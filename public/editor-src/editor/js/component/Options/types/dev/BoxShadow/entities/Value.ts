@@ -1,7 +1,6 @@
 import { Type } from "./Type";
 import { Palette } from "visual/component/Options/types/dev/ColorPicker/entities/palette";
 import { Blur } from "visual/utils/cssProps/Blur";
-import { Spread } from "visual/utils/cssProps/Spread";
 import { Hex } from "visual/utils/color/Hex";
 import { Opacity } from "visual/utils/cssProps/opacity";
 
@@ -15,8 +14,8 @@ export interface Value {
   tempPalette: Palette;
   blur: Blur;
   tempBlur: Blur;
-  spread: Spread;
-  tempSpread: Spread;
+  spread: number;
+  tempSpread: number;
   vertical: number;
   tempVertical: number;
   horizontal: number;

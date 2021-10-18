@@ -60,7 +60,20 @@ export function getItems() {
               label: t("HTML Tag"),
               type: "select-dev",
               devices: "desktop",
+              position: 100,
               choices: toolbarTagsChoices
+            },
+            {
+              id: "hoverTransition",
+              label: t("Hover Transition"),
+              devices: "desktop",
+              position: 110,
+              type: "slider-dev",
+              config: {
+                min: 0,
+                max: 99,
+                units: [{ title: "ms", value: "ms" }]
+              }
             }
           ]
         }

@@ -48,7 +48,6 @@ export function updatePage(
   return Gql.updateCollectionItem(getConnection(), {
     input: {
       id: page.id,
-      title: page.title,
       slug: page.slug,
       status: pageStatusToItemStatus(page.status)
     }

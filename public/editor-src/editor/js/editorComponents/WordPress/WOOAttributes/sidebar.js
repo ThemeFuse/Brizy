@@ -15,6 +15,7 @@ export function getItems() {
     {
       id: "settingsTabs",
       type: "tabs-dev",
+      devices: "desktop",
       tabs: [
         {
           id: "moreSettingsAdvanced",

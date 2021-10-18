@@ -103,6 +103,7 @@ const Component = ({ config }: Props): ReactElement => {
           : { __type: "withOutToken", uri: config.cms.apiUrl },
         user: { isPro: IS_PRO },
         previewUrl: config.urls.pagePreview,
+        domainUrl: config.urls.preview,
         mediaUrl: config.urls.image,
         settingsUrl: config.urls.projectSettings,
         protectedPagePassword: config.project.protectedPagePassword,

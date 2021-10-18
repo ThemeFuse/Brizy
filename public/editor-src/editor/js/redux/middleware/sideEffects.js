@@ -170,7 +170,8 @@ function handleHydrate(callbacks) {
     document.body.style.setProperty("--elements-visibility", "none");
 
     // Hidden Membership Blocks
-    document.body.style.setProperty("--role-default", "block");
+    document.body.style.setProperty("--role-default-block", "block");
+    document.body.style.setProperty("--role-default-flex", "flex");
 
     // clipboard sync between tabs
     jQuery(window).on("storage", e => {
@@ -275,8 +276,11 @@ function handleCurrentRoleChange(callbacks) {
     const oldRole = currentRoleSelector(oldState);
     const newRole = action.value;
 
-    document.body.style.removeProperty(`--role-${oldRole}`);
-    document.body.style.setProperty(`--role-${newRole}`, "block");
+    document.body.style.removeProperty(`--role-${oldRole}-block`);
+    document.body.style.setProperty(`--role-${newRole}-block`, "block");
+
+    document.body.style.removeProperty(`--role-${oldRole}-flex`);
+    document.body.style.setProperty(`--role-${newRole}-flex`, "flex");
   });
 }
 

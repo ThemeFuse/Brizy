@@ -164,8 +164,7 @@ export function getItems({ v, device, context }) {
                   label: t("Autoplay"),
                   type: "switch-dev",
                   devices: "desktop",
-                  disabled:
-                    v.type !== "custom" || v.controls === "off" || !noCover
+                  disabled: v.controls === "off" || !noCover
                 },
                 {
                   id: "muted",
@@ -181,8 +180,7 @@ export function getItems({ v, device, context }) {
                   id: "loop",
                   label: t("Loop"),
                   type: "switch-dev",
-                  devices: "desktop",
-                  disabled: v.type !== "custom"
+                  devices: "desktop"
                 },
                 {
                   id: "start",

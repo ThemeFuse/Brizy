@@ -8,7 +8,7 @@ const AgensStyle = require("./styles/Agens");
 module.exports = {
   name: "Agens",
   color: "#AB7BF9",
-  cat: [0, 1, 3, 100],
+  cat: [0, 1, 3],
   pages: [Homepage, Work, About, Contact],
   styles: [AgensStyle]
 };

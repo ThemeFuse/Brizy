@@ -2,7 +2,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
-    ".brz && .brz-accordion__item:not(.brz-accordion__item--active):hover": {
+    ".brz && > .brz-accordion__item:not(.brz-accordion__item--active):hover": {
       standart: [
         "cssStyleBoxShadow",
         "cssStyleBorder",
@@ -14,10 +14,10 @@ export function style(v, vs, vd) {
         "cssStyleElementAccordionPropertyHoverTransition"
       ]
     },
-    ".brz && .brz-accordion__item:hover": {
+    ".brz && > .brz-accordion__item:hover": {
       standart: ["cssStyleBorderRadius"]
     },
-    ".brz && .brz-accordion__item.brz-accordion__item--active": {
+    ".brz && > .brz-accordion__item.brz-accordion__item--active": {
       standart: [
         "cssStyleElementAccordionActiveColor",
         "cssStyleElementAccordionActiveBgColor",
@@ -29,10 +29,10 @@ export function style(v, vs, vd) {
         "cssStyleElementAccordionPropertyHoverTransition"
       ]
     },
-    ".brz && .brz-accordion__nav": {
+    ".brz && > .brz-accordion__item > .brz-accordion__nav": {
       standart: ["cssStyleElementAccordionNavAlign"]
     },
-    ".brz && .brz-accordion__nav-title": {
+    ".brz && > .brz-accordion__item > .brz-accordion__nav .brz-accordion__nav-title": {
       standart: [
         "cssStyleElementAccordionNavTextAlign",
         "cssStyleTypography2FontFamily",
@@ -42,19 +42,19 @@ export function style(v, vs, vd) {
         "cssStyleTypography2LetterSpacing"
       ]
     },
-    ".brz && .brz-accordion__nav .brz-span": {
+    ".brz && > .brz-accordion__item > .brz-accordion__nav .brz-span": {
       standart: ["cssStyleElementAccordionNavTextAlign"]
     },
-    ".brz && .brz-accordion__nav--icon": {
+    ".brz && > .brz-accordion__item > .brz-accordion__nav .brz-accordion--icon-wrapper": {
       standart: [
         "cssStyleElementAccordionNavIconSpacing",
         "cssStyleElementAccordionNavIconSize"
       ]
     },
-    ".brz && .brz-accordion__item:not(:last-child)": {
+    ".brz && > .brz-accordion__item:not(:last-child)": {
       standart: ["cssStyleElementAccordionSpacing"]
     },
-    ".brz &&:hover .brz-accordion__item-content": {
+    ".brz &&:hover > .brz-accordion__item > .brz-accordion__content > .brz-accordion__item-content": {
       standart: [
         "cssStylePaddingFourFields",
         "cssStyleElementAccordionAnimDuration",
@@ -63,7 +63,7 @@ export function style(v, vs, vd) {
     },
 
     // Styles for filter
-    ".brz && .brz-accordion__filter-wrapper": {
+    ".brz && > .brz-accordion__filter-wrapper": {
       standart: [
         "cssStyleElementAccordionFilterHorizontalAlign",
         "cssStyleElementAccordion3FontFamily",
@@ -74,17 +74,17 @@ export function style(v, vs, vd) {
       ]
     },
 
-    ".brz && .brz-accordion__filter": {
+    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter": {
       standart: ["cssStyleElementAccordionFilterAfterSpacing"]
     },
 
-    ".brz && .brz-accordion__filter__item ": {
+    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item ": {
       standart: ["cssStyleElementAccordionFilterSpacing"]
     },
-    ".brz && .brz-accordion__filter__item:hover": {
+    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item:hover": {
       standart: ["cssStyleElementAccordionFilterColor"]
     },
-    ".brz && .brz-accordion__filter__item--style-1:not(.brz-accordion__filter__item--active):hover": {
+    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item--style-1:not(.brz-accordion__filter__item--active):hover": {
       standart: [
         "cssStyleElementAccordionFilterBgColor",
         "cssStyleElementAccordionFilterBorder",
@@ -92,10 +92,10 @@ export function style(v, vs, vd) {
         "cssStyleElementAccordionFilterShadow"
       ]
     },
-    ".brz && .brz-accordion__filter__item--style-1:hover": {
+    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item--style-1:hover": {
       standart: ["cssStyleElementAccordionFilterPaddingFourFields"]
     },
-    ".brz && .brz-accordion__filter__item--style-1.brz-accordion__filter__item--active": {
+    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item--style-1.brz-accordion__filter__item--active": {
       standart: [
         "cssStyleElementAccordionFilterActiveColor",
         "cssStyleElementAccordionFilterActiveBgColor",
@@ -103,7 +103,7 @@ export function style(v, vs, vd) {
         "cssStyleElementAccordionFilterActiveShadow"
       ]
     },
-    ".brz && .brz-accordion__filter--style-2:hover": {
+    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter--style-2:hover": {
       standart: [
         "cssStyleElementAccordionFilterPaddingFourFields",
         "cssStyleElementAccordionFilterBgColor",
@@ -113,7 +113,7 @@ export function style(v, vs, vd) {
         "cssStyleDisplayInlineFlex"
       ]
     },
-    ".brz && .brz-accordion__filter__item--style-2.brz-accordion__filter__item--active": {
+    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item--style-2.brz-accordion__filter__item--active": {
       standart: ["cssStyleElementAccordionFilterActiveColor"]
     }
   };

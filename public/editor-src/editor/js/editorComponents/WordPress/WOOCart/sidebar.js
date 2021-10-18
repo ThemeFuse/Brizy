@@ -19,6 +19,7 @@ export function getItems({ v, device }) {
       config: {
         align: "start"
       },
+      devices: "desktop",
       tabs: [
         {
           id: "settingsStyling",

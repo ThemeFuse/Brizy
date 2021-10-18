@@ -313,12 +313,22 @@ export function onChangeBgColorFieldsButton2({
   opacity = undefined,
   isChanged = "hex"
 }) {
-  return {
+  const isStartPointer = v.gradientActivePointer === "startPointer";
+
+  return isStartPointer
+? {
     bgColorPalette: isChanged === "hex" ? "" : v.bgColorPalette,
 
     bgColorHex: hex,
 
     bgColorOpacity: opacity
+  }
+: {
+    gradientColorPalette: isChanged === "hex" ? "" : v.gradientColorPalette,
+
+    gradientColorHex: hex,
+
+    gradientColorOpacity: opacity
   };
 }
 

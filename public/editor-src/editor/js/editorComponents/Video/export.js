@@ -185,6 +185,7 @@ function getVideoSrc($elem) {
   var intro = $videoData.attr("data-intro");
   var start = $videoData.attr("data-start");
   var end = $videoData.attr("data-end");
+  var loop = $videoData.attr("data-loop");
 
   if (population) {
     var options = {
@@ -194,7 +195,8 @@ function getVideoSrc($elem) {
       branding: Number(branding === "true"),
       intro: Number(intro === "true"),
       start: Number(start),
-      end: Number(end)
+      end: Number(end),
+      loop: Number(loop)
     };
 
     src = getVideoPopulationUrl(population, options);

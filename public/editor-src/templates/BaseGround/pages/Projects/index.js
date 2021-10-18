@@ -2,1724 +2,5392 @@ module.exports = {
   id: "BaseGroundProjects",
   thumbnailWidth: 680,
   thumbnailHeight: 1171,
-  title: "Projects", 
-  keywords: "features, services, projects, Base Ground, Construction, Building, Business, Corporate",
+  title: "Projects",
+  keywords:
+    "features, services, projects, Base Ground, Construction, Building, Business, Corporate",
   cat: [0, 1],
   pro: true,
-  resolve: { blocks:[
-    {
+  resolve: {
+    blocks: [
+      {
+        type: "SectionHeader",
+        blockId: "block14771",
+        value: {
+          _styles: ["sectionHeader"],
+          items: [
+            {
+              type: "SectionHeaderItem",
+              value: {
+                _styles: ["sectionHeaderItem"],
+                items: [
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--image"],
+                                  items: [
+                                    {
+                                      type: "Image",
+                                      value: {
+                                        _styles: ["image"],
+                                        imagePopulation: "",
+                                        imageWidth: 99,
+                                        imageHeight: 74,
+                                        imageSrc:
+                                          "7f7b1f45ba54f76029f5683261846204.png",
+                                        height: 100,
+                                        positionX: 50,
+                                        positionY: 50,
+                                        resize: 55,
+                                        mobileResize: 50,
+                                        tabletResize: 58,
+                                        _id:
+                                          "dxuyuwiimzzjigtwdvvsknacoqaxmdebksdw"
+                                      }
+                                    }
+                                  ],
+                                  horizontalAlign: "left",
+                                  mobileHorizontalAlign: "left",
+                                  _id: "oksecxrnuicgxrvmuklwxdtmaoqrfalsjgmt"
+                                }
+                              }
+                            ],
+                            verticalAlign: "center",
+                            width: 18,
+                            tabletWidth: 24.6,
+                            paddingTop: 0,
+                            paddingTopSuffix: "px",
+                            padding: 15,
+                            paddingBottom: 0,
+                            paddingBottomSuffix: "px",
+                            mobileWidth: 48.4,
+                            _id: "zawudlwbuziyathunpeboipfwtmweyoxcqej"
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--menu"],
+                                  items: [
+                                    {
+                                      type: "Menu",
+                                      value: {
+                                        _styles: ["menu"],
+                                        fontSize: 18,
+                                        fontFamily: "changa_one",
+                                        lineHeight: 1.6,
+                                        letterSpacing: 0,
+                                        fontWeight: 400,
+                                        fontStyle: "",
+                                        itemPadding: 45,
+                                        itemPaddingRight: 45,
+                                        itemPaddingLeft: 45,
+                                        horizontalAlign: "right",
+                                        colorHex: "#a2a2a2",
+                                        colorOpacity: 1,
+                                        colorPalette: "color8",
+                                        tempColorOpacity: 1,
+                                        hoverColorHex: "#a2a2a2",
+                                        hoverColorOpacity: 1,
+                                        hoverColorPalette: "color3",
+                                        subMenuBgColorPalette: "color2",
+                                        subMenuBgColorOpacity: 1,
+                                        subMenuHoverBgColorPalette: "color2",
+                                        mMenuBgColorPalette: "color2",
+                                        subMenuBorderColorHex: "#000000",
+                                        subMenuBorderColorOpacity: 0.08,
+                                        subMenuBorderColorPalette: "",
+                                        subMenuTempBorderColorOpacity: 0.08,
+                                        subMenuHoverBorderColorHex: "#000000",
+                                        subMenuHoverBorderColorOpacity: 0.07,
+                                        mMenuBorderColorHex: "#000000",
+                                        mMenuBorderColorOpacity: 0.08,
+                                        subMenuColorHex: "#191b21",
+                                        subMenuColorOpacity: 1,
+                                        subMenuColorPalette: "color8",
+                                        subMenuTempColorOpacity: 1,
+                                        subMenuHoverColorHex: "#191b21",
+                                        subMenuHoverColorOpacity: 1,
+                                        mMenuColorHex: "#191b21",
+                                        mMenuColorOpacity: 1,
+                                        mMenuHoverColorHex: "#191b21",
+                                        mMenuHoverColorOpacity: 1,
+                                        subMenuHoverColorPalette: "color3",
+                                        mMenuHoverColorPalette: "color3",
+                                        subMenuHoverBorderColorPalette: "",
+                                        subMenuTempHoverBorderColorOpacity: 0.07,
+                                        subMenuHoverBgColorHex: "#f9f9f9",
+                                        subMenuHoverBgColorOpacity: "#1c1c1c",
+                                        tabletMMenuSize: 25,
+                                        tabletHorizontalAlign: "right",
+                                        tabletMMenuFontSize: 18,
+                                        tabletMMenuLineHeight: 2.5,
+                                        tabletMMenuLetterSpacing: 0,
+                                        tabletMMenuFontWeight: 400,
+                                        tabletMMenuFontStyle: "button",
+                                        mMenuBgColorHex: "#ffffff",
+                                        mMenuBgColorOpacity: 1,
+                                        mMenuTempBgColorOpacity: 1,
+                                        mMenuBorderColorPalette: "color8",
+                                        mMenuTempBorderColorOpacity: 0.08,
+                                        mMenuTitle: "Main Menu",
+                                        mobileHorizontalAlign: "right",
+                                        mobileMMenuSize: 25,
+                                        mMenuColorPalette: "color8",
+                                        mMenuTempColorOpacity: 1,
+                                        mobileMMenuFontSize: 14,
+                                        mobileMMenuLineHeight: 1.8,
+                                        mobileMMenuLetterSpacing: 0,
+                                        mobileMMenuFontWeight: 700,
+                                        mobileMMenuFontStyle: "",
+                                        tabletMMenuIconColorHex: "",
+                                        tabletMMenuIconColorOpacity: 1,
+                                        tabletMMenuIconColorPalette: "color2",
+                                        mMenu: "off",
+                                        mMenuSize: 25,
+                                        subMenuBgColorHex: "#ffffff",
+                                        subMenuTempBgColorOpacity: 1,
+                                        subMenuFontSize: 18,
+                                        subMenuFontFamily: "changa_one",
+                                        subMenuLineHeight: 1.5,
+                                        subMenuLetterSpacing: 0,
+                                        subMenuFontWeight: 400,
+                                        subMenuFontStyle: "",
+                                        mMenuIconColorPalette: "color2",
+                                        mMenuIconColorHex: "",
+                                        mMenuIconColorOpacity: 1,
+                                        mMenuFontSize: 18,
+                                        mMenuFontFamily: "josefin_sans",
+                                        mMenuLineHeight: 2.5,
+                                        mMenuLetterSpacing: 0,
+                                        mMenuFontWeight: 600,
+                                        mMenuFontStyle: "heading6",
+                                        tabletFontStyle: "",
+                                        mobileFontStyle: "",
+                                        tabletSubMenuFontStyle: "",
+                                        mobileSubMenuFontStyle: "heading6",
+                                        tabletMMenu: "off",
+                                        tabletFontSize: 15,
+                                        tabletLineHeight: 1.6,
+                                        tabletLetterSpacing: 0,
+                                        tabletFontWeight: 700,
+                                        tabletItemPadding: 20,
+                                        tabletItemPaddingRight: 20,
+                                        tabletItemPaddingLeft: 20,
+                                        tabletSubMenuFontSize: 15,
+                                        tabletSubMenuLineHeight: 1.5,
+                                        tabletSubMenuLetterSpacing: 0,
+                                        tabletSubMenuFontWeight: 700,
+                                        mobileMMenu: "on",
+                                        mobileFontSize: 15,
+                                        mobileLineHeight: 1.6,
+                                        mobileLetterSpacing: 0,
+                                        mobileFontWeight: 700,
+                                        mobileSubMenuFontSize: 15,
+                                        mobileSubMenuLineHeight: 1.6,
+                                        mobileSubMenuLetterSpacing: 0,
+                                        mobileSubMenuFontWeight: 400,
+                                        mobileItemPadding: 20,
+                                        mobileItemPaddingRight: 20,
+                                        mobileItemPaddingLeft: 20,
+                                        subMenuFontFamilyType: "google",
+                                        mMenuItemHorizontalAlign: "left",
+                                        _id:
+                                          "wjkoqylyjbujevwwqsquytltiqtnwxchuzpd",
+                                        menuSelected:
+                                          "NmRhMGQyNGY2YWIzNzE3YzJlOGE4ZDFmMTM5MTRkMGIyMzI4YmM4MWY4ZmM5MGM0MzM0MDg2YTRiYjk1M2FkMg",
+                                        fontFamilyType: "google",
+                                        mobileMMenuIconColorPalette: "color8",
+                                        mobileMMenuIconColorHex: "",
+                                        mobileMMenuIconColorOpacity: null,
+                                        tabsState: "tabNormal",
+                                        activeColorHex: "#ffffff",
+                                        activeColorOpacity: 1,
+                                        activeColorPalette: "color3",
+                                        tempActiveColorOpacity: 1,
+                                        tempActiveColorPalette: ""
+                                      }
+                                    }
+                                  ],
+                                  showOnTablet: "on",
+                                  _id: "kqmmfzyzdzavfcgujeurojicqgvamggurzmz",
+                                  horizontalAlign: "right"
+                                }
+                              }
+                            ],
+                            verticalAlign: "center",
+                            width: 82,
+                            tabletWidth: 74.4,
+                            paddingTop: 0,
+                            paddingTopSuffix: "px",
+                            padding: 15,
+                            paddingBottom: 0,
+                            paddingBottomSuffix: "px",
+                            mobileWidth: 51.6,
+                            _id: "syfvzjavyisbwbnfqwlrqddtpkuukbjvcacw"
+                          }
+                        }
+                      ],
+                      padding: 0,
+                      paddingSuffix: "px",
+                      paddingTop: 0,
+                      paddingRight: 0,
+                      paddingBottom: 0,
+                      paddingLeft: 0,
+                      size: 100,
+                      tabletPaddingRight: 0,
+                      tabletPaddingRightSuffix: "px",
+                      tabletPadding: 0,
+                      tabletPaddingLeft: 0,
+                      tabletPaddingLeftSuffix: "px",
+                      tabsState: "tabNormal",
+                      tabsCurrentElement: "tabCurrentElement",
+                      tabsColor: "tabOverlay",
+                      _id: "ttbvxhurlunbyrrrmnfmjdmedhtlemmcoamv"
+                    }
+                  }
+                ],
+                paddingType: "ungrouped",
+                paddingTop: 15,
+                paddingBottom: 15,
+                padding: 75,
+                bgColorHex: "#ffffff",
+                bgColorOpacity: 1,
+                bgColorPalette: "color2",
+                tempBgColorOpacity: 1,
+                tabletPaddingType: "ungrouped",
+                tabletPaddingTop: 15,
+                tabletPaddingBottom: 15,
+                tabletPadding: 50,
+                mobilePaddingType: "ungrouped",
+                mobilePaddingTop: 15,
+                mobilePaddingBottom: 15,
+                mobilePadding: 25,
+                boxShadow: "on",
+                boxShadowBlur: 5,
+                boxShadowColorOpacity: 0.1,
+                boxShadowColorHex: "#000000",
+                boxShadowColorPalette: "",
+                boxShadowVertical: 0,
+                _id: "qaxnrixtjxqhdkvnjwroefnhqiyaivfqrxyd",
+                tabsColor: "",
+                tempBgColorPalette: "color2",
+                borderRadius: 0,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                tempBorderTopLeftRadius: 0,
+                tempBorderTopRightRadius: 0,
+                tempBorderBottomLeftRadius: 0,
+                tempBorderBottomRightRadius: 0
+              }
+            },
+            {
+              type: "SectionHeaderStickyItem",
+              value: {
+                _styles: ["sectionHeaderStickyItem"],
+                items: [
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--image"],
+                                  items: [
+                                    {
+                                      type: "Image",
+                                      value: {
+                                        _styles: ["image"],
+                                        imagePopulation: "",
+                                        imageWidth: 2129,
+                                        imageHeight: 457,
+                                        imageSrc:
+                                          "b731902c6bf15805972db395c1ec4670.png",
+                                        height: 100,
+                                        positionX: 50,
+                                        positionY: 50,
+                                        resize: 70,
+                                        mobileResize: 80,
+                                        tabletResize: 100,
+                                        _id:
+                                          "cqbfmxwnluwesdtzyjnogaajoxclofoupycs"
+                                      }
+                                    }
+                                  ],
+                                  horizontalAlign: "left",
+                                  mobileHorizontalAlign: "left",
+                                  _id: "hutvbrkobudqarhsdacnlzngqezkwdlcmmif"
+                                }
+                              }
+                            ],
+                            verticalAlign: "center",
+                            width: 18,
+                            tabletWidth: 24.6,
+                            paddingTop: 0,
+                            paddingTopSuffix: "px",
+                            padding: 15,
+                            paddingBottom: 0,
+                            paddingBottomSuffix: "px",
+                            mobileWidth: 48.4,
+                            _id: "ruywjsgehsnrqgiqzzmaveckotpyqayybgrs"
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--menu"],
+                                  items: [
+                                    {
+                                      type: "Menu",
+                                      value: {
+                                        _styles: ["menu"],
+                                        fontSize: 19,
+                                        fontFamily: "josefin_sans",
+                                        lineHeight: 1.7,
+                                        letterSpacing: 0,
+                                        fontWeight: 400,
+                                        fontStyle: "heading6",
+                                        itemPadding: 45,
+                                        itemPaddingRight: 45,
+                                        itemPaddingLeft: 45,
+                                        horizontalAlign: "right",
+                                        colorHex: "#a2a2a2",
+                                        colorOpacity: 1,
+                                        colorPalette: "color2",
+                                        tempColorOpacity: 1,
+                                        hoverColorHex: "#a2a2a2",
+                                        hoverColorOpacity: 1,
+                                        hoverColorPalette: "color3",
+                                        subMenuBgColorPalette: "color8",
+                                        subMenuBgColorOpacity: 1,
+                                        subMenuHoverBgColorPalette: "color8",
+                                        mMenuBgColorPalette: "color2",
+                                        subMenuBorderColorHex: "#000000",
+                                        subMenuBorderColorOpacity: 0.08,
+                                        subMenuBorderColorPalette: "",
+                                        subMenuTempBorderColorOpacity: 0.08,
+                                        subMenuHoverBorderColorHex: "#000000",
+                                        subMenuHoverBorderColorOpacity: 0.07,
+                                        mMenuBorderColorHex: "#000000",
+                                        mMenuBorderColorOpacity: 0.08,
+                                        subMenuColorHex: "#191b21",
+                                        subMenuColorOpacity: 1,
+                                        subMenuColorPalette: "color2",
+                                        subMenuTempColorOpacity: 1,
+                                        subMenuHoverColorHex: "#191b21",
+                                        subMenuHoverColorOpacity: 1,
+                                        mMenuColorHex: "#191b21",
+                                        mMenuColorOpacity: 1,
+                                        mMenuHoverColorHex: "#191b21",
+                                        mMenuHoverColorOpacity: 1,
+                                        subMenuHoverColorPalette: "color3",
+                                        mMenuHoverColorPalette: "color3",
+                                        subMenuHoverBorderColorPalette: "",
+                                        subMenuTempHoverBorderColorOpacity: 0.07,
+                                        subMenuHoverBgColorHex: "#f9f9f9",
+                                        subMenuHoverBgColorOpacity: "#1c1c1c",
+                                        tabletMMenuSize: 25,
+                                        tabletHorizontalAlign: "right",
+                                        tabletMMenuFontSize: 18,
+                                        tabletMMenuLineHeight: 2.5,
+                                        tabletMMenuLetterSpacing: 0,
+                                        tabletMMenuFontWeight: 400,
+                                        tabletMMenuFontStyle: "button",
+                                        mMenuBgColorHex: "#ffffff",
+                                        mMenuBgColorOpacity: 1,
+                                        mMenuTempBgColorOpacity: 1,
+                                        mMenuBorderColorPalette: "color8",
+                                        mMenuTempBorderColorOpacity: 0.08,
+                                        mMenuTitle: "Main Menu",
+                                        mobileHorizontalAlign: "right",
+                                        mobileMMenuSize: 25,
+                                        mMenuColorPalette: "color8",
+                                        mMenuTempColorOpacity: 1,
+                                        mobileMMenuFontSize: 18,
+                                        mobileMMenuLineHeight: 2.5,
+                                        mobileMMenuLetterSpacing: 0,
+                                        mobileMMenuFontWeight: 400,
+                                        mobileMMenuFontStyle: "button",
+                                        tabletMMenuIconColorHex: "",
+                                        tabletMMenuIconColorOpacity: 1,
+                                        tabletMMenuIconColorPalette: "color2",
+                                        mMenu: "off",
+                                        mMenuSize: 25,
+                                        subMenuBgColorHex: "#ffffff",
+                                        subMenuTempBgColorOpacity: 1,
+                                        subMenuFontSize: 15,
+                                        subMenuFontFamily: "overpass",
+                                        subMenuLineHeight: 1,
+                                        subMenuLetterSpacing: 0,
+                                        subMenuFontWeight: 700,
+                                        subMenuFontStyle: "heading6",
+                                        mMenuIconColorPalette: "color2",
+                                        mMenuIconColorHex: "",
+                                        mMenuIconColorOpacity: 1,
+                                        mMenuFontSize: 18,
+                                        mMenuFontFamily: "josefin_sans",
+                                        mMenuLineHeight: 2.5,
+                                        mMenuLetterSpacing: 0,
+                                        mMenuFontWeight: 600,
+                                        mMenuFontStyle: "heading6",
+                                        tabletFontStyle: "",
+                                        mobileFontStyle: "",
+                                        tabletSubMenuFontStyle: "",
+                                        mobileSubMenuFontStyle: "heading6",
+                                        tabletMMenu: "off",
+                                        tabletFontSize: 15,
+                                        tabletLineHeight: 1.6,
+                                        tabletLetterSpacing: 0,
+                                        tabletFontWeight: 700,
+                                        tabletItemPadding: 20,
+                                        tabletItemPaddingRight: 20,
+                                        tabletItemPaddingLeft: 20,
+                                        tabletSubMenuFontSize: 15,
+                                        tabletSubMenuLineHeight: 1.5,
+                                        tabletSubMenuLetterSpacing: 0,
+                                        tabletSubMenuFontWeight: 700,
+                                        mobileMMenu: "on",
+                                        mobileFontSize: 15,
+                                        mobileLineHeight: 1.6,
+                                        mobileLetterSpacing: 0,
+                                        mobileFontWeight: 700,
+                                        mobileSubMenuFontSize: 15,
+                                        mobileSubMenuLineHeight: 1.6,
+                                        mobileSubMenuLetterSpacing: 0,
+                                        mobileSubMenuFontWeight: 400,
+                                        mobileItemPadding: 20,
+                                        mobileItemPaddingRight: 20,
+                                        mobileItemPaddingLeft: 20,
+                                        subMenuFontFamilyType: "google",
+                                        mMenuItemHorizontalAlign: "left",
+                                        _id:
+                                          "emcrupsysthcnsbffdebtwvhrhicfrbkstfm"
+                                      }
+                                    }
+                                  ],
+                                  showOnTablet: "on",
+                                  _id: "dqujbhvrdumnwtrlvfvgzfrumznjoiglwvly"
+                                }
+                              }
+                            ],
+                            verticalAlign: "center",
+                            width: 82,
+                            tabletWidth: 74.4,
+                            paddingTop: 0,
+                            paddingTopSuffix: "px",
+                            padding: 15,
+                            paddingBottom: 0,
+                            paddingBottomSuffix: "px",
+                            mobileWidth: 51.6,
+                            _id: "lrmskrmlouvgohidxvmtnnollalzttrpwzxe"
+                          }
+                        }
+                      ],
+                      padding: 0,
+                      paddingSuffix: "px",
+                      paddingTop: 0,
+                      paddingRight: 0,
+                      paddingBottom: 0,
+                      paddingLeft: 0,
+                      size: 100,
+                      tabletPaddingRight: 0,
+                      tabletPaddingRightSuffix: "px",
+                      tabletPadding: 0,
+                      tabletPaddingLeft: 0,
+                      tabletPaddingLeftSuffix: "px",
+                      tabsState: "tabNormal",
+                      tabsCurrentElement: "tabCurrentElement",
+                      tabsColor: "tabOverlay",
+                      _id: "mtwhnkyqzhahlvtsegrwcpvmkaicliopavfb"
+                    }
+                  }
+                ],
+                _id: "ntjmyjcksrhqvvadpoyrxtkpoxzbnhcpxzsr"
+              }
+            }
+          ],
+          type: "static",
+          _id: "pefxandvulwzsvwijmybumdkrkveeolmxevh",
+          _thumbnailSrc: 7976488,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 39,
+          _thumbnailTime: 1631624173566
+        }
+      },
+      {
         blockId: "Dimi006Light",
         type: "Section",
         value: {
-            _styles: [
-                "section"
-            ],
-            items: [
-                {
-                    type: "SectionItem",
+          _styles: ["section"],
+          items: [
+            {
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                bgColorOpacity: 1,
+                bgColorHex: "#ffffff",
+                items: [
+                  {
+                    type: "Row",
                     value: {
-                        _styles: [
-                            "section-item"
-                        ],
-                        bgColorOpacity: 1,
-                        bgColorHex: "#ffffff",
-                        items: [
-                            {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        height: 350,
+                                        _id:
+                                          "monaunnpuddmxckaxrluctyjfgnkdotcerjz"
+                                      }
+                                    }
+                                  ],
+                                  _id: "cspcgwtcpvdirmuaxsztbgnnykymxlxxqvfg"
+                                }
+                              },
+                              {
                                 type: "Row",
                                 value: {
-                                    _styles: [
-                                        "row",
-                                        "hide-row-borders",
-                                        "padding-0"
-                                    ],
-                                    items: [
-                                        {
-                                            type: "Column",
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
                                             value: {
-                                                _styles: [
-                                                    "column"
-                                                ],
-                                                items: [
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--spacer"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Spacer",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "spacer"
-                                                                        ],
-                                                                        height: 350
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Row",
-                                                        value: {
-                                                            _styles: [
-                                                                "row",
-                                                                "hide-row-borders",
-                                                                "padding-0"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Column",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "column"
-                                                                        ],
-                                                                        items: [
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">NEW GEOPOST DEVELOPMENT, STAR MOWDEN PROPERTIES</a></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ]
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-paragraph\"><span style=\"opacity: 1;\" class=\"brz-cp-color7\">Recusabo sapiente lorem ipsum</span></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ],
-                                                                                    marginTop: 0,
-                                                                                    marginTopSuffix: "px",
-                                                                                    margin: 0
-                                                                                }
-                                                                            }
-                                                                        ],
-                                                                        width: 100,
-                                                                        paddingType: "ungrouped",
-                                                                        padding: 15,
-                                                                        paddingSuffix: "px",
-                                                                        paddingTop: 15,
-                                                                        paddingRight: 20,
-                                                                        paddingBottom: 15,
-                                                                        paddingLeft: 20,
-                                                                        bgColorPalette: "color1",
-                                                                        bgColorHex: "",
-                                                                        bgColorOpacity: 0.95,
-                                                                        mobilePaddingRight: 10,
-                                                                        mobilePaddingLeft: 10,
-                                                                        tempBgColorOpacity: 0.95,
-                                                                        borderRadius: 0,
-                                                                        borderTopLeftRadius: 0,
-                                                                        borderTopRightRadius: 0,
-                                                                        borderBottomRightRadius: 0,
-                                                                        borderBottomLeftRadius: 0,
-                                                                        paddingLeftSuffix: "px",
-                                                                        paddingRightSuffix: "px"
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    }
-                                                ],
-                                                width: 33.3,
-                                                bgImageWidth: 1000,
-                                                bgImageHeight: 700,
-                                                bgImageSrc: "4595c89cbf0924dcfb79aa7f15fa98c6.jpg",
-                                                bgPositionX: 50,
-                                                bgPositionY: 50,
-                                                bgColorOpacity: 0,
-                                                tempBgColorOpacity: 1,
-                                                mobilePaddingRight: 10,
-                                                mobilePaddingLeft: 10,
-                                                margin: 15,
-                                                marginSuffix: "px",
-                                                marginTop: 15,
-                                                marginRight: 15,
-                                                marginBottom: 15,
-                                                marginLeft: 15,
-                                                paddingType: "grouped",
-                                                padding: 0,
-                                                paddingSuffix: "px",
-                                                paddingTop: 0,
-                                                paddingRight: 0,
-                                                paddingBottom: 0,
-                                                paddingLeft: 0
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="brz-cp-color3 link--external is-empty">NEW GEOPOST DEVELOPMENT, STAR MOWDEN PROPERTIES</a></p>',
+                                                    _id:
+                                                      "otjtawsseegwusxxpkejfjjvgqzdczgqmrmz"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "smdyktaxbksryrgzuvwbjgzatdjhxptajkda"
                                             }
-                                        },
-                                        {
-                                            type: "Column",
+                                          },
+                                          {
+                                            type: "Wrapper",
                                             value: {
-                                                _styles: [
-                                                    "column"
-                                                ],
-                                                items: [
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--spacer"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Spacer",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "spacer"
-                                                                        ],
-                                                                        height: 350
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Row",
-                                                        value: {
-                                                            _styles: [
-                                                                "row",
-                                                                "hide-row-borders",
-                                                                "padding-0"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Column",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "column"
-                                                                        ],
-                                                                        items: [
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">SKYPARK OFFICE BUILDINGS:&nbsp;</a></p><p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">A RENOVATION</a></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ]
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-paragraph\"><span style=\"opacity: 1;\" class=\"brz-cp-color7\">Recusabo sapiente lorem ipsum</span></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ],
-                                                                                    marginTop: 0,
-                                                                                    marginTopSuffix: "px",
-                                                                                    margin: 0
-                                                                                }
-                                                                            }
-                                                                        ],
-                                                                        width: 100,
-                                                                        paddingType: "ungrouped",
-                                                                        padding: 15,
-                                                                        paddingSuffix: "px",
-                                                                        paddingTop: 15,
-                                                                        paddingRight: 20,
-                                                                        paddingBottom: 15,
-                                                                        paddingLeft: 20,
-                                                                        bgColorPalette: "color1",
-                                                                        bgColorHex: "",
-                                                                        bgColorOpacity: 0.95,
-                                                                        mobilePaddingRight: 10,
-                                                                        mobilePaddingLeft: 10,
-                                                                        tempBgColorOpacity: 0.95,
-                                                                        borderRadius: 0,
-                                                                        borderTopLeftRadius: 0,
-                                                                        borderTopRightRadius: 0,
-                                                                        borderBottomRightRadius: 0,
-                                                                        borderBottomLeftRadius: 0,
-                                                                        paddingLeftSuffix: "px",
-                                                                        paddingRightSuffix: "px"
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    }
-                                                ],
-                                                width: 33.3,
-                                                bgImageWidth: 700,
-                                                bgImageHeight: 1000,
-                                                bgImageSrc: "e9a9a676e516e3b6db5bd8dd89a56729.jpg",
-                                                bgPositionX: 50,
-                                                bgPositionY: 50,
-                                                bgColorOpacity: 0,
-                                                tempBgColorOpacity: 1,
-                                                mobilePaddingRight: 10,
-                                                mobilePaddingLeft: 10,
-                                                margin: 15,
-                                                marginSuffix: "px",
-                                                marginTop: 15,
-                                                marginRight: 15,
-                                                marginBottom: 15,
-                                                marginLeft: 15,
-                                                paddingType: "grouped",
-                                                padding: 0,
-                                                paddingSuffix: "px",
-                                                paddingTop: 0,
-                                                paddingRight: 0,
-                                                paddingBottom: 0,
-                                                paddingLeft: 0
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-paragraph"><span style="opacity: 1;" class="brz-cp-color7">Recusabo sapiente lorem ipsum</span></p>',
+                                                    _id:
+                                                      "anzhtagsyjaqqhoywgmuqxkixwjhhzgvhjgw"
+                                                  }
+                                                }
+                                              ],
+                                              marginTop: 0,
+                                              marginTopSuffix: "px",
+                                              margin: 0,
+                                              _id:
+                                                "ketxmckamvilyziyqgutdhqudnbppwnoukrn"
                                             }
-                                        },
-                                        {
-                                            type: "Column",
-                                            value: {
-                                                _styles: [
-                                                    "column"
-                                                ],
-                                                items: [
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--spacer"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Spacer",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "spacer"
-                                                                        ],
-                                                                        height: 350
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Row",
-                                                        value: {
-                                                            _styles: [
-                                                                "row",
-                                                                "hide-row-borders",
-                                                                "padding-0"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Column",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "column"
-                                                                        ],
-                                                                        items: [
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">GROHMES HOUSING&nbsp;</a></p><p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">HEADQUARTERS</a></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ]
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-paragraph\"><span style=\"opacity: 1;\" class=\"brz-cp-color7\">Recusabo sapiente lorem ipsum</span></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ],
-                                                                                    marginTop: 0,
-                                                                                    marginTopSuffix: "px",
-                                                                                    margin: 0
-                                                                                }
-                                                                            }
-                                                                        ],
-                                                                        width: 100,
-                                                                        paddingType: "ungrouped",
-                                                                        padding: 15,
-                                                                        paddingSuffix: "px",
-                                                                        paddingTop: 15,
-                                                                        paddingRight: 20,
-                                                                        paddingBottom: 15,
-                                                                        paddingLeft: 20,
-                                                                        bgColorPalette: "color1",
-                                                                        bgColorHex: "",
-                                                                        bgColorOpacity: 0.95,
-                                                                        mobilePaddingRight: 10,
-                                                                        mobilePaddingLeft: 10,
-                                                                        tempBgColorOpacity: 0.95,
-                                                                        borderRadius: 0,
-                                                                        borderTopLeftRadius: 0,
-                                                                        borderTopRightRadius: 0,
-                                                                        borderBottomRightRadius: 0,
-                                                                        borderBottomLeftRadius: 0,
-                                                                        paddingLeftSuffix: "px",
-                                                                        paddingRightSuffix: "px"
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    }
-                                                ],
-                                                width: 33.4,
-                                                bgImageWidth: 1000,
-                                                bgImageHeight: 700,
-                                                bgImageSrc: "6362603c695693ccfdad596c26052366.jpg",
-                                                bgPositionX: 52,
-                                                bgPositionY: 55,
-                                                bgColorOpacity: 0,
-                                                tempBgColorOpacity: 1,
-                                                mobilePaddingRight: 10,
-                                                mobilePaddingLeft: 10,
-                                                margin: 15,
-                                                marginSuffix: "px",
-                                                marginTop: 15,
-                                                marginRight: 15,
-                                                marginBottom: 15,
-                                                marginLeft: 15,
-                                                paddingType: "grouped",
-                                                padding: 0,
-                                                paddingSuffix: "px",
-                                                paddingTop: 0,
-                                                paddingRight: 0,
-                                                paddingBottom: 0,
-                                                paddingLeft: 0
-                                            }
-                                        }
-                                    ]
+                                          }
+                                        ],
+                                        width: 100,
+                                        paddingType: "ungrouped",
+                                        padding: 15,
+                                        paddingSuffix: "px",
+                                        paddingTop: 15,
+                                        paddingRight: 20,
+                                        paddingBottom: 15,
+                                        paddingLeft: 20,
+                                        bgColorPalette: "color1",
+                                        bgColorHex: "",
+                                        bgColorOpacity: 0.95,
+                                        mobilePaddingRight: 15,
+                                        mobilePaddingLeft: 15,
+                                        tempBgColorOpacity: 0.95,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        paddingLeftSuffix: "px",
+                                        paddingRightSuffix: "px",
+                                        _id:
+                                          "goccnciwlerwuulwasgpdkjuhvnzrvvtvrbx",
+                                        mobilePaddingSuffix: "px",
+                                        mobilePaddingTopSuffix: "px",
+                                        mobilePaddingRightSuffix: "px",
+                                        mobilePaddingBottomSuffix: "px",
+                                        mobilePaddingLeftSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingRightSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingLeftSuffix: "px",
+                                        mobilePadding: 15,
+                                        mobilePaddingTop: 15,
+                                        mobilePaddingBottom: 15,
+                                        tempMobilePadding: 15,
+                                        tempMobilePaddingTop: 15,
+                                        tempMobilePaddingRight: 15,
+                                        tempMobilePaddingBottom: 15,
+                                        tempMobilePaddingLeft: 15
+                                      }
+                                    }
+                                  ],
+                                  _id: "rvcbtgauimciiqmmqeavqixckinetgkgwwaj"
                                 }
-                            },
-                            {
+                              }
+                            ],
+                            width: 33.3,
+                            bgImageWidth: 1000,
+                            bgImageHeight: 700,
+                            bgImageSrc: "4595c89cbf0924dcfb79aa7f15fa98c6.jpg",
+                            bgPositionX: 50,
+                            bgPositionY: 50,
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            mobilePaddingRight: 10,
+                            mobilePaddingLeft: 10,
+                            margin: 15,
+                            marginSuffix: "px",
+                            marginTop: 15,
+                            marginRight: 15,
+                            marginBottom: 15,
+                            marginLeft: 15,
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingSuffix: "px",
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            _id: "ywunmmlxfidagwygqngfpeklisiqqlonalhp"
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        height: 350,
+                                        _id:
+                                          "gdcahwhneijtuoqsaryxrzckcyztjxmtljib"
+                                      }
+                                    }
+                                  ],
+                                  _id: "mgslnjkhhcmtylbflfepzcaoakdrwriygjmg"
+                                }
+                              },
+                              {
                                 type: "Row",
                                 value: {
-                                    _styles: [
-                                        "row",
-                                        "hide-row-borders",
-                                        "padding-0"
-                                    ],
-                                    items: [
-                                        {
-                                            type: "Column",
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
                                             value: {
-                                                _styles: [
-                                                    "column"
-                                                ],
-                                                items: [
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--spacer"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Spacer",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "spacer"
-                                                                        ],
-                                                                        height: 350
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Row",
-                                                        value: {
-                                                            _styles: [
-                                                                "row",
-                                                                "hide-row-borders",
-                                                                "padding-0"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Column",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "column"
-                                                                        ],
-                                                                        items: [
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">HARBOUR FAST FERRY SERVICE PONTOON</a></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ]
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-paragraph\"><span style=\"opacity: 1;\" class=\"brz-cp-color7\">Recusabo sapiente lorem ipsum</span></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ],
-                                                                                    marginTop: 0,
-                                                                                    marginTopSuffix: "px",
-                                                                                    margin: 0
-                                                                                }
-                                                                            }
-                                                                        ],
-                                                                        width: 100,
-                                                                        paddingType: "ungrouped",
-                                                                        padding: 15,
-                                                                        paddingSuffix: "px",
-                                                                        paddingTop: 15,
-                                                                        paddingRight: 20,
-                                                                        paddingBottom: 15,
-                                                                        paddingLeft: 20,
-                                                                        bgColorPalette: "color1",
-                                                                        bgColorHex: "",
-                                                                        bgColorOpacity: 0.95,
-                                                                        mobilePaddingRight: 10,
-                                                                        mobilePaddingLeft: 10,
-                                                                        tempBgColorOpacity: 0.95,
-                                                                        borderRadius: 0,
-                                                                        borderTopLeftRadius: 0,
-                                                                        borderTopRightRadius: 0,
-                                                                        borderBottomRightRadius: 0,
-                                                                        borderBottomLeftRadius: 0,
-                                                                        paddingLeftSuffix: "px",
-                                                                        paddingRightSuffix: "px"
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    }
-                                                ],
-                                                width: 33.3,
-                                                bgImageWidth: 1000,
-                                                bgImageHeight: 700,
-                                                bgImageSrc: "9c1738266a5c2fa1ba311ede3871ab08.jpg",
-                                                bgPositionX: 50,
-                                                bgPositionY: 50,
-                                                bgColorOpacity: 0,
-                                                tempBgColorOpacity: 1,
-                                                mobilePaddingRight: 10,
-                                                mobilePaddingLeft: 10,
-                                                margin: 15,
-                                                marginSuffix: "px",
-                                                marginTop: 15,
-                                                marginRight: 15,
-                                                marginBottom: 15,
-                                                marginLeft: 15,
-                                                paddingType: "grouped",
-                                                padding: 0,
-                                                paddingSuffix: "px",
-                                                paddingTop: 0,
-                                                paddingRight: 0,
-                                                paddingBottom: 0,
-                                                paddingLeft: 0
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="link--external is-empty brz-cp-color3">SKYPARK OFFICE BUILDINGS:&nbsp;</a></p><p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="brz-cp-color3 link--external is-empty">A RENOVATION</a></p>',
+                                                    _id:
+                                                      "mcbhusjbpzjtpbdbrcldktpdioqipvlwjhhp"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "oqvixmtrccxwaavsbhqaipugfxtyttvqlpcu"
                                             }
-                                        },
-                                        {
-                                            type: "Column",
+                                          },
+                                          {
+                                            type: "Wrapper",
                                             value: {
-                                                _styles: [
-                                                    "column"
-                                                ],
-                                                items: [
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--spacer"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Spacer",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "spacer"
-                                                                        ],
-                                                                        height: 350
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Row",
-                                                        value: {
-                                                            _styles: [
-                                                                "row",
-                                                                "hide-row-borders",
-                                                                "padding-0"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Column",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "column"
-                                                                        ],
-                                                                        items: [
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">A45 HIGHWAY, CHEST ROAD &amp; B32 HIGHWAY REPAIRS</a></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ]
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-paragraph\"><span style=\"opacity: 1;\" class=\"brz-cp-color7\">Recusabo sapiente lorem ipsum</span></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ],
-                                                                                    marginTop: 0,
-                                                                                    marginTopSuffix: "px",
-                                                                                    margin: 0
-                                                                                }
-                                                                            }
-                                                                        ],
-                                                                        width: 100,
-                                                                        paddingType: "ungrouped",
-                                                                        padding: 15,
-                                                                        paddingSuffix: "px",
-                                                                        paddingTop: 15,
-                                                                        paddingRight: 20,
-                                                                        paddingBottom: 15,
-                                                                        paddingLeft: 20,
-                                                                        bgColorPalette: "color1",
-                                                                        bgColorHex: "",
-                                                                        bgColorOpacity: 0.95,
-                                                                        mobilePaddingRight: 10,
-                                                                        mobilePaddingLeft: 10,
-                                                                        tempBgColorOpacity: 0.95,
-                                                                        borderRadius: 0,
-                                                                        borderTopLeftRadius: 0,
-                                                                        borderTopRightRadius: 0,
-                                                                        borderBottomRightRadius: 0,
-                                                                        borderBottomLeftRadius: 0,
-                                                                        paddingLeftSuffix: "px",
-                                                                        paddingRightSuffix: "px"
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    }
-                                                ],
-                                                width: 33.3,
-                                                bgImageWidth: 1000,
-                                                bgImageHeight: 700,
-                                                bgImageSrc: "79437c0243b90bd8d03efb25104bab79.jpg",
-                                                bgPositionX: 50,
-                                                bgPositionY: 50,
-                                                bgColorOpacity: 0,
-                                                tempBgColorOpacity: 1,
-                                                mobilePaddingRight: 10,
-                                                mobilePaddingLeft: 10,
-                                                margin: 15,
-                                                marginSuffix: "px",
-                                                marginTop: 15,
-                                                marginRight: 15,
-                                                marginBottom: 15,
-                                                marginLeft: 15,
-                                                paddingType: "grouped",
-                                                padding: 0,
-                                                paddingSuffix: "px",
-                                                paddingTop: 0,
-                                                paddingRight: 0,
-                                                paddingBottom: 0,
-                                                paddingLeft: 0
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-paragraph"><span style="opacity: 1;" class="brz-cp-color7">Recusabo sapiente lorem ipsum</span></p>',
+                                                    _id:
+                                                      "refgishsrudwlhqvpbluszdpjdzaminncmdk"
+                                                  }
+                                                }
+                                              ],
+                                              marginTop: 0,
+                                              marginTopSuffix: "px",
+                                              margin: 0,
+                                              _id:
+                                                "puqlcgktersjzdmkfieeffgezhciuawqaiax"
                                             }
-                                        },
-                                        {
-                                            type: "Column",
-                                            value: {
-                                                _styles: [
-                                                    "column"
-                                                ],
-                                                items: [
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--spacer"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Spacer",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "spacer"
-                                                                        ],
-                                                                        height: 350
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Row",
-                                                        value: {
-                                                            _styles: [
-                                                                "row",
-                                                                "hide-row-borders",
-                                                                "padding-0"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Column",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "column"
-                                                                        ],
-                                                                        items: [
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">MERTHYR RAILWAY STATION&nbsp;</a></p><p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">ACCESS IMPROVEMENTS</a></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ]
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-paragraph\"><span style=\"opacity: 1;\" class=\"brz-cp-color7\">Recusabo sapiente lorem ipsum</span></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ],
-                                                                                    marginTop: 0,
-                                                                                    marginTopSuffix: "px",
-                                                                                    margin: 0
-                                                                                }
-                                                                            }
-                                                                        ],
-                                                                        width: 100,
-                                                                        paddingType: "ungrouped",
-                                                                        padding: 15,
-                                                                        paddingSuffix: "px",
-                                                                        paddingTop: 15,
-                                                                        paddingRight: 20,
-                                                                        paddingBottom: 15,
-                                                                        paddingLeft: 20,
-                                                                        bgColorPalette: "color1",
-                                                                        bgColorHex: "",
-                                                                        bgColorOpacity: 0.95,
-                                                                        mobilePaddingRight: 10,
-                                                                        mobilePaddingLeft: 10,
-                                                                        tempBgColorOpacity: 0.95,
-                                                                        borderRadius: 0,
-                                                                        borderTopLeftRadius: 0,
-                                                                        borderTopRightRadius: 0,
-                                                                        borderBottomRightRadius: 0,
-                                                                        borderBottomLeftRadius: 0,
-                                                                        paddingLeftSuffix: "px",
-                                                                        paddingRightSuffix: "px"
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    }
-                                                ],
-                                                width: 33.4,
-                                                bgImageWidth: 1000,
-                                                bgImageHeight: 700,
-                                                bgImageSrc: "ba94518c8f8c24300e17f37494182e06.jpg",
-                                                bgPositionX: 50,
-                                                bgPositionY: 50,
-                                                bgColorOpacity: 0,
-                                                tempBgColorOpacity: 1,
-                                                mobilePaddingRight: 10,
-                                                mobilePaddingLeft: 10,
-                                                margin: 15,
-                                                marginSuffix: "px",
-                                                marginTop: 15,
-                                                marginRight: 15,
-                                                marginBottom: 15,
-                                                marginLeft: 15,
-                                                paddingType: "grouped",
-                                                padding: 0,
-                                                paddingSuffix: "px",
-                                                paddingTop: 0,
-                                                paddingRight: 0,
-                                                paddingBottom: 0,
-                                                paddingLeft: 0
-                                            }
-                                        }
-                                    ]
+                                          }
+                                        ],
+                                        width: 100,
+                                        paddingType: "ungrouped",
+                                        padding: 15,
+                                        paddingSuffix: "px",
+                                        paddingTop: 15,
+                                        paddingRight: 20,
+                                        paddingBottom: 15,
+                                        paddingLeft: 20,
+                                        bgColorPalette: "color1",
+                                        bgColorHex: "",
+                                        bgColorOpacity: 0.95,
+                                        mobilePaddingRight: 15,
+                                        mobilePaddingLeft: 15,
+                                        tempBgColorOpacity: 0.95,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        paddingLeftSuffix: "px",
+                                        paddingRightSuffix: "px",
+                                        _id:
+                                          "sxwwewmyapbrupywyugjyhtoejwlbjcjsdcv",
+                                        mobilePaddingSuffix: "px",
+                                        mobilePaddingTopSuffix: "px",
+                                        mobilePaddingRightSuffix: "px",
+                                        mobilePaddingBottomSuffix: "px",
+                                        mobilePaddingLeftSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingRightSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingLeftSuffix: "px",
+                                        mobilePadding: 15,
+                                        mobilePaddingTop: 15,
+                                        mobilePaddingBottom: 15,
+                                        tempMobilePadding: 15,
+                                        tempMobilePaddingTop: 15,
+                                        tempMobilePaddingRight: 15,
+                                        tempMobilePaddingBottom: 15,
+                                        tempMobilePaddingLeft: 15
+                                      }
+                                    }
+                                  ],
+                                  _id: "rrczaitzuvduxpmpdboznbovvfbbtsqhwkrk"
                                 }
-                            },
-                            {
+                              }
+                            ],
+                            width: 33.3,
+                            bgImageWidth: 700,
+                            bgImageHeight: 1000,
+                            bgImageSrc: "e9a9a676e516e3b6db5bd8dd89a56729.jpg",
+                            bgPositionX: 50,
+                            bgPositionY: 50,
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            mobilePaddingRight: 10,
+                            mobilePaddingLeft: 10,
+                            margin: 15,
+                            marginSuffix: "px",
+                            marginTop: 15,
+                            marginRight: 15,
+                            marginBottom: 15,
+                            marginLeft: 15,
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingSuffix: "px",
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            _id: "llfgskdpqyixskmwevumfqispoydczedzwok"
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        height: 350,
+                                        _id:
+                                          "rvsyctuoywcwunyopnwyqqrschuxsilkqhvw"
+                                      }
+                                    }
+                                  ],
+                                  _id: "rnzlkhydouokhjjjuunadzqzocxfvmgzkens"
+                                }
+                              },
+                              {
                                 type: "Row",
                                 value: {
-                                    _styles: [
-                                        "row",
-                                        "hide-row-borders",
-                                        "padding-0"
-                                    ],
-                                    items: [
-                                        {
-                                            type: "Column",
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
                                             value: {
-                                                _styles: [
-                                                    "column"
-                                                ],
-                                                items: [
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--spacer"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Spacer",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "spacer"
-                                                                        ],
-                                                                        height: 350
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Row",
-                                                        value: {
-                                                            _styles: [
-                                                                "row",
-                                                                "hide-row-borders",
-                                                                "padding-0"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Column",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "column"
-                                                                        ],
-                                                                        items: [
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">NEW GEOPOST DEVELOPMENT, STAR MOWDEN PROPERTIES</a></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ]
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-paragraph\"><span style=\"opacity: 1;\" class=\"brz-cp-color7\">Recusabo sapiente lorem ipsum</span></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ],
-                                                                                    marginTop: 0,
-                                                                                    marginTopSuffix: "px",
-                                                                                    margin: 0
-                                                                                }
-                                                                            }
-                                                                        ],
-                                                                        width: 100,
-                                                                        paddingType: "ungrouped",
-                                                                        padding: 15,
-                                                                        paddingSuffix: "px",
-                                                                        paddingTop: 15,
-                                                                        paddingRight: 20,
-                                                                        paddingBottom: 15,
-                                                                        paddingLeft: 20,
-                                                                        bgColorPalette: "color1",
-                                                                        bgColorHex: "",
-                                                                        bgColorOpacity: 0.95,
-                                                                        mobilePaddingRight: 10,
-                                                                        mobilePaddingLeft: 10,
-                                                                        tempBgColorOpacity: 0.95,
-                                                                        borderRadius: 0,
-                                                                        borderTopLeftRadius: 0,
-                                                                        borderTopRightRadius: 0,
-                                                                        borderBottomRightRadius: 0,
-                                                                        borderBottomLeftRadius: 0,
-                                                                        paddingLeftSuffix: "px",
-                                                                        paddingRightSuffix: "px"
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    }
-                                                ],
-                                                width: 33.3,
-                                                bgImageWidth: 1000,
-                                                bgImageHeight: 700,
-                                                bgImageSrc: "626244cbad0992820e3999c8c0f3dafe.jpg",
-                                                bgPositionX: 50,
-                                                bgPositionY: 50,
-                                                bgColorOpacity: 0,
-                                                tempBgColorOpacity: 1,
-                                                mobilePaddingRight: 10,
-                                                mobilePaddingLeft: 10,
-                                                margin: 15,
-                                                marginSuffix: "px",
-                                                marginTop: 15,
-                                                marginRight: 15,
-                                                marginBottom: 15,
-                                                marginLeft: 15,
-                                                paddingType: "grouped",
-                                                padding: 0,
-                                                paddingSuffix: "px",
-                                                paddingTop: 0,
-                                                paddingRight: 0,
-                                                paddingBottom: 0,
-                                                paddingLeft: 0
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="link--external is-empty brz-cp-color3">GROHMES HOUSING&nbsp;</a></p><p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="brz-cp-color3 link--external is-empty">HEADQUARTERS</a></p>',
+                                                    _id:
+                                                      "isktbudiihdmorlonajclrbuopvhbofqrxmx"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "zpctgyyziiysinlnrnsmniuvzvayzzbutptz"
                                             }
-                                        },
-                                        {
-                                            type: "Column",
+                                          },
+                                          {
+                                            type: "Wrapper",
                                             value: {
-                                                _styles: [
-                                                    "column"
-                                                ],
-                                                items: [
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--spacer"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Spacer",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "spacer"
-                                                                        ],
-                                                                        height: 350
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Row",
-                                                        value: {
-                                                            _styles: [
-                                                                "row",
-                                                                "hide-row-borders",
-                                                                "padding-0"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Column",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "column"
-                                                                        ],
-                                                                        items: [
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">SKYPARK OFFICE BUILDINGS</a></p><p class=\"brz-tp-subtitle\"><span class=\"brz-cp-color3\">&nbsp;</span></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ]
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-paragraph\"><span style=\"opacity: 1;\" class=\"brz-cp-color7\">Recusabo sapiente lorem ipsum</span></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ],
-                                                                                    marginTop: 0,
-                                                                                    marginTopSuffix: "px",
-                                                                                    margin: 0
-                                                                                }
-                                                                            }
-                                                                        ],
-                                                                        width: 100,
-                                                                        paddingType: "ungrouped",
-                                                                        padding: 15,
-                                                                        paddingSuffix: "px",
-                                                                        paddingTop: 15,
-                                                                        paddingRight: 20,
-                                                                        paddingBottom: 15,
-                                                                        paddingLeft: 20,
-                                                                        bgColorPalette: "color1",
-                                                                        bgColorHex: "",
-                                                                        bgColorOpacity: 0.95,
-                                                                        mobilePaddingRight: 10,
-                                                                        mobilePaddingLeft: 10,
-                                                                        tempBgColorOpacity: 0.95,
-                                                                        borderRadius: 0,
-                                                                        borderTopLeftRadius: 0,
-                                                                        borderTopRightRadius: 0,
-                                                                        borderBottomRightRadius: 0,
-                                                                        borderBottomLeftRadius: 0,
-                                                                        paddingLeftSuffix: "px",
-                                                                        paddingRightSuffix: "px"
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    }
-                                                ],
-                                                width: 33.3,
-                                                bgImageWidth: 1000,
-                                                bgImageHeight: 700,
-                                                bgImageSrc: "29e423691db8c496548a5b93c392b891.jpg",
-                                                bgPositionX: 50,
-                                                bgPositionY: 50,
-                                                bgColorOpacity: 0,
-                                                tempBgColorOpacity: 1,
-                                                mobilePaddingRight: 10,
-                                                mobilePaddingLeft: 10,
-                                                margin: 15,
-                                                marginSuffix: "px",
-                                                marginTop: 15,
-                                                marginRight: 15,
-                                                marginBottom: 15,
-                                                marginLeft: 15,
-                                                paddingType: "grouped",
-                                                padding: 0,
-                                                paddingSuffix: "px",
-                                                paddingTop: 0,
-                                                paddingRight: 0,
-                                                paddingBottom: 0,
-                                                paddingLeft: 0
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-paragraph"><span style="opacity: 1;" class="brz-cp-color7">Recusabo sapiente lorem ipsum</span></p>',
+                                                    _id:
+                                                      "nocuisbbtyexvpricynzcetdzebhwuxvlgsl"
+                                                  }
+                                                }
+                                              ],
+                                              marginTop: 0,
+                                              marginTopSuffix: "px",
+                                              margin: 0,
+                                              _id:
+                                                "nvpxwsruiinnrlvkuufsrihkxnrgfktaeqvc"
                                             }
-                                        },
-                                        {
-                                            type: "Column",
-                                            value: {
-                                                _styles: [
-                                                    "column"
-                                                ],
-                                                items: [
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--spacer"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Spacer",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "spacer"
-                                                                        ],
-                                                                        height: 350
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Row",
-                                                        value: {
-                                                            _styles: [
-                                                                "row",
-                                                                "hide-row-borders",
-                                                                "padding-0"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Column",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "column"
-                                                                        ],
-                                                                        items: [
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">GROHMES HOUSING&nbsp;</a></p><p class=\"brz-tp-subtitle\"><a data-href=\"%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22http%3A%2F%2Ftest.themefuse.com%2Fbase-ground%2F%3Fpage_id%3D590%22%2C%22externalBlank%22%3A%22off%22%7D\" class=\"link--external brz-cp-color3\">HEADQUARTERS</a></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ]
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                type: "Wrapper",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "wrapper",
-                                                                                        "wrapper--richText"
-                                                                                    ],
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "RichText",
-                                                                                            value: {
-                                                                                                _styles: [
-                                                                                                    "richText"
-                                                                                                ],
-                                                                                                text: "<p class=\"brz-tp-paragraph\"><span style=\"opacity: 1;\" class=\"brz-cp-color7\">Recusabo sapiente lorem ipsum</span></p>"
-                                                                                            }
-                                                                                        }
-                                                                                    ],
-                                                                                    marginTop: 0,
-                                                                                    marginTopSuffix: "px",
-                                                                                    margin: 0
-                                                                                }
-                                                                            }
-                                                                        ],
-                                                                        width: 100,
-                                                                        paddingType: "ungrouped",
-                                                                        padding: 15,
-                                                                        paddingSuffix: "px",
-                                                                        paddingTop: 15,
-                                                                        paddingRight: 20,
-                                                                        paddingBottom: 15,
-                                                                        paddingLeft: 20,
-                                                                        bgColorPalette: "color1",
-                                                                        bgColorHex: "",
-                                                                        bgColorOpacity: 0.95,
-                                                                        mobilePaddingRight: 10,
-                                                                        mobilePaddingLeft: 10,
-                                                                        tempBgColorOpacity: 0.95,
-                                                                        borderRadius: 0,
-                                                                        borderTopLeftRadius: 0,
-                                                                        borderTopRightRadius: 0,
-                                                                        borderBottomRightRadius: 0,
-                                                                        borderBottomLeftRadius: 0,
-                                                                        paddingLeftSuffix: "px",
-                                                                        paddingRightSuffix: "px"
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    }
-                                                ],
-                                                width: 33.4,
-                                                bgImageWidth: 1000,
-                                                bgImageHeight: 700,
-                                                bgImageSrc: "633ccca68b400c1203b2f4e93eb4cda6.jpg",
-                                                bgPositionX: 83,
-                                                bgPositionY: 48,
-                                                bgColorOpacity: 0,
-                                                tempBgColorOpacity: 1,
-                                                mobilePaddingRight: 10,
-                                                mobilePaddingLeft: 10,
-                                                margin: 15,
-                                                marginSuffix: "px",
-                                                marginTop: 15,
-                                                marginRight: 15,
-                                                marginBottom: 15,
-                                                marginLeft: 15,
-                                                paddingType: "grouped",
-                                                padding: 0,
-                                                paddingSuffix: "px",
-                                                paddingTop: 0,
-                                                paddingRight: 0,
-                                                paddingBottom: 0,
-                                                paddingLeft: 0
-                                            }
-                                        }
-                                    ]
+                                          }
+                                        ],
+                                        width: 100,
+                                        paddingType: "ungrouped",
+                                        padding: 15,
+                                        paddingSuffix: "px",
+                                        paddingTop: 15,
+                                        paddingRight: 20,
+                                        paddingBottom: 15,
+                                        paddingLeft: 20,
+                                        bgColorPalette: "color1",
+                                        bgColorHex: "",
+                                        bgColorOpacity: 0.95,
+                                        mobilePaddingRight: 15,
+                                        mobilePaddingLeft: 15,
+                                        tempBgColorOpacity: 0.95,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        paddingLeftSuffix: "px",
+                                        paddingRightSuffix: "px",
+                                        _id:
+                                          "wzskklrltqthyxdiyneabdbzyyrgvzdifugj",
+                                        className: "",
+                                        borderStyle: "solid",
+                                        tempBorderStyle: "solid",
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
+                                        borderWidthType: "grouped",
+                                        borderWidth: 0,
+                                        borderTopWidth: 0,
+                                        borderRightWidth: 0,
+                                        borderBottomWidth: 0,
+                                        borderLeftWidth: 0,
+                                        tempBorderWidth: 4,
+                                        tempBorderTopWidth: 4,
+                                        tempBorderRightWidth: 4,
+                                        tempBorderBottomWidth: 4,
+                                        tempBorderLeftWidth: 4,
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
+                                        borderRadiusType: "grouped",
+                                        tempBorderRadius: 0,
+                                        tempBorderTopLeftRadius: 0,
+                                        tempBorderTopRightRadius: 0,
+                                        tempBorderBottomRightRadius: 0,
+                                        tempBorderBottomLeftRadius: 0,
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
+                                        bgColorType: "solid",
+                                        gradientActivePointer: "startPointer",
+                                        gradientStartPointer: 0,
+                                        gradientFinishPointer: 100,
+                                        gradientType: "linear",
+                                        gradientLinearDegree: 90,
+                                        gradientRadialDegree: 90,
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
+                                        tempBgColorPalette: "",
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
+                                        gradientColorHex: "#009900",
+                                        gradientColorOpacity: 1,
+                                        gradientColorPalette: "",
+                                        tempGradientColorOpacity: 1,
+                                        tempGradientColorPalette: "",
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
+                                        borderColorHex: "#66738d",
+                                        borderColorOpacity: 0,
+                                        borderColorPalette: "",
+                                        tempBorderColorOpacity: 1,
+                                        tempBorderColorPalette: "",
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
+                                        boxShadow: "",
+                                        tempBoxShadow: "on",
+                                        boxShadowColorHex: "#000000",
+                                        boxShadowColorOpacity: 1,
+                                        boxShadowColorPalette: "",
+                                        tempBoxShadowColorOpacity: 1,
+                                        tempBoxShadowColorPalette: "",
+                                        boxShadowBlur: 0,
+                                        boxShadowSpread: 0,
+                                        boxShadowVertical: 0,
+                                        boxShadowHorizontal: 0,
+                                        tempBoxShadowBlur: 4,
+                                        tempBoxShadowSpread: 0,
+                                        tempBoxShadowVertical: 2,
+                                        tempBoxShadowHorizontal: 1,
+                                        hoverBoxShadow: null,
+                                        tempHoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
+                                        hoverTransition: 50,
+                                        verticalAlign: "top",
+                                        tempPaddingType: "ungrouped",
+                                        tempPadding: 15,
+                                        tempPaddingTop: 5,
+                                        tempPaddingRight: 15,
+                                        tempPaddingBottom: 5,
+                                        tempPaddingLeft: 15,
+                                        paddingTopSuffix: "px",
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        hoverPaddingType: null,
+                                        tempHoverPaddingType: null,
+                                        hoverPadding: null,
+                                        hoverPaddingTop: null,
+                                        hoverPaddingRight: null,
+                                        hoverPaddingBottom: null,
+                                        hoverPaddingLeft: null,
+                                        tempHoverPadding: null,
+                                        tempHoverPaddingTop: null,
+                                        tempHoverPaddingRight: null,
+                                        tempHoverPaddingBottom: null,
+                                        tempHoverPaddingLeft: null,
+                                        hoverPaddingSuffix: null,
+                                        hoverPaddingTopSuffix: null,
+                                        hoverPaddingRightSuffix: null,
+                                        hoverPaddingBottomSuffix: null,
+                                        hoverPaddingLeftSuffix: null,
+                                        tempHoverPaddingSuffix: null,
+                                        tempHoverPaddingTopSuffix: null,
+                                        tempHoverPaddingRightSuffix: null,
+                                        tempHoverPaddingBottomSuffix: null,
+                                        tempHoverPaddingLeftSuffix: null,
+                                        marginType: "grouped",
+                                        margin: 0,
+                                        marginTop: 0,
+                                        marginRight: 0,
+                                        marginBottom: 0,
+                                        marginLeft: 0,
+                                        marginSuffix: "px",
+                                        marginTopSuffix: "px",
+                                        marginRightSuffix: "px",
+                                        marginBottomSuffix: "px",
+                                        marginLeftSuffix: "px",
+                                        customClassName: "",
+                                        customCSS: "",
+                                        customID: "",
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletBoxShadow: null,
+                                        tempTabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
+                                        tabletVerticalAlign: null,
+                                        tabletPaddingType: "ungrouped",
+                                        tempTabletPaddingType: "ungrouped",
+                                        tabletPadding: 15,
+                                        tabletPaddingTop: 5,
+                                        tabletPaddingRight: 15,
+                                        tabletPaddingBottom: 5,
+                                        tabletPaddingLeft: 15,
+                                        tempTabletPadding: 15,
+                                        tempTabletPaddingTop: 5,
+                                        tempTabletPaddingRight: 15,
+                                        tempTabletPaddingBottom: 5,
+                                        tempTabletPaddingLeft: 15,
+                                        tabletPaddingSuffix: "px",
+                                        tabletPaddingTopSuffix: "px",
+                                        tabletPaddingRightSuffix: "px",
+                                        tabletPaddingBottomSuffix: "px",
+                                        tabletPaddingLeftSuffix: "px",
+                                        tempTabletPaddingSuffix: "px",
+                                        tempTabletPaddingTopSuffix: "px",
+                                        tempTabletPaddingRightSuffix: "px",
+                                        tempTabletPaddingBottomSuffix: "px",
+                                        tempTabletPaddingLeftSuffix: "px",
+                                        tabletMarginType: "ungrouped",
+                                        tabletMargin: 0,
+                                        tabletMarginTop: 0,
+                                        tabletMarginRight: 0,
+                                        tabletMarginBottom: 0,
+                                        tabletMarginLeft: 0,
+                                        tabletMarginSuffix: "px",
+                                        tabletMarginTopSuffix: "px",
+                                        tabletMarginRightSuffix: "px",
+                                        tabletMarginBottomSuffix: "px",
+                                        tabletMarginLeftSuffix: "px",
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileBoxShadow: null,
+                                        tempMobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null,
+                                        mobileVerticalAlign: null,
+                                        mobilePaddingType: "grouped",
+                                        tempMobilePaddingType: "grouped",
+                                        mobilePadding: 15,
+                                        mobilePaddingTop: 15,
+                                        mobilePaddingBottom: 15,
+                                        tempMobilePadding: 15,
+                                        tempMobilePaddingTop: 15,
+                                        tempMobilePaddingRight: 15,
+                                        tempMobilePaddingBottom: 15,
+                                        tempMobilePaddingLeft: 15,
+                                        mobilePaddingSuffix: "px",
+                                        mobilePaddingTopSuffix: "px",
+                                        mobilePaddingRightSuffix: "px",
+                                        mobilePaddingBottomSuffix: "px",
+                                        mobilePaddingLeftSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingRightSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingLeftSuffix: "px",
+                                        mobileMarginType: "ungrouped",
+                                        mobileMargin: 10,
+                                        mobileMarginTop: 10,
+                                        mobileMarginRight: 0,
+                                        mobileMarginBottom: 10,
+                                        mobileMarginLeft: 0,
+                                        mobileMarginSuffix: "px",
+                                        mobileMarginTopSuffix: "px",
+                                        mobileMarginRightSuffix: "px",
+                                        mobileMarginBottomSuffix: "px",
+                                        mobileMarginLeftSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "snhvapctvfcobrduyriiwjddwjcwaseoashl"
                                 }
-                            }
-                        ],
-                        containerSize: 100,
-                        paddingType: "ungrouped",
-                        paddingTop: 130,
-                        paddingBottom: 130,
-                        padding: 75
+                              }
+                            ],
+                            width: 33.4,
+                            bgImageWidth: 1000,
+                            bgImageHeight: 700,
+                            bgImageSrc: "6362603c695693ccfdad596c26052366.jpg",
+                            bgPositionX: 52,
+                            bgPositionY: 55,
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            mobilePaddingRight: 10,
+                            mobilePaddingLeft: 10,
+                            margin: 15,
+                            marginSuffix: "px",
+                            marginTop: 15,
+                            marginRight: 15,
+                            marginBottom: 15,
+                            marginLeft: 15,
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingSuffix: "px",
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            _id: "bajwnmhhrldqcpytyzfwraqixxnncnvylhqt"
+                          }
+                        }
+                      ],
+                      _id: "abimtqgeiiwivedzmmgdvlionklutnaxqfco"
                     }
-                }
-            ],
-            _thumbnailSrc: 382896,
-            _thumbnailWidth: 600,
-            _thumbnailHeight: 587,
-            _thumbnailTime: 1575295094803
+                  },
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        height: 350,
+                                        _id:
+                                          "pvoebcgjlmxfumgqpnuekhympoussyxccucn"
+                                      }
+                                    }
+                                  ],
+                                  _id: "clxhkeivfbbweraeoqpqjvlxgkjzmftzysip"
+                                }
+                              },
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="brz-cp-color3 link--external is-empty">HARBOUR FAST FERRY SERVICE PONTOON</a></p>',
+                                                    _id:
+                                                      "khmamszjihfvlasqwnlusgoddbzygmazxspv"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "arzbjildsjmcbhsvxkjqfmtylvcmamzetsmm"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-paragraph"><span style="opacity: 1;" class="brz-cp-color7">Recusabo sapiente lorem ipsum</span></p>',
+                                                    _id:
+                                                      "gfsbuuxyrrbebqubnafmqctwjpmzmjwtlekc"
+                                                  }
+                                                }
+                                              ],
+                                              marginTop: 0,
+                                              marginTopSuffix: "px",
+                                              margin: 0,
+                                              _id:
+                                                "byelbdubgjwdgwnofjlehutygmlxcaqtouhr"
+                                            }
+                                          }
+                                        ],
+                                        width: 100,
+                                        paddingType: "ungrouped",
+                                        padding: 15,
+                                        paddingSuffix: "px",
+                                        paddingTop: 15,
+                                        paddingRight: 20,
+                                        paddingBottom: 15,
+                                        paddingLeft: 20,
+                                        bgColorPalette: "color1",
+                                        bgColorHex: "",
+                                        bgColorOpacity: 0.95,
+                                        mobilePaddingRight: 15,
+                                        mobilePaddingLeft: 15,
+                                        tempBgColorOpacity: 0.95,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        paddingLeftSuffix: "px",
+                                        paddingRightSuffix: "px",
+                                        _id:
+                                          "avmouxyskutkolafwoxibqihhitxzglwudul",
+                                        className: "",
+                                        borderStyle: "solid",
+                                        tempBorderStyle: "solid",
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
+                                        borderWidthType: "grouped",
+                                        borderWidth: 0,
+                                        borderTopWidth: 0,
+                                        borderRightWidth: 0,
+                                        borderBottomWidth: 0,
+                                        borderLeftWidth: 0,
+                                        tempBorderWidth: 4,
+                                        tempBorderTopWidth: 4,
+                                        tempBorderRightWidth: 4,
+                                        tempBorderBottomWidth: 4,
+                                        tempBorderLeftWidth: 4,
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
+                                        borderRadiusType: "grouped",
+                                        tempBorderRadius: 0,
+                                        tempBorderTopLeftRadius: 0,
+                                        tempBorderTopRightRadius: 0,
+                                        tempBorderBottomRightRadius: 0,
+                                        tempBorderBottomLeftRadius: 0,
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
+                                        bgColorType: "solid",
+                                        gradientActivePointer: "startPointer",
+                                        gradientStartPointer: 0,
+                                        gradientFinishPointer: 100,
+                                        gradientType: "linear",
+                                        gradientLinearDegree: 90,
+                                        gradientRadialDegree: 90,
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
+                                        tempBgColorPalette: "",
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
+                                        gradientColorHex: "#009900",
+                                        gradientColorOpacity: 1,
+                                        gradientColorPalette: "",
+                                        tempGradientColorOpacity: 1,
+                                        tempGradientColorPalette: "",
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
+                                        borderColorHex: "#66738d",
+                                        borderColorOpacity: 0,
+                                        borderColorPalette: "",
+                                        tempBorderColorOpacity: 1,
+                                        tempBorderColorPalette: "",
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
+                                        boxShadow: "",
+                                        tempBoxShadow: "on",
+                                        boxShadowColorHex: "#000000",
+                                        boxShadowColorOpacity: 1,
+                                        boxShadowColorPalette: "",
+                                        tempBoxShadowColorOpacity: 1,
+                                        tempBoxShadowColorPalette: "",
+                                        boxShadowBlur: 0,
+                                        boxShadowSpread: 0,
+                                        boxShadowVertical: 0,
+                                        boxShadowHorizontal: 0,
+                                        tempBoxShadowBlur: 4,
+                                        tempBoxShadowSpread: 0,
+                                        tempBoxShadowVertical: 2,
+                                        tempBoxShadowHorizontal: 1,
+                                        hoverBoxShadow: null,
+                                        tempHoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
+                                        hoverTransition: 50,
+                                        verticalAlign: "top",
+                                        tempPaddingType: "ungrouped",
+                                        tempPadding: 15,
+                                        tempPaddingTop: 5,
+                                        tempPaddingRight: 15,
+                                        tempPaddingBottom: 5,
+                                        tempPaddingLeft: 15,
+                                        paddingTopSuffix: "px",
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        hoverPaddingType: null,
+                                        tempHoverPaddingType: null,
+                                        hoverPadding: null,
+                                        hoverPaddingTop: null,
+                                        hoverPaddingRight: null,
+                                        hoverPaddingBottom: null,
+                                        hoverPaddingLeft: null,
+                                        tempHoverPadding: null,
+                                        tempHoverPaddingTop: null,
+                                        tempHoverPaddingRight: null,
+                                        tempHoverPaddingBottom: null,
+                                        tempHoverPaddingLeft: null,
+                                        hoverPaddingSuffix: null,
+                                        hoverPaddingTopSuffix: null,
+                                        hoverPaddingRightSuffix: null,
+                                        hoverPaddingBottomSuffix: null,
+                                        hoverPaddingLeftSuffix: null,
+                                        tempHoverPaddingSuffix: null,
+                                        tempHoverPaddingTopSuffix: null,
+                                        tempHoverPaddingRightSuffix: null,
+                                        tempHoverPaddingBottomSuffix: null,
+                                        tempHoverPaddingLeftSuffix: null,
+                                        marginType: "grouped",
+                                        margin: 0,
+                                        marginTop: 0,
+                                        marginRight: 0,
+                                        marginBottom: 0,
+                                        marginLeft: 0,
+                                        marginSuffix: "px",
+                                        marginTopSuffix: "px",
+                                        marginRightSuffix: "px",
+                                        marginBottomSuffix: "px",
+                                        marginLeftSuffix: "px",
+                                        customClassName: "",
+                                        customCSS: "",
+                                        customID: "",
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletBoxShadow: null,
+                                        tempTabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
+                                        tabletVerticalAlign: null,
+                                        tabletPaddingType: "ungrouped",
+                                        tempTabletPaddingType: "ungrouped",
+                                        tabletPadding: 15,
+                                        tabletPaddingTop: 5,
+                                        tabletPaddingRight: 15,
+                                        tabletPaddingBottom: 5,
+                                        tabletPaddingLeft: 15,
+                                        tempTabletPadding: 15,
+                                        tempTabletPaddingTop: 5,
+                                        tempTabletPaddingRight: 15,
+                                        tempTabletPaddingBottom: 5,
+                                        tempTabletPaddingLeft: 15,
+                                        tabletPaddingSuffix: "px",
+                                        tabletPaddingTopSuffix: "px",
+                                        tabletPaddingRightSuffix: "px",
+                                        tabletPaddingBottomSuffix: "px",
+                                        tabletPaddingLeftSuffix: "px",
+                                        tempTabletPaddingSuffix: "px",
+                                        tempTabletPaddingTopSuffix: "px",
+                                        tempTabletPaddingRightSuffix: "px",
+                                        tempTabletPaddingBottomSuffix: "px",
+                                        tempTabletPaddingLeftSuffix: "px",
+                                        tabletMarginType: "ungrouped",
+                                        tabletMargin: 0,
+                                        tabletMarginTop: 0,
+                                        tabletMarginRight: 0,
+                                        tabletMarginBottom: 0,
+                                        tabletMarginLeft: 0,
+                                        tabletMarginSuffix: "px",
+                                        tabletMarginTopSuffix: "px",
+                                        tabletMarginRightSuffix: "px",
+                                        tabletMarginBottomSuffix: "px",
+                                        tabletMarginLeftSuffix: "px",
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileBoxShadow: null,
+                                        tempMobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null,
+                                        mobileVerticalAlign: null,
+                                        mobilePaddingType: "grouped",
+                                        tempMobilePaddingType: "grouped",
+                                        mobilePadding: 15,
+                                        mobilePaddingTop: 15,
+                                        mobilePaddingBottom: 15,
+                                        tempMobilePadding: 15,
+                                        tempMobilePaddingTop: 15,
+                                        tempMobilePaddingRight: 15,
+                                        tempMobilePaddingBottom: 15,
+                                        tempMobilePaddingLeft: 15,
+                                        mobilePaddingSuffix: "px",
+                                        mobilePaddingTopSuffix: "px",
+                                        mobilePaddingRightSuffix: "px",
+                                        mobilePaddingBottomSuffix: "px",
+                                        mobilePaddingLeftSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingRightSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingLeftSuffix: "px",
+                                        mobileMarginType: "ungrouped",
+                                        mobileMargin: 10,
+                                        mobileMarginTop: 10,
+                                        mobileMarginRight: 0,
+                                        mobileMarginBottom: 10,
+                                        mobileMarginLeft: 0,
+                                        mobileMarginSuffix: "px",
+                                        mobileMarginTopSuffix: "px",
+                                        mobileMarginRightSuffix: "px",
+                                        mobileMarginBottomSuffix: "px",
+                                        mobileMarginLeftSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "qipyuougpyonwvbrateidnuverequbgqvumf"
+                                }
+                              }
+                            ],
+                            width: 33.3,
+                            bgImageWidth: 1000,
+                            bgImageHeight: 700,
+                            bgImageSrc: "9c1738266a5c2fa1ba311ede3871ab08.jpg",
+                            bgPositionX: 50,
+                            bgPositionY: 50,
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            mobilePaddingRight: 10,
+                            mobilePaddingLeft: 10,
+                            margin: 15,
+                            marginSuffix: "px",
+                            marginTop: 15,
+                            marginRight: 15,
+                            marginBottom: 15,
+                            marginLeft: 15,
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingSuffix: "px",
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            _id: "jlvrmetbjcgbhfiphhkvxccctcqqqjhobfif"
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        height: 350,
+                                        _id:
+                                          "ffhtbfcoktqixrievmgelvxqvaqwvebtmkjv"
+                                      }
+                                    }
+                                  ],
+                                  _id: "otreobxdxaujfdlhgfmvzdjqmqbplmkvwgom"
+                                }
+                              },
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="brz-cp-color3 link--external is-empty">A45 HIGHWAY, CHEST ROAD &amp; B32 HIGHWAY REPAIRS</a></p>',
+                                                    _id:
+                                                      "ugvaiznyfqzwcvurrtrnoyfscqpwsvbbltnk"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "cpywvgdwmswavjwojwyacuwxikuufnxniwha"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-paragraph"><span style="opacity: 1;" class="brz-cp-color7">Recusabo sapiente lorem ipsum</span></p>',
+                                                    _id:
+                                                      "srgplyvyfduqlvvwwywzyzugvsrzqrxuvryz"
+                                                  }
+                                                }
+                                              ],
+                                              marginTop: 0,
+                                              marginTopSuffix: "px",
+                                              margin: 0,
+                                              _id:
+                                                "wnbfrjfzrrsmwpznrdeorutespaufnuwxayn"
+                                            }
+                                          }
+                                        ],
+                                        width: 100,
+                                        paddingType: "ungrouped",
+                                        padding: 15,
+                                        paddingSuffix: "px",
+                                        paddingTop: 15,
+                                        paddingRight: 20,
+                                        paddingBottom: 15,
+                                        paddingLeft: 20,
+                                        bgColorPalette: "color1",
+                                        bgColorHex: "",
+                                        bgColorOpacity: 0.95,
+                                        mobilePaddingRight: 15,
+                                        mobilePaddingLeft: 15,
+                                        tempBgColorOpacity: 0.95,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        paddingLeftSuffix: "px",
+                                        paddingRightSuffix: "px",
+                                        _id:
+                                          "cgycbjzgnebcwgjuxdusgjjeqhoyxfjzuaub",
+                                        className: "",
+                                        borderStyle: "solid",
+                                        tempBorderStyle: "solid",
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
+                                        borderWidthType: "grouped",
+                                        borderWidth: 0,
+                                        borderTopWidth: 0,
+                                        borderRightWidth: 0,
+                                        borderBottomWidth: 0,
+                                        borderLeftWidth: 0,
+                                        tempBorderWidth: 4,
+                                        tempBorderTopWidth: 4,
+                                        tempBorderRightWidth: 4,
+                                        tempBorderBottomWidth: 4,
+                                        tempBorderLeftWidth: 4,
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
+                                        borderRadiusType: "grouped",
+                                        tempBorderRadius: 0,
+                                        tempBorderTopLeftRadius: 0,
+                                        tempBorderTopRightRadius: 0,
+                                        tempBorderBottomRightRadius: 0,
+                                        tempBorderBottomLeftRadius: 0,
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
+                                        bgColorType: "solid",
+                                        gradientActivePointer: "startPointer",
+                                        gradientStartPointer: 0,
+                                        gradientFinishPointer: 100,
+                                        gradientType: "linear",
+                                        gradientLinearDegree: 90,
+                                        gradientRadialDegree: 90,
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
+                                        tempBgColorPalette: "",
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
+                                        gradientColorHex: "#009900",
+                                        gradientColorOpacity: 1,
+                                        gradientColorPalette: "",
+                                        tempGradientColorOpacity: 1,
+                                        tempGradientColorPalette: "",
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
+                                        borderColorHex: "#66738d",
+                                        borderColorOpacity: 0,
+                                        borderColorPalette: "",
+                                        tempBorderColorOpacity: 1,
+                                        tempBorderColorPalette: "",
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
+                                        boxShadow: "",
+                                        tempBoxShadow: "on",
+                                        boxShadowColorHex: "#000000",
+                                        boxShadowColorOpacity: 1,
+                                        boxShadowColorPalette: "",
+                                        tempBoxShadowColorOpacity: 1,
+                                        tempBoxShadowColorPalette: "",
+                                        boxShadowBlur: 0,
+                                        boxShadowSpread: 0,
+                                        boxShadowVertical: 0,
+                                        boxShadowHorizontal: 0,
+                                        tempBoxShadowBlur: 4,
+                                        tempBoxShadowSpread: 0,
+                                        tempBoxShadowVertical: 2,
+                                        tempBoxShadowHorizontal: 1,
+                                        hoverBoxShadow: null,
+                                        tempHoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
+                                        hoverTransition: 50,
+                                        verticalAlign: "top",
+                                        tempPaddingType: "ungrouped",
+                                        tempPadding: 15,
+                                        tempPaddingTop: 5,
+                                        tempPaddingRight: 15,
+                                        tempPaddingBottom: 5,
+                                        tempPaddingLeft: 15,
+                                        paddingTopSuffix: "px",
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        hoverPaddingType: null,
+                                        tempHoverPaddingType: null,
+                                        hoverPadding: null,
+                                        hoverPaddingTop: null,
+                                        hoverPaddingRight: null,
+                                        hoverPaddingBottom: null,
+                                        hoverPaddingLeft: null,
+                                        tempHoverPadding: null,
+                                        tempHoverPaddingTop: null,
+                                        tempHoverPaddingRight: null,
+                                        tempHoverPaddingBottom: null,
+                                        tempHoverPaddingLeft: null,
+                                        hoverPaddingSuffix: null,
+                                        hoverPaddingTopSuffix: null,
+                                        hoverPaddingRightSuffix: null,
+                                        hoverPaddingBottomSuffix: null,
+                                        hoverPaddingLeftSuffix: null,
+                                        tempHoverPaddingSuffix: null,
+                                        tempHoverPaddingTopSuffix: null,
+                                        tempHoverPaddingRightSuffix: null,
+                                        tempHoverPaddingBottomSuffix: null,
+                                        tempHoverPaddingLeftSuffix: null,
+                                        marginType: "grouped",
+                                        margin: 0,
+                                        marginTop: 0,
+                                        marginRight: 0,
+                                        marginBottom: 0,
+                                        marginLeft: 0,
+                                        marginSuffix: "px",
+                                        marginTopSuffix: "px",
+                                        marginRightSuffix: "px",
+                                        marginBottomSuffix: "px",
+                                        marginLeftSuffix: "px",
+                                        customClassName: "",
+                                        customCSS: "",
+                                        customID: "",
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletBoxShadow: null,
+                                        tempTabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
+                                        tabletVerticalAlign: null,
+                                        tabletPaddingType: "ungrouped",
+                                        tempTabletPaddingType: "ungrouped",
+                                        tabletPadding: 15,
+                                        tabletPaddingTop: 5,
+                                        tabletPaddingRight: 15,
+                                        tabletPaddingBottom: 5,
+                                        tabletPaddingLeft: 15,
+                                        tempTabletPadding: 15,
+                                        tempTabletPaddingTop: 5,
+                                        tempTabletPaddingRight: 15,
+                                        tempTabletPaddingBottom: 5,
+                                        tempTabletPaddingLeft: 15,
+                                        tabletPaddingSuffix: "px",
+                                        tabletPaddingTopSuffix: "px",
+                                        tabletPaddingRightSuffix: "px",
+                                        tabletPaddingBottomSuffix: "px",
+                                        tabletPaddingLeftSuffix: "px",
+                                        tempTabletPaddingSuffix: "px",
+                                        tempTabletPaddingTopSuffix: "px",
+                                        tempTabletPaddingRightSuffix: "px",
+                                        tempTabletPaddingBottomSuffix: "px",
+                                        tempTabletPaddingLeftSuffix: "px",
+                                        tabletMarginType: "ungrouped",
+                                        tabletMargin: 0,
+                                        tabletMarginTop: 0,
+                                        tabletMarginRight: 0,
+                                        tabletMarginBottom: 0,
+                                        tabletMarginLeft: 0,
+                                        tabletMarginSuffix: "px",
+                                        tabletMarginTopSuffix: "px",
+                                        tabletMarginRightSuffix: "px",
+                                        tabletMarginBottomSuffix: "px",
+                                        tabletMarginLeftSuffix: "px",
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileBoxShadow: null,
+                                        tempMobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null,
+                                        mobileVerticalAlign: null,
+                                        mobilePaddingType: "grouped",
+                                        tempMobilePaddingType: "grouped",
+                                        mobilePadding: 15,
+                                        mobilePaddingTop: 15,
+                                        mobilePaddingBottom: 15,
+                                        tempMobilePadding: 15,
+                                        tempMobilePaddingTop: 15,
+                                        tempMobilePaddingRight: 15,
+                                        tempMobilePaddingBottom: 15,
+                                        tempMobilePaddingLeft: 15,
+                                        mobilePaddingSuffix: "px",
+                                        mobilePaddingTopSuffix: "px",
+                                        mobilePaddingRightSuffix: "px",
+                                        mobilePaddingBottomSuffix: "px",
+                                        mobilePaddingLeftSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingRightSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingLeftSuffix: "px",
+                                        mobileMarginType: "ungrouped",
+                                        mobileMargin: 10,
+                                        mobileMarginTop: 10,
+                                        mobileMarginRight: 0,
+                                        mobileMarginBottom: 10,
+                                        mobileMarginLeft: 0,
+                                        mobileMarginSuffix: "px",
+                                        mobileMarginTopSuffix: "px",
+                                        mobileMarginRightSuffix: "px",
+                                        mobileMarginBottomSuffix: "px",
+                                        mobileMarginLeftSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "bfidtfobreaoffybwmcmuyznyttuavhmkzxf"
+                                }
+                              }
+                            ],
+                            width: 33.3,
+                            bgImageWidth: 1000,
+                            bgImageHeight: 700,
+                            bgImageSrc: "79437c0243b90bd8d03efb25104bab79.jpg",
+                            bgPositionX: 50,
+                            bgPositionY: 50,
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            mobilePaddingRight: 10,
+                            mobilePaddingLeft: 10,
+                            margin: 15,
+                            marginSuffix: "px",
+                            marginTop: 15,
+                            marginRight: 15,
+                            marginBottom: 15,
+                            marginLeft: 15,
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingSuffix: "px",
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            _id: "cbopinqwqfggtuspygdkczldamspzkwgrbyr"
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        height: 350,
+                                        _id:
+                                          "nnfokktafoowwhxaytiqfgslrulhdxtaqvnd"
+                                      }
+                                    }
+                                  ],
+                                  _id: "kjyapcbvlcfewpwcbxhraurkvogkbnklpors"
+                                }
+                              },
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="link--external is-empty brz-cp-color3">MERTHYR RAILWAY STATION&nbsp;</a></p><p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="brz-cp-color3 link--external is-empty">ACCESS IMPROVEMENTS</a></p>',
+                                                    _id:
+                                                      "igtnaqdvktxlxdeqlikwnyykepbtqvxppbgw"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "hxixhlqpftikmtbzqghazswptgbzlqtfiadr"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-paragraph"><span style="opacity: 1;" class="brz-cp-color7">Recusabo sapiente lorem ipsum</span></p>',
+                                                    _id:
+                                                      "zldgwyhaibfyqzkvzltfwrvortgdbzzpyuew"
+                                                  }
+                                                }
+                                              ],
+                                              marginTop: 0,
+                                              marginTopSuffix: "px",
+                                              margin: 0,
+                                              _id:
+                                                "quutjcykyhrsfskkdvhiifmpbiiwgjudzuat"
+                                            }
+                                          }
+                                        ],
+                                        width: 100,
+                                        paddingType: "ungrouped",
+                                        padding: 15,
+                                        paddingSuffix: "px",
+                                        paddingTop: 15,
+                                        paddingRight: 20,
+                                        paddingBottom: 15,
+                                        paddingLeft: 20,
+                                        bgColorPalette: "color1",
+                                        bgColorHex: "",
+                                        bgColorOpacity: 0.95,
+                                        mobilePaddingRight: 15,
+                                        mobilePaddingLeft: 15,
+                                        tempBgColorOpacity: 0.95,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        paddingLeftSuffix: "px",
+                                        paddingRightSuffix: "px",
+                                        _id:
+                                          "xrzcgktxuohayzzxhnvbjdijktsqefhnhijn",
+                                        className: "",
+                                        borderStyle: "solid",
+                                        tempBorderStyle: "solid",
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
+                                        borderWidthType: "grouped",
+                                        borderWidth: 0,
+                                        borderTopWidth: 0,
+                                        borderRightWidth: 0,
+                                        borderBottomWidth: 0,
+                                        borderLeftWidth: 0,
+                                        tempBorderWidth: 4,
+                                        tempBorderTopWidth: 4,
+                                        tempBorderRightWidth: 4,
+                                        tempBorderBottomWidth: 4,
+                                        tempBorderLeftWidth: 4,
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
+                                        borderRadiusType: "grouped",
+                                        tempBorderRadius: 0,
+                                        tempBorderTopLeftRadius: 0,
+                                        tempBorderTopRightRadius: 0,
+                                        tempBorderBottomRightRadius: 0,
+                                        tempBorderBottomLeftRadius: 0,
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
+                                        bgColorType: "solid",
+                                        gradientActivePointer: "startPointer",
+                                        gradientStartPointer: 0,
+                                        gradientFinishPointer: 100,
+                                        gradientType: "linear",
+                                        gradientLinearDegree: 90,
+                                        gradientRadialDegree: 90,
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
+                                        tempBgColorPalette: "",
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
+                                        gradientColorHex: "#009900",
+                                        gradientColorOpacity: 1,
+                                        gradientColorPalette: "",
+                                        tempGradientColorOpacity: 1,
+                                        tempGradientColorPalette: "",
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
+                                        borderColorHex: "#66738d",
+                                        borderColorOpacity: 0,
+                                        borderColorPalette: "",
+                                        tempBorderColorOpacity: 1,
+                                        tempBorderColorPalette: "",
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
+                                        boxShadow: "",
+                                        tempBoxShadow: "on",
+                                        boxShadowColorHex: "#000000",
+                                        boxShadowColorOpacity: 1,
+                                        boxShadowColorPalette: "",
+                                        tempBoxShadowColorOpacity: 1,
+                                        tempBoxShadowColorPalette: "",
+                                        boxShadowBlur: 0,
+                                        boxShadowSpread: 0,
+                                        boxShadowVertical: 0,
+                                        boxShadowHorizontal: 0,
+                                        tempBoxShadowBlur: 4,
+                                        tempBoxShadowSpread: 0,
+                                        tempBoxShadowVertical: 2,
+                                        tempBoxShadowHorizontal: 1,
+                                        hoverBoxShadow: null,
+                                        tempHoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
+                                        hoverTransition: 50,
+                                        verticalAlign: "top",
+                                        tempPaddingType: "ungrouped",
+                                        tempPadding: 15,
+                                        tempPaddingTop: 5,
+                                        tempPaddingRight: 15,
+                                        tempPaddingBottom: 5,
+                                        tempPaddingLeft: 15,
+                                        paddingTopSuffix: "px",
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        hoverPaddingType: null,
+                                        tempHoverPaddingType: null,
+                                        hoverPadding: null,
+                                        hoverPaddingTop: null,
+                                        hoverPaddingRight: null,
+                                        hoverPaddingBottom: null,
+                                        hoverPaddingLeft: null,
+                                        tempHoverPadding: null,
+                                        tempHoverPaddingTop: null,
+                                        tempHoverPaddingRight: null,
+                                        tempHoverPaddingBottom: null,
+                                        tempHoverPaddingLeft: null,
+                                        hoverPaddingSuffix: null,
+                                        hoverPaddingTopSuffix: null,
+                                        hoverPaddingRightSuffix: null,
+                                        hoverPaddingBottomSuffix: null,
+                                        hoverPaddingLeftSuffix: null,
+                                        tempHoverPaddingSuffix: null,
+                                        tempHoverPaddingTopSuffix: null,
+                                        tempHoverPaddingRightSuffix: null,
+                                        tempHoverPaddingBottomSuffix: null,
+                                        tempHoverPaddingLeftSuffix: null,
+                                        marginType: "grouped",
+                                        margin: 0,
+                                        marginTop: 0,
+                                        marginRight: 0,
+                                        marginBottom: 0,
+                                        marginLeft: 0,
+                                        marginSuffix: "px",
+                                        marginTopSuffix: "px",
+                                        marginRightSuffix: "px",
+                                        marginBottomSuffix: "px",
+                                        marginLeftSuffix: "px",
+                                        customClassName: "",
+                                        customCSS: "",
+                                        customID: "",
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletBoxShadow: null,
+                                        tempTabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
+                                        tabletVerticalAlign: null,
+                                        tabletPaddingType: "ungrouped",
+                                        tempTabletPaddingType: "ungrouped",
+                                        tabletPadding: 15,
+                                        tabletPaddingTop: 5,
+                                        tabletPaddingRight: 15,
+                                        tabletPaddingBottom: 5,
+                                        tabletPaddingLeft: 15,
+                                        tempTabletPadding: 15,
+                                        tempTabletPaddingTop: 5,
+                                        tempTabletPaddingRight: 15,
+                                        tempTabletPaddingBottom: 5,
+                                        tempTabletPaddingLeft: 15,
+                                        tabletPaddingSuffix: "px",
+                                        tabletPaddingTopSuffix: "px",
+                                        tabletPaddingRightSuffix: "px",
+                                        tabletPaddingBottomSuffix: "px",
+                                        tabletPaddingLeftSuffix: "px",
+                                        tempTabletPaddingSuffix: "px",
+                                        tempTabletPaddingTopSuffix: "px",
+                                        tempTabletPaddingRightSuffix: "px",
+                                        tempTabletPaddingBottomSuffix: "px",
+                                        tempTabletPaddingLeftSuffix: "px",
+                                        tabletMarginType: "ungrouped",
+                                        tabletMargin: 0,
+                                        tabletMarginTop: 0,
+                                        tabletMarginRight: 0,
+                                        tabletMarginBottom: 0,
+                                        tabletMarginLeft: 0,
+                                        tabletMarginSuffix: "px",
+                                        tabletMarginTopSuffix: "px",
+                                        tabletMarginRightSuffix: "px",
+                                        tabletMarginBottomSuffix: "px",
+                                        tabletMarginLeftSuffix: "px",
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileBoxShadow: null,
+                                        tempMobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null,
+                                        mobileVerticalAlign: null,
+                                        mobilePaddingType: "grouped",
+                                        tempMobilePaddingType: "grouped",
+                                        mobilePadding: 15,
+                                        mobilePaddingTop: 15,
+                                        mobilePaddingBottom: 15,
+                                        tempMobilePadding: 15,
+                                        tempMobilePaddingTop: 15,
+                                        tempMobilePaddingRight: 15,
+                                        tempMobilePaddingBottom: 15,
+                                        tempMobilePaddingLeft: 15,
+                                        mobilePaddingSuffix: "px",
+                                        mobilePaddingTopSuffix: "px",
+                                        mobilePaddingRightSuffix: "px",
+                                        mobilePaddingBottomSuffix: "px",
+                                        mobilePaddingLeftSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingRightSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingLeftSuffix: "px",
+                                        mobileMarginType: "ungrouped",
+                                        mobileMargin: 10,
+                                        mobileMarginTop: 10,
+                                        mobileMarginRight: 0,
+                                        mobileMarginBottom: 10,
+                                        mobileMarginLeft: 0,
+                                        mobileMarginSuffix: "px",
+                                        mobileMarginTopSuffix: "px",
+                                        mobileMarginRightSuffix: "px",
+                                        mobileMarginBottomSuffix: "px",
+                                        mobileMarginLeftSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "kmrpaabxnaydsznkdswdxzcpdpowqruonwoc"
+                                }
+                              }
+                            ],
+                            width: 33.4,
+                            bgImageWidth: 1000,
+                            bgImageHeight: 700,
+                            bgImageSrc: "ba94518c8f8c24300e17f37494182e06.jpg",
+                            bgPositionX: 50,
+                            bgPositionY: 50,
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            mobilePaddingRight: 10,
+                            mobilePaddingLeft: 10,
+                            margin: 15,
+                            marginSuffix: "px",
+                            marginTop: 15,
+                            marginRight: 15,
+                            marginBottom: 15,
+                            marginLeft: 15,
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingSuffix: "px",
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            _id: "yafawkghhoaujdqhaozafrmiiobiostibsqj"
+                          }
+                        }
+                      ],
+                      _id: "ieekhpqudzhbgephnlvfiufqhevzfnxdrhsw"
+                    }
+                  },
+                  {
+                    type: "Row",
+                    value: {
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        height: 350,
+                                        _id:
+                                          "ofpcxnyjqxeukotcztpqptmlehecwgtrmbvc"
+                                      }
+                                    }
+                                  ],
+                                  _id: "mtynhhorpzvsnoxmpvvaavyquuibjhinkksb"
+                                }
+                              },
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="brz-cp-color3 link--external is-empty">NEW GEOPOST DEVELOPMENT, STAR MOWDEN PROPERTIES</a></p>',
+                                                    _id:
+                                                      "xfsgcjleyiaaztpxzthsfgansqkfuvxvgrrw"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "wqbtdpvxquzxjzybyhixwfvitfgvhvabjkih"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-paragraph"><span style="opacity: 1;" class="brz-cp-color7">Recusabo sapiente lorem ipsum</span></p>',
+                                                    _id:
+                                                      "nfmssojjudtsrhsypmsurdvatnkdfidpxxoc"
+                                                  }
+                                                }
+                                              ],
+                                              marginTop: 0,
+                                              marginTopSuffix: "px",
+                                              margin: 0,
+                                              _id:
+                                                "gfrqmpdcytyvyrxppezcyilncjxhasfcbgvv"
+                                            }
+                                          }
+                                        ],
+                                        width: 100,
+                                        paddingType: "ungrouped",
+                                        padding: 15,
+                                        paddingSuffix: "px",
+                                        paddingTop: 15,
+                                        paddingRight: 20,
+                                        paddingBottom: 15,
+                                        paddingLeft: 20,
+                                        bgColorPalette: "color1",
+                                        bgColorHex: "",
+                                        bgColorOpacity: 0.95,
+                                        mobilePaddingRight: 15,
+                                        mobilePaddingLeft: 15,
+                                        tempBgColorOpacity: 0.95,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        paddingLeftSuffix: "px",
+                                        paddingRightSuffix: "px",
+                                        _id:
+                                          "owvwnfxqldrafjadvgtxcsxsqmvyhcijyujn",
+                                        className: "",
+                                        borderStyle: "solid",
+                                        tempBorderStyle: "solid",
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
+                                        borderWidthType: "grouped",
+                                        borderWidth: 0,
+                                        borderTopWidth: 0,
+                                        borderRightWidth: 0,
+                                        borderBottomWidth: 0,
+                                        borderLeftWidth: 0,
+                                        tempBorderWidth: 4,
+                                        tempBorderTopWidth: 4,
+                                        tempBorderRightWidth: 4,
+                                        tempBorderBottomWidth: 4,
+                                        tempBorderLeftWidth: 4,
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
+                                        borderRadiusType: "grouped",
+                                        tempBorderRadius: 0,
+                                        tempBorderTopLeftRadius: 0,
+                                        tempBorderTopRightRadius: 0,
+                                        tempBorderBottomRightRadius: 0,
+                                        tempBorderBottomLeftRadius: 0,
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
+                                        bgColorType: "solid",
+                                        gradientActivePointer: "startPointer",
+                                        gradientStartPointer: 0,
+                                        gradientFinishPointer: 100,
+                                        gradientType: "linear",
+                                        gradientLinearDegree: 90,
+                                        gradientRadialDegree: 90,
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
+                                        tempBgColorPalette: "",
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
+                                        gradientColorHex: "#009900",
+                                        gradientColorOpacity: 1,
+                                        gradientColorPalette: "",
+                                        tempGradientColorOpacity: 1,
+                                        tempGradientColorPalette: "",
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
+                                        borderColorHex: "#66738d",
+                                        borderColorOpacity: 0,
+                                        borderColorPalette: "",
+                                        tempBorderColorOpacity: 1,
+                                        tempBorderColorPalette: "",
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
+                                        boxShadow: "",
+                                        tempBoxShadow: "on",
+                                        boxShadowColorHex: "#000000",
+                                        boxShadowColorOpacity: 1,
+                                        boxShadowColorPalette: "",
+                                        tempBoxShadowColorOpacity: 1,
+                                        tempBoxShadowColorPalette: "",
+                                        boxShadowBlur: 0,
+                                        boxShadowSpread: 0,
+                                        boxShadowVertical: 0,
+                                        boxShadowHorizontal: 0,
+                                        tempBoxShadowBlur: 4,
+                                        tempBoxShadowSpread: 0,
+                                        tempBoxShadowVertical: 2,
+                                        tempBoxShadowHorizontal: 1,
+                                        hoverBoxShadow: null,
+                                        tempHoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
+                                        hoverTransition: 50,
+                                        verticalAlign: "top",
+                                        tempPaddingType: "ungrouped",
+                                        tempPadding: 15,
+                                        tempPaddingTop: 5,
+                                        tempPaddingRight: 15,
+                                        tempPaddingBottom: 5,
+                                        tempPaddingLeft: 15,
+                                        paddingTopSuffix: "px",
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        hoverPaddingType: null,
+                                        tempHoverPaddingType: null,
+                                        hoverPadding: null,
+                                        hoverPaddingTop: null,
+                                        hoverPaddingRight: null,
+                                        hoverPaddingBottom: null,
+                                        hoverPaddingLeft: null,
+                                        tempHoverPadding: null,
+                                        tempHoverPaddingTop: null,
+                                        tempHoverPaddingRight: null,
+                                        tempHoverPaddingBottom: null,
+                                        tempHoverPaddingLeft: null,
+                                        hoverPaddingSuffix: null,
+                                        hoverPaddingTopSuffix: null,
+                                        hoverPaddingRightSuffix: null,
+                                        hoverPaddingBottomSuffix: null,
+                                        hoverPaddingLeftSuffix: null,
+                                        tempHoverPaddingSuffix: null,
+                                        tempHoverPaddingTopSuffix: null,
+                                        tempHoverPaddingRightSuffix: null,
+                                        tempHoverPaddingBottomSuffix: null,
+                                        tempHoverPaddingLeftSuffix: null,
+                                        marginType: "grouped",
+                                        margin: 0,
+                                        marginTop: 0,
+                                        marginRight: 0,
+                                        marginBottom: 0,
+                                        marginLeft: 0,
+                                        marginSuffix: "px",
+                                        marginTopSuffix: "px",
+                                        marginRightSuffix: "px",
+                                        marginBottomSuffix: "px",
+                                        marginLeftSuffix: "px",
+                                        customClassName: "",
+                                        customCSS: "",
+                                        customID: "",
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletBoxShadow: null,
+                                        tempTabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
+                                        tabletVerticalAlign: null,
+                                        tabletPaddingType: "ungrouped",
+                                        tempTabletPaddingType: "ungrouped",
+                                        tabletPadding: 15,
+                                        tabletPaddingTop: 5,
+                                        tabletPaddingRight: 15,
+                                        tabletPaddingBottom: 5,
+                                        tabletPaddingLeft: 15,
+                                        tempTabletPadding: 15,
+                                        tempTabletPaddingTop: 5,
+                                        tempTabletPaddingRight: 15,
+                                        tempTabletPaddingBottom: 5,
+                                        tempTabletPaddingLeft: 15,
+                                        tabletPaddingSuffix: "px",
+                                        tabletPaddingTopSuffix: "px",
+                                        tabletPaddingRightSuffix: "px",
+                                        tabletPaddingBottomSuffix: "px",
+                                        tabletPaddingLeftSuffix: "px",
+                                        tempTabletPaddingSuffix: "px",
+                                        tempTabletPaddingTopSuffix: "px",
+                                        tempTabletPaddingRightSuffix: "px",
+                                        tempTabletPaddingBottomSuffix: "px",
+                                        tempTabletPaddingLeftSuffix: "px",
+                                        tabletMarginType: "ungrouped",
+                                        tabletMargin: 0,
+                                        tabletMarginTop: 0,
+                                        tabletMarginRight: 0,
+                                        tabletMarginBottom: 0,
+                                        tabletMarginLeft: 0,
+                                        tabletMarginSuffix: "px",
+                                        tabletMarginTopSuffix: "px",
+                                        tabletMarginRightSuffix: "px",
+                                        tabletMarginBottomSuffix: "px",
+                                        tabletMarginLeftSuffix: "px",
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileBoxShadow: null,
+                                        tempMobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null,
+                                        mobileVerticalAlign: null,
+                                        mobilePaddingType: "grouped",
+                                        tempMobilePaddingType: "grouped",
+                                        mobilePadding: 15,
+                                        mobilePaddingTop: 15,
+                                        mobilePaddingBottom: 15,
+                                        tempMobilePadding: 15,
+                                        tempMobilePaddingTop: 15,
+                                        tempMobilePaddingRight: 15,
+                                        tempMobilePaddingBottom: 15,
+                                        tempMobilePaddingLeft: 15,
+                                        mobilePaddingSuffix: "px",
+                                        mobilePaddingTopSuffix: "px",
+                                        mobilePaddingRightSuffix: "px",
+                                        mobilePaddingBottomSuffix: "px",
+                                        mobilePaddingLeftSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingRightSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingLeftSuffix: "px",
+                                        mobileMarginType: "ungrouped",
+                                        mobileMargin: 10,
+                                        mobileMarginTop: 10,
+                                        mobileMarginRight: 0,
+                                        mobileMarginBottom: 10,
+                                        mobileMarginLeft: 0,
+                                        mobileMarginSuffix: "px",
+                                        mobileMarginTopSuffix: "px",
+                                        mobileMarginRightSuffix: "px",
+                                        mobileMarginBottomSuffix: "px",
+                                        mobileMarginLeftSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "xdjokvurcncwdxbjhzcgmlgqfjulmsboabcm"
+                                }
+                              }
+                            ],
+                            width: 33.3,
+                            bgImageWidth: 1000,
+                            bgImageHeight: 700,
+                            bgImageSrc: "626244cbad0992820e3999c8c0f3dafe.jpg",
+                            bgPositionX: 50,
+                            bgPositionY: 50,
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            mobilePaddingRight: 10,
+                            mobilePaddingLeft: 10,
+                            margin: 15,
+                            marginSuffix: "px",
+                            marginTop: 15,
+                            marginRight: 15,
+                            marginBottom: 15,
+                            marginLeft: 15,
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingSuffix: "px",
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            _id: "kriwodhimvxuyirwpskokgwnkxurlbtntifd"
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        height: 350,
+                                        _id:
+                                          "bzpxefsguiupbtdcgsmhovlufwurfkqjekbz"
+                                      }
+                                    }
+                                  ],
+                                  _id: "rzklwobcaguddzwjqjkjouwxykqugmypvdss"
+                                }
+                              },
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="brz-cp-color3 link--external is-empty">SKYPARK OFFICE BUILDINGS</a></p><p class="brz-tp-subtitle"><span class="brz-cp-color3">&nbsp;</span></p>',
+                                                    _id:
+                                                      "tperiypxufdnsrtadkhhizqydumskayntfjs"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "ynssdvjbdpttkjpemteinusiwarefesmjpji"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-paragraph"><span style="opacity: 1;" class="brz-cp-color7">Recusabo sapiente lorem ipsum</span></p>',
+                                                    _id:
+                                                      "vdovnknjbvydeofphesvajhwssaujeoyfwyo"
+                                                  }
+                                                }
+                                              ],
+                                              marginTop: 0,
+                                              marginTopSuffix: "px",
+                                              margin: 0,
+                                              _id:
+                                                "oofxgscqmpinjuwpioqggbhdqnpkkpgxaine"
+                                            }
+                                          }
+                                        ],
+                                        width: 100,
+                                        paddingType: "ungrouped",
+                                        padding: 15,
+                                        paddingSuffix: "px",
+                                        paddingTop: 15,
+                                        paddingRight: 20,
+                                        paddingBottom: 15,
+                                        paddingLeft: 20,
+                                        bgColorPalette: "color1",
+                                        bgColorHex: "",
+                                        bgColorOpacity: 0.95,
+                                        mobilePaddingRight: 15,
+                                        mobilePaddingLeft: 15,
+                                        tempBgColorOpacity: 0.95,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        paddingLeftSuffix: "px",
+                                        paddingRightSuffix: "px",
+                                        _id:
+                                          "skaehaopxmcmkpucclurcxghtvlrtketcoat",
+                                        className: "",
+                                        borderStyle: "solid",
+                                        tempBorderStyle: "solid",
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
+                                        borderWidthType: "grouped",
+                                        borderWidth: 0,
+                                        borderTopWidth: 0,
+                                        borderRightWidth: 0,
+                                        borderBottomWidth: 0,
+                                        borderLeftWidth: 0,
+                                        tempBorderWidth: 4,
+                                        tempBorderTopWidth: 4,
+                                        tempBorderRightWidth: 4,
+                                        tempBorderBottomWidth: 4,
+                                        tempBorderLeftWidth: 4,
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
+                                        borderRadiusType: "grouped",
+                                        tempBorderRadius: 0,
+                                        tempBorderTopLeftRadius: 0,
+                                        tempBorderTopRightRadius: 0,
+                                        tempBorderBottomRightRadius: 0,
+                                        tempBorderBottomLeftRadius: 0,
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
+                                        bgColorType: "solid",
+                                        gradientActivePointer: "startPointer",
+                                        gradientStartPointer: 0,
+                                        gradientFinishPointer: 100,
+                                        gradientType: "linear",
+                                        gradientLinearDegree: 90,
+                                        gradientRadialDegree: 90,
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
+                                        tempBgColorPalette: "",
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
+                                        gradientColorHex: "#009900",
+                                        gradientColorOpacity: 1,
+                                        gradientColorPalette: "",
+                                        tempGradientColorOpacity: 1,
+                                        tempGradientColorPalette: "",
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
+                                        borderColorHex: "#66738d",
+                                        borderColorOpacity: 0,
+                                        borderColorPalette: "",
+                                        tempBorderColorOpacity: 1,
+                                        tempBorderColorPalette: "",
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
+                                        boxShadow: "",
+                                        tempBoxShadow: "on",
+                                        boxShadowColorHex: "#000000",
+                                        boxShadowColorOpacity: 1,
+                                        boxShadowColorPalette: "",
+                                        tempBoxShadowColorOpacity: 1,
+                                        tempBoxShadowColorPalette: "",
+                                        boxShadowBlur: 0,
+                                        boxShadowSpread: 0,
+                                        boxShadowVertical: 0,
+                                        boxShadowHorizontal: 0,
+                                        tempBoxShadowBlur: 4,
+                                        tempBoxShadowSpread: 0,
+                                        tempBoxShadowVertical: 2,
+                                        tempBoxShadowHorizontal: 1,
+                                        hoverBoxShadow: null,
+                                        tempHoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
+                                        hoverTransition: 50,
+                                        verticalAlign: "top",
+                                        tempPaddingType: "ungrouped",
+                                        tempPadding: 15,
+                                        tempPaddingTop: 5,
+                                        tempPaddingRight: 15,
+                                        tempPaddingBottom: 5,
+                                        tempPaddingLeft: 15,
+                                        paddingTopSuffix: "px",
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        hoverPaddingType: null,
+                                        tempHoverPaddingType: null,
+                                        hoverPadding: null,
+                                        hoverPaddingTop: null,
+                                        hoverPaddingRight: null,
+                                        hoverPaddingBottom: null,
+                                        hoverPaddingLeft: null,
+                                        tempHoverPadding: null,
+                                        tempHoverPaddingTop: null,
+                                        tempHoverPaddingRight: null,
+                                        tempHoverPaddingBottom: null,
+                                        tempHoverPaddingLeft: null,
+                                        hoverPaddingSuffix: null,
+                                        hoverPaddingTopSuffix: null,
+                                        hoverPaddingRightSuffix: null,
+                                        hoverPaddingBottomSuffix: null,
+                                        hoverPaddingLeftSuffix: null,
+                                        tempHoverPaddingSuffix: null,
+                                        tempHoverPaddingTopSuffix: null,
+                                        tempHoverPaddingRightSuffix: null,
+                                        tempHoverPaddingBottomSuffix: null,
+                                        tempHoverPaddingLeftSuffix: null,
+                                        marginType: "grouped",
+                                        margin: 0,
+                                        marginTop: 0,
+                                        marginRight: 0,
+                                        marginBottom: 0,
+                                        marginLeft: 0,
+                                        marginSuffix: "px",
+                                        marginTopSuffix: "px",
+                                        marginRightSuffix: "px",
+                                        marginBottomSuffix: "px",
+                                        marginLeftSuffix: "px",
+                                        customClassName: "",
+                                        customCSS: "",
+                                        customID: "",
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletBoxShadow: null,
+                                        tempTabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
+                                        tabletVerticalAlign: null,
+                                        tabletPaddingType: "ungrouped",
+                                        tempTabletPaddingType: "ungrouped",
+                                        tabletPadding: 15,
+                                        tabletPaddingTop: 5,
+                                        tabletPaddingRight: 15,
+                                        tabletPaddingBottom: 5,
+                                        tabletPaddingLeft: 15,
+                                        tempTabletPadding: 15,
+                                        tempTabletPaddingTop: 5,
+                                        tempTabletPaddingRight: 15,
+                                        tempTabletPaddingBottom: 5,
+                                        tempTabletPaddingLeft: 15,
+                                        tabletPaddingSuffix: "px",
+                                        tabletPaddingTopSuffix: "px",
+                                        tabletPaddingRightSuffix: "px",
+                                        tabletPaddingBottomSuffix: "px",
+                                        tabletPaddingLeftSuffix: "px",
+                                        tempTabletPaddingSuffix: "px",
+                                        tempTabletPaddingTopSuffix: "px",
+                                        tempTabletPaddingRightSuffix: "px",
+                                        tempTabletPaddingBottomSuffix: "px",
+                                        tempTabletPaddingLeftSuffix: "px",
+                                        tabletMarginType: "ungrouped",
+                                        tabletMargin: 0,
+                                        tabletMarginTop: 0,
+                                        tabletMarginRight: 0,
+                                        tabletMarginBottom: 0,
+                                        tabletMarginLeft: 0,
+                                        tabletMarginSuffix: "px",
+                                        tabletMarginTopSuffix: "px",
+                                        tabletMarginRightSuffix: "px",
+                                        tabletMarginBottomSuffix: "px",
+                                        tabletMarginLeftSuffix: "px",
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileBoxShadow: null,
+                                        tempMobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null,
+                                        mobileVerticalAlign: null,
+                                        mobilePaddingType: "grouped",
+                                        tempMobilePaddingType: "grouped",
+                                        mobilePadding: 15,
+                                        mobilePaddingTop: 15,
+                                        mobilePaddingBottom: 15,
+                                        tempMobilePadding: 15,
+                                        tempMobilePaddingTop: 15,
+                                        tempMobilePaddingRight: 15,
+                                        tempMobilePaddingBottom: 15,
+                                        tempMobilePaddingLeft: 15,
+                                        mobilePaddingSuffix: "px",
+                                        mobilePaddingTopSuffix: "px",
+                                        mobilePaddingRightSuffix: "px",
+                                        mobilePaddingBottomSuffix: "px",
+                                        mobilePaddingLeftSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingRightSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingLeftSuffix: "px",
+                                        mobileMarginType: "ungrouped",
+                                        mobileMargin: 10,
+                                        mobileMarginTop: 10,
+                                        mobileMarginRight: 0,
+                                        mobileMarginBottom: 10,
+                                        mobileMarginLeft: 0,
+                                        mobileMarginSuffix: "px",
+                                        mobileMarginTopSuffix: "px",
+                                        mobileMarginRightSuffix: "px",
+                                        mobileMarginBottomSuffix: "px",
+                                        mobileMarginLeftSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "dctpwezrqdfnktnktczlokmilzhblejimytj"
+                                }
+                              }
+                            ],
+                            width: 33.3,
+                            bgImageWidth: 1000,
+                            bgImageHeight: 700,
+                            bgImageSrc: "29e423691db8c496548a5b93c392b891.jpg",
+                            bgPositionX: 50,
+                            bgPositionY: 50,
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            mobilePaddingRight: 10,
+                            mobilePaddingLeft: 10,
+                            margin: 15,
+                            marginSuffix: "px",
+                            marginTop: 15,
+                            marginRight: 15,
+                            marginBottom: 15,
+                            marginLeft: 15,
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingSuffix: "px",
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            _id: "xepcjqmnqqnxyjetnmcmbsrqtqvaowpayasw"
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        height: 350,
+                                        _id:
+                                          "xixwaappkuyqjipmfelsuqjogqvkmkujtjig"
+                                      }
+                                    }
+                                  ],
+                                  _id: "agtafjvjjxlybdwshoavfgwwzzvzeylltowi"
+                                }
+                              },
+                              {
+                                type: "Row",
+                                value: {
+                                  _styles: [
+                                    "row",
+                                    "hide-row-borders",
+                                    "padding-0"
+                                  ],
+                                  items: [
+                                    {
+                                      type: "Column",
+                                      value: {
+                                        _styles: ["column"],
+                                        items: [
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="brz-cp-color3 link--external is-empty">GROHMES HOUSING&nbsp;</a></p><p class="brz-tp-subtitle"><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22off%22%2C%22externalType%22%3A%22external%22%2C%22popup%22%3A%22%22%7D" class="link--external is-empty brz-cp-color3">HEADQUARTERS</a></p>',
+                                                    _id:
+                                                      "lcvidzgqmvhgdzmwhhnruekiziljlimyropt"
+                                                  }
+                                                }
+                                              ],
+                                              _id:
+                                                "inozwvpizxyniftoxevutyxyrifiszarvkhk"
+                                            }
+                                          },
+                                          {
+                                            type: "Wrapper",
+                                            value: {
+                                              _styles: [
+                                                "wrapper",
+                                                "wrapper--richText"
+                                              ],
+                                              items: [
+                                                {
+                                                  type: "RichText",
+                                                  value: {
+                                                    _styles: ["richText"],
+                                                    text:
+                                                      '<p class="brz-tp-paragraph"><span style="opacity: 1;" class="brz-cp-color7">Recusabo sapiente lorem ipsum</span></p>',
+                                                    _id:
+                                                      "ksivnqqbfecdtxnxzyyvyqcxvhhqzazexkcn"
+                                                  }
+                                                }
+                                              ],
+                                              marginTop: 0,
+                                              marginTopSuffix: "px",
+                                              margin: 0,
+                                              _id:
+                                                "ozjddckbqfiehfoykryedqoosouupduhqtgc"
+                                            }
+                                          }
+                                        ],
+                                        width: 100,
+                                        paddingType: "ungrouped",
+                                        padding: 15,
+                                        paddingSuffix: "px",
+                                        paddingTop: 15,
+                                        paddingRight: 20,
+                                        paddingBottom: 15,
+                                        paddingLeft: 20,
+                                        bgColorPalette: "color1",
+                                        bgColorHex: "",
+                                        bgColorOpacity: 0.95,
+                                        mobilePaddingRight: 15,
+                                        mobilePaddingLeft: 15,
+                                        tempBgColorOpacity: 0.95,
+                                        borderRadius: 0,
+                                        borderTopLeftRadius: 0,
+                                        borderTopRightRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        paddingLeftSuffix: "px",
+                                        paddingRightSuffix: "px",
+                                        _id:
+                                          "phlozpeuzgzmethzfjxzbclvimivarezuppz",
+                                        className: "",
+                                        borderStyle: "solid",
+                                        tempBorderStyle: "solid",
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
+                                        borderWidthType: "grouped",
+                                        borderWidth: 0,
+                                        borderTopWidth: 0,
+                                        borderRightWidth: 0,
+                                        borderBottomWidth: 0,
+                                        borderLeftWidth: 0,
+                                        tempBorderWidth: 4,
+                                        tempBorderTopWidth: 4,
+                                        tempBorderRightWidth: 4,
+                                        tempBorderBottomWidth: 4,
+                                        tempBorderLeftWidth: 4,
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
+                                        borderRadiusType: "grouped",
+                                        tempBorderRadius: 0,
+                                        tempBorderTopLeftRadius: 0,
+                                        tempBorderTopRightRadius: 0,
+                                        tempBorderBottomRightRadius: 0,
+                                        tempBorderBottomLeftRadius: 0,
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
+                                        bgColorType: "solid",
+                                        gradientActivePointer: "startPointer",
+                                        gradientStartPointer: 0,
+                                        gradientFinishPointer: 100,
+                                        gradientType: "linear",
+                                        gradientLinearDegree: 90,
+                                        gradientRadialDegree: 90,
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
+                                        tempBgColorPalette: "",
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
+                                        gradientColorHex: "#009900",
+                                        gradientColorOpacity: 1,
+                                        gradientColorPalette: "",
+                                        tempGradientColorOpacity: 1,
+                                        tempGradientColorPalette: "",
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
+                                        borderColorHex: "#66738d",
+                                        borderColorOpacity: 0,
+                                        borderColorPalette: "",
+                                        tempBorderColorOpacity: 1,
+                                        tempBorderColorPalette: "",
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
+                                        boxShadow: "",
+                                        tempBoxShadow: "on",
+                                        boxShadowColorHex: "#000000",
+                                        boxShadowColorOpacity: 1,
+                                        boxShadowColorPalette: "",
+                                        tempBoxShadowColorOpacity: 1,
+                                        tempBoxShadowColorPalette: "",
+                                        boxShadowBlur: 0,
+                                        boxShadowSpread: 0,
+                                        boxShadowVertical: 0,
+                                        boxShadowHorizontal: 0,
+                                        tempBoxShadowBlur: 4,
+                                        tempBoxShadowSpread: 0,
+                                        tempBoxShadowVertical: 2,
+                                        tempBoxShadowHorizontal: 1,
+                                        hoverBoxShadow: null,
+                                        tempHoverBoxShadow: null,
+                                        hoverBoxShadowColorHex: null,
+                                        hoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorPalette: null,
+                                        tempHoverBoxShadowColorOpacity: null,
+                                        hoverBoxShadowBlur: null,
+                                        hoverBoxShadowSpread: null,
+                                        hoverBoxShadowVertical: null,
+                                        hoverBoxShadowHorizontal: null,
+                                        tempHoverBoxShadowBlur: null,
+                                        tempHoverBoxShadowSpread: null,
+                                        tempHoverBoxShadowVertical: null,
+                                        tempHoverBoxShadowHorizontal: null,
+                                        hoverTransition: 50,
+                                        verticalAlign: "top",
+                                        tempPaddingType: "ungrouped",
+                                        tempPadding: 15,
+                                        tempPaddingTop: 5,
+                                        tempPaddingRight: 15,
+                                        tempPaddingBottom: 5,
+                                        tempPaddingLeft: 15,
+                                        paddingTopSuffix: "px",
+                                        paddingBottomSuffix: "px",
+                                        tempPaddingSuffix: "px",
+                                        tempPaddingTopSuffix: "px",
+                                        tempPaddingRightSuffix: "px",
+                                        tempPaddingBottomSuffix: "px",
+                                        tempPaddingLeftSuffix: "px",
+                                        hoverPaddingType: null,
+                                        tempHoverPaddingType: null,
+                                        hoverPadding: null,
+                                        hoverPaddingTop: null,
+                                        hoverPaddingRight: null,
+                                        hoverPaddingBottom: null,
+                                        hoverPaddingLeft: null,
+                                        tempHoverPadding: null,
+                                        tempHoverPaddingTop: null,
+                                        tempHoverPaddingRight: null,
+                                        tempHoverPaddingBottom: null,
+                                        tempHoverPaddingLeft: null,
+                                        hoverPaddingSuffix: null,
+                                        hoverPaddingTopSuffix: null,
+                                        hoverPaddingRightSuffix: null,
+                                        hoverPaddingBottomSuffix: null,
+                                        hoverPaddingLeftSuffix: null,
+                                        tempHoverPaddingSuffix: null,
+                                        tempHoverPaddingTopSuffix: null,
+                                        tempHoverPaddingRightSuffix: null,
+                                        tempHoverPaddingBottomSuffix: null,
+                                        tempHoverPaddingLeftSuffix: null,
+                                        marginType: "grouped",
+                                        margin: 0,
+                                        marginTop: 0,
+                                        marginRight: 0,
+                                        marginBottom: 0,
+                                        marginLeft: 0,
+                                        marginSuffix: "px",
+                                        marginTopSuffix: "px",
+                                        marginRightSuffix: "px",
+                                        marginBottomSuffix: "px",
+                                        marginLeftSuffix: "px",
+                                        customClassName: "",
+                                        customCSS: "",
+                                        customID: "",
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletBoxShadow: null,
+                                        tempTabletBoxShadow: null,
+                                        tabletBoxShadowColorHex: null,
+                                        tabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorPalette: null,
+                                        tempTabletBoxShadowColorOpacity: null,
+                                        tabletBoxShadowBlur: null,
+                                        tabletBoxShadowSpread: null,
+                                        tabletBoxShadowVertical: null,
+                                        tabletBoxShadowHorizontal: null,
+                                        tempTabletBoxShadowBlur: null,
+                                        tempTabletBoxShadowSpread: null,
+                                        tempTabletBoxShadowVertical: null,
+                                        tempTabletBoxShadowHorizontal: null,
+                                        tabletVerticalAlign: null,
+                                        tabletPaddingType: "ungrouped",
+                                        tempTabletPaddingType: "ungrouped",
+                                        tabletPadding: 15,
+                                        tabletPaddingTop: 5,
+                                        tabletPaddingRight: 15,
+                                        tabletPaddingBottom: 5,
+                                        tabletPaddingLeft: 15,
+                                        tempTabletPadding: 15,
+                                        tempTabletPaddingTop: 5,
+                                        tempTabletPaddingRight: 15,
+                                        tempTabletPaddingBottom: 5,
+                                        tempTabletPaddingLeft: 15,
+                                        tabletPaddingSuffix: "px",
+                                        tabletPaddingTopSuffix: "px",
+                                        tabletPaddingRightSuffix: "px",
+                                        tabletPaddingBottomSuffix: "px",
+                                        tabletPaddingLeftSuffix: "px",
+                                        tempTabletPaddingSuffix: "px",
+                                        tempTabletPaddingTopSuffix: "px",
+                                        tempTabletPaddingRightSuffix: "px",
+                                        tempTabletPaddingBottomSuffix: "px",
+                                        tempTabletPaddingLeftSuffix: "px",
+                                        tabletMarginType: "ungrouped",
+                                        tabletMargin: 0,
+                                        tabletMarginTop: 0,
+                                        tabletMarginRight: 0,
+                                        tabletMarginBottom: 0,
+                                        tabletMarginLeft: 0,
+                                        tabletMarginSuffix: "px",
+                                        tabletMarginTopSuffix: "px",
+                                        tabletMarginRightSuffix: "px",
+                                        tabletMarginBottomSuffix: "px",
+                                        tabletMarginLeftSuffix: "px",
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileBoxShadow: null,
+                                        tempMobileBoxShadow: null,
+                                        mobileBoxShadowColorHex: null,
+                                        mobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorPalette: null,
+                                        tempMobileBoxShadowColorOpacity: null,
+                                        mobileBoxShadowBlur: null,
+                                        mobileBoxShadowSpread: null,
+                                        mobileBoxShadowVertical: null,
+                                        mobileBoxShadowHorizontal: null,
+                                        tempMobileBoxShadowBlur: null,
+                                        tempMobileBoxShadowSpread: null,
+                                        tempMobileBoxShadowVertical: null,
+                                        tempMobileBoxShadowHorizontal: null,
+                                        mobileVerticalAlign: null,
+                                        mobilePaddingType: "grouped",
+                                        tempMobilePaddingType: "grouped",
+                                        mobilePadding: 15,
+                                        mobilePaddingTop: 15,
+                                        mobilePaddingBottom: 15,
+                                        tempMobilePadding: 15,
+                                        tempMobilePaddingTop: 15,
+                                        tempMobilePaddingRight: 15,
+                                        tempMobilePaddingBottom: 15,
+                                        tempMobilePaddingLeft: 15,
+                                        mobilePaddingSuffix: "px",
+                                        mobilePaddingTopSuffix: "px",
+                                        mobilePaddingRightSuffix: "px",
+                                        mobilePaddingBottomSuffix: "px",
+                                        mobilePaddingLeftSuffix: "px",
+                                        tempMobilePaddingSuffix: "px",
+                                        tempMobilePaddingTopSuffix: "px",
+                                        tempMobilePaddingRightSuffix: "px",
+                                        tempMobilePaddingBottomSuffix: "px",
+                                        tempMobilePaddingLeftSuffix: "px",
+                                        mobileMarginType: "ungrouped",
+                                        mobileMargin: 10,
+                                        mobileMarginTop: 10,
+                                        mobileMarginRight: 0,
+                                        mobileMarginBottom: 10,
+                                        mobileMarginLeft: 0,
+                                        mobileMarginSuffix: "px",
+                                        mobileMarginTopSuffix: "px",
+                                        mobileMarginRightSuffix: "px",
+                                        mobileMarginBottomSuffix: "px",
+                                        mobileMarginLeftSuffix: "px"
+                                      }
+                                    }
+                                  ],
+                                  _id: "fvjurdgbxdejxzctnuxiwdddnmsqtgvrzbjd"
+                                }
+                              }
+                            ],
+                            width: 33.4,
+                            bgImageWidth: 1000,
+                            bgImageHeight: 700,
+                            bgImageSrc: "633ccca68b400c1203b2f4e93eb4cda6.jpg",
+                            bgPositionX: 83,
+                            bgPositionY: 48,
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            mobilePaddingRight: 10,
+                            mobilePaddingLeft: 10,
+                            margin: 15,
+                            marginSuffix: "px",
+                            marginTop: 15,
+                            marginRight: 15,
+                            marginBottom: 15,
+                            marginLeft: 15,
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingSuffix: "px",
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            _id: "ffeqtdecjjyqdpzbewrfhevrrypsqtybdkmx"
+                          }
+                        }
+                      ],
+                      _id: "zaaqpnbvzkfozaduabfvbeivqhftmchjekrl"
+                    }
+                  }
+                ],
+                containerSize: 100,
+                paddingType: "ungrouped",
+                paddingTop: 130,
+                paddingBottom: 130,
+                padding: 75,
+                _id: "bsqqybeduzlfilysvllcfwuqogocybaqvgie",
+                tabletPaddingType: "ungrouped",
+                tabletPaddingBottom: 15,
+                tabletPaddingTop: 15,
+                mobilePaddingRightSuffix: "px",
+                tempMobilePaddingRightSuffix: "px",
+                mobilePaddingSuffix: "px",
+                tempMobilePaddingSuffix: "px",
+                mobilePaddingRight: 15,
+                tempMobilePaddingRight: 15,
+                mobilePaddingLeftSuffix: "px",
+                tempMobilePaddingLeftSuffix: "px",
+                mobilePaddingLeft: 15,
+                tempMobilePaddingLeft: 15
+              }
+            }
+          ],
+          _id: "rpmzlnrdbmzrwewutjlnakbakdlfzpnhdmra",
+          _thumbnailSrc: 382896,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 937,
+          _thumbnailTime: 1631624288154
         }
-    },
-    {
+      },
+      {
         type: "Section",
         blockId: "Gabi036Light",
         value: {
-            _styles: [
-                "section"
-            ],
-            items: [
-                {
-                    type: "SectionItem",
+          _styles: ["section"],
+          items: [
+            {
+              type: "SectionItem",
+              value: {
+                _styles: ["section-item"],
+                bgColorHex: "#ffffff",
+                bgColorOpacity: 1,
+                items: [
+                  {
+                    type: "Row",
                     value: {
-                        _styles: [
-                            "section-item"
-                        ],
-                        bgColorHex: "#ffffff",
-                        bgColorOpacity: 1,
-                        items: [
-                            {
-                                type: "Row",
+                      _styles: ["row", "hide-row-borders", "padding-0"],
+                      items: [
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
                                 value: {
-                                    _styles: [
-                                        "row",
-                                        "hide-row-borders",
-                                        "padding-0"
-                                    ],
-                                    items: [
-                                        {
-                                            type: "Column",
-                                            value: {
-                                                _styles: [
-                                                    "column"
-                                                ],
-                                                items: [
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--map"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Map",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "map"
-                                                                        ],
-                                                                        height: 850
-                                                                    }
-                                                                }
-                                                            ],
-                                                            marginTop: 0,
-                                                            marginBottom: 0,
-                                                            mobileMarginTop: 0,
-                                                            mobileMarginBottom: 0
-                                                        }
-                                                    }
-                                                ],
-                                                paddingType: "grouped",
-                                                padding: 0,
-                                                paddingTop: 0,
-                                                paddingRight: 0,
-                                                paddingBottom: 0,
-                                                paddingLeft: 0
-                                            }
-                                        },
-                                        {
-                                            type: "Column",
-                                            value: {
-                                                _styles: [
-                                                    "column"
-                                                ],
-                                                items: [
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--richText"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "RichText",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "richText"
-                                                                        ],
-                                                                        text: "<h5 class=\"brz-tp-heading4\"><span class=\"brz-cp-color8\">Get In Touch</span></h5>"
-                                                                    }
-                                                                }
-                                                            ],
-                                                            paddingType: "ungrouped",
-                                                            marginTop: 0
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--spacer"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Spacer",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "spacer"
-                                                                        ],
-                                                                        height: 20,
-                                                                        mobileHeight: 10
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--iconText"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Form2",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "form"
-                                                                        ],
-                                                                        items: [
-                                                                            {
-                                                                                type: "Form2Fields",
-                                                                                value: {
-                                                                                    items: [
-                                                                                        {
-                                                                                            type: "Form2Field",
-                                                                                            value: {
-                                                                                                type: "Text",
-                                                                                                label: "Name",
-                                                                                                required: "on",
-                                                                                                options: [
-                                                                                                    "Option 1",
-                                                                                                    "Option 2"
-                                                                                                ],
-                                                                                                placeholder: "Name"
-                                                                                            }
-                                                                                        },
-                                                                                        {
-                                                                                            type: "Form2Field",
-                                                                                            value: {
-                                                                                                type: "Tel",
-                                                                                                label: "Phone",
-                                                                                                required: "on",
-                                                                                                options: [
-                                                                                                    "Option 1",
-                                                                                                    "Option 2"
-                                                                                                ],
-                                                                                                placeholder: "Phone",
-                                                                                                width: 50
-                                                                                            }
-                                                                                        },
-                                                                                        {
-                                                                                            type: "Form2Field",
-                                                                                            value: {
-                                                                                                type: "Email",
-                                                                                                label: "Email",
-                                                                                                required: "on",
-                                                                                                options: [
-                                                                                                    "Option 1",
-                                                                                                    "Option 2"
-                                                                                                ],
-                                                                                                placeholder: "Email",
-                                                                                                width: 50
-                                                                                            }
-                                                                                        },
-                                                                                        {
-                                                                                            type: "Form2Field",
-                                                                                            value: {
-                                                                                                type: "Paragraph",
-                                                                                                label: "Message",
-                                                                                                required: "off",
-                                                                                                options: [
-                                                                                                    "Option 1",
-                                                                                                    "Option 2"
-                                                                                                ],
-                                                                                                placeholder: "Message"
-                                                                                            }
-                                                                                        }
-                                                                                    ],
-                                                                                    tabsState: "",
-                                                                                    tabsColor: "",
-                                                                                    borderColorPalette: "color7",
-                                                                                    tempBorderColorPalette: "color7",
-                                                                                    borderColorOpacity: 0.9,
-                                                                                    borderStyle: "solid",
-                                                                                    borderWidth: 1,
-                                                                                    borderTopWidth: 1,
-                                                                                    borderRightWidth: 1,
-                                                                                    borderBottomWidth: 1,
-                                                                                    borderLeftWidth: 1,
-                                                                                    tempBorderTopWidth: 1,
-                                                                                    tempBorderRightWidth: 1,
-                                                                                    tempBorderBottomWidth: 1,
-                                                                                    tempBorderLeftWidth: 1,
-                                                                                    bgColorHex: "#ffffff",
-                                                                                    bgColorOpacity: 0,
-                                                                                    tempBgColorOpacity: 1,
-                                                                                    bgColorPalette: "",
-                                                                                    tempBgColorPalette: "",
-                                                                                    borderRadius: 0,
-                                                                                    borderTopLeftRadius: 0,
-                                                                                    borderTopRightRadius: 0,
-                                                                                    borderBottomLeftRadius: 0,
-                                                                                    borderBottomRightRadius: 0,
-                                                                                    tempBorderTopLeftRadius: 0,
-                                                                                    tempBorderTopRightRadius: 0,
-                                                                                    tempBorderBottomLeftRadius: 0,
-                                                                                    tempBorderBottomRightRadius: 0,
-                                                                                    fontStyle: "paragraph",
-                                                                                    colorPalette: "color6",
-                                                                                    tempColorPalette: "color6",
-                                                                                    colorOpacity: 0.6,
-                                                                                    colorHex: "#ebebeb",
-                                                                                    tempColorOpacity: 0.6,
-                                                                                    borderColorHex: "#73777f",
-                                                                                    tempBorderColorOpacity: 0.9
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                type: "Button",
-                                                                                value: {
-                                                                                    _styles: [
-                                                                                        "button",
-                                                                                        "submit"
-                                                                                    ],
-                                                                                    text: "SUBMIT",
-                                                                                    tabsState: "",
-                                                                                    tabsColor: "",
-                                                                                    colorPalette: "color3",
-                                                                                    colorOpacity: 1,
-                                                                                    bgColorHex: "#f5a527",
-                                                                                    bgColorOpacity: 0,
-                                                                                    bgColorPalette: "color3",
-                                                                                    tempBgColorPalette: "color3",
-                                                                                    tempBgColorOpacity: 1,
-                                                                                    borderRadiusType: "custom",
-                                                                                    fillType: "filled",
-                                                                                    borderWidth: 2,
-                                                                                    borderColorHex: "#f5a527",
-                                                                                    borderColorPalette: "color3",
-                                                                                    tempBorderColorPalette: "color3",
-                                                                                    borderColorOpacity: 1,
-                                                                                    hoverBgColorOpacity: 1,
-                                                                                    hoverBorderColorHex: "#7d9dbf",
-                                                                                    hoverBorderColorOpacity: 0.8,
-                                                                                    hoverBgColorPalette: "color5",
-                                                                                    hoverBorderColorPalette: "color5",
-                                                                                    tempHoverBorderColorPalette: "color3",
-                                                                                    hoverBgColorHex: "#7d9dbf",
-                                                                                    tempHoverBgColorOpacity: 1,
-                                                                                    tempHoverBgColorPalette: "color3",
-                                                                                    hoverColorPalette: "color2",
-                                                                                    hoverColorOpacity: 1,
-                                                                                    iconName: "newsletter",
-                                                                                    iconType: "outline",
-                                                                                    tempBorderRadiusType: "custom",
-                                                                                    paddingRight: 42,
-                                                                                    paddingLeft: 42,
-                                                                                    borderRadius: 0,
-                                                                                    tempBorderRadius: 0
-                                                                                }
-                                                                            }
-                                                                        ],
-                                                                        submitWidth: 25,
-                                                                        padding: 10,
-                                                                        paddingRight: 10,
-                                                                        paddingBottom: 10,
-                                                                        paddingLeft: 10
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--spacer"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "Spacer",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "spacer"
-                                                                        ],
-                                                                        height: 30
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--richText"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "RichText",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "richText"
-                                                                        ],
-                                                                        text: "<h5 class=\"brz-tp-heading4\"><span class=\"brz-cp-color8\">Our Address</span></h5>"
-                                                                    }
-                                                                }
-                                                            ],
-                                                            paddingType: "ungrouped",
-                                                            marginTop: 0
-                                                        }
-                                                    },
-                                                    {
-                                                        type: "Wrapper",
-                                                        value: {
-                                                            _styles: [
-                                                                "wrapper",
-                                                                "wrapper--richText"
-                                                            ],
-                                                            items: [
-                                                                {
-                                                                    type: "RichText",
-                                                                    value: {
-                                                                        _styles: [
-                                                                            "richText"
-                                                                        ],
-                                                                        text: "<p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color6\">228 Park Ave S, New York, NY 10003</span></p><p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color6\">Phone: 645.328.459</span></p><p class=\"brz-tp-paragraph\"><span class=\"brz-cp-color8\">Email:</span><span class=\"brz-cp-color5\">&nbsp;construct@example.com</span></p>"
-                                                                    }
-                                                                }
-                                                            ],
-                                                            paddingType: "ungrouped"
-                                                        }
-                                                    }
-                                                ],
-                                                paddingLeft: 80,
-                                                bgImageWidth: 1920,
-                                                bgImageHeight: 1089,
-                                                bgImageSrc: "3db6c79e1f88ac9a65a3155c59c43123.jpg",
-                                                mobilePaddingRight: 10,
-                                                mobilePaddingLeft: 10,
-                                                paddingType: "grouped",
-                                                padding: 80,
-                                                paddingTop: 80,
-                                                paddingRight: 80,
-                                                paddingBottom: 80,
-                                                verticalAlign: "center",
-                                                mobilePaddingTop: 43,
-                                                mobilePaddingType: "grouped",
-                                                mobilePadding: 43,
-                                                mobilePaddingBottom: 43,
-                                                bgColorPalette: "color1",
-                                                bgColorHex: "#141b21",
-                                                bgColorOpacity: 0,
-                                                tempBgColorOpacity: 1,
-                                                borderRadius: 0,
-                                                borderTopLeftRadius: 0,
-                                                borderTopRightRadius: 0,
-                                                borderBottomRightRadius: 0,
-                                                borderBottomLeftRadius: 0,
-                                                bgPositionX: 50,
-                                                bgPositionY: 50
-                                            }
-                                        }
-                                    ]
+                                  _styles: ["wrapper", "wrapper--map"],
+                                  items: [
+                                    {
+                                      type: "Map",
+                                      value: {
+                                        _styles: ["map"],
+                                        height: 850,
+                                        mobileHeight: 350,
+                                        tabletHeight: 630,
+                                        _id:
+                                          "zffnirdrhxwuwsntttnklrndwvbxilxfmvmz"
+                                      }
+                                    }
+                                  ],
+                                  marginTop: 0,
+                                  marginBottom: 0,
+                                  mobileMarginTop: 0,
+                                  mobileMarginBottom: 0,
+                                  tabletMarginTopSuffix: "px",
+                                  tabletMarginTop: 0,
+                                  tabletMargin: 0,
+                                  tabletMarginSuffix: "px",
+                                  tabletMarginBottomSuffix: "px",
+                                  tabletMarginBottom: 0,
+                                  _id: "adqrjtjzfqqkulqclhcerjqgeufuxiyzbbzi"
                                 }
-                            }
-                        ],
-                        padding: 0,
-                        paddingTop: 0,
-                        paddingBottom: 0,
-                        containerType: "fullWidth",
-                        media: "image"
+                              }
+                            ],
+                            paddingType: "grouped",
+                            padding: 0,
+                            paddingTop: 0,
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            paddingLeft: 0,
+                            tabletPaddingType: "grouped",
+                            tabletPadding: 0,
+                            tabletPaddingTop: 0,
+                            tabletPaddingRight: 0,
+                            tabletPaddingBottom: 0,
+                            tabletPaddingLeft: 0,
+                            tabletPaddingSuffix: "px",
+                            tabletPaddingTopSuffix: "px",
+                            tabletPaddingRightSuffix: "px",
+                            tabletPaddingBottomSuffix: "px",
+                            tabletPaddingLeftSuffix: "px",
+                            tempTabletPaddingSuffix: "px",
+                            tempTabletPaddingTopSuffix: "px",
+                            tempTabletPaddingRightSuffix: "px",
+                            tempTabletPaddingBottomSuffix: "px",
+                            tempTabletPaddingLeftSuffix: "px",
+                            _id: "gikphvlratbdozlzrpionpmoklcicxqgjkej"
+                          }
+                        },
+                        {
+                          type: "Column",
+                          value: {
+                            _styles: ["column"],
+                            items: [
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        text:
+                                          '<h5 class="brz-tp-heading4"><span class="brz-cp-color8">Get In Touch</span></h5>',
+                                        _id:
+                                          "ptyxjmjhuynxfmcsiawenxwgreneppnnhwmk"
+                                      }
+                                    }
+                                  ],
+                                  paddingType: "ungrouped",
+                                  marginTop: 0,
+                                  _id: "gfgtqycfjgmvpehqxjpofodixsfszkdmcifm"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        height: 20,
+                                        mobileHeight: 10,
+                                        _id:
+                                          "zlglneraektaotpcsglaezwdtmqulolsbque"
+                                      }
+                                    }
+                                  ],
+                                  _id: "niulucdkpyzimfpzfgytjqyrtzlzpmnzajgg"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--iconText"],
+                                  items: [
+                                    {
+                                      type: "Form2",
+                                      value: {
+                                        _styles: ["form"],
+                                        items: [
+                                          {
+                                            type: "Form2Fields",
+                                            value: {
+                                              items: [
+                                                {
+                                                  type: "Form2Field",
+                                                  value: {
+                                                    type: "Text",
+                                                    label: "Name",
+                                                    required: "on",
+                                                    options: [
+                                                      "Option 1",
+                                                      "Option 2"
+                                                    ],
+                                                    placeholder: "Name",
+                                                    _id:
+                                                      "dhyzxwnpbjhhmzjmryhdpeehtwpghuhwvpfp"
+                                                  }
+                                                },
+                                                {
+                                                  type: "Form2Field",
+                                                  value: {
+                                                    type: "Tel",
+                                                    label: "Phone",
+                                                    required: "on",
+                                                    options: [
+                                                      "Option 1",
+                                                      "Option 2"
+                                                    ],
+                                                    placeholder: "Phone",
+                                                    width: 50,
+                                                    _id:
+                                                      "zymmcvyhzxfhjaktenchakyhsmeuqxwcnree"
+                                                  }
+                                                },
+                                                {
+                                                  type: "Form2Field",
+                                                  value: {
+                                                    type: "Email",
+                                                    label: "Email",
+                                                    required: "on",
+                                                    options: [
+                                                      "Option 1",
+                                                      "Option 2"
+                                                    ],
+                                                    placeholder: "Email",
+                                                    width: 50,
+                                                    _id:
+                                                      "tmanglymekiqnbcwvaasnnpkqmxwnhcbmani"
+                                                  }
+                                                },
+                                                {
+                                                  type: "Form2Field",
+                                                  value: {
+                                                    type: "Paragraph",
+                                                    label: "Message",
+                                                    required: "off",
+                                                    options: [
+                                                      "Option 1",
+                                                      "Option 2"
+                                                    ],
+                                                    placeholder: "Message",
+                                                    _id:
+                                                      "xrhehvmpsazsbfcbsmluajtpyocaqwnmncps"
+                                                  }
+                                                }
+                                              ],
+                                              tabsState: "",
+                                              tabsColor: "",
+                                              borderColorPalette: "color7",
+                                              tempBorderColorPalette: "color7",
+                                              borderColorOpacity: 0.9,
+                                              borderStyle: "solid",
+                                              borderWidth: 1,
+                                              borderTopWidth: 1,
+                                              borderRightWidth: 1,
+                                              borderBottomWidth: 1,
+                                              borderLeftWidth: 1,
+                                              tempBorderTopWidth: 1,
+                                              tempBorderRightWidth: 1,
+                                              tempBorderBottomWidth: 1,
+                                              tempBorderLeftWidth: 1,
+                                              bgColorHex: "#ffffff",
+                                              bgColorOpacity: 0,
+                                              tempBgColorOpacity: 1,
+                                              bgColorPalette: "",
+                                              tempBgColorPalette: "",
+                                              borderRadius: 0,
+                                              borderTopLeftRadius: 0,
+                                              borderTopRightRadius: 0,
+                                              borderBottomLeftRadius: 0,
+                                              borderBottomRightRadius: 0,
+                                              tempBorderTopLeftRadius: 0,
+                                              tempBorderTopRightRadius: 0,
+                                              tempBorderBottomLeftRadius: 0,
+                                              tempBorderBottomRightRadius: 0,
+                                              fontStyle: "paragraph",
+                                              colorPalette: "color6",
+                                              tempColorPalette: "color6",
+                                              colorOpacity: 0.6,
+                                              colorHex: "#ebebeb",
+                                              tempColorOpacity: 0.6,
+                                              borderColorHex: "#73777f",
+                                              tempBorderColorOpacity: 0.9,
+                                              _id:
+                                                "ikhhfdpacajwpcrubulfnraxbayfvgdbojox"
+                                            }
+                                          },
+                                          {
+                                            type: "Button",
+                                            value: {
+                                              _styles: ["button", "submit"],
+                                              text: "SUBMIT",
+                                              tabsState: "",
+                                              tabsColor: "",
+                                              colorPalette: "color3",
+                                              colorOpacity: 1,
+                                              bgColorHex: "#f5a527",
+                                              bgColorOpacity: 0,
+                                              bgColorPalette: "color3",
+                                              tempBgColorPalette: "color3",
+                                              tempBgColorOpacity: 1,
+                                              borderRadiusType: "custom",
+                                              fillType: "filled",
+                                              borderWidth: 2,
+                                              borderColorHex: "#f5a527",
+                                              borderColorPalette: "color3",
+                                              tempBorderColorPalette: "color3",
+                                              borderColorOpacity: 1,
+                                              hoverBgColorOpacity: 1,
+                                              hoverBorderColorHex: "#7d9dbf",
+                                              hoverBorderColorOpacity: 0.8,
+                                              hoverBgColorPalette: "color5",
+                                              hoverBorderColorPalette: "color5",
+                                              tempHoverBorderColorPalette:
+                                                "color3",
+                                              hoverBgColorHex: "#7d9dbf",
+                                              tempHoverBgColorOpacity: 1,
+                                              tempHoverBgColorPalette: "color3",
+                                              hoverColorPalette: "color2",
+                                              hoverColorOpacity: 1,
+                                              iconName: "newsletter",
+                                              iconType: "outline",
+                                              tempBorderRadiusType: "custom",
+                                              paddingRight: 42,
+                                              paddingLeft: 42,
+                                              borderRadius: 0,
+                                              tempBorderRadius: 0,
+                                              mobileSize: "small",
+                                              mobileFontSize: 11,
+                                              mobilePaddingTB: 11,
+                                              mobilePaddingTop: 11,
+                                              mobilePaddingBottom: 11,
+                                              tempMobilePaddingTB: 11,
+                                              tempMobilePaddingTop: 11,
+                                              tempMobilePaddingBottom: 11,
+                                              mobilePaddingRL: 26,
+                                              mobilePaddingRight: 26,
+                                              mobilePaddingLeft: 26,
+                                              tempMobilePaddingRL: 26,
+                                              tempMobilePaddingRight: 26,
+                                              tempMobilePaddingLeft: 26,
+                                              mobileBorderRadius: 0,
+                                              tabletSize: "custom",
+                                              tabletFontSize: 11,
+                                              tabletPaddingTB: 11,
+                                              tabletPaddingTop: 11,
+                                              tabletPaddingBottom: 11,
+                                              tempTabletPaddingTB: 11,
+                                              tempTabletPaddingTop: 11,
+                                              tempTabletPaddingBottom: 11,
+                                              tabletPaddingRL: 26,
+                                              tabletPaddingRight: 26,
+                                              tabletPaddingLeft: 26,
+                                              tempTabletPaddingRL: 26,
+                                              tempTabletPaddingRight: 26,
+                                              tempTabletPaddingLeft: 26,
+                                              tabletBorderRadius: 0,
+                                              _id:
+                                                "uismxqpxmpmayrqbjyxacsnhlqwrankjwezm"
+                                            }
+                                          }
+                                        ],
+                                        submitWidth: 25,
+                                        padding: 10,
+                                        paddingRight: 10,
+                                        paddingBottom: 10,
+                                        paddingLeft: 10,
+                                        mobileSubmitWidth: 100,
+                                        tabletSubmitWidth: 100,
+                                        _id:
+                                          "nikwjbccyevhazfizbqdpjuxbuiirscczhae"
+                                      }
+                                    }
+                                  ],
+                                  _id: "twmjlonevoogzhqfnmuelgeddpcnkqzzewjo"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--spacer"],
+                                  items: [
+                                    {
+                                      type: "Spacer",
+                                      value: {
+                                        _styles: ["spacer"],
+                                        height: 30,
+                                        _id:
+                                          "yqrpqnkjjgpspnpsowgoixkxllsjaripwpfp"
+                                      }
+                                    }
+                                  ],
+                                  showOnTablet: "off",
+                                  _id: "pfzupzbpbnpowvuwslsuvjgmlutpzokqwidd"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        text:
+                                          '<h5 class="brz-tp-heading4"><span class="brz-cp-color8">Our Address</span></h5>',
+                                        _id:
+                                          "oumqcsttnzvgyaerryomwgkxksarjdglnhvx"
+                                      }
+                                    }
+                                  ],
+                                  paddingType: "ungrouped",
+                                  marginTop: 0,
+                                  _id: "lteaamuskmohlquzdycroueepvimmkwagnrc"
+                                }
+                              },
+                              {
+                                type: "Wrapper",
+                                value: {
+                                  _styles: ["wrapper", "wrapper--richText"],
+                                  items: [
+                                    {
+                                      type: "RichText",
+                                      value: {
+                                        _styles: ["richText"],
+                                        text:
+                                          '<p class="brz-tp-paragraph"><span class="brz-cp-color6">228 Park Ave S, New York, NY 10003</span></p><p class="brz-tp-paragraph"><span class="brz-cp-color6">Phone: 645.328.459</span></p><p class="brz-tp-paragraph"><span class="brz-cp-color8">Email:</span><span class="brz-cp-color5">&nbsp;construct@example.com</span></p>',
+                                        _id:
+                                          "vheifyvxrqavsylhxnyetlyrhmjbufthuyuo"
+                                      }
+                                    }
+                                  ],
+                                  paddingType: "ungrouped",
+                                  _id: "kxjkpedwwzkxqkttwvarjuoeofscaacahpsd"
+                                }
+                              }
+                            ],
+                            paddingLeft: 80,
+                            bgImageWidth: 1920,
+                            bgImageHeight: 1089,
+                            bgImageSrc: "3db6c79e1f88ac9a65a3155c59c43123.jpg",
+                            mobilePaddingRight: 10,
+                            mobilePaddingLeft: 10,
+                            paddingType: "grouped",
+                            padding: 80,
+                            paddingTop: 80,
+                            paddingRight: 80,
+                            paddingBottom: 80,
+                            verticalAlign: "center",
+                            mobilePaddingTop: 43,
+                            mobilePaddingType: "grouped",
+                            mobilePadding: 43,
+                            mobilePaddingBottom: 43,
+                            bgColorPalette: "color1",
+                            bgColorHex: "#141b21",
+                            bgColorOpacity: 0,
+                            tempBgColorOpacity: 1,
+                            borderRadius: 0,
+                            borderTopLeftRadius: 0,
+                            borderTopRightRadius: 0,
+                            borderBottomRightRadius: 0,
+                            borderBottomLeftRadius: 0,
+                            bgPositionX: 50,
+                            bgPositionY: 50,
+                            _id: "ffaiadhpnmqdfbomfdcnphhixnrtssqjwxte"
+                          }
+                        }
+                      ],
+                      _id: "bxgcasccedahshklowvxiteydwmqhziyqkxh"
                     }
-                }
-            ],
-            _thumbnailSrc: 382898,
-            _thumbnailWidth: 600,
-            _thumbnailHeight: 272,
-            _thumbnailTime: 1575295099023
+                  }
+                ],
+                padding: 0,
+                paddingTop: 0,
+                paddingBottom: 0,
+                containerType: "fullWidth",
+                media: "image",
+                _id: "hvgawdjbwvnsewzkafylvuexurgazpizviuq"
+              }
+            }
+          ],
+          _id: "jfancuoiyqrkmmjepbnpqcuegagpxgcmeahq",
+          _thumbnailSrc: 7976511,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 272,
+          _thumbnailTime: 1631624292086
         }
-    }
-]}
+      },
+      {
+        type: "SectionFooter",
+        value: {
+          _styles: ["sectionFooter"],
+          items: [
+            {
+              type: "Row",
+              value: {
+                _styles: ["row"],
+                items: [
+                  {
+                    type: "Column",
+                    value: {
+                      _styles: ["column"],
+                      items: [
+                        {
+                          type: "Wrapper",
+                          value: {
+                            _styles: ["wrapper", "wrapper--menu"],
+                            items: [
+                              {
+                                type: "Menu",
+                                value: {
+                                  _styles: ["menu"],
+                                  fontSize: 18,
+                                  fontFamily: "changa_one",
+                                  lineHeight: 1.6,
+                                  letterSpacing: 0,
+                                  fontWeight: 400,
+                                  fontStyle: "",
+                                  itemPadding: 45,
+                                  itemPaddingRight: 45,
+                                  itemPaddingLeft: 45,
+                                  horizontalAlign: "right",
+                                  colorHex: "#a2a2a2",
+                                  colorOpacity: 1,
+                                  colorPalette: "color8",
+                                  tempColorOpacity: 1,
+                                  hoverColorHex: "#a2a2a2",
+                                  hoverColorOpacity: 1,
+                                  hoverColorPalette: "color3",
+                                  subMenuBgColorPalette: "color2",
+                                  subMenuBgColorOpacity: 1,
+                                  subMenuHoverBgColorPalette: "color2",
+                                  mMenuBgColorPalette: "color2",
+                                  subMenuBorderColorHex: "#000000",
+                                  subMenuBorderColorOpacity: 0.08,
+                                  subMenuBorderColorPalette: "",
+                                  subMenuTempBorderColorOpacity: 0.08,
+                                  subMenuHoverBorderColorHex: "#000000",
+                                  subMenuHoverBorderColorOpacity: 0.07,
+                                  mMenuBorderColorHex: "#000000",
+                                  mMenuBorderColorOpacity: 0.08,
+                                  subMenuColorHex: "#191b21",
+                                  subMenuColorOpacity: 1,
+                                  subMenuColorPalette: "color8",
+                                  subMenuTempColorOpacity: 1,
+                                  subMenuHoverColorHex: "#191b21",
+                                  subMenuHoverColorOpacity: 1,
+                                  mMenuColorHex: "#191b21",
+                                  mMenuColorOpacity: 1,
+                                  mMenuHoverColorHex: "#191b21",
+                                  mMenuHoverColorOpacity: 1,
+                                  subMenuHoverColorPalette: "color3",
+                                  mMenuHoverColorPalette: "color3",
+                                  subMenuHoverBorderColorPalette: "",
+                                  subMenuTempHoverBorderColorOpacity: 0.07,
+                                  subMenuHoverBgColorHex: "#f9f9f9",
+                                  subMenuHoverBgColorOpacity: "#1c1c1c",
+                                  tabletMMenuSize: 25,
+                                  tabletHorizontalAlign: "right",
+                                  tabletMMenuFontSize: 18,
+                                  tabletMMenuLineHeight: 2.5,
+                                  tabletMMenuLetterSpacing: 0,
+                                  tabletMMenuFontWeight: 400,
+                                  tabletMMenuFontStyle: "button",
+                                  mMenuBgColorHex: "#ffffff",
+                                  mMenuBgColorOpacity: 1,
+                                  mMenuTempBgColorOpacity: 1,
+                                  mMenuBorderColorPalette: "color8",
+                                  mMenuTempBorderColorOpacity: 0.08,
+                                  mMenuTitle: "Main Menu",
+                                  mobileHorizontalAlign: "right",
+                                  mobileMMenuSize: 25,
+                                  mMenuColorPalette: "color8",
+                                  mMenuTempColorOpacity: 1,
+                                  mobileMMenuFontSize: 14,
+                                  mobileMMenuLineHeight: 1.8,
+                                  mobileMMenuLetterSpacing: 0,
+                                  mobileMMenuFontWeight: 700,
+                                  mobileMMenuFontStyle: "",
+                                  tabletMMenuIconColorHex: "",
+                                  tabletMMenuIconColorOpacity: 1,
+                                  tabletMMenuIconColorPalette: "color2",
+                                  mMenu: "off",
+                                  mMenuSize: 25,
+                                  subMenuBgColorHex: "#ffffff",
+                                  subMenuTempBgColorOpacity: 1,
+                                  subMenuFontSize: 18,
+                                  subMenuFontFamily: "changa_one",
+                                  subMenuLineHeight: 1.5,
+                                  subMenuLetterSpacing: 0,
+                                  subMenuFontWeight: 400,
+                                  subMenuFontStyle: "",
+                                  mMenuIconColorPalette: "color2",
+                                  mMenuIconColorHex: "",
+                                  mMenuIconColorOpacity: 1,
+                                  mMenuFontSize: 18,
+                                  mMenuFontFamily: "josefin_sans",
+                                  mMenuLineHeight: 2.5,
+                                  mMenuLetterSpacing: 0,
+                                  mMenuFontWeight: 600,
+                                  mMenuFontStyle: "heading6",
+                                  tabletFontStyle: "",
+                                  mobileFontStyle: "",
+                                  tabletSubMenuFontStyle: "",
+                                  mobileSubMenuFontStyle: "heading6",
+                                  tabletMMenu: "off",
+                                  tabletFontSize: 15,
+                                  tabletLineHeight: 1.6,
+                                  tabletLetterSpacing: 0,
+                                  tabletFontWeight: 700,
+                                  tabletItemPadding: 20,
+                                  tabletItemPaddingRight: 20,
+                                  tabletItemPaddingLeft: 20,
+                                  tabletSubMenuFontSize: 15,
+                                  tabletSubMenuLineHeight: 1.5,
+                                  tabletSubMenuLetterSpacing: 0,
+                                  tabletSubMenuFontWeight: 700,
+                                  mobileMMenu: "on",
+                                  mobileFontSize: 15,
+                                  mobileLineHeight: 1.6,
+                                  mobileLetterSpacing: 0,
+                                  mobileFontWeight: 700,
+                                  mobileSubMenuFontSize: 15,
+                                  mobileSubMenuLineHeight: 1.6,
+                                  mobileSubMenuLetterSpacing: 0,
+                                  mobileSubMenuFontWeight: 400,
+                                  mobileItemPadding: 20,
+                                  mobileItemPaddingRight: 20,
+                                  mobileItemPaddingLeft: 20,
+                                  subMenuFontFamilyType: "google",
+                                  mMenuItemHorizontalAlign: "left",
+                                  _id: "pjeahhuxspbdvwdidpltqvmambhzqbexhheq",
+                                  menuSelected:
+                                    "NmRhMGQyNGY2YWIzNzE3YzJlOGE4ZDFmMTM5MTRkMGIyMzI4YmM4MWY4ZmM5MGM0MzM0MDg2YTRiYjk1M2FkMg",
+                                  fontFamilyType: "google",
+                                  mobileMMenuIconColorPalette: "color8",
+                                  mobileMMenuIconColorHex: "",
+                                  mobileMMenuIconColorOpacity: null,
+                                  tabsState: "tabNormal",
+                                  activeColorHex: "#ffffff",
+                                  activeColorOpacity: 1,
+                                  activeColorPalette: "color3",
+                                  tempActiveColorOpacity: 1,
+                                  tempActiveColorPalette: ""
+                                }
+                              }
+                            ],
+                            showOnTablet: "on",
+                            _id: "vrdyxzpvoolxjvfmldyxkbwtwpyampkusvox",
+                            horizontalAlign: "center"
+                          }
+                        }
+                      ],
+                      verticalAlign: "center",
+                      width: 100,
+                      tabletWidth: 100,
+                      paddingTop: 0,
+                      paddingTopSuffix: "px",
+                      padding: 15,
+                      paddingBottom: 0,
+                      paddingBottomSuffix: "px",
+                      _id: "zigpzokgpdvadypiftwgsyermocnbzzigskj"
+                    }
+                  }
+                ],
+                padding: 0,
+                paddingSuffix: "px",
+                paddingTop: 0,
+                paddingRight: 0,
+                paddingBottom: 30,
+                paddingLeft: 0,
+                paddingType: "ungrouped",
+                paddingBottomSuffix: "px",
+                tabletPaddingBottom: 15,
+                tabletPaddingBottomSuffix: "px",
+                tabletPadding: 0,
+                mobilePaddingBottom: 15,
+                mobilePaddingBottomSuffix: "px",
+                mobilePadding: 0,
+                _id: "akqjfrofnkhwlxlukbwhcqwursslxildssqc"
+              }
+            },
+            {
+              type: "Row",
+              value: {
+                _styles: ["row"],
+                items: [
+                  {
+                    type: "Column",
+                    value: {
+                      _styles: ["column"],
+                      items: [
+                        {
+                          type: "Wrapper",
+                          value: {
+                            _styles: ["wrapper", "wrapper--richText"],
+                            items: [
+                              {
+                                type: "RichText",
+                                value: {
+                                  _styles: ["richText"],
+                                  text:
+                                    '<p class="brz-tp-paragraph brz-fs-sm-13 brz-fs-xs-14 brz-lh-sm-1_7 brz-text-xs-center brz-fw-xs-300 brz-lh-xs-1_7 brz-fw-sm-300 brz-text-lg-center brz-text-sm-left"><span class="brz-cp-color7"><span>Company. All rights reserved.&nbsp;</span></span></p>',
+                                  _id: "igpmhrbzaywuonqseidqfrmnerpslpvhyvaz"
+                                }
+                              }
+                            ],
+                            marginTop: 10,
+                            marginTopSuffix: "px",
+                            margin: 0,
+                            tabletMarginTop: 0,
+                            tabletMarginTopSuffix: "px",
+                            tabletMargin: 0,
+                            mobileMarginTop: 0,
+                            mobileMarginTopSuffix: "px",
+                            mobileMargin: 0,
+                            tabletMarginBottom: 0,
+                            tabletMarginBottomSuffix: "px",
+                            mobileMarginBottom: 0,
+                            mobileMarginBottomSuffix: "px",
+                            _id: "lyqakdcaywjrsedbugaqprzsfmhdwwshillp"
+                          }
+                        }
+                      ],
+                      width: 33.3,
+                      tabletWidth: 33.4,
+                      verticalAlign: "center",
+                      tabletPaddingBottom: 10,
+                      tabletPaddingBottomSuffix: "px",
+                      tabletPadding: 15,
+                      mobilePaddingBottom: 0,
+                      mobilePaddingBottomSuffix: "px",
+                      mobilePadding: 0,
+                      paddingType: "grouped",
+                      padding: 0,
+                      paddingSuffix: "px",
+                      paddingTop: 0,
+                      paddingRight: 0,
+                      paddingBottom: 0,
+                      paddingLeft: 0,
+                      tabletPaddingTop: 10,
+                      tabletPaddingTopSuffix: "px",
+                      tabletPaddingRight: 15,
+                      tabletPaddingRightSuffix: "px",
+                      showOnMobile: "on",
+                      _id: "ebkyqhcxtnfzjzlpxbnkocuicktvqssiaobu"
+                    }
+                  },
+                  {
+                    type: "Column",
+                    value: {
+                      _styles: ["column"],
+                      items: [
+                        {
+                          type: "Wrapper",
+                          value: {
+                            _styles: ["wrapper", "wrapper--image"],
+                            items: [
+                              {
+                                type: "Image",
+                                value: {
+                                  _styles: ["image"],
+                                  imagePopulation: "",
+                                  imageWidth: 99,
+                                  imageHeight: 74,
+                                  imageSrc:
+                                    "7f7b1f45ba54f76029f5683261846204.png",
+                                  height: 100,
+                                  positionX: 50,
+                                  positionY: 50,
+                                  _id: "titngnpsucsviqsgzbqazrbjyafgaoaubogw",
+                                  width: 30,
+                                  widthSuffix: "%",
+                                  heightSuffix: "%",
+                                  tabletWidth: 45,
+                                  tabletWidthSuffix: "%",
+                                  tabletHeightSuffix: "%",
+                                  mobileWidth: 50,
+                                  mobileWidthSuffix: "%",
+                                  mobileHeightSuffix: "%"
+                                }
+                              }
+                            ],
+                            horizontalAlign: "center",
+                            mobileHorizontalAlign: "right",
+                            _id: "shqgbpwlxkpsqqdkkgcxgpnmksqhvpjwkzoa"
+                          }
+                        }
+                      ],
+                      width: 33.4,
+                      paddingRight: 0,
+                      paddingRightSuffix: "px",
+                      padding: 15,
+                      paddingLeft: 0,
+                      paddingLeftSuffix: "px",
+                      tabletWidth: 38.6,
+                      verticalAlign: "center",
+                      tabletPaddingLeft: 0,
+                      tabletPaddingLeftSuffix: "px",
+                      tabletPadding: 15,
+                      _id: "vnyfbvxwrzphfrfpecyzusabjjykgeqgtrqv",
+                      tabletPaddingRight: 0,
+                      tabletPaddingRightSuffix: "px",
+                      tempTabletPaddingRightSuffix: "px",
+                      tabletPaddingSuffix: "px",
+                      tempTabletPaddingSuffix: "px",
+                      mobileWidth: 50
+                    }
+                  },
+                  {
+                    type: "Column",
+                    value: {
+                      _styles: ["column"],
+                      items: [
+                        {
+                          type: "Cloneable",
+                          value: {
+                            _styles: ["wrapper-clone", "wrapper-clone--icon"],
+                            items: [
+                              {
+                                type: "Icon",
+                                value: {
+                                  _styles: ["icon"],
+                                  name: "logo-facebook",
+                                  type: "glyph",
+                                  size: "custom",
+                                  customSize: 18,
+                                  borderRadius: 0,
+                                  colorPalette: "",
+                                  colorHex: "#2e4da7",
+                                  colorOpacity: 1,
+                                  hoverColorPalette: "",
+                                  hoverColorHex: "#496cd1",
+                                  hoverColorOpacity: 0.8,
+                                  linkExternal: "#",
+                                  linkPopulation: "",
+                                  linkExternalType: "linkExternal",
+                                  linkExternalBlank: "on",
+                                  _id: "esmefqydukdrxndqimucnvittxrwoqxcczov"
+                                }
+                              },
+                              {
+                                type: "Icon",
+                                value: {
+                                  _styles: ["icon"],
+                                  name: "logo-pinterest",
+                                  type: "glyph",
+                                  size: "custom",
+                                  customSize: 18,
+                                  borderRadius: 0,
+                                  colorPalette: "",
+                                  colorHex: "#bd081c",
+                                  colorOpacity: 1,
+                                  hoverColorPalette: "",
+                                  hoverColorHex: "#d63d4e",
+                                  hoverColorOpacity: 0.8,
+                                  linkExternal: "#",
+                                  linkPopulation: "",
+                                  linkExternalType: "linkExternal",
+                                  linkExternalBlank: "on",
+                                  _id: "yxlhqcnafakboiqbeebjvtmcbdadlqhdopeq"
+                                }
+                              },
+                              {
+                                type: "Icon",
+                                value: {
+                                  _styles: ["icon"],
+                                  name: "logo-twitter",
+                                  type: "glyph",
+                                  size: "custom",
+                                  customSize: 18,
+                                  borderRadius: 0,
+                                  colorPalette: "",
+                                  colorHex: "#1d9ceb",
+                                  colorOpacity: 1,
+                                  hoverColorPalette: "",
+                                  hoverColorHex: "#47aae8",
+                                  hoverColorOpacity: 0.8,
+                                  linkExternal: "#",
+                                  linkPopulation: "",
+                                  linkExternalType: "linkExternal",
+                                  linkExternalBlank: "on",
+                                  _id: "zbpqzayfnyidvqmtouzleycxfvldkapydabo"
+                                }
+                              },
+                              {
+                                type: "Icon",
+                                value: {
+                                  _styles: ["icon"],
+                                  name: "logo-youtube",
+                                  type: "glyph",
+                                  size: "custom",
+                                  customSize: 24,
+                                  borderRadius: 0,
+                                  colorPalette: "",
+                                  colorHex: "#ee0f0f",
+                                  colorOpacity: 1,
+                                  hoverColorPalette: "",
+                                  hoverColorHex: "#eb5252",
+                                  hoverColorOpacity: 0.8,
+                                  linkExternal: "#",
+                                  linkPopulation: "",
+                                  linkExternalType: "linkExternal",
+                                  linkExternalBlank: "on",
+                                  _id: "ppynmqyvqijqrahturxkfwoknziymlpohzui"
+                                }
+                              }
+                            ],
+                            itemPadding: 14,
+                            itemPaddingRight: 14,
+                            itemPaddingLeft: 14,
+                            horizontalAlign: "center",
+                            tabletHorizontalAlign: "right",
+                            mobileHorizontalAlign: "left",
+                            _id: "qcwqfnqwdvoimlohltvcagoftwzdhugjwydz"
+                          }
+                        }
+                      ],
+                      width: 33.3,
+                      tabletWidth: 27.1,
+                      verticalAlign: "center",
+                      tabletPaddingBottom: 35,
+                      tabletPaddingBottomSuffix: "px",
+                      tabletPadding: 15,
+                      mobilePaddingBottom: 0,
+                      mobilePaddingBottomSuffix: "px",
+                      mobilePadding: 0,
+                      paddingRight: 0,
+                      paddingRightSuffix: "px",
+                      padding: 15,
+                      paddingLeft: 0,
+                      paddingLeftSuffix: "px",
+                      tabletPaddingRight: 0,
+                      tabletPaddingRightSuffix: "px",
+                      _id: "gqtndjaiqpwomkosohojydzolapflwgskxkw",
+                      mobileWidth: 50
+                    }
+                  }
+                ],
+                borderWidthType: "ungrouped",
+                borderTopWidth: 1,
+                borderWidth: 4,
+                tempBorderTopWidth: 1,
+                tempBorderRightWidth: 0,
+                tempBorderBottomWidth: 0,
+                tempBorderLeftWidth: 0,
+                tempBorderWidth: 4,
+                borderColorOpacity: 0.15,
+                borderColorHex: "#66738d",
+                borderColorPalette: "",
+                tempBorderColorOpacity: 0.15,
+                borderRightWidth: 0,
+                borderBottomWidth: 0,
+                borderLeftWidth: 0,
+                borderRadius: 0,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+                borderBottomLeftRadius: 0,
+                tabletPaddingRight: 10,
+                tabletPaddingLeft: 10,
+                mobilePaddingRight: 10,
+                mobilePaddingLeft: 10,
+                padding: 0,
+                paddingSuffix: "px",
+                paddingTop: 25,
+                paddingRight: 0,
+                paddingBottom: 0,
+                paddingLeft: 0,
+                paddingType: "ungrouped",
+                paddingTopSuffix: "px",
+                paddingBottomSuffix: "px",
+                size: 80,
+                tabletPaddingTop: 5,
+                tabletPaddingTopSuffix: "px",
+                tabletPadding: 0,
+                mobilePaddingTop: 20,
+                mobilePaddingTopSuffix: "px",
+                mobilePadding: 0,
+                tabletPaddingBottom: 5,
+                tabletPaddingBottomSuffix: "px",
+                mobileReverseColumns: "on",
+                _id: "noferrixxmjfhxsrgmywbsghtnssjimagyiv"
+              }
+            }
+          ],
+          paddingType: "ungrouped",
+          paddingTop: 45,
+          paddingBottom: 30,
+          padding: 55,
+          tabletPaddingType: "ungrouped",
+          tabletPaddingTop: 25,
+          tabletPaddingBottom: 15,
+          tabletPadding: 25,
+          mobilePaddingType: "ungrouped",
+          mobilePaddingTop: 15,
+          mobilePaddingBottom: 25,
+          mobilePadding: 25,
+          _id: "jkhzinbbmhlrvyfkkyoxwqjhbwmrjzlyegaw",
+          bgColorPalette: "color1",
+          tempBgColorPalette: "color1",
+          bgColorOpacity: 1,
+          borderRadius: 0,
+          borderTopLeftRadius: 0,
+          borderTopRightRadius: 0,
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+          tempBorderTopLeftRadius: 0,
+          tempBorderTopRightRadius: 0,
+          tempBorderBottomLeftRadius: 0,
+          tempBorderBottomRightRadius: 0,
+          tabsState: "tabNormal",
+          tabsCurrentElement: "tabCurrentElement",
+          tabsColor: "tabOverlay",
+          _thumbnailSrc: 3185604,
+          _thumbnailWidth: 600,
+          _thumbnailHeight: 89,
+          _thumbnailTime: 1597148846931,
+          tabletPaddingBottomSuffix: "px",
+          tempTabletPaddingBottomSuffix: "px",
+          tabletPaddingSuffix: "px",
+          tempTabletPaddingSuffix: "px",
+          tempTabletPaddingBottom: 25
+        },
+        blockId: "block2kit15252"
+      }
+    ]
+  }
 };

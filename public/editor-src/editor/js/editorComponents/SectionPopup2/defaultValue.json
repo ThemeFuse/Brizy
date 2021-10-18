@@ -94,7 +94,10 @@
     "closeVerticalPositionSuffix": "px",
 
     "closeSize": "small",
+
     "closeCustomSize": 16,
+    "closeCustomSizeSuffix": "px",
+
     "closeSmallSize": 16,
     "closeMediumSize": 24,
     "closeLargeSize": 32,
@@ -106,9 +109,13 @@
     "tempCloseBorderRadiusShape": "square",
 
     "closeBorderRadius": 0,
+    "closeBorderRadiusSuffix": "px",
+
     "tempCloseBorderRadius": 2,
 
     "closeBgSize": 0,
+    "closeBgSizeSuffix": "px",
+
     "tempCloseBgSize": 5,
 
     "closeColorHex": "#ffffff",
@@ -146,6 +153,7 @@
 
     "showCloseButton": "on",
     "showCloseButtonAfter": 0,
+    "showCloseButtonAfterSuffix": "px",
 
     "hoverShowCloseButton": null,
 
@@ -283,7 +291,10 @@
     "tabletCloseVerticalPositionSuffix": null,
 
     "tabletCloseSize": null,
+
     "tabletCloseCustomSize": null,
+    "tabletCloseCustomSizeSuffix": null,
+
     "tabletCloseSmallSize": null,
     "tabletCloseMediumSize": null,
     "tabletCloseLargeSize": null,
@@ -295,9 +306,11 @@
     "tempTabletCloseBorderRadiusShape": null,
 
     "tabletCloseBorderRadius": null,
+    "tabletCloseBorderRadiusSuffix": null,
     "tempTabletCloseBorderRadius": null,
 
     "tabletCloseBgSize": null,
+    "tabletCloseBgSizeSuffix": null,
     "tempTabletCloseBgSize": null,
 
     "tabletCloseColorHex": null,
@@ -376,6 +389,7 @@
 
     "mobileCloseSize": null,
     "mobileCloseCustomSize": null,
+    "mobileCloseCustomSizeSuffix": null,
     "mobileCloseSmallSize": null,
     "mobileCloseMediumSize": null,
     "mobileCloseLargeSize": null,
@@ -387,9 +401,11 @@
     "tempMobileCloseBorderRadiusShape": null,
 
     "mobileCloseBorderRadius": null,
+    "mobileCloseBorderRadiusSuffix": null,
     "tempMobileCloseBorderRadius": null,
 
     "mobileCloseBgSize": null,
+    "mobileCloseBgSizeSuffix": null,
     "tempMobileCloseBgSize": null,
 
     "mobileCloseColorHex": null,

@@ -15,7 +15,6 @@ import { _setOpacity } from "./utils";
 import { Value } from "./entities/Value";
 import * as Hex from "visual/utils/color/Hex";
 import * as Blur from "visual/utils/cssProps/Blur";
-import * as Spread from "visual/utils/cssProps/Spread";
 import { ElementModel } from "visual/component/Elements/Types";
 import { MValue } from "visual/utils/value";
 import { Literal } from "visual/utils/types/Literal";
@@ -29,8 +28,8 @@ const model: Value = {
   tempOpacity: Opacity.unsafe(1),
   blur: Blur.unsafe(0.3),
   tempBlur: Blur.unsafe(0.3),
-  spread: Spread.unsafe(0.3),
-  tempSpread: Spread.unsafe(0.3),
+  spread: 0.3,
+  tempSpread: 0.3,
   palette: "color1",
   tempPalette: "color2",
   vertical: 1,
@@ -146,8 +145,8 @@ describe("Testing 'toggleFields' function", function() {
       ...model,
       blur: Blur.unsafe(1),
       tempBlur: Blur.empty,
-      spread: Spread.unsafe(1),
-      tempSpread: Spread.empty,
+      spread: 1,
+      tempSpread: 0,
       vertical: 1,
       tempVertical: 0,
       horizontal: 1,
@@ -171,8 +170,8 @@ describe("Testing 'toggleFields' function", function() {
       ...model,
       blur: Blur.empty,
       tempBlur: Blur.unsafe(1),
-      spread: Spread.empty,
-      tempSpread: Spread.unsafe(1),
+      spread: 0,
+      tempSpread: 1,
       vertical: 0,
       tempVertical: 1,
       horizontal: 0,
@@ -196,8 +195,8 @@ describe("Testing 'toggleFields' function", function() {
       ...model,
       blur: Blur.unsafe(3),
       tempBlur: Blur.unsafe(1),
-      spread: Spread.unsafe(3),
-      tempSpread: Spread.unsafe(1),
+      spread: 3,
+      tempSpread: 1,
       vertical: 3,
       tempVertical: 1,
       horizontal: 3,
@@ -299,8 +298,8 @@ describe("Testing 'fromElementModel' function", function() {
       ["tempPalette", Palette.empty, { tempColorPalette: undefined }],
       ["blur", Blur.empty, { blur: undefined }],
       ["tempBlur", Blur.unsafe(4), { tempBlur: undefined }],
-      ["spread", Spread.empty, { spread: undefined }],
-      ["tempSpread", Spread.unsafe(2), { tempSpread: undefined }],
+      ["spread", 0, { spread: undefined }],
+      ["tempSpread", 2, { tempSpread: undefined }],
       ["vertical", 0, { vertical: undefined }],
       ["tempVertical", 0, { tempVertical: undefined }],
       ["horizontal", 0, { horizontal: undefined }],
@@ -389,8 +388,8 @@ describe("Testing 'toElementModel' function", function() {
       tempOpacity: Opacity.unsafe(1),
       blur: Blur.empty,
       tempBlur: Blur.unsafe(2),
-      spread: Spread.empty,
-      tempSpread: Spread.unsafe(2),
+      spread: 0,
+      tempSpread: 2,
       vertical: 0,
       tempVertical: 0,
       horizontal: 0,
@@ -427,8 +426,8 @@ describe("Testing 'fieldsEnabled' function", function() {
   );
 
   test("Fields are not enabled if blur and spread values are 0", () => {
-    expect(
-      fieldsEnabled({ ...model, blur: Blur.empty, spread: Spread.empty })
-    ).toBe(false);
+    expect(fieldsEnabled({ ...model, blur: Blur.empty, spread: 0 })).toBe(
+      false
+    );
   });
 });

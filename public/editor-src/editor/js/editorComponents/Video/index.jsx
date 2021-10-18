@@ -36,7 +36,7 @@ class Video extends EditorComponent {
   handleResizerChange = patch => this.patchValue(patch);
 
   getVideoSrc(v) {
-    const { video, coverImageSrc, controls, start, end } = v;
+    const { video, coverImageSrc, controls, start, end, loop, autoplay } = v;
 
     const videoSrc = getVideoData(video);
 
@@ -56,13 +56,14 @@ class Video extends EditorComponent {
 
     return videoSrc
       ? getVideoUrl(videoSrc, {
-          autoplay: Boolean(coverImageSrc),
+          autoplay: !coverImageSrc && autoplay === "on",
           controls: controls === "on",
           branding,
           intro,
           suggestedVideo: false,
           start,
-          end
+          end,
+          loop: loop === "on"
         })
       : "";
   }
@@ -100,7 +101,8 @@ class Video extends EditorComponent {
       branding,
       intro,
       start,
-      end
+      end,
+      loop
     } = v;
     const videoSrc = this.getVideoSrc(v);
 
@@ -115,6 +117,8 @@ class Video extends EditorComponent {
         data-intro={intro === "on"}
         data-start={start}
         data-end={end}
+        data-loop={loop === "on"}
+        data-autoplay={this.getAutoplay(v)}
       />
     );
 
@@ -296,7 +300,7 @@ class Video extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { type, ratio, controls } = v;
+    const { type, ratio, controls, loop, muted } = v;
 
     const restrictions = {
       size: {
@@ -373,7 +377,14 @@ class Video extends EditorComponent {
               onChange={this.handleResizerChange}
               restrictions={restrictions}
             >
-              <div className="brz-video-content">{content}</div>
+              <div
+                className="brz-video-content"
+                loop={loop === "on"}
+                muted={muted === "on"}
+                data-autoplay={this.getAutoplay(v)}
+              >
+                {content}
+              </div>
             </BoxResizer>
           </Wrapper>
         </CustomCSS>

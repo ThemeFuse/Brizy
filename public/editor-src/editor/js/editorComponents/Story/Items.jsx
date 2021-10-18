@@ -278,7 +278,7 @@ class StoryItems extends EditorArrayComponent {
           settings: {
             centerPadding: "40px",
             slidesToShow: 1,
-            speed: 180
+            speed: 300
           }
         }
       ];

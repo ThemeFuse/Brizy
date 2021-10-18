@@ -55,6 +55,19 @@ exports.libs = options => {
       library: "BrizyLibs",
       libraryTarget: "window"
     },
+    resolve: {
+      extensions: editorConfig.resolve.extensions
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(ts|js)$/,
+          include: [path.resolve(__dirname, "editor")],
+          loader: "babel-loader",
+          options: babelrc.preview()
+        }
+      ]
+    },
     optimization: {
       minimize: options.IS_PRODUCTION,
       minimizer: [

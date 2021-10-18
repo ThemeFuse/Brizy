@@ -343,6 +343,22 @@ $dropdown-arrow-size: 7px;
   }
 }
 
+// Dropdown offset
+.brz-menu__dropdown {
+  &[data-popper-placement^="top"]:before {
+    bottom: calc(var(--offset) * -1);
+  }
+  &[data-popper-placement^="bottom"]:before {
+    top: calc(var(--offset) * -1);
+  }
+  &[data-popper-placement^="left"]:before {
+    right: calc(var(--offset) * -1);
+  }
+  &[data-popper-placement^="right"]:before {
+    left: calc(var(--offset) * -1);
+  }
+}
+
 // Mega Menu in Dropdown
 .brz-mega-menu__dropdown {
   width: 100%;
@@ -369,6 +385,9 @@ $dropdown-arrow-size: 7px;
 // Active without Editor
 &:not(.brz-ed) {
   .brz-menu {
+    &__mmenu:not(.brz-mm-menu_opened) {
+      display: none;
+    }
     .brz-menu__item:hover > .brz-menu__sub-menu,
     .brz-menu__item:hover > .brz-mega-menu__portal {
       visibility: visible;

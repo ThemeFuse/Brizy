@@ -215,7 +215,7 @@ export function cssStyleElementForm2FieldsSelectBorder({ v, device, state }) {
 
   return borderWidth === undefined
     ? ""
-    : `border-bottom:${borderWidth}px ${borderStyle} ${borderColor};`;
+    : `border :${borderWidth}px ${borderStyle} ${borderColor};`;
 }
 
 export function cssStyleElementForm2FieldsSelectBorderRadius({

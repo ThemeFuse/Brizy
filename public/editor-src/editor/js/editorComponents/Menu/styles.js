@@ -19,7 +19,7 @@ export function styleMenuContainer(v, vs, vd) {
 
 export function styleMenu(v, vs, vd) {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&:hover .brz-menu__ul": {
       interval: [
         "cssStyleTypography2FontSize",
         "cssStyleTypography2FontWeight",
@@ -227,34 +227,22 @@ export function styleMenu(v, vs, vd) {
     ".brz && .brz-menu__dropdown": {
       interval: ["cssStyleMenuDropdownPosition"]
     },
-    ".brz && .brz-menu__dropdown-left": {
+    ".brz && [data-popper-placement='left-start']": {
       interval: ["cssStyleMenuDropdownPositionLeft"]
     },
-    ".brz && .brz-menu__dropdown-right": {
+    ".brz && [data-popper-placement='right-start']": {
       interval: ["cssStyleMenuDropdownPositionRight"]
-    },
-    ".brz && .brz-menu__dropdown-left:before": {
-      interval: ["cssStyleMenuDropdownBeforePositionLeft"]
-    },
-    ".brz && .brz-menu__dropdown-right:before": {
-      interval: ["cssStyleMenuDropdownBeforePositionRight"]
     },
 
     // First Level of Dropdown
     ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__dropdown": {
       interval: ["cssStyleMenuFirstDropdownPosition"]
     },
-    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__dropdown-left": {
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > [data-popper-placement='left-start']": {
       interval: ["cssStyleMenuFirstDropdownPositionLeft"]
     },
-    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__dropdown-right": {
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > [data-popper-placement='right-start']": {
       interval: ["cssStyleMenuFirstDropdownPositionRight"]
-    },
-    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__dropdown-left:before": {
-      interval: ["cssStyleMenuFirstDropdownBeforePositionLeft"]
-    },
-    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__dropdown-right:before": {
-      interval: ["cssStyleMenuFirstDropdownBeforePositionRight"]
     },
 
     // Dropdown responsive open / close

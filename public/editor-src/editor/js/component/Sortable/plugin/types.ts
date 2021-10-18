@@ -1,9 +1,14 @@
-export type Rect = {
+export interface Point {
+  x: number;
+  y: number;
+}
+
+export interface Rect {
   left: number;
   right: number;
   top: number;
   bottom: number;
-};
+}
 
 type AcceptElements =
   | "*"
@@ -18,7 +23,8 @@ type AcceptElements =
         sortableNode: Element;
       }
     ) => boolean);
-export type SortablePluginOptions = {
+
+export interface SortablePluginOptions {
   acceptElements: AcceptElements;
   isGrid: boolean;
   showLines: boolean;
@@ -53,16 +59,15 @@ export type SortablePluginOptions = {
     };
   }) => void;
   onEnd?: () => void;
-};
+}
 
-export type SortableInfo = {
-  depth: number;
+export interface SortableInfo {
   zIndex: number;
   isGrid: boolean;
   acceptElements: AcceptElements;
-};
+}
 
-export type GlobalState = {
+export interface GlobalState {
   allSortables: Element[];
   sortableInfo: WeakMap<Element, SortableInfo>;
   dragInfo: {
@@ -83,4 +88,4 @@ export type GlobalState = {
     };
     receiverSortables?: Element[];
   };
-};
+}

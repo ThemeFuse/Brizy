@@ -40,6 +40,20 @@ export function style(v, vs, vd) {
         "cssStyleElementCountDown2HoverTransitionProperty"
       ]
     },
+    ".brz &&:hover .brz-countdown2-separator": {
+      standart: [
+        "cssStyleElementCountDown2NumberColor",
+        "cssStyleNumberTypography2FontFamily",
+        "cssStyleNumberTypography2FontSize",
+        "cssStyleNumberTypography2LineHeight",
+        "cssStyleNumberTypography2FontWeight",
+        "cssStyleNumberTypography2LetterSpacing"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementCountDown2HoverTransitionProperty"
+      ]
+    },
     ".brz &&:hover .brz-countdown2__label": {
       standart: [
         "cssStyleElementCountDown2TitleColor",

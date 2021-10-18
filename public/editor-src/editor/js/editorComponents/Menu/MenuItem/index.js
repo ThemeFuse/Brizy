@@ -26,6 +26,8 @@ import { styleClassName, styleMmMenuClassName, styleMegaMenu } from "./styles";
 import defaultValue from "./defaultValue.json";
 import { calculateMeta } from "./meta";
 import { DraggableOverlay } from "visual/component/DraggableOverlay";
+import { attachRef } from "visual/utils/react";
+import { getParentMegaMenuUid } from "visual/editorComponents/Menu/utils";
 
 const IS_PRO = Config.get("pro");
 let openedMegaMenu = null;
@@ -54,6 +56,8 @@ class MenuItem extends EditorComponent {
   };
 
   menuItem = React.createRef();
+
+  megaMenuRef = React.createRef();
 
   componentDidUpdate(nextProps) {
     if (
@@ -155,6 +159,27 @@ class MenuItem extends EditorComponent {
     if (this.state.isOpen) {
       this.close();
     }
+  };
+
+  insideMegaMenu = target => {
+    const node = this.megaMenuRef.current;
+
+    if (this.state.isOpen && node) {
+      // first level
+      const inFirstLevel = node.contains(target);
+
+      if (inFirstLevel) {
+        return true;
+      }
+
+      const parentMegaMenuId = getParentMegaMenuUid(target);
+      // deep level
+      if (parentMegaMenuId) {
+        return !!node.querySelector(`[data-menu-item-id=${parentMegaMenuId}]`);
+      }
+    }
+
+    return false;
   };
 
   renderIcon(v) {
@@ -300,12 +325,16 @@ class MenuItem extends EditorComponent {
             <SortableZIndex zIndex={2}>
               <div
                 className={portalClassName}
-                ref={ref}
+                ref={el => {
+                  attachRef(el, this.megaMenuRef);
+                  attachRef(el, ref);
+                }}
                 style={{
                   ...style,
                   maxWidth,
                   width: "100%"
                 }}
+                data-mega-menu-uid={this.getId()}
                 data-popper-placement={placement}
               >
                 <MenuItemItems {...itemProps} />
@@ -378,12 +407,13 @@ class MenuItem extends EditorComponent {
       return null;
     }
 
-    const { level, toolbarExtend, mMenu, meta } = this.props;
+    const { level, toolbarExtend, mMenu, meta, mods } = this.props;
     const itemProps = this.makeSubcomponentProps({
       toolbarExtend,
       level,
       mMenu,
       meta,
+      mods,
       bindWithKey: "items",
       megaMenu: false
     });
@@ -421,7 +451,7 @@ class MenuItem extends EditorComponent {
       ".brz-ed-sidebar__right",
       ".brz-ed-tooltip__content-portal",
       ".brz-ed-fixed",
-      ".brz-mega-menu",
+      this.insideMegaMenu,
       ".react-contexify",
       ...(TARGET === "WP"
         ? [
@@ -464,6 +494,7 @@ class MenuItem extends EditorComponent {
           <Reference>
             {() => (
               <li
+                data-menu-item-id={this.getId()}
                 ref={this.menuItem}
                 className={className}
                 onClick={this.handleClick}

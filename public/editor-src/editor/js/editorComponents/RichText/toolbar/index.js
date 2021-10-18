@@ -24,6 +24,26 @@ const dependenciesOption = (v, onChange) => {
   return v.textPopulation ? {} : { dependencies: v => onChange(v) };
 };
 
+const getBlockTag = value => {
+  switch (value) {
+    case "p":
+      return {
+        pre: false,
+        header: null
+      };
+    case "pre":
+      return {
+        header: false,
+        pre: value
+      };
+    default:
+      return {
+        pre: false,
+        header: value
+      };
+  }
+};
+
 const getItems = (v, onChange) => ({ device, component, context }) => {
   const inPopup = Boolean(component.props.meta?.sectionPopup);
   const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
@@ -479,6 +499,25 @@ const getItems = (v, onChange) => ({ device, component, context }) => {
             units: [{ value: "px", title: "px" }]
           },
           ...dependencies
+        },
+        {
+          id: "tag",
+          label: t("HTML Tag"),
+          type: "select",
+          className: "brz-control__select--small",
+          disabled: isPopulationBlock,
+          choices: [
+            { title: t("P"), value: "p" },
+            { title: t("H1"), value: "h1" },
+            { title: t("H2"), value: "h2" },
+            { title: t("H3"), value: "h3" },
+            { title: t("H4"), value: "h4" },
+            { title: t("H5"), value: "h5" },
+            { title: t("H6"), value: "h6" },
+            { title: t("PRE"), value: "pre" }
+          ],
+          onChange: tagName => onChange(getBlockTag(tagName)),
+          value: v.tagName
         },
         {
           id: "advancedSettings",

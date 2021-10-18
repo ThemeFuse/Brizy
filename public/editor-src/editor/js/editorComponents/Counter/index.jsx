@@ -92,7 +92,12 @@ class Counter extends EditorComponent {
   }
 
   initCounter = _.debounce(() => {
-    const { duration, start, end } = this.getValue();
+    const { duration, start, end, type } = this.getValue();
+
+    const isSimple = type === "simple";
+
+    const endNumber = Number(end);
+    const _end = isSimple ? endNumber : Math.max(0, Math.min(100, endNumber));
 
     const step = final => {
       this.state.final !== final && this.setState({ final });
@@ -101,7 +106,7 @@ class Counter extends EditorComponent {
     this.lastAnimation && this.lastAnimation.stop(true, true);
     // remove number
     this.lastAnimation = jQuery({ countNum: Number(start) }).animate(
-      { countNum: Number(end) },
+      { countNum: _end },
       {
         duration: duration * 1000,
         easing: "linear",
@@ -109,7 +114,7 @@ class Counter extends EditorComponent {
           step(roundTo(this.countNum, 2));
         },
         complete: function() {
-          step(Number(end));
+          step(_end);
         }
       }
     );
@@ -168,7 +173,6 @@ class Counter extends EditorComponent {
 
     const formatNumber = function(number) {
       var splitNum;
-      number = Math.abs(number);
       number = number.toFixed(0);
       splitNum = number.split(".");
       splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
