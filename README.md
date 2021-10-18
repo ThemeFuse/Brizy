@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.8.1<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.17<br>
+Stable tag: 2.3.18<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,33 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.18 - 2021-10-18
+* New: 3 design layout packs
+* Improved: Added autoplay and loop options for the Video element
+* Improved: Drag and Drop between columns 
+* Improved: Compatibility WP Ultimo plugin. Edit brizy pages with remapping domain
+* Improved: Compatibility with Page Optimize plugin
+* Improved: Moved HTML Tag option back on the main toolbar on Text element
+* Fixed: PostTitle added title hover transition 
+* Fixed: Contact form text arrangement in dropdown 
+* Fixed: Contact form dropdown border
+* Fixed: Nested accordions collapse issue 
+* Fixed: Alignment in Login element
+* Fixed: Fonts for Tabs 
+* Fixed: Styles issues for nested tabs
+* Fixed: Styles issues for nested accordions
+* Fixed: Vimeo bg video starting with a delay 
+* Fixed: Nested accordions animation 
+* Fixed: Displays negative values for the Counter element 
+* Fixed: Hexa color code in gradient background for Blocks
+* Fixed: Countdown styles size and color 
+* Fixed: Empty links in Text element in preview
+* Fixed: Negative spread values for shadows 
+* Fixed: Double options in right sidebar for certain elements in responsive views
+* Fixed: Images are not rendered on a non default language URL
+* Fixed: Use Brizy_Public_AssetProxy::get_mime instead of native function
+
 
 ### 2.3.17 - 2021-09-21
 * Fixed: Revert optimization for assets, conflicts with plugins
