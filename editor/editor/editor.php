@@ -587,25 +587,31 @@ class Brizy_Editor_Editor_Editor {
         return $config;
     }
 
-    private function addGlobalBlocksData($config) {
+    /**
+     * @return object
+     */
+    private function get_page_attachments()
+    {
+        global $wpdb;
+        $query = $wpdb->prepare(
+            "SELECT 
+					pm.*
+				FROM 
+					{$wpdb->prefix}postmeta pm 
+				    JOIN {$wpdb->prefix}postmeta pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key='brizy_post_uid' AND pm2.meta_value=%s
+				WHERE pm.meta_key='brizy_attachment_uid'
+				GROUP BY pm.post_id",
+            $this->post->getUid()
+        );
 
-        $postTaxonomies = get_post_taxonomies($wp_post_id = (int)$config['wp']['page']);
-        $postTerms = [];
-        foreach ($postTaxonomies as $tax) {
-            $postTerms = array_merge($postTerms, wp_get_post_terms($wp_post_id, $tax));
+        $results = $wpdb->get_results($query);
+        $attachment_data = array();
+        foreach ($results as $row) {
+            $attachment_data[$row->meta_value] = true;
         }
 
-        $postTermsByKeys = [];
-        foreach ($postTerms as $term) {
-            $postTermsByKeys[$term->term_id] = $term;
-        }
-
-        $config['wp']['postTerms']       = $postTerms;
-		$config['wp']['postTermParents'] = array_diff_key( $this->getAllParents( $postTermsByKeys ), $postTermsByKeys );
-		$config['wp']['postAuthor']      = (int) $this->post->getWpPost()->post_author;
-
-		return $config;
-	}
+        return (object)$attachment_data;
+    }
 
 	/**
 	 * @return object
