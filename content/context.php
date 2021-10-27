@@ -88,10 +88,6 @@ class Brizy_Content_Context implements ContextInterface
 		$this->setEntity($wp_post);
 	}
 
-    public function afterExtract($contentPlaceholders, $instancePlaceholders, $contentAfterExtractor) {
-	    $this->setPlaceholders($contentPlaceholders);
-    }
-
 	/**
 	 * @return array
 	 */
@@ -139,6 +135,10 @@ class Brizy_Content_Context implements ContextInterface
 			}
 		}
 
+		if($context = $this->getParentContext()) {
+		    $results = array_merge($results,$context->getPlaceholdersByAttrValue($key, $value));
+        }
+
 		return $results;
 	}
 
@@ -154,6 +154,10 @@ class Brizy_Content_Context implements ContextInterface
                     return $placeholder;
                 }
             }
+        }
+
+        if($context = $this->getParentContext()) {
+            return $context->getPlaceholderByAttrValues($attributes);
         }
 
         return null;
