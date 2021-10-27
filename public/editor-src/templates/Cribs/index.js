@@ -9,7 +9,7 @@ const CribsStyle = require("./styles/Cribs");
 module.exports = {
   name: "Cribs",
   color: "#303030",
-  cat: [0, 3, 100],
+  cat: [0, 3],
   pages: [Homepage, About, Portfolio, PortfolioDetails, Contact],
   styles: [CribsStyle]
 };

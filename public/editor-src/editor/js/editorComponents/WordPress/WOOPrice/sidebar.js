@@ -18,6 +18,7 @@ export function getItems() {
       config: {
         align: "start"
       },
+      devices: "desktop",
       tabs: [
         {
           id: "moreSettingsAdvanced",

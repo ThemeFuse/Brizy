@@ -92,8 +92,7 @@ export function cssStyleVisibleMode({ v, device, state, mode = "editor" }) {
     ? visible
     : "";
 }
-
-export function cssStyleShowMembershipBlock({ v }) {
+function cssStyleShowMembership(v, display) {
   const { membership, membershipRoles } = v;
   const roles = JSON.parse(membershipRoles || "[]");
 
@@ -101,8 +100,20 @@ export function cssStyleShowMembershipBlock({ v }) {
     return "";
   }
 
-  const cssRoles = roles.map(item => `, var(--role-${item}`).join("");
+  const displayCss = `--role-default-${display}`;
+
+  const cssRoles = roles
+    .map(item => `, var(--role-${item}-${display}`)
+    .join("");
   const closeParentheses = ")".repeat(roles.length + 1);
 
-  return `display: var(--role-default ${cssRoles}, none${closeParentheses};`;
+  return `display: var(${displayCss} ${cssRoles}, none${closeParentheses};`;
+}
+
+export function cssStyleShowMembershipBlock({ v }) {
+  return cssStyleShowMembership(v, "block");
+}
+
+export function cssStyleShowMembershipFlex({ v }) {
+  return cssStyleShowMembership(v, "flex");
 }

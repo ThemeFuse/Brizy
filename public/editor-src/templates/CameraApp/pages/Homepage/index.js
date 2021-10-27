@@ -6040,7 +6040,7 @@ module.exports = {
                                         _styles: ["richText"],
 
                                         text:
-                                          '<p class="brz-text-xs-center brz-text-lg-right brz-tp-paragraph brz-text-sm-right"><span class="brz-cp-color7">© 2019&nbsp;/&nbsp;Made with Brizy</span></p>'
+                                          '<p class="brz-text-xs-center brz-text-lg-right brz-tp-paragraph brz-text-sm-right"><span class="brz-cp-color7">© 2019&nbsp;/&nbsp;Made with love</span></p>'
                                       }
                                     }
                                   ],

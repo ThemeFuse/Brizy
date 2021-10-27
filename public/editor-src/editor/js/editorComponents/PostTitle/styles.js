@@ -14,7 +14,8 @@ export function style(v, vs, vd) {
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
         "cssStyleElementTitleTextShadow"
-      ]
+      ],
+      interval: ["cssStyleHoverTransition"]
     },
     // :not(.brz-btn) was added to win specificity battle
     // with standard .brz-a styles

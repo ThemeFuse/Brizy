@@ -3230,7 +3230,7 @@ module.exports = {
                                         _id:
                                           "hzjgwjiiauxejqwudxywlebgelunmcqfnztz",
                                         text:
-                                          '<p class="brz-tp-paragraph brz-text-xs-justify"><span class="brz-cp-color6">Band / Music Artist Template © Brizy Builder</span></p>'
+                                          '<p class="brz-tp-paragraph brz-text-xs-justify"><span class="brz-cp-color6">Band / Music Artist Template © Page Builder</span></p>'
                                       }
                                     }
                                   ],

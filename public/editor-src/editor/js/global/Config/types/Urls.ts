@@ -7,6 +7,7 @@ interface UrlsCommon {
   editorFonts: string;
   image: string;
   pagePreview: string;
+  preview: string;
   site: string;
   support: string;
   templateFonts: string;

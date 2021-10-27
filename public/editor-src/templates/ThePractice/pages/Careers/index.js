@@ -2486,7 +2486,7 @@ module.exports = {
                                 value: {
                                   _styles: ["richText"],
                                   text:
-                                    '<p class="brz-text-sm-left brz-tp-paragraph brz-text-lg-left brz-fs-sm-13 brz-fs-xs-14 brz-lh-sm-1_7 brz-text-xs-center brz-fw-xs-300 brz-lh-xs-1_7 brz-fw-sm-300"><span class="brz-cp-color7">© 2020 -&nbsp;</span><span class="brz-cp-color4">Law &amp; Legal Website Layout</span></p><p class="brz-text-sm-left brz-tp-paragraph brz-text-lg-left brz-fs-sm-13 brz-fs-xs-14 brz-lh-sm-1_7 brz-text-xs-center brz-fw-xs-300 brz-lh-xs-1_7 brz-fw-sm-300"><span class="brz-cp-color7">Website Layout made by&nbsp;Brizy</span></p>',
+                                    '<p class="brz-text-sm-left brz-tp-paragraph brz-text-lg-left brz-fs-sm-13 brz-fs-xs-14 brz-lh-sm-1_7 brz-text-xs-center brz-fw-xs-300 brz-lh-xs-1_7 brz-fw-sm-300"><span class="brz-cp-color7">© 2020 -&nbsp;</span><span class="brz-cp-color4">Law &amp; Legal Website Layout</span></p><p class="brz-text-sm-left brz-tp-paragraph brz-text-lg-left brz-fs-sm-13 brz-fs-xs-14 brz-lh-sm-1_7 brz-text-xs-center brz-fw-xs-300 brz-lh-xs-1_7 brz-fw-sm-300"><span class="brz-cp-color7">Website Layout made with Love</span></p>',
                                   _id: "zgvgbvhchqluviuiqklpbcnhecccisusoghj"
                                 }
                               }

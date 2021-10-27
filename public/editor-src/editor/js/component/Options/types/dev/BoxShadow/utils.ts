@@ -18,7 +18,6 @@ import * as Palette from "visual/component/Options/types/dev/ColorPicker/entitie
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import * as Blur from "visual/utils/cssProps/Blur";
-import * as Spread from "visual/utils/cssProps/Spread";
 import * as Str from "visual/utils/string/specs";
 import * as Num from "visual/utils/math/number";
 import { Value } from "./entities/Value";
@@ -37,8 +36,8 @@ export const DEFAULT_VALUE: Value = {
   tempPalette: Palette.empty,
   blur: Blur.unsafe(0),
   tempBlur: Blur.unsafe(4),
-  spread: Spread.unsafe(0),
-  tempSpread: Spread.unsafe(2),
+  spread: 0,
+  tempSpread: 2,
   vertical: 0,
   tempVertical: 0,
   horizontal: 0,
@@ -90,7 +89,7 @@ export const toggleType = (enable: boolean, m: Value): Value => {
  */
 export const toggleFields = (enable: boolean, m: Value): Value => {
   const blur = Blur.append(m.blur, m.tempBlur);
-  const spread = Spread.append(m.spread, m.tempSpread);
+  const spread = m.spread || m.tempSpread;
   const horizontal = getHorizontal(m) || m.tempHorizontal;
   const vertical = getVertical(m) || m.tempVertical;
 
@@ -98,7 +97,7 @@ export const toggleFields = (enable: boolean, m: Value): Value => {
     ...m,
     blur: enable ? blur : Blur.empty,
     tempBlur: blur,
-    spread: enable ? spread : Spread.empty,
+    spread: enable ? spread : 0,
     tempSpread: spread,
     vertical: enable ? vertical : 0,
     tempVertical: vertical,
@@ -168,8 +167,7 @@ export const fromElementModel: GetModel<Value> = get => {
       mPipe(() => get("colorOpacity"), Num.read, Opacity.fromNumber)() ??
       Opacity.empty,
     blur: mPipe(() => get("blur"), Num.read, Blur.fromNumber)() ?? Blur.empty,
-    spread:
-      mPipe(() => get("spread"), Num.read, Spread.fromNumber)() ?? Spread.empty
+    spread: mPipe(() => get("spread"), Num.read)() ?? 0
   };
 
   const isEmpty =
@@ -202,8 +200,7 @@ export const fromElementModel: GetModel<Value> = get => {
       DEFAULT_VALUE.tempBlur,
     spread: isEmpty ? DEFAULT_VALUE.spread : partial.spread,
     tempSpread:
-      mPipe(() => get("tempSpread"), Num.read, Spread.fromNumber)() ??
-      DEFAULT_VALUE.tempSpread,
+      mPipe(() => get("tempSpread"), Num.read)() ?? DEFAULT_VALUE.tempSpread,
     vertical: isEmpty ? 0 : Num.read(get("vertical")) ?? DEFAULT_VALUE.vertical,
     tempVertical: Num.read(get("tempVertical")) ?? DEFAULT_VALUE.tempVertical,
     horizontal: isEmpty

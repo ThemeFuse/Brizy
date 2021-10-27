@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 1517,
   title: "Homepage",
   keywords: "Cribs, homepage, portfolio, gallery, carousel, projects, testimonials",
-  cat: [0, 3, 100],
+  cat: [0, 3],
   pro: true,
   resolve: {
     blocks: [

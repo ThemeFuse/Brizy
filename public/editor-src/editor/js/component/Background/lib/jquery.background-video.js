@@ -114,9 +114,11 @@ function Vimeo($iframe, settings) {
 
       switch (parsedData.event) {
         case "ready": {
-          $iframe.attr("data-ready", "true");
-          sendMessage("addEventListener", "loaded");
-          sendMessage("addEventListener", "finish");
+          if (!$iframe.data("ready")) {
+            $iframe.attr("data-ready", "true");
+            sendMessage("addEventListener", "loaded");
+            sendMessage("addEventListener", "finish");
+          }
           break;
         }
         case "finish": {

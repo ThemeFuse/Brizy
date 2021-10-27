@@ -2,7 +2,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
-    ".brz &&:hover .brz-switcher__nav": {
+    ".brz &&:hover > .brz-switcher__nav": {
       standart: [
         "cssStyleTypography3FontFamily",
         "cssStyleTypography3FontSize",
@@ -17,18 +17,18 @@ export function style(v, vs, vd) {
         "cssStyleElementSwitcherWidth"
       ]
     },
-    ".brz &&:hover .brz-switcher__nav:before": {
+    ".brz &&:hover > .brz-switcher__nav:before": {
       standart: ["cssStyleBorderRadius", "cssStyleElementSwitcherNavBeforeBg"]
     },
-    ".brz &&:hover .brz-switcher__nav--item": {
+    ".brz &&:hover > .brz-switcher__nav .brz-switcher__nav--item": {
       standart: ["cssStyleColor", "cssStylePaddingFourFields"]
     },
-    ".brz &&:hover .brz-switcher__nav--item--active": {
+    ".brz &&:hover > .brz-switcher__nav .brz-switcher__nav--item--active": {
       standart: ["cssStyleElementSwitcherActiveTextColor"]
     },
 
     //style2
-    ".brz &&:hover .brz-switcher__nav2": {
+    ".brz &&:hover > .brz-switcher__nav2": {
       standart: [
         "cssStyleColor",
         "cssStyleTypography3FontFamily",
@@ -39,7 +39,7 @@ export function style(v, vs, vd) {
         "cssStyleElementSwitcherNavSpacing"
       ]
     },
-    ".brz &&:hover .brz-switcher__nav2--control": {
+    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2--control": {
       standart: [
         "cssStyleTypography3FontFamily",
         "cssStyleTypography3FontSize",
@@ -54,7 +54,7 @@ export function style(v, vs, vd) {
         "cssStyleElementSwitcherNav2Width"
       ]
     },
-    ".brz &&:hover .brz-switcher__nav2--control:before": {
+    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2--control:before": {
       standart: ["cssStyleBorderRadius", "cssStyleElementSwitcherNavBeforeBg"]
     }
   };

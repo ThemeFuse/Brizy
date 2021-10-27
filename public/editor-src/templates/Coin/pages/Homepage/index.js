@@ -37,12 +37,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "ipexfckdghiozmmoowiwytajnedibidzfbrx",
                                         text:
                                           '<p class="brz-text-xs-center brz-ls-lg-m_2 brz-fs-xs-im-41 brz-fs-sm-im-41 brz-fs-lg-42 brz-fw-lg-700 brz-ff-josefin_sans brz-lh-xs-im-1_2 brz-lh-lg-1_2 brz-text-sm-justify brz-lh-sm-1_1 brz-ls-sm-m_2 brz-fw-sm-700 brz-ls-xs-m_1_5 brz-fw-xs-700"><span class="brz-cp-color2">coin</span><strong class="brz-cp-color5">.</strong></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "cteebefffvydhmvjajgczrivwsvhfoclafdm"
                                 }
                               },
                               {
@@ -54,14 +56,15 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "wxczvwckirvennczfggyuxqxhxrbenpwaevq",
                                         height: 93,
                                         tabletHeight: 10,
                                         mobileHeight: 15
                                       }
                                     }
                                   ],
-
+                                  _id: "yeqrjvuejxgcpmnlkfuiryaoejonhjxcduch",
                                   showOnTablet: "on",
                                   showOnMobile: "on"
                                 }
@@ -75,12 +78,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "khrnwyzfltwslsqsmxyrvrulmfpulrdzvwom",
                                         text:
                                           '<p class="brz-text-xs-center brz-tp-abovetitle brz-text-sm-justify"><span class="brz-cp-color3">NEW DIGITAL WORLD</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "oviseebbdwhqhulvhpqymxmlnwmiuuweolsc"
                                 }
                               },
                               {
@@ -92,13 +97,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "ovtdcgaujmjbhbddtnlhbevsahnafrnjcgsu",
                                         text:
                                           '<p class="brz-text-sm-left brz-tp-heading1 brz-text-xs-center brz-mb-xs-10"><span class="brz-cp-color2">Meet </span><strong class="brz-cp-color2">Coin</strong><span class="brz-cp-color2">, the crypto banking experience</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "ogreqagdyofsgwdljoetnsmetnnlxtbmfdro",
                                   mobileMarginType: "grouped"
                                 }
                               },
@@ -111,13 +117,14 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "ktsskujpymbiissrnbjuatuyqszxlcasbmzn",
                                         height: 10,
                                         tabletHeight: 5
                                       }
                                     }
                                   ],
-
+                                  _id: "wjpqvdhklbyrilojhmmalklmgmxktpzcuhzv",
                                   showOnTablet: "on",
                                   showOnMobile: "off"
                                 }
@@ -131,13 +138,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "ylenqeaketnehvavqjlewnkojnfpasalzmaj",
                                         text:
                                           '<p class="brz-tp-subtitle brz-text-sm-left brz-text-xs-center brz-fs-xs-19"><span class="brz-cp-color7">Step into a brand new world of banking. With Coin, you get to spend your crypto currencies using a debit card.</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "uqqswobncfkzyazwgmbolbkbemyhzehjiewq",
                                   paddingType: "ungrouped",
                                   paddingRightSuffix: "px",
                                   paddingRight: 160,
@@ -166,14 +174,15 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "qnahxrsbcinuaxnnowbriytmxqgcswtgkfqu",
                                         height: 30,
                                         tabletHeight: 5,
                                         mobileHeight: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "juumsptjkgoicokitnrgwmywteqnpnyjrggq",
                                   showOnTablet: "on",
                                   showOnMobile: "off"
                                 }
@@ -190,7 +199,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "xyfmbsfwrvnhxaoqjijjgnnoqyezfslwulqf",
                                         text: "GET STARTED",
                                         iconName: "",
                                         iconType: "",
@@ -254,7 +264,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "jteewtitjfmxudbnqrnvgibbwkmvnnxeprqc",
                                   horizontalAlign: "left",
                                   tabletHorizontalAlign: "left",
                                   mobileHorizontalAlign: "center",
@@ -273,14 +283,15 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "mdlyloruexmejxmihndttiyltlsqmrkechdq",
                                         height: 30,
                                         tabletHeight: 10,
                                         mobileHeight: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "upqhigvzoqsvyfmajcrmkxaermlyhgidlayn",
                                   showOnTablet: "on",
                                   showOnMobile: "off"
                                 }
@@ -311,7 +322,8 @@ module.exports = {
                                                   type: "Icon",
                                                   value: {
                                                     _styles: ["icon"],
-
+                                                    _id:
+                                                      "ssoaxugsgsefolumencebgbwwwmgbuzglujc",
                                                     size: "small",
                                                     customSize: 32,
                                                     borderRadius: 0,
@@ -332,7 +344,8 @@ module.exports = {
                                                   type: "Icon",
                                                   value: {
                                                     _styles: ["icon"],
-
+                                                    _id:
+                                                      "rcixpjhjmdrxhjgyywkfumtejoewishdhepo",
                                                     size: "custom",
                                                     customSize: 32,
                                                     borderRadius: 0,
@@ -348,7 +361,8 @@ module.exports = {
                                                   }
                                                 }
                                               ],
-
+                                              _id:
+                                                "okmrouvycxmbqlvuqwgxijnsyejhwdwcicde",
                                               horizontalAlign: "left",
                                               itemPadding: 15,
                                               itemPaddingRight: 15,
@@ -361,7 +375,8 @@ module.exports = {
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "cdvfzaipplwlkjfboohejvdifdpeukgvqwes",
                                         width: 16.9,
                                         paddingLeft: 0,
                                         paddingLeftSuffix: "px",
@@ -410,16 +425,20 @@ module.exports = {
                                                   type: "RichText",
                                                   value: {
                                                     _styles: ["richText"],
-
+                                                    _id:
+                                                      "degxmfixtehvxjcgxozyoyqhrnjjdjkyfdki",
                                                     text:
                                                       '<p class="brz-tp-paragraph brz-ls-sm-m_0_5 brz-fs-sm-17"><span class="brz-cp-color6">Download the app to get started</span></p>'
                                                   }
                                                 }
-                                              ]
+                                              ],
+                                              _id:
+                                                "nigrynthcrigljxofspvfaxlpmkjmyukhsxw"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "mihupseffvvcvslttcaavxgwvysunhsafdfu",
                                         width: 83.1,
                                         verticalAlign: "center",
                                         tabsState: "tabNormal",
@@ -453,7 +472,8 @@ module.exports = {
                                         mobileMarginSuffix: "px"
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "pvcxaoaptkxbyllapnmflpeycctqirqbqouq"
                                 }
                               },
                               {
@@ -465,20 +485,21 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "sydldngyoawewinuunuyqkwsehqigtkyhqis",
                                         height: 122,
                                         tabletHeight: 10,
                                         mobileHeight: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "ahohnxlzngcordisabqutacvdqqhokigwfei",
                                   showOnTablet: "off",
                                   showOnMobile: "on"
                                 }
                               }
                             ],
-
+                            _id: "bawhotzelxulwsfawshhhxyrglqozbzdtbed",
                             paddingRight: 15,
                             paddingRightSuffix: "px",
                             padding: 15,
@@ -523,7 +544,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "trttjltklwelqqxuqkmhjoytclyrogovwhkh",
                                         text: "Features",
                                         iconName: "",
                                         iconType: "",
@@ -605,7 +627,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "qcouxhlfbhudninisqmircotpqxqvlremyzk",
                                         text: "F.A.Q.",
                                         iconName: "",
                                         iconType: "",
@@ -687,7 +710,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "zghypisxfzabrdvnscqangkmwtmwhiidojvd",
                                         text: "Pricing",
                                         iconName: "",
                                         iconType: "",
@@ -768,7 +792,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "jgrjbpntdoralgjoaaflgpqbxlcyjeluglzi",
                                         text: "DOWNLOAD",
                                         iconName: "",
                                         iconType: "",
@@ -847,7 +872,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "keplmnkmufdffxcdtncmuztwiujwnywlvzyc",
                                   horizontalAlign: "right",
                                   itemPadding: 40,
                                   itemPaddingRight: 40,
@@ -871,14 +896,15 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "wkndceonswebqkhnzeyceergthuupqbfeirf",
                                         height: 255,
                                         tabletHeight: 193,
                                         mobileHeight: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "luwnbwrhexynujvepcmabcarfdnsawynlsww",
                                   showOnTablet: "on",
                                   showOnMobile: "off"
                                 }
@@ -892,7 +918,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "xhjrppqfrzyivphkyojsehleftgglmnvrdvv",
                                         imageWidth: 1080,
                                         imageHeight: 684,
                                         imageSrc:
@@ -924,14 +951,14 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "ystxwakravfjgsmodgfljwkelfssywrkngdh",
                                   horizontalAlign: "left",
                                   tabletHorizontalAlign: "left",
                                   mobileHorizontalAlign: "center"
                                 }
                               }
                             ],
-
+                            _id: "didaokcxxovakavppigkklawyzjvjqfqigtv",
                             tabsState: "tabNormal",
                             tabsCurrentElement: "tabCurrentElement",
                             tabsColor: "tabOverlay",
@@ -1004,13 +1031,13 @@ module.exports = {
                           }
                         }
                       ],
-
+                      _id: "xurmcpqveclilabysavthiuzaahchdpohknh",
                       tabletReverseColumns: "off",
                       mobileReverseColumns: "on"
                     }
                   }
                 ],
-
+                _id: "ljllrunrzdpinkcixewoizizaxttrlqodwuq",
                 containerType: "boxed",
                 tabsState: "tabNormal",
                 tabsCurrentElement: "",
@@ -1083,11 +1110,11 @@ module.exports = {
               }
             }
           ],
-
+          _id: "ihurrgujhdzjwfkmwxrvaeeqjmelmbxwotgu",
           _thumbnailSrc: 182964,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 311,
-          _thumbnailTime: 1579200661249
+          _thumbnailHeight: 269,
+          _thumbnailTime: 1631622678542
         },
         blockId: "Blank000Light"
       },
@@ -1110,13 +1137,13 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-
+                            _id: "wrpmihiamdeccjitcxikbxhdfxruhvhhmskx",
                             text:
                               '<p class="brz-text-lg-center brz-tp-heading2"><span class="brz-cp-color2">Best way to spend your crypto</span></p>'
                           }
                         }
                       ],
-
+                      _id: "fepagyiadxzfqetolygowrpdookiuiqykehu",
                       mobilePaddingType: "ungrouped",
                       paddingRightSuffix: "px",
                       mobilePaddingRight: 20,
@@ -1135,13 +1162,13 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-
+                            _id: "ahlahtqdkvoqidpdxvrejeombhyudakbdama",
                             text:
                               '<p class="brz-text-lg-center brz-tp-subtitle"><span class="brz-cp-color7">With Coin debit card you can load directly from your crypto wallet and spend it anywhere you want. Easy, quickly, with no fuss.</span></p>'
                           }
                         }
                       ],
-
+                      _id: "cmgynbvvknnraumwbxbpwcnrcgipxdomtkfx",
                       paddingType: "ungrouped",
                       paddingRightSuffix: "%",
                       paddingRight: 23,
@@ -1170,14 +1197,14 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "pswetecxsuwtxlduzyxmgdpslkjasavvmpcb",
                             height: 20,
                             tabletHeight: 10,
                             mobileHeight: 10
                           }
                         }
                       ],
-
+                      _id: "byjtcbheafnndqwxfcpnnajicmahxtypshss",
                       showOnTablet: "on"
                     }
                   },
@@ -1200,7 +1227,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "fmpigetrdtiuorvgqzdbxqvyhjdctcbyjoxr",
                                         imageWidth: 98,
                                         imageHeight: 134,
                                         imageSrc:
@@ -1213,7 +1241,8 @@ module.exports = {
                                         mobileResize: 30
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "wxngfzicbnafmjlpiihquqovpnuwbahsfcaw"
                                 }
                               },
                               {
@@ -1225,13 +1254,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "yasgtadztgkozhmaihrdgqswqdueovdbmrqp",
                                         text:
                                           '<p class="brz-tp-paragraph brz-text-lg-center"><span class="brz-cp-color6">Bitcoin</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "hutrxsymzaauokpbhczzkastuxmzqhgswlgk",
                                   paddingType: "ungrouped",
                                   paddingTopSuffix: "px",
                                   paddingTop: 3,
@@ -1240,7 +1270,7 @@ module.exports = {
                                 }
                               }
                             ],
-
+                            _id: "marmgjduygrzswtsjnhqlyrgcedohjanpuar",
                             width: 20,
                             tabsState: "tabNormal",
                             tabsCurrentElement: "tabCurrentElement",
@@ -1263,7 +1293,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "bzwrxxpikefdscpfkfxqdtnztsehqcoyztww",
                                         imageWidth: 51,
                                         imageHeight: 83,
                                         imageSrc:
@@ -1277,7 +1308,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "jknoqbhqwwdwxwxtepyqlqacgpdvuwgqbysp",
                                   marginBottomSuffix: "px",
                                   marginBottom: 7,
                                   margin: 0,
@@ -1293,16 +1324,18 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "itejavceddjifaldpdwsgxhthhiprvgtwgwk",
                                         text:
                                           '<p class="brz-text-lg-center brz-tp-paragraph"><span class="brz-cp-color6">Ethereum</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "etdhfgoagdiqqffpoymcyjqdjgicdvpqrkni"
                                 }
                               }
                             ],
-
+                            _id: "hrfxoiqfaskdgnvyzwnwbcjnzivwrubditij",
                             width: 20,
                             tabsState: "tabNormal",
                             tabsCurrentElement: "tabCurrentElement",
@@ -1325,7 +1358,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "kuvyqazlwqyyuoafyquxiojbnrkumstplnjx",
                                         imageWidth: 66,
                                         imageHeight: 66,
                                         imageSrc:
@@ -1338,7 +1372,8 @@ module.exports = {
                                         mobileResize: 45
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "bitixuajniyqdbtwviegbcoceqlqtgjeslmq"
                                 }
                               },
                               {
@@ -1350,16 +1385,18 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "aelgtdorehbwcvxyyounqotskvgyknoptjbc",
                                         text:
                                           '<p class="brz-tp-paragraph brz-text-lg-center"><span class="brz-cp-color6">Litecoin</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "lbrqmrjatqlxniiwqtvybefekgxxnxcohuzc"
                                 }
                               }
                             ],
-
+                            _id: "svqqlzvmkvykirehhwikdqpdhdfhewzwhjqy",
                             width: 20,
                             tabsState: "tabNormal",
                             tabsCurrentElement: "tabCurrentElement",
@@ -1382,7 +1419,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "jxgbengqglmncautrwjwpvtfdahcxnziyuak",
                                         imageWidth: 56,
                                         imageHeight: 55,
                                         imageSrc:
@@ -1395,7 +1433,8 @@ module.exports = {
                                         mobileResize: 40
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "schpkxdkdlpmcczrwdjzkmnekcarkpxfvylf"
                                 }
                               },
                               {
@@ -1407,16 +1446,18 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "vttdwnafxsmyvwzzxkcwmvqsphufxhncrtwm",
                                         text:
                                           '<p class="brz-text-lg-center brz-tp-paragraph"><span class="brz-cp-color6">Libra</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "tryujltczgkxmhystmhttpawfqbipiymyrxp"
                                 }
                               }
                             ],
-
+                            _id: "wipejjmfldyqsnrzewnppdpmkgtrvqcpehxo",
                             width: 20,
                             tabsState: "tabNormal",
                             tabsCurrentElement: "tabCurrentElement",
@@ -1442,7 +1483,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "xbnkysjwlwjgceejjnfncckqmcvxjpcmznxr",
                                         imageWidth: 64,
                                         imageHeight: 64,
                                         imageSrc:
@@ -1455,7 +1497,8 @@ module.exports = {
                                         mobileResize: 40
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "ucjhmdzfawxcgwqcevwwhmtfvggzgsruefsn"
                                 }
                               },
                               {
@@ -1467,16 +1510,18 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "hepmulwsfikwmrtqycuifjbpvhctspsnrutb",
                                         text:
                                           '<p class="brz-tp-paragraph brz-text-lg-center"><span class="brz-cp-color6">Monero</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "zzlytyucmyxzxgtpvzfkgvwcbywxbcmctkvs"
                                 }
                               }
                             ],
-
+                            _id: "wxheydciwuccwbfjdqbzbrmhctkmmdnfzfvr",
                             width: 20,
                             verticalAlign: "bottom",
                             tabsState: "tabNormal",
@@ -1486,7 +1531,7 @@ module.exports = {
                           }
                         }
                       ],
-
+                      _id: "oaneyqknicbodpgsanafktucprrsmbwgjbph",
                       size: 75,
                       tabsState: "tabNormal",
                       tabsCurrentElement: "tabCurrentElement",
@@ -1507,14 +1552,14 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "yautpaanzepwiymdhiloxyjxoveexlcwrobd",
                             height: 70,
                             tabletHeight: 33,
                             mobileHeight: 10
                           }
                         }
                       ],
-
+                      _id: "oydtlhydwtltdxudwtoxfsenqfmroigvnmnp",
                       showOnTablet: "on",
                       showOnMobile: "off"
                     }
@@ -1541,7 +1586,8 @@ module.exports = {
                                       type: "Icon",
                                       value: {
                                         _styles: ["icon"],
-
+                                        _id:
+                                          "tcvbrxonknujpapjsrlkxpxwxiqryxbdepjg",
                                         name: "active-40",
                                         type: "glyph",
                                         size: "custom",
@@ -1555,7 +1601,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "ofvsxpfsujzwuawyheehbticmvxuxqowpxkc",
                                   horizontalAlign: "right",
                                   mobileHorizontalAlign: "center"
                                 }
@@ -1569,13 +1615,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "narrcbzskaogsozvarenfctzhkpzubisfniq",
                                         text:
                                           '<p class="brz-tp-heading5 brz-text-lg-right brz-text-xs-center"><span class="brz-cp-color2">Ultra-secure Mobile App</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "mwlxzmmrraowrhkypholnuytqckbqbmpjqnx",
                                   marginType: "grouped",
                                   tabletMarginType: "grouped",
                                   mobileMarginType: "grouped"
@@ -1590,12 +1637,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "vtwrqzryxtzoqxscfvxszxldbkpnphocbwub",
                                         text:
                                           '<p class="brz-text-lg-right brz-tp-paragraph brz-text-xs-center"><span class="brz-cp-color7" style="opacity: 0.7;">100% encrypted from the client to the cloud. There\'s no way for us or anyone to know what you\'re writing.</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "duyqcluboynolrhkrpiftfjmqvabdpdtuqob"
                                 }
                               },
                               {
@@ -1607,14 +1656,15 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "fmocpyvhndmtqeqrwilzdfpqdljijjnzcjjs",
                                         height: 124,
                                         tabletHeight: 10,
                                         mobileHeight: 28
                                       }
                                     }
                                   ],
-
+                                  _id: "ilnmhekeijvdbjcslwmnjptczsooaqkwciwe",
                                   showOnTablet: "on",
                                   showOnMobile: "on"
                                 }
@@ -1631,7 +1681,8 @@ module.exports = {
                                       type: "Icon",
                                       value: {
                                         _styles: ["icon"],
-
+                                        _id:
+                                          "uscawfdmlwwghhdegntvxmqhrtakzfyvkvzr",
                                         name: "pos",
                                         type: "glyph",
                                         size: "custom",
@@ -1645,7 +1696,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "djhgqlmrvxresuvkkzmrgbcvfzvbnlmjdnxa",
                                   horizontalAlign: "right",
                                   mobileHorizontalAlign: "center"
                                 }
@@ -1659,14 +1710,15 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "mufpzlcvdefpgbpkknmawmfwkprjfntviwli",
                                         text:
                                           '<p class="brz-text-lg-right brz-tp-heading5 brz-text-xs-center"><span class="brz-cp-color2">Recent Transactions</span></p>',
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "mrwsgztjbrhgcbdmcrihdrpzgqhycelunezz",
                                   className: "",
                                   horizontalAlign: "center",
                                   paddingType: "grouped",
@@ -1692,7 +1744,7 @@ module.exports = {
                                   marginBottomSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -1715,7 +1767,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -1749,16 +1801,18 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "axhmjxulgdsfywyomttceqcstbwzpzwgqlvl",
                                         text:
                                           '<p class="brz-tp-paragraph brz-text-lg-right brz-text-xs-center"><span class="brz-cp-color7" style="opacity: 0.7;">Our app automatically sorts all your transcations and creates your budget reports. Fast and useful.&nbsp;</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "fnuzftruhnmzbwrnvpkyadbnrkxrktkvigrz"
                                 }
                               }
                             ],
-
+                            _id: "mikmkrrjfgxbrfictbdykisrnvhaoctyjpgy",
                             width: 32,
                             tabsState: "tabNormal",
                             tabsCurrentElement: "tabCurrentElement",
@@ -1796,7 +1850,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "yncujoeedjdltscpifyzgytxuuylljnanlev",
                                         imageWidth: 754,
                                         imageHeight: 1622,
                                         imageSrc:
@@ -1828,12 +1883,12 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "fhxmhfiwafpinrbpkysjchyntqxzsxxbkldp",
                                   showOnMobile: "on"
                                 }
                               }
                             ],
-
+                            _id: "cwayajmwhdsguemypeqefjjyesitoaetlwnf",
                             width: 36,
                             tabletWidth: 44.1,
                             showOnMobile: "on",
@@ -1860,7 +1915,8 @@ module.exports = {
                                       type: "Icon",
                                       value: {
                                         _styles: ["icon"],
-
+                                        _id:
+                                          "thwohoghmbszoroqzmsjxkiqufoqatbgbnnc",
                                         name: "bell-55",
                                         type: "glyph",
                                         size: "custom",
@@ -1874,7 +1930,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "alcnpdjgpgfawbdnvljqsmoozoyvmeaqlcut",
                                   horizontalAlign: "left",
                                   mobileHorizontalAlign: "center"
                                 }
@@ -1888,14 +1944,15 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "thtuwtatgwplvvmrjdsnvlqudblroqktfzba",
                                         text:
                                           '<p class="brz-text-lg-left brz-tp-heading5 brz-text-xs-center"><span class="brz-cp-color2">Overspend Notifications</span></p>',
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "mhmrfmylezsvuhhjfqglczqknsrrejkjgfwc",
                                   className: "",
                                   horizontalAlign: "center",
                                   paddingType: "grouped",
@@ -1921,7 +1978,7 @@ module.exports = {
                                   marginBottomSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -1944,7 +2001,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -1978,12 +2035,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "pzjazssackbirurginzeiqmbvobxlltpdfjm",
                                         text:
                                           '<p class="brz-text-lg-left brz-tp-paragraph brz-text-xs-center"><span class="brz-cp-color7" style="opacity: 0.7;">Get instant notifications when you go over budget or when you get close to your self-imposed limit.</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "kjxgfuhpxnazcsbikbytqignbpdhvichltkg"
                                 }
                               },
                               {
@@ -1995,14 +2054,15 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "qojrtvtsqwubxrgapikiwuazhcvtrvlrkrou",
                                         height: 100,
                                         tabletHeight: 10,
                                         mobileHeight: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "ygbkautqcajqmexbuzknrugoztdfsslijdgs",
                                   showOnTablet: "on",
                                   showOnMobile: "off"
                                 }
@@ -2019,7 +2079,8 @@ module.exports = {
                                       type: "Icon",
                                       value: {
                                         _styles: ["icon"],
-
+                                        _id:
+                                          "yllpxhmdlyzynnzqrionubalqiskuqoqeqpt",
                                         name: "stock",
                                         type: "glyph",
                                         size: "custom",
@@ -2033,7 +2094,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "qvmhgmbegvzlpyjqogtxekmgpbclnyqyqiqe",
                                   horizontalAlign: "left",
                                   mobileHorizontalAlign: "center"
                                 }
@@ -2047,14 +2108,15 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "eylphjlnasycppvqxbmurufzosyyndavqddj",
                                         text:
                                           '<p class="brz-text-lg-left brz-tp-heading5 brz-text-xs-center"><span class="brz-cp-color2">Best rates ever</span></p>',
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "nynjzzdyinqnusgbwpefrorpdgavodotxpmg",
                                   className: "",
                                   horizontalAlign: "center",
                                   paddingType: "grouped",
@@ -2080,7 +2142,7 @@ module.exports = {
                                   marginBottomSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -2103,7 +2165,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -2137,16 +2199,18 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "ecdofqgbqeorvdlkangxgakbnamlrlpolouc",
                                         text:
                                           '<p class="brz-text-lg-left brz-tp-paragraph brz-text-xs-center"><span class="brz-cp-color7" style="opacity: 0.7;">We use the real-world convertion rates and we guarantee you won’t find a better one.</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "gdadkjyyaqxpepxvddhjsjcfaobnyzamiplc"
                                 }
                               }
                             ],
-
+                            _id: "ewycemworvvxrtghlfdmtkhycwqdhyxgsmeu",
                             width: 32,
                             tabsState: "tabNormal",
                             tabsCurrentElement: "tabCurrentElement",
@@ -2168,11 +2232,12 @@ module.exports = {
                             mobilePaddingType: "ungrouped"
                           }
                         }
-                      ]
+                      ],
+                      _id: "dedjhbtqdlnbypubnnuuztfqufoelnobjicp"
                     }
                   }
                 ],
-
+                _id: "phbkzqpcrimtpqhipbwyzxbveroharkkvubl",
                 paddingType: "ungrouped",
                 paddingTop: 15,
                 paddingBottom: 30,
@@ -2188,11 +2253,11 @@ module.exports = {
               }
             }
           ],
-
+          _id: "usrpqkragmazmlttdbesufldjabzoyuzsjzj",
           _thumbnailSrc: 183050,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 447,
-          _thumbnailTime: 1579200672517,
+          _thumbnailHeight: 389,
+          _thumbnailTime: 1631622682966,
           anchorName: "services"
         },
         blockId: "Blank000Light"
@@ -2216,12 +2281,13 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-
+                            _id: "rimqclnnxwymuevoxfchjyhmnjivpqghaiph",
                             text:
                               '<p class="brz-text-lg-center brz-tp-heading2"><span class="brz-cp-color2">Use the card worldwide</span></p>'
                           }
                         }
-                      ]
+                      ],
+                      _id: "luqthlnvlxfbtxlowjuwbofnniebgitzmibw"
                     }
                   },
                   {
@@ -2233,13 +2299,13 @@ module.exports = {
                           type: "RichText",
                           value: {
                             _styles: ["richText"],
-
+                            _id: "dxpkfohxlchvayhizeqhpcdtyikwzumvehhd",
                             text:
                               '<p class="brz-text-lg-center brz-tp-subtitle"><span class="brz-cp-color7">With Coin debit card you can load directly from your crypto wallet and spend it anywhere you want. Easy, quickly, with no fuss.</span></p>'
                           }
                         }
                       ],
-
+                      _id: "vjpbegjlcobqxxwcgykryhykfdffujsgotgl",
                       paddingType: "ungrouped",
                       paddingRightSuffix: "px",
                       paddingRight: 150,
@@ -2268,14 +2334,14 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "fyiwxtrykwsojqkmpefpvbyuqxuzeqobxqzx",
                             height: 80,
                             tabletHeight: 15,
                             mobileHeight: 10
                           }
                         }
                       ],
-
+                      _id: "samcbypuqfoxqdzuatxldamovmswdhgespxt",
                       showOnTablet: "on",
                       showOnMobile: "off"
                     }
@@ -2324,7 +2390,8 @@ module.exports = {
                                                             "icon",
                                                             "iconText--icon"
                                                           ],
-
+                                                          _id:
+                                                            "alceddrzzcnvkvxxfzvluymrcixasyugeiwo",
                                                           name: "currency-euro",
                                                           type: "glyph",
                                                           size: "custom",
@@ -2347,21 +2414,26 @@ module.exports = {
                                                             "text",
                                                             "iconText--text"
                                                           ],
-
+                                                          _id:
+                                                            "kwmzxhnlzilgcusvhurlljbvdytaqdpjtowe",
                                                           text:
                                                             '<p class="brz-tp-heading3"><span class="brz-cp-color4">150</span></p><p class="brz-tp-heading6"><span class="brz-cp-color2">currencies </span></p>'
                                                         }
                                                       }
                                                     ],
-
+                                                    _id:
+                                                      "aftxplcioikathczzplxzjcfryddeskcjuzr",
                                                     iconSpacing: 15
                                                   }
                                                 }
-                                              ]
+                                              ],
+                                              _id:
+                                                "enbkdfwuyqhjoeqjtytbvlfvpsorcyowmrho"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "ijbuixafcemkcbofevezgnjbabuvdyrhohir",
                                         width: 50,
                                         tabsColor: "tabOverlay",
                                         bgColorPalette: "color8",
@@ -2468,7 +2540,8 @@ module.exports = {
                                                             "icon",
                                                             "iconText--icon"
                                                           ],
-
+                                                          _id:
+                                                            "fgpoawmojuxelhkjexynokrtwdkdvnsiwuzl",
                                                           name: "coins",
                                                           type: "outline",
                                                           size: "custom",
@@ -2495,21 +2568,26 @@ module.exports = {
                                                             "text",
                                                             "iconText--text"
                                                           ],
-
+                                                          _id:
+                                                            "zoycvfwblcjgyxqfagdpwevkrfuruqwxjypa",
                                                           text:
                                                             '<p class="brz-tp-heading3"><span class="brz-cp-color8">up to 3%</span></p><p class="brz-tp-heading5"><span class="brz-cp-color2">cashback per month</span></p>'
                                                         }
                                                       }
                                                     ],
-
+                                                    _id:
+                                                      "qjanyrqetjlpmfptepwhbgbefhrcgheyqniq",
                                                     iconSpacing: 20
                                                   }
                                                 }
-                                              ]
+                                              ],
+                                              _id:
+                                                "yxfghpofwlnolbpevqlggcjlboqgvznfruch"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "zerkhlmfoaacymakwveovtctriegtgaircyd",
                                         width: 50,
                                         tabsColor: "tabOverlay",
                                         bgColorPalette: "color3",
@@ -2618,7 +2696,8 @@ module.exports = {
                                           "color2"
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "hnresqzgnuvtngdbmfzhpnhtkuiozftpqjzo"
                                 }
                               },
                               {
@@ -2655,7 +2734,8 @@ module.exports = {
                                                             "icon",
                                                             "iconText--icon"
                                                           ],
-
+                                                          _id:
+                                                            "wsrvcgdobeiiackdnasnvwzepxnzkefmypqu",
                                                           name: "bitcoin",
                                                           type: "glyph",
                                                           size: "custom",
@@ -2678,21 +2758,26 @@ module.exports = {
                                                             "text",
                                                             "iconText--text"
                                                           ],
-
+                                                          _id:
+                                                            "dqsdhiyjrzducqnjejrkpsuvdddbygvrjpds",
                                                           text:
                                                             '<p class="brz-tp-heading3"><span class="brz-cp-color5">0.5%</span></p><p class="brz-tp-heading6"><span class="brz-cp-color2">commission fee</span></p>'
                                                         }
                                                       }
                                                     ],
-
+                                                    _id:
+                                                      "xmxgssrpdqdvmvfkzcepcpvkjjzbxgpeltiq",
                                                     iconSpacing: 15
                                                   }
                                                 }
-                                              ]
+                                              ],
+                                              _id:
+                                                "chlqgwsxlgdlvoloctsfetzmqefxgqjjtkox"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "svezucqpojfzgmetthymhkqvbelntuhhcwfw",
                                         width: 50,
                                         tabsColor: "tabOverlay",
                                         bgColorPalette: "color8",
@@ -2759,12 +2844,33 @@ module.exports = {
                                         tabletMarginLeft: 10,
                                         className: "",
                                         tempBorderStyle: "solid",
-
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
                                         borderWidthType: "grouped",
                                         tempBorderWidth: 4,
-
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
                                         borderRadiusType: "grouped",
-
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
                                         bgColorType: "solid",
                                         gradientActivePointer: "startPointer",
                                         gradientStartPointer: 0,
@@ -2772,20 +2878,38 @@ module.exports = {
                                         gradientType: "linear",
                                         gradientLinearDegree: 90,
                                         gradientRadialDegree: 90,
-
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
                                         bgColorHex: "#000000",
                                         tempBgColorOpacity: 1,
-
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
                                         gradientColorHex: "#009900",
                                         gradientColorOpacity: 1,
                                         gradientColorPalette: "",
                                         tempGradientColorOpacity: 1,
                                         tempGradientColorPalette: "",
-
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
                                         borderColorHex: "#66738d",
                                         tempBorderColorOpacity: 1,
                                         tempBorderColorPalette: "",
-
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
                                         hoverTransition: 50,
                                         verticalAlign: "center",
                                         paddingType: "ungrouped",
@@ -2798,7 +2922,53 @@ module.exports = {
                                         boxShadowSpread: 0,
                                         customClassName: "",
                                         customCSS: "",
-
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletVerticalAlign: null,
                                         tabletPaddingType: "ungrouped",
                                         tabletPadding: 15,
                                         tabletPaddingTop: 5,
@@ -2817,7 +2987,53 @@ module.exports = {
                                         tabletMarginRightSuffix: "px",
                                         tabletMarginBottomSuffix: "px",
                                         tabletMarginLeftSuffix: "px",
-
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileVerticalAlign: null,
                                         mobilePaddingType: "ungrouped",
                                         mobilePadding: 0,
                                         mobilePaddingTop: 15,
@@ -2870,7 +3086,8 @@ module.exports = {
                                                             "icon",
                                                             "iconText--icon"
                                                           ],
-
+                                                          _id:
+                                                            "ghteeqdzltwamptvhifylrpppovadugxjxnr",
                                                           name: "hospital-34",
                                                           type: "glyph",
                                                           size: "custom",
@@ -2893,21 +3110,26 @@ module.exports = {
                                                             "text",
                                                             "iconText--text"
                                                           ],
-
+                                                          _id:
+                                                            "obqjriqqmzfqjxxbtgwvezypddmnuxnlmixj",
                                                           text:
                                                             '<p class="brz-tp-heading3"><span class="brz-cp-color1">$2/day</span></p><p class="brz-tp-heading6"><span class="brz-cp-color2">health insurance</span></p>'
                                                         }
                                                       }
                                                     ],
-
+                                                    _id:
+                                                      "wkqbwxwywbftkqniepocrbwisgnrwnnqirph",
                                                     iconSpacing: 15
                                                   }
                                                 }
-                                              ]
+                                              ],
+                                              _id:
+                                                "zkdqmrqemjdolvebstqyarvicxmlsddijwhw"
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "potejslekpjpjdzwfppclojtpfagbyednfpf",
                                         width: 50,
                                         tabsColor: "tabOverlay",
                                         bgColorPalette: "color8",
@@ -2974,12 +3196,33 @@ module.exports = {
                                         tabletMarginLeft: 10,
                                         className: "",
                                         tempBorderStyle: "solid",
-
+                                        hoverBorderStyle: null,
+                                        tempHoverBorderStyle: null,
                                         borderWidthType: "grouped",
                                         tempBorderWidth: 4,
-
+                                        hoverBorderWidthType: null,
+                                        hoverBorderWidth: null,
+                                        hoverBorderTopWidth: null,
+                                        hoverBorderRightWidth: null,
+                                        hoverBorderBottomWidth: null,
+                                        hoverBorderLeftWidth: null,
+                                        tempHoverBorderWidth: null,
+                                        tempHoverBorderTopWidth: null,
+                                        tempHoverBorderRightWidth: null,
+                                        tempHoverBorderBottomWidth: null,
+                                        tempHoverBorderLeftWidth: null,
                                         borderRadiusType: "grouped",
-
+                                        hoverBorderRadiusType: null,
+                                        hoverBorderRadius: null,
+                                        hoverBorderTopLeftRadius: null,
+                                        hoverBorderTopRightRadius: null,
+                                        hoverBorderBottomRightRadius: null,
+                                        hoverBorderBottomLeftRadius: null,
+                                        tempHoverBorderRadius: null,
+                                        tempHoverBorderTopLeftRadius: null,
+                                        tempHoverBorderTopRightRadius: null,
+                                        tempHoverBorderBottomRightRadius: null,
+                                        tempHoverBorderBottomLeftRadius: null,
                                         bgColorType: "solid",
                                         gradientActivePointer: "startPointer",
                                         gradientStartPointer: 0,
@@ -2987,20 +3230,38 @@ module.exports = {
                                         gradientType: "linear",
                                         gradientLinearDegree: 90,
                                         gradientRadialDegree: 90,
-
+                                        hoverBgColorType: null,
+                                        hoverGradientActivePointer: null,
+                                        hoverGradientStartPointer: null,
+                                        hoverGradientFinishPointer: null,
+                                        hoverGradientType: null,
+                                        hoverGradientLinearDegree: null,
+                                        hoverGradientRadialDegree: null,
                                         bgColorHex: "#000000",
                                         tempBgColorOpacity: 1,
-
+                                        hoverBgColorHex: null,
+                                        hoverBgColorOpacity: null,
+                                        hoverBgColorPalette: null,
+                                        tempHoverBgColorOpacity: null,
+                                        tempHoverBgColorPalette: null,
                                         gradientColorHex: "#009900",
                                         gradientColorOpacity: 1,
                                         gradientColorPalette: "",
                                         tempGradientColorOpacity: 1,
                                         tempGradientColorPalette: "",
-
+                                        hoverGradientColorHex: null,
+                                        hoverGradientColorOpacity: null,
+                                        hoverGradientColorPalette: null,
+                                        tempHoverGradientColorOpacity: null,
+                                        tempHoverGradientColorPalette: null,
                                         borderColorHex: "#66738d",
                                         tempBorderColorOpacity: 1,
                                         tempBorderColorPalette: "",
-
+                                        hoverBorderColorHex: null,
+                                        hoverBorderColorOpacity: null,
+                                        hoverBorderColorPalette: null,
+                                        tempHoverBorderColorOpacity: null,
+                                        tempHoverBorderColorPalette: null,
                                         hoverTransition: 50,
                                         verticalAlign: "center",
                                         paddingType: "ungrouped",
@@ -3013,7 +3274,53 @@ module.exports = {
                                         boxShadowSpread: 0,
                                         customClassName: "",
                                         customCSS: "",
-
+                                        tabletBorderStyle: null,
+                                        tempTabletBorderStyle: null,
+                                        tabletBorderWidthType: null,
+                                        tabletBorderWidth: null,
+                                        tabletBorderTopWidth: null,
+                                        tabletBorderRightWidth: null,
+                                        tabletBorderBottomWidth: null,
+                                        tabletBorderLeftWidth: null,
+                                        tempTabletBorderWidth: null,
+                                        tempTabletBorderTopWidth: null,
+                                        tempTabletBorderRightWidth: null,
+                                        tempTabletBorderBottomWidth: null,
+                                        tempTabletBorderLeftWidth: null,
+                                        tabletBorderRadiusType: null,
+                                        tabletBorderRadius: null,
+                                        tabletBorderTopLeftRadius: null,
+                                        tabletBorderTopRightRadius: null,
+                                        tabletBorderBottomLeftRadius: null,
+                                        tabletBorderBottomRightRadius: null,
+                                        tempTabletBorderRadius: null,
+                                        tempTabletBorderTopLeftRadius: null,
+                                        tempTabletBorderTopRightRadius: null,
+                                        tempTabletBorderBottomLeftRadius: null,
+                                        tempTabletBorderBottomRightRadius: null,
+                                        tabletBgColorType: null,
+                                        tabletGradientStartPointer: null,
+                                        tabletGradientFinishPointer: null,
+                                        tabletGradientActivePointer: null,
+                                        tabletGradientType: null,
+                                        tabletGradientLinearDegree: null,
+                                        tabletGradientRadialDegree: null,
+                                        tabletBgColorHex: null,
+                                        tabletBgColorOpacity: null,
+                                        tabletBgColorPalette: null,
+                                        tempTabletBgColorOpacity: null,
+                                        tempTabletBgColorPalette: null,
+                                        tabletGradientColorHex: null,
+                                        tabletGradientColorOpacity: null,
+                                        tabletGradientColorPalette: null,
+                                        tempTabletGradientColorOpacity: null,
+                                        tempTabletGradientColorPalette: null,
+                                        tabletBorderColorHex: null,
+                                        tabletBorderColorOpacity: null,
+                                        tabletBorderColorPalette: null,
+                                        tempTabletBorderColorOpacity: null,
+                                        tempTabletBorderColorPalette: null,
+                                        tabletVerticalAlign: null,
                                         tabletPaddingType: "ungrouped",
                                         tabletPadding: 15,
                                         tabletPaddingTop: 5,
@@ -3032,7 +3339,53 @@ module.exports = {
                                         tabletMarginRightSuffix: "px",
                                         tabletMarginBottomSuffix: "px",
                                         tabletMarginLeftSuffix: "px",
-
+                                        mobileBgColorType: null,
+                                        mobileGradientStartPointer: null,
+                                        mobileGradientFinishPointer: null,
+                                        mobileGradientActivePointer: null,
+                                        mobileGradientType: null,
+                                        mobileGradientLinearDegree: null,
+                                        mobileGradientRadialDegree: null,
+                                        mobileBgColorHex: null,
+                                        mobileBgColorOpacity: null,
+                                        mobileBgColorPalette: null,
+                                        tempMobileBgColorOpacity: null,
+                                        tempMobileBgColorPalette: null,
+                                        mobileGradientColorHex: null,
+                                        mobileGradientColorOpacity: null,
+                                        mobileGradientColorPalette: null,
+                                        tempMobileGradientColorOpacity: null,
+                                        tempMobileGradientColorPalette: null,
+                                        mobileBorderStyle: null,
+                                        tempMobileBorderStyle: null,
+                                        mobileBorderWidthType: null,
+                                        mobileBorderWidth: null,
+                                        mobileBorderTopWidth: null,
+                                        mobileBorderRightWidth: null,
+                                        mobileBorderBottomWidth: null,
+                                        mobileBorderLeftWidth: null,
+                                        tempMobileBorderWidth: null,
+                                        tempMobileBorderTopWidth: null,
+                                        tempMobileBorderRightWidth: null,
+                                        tempMobileBorderBottomWidth: null,
+                                        tempMobileBorderLeftWidth: null,
+                                        mobileBorderRadiusType: null,
+                                        mobileBorderRadius: null,
+                                        mobileBorderTopLeftRadius: null,
+                                        mobileBorderTopRightRadius: null,
+                                        mobileBorderBottomLeftRadius: null,
+                                        mobileBorderBottomRightRadius: null,
+                                        tempMobileBorderRadius: null,
+                                        tempMobileBorderTopLeftRadius: null,
+                                        tempMobileBorderTopRightRadius: null,
+                                        tempMobileBorderBottomLeftRadius: null,
+                                        tempMobileBorderBottomRightRadius: null,
+                                        mobileBorderColorHex: null,
+                                        mobileBorderColorOpacity: null,
+                                        mobileBorderColorPalette: null,
+                                        tempMobileBorderColorOpacity: null,
+                                        tempMobileBorderColorPalette: null,
+                                        mobileVerticalAlign: null,
                                         mobilePaddingType: "ungrouped",
                                         mobilePadding: 0,
                                         mobilePaddingTop: 15,
@@ -3060,16 +3413,18 @@ module.exports = {
                                         mobileMarginLeftSuffix: "px"
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "kfjlltmdjvawhhbklxszlwxsnsluwkakpbyf"
                                 }
                               }
                             ],
-
+                            _id: "lwjfxpubtswalhgidrzbzxlxdwnklhjsuoyt",
                             tabletWidth: 64,
                             className: "",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
-
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
                             borderWidthType: "grouped",
                             borderWidth: 0,
                             borderTopWidth: 0,
@@ -3081,7 +3436,17 @@ module.exports = {
                             tempBorderRightWidth: 4,
                             tempBorderBottomWidth: 4,
                             tempBorderLeftWidth: 4,
-
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
                             borderRadiusType: "grouped",
                             borderRadius: 0,
                             borderTopLeftRadius: 0,
@@ -3093,7 +3458,17 @@ module.exports = {
                             tempBorderTopRightRadius: 0,
                             tempBorderBottomRightRadius: 0,
                             tempBorderBottomLeftRadius: 0,
-
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
                             bgColorType: "solid",
                             gradientActivePointer: "startPointer",
                             gradientStartPointer: 0,
@@ -3101,25 +3476,43 @@ module.exports = {
                             gradientType: "linear",
                             gradientLinearDegree: 90,
                             gradientRadialDegree: 90,
-
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
                             bgColorHex: "#000000",
                             bgColorOpacity: 0,
                             bgColorPalette: "",
                             tempBgColorOpacity: 1,
                             tempBgColorPalette: "",
-
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
                             gradientColorHex: "#009900",
                             gradientColorOpacity: 1,
                             gradientColorPalette: "",
                             tempGradientColorOpacity: 1,
                             tempGradientColorPalette: "",
-
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
                             borderColorHex: "#66738d",
                             borderColorOpacity: 0,
                             borderColorPalette: "",
                             tempBorderColorOpacity: 1,
                             tempBorderColorPalette: "",
-
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
                             hoverTransition: 50,
                             verticalAlign: "top",
                             paddingType: "ungrouped",
@@ -3156,7 +3549,53 @@ module.exports = {
                             tempBoxShadowColorOpacity: 1,
                             customClassName: "",
                             customCSS: "",
-
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletVerticalAlign: null,
                             tabletPaddingType: "ungrouped",
                             tabletPadding: 15,
                             tabletPaddingTop: 25,
@@ -3184,7 +3623,53 @@ module.exports = {
                             tabletMarginRightSuffix: "px",
                             tabletMarginBottomSuffix: "px",
                             tabletMarginLeftSuffix: "px",
-
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileVerticalAlign: null,
                             mobilePaddingType: "ungrouped",
                             mobilePadding: 0,
                             mobilePaddingTop: 0,
@@ -3232,12 +3717,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "fnlmktrdryasafkijfbuseggktsdckrvctir",
                                         text:
                                           '<p class="brz-tp-abovetitle"><span class="brz-cp-color3">CASH WITH BENEFITS</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "fxopnuufvejxhfuzrlgylmvvgnemnsxyepwp"
                                 }
                               },
                               {
@@ -3249,13 +3736,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "pcswnadctddgygxlizbwecszbbhymccrioqs",
                                         text:
                                           '<p class="brz-tp-heading3"><span class="brz-cp-color2">Withdraw with no commission under equivalent of $400</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "tkgqieupfoqzyjfvyfzgriqohfeqoyblhoau",
                                   mobileMarginType: "grouped"
                                 }
                               },
@@ -3268,16 +3756,18 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "gzmdhunevprvnjzfukybldykrpxyzxvmqymp",
                                         text:
                                           '<p class="brz-tp-paragraph"><span class="brz-cp-color7" style="opacity: 0.7;">We use the real-world convertion rates and we guarantee you won’t find a better one.</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "wzuyhrapigqgizqzmqwlfkfwxpximqxbwtrz"
                                 }
                               }
                             ],
-
+                            _id: "yyqqqpeajhdjnxhyqhbkveudryyzikmzwgtx",
                             paddingLeft: 20,
                             paddingLeftSuffix: "%",
                             padding: 15,
@@ -3291,7 +3781,8 @@ module.exports = {
                             className: "",
                             borderStyle: "solid",
                             tempBorderStyle: "solid",
-
+                            hoverBorderStyle: null,
+                            tempHoverBorderStyle: null,
                             borderWidthType: "grouped",
                             borderWidth: 0,
                             borderTopWidth: 0,
@@ -3303,7 +3794,17 @@ module.exports = {
                             tempBorderRightWidth: 4,
                             tempBorderBottomWidth: 4,
                             tempBorderLeftWidth: 4,
-
+                            hoverBorderWidthType: null,
+                            hoverBorderWidth: null,
+                            hoverBorderTopWidth: null,
+                            hoverBorderRightWidth: null,
+                            hoverBorderBottomWidth: null,
+                            hoverBorderLeftWidth: null,
+                            tempHoverBorderWidth: null,
+                            tempHoverBorderTopWidth: null,
+                            tempHoverBorderRightWidth: null,
+                            tempHoverBorderBottomWidth: null,
+                            tempHoverBorderLeftWidth: null,
                             borderRadiusType: "grouped",
                             borderRadius: 0,
                             borderTopLeftRadius: 0,
@@ -3315,7 +3816,17 @@ module.exports = {
                             tempBorderTopRightRadius: 0,
                             tempBorderBottomRightRadius: 0,
                             tempBorderBottomLeftRadius: 0,
-
+                            hoverBorderRadiusType: null,
+                            hoverBorderRadius: null,
+                            hoverBorderTopLeftRadius: null,
+                            hoverBorderTopRightRadius: null,
+                            hoverBorderBottomRightRadius: null,
+                            hoverBorderBottomLeftRadius: null,
+                            tempHoverBorderRadius: null,
+                            tempHoverBorderTopLeftRadius: null,
+                            tempHoverBorderTopRightRadius: null,
+                            tempHoverBorderBottomRightRadius: null,
+                            tempHoverBorderBottomLeftRadius: null,
                             bgColorType: "solid",
                             gradientActivePointer: "startPointer",
                             gradientStartPointer: 0,
@@ -3323,25 +3834,43 @@ module.exports = {
                             gradientType: "linear",
                             gradientLinearDegree: 90,
                             gradientRadialDegree: 90,
-
+                            hoverBgColorType: null,
+                            hoverGradientActivePointer: null,
+                            hoverGradientStartPointer: null,
+                            hoverGradientFinishPointer: null,
+                            hoverGradientType: null,
+                            hoverGradientLinearDegree: null,
+                            hoverGradientRadialDegree: null,
                             bgColorHex: "#000000",
                             bgColorOpacity: 0,
                             bgColorPalette: "",
                             tempBgColorOpacity: 1,
                             tempBgColorPalette: "",
-
+                            hoverBgColorHex: null,
+                            hoverBgColorOpacity: null,
+                            hoverBgColorPalette: null,
+                            tempHoverBgColorOpacity: null,
+                            tempHoverBgColorPalette: null,
                             gradientColorHex: "#009900",
                             gradientColorOpacity: 1,
                             gradientColorPalette: "",
                             tempGradientColorOpacity: 1,
                             tempGradientColorPalette: "",
-
+                            hoverGradientColorHex: null,
+                            hoverGradientColorOpacity: null,
+                            hoverGradientColorPalette: null,
+                            tempHoverGradientColorOpacity: null,
+                            tempHoverGradientColorPalette: null,
                             borderColorHex: "#66738d",
                             borderColorOpacity: 0,
                             borderColorPalette: "",
                             tempBorderColorOpacity: 1,
                             tempBorderColorPalette: "",
-
+                            hoverBorderColorHex: null,
+                            hoverBorderColorOpacity: null,
+                            hoverBorderColorPalette: null,
+                            tempHoverBorderColorOpacity: null,
+                            tempHoverBorderColorPalette: null,
                             hoverTransition: 50,
                             paddingType: "ungrouped",
                             paddingTop: 5,
@@ -3372,7 +3901,53 @@ module.exports = {
                             tempBoxShadowColorOpacity: 1,
                             customClassName: "",
                             customCSS: "",
-
+                            tabletBorderStyle: null,
+                            tempTabletBorderStyle: null,
+                            tabletBorderWidthType: null,
+                            tabletBorderWidth: null,
+                            tabletBorderTopWidth: null,
+                            tabletBorderRightWidth: null,
+                            tabletBorderBottomWidth: null,
+                            tabletBorderLeftWidth: null,
+                            tempTabletBorderWidth: null,
+                            tempTabletBorderTopWidth: null,
+                            tempTabletBorderRightWidth: null,
+                            tempTabletBorderBottomWidth: null,
+                            tempTabletBorderLeftWidth: null,
+                            tabletBorderRadiusType: null,
+                            tabletBorderRadius: null,
+                            tabletBorderTopLeftRadius: null,
+                            tabletBorderTopRightRadius: null,
+                            tabletBorderBottomLeftRadius: null,
+                            tabletBorderBottomRightRadius: null,
+                            tempTabletBorderRadius: null,
+                            tempTabletBorderTopLeftRadius: null,
+                            tempTabletBorderTopRightRadius: null,
+                            tempTabletBorderBottomLeftRadius: null,
+                            tempTabletBorderBottomRightRadius: null,
+                            tabletBgColorType: null,
+                            tabletGradientStartPointer: null,
+                            tabletGradientFinishPointer: null,
+                            tabletGradientActivePointer: null,
+                            tabletGradientType: null,
+                            tabletGradientLinearDegree: null,
+                            tabletGradientRadialDegree: null,
+                            tabletBgColorHex: null,
+                            tabletBgColorOpacity: null,
+                            tabletBgColorPalette: null,
+                            tempTabletBgColorOpacity: null,
+                            tempTabletBgColorPalette: null,
+                            tabletGradientColorHex: null,
+                            tabletGradientColorOpacity: null,
+                            tabletGradientColorPalette: null,
+                            tempTabletGradientColorOpacity: null,
+                            tempTabletGradientColorPalette: null,
+                            tabletBorderColorHex: null,
+                            tabletBorderColorOpacity: null,
+                            tabletBorderColorPalette: null,
+                            tempTabletBorderColorOpacity: null,
+                            tempTabletBorderColorPalette: null,
+                            tabletVerticalAlign: null,
                             tabletPaddingType: "ungrouped",
                             tabletPadding: 15,
                             tabletPaddingTop: 25,
@@ -3400,7 +3975,53 @@ module.exports = {
                             tabletMarginRightSuffix: "px",
                             tabletMarginBottomSuffix: "px",
                             tabletMarginLeftSuffix: "px",
-
+                            mobileBgColorType: null,
+                            mobileGradientStartPointer: null,
+                            mobileGradientFinishPointer: null,
+                            mobileGradientActivePointer: null,
+                            mobileGradientType: null,
+                            mobileGradientLinearDegree: null,
+                            mobileGradientRadialDegree: null,
+                            mobileBgColorHex: null,
+                            mobileBgColorOpacity: null,
+                            mobileBgColorPalette: null,
+                            tempMobileBgColorOpacity: null,
+                            tempMobileBgColorPalette: null,
+                            mobileGradientColorHex: null,
+                            mobileGradientColorOpacity: null,
+                            mobileGradientColorPalette: null,
+                            tempMobileGradientColorOpacity: null,
+                            tempMobileGradientColorPalette: null,
+                            mobileBorderStyle: null,
+                            tempMobileBorderStyle: null,
+                            mobileBorderWidthType: null,
+                            mobileBorderWidth: null,
+                            mobileBorderTopWidth: null,
+                            mobileBorderRightWidth: null,
+                            mobileBorderBottomWidth: null,
+                            mobileBorderLeftWidth: null,
+                            tempMobileBorderWidth: null,
+                            tempMobileBorderTopWidth: null,
+                            tempMobileBorderRightWidth: null,
+                            tempMobileBorderBottomWidth: null,
+                            tempMobileBorderLeftWidth: null,
+                            mobileBorderRadiusType: null,
+                            mobileBorderRadius: null,
+                            mobileBorderTopLeftRadius: null,
+                            mobileBorderTopRightRadius: null,
+                            mobileBorderBottomLeftRadius: null,
+                            mobileBorderBottomRightRadius: null,
+                            tempMobileBorderRadius: null,
+                            tempMobileBorderTopLeftRadius: null,
+                            tempMobileBorderTopRightRadius: null,
+                            tempMobileBorderBottomLeftRadius: null,
+                            tempMobileBorderBottomRightRadius: null,
+                            mobileBorderColorHex: null,
+                            mobileBorderColorOpacity: null,
+                            mobileBorderColorPalette: null,
+                            tempMobileBorderColorOpacity: null,
+                            tempMobileBorderColorPalette: null,
+                            mobileVerticalAlign: null,
                             mobilePaddingType: "ungrouped",
                             mobilePadding: 0,
                             mobilePaddingTop: 30,
@@ -3432,7 +4053,8 @@ module.exports = {
                             tempMobilePaddingLeftSuffix: "px"
                           }
                         }
-                      ]
+                      ],
+                      _id: "dcqjqepilxtrzynhkdescsnunyorvrgwdezb"
                     }
                   },
                   {
@@ -3444,14 +4066,14 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "bbaxtsqueisnheoazxqsxckkrlwmgbsfgfpy",
                             height: 150,
                             tabletHeight: 26,
                             mobileHeight: 10
                           }
                         }
                       ],
-
+                      _id: "xdyujibzlamgbhqyqjyuutjcuxmihmvpowqe",
                       showOnTablet: "on",
                       showOnMobile: "on"
                     }
@@ -3483,7 +4105,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "mthjsfgjqhdazelazhjaexzqfsawupnelkyc",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -3501,18 +4124,20 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "rrnqfqfkotcdbcnycrnwfitzfkhcefwvwfhh",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">The easiest way to spend crypto worldwide</span></p>'
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "pozieejzqwlasoladndkywrulnfgqlqnoznx",
                                         iconSpacing: 14
                                       }
                                     }
                                   ],
-
+                                  _id: "qurjfyjahhsjayjboshckjhqmxmjvcbprvav",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -3536,7 +4161,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "bkvnseljepsejnsjctjldkqiloxueindlhfz",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -3645,10 +4271,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -3658,21 +4289,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "qjimwgwglwnrbijcqaikzzsgtqtyzhnfhdqe",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">Instant transactions and payments</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "ueonvfiwfeexfbtigxhkyegcznwzcywaspti",
                                         iconSpacing: 14,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "tvrqieruuhqrdtlvdsjeufqjtkhinbsdhgrr",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -3698,7 +4331,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -3721,7 +4354,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -3763,7 +4396,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "sjcpohugvfkcrpvaekzovpljplhttkybdyua",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -3872,10 +4506,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -3885,21 +4524,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "sinxspaqbbbxelduhggbkimgelzjzfvchoqw",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">Track your spend through the app</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "ezkdxdzsxwjkqjdflsqkxfaboygdryaqtxaj",
                                         iconSpacing: 14,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "lwmxaxsjjbtvnkqhedbsqatqmwlmzpixemfi",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -3925,7 +4566,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -3948,7 +4589,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -3990,7 +4631,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "ryiuuhfoysuyjjpfirsymqwillgrzicqaopz",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -4099,10 +4741,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -4112,21 +4759,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "eyxttjmsnoswmruiqckbemcjgzmklqguvvhy",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">Easily choose which crypto you spend</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "cipboaoyuqfngwkclfhasmphvcvedydrcwjd",
                                         iconSpacing: 14,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "ehtzteerkituunbiovccmxejzodoclwursjo",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -4152,7 +4801,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -4175,7 +4824,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -4217,7 +4866,8 @@ module.exports = {
                                                 "icon",
                                                 "iconText--icon"
                                               ],
-
+                                              _id:
+                                                "xzpdembrqullabghatppxxilzbsepuneqkmt",
                                               name: "check-simple",
                                               type: "glyph",
                                               size: "custom",
@@ -4326,10 +4976,15 @@ module.exports = {
                                               tempBoxShadowColorOpacity: 1,
                                               strokeWidth: 1,
                                               customCSS: "",
-
+                                              mobileSize: null,
+                                              mobileCustomSize: null,
+                                              mobilePadding: null,
                                               tempMobilePadding: 20,
-
-                                              tempMobileBorderRadius: 4
+                                              mobileBorderRadius: null,
+                                              tempMobileBorderRadius: 4,
+                                              tabletSize: null,
+                                              tabletCustomSize: null,
+                                              tabletPadding: null
                                             }
                                           },
                                           {
@@ -4339,21 +4994,23 @@ module.exports = {
                                                 "text",
                                                 "iconText--text"
                                               ],
-
+                                              _id:
+                                                "ulhryliobpvkxqnetdslazlgoectzrrxjfco",
                                               text:
                                                 '<p class="brz-tp-paragraph"><span class="brz-cp-color8">World-class security &amp; privacy</span></p>',
                                               customCSS: ""
                                             }
                                           }
                                         ],
-
+                                        _id:
+                                          "oixxcocuwrcufcyiyfqbozpqyfzgunrwhdau",
                                         iconSpacing: 14,
                                         iconPosition: "left",
                                         customCSS: ""
                                       }
                                     }
                                   ],
-
+                                  _id: "isiwolohadzdtocbmmpvqotdzgyjwmrbmraw",
                                   marginBottomSuffix: "px",
                                   marginBottom: 5,
                                   margin: 0,
@@ -4379,7 +5036,7 @@ module.exports = {
                                   marginRightSuffix: "px",
                                   marginLeftSuffix: "px",
                                   customClassName: "",
-
+                                  tabletHorizontalAlign: null,
                                   tabletPaddingType: "grouped",
                                   tabletPadding: 0,
                                   tabletPaddingTop: 0,
@@ -4402,7 +5059,7 @@ module.exports = {
                                   tabletMarginRightSuffix: "px",
                                   tabletMarginBottomSuffix: "px",
                                   tabletMarginLeftSuffix: "px",
-
+                                  mobileHorizontalAlign: null,
                                   mobilePaddingType: "grouped",
                                   mobilePadding: 0,
                                   mobilePaddingTop: 0,
@@ -4428,7 +5085,7 @@ module.exports = {
                                 }
                               }
                             ],
-
+                            _id: "whnscerrgfaompufguvyhfsrejefxpayraie",
                             tabsColor: "tabOverlay",
                             tabsCurrentElement: "tabCurrentElement",
                             borderWidthType: "ungrouped",
@@ -4523,13 +5180,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "oxfyncilpyznrcasscgxjenrahaoasurlfly",
                                         text:
                                           '<p class="brz-text-lg-center brz-tp-heading6"><span class="brz-cp-color8">DOWNLOAD THE APP NOW</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "hxesrdjwhxkfyqwinvghspjprhiqffvumcer",
                                   marginBottomSuffix: "px",
                                   marginBottom: 0,
                                   margin: 0,
@@ -4545,12 +5203,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "udafwagihpioimalbburxeraykrfsudaxgyk",
                                         text:
                                           '<p class="brz-fs-xs-im-13 brz-fs-lg-16 brz-fw-xs-im-400 brz-fw-sm-im-400 brz-fw-lg-400 brz-ff-josefin_sans brz-ls-xs-im-m_0_5 brz-ls-sm-im-m_0_5 brz-ls-lg-m_0_5 brz-lh-xs-im-1_6 brz-lh-sm-im-1_6 brz-lh-lg-1_6 brz-text-lg-center brz-fs-sm-14"><span class="brz-cp-color6" style="opacity: 0.8;">Get the version you need from Apple or Google</span></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "kykxinbnspiflusrwwhfrgsyuwygouolvmub"
                                 }
                               },
                               {
@@ -4562,12 +5222,13 @@ module.exports = {
                                       type: "Spacer",
                                       value: {
                                         _styles: ["spacer"],
-
+                                        _id:
+                                          "dhntygsxfcxdnjmirvaegwunnvbywjisddcr",
                                         height: 10
                                       }
                                     }
                                   ],
-
+                                  _id: "tnxtwktdvzcsvhszhprfwmjxpgejeziynsjr",
                                   showOnTablet: "off"
                                 }
                               },
@@ -4580,7 +5241,8 @@ module.exports = {
                                       type: "Image",
                                       value: {
                                         _styles: ["image"],
-
+                                        _id:
+                                          "cwvhhpvdatoxxvpgxuocpqnavxmonfrzwvys",
                                         imageWidth: 662,
                                         imageHeight: 96,
                                         imageSrc:
@@ -4595,7 +5257,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "vrohcptkjnvprwfguhoqebtmzpsxvjzsxpfp",
                                   mobileMarginBottomSuffix: "px",
                                   mobileMarginBottom: 30,
                                   mobileMargin: 0,
@@ -4603,7 +5265,7 @@ module.exports = {
                                 }
                               }
                             ],
-
+                            _id: "syhmnzewezieakibwuhqypmxqchdoteednbl",
                             verticalAlign: "center",
                             tabsState: "tabNormal",
                             tabsCurrentElement: "tabCurrentElement",
@@ -4619,7 +5281,7 @@ module.exports = {
                           }
                         }
                       ],
-
+                      _id: "ydnnrukrhyjlomnircyzwbovygxazryoeixj",
                       tabsColor: "tabOverlay",
                       bgColorPalette: "color2",
                       tempBgColorPalette: "color2",
@@ -4707,14 +5369,14 @@ module.exports = {
                           type: "Spacer",
                           value: {
                             _styles: ["spacer"],
-
+                            _id: "iyrsngktrxjhperwszpmtbbnwlasbggtmrdv",
                             height: 80,
                             tabletHeight: 54,
                             mobileHeight: 30
                           }
                         }
                       ],
-
+                      _id: "hgqyqwtwgmfmasunoqowzcpcwfrvrdkcgjos",
                       showOnTablet: "on",
                       showOnMobile: "on"
                     }
@@ -4738,13 +5400,14 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "xsljsqmuomnkaprtsnhkuqzyhkfytgickayr",
                                         text:
                                           '<p class="brz-text-xs-center brz-ls-lg-m_2 brz-fs-xs-im-41 brz-fs-sm-im-41 brz-fs-lg-42 brz-fw-lg-700 brz-ff-josefin_sans brz-lh-xs-im-1_2 brz-lh-lg-1_2 brz-ls-sm-m_1 brz-fw-sm-700 brz-lh-sm-1_1 brz-ls-xs-m_1 brz-fw-xs-700"><span class="brz-cp-color2">coin</span><strong class="brz-cp-color5">.</strong></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "azqqgejoiqzrhdibimljidhmearguudaojmx",
                                   marginBottomSuffix: "px",
                                   marginBottom: 0,
                                   margin: 0,
@@ -4760,19 +5423,20 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "uhuzofghunvurypaywswmktxkmbatuopinia",
                                         text:
                                           '<p class="brz-tp-paragraph brz-text-xs-center"><span class="brz-cp-color6">Website Terms &nbsp;/&nbsp; Legal Agreements&nbsp; /&nbsp; Privacy policy</span></p>'
                                       }
                                     }
                                   ],
-
+                                  _id: "paodwbvevevsigbgbksrrrcaaluegyidrvti",
                                   showOnTablet: "off",
                                   showOnMobile: "off"
                                 }
                               }
                             ],
-
+                            _id: "dwjhzynsppqqhhsdogssutpokmkvxsavsdww",
                             tabletWidth: 40.1,
                             verticalAlign: "center"
                           }
@@ -4794,7 +5458,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "myfzojyvywykijvowoweisvjfhnxnkevdbkk",
                                         text: "SERVICES",
                                         fillType: "default",
                                         tempFillType: "filled",
@@ -4865,7 +5530,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "veuyorhoidmcasbqepnvdbyqogastdasficp",
                                         text: "FEATURES",
                                         fillType: "default",
                                         tempFillType: "filled",
@@ -4936,7 +5602,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "lnxizvqcdiykcapgjonzgcnxjfawegiwbgcg",
                                         text: "F.A.Q.",
                                         fillType: "default",
                                         tempFillType: "filled",
@@ -5007,7 +5674,8 @@ module.exports = {
                                       type: "Button",
                                       value: {
                                         _styles: ["button"],
-
+                                        _id:
+                                          "kngcjklfbsgfkjqshghuqonrjxggfethirsv",
                                         text: "PRICING",
                                         fillType: "default",
                                         tempFillType: "filled",
@@ -5075,7 +5743,7 @@ module.exports = {
                                       }
                                     }
                                   ],
-
+                                  _id: "cgrcirdntommjlxubwuyjdlgdkzwhplgyoia",
                                   horizontalAlign: "right",
                                   itemPadding: 30,
                                   itemPaddingRight: 30,
@@ -5103,16 +5771,18 @@ module.exports = {
                                       type: "RichText",
                                       value: {
                                         _styles: ["richText"],
-
+                                        _id:
+                                          "ggrubqhcybulzcirjefrvszibgqoifmffztx",
                                         text:
-                                          '<p class="brz-text-xs-center brz-text-lg-right brz-tp-paragraph brz-mt-xs-10"><span class="brz-cp-color6">Crypto Landing Page /&nbsp;© 2019&nbsp;/&nbsp;Made with </span><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22https%3A%2F%2Fbrizy.io%22%2C%22externalBlank%22%3A%22on%22%2C%22externalRel%22%3A%22on%22%2C%22externalType%22%3A%22external%22%2C%22population%22%3A%22%22%2C%22popup%22%3A%22%22%7D" class="link--external brz-cp-color6">Brizy</a></p>'
+                                          '<p class="brz-text-xs-center brz-text-lg-right brz-tp-paragraph brz-mt-xs-10"><span class="brz-cp-color6">Crypto Landing Page /&nbsp;© 2019&nbsp;/&nbsp;Made with </span><a data-href="%7B%22type%22%3A%22external%22%2C%22anchor%22%3A%22%22%2C%22external%22%3A%22%22%2C%22externalBlank%22%3A%22on%22%2C%22externalRel%22%3A%22on%22%2C%22externalType%22%3A%22external%22%2C%22population%22%3A%22%22%2C%22popup%22%3A%22%22%7D" class="brz-cp-color6 link--external is-empty">love</a></p>'
                                       }
                                     }
-                                  ]
+                                  ],
+                                  _id: "jmsjvyhwpnugfgcnaaegrnpddrndvpdbvjpp"
                                 }
                               }
                             ],
-
+                            _id: "oinfxeyrkhliwfvqrlycfqieadgfjjdkgjtv",
                             mobileMarginTop: -15,
                             mobileMarginTopSuffix: "px",
                             mobileMargin: 10,
@@ -5123,7 +5793,7 @@ module.exports = {
                           }
                         }
                       ],
-
+                      _id: "gehzxhkexxvtyohrxroflpoxxghxrlsgqpyg",
                       size: 88,
                       tabsState: "tabNormal",
                       tabsCurrentElement: "tabCurrentElement",
@@ -5131,7 +5801,7 @@ module.exports = {
                     }
                   }
                 ],
-
+                _id: "ooldztadbuknmjbtyeqxelllyxywqcjxskuf",
                 paddingType: "ungrouped",
                 paddingTop: 70,
                 paddingBottom: 140,
@@ -5161,11 +5831,11 @@ module.exports = {
               }
             }
           ],
-
+          _id: "fzrudxcojngommngikgwpxxgzagrwrwaaebg",
           _thumbnailSrc: 183074,
           _thumbnailWidth: 600,
-          _thumbnailHeight: 554,
-          _thumbnailTime: 1579200677325,
+          _thumbnailHeight: 481,
+          _thumbnailTime: 1631622687295,
           anchorName: "features"
         },
         blockId: "Blank000Light"

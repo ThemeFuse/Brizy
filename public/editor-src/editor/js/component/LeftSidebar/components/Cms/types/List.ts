@@ -8,6 +8,7 @@ export interface Cloud {
   development: boolean;
   protectedPagePassword: string;
   previewUrl: string;
+  domainUrl: string;
   settingsUrl: string;
   user: {
     isPro: boolean;

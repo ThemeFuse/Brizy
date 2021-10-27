@@ -23,7 +23,6 @@ import { OptionType } from "visual/component/Options/Type";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import * as Blur from "visual/utils/cssProps/Blur";
 import * as Hex from "visual/utils/color/Hex";
-import * as Spread from "visual/utils/cssProps/Spread";
 import {
   setBlur,
   setHex,
@@ -76,9 +75,7 @@ export const BoxShadow: OptionType<Value> & FC<Props> = ({
           break;
         }
         case "spread": {
-          const spread = Spread.fromNumber(m.spread);
-          spread &&
-            onChange(toElementModel(setSpread(spread, value), identity));
+          onChange(toElementModel(setSpread(m.spread, value), identity));
           break;
         }
         case "palette": {

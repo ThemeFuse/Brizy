@@ -39,5 +39,5 @@ export function cssStyleElementCounterStrokeColor({
 }
 
 export function cssStyleElementCounterTransitionHoverProperty() {
-  return "transition-property: color, fill, stroke";
+  return "transition-property: color, fill, stroke;";
 }

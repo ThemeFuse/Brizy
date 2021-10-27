@@ -2,8 +2,18 @@ import React from "react";
 import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import MenuDropDown from "visual/component/MenuDropDown";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 
-const renderSubMenu = (items, mMenu, level) => {
+const getPlacement = (level, mods) => ({
+  [DESKTOP]:
+    mods?.desktop === "horizontal" && level === 0
+      ? "bottom-start"
+      : "right-start",
+  [TABLET]: "bottom-start",
+  [MOBILE]: "bottom-start"
+});
+
+const renderSubMenu = (items, mMenu, level, mods) => {
   const mMenuClassName = classnames("brz-mm-menu__sub-menu", {
     "brz-menu__ul--has-dropdown": level === 0
   });
@@ -11,7 +21,13 @@ const renderSubMenu = (items, mMenu, level) => {
   return mMenu ? (
     <ul className={mMenuClassName}>{items}</ul>
   ) : (
-    <MenuDropDown className="brz-menu__sub-menu">{items}</MenuDropDown>
+    <MenuDropDown
+      placement={IS_PREVIEW ? getPlacement(level, mods) : undefined}
+      mods={IS_PREVIEW ? mods : undefined}
+      className="brz-menu__sub-menu"
+    >
+      {items}
+    </MenuDropDown>
   );
 };
 
@@ -32,7 +48,7 @@ class MenuItemItems extends EditorArrayComponent {
 
   getItemProps(itemData, itemIndex, items) {
     const props = super.getItemProps(itemData, itemIndex, items);
-    let { level, toolbarExtend, mMenu, meta, getParent } = this.props;
+    let { level, toolbarExtend, mMenu, meta, getParent, mods } = this.props;
 
     return {
       ...props,
@@ -40,6 +56,7 @@ class MenuItemItems extends EditorArrayComponent {
       toolbarExtend,
       meta,
       getParent,
+      mods,
       level: ++level
     };
   }
@@ -61,14 +78,14 @@ class MenuItemItems extends EditorArrayComponent {
   }
 
   renderItemsContainer(_items) {
-    const { level, megaMenu, mMenu } = this.props;
+    const { level, megaMenu, mMenu, mods } = this.props;
     const items = _items.filter(el => el);
 
     if (items.length === 0) {
       return null;
     }
 
-    return megaMenu ? items : renderSubMenu(items, mMenu, level);
+    return megaMenu ? items : renderSubMenu(items, mMenu, level, mods);
   }
 }
 

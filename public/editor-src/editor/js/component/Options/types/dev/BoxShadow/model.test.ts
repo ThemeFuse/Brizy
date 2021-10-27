@@ -11,7 +11,6 @@ import {
 import { palettes } from "visual/utils/color/Palette";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import * as Blur from "visual/utils/cssProps/Blur";
-import * as Spread from "visual/utils/cssProps/Spread";
 import { Value } from "./entities/Value";
 import * as Hex from "visual/utils/color/Hex";
 
@@ -23,8 +22,8 @@ const model: Value = {
   tempOpacity: Opacity.unsafe(1),
   blur: Blur.unsafe(0.3),
   tempBlur: Blur.unsafe(0.3),
-  spread: Spread.unsafe(0.3),
-  tempSpread: Spread.unsafe(0.3),
+  spread: 0.3,
+  tempSpread: 0.3,
   palette: "color1",
   tempPalette: "color2",
   vertical: 1,
@@ -72,7 +71,7 @@ describe("Testing 'getBlur' function", () => {
 });
 
 describe("Testing 'getSpread' function", () => {
-  const seed = times(11, identity).map(Spread.unsafe);
+  const seed = times(11, identity);
 
   seed.forEach(spread => {
     test(`Expect value to be ${spread}`, () => {

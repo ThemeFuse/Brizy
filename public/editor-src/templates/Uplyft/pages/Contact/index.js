@@ -294,8 +294,7 @@ module.exports = {
                                         hoverBorderColorPalette: "",
                                         tempHoverBorderColorPalette: "",
                                         linkType: "external",
-                                        linkExternal:
-                                          "https://uplyft.brizy.site/contact",
+                                        linkExternal: "https://google.com",
                                         linkPopulation: "",
                                         linkExternalType: "linkExternal"
                                       }
