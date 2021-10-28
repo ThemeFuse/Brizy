@@ -76,23 +76,25 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
         return apply_filters('brizy_placeholders', self::$cache_grouped_placeholders = $result);
     }
 
-    public function getGroupedPlaceholdersForApiResponse()
-    {
-        $groups = $this->getGroupedPlaceholders();
-        $result = [];
-        foreach ($groups as $group => $entries) {
+	public function getGroupedPlaceholdersForApiResponse() {
+		$groups = $this->getGroupedPlaceholders();
+		$result = [];
+		foreach ( $groups as $group => $entries ) {
 
-            $result[$group] = array_map(function ($entry) {
-                return [
-                    'placeholder'=>'{{'.$entry->getPlaceholder().'}}',
-                    'label'=>$entry->getLabel(),
-                    'display'=>$entry->getDisplay()
-                ];
-            }, $entries);
-        }
+			$result[ $group ] = array_map( function ( $entry ) {
 
-        return $result;
-    }
+				$placeholder = [
+					'placeholder' => '{{' . $entry->getPlaceholder() . '}}',
+					'label'       => $entry->getLabel(),
+					'display'     => $entry->getDisplay()
+				];
+
+				return apply_filters( 'editor_placeholder_data', $placeholder, $entry );
+			}, $entries );
+		}
+
+		return $result;
+	}
 
     /**
      * @param $name

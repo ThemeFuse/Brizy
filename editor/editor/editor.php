@@ -177,8 +177,8 @@ class Brizy_Editor_Editor_Editor
 			'prefix'          => Brizy_Editor::prefix(),
 			'cloud'           => $this->getCloudInfo(),
 			'editorVersion'   => BRIZY_EDITOR_VERSION,
+	        'imageSizes'      => $this->getImgSizes()
 		);
-
 
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
@@ -1070,4 +1070,19 @@ class Brizy_Editor_Editor_Editor
 
         return $response;
     }
+
+	private function getImgSizes() {
+
+		$sizes = [];
+
+		foreach ( Brizy_Editor::get_all_image_sizes() as $name => $size ) {
+			if ( isset( $size['crop'] ) ) {
+				unset( $size['crop'] );
+			}
+			$size['name'] = $name;
+			$sizes[] = $size;
+		}
+
+		return $sizes;
+	}
 }

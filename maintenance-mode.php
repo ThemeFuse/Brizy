@@ -187,8 +187,6 @@ class Brizy_MaintenanceMode {
 	            ! empty( $_GET[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT ) ] )
                 &&
 	            ! empty( $_GET[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_FILTER ) ] )
-                &&
-	            ! empty( $_GET[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_POST ) ] )
         ) {
 		    $out = true;
         }

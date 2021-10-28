@@ -100,13 +100,13 @@ class Brizy_Editor_Asset_Crop_Cropper {
 	private function internalCrop( $source, $target, $filterOptions ) {
 		if ( $filterOptions['format'] == "gif" ) {
 			// do not resize
-			return $this->copyFile( $source, $target );
+			return false;
 		} else {
 			list( $imgWidth, $imgHeight ) = $filterOptions['originalSize'];
 			if ( $filterOptions['is_advanced'] === false ) {
 				list( $requestedImgWidth, $requestedImgHeight ) = array_values( $filterOptions['requestedData'] );
 				if ( $requestedImgWidth > $imgWidth && ( $requestedImgHeight == "any" || $requestedImgHeight == "*" ) ) {
-					return $this->copyFile( $source, $target );
+					return false;
 				}
 
 				return $this->serviceResize( $source, $target, $requestedImgWidth, $requestedImgHeight );
@@ -154,20 +154,10 @@ class Brizy_Editor_Asset_Crop_Cropper {
 	 */
 	public function crop( $source, $target, $filter ) {
 
-		if ( ! file_exists( $source ) ) {
-			throw new Exception( 'Unable to crop media. Source file not found.' );
-		}
-
-		if ( ! is_writable( dirname( $target ) ) ) {
-			throw new Exception( 'Unable to crop media. Target directory is not writable.' );
-		}
-
 		try {
 			wp_raise_memory_limit( 'image' );
-			$filterOptions = $this->getFilterOptions( $source, $filter );
-			$result        = $this->internalCrop( $source, $target, $filterOptions );
 
-			return $result;
+			return $this->internalCrop( $source, $target, $this->getFilterOptions( $source, $filter ) );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
 
@@ -182,12 +172,12 @@ class Brizy_Editor_Asset_Crop_Cropper {
 	 * @return array
 	 * @throws Exception
 	 */
-	private function getFilterOptions( $source, $filter ) {
+	public function getFilterOptions( $source, $filter ) {
 
 		$imageEditor = wp_get_image_editor( $source );
 
-		if($imageEditor instanceof WP_Error) {
-			throw new Exception('No image editor returned');
+		if ( is_wp_error( $imageEditor ) ) {
+			throw new Exception( $imageEditor->get_error_message() );
 		}
 
 		parse_str( strtolower( $filter ), $output );
@@ -226,7 +216,6 @@ class Brizy_Editor_Asset_Crop_Cropper {
 	private function getCropType( $filter ) {
 		$regExAdvanced = "/^iW=[0-9]{1,4}&iH=[0-9]{1,4}&oX=[0-9]{1,4}&oY=[0-9]{1,4}&cW=[0-9]{1,4}&cH=[0-9]{1,4}$/is";
 		$regExBasic    = "/^iW=[0-9]{1,4}&iH=([0-9]{1,4}|any|\*{1})$/is";
-		$cropType      = null;
 
 		if ( preg_match( $regExBasic, $filter ) ) {
 			$cropType = self::BASIC_CROP_TYPE;
@@ -237,15 +226,5 @@ class Brizy_Editor_Asset_Crop_Cropper {
 		}
 
 		return $cropType;
-	}
-
-	/**
-	 * @param $source
-	 * @param $target
-	 *
-	 * @return bool
-	 */
-	private function copyFile( $source, $target ) {
-		return (bool) copy( $source, $target );
 	}
 }
