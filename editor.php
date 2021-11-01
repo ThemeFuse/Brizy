@@ -148,7 +148,6 @@ class Brizy_Editor {
 		if ( Brizy_Editor_User::is_user_allowed() ) {
 			Brizy_Admin_Svg_Main::_init();
             Brizy_Admin_Json_Main::_init();
-			Brizy_Admin_OptimizeImages::_init();
 			Brizy_Admin_Layouts_Main::_init();
 			Brizy_Admin_Membership_Membership::_init();
 
@@ -559,5 +558,54 @@ class Brizy_Editor {
 		}
 
 		return self::$is_allowed_for_current_user;
+	}
+
+	/**
+	 * Get all image sizes.
+	 *
+	 * Retrieve available image sizes with data like `width`, `height` and `crop`.
+	 *
+	 * @return array An array of available image sizes.
+	 */
+	static public function get_all_image_sizes() {
+		global $_wp_additional_image_sizes;
+
+		static $image_sizes = [];
+
+		if ( $image_sizes ) {
+			return $image_sizes;
+		}
+
+		foreach ( [ 'thumbnail', 'medium', 'medium_large', 'large' ] as $size ) {
+			$image_sizes[ $size ] = [
+				'width'  => (int) get_option( $size . '_size_w' ),
+				'height' => (int) get_option( $size . '_size_h' ),
+				'crop'   => (bool) get_option( $size . '_crop' ),
+			];
+		}
+
+		if ( $_wp_additional_image_sizes ) {
+			$image_sizes = array_merge( $image_sizes, $_wp_additional_image_sizes );
+		}
+
+		/** The filter image_size_names_choose is documented in wp-admin/includes/media.php */
+		$image_sizes = array_filter( apply_filters( 'image_size_names_choose', $image_sizes ), function( $size ) {
+			return ! empty( $size['width'] ) && ! empty( $size['height'] );
+		} );
+
+		foreach ( $image_sizes as $sizeName => $sizeAttrs ) {
+			$label = ucwords( str_replace( '_', ' ', $sizeName ) );
+			if ( is_array( $sizeAttrs ) ) {
+				$label .= sprintf( ' - %d x %d', $sizeAttrs['width'], $sizeAttrs['height'] );
+			}
+
+			$image_sizes[ $sizeName ]['label'] = $label;
+		}
+
+		if ( ! array_key_exists( 'original', $image_sizes ) ) {
+            $image_sizes = ['original'=>['label'=>__( 'Original', 'brizy' )]] + $image_sizes;
+		}
+
+		return $image_sizes;
 	}
 }

@@ -161,13 +161,42 @@ class Brizy_Editor_UrlBuilder
      */
     public function brizy_upload_path($path = null)
     {
-
         if ($path) {
             $path = ltrim($path, '/');
         }
 
         return $this->upload_path(sprintf(Brizy_Config::LOCAL_PAGE_ASSET_STATIC_URL, $path));
     }
+
+    /**
+     * @param $path
+     *
+     * @return string
+     */
+    public function wp_upload_path($path = null)
+    {
+	    if ( $path ) {
+		    $path = ltrim( $path, '/' );
+	    }
+
+        return $this->upload_dir['path'] . '/' . $path;
+    }
+
+	/**
+	 * @param $path
+	 *
+	 * @return string
+	 */
+	public function wp_upload_relative_path( $path )
+	{
+		$path = ltrim( $path, '/' );
+
+		if ( empty( $this->upload_dir['subdir'] ) || $this->upload_dir['subdir'] == '/' ) {
+			return $path;
+		}
+
+		return ltrim( $this->upload_dir['subdir'] . '/' . $path, '/' );
+	}
 
     /**
      * @param $path
