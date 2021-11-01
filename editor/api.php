@@ -39,7 +39,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     const AJAX_GET_TERMS_BY = '_get_terms_by';
     const AJAX_GET_POST_TAXONOMIES = '_get_post_taxonomies';
 
-
     /**
      * @var Brizy_Editor_Post
      */
@@ -956,11 +955,10 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         try {
             $this->verifyNonce(self::nonce);
 
-            $project = Brizy_Editor_Project::get();
-            $apost = (int)$_REQUEST['post_id'];
+            $project      = Brizy_Editor_Project::get();
+	        $media_cacher = new Brizy_Editor_CropCacheMedia( $project );
 
-            $media_cacher = new Brizy_Editor_CropCacheMedia($project, $apost);
-            $media_cacher->download_original_image($_REQUEST['media']);
+	        $media_cacher->download_original_image( $_REQUEST['media'] );
 
             $this->success(array(), 200);
         } catch (Exception $e) {

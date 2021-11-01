@@ -26,17 +26,14 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 	 * @return mixed|string
 	 */
 	public function process( $content, Brizy_Content_Context $context ) {
-
-		$content = $this->process_external_asset_urls( $content, $context );
-
-		return $content;
+		return $this->process_external_asset_urls( $content, $context );
 	}
 
 	/**
 	 * @param string $content
 	 * @param Brizy_Content_Context $context
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function process_external_asset_urls( $content, Brizy_Content_Context $context ) {
 
@@ -45,90 +42,72 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 
 		$project  = $context->getProject();
 
-		$endpoint = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT );
-		$endpoint_post = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_POST );
-		$endpoint_filter = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_FILTER );
+		$uidKey    = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT );
+		$postIdKey = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_POST );
+		$sizeKey   = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT_FILTER );
 
-		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . $endpoint . '=(.[^"\',\s)]*))/im', $content, $matches );
+		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . $uidKey . '=(.[^"\',\s)]*))/im', $content, $matches );
 
-		if ( ! isset( $matches[0] ) || count( $matches[0] ) == 0 ) {
+		if ( empty( $matches[0] ) ) {
 			return $content;
 		}
 
-		foreach ( $matches[0] as $i => $url ) {
+		$uids = [];
 
-			$parsed_url = parse_url( html_entity_decode( $matches[0][ $i ] ) );
-
-			if ( ! isset( $parsed_url['query'] ) ) {
-				continue;
-			}
-
-			parse_str( $parsed_url['query'], $params );
-
-
-			if ( ! isset( $params[ $endpoint ] ) ) {
-				continue;
-			}
-
-			$post_id = wp_is_post_revision( (int) $params[ $endpoint_post ] ) ? wp_get_post_parent_id( (int) $params[ $endpoint_post ] ) : (int) $params[ $endpoint_post ];
-			$media_cache           = new Brizy_Editor_CropCacheMedia( $project, $post_id );
-
-			$new_url = null;
-
-			$media_path = $this->get_attachment_file_by_uid( $params[ $endpoint ] );
-
-			if ( ! $media_path ) {
-				continue;
-			}
-
+		foreach ( $matches[0] as $url ) {
 			try {
+				$args = $this->getQueryArgs( $url );
+				$uid  = $args[ $uidKey ];
 
-				$crop_media_path = $media_cache->crop_media( $media_path, $params[ $endpoint_filter ], false );
-
-				$urlBuilder      = new Brizy_Editor_UrlBuilder( $project, $post_id );
-				$local_media_url = str_replace( $urlBuilder->upload_path(), $urlBuilder->upload_url(), $crop_media_path );
-
-				$content = str_replace( $matches[0][ $i ], $local_media_url, $content );
-
+				if ( ! is_numeric( $uid ) && ! in_array( $uid, $uids ) ) {
+					$uids[] = $uid;
+				}
 			} catch ( Exception $e ) {
 				continue;
 			}
+		}
 
+		$mediaCache = new Brizy_Editor_CropCacheMedia( $project );
 
+		$mediaCache->cacheImgs( $uids );
+
+		foreach ( $matches[0] as $url ) {
+
+			try {
+				$args   = $this->getQueryArgs( $url );
+				$postId = null;
+
+				if ( ! empty( $args[ $postIdKey ] ) && $postId = $args[ $postIdKey ] ) {
+					$postId = wp_is_post_revision( $postId ) ? wp_get_post_parent_id( $postId ) : $postId;
+				}
+
+				$croppedUrl = $mediaCache->tryOptimizedPath( $args[ $uidKey ], $args[ $sizeKey ], $postId );
+				$content    = str_replace( $url, $croppedUrl, $content );
+			} catch ( Exception $e ) {
+				continue;
+			}
 		}
 
 		return $content;
 	}
 
-	private function get_attachment_file_by_uid( $attachment ) {
+	/**
+	 * @throws Exception
+	 */
+	private function getQueryArgs( $url ) {
+		$endpoint  = Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT );
+		$parsedUrl = parse_url( html_entity_decode( $url ) );
 
-
-		if ( ! is_numeric( $attachment ) ) {
-			global $wpdb;
-
-			$pt = $wpdb->posts;
-			$mt  = $wpdb->postmeta;
-			$attachment  = $wpdb->get_var( $wpdb->prepare(
-				"SELECT 
-						{$pt}.ID
-					FROM {$pt}
-						INNER JOIN {$mt} ON ( {$pt}.ID = {$mt}.post_id )
-					WHERE 
-						( {$mt}.meta_key = 'brizy_attachment_uid' 
-						AND {$mt}.meta_value = %s )
-						AND {$pt}.post_type = 'attachment'
-						AND {$pt}.post_status = 'inherit'
-					GROUP BY {$pt}.ID
-					ORDER BY {$pt}.post_date DESC",
-				$attachment
-			) );
-
-
-			if ( ! $attachment ) {
-				return;
-			}
+		if ( empty( $parsedUrl['query'] ) ) {
+			throw new Exception( 'The query does not exists.' );
 		}
 
-		return get_attached_file( $attachment );
+		parse_str( $parsedUrl['query'], $args );
+
+		if ( empty( $args[ $endpoint ] ) ) {
+			throw new Exception( 'Invalid query.' );
+		}
+
+		return $args;
 	}
 }
