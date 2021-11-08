@@ -74,7 +74,6 @@ class Brizy_Public_Main
             add_filter('template_include', array($this, 'templateInclude'), 10000);
 
         } elseif (self::is_editing_page_with_editor_on_iframe($this->post) && Brizy_Editor_User::is_user_allowed()) {
-            remove_all_filters('template_redirect');
             add_filter('template_include', array($this, 'templateIncludeForEditor'), 10000);
             add_filter('show_admin_bar', '__return_false');
             add_filter('body_class', array($this, 'body_class_editor'));
