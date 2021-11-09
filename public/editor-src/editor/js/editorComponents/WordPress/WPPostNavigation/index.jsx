@@ -62,36 +62,21 @@ class WPPostNavigation extends EditorComponent {
             {showTitle === "on" && (
               <div className="brz-navigation-title">
                 <TextEditor
-                  className="brz-navigation-title__prev"
                   value={previous}
                   onChange={this.handleChangePrevious}
                 />
-                <TextEditor
-                  className="brz-navigation-title__next"
-                  value={next}
-                  onChange={this.handleChangeNext}
-                />
+                <TextEditor value={next} onChange={this.handleChangeNext} />
               </div>
             )}
             {showPost === "on" && (
               <div className="brz-wp-shortcode">
-                <div className="brz-blocked">
-                  <div className="brz-navigation">
-                    <a
-                      className="brz-a brz-navigation__prev"
-                      href="#"
-                      rel="prev"
-                    >
-                      Previous post
-                    </a>
-                    <a
-                      className="brz-a brz-navigation__next"
-                      href="#"
-                      rel="next"
-                    >
-                      Next post
-                    </a>
-                  </div>
+                <div className="brz-navigation">
+                  <a className="brz-a" href="#" rel="prev">
+                    Previous post
+                  </a>
+                  <a className="brz-a" href="#" rel="next">
+                    Next post
+                  </a>
                 </div>
               </div>
             )}
@@ -127,11 +112,7 @@ class WPPostNavigation extends EditorComponent {
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <Wrapper {...this.makeWrapperProps({ className })}>
-          <DynamicContentHelper
-            placeholder={placeholder}
-            tagName="div"
-            props={{ className }}
-          />
+          <DynamicContentHelper placeholder={placeholder} tagName="div" />
         </Wrapper>
       </CustomCSS>
     );

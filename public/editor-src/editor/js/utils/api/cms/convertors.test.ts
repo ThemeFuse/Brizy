@@ -48,11 +48,7 @@ describe("Testing 'apiToPage' function", function() {
       id: collectionTypeAddPrefix(i + 1),
       title: `Test ${i + 1}`
     },
-    template: {
-      __typename: "Template",
-      id: templateAddPrefix(i + 100),
-      data: JSON.stringify({ items: times(i, i => i) })
-    },
+    pageData: JSON.stringify({ items: times(i, i => i) }),
     fields: null,
     createdAt: "1234"
   }));
@@ -65,7 +61,7 @@ describe("Testing 'apiToPage' function", function() {
       expect(result.title).toBe(item.title);
       expect(result.slug).toBe(item.slug);
       expect(["draft", "publish"].includes(result.status)).toBe(true);
-      expect(result.data).toEqual(JSON.parse(item.template?.data ?? "{}"));
+      expect(result.data).toEqual(JSON.parse(item.pageData ?? "{}"));
       expect(result.collectionType.id).toBe(item.type.id);
       expect(result.collectionType.title).toBe(item.type.title);
     });

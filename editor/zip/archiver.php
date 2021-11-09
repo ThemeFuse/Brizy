@@ -31,7 +31,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 		$this->editorVersion = $editorVersion;
 
 		if ( ! class_exists( 'ZipArchive' ) ) {
-			throw new InvalidArgumentException( __( 'You system does now support zip extension installed' ) );
+			throw new InvalidArgumentException( __( 'Please install/enable php zip extension. Contact your hosting company for more info and help.' ) );
 		}
 	}
 

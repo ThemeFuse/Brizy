@@ -18,7 +18,7 @@ class SelectOptionType extends React.Component {
     attr: {},
     helper: false,
     helperContent: "",
-    helperPlacement: "top-center",
+    helperPlacement: "top",
     onChange: _.noop
   };
 

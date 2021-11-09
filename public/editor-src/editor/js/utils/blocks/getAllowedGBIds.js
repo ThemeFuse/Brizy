@@ -226,7 +226,7 @@ function getFieldsReferences(fields) {
     .map(field => {
       if (field.__typename === "CollectionItemFieldReference") {
         const entityType = field.type.collectionType.id;
-        const entityValues = field.values.collectionItem.id;
+        const entityValues = field.referenceValues.collectionItem.id;
 
         return {
           appliedFor: 1,
@@ -235,7 +235,9 @@ function getFieldsReferences(fields) {
         };
       } else if (field.__typename === "CollectionItemFieldMultiReference") {
         const entityType = field.type.collectionType.id;
-        const entityValues = field.values.collectionItems.map(({ id }) => id);
+        const entityValues = field.multiReferenceValues.collectionItems.map(
+          ({ id }) => id
+        );
 
         return {
           appliedFor: 1,

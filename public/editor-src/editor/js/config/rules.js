@@ -59,7 +59,7 @@ export default {
   },
   "richText--carousel": {
     text:
-      "<p class='brz-tp-paragraph brz-text-lg-center'><span class='brz-cp-color7'>No matter if you've used a visual page builder before, with Brizy you'll be a pro the second you start using it.</span></p>"
+      "<p class='brz-tp-paragraph brz-text-lg-center'><span class='brz-cp-color7'>The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span></p>"
   },
   "hide-row-borders": {
     showToolbar: "off"

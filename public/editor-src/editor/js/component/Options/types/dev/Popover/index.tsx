@@ -42,7 +42,7 @@ export const Popover: FC<Props> &
       title={config?.title}
       trigger={getTrigger(config?.icon ?? "nc-cog")}
       className={className}
-      placement={config?.placement ?? "top-center"}
+      placement={config?.placement ?? "top"}
       size={config?.size ?? "medium"}
       toolbar={toolbar}
       clickOutsideExceptions={[

@@ -13,15 +13,21 @@ export type Props = WithClassName &
     size: "small" | "medium" | "large" | "auto";
     clickOutsideExceptions?: string[];
     placement:
-      | "top-left"
-      | "top-center"
-      | "top-right"
-      | "center-left"
-      | "center-center"
-      | "center-right"
-      | "bottom-left"
-      | "bottom-center"
-      | "bottom-right";
+      | "auto"
+      | "auto-start"
+      | "auto-end"
+      | "top"
+      | "top-start"
+      | "top-end"
+      | "bottom"
+      | "bottom-start"
+      | "bottom-end"
+      | "right"
+      | "right-start"
+      | "right-end"
+      | "left"
+      | "left-start"
+      | "left-end";
   };
 
 export const Popover: FC<Props> = ({

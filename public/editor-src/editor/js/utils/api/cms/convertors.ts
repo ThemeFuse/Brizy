@@ -36,7 +36,7 @@ export const itemToPage = (item: CollectionItem): PageCloud => {
     title: item.title,
     slug: item.slug,
     status: itemStatusToPageStatus(item.status),
-    data: (readData(item.template?.data) as PageCloud["data"]) ?? {
+    data: (readData(item.pageData) as PageCloud["data"]) ?? {
       items: []
     },
     dataVersion: 0,

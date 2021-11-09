@@ -14,12 +14,6 @@ export interface UpdateCollectionItem_updateCollectionItem_collectionItem_type {
   id: string;
 }
 
-export interface UpdateCollectionItem_updateCollectionItem_collectionItem_template {
-  __typename: "Template";
-  id: string;
-  data: string | null;
-}
-
 export interface UpdateCollectionItem_updateCollectionItem_collectionItem {
   __typename: "CollectionItem";
   id: string;
@@ -27,14 +21,11 @@ export interface UpdateCollectionItem_updateCollectionItem_collectionItem {
   slug: string;
   status: CollectionItemStatus;
   createdAt: string;
+  pageData: string | null;
   /**
    * CollectionType
    */
   type: UpdateCollectionItem_updateCollectionItem_collectionItem_type;
-  /**
-   * Data
-   */
-  template: UpdateCollectionItem_updateCollectionItem_collectionItem_template | null;
 }
 
 export interface UpdateCollectionItem_updateCollectionItem {

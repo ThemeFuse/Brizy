@@ -73,18 +73,6 @@
     }
   }
 }
-.brz-ed-control__tabs__top + .brz-ed-control__tab__content > {
-  .brz-ed-tabs__options > {
-    .brz-ed-popover__option {
-      &:first-child {
-        padding-top: 10px;
-      }
-      &:last-child {
-        padding-bottom: 10px;
-      }
-    }
-  }
-}
 .brz-ed-control__tabs__content__left {
   min-height: 89px;
 }

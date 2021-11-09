@@ -67,7 +67,7 @@ export function getItems({ v, device }) {
                   id: "tabsCount",
                   label: t("Columns"),
                   type: "slider-dev",
-                  disabled: v.verticalMode === "on",
+                  disabled: dvv("verticalMode") === "on",
                   config: {
                     min: 1,
                     max: 6

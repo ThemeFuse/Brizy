@@ -2,14 +2,15 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleSizeWidthPercent"]
     },
-    ".brz &&:hover .brz-navigation-title": {
+    ".brz && .brz-navigation-title": {
       standart: ["cssStyleElementPostNavigationSpacing"]
     },
-    ".brz &&:hover .brz-span": {
+    ".brz && .brz-navigation-title .brz-span:hover": {
       standart: [
+        "cssStyleElementPostNavigationColorTitle",
         "cssStyleElementPostNavigation2TitleFontFamily",
         "cssStyleElementPostNavigation2TitleFontSize",
         "cssStyleElementPostNavigation2TitleLineHeight",
@@ -17,23 +18,25 @@ export function style(v, vs, vd) {
         "cssStyleElementPostNavigation2TitleLetterSpacing"
       ]
     },
-    ".brz && .brz-span:hover": {
-      standart: ["cssStyleElementPostNavigationColorTitle"]
-    },
-    ".brz &&:hover .brz-a": {
+    ".brz && .brz-navigation-title .brz-a:not(.brz-btn)[href]:hover": {
       standart: [
+        "cssStyleElementPostNavigationColorTitle",
+        "cssStyleElementPostNavigation2TitleFontFamily",
+        "cssStyleElementPostNavigation2TitleFontSize",
+        "cssStyleElementPostNavigation2TitleLineHeight",
+        "cssStyleElementPostNavigation2TitleFontWeight",
+        "cssStyleElementPostNavigation2TitleLetterSpacing"
+      ]
+    },
+    ".brz && .brz-navigation .brz-a:not(.brz-btn)[href]:hover": {
+      standart: [
+        "cssStyleElementPostNavigationColorPost",
         "cssStyleElementPostNavigation2PostFontFamily",
         "cssStyleElementPostNavigation2PostFontSize",
         "cssStyleElementPostNavigation2PostLineHeight",
         "cssStyleElementPostNavigation2PostFontWeight",
         "cssStyleElementPostNavigation2PostLetterSpacing"
       ]
-    },
-    ".brz &&:hover .brz-blocked .brz-navigation .brz-a": {
-      standart: IS_EDITOR ? ["cssStyleElementPostNavigationColorPost"] : []
-    },
-    ".brz && .brz-navigation .brz-a:not(.brz-btn)[href]:hover": {
-      standart: IS_PREVIEW ? ["cssStyleElementPostNavigationColorPost"] : []
     },
     ".brz &&:hover:before": {
       standart: [

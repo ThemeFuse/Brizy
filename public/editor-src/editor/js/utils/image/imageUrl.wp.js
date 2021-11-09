@@ -1,9 +1,13 @@
 import Config from "visual/global/Config";
 import { isPlaceholderStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import { downloadImageFromCloud } from "visual/utils/api";
-import { objectToQueryString, isAbsoluteUrl } from "visual/utils/url";
+import { downloadImageFromCloud } from "visual/utils/api/index-legacy.wp";
+import {
+  objectToQueryString,
+  isAbsoluteUrl,
+  urlContainsQueryString
+} from "visual/utils/url";
 import cloudImageUrl, { getFilter, svgUrl as cloudSvgUrl } from "./imageUrl.ts";
-import { imageAttachments } from "./imageAttachments";
+import { imageAttachments } from "./imageAttachments.wp";
 
 const siteUrl = Config.get("urls").site;
 const imageUrlPrefix = siteUrl.includes("?") ? `${siteUrl}&` : `${siteUrl}/?`;
@@ -33,8 +37,7 @@ export default function imageUrl(
       const prefix = Config.get("prefix") ?? "brizy";
       const queryString = objectToQueryString({
         [`${prefix}_media`]: src,
-        [`${prefix}_crop`]: filter,
-        [`${prefix}_post`]: Config.get("wp").page
+        [`${prefix}_crop`]: filter
       });
 
       return imageUrlPrefix + queryString;
@@ -55,8 +58,7 @@ export default function imageUrl(
     const prefix = Config.get("prefix") ?? "brizy";
     const queryString = objectToQueryString({
       [`${prefix}_media`]: src,
-      [`${prefix}_crop`]: filter,
-      [`${prefix}_post`]: Config.get("wp").page
+      [`${prefix}_crop`]: filter
     });
 
     return imageUrlPrefix + queryString;
@@ -87,4 +89,19 @@ export function svgUrl(src) {
   const { customFile } = Config.get("urls");
 
   return `${customFile}${src}`;
+}
+
+export function imageSpecificSize(src, size) {
+  const config = Config.getAll();
+  const siteUrl = config.urls.site;
+  const imageUrlPrefix = urlContainsQueryString(siteUrl)
+    ? `${siteUrl}&`
+    : `${siteUrl}/?`;
+  const prefix = config.prefix ?? "brizy";
+  const queryString = objectToQueryString({
+    [`${prefix}_media`]: src,
+    [`${prefix}_crop`]: size
+  });
+
+  return `${imageUrlPrefix}${queryString}`;
 }

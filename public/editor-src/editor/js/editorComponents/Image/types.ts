@@ -37,9 +37,29 @@ export type Meta = {
 };
 
 export type V = {
+  className: string;
+  zoom: number;
+  width: number;
+  height: number;
+  tabletWidth: number | null;
+  tabletHeight: number | null;
+  mobileWidth: number | null;
+  mobileHeight: number | null;
+  imageWidth: number;
+  imageHeight: number;
+  widthSuffix: Unit;
+  heightSuffix: Unit;
   imageSrc: string;
   imageExtension: string;
   imagePopulation: string;
+  sizeType: string;
+  size: number;
+  tabletSize: number | null;
+  mobileSize: number | null;
+  positionY: number;
+  positionX: number;
+  offsetX: number;
+  offsetY: number;
   linkType: "anchor" | "external" | "popup" | "upload" | "lightBox" | "action";
   linkAnchor: string;
   linkExternalBlank: "on" | "off";
@@ -49,7 +69,7 @@ export type V = {
   linkPopup: string;
   linkUpload: string;
 
-  [others: string]: any;
+  [others: string]: unknown;
 };
 
 export type Patch = { [key: string]: number };

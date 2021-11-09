@@ -25,14 +25,6 @@ import {
   DeleteCollectionItemVariables
 } from "./types/DeleteCollectionItem";
 import {
-  CreateTemplate,
-  CreateTemplateVariables
-} from "./types/CreateTemplate";
-import {
-  UpdateTemplate,
-  UpdateTemplateVariables
-} from "./types/UpdateTemplate";
-import {
   ReferencedCollectionItems,
   ReferencedCollectionItemsVariables
 } from "./types/ReferencedCollectionItems";
@@ -44,6 +36,7 @@ const collectionItemFragment = gql`
     title
     slug
     status
+    pageData
     createdAt
     type {
       id
@@ -51,17 +44,26 @@ const collectionItemFragment = gql`
     }
     fields @include(if: $withFields) {
       id
-      values
       type {
         collectionType {
           id
           title
         }
       }
-    }
-    template {
-      id
-      data
+      ... on CollectionItemFieldMultiReference {
+        multiReferenceValues {
+          collectionItems {
+            id
+          }
+        }
+      }
+      ... on CollectionItemFieldReference {
+        referenceValues {
+          collectionItem {
+            id
+          }
+        }
+      }
     }
   }
 `;
@@ -140,11 +142,11 @@ export const collectionItemFieldBySlug = (
       query GetCollectionItemFieldBySlug($item: ID!, $slug: String!) {
         collectionItemFieldBySlug(item: $item, slug: $slug) {
           id
-          values
           type {
             id
             slug
           }
+          values
         }
       }
     `,
@@ -242,12 +244,9 @@ export const updateCollectionItem = (
             slug
             status
             createdAt
+            pageData
             type {
               id
-            }
-            template {
-              id
-              data
             }
           }
         }
@@ -275,44 +274,6 @@ export const deleteCollectionItem = (
         id: `${graphQLIdPrefixes.collectionItem}${id}`
       }
     }
-  });
-//#endregion
-
-//#region Templates
-export const createTemplate = (
-  apolloClient: ApolloClient,
-  variables: CreateTemplateVariables
-): Promise<FetchResult<CreateTemplate>> =>
-  apolloClient.mutate<CreateTemplate, CreateTemplateVariables>({
-    mutation: gql`
-      mutation CreateTemplate($input: createTemplateInput!) {
-        createTemplate(input: $input) {
-          template {
-            id
-            data
-          }
-        }
-      }
-    `,
-    variables
-  });
-
-export const updateTemplate = (
-  apolloClient: ApolloClient,
-  variables: UpdateTemplateVariables
-): Promise<FetchResult<UpdateTemplate>> =>
-  apolloClient.mutate<UpdateTemplate, UpdateTemplateVariables>({
-    mutation: gql`
-      mutation UpdateTemplate($input: updateTemplateInput!) {
-        updateTemplate(input: $input) {
-          template {
-            id
-            data
-          }
-        }
-      }
-    `,
-    variables
   });
 //#endregion
 

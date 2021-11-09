@@ -15,29 +15,80 @@ export interface CollectionItemFragment_type {
   title: string;
 }
 
-export interface CollectionItemFragment_fields_type_collectionType {
+export interface CollectionItemFragment_fields_CollectionItemFieldCheck_type_collectionType {
   __typename: "CollectionType";
   id: string;
   title: string;
 }
 
-export interface CollectionItemFragment_fields_type {
+export interface CollectionItemFragment_fields_CollectionItemFieldCheck_type {
   __typename: "CollectionTypeFieldCheck" | "CollectionTypeFieldColor" | "CollectionTypeFieldDateTime" | "CollectionTypeFieldEmail" | "CollectionTypeFieldFile" | "CollectionTypeFieldGallery" | "CollectionTypeFieldImage" | "CollectionTypeFieldLink" | "CollectionTypeFieldMap" | "CollectionTypeFieldMultiReference" | "CollectionTypeFieldNumber" | "CollectionTypeFieldPassword" | "CollectionTypeFieldPhone" | "CollectionTypeFieldReference" | "CollectionTypeFieldRichText" | "CollectionTypeFieldSelect" | "CollectionTypeFieldSwitch" | "CollectionTypeFieldText" | "CollectionTypeFieldVideoLink";
-  collectionType: CollectionItemFragment_fields_type_collectionType;
+  collectionType: CollectionItemFragment_fields_CollectionItemFieldCheck_type_collectionType;
 }
 
-export interface CollectionItemFragment_fields {
-  __typename: "CollectionItemFieldCheck" | "CollectionItemFieldColor" | "CollectionItemFieldDateTime" | "CollectionItemFieldEmail" | "CollectionItemFieldFile" | "CollectionItemFieldGallery" | "CollectionItemFieldImage" | "CollectionItemFieldLink" | "CollectionItemFieldMap" | "CollectionItemFieldMultiReference" | "CollectionItemFieldNumber" | "CollectionItemFieldPassword" | "CollectionItemFieldPhone" | "CollectionItemFieldReference" | "CollectionItemFieldRichText" | "CollectionItemFieldSelect" | "CollectionItemFieldSwitch" | "CollectionItemFieldText" | "CollectionItemFieldVideoLink";
+export interface CollectionItemFragment_fields_CollectionItemFieldCheck {
+  __typename: "CollectionItemFieldCheck" | "CollectionItemFieldColor" | "CollectionItemFieldDateTime" | "CollectionItemFieldEmail" | "CollectionItemFieldFile" | "CollectionItemFieldGallery" | "CollectionItemFieldImage" | "CollectionItemFieldLink" | "CollectionItemFieldMap" | "CollectionItemFieldNumber" | "CollectionItemFieldPassword" | "CollectionItemFieldPhone" | "CollectionItemFieldRichText" | "CollectionItemFieldSelect" | "CollectionItemFieldSwitch" | "CollectionItemFieldText" | "CollectionItemFieldVideoLink";
   id: string;
-  values: any;
-  type: CollectionItemFragment_fields_type;
+  type: CollectionItemFragment_fields_CollectionItemFieldCheck_type;
 }
 
-export interface CollectionItemFragment_template {
-  __typename: "Template";
+export interface CollectionItemFragment_fields_CollectionItemFieldMultiReference_type_collectionType {
+  __typename: "CollectionType";
   id: string;
-  data: string | null;
+  title: string;
 }
+
+export interface CollectionItemFragment_fields_CollectionItemFieldMultiReference_type {
+  __typename: "CollectionTypeFieldCheck" | "CollectionTypeFieldColor" | "CollectionTypeFieldDateTime" | "CollectionTypeFieldEmail" | "CollectionTypeFieldFile" | "CollectionTypeFieldGallery" | "CollectionTypeFieldImage" | "CollectionTypeFieldLink" | "CollectionTypeFieldMap" | "CollectionTypeFieldMultiReference" | "CollectionTypeFieldNumber" | "CollectionTypeFieldPassword" | "CollectionTypeFieldPhone" | "CollectionTypeFieldReference" | "CollectionTypeFieldRichText" | "CollectionTypeFieldSelect" | "CollectionTypeFieldSwitch" | "CollectionTypeFieldText" | "CollectionTypeFieldVideoLink";
+  collectionType: CollectionItemFragment_fields_CollectionItemFieldMultiReference_type_collectionType;
+}
+
+export interface CollectionItemFragment_fields_CollectionItemFieldMultiReference_multiReferenceValues_collectionItems {
+  __typename: "CollectionItemReference";
+  id: string;
+}
+
+export interface CollectionItemFragment_fields_CollectionItemFieldMultiReference_multiReferenceValues {
+  __typename: "CollectionItemFieldMultiReferenceValues";
+  collectionItems: CollectionItemFragment_fields_CollectionItemFieldMultiReference_multiReferenceValues_collectionItems[];
+}
+
+export interface CollectionItemFragment_fields_CollectionItemFieldMultiReference {
+  __typename: "CollectionItemFieldMultiReference";
+  id: string;
+  type: CollectionItemFragment_fields_CollectionItemFieldMultiReference_type;
+  multiReferenceValues: CollectionItemFragment_fields_CollectionItemFieldMultiReference_multiReferenceValues;
+}
+
+export interface CollectionItemFragment_fields_CollectionItemFieldReference_type_collectionType {
+  __typename: "CollectionType";
+  id: string;
+  title: string;
+}
+
+export interface CollectionItemFragment_fields_CollectionItemFieldReference_type {
+  __typename: "CollectionTypeFieldCheck" | "CollectionTypeFieldColor" | "CollectionTypeFieldDateTime" | "CollectionTypeFieldEmail" | "CollectionTypeFieldFile" | "CollectionTypeFieldGallery" | "CollectionTypeFieldImage" | "CollectionTypeFieldLink" | "CollectionTypeFieldMap" | "CollectionTypeFieldMultiReference" | "CollectionTypeFieldNumber" | "CollectionTypeFieldPassword" | "CollectionTypeFieldPhone" | "CollectionTypeFieldReference" | "CollectionTypeFieldRichText" | "CollectionTypeFieldSelect" | "CollectionTypeFieldSwitch" | "CollectionTypeFieldText" | "CollectionTypeFieldVideoLink";
+  collectionType: CollectionItemFragment_fields_CollectionItemFieldReference_type_collectionType;
+}
+
+export interface CollectionItemFragment_fields_CollectionItemFieldReference_referenceValues_collectionItem {
+  __typename: "CollectionItemReference";
+  id: string;
+}
+
+export interface CollectionItemFragment_fields_CollectionItemFieldReference_referenceValues {
+  __typename: "CollectionItemFieldReferenceValues";
+  collectionItem: CollectionItemFragment_fields_CollectionItemFieldReference_referenceValues_collectionItem;
+}
+
+export interface CollectionItemFragment_fields_CollectionItemFieldReference {
+  __typename: "CollectionItemFieldReference";
+  id: string;
+  type: CollectionItemFragment_fields_CollectionItemFieldReference_type;
+  referenceValues: CollectionItemFragment_fields_CollectionItemFieldReference_referenceValues;
+}
+
+export type CollectionItemFragment_fields = CollectionItemFragment_fields_CollectionItemFieldCheck | CollectionItemFragment_fields_CollectionItemFieldMultiReference | CollectionItemFragment_fields_CollectionItemFieldReference;
 
 export interface CollectionItemFragment {
   __typename: "CollectionItem";
@@ -45,6 +96,7 @@ export interface CollectionItemFragment {
   title: string;
   slug: string;
   status: CollectionItemStatus;
+  pageData: string | null;
   createdAt: string;
   /**
    * CollectionType
@@ -54,8 +106,4 @@ export interface CollectionItemFragment {
    * fixme: must be `[CollectionItemFieldInterface!]!`
    */
   fields: CollectionItemFragment_fields[] | null;
-  /**
-   * Data
-   */
-  template: CollectionItemFragment_template | null;
 }

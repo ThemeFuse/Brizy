@@ -12,7 +12,7 @@ import {
 import * as toolbarConfig from "./toolbar";
 import { styleContent } from "./styles";
 import { css } from "visual/utils/cssStyle";
-import { imageUrl } from "visual/utils/image";
+import { imageSpecificSize, imageUrl } from "visual/utils/image";
 import defaultValue from "./defaultValue.json";
 
 class VideoPlaylistItem extends EditorComponent {
@@ -47,10 +47,20 @@ class VideoPlaylistItem extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { video, title, subTitle, coverImageSrc, customCSS } = v;
+    const {
+      video,
+      title,
+      subTitle,
+      coverImageSrc,
+      coverSizeType,
+      customCSS
+    } = v;
     const { onActiveItem, active } = this.props;
     const videoSrc = this.getVideoSrc(v);
-    const coverUrl = imageUrl(coverImageSrc);
+    const coverUrl =
+      coverSizeType === "custom"
+        ? imageUrl(coverImageSrc)
+        : imageSpecificSize(coverImageSrc, coverSizeType);
     const classNameContent = classnames(
       "brz-video-playlist-video-item",
       { "brz-video-playlist-video-item__cover": v.coverImageSrc },

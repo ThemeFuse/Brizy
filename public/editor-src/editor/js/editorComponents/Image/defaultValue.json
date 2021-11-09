@@ -7,6 +7,17 @@
     "imageWidth": 600,
     "imageHeight": 450,
     "imageExtension": "",
+    "sizeType": "custom",
+
+    "size": 100,
+    "sizeSuffix": "%",
+
+    "tabletSizeType": null,
+    "tabletSize": null,
+    "tabletSizeSuffix": null,
+    "mobileSizeType": null,
+    "mobileSize": null,
+    "mobileSizeSuffix": null,
 
     "positionY": 50,
     "positionX": 50,
@@ -112,19 +123,19 @@
     "tempHoverBorderLeftWidth": null,
 
     "borderRadiusType": "square",
-    
+
     "borderRadius": 0,
     "borderTopLeftRadius": 0,
     "borderTopRightRadius": 0,
     "borderBottomRightRadius": 0,
     "borderBottomLeftRadius": 0,
-    
+
     "tempBorderRadius": 0,
     "tempBorderTopLeftRadius": 0,
     "tempBorderTopRightRadius": 0,
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
-    
+
     "borderRadiusSuffix": "px",
     "borderTopLeftRadiusSuffix": "px",
     "borderTopRightRadiusSuffix": "px",

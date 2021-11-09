@@ -46,13 +46,19 @@
       font-size: 14px;
     }
   }
-  &__item-btn {
+  &__item--small {
     padding: 8px 13px;
   }
-  &__preview {
-    cursor: pointer;
+  &__item--none {
     padding: 0;
-
+  }
+  &__item--pointer {
+    cursor: pointer;
+  }
+  &__item--active {
+    color: #fff;
+  }
+  &__preview {
     .brz-a {
       color: #fff;
       transition: color 150ms linear;
@@ -62,10 +68,6 @@
     &:hover .brz-a {
       color: $brand-primary;
     }
-  }
-  &__hidden_elements {
-    cursor: pointer;
-    color: #fff;
   }
   &__btn {
     cursor: pointer;
@@ -148,12 +150,6 @@
 
     .brz-icon-svg {
       margin-left: 0;
-    }
-  }
-  &__btn--download {
-    .brz-button,
-    .brz-a {
-      min-width: 97px;
     }
   }
   &-popover__item {

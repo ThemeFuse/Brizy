@@ -49,17 +49,23 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 	 * @return int|mixed|null|string
 	 */
 	protected function getAttachmentIdByPlaceholderName( $placeholderName, Brizy_Content_Context $context, \BrizyPlaceholders\ContentPlaceholder $contentPlaceholder  ) {
-		$attachmentId = null;
 
 		$provider = $context->getProvider();
 
-		if(!$provider)
-			return;
+		if ( ! $provider ) {
+			return 0;
+		}
 
 		$placeholder = $provider->getPlaceholderSupportingName( $placeholderName );
 
+		if ( ! $placeholder ) {
+			return 0;
+		}
+
 		if ( $placeholder instanceof BrizyPro_Content_Placeholders_Image ) {
 			$attachmentId = $placeholder->getAttachmentId( $context, $contentPlaceholder );
+		} else {
+			$attachmentId = $placeholder->getValue( $context, $contentPlaceholder );
 		}
 
 		return $attachmentId;

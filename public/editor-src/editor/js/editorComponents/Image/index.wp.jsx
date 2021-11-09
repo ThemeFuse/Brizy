@@ -1,18 +1,24 @@
 import Image from "./index.jsx";
-
-const formatPopulation = population => population.replace(/{{|}}/g, "");
+import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 
 export default class WPImage extends Image {
   getExtraImageProps(v) {
     const { alt: alt_, imageSrc, imagePopulation } = v;
-    const alt = alt_
-      ? alt_
-      : imagePopulation
-      ? `{{ brizy_dc_image_alt placeholder='${formatPopulation(
-          imagePopulation
-        )}' }}`
-      : `{{ brizy_dc_image_alt uid='${imageSrc}' }}`;
 
-    return { alt };
+    if (alt_) {
+      return { alt: alt_ };
+    }
+
+    if (imagePopulation) {
+      const placeholderData = placeholderObjFromStr(imagePopulation);
+
+      if (placeholderData) {
+        return {
+          alt: `{{ brizy_dc_image_alt placeholder='${placeholderData.name}' }}`
+        };
+      }
+    }
+
+    return { alt: `{{ brizy_dc_image_alt uid='${imageSrc}' }}` };
   }
 }

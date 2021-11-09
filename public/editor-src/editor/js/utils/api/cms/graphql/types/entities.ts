@@ -52,20 +52,13 @@ export interface SocialPropsInput {
 
 export interface createCollectionItemInput {
   type: string;
-  template?: string | null;
   status?: CollectionItemStatus | null;
   fields?: CollectionItemFieldInput[] | null;
   title: string;
   slug?: string | null;
   seo?: SeoPropsInput | null;
   social?: SocialPropsInput | null;
-  clientMutationId?: string | null;
-}
-
-export interface createTemplateInput {
-  title: string;
-  type: string;
-  data: string;
+  pageData?: string | null;
   clientMutationId?: string | null;
 }
 
@@ -76,20 +69,13 @@ export interface deleteCollectionItemInput {
 
 export interface updateCollectionItemInput {
   id: string;
-  template?: string | null;
   status?: CollectionItemStatus | null;
   fields?: CollectionItemFieldInput[] | null;
   title?: string | null;
   slug?: string | null;
   seo?: SeoPropsInput | null;
   social?: SocialPropsInput | null;
-  clientMutationId?: string | null;
-}
-
-export interface updateTemplateInput {
-  id: string;
-  title?: string | null;
-  data?: string | null;
+  pageData?: string | null;
   clientMutationId?: string | null;
 }
 

@@ -8,13 +8,15 @@ import {
   IS_EXTERNAL_STORY
 } from "visual/utils/models";
 import { pageSlugSelector } from "visual/redux/selectors";
+import { BottomPanelItem } from "./Item";
 
 export function PreviewButton(): ReactElement | null {
+  const pageSlug = useSelector(pageSlugSelector);
+
   if (IS_EXTERNAL_POPUP) {
     return null;
   }
 
-  const pageSlug = useSelector(pageSlugSelector);
   const previewUrl = Config.getAll().urls.pagePreview;
 
   let suffix = "";
@@ -30,13 +32,15 @@ export function PreviewButton(): ReactElement | null {
       : previewUrl + "/" + pageSlug + suffix;
 
   return (
-    <li
-      className="brz-li brz-ed-fixed-bottom-panel__item brz-ed-fixed-bottom-panel__preview"
+    <BottomPanelItem
+      paddingSize="none"
+      pointer={true}
+      className="brz-ed-fixed-bottom-panel__preview"
       title="Preview"
     >
       <a href={url} className="brz-a" target="_blank" rel="noopener noreferrer">
         <EditorIcon icon="nc-preview" />
       </a>
-    </li>
+    </BottomPanelItem>
   );
 }

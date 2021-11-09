@@ -8,7 +8,9 @@ class Brizy_Compatibilities_NcEasywp {
 		}
 	}
 
-	public function before_send_asset( $post_id ) {
-		do_action( 'edit_post', $post_id, get_post( $post_id ) );
+	public function before_send_asset() {
+		do_action('clear_redis');
+		do_action('clear_varnish');
+		do_action('clear_opcache');
 	}
 }

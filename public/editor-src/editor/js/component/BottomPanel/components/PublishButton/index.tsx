@@ -1,11 +1,6 @@
 import React, { Component, ReactElement } from "react";
-import classnames from "classnames";
 import { connect, ConnectedProps } from "react-redux";
-import Config from "visual/global/Config";
-import Tooltip, { TooltipItem } from "visual/component/Controls/Tooltip";
-import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
-import { Roles } from "visual/component/Roles";
 import { ToastNotification } from "visual/component/Notifications";
 import { removeBlocks } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
@@ -20,10 +15,11 @@ import {
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import { createBlockScreenshot, createSavedLayout } from "visual/utils/api";
 import { uuid } from "visual/utils/uuid";
-import { IS_STORY } from "visual/utils/models";
+import { IS_STORY, IS_GLOBAL_POPUP } from "visual/utils/models";
 import { isNumber } from "visual/utils/math";
-
-const { isGlobalPopup: IS_GLOBAL_POPUP } = Config.get("wp") || {};
+import { BottomPanelItem } from "../Item";
+import { Controls, Props as ControlsProps } from "./Control";
+import { getTooltipPageIcon, getTooltipPageTitle } from "./utils";
 
 type Page = ReduxState["page"];
 
@@ -35,14 +31,14 @@ const mapState = (
   extraFontStyles: ReduxState["extraFontStyles"];
 } => ({
   pageStatus: pageSelector(state).status,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  pageData: pageDataNoRefsSelector(state) as any,
+  pageData: pageDataNoRefsSelector(state),
   extraFontStyles: extraFontStylesSelector(state)
 });
 const mapDispatch = { updatePageStatus, removeBlocks, fetchPageSuccess };
 const PublishConnector = connect(mapState, mapDispatch);
 
 type Props = ConnectedProps<typeof PublishConnector>;
+
 type State = {
   updateLoading: boolean;
   layoutLoading: boolean;
@@ -55,6 +51,21 @@ class PublishButton extends Component<Props, State> {
     updateLoading: false,
     layoutLoading: false,
     draftLoading: false
+  };
+
+  handleClick = (): void => {
+    const { pageStatus } = this.props;
+
+    switch (pageStatus) {
+      case "publish": {
+        this.handlePublish("updateLoading");
+        break;
+      }
+      case "draft": {
+        this.handleDraft("updateLoading");
+        break;
+      }
+    }
   };
 
   handlePublish(loading: "updateLoading" | "draftLoading"): void {
@@ -171,141 +182,76 @@ class PublishButton extends Component<Props, State> {
     this.props.removeBlocks();
   };
 
-  renderPopover(): ReactElement {
+  getTooltipItems(): ControlsProps["addonAfter"] {
     const { pageStatus } = this.props;
-    const overlay: ReactElement = (
-      <>
-        {!IS_STORY ? (
-          <>
-            <Roles allow={["admin"]}>
-              <TooltipItem
-                className="brz-ed-fixed-bottom-panel-popover__item"
-                onClick={this.handleClearPage}
-              >
-                <EditorIcon icon="nc-trash" />
-                <span className="brz-span">{t("Clear Layout")}</span>
-              </TooltipItem>
-            </Roles>
-            <TooltipItem
-              className="brz-ed-fixed-bottom-panel-popover__item"
-              onClick={this.handleSavePage}
-            >
-              {this.state.layoutLoading ? (
-                <EditorIcon
-                  icon="nc-circle-02"
-                  className="brz-ed-animated--spin"
-                />
-              ) : (
-                <EditorIcon icon="nc-save-section" />
-              )}
-              <span className="brz-span">{t("Save Layout")}</span>
-            </TooltipItem>
-          </>
-        ) : null}
-        {pageStatus === "publish" ? (
-          <TooltipItem
-            className="brz-ed-fixed-bottom-panel-popover__item"
-            onClick={(): void => {
-              this.handleDraft("draftLoading");
-            }}
-          >
-            {this.state.draftLoading ? (
-              <EditorIcon
-                icon="nc-circle-02"
-                className="brz-ed-animated--spin"
-              />
-            ) : (
-              <EditorIcon icon="nc-switch" />
-            )}
-            <span className="brz-span">{t("Switch to Draft")}</span>
-          </TooltipItem>
-        ) : (
-          <TooltipItem
-            className="brz-ed-fixed-bottom-panel-popover__item"
-            onClick={(): void => {
-              this.handlePublish("draftLoading");
-            }}
-          >
-            {this.state.draftLoading ? (
-              <EditorIcon
-                icon="nc-circle-02"
-                className="brz-ed-animated--spin"
-              />
-            ) : (
-              <EditorIcon icon="nc-publish" />
-            )}
-            <span className="brz-span">{t("Publish Page")}</span>
-          </TooltipItem>
-        )}
-      </>
-    );
+    const layoutItems = IS_STORY
+      ? []
+      : [
+          {
+            title: t("Clear Layout"),
+            icon: "nc-trash",
+            roles: ["admin"],
+            onClick: (): void => {
+              this.handleClearPage();
+            }
+          },
+          {
+            title: t("Save Layout"),
+            icon: "nc-save-section",
+            loading: this.state.layoutLoading,
+            onClick: (): void => {
+              this.handleSavePage();
+            }
+          }
+        ];
 
-    return (
-      <Tooltip
-        overlayClassName="brz-ed-tooltip__overlay-publish-button"
-        placement="top-right"
-        offset={20}
-        overlay={overlay}
-        inPortal={true}
-      >
-        <button className="brz-button">
-          <EditorIcon icon="nc-arrow-up" />
-        </button>
-      </Tooltip>
-    );
+    return [
+      ...layoutItems,
+      {
+        title: getTooltipPageTitle(pageStatus),
+        icon: getTooltipPageIcon(pageStatus),
+        loading: this.state.draftLoading,
+        onClick: (): void => {
+          switch (pageStatus) {
+            case "publish": {
+              this.handleDraft("draftLoading");
+              break;
+            }
+            case "draft": {
+              this.handlePublish("draftLoading");
+              break;
+            }
+          }
+        }
+      }
+    ];
   }
 
-  renderPublish(): ReactElement {
+  getLabel(): string {
     const { pageStatus } = this.props;
-    const { updateLoading } = this.state;
-    const label = pageStatus === "publish" ? t("Update") : t("Save Draft");
-    const loadingClassName = classnames("brz-ed-animated--spin", {
-      "brz-d-none": !updateLoading
-    });
-    const labelClassName = classnames("brz-span", {
-      "brz-invisible": updateLoading
-    });
 
-    if (IS_GLOBAL_POPUP) {
-      return (
-        <div
-          className="brz-ed-fixed-bottom-panel__btn brz-ed-fixed-bottom-panel__btn-loading"
-          onClick={(): void => {
-            pageStatus === "publish"
-              ? this.handlePublish("updateLoading")
-              : this.handleDraft("updateLoading");
-          }}
-        >
-          <EditorIcon icon="nc-circle-02" className={loadingClassName} />
-          <span className={labelClassName}>{label}</span>
-        </div>
-      );
+    switch (pageStatus) {
+      case "publish": {
+        return t("Update");
+      }
+      case "draft": {
+        return t("Save Draft");
+      }
     }
-
-    return (
-      <div className="brz-ed-fixed-bottom-panel__btn brz-ed-fixed-bottom-panel__btn-popover">
-        <div
-          className="brz-ed-fixed-bottom-panel__btn-loading brz-d-xs-flex brz-align-items-xs-center brz-text-lg-center"
-          onClick={(): void => {
-            pageStatus === "publish"
-              ? this.handlePublish("updateLoading")
-              : this.handleDraft("updateLoading");
-          }}
-        >
-          <EditorIcon icon="nc-circle-02" className={loadingClassName} />
-          <span className={labelClassName}>{label}</span>
-        </div>
-        {this.renderPopover()}
-      </div>
-    );
   }
 
   render(): ReactElement {
     return (
       <>
-        <li className="brz-li brz-ed-fixed-bottom-panel__item brz-ed-fixed-bottom-panel__item-btn">
-          {this.renderPublish()}
-        </li>
+        <BottomPanelItem paddingSize="small">
+          <Controls
+            addonAfter={IS_GLOBAL_POPUP ? undefined : this.getTooltipItems()}
+            onClick={this.handleClick}
+            loading={this.state.updateLoading}
+          >
+            {this.getLabel()}
+          </Controls>
+        </BottomPanelItem>
         <HotKeys
           id="key-helper-update-page"
           keyNames={["ctrl+S", "cmd+S", "right_cmd+S"]}

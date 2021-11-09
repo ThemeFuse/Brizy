@@ -1,5 +1,8 @@
 import _ from "underscore";
-import { DynamicContent } from "visual/global/Config/types/DynamicContent";
+import {
+  ConfigDCItem,
+  DynamicContent
+} from "visual/global/Config/types/DynamicContent";
 import { TypeChoices } from "./types";
 
 type Options = DynamicContent<"wp"> | DynamicContent<"cloud">;
@@ -12,23 +15,37 @@ export interface Choice {
 
 export interface OptGroup {
   title: string;
-  optgroup: Choice[];
+  optgroup: (Choice | OptGroup)[];
   icon?: string;
 }
 
+const isOptionOptGroup = (
+  option: ConfigDCItem
+): option is Required<ConfigDCItem> => {
+  return "optgroup" in option;
+};
+
+const configDCItemToChoices = (option: ConfigDCItem): Choice | OptGroup => {
+  if (isOptionOptGroup(option)) {
+    return {
+      title: option.label,
+      optgroup: option.optgroup.map(configDCItemToChoices)
+    };
+  }
+
+  // `alias` was added for interop reasons between WP and cloud
+  // e.g. cloud does not have a separate placeholder for excerpt ( {{brizy_dc_post_excerpt}} )
+  // but PostExcerpt element sets it, and this kind of issues were solved with `alias` key
+  return {
+    title: option.label,
+    value: option.alias || option.placeholder
+  };
+};
+
 const optionsToChoices = <T extends keyof Options>(
   options: Options[T]
-): Choice[] => {
-  return _.flatten(_.values(options), true).map(
-    ({ label, placeholder, alias }) => ({
-      title: label,
-
-      // `alias` was added for interop reasons between WP and cloud
-      // e.g. cloud does not have a separate placeholder for excerpt ( {{brizy_dc_post_excerpt}} )
-      // but PostExcerpt element sets it, and this kind of issues were solved with `alias` key
-      value: alias || placeholder
-    })
-  );
+): (Choice | OptGroup)[] => {
+  return _.flatten(_.values(options), true).map(configDCItemToChoices);
 };
 
 export const getDynamicContentChoices = (

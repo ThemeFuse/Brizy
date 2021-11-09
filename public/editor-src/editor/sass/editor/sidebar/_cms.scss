@@ -6,7 +6,6 @@
   top: 0;
   width: calc(100% - 48px);
   z-index: 1100;
-  background: $body-bg;
 
   .brz-iframe.brz-cms {
     width: 90%;
@@ -25,12 +24,16 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 90%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     background: $body-bg;
+
+    @media screen and (max-width: 1300px) {
+      width: 100%;
+    }
 
     .brz-ed-animated--spin {
       color: rgba(150, 150, 150, 0.75);
