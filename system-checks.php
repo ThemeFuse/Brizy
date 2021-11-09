@@ -9,10 +9,10 @@ class Brizy_SystemChecks {
 		'php'       => '5.6',
 		'extension' => [
 			'xml'      => 'https://www.php.net/manual/en/book.xml.php',
-			'gd'       => 'https://www.php.net/manual/ro/book.image.php',
-			'fileinfo' => 'https://www.php.net/manual/ro/book.fileinfo.php',
-			'zip'      => 'https://www.php.net/manual/ro/book.zip.php',
-			'curl'     => 'https://www.php.net/manual/ro/book.curl.php',
+			'gd'       => 'https://www.php.net/manual/en/book.image.php',
+			'fileinfo' => 'https://www.php.net/manual/en/book.fileinfo.php',
+			'zip'      => 'https://www.php.net/manual/en/book.zip.php',
+			'curl'     => 'https://www.php.net/manual/en/book.curl.php',
 			'json'     => 'https://www.php.net/manual/en/book.json.php'
 		]
 	];
