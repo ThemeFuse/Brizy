@@ -46,7 +46,7 @@ const Content: React.FC<ImageProps> = props => {
 
   if (IS_EDITOR && imagePopulation) {
     return meta._dc?.lastCache?.imageSrc ? (
-      <Population v={v} />
+      <Population v={v} attr={extraAttributes} />
     ) : (
       renderPlaceholder()
     );

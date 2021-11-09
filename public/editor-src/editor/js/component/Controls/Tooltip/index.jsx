@@ -19,7 +19,7 @@ export default class Tooltip extends React.Component {
     className: "",
     overlayClassName: "",
     arrow: true,
-    placement: "top-center",
+    placement: "top",
     openOnClick: true,
     closeDelay: 0,
     overlay: "",

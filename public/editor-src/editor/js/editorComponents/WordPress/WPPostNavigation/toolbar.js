@@ -24,7 +24,7 @@ export function getItems({ v, device, state }) {
       id: "toolbarCurrentShortcode",
       type: "popover-dev",
       config: {
-        icon: "nc-wp-shortcode",
+        icon: "nc-wp-post-navigation",
         title: t("Post Navigation")
       },
       position: 60,

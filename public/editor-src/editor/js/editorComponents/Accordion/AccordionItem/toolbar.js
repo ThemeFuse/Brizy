@@ -33,8 +33,7 @@ export function getItems() {
                   helper: {
                     enabled: true,
                     content:
-                      "Enter the tags, separated by a comma (art, sport, nature, etc).",
-                    position: "top-left"
+                      "Enter the tags, separated by a comma (art, sport, nature, etc)."
                   },
                   placeholder: "art, nature, etc.",
                   devices: "desktop"

@@ -8,8 +8,9 @@ import { BlocksSortable } from "./components/BlocksSortable";
 import { Styling } from "./components/Styling";
 import { DeviceModes } from "./components/DeviceModes";
 import { Cms } from "./components/Cms";
+import { Settings } from "./components/Settings";
 
-const urls = Config.get("urls");
+const urls = Config.getAll().urls;
 
 export default {
   top: [
@@ -20,6 +21,7 @@ export default {
   ],
   bottom: [
     DeviceModes,
+    ...(IS_EXTERNAL_STORY ? [Settings] : []),
     {
       id: "popover",
       icon: "nc-back",

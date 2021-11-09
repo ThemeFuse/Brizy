@@ -1,6 +1,6 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
-import { imageUrl, svgUrl } from "visual/utils/image";
+import { imageSpecificSize, imageUrl, svgUrl } from "visual/utils/image";
 
 const isSVG = extension => extension === "svg";
 
@@ -36,29 +36,28 @@ export function styleElementVideoBgColorRatio({ v, device, state }) {
 }
 
 export function styleElementVideoCoverSrc({ v, device, state }) {
-  const coverImageSrc = defaultValueValue({
-    v,
-    key: "coverImageSrc",
-    device,
-    state
-  });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const src = dvv("coverImageSrc");
+  const extension = dvv("coverImageExtension");
+  const sizeType = dvv("coverSizeType");
 
-  const coverImageExtension = defaultValueValue({
-    v,
-    key: "coverImageExtension",
-    device,
-    state
-  });
+  if (src === undefined) {
+    return undefined;
+  }
 
-  return coverImageSrc === undefined
-    ? coverImageSrc
-    : coverImageSrc === ""
-    ? "none"
-    : `url(${
-        isSVG(coverImageExtension)
-          ? svgUrl(coverImageSrc)
-          : imageUrl(coverImageSrc)
-      })`;
+  if (src === "") {
+    return "none";
+  }
+
+  if (isSVG(extension)) {
+    return `url(${svgUrl(src)})`;
+  }
+
+  if (sizeType === "custom") {
+    return `url(${imageUrl(src)})`;
+  }
+
+  return `url(${imageSpecificSize(src, sizeType)})`;
 }
 
 export function styleElementVideoCoverPositionX({ v, device, state }) {

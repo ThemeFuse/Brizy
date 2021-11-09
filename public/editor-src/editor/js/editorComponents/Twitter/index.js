@@ -30,7 +30,7 @@ class Twitter extends EditorComponent {
       buttonShowScreenName,
       customCSS
     } = v;
-    const name = twitterUsername.trim() || "ThemeFuse";
+    const name = twitterUsername.trim() || "NatGeo";
     const className = classnames(
       "brz-twitter",
       { "brz-customSize": twitterType === "embed" },
@@ -90,7 +90,7 @@ class Twitter extends EditorComponent {
       tweet,
       customCSS
     } = v;
-    const name = twitterUsername.trim() || "ThemeFuse";
+    const name = twitterUsername.trim() || "NatGeo";
     const className = classnames(
       "brz-twitter",
       { "brz-customSize": twitterType === "embed" },

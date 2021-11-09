@@ -1,6 +1,7 @@
 import React from "react";
 
 type Props = {
+  attr?: React.HTMLAttributes<HTMLImageElement>;
   v: {
     imagePopulation: string;
     imageSrc: string;
@@ -9,9 +10,10 @@ type Props = {
   };
 };
 
-const PopulationComponent: React.FC<Props> = ({ v: { imageSrc } }) => {
+const PopulationComponent: React.FC<Props> = ({ attr, v: { imageSrc } }) => {
   return (
     <img
+      {...attr}
       className="dynamic-image"
       src={imageSrc}
       draggable={false}

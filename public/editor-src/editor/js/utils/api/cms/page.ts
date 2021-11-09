@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { PageCloud } from "visual/types";
 import { isT } from "visual/utils/value";
 import { t } from "visual/utils/i18n";
@@ -6,6 +7,7 @@ import { itemToPage, pageStatusToItemStatus } from "./convertors";
 import { getConnection } from "./graphql/apollo";
 import * as Gql from "./graphql/gql";
 import { errOnEmpty, onCatch } from "./utils";
+import { UpdateCollectionItem_updateCollectionItem_collectionItem } from "./graphql/types/UpdateCollectionItem";
 
 export function getPages(collectionTypeId: string): Promise<PageCloud[]> {
   const page = paginationData.page;
@@ -33,7 +35,7 @@ export function getPage(id: string): Promise<PageCloud> {
 export function updatePage(
   page: PageCloud,
   meta: { is_autosave?: 1 | 0 } = {}
-): Promise<void> {
+): Promise<UpdateCollectionItem_updateCollectionItem_collectionItem | void> {
   /*
    * WARNING: temporary solution to let only request with publish intent pass.
    * This behavior should be done at a higher level, but is left here
@@ -49,36 +51,12 @@ export function updatePage(
     input: {
       id: page.id,
       slug: page.slug,
+      pageData: data,
       status: pageStatusToItemStatus(page.status)
     }
   })
     .then(r => r.data?.updateCollectionItem?.collectionItem)
     .then(errOnEmpty(t("Invalid api data")))
-    .then(p => {
-      if (p.template) {
-        Gql.updateTemplate(getConnection(), {
-          input: { id: p.template.id, data }
-        });
-      } else {
-        Gql.createTemplate(getConnection(), {
-          input: {
-            data,
-            title: page.title,
-            type: page.collectionType.id
-          }
-        })
-          .then(r => r.data?.createTemplate?.template)
-          .then(errOnEmpty(t("Invalid api data")))
-          .then(template =>
-            Gql.updateCollectionItem(getConnection(), {
-              input: {
-                id: page.id,
-                template: template.id
-              }
-            })
-          );
-      }
-    })
     .catch(onCatch(t("Failed to update page")));
 }
 

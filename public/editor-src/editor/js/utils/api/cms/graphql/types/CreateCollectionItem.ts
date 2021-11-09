@@ -15,29 +15,80 @@ export interface CreateCollectionItem_createCollectionItem_collectionItem_type {
   title: string;
 }
 
-export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_type_collectionType {
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldCheck_type_collectionType {
   __typename: "CollectionType";
   id: string;
   title: string;
 }
 
-export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_type {
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldCheck_type {
   __typename: "CollectionTypeFieldCheck" | "CollectionTypeFieldColor" | "CollectionTypeFieldDateTime" | "CollectionTypeFieldEmail" | "CollectionTypeFieldFile" | "CollectionTypeFieldGallery" | "CollectionTypeFieldImage" | "CollectionTypeFieldLink" | "CollectionTypeFieldMap" | "CollectionTypeFieldMultiReference" | "CollectionTypeFieldNumber" | "CollectionTypeFieldPassword" | "CollectionTypeFieldPhone" | "CollectionTypeFieldReference" | "CollectionTypeFieldRichText" | "CollectionTypeFieldSelect" | "CollectionTypeFieldSwitch" | "CollectionTypeFieldText" | "CollectionTypeFieldVideoLink";
-  collectionType: CreateCollectionItem_createCollectionItem_collectionItem_fields_type_collectionType;
+  collectionType: CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldCheck_type_collectionType;
 }
 
-export interface CreateCollectionItem_createCollectionItem_collectionItem_fields {
-  __typename: "CollectionItemFieldCheck" | "CollectionItemFieldColor" | "CollectionItemFieldDateTime" | "CollectionItemFieldEmail" | "CollectionItemFieldFile" | "CollectionItemFieldGallery" | "CollectionItemFieldImage" | "CollectionItemFieldLink" | "CollectionItemFieldMap" | "CollectionItemFieldMultiReference" | "CollectionItemFieldNumber" | "CollectionItemFieldPassword" | "CollectionItemFieldPhone" | "CollectionItemFieldReference" | "CollectionItemFieldRichText" | "CollectionItemFieldSelect" | "CollectionItemFieldSwitch" | "CollectionItemFieldText" | "CollectionItemFieldVideoLink";
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldCheck {
+  __typename: "CollectionItemFieldCheck" | "CollectionItemFieldColor" | "CollectionItemFieldDateTime" | "CollectionItemFieldEmail" | "CollectionItemFieldFile" | "CollectionItemFieldGallery" | "CollectionItemFieldImage" | "CollectionItemFieldLink" | "CollectionItemFieldMap" | "CollectionItemFieldNumber" | "CollectionItemFieldPassword" | "CollectionItemFieldPhone" | "CollectionItemFieldRichText" | "CollectionItemFieldSelect" | "CollectionItemFieldSwitch" | "CollectionItemFieldText" | "CollectionItemFieldVideoLink";
   id: string;
-  values: any;
-  type: CreateCollectionItem_createCollectionItem_collectionItem_fields_type;
+  type: CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldCheck_type;
 }
 
-export interface CreateCollectionItem_createCollectionItem_collectionItem_template {
-  __typename: "Template";
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference_type_collectionType {
+  __typename: "CollectionType";
   id: string;
-  data: string | null;
+  title: string;
 }
+
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference_type {
+  __typename: "CollectionTypeFieldCheck" | "CollectionTypeFieldColor" | "CollectionTypeFieldDateTime" | "CollectionTypeFieldEmail" | "CollectionTypeFieldFile" | "CollectionTypeFieldGallery" | "CollectionTypeFieldImage" | "CollectionTypeFieldLink" | "CollectionTypeFieldMap" | "CollectionTypeFieldMultiReference" | "CollectionTypeFieldNumber" | "CollectionTypeFieldPassword" | "CollectionTypeFieldPhone" | "CollectionTypeFieldReference" | "CollectionTypeFieldRichText" | "CollectionTypeFieldSelect" | "CollectionTypeFieldSwitch" | "CollectionTypeFieldText" | "CollectionTypeFieldVideoLink";
+  collectionType: CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference_type_collectionType;
+}
+
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference_multiReferenceValues_collectionItems {
+  __typename: "CollectionItemReference";
+  id: string;
+}
+
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference_multiReferenceValues {
+  __typename: "CollectionItemFieldMultiReferenceValues";
+  collectionItems: CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference_multiReferenceValues_collectionItems[];
+}
+
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference {
+  __typename: "CollectionItemFieldMultiReference";
+  id: string;
+  type: CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference_type;
+  multiReferenceValues: CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference_multiReferenceValues;
+}
+
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldReference_type_collectionType {
+  __typename: "CollectionType";
+  id: string;
+  title: string;
+}
+
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldReference_type {
+  __typename: "CollectionTypeFieldCheck" | "CollectionTypeFieldColor" | "CollectionTypeFieldDateTime" | "CollectionTypeFieldEmail" | "CollectionTypeFieldFile" | "CollectionTypeFieldGallery" | "CollectionTypeFieldImage" | "CollectionTypeFieldLink" | "CollectionTypeFieldMap" | "CollectionTypeFieldMultiReference" | "CollectionTypeFieldNumber" | "CollectionTypeFieldPassword" | "CollectionTypeFieldPhone" | "CollectionTypeFieldReference" | "CollectionTypeFieldRichText" | "CollectionTypeFieldSelect" | "CollectionTypeFieldSwitch" | "CollectionTypeFieldText" | "CollectionTypeFieldVideoLink";
+  collectionType: CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldReference_type_collectionType;
+}
+
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldReference_referenceValues_collectionItem {
+  __typename: "CollectionItemReference";
+  id: string;
+}
+
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldReference_referenceValues {
+  __typename: "CollectionItemFieldReferenceValues";
+  collectionItem: CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldReference_referenceValues_collectionItem;
+}
+
+export interface CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldReference {
+  __typename: "CollectionItemFieldReference";
+  id: string;
+  type: CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldReference_type;
+  referenceValues: CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldReference_referenceValues;
+}
+
+export type CreateCollectionItem_createCollectionItem_collectionItem_fields = CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldCheck | CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference | CreateCollectionItem_createCollectionItem_collectionItem_fields_CollectionItemFieldReference;
 
 export interface CreateCollectionItem_createCollectionItem_collectionItem {
   __typename: "CollectionItem";
@@ -45,6 +96,7 @@ export interface CreateCollectionItem_createCollectionItem_collectionItem {
   title: string;
   slug: string;
   status: CollectionItemStatus;
+  pageData: string | null;
   createdAt: string;
   /**
    * CollectionType
@@ -54,10 +106,6 @@ export interface CreateCollectionItem_createCollectionItem_collectionItem {
    * fixme: must be `[CollectionItemFieldInterface!]!`
    */
   fields: CreateCollectionItem_createCollectionItem_collectionItem_fields[] | null;
-  /**
-   * Data
-   */
-  template: CreateCollectionItem_createCollectionItem_collectionItem_template | null;
 }
 
 export interface CreateCollectionItem_createCollectionItem {

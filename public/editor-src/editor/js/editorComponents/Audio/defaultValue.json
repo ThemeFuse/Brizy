@@ -15,6 +15,7 @@
     "showArtwork": "off",
 
     "coverImageSrc": "",
+    "coverSizeType": "custom",
 
     "coverImageWidth": 0,
     "coverImageHeight": 0,
@@ -24,9 +25,11 @@
     "coverPositionY": 50,
     "coverPositionX": 50,
 
+    "tabletCoverSizeType": null,
     "tabletCoverPositionY": null,
     "tabletCoverPositionX": null,
 
+    "mobileCoverSizeType": null,
     "mobileCoverPositionY": null,
     "mobileCoverPositionX": null,
 

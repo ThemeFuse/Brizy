@@ -17,6 +17,7 @@ import { NORMAL, HOVER } from "visual/utils/stateMode";
 import { isSVG, isGIF } from "./utils";
 import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 
 export const getMaxHeight = (cW, v) => {
   const { imageWidth: iW, imageHeight: iH } = v;
@@ -61,23 +62,25 @@ export const getItems = ({ property }) => ({
   const { cW, gallery } = property[device];
 
   const { inGallery = false, enableTags } = gallery || {};
-
+  const dvv = key => defaultValueValue({ v, key, device });
   const { hex: borderColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "borderColorHex", device }),
-    defaultValueValue({ v, key: "borderColorPalette", device })
+    dvv("borderColorHex"),
+    dvv("borderColorPalette")
   );
 
-  const widthSuffixValue = defaultValueValue({ v, key: "widthSuffix", device });
-  const heightSuffixValue = defaultValueValue({
-    v,
-    key: "heightSuffix",
-    device
-  });
+  const widthSuffixValue = dvv("widthSuffix");
+  const heightSuffixValue = dvv("heightSuffix");
+  const sizeType = dvv("sizeType");
 
   const imageDynamicContentChoices = getDynamicContentChoices(
     context.dynamicContent.config,
     DCTypes.image
   );
+
+  const placeholderData = placeholderObjFromStr(v.imagePopulation);
+  const disabledWidthHeight =
+    (sizeType !== "custom" && !v.imagePopulation) ||
+    placeholderData?.attr !== undefined;
 
   return [
     {
@@ -133,7 +136,8 @@ export const getItems = ({ property }) => ({
                   disabled:
                     Boolean(v.imagePopulation) ||
                     isSVG(v.imageExtension) ||
-                    isGIF(v.imageExtension),
+                    isGIF(v.imageExtension) ||
+                    sizeType !== "custom",
                   config: {
                     min: 100,
                     max: 200,
@@ -307,7 +311,10 @@ export const getItems = ({ property }) => ({
           id: "width",
           label: t("Width"),
           type: "slider-dev",
-          disabled: isSVG(v.imageExtension) || isGIF(v.imageExtension),
+          disabled:
+            isSVG(v.imageExtension) ||
+            isGIF(v.imageExtension) ||
+            disabledWidthHeight,
           config: {
             min: 5,
             max: widthSuffixValue === "px" ? cW : 100,
@@ -321,7 +328,10 @@ export const getItems = ({ property }) => ({
           id: "height",
           label: t("Height"),
           type: "slider-dev",
-          disabled: isSVG(v.imageExtension) || isGIF(v.imageExtension),
+          disabled:
+            isSVG(v.imageExtension) ||
+            isGIF(v.imageExtension) ||
+            disabledWidthHeight,
           config: {
             min: 5,
             max: heightSuffixValue === "px" ? Math.round(cW * 2) : 100,
@@ -331,6 +341,17 @@ export const getItems = ({ property }) => ({
                   { value: "px", title: "px" },
                   { value: "%", title: "%" }
                 ]
+          }
+        },
+        {
+          id: "size",
+          label: t("Size"),
+          type: "slider-dev",
+          disabled: !disabledWidthHeight,
+          config: {
+            min: 5,
+            max: 100,
+            units: [{ value: "%", title: "%" }]
           }
         },
         {

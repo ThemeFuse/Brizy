@@ -695,16 +695,6 @@ $wp-heading-color: #23282d;
 .attachments-browser .attachments {
   padding: 2px 8px 8px;
 }
-.attachments-browser .attachments,
-.attachments-browser .uploader-inline {
-  position: absolute;
-  top: 72px;
-  left: 0;
-  right: 300px;
-  bottom: 0;
-  overflow: auto;
-  outline: none;
-}
 .attachments-browser .uploader-inline.hidden {
   display: none;
 }

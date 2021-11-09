@@ -17,20 +17,29 @@ rm -rf vendor
 echo -e "\nDelete all dev files"
 echo -e "-----------------------------------------------------------------------------"
 echo -e "Clean vendor folder"
-(  find ./vendor -type d -iname "docs" &&
-   find ./vendor -type d -name "doc" &&
-   find ./vendor -type d -name ".git" &&
-   find ./vendor -name "*.md" &&
-   find ./vendor -name "composer.json" &&
-   find ./vendor -name "composer.lock" &&
-   find ./vendor -name "changelog.txt" &&
-   find ./vendor -name "changelog.md" &&
-   find ./vendor -name "phpcs.*" &&
-   find ./vendor -name "*.dist" &&
-   find ./vendor -name ".github" &&
-   find ./vendor -name "Dockerfile" &&
-   find ./vendor -name ".travis.yml" &&
-   find ./vendor -name ".gitignore" ) | xargs --no-run-if-empty rm -rf
+(
+  find ./vendor -type d -name "twig" -prune -o -type d -name tests -print &&
+  find ./vendor -type d -name "twig" -prune -o -type d -name test -print &&
+  find ./vendor -type d -iname "docs" &&
+  find ./vendor -type d -name "doc" &&
+  find ./vendor -type d -name ".git" &&
+  find ./vendor -type d -path "*select2/select2/src" &&
+  find ./vendor -type f -path "*select2/select2/.*" &&
+  find ./vendor -name ".gitattributes" &&
+  find ./vendor -name "*.md" &&
+  find ./vendor -name "composer.json" &&
+  find ./vendor -name "composer.lock" &&
+  find ./vendor -name "changelog.txt" &&
+  find ./vendor -name "changelog.md" &&
+  find ./vendor -name "phpcs.*" &&
+  find ./vendor -name "*.dist" &&
+  find ./vendor -name ".github" &&
+  find ./vendor -name "Dockerfile" &&
+  find ./vendor -name "docker-compose*" &&
+  find ./vendor -name ".docker*" &&
+  find ./vendor -name ".travis.yml" &&
+  find ./vendor -name ".gitignore"
+) | xargs --no-run-if-empty rm -rf
 
 echo -e "Clean plugin root folder"
 rm -rf ./public/editor-src \
@@ -51,3 +60,27 @@ rm -rf ./public/editor-src \
        ./.travis.yml \
        ./*.dev.php \
        ./jenkins
+
+
+(
+   find ./vendor -type d -name "twig" -prune -o -type d -name tests -print &&
+   find ./vendor -type d -name "twig" -prune -o -type d -name test -print &&
+   find ./vendor -type d -iname "docs" &&
+   find ./vendor -type d -name "doc" &&
+   find ./vendor -type d -name ".git" &&
+   find ./vendor -type d -path "*select2/select2/src" &&
+   find ./vendor -type f -path "*select2/select2/.*" &&
+   find ./vendor -name ".gitattributes" &&
+   find ./vendor -name "*.md" &&
+   find ./vendor -name "composer.json" &&
+   find ./vendor -name "composer.lock" &&
+   find ./vendor -name "changelog.txt" &&
+   find ./vendor -name "changelog.md" &&
+   find ./vendor -name "phpcs.*" &&
+   find ./vendor -name "*.dist" &&
+   find ./vendor -name ".github" &&
+   find ./vendor -name "Dockerfile" &&
+   find ./vendor -name "docker-compose*" &&
+   find ./vendor -name ".docker*" &&
+   find ./vendor -name ".travis.yml" &&
+   find ./vendor -name ".gitignore" ) | xargs du -ch | tail -1 | cut -f 1

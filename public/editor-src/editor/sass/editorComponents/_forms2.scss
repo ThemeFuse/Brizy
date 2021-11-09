@@ -256,8 +256,8 @@
     &-results__option {
       margin: 0;
       padding: 12px 24px;
-      font-size: 16px;
-      line-height: 1.5;
+      font-size: inherit;
+      line-height: inherit;
       height: auto;
       cursor: pointer;
       background-color: inherit;
@@ -288,7 +288,7 @@
 
       .select2-selection__rendered {
         color: inherit;
-        line-height: 1;
+        line-height: inherit;
         padding: 0;
         flex: 1;
       }
@@ -298,6 +298,7 @@
         display: flex;
         flex-wrap: wrap;
         margin: -2.5px;
+        font-family: inherit;
       }
       .select2-selection__choice {
         margin: 2.5px;
@@ -330,6 +331,7 @@
       font: inherit;
       color: inherit;
       margin: 0;
+      letter-spacing: inherit;
 
       &::placeholder {
         color: inherit;

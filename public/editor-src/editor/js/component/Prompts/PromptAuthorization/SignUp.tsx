@@ -15,6 +15,8 @@ import { t } from "visual/utils/i18n";
 import { checkCompatibility, signUp } from "./api";
 import { SignAuthorizationProps, AuthorizationField } from "./types";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
+import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { _getWhiteLabel } from "visual/utils/whiteLabel";
 
 const isWP = Boolean(Config.get("wp"));
 const fields: AuthorizationField[] = [
@@ -218,10 +220,18 @@ class SignUp extends Component<SingUpProps, SignUpState> {
         nextLoading
       } = this.state;
 
+      const config = Config.getAll();
+
+      const _img =
+        (_getWhiteLabel(config) && isCloud(config) && config.urls.favicon) ||
+        img;
+
+      const _alt = _getWhiteLabel(config)?.brandingName || "Brizy";
+
       return (
         <Scrollbars className="brz-text-lg-center">
           <div className="brz-ed-popup-integrations__connect-head">
-            <img className="brz-img" src={img} alt="Brizy" />
+            <img className="brz-img" src={_img} alt={_alt} />
             <p className="brz-p">{signUpDescription}</p>
           </div>
           <div className="brz-ed-popup-integrations__connect-body">

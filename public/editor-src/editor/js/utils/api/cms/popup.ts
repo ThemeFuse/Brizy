@@ -12,9 +12,7 @@ export function getRulesList(collectionItemId: string): Promise<Rule[]> {
     .then(r => {
       const value = r?.data?.collectionItemFieldBySlug?.values?.value ?? null;
       if (value) {
-        const rules = JSON.parse(value) as Rule[];
-
-        return rules;
+        return JSON.parse(value) as Rule[];
       }
 
       return value;

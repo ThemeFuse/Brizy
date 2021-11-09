@@ -191,6 +191,12 @@ describe("Testing 'placeholderObjFromStr' function", () => {
     ["{{            test   }}", { name: "test" }],
     ["{{test_abc123}}", { name: "test_abc123" }],
     ["{{ test_abc123}}", { name: "test_abc123" }],
+    ["{{ test_abc123-23324}}", { name: "test_abc123-23324" }],
+    ["{{test_abc123-23324 }}", { name: "test_abc123-23324" }],
+    [
+      "{{ test_abc123-23324 a='123' b='344'}}",
+      { name: "test_abc123-23324", attr: { a: "123", b: "344" } }
+    ],
     [
       "{{ test     a='123'       b=\"abc-111__xyz\"  }}",
       { name: "test", attr: { a: "123", b: "abc-111__xyz" } }
@@ -199,7 +205,7 @@ describe("Testing 'placeholderObjFromStr' function", () => {
       "{{ test  dasdasdas   ac='1'  12121212121 DC=\"z\"  }}",
       { name: "test", attr: { ac: "1", DC: "z" } }
     ],
-    ["{{ a-b-c }}", { name: "a" }],
+    ["{{ a-b-c }}", { name: "a-b-c" }],
     ["{{ a='123' b='456' }}", { name: "a", attr: { b: "456" } }]
   ])("Valid str %#", (str, expected) => {
     expect(placeholderObjFromStr(str)).toStrictEqual(expected);
