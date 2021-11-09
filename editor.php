@@ -77,6 +77,10 @@ class Brizy_Editor {
 	 */
 	private function __construct() {
 
+		if((is_multisite() && is_network_admin()) || is_admin()) {
+			Brizy_SystemChecks::run();
+		}
+
 		// make sure the project is created
 		// do not remove this.. we force the project creation here.
 		$project = Brizy_Editor_Project::get();
