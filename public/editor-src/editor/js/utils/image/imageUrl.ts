@@ -1,6 +1,6 @@
 import _ from "underscore";
 import { isPlaceholderStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import Config from "visual/global/Config";
+import Config, { Cloud } from "visual/global/Config";
 import { objectToQueryString, isAbsoluteUrl } from "visual/utils/url";
 
 export type Options = {
@@ -41,4 +41,10 @@ export function svgUrl(src: unknown): string | null {
   }
 
   return null;
+}
+
+export function imageSpecificSize(src: string, size: string): string {
+  const config = Config.getAll() as Cloud;
+  const { urls } = config;
+  return [urls.image, size, src].join("/");
 }

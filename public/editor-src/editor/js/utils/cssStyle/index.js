@@ -1001,13 +1001,15 @@ export {
 export {
   cssStyleElementImageMaxWidthPreview,
   cssStyleElementImageHeightPreview,
+  cssStyleElementImageSizePreview,
   cssStyleElementImageMaxWidthEditor,
   cssStyleElementImageHeightEditor,
   cssStyleElementImageWidthWrapper,
   cssStyleElementImageHeightWrapper,
+  cssStyleElementImagePosition,
   cssStyleElementImageMarginLeft,
   cssStyleElementImageMarginTop,
-  cssStyleElementImagePictureSize,
+  cssStyleElementImagePictureSizePreview,
   cssStyleElementImageTransitionProperty,
   cssStyleElementImageFilter
 } from "./cssStyleElementImage";

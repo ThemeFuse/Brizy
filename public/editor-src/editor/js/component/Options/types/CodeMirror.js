@@ -63,7 +63,7 @@ class CodeMirrorOptionType extends React.Component {
     const helper = _helper ? (
       <div className="brz-ed-option__helper">
         <Tooltip
-          placement="bottom-center"
+          placement="bottom"
           openOnClick={false}
           overlay={
             <div

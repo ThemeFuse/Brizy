@@ -17,6 +17,7 @@
     "images": {
       "coverImageSrc": ""
     },
+    "coverSizeType": "custom",
 
     "offsetX": 0,
     "offsetY": 0,
@@ -32,6 +33,7 @@
     "coverZoom": 100,
     "coverZoomSuffix": null,
 
+    "tabletCoverSizeType": null,
     "tabletCoverPositionY": null,
     "tabletCoverPositionX": null,
 
@@ -41,6 +43,7 @@
     "tabletCoverZoom": null,
     "tabletCoverZoomSuffix": null,
 
+    "mobileCoverSizeType": null,
     "mobileCoverZoom": null,
     "mobileCoverZoomSuffix": null
   },

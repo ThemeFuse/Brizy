@@ -1,33 +1,58 @@
 import React, { Fragment } from "react";
 import _ from "underscore";
+import classnames from "classnames";
 import ResizeAware from "react-resize-aware";
+import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import { imageUrl, imagePopulationUrl } from "visual/utils/image";
+import {
+  imagePopulationUrl,
+  imageSpecificSize,
+  imageUrl
+} from "visual/utils/image";
 import { getStore } from "visual/redux/store";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import {
-  tabletSyncOnChange,
+  defaultValueValue,
   mobileSyncOnChange,
-  defaultValueKey
+  tabletSyncOnChange
 } from "visual/utils/onChange";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import toolbarConfigFn from "./toolbar";
-import classnames from "classnames";
 import { css } from "visual/utils/cssStyle";
 import { style, styleContent } from "./styles";
 import { Wrapper } from "../tools/Wrapper";
-import { isSVG, isGIF, calcWrapperSizes } from "./utils";
+import {
+  calcWrapperOriginalSizes,
+  calcWrapperPredefinedSizes,
+  calcWrapperSizes,
+  getImageSize,
+  getSizeType,
+  isGIF,
+  isOriginalSize,
+  isPredefinedSize,
+  isSVG
+} from "./utils";
 import { isNumber } from "visual/utils/math";
 
 import ImageWrapper from "./Wrapper";
 import ImageContent from "./Image";
 import { IS_STORY } from "visual/utils/models";
 import * as ImagePatch from "./types/ImagePatch";
-import { elementModelToValue, patchOnImageChange } from "./imageChange";
+import {
+  elementModelToValue,
+  patchOnDCChange,
+  patchOnImageChange,
+  patchOnSizeTypeChange
+} from "./imageChange";
+import {
+  placeholderObjFromStr,
+  placeholderObjToStr
+} from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 
 class Image extends EditorComponent {
   static get componentId() {
@@ -50,10 +75,12 @@ class Image extends EditorComponent {
 
   constructor(props) {
     super(props);
-    const { desktopW: containerWidth } = this.props.meta;
+    const { desktopW, mobileW, tabletW } = this.props.meta;
 
     this.state = {
-      containerWidth
+      containerWidth: desktopW,
+      tabletContainerWidth: tabletW,
+      mobileContainerWidth: mobileW
     };
   }
 
@@ -71,47 +98,42 @@ class Image extends EditorComponent {
 
   patchValue(patch, meta) {
     const image = this.handleImageChange(patch);
-    super.patchValue(
-      {
-        ...patch,
-        ...image
-      },
-      meta
-    );
+    super.patchValue({ ...patch, ...image }, meta);
   }
 
   handleImageChange(patch) {
     const device = deviceModeSelector(getStore().getState());
+    const { v } = this.getValue2();
+    const value = elementModelToValue(v);
     const image = ImagePatch.fromImageElementModel(patch);
 
     const imageDC = ImagePatch.fromImageDCElementModel(patch);
 
-    if (image) {
-      const { v } = this.getValue2();
-      const value = elementModelToValue(v);
-      const wrapperSize = this.getWrapperSizes(v)[device];
+    const imageSizeType = ImagePatch.patchImageSizeType(patch);
 
-      return (
-        (value &&
-          patchOnImageChange(
-            this.state.containerWidth,
-            value,
-            wrapperSize,
-            image
-          )) ??
-        {}
-      );
+    if (value === undefined) {
+      return {};
     }
 
-    if (imageDC) {
-      const { v } = this.getValue2();
+    if (image !== undefined) {
       const wrapperSize = this.getWrapperSizes(v)[device];
-      const dvk = key => defaultValueKey({ key, device });
+      const containerWidth = this.getContainerSize()[device];
 
-      return {
-        [dvk("height")]: wrapperSize.height,
-        [dvk("heightSuffix")]: "px"
-      };
+      return patchOnImageChange(containerWidth, value, wrapperSize, image);
+    }
+
+    if (imageDC !== undefined) {
+      const wrapperSize = this.getWrapperSizes(v)[device];
+      const containerWidth = this.getContainerSize()[device];
+
+      return patchOnDCChange(containerWidth, patch, wrapperSize);
+    }
+
+    const sizeType = defaultValueValue({ v, device, key: "sizeType" });
+    if (imageSizeType !== undefined && imageSizeType.sizeType !== sizeType) {
+      const containerWidth = this.getContainerSize()[device];
+
+      return patchOnSizeTypeChange(containerWidth, value, imageSizeType);
     }
 
     return {};
@@ -128,27 +150,51 @@ class Image extends EditorComponent {
     this.patchValue(patch);
   };
 
-  updateContainerWidth = () => {
-    if (!this.mounted) {
-      return;
-    }
+  getWidth = () => {
+    const parentNode = this.container?.current?.parentElement;
+    const parentWidth = parentNode?.getBoundingClientRect().width;
 
-    const { containerWidth: stateContainerWidth } = this.state;
-
-    if (getStore().getState().ui.deviceMode === "desktop") {
-      const parentNode = this.container?.current?.parentElement;
-      const parentWidth = parentNode?.getBoundingClientRect().width;
-
+    if (parentNode && isNumber(parentWidth)) {
       const cs = getComputedStyle(parentNode);
 
       const paddingX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
       const borderX =
         parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
 
-      const containerWidth = parentWidth - paddingX - borderX;
+      return parentWidth - paddingX - borderX;
+    }
 
-      if (isNumber(containerWidth) && containerWidth !== stateContainerWidth) {
-        this.setState({ containerWidth });
+    return undefined;
+  };
+
+  updateContainerWidth = () => {
+    if (!this.mounted) {
+      return;
+    }
+
+    const deviceMode = getStore().getState().ui.deviceMode;
+    const width = this.getWidth();
+
+    if (width !== undefined) {
+      switch (deviceMode) {
+        case "desktop": {
+          if (this.state.containerWidth !== width) {
+            this.setState({ containerWidth: width });
+          }
+          break;
+        }
+        case "tablet": {
+          if (this.state.tabletContainerWidth !== width) {
+            this.setState({ tabletContainerWidth: width });
+          }
+          break;
+        }
+        case "mobile": {
+          if (this.state.mobileContainerWidth !== width) {
+            this.setState({ mobileContainerWidth: width });
+          }
+          break;
+        }
       }
     }
   };
@@ -164,29 +210,49 @@ class Image extends EditorComponent {
     cW = Math.round(cW);
     cH = Math.round(cH);
 
+    if (v.imagePopulation) {
+      const src = v.imagePopulation;
+      const options = { cW: Math.round(cW), cH: Math.round(cH) };
+      const url = imagePopulationUrl(src, options);
+
+      return {
+        source: url,
+        url: `${url} 1x, ${imagePopulationUrl(src, multiplier(options, 2))} 2x`
+      };
+    }
+
+    const sizeType = defaultValueValue({ v, device, key: "sizeType" });
+    const size = getImageSize(sizeType);
+
+    if (isPredefinedSize(size) || isOriginalSize(size)) {
+      const url = imageSpecificSize(v.imageSrc, sizeType);
+
+      return {
+        source: url,
+        url: `${url} 1x, ${url} 2x`
+      };
+    }
+
     let { width: iW, height: iH, marginLeft: oX, marginTop: oY } = imageSizes[
       device
     ];
 
     oX = Math.abs(oX);
     oY = Math.abs(oY);
-
-    const urlFn = v.imagePopulation ? imagePopulationUrl : imageUrl;
-    const src = v.imagePopulation ? v.imagePopulation : v.imageSrc;
-    const options = v.imagePopulation
-      ? { cW: Math.round(cW), cH: Math.round(cH) }
-      : {
-          iW: Math.round(iW),
-          iH: Math.round(iH),
-          oX: Math.round(oX),
-          oY: Math.round(oY),
-          cW: Math.round(cW),
-          cH: Math.round(cH)
-        };
+    const src = v.imageSrc;
+    const options = {
+      iW: Math.round(iW),
+      iH: Math.round(iH),
+      oX: Math.round(oX),
+      oY: Math.round(oY),
+      cW: Math.round(cW),
+      cH: Math.round(cH)
+    };
+    const url = imageUrl(src, options);
 
     return {
-      source: urlFn(src, options),
-      url: `${urlFn(src, options)} 1x, ${urlFn(src, multiplier(options, 2))} 2x`
+      source: url,
+      url: `${url} 1x, ${imageUrl(src, multiplier(options, 2))} 2x`
     };
 
     function multiplier(data, num) {
@@ -208,7 +274,11 @@ class Image extends EditorComponent {
   }
 
   getWrapperSizes(v) {
-    const { containerWidth } = this.state;
+    const {
+      containerWidth,
+      tabletContainerWidth,
+      mobileContainerWidth
+    } = this.state;
     const {
       imageWidth,
       imageHeight,
@@ -217,7 +287,27 @@ class Image extends EditorComponent {
       widthSuffix,
       heightSuffix
     } = v;
-    const { tabletW, mobileW } = this.props.meta;
+    const _sizeType = getSizeType(v, DESKTOP);
+    const _tabletSizeType = getSizeType(v, TABLET);
+    const _mobileSizeType = getSizeType(v, MOBILE);
+
+    const sizeType = getImageSize(_sizeType);
+    const tabletSizeType = getImageSize(_tabletSizeType);
+    const mobileSizeType = getImageSize(_mobileSizeType);
+    const { desktop, tablet, mobile } = this.getContainerSize();
+
+    if (isPredefinedSize(sizeType)) {
+      return {
+        desktop: calcWrapperPredefinedSizes(sizeType, desktop),
+        tablet: calcWrapperPredefinedSizes(tabletSizeType, tablet),
+        mobile: calcWrapperPredefinedSizes(mobileSizeType, mobile)
+      };
+    }
+
+    const dvv = (key, device) => defaultValueValue({ v, device, key });
+    const size = dvv("size", DESKTOP);
+    const tabletSize = dvv("size", TABLET);
+    const mobileSize = dvv("size", MOBILE);
 
     const desktopValue = {
       imageWidth,
@@ -225,11 +315,13 @@ class Image extends EditorComponent {
       width,
       height,
       widthSuffix,
-      heightSuffix
+      heightSuffix,
+      size
     };
     const tabletValue = {
       imageWidth,
       imageHeight,
+      size: tabletSize,
       width: v.tabletWidth || width,
       height: v.tabletHeight || height,
       widthSuffix: tabletSyncOnChange(v, "widthSuffix"),
@@ -238,15 +330,33 @@ class Image extends EditorComponent {
     const mobileValue = {
       imageWidth,
       imageHeight,
+      size: mobileSize,
       width: v.mobileWidth || width,
-      height: v.mobileHeight || v.height,
+      height: v.mobileHeight || height,
       widthSuffix: mobileSyncOnChange(v, "widthSuffix"),
       heightSuffix: mobileSyncOnChange(v, "heightSuffix")
     };
+
+    if (isOriginalSize(sizeType)) {
+      return {
+        desktop: calcWrapperOriginalSizes(desktopValue, containerWidth),
+        tablet: calcWrapperOriginalSizes(tabletValue, tabletContainerWidth),
+        mobile: calcWrapperOriginalSizes(mobileValue, mobileContainerWidth)
+      };
+    }
+
     return {
       desktop: calcWrapperSizes(desktopValue, containerWidth),
-      tablet: calcWrapperSizes(tabletValue, tabletW),
-      mobile: calcWrapperSizes(mobileValue, mobileW)
+      tablet: calcWrapperSizes(tabletValue, tabletContainerWidth),
+      mobile: calcWrapperSizes(mobileValue, mobileContainerWidth)
+    };
+  }
+
+  getContainerSize() {
+    return {
+      desktop: this.state.containerWidth,
+      tablet: this.state.tabletContainerWidth,
+      mobile: this.state.mobileContainerWidth
     };
   }
 
@@ -317,6 +427,35 @@ class Image extends EditorComponent {
         ...value,
         mobileHeightSuffix: "%"
       };
+    }
+
+    if (dbValue.imagePopulation) {
+      const placeholderData = placeholderObjFromStr(dbValue.imagePopulation);
+      const attr = placeholderData?.attr;
+      const name = placeholderData?.name;
+
+      if (name !== undefined && attr?.size !== undefined) {
+        const { imageSizes } = Config.getAll();
+        const imageData = imageSizes?.find(({ name }) => name === attr.size);
+
+        if (imageSizes !== undefined && imageData === undefined) {
+          const _attr = { ...attr, size: "original" };
+          value = {
+            ...value,
+            imagePopulation: placeholderObjToStr({ name, attr: _attr })
+          };
+        }
+      }
+    }
+
+    if (dbValue.sizeType !== undefined && dbValue.sizeType !== "custom") {
+      const { imageSizes } = Config.getAll();
+      const imageData = imageSizes?.find(
+        ({ name }) => name === dbValue.sizeType
+      );
+      if (imageData === undefined) {
+        dbValue.sizeType = "original";
+      }
     }
 
     return {
@@ -418,8 +557,12 @@ class Image extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     const { className } = v;
-    const { tabletW, mobileW, gallery = {} } = this.props.meta;
-    const { containerWidth } = this.state;
+    const { gallery = {} } = this.props.meta;
+    const {
+      containerWidth,
+      tabletContainerWidth,
+      mobileContainerWidth
+    } = this.state;
 
     const wrapperSizes = this.getWrapperSizes(v);
 
@@ -427,9 +570,9 @@ class Image extends EditorComponent {
       desktopWrapperSizes: wrapperSizes.desktop,
       desktopContainerWidth: containerWidth,
       tabletWrapperSizes: wrapperSizes.tablet,
-      tabletContainerWidth: tabletW,
+      tabletContainerWidth,
       mobileWrapperSizes: wrapperSizes.mobile,
-      mobileContainerWidth: mobileW,
+      mobileContainerWidth,
       gallery
     });
 
@@ -459,6 +602,8 @@ class Image extends EditorComponent {
     const meta = {
       ...this.props.meta,
       desktopW: containerWidth,
+      tabletW: tabletContainerWidth,
+      mobileW: mobileContainerWidth,
       _dc: this._dc
     };
 

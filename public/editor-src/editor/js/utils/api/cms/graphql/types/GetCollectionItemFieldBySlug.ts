@@ -16,8 +16,8 @@ export interface GetCollectionItemFieldBySlug_collectionItemFieldBySlug_type {
 export interface GetCollectionItemFieldBySlug_collectionItemFieldBySlug {
   __typename: "CollectionItemField";
   id: string;
-  values: any;
   type: GetCollectionItemFieldBySlug_collectionItemFieldBySlug_type;
+  values: any;
 }
 
 export interface GetCollectionItemFieldBySlug {

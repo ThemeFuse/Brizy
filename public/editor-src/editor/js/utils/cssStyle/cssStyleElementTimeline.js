@@ -141,7 +141,7 @@ export function cssStyleElementTimelineLineTop({ v, device, state }) {
         return `bottom: ${afterHeight}px; top:auto; left: ${leftPosition}px;`;
       }
       case "style-3": {
-        return `top: ${afterHeight}px; bottom:auto; left: ${leftPosition}px;`;
+        return `top: calc( ${afterHeight}px + 50%); bottom:auto; left: ${leftPosition}px;`;
       }
     }
   } else if (orientation === "on") {
@@ -243,16 +243,18 @@ export function cssStyleElementTimelineLineWidthHeightBefore({
 }) {
   const halfIconWidth = cssStyleElementTimelineIconHalfHeightWidth({
     v,
+    device,
     prefix
   });
   const iconWidth = cssStyleElementTimelineIconHeightWidth({
     v,
+    device,
     prefix
   });
   const borderWidth = styleBorderWidthGrouped({ v, device, prefix: "line" });
   const orientation = styleElementTimelineOrientation({ v, device, state });
   if (orientation === "on") {
-    return `height: calc(50% - ${halfIconWidth}px); width: ${borderWidth}px;`;
+    return `height: calc(50% + (${halfIconWidth}px + ${iconWidth}px)); width: ${borderWidth}px;`;
   } else if (orientation === "off") {
     return `width: calc(100% - ${iconWidth}px); height: ${borderWidth}px;`;
   }
@@ -265,13 +267,14 @@ export function cssStyleElementTimelineLineWidthHeightAfter({
   prefix
 }) {
   const dvv = key => defaultValueValue({ v, key, device });
-
   const halfIconWidth = cssStyleElementTimelineIconHalfHeightWidth({
     v,
+    device,
     prefix
   });
   const iconWidth = cssStyleElementTimelineIconHeightWidth({
     v,
+    device,
     prefix
   });
   const borderWidth = styleBorderWidthGrouped({ v, device, prefix: "line" });
@@ -283,7 +286,7 @@ export function cssStyleElementTimelineLineWidthHeightAfter({
       : 100;
 
   if (orientation === "on") {
-    return `height: calc(${lineOffset}px + (50% - ${halfIconWidth}px)); width: ${borderWidth}px;`;
+    return `height: calc(${lineOffset}px + (60% - ${halfIconWidth}px)); width: ${borderWidth}px; left: ${borderWidth}px;`;
   } else if (orientation === "off") {
     return `width: calc(100% - ${iconWidth}px); height: ${borderWidth}px;`;
   }
@@ -298,9 +301,10 @@ export function cssStyleElementTimelineVerticalLinePosition({
   const borderWidth = styleBorderWidthGrouped({ v, device, prefix: "line" });
   const iconWidth = cssStyleElementTimelineIconHalfHeightWidth({
     v,
+    device,
     prefix
   });
-  const textWidth = cssStyleElementTimelineTextWidth({ v });
+  const textWidth = cssStyleElementTimelineTextWidth({ v, device });
   const linePosition = textWidth + iconWidth - borderWidth / 2;
   const orientation = styleElementTimelineOrientation({ v, device, state });
   const style = styleElementTimelineStyle({ v, device, state });
@@ -311,7 +315,7 @@ export function cssStyleElementTimelineVerticalLinePosition({
         return `left: ${linePosition}px; bottom: calc( ${iconWidth}px + 50%);`;
       }
       case "style-2": {
-        return `right: ${linePosition}px; bottom: calc( ${iconWidth}px + 50%);`;
+        return `right: ${linePosition}px; bottom: calc( ${iconWidth}px + 50%); left:unset;`;
       }
       case "style-3": {
         return `left: ${linePosition}px; bottom: calc( ${iconWidth}px + 50%);`;
@@ -428,16 +432,24 @@ export function cssStyleElementTimelineCustomLineTop({ v, device }) {
   const orientation = styleElementTimelineOrientation({ v, device });
   const style = styleElementTimelineStyle({ v, device });
 
-  const borderWidthLine = styleBorderWidthGrouped({ v, prefix: "line" });
-  const halfIconHeight = cssStyleElementTimelineIconHalfHeightWidth({ v });
+  const borderWidthLine = styleBorderWidthGrouped({
+    v,
+    device,
+    prefix: "line"
+  });
+  const halfIconHeight = cssStyleElementTimelineIconHalfHeightWidth({
+    v,
+    device
+  });
   const textHeight = cssStyleElementTimelineTextHeight({ v, device });
   const borderWidth = styleBorderWidthGrouped({ v, device });
   const customSize = styleElementTimelineIconCustomSize({ v, device });
   const iconPadding = styleElementTimelineIconPadding({ v, device });
   const iconWidth = cssStyleElementTimelineIconHalfHeightWidth({
-    v
+    v,
+    device
   });
-  const textWidth = cssStyleElementTimelineTextWidth({ v });
+  const textWidth = cssStyleElementTimelineTextWidth({ v, device });
   const verticalPosition = textWidth + iconWidth - borderWidthLine / 2;
 
   const horizontalLeftPosition =
@@ -448,7 +460,7 @@ export function cssStyleElementTimelineCustomLineTop({ v, device }) {
   if (orientation === "off") {
     switch (style) {
       case "style-1": {
-        return `bottom:auto; right: auto; left: ${horizontalLeftPosition}px;`;
+        return `bottom:auto; right: auto; top: ${afterHeight}px; left: ${horizontalLeftPosition}px;`;
       }
       case "style-2": {
         return `bottom: ${afterHeight}px; top:auto; right: auto; left: ${horizontalLeftPosition}px;`;
@@ -460,13 +472,13 @@ export function cssStyleElementTimelineCustomLineTop({ v, device }) {
   } else if (orientation === "on") {
     switch (style) {
       case "style-1": {
-        return `left: ${verticalPosition}px;`;
+        return `left: ${verticalPosition}px; top: calc(50% + (${afterHeight}px / 2));`;
       }
       case "style-2": {
-        return `right: ${verticalPosition}px; left: auto;`;
+        return `right: ${verticalPosition}px; left: auto; top: calc(50% + (${afterHeight}px / 2));`;
       }
       case "style-3": {
-        return `left: ${verticalPosition}px;`;
+        return `left: ${verticalPosition}px; top: calc(50% + (${afterHeight}px / 2));`;
       }
     }
   }
@@ -477,10 +489,14 @@ export function cssStyleElementTimelineCustomLineOdd({ v, device }) {
   const style = styleElementTimelineStyle({ v, device });
 
   const borderWidthLine = styleBorderWidthGrouped({ v, prefix: "line" });
-  const halfIconHeight = cssStyleElementTimelineIconHalfHeightWidth({ v });
+  const halfIconHeight = cssStyleElementTimelineIconHalfHeightWidth({
+    v,
+    device
+  });
   const textHeight = cssStyleElementTimelineTextHeight({ v, device });
   const iconHeight = cssStyleElementTimelineIconHalfHeightWidth({
-    v
+    v,
+    device
   });
   const borderWidth = styleBorderWidthGrouped({ v, device });
   const customSize = styleElementTimelineIconCustomSize({ v, device });
@@ -683,7 +699,7 @@ export function cssStyleElementTimelineVerticalCustomPosition({
         return `right: auto; left: ${rightPosition}px;`;
       }
       case "style-2": {
-        return "";
+        return `right: ${rightPosition}px; left: auto;`;
       }
       case "style-3": {
         return `right: ${rightPosition}px; left: unset;`;

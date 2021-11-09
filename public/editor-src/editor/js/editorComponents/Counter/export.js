@@ -68,7 +68,7 @@ function animate(value) {
   var $chart = $(elem).find(".brz-counter-pie-chart");
 
   const endNumber = Number(value.end);
-  const end = $chart.length ? endNumber : Math.max(0, Math.min(100, endNumber));
+  const end = $chart.length ? Math.max(0, Math.min(100, endNumber)) : endNumber;
 
   var step = function(countNum) {
     $figures.text(formatNumber(countNum, separator));

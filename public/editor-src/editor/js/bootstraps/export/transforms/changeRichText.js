@@ -18,6 +18,10 @@ export default function changeRichText($) {
   // Change Links
   $(".brz-rich-text")
     .find("a[data-href]")
+    .filter(function() {
+      const attr = $(this).attr("data-href");
+      return attr.trim().length > 0;
+    })
     .each(function() {
       const $this = $(this);
       const html = $this.html();

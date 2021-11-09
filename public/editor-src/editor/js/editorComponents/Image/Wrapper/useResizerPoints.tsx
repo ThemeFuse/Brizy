@@ -1,6 +1,11 @@
+import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { ImageProps } from "../types";
 
 import { isSVG, isGIF } from "../utils";
+import { SizeRestriction, WidthHeightRestriction } from "./type";
+import { getSizeRestriction, getWidthRestriction } from "./utils";
+
+const resize = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
 const POINTS = {
   default: [
@@ -14,96 +19,72 @@ const POINTS = {
     "bottomRight"
   ],
   gallery: ["bottomCenter"],
-  svg: ["topLeft", "topRight", "bottomLeft", "bottomRight"],
-  gif: ["topLeft", "topRight", "bottomLeft", "bottomRight"]
+  svg: resize,
+  gif: resize,
+  sizeType: resize,
+  population: resize
 };
 
-type RestrictionInterval = {
-  px: {
-    min: number;
-    max: number;
-  };
-  "%": {
-    min: number;
-    max: number;
-  };
-};
-
-type UseResizerPoints = (
-  props: ImageProps
-) => {
+interface ResizerCustomSize {
   points:
     | typeof POINTS.default
     | typeof POINTS.gallery
     | typeof POINTS.svg
     | typeof POINTS.gif;
-  restrictions: {
-    height: RestrictionInterval;
-    width: RestrictionInterval;
-    tabletWidth: RestrictionInterval;
-    mobileWidth: RestrictionInterval;
-  };
-};
+  restrictions: WidthHeightRestriction;
+}
+
+interface ResizerPredefinedSize {
+  points: typeof POINTS.sizeType;
+  restrictions: SizeRestriction;
+}
+
+type UseResizerPoints = (
+  props: ImageProps
+) => ResizerCustomSize | ResizerPredefinedSize;
 
 const useResizerPoints: UseResizerPoints = ({ v, meta }) => {
-  const { gallery, desktopW, tabletW, mobileW } = meta;
-  const { imageExtension } = v;
-  const isAbsoluteOrFixed =
-    v.elementPosition === "absolute" || v.elementPosition === "fixed";
+  const { sizeType, imagePopulation } = v;
+  const placeholderData = placeholderObjFromStr(imagePopulation);
 
-  let points = POINTS.default;
-  if (gallery && gallery.inGallery) {
-    points = POINTS.gallery;
-  } else if (isSVG(imageExtension)) {
-    points = POINTS.svg;
-  } else if (isGIF(imageExtension)) {
-    points = POINTS.gif;
+  if (placeholderData) {
+    if (placeholderData.attr === undefined) {
+      return {
+        points: POINTS.default,
+        restrictions: getWidthRestriction(meta, false)
+      };
+    }
+    return {
+      points: POINTS.population,
+      restrictions: getSizeRestriction()
+    };
   }
 
-  const restrictions = {
-    height: {
-      px: {
-        min: 5,
-        max: Infinity
-      },
-      "%": {
-        min: 5,
-        max: Infinity
-      }
-    },
-    width: {
-      px: {
-        min: 5,
-        max: desktopW
-      },
-      "%": {
-        min: 5,
-        max: isAbsoluteOrFixed ? Infinity : 100
-      }
-    },
-    tabletWidth: {
-      px: {
-        min: 5,
-        max: tabletW
-      },
-      "%": {
-        min: 5,
-        max: 100
-      }
-    },
-    mobileWidth: {
-      px: {
-        min: 5,
-        max: mobileW
-      },
-      "%": {
-        min: 5,
-        max: 100
-      }
-    }
-  };
+  if (sizeType === "custom") {
+    const { imageExtension, elementPosition } = v;
+    const { gallery } = meta;
+    const isAbsoluteOrFixed =
+      elementPosition === "absolute" || elementPosition === "fixed";
+    let points = POINTS.default;
 
-  return { points, restrictions };
+    if (gallery && gallery.inGallery) {
+      points = POINTS.gallery;
+    } else if (isSVG(imageExtension)) {
+      points = POINTS.svg;
+    } else if (isGIF(imageExtension)) {
+      points = POINTS.gif;
+    }
+
+    return {
+      points: points,
+      restrictions: getWidthRestriction(meta, isAbsoluteOrFixed)
+    };
+  }
+
+  return {
+    points: POINTS.sizeType,
+    restrictions: getSizeRestriction()
+  };
 };
 
 export default useResizerPoints;

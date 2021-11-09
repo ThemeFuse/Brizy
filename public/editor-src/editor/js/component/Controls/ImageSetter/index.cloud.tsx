@@ -245,7 +245,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
       >
         {this.props.sizes?.map(s => (
           <Item key={s.value} value={s.value}>
-            {s.label}
+            <span title={s.label}>{s.label}</span>
           </Item>
         ))}
       </Select2>
@@ -260,8 +260,8 @@ export class ImageSetter<T extends ReactText> extends React.Component<
 
     return (
       <div className={className}>
-        {this.state.src ? this.renderSelect() : null}
         {this.state.src ? this.renderDraggable() : this.renderUpload()}
+        {this.state.src ? this.renderSelect() : null}
       </div>
     );
   }

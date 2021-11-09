@@ -4,23 +4,47 @@ import React, { useState, useRef, useEffect } from "react";
 import { MIN_COL_WIDTH } from "visual/config/columns";
 import { imageUrl } from "visual/utils/image";
 import { calcImageSizes } from "../utils";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
+import {
+  tabletSyncOnChange,
+  mobileSyncOnChange,
+  defaultValueValue
+} from "visual/utils/onChange";
 
 import classnames from "classnames";
 import { css } from "visual/utils/cssStyle";
 import { styleImage } from "../styles";
 
 import { ImageSizes, ImageProps, Device, Styles } from "../types";
+import { imageSpecificSize } from "visual/utils/image";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 
-const formatSrc = (imageSrc: string, maxCw: number): string => {
-  const imgUrl_1X = imageUrl(imageSrc, { iW: maxCw, iH: "any" });
+const formatRetinaSrc = (
+  src: string,
+  sizeType: string,
+  maxCw: number
+): string => {
+  switch (sizeType) {
+    case "custom": {
+      const url_1X = imageUrl(src, { iW: maxCw, iH: "any" });
+      const url_2X = imageUrl(src, { iW: maxCw * 2, iH: "any" });
+      return `${url_1X} 1x, ${url_2X} 2x`;
+    }
+    default: {
+      const url = imageSpecificSize(src, sizeType);
+      return `${url} 1x, ${url} 2x`;
+    }
+  }
+};
 
-  const imgUrl_2X = imageUrl(imageSrc, {
-    iW: maxCw * 2,
-    iH: "any"
-  });
-
-  return `${imgUrl_1X} 1x, ${imgUrl_2X} 2x`;
+const formatSrc = (src: string, sizeType: string, maxCw: number): string => {
+  switch (sizeType) {
+    case "custom": {
+      return imageUrl(src, { iW: maxCw, iH: "any" }) ?? "";
+    }
+    default: {
+      return imageSpecificSize(src, sizeType);
+    }
+  }
 };
 
 const SimpleImage: React.FC<ImageProps> = props => {
@@ -68,15 +92,18 @@ const SimpleImage: React.FC<ImageProps> = props => {
   }, [desktopW, tabletW, mobileW, width, height, zoom]);
 
   const imageSizes = getImageSizes();
+  const sizeType = dvv<string>("sizeType", DESKTOP);
+  const tabletSizeType = dvv<string>("sizeType", TABLET);
+  const mobileSizeType = dvv<string>("sizeType", MOBILE);
 
   // ! find less hacky way
   const responsiveUrls = getResponsiveUrls && getResponsiveUrls(imageSizes);
 
   const { desktopSrc, tabletSrc, mobileSrc, sourceSrc } = responsiveUrls || {
-    desktopSrc: formatSrc(imageSrc, maxDesktopCW),
-    tabletSrc: formatSrc(imageSrc, maxTabletCW),
-    mobileSrc: formatSrc(imageSrc, maxMobileCW),
-    sourceSrc: imageUrl(imageSrc, { iW: maxMobileCW, iH: "any" })
+    desktopSrc: formatRetinaSrc(imageSrc, sizeType, maxDesktopCW),
+    tabletSrc: formatRetinaSrc(imageSrc, tabletSizeType, maxTabletCW),
+    mobileSrc: formatRetinaSrc(imageSrc, mobileSizeType, maxMobileCW),
+    sourceSrc: formatSrc(imageSrc, sizeType, maxMobileCW)
   };
   // ! find less hacky way
 
@@ -90,7 +117,7 @@ const SimpleImage: React.FC<ImageProps> = props => {
           styleImage(v, vs, vd, imageSizes) as Styles
         )
       )
-    : classnames("brz-img", "brz-p-absolute");
+    : "brz-img";
 
   return (
     <>
@@ -106,6 +133,9 @@ const SimpleImage: React.FC<ImageProps> = props => {
       />
     </>
   );
+  function dvv<T>(key: string, device: Device): T {
+    return defaultValueValue({ v, key, device });
+  }
 
   function getMaxCW(cW: number, type: Device = "desktop"): number {
     const widthStepInPercent = 20;
@@ -143,7 +173,8 @@ const SimpleImage: React.FC<ImageProps> = props => {
       width,
       height,
       widthSuffix,
-      heightSuffix
+      heightSuffix,
+      size: dvv<number>("size", DESKTOP)
     };
     const tabletValue = {
       imageWidth,
@@ -154,7 +185,8 @@ const SimpleImage: React.FC<ImageProps> = props => {
       width: v.tabletWidth || width,
       height: v.tabletHeight || height,
       widthSuffix: tabletSyncOnChange(v, "widthSuffix"),
-      heightSuffix: tabletSyncOnChange(v, "heightSuffix")
+      heightSuffix: tabletSyncOnChange(v, "heightSuffix"),
+      size: dvv<number>("size", TABLET)
     };
     const mobileValue = {
       imageWidth,
@@ -165,7 +197,8 @@ const SimpleImage: React.FC<ImageProps> = props => {
       width: v.mobileWidth || width,
       height: v.mobileHeight || height,
       widthSuffix: mobileSyncOnChange(v, "widthSuffix"),
-      heightSuffix: mobileSyncOnChange(v, "heightSuffix")
+      heightSuffix: mobileSyncOnChange(v, "heightSuffix"),
+      size: dvv<number>("size", MOBILE)
     };
 
     return {

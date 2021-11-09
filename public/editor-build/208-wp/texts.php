@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_206Wp_Texts {
+class Brizy_Public_EditorBuild_208Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -515,7 +515,6 @@ class Brizy_Public_EditorBuild_206Wp_Texts {
 			"Order By" => __("Order By", "brizy"),
 			"Order Tracking" => __("Order Tracking", "brizy"),
 			"Orientation" => __("Orientation", "brizy"),
-			"Original" => __("Original", "brizy"),
 			"Outline" => __("Outline", "brizy"),
 			"Outset" => __("Outset", "brizy"),
 			"Overlay" => __("Overlay", "brizy"),
@@ -651,7 +650,6 @@ class Brizy_Public_EditorBuild_206Wp_Texts {
 			"Save" => __("Save", "brizy"),
 			"Save Draft" => __("Save Draft", "brizy"),
 			"Save Draft / Update Page" => __("Save Draft / Update Page", "brizy"),
-			"Save HTML" => __("Save HTML", "brizy"),
 			"Save Layout" => __("Save Layout", "brizy"),
 			"Saved" => __("Saved", "brizy"),
 			"Saved Library is syncing to your Account" => __("Saved Library is syncing to your Account", "brizy"),

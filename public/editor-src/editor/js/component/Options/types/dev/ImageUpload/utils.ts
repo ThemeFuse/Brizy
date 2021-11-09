@@ -6,7 +6,7 @@ import * as Option from "visual/component/Options/Type";
 import { MValue } from "visual/utils/value";
 import { GetModel } from "visual/component/Options/Type";
 
-import { PositionPatch, ImageDataPatch, Value } from "./Types";
+import { PositionPatch, ImageDataPatch, Value, Size } from "./Types";
 import { apply } from "visual/utils/model";
 
 export const DEFAULT_VALUE: Value = {
@@ -82,3 +82,11 @@ export const patchPosition = (
       }
     : undefined;
 };
+
+export const configSizeToSize = (size: {
+  label: string;
+  name: string;
+}): Size => ({
+  value: size.name,
+  label: size.label
+});

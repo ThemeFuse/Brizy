@@ -8,19 +8,31 @@
     @include small-select;
 
     position: absolute;
-    z-index: 2;
-    top: 6px;
+    z-index: 10;
+    top: 4px;
     left: 4px;
-    width: auto;
+    width: calc(100% - 8px);
+    max-width: calc(100% - 8px);
 
     .brz-ed-control__multiSelect {
+      &__menu {
+        max-width: 100%;
+      }
+
       &--value-container {
         background-color: $control-background-color;
+        display: inline-flex;
+        max-width: 100%;
       }
 
       &__option,
       &--tag {
         font-size: $options-handle-font-size-small;
+
+        span {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
     }
   }

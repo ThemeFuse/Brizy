@@ -1,11 +1,20 @@
-import { ImagePatch } from "./types/ImagePatch";
-import { calcWrapperSizes } from "./utils";
+import { ImageDCPatch, ImagePatch, SizeTypePatch } from "./types/ImagePatch";
+import {
+  calcWrapperSizes,
+  getImageSize,
+  isCustomSize,
+  isOriginalSize,
+  isPredefinedSize
+} from "./utils";
 import { isUnit, Unit } from "./types";
 import { optional, readWithParser } from "visual/utils/reader/readWithParser";
 import { ElementModel } from "visual/component/Elements/Types";
 import { mPipe, pass } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
+import * as Math from "visual/utils/math";
+import * as Str from "visual/utils/string/specs";
 import { prop } from "visual/utils/object/get";
+import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 
 export interface Size {
   width: number;
@@ -22,9 +31,29 @@ export interface Patch {
 }
 
 export interface Value extends Size {
+  size: number;
   widthSuffix: Unit;
   heightSuffix: Unit;
+  sizeType: string;
   showOriginalImage?: "on" | "off";
+  imagePopulation?: string;
+}
+
+export interface PatchSize {
+  sizeType: string;
+  size?: number;
+  width?: number;
+  height?: number;
+  widthSuffix?: Unit;
+  heightSuffix?: Unit;
+}
+
+export interface PatchDC {
+  size?: number;
+  width?: number;
+  height?: number;
+  heightSuffix?: Unit;
+  widthSuffix?: Unit;
 }
 
 export const elementModelToValue = readWithParser<ElementModel, Value>({
@@ -37,7 +66,9 @@ export const elementModelToValue = readWithParser<ElementModel, Value>({
       prop("showOriginalImage"),
       pass((v): v is "on" | "off" => ["on", "off"].includes(v as string))
     )
-  )
+  ),
+  sizeType: mPipe(prop("sizeType"), Str.read),
+  size: mPipe(prop("size"), Num.read)
 });
 
 export const patchOnImageChange = (
@@ -58,7 +89,8 @@ export const patchOnImageChange = (
       widthSuffix: v.widthSuffix,
       heightSuffix: v.heightSuffix,
       width: v.width,
-      height: v.height
+      height: v.height,
+      size: v.size
     },
     cW
   );
@@ -88,7 +120,78 @@ export const patchOnImageChange = (
     imageHeight: imgHeight,
     imageSrc: src,
     imageExtension: extension,
-    width: Math.round(newCW),
-    height: Math.round(newCH)
+    width: Math.roundTo(newCW, 2),
+    height: Math.roundTo(newCH, 2)
+  };
+};
+
+export const patchOnSizeTypeChange = (
+  cW: number,
+  v: Value,
+  patch: SizeTypePatch
+): PatchSize => {
+  const type = patch.sizeType;
+  const patchSize: PatchSize = {
+    sizeType: type
+  };
+  const size = getImageSize(type);
+
+  if (isPredefinedSize(size)) {
+    const resize = Math.roundTo((size.width / cW) * 100, 2);
+    patchSize.size = Math.clamp(resize, 0, 100);
+  }
+
+  if (isOriginalSize(size)) {
+    patchSize.size = 100;
+  }
+
+  // Need to reset all value to percentage
+  if (isCustomSize(size)) {
+    patchSize.width = 100;
+    patchSize.height = 100;
+    patchSize.widthSuffix = "%";
+    patchSize.heightSuffix = "%";
+  }
+
+  return patchSize;
+};
+
+export const patchOnDCChange = (
+  cW: number,
+  patch: ImageDCPatch,
+  wrapperSizes: Size
+): PatchDC => {
+  const placeholderData = placeholderObjFromStr(patch.imagePopulation);
+
+  if (placeholderData === undefined) {
+    return {
+      width: 100,
+      height: 100,
+      widthSuffix: "%",
+      heightSuffix: "%"
+    };
+  }
+
+  const { attr } = placeholderData;
+  const getSize = mPipe(Str.read, getImageSize);
+  const size = getSize(attr?.size);
+
+  if (size !== undefined) {
+    if (isPredefinedSize(size)) {
+      const resize = Math.roundTo((size.width / cW) * 100, 2);
+
+      return {
+        size: Math.clamp(resize, 0, 100)
+      };
+    }
+
+    return {
+      size: 100
+    };
+  }
+
+  return {
+    height: wrapperSizes.height,
+    heightSuffix: "px"
   };
 };

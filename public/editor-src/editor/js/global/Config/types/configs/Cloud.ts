@@ -6,6 +6,7 @@ import { Urls } from "visual/global/Config/types/Urls";
 import { Project } from "visual/global/Config/types/Project";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Config } from "visual/global/Config/types";
+import { WhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
 
 // region Base
 interface Base<Platform> extends ConfigCommon, WithId<number> {
@@ -30,6 +31,7 @@ interface Base<Platform> extends ConfigCommon, WithId<number> {
     apiUrl: string;
     blogId: string;
   };
+  whiteLabel?: WhiteLabel;
 }
 
 // endregion
