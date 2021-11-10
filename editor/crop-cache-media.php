@@ -106,7 +106,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		$cropper      = new Brizy_Editor_Asset_Crop_Cropper();
 		$originalPath = $this->getOriginalPath( $uid );
 
-		if ( ! $cropper->crop( $originalPath, $resizedImgPath, $size ) ) {
+		if ( ! $cropper->crop( $originalPath, $resizedImgPath, $size, $this->getOrignalImgSizes( $uid ) ) ) {
 			return $originalPath;
 		}
 
@@ -132,7 +132,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		}
 
 		$cropper = new Brizy_Editor_Asset_Crop_Cropper();
-		$options = $cropper->getFilterOptions( $originalPath, $size );
+		$options = $cropper->getFilterOptions( $originalPath, $size, $this->getOrignalImgSizes( $uid ) );
 
 		if (
 			$options['is_advanced'] === false
@@ -218,6 +218,16 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		}
 
 		return $img[0];
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	private function getOrignalImgSizes( $uid ) {
+
+		$sizes = wp_get_attachment_image_src( $this->getAttachmentId( $uid ), 'full' );
+
+		return [ $sizes[1], $sizes[2] ];
 	}
 
 	public function cacheImgs( $uids ) {

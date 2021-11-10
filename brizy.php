@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 2.3.19
+ * Version: 2.3.20
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -19,7 +19,7 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '2.3.19' );
+define( 'BRIZY_VERSION', '2.3.20' );
 define( 'BRIZY_MINIMUM_PRO_VERSION', '2.3.0' );
 define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '208-wp' );
 define( 'BRIZY_SYNC_VERSION', '208' );
@@ -44,12 +44,6 @@ register_activation_hook( BRIZY_FILE, 'brizy_install' );
 register_deactivation_hook( BRIZY_FILE, 'brizy_clean' );
 
 function brizy_load() {
-
-	if ( version_compare( PHP_VERSION, '5.6.0' ) < 0 ) {
-		add_action( 'admin_notices', 'brizy_notices' );
-
-		return;
-	}
 
 	try {
 		$instance = Brizy_Editor::get();
