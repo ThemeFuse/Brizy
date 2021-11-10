@@ -12,27 +12,31 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 		    $attrs = $contentPlaceholder->getAttributes();
 
 		    if ( ! empty( $attrs['roles'] ) ) {
-			    $roles = explode( ',', $attrs['roles'] );
-			    $user  = wp_get_current_user();
+			    $roles     = explode( ',', $attrs['roles'] );
+			    $userRoles = (array) wp_get_current_user()->roles;
 
-			    if ( Brizy_Editor_User::is_user_allowed() && isset( $user->roles ) ) {
+                if ( in_array( 'logged', $roles ) && is_user_logged_in() ) {
+	                $userRoles[] = 'logged';
+                }
+
+			    if ( Brizy_Editor_User::is_user_allowed() ) {
 
 				    if ( ! empty( $_GET['role'] ) ) {
 
 					    if ( $_GET['role'] === 'default' ) {
-						    $roles[]       = 'default';
-						    $user->roles[] = 'default';
+						    $roles[]     = 'default';
+						    $userRoles[] = 'default';
 					    } else {
-						    $user->roles = [];
+						    $userRoles = [];
 
 						    if ( $_GET['role'] == 'not_logged' ) {
 
 							    if ( in_array( 'not_logged', $roles ) ) {
-								    $roles[]       = 'default';
-								    $user->roles[] = 'default';
+								    $roles[]     = 'default';
+								    $userRoles[] = 'default';
 							    }
 						    } else {
-							    $user->roles[] = $_GET['role'];
+							    $userRoles[] = $_GET['role'];
 						    }
                         }
 				    }
@@ -43,12 +47,12 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 				    $roles = array_diff( $roles, [ 'not_logged' ] );
 
 				    if ( is_user_logged_in() ) {
-					    if ( ! array_intersect( $roles, (array) $user->roles ) ) {
+					    if ( ! array_intersect( $roles, $userRoles ) ) {
 						    return '';
 					    }
 				    }
 			    } else {
-				    if ( ! array_intersect( $roles, (array) $user->roles ) ) {
+				    if ( ! array_intersect( $roles, $userRoles ) ) {
 					    return '';
 				    }
 			    }

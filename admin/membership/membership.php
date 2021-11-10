@@ -61,18 +61,22 @@ class Brizy_Admin_Membership_Membership {
 
 		array_unshift( $roles,
 			[
-				'name' => esc_html__( 'Default', 'brizy-pro' ),
+				'name' => esc_html__( 'Default', 'brizy' ),
 				'role' => 'default'
 			],
 			[
-				'name' => esc_html__( 'Not Logged', 'brizy-pro' ),
+				'name' => esc_html__( 'Not Logged', 'brizy' ),
 				'role' => 'not_logged'
+			],
+			[
+				'name' => esc_html__( 'Logged In', 'brizy' ),
+				'role' => 'logged'
 			]
 		);
 
 		$rolesList = wp_list_pluck( $roles, 'role' );
 		$selected  = [];
-		$title     = esc_html__( 'View Page By Your Roles', 'brizy' );
+		$title     = esc_html__( 'View Page By Roles', 'brizy' );
 
 		if ( empty( $_GET['role'] ) ) {
 			$user     = wp_get_current_user();
@@ -82,7 +86,7 @@ class Brizy_Admin_Membership_Membership {
 
 			if ( false !== $index ) {
 				$selected[] = $roles[ $index ]['role'];
-				$title = sprintf( esc_html__( 'View Page As %s', 'brizy-pro' ), $roles[ $index ]['name'] );
+				$title = sprintf( esc_html__( 'View Page As %s', 'brizy' ), $roles[ $index ]['name'] );
 			}
 		}
 
