@@ -152,12 +152,12 @@ class Brizy_Editor_Asset_Crop_Cropper {
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function crop( $source, $target, $filter ) {
+	public function crop( $source, $target, $filter, $originalSizes ) {
 
 		try {
 			wp_raise_memory_limit( 'image' );
 
-			return $this->internalCrop( $source, $target, $this->getFilterOptions( $source, $filter ) );
+			return $this->internalCrop( $source, $target, $this->getFilterOptions( $source, $filter, $originalSizes ) );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
 
@@ -172,18 +172,12 @@ class Brizy_Editor_Asset_Crop_Cropper {
 	 * @return array
 	 * @throws Exception
 	 */
-	public function getFilterOptions( $source, $filter ) {
-
-		$imageEditor = wp_get_image_editor( $source );
-
-		if ( is_wp_error( $imageEditor ) ) {
-			throw new Exception( $imageEditor->get_error_message() );
-		}
+	public function getFilterOptions( $source, $filter, $originalSizes ) {
 
 		parse_str( strtolower( $filter ), $output );
 		$configuration                 = array();
 		$configuration['format']       = pathinfo( basename( $source ), PATHINFO_EXTENSION );
-		$configuration['originalSize'] = array_values( $imageEditor->get_size() );
+		$configuration['originalSize'] = $originalSizes;
 
 		$cropType = $this->getCropType( $filter );
 
