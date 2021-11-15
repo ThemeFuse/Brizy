@@ -7,51 +7,61 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 {
     public function __construct() {
 
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('Internal Display Block By User Role', 'display_by_roles', function (Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder) {
+	    $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_roles', function ( Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder ) {
 
-                $attrs = $contentPlaceholder->getAttributes();
+		    $attrs = $contentPlaceholder->getAttributes();
 
-                if (!empty($attrs['roles'])) {
-                    $roles = explode(',', $attrs['roles']);
-                    $user = wp_get_current_user();
+		    if ( ! empty( $attrs['roles'] ) ) {
+			    $roles     = explode( ',', $attrs['roles'] );
+			    $userRoles = (array) wp_get_current_user()->roles;
 
-                    if ( Brizy_Editor_User::is_user_allowed() && isset( $user->roles ) ) {
-
-					    if ( ! empty( $_GET['role'] ) && $_GET['role'] != 'default' ) {
-
-					        $user->roles = [];
-
-					        if ( $_GET['role'] == 'not_logged' ) {
-
-						        if ( in_array( 'not_logged', $roles ) ) {
-							        $roles[] = 'default';
-							        $user->roles[] = 'default';
-						        }
-                            } else {
-						        $user->roles[] = $_GET['role'];
-                            }
-                        } else {
-						    $roles[] = 'default';
-						    $user->roles[] = 'default';
-                        }
-                    }if (in_array('not_logged', $roles)) {
-
-                        $roles = array_diff($roles, ['not_logged']);
-
-                        if (is_user_logged_in() ) {
-						    if ( !array_intersect($roles, (array)$user->roles)) {
-                            return '';}
-                        }
-                    } else {
-                        if (!array_intersect($roles, (array)$user->roles)) {
-                            return '';
-                        }
-                    }
+                if ( in_array( 'logged', $roles ) && is_user_logged_in() ) {
+	                $userRoles[] = 'logged';
                 }
 
-                $replacer = new \BrizyPlaceholders\Replacer($context->getProvider());
-                return $replacer->replacePlaceholders($contentPlaceholder->getContent(), $context);
-            }) );
+			    if ( Brizy_Editor_User::is_user_allowed() ) {
+
+				    if ( ! empty( $_GET['role'] ) ) {
+
+					    if ( $_GET['role'] === 'default' ) {
+						    $roles[]     = 'default';
+						    $userRoles[] = 'default';
+					    } else {
+						    $userRoles = [];
+
+						    if ( $_GET['role'] == 'not_logged' ) {
+
+							    if ( in_array( 'not_logged', $roles ) ) {
+								    $roles[]     = 'default';
+								    $userRoles[] = 'default';
+							    }
+						    } else {
+							    $userRoles[] = $_GET['role'];
+						    }
+                        }
+				    }
+			    }
+
+			    if ( in_array( 'not_logged', $roles ) ) {
+
+				    $roles = array_diff( $roles, [ 'not_logged' ] );
+
+				    if ( is_user_logged_in() ) {
+					    if ( ! array_intersect( $roles, $userRoles ) ) {
+						    return '';
+					    }
+				    }
+			    } else {
+				    if ( ! array_intersect( $roles, $userRoles ) ) {
+					    return '';
+				    }
+			    }
+		    }
+
+		    $replacer = new \BrizyPlaceholders\Replacer( $context->getProvider() );
+
+		    return $replacer->replacePlaceholders( $contentPlaceholder->getContent(), $context );
+	    } ) );
         $this->registerPlaceholder( new Brizy_Content_Placeholders_ImageTitleAttribute('Internal Title Attributes', 'brizy_dc_image_title') );
         $this->registerPlaceholder( new Brizy_Content_Placeholders_ImageAltAttribute('Internal Alt Attributes', 'brizy_dc_image_alt') );
         $this->registerPlaceholder( new Brizy_Content_Placeholders_UniquePageUrl('Uniquer page url', 'brizy_dc_current_page_unique_url') );
