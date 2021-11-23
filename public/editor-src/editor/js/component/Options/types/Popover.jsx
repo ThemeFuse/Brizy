@@ -162,11 +162,11 @@ class PopoverOptionType extends React.Component {
     } = this.props;
     const className = classnames("brz-ed-popover", _className);
     let toolbar = _toolbar;
-    let placement = "top-center";
+    let placement = "top";
 
     if (location === "rightSidebar") {
       toolbar = null;
-      placement = "bottom-center";
+      placement = "bottom";
     }
 
     return (

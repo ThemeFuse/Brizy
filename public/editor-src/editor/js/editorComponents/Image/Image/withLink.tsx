@@ -2,6 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import Link from "visual/component/Link";
 import { imageUrl, imagePopulationUrl } from "visual/utils/image";
+import * as Str from "visual/utils/string/specs";
 import { isSVG, isGIF } from "../utils";
 
 import { ImageProps } from "../types";
@@ -28,14 +29,14 @@ function withLink(
     const linkType = linkLightBox === "on" ? "lightBox" : linkType_;
     const linkHrefs = {
       anchor: linkAnchor,
-      external: props.v[linkExternalType],
+      external: Str.read(props.v[linkExternalType]),
       popup: linkPopup,
       upload: linkUpload,
       lightBox: imagePopulation
         ? imagePopulationUrl(imagePopulation)
         : isSVG(imageExtension) || isGIF(imageExtension)
         ? ""
-        : imageUrl(imageSrc),
+        : Str.read(imageUrl(imageSrc)),
       action: ""
     };
     if (linkHrefs[linkType] !== "") {

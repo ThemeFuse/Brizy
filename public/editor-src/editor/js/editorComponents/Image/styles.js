@@ -60,7 +60,8 @@ export function styleWrapper(v, vs, vd, props) {
       standart: [
         "cssStyleBorder|||editor",
         "cssStyleElementImageWidthWrapper",
-        "cssStyleElementImageHeightWrapper",
+        "cssStyleElementImageHeightWrapper|||editor",
+        "cssStyleElementImagePosition",
         "cssStyleBorderRadius|||editor",
         "cssStyleBoxShadow|||editor"
       ],
@@ -104,7 +105,13 @@ export function styleImage(v, vs, vd, props) {
 export function stylePicture(v, vs, vd, props) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleElementImagePictureSize"]
+      standart: ["cssStyleElementImagePictureSizePreview"]
+    },
+    ".brz &&:hover > .brz-img": {
+      standart: [
+        "cssStyleElementImagePosition",
+        "cssStyleElementImageSizePreview"
+      ]
     }
   };
 

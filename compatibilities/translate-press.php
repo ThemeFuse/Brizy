@@ -16,6 +16,7 @@ class Brizy_Compatibilities_TranslatePress {
 		add_action( 'home_url', [ $this, 'home_url' ] );
 		add_action( 'brizy_create_editor_config_before', [ $this, 'rmLangPrefixFromHomeUrl' ] );
 		add_action( 'brizy_create_editor_config_after', [ $this, 'rmFilterTrpHomeUrl' ] );
+		add_action( 'brizy_before_send_asset', [ $this, 'clearBufferBeforeSendImg' ] );
 	}
 
 	/*
@@ -123,5 +124,9 @@ class Brizy_Compatibilities_TranslatePress {
 
 	public function rmFilterTrpHomeUrl() {
 		remove_filter( 'trp_home_url', [ $this, 'trp_home_url' ] );
+	}
+
+	public function clearBufferBeforeSendImg() {
+		ob_end_clean();
 	}
 }

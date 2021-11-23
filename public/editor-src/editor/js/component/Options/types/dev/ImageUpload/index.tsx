@@ -1,6 +1,8 @@
 import React, { useCallback, useMemo } from "react";
 import classNames from "classnames";
 import { ImageSetter } from "visual/component/Controls/ImageSetter";
+import { t } from "visual/utils/i18n";
+import Config from "visual/global/Config";
 import { Image } from "./model";
 import { Component } from "./Types";
 import {
@@ -8,9 +10,9 @@ import {
   getModel,
   getElementModel,
   patchPosition,
-  patchImageData
-} from "visual/component/Options/types/dev/ImageUpload/utils";
-import { t } from "visual/utils/i18n";
+  patchImageData,
+  configSizeToSize
+} from "./utils";
 
 export const ImageUpload: Component = ({ onChange, value, config, label }) => {
   const className = classNames(
@@ -18,20 +20,16 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
     "brz-ed-option__inline"
   );
 
-  const disableSizes = config?.disableSizes ?? true;
+  const disableSizes = config?.disableSizes ?? false;
   const sizes = useMemo(
     () => [
       {
         value: "custom",
         label: t("Custom")
       },
-      {
-        value: "original",
-        label: t("Original")
-      },
-      ...(config?.sizes ?? [])
+      ...(Config.getAll().imageSizes ?? []).map(configSizeToSize)
     ],
-    [config?.sizes]
+    []
   );
 
   const onImageChange = useCallback(
@@ -65,7 +63,11 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
       <ImageSetter<string>
         className={className}
         onlyPointer={!(config?.edit ?? true)}
-        showPointer={value.extension !== "svg" && (config?.pointer ?? true)}
+        showPointer={
+          value.sizeType === "custom" &&
+          value.extension !== "svg" &&
+          (config?.pointer ?? true)
+        }
         extension={value.extension}
         x={value.x}
         y={value.y}
@@ -74,7 +76,7 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
         src={value.src}
         onChange={onImageChange}
         size={value.sizeType}
-        sizes={!disableSizes ? sizes : undefined}
+        sizes={!disableSizes && value.extension !== "svg" ? sizes : undefined}
         onSizeChange={onTypeChange}
       />
     </>

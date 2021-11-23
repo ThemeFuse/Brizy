@@ -201,6 +201,7 @@ export function getItems({ v, device, context }) {
                   type: "number-dev",
                   label: t("End"),
                   devices: "desktop",
+                  disabled: v.type === "vimeo",
                   helper: {
                     content: t("Specify an end time (in seconds)")
                   },

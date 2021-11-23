@@ -9,12 +9,13 @@ import { css } from "visual/utils/cssStyle";
 import { styleWrapper } from "../styles";
 
 import useResizerPoints from "./useResizerPoints";
-import { ImageProps, V, Patch, Styles } from "../types";
+import { ImageProps, V, Patch, Styles, Meta } from "../types";
+import { getSizeType } from "visual/editorComponents/Image/utils";
+import { DESKTOP } from "visual/utils/responsiveMode";
 
 const Image: React.FC<ImageProps> = props => {
   const { v, vs, vd, _id, componentId, wrapperSizes, meta } = props;
-  const isAbsoluteOrFixed =
-    v.elementPosition === "absolute" || v.elementPosition === "fixed";
+
   const { points, restrictions } = useResizerPoints(props);
 
   const classNameWrapper = classnames(
@@ -30,53 +31,58 @@ const Image: React.FC<ImageProps> = props => {
     )
   );
 
-  const value = {
-    ...v,
-    width:
-      v.widthSuffix === "px"
-        ? clamp(v.width || meta.desktopW, 0, meta.desktopW)
-        : v.width,
-    tabletWidth:
-      tabletSyncOnChange(v, "widthSuffix") === "px"
-        ? clamp(v.tabletWidth || v.width, 0, meta.tabletW)
-        : v.tabletWidth,
-    mobileWidth: mobileSyncOnChange(v, "widthSuffix")
-      ? clamp(v.mobileWidth || v.width, 0, meta.mobileW)
-      : v.mobileWidth
-  };
-
   return (
     <BoxResizer
       keepAspectRatio
       restrictions={restrictions}
       points={points}
       meta={meta}
-      value={resizerTransformValue(value)}
+      value={resizerTransformValue(v, meta)}
       onChange={(patch: Patch): void =>
-        props.onChange(resizerTransformPatch(patch))
+        props.onChange(resizerTransformPatch(patch, v))
       }
     >
       <div className={classNameWrapper}>{props.children}</div>
     </BoxResizer>
   );
 
-  // It's needed only for story. When we change height
-  function resizerTransformValue(value: V): V {
-    let newValue = {};
-    if (isAbsoluteOrFixed) {
-      const ratio = v.imageWidth / v.imageHeight;
+  function resizerTransformValue(v: V, meta: Meta): Partial<V> {
+    const {
+      width,
+      height,
+      tabletWidth,
+      mobileWidth,
+      imageWidth,
+      imageHeight,
+      elementPosition,
+      widthSuffix
+    } = v;
+    const { desktopW, tabletW, mobileW } = meta;
+    const isAbsoluteOrFixed =
+      elementPosition === "absolute" || elementPosition === "fixed";
+    const sizeType = getSizeType(v, DESKTOP);
+    const { size, ..._v } = v;
 
-      newValue = {
-        height: value.height / ratio
-      };
-    }
     return {
-      ...value,
-      ...newValue
+      ..._v,
+      width:
+        widthSuffix === "px" ? clamp(width || desktopW, 0, desktopW) : width,
+      tabletWidth:
+        tabletSyncOnChange(v, "widthSuffix") === "px"
+          ? clamp(tabletWidth || width, 0, tabletW)
+          : tabletWidth,
+      mobileWidth: mobileSyncOnChange(v, "widthSuffix")
+        ? clamp(mobileWidth || width, 0, mobileW)
+        : mobileWidth,
+      height: isAbsoluteOrFixed ? height / (imageWidth / imageHeight) : height,
+      ...(sizeType !== "custom" && { size })
     };
   }
 
-  function resizerTransformPatch(patch: Patch): Patch {
+  function resizerTransformPatch(patch: Patch, v: V): Patch {
+    const isAbsoluteOrFixed =
+      v.elementPosition === "absolute" || v.elementPosition === "fixed";
+
     let newPatch = {};
     if (isAbsoluteOrFixed) {
       const ratio = v.imageWidth / v.imageHeight;

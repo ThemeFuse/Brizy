@@ -1,6 +1,6 @@
 import preloadImage from "./preloadImage";
 import uploadImage from "./uploadImage";
-import imageUrl, { svgUrl } from "./imageUrl";
+import imageUrl, { svgUrl, imageSpecificSize } from "./imageUrl";
 import imageWrapperSize from "./imageWrapperSize";
 import imagePopulationUrl from "./imagePopulationUrl";
 import { getImageFormat, isSVG } from "./imageFormat";
@@ -13,5 +13,6 @@ export {
   imagePopulationUrl,
   imageWrapperSize,
   getImageFormat,
-  isSVG
+  isSVG,
+  imageSpecificSize
 };

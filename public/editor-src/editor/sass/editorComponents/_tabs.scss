@@ -117,21 +117,22 @@
     height: 100%;
   }
   &__content--vertical.brz-tabs__content--style-1.brz-tabs__content--left
-    .brz-tabs__items--active,
+    .brz-tabs__items.brz-tabs__items--active,
   &__content--vertical.brz-tabs__content--style-1.brz-tabs__content--left
-    .brz-tabs__items--active:hover {
+    .brz-tabs__items.brz-tabs__items--active:hover {
     border-left-style: none;
   }
   &__content--vertical.brz-tabs__content--right.brz-tabs__content--style-1
-    .brz-tabs__items--active,
+    .brz-tabs__items.brz-tabs__items--active,
   &__content--vertical.brz-tabs__content--right.brz-tabs__content--style-1
-    .brz-tabs__items--active:hover {
+    .brz-tabs__items.brz-tabs__items--active:hover {
     border-right-style: none;
   }
-  &__content--horizontal.brz-tabs__content--style-1 .brz-tabs__items--active,
   &__content--horizontal.brz-tabs__content--style-1
-    .brz-tabs__items--active:hover {
-    border-top-style: none !important;
+    .brz-tabs__items.brz-tabs__items--active,
+  &__content--horizontal.brz-tabs__content--style-1
+    .brz-tabs__items.brz-tabs__items--active:hover {
+    border-top-style: none;
   }
 }
 
@@ -178,21 +179,21 @@
       border-top-style: solid;
     }
     &__content.brz-tabs__content--vertical.brz-tabs__content--left
-      .brz-tabs__items--active,
+      .brz-tabs__items.brz-tabs__items--active,
     &__content.brz-tabs__content--vertical.brz-tabs__content--left
-      .brz-tabs__items--active:hover {
+      .brz-tabs__items.brz-tabs__items--active:hover {
       border-left-style: solid;
     }
     &__content.brz-tabs__content--vertical.brz-tabs__content--right
-      .brz-tabs__items--active,
+      .brz-tabs__items.brz-tabs__items--active,
     &__content.brz-tabs__content--vertical.brz-tabs__content--right
-      .brz-tabs__items--active:hover {
+      .brz-tabs__items.brz-tabs__items--active:hover {
       border-right-style: solid;
     }
     &__content.brz-tabs__content--horizontal.brz-tabs__content--style-1
-      .brz-tabs__items--active,
+      .brz-tabs__items.brz-tabs__items--active,
     &__content.brz-tabs__content--horizontal.brz-tabs__content--style-1
-      .brz-tabs__items--active:hover {
+      .brz-tabs__items.brz-tabs__items--active:hover {
       border-top-style: solid;
     }
     &__nav--horizontal.brz-tabs__nav.brz-tabs__nav--style-2 {

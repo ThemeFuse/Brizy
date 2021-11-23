@@ -39,7 +39,7 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 			$mediaCache  = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get() );
 			$croppedPath = $mediaCache->crop_media( $vars[ $endpointKey ], $size );
 
-			//do_action( 'brizy_before_send_asset', null );
+			do_action( 'brizy_before_send_asset' );
 
 			$this->send_file( $croppedPath );
 

@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.8.1
 Requires PHP: 5.6.20
-Stable tag: 2.3.18
+Stable tag: 2.3.20
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,27 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.20 - 2021-11-10 =
+* Improved: Added system check at the plugin startup
+* Fixed: Black line on resized images
+* Fixed:  Avoid using the WP image functions for getting image sizes
+
+= 2.3.19 - 2021-11-09 =
+* New: Select original image in the Image Element
+* New: Select original image for the dynamic image element 
+* Improved: Updated the Google fonts library
+* Fixed: Google fonts search option was not working correctly
+* Fixed: Image is cut in full height option
+* Fixed: The fonts no longer intersect for element tabs 
+* Fixed: End option on Vimeo videos
+* Fixed: Border Shadow options display
+* Fixed: Border top on tabs in responsive
+* Fixed: Media file upload position 
+* Fixed: Counter goes only to 100 in preview
+* Fixed: Text sometime data-href is empty (Internal 500 error on the front-end)
+* Fixed: Select drop-down options in the contact form are not showing the selected font
+* Fixed: Allowing redirects on loading our iframe, so you can use theme default templates 
 
 = 2.3.18 - 2021-10-18 =
 * New: 3 design layout packs

@@ -57,36 +57,42 @@ class Brizy_Admin_Membership_Membership {
 			return;
 		}
 
-		global $wp;
-
 		$roles = self::roleList();
 
 		array_unshift( $roles,
 			[
-				'name' => esc_html__( 'Default', 'brizy-pro' ),
+				'name' => esc_html__( 'Default', 'brizy' ),
 				'role' => 'default'
 			],
 			[
-				'name' => esc_html__( 'Not Logged', 'brizy-pro' ),
+				'name' => esc_html__( 'Not Logged', 'brizy' ),
 				'role' => 'not_logged'
+			],
+			[
+				'name' => esc_html__( 'Logged In', 'brizy' ),
+				'role' => 'logged'
 			]
 		);
 
-		$getRole  = 'default';
-		$selected = $roles[0]['name'];
+		$rolesList = wp_list_pluck( $roles, 'role' );
+		$selected  = [];
+		$title     = esc_html__( 'View Page By Roles', 'brizy' );
 
-		if ( ! empty( $_GET['role'] ) ) {
-			$index = array_search( $_GET['role'], wp_list_pluck( $roles, 'role' ) );
+		if ( empty( $_GET['role'] ) ) {
+			$user     = wp_get_current_user();
+			$selected = array_intersect( $user->roles, $rolesList );
+		} else {
+			$index = array_search( $_GET['role'], $rolesList );
 
 			if ( false !== $index ) {
-				$selected = $roles[ $index ]['name'];
-				$getRole  = $_GET['role'];
+				$selected[] = $roles[ $index ]['role'];
+				$title = sprintf( esc_html__( 'View Page As %s', 'brizy' ), $roles[ $index ]['name'] );
 			}
 		}
 
 		$wp_admin_bar->add_menu( [
 			'id'    => $this->get_menu_id(),
-			'title' => sprintf( esc_html__( 'View Page As %s', 'brizy-pro' ), $selected )
+			'title' => $title
 		] );
 
 		foreach ( $roles as $role ) {
@@ -94,10 +100,10 @@ class Brizy_Admin_Membership_Membership {
 				'parent' => $this->get_menu_id(),
 				'id'     => Brizy_Editor::prefix( '-membership-view-as-' . $role['role'] ),
 				'title'  => $role['name'],
-				'href' => add_query_arg( 'role', $role['role'], add_query_arg( [ $_GET ], wp_guess_url() ) ),
+				'href' => add_query_arg( 'role', $role['role'], home_url( $_SERVER['REQUEST_URI'] ) ),
 			];
 
-			if ( $role['role'] == $getRole ) {
+			if ( in_array( $role['role'], $selected ) ) {
 				$args['meta'] = [ 'class' => 'active' ];
 			}
 

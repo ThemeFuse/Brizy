@@ -77,8 +77,12 @@ class Brizy_Editor {
 	 */
 	private function __construct() {
 
+		if ( is_admin() ) {
+			Brizy_SystemChecks::run();
+		}
+
 		// make sure the project is created
-		// do not remove this.. we force the project creation here.
+		// do not remove this! we force the project creation here.
 		$project = Brizy_Editor_Project::get();
 
 		Brizy_Admin_Flash::instance()->initialize(); // initialize flash
@@ -142,7 +146,6 @@ class Brizy_Editor {
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Fonts_Main::_init();
 		Brizy_Admin_Blocks_Main::_init();
-		Brizy_Admin_Membership_Membership::_init();
         Brizy_Admin_Stories_Main::_init();
 
 		if ( Brizy_Editor_User::is_user_allowed() ) {

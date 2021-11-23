@@ -16,6 +16,10 @@ export interface ImageDCPatch {
   imagePopulation: string;
 }
 
+export interface SizeTypePatch {
+  sizeType: string;
+}
+
 // is it correct fn name?
 export const fromImageElementModel = readWithParser<ElementModel, ImagePatch>({
   imageSrc: mPipe(prop("imageSrc"), Str.read),
@@ -29,4 +33,8 @@ export const fromImageDCElementModel = readWithParser<
   ImageDCPatch
 >({
   imagePopulation: mPipe(prop("imagePopulation"), Str.read)
+});
+
+export const patchImageSizeType = readWithParser<ElementModel, SizeTypePatch>({
+  sizeType: mPipe(prop("sizeType"), Str.read)
 });

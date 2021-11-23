@@ -52,7 +52,7 @@ export const keyDCInfo = (v: V, key: string): ECKeyDCInfo => {
 export function placeholderObjFromStr(
   placeholder: string
 ): MValue<DCPlaceholderObj> {
-  const r1 = /^{{\s*(\w+)(.*?)\s*}}$/;
+  const r1 = /^{{\s*([\w-]+)(.*?)\s*}}$/;
   const nameAndAttr = r1.exec(placeholder);
 
   if (!nameAndAttr) {

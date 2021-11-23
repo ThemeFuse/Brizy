@@ -1,6 +1,7 @@
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { TemplateType } from "visual/global/Config/types/TemplateType";
+import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 
 export interface ConfigCommon {
   branding: {
@@ -13,4 +14,5 @@ export interface ConfigCommon {
   postTypesTaxs: PostTypesTax[]; // is this property common or just wp?
 
   template_type?: TemplateType;
+  imageSizes: ImageDataSize[];
 }

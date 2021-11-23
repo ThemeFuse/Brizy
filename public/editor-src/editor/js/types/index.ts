@@ -114,7 +114,6 @@ export type PageCloud = PageCommon & {
   fields:
     | {
         id: string;
-        values: unknown;
         type: {
           collectionType: {
             id: string;

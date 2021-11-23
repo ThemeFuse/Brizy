@@ -14,7 +14,7 @@ class InputOptionType extends React.Component {
     placeholder: "",
     helper: false,
     helperContent: "",
-    helperPlacement: "top-center",
+    helperPlacement: "top",
     display: "inline",
     value: {
       value: "",

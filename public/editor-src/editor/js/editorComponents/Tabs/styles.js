@@ -2,7 +2,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function styleTabs(v, vs, vd) {
   const styles = {
-    ".brz && .brz-tabs__nav--item, .brz && .brz-tabs__nav--button": {
+    ".brz && > .brz-tabs__nav .brz-tabs__nav--item, .brz && > .brz-tabs__content > .brz-tabs__items > .brz-tabs__nav--mobile .brz-tabs__nav--button": {
       standart: [
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
@@ -59,7 +59,7 @@ export function styleTabs(v, vs, vd) {
     ".brz && > .brz-tabs__nav--style-3 .brz-tabs__nav--active .brz-tabs__nav--button": {
       standart: ["cssStyleElementTabsActiveColor"]
     },
-    ".brz && .brz-tabs__nav--mobile.brz-tabs__nav--mobile--active .brz-tabs__nav--button": {
+    ".brz && > .brz-tabs__content > .brz-tabs__items > .brz-tabs__nav--mobile.brz-tabs__nav--mobile--active .brz-tabs__nav--button": {
       standart: [
         "cssStyleElementTabsBorderMobileWidth",
         "cssStyleElementTabsActiveColor",

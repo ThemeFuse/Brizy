@@ -17,7 +17,7 @@ export default class TooltipContent extends React.Component {
   static defaultProps = {
     className: "",
     isOpen: false,
-    placement: "top-center",
+    placement: "top",
     placementStyle: {},
     arrow: true,
     arrowPlacement: "top-center",
@@ -229,10 +229,16 @@ export default class TooltipContent extends React.Component {
         referenceElement={node}
         placement={placement}
         eventsEnabled={false}
-        modifiers={{
-          offset: { offset: `0, ${offset}px` },
-          computeStyle: { gpuAcceleration: false }
-        }}
+        modifiers={[
+          {
+            name: "offset",
+            options: { offset: [0, offset] }
+          },
+          {
+            name: "computeStyles",
+            options: { gpuAcceleration: false }
+          }
+        ]}
       >
         {({ ref, style, arrowProps, placement }) => (
           <div ref={ref} className={className} style={style}>

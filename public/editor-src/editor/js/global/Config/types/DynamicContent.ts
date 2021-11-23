@@ -11,6 +11,7 @@ export interface ConfigDCItem {
   placeholder: string;
   alias?: string;
   display?: "block" | "inline";
+  optgroup?: ConfigDCItem[];
 }
 
 export interface ConfigDCReference {
