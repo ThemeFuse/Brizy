@@ -111,8 +111,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
             $items = array_filter($items);
 
             if (count($items) == 0) {
-                $this->error(404, __('There are no blocks to be archived', 'brizy' ) );
-			}
+                $this->error(404, __('There are no blocks to be archived', 'brizy'));
+            }
 
             $fontManager = new Brizy_Admin_Fonts_Manager();
             $zip         = new Brizy_Editor_Zip_Archiver(
@@ -236,16 +236,14 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
             }
 
             $bockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
-
-	        /**
+            /**
 	         * @var Brizy_Editor_Post $block;
-	         */
-            $block = $bockManager->createEntity($this->param('uid'), $status);
+	         */$block       = $bockManager->createEntity($this->param('uid'), $status);
             $block->setMeta(stripslashes($this->param('meta')));
             $block->set_editor_data($editorData);
             $block->set_needs_compile(true);
 
-	        if($this->param('title'))
+            if($this->param('title'))
 	        {
 		        $block->setTitle(stripslashes($this->param('title')));
 	        }
@@ -253,9 +251,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 	        if($this->param('tags'))
 	        {
 		        $block->setTags(stripslashes($this->param('tags')));
-	        }
-
-            if ($position) {
+	        }if ($position) {
                 $block->setPosition(
                     Brizy_Editor_BlockPosition::createFromSerializedData(get_object_vars(json_decode($position)))
                 );
@@ -380,7 +376,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
             }
 
             $bockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
-            $blocks = $bockManager->getEntity((array)$this->param('uid'));
+                $blocks       = $bockManager->getEntity((array)$this->param('uid'));
 
             foreach ((array)$this->param('uid') as $i => $uid) {
 
@@ -442,10 +438,12 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
                     $block->save();
 
                     do_action('brizy_global_block_updated', $block);
+
                 }
-            }
+}
 
             do_action('brizy_global_data_updated');
+
 
             $this->success([]);
 
@@ -479,18 +477,19 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
         $this->verifyNonce(self::nonce);
 
         try {
-            $fields = $this->param('fields') ? $this->param('fields') : [];
+            $fields      = $this->param('fields') ? $this->param('fields') : [];
             $bockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_SAVED);
-            $blocks = $bockManager->getEntities([
-                'paged' => (int)($this->param('page') ?: 1),
+            $blocks      = $bockManager->getEntities([
+            'paged' => (int)($this->param('page') ?: 1),
                 'posts_per_page' => (int)($this->param('count') ?: -1),
                 'order' => $this->param('order') ?: 'ASC',
                 'orderby' => $this->param('orderby') ?: 'ID'
-            ]);
-            $blocks = apply_filters('brizy_get_saved_blocks',
+            ]);$blocks      = apply_filters(
+                'brizy_get_saved_blocks',
                 $bockManager->createResponseForEntities($blocks, $fields),
                 $fields,
-                $bockManager);
+                $bockManager
+            );
             $this->success($blocks);
         } catch (Exception $exception) {
             $this->error(400, $exception->getMessage());
@@ -546,10 +545,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 
         try {
             $bockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_SAVED);
-            $block = $bockManager->createEntity($this->param('uid'));
+            $block       = $bockManager->createEntity($this->param('uid'));
             $block->setMedia(stripslashes($this->param('media')));
             $block->setMeta(stripslashes($this->param('meta')));
-
             if($this->param('title'))
             {
             	$block->setTitle(stripslashes($this->param('title')));
@@ -557,9 +555,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 	        if($this->param('tags'))
 	        {
 	        	$block->setTags(stripslashes($this->param('tags')));
-	        }
-
-            $block->set_editor_data(stripslashes($this->param('data')));
+	        }$block->set_editor_data(stripslashes($this->param('data')));
             $block->set_needs_compile(true);
             //$block->setCloudUpdateRequired( true );
             $block->save();
@@ -619,7 +615,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 	        }
 
 
-	        if ((int)$this->param('is_autosave')) {
+            if ((int)$this->param('is_autosave')) {
                 $block->save(1);
             } else {
                 $block->save();
