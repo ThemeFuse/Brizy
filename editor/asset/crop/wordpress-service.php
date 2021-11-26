@@ -51,7 +51,7 @@ class  Brizy_Editor_Asset_Crop_WordpressService implements Brizy_Editor_Asset_Cr
 	 */
 	public function crop( $offsetX, $offsetY, $width, $height ) {
 		try {
-			$this->imageEditor->crop( floor($offsetX), floor($offsetY), floor($width), floor($height) );
+			$this->imageEditor->crop( $offsetX, $offsetY, $width, $height );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
 
@@ -70,7 +70,7 @@ class  Brizy_Editor_Asset_Crop_WordpressService implements Brizy_Editor_Asset_Cr
 	public function resize( $width, $height ) {
 
 		try {
-			$this->imageEditor->resize( floor($width), floor($height) );
+			$this->imageEditor->resize( $width, $height );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
 
