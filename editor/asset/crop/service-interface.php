@@ -28,6 +28,10 @@ interface Brizy_Editor_Asset_Crop_ServiceInterface {
 	 */
 	public function resize( $width, $height );
 
+	/**
+	 * @return mixed
+	 */
+	public function getSize();
 
 	/**
 	 * @return bool
