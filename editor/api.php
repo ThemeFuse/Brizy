@@ -85,7 +85,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 		$this->addAjaxAction( self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
 		$this->addAjaxAction( self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
 		$this->addAjaxAction( self::AJAX_PLACEHOLDER_CONTENT, array( $this, 'placeholder_content' ) );
-		$this->addAjaxAction( self::AJAX_PLACEHOLDERS_CONTENT, array( $this, 'placeholder_content' ) );
+		$this->addAjaxAction( self::AJAX_PLACEHOLDERS_CONTENT, array( $this, 'placeholders_content' ) );
 		$this->addAjaxAction( self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
 		$this->addAjaxAction( self::AJAX_SEARCH_POST, array( $this, 'search_post' ) );
 		$this->addAjaxAction( self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
