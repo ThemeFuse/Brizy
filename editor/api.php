@@ -83,6 +83,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$this->addAjaxAction( self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
 		$this->addAjaxAction( self::AJAX_PLACEHOLDER_CONTENT, array( $this, 'placeholder_content' ) );
 		$this->addAjaxAction( self::AJAX_PLACEHOLDERS_CONTENT, array( $this, 'placeholders_content' ) );
+		$this->addAjaxAction( self::AJAX_PLACEHOLDERS_CONTENT, array( $this, 'placeholder_content' ) );
 		$this->addAjaxAction( self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
 		$this->addAjaxAction( self::AJAX_SEARCH_POST, array( $this, 'search_post' ) );
 		$this->addAjaxAction( self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
@@ -542,16 +543,12 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				$contents[]  = apply_filters( 'brizy_content', $placeholder, Brizy_Editor_Project::get(), $post );
 			}
 
-			$this->success(
-				array(
-					'placeholders' => $contents,
-				)
-			);
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			$this->error( $exception->getCode(), $exception->getMessage() );
-		}
-	}
+            $this->success(array('placeholders' => $contents));
+        } catch (Exception $exception) {
+            Brizy_Logger::instance()->exception($exception);
+            $this->error($exception->getCode(), $exception->getMessage());
+        }
+    }
 
 	public function placeholders_content() {
 		global $post, $wp_query;
