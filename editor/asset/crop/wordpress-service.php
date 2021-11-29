@@ -61,6 +61,15 @@ class  Brizy_Editor_Asset_Crop_WordpressService implements Brizy_Editor_Asset_Cr
 		return true;
 	}
 
+
+	public function getSize() {
+		try {
+			return $this->imageEditor->get_size();
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
+		}
+	}
+
 	/**
 	 * @param int $width
 	 * @param int $height
