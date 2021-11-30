@@ -9,6 +9,7 @@ import {
 } from "visual/utils/models";
 import { pageSlugSelector } from "visual/redux/selectors";
 import { BottomPanelItem } from "./Item";
+import { isCloud, isCustomer } from "visual/global/Config/types/configs/Cloud";
 
 export function PreviewButton(): ReactElement | null {
   const pageSlug = useSelector(pageSlugSelector);
@@ -16,8 +17,8 @@ export function PreviewButton(): ReactElement | null {
   if (IS_EXTERNAL_POPUP) {
     return null;
   }
-
-  const previewUrl = Config.getAll().urls.pagePreview;
+  const config = Config.getAll();
+  const previewUrl = config.urls.pagePreview;
 
   let suffix = "";
   if (process.env.NODE_ENV === "development") {
@@ -25,11 +26,17 @@ export function PreviewButton(): ReactElement | null {
       ? "?pro=true"
       : "";
   }
+  let href = "";
 
-  const url =
-    IS_INTERNAL_POPUP || IS_EXTERNAL_STORY
-      ? previewUrl
-      : previewUrl + "/" + pageSlug + suffix;
+  if (
+    IS_INTERNAL_POPUP ||
+    IS_EXTERNAL_STORY ||
+    (isCloud(config) && isCustomer(config))
+  ) {
+    href = previewUrl;
+  } else {
+    href = `${previewUrl}/${pageSlug}${suffix}`;
+  }
 
   return (
     <BottomPanelItem
@@ -38,7 +45,12 @@ export function PreviewButton(): ReactElement | null {
       className="brz-ed-fixed-bottom-panel__preview"
       title="Preview"
     >
-      <a href={url} className="brz-a" target="_blank" rel="noopener noreferrer">
+      <a
+        href={href}
+        className="brz-a"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <EditorIcon icon="nc-preview" />
       </a>
     </BottomPanelItem>

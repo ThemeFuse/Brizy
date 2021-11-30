@@ -256,7 +256,7 @@ class Brizy_Admin_FormEntries {
 			$val = array_fill( 0, $range, '' );
 
 			foreach ( $lines as $line ) {
-				$val[ $cols[ $line['label'] ] ] = $line['value'];
+				$val[ html_entity_decode( $cols[ $line['label'] ], ENT_COMPAT, 'UTF-8' ) ] = html_entity_decode( $line['value'], ENT_COMPAT, 'UTF-8' );
 			}
 
 			fputcsv( $fp, $val );

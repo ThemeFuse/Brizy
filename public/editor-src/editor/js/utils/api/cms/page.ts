@@ -1,15 +1,20 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { PageCloud } from "visual/types";
+import { PageCollection, PageCustomer } from "visual/types";
 import { isT } from "visual/utils/value";
 import { t } from "visual/utils/i18n";
 import { paginationData } from "visual/utils/api/const";
-import { itemToPage, pageStatusToItemStatus } from "./convertors";
+import {
+  itemCustomerToPage,
+  itemToPage,
+  pageStatusToItemStatus
+} from "./convertors";
 import { getConnection } from "./graphql/apollo";
 import * as Gql from "./graphql/gql";
 import { errOnEmpty, onCatch } from "./utils";
 import { UpdateCollectionItem_updateCollectionItem_collectionItem } from "./graphql/types/UpdateCollectionItem";
+import { UpdateCustomer_updateCustomer_customer } from "visual/utils/api/cms/graphql/types/UpdateCustomer";
 
-export function getPages(collectionTypeId: string): Promise<PageCloud[]> {
+export function getPages(collectionTypeId: string): Promise<PageCollection[]> {
   const page = paginationData.page;
   const itemsPerPage = paginationData.count;
 
@@ -24,7 +29,7 @@ export function getPages(collectionTypeId: string): Promise<PageCloud[]> {
     .catch(onCatch(t("Failed to fetch api data")));
 }
 
-export function getPage(id: string): Promise<PageCloud> {
+export function getPage(id: string): Promise<PageCollection> {
   return Gql.getCollectionItem(getConnection(), { id })
     .then(r => r?.data?.collectionItem)
     .then(errOnEmpty(t("Invalid api data")))
@@ -33,7 +38,7 @@ export function getPage(id: string): Promise<PageCloud> {
 }
 
 export function updatePage(
-  page: PageCloud,
+  page: PageCollection,
   meta: { is_autosave?: 1 | 0 } = {}
 ): Promise<UpdateCollectionItem_updateCollectionItem_collectionItem | void> {
   /*
@@ -59,6 +64,42 @@ export function updatePage(
     .then(errOnEmpty(t("Invalid api data")))
     .catch(onCatch(t("Failed to update page")));
 }
+
+//#region Customer
+export function getCustomerPage(id: string): Promise<PageCustomer> {
+  return Gql.getCustomer(getConnection(), { id })
+    .then(r => r?.data?.customer)
+    .then(errOnEmpty(t("Invalid api data")))
+    .then(itemCustomerToPage)
+    .catch(onCatch(t("Failed to fetch api data")));
+}
+
+export function updateCustomerPage(
+  page: PageCustomer,
+  meta: { is_autosave?: 1 | 0 } = {}
+): Promise<UpdateCustomer_updateCustomer_customer | void> {
+  /*
+   * WARNING: temporary solution to let only request with publish intent pass.
+   * This behavior should be done at a higher level, but is left here
+   * until we have a better architecture around the requests and the draft / revision system
+   */
+  if (meta.is_autosave !== 0) {
+    return Promise.resolve();
+  }
+
+  const data = JSON.stringify(page.data);
+
+  return Gql.updateCustomer(getConnection(), {
+    input: {
+      id: page.id,
+      pageData: data
+    }
+  })
+    .then(r => r.data?.updateCustomer?.customer)
+    .then(errOnEmpty(t("Invalid api data")))
+    .catch(onCatch(t("Failed to update page")));
+}
+//#endregion
 
 // export function createPage(
 //   data: Pick<PageCloudCMS, "title" | "slug" | "data">,

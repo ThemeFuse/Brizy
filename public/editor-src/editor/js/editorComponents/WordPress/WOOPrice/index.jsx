@@ -24,7 +24,7 @@ export default class WOOPrice extends EditorComponent {
   };
 
   handleDCLoad = html => {
-    this.setState({ hasDiscount: html.includes("<del>") });
+    this.setState({ hasDiscount: html.includes("</del>") });
     this.setState({
       hasTwoPrices:
         html.indexOf("woocommerce-Price-amount") !==

@@ -60,4 +60,8 @@ class  Brizy_Editor_Asset_Crop_ExternalService implements Brizy_Editor_Asset_Cro
 	public function saveTargetImage() {
 		throw new Exception( 'Not implemented' );
 	}
+
+	public function getSize() {
+		throw new Exception( 'Not implemented' );
+	}
 }

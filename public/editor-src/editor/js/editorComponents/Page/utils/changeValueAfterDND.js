@@ -132,7 +132,6 @@ function detachGlobalBlocks(value) {
 export default function changeValueAfterDND(oldValue, { from, to }) {
   let value = attachGlobalBlocks(oldValue, from);
   value = attachGlobalBlocks(value, to);
-
   value = attachMenu(value);
 
   value = getValue(value, { from, to });

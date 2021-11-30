@@ -327,9 +327,11 @@ class Login extends EditorComponent {
   }
 
   renderAuthorizedForm(v) {
-    const redirectLogoutHref = `{{editor_logout_url}}&amp;redirect_to=${encodeURI(
-      v.logoutRedirect
-    )}`;
+    const { logoutRedirectType, logoutRedirect } = v;
+
+    const redirectLogoutHref = `{{editor_logout_url redirect="${
+      logoutRedirectType === "samePage" ? "samePage" : logoutRedirect
+    }"}}`;
     const style = IS_EDITOR ? { pointerEvents: "none" } : {};
 
     return (

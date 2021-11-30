@@ -143,7 +143,9 @@ class Icon extends EditorComponent {
       linkExternalType,
       linkPopup,
       linkUpload,
-      actionClosePopup
+      actionClosePopup,
+      customID,
+      customClassName
     } = v;
 
     const hrefs = {
@@ -191,7 +193,7 @@ class Icon extends EditorComponent {
                 className: IS_STORY
                   ? styleWrapperClassName(v)
                   : "brz-icon__container",
-                attributes: { style }
+                attributes: { style, id: customID, className: customClassName }
               })}
             >
               <BoxResizer

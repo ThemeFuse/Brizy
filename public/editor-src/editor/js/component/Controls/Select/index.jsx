@@ -112,28 +112,27 @@ class Select extends React.Component {
   };
 
   handleLabelClick = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
+    this.setState({ isOpen: !this.state.isOpen }, () => {
+      if (this.state.isOpen) {
+        this.reposition();
+        this.dropdown.style.setProperty("opacity", 1);
+      }
     });
   };
 
   reposition() {
-    const { bottom, width, x } = this.dropdown.getBoundingClientRect();
-    let { position } = this.state;
-    const [positionX, positionY] = position.split("-");
+    if (this.dropdown) {
+      this.isRepositioning = true;
+      this.setState({ position: "bottom-left" }, () => {
+        const { bottom, right } = this.dropdown.getBoundingClientRect();
+        const positionY = bottom >= window.innerHeight ? "top" : "bottom";
+        const positionX = right >= window.innerWidth ? "right" : "left";
 
-    if (bottom >= window.innerHeight) {
-      position = `top-${positionY}`;
+        this.setState({ position: `${positionY}-${positionX}` }, () => {
+          this.isRepositioning = false;
+        });
+      });
     }
-    if (width + x >= window.innerWidth) {
-      position = `${positionX}-right`;
-    }
-
-    this.isRepositioning = true;
-
-    this.setState({ position }, () => {
-      this.isRepositioning = false;
-    });
   }
 
   renderLabel() {
@@ -223,10 +222,11 @@ class Select extends React.Component {
   renderDropDown() {
     const { inPortal, className: _className } = this.props;
 
-    if (!inPortal) {
+    if (this.state.isOpen && !inPortal) {
       return (
         <div
           className="brz-control__select-options"
+          style={{ opacity: 0 }}
           ref={this.handleDropdownNode}
         >
           <ScrollPane

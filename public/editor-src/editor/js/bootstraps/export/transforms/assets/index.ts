@@ -7,7 +7,7 @@ export interface Fonts {
   upload: UploadedFont[];
 }
 
-interface AssetCommon {
+export interface AssetCommon {
   attr?: Record<string, string>;
 }
 

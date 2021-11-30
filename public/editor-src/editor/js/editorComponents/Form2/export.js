@@ -1,6 +1,7 @@
 import $ from "jquery";
 import { Libs } from "visual/libs";
 import { decodeFromString } from "visual/utils/string";
+import { isNullish } from "visual/utils/value";
 
 export default function($node) {
   const root = $node.get(0);
@@ -144,6 +145,18 @@ export default function($node) {
   });
 }
 
+const updatePattern = form => {
+  const elements = form.querySelectorAll("input[pattern], textarea[pattern]");
+
+  elements.forEach(item => {
+    const pattern = item.getAttribute("pattern");
+
+    if (pattern) {
+      item.setAttribute("pattern", decodeURI(pattern));
+    }
+  });
+};
+
 function validateFormItem(node) {
   const form = node.closest(".brz-form");
   const parentElem = node.closest(".brz-forms2__item");
@@ -152,10 +165,8 @@ function validateFormItem(node) {
 
   const _error = error ? decodeFromString(error) : null;
 
-  const pattern =
-    (node.getAttribute("pattern") || "") &&
-    decodeURI(node.getAttribute("pattern"));
-  const patternTest = new RegExp(pattern).test(value);
+  const pattern = node.getAttribute("pattern");
+  const patternTest = isNullish(pattern) || new RegExp(pattern).test(value);
   let result = true;
 
   parentElem.classList.remove(
@@ -327,6 +338,8 @@ function validateForm(form) {
 
 function initForm(form) {
   const $form = $(form);
+
+  updatePattern(form);
 
   $form.on("blur", "form input, form textarea, form select", function() {
     validateFormItem(this);

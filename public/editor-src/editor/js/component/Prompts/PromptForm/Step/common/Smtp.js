@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { t } from "visual/utils/i18n";
 import { updateSmtpIntegration } from "../../api";
-import { InputFields } from "../../../common/GlobalApps/StepsView";
+import { Fields } from "../../../common/GlobalApps/StepsView/Fields";
 import { pendingRequest } from "visual/utils/api";
 
 class Smtp extends Component {
@@ -99,7 +99,7 @@ class Smtp extends Component {
     }));
 
     return (
-      <InputFields
+      <Fields
         {...app}
         data={data}
         error={error}

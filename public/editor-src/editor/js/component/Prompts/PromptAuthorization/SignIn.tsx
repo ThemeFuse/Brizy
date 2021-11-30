@@ -6,9 +6,10 @@ import Scrollbars from "react-custom-scrollbars";
 import { connect, ConnectedProps } from "react-redux";
 import Config from "visual/global/Config";
 import { pendingRequest } from "visual/utils/api";
-import EditorIcon from "visual/component/EditorIcon";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
-import Button from "visual/component/Prompts/common/Button";
+import { Alert } from "visual/component/Alert";
+import { Button } from "visual/component/Prompts/common/Button";
+import { Loading } from "visual/component/Prompts/common/Loading";
 import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
@@ -240,11 +241,7 @@ class SignIn extends Component<SingInProps, SignInState> {
   };
 
   renderLoading(): React.ReactElement {
-    return (
-      <div className="brz-ed-popup-content--loading">
-        <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
-      </div>
-    );
+    return <Loading />;
   }
 
   renderNotice(): React.ReactElement | undefined {
@@ -253,11 +250,7 @@ class SignIn extends Component<SingInProps, SignInState> {
     if (notice !== null) {
       const { message, type } = notice;
 
-      return (
-        <div className={`brz-ed-alert brz-ed-alert-${type}`}>
-          <span className="brz-span">{message}</span>
-        </div>
-      );
+      return <Alert message={message} type={type} />;
     }
   }
 

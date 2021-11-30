@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
-import Button from "visual/component/Prompts/common/Button";
+import { Button } from "visual/component/Prompts/common/Button";
 import { updateAuthorization } from "visual/redux/actions2";
 import {
   authorizedSelector,

@@ -35,7 +35,6 @@ class Brizy_Editor_Asset_Crop_Cropper {
 				 * @var Brizy_Editor_Asset_Crop_ServiceInterface $service ;
 				 */
 				$service = new $serviceClass( $source, $target );
-
 				if ( $callback( $service ) ) {
 					return true;
 				}
@@ -127,7 +126,29 @@ class Brizy_Editor_Asset_Crop_Cropper {
 			} else {
 
 				return $this->serviceLoop( $source, $target, function ( Brizy_Editor_Asset_Crop_ServiceInterface $service ) use ( $source, $target, $requestedImgWidth, $requestedImgHeight, $requestedOffsetX, $requestedOffsetY, $containerWidth, $containerHeight ) {
-					$result = $service->resize( $requestedImgWidth, $requestedImgHeight );
+
+					$result = $service->resize( $requestedImgWidth, null );
+
+					$imageSizeAfterResize = $service->getSize();
+
+					$blackStripOnX = ( $containerWidth + $requestedOffsetX ) - $requestedImgWidth;
+					$blackStripOnY = ( $containerHeight + $requestedOffsetY ) - $requestedImgHeight;
+
+					$requestedImgWidth  = min( $imageSizeAfterResize['width'], $requestedImgWidth );
+					$requestedImgHeight = min( $imageSizeAfterResize['height'], $requestedImgHeight );
+
+					// calculated the crop over boundary values
+					$containerWidthStripDelta  = $blackStripOnX > 0 ? $blackStripOnX : 0;
+					$containerHeightStripDelta = $blackStripOnY > 0 ? $blackStripOnY : 0;
+
+					// make sure the requested crop offset and size does now go over image boundaries
+					$requestedOffsetX = ( $blackStripOnX ) > 0 ? ( $requestedOffsetX - $containerWidthStripDelta ) : $requestedOffsetX;
+					$requestedOffsetY = ( $blackStripOnY ) > 0 ? ( $requestedOffsetY - $containerHeightStripDelta ) : $requestedOffsetY;
+
+					// avoid the case when the image height or with is less that 1px (GD problem)
+					$containerWidth  = $containerWidth > $requestedImgHeight ? $requestedImgWidth : $containerWidth;
+					$containerHeight = $containerHeight > $requestedImgHeight ? $requestedImgHeight : $containerHeight;
+
 					if ( $result && $service->crop( $requestedOffsetX, $requestedOffsetY, $containerWidth, $containerHeight ) ) {
 						$result = $service->saveTargetImage();
 

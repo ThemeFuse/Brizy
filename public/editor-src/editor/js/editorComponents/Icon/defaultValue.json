@@ -7,7 +7,7 @@
     "offsetY": 0,
 
     "popups": []
-  },
+},
 
   "link": {
     "linkType": "external",
@@ -29,6 +29,10 @@
 
   "style": {
     "className": "",
+
+    "customClassName": "",
+
+    "customID": "",
 
     "size": "medium",
     "customSize": 48,

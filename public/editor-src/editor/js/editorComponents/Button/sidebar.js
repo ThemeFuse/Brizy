@@ -1,9 +1,16 @@
 import { t } from "visual/utils/i18n";
 import { IS_STORY } from "visual/utils/models";
+import { getDynamicContentChoices } from "visual/utils/options";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export const title = t("Button");
 
-export function getItems({ v }) {
+export function getItems({ v, context }) {
+  const richTextDC = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
+
   return [
     {
       id: "settingsTabs",
@@ -19,6 +26,47 @@ export function getItems({ v }) {
           label: t("Advanced"),
           icon: "nc-cog",
           options: [
+            {
+              id: "cssID",
+              label: t("CSS ID"),
+              type: "population-dev",
+              position: 30,
+              devices: "desktop",
+              display: "block",
+              helper: {
+                content: "Add your custom ID without the #pound, example: my-id"
+              },
+              config: {
+                choices: richTextDC
+              },
+              options: [
+                {
+                  id: "customID",
+                  type: "inputText-dev"
+                }
+              ]
+            },
+            {
+              id: "cssClass",
+              label: t("CSS Class"),
+              type: "population-dev",
+              position: 40,
+              devices: "desktop",
+              display: "block",
+              helper: {
+                content:
+                  "Add your custom class without the .dot, example: my-class"
+              },
+              config: {
+                choices: richTextDC
+              },
+              options: [
+                {
+                  id: "customClassName",
+                  type: "inputText-dev"
+                }
+              ]
+            },
             {
               id: "hoverTransition",
               label: t("Hover Transition"),
