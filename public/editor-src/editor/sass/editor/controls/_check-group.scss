@@ -1,0 +1,21 @@
+.brz-control__check-group {
+  &-option-icon {
+    margin-right: 10px;
+  }
+  &-option--divider {
+    font-size: 15px;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 17px 30px 16px 4px;
+    height: 51px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  &-option--inline {
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 1;
+  }
+}

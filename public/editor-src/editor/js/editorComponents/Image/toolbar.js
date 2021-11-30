@@ -78,9 +78,11 @@ export const getItems = ({ property }) => ({
   );
 
   const placeholderData = placeholderObjFromStr(v.imagePopulation);
-  const disabledWidthHeight =
-    (sizeType !== "custom" && !v.imagePopulation) ||
-    placeholderData?.attr !== undefined;
+  const isCustomSizeType =
+    (sizeType === "custom" && !placeholderData) ||
+    (placeholderData && placeholderData.attr === undefined);
+  const isSvgOrGif =
+    (isSVG(v.imageExtension) || isGIF(v.imageExtension)) && !placeholderData;
 
   return [
     {
@@ -309,17 +311,14 @@ export const getItems = ({ property }) => ({
       options: [
         {
           id: "width",
-          label: t("Width"),
+          label: isSvgOrGif ? t("Size") : t("Width"),
           type: "slider-dev",
-          disabled:
-            isSVG(v.imageExtension) ||
-            isGIF(v.imageExtension) ||
-            disabledWidthHeight,
+          disabled: !isCustomSizeType && !isSvgOrGif,
           config: {
             min: 5,
             max: widthSuffixValue === "px" ? cW : 100,
             units: [
-              { value: "px", title: "px" },
+              ...(isSvgOrGif ? [] : [{ value: "px", title: "px" }]),
               { value: "%", title: "%" }
             ]
           }
@@ -328,10 +327,7 @@ export const getItems = ({ property }) => ({
           id: "height",
           label: t("Height"),
           type: "slider-dev",
-          disabled:
-            isSVG(v.imageExtension) ||
-            isGIF(v.imageExtension) ||
-            disabledWidthHeight,
+          disabled: !isCustomSizeType || isSvgOrGif,
           config: {
             min: 5,
             max: heightSuffixValue === "px" ? Math.round(cW * 2) : 100,
@@ -347,7 +343,7 @@ export const getItems = ({ property }) => ({
           id: "size",
           label: t("Size"),
           type: "slider-dev",
-          disabled: !disabledWidthHeight,
+          disabled: isCustomSizeType || isSvgOrGif,
           config: {
             min: 5,
             max: 100,

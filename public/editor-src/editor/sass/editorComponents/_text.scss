@@ -29,38 +29,15 @@
   em {
     font-style: italic;
   }
-  ul,
-  ol {
-    li {
-      list-style: none;
-      padding-left: 1em;
-
-      &:before {
-        margin-left: -1em;
-      }
-    }
+  ul li,
+  ol li {
+    margin-left: 2em;
   }
   ul {
-    li:before {
-      position: relative;
-      top: -0.1em;
-      line-height: 1;
-      content: "\2022";
-      padding-right: 0.5em;
-    }
+    list-style-type: disc;
   }
   ol {
-    counter-reset: number;
-
-    li {
-      counter-increment: number;
-
-      &:before {
-        content: counter(number);
-        line-height: 1;
-        padding-right: 0.5em;
-      }
-    }
+    list-style-type: decimal;
   }
   .ql-editor {
     white-space: pre-wrap;
@@ -118,7 +95,6 @@
   ul,
   dl {
     margin: 0;
-    list-style: none;
     padding: 0;
   }
   ol ol,

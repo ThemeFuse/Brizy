@@ -1,3 +1,4 @@
+import { optional, pass, mPipe } from "fp-utilities";
 import { ImageDCPatch, ImagePatch, SizeTypePatch } from "./types/ImagePatch";
 import {
   calcWrapperSizes,
@@ -7,9 +8,8 @@ import {
   isPredefinedSize
 } from "./utils";
 import { isUnit, Unit } from "./types";
-import { optional, readWithParser } from "visual/utils/reader/readWithParser";
+import { readWithParser } from "visual/utils/reader/readWithParser";
 import { ElementModel } from "visual/component/Elements/Types";
-import { mPipe, pass } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
 import * as Math from "visual/utils/math";
 import * as Str from "visual/utils/string/specs";
@@ -28,6 +28,16 @@ export interface Patch {
   imageExtension: string;
   width: number;
   height: number;
+  widthSuffix: Unit;
+  heightSuffix: Unit;
+  tabletWidth: number | null;
+  tabletHeight: number | null;
+  tabletWidthSuffix: Unit | null;
+  tabletHeightSuffix: Unit | null;
+  mobileWidth: number | null;
+  mobileHeight: number | null;
+  mobileWidthSuffix: Unit | null;
+  mobileHeightSuffix: Unit | null;
 }
 
 export interface Value extends Size {
@@ -35,8 +45,15 @@ export interface Value extends Size {
   widthSuffix: Unit;
   heightSuffix: Unit;
   sizeType: string;
-  showOriginalImage?: "on" | "off";
   imagePopulation?: string;
+  tabletWidth?: number;
+  tabletHeight?: number;
+  tabletWidthSuffix?: Unit;
+  tabletHeightSuffix?: Unit;
+  mobileWidth?: number;
+  mobileHeight?: number;
+  mobileWidthSuffix?: Unit;
+  mobileHeightSuffix?: Unit;
 }
 
 export interface PatchSize {
@@ -61,14 +78,16 @@ export const elementModelToValue = readWithParser<ElementModel, Value>({
   width: mPipe(prop("width"), Num.read),
   heightSuffix: mPipe(prop("heightSuffix"), pass(isUnit)),
   widthSuffix: mPipe(prop("widthSuffix"), pass(isUnit)),
-  showOriginalImage: optional(
-    mPipe(
-      prop("showOriginalImage"),
-      pass((v): v is "on" | "off" => ["on", "off"].includes(v as string))
-    )
-  ),
   sizeType: mPipe(prop("sizeType"), Str.read),
-  size: mPipe(prop("size"), Num.read)
+  size: mPipe(prop("size"), Num.read),
+  tabletWidth: optional(mPipe(prop("tabletWidth"), Num.read)),
+  tabletHeight: optional(mPipe(prop("tabletHeight"), Num.read)),
+  tabletWidthSuffix: optional(mPipe(prop("tabletWidthSuffix"), pass(isUnit))),
+  tabletHeightSuffix: optional(mPipe(prop("tabletHeightSuffix"), pass(isUnit))),
+  mobileWidth: optional(mPipe(prop("mobileWidth"), Num.read)),
+  mobileHeight: optional(mPipe(prop("mobileHeight"), Num.read)),
+  mobileWidthSuffix: optional(mPipe(prop("mobileWidthSuffix"), pass(isUnit))),
+  mobileHeightSuffix: optional(mPipe(prop("mobileHeightSuffix"), pass(isUnit)))
 });
 
 export const patchOnImageChange = (
@@ -81,6 +100,7 @@ export const patchOnImageChange = (
   const imgHeight = patch.imageHeight;
   const extension = patch.imageExtension;
   const src = patch.imageSrc;
+  const isSvgOrGif = extension === "svg" || extension === "gif";
 
   const newWrapperSizes = calcWrapperSizes(
     {
@@ -97,22 +117,46 @@ export const patchOnImageChange = (
 
   let newCW = wrapperSizes.width;
   let newCH = wrapperSizes.height;
+  let newWidthSuffix = v.widthSuffix;
+  let newHeightSuffix = v.heightSuffix;
+  let newTabletWidth = v.tabletWidth ?? null;
+  let newTabletHeight = v.tabletHeight ?? null;
+  let newTabletWidthSuffix = v.tabletWidthSuffix ?? null;
+  let newTabletHeightSuffix = v.tabletHeightSuffix ?? null;
+  let newMobileWidth = v.mobileWidth ?? null;
+  let newMobileHeight = v.mobileHeight ?? null;
+  let newMobileWidthSuffix = v.mobileWidthSuffix ?? null;
+  let newMobileHeightSuffix = v.mobileHeightSuffix ?? null;
 
   if (v.widthSuffix === "%") {
     const w = v.width || 100;
     newCW = (wrapperSizes.width * w) / newWrapperSizes.width;
+  } else {
+    if (isSvgOrGif) {
+      const resize = Math.roundTo((v.width / cW) * 100, 2);
+      newCW = Math.clamp(resize, 0, 100);
+      newWidthSuffix = "%";
+    }
   }
 
-  if (v.heightSuffix === "%") {
-    const h = v.height || 100;
-    newCH = (wrapperSizes.height * h) / newWrapperSizes.height;
-  }
-
-  // Conditions for SVG & GIF
-  const isSvgOrGif = extension === "svg" || extension === "gif";
-  if (isSvgOrGif || (!isSvgOrGif && src && v.showOriginalImage === "on")) {
-    const originalCH = wrapperSizes.width / (imgWidth / imgHeight);
-    newCH = v.heightSuffix === "px" ? originalCH : 100;
+  // we need to reset responsive values & height,
+  // because old values is not relevant to new aspect ratio of svg / gif
+  if (isSvgOrGif) {
+    newCH = 100;
+    newHeightSuffix = "%";
+    newTabletWidth = null;
+    newTabletHeight = null;
+    newTabletWidthSuffix = null;
+    newTabletHeightSuffix = null;
+    newMobileWidth = null;
+    newMobileHeight = null;
+    newMobileWidthSuffix = null;
+    newMobileHeightSuffix = null;
+  } else {
+    if (v.heightSuffix === "%") {
+      const h = v.height || 100;
+      newCH = (wrapperSizes.height * h) / newWrapperSizes.height;
+    }
   }
 
   return {
@@ -121,7 +165,17 @@ export const patchOnImageChange = (
     imageSrc: src,
     imageExtension: extension,
     width: Math.roundTo(newCW, 2),
-    height: Math.roundTo(newCH, 2)
+    height: Math.roundTo(newCH, 2),
+    widthSuffix: newWidthSuffix,
+    heightSuffix: newHeightSuffix,
+    mobileHeight: newMobileHeight,
+    mobileHeightSuffix: newMobileHeightSuffix,
+    mobileWidth: newMobileWidth,
+    mobileWidthSuffix: newMobileWidthSuffix,
+    tabletHeight: newTabletHeight,
+    tabletHeightSuffix: newTabletHeightSuffix,
+    tabletWidth: newTabletWidth,
+    tabletWidthSuffix: newTabletWidthSuffix
   };
 };
 

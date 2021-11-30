@@ -10,7 +10,7 @@ import { styleWrapper } from "../styles";
 
 import useResizerPoints from "./useResizerPoints";
 import { ImageProps, V, Patch, Styles, Meta } from "../types";
-import { getSizeType } from "visual/editorComponents/Image/utils";
+import { getSizeType, isGIF, isSVG } from "visual/editorComponents/Image/utils";
 import { DESKTOP } from "visual/utils/responsiveMode";
 
 const Image: React.FC<ImageProps> = props => {
@@ -55,13 +55,17 @@ const Image: React.FC<ImageProps> = props => {
       imageWidth,
       imageHeight,
       elementPosition,
-      widthSuffix
+      widthSuffix,
+      imagePopulation,
+      imageExtension
     } = v;
     const { desktopW, tabletW, mobileW } = meta;
     const isAbsoluteOrFixed =
       elementPosition === "absolute" || elementPosition === "fixed";
     const sizeType = getSizeType(v, DESKTOP);
     const { size, ..._v } = v;
+    const isSvgOrGif =
+      (isSVG(imageExtension) || isGIF(imageExtension)) && !imagePopulation;
 
     return {
       ..._v,
@@ -75,7 +79,7 @@ const Image: React.FC<ImageProps> = props => {
         ? clamp(mobileWidth || width, 0, mobileW)
         : mobileWidth,
       height: isAbsoluteOrFixed ? height / (imageWidth / imageHeight) : height,
-      ...(sizeType !== "custom" && { size })
+      ...(sizeType !== "custom" && !isSvgOrGif && { size })
     };
   }
 

@@ -202,7 +202,8 @@ export {
   cssStyleElementRichTextGradient,
   cssStyleElementRichTextFontSize,
   cssStyleElementRichTextBgImage,
-  cssStyleElementRichTextFontFamily
+  cssStyleElementRichTextFontFamily,
+  cssStyleElementRichTextColor
 } from "./cssStyleElementRichText";
 
 //Element Button

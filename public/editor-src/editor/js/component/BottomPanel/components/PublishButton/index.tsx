@@ -184,26 +184,27 @@ class PublishButton extends Component<Props, State> {
 
   getTooltipItems(): ControlsProps["addonAfter"] {
     const { pageStatus } = this.props;
-    const layoutItems = IS_STORY
-      ? []
-      : [
-          {
-            title: t("Clear Layout"),
-            icon: "nc-trash",
-            roles: ["admin"],
-            onClick: (): void => {
-              this.handleClearPage();
+    const layoutItems =
+      IS_STORY || IS_GLOBAL_POPUP
+        ? []
+        : [
+            {
+              title: t("Clear Layout"),
+              icon: "nc-trash",
+              roles: ["admin"],
+              onClick: (): void => {
+                this.handleClearPage();
+              }
+            },
+            {
+              title: t("Save Layout"),
+              icon: "nc-save-section",
+              loading: this.state.layoutLoading,
+              onClick: (): void => {
+                this.handleSavePage();
+              }
             }
-          },
-          {
-            title: t("Save Layout"),
-            icon: "nc-save-section",
-            loading: this.state.layoutLoading,
-            onClick: (): void => {
-              this.handleSavePage();
-            }
-          }
-        ];
+          ];
 
     return [
       ...layoutItems,
@@ -245,7 +246,7 @@ class PublishButton extends Component<Props, State> {
       <>
         <BottomPanelItem paddingSize="small">
           <Controls
-            addonAfter={IS_GLOBAL_POPUP ? undefined : this.getTooltipItems()}
+            addonAfter={this.getTooltipItems()}
             onClick={this.handleClick}
             loading={this.state.updateLoading}
           >

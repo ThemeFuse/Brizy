@@ -3,6 +3,7 @@ import Config from "visual/global/Config";
 import LibsConfig from "visual/bootstraps/libs.json";
 import { assetUrl } from "visual/utils/asset";
 import {
+  CUSTOM_CODE,
   DEPENDENCY_SCORE,
   LIBS_SCORE,
   MAIN_SCORE,
@@ -23,10 +24,15 @@ import {
   StylesPro
 } from "./index";
 import { toHashCode } from "visual/utils/string";
+import { IS_WP } from "visual/utils/env";
 
 type MakeStyles = {
   free: StylesFree;
   pro?: StylesPro;
+};
+
+const withRel = (attr: Record<string, string>): Record<string, string> => {
+  return IS_WP ? attr : { ...attr, rel: "stylesheet" };
 };
 
 const makePageMetaViewport = (): Asset => ({
@@ -52,11 +58,10 @@ const makePageFonts = (fonts: Fonts): (AssetGoogle | AssetUpload)[] => {
       content: {
         type: "file",
         url: google,
-        attr: {
+        attr: withRel({
           class: "brz-link brz-link-google",
-          type: "text/css",
-          rel: "stylesheet"
-        }
+          type: "text/css"
+        })
       },
       pro: false
     });
@@ -70,11 +75,10 @@ const makePageFonts = (fonts: Fonts): (AssetGoogle | AssetUpload)[] => {
       content: {
         type: "file",
         url: upload,
-        attr: {
+        attr: withRel({
           class: "brz-link brz-link-upload",
-          type: "text/css",
-          rel: "stylesheet"
-        }
+          type: "text/css"
+        })
       },
       pro: false
     });
@@ -126,7 +130,7 @@ const makePageStyles = ($doc: cheerio.CheerioAPI): Asset[] => {
 const makeCustomCSS = ($doc: cheerio.CheerioAPI): Asset[] => {
   return getCustomCSS($doc).map((style, index) => ({
     name: toHashCode(style),
-    score: OTHERS_SCORE,
+    score: CUSTOM_CODE,
     content: {
       type: "inline",
       content: style,
@@ -189,10 +193,9 @@ export const makeStyles = (
     content: {
       type: "file",
       url: assetUrl("editor/css/preview.css"),
-      attr: {
-        class: "brz-link brz-link-preview",
-        rel: "stylesheet"
-      }
+      attr: withRel({
+        class: "brz-link brz-link-preview"
+      })
     },
     pro: false
   };
@@ -235,11 +238,10 @@ export const makeStyles = (
       content: {
         type: "file",
         url: assetUrl(`editor/css/${name}.css`),
-        attr: {
+        attr: withRel({
           class: "brz-link brz-link-preview-lib",
-          rel: "stylesheet",
           "data-group": name
-        }
+        })
       },
       pro: false
     });
@@ -278,10 +280,9 @@ export const makeStyles = (
       content: {
         type: "file",
         url: `${proUrls.assets}/css/preview.pro.css`,
-        attr: {
-          class: "brz-link brz-link-preview-pro",
-          rel: "stylesheet"
-        }
+        attr: withRel({
+          class: "brz-link brz-link-preview-pro"
+        })
       },
       pro: true
     };
@@ -298,11 +299,10 @@ export const makeStyles = (
         content: {
           type: "file",
           url: `${proUrls.assets}/css/${name}-pro.css`,
-          attr: {
+          attr: withRel({
             class: "brz-link brz-link-preview-lib-pro",
-            rel: "stylesheet",
             "data-group": name
-          }
+          })
         },
         pro: true
       });

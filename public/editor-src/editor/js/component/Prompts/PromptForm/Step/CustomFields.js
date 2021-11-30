@@ -3,7 +3,7 @@ import { replaceAt } from "timm";
 import { t } from "visual/utils/i18n";
 import { updateIntegration } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
-import { InputFields } from "../../common/GlobalApps/StepsView";
+import { Fields } from "../../common/GlobalApps/StepsView/Fields";
 import { getFields, checkRequiredFields } from "../../common/utils";
 import { pendingRequest } from "visual/utils/api";
 
@@ -110,7 +110,7 @@ class CustomFields extends Component {
     }));
 
     return (
-      <InputFields
+      <Fields
         headTitle={t("FORM FIELDS")}
         headDescription={`${title} ${t("FIELDS")}`}
         data={data}

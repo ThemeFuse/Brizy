@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import classnames from "classnames";
-import { uuid } from "visual/utils/uuid";
 
 export default class TextField extends Component {
   static get componentTitle() {
@@ -140,7 +139,8 @@ export default class TextField extends Component {
       columns,
       options,
       tabletColumns,
-      mobileColumns
+      mobileColumns,
+      labelId
     } = this.props;
     if (IS_EDITOR) {
       const props = {
@@ -172,7 +172,7 @@ export default class TextField extends Component {
         mobileColumns,
         attr: {
           type: type.toLocaleLowerCase(),
-          id: uuid(),
+          id: labelId,
           name: _id,
           placeholder: this.getPlaceholder(),
           required: required === "on",

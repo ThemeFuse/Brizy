@@ -19,8 +19,7 @@ import {
   Page,
   GlobalBlock,
   SavedBlock,
-  SavedLayout,
-  PageCloud
+  SavedLayout
 } from "visual/types";
 import { PageError } from "visual/utils/errors";
 import { pipe } from "visual/utils/fp/pipe";
@@ -318,8 +317,8 @@ export const parsePageCommon = (page: unknown): PageCommon => {
       data: pipe(
         Obj.readKey("data"),
         Json.read,
-        Obj.read as () => PageCloud["data"] | undefined, // TODO: needs more thorough checking
-        onNullish({ items: [] } as PageCloud["data"])
+        Obj.read as () => PageCommon["data"] | undefined, // TODO: needs more thorough checking
+        onNullish({ items: [] } as PageCommon["data"])
       ),
       dataVersion: pipe(Obj.readKey("dataVersion"), Num.read, onNullish(0)),
       title: pipe(Obj.readKey("title"), Str.read, onNullish("")),

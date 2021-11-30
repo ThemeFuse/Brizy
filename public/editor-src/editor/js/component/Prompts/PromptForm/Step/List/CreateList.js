@@ -4,7 +4,7 @@ import ScrollPane from "visual/component/ScrollPane";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { t } from "visual/utils/i18n";
-import Button from "../../../common/Button";
+import { Button } from "../../../common/Button";
 import { capitalize } from "visual/utils/string";
 
 export default class CreateList extends Component {

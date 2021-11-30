@@ -73,6 +73,10 @@ export function getItems({ v, device, component }) {
               title: "Not logged",
               value: "not_logged"
             },
+            {
+              title: "Logged",
+              value: "logged"
+            },
             ...membershipRoles.map(({ role, name }) => ({
               title: name,
               value: role

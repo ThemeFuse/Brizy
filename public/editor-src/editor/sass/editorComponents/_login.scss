@@ -47,9 +47,16 @@
     flex-shrink: 0;
   }
   &__item-button {
+    .brz-login__item {
+      width: 100%;
+      overflow: hidden;
+    }
     .brz-btn {
       outline: none;
       width: 100%;
+
+      padding-left: 0;
+      padding-right: 0;
     }
     .brz-icon-svg {
       flex-grow: 0;

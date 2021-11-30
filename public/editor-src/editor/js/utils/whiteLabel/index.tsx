@@ -15,7 +15,7 @@ export const _getWhiteLabel: (config: Config) => WhiteLabel | undefined = match(
   [
     isWp,
     (c): WhiteLabel | undefined =>
-      c.pro.whiteLabel
+      c.pro?.whiteLabel
         ? {
             brandingName: c.branding.name,
             updateToProLink: c.urls.upgradeToPro,

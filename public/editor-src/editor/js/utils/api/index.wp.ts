@@ -1,5 +1,4 @@
 export * from "./index-legacy.wp";
-
 import Config, { WP } from "visual/global/Config";
 import { persistentRequest, request2 } from "./index-legacy";
 import * as Obj from "visual/utils/reader/object";
@@ -25,7 +24,9 @@ import {
   GetPostTaxonomies,
   UploadSavedBlocks,
   UploadSavedLayouts,
-  UploadSavedPopups
+  UploadSavedPopups,
+  GetWPCollectionTypes,
+  GetWPCollectionItems
 } from "./types";
 import {
   makeBlockMeta,
@@ -513,5 +514,50 @@ export const getPostTaxonomies: GetPostTaxonomies = async ({
     signal: abortSignal
   })
     .then(r => r.json())
-    .then(({ data }) => data);
+    .then(({ data }) => data)
+    .catch(e => {
+      if (process.env.NODE_ENV === "development") {
+        console.log(e);
+      }
+      return [];
+    });
+};
+
+export const getCollectionTypes: GetWPCollectionTypes = async () => {
+  const config = Config.getAll() as WP;
+
+  const data = config.wp.postTypes;
+
+  return Promise.resolve(data);
+};
+
+export const getCollectionItems: GetWPCollectionItems = async id => {
+  const config = Config.getAll() as WP;
+
+  const { wp, editorVersion } = config;
+  const { url, hash, getPostObjects } = wp.api;
+
+  return await request2(url, {
+    method: "POST",
+    body: new URLSearchParams({
+      hash,
+      version: editorVersion,
+      postType: id,
+      action: getPostObjects
+    })
+  })
+    .then(r => r.json())
+    .then(result => {
+      if (!result?.data) {
+        throw "Something went wrong";
+      }
+
+      return result.data;
+    })
+    .catch(e => {
+      if (process.env.NODE_ENV === "development") {
+        console.error(e);
+      }
+      return [];
+    });
 };

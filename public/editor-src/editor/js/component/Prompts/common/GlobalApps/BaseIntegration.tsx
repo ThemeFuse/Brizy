@@ -1,9 +1,10 @@
-import React, { Component, ElementType, ReactElement } from "react";
+import React, { Component, ElementType, ReactElement, ReactNode } from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import produce from "immer";
-import EditorIcon from "visual/component/EditorIcon";
+import { Alert } from "visual/component/Alert";
 import { Context } from "./Context";
+import { Loading } from "../Loading";
 import Steppers from "../Steppers";
 import AppList from "./StepsView/AppsList";
 import {
@@ -190,19 +191,11 @@ class BaseIntegration<
   };
 
   renderLoading(): ReactElement {
-    return (
-      <div className="brz-ed-popup-content--loading">
-        <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
-      </div>
-    );
+    return <Loading />;
   }
 
-  renderError(): ReactElement {
-    return (
-      <div className="brz-ed-alert brz-ed-alert-error">
-        <span className="brz-span">{this.state.error}</span>
-      </div>
-    );
+  renderError(): ReactNode {
+    return this.state.error && <Alert message={this.state.error} />;
   }
 
   renderApps(): ReactElement {
@@ -210,7 +203,7 @@ class BaseIntegration<
 
     return (
       <>
-        {error && this.renderError()}
+        {error && <Alert message={error} />}
         <AppList
           apps={this.appsData}
           proExceptions={this.proExceptions}
@@ -291,7 +284,7 @@ class BaseIntegration<
 
     return (
       <div className={className}>
-        {this.state.loading ? this.renderLoading() : this.renderContent()}
+        {this.state.loading ? <Loading /> : this.renderContent()}
       </div>
     );
   }

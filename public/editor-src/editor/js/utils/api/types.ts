@@ -142,3 +142,34 @@ export type GetPostTaxonomies = (data: {
     labels: { name: string; singular_name: string };
   }[]
 >;
+
+interface CloudCollectionType {
+  id: string;
+  title: string;
+  slug?: string;
+}
+export type GetCollectionTypes = () => Promise<CloudCollectionType[]>;
+
+interface CollectionItem {
+  slug: string;
+  id: string;
+  title: string;
+}
+export type GetCollectionItems = (
+  id: string
+) => Promise<{ collection: CollectionItem[] }>;
+
+interface WPCollectionType {
+  name: string;
+  label: string;
+}
+export type GetWPCollectionTypes = () => Promise<WPCollectionType[]>;
+
+interface WPCollectionItem {
+  ID: number;
+  post_title: string;
+  title: string;
+}
+export type GetWPCollectionItems = (
+  id: string
+) => Promise<{ posts: WPCollectionItem[] }>;

@@ -7,7 +7,7 @@ import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
-import Button from "../../Button";
+import { Button } from "../../Button";
 
 class RadioFields extends Component {
   static defaultProps = {

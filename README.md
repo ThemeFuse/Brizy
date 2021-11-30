@@ -1,9 +1,9 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 5.8.1<br>
+Tested up to: 5.8.2<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.20<br>
+Stable tag: 2.3.21<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,24 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.21 - 2021-11-30
+* New: Size options when you upload .svg and .gifs files in Image element
+* Fixed: Remove rel attributes for style to solve some plugin conflicts
+* Fixed: Button align and width on Login element 
+* Fixed: Labels correspond with input id in the Form element 
+* Fixed: 505 error when you use extra large retina images
+* Fixed: Text alignment when it is in a list for certain fonts 
+* Fixed: Color for bullet points
+* Fixed: Removed the form placeholder name from dropdowns on the front end
+* Fixed: Form pattern attribute
+* Fixed: Individual IDs and CSS classes for Icons and Buttons
+* Fixed: Decode html entity on export leads
+* Fixed: Blurred images with TranslatePress plugin installed
+* Fixed: Added display block by logged-in users 
+* Fixed: Show in preview blocks by role even the user has the role of administrator
+* Fixed: Syntax error in CSS when you have custom CSS
+* Improved: Drag and Drop performance
 
 ### 2.3.20 - 2021-11-10
 * Improved: Added system check at the plugin startup

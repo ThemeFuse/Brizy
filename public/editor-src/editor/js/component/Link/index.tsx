@@ -21,6 +21,7 @@ type Props = PropsWithChildren<
     href?: string;
     type?: Type;
     attr?: JSX.IntrinsicAttributes;
+    id?: string;
   }
 >;
 
@@ -35,7 +36,8 @@ const _Link = (
     target = defaultTarget,
     type = defaultType,
     href,
-    attr = {}
+    attr = {},
+    id = ""
   }: Props,
   ref: Ref<HTMLAnchorElement>
 ): ReactElement => {
@@ -60,6 +62,7 @@ const _Link = (
       onClick={preventDefault}
       {...attrs}
       ref={ref}
+      id={id}
     >
       {children}
     </a>

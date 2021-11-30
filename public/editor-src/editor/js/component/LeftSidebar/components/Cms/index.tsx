@@ -125,7 +125,9 @@ const Component = ({ config }: Props): ReactElement => {
         taxesMainCategoryId: "taxesMainCategoryId",
         notificationApi: token
           ? { __type: "withToken", token, uri: config.cms.apiUrl }
-          : { __type: "withOutToken", uri: config.cms.apiUrl }
+          : { __type: "withOutToken", uri: config.cms.apiUrl },
+        supportLinks: config.cms.supportLinks,
+        customersEditorUrl: config.cms.customerEditorUrl
       });
 
       ref.current?.contentWindow?.postMessage(list, iframeSrc);
