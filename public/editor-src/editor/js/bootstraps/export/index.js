@@ -40,6 +40,7 @@ import extractPopups from "./transforms/extractPopups";
 import dynamicContent from "./transforms/dynamicContent";
 import replaceIcons from "./transforms/replaceIcons";
 import { changeMenuUid } from "./transforms/changeMenuUid";
+import { isCollectionPage } from "visual/global/Config/types/configs/Cloud";
 
 export default async function main({
   pageId,
@@ -51,12 +52,18 @@ export default async function main({
   // ! pages.map(parsePageCommon)  removes collectionType property
   // ! .map((page, i) => ({ ...page, collectionType: pages[i].collectionType })) - this is a temp
   const page = pages
-    .map(parsePageCommon)
-    .map((page, i) => ({
-      ...page,
-      collectionType: pages[i].collectionType,
-      fields: pages[i].fields
-    }))
+    .map(page => {
+      const parsedPage = parsePageCommon(page);
+
+      return isCollectionPage(page)
+        ? {
+            ...parsedPage,
+            collectionType: page.collectionType,
+            fields: page.fields
+          }
+        : parsedPage;
+    })
+
     .find(page => {
       if (pageId) {
         const pageId1 = Str.read(page.id);

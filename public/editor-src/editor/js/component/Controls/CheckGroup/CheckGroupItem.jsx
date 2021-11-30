@@ -11,7 +11,9 @@ export default class CheckGroupItem extends Component {
     value: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     onClick: PropTypes.func,
-    renderIcons: PropTypes.func
+    renderIcons: PropTypes.func,
+    divider: PropTypes.bool,
+    inline: PropTypes.bool
   };
 
   static defaultProps = {
@@ -19,6 +21,8 @@ export default class CheckGroupItem extends Component {
     active: false,
     value: "",
     name: "",
+    divider: false,
+    inline: false,
     renderIcons: _.noop,
     onClick: _.noop
   };
@@ -29,12 +33,18 @@ export default class CheckGroupItem extends Component {
       name,
       active,
       value,
+      divider,
+      inline,
       children,
       renderIcons,
       onClick
     } = this.props;
     const className = classnames(
       "brz-control__check-group-option",
+      {
+        "brz-control__check-group-option--divider": divider,
+        "brz-control__check-group-option--inline": inline
+      },
       { active },
       _className
     );
@@ -56,9 +66,18 @@ export default class CheckGroupItem extends Component {
       value,
       required,
       renderIcons,
+      divider,
+      inline,
       children
     } = this.props;
-    const className = classnames("brz-control__check-group-option", _className);
+    const className = classnames(
+      "brz-control__check-group-option",
+      {
+        "brz-control__check-group-option--divider": divider,
+        "brz-control__check-group-option--inline": inline
+      },
+      _className
+    );
     const id = uuid();
 
     return (

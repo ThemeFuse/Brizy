@@ -107,7 +107,6 @@ export default class Button extends EditorComponent {
   renderLink(v, vs, vd, content) {
     const state = State.mRead(v.tabsState);
     const device = deviceModeSelector(getStore().getState());
-
     const {
       linkType,
       linkAnchor,
@@ -116,11 +115,14 @@ export default class Button extends EditorComponent {
       linkExternalRel,
       linkPopup,
       linkUpload,
-      actionClosePopup
+      actionClosePopup,
+      customClassName,
+      customID
     } = v;
 
     const className = classnames(
       "brz-btn",
+      customClassName,
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
@@ -144,7 +146,8 @@ export default class Button extends EditorComponent {
       href: hrefs[linkType],
       target: linkExternalBlank,
       rel: linkExternalRel,
-      className: className
+      className: className,
+      id: customID
     };
 
     if (IS_EDITOR) {

@@ -256,8 +256,9 @@ class Image extends EditorComponent {
     };
 
     function multiplier(data, num) {
+      const maxRetinaSize = 9000; // restrictions for backend
       return Object.entries(data).reduce((acc, [key, value]) => {
-        acc[key] = value * num;
+        acc[key] = Math.min(value * num, maxRetinaSize);
         return acc;
       }, {});
     }
@@ -280,6 +281,8 @@ class Image extends EditorComponent {
       mobileContainerWidth
     } = this.state;
     const {
+      imageExtension,
+      imagePopulation,
       imageWidth,
       imageHeight,
       width,
@@ -287,6 +290,8 @@ class Image extends EditorComponent {
       widthSuffix,
       heightSuffix
     } = v;
+    const isSvgOfGif =
+      (isSVG(imageExtension) || isGIF(imageExtension)) && !imagePopulation;
     const _sizeType = getSizeType(v, DESKTOP);
     const _tabletSizeType = getSizeType(v, TABLET);
     const _mobileSizeType = getSizeType(v, MOBILE);
@@ -296,7 +301,7 @@ class Image extends EditorComponent {
     const mobileSizeType = getImageSize(_mobileSizeType);
     const { desktop, tablet, mobile } = this.getContainerSize();
 
-    if (isPredefinedSize(sizeType)) {
+    if (isPredefinedSize(sizeType) && !isSvgOfGif) {
       return {
         desktop: calcWrapperPredefinedSizes(sizeType, desktop),
         tablet: calcWrapperPredefinedSizes(tabletSizeType, tablet),
@@ -337,7 +342,7 @@ class Image extends EditorComponent {
       heightSuffix: mobileSyncOnChange(v, "heightSuffix")
     };
 
-    if (isOriginalSize(sizeType)) {
+    if (isOriginalSize(sizeType) && !isSvgOfGif) {
       return {
         desktop: calcWrapperOriginalSizes(desktopValue, containerWidth),
         tablet: calcWrapperOriginalSizes(tabletValue, tabletContainerWidth),

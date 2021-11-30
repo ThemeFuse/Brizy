@@ -56,6 +56,9 @@ export function style(v, vs, vd) {
     },
     ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2--control:before": {
       standart: ["cssStyleBorderRadius", "cssStyleElementSwitcherNavBeforeBg"]
+    },
+    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2__item--active": {
+      standart: ["cssStyleElementSwitcherActiveTextColor"]
     }
   };
 

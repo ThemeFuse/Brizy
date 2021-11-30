@@ -70,7 +70,7 @@ export type GlobalBlockPosition = {
 
 //#region Page
 
-export type DataCommon = {
+export interface DataCommon {
   id: string;
   data: {
     items: Block[];
@@ -79,7 +79,7 @@ export type DataCommon = {
   dataVersion: number;
   status: "draft" | "publish";
   title: string;
-};
+}
 
 export type PageCommon = DataCommon & {
   slug: string;
@@ -105,7 +105,7 @@ export type InternalPopupCloud = DataCommon & {
   project: number;
 };
 
-export type PageCloud = PageCommon & {
+export type PageCollection = PageCommon & {
   _kind: "cloud-cms";
   collectionType: {
     id: string;
@@ -124,13 +124,18 @@ export type PageCloud = PageCommon & {
     | null;
 };
 
-export type PopupCloud = PageCloud & {
+export interface PageCustomer extends DataCommon {
+  _kind: "cloud-customer";
+}
+
+export type PopupCloud = PageCollection & {
   rules: Rule[];
 };
 
 export type Page =
   | PageWP
-  | PageCloud
+  | PageCollection
+  | PageCustomer
   | InternalPopupCloud
   | ExternalPopupCloud
   | PopupCloud;

@@ -1,7 +1,9 @@
 {
   "content": {
     "type": "wp",
-    "popups": []
+    "popups": [],
+    "sourceType": "",
+    "sourceID": ""
   },
 
   "toolbar": {

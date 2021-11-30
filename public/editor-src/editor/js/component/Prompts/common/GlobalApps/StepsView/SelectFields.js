@@ -3,7 +3,7 @@ import _ from "underscore";
 import Scrollbars from "react-custom-scrollbars";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import Button from "../../Button";
+import { Button } from "../../Button";
 import { isMaxFields } from "../../utils";
 import { t } from "visual/utils/i18n";
 

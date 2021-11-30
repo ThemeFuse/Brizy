@@ -1,3 +1,5 @@
+@import "../../variables";
+
 // Base Style
 .brz-ed-popup-wrapper {
   position: absolute;
@@ -7,6 +9,8 @@
   width: 600px;
   box-shadow: $toolbar-box-shadow;
   border-radius: 5px;
+  font-family: $font-family-1;
+  color: $prompt-content-color;
 }
 .brz-ed-fixed-leave-transition.brz-ed-fixed-hidden {
   visibility: hidden;
@@ -124,7 +128,7 @@
   // Loading
   &-content--loading {
     position: absolute;
-    top: 79px;
+    top: 0;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -228,8 +232,27 @@
   text-transform: uppercase;
 }
 .brz-ed-popup-content {
-  background: #eff0f1;
+  position: relative;
+  background-color: #eff0f1;
   border-radius: 0 0 5px 5px;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+
+  &--spacing {
+    padding: 35px 43px 45px 43px;
+  }
+  &--height {
+    height: 565px;
+  }
+  &__head {
+    font-size: 13px;
+    color: #292e37;
+  }
+  &__footer--inline {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 // Close
@@ -378,5 +401,12 @@
   }
   .brz-ed-popup-form-field-label {
     width: 80%;
+  }
+}
+
+// --- Responsive
+@media screen and (max-height: 899px) {
+  .brz-ed-popup-content--height {
+    height: 465px;
   }
 }

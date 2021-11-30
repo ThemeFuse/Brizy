@@ -18,7 +18,6 @@ describe("Testing 'elementModelToValue' function", () => {
     const input: ElementModel = {
       widthSuffix: "px",
       heightSuffix: "%",
-      showOriginalImage: "on",
       sizeType: "custom",
       width: 45,
       height: 50,
@@ -26,9 +25,16 @@ describe("Testing 'elementModelToValue' function", () => {
     };
 
     const output: Value = {
+      mobileHeight: undefined,
+      mobileHeightSuffix: undefined,
+      mobileWidth: undefined,
+      mobileWidthSuffix: undefined,
+      tabletHeight: undefined,
+      tabletHeightSuffix: undefined,
+      tabletWidth: undefined,
+      tabletWidthSuffix: undefined,
       widthSuffix: "px",
       heightSuffix: "%",
-      showOriginalImage: "on",
       sizeType: "custom",
       width: 45,
       height: 50,
@@ -36,6 +42,43 @@ describe("Testing 'elementModelToValue' function", () => {
     };
 
     expect(elementModelToValue(input)).toStrictEqual(output);
+
+    const responsiveOutput: Value = {
+      mobileHeight: 10,
+      mobileHeightSuffix: "px",
+      mobileWidth: 10,
+      mobileWidthSuffix: "%",
+      tabletHeight: 20,
+      tabletHeightSuffix: "%",
+      tabletWidth: 20,
+      tabletWidthSuffix: "px",
+      widthSuffix: "px",
+      heightSuffix: "%",
+      sizeType: "custom",
+      width: 45,
+      height: 50,
+      size: 10
+    };
+    const responsiveInput: ElementModel = {
+      widthSuffix: "px",
+      heightSuffix: "%",
+      sizeType: "custom",
+      width: 45,
+      height: 50,
+      size: 10,
+      mobileHeight: 10,
+      mobileHeightSuffix: "px",
+      mobileWidth: 10,
+      mobileWidthSuffix: "%",
+      tabletHeight: 20,
+      tabletHeightSuffix: "%",
+      tabletWidth: 20,
+      tabletWidthSuffix: "px"
+    };
+
+    expect(elementModelToValue(responsiveInput)).toStrictEqual(
+      responsiveOutput
+    );
   });
 });
 
@@ -43,13 +86,20 @@ describe("Testing 'Patches for image' functions", () => {
   test("patchOnSizeTypeChange", () => {
     const cW = 400;
     const v: Value = {
+      mobileHeight: undefined,
+      mobileHeightSuffix: undefined,
+      mobileWidth: undefined,
+      mobileWidthSuffix: undefined,
+      tabletHeight: undefined,
+      tabletHeightSuffix: undefined,
+      tabletWidth: undefined,
+      tabletWidthSuffix: undefined,
       width: 200,
       height: 200,
       widthSuffix: "px",
       heightSuffix: "px",
       size: 2,
       sizeType: "",
-      showOriginalImage: "off",
       imagePopulation: undefined
     };
 

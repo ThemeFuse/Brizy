@@ -43,7 +43,8 @@ export class TextEditor extends Component<Props, State> {
     return (
       (this.lastNotifiedValue !== undefined &&
         this.lastNotifiedValue !== nextProps.value) ||
-      this.props.tagName !== nextProps.tagName
+      this.props.tagName !== nextProps.tagName ||
+      this.props.className !== nextProps.className
     );
   }
 

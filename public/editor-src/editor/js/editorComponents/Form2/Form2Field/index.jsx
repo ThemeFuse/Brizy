@@ -8,6 +8,7 @@ import * as sidebar from "./sidebar";
 import defaultValue from "./defaultValue";
 import { css } from "visual/utils/cssStyle";
 import { style } from "./styles";
+import { uuid } from "visual/utils/uuid";
 
 class Form2Field extends EditorComponent {
   static get componentId() {
@@ -90,6 +91,8 @@ class Form2Field extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
+    const labelId = uuid();
+
     const {
       labelType,
       placeholder: showPlaceholder,
@@ -111,11 +114,10 @@ class Form2Field extends EditorComponent {
 
     return (
       <div className={classNameField}>
-        {labelType === "outside" && (
-          <Component.Label id={this.getId()} value={v} />
-        )}
+        {labelType === "outside" && <Component.Label id={labelId} value={v} />}
         <Component
           {...v}
+          labelId={labelId}
           error={this.getError(v)}
           showPlaceholder={showPlaceholder}
           selectClassName={selectClassName}

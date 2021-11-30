@@ -39,6 +39,10 @@ export interface CollectionItemFieldInput {
   values: any;
 }
 
+export interface CustomerGroupPropsInput {
+  id: string;
+}
+
 export interface SeoPropsInput {
   title?: string | null;
   description?: string | null;
@@ -75,6 +79,22 @@ export interface updateCollectionItemInput {
   slug?: string | null;
   seo?: SeoPropsInput | null;
   social?: SocialPropsInput | null;
+  pageData?: string | null;
+  clientMutationId?: string | null;
+}
+
+export interface updateCustomerInput {
+  id: string;
+  email?: string | null;
+  userName?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  password?: string | null;
+  passwordConfirm?: string | null;
+  phone?: string | null;
+  verifiedEmail?: boolean | null;
+  customerGroups?: CustomerGroupPropsInput[] | null;
+  sendEmailInvite?: boolean | null;
   pageData?: string | null;
   clientMutationId?: string | null;
 }

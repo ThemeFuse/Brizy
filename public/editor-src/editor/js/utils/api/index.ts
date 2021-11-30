@@ -30,8 +30,11 @@ import {
   GetDynamicContent,
   UploadSavedBlocks,
   UploadSavedLayouts,
-  UploadSavedPopups
+  UploadSavedPopups,
+  GetCollectionTypes,
+  GetCollectionItems
 } from "./types";
+import { Cloud } from "visual/global/Config/types/configs/Cloud";
 
 const paginationData = {
   page: 1,
@@ -257,3 +260,42 @@ export const uploadSaveLayouts: UploadSavedLayouts = () => {
 };
 
 //#endregion
+export const getCollectionTypes: GetCollectionTypes = async () => {
+  const config = Config.getAll() as Cloud;
+
+  const { urls, project } = config;
+
+  return await request2(`${urls.api}/types/${project.id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(r => r.json())
+    .catch(e => {
+      if (process.env.NODE_ENV === "development") {
+        console.error(e);
+      }
+      return [];
+    });
+};
+
+export const getCollectionItems: GetCollectionItems = async (id: string) => {
+  const config = Config.getAll() as Cloud;
+
+  const { urls, project } = config;
+
+  return await request2(`${urls.api}/pages/${project.id}/type?type=${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(r => r.json())
+    .catch(e => {
+      if (process.env.NODE_ENV === "development") {
+        console.error(e);
+      }
+      return [];
+    });
+};

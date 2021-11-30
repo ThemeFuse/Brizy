@@ -20,15 +20,39 @@
     "react/prop-types": 0,
     "no-prototype-builtins": 0,
     "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
-    // "graphql/template-strings": [
-    //   "error",
-    //   {
-    //     "env": "apollo",
-    //     "tagName": "gql",
-    //     "schemaJsonFilepath": "./editor/js/utils/api/editor/cms/graphql/schema.json"
-    //   }
-    // ]
+    "react/jsx-uses-vars": "error",
+    "graphql/template-strings": [
+      "error",
+      {
+        "env": "apollo",
+        "tagName": "gql",
+        "validators": [
+          "ExecutableDefinitionsRule",
+          "FieldsOnCorrectTypeRule",
+          "KnownArgumentNamesRule",
+          "KnownDirectivesRule",
+          "KnownTypeNamesRule",
+          "LoneAnonymousOperationRule",
+          "NoFragmentCyclesRule",
+          "NoUndefinedVariablesRule",
+          "OverlappingFieldsCanBeMergedRule",
+          "PossibleFragmentSpreadsRule",
+          "ProvidedRequiredArgumentsRule",
+          "ScalarLeafsRule",
+          "SingleFieldSubscriptionsRule",
+          "UniqueArgumentNamesRule",
+          "UniqueDirectivesPerLocationRule",
+          "UniqueFragmentNamesRule",
+          "UniqueInputFieldNamesRule",
+          "UniqueOperationNamesRule",
+          "UniqueVariableNamesRule",
+          "ValuesOfCorrectTypeRule",
+          "VariablesAreInputTypesRule",
+          "VariablesInAllowedPositionRule"
+        ],
+        "schemaJsonFilepath": "./editor/js/utils/api/cms/graphql/schema.json"
+      }
+    ]
   },
   "env": {
     "es6": true,
@@ -70,7 +94,7 @@
       "plugin:@typescript-eslint/recommended",
       "prettier"
     ],
-    "plugins": ["@typescript-eslint"],
+    "plugins": ["@typescript-eslint", "graphql"],
     "rules": {
       "react/prop-types": "off"
     }

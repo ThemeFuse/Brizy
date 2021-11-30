@@ -1,3 +1,11 @@
+const Carwash = require("./Carwash");
+const Wedding = require("./Wedding");
+const ScooterRental = require("./ScooterRental");
+const CarParts = require("./CarParts");
+const Mechanic = require("./Mechanic");
+const Birthday = require("./Birthday");
+const Homeshop = require("./Homeshop");
+const Cospace = require("./Cospace");
 const Taxi = require("./Taxi");
 const Payss = require("./Payss");
 const Spirit = require("./Spirit");
@@ -122,6 +130,14 @@ const Workspace = require("./Workspace");
 
 module.exports = {
   templates: [
+    Carwash,
+    ScooterRental,
+    CarParts,
+    Wedding,
+    Mechanic,
+    Birthday,
+    Homeshop,
+    Cospace,
     Taxi,
     Payss,
     Spirit,

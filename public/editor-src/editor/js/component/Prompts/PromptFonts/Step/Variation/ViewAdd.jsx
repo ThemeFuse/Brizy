@@ -4,7 +4,7 @@ import ScrollPane from "visual/component/ScrollPane";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import Tooltip from "visual/component/Controls/Tooltip";
-import Button from "visual/component/Prompts/common/Button";
+import { Button } from "visual/component/Prompts/common/Button";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 

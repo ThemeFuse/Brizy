@@ -31,7 +31,7 @@ export const Async: FC<Omit<Props, "choices"> & {
     return (): void => {
       controller?.abort();
     };
-  }, []);
+  }, [props.choices]);
 
   if (!isLoaded) {
     return (

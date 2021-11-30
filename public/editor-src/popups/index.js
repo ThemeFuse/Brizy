@@ -1,5 +1,17 @@
-
 const Blank0001Popup2 = require("./blocks/Blank0001Popup2");
+const popup2000 = require("./blocks/popup2000");
+const popup2001 = require("./blocks/popup2001");
+const popup2002 = require("./blocks/popup2002");
+const popup2003 = require("./blocks/popup2003");
+const popup2004 = require("./blocks/popup2004");
+const popup2006 = require("./blocks/popup2006");
+const popup2007 = require("./blocks/popup2007");
+const popup2008 = require("./blocks/popup2008");
+const popup2009 = require("./blocks/popup2009");
+const popup2010 = require("./blocks/popup2010");
+const popup2011 = require("./blocks/popup2011");
+const popup2012 = require("./blocks/popup2012");
+const popup2013 = require("./blocks/popup2013");
 const popup1697 = require("./blocks/popup1697");
 const popup1769 = require("./blocks/popup1769");
 const popup1773 = require("./blocks/popup1773");
@@ -46,55 +58,75 @@ const popup1614 = require("./blocks/popup1614");
 const popup1615 = require("./blocks/popup1615");
 const popup1593 = require("./blocks/popup1593");
 
-
 module.exports = {
   blocks: [
     Blank0001Popup2,
+    popup2000,
+    popup2001,
+    popup2002,
+    popup2003,
+    popup2004,
+    popup2006,
+    popup2007,
+    popup2008,
+    popup2009,
+    popup2010,
+    popup2011,
+    popup2012,
+    popup2013,
     popup1697,
-popup1769,
-popup1773,
-popup1541,
-popup1578,
-popup1718,
-popup1719,
-popup1651,
-popup1715,
-popup1716,
-popup1717,
-popup1605,
-popup1660,
-popup1662,
-popup1664,
-popup1663,
-popup1661,
-popup1762,
-popup1764,
-popup1765,
-popup1767,
-popup1768,
-popup1770,
-popup1772,
-popup1497,
-popup1498,
-popup1492,
-popup1499,
-popup1500,
-popup1496,
-popup1537,
-popup1546,
-popup1760,
-popup1547,
-popup1761,
-popup1548,
-popup1549,
-popup1763,
-popup1771,
-popup1616,
-popup1766,
-popup1613,
-popup1614,
-popup1615,
-popup1593
+    popup1769,
+    popup1773,
+    popup1541,
+    popup1578,
+    popup1718,
+    popup1719,
+    popup1651,
+    popup1715,
+    popup1716,
+    popup1717,
+    popup1605,
+    popup1660,
+    popup1662,
+    popup1664,
+    popup1663,
+    popup1661,
+    popup1762,
+    popup1764,
+    popup1765,
+    popup1767,
+    popup1768,
+    popup1770,
+    popup1772,
+    popup1497,
+    popup1498,
+    popup1492,
+    popup1499,
+    popup1500,
+    popup1496,
+    popup1537,
+    popup1546,
+    popup1760,
+    popup1547,
+    popup1761,
+    popup1548,
+    popup1549,
+    popup1763,
+    popup1771,
+    popup1616,
+    popup1766,
+    popup1613,
+    popup1614,
+    popup1615,
+    popup1593
   ],
-  categories:[{"id":0,"slug":"blank","title":"Blank","hidden":true},{"id":1579,"slug":"features","title":"Features"},{"id":1698,"slug":"media","title":"Media"},{"id":1652,"slug":"notifications","title":"Notifications"},{"id":1493,"slug":"sale","title":"Sale"},{"id":1538,"slug":"sign-up","title":"Sign up"},{"id":1606,"slug":"subscribe","title":"Subscribe"}]
+  categories: [
+    { id: 0, slug: "blank", title: "Blank", hidden: true },
+    { id: 1579, slug: "features", title: "Features" },
+    { id: 1698, slug: "media", title: "Media" },
+    { id: 1652, slug: "notifications", title: "Notifications" },
+    { id: 1493, slug: "sale", title: "Sale" },
+    { id: 1538, slug: "sign-up", title: "Sign up" },
+    { id: 1606, slug: "subscribe", title: "Subscribe" }
+  ]
 };

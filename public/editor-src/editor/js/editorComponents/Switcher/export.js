@@ -25,11 +25,13 @@ export default function($node) {
     const $switcherNavControl = $this.find(
       "> .brz-switcher__nav2 .brz-switcher__nav2--control"
     );
-
+    const $switcherActiveContent = $this.find(
+      "> .brz-switcher__nav2 .brz-switcher__nav2__item"
+    );
     $switcherNavControl.on("click", function() {
       $switcherNavControl.toggleClass("brz-switcher__nav2--control--active");
       $switcherContent.toggleClass("brz-switcher__content--tab--active");
-
+      $switcherActiveContent.toggleClass("brz-switcher__nav2__item--active");
       // Emit Switcher Changed
       window.Brz.emit("elements.switcher.changed", $this.get(0), {
         active: $this.find(".brz-switcher__content--tab--active").get(0),

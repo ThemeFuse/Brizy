@@ -84,12 +84,12 @@ class Tab extends EditorComponent {
         <div className={contentClassName}>
           <Animation
             iterationCount={
-                IS_PREVIEW && (meta.sectionPopup || meta.sectionPopup2)
-                  ? Infinity
-                  : 1
-              }
-              component={"div"}
-              componentProps={{className: "brz-d-xs-flex brz-flex-xs-column" }}
+              IS_PREVIEW && (meta.sectionPopup || meta.sectionPopup2)
+                ? Infinity
+                : 1
+            }
+            component={"div"}
+            componentProps={{ className: "brz-d-xs-flex brz-flex-xs-column" }}
             animationClass={animationClassName}
           >
             <Items {...itemsProps} />

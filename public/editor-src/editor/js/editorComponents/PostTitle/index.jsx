@@ -90,7 +90,9 @@ export default class PostTitle extends EditorComponent {
       linkExternalType,
       linkPopup,
       linkUpload,
-      tagName
+      tagName,
+      sourceType,
+      sourceID
     } = v;
     const className = classnames(
       "brz-wp-title",
@@ -107,9 +109,14 @@ export default class PostTitle extends EditorComponent {
       popup: linkPopup,
       upload: linkUpload
     };
+
+    const placeholderWithTypes = sourceType
+      ? `{{brizy_dc_post_title type="${sourceType}" id="${sourceID}"}}`
+      : "{{brizy_dc_post_title}}";
+
     const text = (
       <DynamicContentHelper
-        placeholder="{{brizy_dc_post_title}}"
+        placeholder={placeholderWithTypes}
         placeholderIcon="wp-title"
         tagName={tagName}
         props={{
