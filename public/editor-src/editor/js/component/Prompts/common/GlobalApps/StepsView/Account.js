@@ -5,7 +5,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import Radio from "visual/component/Controls/Radio";
 import RadioItem from "visual/component/Controls/Radio/RadioItem";
 import { t } from "visual/utils/i18n";
-import Button from "../../Button";
+import { Button } from "../../Button";
 
 class Account extends Component {
   static defaultProps = {

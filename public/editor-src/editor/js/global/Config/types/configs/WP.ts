@@ -22,6 +22,7 @@ export interface Prop {
     uploadBlocks: string;
     downloadBlocks: string;
     downloadLayouts: string;
+    getPostObjects: string;
 
     // TODO: need completed it
   };
@@ -29,7 +30,7 @@ export interface Prop {
 
 export interface WP extends ConfigCommon {
   dynamicContent: DynamicContent<"wp">;
-  pro: Pro<"wp">;
+  pro?: Pro<"wp">;
   user: User<"wp">;
   urls: Urls<"wp">;
   project: Project<"wp">;

@@ -7,9 +7,10 @@ import { connect, ConnectedProps } from "react-redux";
 import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
 import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
-import EditorIcon from "visual/component/EditorIcon";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
-import Button from "visual/component/Prompts/common/Button";
+import { Button } from "visual/component/Prompts/common/Button";
+import { Alert } from "visual/component/Alert";
+import { Loading } from "visual/component/Prompts/common/Loading";
 import { validateEmail } from "../common/utils";
 import { t } from "visual/utils/i18n";
 import { checkCompatibility, signUp } from "./api";
@@ -192,11 +193,7 @@ class SignUp extends Component<SingUpProps, SignUpState> {
   };
 
   renderLoading(): React.ReactElement {
-    return (
-      <div className="brz-ed-popup-content--loading">
-        <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
-      </div>
-    );
+    return <Loading />;
   }
 
   renderNotice(): React.ReactElement | undefined {
@@ -205,11 +202,7 @@ class SignUp extends Component<SingUpProps, SignUpState> {
     if (notice) {
       const { message, type } = notice;
 
-      return (
-        <div className={`brz-ed-alert brz-ed-alert-${type}`}>
-          <span className="brz-span">{message}</span>
-        </div>
-      );
+      return <Alert message={message} type={type} />;
     }
   }
 

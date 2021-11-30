@@ -254,7 +254,7 @@ export default class Select extends TextField {
     return options.length ? (
       <div className={this.getClassName(v)}>
         <select {...attr} className="brz-select">
-          <option value=" ">{label}</option>
+          <option value="">{label}</option>
           {options.map((item, index) => (
             <option key={index} value={item}>
               {item}

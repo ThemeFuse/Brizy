@@ -1,4 +1,4 @@
-import { hasProps, map } from "visual/utils/object";
+import { hasProps } from "visual/utils/object";
 import setIds from "./setIds";
 import stripIds from "./stripIds";
 import {
@@ -23,14 +23,12 @@ import {
   isGlobalPopup
 } from "./modes";
 import { setOffsetsToElementFromWrapper } from "./setDataInElement";
+import { mapWithStructuralSharing } from "../object/mapWithStructuralSharing";
 
 const isModel = obj => hasProps(["type", "value"], obj);
 
-const mapModels = (fn, model) => {
-  return isModel(model)
-    ? map(mapModels.bind(null, fn), fn(model))
-    : map(mapModels.bind(null, fn), model);
-};
+const mapModels = (fn, model) =>
+  mapWithStructuralSharing(model, obj => (isModel(obj) ? fn(obj) : obj));
 
 export {
   setIds,

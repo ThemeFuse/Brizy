@@ -10,6 +10,7 @@ import {
   cssStyleBgColor,
   cssStyleBoxShadow
 } from "visual/utils/cssStyle";
+import { ACTIVE } from "../stateMode";
 
 export function cssStyleElementTabsBtnSpacing({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
@@ -200,8 +201,8 @@ export function cssStyleElementTabsNavStyle3Before({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
   const verticalMode = dvv("verticalMode");
   const verticalAlign = dvv("verticalAlign");
-  const color = styleBorderColor({ v, device, state: "active" });
-  const width = styleBorderWidthGrouped({ v, device, state: "active" });
+  const color = styleBorderColor({ v, device, state: ACTIVE });
+  const width = styleBorderWidthGrouped({ v, device, state: ACTIVE });
 
   if (verticalMode === "off") {
     return `content: ""; width: 100%; height: ${width}px;  background-color: ${color}; position: absolute; bottom: 0; left: 0; z-index: 2;`;
@@ -215,20 +216,20 @@ export function cssStyleElementTabsNavStyle3Before({ v, device, state }) {
 }
 
 export function cssStyleElementTabsActiveColor({ v }) {
-  return cssStyleColor({ v, state: "active", prefix: "color" });
+  return cssStyleColor({ v, state: ACTIVE, prefix: "color" });
 }
 
 export function cssStyleElementTabsActiveBgColor({ v }) {
-  return cssStyleBgColor({ v, state: "active", prefix: "bg" });
+  return cssStyleBgColor({ v, state: ACTIVE, prefix: "bg" });
 }
 
 export function cssStyleElementTabsActiveShadow({ v }) {
-  return cssStyleBoxShadow({ v, state: "active" });
+  return cssStyleBoxShadow({ v, state: ACTIVE });
 }
 
 export function cssStyleElementTabsActiveBorder({ v }) {
   const borderWidth = styleBorderWidthGrouped({ v, state: "normal" });
   const borderStyle = styleBorderStyle({ v, state: "normal" });
-  const borderColor = styleBorderColor({ v, state: "active" });
+  const borderColor = styleBorderColor({ v, state: ACTIVE });
   return `border: ${borderWidth}px ${borderStyle} ${borderColor};`;
 }

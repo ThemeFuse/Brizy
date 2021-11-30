@@ -45,6 +45,7 @@ export function styleHeading(v, vs, vd) {
     ".brz &&:hover": {
       standart: [
         "cssStyleColor",
+        ...(IS_EDITOR ? [] : ["cssStyleElementRichTextColor"]),
         "cssStyleElementRichTextMartinTop",
         "cssStyleElementRichTextMartinBottom",
         "cssStyleContentAlign",

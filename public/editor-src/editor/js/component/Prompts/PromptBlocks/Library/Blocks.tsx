@@ -19,7 +19,7 @@ import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
 import CloudConnect from "./CloudConnect";
 import { BlockCategory } from "../types";
 import { ApiBlockMetaWithType, BlocksThumbs } from "./index";
-import Button from "../../common/Button";
+import { Button } from "../../common/Button";
 import { Footer } from "../common/Footer";
 
 export interface Props {

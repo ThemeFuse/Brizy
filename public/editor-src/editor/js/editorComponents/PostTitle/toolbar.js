@@ -9,6 +9,7 @@ import {
 } from "visual/utils/toolbar";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { getSourceTypeChoices, getSourceIdChoices } from "./utils";
 
 export function getItems({ v, device, component }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
@@ -22,6 +23,46 @@ export function getItems({ v, device, component }) {
   );
 
   return [
+    {
+      id: "posts",
+      type: "popover-dev",
+      config: {
+        icon: "nc-wp-posts",
+        size: "auto",
+        title: t("Posts")
+      },
+      roles: ["admin"],
+      position: 70,
+      options: [
+        {
+          id: "sourceType",
+          type: "select-dev",
+          label: t("Source Type"),
+          device: "desktop",
+          placeholder: "Options",
+          choices: {
+            load: () => getSourceTypeChoices(),
+            emptyLoad: {
+              title: t("There are no choices")
+            }
+          }
+        },
+        {
+          id: "sourceID",
+          type: "select-dev",
+          label: t("Source ID"),
+          disabled: v.sourceType === "",
+          device: "desktop",
+          placeholder: "Select",
+          choices: {
+            load: () => getSourceIdChoices(v.sourceType),
+            emptyLoad: {
+              title: t("There are no choices")
+            }
+          }
+        }
+      ]
+    },
     {
       id: "popoverTypography",
       type: "popover-dev",

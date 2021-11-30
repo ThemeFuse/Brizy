@@ -7,10 +7,16 @@ import {
   styleElementRichTextFontFamily
 } from "visual/utils/style2/styleElementRichText";
 import { IS_STORY } from "../models";
-import { styleTypography2FontSize } from "../style2";
+import { styleState, styleTypography2FontSize } from "../style2";
 import { CSSValue } from "../style2/types";
 import { cssStyleTypography3FontSize } from "./cssStyleTypography2";
 import { styleBgImage, styleExportBgImage } from "visual/utils/style2";
+import { ElementModel } from "visual/component/Elements/Types";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { defaultValueValue } from "visual/utils/onChange";
+import { State } from "visual/utils/stateMode";
+import { capByPrefix } from "visual/utils/string";
+import { hexToRgba } from "visual/utils/color";
 
 export function cssStyleElementRichTextMartinTop(d: CSSValue): string {
   const marginTop = styleElementRichTextMarginTop(d);
@@ -103,4 +109,27 @@ export function cssStyleElementRichTextFontFamily({
     prefix,
     state
   })} !important;`;
+}
+
+const getState = (v: ElementModel, state: State): string =>
+  //@ts-expect-error: v as any
+  styleState({ v, state }) === "hover" ? "hover" : state;
+
+export function cssStyleElementRichTextColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const _state = getState(v, state);
+  const dvv = (key: string): string =>
+    defaultValueValue({ v, key, device, state: _state });
+
+  const { hex } = getOptionColorHexByPalette(
+    dvv(capByPrefix("color", "hex")),
+    dvv("block-colorPalette")
+  );
+
+  const rgb = hexToRgba(hex, dvv(capByPrefix("color", "opacity"))) ?? "";
+
+  return rgb === undefined ? "" : `color:${rgb};`;
 }

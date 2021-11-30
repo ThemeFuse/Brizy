@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import { t } from "visual/utils/i18n";
-import Button from "../../../common/Button";
+import { Button } from "../../../common/Button";
 import ScrollPane from "visual/component/ScrollPane";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 

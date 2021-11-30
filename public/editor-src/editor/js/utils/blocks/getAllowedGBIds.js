@@ -1,6 +1,5 @@
 import _ from "underscore";
 import Config from "visual/global/Config";
-import { IS_CLOUD } from "visual/utils/env";
 import {
   getCurrentRule,
   TEMPLATES_GROUP_ID,
@@ -8,6 +7,7 @@ import {
 } from "./blocksConditions";
 import { isPopup } from "./isPopup";
 import { IS_TEMPLATE } from "visual/utils/models";
+import { isCollectionPage } from "visual/global/Config/types/configs/Cloud";
 
 export const getAllowedGBIds = (pageBlocksIds, globalBlocks, page) => {
   return Object.entries(globalBlocks).reduce(
@@ -186,7 +186,7 @@ export function canUseConditionInPage(globalBlock, page) {
   } = pageSplitRules(rules, page);
 
   let cmsRule = false;
-  if (IS_CLOUD) {
+  if (isCollectionPage(page)) {
     const { fields } = page;
 
     const refs = getFieldsReferences(fields);

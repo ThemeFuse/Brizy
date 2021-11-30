@@ -60,6 +60,13 @@ class Switcher extends EditorComponent {
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
 
+    const classNameActive1 = classnames("brz-switcher__nav2__item", {
+      "brz-switcher__nav2__item--active": activeTab === 0
+    });
+    const classNameActive2 = classnames("brz-switcher__nav2__item", {
+      "brz-switcher__nav2__item--active": activeTab === 1
+    });
+
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig, {
@@ -67,14 +74,22 @@ class Switcher extends EditorComponent {
         })}
       >
         <div className="brz-switcher__nav2">
-          <TextEditor value={labelText1} onChange={this.handleLabelChange1} />
+          <TextEditor
+            className={classNameActive1}
+            value={labelText1}
+            onChange={this.handleLabelChange1}
+          />
           <div
             onClick={() => {
               this.handleChangeNav(activeTab === 0 ? 1 : 0);
             }}
             className={className}
           />
-          <TextEditor value={labelText2} onChange={this.handleLabelChange2} />
+          <TextEditor
+            className={classNameActive2}
+            value={labelText2}
+            onChange={this.handleLabelChange2}
+          />
         </div>
       </Toolbar>
     );

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 
 export { default as CheckGroupItem } from "./CheckGroupItem";
+export { CheckGroupIcon } from "./CheckGroupIcon";
 
 export default class CheckGroup extends React.Component {
   static propTypes = {
@@ -34,6 +35,7 @@ export default class CheckGroup extends React.Component {
 
     return React.Children.map(children, (child, index) => {
       return React.cloneElement(child, {
+        ...child.props,
         key: index,
         active: Boolean(defaultValue[child.props.value]),
         onClick: child.props.disabled

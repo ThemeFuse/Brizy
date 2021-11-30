@@ -1,7 +1,7 @@
 import {
   getCollectionTypesWithFields,
   getCollectionItems
-} from "visual/utils/api";
+} from "visual/utils/api/cms";
 import { isT } from "visual/utils/value";
 import { Choice } from "visual/component/Options/types/dev/MultiSelect2/types";
 import { Dictionary } from "visual/types/utils";

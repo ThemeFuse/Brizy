@@ -1,13 +1,14 @@
-import { PageCloud } from "visual/types";
+import { PageCollection, PageCustomer } from "visual/types";
 import * as Json from "visual/utils/reader/json";
 import * as Obj from "visual/utils/reader/object";
 import { CollectionItemStatus } from "visual/utils/api/cms/graphql/types/entities";
 import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
+import { GetCustomer_customer as CustomerItem } from "visual/utils/api/cms/graphql/types/GetCustomer";
 import { mPipe } from "visual/utils/fp/mPipe";
 
 export const itemStatusToPageStatus = (
   status: CollectionItemStatus
-): PageCloud["status"] => {
+): PageCollection["status"] => {
   switch (status) {
     case CollectionItemStatus.draft:
       return "draft";
@@ -17,7 +18,7 @@ export const itemStatusToPageStatus = (
 };
 
 export const pageStatusToItemStatus = (
-  status: PageCloud["status"]
+  status: PageCollection["status"]
 ): CollectionItemStatus => {
   switch (status) {
     case "draft":
@@ -27,7 +28,7 @@ export const pageStatusToItemStatus = (
   }
 };
 
-export const itemToPage = (item: CollectionItem): PageCloud => {
+export const itemToPage = (item: CollectionItem): PageCollection => {
   const readData = mPipe(Json.read, Obj.read);
 
   return {
@@ -36,7 +37,7 @@ export const itemToPage = (item: CollectionItem): PageCloud => {
     title: item.title,
     slug: item.slug,
     status: itemStatusToPageStatus(item.status),
-    data: (readData(item.pageData) as PageCloud["data"]) ?? {
+    data: (readData(item.pageData) as PageCollection["data"]) ?? {
       items: []
     },
     dataVersion: 0,
@@ -45,5 +46,20 @@ export const itemToPage = (item: CollectionItem): PageCloud => {
       title: item.type.title
     },
     fields: item.fields
+  };
+};
+
+export const itemCustomerToPage = (item: CustomerItem): PageCustomer => {
+  const readData = mPipe(Json.read, Obj.read);
+
+  return {
+    _kind: "cloud-customer",
+    id: item.id,
+    title: "Some title",
+    data: (readData(item.pageData) as PageCustomer["data"]) ?? {
+      items: []
+    },
+    status: "publish",
+    dataVersion: 0
   };
 };

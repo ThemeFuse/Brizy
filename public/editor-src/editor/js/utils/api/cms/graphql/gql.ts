@@ -28,6 +28,14 @@ import {
   ReferencedCollectionItems,
   ReferencedCollectionItemsVariables
 } from "./types/ReferencedCollectionItems";
+import {
+  GetCustomer,
+  GetCustomerVariables
+} from "visual/utils/api/cms/graphql/types/GetCustomer";
+import {
+  UpdateCustomer,
+  UpdateCustomerVariables
+} from "visual/utils/api/cms/graphql/types/UpdateCustomer";
 
 //#region CollectionItem fragment
 const collectionItemFragment = gql`
@@ -304,6 +312,42 @@ export const getReferencedCollectionItems = (
         }
       }
       ${collectionItemFragment}
+    `,
+    variables
+  });
+//#endregion
+
+//#region Customers
+export const getCustomer = (
+  apolloClient: ApolloClient,
+  variables: GetCustomerVariables
+): Promise<ApolloQueryResult<GetCustomer>> =>
+  apolloClient.query<GetCustomer, GetCustomerVariables>({
+    query: gql`
+      query GetCustomer($id: ID!) {
+        customer(id: $id) {
+          id
+          pageData
+        }
+      }
+    `,
+    variables
+  });
+
+export const updateCustomer = (
+  apolloClient: ApolloClient,
+  variables: UpdateCustomerVariables
+): Promise<FetchResult<UpdateCustomer>> =>
+  apolloClient.mutate<UpdateCustomer, UpdateCustomerVariables>({
+    mutation: gql`
+      mutation UpdateCustomer($input: updateCustomerInput!) {
+        updateCustomer(input: $input) {
+          customer {
+            id
+            pageData
+          }
+        }
+      }
     `,
     variables
   });

@@ -9,7 +9,7 @@ import {
 } from "visual/utils/fonts";
 import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
 import { pendingRequest } from "visual/utils/api";
-import InputFields from "visual/component/Prompts/common/GlobalApps/StepsView/InputFields";
+import { Fields } from "visual/component/Prompts/common/GlobalApps/StepsView/Fields";
 import { t } from "visual/utils/i18n";
 
 class GoogleConnect extends Component {
@@ -148,7 +148,7 @@ class GoogleConnect extends Component {
     );
 
     return (
-      <InputFields
+      <Fields
         {...app}
         data={data}
         headTitle={t("ADD GOOGLE FONT")}

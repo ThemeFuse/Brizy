@@ -149,47 +149,6 @@ export function getItems({ v, device, context }) {
               }
             },
             {
-              id: "cssID",
-              label: t("CSS ID"),
-              type: "population-dev",
-              position: 30,
-              devices: "desktop",
-              display: "block",
-              helper: {
-                content: "Add your custom ID without the #pound, example: my-id"
-              },
-              config: {
-                choices: richTextDC
-              },
-              options: [
-                {
-                  id: "customID",
-                  type: "inputText-dev"
-                }
-              ]
-            },
-            {
-              id: "cssClass",
-              label: t("CSS Class"),
-              type: "population-dev",
-              position: 40,
-              devices: "desktop",
-              display: "block",
-              helper: {
-                content:
-                  "Add your custom class without the .dot, example: my-class"
-              },
-              config: {
-                choices: richTextDC
-              },
-              options: [
-                {
-                  id: "customClassName",
-                  type: "inputText-dev"
-                }
-              ]
-            },
-            {
               id: "customAttributes",
               label: t("Custom Attributes"),
               type: "codeMirror-dev",
