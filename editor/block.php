@@ -10,11 +10,12 @@
 class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 
-	use Brizy_Editor_AutoSaveAware, Brizy_Editor_Synchronizable;
+	use Brizy_Editor_AutoSaveAware, Brizy_Editor_Synchronizable, Brizy_Editor_PostTagsAware;
 
 	const BRIZY_META = 'brizy-meta';
 	const BRIZY_MEDIA = 'brizy-media';
 	const BRIZY_POSITION = 'brizy-position';
+
 
 	/**
 	 * @var Brizy_Editor_BlockPosition
@@ -76,6 +77,8 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			$fields = array(
 				'uid',
 				'id',
+				'title',
+				'tags',
 				'meta',
 				'data',
 				'status',
@@ -108,6 +111,14 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		if ( in_array( 'meta', $fields ) ) {
 			$global['meta'] = $this->getMeta();
+		}
+
+		if ( in_array( 'title', $fields ) ) {
+			$global['title'] = $this->getTitle();
+		}
+
+		if ( in_array( 'tags', $fields ) ) {
+			$global['tags'] = $this->getTags();
 		}
 
 
@@ -272,6 +283,8 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		$data['meta']  = $this->getMeta();
 		$data['media'] = $this->getMedia();
+		$data['title'] = $this->getTitle();
+		$data['tags'] = $this->getTags();
 		//$data['cloudId']        = $this->getCloudId();
 		//$data['cloudAccountId'] = $this->getCloudAccountId();
 		unset( $data['wp_post'] );
@@ -279,7 +292,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		return $data;
 	}
 
-	public function loadInstanceData() {
+	protected function loadInstanceData() {
 		parent::loadInstanceData();
 		$storage      = $this->getStorage();
 		$storage_post = $storage->get( self::BRIZY_POST, false );
@@ -301,6 +314,8 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		$this->meta  = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_META, true );
 		$this->media = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_MEDIA, true );
+
+		$this->loadInstanceTags();
 	}
 
 	public function convertToOptionValue() {
@@ -401,6 +416,8 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		update_metadata( 'post', $this->getWpPostId(), self::BRIZY_META, $this->meta );
 		update_metadata( 'post', $this->getWpPostId(), self::BRIZY_MEDIA, $this->media );
+
+		$this->saveInstanceTags();
 	}
 
     /**
