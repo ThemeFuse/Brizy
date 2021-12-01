@@ -201,13 +201,19 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
             $layout->setGlobalStyles(stripslashes($this->param('globalStyles')));
             $layout->set_editor_data($editorData);
             $layout->set_needs_compile(true);
-            if ($this->param('title')) {
-                $layout->setTitle(stripslashes($this->param('title')));
-            }
 
-            if ($this->param('tags')) {
-                $layout->setTags(stripslashes($this->param('tags')));
-            }//$layout->setCloudUpdateRequired( true );
+	        if($this->param('title'))
+	        {
+		        $layout->setTitle(stripslashes($this->param('title')));
+	        }
+
+	        if($this->param('tags'))
+	        {
+		        $layout->setTags(stripslashes($this->param('tags')));
+	        }
+
+
+	        //$layout->setCloudUpdateRequired( true );
             $layout->setDataVersion(1);
             $layout->save();
 
