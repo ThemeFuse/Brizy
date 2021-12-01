@@ -236,14 +236,16 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
             }
 
             $bockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
-            /**
+
+	        /**
 	         * @var Brizy_Editor_Post $block;
-	         */$block       = $bockManager->createEntity($this->param('uid'), $status);
+	         */
+            $block       = $bockManager->createEntity($this->param('uid'), $status);
             $block->setMeta(stripslashes($this->param('meta')));
             $block->set_editor_data($editorData);
             $block->set_needs_compile(true);
 
-            if($this->param('title'))
+	        if($this->param('title'))
 	        {
 		        $block->setTitle(stripslashes($this->param('title')));
 	        }
@@ -251,7 +253,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 	        if($this->param('tags'))
 	        {
 		        $block->setTags(stripslashes($this->param('tags')));
-	        }if ($position) {
+	        }
+
+            if ($position) {
                 $block->setPosition(
                     Brizy_Editor_BlockPosition::createFromSerializedData(get_object_vars(json_decode($position)))
                 );
@@ -548,6 +552,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
             $block       = $bockManager->createEntity($this->param('uid'));
             $block->setMedia(stripslashes($this->param('media')));
             $block->setMeta(stripslashes($this->param('meta')));
+
             if($this->param('title'))
             {
             	$block->setTitle(stripslashes($this->param('title')));
@@ -555,7 +560,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 	        if($this->param('tags'))
 	        {
 	        	$block->setTags(stripslashes($this->param('tags')));
-	        }$block->set_editor_data(stripslashes($this->param('data')));
+	        }
+
+            $block->set_editor_data(stripslashes($this->param('data')));
             $block->set_needs_compile(true);
             //$block->setCloudUpdateRequired( true );
             $block->save();
@@ -615,7 +622,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 	        }
 
 
-            if ((int)$this->param('is_autosave')) {
+	        if ((int)$this->param('is_autosave')) {
                 $block->save(1);
             } else {
                 $block->save();

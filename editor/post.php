@@ -7,14 +7,14 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
 
     use Brizy_Editor_AutoSaveAware;
 
-    const BRIZY_POST = 'brizy-post';
-    const BRIZY_POST_NEEDS_COMPILE_KEY = 'brizy-need-compile';
-    const BRIZY_POST_SIGNATURE_KEY = 'brizy-post-signature';
-    const BRIZY_POST_HASH_KEY = 'brizy-post-hash';
-    const BRIZY_POST_EDITOR_VERSION = 'brizy-post-editor-version';
-    const BRIZY_POST_COMPILER_VERSION = 'brizy-post-compiler-version';
-    const BRIZY_POST_PLUGIN_VERSION = 'brizy-post-plugin-version';
-    const BRIZY_TAGS = 'brizy-tags';
+	const BRIZY_POST = 'brizy-post';
+	const BRIZY_POST_NEEDS_COMPILE_KEY = 'brizy-need-compile';
+	const BRIZY_POST_SIGNATURE_KEY = 'brizy-post-signature';
+	const BRIZY_POST_HASH_KEY = 'brizy-post-hash';
+	const BRIZY_POST_EDITOR_VERSION = 'brizy-post-editor-version';
+	const BRIZY_POST_COMPILER_VERSION = 'brizy-post-compiler-version';
+	const BRIZY_POST_PLUGIN_VERSION = 'brizy-post-plugin-version';
+	const BRIZY_TAGS = 'brizy-tags';
 
     static protected $instance = null;
     static protected $compiled_page = [];
@@ -264,8 +264,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
 
         $postarr = [
             'ID' => $this->getWpPostId(),
-            'post_title' => $this->getTitle(),
-            'post_content' => $this->getPostContent($createRevision)
+            'post_title'   => $this->getTitle(),
+			'post_content' => $this->getPostContent($createRevision)
         ];
 
         $this->deleteOldAutosaves($this->getWpPostId());
@@ -759,14 +759,14 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         //$storageData          = $storage->get_storage();
         $storage_post = $storage->get($this->getObjectKey(), false);
 
-        $this->setTitle(get_the_title($this->getWpPostId()));
+        $this->setTitle( get_the_title( $this->getWpPostId() ) );
 
-        // check for deprecated forms of posts
-        if ($storage_post instanceof self) {
-            $this->set_editor_data($storage_post->editor_data);
-            $this->set_needs_compile(true);
-            $this->save();
-        } else if (is_array($storage_post)) {
+		// check for deprecated forms of posts
+		if ( $storage_post instanceof self ) {
+			$this->set_editor_data( $storage_post->editor_data );
+			$this->set_needs_compile( true );
+			$this->save();
+		} else if ( is_array( $storage_post ) ) {
 
             if (isset($storage_post['compiled_html'])) {
                 $this->set_encoded_compiled_html($storage_post['compiled_html']);
@@ -799,7 +799,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
     protected function populateAutoSavedData($autosave)
     {
         $autosave->setTitle($this->getTitle());
-        $autosave->set_template($this->get_template());
+        $autosave->setTitle( $this->getTitle() );
+		$autosave->set_template($this->get_template());
         $autosave->set_editor_data($this->get_editor_data());
         $autosave->set_editor_version($this->get_editor_version());
         $autosave->set_needs_compile(true);
