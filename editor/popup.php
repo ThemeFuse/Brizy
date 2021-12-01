@@ -1,4 +1,4 @@
-<?php
+q<?php
 /**
  * Created by PhpStorm.
  * User: alex
