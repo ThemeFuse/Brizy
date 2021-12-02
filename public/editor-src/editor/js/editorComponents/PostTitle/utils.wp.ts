@@ -1,12 +1,12 @@
 import {
-  getCollectionItems,
-  getCollectionTypes
+  getCollectionSourceItems,
+  getCollectionSourceTypes
 } from "visual/utils/api/index.wp";
 import { GetSourceIdChoices, GetSourceTypeChoices } from "./utils";
 
 export const getSourceTypeChoices: GetSourceTypeChoices = async () => {
   try {
-    const items = await getCollectionTypes();
+    const items = await getCollectionSourceTypes();
     const newItems = [{ name: "", label: "Auto" }, ...items];
 
     return newItems.map(el => ({
@@ -23,7 +23,7 @@ export const getSourceTypeChoices: GetSourceTypeChoices = async () => {
 
 export const getSourceIdChoices: GetSourceIdChoices = async (id: string) => {
   try {
-    const data = await getCollectionItems(id);
+    const data = await getCollectionSourceItems(id);
 
     return data.posts.map(({ ID, title }) => ({ value: ID, title }));
   } catch (e) {

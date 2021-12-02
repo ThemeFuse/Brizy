@@ -1,12 +1,15 @@
 import { Choice } from "visual/component/Options/types/dev/Select/types";
-import { getCollectionItems, getCollectionTypes } from "visual/utils/api";
+import {
+  getCollectionSourceItems,
+  getCollectionSourceTypes
+} from "visual/utils/api";
 
 export type GetSourceTypeChoices = () => Promise<Choice[]>;
 export type GetSourceIdChoices = (id: string) => Promise<Choice[]>;
 
 export const getSourceTypeChoices: GetSourceTypeChoices = async () => {
   try {
-    const items = await getCollectionTypes();
+    const items = await getCollectionSourceTypes();
     const newItems = [{ id: "", title: "Auto" }, ...items];
 
     return newItems.map(el => ({
@@ -23,7 +26,7 @@ export const getSourceTypeChoices: GetSourceTypeChoices = async () => {
 
 export const getSourceIdChoices: GetSourceIdChoices = async (id: string) => {
   try {
-    const data = await getCollectionItems(id);
+    const data = await getCollectionSourceItems(id);
     return data.collection.map(({ id, title }) => ({
       value: id,
       title: title
