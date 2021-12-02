@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.8.2<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.21<br>
+Stable tag: 2.3.22<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.22 - 2021-12-02
+* Fixed: Global blocks conditions
+* Fixed:  Black stripes after image crop
 
 ### 2.3.21 - 2021-11-30
 * New: Size options when you upload .svg and .gifs files in Image element

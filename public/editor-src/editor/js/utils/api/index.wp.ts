@@ -25,8 +25,8 @@ import {
   UploadSavedBlocks,
   UploadSavedLayouts,
   UploadSavedPopups,
-  GetWPCollectionTypes,
-  GetWPCollectionItems
+  GetWPCollectionSourceTypes,
+  GetWPCollectionSourceItems
 } from "./types";
 import {
   makeBlockMeta,
@@ -523,7 +523,7 @@ export const getPostTaxonomies: GetPostTaxonomies = async ({
     });
 };
 
-export const getCollectionTypes: GetWPCollectionTypes = async () => {
+export const getCollectionSourceTypes: GetWPCollectionSourceTypes = async () => {
   const config = Config.getAll() as WP;
 
   const data = config.wp.postTypes;
@@ -531,7 +531,7 @@ export const getCollectionTypes: GetWPCollectionTypes = async () => {
   return Promise.resolve(data);
 };
 
-export const getCollectionItems: GetWPCollectionItems = async id => {
+export const getCollectionSourceItems: GetWPCollectionSourceItems = async id => {
   const config = Config.getAll() as WP;
 
   const { wp, editorVersion } = config;
