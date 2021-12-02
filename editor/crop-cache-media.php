@@ -88,13 +88,13 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		}
 
         if ( array_key_exists( $size, Brizy_Editor::get_all_image_sizes() ) ) {
-			//return $this->getImgUrlByWpSize( $uid, $size, true );
+			return $this->getImgUrlByWpSize( $uid, $size, true );
 		}
 
 		$resizedImgPath = $this->getResizedMediaPath( $uid, $size );
 
 		if ( file_exists( $resizedImgPath ) ) {
-			//return $resizedImgPath;
+			return $resizedImgPath;
 		}
 
 		$cropPath = $this->url_builder->brizy_upload_path( 'imgs/' );

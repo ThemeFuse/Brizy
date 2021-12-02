@@ -143,33 +143,37 @@ export type GetPostTaxonomies = (data: {
   }[]
 >;
 
-interface CloudCollectionType {
+interface CloudCollectionSourceType {
   id: string;
   title: string;
   slug?: string;
 }
-export type GetCollectionTypes = () => Promise<CloudCollectionType[]>;
+export type GetCollectionSourceTypes = () => Promise<
+  CloudCollectionSourceType[]
+>;
 
-interface CollectionItem {
+interface CollectionSourceItem {
   slug: string;
   id: string;
   title: string;
 }
-export type GetCollectionItems = (
+export type GetCollectionSourceItems = (
   id: string
-) => Promise<{ collection: CollectionItem[] }>;
+) => Promise<{ collection: CollectionSourceItem[] }>;
 
-interface WPCollectionType {
+interface WPCollectionSourceType {
   name: string;
   label: string;
 }
-export type GetWPCollectionTypes = () => Promise<WPCollectionType[]>;
+export type GetWPCollectionSourceTypes = () => Promise<
+  WPCollectionSourceType[]
+>;
 
-interface WPCollectionItem {
+interface WPCollectionSourceItem {
   ID: number;
   post_title: string;
   title: string;
 }
-export type GetWPCollectionItems = (
+export type GetWPCollectionSourceItems = (
   id: string
-) => Promise<{ posts: WPCollectionItem[] }>;
+) => Promise<{ posts: WPCollectionSourceItem[] }>;
