@@ -146,7 +146,7 @@ class Brizy_Editor_Asset_Crop_Cropper {
 					$requestedOffsetY = ( $blackStripOnY ) > 0 ? ( $requestedOffsetY - $containerHeightStripDelta ) : $requestedOffsetY;
 
 					// avoid the case when the image height or with is less that 1px (GD problem)
-					$containerWidth  = $containerWidth > $requestedImgHeight ? $requestedImgWidth : $containerWidth;
+					$containerWidth  = $containerWidth > $requestedImgWidth ? $requestedImgWidth : $containerWidth;
 					$containerHeight = $containerHeight > $requestedImgHeight ? $requestedImgHeight : $containerHeight;
 
 					if ( $result && $service->crop( $requestedOffsetX, $requestedOffsetY, $containerWidth, $containerHeight ) ) {

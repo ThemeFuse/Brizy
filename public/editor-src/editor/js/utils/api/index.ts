@@ -31,8 +31,8 @@ import {
   UploadSavedBlocks,
   UploadSavedLayouts,
   UploadSavedPopups,
-  GetCollectionTypes,
-  GetCollectionItems
+  GetCollectionSourceTypes,
+  GetCollectionSourceItems
 } from "./types";
 import { Cloud } from "visual/global/Config/types/configs/Cloud";
 
@@ -260,7 +260,7 @@ export const uploadSaveLayouts: UploadSavedLayouts = () => {
 };
 
 //#endregion
-export const getCollectionTypes: GetCollectionTypes = async () => {
+export const getCollectionSourceTypes: GetCollectionSourceTypes = async () => {
   const config = Config.getAll() as Cloud;
 
   const { urls, project } = config;
@@ -280,7 +280,9 @@ export const getCollectionTypes: GetCollectionTypes = async () => {
     });
 };
 
-export const getCollectionItems: GetCollectionItems = async (id: string) => {
+export const getCollectionSourceItems: GetCollectionSourceItems = async (
+  id: string
+) => {
   const config = Config.getAll() as Cloud;
 
   const { urls, project } = config;
