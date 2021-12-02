@@ -485,23 +485,13 @@ class Brizy_Admin_Templates
                 add_action('wp_head', array($this, 'insertTemplateHead'));
                 add_action('brizy_template_content', array($this, 'showTemplateContent'), -12000);
                 add_action('wp_enqueue_scripts', array($this, 'enqueue_preview_assets'), 9999);
-                $this->addTheContentFilters();
+	            add_filter( 'the_content', [ $this, 'filterPageContent' ], - 12000 );
             }
 
         } catch (Exception $e) {
             //ignore
             Brizy_Logger::instance()->error($e->getMessage(), []);
         }
-    }
-
-    public function addTheContentFilters()
-    {
-        add_filter('the_content', array($this, 'filterPageContent'), -12000);
-    }
-
-    public function removeTheContentFilters()
-    {
-        remove_filter('the_content', array($this, 'filterPageContent'), -12000);
     }
 
     /**
@@ -578,26 +568,22 @@ class Brizy_Admin_Templates
             return;
         }
 
-        $pid = Brizy_Editor::get()->currentPostId();
+        $pid  = Brizy_Editor::get()->currentPostId();
+        $post = self::getTemplate()->getWpPost();
 
-        $project = Brizy_Editor_Project::get();
-        $template = self::getTemplate();
-        $post = $template->getWpPost();
+	    if ( $pid ) {
+		    $post = get_post( $pid );
+	    }
 
-        if ($pid) {
-            $post = get_post($pid);
-        }
-
-        $compiled_page = self::getTemplate()->get_compiled_page();
-        $content = $compiled_page->get_body();
-
-        return apply_filters(
+        $content = apply_filters(
             'brizy_content',
-            $content,
+	        self::getTemplate()->get_compiled_page()->getBody(),
             Brizy_Editor_Project::get(),
             $post,
             'body'
         );
+
+        return apply_filters( 'brizy_template_content_compiled', $content );
     }
 
     /**
