@@ -39,14 +39,18 @@ class Brizy_Admin_Popups_Main
     public function enqueuePopupScripts()
     {
         foreach ($this->getMatchingBrizyPopups() as $popup) {
-            $needs_compile = ! $popup->isCompiledWithCurrentVersion() || $popup->get_needs_compile();
-            if ($needs_compile) {
-                $popup->compile_page();
-                $popup->saveStorage();
-                $popup->savePost();
-            }
 
-            Brizy_Public_AssetEnqueueManager::_init()->enqueuePost($popup);
+	        try {
+		        $needs_compile = ! $popup->isCompiledWithCurrentVersion() || $popup->get_needs_compile();
+		        if ( $needs_compile ) {
+			        $popup->compile_page();
+			        $popup->saveStorage();
+			        $popup->savePost();
+		        }
+		        Brizy_Public_AssetEnqueueManager::_init()->enqueuePost( $popup );
+	        } catch ( Exception $e ) {
+		        Brizy_Logger::instance()->exception($e);
+	        }
         }
     }
 
@@ -195,25 +199,25 @@ class Brizy_Admin_Popups_Main
         $popups  = $this->getMatchingBrizyPopups($wpPost);
 
         foreach ($popups as $brizyPopup) {
-            /**
-             * @var Brizy_Editor_Post $brizyPopup ;
-             */
-
-            if ($brizyPopup->get_needs_compile()) {
-                $brizyPopup->compile_page();
-                $brizyPopup->saveStorage();
-                $brizyPopup->savePost();
-            }
-
-            $compiledPage = $brizyPopup->get_compiled_page();
-
-            if ($context == 'head') {
-                $content = $this->insertHead($content, $compiledPage->get_head());
-            }
-
-            if ($context == 'body') {
-                $content = $this->insertBody($content, $compiledPage->get_body());
-            }
+	        try {
+		        /**
+		         * @var Brizy_Editor_Post $brizyPopup ;
+		         */
+		        if ( $brizyPopup->get_needs_compile() ) {
+			        $brizyPopup->compile_page();
+			        $brizyPopup->saveStorage();
+			        $brizyPopup->savePost();
+		        }
+		        $compiledPage = $brizyPopup->get_compiled_page();
+		        if ( $context == 'head' ) {
+			        $content = $this->insertHead( $content, $compiledPage->get_head() );
+		        }
+		        if ( $context == 'body' ) {
+			        $content = $this->insertBody( $content, $compiledPage->get_body() );
+		        }
+	        } catch ( Brizy_Editor_Exceptions_ServiceUnavailable $e ) {
+		        Brizy_Logger::instance()->exception($e);
+	        }
         }
 
         return $content;
