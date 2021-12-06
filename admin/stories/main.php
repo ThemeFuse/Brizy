@@ -59,7 +59,7 @@ class Brizy_Admin_Stories_Main
 	            'public'              => true,
 	            'description'         => __bt( 'brizy', 'Brizy' ) . ' ' . __( 'stories', 'brizy' ) . '.',
 	            'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
-	            'rewrite'             => [ 'slug' => self::CP_STORY ],
+	            'rewrite'             => [ 'slug' => apply_filters('brizy_story_rewrite_slug',self::CP_STORY) ],
 	            'capability_type'     => 'page',
 	            'exclude_from_search' => true,
 	            'supports'            => [ 'title', 'post_content', 'revisions' ],
