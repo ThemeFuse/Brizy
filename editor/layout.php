@@ -9,7 +9,7 @@
 
 class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
-	use Brizy_Editor_Synchronizable;
+	use Brizy_Editor_Synchronizable, Brizy_Editor_PostTagsAware;
 
 	const BRIZY_LAYOUT_META = 'brizy-meta';
 	const BRIZY_LAYOUT_MEDIA = 'brizy-media';
@@ -61,6 +61,8 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 			$fields = array(
 				'id',
 				'uid',
+				'title',
+				'tags',
 				'meta',
 				'data',
 				'status',
@@ -75,6 +77,14 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
 		if ( in_array( 'uid', $fields ) ) {
 			$global['uid'] = $this->getUid();
+		}
+
+		if ( in_array( 'title', $fields ) ) {
+			$global['title'] = $this->getTitle();
+		}
+
+		if ( in_array( 'tags', $fields ) ) {
+			$global['tags'] = $this->getTags();
 		}
 
 		if ( in_array( 'status', $fields ) ) {
@@ -200,6 +210,8 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		//$data['cloudId']     = $this->getCloudId();
 		//$data['cloudAccountId'] = $this->getCloudAccountId();
 		$data['media'] = $this->getMedia();
+		$data['title'] = $this->getTitle();
+		$data['tags'] = $this->getTags();
 
 		unset( $data['wp_post'] );
 
@@ -221,6 +233,8 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
 		$this->meta  = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_META, true );
 		$this->media = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_MEDIA, true );
+
+		$this->loadInstanceTags();
 	}
 
 	public function convertToOptionValue() {
@@ -243,6 +257,8 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
 		update_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_META, $this->meta );
 		update_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_MEDIA, $this->media );
+
+		$this->saveInstanceTags();
 	}
 
 }
