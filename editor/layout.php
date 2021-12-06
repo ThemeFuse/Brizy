@@ -261,6 +261,16 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		$this->saveInstanceTags();
 	}
 
+	public function save( $autosave = 0 ) {
+
+		parent::save( $autosave );
+
+		if ( $autosave !== 1 ) {
+			$this->savePost( true );
+		}
+	}
+
+
 }
 
 
