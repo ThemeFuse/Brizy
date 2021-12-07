@@ -30,9 +30,9 @@ class Brizy_Admin_Migrations_AttachmentUidMigration implements Brizy_Admin_Migra
 						    p.ID as post_id,
        						'brizy_attachment_uid' as meta_key,
        						wp.meta_value as meta_value
-						FROM wp_posts p
-						         JOIN wp_postmeta wp on p.ID = wp.post_id and wp.meta_key='brizy_post_uid'
-						         LEFT JOIN wp_postmeta wp2 on p.ID = wp2.post_id and wp2.meta_key='brizy_attachment_uid'
+						FROM {$wpdb->posts} p
+						         JOIN {$wpdb->postmeta} wp on p.ID = wp.post_id and wp.meta_key='brizy_post_uid'
+						         LEFT JOIN {$wpdb->postmeta} wp2 on p.ID = wp2.post_id and wp2.meta_key='brizy_attachment_uid'
 						WHERE post_type='attachment' and wp2.meta_value is NULL", ARRAY_A );
 
 			if ( is_array( $invalidAttachments ) ) {
