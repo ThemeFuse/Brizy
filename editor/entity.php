@@ -360,7 +360,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	}
 
 	public function getTitle() {
-		return $this->getWpPost()->post_title;
+		return html_entity_decode($this->getWpPost()->post_title);
 	}
 
 	public function setTitle( $title ) {
