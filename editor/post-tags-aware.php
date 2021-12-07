@@ -11,7 +11,7 @@ trait Brizy_Editor_PostTagsAware {
 	 * @return string
 	 */
 	public function getTags() {
-		return $this->tags;
+		return html_entity_decode($this->tags);
 	}
 
 	/**
