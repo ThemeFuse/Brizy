@@ -1,5 +1,8 @@
 {
-  "content": { "popups": [] },
+  "content": {
+    "popups": [],
+    "type": "wp"
+  },
 
   "toolbar": {
     "tabsState": "",

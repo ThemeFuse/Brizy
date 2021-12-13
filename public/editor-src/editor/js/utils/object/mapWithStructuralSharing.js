@@ -1,12 +1,13 @@
 // https://dev.to/viebel/structural-sharing-with-7-lines-of-javascript-2dnh
 export function mapWithStructuralSharing(obj, cb) {
+  const patched = cb(obj);
   let patch;
 
   for (let key in obj) {
     if (!obj.hasOwnProperty(key)) continue;
 
     if (typeof obj[key] === "object" && obj[key] !== null) {
-      const r = mapWithStructuralSharing(obj[key], cb);
+      const r = mapWithStructuralSharing(patched[key], cb);
 
       if (r !== obj[key]) {
         patch = patch ?? {};
@@ -15,9 +16,7 @@ export function mapWithStructuralSharing(obj, cb) {
     }
   }
 
-  const r = cb(obj);
-
-  return patch ? patchImmutable(patch, obj) : r;
+  return patch ? patchImmutable(patch, patched) : patched;
 }
 
 function patchImmutable(patch, obj) {

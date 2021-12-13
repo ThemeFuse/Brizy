@@ -2,7 +2,12 @@ import { MouseEvent } from "react";
 import Config from "visual/global/Config";
 import Prompts from "visual/component/Prompts";
 import { t } from "visual/utils/i18n";
-import { IS_EXTERNAL_POPUP, IS_EXTERNAL_STORY } from "visual/utils/models";
+import {
+  IS_EXTERNAL_POPUP,
+  IS_EXTERNAL_STORY
+  // IS_GLOBAL_POPUP,
+  // IS_STORY
+} from "visual/utils/models";
 import { AddElements } from "./components/AddElements";
 import { BlocksSortable } from "./components/BlocksSortable";
 import { Styling } from "./components/Styling";
@@ -22,6 +27,19 @@ export default {
   bottom: [
     DeviceModes,
     ...(IS_EXTERNAL_STORY ? [Settings] : []),
+    // {
+    //   id: "popover",
+    //   icon: "nc-page",
+    //   title: t("Page"),
+    //   type: "popover",
+    //   disabled: IS_GLOBAL_POPUP || IS_STORY,
+    //   options: [
+    //     {
+    //       type: "showMembership",
+    //       label: t("View as")
+    //     }
+    //   ]
+    // },
     {
       id: "popover",
       icon: "nc-back",

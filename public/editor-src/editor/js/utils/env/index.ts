@@ -52,3 +52,8 @@ const isProtected = (c: Cloud): boolean => {
 
 export const IS_PROTECTED =
   isCloud(config) && isCMS(config) && isProtected(config);
+
+export const IS_USER_PAGE =
+  isCloud(config) && config.page.provider === "customers";
+
+export const IS_RESET_PASS = isCloud(config) && config.page.isResetPassPage;

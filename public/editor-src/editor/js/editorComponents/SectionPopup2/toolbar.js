@@ -1,10 +1,12 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getDynamicContentChoices
+} from "visual/utils/options";
 import { t } from "visual/utils/i18n";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarBgImage,
   toolbarGradientType,
   toolbarBgColorHexField2,
   toolbarBgColor2,
@@ -13,14 +15,19 @@ import {
   toolbarElementSectionSaved,
   toolbarElementSectionGlobal
 } from "visual/utils/toolbar";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device, component }) {
+export function getItems({ v, device, component, context }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const widthSuffix = dvv("widthSuffix");
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
     dvv("bgColorPalette")
+  );
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.image
   );
 
   const columnsHeightStylePicker =
@@ -131,13 +138,12 @@ export function getItems({ v, device, component }) {
               id: "tabMedia",
               label: t("Image"),
               options: [
-                toolbarBgImage({
-                  v,
-                  device,
-                  config: component.context.dynamicContent.config,
-                  state: "normal",
-                  onChange: ["onChangeBgImage", "onChangeBgImageBgOpacity"]
-                })
+                {
+                  label: t("Image"),
+                  id: "bg",
+                  type: "imageUpload-dev",
+                  population: imageDynamicContentChoices
+                }
               ]
             }
           ]

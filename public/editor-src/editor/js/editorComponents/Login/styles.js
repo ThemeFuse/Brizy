@@ -2,7 +2,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(v, vs, vd) {
   const styles = {
-    ".brz &&:hover .brz-form-login": {
+    ".brz &&:hover .brz-login-form": {
       standart: ["cssStyleDisplayFlex", "cssStyleElementLoginFormMargin"]
     },
     ".brz &&:hover .brz-login__item-button": {
@@ -12,10 +12,10 @@ export function style(v, vs, vd) {
         "cssStyleElementForm2SubmitWidth"
       ]
     },
-    ".brz && .brz-login__autorized": {
+    ".brz && .brz-login__authorized": {
       standart: ["cssStyleElementLoginAutorizedAlign"]
     },
-    ".brz && .brz-login__autorized p,.brz && .brz-login__autorized a": {
+    ".brz && .brz-login__authorized p,.brz && .brz-login__authorized a,.brz && .brz-login__authorized span": {
       standart: [
         "cssStyleElementLoginTextTypography2FontFamily",
         "cssStyleElementLoginTextTypography2FontSize",
@@ -24,13 +24,16 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginTextTypography2LetterSpacing"
       ]
     },
-    ".brz && .brz-login__autorized p:hover": {
+    ".brz && .brz-login__authorized p:hover": {
       standart: ["cssStyleElementLoginTextColor"]
     },
-    ".brz && .brz-login__autorized a:hover": {
+    ".brz && .brz-login__authorized a:hover": {
       standart: ["cssStyleElementLoginLinkColor"]
     },
-    ".brz && .brz-form-login .brz-input:hover": {
+    ".brz && .brz-login__authorized span:hover": {
+      standart: ["cssStyleElementLoginLinkColor"]
+    },
+    ".brz && .brz-login-form .brz-input:hover": {
       standart: [
         "cssStyleColor",
         "cssStyleBgColor",
@@ -44,16 +47,16 @@ export function style(v, vs, vd) {
         "cssStyleTypography2LetterSpacing"
       ]
     },
-    ".brz && .brz-form-login .brz-form-login__field": {
+    ".brz && .brz-login-form .brz-login-form__field": {
       standart: ["cssStyleElementLoginFieldPadding"]
     },
-    ".brz && .brz-form-login .brz-login__field-label": {
+    ".brz && .brz-login-form .brz-login__field-label": {
       standart: ["cssStyleElementForm2FieldsLabelPadding"]
     },
-    ".brz &&:hover .brz-form-login .brz-login__field-label": {
+    ".brz &&:hover .brz-login-form .brz-login__field-label": {
       standart: ["cssStyleLabelColor", "cssStyleElementForm2FieldsLabelAlign"]
     },
-    ".brz &&:hover .brz-form-login .brz-login__field-label .brz-label": {
+    ".brz &&:hover .brz-login-form .brz-login__field-label .brz-label": {
       standart: [
         "cssStyleElementForm2FieldsLabelFontFamily",
         "cssStyleElementForm2FieldsLabelFontSize",
@@ -62,7 +65,7 @@ export function style(v, vs, vd) {
         "cssStyleElementForm2FieldsLabelLineHeight"
       ]
     },
-    ".brz && .brz-form-login .brz-form-login__field-lost-password:hover": {
+    ".brz && .brz-login-form .brz-login-form__field-lost-password:hover": {
       standart: [
         "cssStyleElementLoginLostPasswordColor",
         "cssStyleElementLoginLostPasswordTypography2FontFamily",
@@ -73,7 +76,7 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginLostPasswordAlign"
       ]
     },
-    ".brz && .brz-form-login .brz-control__check-group-option:hover": {
+    ".brz && .brz-login-form .brz-control__check-group-option:hover": {
       standart: [
         "cssStyleElementForm2FieldsCheckboxColor",
         "cssStyleElementForm2FieldsCheckboxFontFamily",
@@ -84,7 +87,7 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginRememberMeAlign"
       ]
     },
-    ".brz && .brz-form-login .brz-login__register-info:hover": {
+    ".brz && .brz-login-form .brz-login__register-info:hover": {
       standart: [
         "cssStyleElementLoginRegisterInfoTypography2FontFamily",
         "cssStyleElementLoginRegisterInfoTypography2FontSize",
@@ -95,7 +98,7 @@ export function style(v, vs, vd) {
         "cssStyleElementRegisterInfoAlign"
       ]
     },
-    ".brz && .brz-form-login .brz-form-login__field-register-link:hover": {
+    ".brz && .brz-login-form .brz-login-form__field-register-link:hover": {
       standart: [
         "cssStyleElementLoginRegisterLinkTypography2FontFamily",
         "cssStyleElementLoginRegisterLinkTypography2FontSize",
@@ -106,7 +109,7 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginRegisterLinkAlign"
       ]
     },
-    ".brz && .brz-form-login .brz-form-login__field-login-link:hover": {
+    ".brz && .brz-login-form .brz-login-form__field-login-link:hover": {
       standart: [
         "cssStyleElementLoginLoginLinkTypography2FontFamily",
         "cssStyleElementLoginLoginLinkTypography2FontSize",

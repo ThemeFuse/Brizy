@@ -65,6 +65,8 @@ import ProtectedPage from "./ProtectedPage";
 import LoginField from "./Login/LoginField";
 import RegisterField from "./Login/RegisterField";
 import ForgotPasswordField from "./Login/ForgotPasswordField";
+import ResetPassword from "./ResetPassword";
+import ResetPasswordField from "./ResetPassword/ResetPasswordField";
 import Menu from "./Menu";
 import MenuItem from "./Menu/MenuItem";
 import SectionMegaMenu from "./Menu/SectionMegaMenu";
@@ -147,6 +149,8 @@ export default {
   LoginField,
   RegisterField,
   ForgotPasswordField,
+  ResetPassword,
+  ResetPasswordField,
   Menu,
   MenuItem,
   SectionMegaMenu,

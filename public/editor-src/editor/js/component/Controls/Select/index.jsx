@@ -115,7 +115,6 @@ class Select extends React.Component {
     this.setState({ isOpen: !this.state.isOpen }, () => {
       if (this.state.isOpen) {
         this.reposition();
-        this.dropdown.style.setProperty("opacity", 1);
       }
     });
   };
@@ -123,6 +122,8 @@ class Select extends React.Component {
   reposition() {
     if (this.dropdown) {
       this.isRepositioning = true;
+      this.dropdown.style.setProperty("opacity", 1);
+
       this.setState({ position: "bottom-left" }, () => {
         const { bottom, right } = this.dropdown.getBoundingClientRect();
         const positionY = bottom >= window.innerHeight ? "top" : "bottom";
