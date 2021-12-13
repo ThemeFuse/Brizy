@@ -14,6 +14,36 @@ import EditorIcon from "visual/component/EditorIcon";
 import ThemeIcon from "visual/component/ThemeIcon";
 import { IS_WP } from "visual/utils/env";
 
+const readLoginType = type => {
+  switch (type) {
+    case "Email":
+    case "Password":
+    case "Remember":
+      return type;
+
+    default:
+      return undefined;
+  }
+};
+
+const getFieldType = type => {
+  switch (type) {
+    case "Email":
+      return "text";
+    case "Password":
+      return "password";
+  }
+};
+
+const getFieldName = type => {
+  switch (type) {
+    case "Email":
+      return IS_WP ? "log" : "email";
+    case "Password":
+      return IS_WP ? "pwd" : "password";
+  }
+};
+
 class LoginField extends EditorComponent {
   static get componentId() {
     return "LoginField";
@@ -100,10 +130,12 @@ class LoginField extends EditorComponent {
       toolbarExtendCheckbox
     } = this.props;
 
+    const { type } = v;
+
     const className = classnames(
-      "brz-form-login__field",
-      `brz-form-login__field-${v.type}`,
-      `brz-form-login__field-remember-${remember}`,
+      "brz-login-form__field",
+      `brz-login-form__field-${type}`,
+      `brz-login-form__field-remember-${remember}`,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -114,119 +146,85 @@ class LoginField extends EditorComponent {
     const styleLabel = {
       height: v.label === "" ? 0 : "auto"
     };
+    const _type = readLoginType(type);
 
-    return (
-      <div className={className}>
-        {v.type === "Email" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <Toolbar {...toolbarExtendLabel}>
-                <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label">
-                    <TextEditor
-                      value={this.getLabel(v)}
-                      onChange={this.handleLabelChange}
-                    />
-                  </label>
-                </div>
-              </Toolbar>
-            )}
-            <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-              <div className="brz-login__field">
-                <input
-                  name={IS_WP ? "log" : "email"}
-                  className="brz-input brz-login__field-email"
-                  type="text"
-                  id="user"
-                  placeholder={this.getPlaceholder(v)}
-                  value={this.getPlaceholder(v)}
-                  required
-                  onChange={e => {
-                    showLabel === "on"
-                      ? this.patchValue({
-                          placeholder: e.target.value
-                        })
-                      : this.patchValue({
-                          label: e.target.value,
-                          placeholder: e.target.value
-                        });
-                  }}
-                />
-              </div>
-            </Toolbar>
-          </div>
-        )}
-        {v.type === "Password" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <Toolbar {...toolbarExtendLabel}>
-                <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label">
-                    <TextEditor
-                      value={this.getLabel(v)}
-                      onChange={this.handleLabelChange}
-                    />
-                  </label>
-                </div>
-              </Toolbar>
-            )}
-            <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-              <div className="brz-login__field">
-                <input
-                  className="brz-input brz-login__field brz-login__field-password"
-                  type="password"
-                  name={IS_WP ? "pwd" : "password"}
-                  id="password"
-                  placeholder={this.getPlaceholder(v)}
-                  value={this.getPlaceholder(v)}
-                  required
-                  onChange={e => {
-                    showLabel === "on"
-                      ? this.patchValue({
-                          placeholder: e.target.value
-                        })
-                      : this.patchValue({
-                          label: e.target.value,
-                          placeholder: e.target.value
-                        });
-                  }}
-                />
-              </div>
-            </Toolbar>
-          </div>
-        )}
-        {v.type === "Remember" && remember === "on" && (
-          <div className="brz-login__item">
-            <Toolbar {...toolbarExtendCheckbox}>
-              <CheckboxControls
-                defaultValue={active}
-                onChange={this.handleActive}
-              >
-                <CheckboxControlsItem
-                  name="rememberme"
-                  value="forever"
-                  renderIcons={this.renderIconForEdit}
-                >
-                  <TextEditor
-                    value={this.getLabel(v)}
-                    onChange={this.handleLabelRememberChange}
+    if (_type) {
+      return (
+        <div className={className}>
+          {(type === "Email" || type === "Password") && (
+            <div className="brz-login__item">
+              {showLabel === "on" && (
+                <Toolbar {...toolbarExtendLabel}>
+                  <div className="brz-login__field-label" style={styleLabel}>
+                    <label className="brz-label">
+                      <TextEditor
+                        value={this.getLabel(v)}
+                        onChange={this.handleLabelChange}
+                      />
+                    </label>
+                  </div>
+                </Toolbar>
+              )}
+              <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+                <div className="brz-login__field">
+                  <input
+                    name={IS_WP ? "log" : "email"}
+                    className="brz-input"
+                    type="text"
+                    placeholder={this.getPlaceholder(v)}
+                    value={this.getPlaceholder(v)}
+                    required
+                    onChange={e => {
+                      showLabel === "on"
+                        ? this.patchValue({
+                            placeholder: e.target.value
+                          })
+                        : this.patchValue({
+                            label: e.target.value,
+                            placeholder: e.target.value
+                          });
+                    }}
                   />
-                </CheckboxControlsItem>
-              </CheckboxControls>
-            </Toolbar>
-          </div>
-        )}
-      </div>
-    );
+                </div>
+              </Toolbar>
+            </div>
+          )}
+          {type === "Remember" && remember === "on" && (
+            <div className="brz-login__item">
+              <Toolbar {...toolbarExtendCheckbox}>
+                <CheckboxControls
+                  defaultValue={active}
+                  onChange={this.handleActive}
+                >
+                  <CheckboxControlsItem
+                    name="rememberme"
+                    value="forever"
+                    renderIcons={this.renderIconForEdit}
+                  >
+                    <TextEditor
+                      value={this.getLabel(v)}
+                      onChange={this.handleLabelRememberChange}
+                    />
+                  </CheckboxControlsItem>
+                </CheckboxControls>
+              </Toolbar>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return null;
   }
 
   renderForView(v, vs, vd) {
     const { remember, showLabel } = this.props;
+    const { type } = v;
 
     const className = classnames(
-      "brz-form-login__field",
-      `brz-form-login__field-${v.type}`,
-      `brz-form-login__field-remember-${remember}`,
+      "brz-login-form__field",
+      `brz-login-form__field-${type}`,
+      `brz-login-form__field-remember-${remember}`,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -238,63 +236,48 @@ class LoginField extends EditorComponent {
       height: v.label === "" ? 0 : "auto"
     };
 
-    return (
-      <div className={className}>
-        {v.type === "Email" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label">{this.getLabel(v)}</label>
+    const _type = readLoginType(type);
+
+    if (_type) {
+      return (
+        <div className={className}>
+          {(type === "Email" || type === "Password") && (
+            <div className="brz-login__item">
+              {showLabel === "on" && (
+                <div className="brz-login__field-label" style={styleLabel}>
+                  <label className="brz-label">{this.getLabel(v)}</label>
+                </div>
+              )}
+              <div className="brz-login__field">
+                <input
+                  type={getFieldType(_type)}
+                  name={getFieldName(_type)}
+                  className="brz-input"
+                  placeholder={this.getPlaceholder(v)}
+                  defaultValue=""
+                  required
+                />
               </div>
-            )}
-            <div className="brz-login__field">
-              <input
-                type="text"
-                name={IS_WP ? "log" : "email"}
-                id="user"
-                className="brz-input brz-login__field-email"
-                placeholder={this.getPlaceholder(v)}
-                defaultValue=""
-                required
-              />
             </div>
-          </div>
-        )}
-        {v.type === "Password" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label">{this.getLabel(v)}</label>
-              </div>
-            )}
-            <div className="brz-login__field">
-              <input
-                type="password"
-                name={IS_WP ? "pwd" : "password"}
-                id="password"
-                className="brz-input brz-login__field brz-login__field-password"
-                placeholder={this.getPlaceholder(v)}
-                defaultValue=""
-                required
-              />
+          )}
+          {_type === "Remember" && remember === "on" && (
+            <div className="brz-login__item">
+              <CheckboxControls>
+                <CheckboxControlsItem
+                  name="rememberme"
+                  value="forever"
+                  renderIcons={this.renderIconForView}
+                >
+                  {this.getLabel(v)}
+                </CheckboxControlsItem>
+              </CheckboxControls>
             </div>
-          </div>
-        )}
-        {v.type === "Remember" && remember === "on" && (
-          <div className="brz-login__item">
-            <CheckboxControls>
-              <CheckboxControlsItem
-                name="rememberme"
-                value="forever"
-                renderIcons={this.renderIconForView}
-              >
-                {this.getLabel(v)}
-              </CheckboxControlsItem>
-            </CheckboxControls>
-          </div>
-        )}
-      </div>
-    );
+          )}
+        </div>
+      );
+    }
+
+    return null;
   }
 }
 

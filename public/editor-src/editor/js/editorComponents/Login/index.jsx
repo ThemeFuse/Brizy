@@ -79,7 +79,7 @@ class Login extends EditorComponent {
 
     return {
       startIndex: 11,
-      endIndex: 16
+      endIndex: 18
     };
   }
 
@@ -166,7 +166,12 @@ class Login extends EditorComponent {
         showLabel: v.showLabel,
         showPlaceholder: v.showPlaceholder,
         remember: v.remember,
-        showRegisterInfo: v.showRegisterInfo
+        showRegisterInfo: v.showRegisterInfo,
+
+        showFirstName: v.showFirstName,
+        showLastName: v.showLastName,
+        showUsername: v.showUsername,
+        showPhoneNumber: v.showPhoneNumber
       }
     });
     return <EditorArrayComponent {...fieldsProps} />;
@@ -222,7 +227,7 @@ class Login extends EditorComponent {
       }
     });
     return (
-      <div className="brz-form-login__field brz-login__item-button">
+      <div className="brz-login-form__field brz-login__item-button">
         <div className="brz-login__item brz-align-self-xs-end">
           <EditorArrayComponent {...buttonsProps} />
         </div>
@@ -231,16 +236,12 @@ class Login extends EditorComponent {
   }
 
   renderLostYourPasswordLink(lostPassword) {
-    if (!IS_WP) {
-      return null;
-    }
-
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarExtendLostPasswordConfig)}
         key="forgot"
       >
-        <div className="brz-form-login__field brz-form-login__field-lost-password">
+        <div className="brz-login-form__field brz-login-form__field-lost-password">
           <TextEditor value={lostPassword} onChange={this.handleLinkChange} />
         </div>
       </Toolbar>
@@ -253,7 +254,7 @@ class Login extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarRegisterLink)}
         key="register"
       >
-        <div className="brz-form-login__field brz-form-login__field-register-link">
+        <div className="brz-login-form__field brz-login-form__field-register-link">
           <TextEditor
             value={registerLink}
             onChange={this.handleRegisterLinkChange}
@@ -269,7 +270,7 @@ class Login extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarLoginLink)}
         key="login"
       >
-        <div className="brz-form-login__field brz-form-login__field-login-link">
+        <div className="brz-login-form__field brz-login-form__field-login-link">
           <TextEditor value={loginLink} onChange={this.handleLoginLinkChange} />
         </div>
       </Toolbar>
@@ -327,24 +328,38 @@ class Login extends EditorComponent {
   }
 
   renderAuthorizedForm(v) {
-    const { logoutRedirectType, logoutRedirect } = v;
+    const renderLink = () => {
+      if (IS_WP) {
+        const { logoutRedirectType, logoutRedirect } = v;
 
-    const redirectLogoutHref = `{{editor_logout_url redirect="${
-      logoutRedirectType === "samePage" ? "samePage" : logoutRedirect
-    }"}}`;
-    const style = IS_EDITOR ? { pointerEvents: "none" } : {};
+        const redirectLogoutHref = `{{editor_logout_url redirect="${
+          logoutRedirectType === "samePage" ? "samePage" : logoutRedirect
+        }"}}`;
 
-    return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarAutorized)}>
-        <div className="brz-login__autorized">
-          <DynamicContentHelper
-            placeholder="{{editor_user_display_name}}"
-            tagName="p"
-          />
-          <a style={style} href={redirectLogoutHref}>
+        return (
+          <a className="brz-login__authorized-link" href={redirectLogoutHref}>
             {" "}
             Logout
           </a>
+        );
+      }
+
+      return <span className="brz-login__authorized-link"> Logout</span>;
+    };
+
+    const fallbackComponent = <p>John Doe</p>;
+
+    return (
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarAutorized)}>
+        <div className="brz-login__authorized">
+          {v.showName === "on" && (
+            <DynamicContentHelper
+              placeholder="{{editor_user_display_name}}"
+              tagName="p"
+              fallbackComponent={fallbackComponent}
+            />
+          )}
+          {renderLink()}
         </div>
       </Toolbar>
     );
@@ -361,8 +376,52 @@ class Login extends EditorComponent {
     }
   }
 
-  renderForm(v) {
+  renderFormForView(v) {
+    const { defaultRoles } = v;
+
+    const getDefaultRoles = () => {
+      try {
+        return JSON.stringify(
+          JSON.parse(defaultRoles)?.map(item => ({ id: item }))
+        );
+      } catch {
+        return [];
+      }
+    };
+
+    return (
+      <>
+        {this.renderAuthorizedForm(v)}
+
+        <form className="brz-login-form brz-login-form__login" noValidate>
+          {this.renderLoginForm(v)}
+        </form>
+
+        <form
+          className="brz-login-form brz-login-form__register"
+          noValidate
+          data-defaultrole={getDefaultRoles()}
+        >
+          {this.renderRegisterForm(v)}
+        </form>
+
+        <form className="brz-login-form brz-login-form__forgot" noValidate>
+          {this.renderForgotForm(v)}
+        </form>
+      </>
+    );
+  }
+
+  renderForEdit(v, vs, vd) {
     const { type } = v;
+    const className = classnames(
+      "brz-login",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
+    );
 
     const content =
       type === "login"
@@ -373,68 +432,20 @@ class Login extends EditorComponent {
         ? this.renderForgotForm(v)
         : undefined;
 
-    if (IS_EDITOR) {
-      if (type === "authorized") {
-        return this.renderAuthorizedForm(v);
-      } else {
-        return <form className="brz-form-login">{content}</form>;
-      }
-    } else {
-      return IS_WP ? (
-        <>
-          {this.renderAuthorizedForm(v)}
-
-          <form
-            className="brz-form-login brz-form-login-login"
-            noValidate
-            action={this.getActions("login")}
-          >
-            {this.renderLoginForm(v)}
-          </form>
-
-          {this.canRegister() && (
-            <form
-              className="brz-form-login brz-form-login-register"
-              noValidate
-              action={this.getActions("register")}
-              method="post"
-            >
-              {this.renderRegisterForm(v)}
-            </form>
+    return (
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Wrapper {...this.makeWrapperProps({ className })}>
+          {type === "authorized" ? (
+            this.renderAuthorizedForm(v)
+          ) : (
+            <form className="brz-login-form">{content}</form>
           )}
-
-          <form
-            className="brz-form-login brz-form-login-forgot"
-            noValidate
-            action={this.getActions("forgot")}
-            method="post"
-          >
-            {this.renderForgotForm(v)}
-          </form>
-        </>
-      ) : (
-        <>
-          {this.renderAuthorizedForm(v)}
-
-          <form className="brz-form-login brz-form-login-login" noValidate>
-            {this.renderLoginForm(v)}
-          </form>
-
-          {this.canRegister() && (
-            <form className="brz-form-login brz-form-login-register" noValidate>
-              {this.renderRegisterForm(v)}
-            </form>
-          )}
-
-          <form className="brz-form-login brz-form-login-forgot" noValidate>
-            {this.renderForgotForm(v)}
-          </form>
-        </>
-      );
-    }
+        </Wrapper>
+      </CustomCSS>
+    );
   }
 
-  renderForEdit(v, vs, vd) {
+  renderForView(v, vs, vd) {
     const { type } = v;
     const className = classnames(
       "brz-login",
@@ -455,12 +466,13 @@ class Login extends EditorComponent {
               "data-redirect": v.redirectType,
               "data-redirect-value": v.messageRedirect,
               "data-error-empty": v.emptyFieldsError,
-              "data-error-url": v.submitUrlError,
+              "data-error-passlength": v.passLengthError,
+              "data-error-passmatch": v.passMatchError,
               type
             }
           })}
         >
-          {this.renderForm(v)}
+          {this.renderFormForView(v)}
         </Wrapper>
       </CustomCSS>
     );

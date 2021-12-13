@@ -1,11 +1,12 @@
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import classnames from "classnames";
-import Config from "visual/global/Config";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { updateUI } from "visual/redux/actions2";
 import { currentRoleSelector } from "visual/redux/selectors";
+import { getMembershipRoles } from "visual/utils/membership";
+import Config from "visual/global/Config";
 
 export interface Props {
   label: string;
@@ -13,18 +14,23 @@ export interface Props {
 }
 
 export const Roles = (props: Props): ReactElement => {
+  const currentRole = useSelector(currentRoleSelector) ?? "default";
+  const dispatch = useDispatch();
+
   const { label, className: _className } = props;
   const className = classnames(
     "brz-ed-sidebar-bottom__option brz-ed-sidebar__wp-template",
     _className
   );
-  const currentRole = useSelector(currentRoleSelector) ?? "default";
-  const dispatch = useDispatch();
+
+  const config = Config.getAll();
+
   const renderOptions = useMemo(() => {
     const membershipRoles = [
       { role: "default", name: "Default" },
       { role: "not_logged", name: "Not logged" },
-      ...(Config.get("wp")?.availableRoles || [])
+      { role: "logged", name: "Logged" },
+      ...getMembershipRoles(config)
     ];
 
     return membershipRoles.map((item, index) => (

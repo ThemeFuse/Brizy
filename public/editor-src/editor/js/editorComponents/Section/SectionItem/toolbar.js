@@ -1,9 +1,11 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getDynamicContentChoices
+} from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarBgImage,
   toolbarBgVideoUrl,
   toolbarGradientType,
   toolbarBgColorHexField2,
@@ -15,16 +17,20 @@ import {
   toolbarBorderWidthFourFields2,
   toolbarElementContainerTypeImageMap
 } from "visual/utils/toolbar";
-
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device, component, state }) {
+export function getItems({ v, device, component, state, context }) {
   const dvv = key => defaultValueValue({ v, key, device });
   const dvvHover = key => defaultValueValue({ v, key, device, state });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvvHover("bgColorHex"),
     dvvHover("bgColorPalette")
+  );
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.image
   );
 
   const { isSlider: inSlider } = component.props.meta.section;
@@ -64,21 +70,16 @@ export function getItems({ v, device, component, state }) {
                   devices: "responsive",
                   state: "normal"
                 }),
-                toolbarBgImage({
-                  v,
-                  device,
-                  state,
-                  config: component.context.dynamicContent.config,
+                {
+                  label: t("Image"),
+                  id: "bg",
+                  type: "imageUpload-dev",
                   states:
                     // https://github.com/bagrinsergiu/blox-editor/issues/9032
                     dvv("media") === "image" ? [NORMAL, HOVER] : undefined,
                   disabled: dvv("media") !== "image",
-                  onChange: [
-                    "onChangeBgImage",
-                    "onChangeBgImageBgOpacity",
-                    "onChangeBgImageDependencies"
-                  ]
-                }),
+                  population: imageDynamicContentChoices
+                },
                 {
                   id: "bgAttachment",
                   label: t("Parallax"),

@@ -5,6 +5,9 @@
     "media": "image",
     "tagName": "footer",
 
+    "bgSizeType": "custom",    
+    "hoverBgSizeType": null,
+
     "membership": "off",
     "membershipRoles": "[]",
 
@@ -88,6 +91,8 @@
     "showOnMobile": "on",
 
     "mobileMedia": "image",
+
+    "mobileBgSizeType": null,
 
     "mobileBgImageWidth": null,
     "mobileBgImageHeight": null,
@@ -396,6 +401,8 @@
 
     "customCSS": "",
 
+    "tabletBgSizeType": null,
+    
     "tabletContainerType": null,
     "tabletContainerSize": null,
     "tabletContainerSizeSuffix": null,

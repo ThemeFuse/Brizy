@@ -1,9 +1,11 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getDynamicContentChoices
+} from "visual/utils/options";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarBgImage,
   toolbarGradientType,
   toolbarBgColor2,
   toolbarBgColorHexField2,
@@ -22,8 +24,9 @@ import {
 } from "visual/utils/toolbar";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device, state, component, context }) {
+export function getItems({ v, device, component, context }) {
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
   const dvk = key => defaultValueKey({ key, device });
@@ -33,6 +36,10 @@ export function getItems({ v, device, state, component, context }) {
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
     dvv("bgColorPalette")
+  );
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.image
   );
 
   return [
@@ -54,19 +61,13 @@ export function getItems({ v, device, state, component, context }) {
               id: "tabCurrentElement",
               label: t("Image"),
               options: [
-                toolbarBgImage({
-                  v,
-                  device,
-                  state,
-                  config: component.context.dynamicContent.config,
+                {
+                  label: t("Image"),
+                  id: "bg",
+                  type: "imageUpload-dev",
                   states: [NORMAL, HOVER],
-                  onChange: [
-                    "onChangeBgImage",
-                    "onChangeBgImageBgOpacity",
-                    "onChangeBgImageDependencies",
-                    "onChangeBgImageColumnAndRowSyncMobile"
-                  ]
-                })
+                  population: imageDynamicContentChoices
+                }
               ]
             }
           ]

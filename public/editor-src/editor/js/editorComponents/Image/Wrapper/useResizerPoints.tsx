@@ -48,7 +48,10 @@ const useResizerPoints: UseResizerPoints = ({ v, meta }) => {
   const placeholderData = placeholderObjFromStr(imagePopulation);
 
   if (placeholderData) {
-    if (placeholderData.attr === undefined) {
+    if (
+      placeholderData.attr === undefined ||
+      placeholderData.attr?.size === undefined
+    ) {
       return {
         points: POINTS.default,
         restrictions: getWidthRestriction(meta, false)

@@ -5,6 +5,9 @@
     "media": "image",
     "tagName": "div",
 
+    "bgSizeType": "custom",
+    "hoverBgSizeType": null,
+
     "images": {
       "bgImageSrc": "",
       "tabletBgImageSrc": null,
@@ -83,6 +86,8 @@
     "showOnMobile": "on",
 
     "mobileMedia": "image",
+
+    "mobileBgSizeType": null,
 
     "mobileBgImageWidth": null,
     "mobileBgImageHeight": null,
@@ -375,6 +380,8 @@
     "customCSS": "",
 
     "tabletBorderStyle": null,
+
+    "tabletBgSizeType": null,
 
     "tempTabletBorderStyle": null,
 

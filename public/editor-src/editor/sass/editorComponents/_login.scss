@@ -1,7 +1,7 @@
 &:not(.brz-ed) {
   .brz-login {
-    .brz-form-login.brz-form-login,
-    .brz-login__autorized {
+    .brz-login-form,
+    .brz-login__authorized {
       display: none;
     }
   }
@@ -9,12 +9,18 @@
 .brz-login {
   width: 100%;
 
-  &__autorized {
+  &__authorized {
     * {
       display: inline;
     }
     p {
       margin: 0;
+    }
+    span {
+      cursor: pointer;
+    }
+    a {
+      text-decoration: none;
     }
   }
   span.psw {
@@ -67,6 +73,7 @@
     width: 100%;
     padding: 17px 30px;
     margin-top: 15px;
+    word-break: break-word;
 
     font-family: $font-family-1;
     font-size: 12px;
@@ -76,7 +83,24 @@
 
     text-transform: uppercase;
     color: #fff;
-    background-color: #f00;
+
+    &--success {
+      background-color: #15d053;
+    }
+    &--error {
+      background-color: #f00;
+    }
+  }
+
+  &-form {
+    flex-wrap: wrap !important;
+    margin-top: -0 !important;
+
+    .brz-login__field {
+      .brz-login__field-empty.brz-input {
+        border-color: #f00;
+      }
+    }
   }
   .brz-control__check-group-option {
     display: flex;
@@ -89,25 +113,22 @@
   .brz-login__field-label {
     display: block;
   }
-  .brz-form-login {
-    flex-wrap: wrap !important;
-    margin-top: -0 !important;
-  }
-  .brz-form-login__field {
+
+  .brz-login-form__field {
     padding-top: 0 !important;
 
     a {
       text-decoration: none;
     }
   }
-  .brz-form-login__field-lost-password,
-  .brz-form-login__field-register-link,
-  .brz-form-login__field-login-link {
+  .brz-login-form__field-lost-password,
+  .brz-login-form__field-register-link,
+  .brz-login-form__field-login-link {
     width: 100%;
     cursor: pointer;
   }
-  .brz-form-login__field-remember-off.brz-form-login__field-Remember,
-  .brz-form-login__field-registerInfo-off {
+  .brz-login-form__field-remember-off.brz-login-form__field-Remember,
+  .brz-login-form__field-registerInfo-off {
     padding: 0 !important;
   }
 }

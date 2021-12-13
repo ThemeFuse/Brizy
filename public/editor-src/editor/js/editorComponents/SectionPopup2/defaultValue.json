@@ -6,6 +6,8 @@
 
     "media": "image",
 
+    "bgSizeType": "custom",
+
     "images": {
       "bgImageSrc": "",
       "hoverBgImageSrc": null,
@@ -41,6 +43,8 @@
 
     "tabletMedia": "image",
 
+    "tabletBgSizeType": null,
+
     "tabletBgImageWidth": null,
     "tabletBgImageHeight": null,
     "tabletBgPositionX": null,
@@ -54,6 +58,8 @@
     "tabletContrast": null,
 
     "mobileMedia": "image",
+
+    "mobileBgSizeType": null,
 
     "mobileBgImageWidth": null,
     "mobileBgImageHeight": null,

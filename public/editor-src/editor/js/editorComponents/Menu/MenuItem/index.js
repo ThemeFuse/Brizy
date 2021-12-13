@@ -28,6 +28,7 @@ import { calculateMeta } from "./meta";
 import { DraggableOverlay } from "visual/component/DraggableOverlay";
 import { attachRef } from "visual/utils/react";
 import { getParentMegaMenuUid } from "visual/editorComponents/Menu/utils";
+import { IS_WP } from "visual/utils/env";
 
 const IS_PRO = Config.get("pro");
 let openedMegaMenu = null;
@@ -41,6 +42,7 @@ class MenuItem extends EditorComponent {
     defaultValue: {},
     level: 0,
     mMenu: false,
+    menuSelected: undefined,
     mods: {
       desktop: "vertical",
       tablet: "vertical",
@@ -407,13 +409,21 @@ class MenuItem extends EditorComponent {
       return null;
     }
 
-    const { level, toolbarExtend, mMenu, meta, mods } = this.props;
+    const {
+      level,
+      toolbarExtend,
+      mMenu,
+      meta,
+      menuSelected,
+      mods
+    } = this.props;
     const itemProps = this.makeSubcomponentProps({
       toolbarExtend,
       level,
       mMenu,
       meta,
       mods,
+      menuSelected,
       bindWithKey: "items",
       megaMenu: false
     });
@@ -422,17 +432,28 @@ class MenuItem extends EditorComponent {
   }
 
   renderSimple(v, vs, vd, content) {
-    const { level, mMenu, mods } = this.props;
+    const { level, mMenu, mods, menuSelected } = this.props;
     const className = styleClassName(v, this.state);
 
     if (IS_PREVIEW) {
-      const attr =
-        TARGET === "WP"
-          ? { className, "data-menu-item-id": v.id }
-          : { className };
+      if (IS_WP) {
+        return (
+          <>
+            {IS_PRO &&
+              `{{ nav_item_${level} menuId='${menuSelected}' itemId='${v.id}' }}`}
+            <li className={className} data-menu-item-id={v.id}>
+              {this.renderLink(v, vs, vd, content)}
+              {v.megaMenu === "off"
+                ? this.renderDropDown(v, vs, vd)
+                : this.renderMegaMenu(v, vs, vd)}
+            </li>
+            {IS_PRO && `{{ end_nav_item_${level} }}`}
+          </>
+        );
+      }
 
       return (
-        <li {...attr}>
+        <li className={className}>
           {this.renderLink(v, vs, vd, content)}
           {v.megaMenu === "off"
             ? this.renderDropDown(v, vs, vd)
@@ -518,23 +539,33 @@ class MenuItem extends EditorComponent {
   }
 
   renderMMenu(v, vs, vd, content) {
-    const { level, mMenu } = this.props;
+    const { level, mMenu, menuSelected } = this.props;
     const toolbarConfig = toolbarConfigFn(level, mMenu);
     const sidebarConfig = sidebarConfigFn(level, mMenu);
 
     const isDropDown = v.megaMenu === "off";
 
     if (IS_PREVIEW) {
-      const attr =
-        TARGET === "WP"
-          ? {
-              className: styleMmMenuClassName(v),
-              "data-menu-item-id": v.id
-            }
-          : { className: styleMmMenuClassName(v) };
+      const className = styleMmMenuClassName(v);
+
+      if (IS_WP) {
+        return (
+          <>
+            {IS_PRO &&
+              `{{ nav_item_${level} menuId='${menuSelected}' itemId='${v.id}' }}`}
+            <li className={className} data-menu-item-id={v.id}>
+              {this.renderLink(v, vs, vd, content)}
+              {isDropDown
+                ? this.renderDropDown(v, vs, vd)
+                : this.renderMegaMenu(v, vs, vd)}
+            </li>
+            {IS_PRO && `{{ end_nav_item_${level} }}`}
+          </>
+        );
+      }
 
       return (
-        <li {...attr}>
+        <li className={className}>
           {this.renderLink(v, vs, vd, content)}
           {isDropDown
             ? this.renderDropDown(v, vs, vd)
