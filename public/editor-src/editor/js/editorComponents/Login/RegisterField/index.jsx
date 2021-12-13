@@ -11,6 +11,33 @@ import EditorIcon from "visual/component/EditorIcon";
 import ThemeIcon from "visual/component/ThemeIcon";
 import { IS_WP } from "visual/utils/env";
 
+const readRegisterWpType = type => {
+  switch (type) {
+    case "Name":
+    case "RegisterEmail":
+      return type;
+
+    default:
+      return undefined;
+  }
+};
+
+const readRegisterCloudType = type => {
+  switch (type) {
+    case "FirstName":
+    case "LastName":
+    case "Username":
+    case "RegisterEmail":
+    case "Password":
+    case "PasswordConfirm":
+    case "Phone":
+      return type;
+
+    default:
+      return undefined;
+  }
+};
+
 class RegisterField extends EditorComponent {
   static get componentId() {
     return "RegisterField";
@@ -41,6 +68,64 @@ class RegisterField extends EditorComponent {
     }
 
     return placeholder === null || showLabel === "off" ? label : placeholder;
+  }
+
+  getWpFieldType(type) {
+    switch (readRegisterWpType(type)) {
+      case "Name":
+        return "text";
+      case "RegisterEmail":
+        return "email";
+      case undefined:
+        return "";
+    }
+  }
+  getWpFieldName(type) {
+    switch (readRegisterWpType(type)) {
+      case "Name":
+        return "user_login";
+      case "RegisterEmail":
+        return "user_email";
+      case undefined:
+        return "";
+    }
+  }
+
+  getCloudFieldType(type) {
+    switch (readRegisterCloudType(type)) {
+      case "FirstName":
+      case "LastName":
+      case "Username":
+      case "Phone":
+        return "text";
+      case "RegisterEmail":
+        return "email";
+      case "Password":
+      case "PasswordConfirm":
+        return "password";
+      case undefined:
+        return "";
+    }
+  }
+  getCloudFieldName(type) {
+    switch (readRegisterCloudType(type)) {
+      case "FirstName":
+        return "firstName";
+      case "LastName":
+        return "lastName";
+      case "Username":
+        return "userName";
+      case "RegisterEmail":
+        return "email";
+      case "Password":
+        return "password";
+      case "PasswordConfirm":
+        return "passwordConfirm";
+      case "Phone":
+        return "phone";
+      case undefined:
+        return "";
+    }
   }
 
   renderIconForEdit = ({ active }) => {
@@ -109,14 +194,20 @@ class RegisterField extends EditorComponent {
       showLabel,
       toolbarExtendLabel,
       toolbarRegisterInfo,
-      showRegisterInfo
+      showRegisterInfo,
+
+      showFirstName,
+      showLastName,
+      showUsername,
+      showPhoneNumber
     } = this.props;
+    const { type } = v;
     const className = classnames(
-      "brz-form-login__field",
-      `brz-form-login__field-${v.type}`,
+      "brz-login-form__field",
+      `brz-login-form__field-${type}`,
       {
-        "brz-form-login__field-registerInfo-off":
-          showRegisterInfo === "off" && v.type === "RegisterInfo"
+        "brz-login-form__field-registerInfo-off":
+          showRegisterInfo === "off" && type === "RegisterInfo"
       },
       css(
         `${this.constructor.componentId}`,
@@ -129,7 +220,7 @@ class RegisterField extends EditorComponent {
     };
     return IS_WP ? (
       <div className={className}>
-        {v.type === "Name" && (
+        {(type === "Name" || type === "RegisterEmail") && (
           <div className="brz-login__item">
             {showLabel === "on" && (
               <Toolbar {...toolbarExtendLabel}>
@@ -147,7 +238,7 @@ class RegisterField extends EditorComponent {
               <div className="brz-login__field">
                 {showLabel === "on" ? (
                   <input
-                    className="brz-input brz-login__field-name"
+                    className="brz-input"
                     type="text"
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
@@ -159,54 +250,8 @@ class RegisterField extends EditorComponent {
                   />
                 ) : (
                   <input
-                    className="brz-input brz-login__field-name"
+                    className="brz-input"
                     type="text"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    onChange={e => {
-                      this.patchValue({
-                        label: e.target.value,
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                )}
-              </div>
-            </Toolbar>
-          </div>
-        )}
-        {v.type === "RegisterEmail" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <Toolbar {...toolbarExtendLabel}>
-                <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label ">
-                    <TextEditor
-                      value={this.getLabel(v)}
-                      onChange={this.handleLabelChange}
-                    />
-                  </label>
-                </div>
-              </Toolbar>
-            )}
-            <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-              <div className="brz-login__field">
-                {showLabel === "on" ? (
-                  <input
-                    className="brz-input brz-login__field-email"
-                    type="email"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    onChange={e => {
-                      this.patchValue({
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                ) : (
-                  <input
-                    className="brz-input brz-login__field-email"
-                    type="email"
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
                     onChange={e => {
@@ -228,8 +273,14 @@ class RegisterField extends EditorComponent {
         )}
       </div>
     ) : (
-      <div className={className}>
-        {v.type === "FirstName" && (
+      ((type === "FirstName" && showFirstName === "on") ||
+        (type === "LastName" && showLastName === "on") ||
+        (type === "Username" && showUsername === "on") ||
+        type === "RegisterEmail" ||
+        type === "Password" ||
+        type === "PasswordConfirm" ||
+        (type === "Phone" && showPhoneNumber === "on")) && (
+        <div className={className}>
           <div className="brz-login__item">
             {showLabel === "on" && (
               <Toolbar {...toolbarExtendLabel}>
@@ -247,7 +298,7 @@ class RegisterField extends EditorComponent {
               <div className="brz-login__field">
                 {showLabel === "on" ? (
                   <input
-                    className="brz-input brz-login__field-name"
+                    className="brz-input"
                     type="text"
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
@@ -259,7 +310,7 @@ class RegisterField extends EditorComponent {
                   />
                 ) : (
                   <input
-                    className="brz-input brz-login__field-name"
+                    className="brz-input"
                     type="text"
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
@@ -274,207 +325,29 @@ class RegisterField extends EditorComponent {
               </div>
             </Toolbar>
           </div>
-        )}
-        {v.type === "LastName" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <Toolbar {...toolbarExtendLabel}>
-                <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label">
-                    <TextEditor
-                      value={this.getLabel(v)}
-                      onChange={this.handleLabelChange}
-                    />
-                  </label>
-                </div>
-              </Toolbar>
-            )}
-            <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-              <div className="brz-login__field">
-                {showLabel === "on" ? (
-                  <input
-                    className="brz-input brz-login__field-name"
-                    type="text"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    onChange={e => {
-                      this.patchValue({
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                ) : (
-                  <input
-                    className="brz-input brz-login__field-name"
-                    type="text"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    onChange={e => {
-                      this.patchValue({
-                        label: e.target.value,
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                )}
-              </div>
-            </Toolbar>
-          </div>
-        )}
-        {v.type === "RegisterEmail" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <Toolbar {...toolbarExtendLabel}>
-                <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label">
-                    <TextEditor
-                      value={this.getLabel(v)}
-                      onChange={this.handleLabelChange}
-                    />
-                  </label>
-                </div>
-              </Toolbar>
-            )}
-            <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-              <div className="brz-login__field">
-                {showLabel === "on" ? (
-                  <input
-                    className="brz-input brz-login__field-email"
-                    type="email"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    onChange={e => {
-                      this.patchValue({
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                ) : (
-                  <input
-                    className="brz-input brz-login__field-email"
-                    type="email"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    onChange={e => {
-                      this.patchValue({
-                        label: e.target.value,
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                )}
-              </div>
-            </Toolbar>
-          </div>
-        )}
-        {v.type === "Password" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <Toolbar {...toolbarExtendLabel}>
-                <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label">
-                    <TextEditor
-                      value={this.getLabel(v)}
-                      onChange={this.handleLabelChange}
-                    />
-                  </label>
-                </div>
-              </Toolbar>
-            )}
-            <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-              <div className="brz-login__field">
-                {showLabel === "on" ? (
-                  <input
-                    className="brz-input brz-login__field-name"
-                    type="password"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    onChange={e => {
-                      this.patchValue({
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                ) : (
-                  <input
-                    className="brz-input brz-login__field-name"
-                    type="password"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    onChange={e => {
-                      this.patchValue({
-                        label: e.target.value,
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                )}
-              </div>
-            </Toolbar>
-          </div>
-        )}
-        {v.type === "Phone" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <Toolbar {...toolbarExtendLabel}>
-                <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label">
-                    <TextEditor
-                      value={this.getLabel(v)}
-                      onChange={this.handleLabelChange}
-                    />
-                  </label>
-                </div>
-              </Toolbar>
-            )}
-            <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-              <div className="brz-login__field">
-                {showLabel === "on" ? (
-                  <input
-                    className="brz-input brz-login__field-name"
-                    type="text"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    onChange={e => {
-                      this.patchValue({
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                ) : (
-                  <input
-                    className="brz-input brz-login__field-name"
-                    type="text"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    onChange={e => {
-                      this.patchValue({
-                        label: e.target.value,
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                )}
-              </div>
-            </Toolbar>
-          </div>
-        )}
-        {this.renderRegisterInfoForEdit(
-          v,
-          showRegisterInfo,
-          toolbarRegisterInfo
-        )}
-      </div>
+        </div>
+      )
     );
   }
+
   renderForView(v, vs, vd) {
-    const { showLabel, showRegisterInfo } = this.props;
+    const {
+      showLabel,
+      showRegisterInfo,
+
+      showFirstName,
+      showLastName,
+      showUsername,
+      showPhoneNumber
+    } = this.props;
+    const { type } = v;
+
     const className = classnames(
-      "brz-form-login__field",
-      `brz-form-login__field-${v.type}`,
+      "brz-login-form__field",
+      `brz-login-form__field-${type}`,
       {
-        "brz-form-login__field-registerInfo-off":
-          showRegisterInfo === "off" && v.type === "RegisterInfo"
+        "brz-login-form__field-registerInfo-off":
+          showRegisterInfo === "off" && type === "RegisterInfo"
       },
       css(
         `${this.constructor.componentId}`,
@@ -487,7 +360,7 @@ class RegisterField extends EditorComponent {
     };
     return IS_WP ? (
       <div className={className}>
-        {v.type === "Name" && (
+        {(type === "Name" || type === "RegisterEmail") && (
           <div className="brz-login__item">
             {showLabel === "on" && (
               <div className="brz-login__field-label" style={styleLabel}>
@@ -496,30 +369,11 @@ class RegisterField extends EditorComponent {
             )}
             <div className="brz-login__field">
               <input
-                type="text"
-                name="user_login"
-                className="brz-input brz-login__field-name"
+                type={this.getWpFieldType(type)}
+                name={this.getWpFieldName(type)}
+                className="brz-input"
                 placeholder={this.getPlaceholder(v)}
-                value=""
-                required
-              />
-            </div>
-          </div>
-        )}
-        {v.type === "RegisterEmail" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label">{this.getLabel(v)}</label>
-              </div>
-            )}
-            <div className="brz-login__field">
-              <input
-                type="email"
-                name="user_email"
-                className="brz-input brz-login__field-email"
-                placeholder={this.getPlaceholder(v)}
-                value=""
+                defaultValue=""
                 required
               />
             </div>
@@ -528,8 +382,14 @@ class RegisterField extends EditorComponent {
         {this.renderRegisterInfoForView(v, showRegisterInfo)}
       </div>
     ) : (
-      <div className={className}>
-        {v.type === "FirstName" && (
+      ((type === "FirstName" && showFirstName === "on") ||
+        (type === "LastName" && showLastName === "on") ||
+        (type === "Username" && showUsername === "on") ||
+        type === "RegisterEmail" ||
+        type === "Password" ||
+        type === "PasswordConfirm" ||
+        (type === "Phone" && showPhoneNumber === "on")) && (
+        <div className={className}>
           <div className="brz-login__item">
             {showLabel === "on" && (
               <div className="brz-login__field-label" style={styleLabel}>
@@ -538,94 +398,21 @@ class RegisterField extends EditorComponent {
             )}
             <div className="brz-login__field">
               <input
-                type="text"
-                name="firstName"
-                className="brz-input brz-login__field-name"
+                type={this.getCloudFieldType(type)}
+                name={this.getCloudFieldName(type)}
+                className="brz-input"
                 placeholder={this.getPlaceholder(v)}
                 defaultValue=""
-                required
+                required={
+                  type === "RegisterEmail" ||
+                  type === "Password" ||
+                  type === "PasswordConfirm"
+                }
               />
             </div>
           </div>
-        )}
-        {v.type === "LastName" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label">{this.getLabel(v)}</label>
-              </div>
-            )}
-            <div className="brz-login__field">
-              <input
-                type="text"
-                name="lastName"
-                className="brz-input brz-login__field-name"
-                placeholder={this.getPlaceholder(v)}
-                defaultValue=""
-                required
-              />
-            </div>
-          </div>
-        )}
-        {v.type === "RegisterEmail" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label">{this.getLabel(v)}</label>
-              </div>
-            )}
-            <div className="brz-login__field">
-              <input
-                type="email"
-                name="email"
-                className="brz-input brz-login__field-email"
-                placeholder={this.getPlaceholder(v)}
-                defaultValue=""
-                required
-              />
-            </div>
-          </div>
-        )}
-        {v.type === "Password" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label">{this.getLabel(v)}</label>
-              </div>
-            )}
-            <div className="brz-login__field">
-              <input
-                type="password"
-                name="password"
-                className="brz-input brz-login__field-name"
-                placeholder={this.getPlaceholder(v)}
-                defaultValue=""
-                required
-              />
-            </div>
-          </div>
-        )}
-        {v.type === "Phone" && (
-          <div className="brz-login__item">
-            {showLabel === "on" && (
-              <div className="brz-login__field-label" style={styleLabel}>
-                <label className="brz-label">{this.getLabel(v)}</label>
-              </div>
-            )}
-            <div className="brz-login__field">
-              <input
-                type="text"
-                name="phone"
-                className="brz-input brz-login__field-name"
-                placeholder={this.getPlaceholder(v)}
-                defaultValue=""
-                required
-              />
-            </div>
-          </div>
-        )}
-        {this.renderRegisterInfoForView(v, showRegisterInfo)}
-      </div>
+        </div>
+      )
     );
   }
 }

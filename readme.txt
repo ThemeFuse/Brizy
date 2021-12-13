@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.8.2
 Requires PHP: 5.6.20
-Stable tag: 2.3.22
+Stable tag: 2.3.23
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,15 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.23 - 2021-12-13 =
+* Fixed: Switching weights on custom uploaded fonts
+* Fixed: Select dropdown width on Countdown 
+* Fixed: Responsive corrections in Seo Agency layout
+* Fixed: Added brizy_attachment_uid to attachments
+* Fixed: Show WooCommerce notices on templates for products
+* Fixed: Menu improvement
+* Improved: Need help URLs in Form app integrations
 
 = 2.3.22 - 2021-12-02 =
 * Fixed: Global blocks conditions

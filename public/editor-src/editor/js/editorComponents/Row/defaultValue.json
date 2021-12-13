@@ -3,6 +3,9 @@
     "media": "image",
     "tagName": "div",
 
+    "bgSizeType": "custom",
+    "hoverBgSizeType": null,
+
     "images": {
       "bgImageSrc": "",
       "hoverBgImageSrc": null,
@@ -59,6 +62,8 @@
 
     "tabletReverseColumns": "off",
 
+    "tabletBgSizeType": null,
+
     "showOnTablet": "on",
 
     "tabletMedia": "image",
@@ -91,6 +96,8 @@
     "mobileSizeSuffix": null,
 
     "mobileMedia": "image",
+
+    "mobileBgSizeType": null,
 
     "mobileBgImageWidth": null,
     "mobileBgImageHeight": null,

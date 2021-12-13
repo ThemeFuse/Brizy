@@ -1,5 +1,3 @@
-import Config from "visual/global/Config";
-import { IS_WP } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import {
   toolbarShowOnResponsive,
@@ -8,8 +6,13 @@ import {
 } from "visual/utils/toolbar";
 import { defaultValueValue } from "visual/utils/onChange";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { getAllMembershipChoices } from "visual/utils/membership";
+import Config from "visual/global/Config";
+import { IS_WP } from "visual/utils/env";
 
 export function getItems({ v, device, component }) {
+  const config = Config.getAll();
+
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const slider = dvv("slider");
 
@@ -28,8 +31,6 @@ export function getItems({ v, device, component }) {
     { title: t("Round"), icon: "nc-right-arrow-filled", value: "filled" },
     { title: t("Outline"), icon: "nc-right-arrow-outline", value: "outline" }
   ];
-
-  const membershipRoles = Config.get("wp")?.availableRoles || [];
 
   return [
     toolbarShowOnResponsive({
@@ -75,30 +76,23 @@ export function getItems({ v, device, component }) {
                   ]
                 },
                 {
-                  id: "membership",
-                  label: t("Membership"),
-                  type: "switch-dev",
-                  disabled: !IS_WP
-                },
-                {
-                  id: "membershipRoles",
-                  label: t("Show to"),
-                  type: "multiSelect-dev",
-                  placeholder: "Select",
-                  disabled: v.membership === "off" || !IS_WP,
-                  choices: [
+                  id: "membershipGroup",
+                  type: "group-dev",
+                  disabled: !IS_WP,
+                  options: [
                     {
-                      title: "Not logged",
-                      value: "not_logged"
+                      id: "membership",
+                      label: t("Membership"),
+                      type: "switch-dev"
                     },
                     {
-                      title: "Logged",
-                      value: "logged"
-                    },
-                    ...membershipRoles.map(({ role, name }) => ({
-                      title: name,
-                      value: role
-                    }))
+                      id: "membershipRoles",
+                      label: t("Show to"),
+                      type: "multiSelect2-dev",
+                      placeholder: "Select",
+                      disabled: v.membership === "off",
+                      choices: getAllMembershipChoices(config)
+                    }
                   ]
                 },
                 {

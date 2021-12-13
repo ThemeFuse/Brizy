@@ -7,6 +7,7 @@ import * as toolbarConfig from "./toolbar";
 import classnames from "classnames";
 import { css } from "visual/utils/cssStyle";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
+import { IS_WP } from "visual/utils/env";
 
 class ForgotPasswordField extends EditorComponent {
   static get componentId() {
@@ -43,8 +44,8 @@ class ForgotPasswordField extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { showLabel, toolbarExtendLabel } = this.props;
     const className = classnames(
-      "brz-form-login__field",
-      `brz-form-login__field-${v.type}`,
+      "brz-login-form__field",
+      `brz-login-form__field-${v.type}`,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -76,12 +77,10 @@ class ForgotPasswordField extends EditorComponent {
               <div className="brz-login__field">
                 {showLabel === "on" ? (
                   <input
-                    name="user_login"
-                    className="brz-input brz-login__field-email"
+                    className="brz-input"
                     type="email"
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
-                    required
                     onChange={e => {
                       this.patchValue({
                         placeholder: e.target.value
@@ -90,12 +89,10 @@ class ForgotPasswordField extends EditorComponent {
                   />
                 ) : (
                   <input
-                    name="user_login"
-                    className="brz-input brz-login__field-email"
+                    className="brz-input"
                     type="email"
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
-                    required
                     onChange={e => {
                       this.patchValue({
                         label: e.target.value,
@@ -116,8 +113,8 @@ class ForgotPasswordField extends EditorComponent {
     const { showLabel } = this.props;
 
     const className = classnames(
-      "brz-form-login__field",
-      `brz-form-login__field-${v.type}`,
+      "brz-login-form__field",
+      `brz-login-form__field-${v.type}`,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -141,8 +138,8 @@ class ForgotPasswordField extends EditorComponent {
             <div className="brz-login__field">
               <input
                 type="email"
-                name="user_login"
-                className="brz-input brz-login__field-email"
+                name={IS_WP ? "user_login" : "email"}
+                className="brz-input"
                 placeholder={this.getPlaceholder(v)}
                 defaultValue=""
                 required

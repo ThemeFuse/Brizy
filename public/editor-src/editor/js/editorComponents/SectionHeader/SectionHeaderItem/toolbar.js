@@ -1,9 +1,11 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getDynamicContentChoices
+} from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarBgImage,
   toolbarBgColor2,
   toolbarBgColorHexField2,
   toolbarGradientType,
@@ -18,6 +20,7 @@ import {
 } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export function getItems({ v, device, state, context }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
@@ -25,6 +28,10 @@ export function getItems({ v, device, state, context }) {
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
     dvv("bgColorPalette")
+  );
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.image
   );
 
   return [
@@ -45,18 +52,13 @@ export function getItems({ v, device, state, context }) {
               id: "tabCurrentElement",
               label: t("Image"),
               options: [
-                toolbarBgImage({
-                  v,
-                  device,
-                  state,
-                  config: context.dynamicContent.config,
+                {
+                  label: t("Image"),
+                  id: "bg",
+                  type: "imageUpload-dev",
                   states: [NORMAL, HOVER],
-                  onChange: [
-                    "onChangeBgImage",
-                    "onChangeBgImageBgOpacity",
-                    "onChangeBgImageDependencies"
-                  ]
-                })
+                  population: imageDynamicContentChoices
+                }
               ]
             }
           ]

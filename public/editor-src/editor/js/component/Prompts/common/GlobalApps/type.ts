@@ -54,4 +54,5 @@ export type AppData = {
   img: string;
   title: string;
   stages: Array<{ type: BaseKey; title: string; hideProgress?: boolean }>;
+  docsUrl: string;
 };

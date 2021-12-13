@@ -58,18 +58,18 @@
   }
   button {
     cursor: pointer;
-    color: inherit;
+    color: inherit !important;
     outline: none;
     overflow: hidden;
     padding: 0;
     text-indent: -9999px;
     border: 2px solid currentColor;
     border-radius: 0;
-    background-color: transparent;
+    background-color: transparent !important;
     transition: transform linear 0.2s, background-color linear 0.2s;
   }
   .slick-active button {
-    background-color: currentColor;
+    background-color: currentColor !important;
     transition: transform linear 0.2s, background-color linear 0.2s;
   }
 

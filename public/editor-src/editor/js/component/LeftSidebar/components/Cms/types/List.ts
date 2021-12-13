@@ -3,12 +3,27 @@ import { Authorize } from "./Authorize";
 import { WithPayload } from "./Base";
 import { ProjectId } from "visual/component/LeftSidebar/components/Cms/types/ProjectId";
 import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
+import { ActiveItem } from "./ActiveItem";
 
-export interface Cloud {
-  __type: "cloud";
+interface Base {
   development: boolean;
-  protectedPagePassword: string;
   previewUrl: string;
+  mediaUrl: string;
+  customerPreviewUrl: string;
+  activeItem: ActiveItem;
+  projectId: ProjectId;
+}
+
+export enum Subscription {
+  Free = "free",
+  Silver = "silver",
+  Gold = "gold",
+  Platinum = "platinum"
+}
+
+export interface Cloud extends Base {
+  __type: "cloud";
+  protectedPagePassword: string;
   domainUrl: string;
   settingsUrl: string;
   user: {
@@ -19,9 +34,7 @@ export interface Cloud {
   userApi: Authorize;
   appointmentsApi: Authorize;
   translationApi: string;
-  mediaUrl: string;
   shop: Authorize;
-  projectId: ProjectId;
   taxesInfoUrl: string;
   shopChannel: string;
   taxesMainCategoryId: string;
@@ -30,8 +43,18 @@ export interface Cloud {
   customersEditorUrl: string;
 }
 
-export type Context = Cloud;
+export interface Shopify extends Base {
+  __type: "shopify";
+  subscription: Subscription;
+  api: Authorize;
+  appointmentsApi: Authorize;
+  translationApi: Authorize;
+  customersEditorUrl: string;
+  updateEditorApi: Authorize;
+}
+
+export type Context = Cloud | Shopify;
 
 export type List = WithPayload<"list", Context>;
 
-export const cloud = (payload: Cloud): List => ({ type: "list", payload });
+export const list = (payload: Context): List => ({ type: "list", payload });

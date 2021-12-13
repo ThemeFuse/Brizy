@@ -17,6 +17,7 @@
     .brz-ed-control__multiSelect {
       &__menu {
         max-width: 100%;
+        min-width: unset;
       }
 
       &--value-container {

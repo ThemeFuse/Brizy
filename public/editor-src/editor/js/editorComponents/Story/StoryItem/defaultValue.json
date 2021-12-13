@@ -4,6 +4,8 @@
 
     "media": "image",
 
+    "bgSizeType": "custom",
+
     "images": {
       "bgImageSrc": ""
     },

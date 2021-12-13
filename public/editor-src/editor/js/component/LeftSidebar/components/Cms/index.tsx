@@ -14,7 +14,6 @@ import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 import { mPipe, pass } from "fp-utilities";
 import * as Obj from "visual/utils/reader/object";
-import { IS_PRO } from "visual/utils/env";
 import { uiSelector } from "visual/redux/selectors";
 import { updateUI } from "visual/redux/actions2";
 import Link from "../Options/types/Link";
@@ -28,8 +27,7 @@ import {
   isShopify,
   Shopify
 } from "visual/global/Config/types/configs/Cloud";
-import { getWhiteLabel } from "./types/WhiteLabel";
-import { fromNumber } from "./types/ProjectId";
+import { getContext } from "visual/component/LeftSidebar/components/Cms/utils";
 
 interface Props {
   config: CMS | Shopify;
@@ -37,7 +35,6 @@ interface Props {
 
 const Component = ({ config }: Props): ReactElement => {
   const iframeSrc = config.cms.adminUrl;
-  const token = config.tokenV2?.access_token;
   const ref = useRef<HTMLIFrameElement>(null);
   const leftSidebar = useSelector(uiSelector).leftSidebar;
   const opened =
@@ -96,39 +93,7 @@ const Component = ({ config }: Props): ReactElement => {
 
   useEffect(() => {
     if (opened && iframeLoaded) {
-      const list = List.cloud({
-        __type: "cloud",
-        projectApi: token
-          ? { __type: "withToken", token, uri: config.cms.apiUrl }
-          : { __type: "withOutToken", uri: config.cms.apiUrl },
-        user: { isPro: IS_PRO },
-        previewUrl: config.urls.pagePreview,
-        domainUrl: config.urls.preview,
-        mediaUrl: config.urls.image,
-        settingsUrl: config.urls.projectSettings,
-        protectedPagePassword: config.project.protectedPagePassword,
-        whiteLabel: getWhiteLabel(config),
-        userApi: token
-          ? { __type: "withToken", token, uri: config.cms.apiUrl }
-          : { __type: "withOutToken", uri: config.cms.apiUrl },
-        shop: token
-          ? { __type: "withToken", token, uri: config.cms.apiUrl }
-          : { __type: "withOutToken", uri: config.cms.apiUrl },
-        development: process.env.NODE_ENV === "development",
-        translationApi: "",
-        appointmentsApi: token
-          ? { __type: "withToken", token, uri: config.cms.apiUrl }
-          : { __type: "withOutToken", uri: config.cms.apiUrl },
-        projectId: fromNumber(config.project.id),
-        shopChannel: "shopChannel",
-        taxesInfoUrl: "taxesInfoUrl",
-        taxesMainCategoryId: "taxesMainCategoryId",
-        notificationApi: token
-          ? { __type: "withToken", token, uri: config.cms.apiUrl }
-          : { __type: "withOutToken", uri: config.cms.apiUrl },
-        supportLinks: config.cms.supportLinks,
-        customersEditorUrl: config.cms.customerEditorUrl
-      });
+      const list = List.list(getContext(config));
 
       ref.current?.contentWindow?.postMessage(list, iframeSrc);
     }

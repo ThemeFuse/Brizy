@@ -220,6 +220,7 @@ export default class Menu extends EditorComponent {
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: {
+        menuSelected,
         mMenu: hasMMenu,
         meta: this.getMeta(v),
         mods: {

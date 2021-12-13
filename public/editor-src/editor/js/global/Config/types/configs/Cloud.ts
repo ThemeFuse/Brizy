@@ -9,13 +9,17 @@ import { Config as Config_ } from "visual/global/Config/types";
 import { Page, PageCollection } from "visual/types";
 import { WhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
 import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
+import { Role } from "visual/utils/membership";
 
 //#region Base
 interface Base<Platform> extends ConfigCommon, WithId<number> {
+  availableRoles: Role[];
   page: {
-    id: number;
+    id: string;
     isProtected: boolean;
     provider: "customers" | "collections";
+    isCustomersPage: boolean;
+    isResetPassPage: boolean;
   };
   container: {
     id: number;
@@ -35,6 +39,9 @@ interface Base<Platform> extends ConfigCommon, WithId<number> {
     blogId: string;
     supportLinks: SupportLinks;
     customerEditorUrl: string;
+    customerPreviewUrl: string;
+    collectionPreviewUrl: string;
+    translationsApiUrl: string;
   };
   whiteLabel?: WhiteLabel;
 }

@@ -988,6 +988,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         }
     }
 
+	/**
+	 * @see Brizy_Admin_Migrations_AttachmentUidMigration
+	 */
     public function get_attachment_key()
     {
         try {
@@ -1006,7 +1009,15 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                 $file = get_attached_file($attachmentId);
                 $path_parts = pathinfo($file);
                 $uid = "wp-" . md5($attachmentId . time()) . '.' . $path_parts['extension'];
+
+	            // this is a bit wrong as the attachment is attached to itself
+	            // (we used brizy_post_uid to mark the attachments as attached to the post with uid in this key)
+	            // we also migrated the attachment that does not have brizy_attachment_uid meta and
+	            // does have only brizy_post_uid meta: see the Brizy_Admin_Migrations_AttachmentUidMigration class
                 update_post_meta($attachmentId, 'brizy_post_uid', $uid);
+
+				// we added this here as the correct way to create a brizy_attachment_uid key
+                update_post_meta($attachmentId, 'brizy_attachment_uid', $uid);
             }
 
             $this->success(array('uid' => $uid));

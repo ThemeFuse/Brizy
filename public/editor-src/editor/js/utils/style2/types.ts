@@ -7,4 +7,5 @@ export type CSSValue = {
   device: ResponsiveMode;
   state: State;
   prefix?: string;
+  mode?: string;
 };

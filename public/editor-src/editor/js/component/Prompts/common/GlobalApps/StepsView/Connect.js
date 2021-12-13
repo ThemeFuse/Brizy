@@ -69,7 +69,8 @@ class Connect extends Component {
       nextLoading,
       prevLoading,
       onNext,
-      onPrev
+      onPrev,
+      docsUrl
     } = this.props;
 
     return (
@@ -78,7 +79,12 @@ class Connect extends Component {
           <img className="brz-img" src={img} title={title} alt={title} />
           <p className="brz-p">{descriptions}</p>
           <p className="brz-p brz-ed-popup-integrations__connect-info">
-            <a className="brz-a" href="#" target="_blank">
+            <a
+              className="brz-a"
+              href={docsUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
               {t("Need help")}?
             </a>
           </p>
