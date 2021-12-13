@@ -82,7 +82,7 @@ module.exports = {
                             paddingBottom: 0,
                             paddingBottomSuffix: "px",
                             _id: "sicasmvqcjlhvclbljkvhfaekyuggmjwpyot",
-                            mobileWidth: 28
+                            mobileWidth: 30
                           }
                         },
                         {
@@ -225,7 +225,7 @@ module.exports = {
                             paddingBottom: 0,
                             paddingBottomSuffix: "px",
                             _id: "vmviweclbmywbfhkphpjzygxvshwkvictcgj",
-                            mobileWidth: 71.3
+                            mobileWidth: 25
                           }
                         },
                         {
@@ -336,7 +336,8 @@ module.exports = {
                             tabletWidth: 40.7,
                             showOnTablet: "on",
                             showOnMobile: "on",
-                            _id: "roapnotiyfgmucnohulxtfpiwcymrjbtjsak"
+                            _id: "roapnotiyfgmucnohulxtfpiwcymrjbtjsak",
+                            mobileWidth: 45
                           }
                         }
                       ],
@@ -1248,7 +1249,9 @@ module.exports = {
                 containerType: "boxed",
                 tabletPaddingType: "ungrouped",
                 tabletPaddingTop: 182,
-                tabletPaddingBottom: 100
+                tabletPaddingBottom: 100,
+                mobilePaddingType: "ungrouped",
+                mobilePaddingTop: 200
               }
             }
           ],

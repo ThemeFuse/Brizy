@@ -2,8 +2,9 @@
   "content": {
     "type": "login",
 
-    "emptyFieldsError": "All fields should be filled!",
-    "submitUrlError": "Something went wrong, try again later",
+    "emptyFieldsError": "Please fill in the mandatory fields",
+    "passLengthError": "Password should be at least 6 characters",
+    "passMatchError": "Passwords do not match",
 
     "redirectType": "samePage",
     "messageRedirect": "",
@@ -16,12 +17,25 @@
 
     "remember": "on",
     "showRegisterInfo": "on",
+
     "lostPassword": "Lost your password?",
     "showLostPassword": "on",
+
     "registerLink": "Register",
     "showRegisterLink": "on",
+
     "loginLink": "Back to Login",
     "showLoginLink": "on",
+
+    "showFirstName": "on",
+    "showLastName": "on",
+    "showUsername": "on",
+    "showPhoneNumber": "on",
+
+    "defaultRoles": "[]",
+
+    "showName": "on",
+
     "items": []
   },
 

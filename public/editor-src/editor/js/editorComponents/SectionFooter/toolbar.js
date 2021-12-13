@@ -1,11 +1,13 @@
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getDynamicContentChoices
+} from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarElementSectionGlobal,
-  toolbarBgImage,
   toolbarGradientType,
   toolbarBgColorHexField2,
   toolbarBgColor2,
@@ -20,11 +22,13 @@ import {
   toolbarElementSectionSaved,
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
+import { getAllMembershipChoices } from "visual/utils/membership";
 import { IS_WP } from "visual/utils/env";
-
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device, component, state }) {
+export function getItems({ v, device, component, state, context }) {
+  const config = Config.getAll();
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const sectionHeightSuffix = dvv("sectionHeightSuffix");
@@ -33,8 +37,10 @@ export function getItems({ v, device, component, state }) {
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
-
-  const membershipRoles = Config.get("wp")?.availableRoles || [];
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.image
+  );
 
   return [
     toolbarShowOnResponsive({
@@ -72,30 +78,23 @@ export function getItems({ v, device, component, state }) {
           ]
         },
         {
-          id: "membership",
-          label: t("Membership"),
-          type: "switch-dev",
-          disabled: !IS_WP
-        },
-        {
-          id: "membershipRoles",
-          label: t("Show to"),
-          type: "multiSelect-dev",
-          placeholder: "Select",
-          disabled: v.membership === "off" || !IS_WP,
-          choices: [
+          id: "membershipGroup",
+          type: "group-dev",
+          disabled: !IS_WP,
+          options: [
             {
-              title: "Not logged",
-              value: "not_logged"
+              id: "membership",
+              label: t("Membership"),
+              type: "switch-dev"
             },
             {
-              title: "Logged",
-              value: "logged"
-            },
-            ...membershipRoles.map(({ role, name }) => ({
-              title: name,
-              value: role
-            }))
+              id: "membershipRoles",
+              label: t("Show to"),
+              type: "multiSelect2-dev",
+              placeholder: "Select",
+              disabled: v.membership === "off",
+              choices: getAllMembershipChoices(config)
+            }
           ]
         }
       ]
@@ -117,18 +116,13 @@ export function getItems({ v, device, component, state }) {
               id: "tabCurrentElement",
               label: t("Image"),
               options: [
-                toolbarBgImage({
-                  v,
-                  device,
-                  state,
-                  config: component.context.dynamicContent.config,
+                {
+                  label: t("Image"),
+                  id: "bg",
+                  type: "imageUpload-dev",
                   states: [NORMAL, HOVER],
-                  onChange: [
-                    "onChangeBgImage",
-                    "onChangeBgImageBgOpacity",
-                    "onChangeBgImageDependencies"
-                  ]
-                })
+                  population: imageDynamicContentChoices
+                }
               ]
             }
           ]

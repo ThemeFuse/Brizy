@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.8.2<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.22<br>
+Stable tag: 2.3.24<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,18 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.24 - 2021-12-13
+* Fixed: Included all composer files
+
+### 2.3.23 - 2021-12-13
+* Fixed: Switching weights on custom uploaded fonts
+* Fixed: Select dropdown width on Countdown 
+* Fixed: Responsive corrections in Seo Agency layout
+* Fixed: Added brizy_attachment_uid to attachments
+* Fixed: Show WooCommerce notices on templates for products
+* Fixed: Menu improvement
+* Improved: Need help URLs in Form app integrations
 
 ### 2.3.22 - 2021-12-02
 * Fixed: Global blocks conditions

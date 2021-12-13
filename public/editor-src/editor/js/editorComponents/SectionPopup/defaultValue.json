@@ -5,6 +5,8 @@
     "items": [],
 
     "media": "image",
+    
+    "bgSizeType": "custom",
 
     "images": {
       "bgImageSrc": "",
@@ -40,6 +42,8 @@
     "hoverContrast": null,
 
     "tabletMedia": "image",
+
+    "tabletBgSizeType": null,
 
     "tabletBgImageWidth": null,
     "tabletBgImageHeight": null,

@@ -6,6 +6,8 @@
   top: 0;
   left: 0;
   z-index: z("section-popup");
+  display: flex;
+  justify-content: center;
 
   &__close {
     position: absolute;
@@ -24,6 +26,7 @@
     max-height: 100%;
     padding-top: 70px;
     padding-bottom: 70px;
+    justify-content: center;
   }
   & .brz-container {
     height: 100%;

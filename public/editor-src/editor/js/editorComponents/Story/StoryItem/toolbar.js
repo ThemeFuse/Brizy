@@ -1,19 +1,26 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getDynamicContentChoices
+} from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarBgImage,
   toolbarBgVideoUrl,
   toolbarElementSectionSaved
 } from "visual/utils/toolbar";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, component, device }) {
+export function getItems({ v, component, device, context }) {
   const dvv = key => defaultValueValue({ v, key, device });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
     dvv("bgColorPalette")
+  );
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.image
   );
 
   return [
@@ -45,18 +52,13 @@ export function getItems({ v, component, device }) {
                     { value: "map", icon: "nc-media-map" }
                   ]
                 },
-                toolbarBgImage({
-                  v,
-                  device,
-                  config: component.context.dynamicContent.config,
-                  state: "normal",
+                {
+                  label: t("Image"),
+                  id: "bg",
+                  type: "imageUpload-dev",
                   disabled: dvv("media") !== "image",
-                  onChange: [
-                    "onChangeBgImage",
-                    "onChangeBgImageBgOpacity",
-                    "onChangeBgImageDependencies"
-                  ]
-                }),
+                  population: imageDynamicContentChoices
+                },
                 toolbarBgVideoUrl({
                   v,
                   device,

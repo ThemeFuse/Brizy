@@ -8,6 +8,9 @@ export default {
   "wrapper--login": {
     showToolbar: "on"
   },
+  "wrapper--reset--psw": {
+    showToolbar: "on"
+  },
   "wrapper--tabs": {
     showToolbar: "on"
   },

@@ -28,7 +28,7 @@ export default {
           roles: ["admin"]
         },
         {
-          type: "wpShowMembership",
+          type: "showMembership",
           label: t("View as")
         },
         {

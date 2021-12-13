@@ -46,7 +46,7 @@ export function styleClassName(v) {
     });
 
     glamorObj = {
-      ".brz &": {
+      ".brz &.brz-icon": {
         color: "var(--color)",
         borderColor: "var(--borderColor)",
         backgroundColor: "var(--backgroundColor)",
@@ -57,13 +57,13 @@ export function styleClassName(v) {
         transition: "var(--hoverTransition)",
         transitionProperty: "var(--hoverTransitionProperty)"
       },
-      ".brz &:hover": {
+      ".brz &.brz-icon:hover": {
         color: "var(--hoverColor)",
         borderColor: "var(--hoverBorderColor)",
         backgroundColor: "var(--hoverBgColor)",
         backgroundImage: "var(--hoverBackgroundGradient)"
       },
-      ".brz-ed--desktop &": {
+      ".brz-ed--desktop &.brz-icon": {
         width: IS_STORY ? "100%" : "var(--width)",
         height: IS_STORY ? "unset" : "var(--height)",
         fontSize: IS_STORY ? "unset" : "var(--fontSize)",
@@ -78,7 +78,7 @@ export function styleClassName(v) {
           boxShadow: shadowDesktopHover !== "" ? "var(--hoverBoxShadow)" : null
         }
       },
-      ".brz-ed--tablet &": {
+      ".brz-ed--tablet &.brz-icon": {
         width: "var(--tabletWidth)",
         height: "var(--tabletHeight)",
         fontSize: "var(--tabletFontSize)",
@@ -86,7 +86,7 @@ export function styleClassName(v) {
         borderRadius: "var(--tabletBorderRadius)",
         strokeWidth: "var(--tabletStrokeWidth)"
       },
-      ".brz-ed--mobile &": {
+      ".brz-ed--mobile &.brz-icon": {
         width: "var(--mobileWidth)",
         height: "var(--mobileHeight)",
         fontSize: "var(--mobileFontSize)",

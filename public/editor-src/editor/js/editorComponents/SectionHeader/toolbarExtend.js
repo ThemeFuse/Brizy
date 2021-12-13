@@ -5,10 +5,12 @@ import {
   toolbarElementSectionSaved,
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
+import { getAllMembershipChoices } from "visual/utils/membership";
+
 import { IS_WP } from "visual/utils/env";
 
 export function getItems({ v, device, component }) {
-  const membershipRoles = Config.get("wp")?.availableRoles || [];
+  const config = Config.getAll();
 
   return [
     toolbarShowOnResponsive({
@@ -57,30 +59,23 @@ export function getItems({ v, device, component }) {
           ]
         },
         {
-          id: "membership",
-          label: t("Membership"),
-          type: "switch-dev",
-          disabled: !IS_WP
-        },
-        {
-          id: "membershipRoles",
-          label: t("Show to"),
-          type: "multiSelect-dev",
-          placeholder: "Select",
-          disabled: v.membership === "off" || !IS_WP,
-          choices: [
+          id: "membershipGroup",
+          type: "group-dev",
+          disabled: !IS_WP,
+          options: [
             {
-              title: "Not logged",
-              value: "not_logged"
+              id: "membership",
+              label: t("Membership"),
+              type: "switch-dev"
             },
             {
-              title: "Logged",
-              value: "logged"
-            },
-            ...membershipRoles.map(({ role, name }) => ({
-              title: name,
-              value: role
-            }))
+              id: "membershipRoles",
+              label: t("Show to"),
+              type: "multiSelect2-dev",
+              placeholder: "Select",
+              disabled: v.membership === "off",
+              choices: getAllMembershipChoices(config)
+            }
           ]
         }
       ]

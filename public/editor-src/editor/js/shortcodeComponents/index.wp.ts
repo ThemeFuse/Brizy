@@ -85,7 +85,9 @@ const singleShortcodes = [
   ...(IS_SINGLE_TEMPLATE ? [{ component: WPPostContent, pro: true }] : []),
   { component: WPPostInfo, pro: true },
   { component: WPBreadcrumbs, pro: true },
-  { component: WPPostNavigation, pro: true },
+  ...(IS_SINGLE_TEMPLATE || IS_POST
+    ? [{ component: WPPostNavigation, pro: true }]
+    : []),
   { component: Posts, pro: true }
 ];
 

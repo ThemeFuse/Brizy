@@ -8,7 +8,6 @@ import {
 import { t } from "visual/utils/i18n";
 
 import {
-  toolbarBgImage,
   toolbarBgColor2,
   toolbarTextShadowHexField2,
   toolbarTextShadow,
@@ -864,11 +863,10 @@ function getTextPopulationOptions(v, { device }) {
           id: "mask",
           label: t("Mask"),
           options: [
-            toolbarBgImage({
-              v,
-              device,
-              onChange: ["onChangeBgImage"]
-            })
+            {
+              id: "bg",
+              type: "imageUpload-dev"
+            }
           ]
         }
       ]

@@ -11,16 +11,25 @@
 
   "style": {
     "customCSS": "",
+    
     "width": 100,
     "widthSuffix": "%",
 
     "media": "image",
+
+    "bgSizeType": "custom",
+    "tabletBgSizeType": null,
+    "mobileBgSizeType": null,
+
     "bgImageWidth": 0,
     "bgImageHeight": 0,
+
     "bgImageExtension": "",
     "bgImageSrc": "",
+
     "bgPositionX": 50,
     "bgPositionY": 50,
+
     "bgPopulation": "",
 
     "contentHorizontalAlign": "left",

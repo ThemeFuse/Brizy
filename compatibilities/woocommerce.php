@@ -6,6 +6,7 @@ class Brizy_Compatibilities_Woocommerce {
 		add_action( 'woocommerce_checkout_terms_and_conditions', [ $this, 'woocommerce_checkout_terms_and_conditions' ], 29 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ], 11 );
 		add_filter( 'brizy_html_entity_decode', '__return_false' );
+		add_filter( 'brizy_template_content_compiled', [ $this, 'insertWooNotice' ] );
 	}
 
 	/*
@@ -32,4 +33,32 @@ class Brizy_Compatibilities_Woocommerce {
 			wp_dequeue_script( 'wc-geolocation' );
 		}
 	}
+
+	public function insertWooNotice( $content ) {
+
+		$notices = wc_print_notices( true );
+
+		if ( empty( $content ) || empty( $notices ) || false == strpos( $content, 'brz-section__header ' ) ) {
+			return $content;
+		}
+
+	    $dom = pQuery::parseStr( $content );
+
+	    $dom->query('section.brz-section__header')->after( $notices );
+
+		return $dom->html();
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

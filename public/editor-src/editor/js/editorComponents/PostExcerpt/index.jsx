@@ -14,6 +14,7 @@ import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "../tools/Wrapper";
+import { getPlaceholder, getPlaceholderIcon } from "./utils";
 
 export default class PostExcerpt extends EditorComponent {
   static get componentId() {
@@ -82,6 +83,7 @@ export default class PostExcerpt extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     const {
+      type,
       className: className_,
       linkType,
       linkAnchor,
@@ -108,8 +110,8 @@ export default class PostExcerpt extends EditorComponent {
     };
     const text = (
       <DynamicContentHelper
-        placeholder="{{brizy_dc_post_excerpt}}"
-        placeholderIcon="wp-excerpt"
+        placeholder={getPlaceholder(type)}
+        placeholderIcon={getPlaceholderIcon(type)}
         tagName={v.tagName}
         props={{
           className: "brz-wp-post-excerpt-content"

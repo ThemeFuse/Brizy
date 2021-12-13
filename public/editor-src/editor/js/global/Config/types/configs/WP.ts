@@ -6,6 +6,7 @@ import { Project } from "../Project";
 import { Config } from "visual/global/Config/types";
 import { ConfigCommon } from "./ConfigCommon";
 import { Rule } from "../Rule";
+import { Role } from "visual/utils/membership";
 
 export interface Prop {
   [k: string]: unknown;
@@ -26,6 +27,8 @@ export interface Prop {
 
     // TODO: need completed it
   };
+
+  availableRoles: Role[];
 }
 
 export interface WP extends ConfigCommon {

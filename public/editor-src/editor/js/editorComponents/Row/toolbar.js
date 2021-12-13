@@ -1,10 +1,12 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getOptionColorHexByPalette,
+  getDynamicContentChoices
+} from "visual/utils/options";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarBgImage,
   toolbarBgVideoUrl,
   toolbarBorder2,
   toolbarBorderColorHexField2,
@@ -19,10 +21,10 @@ import {
   toolbarLinkAnchor,
   toolbarLinkPopup
 } from "visual/utils/toolbar";
-
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
-export function getItems({ v, device, component, state }) {
+export function getItems({ v, device, component, state, context }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
   const dvvh = key => defaultValueValue({ v, key, device, state });
 
@@ -33,6 +35,10 @@ export function getItems({ v, device, component, state }) {
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
+  const imageDynamicContentChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.image
+  );
 
   return [
     toolbarShowOnResponsive({ v, device, devices: "responsive" }),
@@ -70,37 +76,25 @@ export function getItems({ v, device, component, state }) {
                   devices: "responsive",
                   state
                 }),
-                toolbarBgImage({
-                  v,
-                  device,
-                  state,
-                  config: component.context.dynamicContent.config,
+                {
+                  label: t("Image"),
+                  id: "bg",
+                  type: "imageUpload-dev",
                   states: [NORMAL, HOVER],
                   devices: "desktop",
                   disabled: dvvh("media") !== "image",
-                  onChange: [
-                    "onChangeBgImage",
-                    "onChangeBgImageBgOpacity",
-                    "onChangeBgImageDependencies",
-                    "onChangeBgImageColumnAndRowSyncMobile"
-                  ]
-                }),
-                toolbarBgImage({
-                  v,
-                  device,
-                  state,
-                  config: component.context.dynamicContent.config,
+                  population: imageDynamicContentChoices
+                },
+                {
+                  label: t("Image"),
+                  id: "bg",
+                  type: "imageUpload-dev",
                   states: [NORMAL, HOVER],
                   devices: "responsive",
                   disabled:
                     dvvh("media") !== "image" && dvvh("media") !== "video",
-                  onChange: [
-                    "onChangeBgImage",
-                    "onChangeBgImageBgOpacity",
-                    "onChangeBgImageDependencies",
-                    "onChangeBgImageColumnAndRowSyncMobile"
-                  ]
-                }),
+                  population: imageDynamicContentChoices
+                },
                 toolbarBgVideoUrl({
                   v,
                   device,
