@@ -223,6 +223,19 @@ class Select extends React.Component {
   renderDropDown() {
     const { inPortal, className: _className } = this.props;
 
+    if (IS_PREVIEW) {
+      return (
+        <div className="brz-control__select-options">
+          <ScrollPane
+            className="brz-ed-scroll-pane"
+            style={this.getScrollPaneStyle()}
+          >
+            {this.renderItems()}
+          </ScrollPane>
+        </div>
+      );
+    }
+
     if (this.state.isOpen && !inPortal) {
       return (
         <div

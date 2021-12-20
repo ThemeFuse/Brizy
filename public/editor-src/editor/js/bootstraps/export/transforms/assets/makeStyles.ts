@@ -87,6 +87,21 @@ const makePageFonts = (fonts: Fonts): (AssetGoogle | AssetUpload)[] => {
   return pageFonts;
 };
 
+const normalizeCustomCSS = (styles: string): string =>
+  styles.replace(/&(quot|#x27|amp|gt);/g, (match: string): string => {
+    switch (match) {
+      case "&quot;":
+        return '"';
+      case "&#x27;":
+        return "'";
+      case "&amp;":
+        return "&";
+      case "&gt;":
+        return ">";
+    }
+    return "";
+  });
+
 const makePageStyles = ($doc: cheerio.CheerioAPI): Asset[] => {
   const prefetchLinks: Asset = {
     name: "projectPrefetchFonts",
@@ -133,7 +148,7 @@ const makeCustomCSS = ($doc: cheerio.CheerioAPI): Asset[] => {
     score: CUSTOM_CODE,
     content: {
       type: "inline",
-      content: style,
+      content: normalizeCustomCSS(style),
       attr: {
         id: `brz-custom-css-${index}`,
         class: "brz-style"
