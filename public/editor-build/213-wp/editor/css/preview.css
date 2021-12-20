@@ -2850,6 +2850,8 @@ body {
     caret-color: #000;
     color: transparent !important;
     -webkit-background-clip: text;
+    -webkit-box-decoration-break: clone;
+    -webkit-text-fill-color: transparent;
     background-clip: text; }
   .brz .brz-rich-text > div > h1,
   .brz .brz-rich-text > div > h2,
