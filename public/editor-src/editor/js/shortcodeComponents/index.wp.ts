@@ -111,10 +111,18 @@ const productShortcodes = hasWoocommerce
   : [];
 
 const productArchiveShortcodes = hasWoocommerce
-  ? [{ component: WOOArchives, pro: true }]
+  ? [
+      { component: WOOArchives, pro: true },
+      { component: PostTitle, pro: true },
+      { component: PostExcerpt, pro: true }
+    ]
   : [];
 
-const postArchiveShortcodes = [{ component: Archive, pro: true }];
+const postArchiveShortcodes = [
+  { component: Archive, pro: true },
+  { component: PostTitle, pro: true },
+  { component: PostExcerpt, pro: true }
+];
 
 const config = ((): Shortcodes => {
   if (IS_STORY) {

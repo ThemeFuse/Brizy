@@ -26,6 +26,10 @@ export interface Cloud extends Base {
   protectedPagePassword: string;
   domainUrl: string;
   settingsUrl: string;
+  customersSlug: string;
+  categoriesSlug: string;
+  productsSlug: string;
+  taxesInfoUrl: string;
   user: {
     isPro: boolean;
   };
@@ -33,9 +37,11 @@ export interface Cloud extends Base {
   projectApi: Authorize;
   userApi: Authorize;
   appointmentsApi: Authorize;
-  translationApi: string;
+  translationApi: Authorize;
   shop: Authorize;
-  taxesInfoUrl: string;
+  shopify: Authorize;
+  square: Authorize;
+  projectId: ProjectId;
   shopChannel: string;
   taxesMainCategoryId: string;
   notificationApi: Authorize;

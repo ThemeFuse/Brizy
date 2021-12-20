@@ -83,13 +83,17 @@ export default class List extends Component<Props, State> {
   }
 
   filterFn = (item: LayoutData, cf: Filter): boolean => {
+    const searchRegex = new RegExp(
+      cf.search?.replace(/[.*+?^${}()|[\]\\]/g, ""),
+      "i"
+    );
+
     const categoryMatch =
       cf.category === "*" || item.cat.includes(Number(cf.category));
     const searchMatch =
       cf.search === "" ||
-      new RegExp(cf.search?.replace(/[.*+?^${}()|[\]\\]/g, ""), "i").test(
-        item.keywords
-      );
+      searchRegex.test(item.keywords) ||
+      searchRegex.test(item.name);
 
     return categoryMatch && searchMatch;
   };
