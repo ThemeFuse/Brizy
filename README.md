@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.8.2<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.24<br>
+Stable tag: 2.3.25<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,13 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.25 - 2021-12-20
+* Fixed: Image size select
+* Fixed: Search by layout name
+* Fixed: Custom css characters transformed to unicode in preview
+* Fixed: Form select scroll
+* Fixed: Increased the returned post count on brizy_get_pots
 
 ### 2.3.24 - 2021-12-13
 * Fixed: Included all composer files
