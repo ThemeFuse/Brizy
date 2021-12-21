@@ -513,17 +513,27 @@ class Brizy_Editor_Editor_Editor
                 get_object_vars(is_object($custom_menu_data) ? $custom_menu_data : (object)array())
             );
 
-	        $menu_items = [];
+	        $menuItems = [];
 
-			add_action( 'wp_get_nav_menu_items', function ( $items ) use ( &$menu_items ) {
-		        $menu_items = $items;
+	        add_action( 'wp_get_nav_menu_items', function ( $items ) use ( &$menuItems ) {
+		        foreach ( $items as $item ) {
+			        $menuItems[ $item->ID ] = $item;
+		        }
 		        return $items;
 	        }, -1000 );
 
-            wp_get_nav_menu_items( $menu->term_id );
+	        $currentItems = wp_get_nav_menu_items( $menu->term_id );
 
-            _wp_menu_item_classes_by_context($menu_items);
-            $menu_items = $this->get_menu_tree($menu_items);
+	        _wp_menu_item_classes_by_context( $menuItems );
+
+	        $currentItemsAssociative = [];
+	        foreach ( $currentItems as $currentItem ) {
+		        $currentItemsAssociative[ $currentItem->ID ] = $currentItem;
+	        }
+
+	        $menuItems = $currentItemsAssociative + $menuItems;
+
+            $menu_items = $this->get_menu_tree($menuItems);
 
             if (count($menu_items) > 0) {
                 $amenu->items = $menu_items;
@@ -546,16 +556,20 @@ class Brizy_Editor_Editor_Editor
         $result_items = array();
 
         foreach ($items as $item) {
-            if ((int)$item->menu_item_parent !== $parent) {
-                continue;
-            }
+	        if ( (string) $item->menu_item_parent !== (string) $parent ) {
+		        continue;
+	        }
 
             $menu_uid = get_post_meta($item->ID, 'brizy_post_uid', true);
 
-            if (!$menu_uid) {
-                $menu_uid = md5($item->ID . time());
-                update_post_meta($item->ID, 'brizy_post_uid', $menu_uid);
-            }
+	        if ( ! $menu_uid ) {
+		        $menu_uid = md5( $item->ID . time() );
+		        $update   = update_post_meta( $item->ID, 'brizy_post_uid', $menu_uid );
+
+		        if ( ! $update ) {
+			        $menu_uid = $item->ID;
+		        }
+	        }
 
             $megaMenuItems = $this->getMegaMenuItems();
 
