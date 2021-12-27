@@ -31,7 +31,9 @@ const cloud = (config: CMS): Cloud => {
       ? { __type: "withToken", token, uri: config.cms.apiUrl }
       : { __type: "withOutToken", uri: config.cms.apiUrl },
     development: process.env.NODE_ENV === "development",
-    translationApi: "",
+    translationApi: token
+      ? { __type: "withToken", token, uri: config.cms.translationsApiUrl }
+      : { __type: "withOutToken", uri: config.cms.translationsApiUrl },
     appointmentsApi: token
       ? { __type: "withToken", token, uri: config.cms.apiUrl }
       : { __type: "withOutToken", uri: config.cms.apiUrl },
@@ -48,7 +50,16 @@ const cloud = (config: CMS): Cloud => {
     activeItem: {
       id: config.page.id,
       __type: ActiveItemTypes.CollectionItem
-    }
+    },
+    shopify: token
+      ? { __type: "withToken", token, uri: config.cms.apiUrl }
+      : { __type: "withOutToken", uri: config.cms.apiUrl },
+    square: token
+      ? { __type: "withToken", token, uri: config.cms.apiUrl }
+      : { __type: "withOutToken", uri: config.cms.apiUrl },
+    customersSlug: "customers",
+    categoriesSlug: "categories",
+    productsSlug: "products"
   };
 };
 
@@ -68,8 +79,8 @@ const shopify = (config: ShopifyConf): Shopify => {
       ? { __type: "withToken", token, uri: config.cms.apiUrl }
       : { __type: "withOutToken", uri: config.cms.apiUrl },
     translationApi: token
-      ? { __type: "withToken", token, uri: "test" }
-      : { __type: "withOutToken", uri: "test" },
+      ? { __type: "withToken", token, uri: config.cms.translationsApiUrl }
+      : { __type: "withOutToken", uri: config.cms.translationsApiUrl },
     customersEditorUrl: config.cms.customerEditorUrl,
     updateEditorApi: token
       ? {
