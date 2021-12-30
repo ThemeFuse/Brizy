@@ -152,13 +152,35 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 		return [ $instances, $failed ];
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	private function createSingleFromZipPath( ZipArchive $z, $dir ) {
 
 		$data   = json_decode( $z->getFromName( $dir . '/data.json' ) );
 		$hasPro = (bool) $data->hasPro;
 
-		if ( $hasPro && ( ! class_exists( 'BrizyPro_Admin_License' ) || ! BrizyPro_Admin_License::_init()->getCurrentLicense() ) ) {
-			throw new Exception( 'Attempt to import a PRO block in a non PRO environment.' );
+		if ( $hasPro ) {
+
+			$throw = false;
+
+			if ( ! class_exists( 'BrizyPro_Admin_License' ) ) {
+				$throw = true;
+			} else {
+				if ( method_exists( BrizyPro_Admin_License::_init(), 'isValidLicense' ) ) {
+					if ( ! BrizyPro_Admin_License::_init()->isValidLicense() ) {
+						$throw = true;
+					}
+				} else {
+					if ( ! BrizyPro_Admin_License::_init()->getCurrentLicense()  ) {
+						$throw = true;
+					}
+				}
+			}
+
+			if ( $throw ) {
+				throw new Exception( 'Attempt to import a PRO block in a non PRO environment.' );
+			}
 		}
 
 		$entityClass = $data->class;
