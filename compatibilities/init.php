@@ -118,6 +118,10 @@ class Brizy_Compatibilities_Init {
 		if ( class_exists( 'Wp_Ultimo' ) ) {
 			new Brizy_Compatibilities_WpUltimo();
 		}
+
+		if ( defined( 'PERFMATTERS_VERSION' ) ) {
+			new Brizy_Compatibilities_Perfmatters();
+		}
   }
 
 	public function after_setup_theme() {
