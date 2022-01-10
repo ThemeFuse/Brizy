@@ -30,6 +30,13 @@ import * as Obj from "visual/utils/reader/object";
 import * as Union from "visual/utils/reader/union";
 import * as Json from "visual/utils/reader/json";
 import { onNullish } from "visual/utils/value";
+import {
+  BlogSourceItem,
+  CollectionSourceItem,
+  Rule
+} from "visual/utils/api/types";
+import { parse } from "fp-utilities";
+import { readKey } from "visual/utils/reader/object";
 
 type SavedBlockFromApi = {
   id: string;
@@ -361,5 +368,22 @@ export function stringifyPage(
 ): PageSerialized<PageWP | InternalPopupCloud> {
   return { ...page, data: JSON.stringify(page.data) };
 }
+
+export const parseCollectionSourceItem = parse<object, CollectionSourceItem>({
+  id: mPipe(readKey("id"), Str.read),
+  title: mPipe(readKey("title"), Str.read, onNullish("")),
+  type: mPipe(readKey("type"), Str.read)
+});
+
+export const parsePageRules = parse<object, Rule>({
+  id: mPipe(readKey("id"), Str.read),
+  title: mPipe(readKey("title"), Str.read, onNullish("")),
+  type: mPipe(readKey("type"), Str.read)
+});
+
+export const parseBlogSourceItem = parse<object, BlogSourceItem>({
+  id: mPipe(readKey("id"), Str.read),
+  title: mPipe(readKey("title"), Str.read, onNullish(""))
+});
 
 //#endregion

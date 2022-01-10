@@ -422,7 +422,7 @@ function handleSubmit(form, allData) {
     if (success === false) {
       handleError();
     } else {
-      showFormMessage(form, getFormMessage("success", successMessage));
+      showFormMessage(nodeForm, getFormMessage("success", successMessage));
 
       if (redirect !== "") {
         window.location.replace(redirect);
@@ -435,7 +435,7 @@ function handleSubmit(form, allData) {
 
   const handleError = () => {
     form.classList.add("brz-forms2__send--fail");
-    showFormMessage(form, getFormMessage("error", errorMessage));
+    showFormMessage(nodeForm, getFormMessage("error", errorMessage));
   };
 
   const handleAlways = () => {

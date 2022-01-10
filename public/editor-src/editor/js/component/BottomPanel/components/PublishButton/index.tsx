@@ -1,39 +1,71 @@
 import React, { Component, ReactElement } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { match } from "fp-utilities";
+import Config from "visual/global/Config";
+import Prompts, { PromptsProps } from "visual/component/Prompts";
 import HotKeys from "visual/component/HotKeys";
 import { ToastNotification } from "visual/component/Notifications";
 import { removeBlocks } from "visual/redux/actions2";
-import { ReduxState } from "visual/redux/types";
+import { ReduxState, StoreChanged } from "visual/redux/types";
 import { updatePageStatus, fetchPageSuccess } from "visual/redux/actions2";
 import { SavedLayout } from "visual/types";
 import { t } from "visual/utils/i18n";
 import {
   pageSelector,
   pageDataNoRefsSelector,
-  extraFontStylesSelector
+  extraFontStylesSelector,
+  storeWasChangedSelector
 } from "visual/redux/selectors";
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
-import { createBlockScreenshot, createSavedLayout } from "visual/utils/api";
+import {
+  createBlockScreenshot,
+  createSavedLayout,
+  shopifyUnpublishPage
+} from "visual/utils/api";
 import { uuid } from "visual/utils/uuid";
 import { IS_STORY, IS_GLOBAL_POPUP } from "visual/utils/models";
 import { isNumber } from "visual/utils/math";
 import { BottomPanelItem } from "../Item";
 import { Controls, Props as ControlsProps } from "./Control";
-import { getTooltipPageIcon, getTooltipPageTitle } from "./utils";
+import {
+  getButtonLabel,
+  getTooltipPageIcon,
+  getTooltipPageTitle,
+  getMode
+} from "./utils";
+import {
+  isShopify,
+  isCMS,
+  isCloud
+} from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
+import { isShopifyPage } from "visual/types";
 
 type Page = ReduxState["page"];
+
+const _getMode = match(
+  [isCloud, match([isShopify, getMode], [isCMS, (): undefined => undefined])],
+  [isWp, (): undefined => undefined]
+);
 
 const mapState = (
   state: ReduxState
 ): {
-  pageStatus: Page["status"];
+  page: Page;
   pageData: Page["data"];
   extraFontStyles: ReduxState["extraFontStyles"];
-} => ({
-  pageStatus: pageSelector(state).status,
-  pageData: pageDataNoRefsSelector(state),
-  extraFontStyles: extraFontStylesSelector(state)
-});
+  mode: "withRules" | "withTemplate" | "withArticle" | undefined;
+  storeWasChanged: StoreChanged;
+} => {
+  const config = Config.getAll();
+  return {
+    page: pageSelector(state),
+    pageData: pageDataNoRefsSelector(state),
+    extraFontStyles: extraFontStylesSelector(state),
+    mode: _getMode(config),
+    storeWasChanged: storeWasChangedSelector(state)
+  };
+};
 const mapDispatch = { updatePageStatus, removeBlocks, fetchPageSuccess };
 const PublishConnector = connect(mapState, mapDispatch);
 
@@ -53,63 +85,205 @@ class PublishButton extends Component<Props, State> {
     draftLoading: false
   };
 
-  handleClick = (): void => {
-    const { pageStatus } = this.props;
+  draftLoading: Promise<void> | undefined;
+  updateLoading: Promise<void> | undefined;
 
-    switch (pageStatus) {
-      case "publish": {
-        this.handlePublish("updateLoading");
+  publish = (loading: "updateLoading" | "draftLoading"): void => {
+    const { mode, storeWasChanged } = this.props;
+
+    switch (mode) {
+      case "withTemplate": {
+        switch (storeWasChanged) {
+          case StoreChanged.changed: {
+            this.handlePublish(loading);
+            break;
+          }
+          case StoreChanged.unchanged: {
+            this.handlePublishWithLayout(loading);
+            break;
+          }
+        }
         break;
       }
-      case "draft": {
-        this.handleDraft("updateLoading");
+      case "withRules": {
+        switch (storeWasChanged) {
+          case StoreChanged.changed: {
+            this.handlePublish(loading);
+            break;
+          }
+          case StoreChanged.unchanged: {
+            this.handlePublishWithRules(loading);
+            break;
+          }
+        }
         break;
+      }
+      case "withArticle": {
+        switch (storeWasChanged) {
+          case StoreChanged.changed: {
+            this.handlePublish(loading);
+            break;
+          }
+          case StoreChanged.unchanged: {
+            this.handlePublishWithArticle(loading);
+            break;
+          }
+        }
+        break;
+      }
+      default: {
+        this.handlePublish(loading);
       }
     }
   };
 
-  handlePublish(loading: "updateLoading" | "draftLoading"): void {
-    if (this.state[loading]) {
-      return;
-    }
+  draft = (loading: "updateLoading" | "draftLoading"): void => {
+    const { mode, page } = this.props;
+    const config = Config.getAll();
 
-    this.setState({ [loading]: true }, () => {
-      this.props
-        .updatePageStatus("publish")
-        .then(() => {
-          this.props.fetchPageSuccess();
-          this.setState({ [loading]: false });
-        })
-        .catch(e => {
-          if (process.env.NODE_ENV === "development") {
-            console.error("could not publish or save page", e);
+    if (isCloud(config) && isShopify(config)) {
+      switch (mode) {
+        case "withTemplate":
+        case "withRules":
+        case "withArticle": {
+          switch (page.status) {
+            case "draft":
+              this.handleDraft(loading);
+              break;
+            case "publish":
+              this.handleDraft(loading).then(() =>
+                shopifyUnpublishPage(config)
+              );
+              break;
           }
-          ToastNotification.error(t("Could not publish or save page"));
+          break;
+        }
+        case undefined: {
+          this.handleDraft(loading);
+        }
+      }
+    } else {
+      this.handleDraft(loading);
+    }
+  };
+
+  handlePublishWithRules(loading: "updateLoading" | "draftLoading"): void {
+    const { page } = this.props;
+
+    const data: PromptsProps = {
+      prompt: "pageRules",
+      mode: "single",
+      props: {
+        headTitle: t("SELECT FOR WHAT TEMPLATE IS USED"),
+        pageTitle: isShopifyPage(page) ? page.title : undefined,
+        selectedLayout: isShopifyPage(page) ? page.layout : undefined,
+        onClose: (): void => {
           this.setState({ [loading]: false });
-        });
-    });
+        },
+        onSave: (): Promise<void> => {
+          return this.handlePublish(loading);
+        },
+        onCancel: (): void => {
+          this.setState({ [loading]: false });
+        }
+      }
+    };
+    Prompts.open(data);
   }
 
-  handleDraft(loading: "updateLoading" | "draftLoading"): void {
-    if (this.state[loading]) {
-      return;
+  handlePublishWithLayout(loading: "updateLoading" | "draftLoading"): void {
+    const { page } = this.props;
+
+    const data: PromptsProps = {
+      prompt: "pageTemplate",
+      mode: "single",
+      props: {
+        headTitle: t("YOUR PAGE IS READY TO PUBLISH!"),
+        selectedLayout: isShopifyPage(page) ? page.layout : undefined,
+        pageTitle: isShopifyPage(page) ? page.title : undefined,
+        onClose: (): void => {
+          this.setState({ [loading]: false });
+        },
+        onSave: (): Promise<void> => {
+          return this.handlePublish(loading);
+        },
+        onCancel: (): void => {
+          this.setState({ [loading]: false });
+        }
+      }
+    };
+    Prompts.open(data);
+  }
+
+  handlePublishWithArticle(loading: "updateLoading" | "draftLoading"): void {
+    const { page } = this.props;
+    const data: PromptsProps = {
+      prompt: "pageArticle",
+      mode: "single",
+      props: {
+        headTitle: t("YOUR PAGE IS READY TO PUBLISH!"),
+        pageTitle: isShopifyPage(page) ? page.title : undefined,
+        selectedLayout: isShopifyPage(page) ? page.layout : undefined,
+        onClose: (): void => {
+          this.setState({ [loading]: false });
+        },
+        onSave: (): Promise<void> => {
+          return this.handlePublish(loading);
+        },
+        onCancel: (): void => {
+          this.setState({ [loading]: false });
+        }
+      }
+    };
+    Prompts.open(data);
+  }
+
+  handlePublish(loading: "updateLoading" | "draftLoading"): Promise<void> {
+    if (this[loading]) {
+      return this[loading] as Promise<void>;
     }
 
-    this.setState({ [loading]: true }, () => {
-      this.props
-        .updatePageStatus("draft")
-        .then(() => {
-          this.props.fetchPageSuccess();
-          this.setState({ [loading]: false });
-        })
-        .catch(e => {
-          if (process.env.NODE_ENV === "development") {
-            console.error("could not switch to draft", e);
-          }
-          ToastNotification.error(t("Could not switch to draft"));
-          this.setState({ [loading]: false });
-        });
-    });
+    this.setState({ [loading]: true });
+
+    return (this[loading] = this.props
+      .updatePageStatus("publish")
+      .then(() => {
+        this.props.fetchPageSuccess();
+        this.setState({ [loading]: false });
+        this[loading] = undefined;
+      })
+      .catch(e => {
+        if (process.env.NODE_ENV === "development") {
+          console.error("could not publish or save page", e);
+        }
+        ToastNotification.error(t("Could not publish or save page"));
+        this.setState({ [loading]: false });
+        this[loading] = undefined;
+      }));
+  }
+
+  handleDraft(loading: "updateLoading" | "draftLoading"): Promise<void> {
+    if (this[loading]) {
+      return this[loading] as Promise<void>;
+    }
+
+    this.setState({ [loading]: true });
+
+    return (this[loading] = this.props
+      .updatePageStatus("draft")
+      .then(() => {
+        this.props.fetchPageSuccess();
+        this.setState({ [loading]: false });
+        this[loading] = undefined;
+      })
+      .catch(e => {
+        if (process.env.NODE_ENV === "development") {
+          console.error("could not switch to draft", e);
+        }
+        ToastNotification.error(t("Could not switch to draft"));
+        this.setState({ [loading]: false });
+        this[loading] = undefined;
+      }));
   }
 
   handleSavePage = async (): Promise<void> => {
@@ -183,7 +357,7 @@ class PublishButton extends Component<Props, State> {
   };
 
   getTooltipItems(): ControlsProps["addonAfter"] {
-    const { pageStatus } = this.props;
+    const { page } = this.props;
     const layoutItems =
       IS_STORY || IS_GLOBAL_POPUP
         ? []
@@ -209,17 +383,17 @@ class PublishButton extends Component<Props, State> {
     return [
       ...layoutItems,
       {
-        title: getTooltipPageTitle(pageStatus),
-        icon: getTooltipPageIcon(pageStatus),
+        title: getTooltipPageTitle(page.status),
+        icon: getTooltipPageIcon(page.status),
         loading: this.state.draftLoading,
         onClick: (): void => {
-          switch (pageStatus) {
+          switch (page.status) {
             case "publish": {
-              this.handleDraft("draftLoading");
+              this.draft("draftLoading");
               break;
             }
             case "draft": {
-              this.handlePublish("draftLoading");
+              this.publish("draftLoading");
               break;
             }
           }
@@ -229,14 +403,23 @@ class PublishButton extends Component<Props, State> {
   }
 
   getLabel(): string {
-    const { pageStatus } = this.props;
+    const { page, mode, storeWasChanged } = this.props;
 
-    switch (pageStatus) {
-      case "publish": {
-        return t("Update");
+    switch (mode) {
+      case "withTemplate":
+      case "withRules":
+      case "withArticle": {
+        return getButtonLabel(storeWasChanged, page.status);
       }
-      case "draft": {
-        return t("Save Draft");
+      default: {
+        switch (page.status) {
+          case "publish": {
+            return t("Update");
+          }
+          case "draft": {
+            return t("Save Draft");
+          }
+        }
       }
     }
   }
@@ -247,7 +430,14 @@ class PublishButton extends Component<Props, State> {
         <BottomPanelItem paddingSize="small">
           <Controls
             addonAfter={this.getTooltipItems()}
-            onClick={this.handleClick}
+            onClick={(): void => {
+              switch (this.props.page.status) {
+                case "publish":
+                  return this.publish("updateLoading");
+                case "draft":
+                  return this.draft("updateLoading");
+              }
+            }}
             loading={this.state.updateLoading}
           >
             {this.getLabel()}
@@ -259,9 +449,11 @@ class PublishButton extends Component<Props, State> {
           onKeyDown={(e: MouseEvent): void => {
             e.preventDefault();
 
-            this.props.pageStatus === "publish"
-              ? this.handlePublish("updateLoading")
-              : this.handleDraft("updateLoading");
+            if (this.props.storeWasChanged) {
+              this.props.page.status === "publish"
+                ? this.handlePublish("updateLoading")
+                : this.handleDraft("updateLoading");
+            }
           }}
         />
       </>

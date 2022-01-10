@@ -80,7 +80,7 @@ export const getItems = ({ property }) => ({
   const placeholderData = placeholderObjFromStr(v.imagePopulation);
   const isCustomSizeType =
     (sizeType === "custom" && !placeholderData) ||
-    (placeholderData && placeholderData.attr === undefined);
+    placeholderData?.attr?.size === undefined;
   const isSvgOrGif =
     (isSVG(v.imageExtension) || isGIF(v.imageExtension)) && !placeholderData;
 

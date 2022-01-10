@@ -60,7 +60,7 @@ const pageCurtain = window.parent.document.querySelector(
       blocksThumbnailSizes
     ] = await Promise.all([
       getProject(),
-      getCurrentPage(),
+      getCurrentPage(Config.getAll()),
       getGlobalBlocks(),
       fetch(assetUrl("thumbs/blocksThumbnailSizes.json")).then(r => r.json())
     ]);

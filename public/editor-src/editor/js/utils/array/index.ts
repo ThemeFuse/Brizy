@@ -161,9 +161,25 @@ export const pick = <T>(indexes: number[], arr: T[]): T[] => {
   }, [] as T[]);
 };
 
-export const map = <A, B>(f: (a: A) => B, arr: A[]): B[] => arr.map(f);
+export function map<A, B>(f: (a: A) => B): (arr: A[]) => B[];
+export function map<A, B>(f: (a: A) => B, arr: A[]): B[];
+export function map<A, B>(
+  ...args: [(a: A) => B] | [(a: A) => B, A[]]
+): ((arr: A[]) => B[]) | B[] {
+  return args[1] ? args[1].map(args[0]) : (arr: A[]): B[] => arr.map(args[0]);
+}
 
-export const filter = <A>(p: (a: A) => boolean, arr: A[]): A[] => arr.filter(p);
+export function filter<A, B extends A>(p: (a: A) => a is B): (arr: A[]) => B[];
+export function filter<A>(p: (a: A) => boolean): (arr: A[]) => A[];
+export function filter<A, B extends A = A>(p: (a: A) => a is B, arr: A[]): B[];
+export function filter<A>(p: (a: A) => boolean, arr: A[]): A[];
+export function filter<A>(
+  ...args: [(a: A) => boolean] | [(a: A) => boolean, A[]]
+): ((arr: A[]) => A[]) | A[] {
+  return args[1]
+    ? args[1].filter(args[0])
+    : (arr: A[]): A[] => arr.filter(args[0]);
+}
 
 /**
  * Order array items by the order of the provided keys list
