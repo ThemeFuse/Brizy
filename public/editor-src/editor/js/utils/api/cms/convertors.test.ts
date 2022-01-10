@@ -1,6 +1,6 @@
 import { times } from "underscore";
 import {
-  itemToPage,
+  itemToPageCollection,
   itemStatusToPageStatus,
   pageStatusToItemStatus
 } from "./convertors";
@@ -46,7 +46,9 @@ describe("Testing 'apiToPage' function", function() {
     type: {
       __typename: "CollectionType",
       id: collectionTypeAddPrefix(i + 1),
-      title: `Test ${i + 1}`
+      title: `Test ${i + 1}`,
+      slug: "collection-slug",
+      fields: []
     },
     pageData: JSON.stringify({ items: times(i, i => i) }),
     fields: null,
@@ -54,7 +56,7 @@ describe("Testing 'apiToPage' function", function() {
   }));
 
   seed.forEach(item => {
-    const result = itemToPage(item);
+    const result = itemToPageCollection(item);
 
     test("Test item", () => {
       expect(result.id).toBe(item.id);

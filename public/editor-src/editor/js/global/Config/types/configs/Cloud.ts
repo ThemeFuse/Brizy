@@ -9,6 +9,7 @@ import { Config as Config_ } from "visual/global/Config/types";
 import { Page, PageCollection } from "visual/types";
 import { WhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
 import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
+import { TemplateType } from "../TemplateType";
 import { Role } from "visual/utils/membership";
 
 //#region Base
@@ -49,22 +50,39 @@ interface Base<Platform> extends ConfigCommon, WithId<number> {
 //#endregion
 
 //#region CMS
-export type CMS = Base<"cms">;
+export interface CMS extends Base<"cms"> {
+  templateType?: TemplateType;
+}
 
 export const isCMS = (c: Cloud): c is CMS => c.platform === "cms";
 //#endregion
 
 //#region Shopify
-export type Shopify = Base<"shopify">;
+export enum ShopifyTemplate {
+  Product = "shopify-product",
+  Page = "shopify-page",
+  Collection = "shopify-collection",
+  Article = "shopify-article"
+}
+
+export const isShopifyTemplate = (s: string): s is ShopifyTemplate =>
+  Object.values(ShopifyTemplate).includes(s as ShopifyTemplate);
+
+export interface Shopify extends Base<"shopify"> {
+  templates: { id: string }[];
+  templateType: {
+    id: string;
+    type: ShopifyTemplate;
+  };
+}
 
 export const isShopify = (c: Cloud): c is Shopify => c.platform === "shopify";
 //#endregion
 
 //#region Provider
-export const isCustomer = (c: Cloud): boolean =>
-  c.page.provider === "customers";
+export const isCustomer = (c: CMS): boolean => c.page.provider === "customers";
 
-export const isCollection = (c: Cloud): boolean =>
+export const isCollection = (c: CMS): boolean =>
   c.page.provider === "collections";
 //#endregion
 

@@ -206,7 +206,7 @@ class Brizy_Public_Main
     {
 	    Brizy_Public_AssetEnqueueManager::_init()->enqueuePost( $this->post );
 
-        do_action('brizy_preview_enqueue_scripts');
+        do_action( 'brizy_preview_enqueue_scripts', $this->post );
     }
 
     public function toolbar_link($wp_admin_bar)

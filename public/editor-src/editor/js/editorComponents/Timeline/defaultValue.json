@@ -19,6 +19,13 @@
     "width": 350,
     "widthSuffix": "px",
 
+    "textSpacing": 0,
+    "textSpacingSuffix": "px",
+    "tabletTextSpacing": null,
+    "tabletTextSpacingSuffix": null,
+    "mobileTextSpacing": null,
+    "mobileTextSpacingSuffix": null,
+
     "size": "medium",
     "customSize": 32,
     "smallSize": 32,

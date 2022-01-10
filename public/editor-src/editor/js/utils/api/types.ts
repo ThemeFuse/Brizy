@@ -152,14 +152,20 @@ export type GetCollectionSourceTypes = () => Promise<
   CloudCollectionSourceType[]
 >;
 
-interface CollectionSourceItem {
-  slug: string;
+export interface CollectionSourceItem {
+  id: string;
+  title: string;
+  type: string;
+}
+
+export interface BlogSourceItem {
   id: string;
   title: string;
 }
+
 export type GetCollectionSourceItems = (
   id: string
-) => Promise<{ collection: CollectionSourceItem[] }>;
+) => Promise<CollectionSourceItem[]>;
 
 interface WPCollectionSourceType {
   name: string;
@@ -177,3 +183,16 @@ interface WPCollectionSourceItem {
 export type GetWPCollectionSourceItems = (
   id: string
 ) => Promise<{ posts: WPCollectionSourceItem[] }>;
+
+//#region rules
+export interface Rule {
+  id: string;
+  title: string;
+  type: string;
+}
+
+export interface SelectedItem extends Rule {
+  selected: true;
+}
+
+//#endregion

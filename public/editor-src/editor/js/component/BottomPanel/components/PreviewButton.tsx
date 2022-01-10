@@ -9,7 +9,11 @@ import {
 } from "visual/utils/models";
 import { pageSlugSelector } from "visual/redux/selectors";
 import { BottomPanelItem } from "./Item";
-import { isCloud, isCustomer } from "visual/global/Config/types/configs/Cloud";
+import {
+  isCloud,
+  isCMS,
+  isCustomer
+} from "visual/global/Config/types/configs/Cloud";
 
 export function PreviewButton(): ReactElement | null {
   const pageSlug = useSelector(pageSlugSelector);
@@ -31,9 +35,9 @@ export function PreviewButton(): ReactElement | null {
   if (
     IS_INTERNAL_POPUP ||
     IS_EXTERNAL_STORY ||
-    (isCloud(config) && isCustomer(config))
+    (isCloud(config) && isCMS(config) && isCustomer(config))
   ) {
-    href = previewUrl;
+    href = `${previewUrl}${suffix}`;
   } else {
     href = `${previewUrl}/${pageSlug}${suffix}`;
   }

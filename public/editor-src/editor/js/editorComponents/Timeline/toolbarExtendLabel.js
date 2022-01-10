@@ -68,6 +68,25 @@ export function getItems({ v, device }) {
           ]
         }
       ]
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: {
+        title: t("Settings")
+      },
+      options: [
+        {
+          id: "textSpacing",
+          label: t("Spacing"),
+          type: "slider-dev",
+          config: {
+            min: -100,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        }
+      ]
     }
   ];
 }

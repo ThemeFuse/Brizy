@@ -29,15 +29,23 @@ class Upload extends Component {
       onChangeText,
       onBlur,
       onClick,
-      fileText
+      fileText,
+      showPlaceholder
     } = this.props;
+
     const className = classnames("brz-input__upload", _className);
+
+    const classNameInput = classnames(
+      "brz-input",
+      "brz-input__upload-placeholder",
+      { "brz-p-events--none": IS_EDITOR && !showPlaceholder }
+    );
 
     return (
       <div className={className} onClick={onClick} onBlur={onBlur}>
         <label className="brz-label">
           <input
-            className="brz-input brz-input__upload-placeholder"
+            className={classNameInput}
             type="text"
             value={value}
             onChange={onChange}

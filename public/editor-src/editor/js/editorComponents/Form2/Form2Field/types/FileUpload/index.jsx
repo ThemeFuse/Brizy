@@ -13,10 +13,9 @@ export default class FileUpload extends TextField {
     return "FileUpload";
   }
 
-  getClassName({ showPlaceholder }) {
+  getClassName() {
     return classnames(
-      "brz-input brz-forms2__field brz-forms2__field-fileUpload",
-      { "brz-p-events--none": IS_EDITOR && !showPlaceholder }
+      "brz-input brz-forms2__field brz-forms2__field-fileUpload"
     );
   }
 
@@ -42,7 +41,7 @@ export default class FileUpload extends TextField {
   };
 
   renderForEdit(v) {
-    const { labelType, attr } = v;
+    const { labelType, attr, showPlaceholder } = v;
     const { fileText } = this.props;
 
     return labelType === "outside" ? (
@@ -53,6 +52,7 @@ export default class FileUpload extends TextField {
         value={attr.placeholder}
         onChange={this.handleValueChange}
         onChangeText={this.handleTextChange}
+        showPlaceholder={showPlaceholder}
       />
     ) : (
       <Upload
@@ -61,6 +61,7 @@ export default class FileUpload extends TextField {
         className={this.getClassName(v)}
         onChange={this.handleValueChange}
         onChangeText={this.handleTextChange}
+        showPlaceholder={showPlaceholder}
       />
     );
   }

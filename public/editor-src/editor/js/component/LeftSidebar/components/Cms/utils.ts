@@ -96,7 +96,11 @@ const shopify = (config: ShopifyConf): Shopify => {
     activeItem: {
       id: config.page.id,
       __type: ActiveItemTypes.CollectionItem
-    }
+    },
+    userApi: token
+      ? { __type: "withToken", token, uri: config.cms.apiUrl }
+      : { __type: "withOutToken", uri: config.cms.apiUrl },
+    builderVersion: config.editorVersion
   };
 };
 

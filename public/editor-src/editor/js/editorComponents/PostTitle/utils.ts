@@ -27,7 +27,7 @@ export const getSourceTypeChoices: GetSourceTypeChoices = async () => {
 export const getSourceIdChoices: GetSourceIdChoices = async (id: string) => {
   try {
     const data = await getCollectionSourceItems(id);
-    return data.collection.map(({ id, title }) => ({
+    return data.map(({ id, title }) => ({
       value: id,
       title: title
     }));
