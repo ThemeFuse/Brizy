@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 5.8.2
+Tested up to: 5.8.3
 Requires PHP: 5.6.20
-Stable tag: 2.3.25
+Stable tag: 2.3.26
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,18 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.26 - 2022-01-10 =
+* Improved: Removed icon ids
+* Fixed: Video with cover was not playing on click
+* Fixed: Upload form field could not be edited if placeholder is off
+* Fixed: Form error messages
+* Fixed: Added compatibility with the plugin Perfmatters
+* Fixed: On export templates check if the license key is valid
+* Fixed: Tell the editor if the current user is admin 
+* Fixed: Do not load scripts in header and footer when they are build it with Astra Pro and template is brizy blank template
+* Fixed: WPML Menu switcher is missing from Brizy pages
+* Fixed: Escape the script contents for non adminstrators users (This vulnerability was discovered by Vishnupriya Ilango of Fortinets FortiGuard Labs)
 
 = 2.3.25 - 2021-12-20 =
 * Fixed: Image size select
