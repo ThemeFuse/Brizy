@@ -507,6 +507,7 @@ $option-color: #626b70;
     padding-top: 15px;
     padding-bottom: 15px;
   }
+  &-step__field,
   &-step__fields-select {
     max-width: 223px;
     width: 100%;
@@ -520,6 +521,7 @@ $option-color: #626b70;
       background-color: #fff;
     }
   }
+  &-step__field,
   &-step__fields-select,
   &-step__fields-input {
     max-width: 223px;

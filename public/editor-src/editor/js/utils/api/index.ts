@@ -1,3 +1,5 @@
+import { Cloud, Shopify } from "visual/global/Config/types/configs/Cloud";
+
 export * from "./index-legacy";
 export * from "./cms";
 export * from "./cms/page";
@@ -5,13 +7,16 @@ export * from "./cms/popup";
 
 import Config from "visual/global/Config";
 import * as Obj from "visual/utils/reader/object";
-import * as Arr from "visual/utils/reader/array";
+import * as ArrReader from "visual/utils/reader/array";
 import * as Str from "visual/utils/reader/string";
 import { request2, persistentRequest } from "./index-legacy";
 import {
   makeBlockMeta,
+  parseBlogSourceItem,
+  parseCollectionSourceItem,
   ParsedSavedBlockApiMeta,
   parseMetaSavedBlock,
+  parsePageRules,
   parseSavedBlock,
   parseSavedLayout,
   stringifySavedBlock
@@ -32,9 +37,16 @@ import {
   UploadSavedLayouts,
   UploadSavedPopups,
   GetCollectionSourceTypes,
-  GetCollectionSourceItems
+  Rule,
+  SelectedItem,
+  CollectionSourceItem,
+  BlogSourceItem
 } from "./types";
-import { Cloud } from "visual/global/Config/types/configs/Cloud";
+import { read } from "visual/utils/reader/json";
+import { isT, mPipe, pass } from "fp-utilities";
+import * as Arr from "visual/utils/array";
+import { throwOnNullish } from "visual/utils/value";
+import { pipe } from "visual/utils/fp";
 
 const paginationData = {
   page: 1,
@@ -69,7 +81,9 @@ export const getDynamicContent: GetDynamicContent = async ({
   }
 
   const json = await r.json();
-  const dc = Obj.readWithValueReader(Arr.readWithItemReader(Str.read))(json);
+  const dc = Obj.readWithValueReader(ArrReader.readWithItemReader(Str.read))(
+    json
+  );
 
   if (dc === undefined) {
     throw new Error("fetch dynamic content error");
@@ -280,24 +294,175 @@ export const getCollectionSourceTypes: GetCollectionSourceTypes = async () => {
     });
 };
 
-export const getCollectionSourceItems: GetCollectionSourceItems = async (
+export const getCollectionSourceItems = (
   id: string
-) => {
+): Promise<CollectionSourceItem[]> => {
   const config = Config.getAll() as Cloud;
-
   const { urls, project } = config;
+  const readCollectionSourceItem = mPipe(
+    pass(Obj.isObject),
+    Obj.readKey("collection"),
+    ArrReader.read,
+    Arr.map(mPipe(pass(Obj.isObject), parseCollectionSourceItem)),
+    Arr.filter(isT)
+  );
 
-  return await request2(`${urls.api}/pages/${project.id}/type?type=${id}`, {
+  return request2(`${urls.api}/pages/${project.id}/type?type=${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
     }
   })
     .then(r => r.json())
-    .catch(e => {
-      if (process.env.NODE_ENV === "development") {
-        console.error(e);
-      }
-      return [];
-    });
+    .then(pipe(readCollectionSourceItem, throwOnNullish("Invalid response")));
 };
+
+//#region page rules
+// right now is used only shopify integration
+
+const readMeta = mPipe(
+  pass(Obj.isObject),
+  Obj.readKey("value"),
+  read,
+  pass(Obj.isObject)
+);
+
+export const getPageRelations = async (config: Shopify): Promise<Rule[]> => {
+  const { project, urls, page } = config;
+
+  return (
+    request2(`${urls.api}/projects/${project.id}/shopify_relation`, {
+      method: "GET"
+    })
+      .then(r => (r.ok ? r : undefined))
+      .then(throwOnNullish("fetch page rules error"))
+      .then(r => r.json())
+      .then(readMeta)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .then(throwOnNullish<Record<any, any>>("fetch page rules error"))
+      .then(t => t[page.id] ?? [])
+      .then(
+        mPipe(
+          ArrReader.read,
+          Arr.map(mPipe(pass(Obj.isObject), parsePageRules)),
+          Arr.filter(isT)
+        )
+      )
+      .then(throwOnNullish("fetch page rules error"))
+  );
+};
+
+export const shopifySyncRules = (
+  rules: SelectedItem[],
+  title: string
+): Promise<void> => {
+  const config = Config.getAll() as Cloud;
+  const { platform, project, page, urls } = config;
+
+  const body = new URLSearchParams({
+    page: `${page.id}`,
+    // eslint-disable-next-line @typescript-eslint/camelcase, @typescript-eslint/no-unused-vars
+    assigned_items: JSON.stringify(rules.map(({ selected, ...i }) => i)),
+    title
+  });
+
+  return request2(`${urls.api}/${platform}/projects/${project.id}/sync`, {
+    method: "POST",
+    body
+  }).then(r => {
+    if (!r.ok) {
+      throw new Error("Unable to sync");
+    }
+  });
+};
+
+export const shopifySyncArticle = (
+  blogId: string,
+  blogTitle: string,
+  title: string
+): Promise<void> => {
+  const config = Config.getAll() as Cloud;
+  const { platform, project, page, urls } = config;
+
+  const body = new URLSearchParams({
+    page: `${page.id}`,
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    blog_id: blogId,
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    blog_title: blogTitle,
+    title: title
+  });
+
+  return request2(`${urls.api}/${platform}/projects/${project.id}/sync`, {
+    method: "POST",
+    body
+  }).then(r => {
+    if (!r.ok) {
+      throw new Error("Unable to sync");
+    }
+  });
+};
+
+export const shopifySyncPage = (title: string): Promise<void> => {
+  const config = Config.getAll() as Cloud;
+  const { platform, project, page, urls } = config;
+
+  const body = new URLSearchParams({
+    page: `${page.id}`,
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    blog_title: title,
+    title
+  });
+
+  return request2(`${urls.api}/${platform}/projects/${project.id}/sync`, {
+    method: "POST",
+    body
+  }).then(r => {
+    if (!r.ok) {
+      throw new Error("Unable to sync");
+    }
+  });
+};
+
+export const shopifyBlogItems = (): Promise<BlogSourceItem[]> => {
+  const config = Config.getAll() as Cloud;
+  const { urls, project } = config;
+  const readBlogSourceItem = mPipe(
+    pass(Obj.isObject),
+    Obj.readKey("blogs"),
+    ArrReader.read,
+    Arr.map(mPipe(pass(Obj.isObject), parseBlogSourceItem)),
+    Arr.filter(isT)
+  );
+
+  return request2(`${urls.api}/shopify/projects/${project.id}/blogs`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(r => r.json())
+    .then(pipe(readBlogSourceItem, throwOnNullish("Invalid response")));
+};
+
+export const shopifyUnpublishPage = (config: Shopify): Promise<void> => {
+  const { project, page, urls } = config;
+
+  const body = new URLSearchParams({
+    project: `${project.id}`,
+    page: page.id
+  });
+
+  return request2(
+    `${urls.api}/shopify/projects/${config.project.id}/unpublish`,
+    {
+      method: "POST",
+      body
+    }
+  ).then(r => {
+    if (!r.ok) {
+      throw new Error("Something gone wrong");
+    }
+  });
+};
+//#endregion

@@ -1,6 +1,7 @@
 import { ReduxState, StoreChanged } from "visual/redux/types";
 import { Authorized, SyncAllowed } from "visual/types";
 import { createSelector } from "reselect";
+import { isShopifyPage } from "visual/types";
 
 // === 0 DEPENDENCIES ===
 export const projectSelector = (state: ReduxState): ReduxState["project"] =>
@@ -61,3 +62,11 @@ export const leftSidebarSelector = createSelector(
   uiSelector,
   ui => ui.leftSidebar
 );
+
+export const pageLayout = createSelector(pageSelector, page => {
+  if (isShopifyPage(page)) {
+    return page.layout;
+  }
+
+  return undefined;
+});

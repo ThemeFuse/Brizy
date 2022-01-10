@@ -13,6 +13,7 @@ import {
   Style
 } from "visual/types";
 import { fontSelector } from "visual/redux/selectors";
+import { ShopifyPage } from "visual/types";
 
 type UIState = ReduxState["ui"];
 
@@ -196,6 +197,7 @@ export type ReduxAction =
   | ActionUpdateTriggers
   | ActionUpdatePopupRules
   | ActionUpdatePageStatus
+  | ActionUpdatePageLayout
   | ActionFetchPageSuccess
   | ActionUpdateExtraFontStyles
   | ActionImportTemplate
@@ -212,7 +214,8 @@ export type ReduxAction =
   | ActionMakeGlobalToNormalBlock
   | ActionMakePopupToGlobalBlock
   | ActionMakeGlobalBlockToPopup
-  | ActionStoreWasChanged;
+  | ActionStoreWasChanged
+  | ActionUpdatePageTitle;
 
 export type ActionImportTemplate = {
   type: "IMPORT_TEMPLATE";
@@ -248,6 +251,11 @@ export type ActionUpdateAuthorized = {
   payload: Authorized;
 };
 
+export type ActionUpdatePageTitle = {
+  type: "UPDATE_PAGE_TITLE";
+  payload: string;
+};
+
 export type ActionUpdateSyncAllowed = {
   type: "UPDATE_SYNC_ALLOWED";
   payload: SyncAllowed;
@@ -268,6 +276,13 @@ export type ActionUpdatePageStatus = {
   meta?: {
     onSuccess: (s?: void) => void;
     onError: (e?: void) => void;
+  };
+};
+
+export type ActionUpdatePageLayout = {
+  type: "UPDATE_PAGE_LAYOUT";
+  payload: {
+    layout: ShopifyPage["layout"]["id"];
   };
 };
 
@@ -487,6 +502,13 @@ export const updatePageStatus: ThunkPublishPage = status => (
   });
 };
 
+export const updatePageLayout = (layout: string): ActionUpdatePageLayout => {
+  return {
+    type: "UPDATE_PAGE_LAYOUT",
+    payload: { layout }
+  };
+};
+
 export function addBlock(
   block: { block: Block; fonts: FontsPayload },
   meta = { insertIndex: 0 }
@@ -631,5 +653,14 @@ export function updateSyncAllowed(
   return {
     type: "UPDATE_SYNC_ALLOWED",
     payload: syncAllowed
+  };
+}
+
+// updatePageTitle
+
+export function updatePageTitle(title: string): ActionUpdatePageTitle {
+  return {
+    type: "UPDATE_PAGE_TITLE",
+    payload: title
   };
 }

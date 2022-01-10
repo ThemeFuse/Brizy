@@ -12,6 +12,7 @@ interface Base {
   customerPreviewUrl: string;
   activeItem: ActiveItem;
   projectId: ProjectId;
+  userApi: Authorize;
 }
 
 export enum Subscription {
@@ -35,7 +36,6 @@ export interface Cloud extends Base {
   };
   whiteLabel: WhiteLabel;
   projectApi: Authorize;
-  userApi: Authorize;
   appointmentsApi: Authorize;
   translationApi: Authorize;
   shop: Authorize;
@@ -57,6 +57,7 @@ export interface Shopify extends Base {
   translationApi: Authorize;
   customersEditorUrl: string;
   updateEditorApi: Authorize;
+  builderVersion: string;
 }
 
 export type Context = Cloud | Shopify;

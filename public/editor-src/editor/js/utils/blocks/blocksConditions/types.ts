@@ -1,5 +1,5 @@
 import { ReduxState } from "visual/redux/types";
-import { GlobalBlock, GlobalBlockPosition, Rule as GbRule } from "visual/types";
+import { GlobalBlock, GlobalBlockPosition } from "visual/types";
 
 export type PB = ReduxState["blocksOrder"];
 export type GB = ReduxState["globalBlocks"];
@@ -17,14 +17,6 @@ export type SortedGBPositions = {
   globalBlockId: string;
   align: PositionAlign;
 }[];
-
-export type Rule = {
-  group: GbRule["appliedFor"];
-
-  type: GbRule["entityType"];
-
-  id: string | number;
-};
 
 export type SurroundedConditionsIds = {
   top: PB;

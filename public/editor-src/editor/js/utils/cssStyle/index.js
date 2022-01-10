@@ -527,7 +527,7 @@ export {
   cssStyleElementTimelineTab,
   cssStyleElementTimelineTabs,
   cssStyleElementTimelineTabContentBefore,
-  cssStyleElementTimelineNavTitle,
+  cssStyleElementTimelineNavTitleSpacing,
   cssStyleElementTimelineWidth,
   cssStyleElementTimelineIconSize,
   cssStyleElementTimelineIconWidth,

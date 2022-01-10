@@ -1,16 +1,19 @@
+import { Config } from "../index";
+import { ConfigCommon } from "./ConfigCommon";
 import { DynamicContent } from "../DynamicContent";
 import { Pro } from "../Pro";
 import { User } from "../User";
 import { Urls } from "../Urls";
 import { Project } from "../Project";
-import { Config } from "visual/global/Config/types";
-import { ConfigCommon } from "./ConfigCommon";
+import { TemplateType } from "../TemplateType";
 import { Rule } from "../Rule";
 import { Role } from "visual/utils/membership";
 
 export interface Prop {
   [k: string]: unknown;
 
+  page?: string;
+  templates: { id: string; title: string }[];
   ruleMatches: Rule[];
   postType: string;
   postTypes: { name: string; label: string }[];
@@ -37,6 +40,7 @@ export interface WP extends ConfigCommon {
   user: User<"wp">;
   urls: Urls<"wp">;
   project: Project<"wp">;
+  template_type?: TemplateType;
 
   wp: Prop;
 }

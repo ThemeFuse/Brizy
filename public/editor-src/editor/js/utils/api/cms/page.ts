@@ -4,8 +4,9 @@ import { isT } from "visual/utils/value";
 import { t } from "visual/utils/i18n";
 import { paginationData } from "visual/utils/api/const";
 import {
+  getConverter,
   itemCustomerToPage,
-  itemToPage,
+  pageFieldsToItemFields,
   pageStatusToItemStatus
 } from "./convertors";
 import { getConnection } from "./graphql/apollo";
@@ -13,8 +14,11 @@ import * as Gql from "./graphql/gql";
 import { errOnEmpty, onCatch } from "./utils";
 import { UpdateCollectionItem_updateCollectionItem_collectionItem } from "./graphql/types/UpdateCollectionItem";
 import { UpdateCustomer_updateCustomer_customer } from "visual/utils/api/cms/graphql/types/UpdateCustomer";
+import { isShopifyPage, ShopifyPage } from "visual/types";
 
-export function getPages(collectionTypeId: string): Promise<PageCollection[]> {
+export function getPages(
+  collectionTypeId: string
+): Promise<Array<PageCollection | ShopifyPage>> {
   const page = paginationData.page;
   const itemsPerPage = paginationData.count;
 
@@ -25,20 +29,20 @@ export function getPages(collectionTypeId: string): Promise<PageCollection[]> {
   })
     .then(r => r?.data?.collectionItems?.collection)
     .then(errOnEmpty(t("Invalid api data")))
-    .then(pages => pages.filter(isT).map(itemToPage))
+    .then(pages => pages.filter(isT).map(getConverter()))
     .catch(onCatch(t("Failed to fetch api data")));
 }
 
-export function getPage(id: string): Promise<PageCollection> {
+export function getPage(id: string): Promise<PageCollection | ShopifyPage> {
   return Gql.getCollectionItem(getConnection(), { id })
     .then(r => r?.data?.collectionItem)
     .then(errOnEmpty(t("Invalid api data")))
-    .then(itemToPage)
+    .then(getConverter())
     .catch(onCatch(t("Failed to fetch api data")));
 }
 
 export function updatePage(
-  page: PageCollection,
+  page: PageCollection | ShopifyPage,
   meta: { is_autosave?: 1 | 0 } = {}
 ): Promise<UpdateCollectionItem_updateCollectionItem_collectionItem | void> {
   /*
@@ -57,7 +61,8 @@ export function updatePage(
       id: page.id,
       slug: page.slug,
       pageData: data,
-      status: pageStatusToItemStatus(page.status)
+      status: pageStatusToItemStatus(page.status),
+      fields: isShopifyPage(page) ? pageFieldsToItemFields(page) : []
     }
   })
     .then(r => r.data?.updateCollectionItem?.collectionItem)

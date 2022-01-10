@@ -507,7 +507,7 @@ class Brizy_Admin_Templates
 
 	    Brizy_Public_AssetEnqueueManager::_init()->enqueuePost( self::getTemplate() );
 
-        do_action('brizy_preview_enqueue_scripts');
+        do_action( 'brizy_preview_enqueue_scripts', self::getTemplate() );
     }
 
     public function bodyClassFrontend($classes)

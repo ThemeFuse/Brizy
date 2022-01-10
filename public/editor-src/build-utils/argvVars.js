@@ -15,6 +15,8 @@ module.exports = function(argv) {
   const NO_VERIFICATION = argv_["verification"] === false;
   const PORT = argv_.port || 3000;
   const BUNDLE_ANALYZER = argv_["bundle-analyzer"];
+  const COMPILER_URL =
+    argv_["compiler-url"] || "http://localhost:5000/compile/v3";
 
   const paths = {
     editor: path.resolve(__dirname, "../editor"),
@@ -40,6 +42,7 @@ module.exports = function(argv) {
     NO_VERIFICATION,
     PORT,
     BUNDLE_ANALYZER,
+    COMPILER_URL,
     paths
   };
 

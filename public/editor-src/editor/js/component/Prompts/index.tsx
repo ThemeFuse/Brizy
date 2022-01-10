@@ -14,6 +14,9 @@ import KeyHelper from "./PromptKeyHelper";
 import Fonts from "./PromptFonts";
 import Conditions from "./PromptConditions";
 import Authorization from "./PromptAuthorization";
+import { PromptPageArticle } from "./PromptPageArticle";
+import { PromptPageRules } from "./PromptPageRules";
+import { PromptPageTemplate } from "./PromptPageTemplate";
 import {
   PromptAppsProps,
   PromptConditionsProps,
@@ -24,6 +27,9 @@ import {
 } from "visual/component/Prompts/types";
 import { SignAuthorizationProps } from "visual/component/Prompts/PromptAuthorization/types";
 import { PromptBlocksProps } from "visual/component/Prompts/PromptBlocks/types";
+import { Props as PromptPageArticleProps } from "visual/component/Prompts/PromptPageArticle/types";
+import { Props as PromptPageRulesProps } from "visual/component/Prompts/PromptPageRules/types";
+import { Props as PromptPageTemplateProps } from "visual/component/Prompts/PromptPageTemplate/types";
 
 const PROMPTS = {
   icon: Icon,
@@ -33,7 +39,10 @@ const PROMPTS = {
   keyHelper: KeyHelper,
   fonts: Fonts,
   conditions: Conditions,
-  authorization: Authorization
+  authorization: Authorization,
+  pageRules: PromptPageRules,
+  pageTemplate: PromptPageTemplate,
+  pageArticle: PromptPageArticle
 };
 
 type PromptTypes = typeof PROMPTS;
@@ -51,7 +60,10 @@ export type PromptsProps = {
     | PromptAppsProps
     | PromptIconProps
     | PromptFontsProps
-    | PromptKeyHelperProps;
+    | PromptKeyHelperProps
+    | PromptPageRulesProps
+    | PromptPageTemplateProps
+    | PromptPageArticleProps;
 };
 
 type PromptsState = {

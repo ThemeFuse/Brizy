@@ -1,5 +1,10 @@
-import { Page } from "visual/types";
+import { StoreChanged } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
+import { Page } from "visual/types";
+import {
+  Shopify,
+  ShopifyTemplate
+} from "visual/global/Config/types/configs/Cloud";
 
 export const getTooltipPageTitle = (status: Page["status"]): string => {
   switch (status) {
@@ -19,6 +24,53 @@ export const getTooltipPageIcon = (status: Page["status"]): string => {
     }
     case "draft": {
       return "nc-publish";
+    }
+  }
+};
+
+export const getButtonLabel = (
+  store: StoreChanged,
+  status: Page["status"]
+): string => {
+  switch (store) {
+    case StoreChanged.changed: {
+      switch (status) {
+        case "draft":
+        case "publish": {
+          return t("Save");
+        }
+      }
+      break;
+    }
+    case StoreChanged.pending: {
+      return t("Saving");
+    }
+    case StoreChanged.unchanged: {
+      switch (status) {
+        case "draft": {
+          return t("Save Draft");
+        }
+        case "publish": {
+          return t("Publish");
+        }
+      }
+    }
+  }
+};
+
+export const getMode = (
+  config: Shopify
+): "withRules" | "withTemplate" | "withArticle" | undefined => {
+  switch (config.templateType.type) {
+    case ShopifyTemplate.Collection:
+    case ShopifyTemplate.Product: {
+      return "withRules";
+    }
+    case ShopifyTemplate.Article: {
+      return "withArticle";
+    }
+    case ShopifyTemplate.Page: {
+      return "withTemplate";
     }
   }
 };

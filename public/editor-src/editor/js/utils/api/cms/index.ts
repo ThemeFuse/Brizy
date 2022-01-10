@@ -1,3 +1,4 @@
+import { orElse } from "fp-utilities";
 import { CustomError } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import { MNullish, isNullish, isT } from "visual/utils/value";
@@ -6,6 +7,7 @@ import * as Gql from "./graphql/gql";
 import { getConnection } from "./graphql/apollo";
 import { GetCollectionTypesWithFields_collectionTypes as CollectionTypesWithFields } from "./graphql/types/GetCollectionTypesWithFields";
 import { GetCollectionItem_collectionItem as CollectionItem } from "./graphql/types/GetCollectionItem";
+import { GetCustomers_customers_collection as Customers } from "./graphql/types/GetCustomers";
 import * as TMP from "./correctors";
 
 const errOnEmpty = (m: string) => <T>(t: MNullish<T>): T => {
@@ -91,4 +93,15 @@ export function getReferencedCollectionItems(
       .then(TMP.correctCollectionItems(filters ?? {}))
       .catch(onCatch(t("Failed to fetch api data")))
   );
+}
+
+export function getCustomers(): Promise<Customers[]> {
+  const page = paginationData.page;
+  const itemsPerPage = paginationData.count;
+
+  return Gql.getCustomers(getConnection(), { page, itemsPerPage })
+    .then(r => r.data?.customers?.collection)
+    .then(items => items?.filter(isT))
+    .then(orElse<Customers[]>([]))
+    .catch(onCatch(t("Failed to fetch api data")));
 }

@@ -56,6 +56,17 @@ class Brizy_Public_AssetEnqueueManager {
 		}
 	}
 
+	/**
+	 * @param Brizy_Editor_Post $post
+	 */
+	public function dequeuePost( $post ) {
+		$id = $post->getWpPost()->ID;
+
+		if ( isset( $this->posts[ $id ] ) ) {
+			unset( $this->posts[ $id ] );
+		}
+	}
+
 	public function insertHeadCodeAssets() {
 
 		$content = $this->getCodeAssetsAsString( $this->styles );

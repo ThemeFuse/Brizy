@@ -12,6 +12,7 @@ import Config from "visual/global/Config";
 import Portal from "visual/component/Portal";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
+import { IS_PRO } from "visual/utils/env";
 import { mPipe, pass } from "fp-utilities";
 import * as Obj from "visual/utils/reader/object";
 import { uiSelector } from "visual/redux/selectors";
@@ -78,7 +79,8 @@ const Component = ({ config }: Props): ReactElement => {
               const [, mode, id] = r.exec(m.payload) ?? [];
 
               if (mode && id) {
-                window.parent.location.href = `/editor/${mode}/${id}`;
+                const suffix = IS_PRO ? "?pro=true" : "";
+                window.parent.location.href = `/editor/${mode}/${id}${suffix}`;
               } else {
                 console.warn("could not parse url: ", m.payload);
               }

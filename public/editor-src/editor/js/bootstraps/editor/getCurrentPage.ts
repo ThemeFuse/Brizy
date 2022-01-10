@@ -1,4 +1,4 @@
-import Config, { Cloud } from "visual/global/Config";
+import { Config } from "visual/global/Config";
 import {
   getExternalPopups,
   createExternalPopup,
@@ -14,18 +14,19 @@ import {
 } from "visual/utils/models";
 import { Page } from "visual/types";
 import * as Str from "visual/utils/reader/string";
-import { isCustomer } from "visual/global/Config/types/configs/Cloud";
+import { isCMS, isCustomer } from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
 
-export async function getCurrentPage(): Promise<Page> {
-  if (TARGET === "WP") {
-    const pageId = Str.read(Config.get("wp").page) ?? "";
+export async function getCurrentPage(config: Config): Promise<Page> {
+  if (isWp(config)) {
+    const pageId = Str.read(config.wp.page) ?? "";
     return getPage(pageId);
   } else {
-    const config = Config.getAll() as Cloud;
-
     if (IS_PAGE) {
       const pageId = Str.read(config.page?.id) ?? "";
-      return isCustomer(config) ? getCustomerPage(pageId) : getPage(pageId);
+      return isCMS(config) && isCustomer(config)
+        ? getCustomerPage(pageId)
+        : getPage(pageId);
     }
 
     if (IS_SINGLE || IS_ARCHIVE || IS_STORY || IS_INTERNAL_POPUP) {

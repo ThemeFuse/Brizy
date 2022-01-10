@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { setIn } from "timm";
+import { t } from "visual/utils/i18n";
 import {
   disableAlreadyUsedRules,
   getUniqRules,
   getRulesListIndexByRule
 } from "./utils";
-
 import { getCollectionTypesInfo } from "visual/editorComponents/Posts/toolbarExtendParent/utils";
-
-import { getCollectionItems } from "visual/utils/api";
+import { getCollectionItems, getCustomers } from "visual/utils/api";
+import { CUSTOMER_TYPE } from "visual/utils/blocks/blocksConditions";
 
 const transformCollectionItems = items =>
   items.map(({ id, title }) => ({
@@ -17,14 +17,15 @@ const transformCollectionItems = items =>
   }));
 
 export default function useRuleList(rules) {
-  const [rulesList, setRulesList] = useState([]);
+  const [collectionRuleList, setCollectionRuleList] = useState([]);
+  const [customerRuleList, setCustomerRuleList] = useState([]);
   const [listLoading, setListLoading] = useState(true);
 
   // it's needed only for cms!
   const [refsById, setRefsById] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchCollectionData() {
       const { collectionTypes, refsById } = await getCollectionTypesInfo();
 
       let rulesList = collectionTypes.map(({ id, title }) => ({
@@ -35,35 +36,68 @@ export default function useRuleList(rules) {
       }));
 
       setRefsById(refsById);
-      setRulesList(rulesList);
+      setCollectionRuleList(rulesList);
     }
 
-    fetchData();
+    async function fetchCustomersData() {
+      const items = await fetchCustomersListsItems();
+
+      if (items.length > 0) {
+        setCustomerRuleList([
+          {
+            title: t("Users"),
+            value: CUSTOMER_TYPE,
+            groupValue: 1,
+            items: [
+              {
+                title: "Specific User",
+                value: CUSTOMER_TYPE,
+                items
+              }
+            ]
+          }
+        ]);
+      }
+    }
+
+    fetchCollectionData();
+    fetchCustomersData();
   }, []);
 
   useEffect(() => {
     async function fetchData() {
       const uniqRules = getUniqRules(rules);
-      let newRulesList = rulesList;
+      let collectionNewRulesList = collectionRuleList;
 
       await Promise.all(
         uniqRules.map(async rule => {
-          const ruleIndex = getRulesListIndexByRule(rulesList, rule);
-          const hasItems = rulesList[ruleIndex] && rulesList[ruleIndex].items;
+          const ruleIndex = getRulesListIndexByRule(collectionRuleList, rule);
+          const hasItems =
+            collectionRuleList[ruleIndex] &&
+            collectionRuleList[ruleIndex].items;
 
           if (ruleIndex === -1 || hasItems) {
             return Promise.resolve();
           }
 
-          const items = await fetchRuleListItems(rule, newRulesList[ruleIndex]);
+          const items = await fetchRuleListItems(
+            rule,
+            collectionNewRulesList[ruleIndex]
+          );
 
-          newRulesList = setIn(newRulesList, [ruleIndex, "items"], items);
+          collectionNewRulesList = setIn(
+            collectionNewRulesList,
+            [ruleIndex, "items"],
+            items
+          );
 
           return Promise.resolve();
         })
       );
 
-      setRulesList(disableAlreadyUsedRules(rules, newRulesList));
+      setCollectionRuleList(
+        disableAlreadyUsedRules(rules, collectionNewRulesList)
+      );
       setListLoading(false);
     }
 
@@ -72,12 +106,16 @@ export default function useRuleList(rules) {
       return;
     }
 
-    if (rulesList.length) {
+    if (collectionRuleList.length) {
       fetchData();
     }
-  }, [rules, rulesList]);
+  }, [rules, collectionRuleList]);
 
-  return [listLoading, rulesList];
+  useEffect(() => {
+    setCustomerRuleList(disableAlreadyUsedRules(rules, customerRuleList));
+  }, [rules, customerRuleList]);
+
+  return [listLoading, [...collectionRuleList, ...customerRuleList]];
 
   async function fetchRuleListItems(rule, collectionType) {
     // maybe we shoud union our queries into one!
@@ -111,5 +149,21 @@ export default function useRuleList(rules) {
     }
 
     return items;
+  }
+
+  async function fetchCustomersListsItems() {
+    try {
+      const customers = await getCustomers();
+
+      return customers.map(({ id, firstName, lastName }) => ({
+        title: `${firstName} ${lastName}`,
+        value: id
+      }));
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.log(e);
+      }
+      return [];
+    }
   }
 }

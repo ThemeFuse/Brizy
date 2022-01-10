@@ -50,6 +50,10 @@ class Brizy_Compatibilities_Init {
 		if ( function_exists( 'WPNCEasyWP' ) ) {
 			new Brizy_Compatibilities_NcEasywp();
 		}
+
+		if ( defined( 'ASTRA_EXT_FILE' ) ) {
+			new Brizy_Compatibilities_AstraAddon();
+		}
 	}
 
 	public function action_plugins_loaded() {
@@ -113,6 +117,10 @@ class Brizy_Compatibilities_Init {
 
 		if ( class_exists( 'Wp_Ultimo' ) ) {
 			new Brizy_Compatibilities_WpUltimo();
+		}
+
+		if ( defined( 'PERFMATTERS_VERSION' ) ) {
+			new Brizy_Compatibilities_Perfmatters();
 		}
   }
 
