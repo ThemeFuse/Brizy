@@ -42,7 +42,7 @@ class Brizy_Compatibilities_Woocommerce {
 			return $content;
 		}
 
-	    $dom = pQuery::parseStr( $content );
+	    $dom = Brizy_Parser_Pquery::parseStr( $content );
 
 	    $dom->query('section.brz-section__header')->after( $notices );
 

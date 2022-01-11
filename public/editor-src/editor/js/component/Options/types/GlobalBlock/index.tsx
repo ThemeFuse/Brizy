@@ -22,7 +22,11 @@ import {
   updateBlocks,
   ActionUpdateBlocks
 } from "visual/redux/actions2";
-import { setIds } from "visual/utils/models";
+import {
+  IS_EXTERNAL_POPUP,
+  IS_INTERNAL_POPUP,
+  setIds
+} from "visual/utils/models";
 import { isPopup } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
@@ -180,16 +184,18 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
 
               popupId && openPopupById(popupId);
 
-              Prompts.open({
-                prompt: "conditions",
-                mode: "single",
-                props: {
-                  options: getOptions(
-                    this.props.blockType === "normal" ? "block" : "popup",
-                    this.props.value._id
-                  )
-                }
-              });
+              if (IS_INTERNAL_POPUP || IS_EXTERNAL_POPUP) {
+                Prompts.open({
+                  prompt: "conditions",
+                  mode: "single",
+                  props: {
+                    options: getOptions(
+                      this.props.blockType === "normal" ? "block" : "popup",
+                      this.props.value._id
+                    )
+                  }
+                });
+              }
             } else {
               throw r;
             }

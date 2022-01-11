@@ -18,8 +18,7 @@ export function style(v, vs, vd) {
         "cssStyleTypography3FontSize",
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
-        "cssStyleTypography3LetterSpacing",
-        "cssStyleElementTimelineNavTitle"
+        "cssStyleTypography3LetterSpacing"
       ]
     },
     ".brz && .brz-timeline__nav--icon": {
@@ -132,7 +131,9 @@ export function style(v, vs, vd) {
     ".brz && .brz-timeline__tab:nth-child(even):last-child:after": {
       standart: ["cssStyleElementTimelineVerticalTabBeforeStyle3"]
     },
-
+    ".brz && .brz-timeline__tab .brz-timeline__nav--title": {
+      standart: ["cssStyleElementTimelineNavTitleSpacing"]
+    },
     ".brz && .brz-timeline__tab:nth-child(even) > .brz-timeline__nav--title": {
       standart: ["cssStyleElementTimelineNavTitleStyle3"]
     }

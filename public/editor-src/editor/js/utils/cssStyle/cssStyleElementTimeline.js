@@ -450,6 +450,8 @@ export function cssStyleElementTimelineCustomLineTop({ v, device }) {
     device
   });
   const textWidth = cssStyleElementTimelineTextWidth({ v, device });
+  const dvv = key => defaultValueValue({ v, key, device });
+  const textSpacing = dvv("textSpacing");
   const verticalPosition = textWidth + iconWidth - borderWidthLine / 2;
 
   const horizontalLeftPosition =
@@ -457,13 +459,16 @@ export function cssStyleElementTimelineCustomLineTop({ v, device }) {
 
   const afterHeight = halfIconHeight + textHeight - borderWidthLine / 2;
 
+  const afterHeight2 =
+    halfIconHeight + textHeight + textSpacing - borderWidthLine / 2;
+
   if (orientation === "off") {
     switch (style) {
       case "style-1": {
-        return `bottom:auto; right: auto; top: ${afterHeight}px; left: ${horizontalLeftPosition}px;`;
+        return `bottom:auto; right: auto; top: ${afterHeight2}px; left: ${horizontalLeftPosition}px;`;
       }
       case "style-2": {
-        return `bottom: ${afterHeight}px; top:auto; right: auto; left: ${horizontalLeftPosition}px;`;
+        return `bottom: ${afterHeight2}px; top:auto; right: auto; left: ${horizontalLeftPosition}px;`;
       }
       case "style-3": {
         return `bottom: ${halfIconHeight}px; top: unset; right: auto; left: ${horizontalLeftPosition}px;`;
@@ -502,12 +507,15 @@ export function cssStyleElementTimelineCustomLineOdd({ v, device }) {
   const customSize = styleElementTimelineIconCustomSize({ v, device });
   const iconPadding = styleElementTimelineIconPadding({ v, device });
   const textWidth = cssStyleElementTimelineTextWidth({ v });
+  const dvv = key => defaultValueValue({ v, key, device });
+  const textSpacing = dvv("textSpacing");
 
   const verticalPosition = textWidth + iconHeight - borderWidthLine / 2;
 
   const leftPosition = customSize + iconPadding * 2 + borderWidth * 2 + 20;
 
-  const afterHeight = halfIconHeight + textHeight - borderWidthLine / 2;
+  const afterHeight =
+    halfIconHeight + textHeight + textSpacing - borderWidthLine / 2;
 
   if (orientation === "off") {
     switch (style) {
@@ -923,44 +931,66 @@ export function cssStyleElementTimelineContentBeforeStyle3({ v, device }) {
   }
 }
 
-export function cssStyleElementTimelineNavTitle({ v, device }) {
+export function cssStyleElementTimelineNavTitleSpacing({ v, device }) {
   const orientation = styleElementTimelineOrientation({ v, device });
   const style = styleElementTimelineStyle({ v, device });
-  if (orientation === "off" && style === "style-3") {
-    return "position: absolute; top: 0; transform: translateY(-100%);";
+  const dvv = key => defaultValueValue({ v, key, device });
+  const textSpacing = dvv("textSpacing");
+  if (orientation === "off") {
+    switch (style) {
+      case "style-1": {
+        return `position: relative; margin-bottom: ${textSpacing}px; left: -10px; top: auto; transform: none;`;
+      }
+      case "style-2": {
+        return `position: relative; margin-top: ${textSpacing}px; left: -10px; top: auto; transform: none;`;
+      }
+      case "style-3": {
+        return `position: absolute; margin-top: auto; top: ${-textSpacing}px; left: -10px; transform: translateY(-100%);`;
+      }
+    }
   } else if (orientation === "on") {
-    return "position: relative; left: -10px; transform: none;";
-  } else {
-    return "position: relative; transform: none;";
+    switch (style) {
+      case "style-1": {
+        return `position: relative; margin: 0; left: ${-textSpacing}px; top: auto; transform: none;`;
+      }
+      case "style-2": {
+        return `position: relative; margin: 0; top: auto; left: ${textSpacing}px; transform: none;`;
+      }
+      case "style-3": {
+        return `position: relative; margin: 0; left: ${-textSpacing}px; top: auto; transform: none;`;
+      }
+    }
   }
 }
 
 export function cssStyleElementTimelineNavTitleStyle3({ v, device }) {
   const orientation = styleElementTimelineOrientation({ v, device });
   const style = styleElementTimelineStyle({ v, device });
+  const dvv = key => defaultValueValue({ v, key, device });
+  const textSpacing = dvv("textSpacing");
 
   if (orientation === "off") {
     switch (style) {
       case "style-1": {
-        return "position: relative; transform: none;";
+        return "position: relative;  left: -10px; bottom: auto; transform: none;";
       }
       case "style-2": {
-        return "position: relative; transform: none;";
+        return "position: relative;  left: -10px; bottom: auto; transform: none;";
       }
       case "style-3": {
-        return "position: absolute; bottom: 0; top: auto; transform: translateY(100%);";
+        return `position: absolute; bottom: ${-textSpacing}px; top: auto; left: -10px; transform: translateY(100%);`;
       }
     }
   } else if (orientation === "on") {
     switch (style) {
       case "style-1": {
-        return "position: relative; left: -10px; transform: none;";
+        return `position: relative; left: ${-textSpacing}px; bottom: auto; transform: none;`;
       }
       case "style-2": {
-        return "position: relative; left: -10px; transform: none;";
+        return `position: relative; bottom: auto; left: ${textSpacing}px; transform: none;`;
       }
       case "style-3": {
-        return "position: relative; left: -10px; transform: none;";
+        return `position: relative; left: ${textSpacing}px; bottom: auto; transform: none;`;
       }
     }
   }

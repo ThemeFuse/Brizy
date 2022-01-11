@@ -6,6 +6,7 @@ import {
 } from "visual/redux/selectors";
 import { ReduxState } from "../types";
 import { ReduxAction } from "../actions2";
+import { isShopifyPage, ShopifyPage } from "visual/types";
 
 type Page = ReduxState["page"];
 type RPage = (s: Page, a: ReduxAction, f: ReduxState) => Page;
@@ -42,6 +43,24 @@ export const page: RPage = (state, action, fullState) => {
         draft.data.rulesAmount = action.payload.rules.length;
         draft.dataVersion = draft.dataVersion + 1;
       });
+    }
+    case "UPDATE_PAGE_LAYOUT": {
+      if (isShopifyPage(state)) {
+        return produce<ShopifyPage>(state, draft => {
+          draft.layout.value = action.payload.layout;
+          draft.dataVersion = draft.dataVersion + 1;
+        });
+      }
+      return state;
+    }
+    case "UPDATE_PAGE_TITLE": {
+      if (isShopifyPage(state)) {
+        return produce<ShopifyPage>(state, draft => {
+          draft.title = action.payload;
+          draft.dataVersion = draft.dataVersion + 1;
+        });
+      }
+      return state;
     }
     default:
       return state;

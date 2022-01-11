@@ -9,6 +9,7 @@ class Brizy_Compatibilities_WPML {
 		add_action( 'wp_insert_post', array( $this, 'insertNewPost' ), - 10000, 3 );
 		add_action( 'wp_insert_post', array( $this, 'duplicatePosts' ), - 10000, 3 );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ], 11 );
+		add_action( 'wp_ajax_wpml-ls-save-settings', [ $this, 'save_settings' ] );
 	}
 
 	/**
@@ -74,5 +75,16 @@ class Brizy_Compatibilities_WPML {
 		}
 
 		return $query;
+	}
+
+	public function save_settings() {
+
+		parse_str($_POST['settings'], $result);
+
+		if ( ! isset( $result['menus'] ) ) {
+			return;
+		}
+
+		Brizy_Editor_Post::mark_all_for_compilation();
 	}
 }

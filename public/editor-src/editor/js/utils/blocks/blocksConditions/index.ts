@@ -6,8 +6,18 @@ import { pageSplitRules, isIncludeCondition } from "../getAllowedGBIds";
 
 import { IS_WP } from "visual/utils/env";
 import { IS_TEMPLATE } from "visual/utils/models";
-import { isCollectionPage } from "visual/global/Config/types/configs/Cloud";
-import { GlobalBlock, GlobalBlockPosition, Page } from "visual/types";
+import {
+  isCloud,
+  isCMS,
+  isCollectionPage,
+  isCustomer
+} from "visual/global/Config/types/configs/Cloud";
+import {
+  CollectionTypeRule,
+  GlobalBlock,
+  GlobalBlockPosition,
+  Page
+} from "visual/types";
 import { Config as ConfigType } from "./config";
 
 export const PAGES_GROUP_ID = 1;
@@ -18,6 +28,7 @@ export const TEMPLATES_GROUP_ID = 16;
 
 export const POST_TYPE = "post";
 export const TEMPLATE_TYPE = "brizy_template";
+export const CUSTOMER_TYPE = "customer";
 
 import {
   PB,
@@ -28,7 +39,6 @@ import {
   PositionAlign,
   AlignsList,
   SortedGBPositions,
-  Rule,
   SurroundedConditionsIds,
   InsertScheme
 } from "./types";
@@ -294,14 +304,21 @@ function turnPositionsIntoObject(
 // if there is are not pages we create one on client side.
 export const getCurrentRule = (
   page = pageSelector(getStore().getState())
-): Rule => {
-  let group: Rule["group"] = PAGES_GROUP_ID;
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  let type: Rule["type"] = "page";
+): {
+  group: CollectionTypeRule["appliedFor"];
+  type: CollectionTypeRule["entityType"];
+  id: Page["id"];
+} => {
+  const config = Config.getAll();
+  let group = PAGES_GROUP_ID;
+  let type = "page";
 
   if (isCollectionPage(page)) {
     type = page.collectionType.id;
+  }
+
+  if (isCloud(config) && isCMS(config) && isCustomer(config)) {
+    type = CUSTOMER_TYPE;
   }
 
   if (IS_WP) {
@@ -406,7 +423,9 @@ export const changeRule = (
   let newGlobalBlock = {
     ...globalBlock,
     rules: globalBlock.rules.filter(
+      // @ts-expect-error: this code is reverted when merged with beta-gb-change
       ({ entityValues }) =>
+        // @ts-expect-error: this code is reverted when merged with beta-gb-change
         !entityValues.some(v => String(v) === String(currentRule.id))
     )
   };

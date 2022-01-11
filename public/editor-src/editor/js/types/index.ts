@@ -2,6 +2,10 @@ import { Dictionary } from "./utils";
 import { ElementModel } from "editor/js/component/Elements/Types";
 import { Palette as ColorPalette } from "visual/utils/color/Palette";
 import { Hex } from "visual/utils/color/Hex";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
+
 export type V = Dictionary<unknown>;
 
 // blocks
@@ -14,12 +18,30 @@ export type Block = {
   blockId: string;
 };
 
-export type Rule = {
-  type: 1 | 2;
+export enum BlockTypeRule {
+  include = 1,
+  exclude = 2
+}
+
+export interface AllRule {
+  type: BlockTypeRule;
+}
+
+export interface CollectionTypeRule extends AllRule {
   appliedFor: number | null;
   entityType: string;
+  // temporary only in fixes
   entityValues: (number | string)[];
-};
+}
+
+export interface CollectionItemRule extends AllRule {
+  appliedFor: number | null;
+  entityType: string;
+  mode: "reference" | "specific";
+  entityValues: (number | string)[];
+}
+
+export type Rule = AllRule | CollectionTypeRule | CollectionItemRule;
 
 export type GlobalBlock = {
   data: Block & { deleted?: boolean };
@@ -70,7 +92,7 @@ export type GlobalBlockPosition = {
 
 //#region Page
 
-export interface DataCommon {
+interface DataCommon {
   id: string;
   data: {
     items: Block[];
@@ -78,67 +100,68 @@ export interface DataCommon {
   };
   dataVersion: number;
   status: "draft" | "publish";
+}
+
+interface DataWithTitle extends DataCommon {
   title: string;
 }
 
-export type PageCommon = DataCommon & {
+export interface PageCommon extends DataWithTitle {
   slug: string;
-};
+}
 
-export type PageWP = PageCommon & {
+export interface PageWP extends PageCommon {
   _kind: "wp";
   is_index: boolean; // TODO: would be nice if WP and cloud types would match
   template: string;
   url: string; // TODO: find out what is this for
-};
+}
 
-export type PopupWP = PageWP;
-
-export type ExternalStoryCloud = Omit<DataCommon, "title"> & {
+export interface ExternalStoryCloud extends DataCommon {
   slug: string;
-};
+}
 
-export type ExternalPopupCloud = Omit<DataCommon, "title">;
-
-export type InternalPopupCloud = DataCommon & {
+export interface InternalPopupCloud extends DataWithTitle {
   rules: Rule[];
   project: number;
-};
+}
 
-export type PageCollection = PageCommon & {
-  _kind: "cloud-cms";
+export interface PageCollection extends PageCommon {
   collectionType: {
     id: string;
     title: string;
   };
-  fields:
-    | {
-        id: string;
-        type: {
-          collectionType: {
-            id: string;
-            title: string;
-          };
-        };
-      }[]
-    | null;
-};
-
-export interface PageCustomer extends DataCommon {
-  _kind: "cloud-customer";
+  fields: CollectionItem["fields"] | null;
 }
 
-export type PopupCloud = PageCollection & {
+export type PageCustomer = DataWithTitle;
+
+export type CloudPopup = PageCollection & {
   rules: Rule[];
+};
+
+export type ExternalPopupCloud = DataCommon;
+
+export interface ShopifyPage extends PageCommon {
+  layout: {
+    id: string;
+    value: string | undefined;
+  };
+}
+
+export const isShopifyPage = (page: Page): page is ShopifyPage => {
+  const config = Config.getAll();
+  return isCloud(config) && isShopify(config) && !("rules" in page);
 };
 
 export type Page =
   | PageWP
   | PageCollection
+  | ShopifyPage
   | PageCustomer
   | InternalPopupCloud
   | ExternalPopupCloud
-  | PopupCloud;
+  | CloudPopup;
 
 //#endregion
 

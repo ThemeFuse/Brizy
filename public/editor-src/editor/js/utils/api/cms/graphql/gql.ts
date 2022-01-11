@@ -36,6 +36,10 @@ import {
   UpdateCustomer,
   UpdateCustomerVariables
 } from "visual/utils/api/cms/graphql/types/UpdateCustomer";
+import {
+  GetCustomers,
+  GetCustomersVariables
+} from "visual/utils/api/cms/graphql/types/GetCustomers";
 
 //#region CollectionItem fragment
 const collectionItemFragment = gql`
@@ -49,15 +53,28 @@ const collectionItemFragment = gql`
     type {
       id
       title
+      slug
+      fields @include(if: $withFields) {
+        id
+        slug
+      }
     }
     fields @include(if: $withFields) {
       id
       type {
+        id
+        slug
         collectionType {
           id
           title
         }
       }
+      ... on CollectionItemFieldText {
+        textValues {
+          value
+        }
+      }
+
       ... on CollectionItemFieldMultiReference {
         multiReferenceValues {
           collectionItems {
@@ -345,6 +362,26 @@ export const updateCustomer = (
           customer {
             id
             pageData
+          }
+        }
+      }
+    `,
+    variables
+  });
+
+export const getCustomers = (
+  apolloClient: ApolloClient,
+  variables: GetCustomersVariables
+): Promise<FetchResult<GetCustomers>> =>
+  apolloClient.query<GetCustomers, GetCustomersVariables>({
+    query: gql`
+      query GetCustomers($page: Int, $itemsPerPage: Int) {
+        customers(page: $page, itemsPerPage: $itemsPerPage) {
+          collection {
+            id
+            email
+            firstName
+            lastName
           }
         }
       }
