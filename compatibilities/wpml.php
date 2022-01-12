@@ -26,8 +26,8 @@ class Brizy_Compatibilities_WPML {
 
 		if ( isset( $_POST['langs'] ) ) {
 			if ( $wpml_post_translations && is_post_type_translated( $postType ) ) {
-				$currentBrizyPost = Brizy_Editor_Post::get( (int) $postId );
-				$currentBrizyPost->duplicateTo( (int) $_POST['post_id'] );
+				$currentBrizyPost = Brizy_Editor_Post::get( (int) $_POST['post_id'] );
+				$currentBrizyPost->duplicateTo( (int) $postId );
 			}
 		}
 
