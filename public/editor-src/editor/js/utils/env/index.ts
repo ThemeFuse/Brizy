@@ -1,3 +1,4 @@
+import { match } from "fp-utilities";
 import Config, { Cloud, Config as Conf } from "visual/global/Config";
 import {
   isCloud,
@@ -8,7 +9,6 @@ import {
 } from "visual/global/Config/types/configs/Cloud";
 import { TemplateType } from "visual/global/Config/types/TemplateType";
 import { isWp } from "visual/global/Config/types/configs/WP";
-import { match } from "fp-utilities";
 
 const config = Config.getAll();
 

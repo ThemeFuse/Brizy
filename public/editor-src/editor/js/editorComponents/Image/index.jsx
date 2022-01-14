@@ -47,7 +47,8 @@ import {
   elementModelToValue,
   patchOnDCChange,
   patchOnImageChange,
-  patchOnSizeTypeChange
+  patchOnSizeTypeChange,
+  pathOnUnitChange
 } from "./imageChange";
 import {
   placeholderObjFromStr,
@@ -104,12 +105,15 @@ class Image extends EditorComponent {
   handleImageChange(patch) {
     const device = deviceModeSelector(getStore().getState());
     const { v } = this.getValue2();
+    const dvv = key => defaultValueValue({ v, device, key });
     const value = elementModelToValue(v);
     const image = ImagePatch.fromImageElementModel(patch);
 
     const imageDC = ImagePatch.fromImageDCElementModel(patch);
 
     const imageSizeType = ImagePatch.patchImageSizeType(patch);
+
+    const imageUnit = ImagePatch.patchImageUnit(patch, device);
 
     if (value === undefined) {
       return {};
@@ -129,7 +133,13 @@ class Image extends EditorComponent {
       return patchOnDCChange(containerWidth, patch, wrapperSize);
     }
 
-    const sizeType = defaultValueValue({ v, device, key: "sizeType" });
+    if (imageUnit !== undefined) {
+      const containerWidth = this.getContainerSize()[device];
+
+      return pathOnUnitChange(containerWidth, value, imageUnit, device);
+    }
+
+    const sizeType = dvv("sizeType");
     if (imageSizeType !== undefined && imageSizeType.sizeType !== sizeType) {
       const containerWidth = this.getContainerSize()[device];
 
@@ -317,6 +327,7 @@ class Image extends EditorComponent {
     const desktopValue = {
       imageWidth,
       imageHeight,
+      imageExtension,
       width,
       height,
       widthSuffix,
@@ -326,6 +337,7 @@ class Image extends EditorComponent {
     const tabletValue = {
       imageWidth,
       imageHeight,
+      imageExtension,
       size: tabletSize,
       width: v.tabletWidth || width,
       height: v.tabletHeight || height,
@@ -335,6 +347,7 @@ class Image extends EditorComponent {
     const mobileValue = {
       imageWidth,
       imageHeight,
+      imageExtension,
       size: mobileSize,
       width: v.mobileWidth || width,
       height: v.mobileHeight || height,

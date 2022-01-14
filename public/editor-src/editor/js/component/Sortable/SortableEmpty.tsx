@@ -126,7 +126,7 @@ class Sortable extends Component<Props> {
     getStore().dispatch(
       updateUI("leftSidebar", {
         isOpen: true,
-        drawerContentType: "addElements"
+        drawerContentType: "addBaseElements"
       })
     );
   };

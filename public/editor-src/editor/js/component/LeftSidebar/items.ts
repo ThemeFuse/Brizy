@@ -8,19 +8,22 @@ import {
   // IS_GLOBAL_POPUP,
   // IS_STORY
 } from "visual/utils/models";
-import { AddElements } from "./components/AddElements";
+import { Base, Shopify } from "./components/AddElements";
 import { BlocksSortable } from "./components/BlocksSortable";
 import { Styling } from "./components/Styling";
 import { DeviceModes } from "./components/DeviceModes";
 import { Cms } from "./components/Cms";
 import { Settings } from "./components/Settings";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 
-const urls = Config.getAll().urls;
+const config = Config.getAll();
+const urls = config.urls;
 
 export default {
   top: [
     ...(!IS_EXTERNAL_STORY && !IS_EXTERNAL_POPUP ? [Cms] : []),
-    AddElements,
+    Base,
+    ...(isCloud(config) && isShopify(config) ? [Shopify] : []),
     BlocksSortable,
     Styling
   ],
@@ -78,6 +81,7 @@ export default {
         {
           type: "link",
           icon: "nc-back",
+          disabled: isCloud(config) && isShopify(config),
           label: t("Go to Dashboard"),
           link: urls.backToDashboard
         }

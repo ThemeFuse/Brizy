@@ -1,15 +1,20 @@
 interface UserCommon {
   isAuthorized: boolean;
-  role: string; // add more narrow type like "admin" | "hz",;
+  // ours dashboard role manager
+  role: "admin" | "limited";
+}
+
+interface UserCloud extends UserCommon {
+  isApproved: boolean;
 }
 
 interface UserWP extends UserCommon {
-  isApproved: boolean;
   isGuest: boolean;
+  isWpAdmin: boolean;
 }
 
 type Cnf = {
-  cloud: UserCommon;
+  cloud: UserCloud;
   wp: UserWP;
 };
 

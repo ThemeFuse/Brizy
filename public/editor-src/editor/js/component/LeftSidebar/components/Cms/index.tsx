@@ -30,7 +30,7 @@ import {
 } from "visual/global/Config/types/configs/Cloud";
 import { getContext } from "visual/component/LeftSidebar/components/Cms/utils";
 
-interface Props {
+export interface Props {
   config: CMS | Shopify;
 }
 

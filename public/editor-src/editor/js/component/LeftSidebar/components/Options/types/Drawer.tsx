@@ -37,7 +37,8 @@ const Drawer: React.FC<DrawerProps> = ({
   drawerTitle = "",
   drawerComponent: DrawerContent,
   wrapperHeaderComponent: WrapperHeaderComponent = ({ children }) => children,
-  id
+  id,
+  ...extraProps
 }) => {
   const prevContentTypeRef = useRef(drawerContentType);
   useEffect(() => {
@@ -53,7 +54,7 @@ const Drawer: React.FC<DrawerProps> = ({
     <DrawerAnimation in={!!drawerContentType} appear={isOpened}>
       <WrapperHeaderComponent>
         <DrawerComponent headerText={drawerTitle}>
-          {DrawerContent && <DrawerContent />}
+          {DrawerContent && <DrawerContent extraProps={extraProps} />}
         </DrawerComponent>
       </WrapperHeaderComponent>
     </DrawerAnimation>
