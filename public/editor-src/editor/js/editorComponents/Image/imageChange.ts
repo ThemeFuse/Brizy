@@ -1,5 +1,11 @@
 import { optional, pass, mPipe } from "fp-utilities";
-import { ImageDCPatch, ImagePatch, SizeTypePatch } from "./types/ImagePatch";
+import { DeviceMode } from "visual/types";
+import {
+  ImageDCPatch,
+  ImagePatch,
+  SizeTypePatch,
+  UnitPatch
+} from "./types/ImagePatch";
 import {
   calcWrapperSizes,
   getImageSize,
@@ -15,6 +21,7 @@ import * as Math from "visual/utils/math";
 import * as Str from "visual/utils/string/specs";
 import { prop } from "visual/utils/object/get";
 import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
 export interface Size {
   width: number;
@@ -41,6 +48,7 @@ export interface Patch {
 }
 
 export interface Value extends Size {
+  imageExtension: string;
   size: number;
   widthSuffix: Unit;
   heightSuffix: Unit;
@@ -73,6 +81,21 @@ export interface PatchDC {
   widthSuffix?: Unit;
 }
 
+export interface PatchUnit {
+  width?: number;
+  height?: number;
+  widthSuffix?: Unit;
+  heightSuffix?: Unit;
+  tabletWidth?: number;
+  tabletHeight?: number;
+  tabletWidthSuffix?: Unit;
+  tabletHeightSuffix?: Unit;
+  mobileWidth?: number;
+  mobileHeight?: number;
+  mobileWidthSuffix?: Unit;
+  mobileHeightSuffix?: Unit;
+}
+
 export const elementModelToValue = readWithParser<ElementModel, Value>({
   height: mPipe(prop("height"), Num.read),
   width: mPipe(prop("width"), Num.read),
@@ -80,6 +103,8 @@ export const elementModelToValue = readWithParser<ElementModel, Value>({
   widthSuffix: mPipe(prop("widthSuffix"), pass(isUnit)),
   sizeType: mPipe(prop("sizeType"), Str.read),
   size: mPipe(prop("size"), Num.read),
+  imageExtension: mPipe(prop("imageExtension"), Str.read),
+  imagePopulation: optional(mPipe(prop("imagePopulation"), Str.read)),
   tabletWidth: optional(mPipe(prop("tabletWidth"), Num.read)),
   tabletHeight: optional(mPipe(prop("tabletHeight"), Num.read)),
   tabletWidthSuffix: optional(mPipe(prop("tabletWidthSuffix"), pass(isUnit))),
@@ -247,5 +272,55 @@ export const patchOnDCChange = (
   return {
     height: wrapperSizes.height,
     heightSuffix: "px"
+  };
+};
+
+const normalizeWidth = (cW: number, width: number, suffix: Unit): number => {
+  switch (suffix) {
+    case "%": {
+      return Math.roundTo((width / cW) * 100, 2);
+    }
+    case "px": {
+      return Math.roundTo((width / 100) * cW, 2);
+    }
+  }
+};
+
+export const pathOnUnitChange = (
+  cW: number,
+  v: Value,
+  patch: UnitPatch,
+  device: DeviceMode
+): PatchUnit => {
+  const extension = v.imageExtension;
+  const population = v.imagePopulation;
+  const isSvgOrGif = extension === "svg" || extension === "gif";
+  const dvk = (key: string): string =>
+    defaultValueKey({ key, device, state: "normal" });
+  const [suffixKey] = Object.keys(patch).filter(
+    key => key === dvk("widthSuffix") || key === dvk("heightSuffix")
+  );
+  const dvv = (key: string): unknown => defaultValueValue({ key, v, device });
+
+  if (suffixKey === undefined) {
+    return patch;
+  }
+
+  const widthKey = dvk("width");
+  const width = Num.read(dvv("width"));
+  const vPatched = dvv(suffixKey);
+  const patchValue = patch[suffixKey];
+
+  if (!isUnit(patchValue) || width === undefined) {
+    return {};
+  }
+
+  if (!isSvgOrGif || population || vPatched === patchValue) {
+    return patch;
+  }
+
+  return {
+    [suffixKey]: patchValue,
+    [widthKey]: normalizeWidth(cW, width, patchValue)
   };
 };

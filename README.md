@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.8.3<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.26<br>
+Stable tag: 2.3.27<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,15 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.27 - 2022-01-14
+* New: Added border, background-color and shadow for content
+* New: Added Image width px unit for svg and gif type
+* Improved: XSS in RichText and all Links
+* Fixed: Login entered information error
+* Fixed: Dashboard news
+* Fixed: Update pot file and corrected some strings translations
+* Fixed: Fatal error on duplicate page with wpml, restore asset url by wp option siteurl
 
 ### 2.3.26 - 2022-01-10
 * Improved: Removed icon ids

@@ -188,15 +188,6 @@ class Brizy_Editor {
 		$this->loadEditorApi( $post, $user );
 		$this->loadEditorAdminSettings();
 
-		function brizy_add_dashboard_widgets() {
-			try {
-
-				Brizy_Admin_DashboardWidget::_init();
-			} catch ( Exception $e ) {
-				// ignore this exceptions for now.
-			}
-		}
-
 		if ( $post && $post->uses_editor() ) {
 
 			if ( is_user_logged_in() ) {
@@ -206,7 +197,9 @@ class Brizy_Editor {
 
 		if ( ! class_exists( 'BrizyPro_Admin_WhiteLabel' ) || ! BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
 			if ( current_user_can( 'manage_options' ) ) {
-				add_action( 'wp_dashboard_setup', 'brizy_add_dashboard_widgets' );
+				add_action( 'wp_dashboard_setup', function () {
+					Brizy_Admin_DashboardWidget::_init();
+				} );
 			}
 		}
 

@@ -1,9 +1,9 @@
 import nonWP from "./index.js";
-import WPTemplate from "./WPTemplate";
 import WPFeatureImage from "./WPFeatureImage";
+import Template from "./Template";
 
 export default {
   ...nonWP,
-  wpTemplate: WPTemplate,
+  wpTemplate: Template,
   wpFeatureImage: WPFeatureImage
 };

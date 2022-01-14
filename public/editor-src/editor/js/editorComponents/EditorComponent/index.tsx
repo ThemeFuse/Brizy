@@ -1126,3 +1126,5 @@ export class EditorComponent<
 }
 
 export default EditorComponent;
+
+export type Editor = typeof EditorComponent;

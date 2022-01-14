@@ -4,6 +4,7 @@ import { Palette as ColorPalette } from "visual/utils/color/Palette";
 import { Hex } from "visual/utils/color/Hex";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
 import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 
 export type V = Dictionary<unknown>;
@@ -154,6 +155,11 @@ export const isShopifyPage = (page: Page): page is ShopifyPage => {
   return isCloud(config) && isShopify(config) && !("rules" in page);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const isWPPage = (page: Page): page is PageWP => {
+  return isWp(Config.getAll());
+};
+
 export type Page =
   | PageWP
   | PageCollection
@@ -254,10 +260,12 @@ export interface ExtraFontStyle {
 
 export type Shortcode = {
   component: {
+    title: string;
     icon: string;
     id: string;
     resolve: ElementModel;
-    title: string;
+    position?: number;
+    hidden?: boolean;
   };
   pro: boolean;
 };

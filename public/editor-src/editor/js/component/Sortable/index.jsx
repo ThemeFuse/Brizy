@@ -112,7 +112,7 @@ class Sortable extends React.Component {
     getStore().dispatch(
       updateUI("leftSidebar", {
         isOpen: true,
-        drawerContentType: "addElements"
+        drawerContentType: "addBaseElements"
       })
     );
   };
