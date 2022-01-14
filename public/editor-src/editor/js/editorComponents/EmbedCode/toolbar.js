@@ -4,12 +4,12 @@ import { hexToRgba } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
 import { IS_STORY } from "visual/utils/models";
 import Config from "visual/global/Config";
-
-const { isApproved } = Config.get("user");
-
 import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { isCloud } from "visual/global/Config/types/configs/Cloud";
 
 export function getItems({ v, device }) {
+  const config = Config.getAll();
+  const isApproved = isCloud(config) ? config.user.isApproved : true;
   const dvv = key => defaultValueValue({ v, key, device });
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
@@ -23,7 +23,7 @@ export function getItems({ v, device }) {
       type: "popover-dev",
       config: {
         icon: "nc-iframe",
-        size: TARGET !== "WP" && !isApproved ? "medium" : "large",
+        size: "large",
         title: t("Embed")
       },
       devices: "desktop",
@@ -32,7 +32,7 @@ export function getItems({ v, device }) {
         {
           id: "code",
           type: "textarea-dev",
-          disabled: TARGET === "WP" ? false : !isApproved,
+          disabled: !isApproved,
           placeholder: t("Paste your code here...")
         }
       ]

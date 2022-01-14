@@ -17,6 +17,8 @@ export interface Prop {
   ruleMatches: Rule[];
   postType: string;
   postTypes: { name: string; label: string }[];
+  hasSidebars: boolean;
+  plugins: Record<string, unknown>;
   api: {
     [k: string]: unknown;
     url: string;

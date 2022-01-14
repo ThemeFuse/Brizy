@@ -1,14 +1,16 @@
 import React from "react";
+import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
+import Config from "visual/global/Config";
 import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
-import classnames from "classnames";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
+import { xss } from "visual/utils/xss";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -20,6 +22,17 @@ class WPCustomShortcode extends EditorComponent {
   static defaultValue = defaultValue;
 
   handleResizerChange = patch => this.patchValue(patch);
+
+  handleValueChange(newValue, meta) {
+    const config = Config.getAll();
+
+    if (meta.patch.shortcode && !config.user.isWpAdmin) {
+      const xssShortcode = xss(newValue.shortcode, "discard");
+      super.handleValueChange({ ...newValue, shortcode: xssShortcode });
+    } else {
+      super.handleValueChange(newValue, meta);
+    }
+  }
 
   renderForEdit(v, vs, vd) {
     const { className } = v;

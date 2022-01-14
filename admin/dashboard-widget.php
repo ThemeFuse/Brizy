@@ -3,9 +3,6 @@
 
 class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 
-	/**
-	 * @throws Exception
-	 */
 	public static function _init() {
 		static $instance;
 
@@ -39,67 +36,89 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 	 * @return string
 	 */
 	public function getName() {
-		return Brizy_Editor::get()->get_name() . " Overview";
+		return sprintf( __( '%s Overview', 'brizy' ), Brizy_Editor::get()->get_name() );
 	}
 
 	public function render() {
+		try {
+			$news = $this->getNews();
+		} catch ( Exception $e ) {
+			$news = $e->getMessage();
+		}
+
 		echo Brizy_Admin_View::render( 'dashboard', array(
-			'news'  => $this->renderNews(),
+			'news'  => Brizy_Admin_View::render( 'dashboard-news', [ 'news' => $news ] ),
 			'posts' => $this->renderBrizyPosts()
 		) );
 	}
 
 	/**
-	 * @return string
+	 * @return array
+	 * @throws Exception
 	 */
-	private function renderNews() {
+	private function getNews() {
 
 		$transient_key = 'brizy_feed_news';
 
 		if ( ! ( $news = get_transient( $transient_key ) ) ) {
 
-			$request = wp_remote_get( 'https://www.brizy.io/index.php/wp-json/wp/v2/posts?categories=6' );
+			$request = wp_remote_get( 'https://www.brizy.io/blog' );
 
 			if ( is_wp_error( $request ) ) {
-
-				return $request->get_error_message();
-
-			} elseif ( ! isset( $request['response'], $request['response']['code'] ) || ! is_array( $request['response'] ) ) {
-
-				return esc_html__( 'Something went wrong. There is no a valid response code.', 'brizy' );
-
-			} elseif ( 200 !== $request['response']['code'] ) {
-
-				if ( isset( $request['response']['message'] ) ) {
-					return $request['response']['message'];
-				} else {
-					return esc_html__( 'The request was blocked, or something is wrong with the remote server.', 'brizy' );
-				}
-
+				throw new Exception( $request->get_error_message() );
+			} elseif ( 200 !== wp_remote_retrieve_response_code( $request ) ) {
+				throw new Exception( wp_remote_retrieve_response_message( $request ) );
 			} elseif ( empty( $request['body'] ) ) {
-				return esc_html__( 'There is no body in the remote server response.', 'brizy' );
+				throw new Exception( esc_html__( 'There is no body in the remote server response.', 'brizy' ) );
 			}
 
-			$items = json_decode( $request['body'], true );
+			$dom      = Brizy_Parser_Pquery::parseStr( $request['body'] );
+			$news     = [];
+			$titles   = $dom->query( '.brz-wp-title .brz-a .brz-wp-title-content' );
+			$links    = $dom->query( '.brz-wp-title .brz-a' );
+			$excerpts = $dom->query( '.brz-posts .brz-posts__item .brz-css-qtnxu' );
 
-			if ( ! $items ) {
-				return esc_html__( 'Filed decode returned json by brizy.io', 'brizy' );
+			if ( count( $titles ) !== 5 || count( $links ) !== 5 || count( $excerpts ) !== 5 ) {
+				throw new Exception( __( 'Parsing failed!', 'brizy' ) );
 			}
 
-			$news = [];
-
-			foreach ( array_slice( $items, 0, 3 ) as $item ) {
-				$news[] = [
-					'url'     => $item['link'],
-					'title'   => $item['title']['rendered'],
-					'excerpt' => $item['excerpt']['rendered'],
-				];
+			foreach ( $titles as $title ) {
+				$news[]['title'] = $title->getInnerText();
 			}
 
-			set_transient( $transient_key, $news, 2 * DAY_IN_SECONDS );
+			foreach ( $links as $i => $link ) {
+				if ( isset( $news[ $i ] ) ) {
+					$news[ $i ]['url'] = esc_url( 'https://www.brizy.io' . $link->getAttribute( 'href' ) );
+				}
+			}
+
+			foreach ( $excerpts as $i => $excerpt ) {
+				if ( isset( $news[ $i ] ) ) {
+					$news[ $i ]['excerpt'] = wp_trim_words( wp_strip_all_tags( $excerpt->getInnerText() ), 40, '...' );
+				}
+			}
+
+			set_transient( $transient_key, $news, 5 * DAY_IN_SECONDS );
 		}
 
-		return Brizy_Admin_View::render( 'dashboard-news', [ 'news' => $news ] );
+		return $news;
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	private function parseQuery( $selector, $dom, &$news, $key, $callback ) {
+		$items = $dom->query( $selector );
+
+		if ( ! $items || count( $items ) !== 5 ) {
+			throw new Exception( __( 'Parsing failed!', 'brizy' ) );
+		}
+
+		foreach ( $items as $i => $item ) {
+			if ( isset( $news[ $i ] ) ) {
+				$news[ $i ][$key] = wp_strip_all_tags( $item->{$callback}() );
+			}
+		}
 	}
 
 	/**
