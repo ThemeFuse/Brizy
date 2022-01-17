@@ -4,27 +4,17 @@ class Brizy_Import_Main {
 
 	private $provider;
 
-	/**
-	 * @var self
-	 */
-	static protected $instance = null;
-
-	static public function instance() {
-
-		if ( self::$instance ) {
-			return self::$instance;
-		}
-
-		return self::$instance = new self();
-	}
-
-	private function __construct() {
+	public function __construct() {
 
 		$this->provider = new Brizy_Import_Providers_Multisite();
 
-		add_action( 'admin_menu',                [ $this, 'addSubmenuPageTemplates' ], 11 );
-		add_action( 'wp_ajax_brizy-import-demo', [ $this, 'ajaxImportDemo' ] );
-		add_action( 'admin_enqueue_scripts',     [ $this, 'adminEnqueueScripts' ] );
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			WP_CLI::add_command( 'brizy demo', WP_CLI::class );
+		} else {
+			add_action( 'admin_menu',                [ $this, 'addSubmenuPageTemplates' ], 11 );
+			add_action( 'wp_ajax_brizy-import-demo', [ $this, 'ajaxImportDemo' ] );
+			add_action( 'admin_enqueue_scripts',     [ $this, 'adminEnqueueScripts' ] );
+		}
 	}
 
 	public function addSubmenuPageTemplates() {
@@ -84,17 +74,9 @@ class Brizy_Import_Main {
 			wp_send_json_error( __( 'Invalid demo id. Please contact our support.', 'brizy' ) );
 		}
 
-		$license = '';
-
-		if ( Brizy_Compatibilities_BrizyProCompatibility::isPro() ) {
-			$licenseData = BrizyPro_Admin_License::_init()->getCurrentLicense();
-			if ( ! empty( $licenseData['key'] ) ) {
-				$license = $licenseData['key'];
-			}
-		}
-
 		try {
-			//$this->import( $_POST['demo'], $license );
+//			$import = new Brizy_Import_Import( $_POST['demo'] );
+//			$import->import();
 		} catch (Exception $e) {
 			wp_send_json_error( $e->getMessage() );
 		}
@@ -122,27 +104,5 @@ class Brizy_Import_Main {
 			$urlBuilder->plugin_url( 'vendor/select2/select2/dist/js/select2.full.min.js' ),
 			[ 'jquery' ]
 		);
-	}
-
-	/**
-	 * @param $demo
-	 * @param $key
-	 * @throws Exception
-	 */
-	public function import( $demo, $key ) {
-
-		$extractor = new Brizy_Import_Extractors_Xml( $this->provider->getDemoUrl( $demo, $key ) );
-		$parser    = new Brizy_Import_Parsers_Parser( $extractor->getFilePath() );
-		$data      = $parser->parse();
-
-		if ( ! empty( $data['plugins'] ) ) {
-			$plugins = new Brizy_Import_Plugins( $data['plugins'] );
-			$plugins->install();
-		}
-
-		$importer = new Brizy_Import_Importers_WordpressImporter( $data );
-		$importer->import();
-
-		$extractor->cleanup();
 	}
 }

@@ -203,6 +203,10 @@ class Brizy_Editor {
 			}
 		}
 
+		if ( ( current_user_can( 'manage_options' ) && is_admin() ) || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+			new Brizy_Import_Main();
+		}
+
 		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 3 );
 	}
 
@@ -352,10 +356,6 @@ class Brizy_Editor {
 				Brizy_Admin_NetworkSettings::_init();
 			} elseif ( is_admin() ) {
 				Brizy_Admin_Settings::_init();
-
-				if ( current_user_can( 'manage_options' ) ) {
-					Brizy_Import_Main::instance();
-				}
 			}
 		} catch ( Exception $exception ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Unable to empty the trash. Please try again later.' );
