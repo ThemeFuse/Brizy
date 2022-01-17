@@ -9,7 +9,7 @@ export function XSS($: cheerio.Root): void {
   // <a href="javscript:alert(a)></a>"
   $richText.each(function(this: cheerio.Element) {
     const $this = $(this);
-    const html = $this.html();
+    const html = $this.parent().html();
 
     if (html) {
       $this.replaceWith(xss(html, "escape"));
