@@ -8,8 +8,15 @@ export const xss = (html: string, escaping: Escaping): string => {
     allowedClasses: {
       "*": ["*"]
     },
+
     allowedAttributes: {
-      a: ["href", "target", "rel", "style", "data-*"]
+      a: ["href", "target", "rel", "style", "data-*"],
+      span: ["style"],
+      strong: ["style"],
+      em: ["style"],
+      u: ["style"],
+      s: ["style"],
+      li: ["style"]
     }
   });
 };
