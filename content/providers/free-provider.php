@@ -250,6 +250,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 				return do_shortcode( '[woocommerce_order_tracking]' );
 			} )
 		);
+        $this->registerPlaceholder( new Brizy_Content_Placeholders_IgnoreDc('') );
 
 		$this->registerPlaceholder(
 			new Brizy_Content_Placeholders_Simple( __( 'WooCommerce Notices', 'brizy' ),
