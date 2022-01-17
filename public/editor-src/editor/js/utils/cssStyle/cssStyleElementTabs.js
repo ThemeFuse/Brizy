@@ -2,11 +2,13 @@ import { defaultValueValue } from "visual/utils/onChange";
 import {
   styleBorderStyle,
   styleBorderWidthGrouped,
-  styleBorderColor
+  styleBorderColor,
+  styleBgColor
 } from "visual/utils/style2";
 import {
   cssStylePaddingFourFields,
   cssStyleColor,
+  cssStyleBorder,
   cssStyleBgColor,
   cssStyleBoxShadow
 } from "visual/utils/cssStyle";
@@ -39,29 +41,24 @@ export function cssStyleElementTabsBtnIconSize({ v, device, state }) {
 }
 
 export function cssStyleElementTabsBtnActiveBorderBottomColor({ v }) {
-  const dvv = key => defaultValueValue({ v, key });
-  const bgColorHex = dvv("bgColorHex");
-
-  return `border-bottom-color: ${bgColorHex};`;
+  const borderColor = styleBgColor({ v, state: ACTIVE, prefix: "bg" });
+  return `border-bottom-color: ${borderColor};`;
 }
+
 export function cssStyleElementTabsBtnActiveBorderRightColor({ v }) {
-  const dvv = key => defaultValueValue({ v, key });
-  const bgColorHex = dvv("bgColorHex");
-
-  return `border-right-color: ${bgColorHex};`;
+  const borderColor = styleBgColor({ v, state: ACTIVE, prefix: "bg" });
+  return `border-right-color: ${borderColor};`;
 }
+
 export function cssStyleElementTabsBtnActiveBorderLeftColor({ v }) {
-  const dvv = key => defaultValueValue({ v, key });
-  const bgColorHex = dvv("bgColorHex");
-
-  return `border-left-color: ${bgColorHex};`;
+  const borderColor = styleBgColor({ v, state: ACTIVE, prefix: "bg" });
+  return `border-left-color: ${borderColor};`;
 }
 
-export function cssStyleElementTabsActiveBeforeAfterColor({ v, state }) {
-  return `background-color: ${styleBorderColor({
-    v,
-    state
-  })}; z-index: 1;`;
+export function cssStyleElementTabsActiveBeforeAfterColor({ v }) {
+  const dvv = key => defaultValueValue({ v, key });
+  const borderColorHex = dvv("borderColorHex");
+  return `background-color: ${borderColorHex}; z-index: 1;`;
 }
 
 export function cssStyleElementTabsActiveBeforeHeight({ v, device, state }) {
@@ -232,4 +229,29 @@ export function cssStyleElementTabsActiveBorder({ v }) {
   const borderStyle = styleBorderStyle({ v, state: "normal" });
   const borderColor = styleBorderColor({ v, state: ACTIVE });
   return `border: ${borderWidth}px ${borderStyle} ${borderColor};`;
+}
+
+export function cssStyleElementTabsContentBgColor({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const contentBgColorOpacity = dvv("contentBgColorOpacity");
+  return contentBgColorOpacity === 0
+    ? ""
+    : cssStyleBgColor({ v, device, state, prefix: "contentBg" });
+}
+
+export function cssStyleElementTabsContentBorder({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const contentBorderColorOpacity = dvv("contentBorderColorOpacity");
+  return contentBorderColorOpacity === 0
+    ? ""
+    : cssStyleBorder({ v, device, state, prefix: "content" });
+}
+
+export function cssStyleElementTabsContentShadow({
+  v,
+  device,
+  state,
+  prefix = "content"
+}) {
+  return cssStyleBoxShadow({ v, device, state, prefix });
 }

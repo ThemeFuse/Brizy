@@ -12,6 +12,9 @@ import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import { Wrapper } from "../tools/Wrapper";
+import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
+import { xss } from "visual/utils/xss";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -22,10 +25,30 @@ export default class EmbedCode extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  isApproved = () => {
+    const config = Config.getAll();
+
+    if (isCloud(config)) {
+      return config.user.isApproved;
+    }
+
+    return true;
+  };
+
+  handleValueChange(newValue, meta) {
+    const config = Config.getAll();
+
+    if (meta.patch.code && isWp(config) && !config.user.isWpAdmin) {
+      const xssCode = xss(newValue.code, "discard");
+      super.handleValueChange({ ...newValue, code: xssCode });
+    } else {
+      super.handleValueChange(newValue, meta);
+    }
+  }
+
   handleResizerChange = patch => this.patchValue(patch);
 
   renderForEdit(v, vs, vd) {
-    const { isApproved } = Config.get("user");
     const { code } = v;
 
     const className = classnames(
@@ -38,7 +61,7 @@ export default class EmbedCode extends EditorComponent {
     );
 
     const content =
-      code && (TARGET === "WP" ? true : isApproved) ? (
+      code && this.isApproved() ? (
         <div
           className={classnames({ "brz-blocked": IS_EDITOR })}
           dangerouslySetInnerHTML={{ __html: code }}

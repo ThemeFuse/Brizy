@@ -757,7 +757,10 @@ export {
   cssStyleElementTabsActiveColor,
   cssStyleElementTabsActiveBgColor,
   cssStyleElementTabsActiveBorder,
-  cssStyleElementTabsActiveShadow
+  cssStyleElementTabsActiveShadow,
+  cssStyleElementTabsContentBgColor,
+  cssStyleElementTabsContentBorder,
+  cssStyleElementTabsContentShadow
 } from "./cssStyleElementTabs";
 
 // Element Comments

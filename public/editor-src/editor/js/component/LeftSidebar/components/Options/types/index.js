@@ -4,6 +4,7 @@ import Popover from "./Popover";
 import Drawer from "./Drawer";
 import Custom from "./Custom";
 import { Roles } from "./Roles";
+import Template from "./Template";
 
 export default {
   button: Button,
@@ -11,5 +12,6 @@ export default {
   popover: Popover,
   drawer: Drawer,
   custom: Custom,
-  showMembership: Roles
+  showMembership: Roles,
+  template: Template
 };

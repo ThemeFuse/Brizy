@@ -40,6 +40,7 @@ import extractPopups from "./transforms/extractPopups";
 import dynamicContent from "./transforms/dynamicContent";
 import replaceIcons from "./transforms/replaceIcons";
 import { changeMenuUid } from "./transforms/changeMenuUid";
+import { XSS } from "./transforms/xss";
 import { isCollectionPage } from "visual/global/Config/types/configs/Cloud";
 
 export default async function main({
@@ -240,6 +241,7 @@ async function getPageBlocks({
   await replaceIcons($pageHTML, buildPath);
   changeRichText($pageHTML);
   changeMenuUid($pageHTML);
+  XSS($pageHTML);
 
   const { freeScripts, freeStyles, proScripts, proStyles } = getAssets(
     $pageHTML,

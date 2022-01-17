@@ -1,4 +1,4 @@
-<?php if ( $news ) : ?>
+<?php if ( is_array( $news ) ) : ?>
     <div class="brizy-overview__feed">
         <h3 class="brizy-overview__heading">
             <?php _e( 'News & Updates', 'brizy' ); ?>
@@ -16,5 +16,7 @@
         </ul>
     </div>
 <?php else : ?>
-    <p><?php _e( 'No News', 'brizy' ); ?></p>
+    <p>
+        <?php echo is_string( $news ) ? $news : __( 'No News', 'brizy' ); ?>
+    </p>
 <?php endif; ?>

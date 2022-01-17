@@ -318,9 +318,10 @@ export const getItems = ({ property }) => ({
             min: 5,
             max: widthSuffixValue === "px" ? cW : 100,
             units: [
-              ...(isSvgOrGif ? [] : [{ value: "px", title: "px" }]),
+              { value: "px", title: "px" },
               { value: "%", title: "%" }
-            ]
+            ],
+            inputMax: isSvgOrGif ? 100 : undefined
           }
         },
         {

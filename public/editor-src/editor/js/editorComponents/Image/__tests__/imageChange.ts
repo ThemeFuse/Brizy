@@ -1,11 +1,14 @@
+import { DeviceMode } from "visual/types";
 import { ElementModel } from "visual/component/Elements/Types";
-import { ImageDCPatch, SizeTypePatch } from "../types/ImagePatch";
+import { ImageDCPatch, SizeTypePatch, UnitPatch } from "../types/ImagePatch";
 import {
   elementModelToValue,
   patchOnSizeTypeChange,
   patchOnDCChange,
+  pathOnUnitChange,
   Value,
-  Size
+  Size,
+  PatchUnit
 } from "../imageChange";
 
 // init config before start the tests
@@ -16,6 +19,7 @@ beforeEach(() => {
 describe("Testing 'elementModelToValue' function", () => {
   test("Match properties", () => {
     const input: ElementModel = {
+      imageExtension: "gif",
       widthSuffix: "px",
       heightSuffix: "%",
       sizeType: "custom",
@@ -25,6 +29,8 @@ describe("Testing 'elementModelToValue' function", () => {
     };
 
     const output: Value = {
+      imageExtension: "gif",
+      imagePopulation: undefined,
       mobileHeight: undefined,
       mobileHeightSuffix: undefined,
       mobileWidth: undefined,
@@ -43,23 +49,9 @@ describe("Testing 'elementModelToValue' function", () => {
 
     expect(elementModelToValue(input)).toStrictEqual(output);
 
-    const responsiveOutput: Value = {
-      mobileHeight: 10,
-      mobileHeightSuffix: "px",
-      mobileWidth: 10,
-      mobileWidthSuffix: "%",
-      tabletHeight: 20,
-      tabletHeightSuffix: "%",
-      tabletWidth: 20,
-      tabletWidthSuffix: "px",
-      widthSuffix: "px",
-      heightSuffix: "%",
-      sizeType: "custom",
-      width: 45,
-      height: 50,
-      size: 10
-    };
     const responsiveInput: ElementModel = {
+      imageExtension: "gif",
+      imagePopulation: "{{feature}}",
       widthSuffix: "px",
       heightSuffix: "%",
       sizeType: "custom",
@@ -75,6 +67,25 @@ describe("Testing 'elementModelToValue' function", () => {
       tabletWidth: 20,
       tabletWidthSuffix: "px"
     };
+    const responsiveOutput: Value = {
+      imageExtension: "gif",
+
+      mobileHeight: 10,
+      mobileHeightSuffix: "px",
+      mobileWidth: 10,
+      mobileWidthSuffix: "%",
+      tabletHeight: 20,
+      tabletHeightSuffix: "%",
+      tabletWidth: 20,
+      tabletWidthSuffix: "px",
+      widthSuffix: "px",
+      heightSuffix: "%",
+      sizeType: "custom",
+      width: 45,
+      height: 50,
+      size: 10,
+      imagePopulation: "{{feature}}"
+    };
 
     expect(elementModelToValue(responsiveInput)).toStrictEqual(
       responsiveOutput
@@ -86,6 +97,7 @@ describe("Testing 'Patches for image' functions", () => {
   test("patchOnSizeTypeChange", () => {
     const cW = 400;
     const v: Value = {
+      imageExtension: "",
       mobileHeight: undefined,
       mobileHeightSuffix: undefined,
       mobileWidth: undefined,
@@ -237,5 +249,114 @@ describe("Testing 'Patches for image' functions", () => {
     expect(patchOnDCChange(cW, patch1536x1536, wrapperSizes)).toStrictEqual({
       size: 100
     });
+  });
+
+  test.each<[number, Value, UnitPatch, DeviceMode, PatchUnit]>([
+    // base
+    [
+      400,
+      {
+        width: 0,
+        height: 0,
+        widthSuffix: "px",
+        heightSuffix: "px",
+        size: 0,
+        sizeType: "custom",
+        imageExtension: "jpeg"
+      },
+      {
+        width: 100,
+        height: 100
+      },
+      "desktop",
+      {
+        width: 100,
+        height: 100
+      }
+    ],
+    [
+      500,
+      {
+        width: 500,
+        height: 200,
+        widthSuffix: "px",
+        heightSuffix: "px",
+        size: 100,
+        sizeType: "custom",
+        imageExtension: "gif"
+      },
+      {
+        widthSuffix: "%"
+      },
+      "desktop",
+      {
+        width: 100,
+        widthSuffix: "%"
+      }
+    ],
+    [
+      500,
+      {
+        width: 250,
+        height: 200,
+        widthSuffix: "px",
+        heightSuffix: "px",
+        size: 100,
+        sizeType: "custom",
+        imageExtension: "gif"
+      },
+      {
+        widthSuffix: "%"
+      },
+      "desktop",
+      {
+        width: 50,
+        widthSuffix: "%"
+      }
+    ],
+    [
+      500,
+      {
+        width: 50,
+        height: 200,
+        widthSuffix: "%",
+        heightSuffix: "px",
+        size: 100,
+        sizeType: "custom",
+        imageExtension: "gif"
+      },
+      {
+        widthSuffix: "px"
+      },
+      "desktop",
+      {
+        width: 250,
+        widthSuffix: "px"
+      }
+    ],
+    [
+      500,
+      {
+        width: 100,
+        height: 200,
+        widthSuffix: "%",
+        heightSuffix: "px",
+        size: 100,
+        sizeType: "custom",
+        imageExtension: "gif",
+        tabletWidth: 75,
+        tabletWidthSuffix: "%"
+      },
+      {
+        tabletWidthSuffix: "px"
+      },
+      "tablet",
+      {
+        tabletWidth: 375,
+        tabletWidthSuffix: "px"
+      }
+    ]
+  ])("pathOnUnitChange cW = %i", (cW, v, patch, device, resolve) => {
+    expect(pathOnUnitChange(cW, v, patch, device)).toStrictEqual(resolve);
   });
 });

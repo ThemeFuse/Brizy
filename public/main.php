@@ -222,7 +222,7 @@ class Brizy_Public_Main
         $postTypeLabel = $wp_post_types[$type]->labels->singular_name;
         $args = array(
             'id' => 'brizy_Edit_page_link',
-            'title' => __("Edit " . $postTypeLabel . " with " . __bt('brizy', 'Brizy')),
+            'title' => sprintf( __( 'Edit %s with %s', 'brizy' ), $postTypeLabel, __bt( 'brizy', 'Brizy' ) ),
             'href' => apply_filters('brizy_toolbar_link', $this->post->edit_url(), $this->post),
             'meta' => array(),
         );

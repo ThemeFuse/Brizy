@@ -24,7 +24,14 @@ export function styleTabs(v, vs, vd) {
       standart: ["cssStyleElementTabsAfterSpacingVertical"]
     },
     ".brz && > .brz-tabs__content > .brz-tabs__items:hover": {
-      standart: ["cssStyleColor", "cssStyleBgColor", "cssStyleBorder"]
+      standart: [
+        "cssStyleColor",
+        "cssStyleBgColor",
+        "cssStyleBorder",
+        "cssStyleElementTabsContentBgColor",
+        "cssStyleElementTabsContentBorder",
+        "cssStyleElementTabsContentShadow"
+      ]
     },
     ".brz && > .brz-tabs__nav .brz-tabs__nav--item:not(.brz-tabs__nav--active) .brz-tabs__nav--button:hover": {
       standart: [

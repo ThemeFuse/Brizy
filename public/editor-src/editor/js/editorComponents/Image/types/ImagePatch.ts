@@ -1,9 +1,12 @@
+import { mPipe } from "fp-utilities";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import { ElementModel } from "visual/component/Elements/Types";
-import { mPipe } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
 import * as Str from "visual/utils/string/specs";
 import { prop } from "visual/utils/object/get";
+import { Unit } from "../types";
+import { DeviceMode } from "visual/types";
+import { defaultValueKey } from "visual/utils/onChange";
 
 export interface ImagePatch {
   imageExtension: string;
@@ -18,6 +21,16 @@ export interface ImageDCPatch {
 
 export interface SizeTypePatch {
   sizeType: string;
+}
+
+export interface UnitPatch {
+  [k: string]: unknown;
+  widthSuffix?: Unit;
+  heightSuffix?: Unit;
+  tabletWidthSuffix?: Unit;
+  tabletHeightSuffix?: Unit;
+  mobileWidthSuffix?: Unit;
+  mobileHeightSuffix?: Unit;
 }
 
 // is it correct fn name?
@@ -38,3 +51,16 @@ export const fromImageDCElementModel = readWithParser<
 export const patchImageSizeType = readWithParser<ElementModel, SizeTypePatch>({
   sizeType: mPipe(prop("sizeType"), Str.read)
 });
+
+export const patchImageUnit = (
+  patch: ElementModel,
+  device: DeviceMode
+): UnitPatch | undefined => {
+  const dvk = (key: string): string =>
+    defaultValueKey({ key, device, state: "normal" });
+  const [patchKey] = Object.keys(patch).filter(
+    key => key === dvk("widthSuffix") || key === dvk("heightSuffix")
+  );
+
+  return patchKey ? patch : undefined;
+};

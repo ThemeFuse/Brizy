@@ -1,7 +1,7 @@
 import { MouseEvent } from "react";
 import Config from "visual/global/Config";
 import Prompts from "visual/component/Prompts";
-import { AddElements } from "./components/AddElements";
+import { Base } from "./components/AddElements";
 import { BlocksSortable } from "./components/BlocksSortable";
 import { Styling } from "./components/Styling";
 import { DeviceModes } from "./components/DeviceModes";
@@ -12,7 +12,7 @@ const urls = Config.get("urls");
 const proEnabled = Boolean(Config.get("pro"));
 
 export default {
-  top: [AddElements, BlocksSortable, Styling],
+  top: [Base, BlocksSortable, Styling],
   bottom: [
     DeviceModes,
     {
@@ -23,7 +23,7 @@ export default {
       disabled: IS_GLOBAL_POPUP || IS_STORY,
       options: [
         {
-          type: "wpTemplate",
+          type: "template",
           label: t("Page Template"),
           roles: ["admin"]
         },

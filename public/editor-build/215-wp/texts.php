@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_214Wp_Texts {
+class Brizy_Public_EditorBuild_215Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -48,6 +48,7 @@ class Brizy_Public_EditorBuild_214Wp_Texts {
 			"Add New Block / Layout" => __("Add New Block / Layout", "brizy"),
 			"Add New Column" => __("Add New Column", "brizy"),
 			"Add New Font" => __("Add New Font", "brizy"),
+			"Add Shopify Elements" => __("Add Shopify Elements", "brizy"),
 			"Add To Cart" => __("Add To Cart", "brizy"),
 			"Add To Cart Input" => __("Add To Cart Input", "brizy"),
 			"Add a new block" => __("Add a new block", "brizy"),
