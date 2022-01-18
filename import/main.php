@@ -9,7 +9,7 @@ class Brizy_Import_Main {
 		$this->provider = new Brizy_Import_Providers_Multisite();
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
-			WP_CLI::add_command( 'brizy demo', WP_CLI::class );
+			WP_CLI::add_command( 'brizy demo', Brizy_Import_WpCli::class );
 		} else {
 			add_action( 'admin_menu',                [ $this, 'addSubmenuPageTemplates' ], 11 );
 			add_action( 'wp_ajax_brizy-import-demo', [ $this, 'ajaxImportDemo' ] );

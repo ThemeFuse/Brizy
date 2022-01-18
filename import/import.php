@@ -3,23 +3,20 @@
 class Brizy_Import_Import {
 
 	private $demoId;
+	private $provider;
+	private $extractor;
 
 	public function __construct( $demoId ) {
-		$this->demoId = $demoId;
+		$this->demoId    = $demoId;
+		$this->provider  = new Brizy_Import_Providers_Multisite();
+		$this->extractor = new Brizy_Import_Extractors_Xml( $this->provider->getDemoUrl( $this->demoId, $this->getKey() ) );
 	}
 
 	/**
 	 * @throws Exception
 	 */
 	public function import() {
-
-		$provider  = new Brizy_Import_Providers_Multisite();
-		$extractor = new Brizy_Import_Extractors_Xml( $provider->getDemoUrl( $this->demoId, $this->getKey() ) );
-		$xmlPath   = $extractor->getFilePath();
-
-		$extractor->cleanup();
-
-		$parser = new Brizy_Import_Parsers_Parser( $xmlPath );
+		$parser = new Brizy_Import_Parsers_Parser( $this->extractor->getFilePath() );
 		$data   = $parser->parse();
 
 		if ( ! empty( $data['plugins'] ) ) {
@@ -42,5 +39,9 @@ class Brizy_Import_Import {
 		}
 
 		return $key;
+	}
+
+	public function cleanup() {
+		$this->extractor->cleanup();
 	}
 }

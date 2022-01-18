@@ -12,6 +12,9 @@ class Brizy_Import_Extractors_Xml {
 		$this->url = $url;
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function getFilePath() {
 
 		$path = get_attached_file( $this->getId() );
@@ -31,6 +34,9 @@ class Brizy_Import_Extractors_Xml {
 		return $this->id;
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function download() {
 		$remoteXml = fopen( $this->url, 'r' );
 

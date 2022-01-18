@@ -1,6 +1,6 @@
 <?php defined( 'ABSPATH' ) or die();
 
-class Brizy_Import_WpCli extends \WP_CLI_Command {
+class Brizy_Import_WpCli extends WP_CLI_Command {
 	/**
 	 * Import a Demo
 	 *
@@ -20,22 +20,24 @@ class Brizy_Import_WpCli extends \WP_CLI_Command {
 	 * @throws \WP_CLI\ExitException
 	 */
 	public function import( array $args, array $assoc_args ) {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			WP_CLI::error( 'You must run this command as an admin user' );
-		}
 
 		if ( empty( $args[0] ) ) {
 			WP_CLI::error( 'Please specify the id off the demo to import' );
 		}
 
-		WP_CLI::line( 'Demo import started' );
+		WP_CLI::line( 'Demo import started...' );
+
+		$import = new Brizy_Import_Import( $args[0] );
 
 		try {
-			$import = new Brizy_Import_Import( $args[0] );
-			$import->import();
+
+			//$import->import();
 
 			WP_CLI::success( 'Demo imported successfully' );
 		} catch ( Exception $e ) {
+
+			$import->cleanup();
+
 			WP_CLI::error( $e->getMessage() );
 		}
 	}
