@@ -202,6 +202,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
         $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('', 'editor_product_order_tracking', function () {
             return do_shortcode('[woocommerce_order_tracking]');
         }) );
+        $this->registerPlaceholder( new Brizy_Content_Placeholders_IgnoreDc('') );
     }
 
     private function filterData($property, $post)
