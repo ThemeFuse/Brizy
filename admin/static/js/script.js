@@ -251,31 +251,15 @@ jQuery(document).ready(function ($) {
                 $( '.js-demo-search-icon' ).show();
             } );
 
-            searchInput.on('keyup change', function(e) {
-                console.log( 'test search' );
+            searchInput.on('keyup change click search', function() {
+                DemoImport.searchDemo();
             });
 
             selectTerm.select2();
 
             selectTerm.change( function () {
-                var demos = $( '.brz-demo-item' ),
-                    term  = $( this ).val();
-
-                if ( ! term ) {
-                    demos.fadeIn( 'slow' );
-                    return;
-                }
-
-                demos.each(function() {
-
-                    var terms = String( $( this ).data( 'terms' ) ).split(',');
-
-                    if ( terms.includes( term ) ) {
-                        $( this ).fadeIn( 'slow' );
-                    } else {
-                        $( this ).fadeOut( 'slow' );
-                    }
-                });
+                console.log( $(this).val() );
+                DemoImport.searchDemo();
             } );
 
             $( '.brz-demo-item-actions button:not(.brz-demo-item-gopro)' ).click( function ( e ) {
@@ -310,6 +294,25 @@ jQuery(document).ready(function ($) {
                     }
                 } );
             } );
+        },
+        searchDemo: function () {
+            var search      = $( '.js-demo-input-search' ).val(),
+                searchRegex = new RegExp( search.replace(/[.*+?^${}()|[\]\\]/g, ''), 'i' ),
+                term        = $( '.brz-demo-filter-terms select' ).val();
+
+            $( '.brz-demo-item' ).each(function() {
+                var keywords      = $( this ).data( 'keywords' ),
+                    name          = $( this ).data( 'name' ),
+                    terms         = String( $( this ).data( 'terms' ) ).split(','),
+                    matchBySearch = search === '' || searchRegex.test( keywords ) || searchRegex.test( name ),
+                    matchByTerms  = term === '' || terms.includes( term );
+
+                if ( matchBySearch && matchByTerms ) {
+                    $( this ).fadeIn( 'slow' );
+                } else {
+                    $( this ).fadeOut( 'slow' );
+                }
+            });
         }
     };
 

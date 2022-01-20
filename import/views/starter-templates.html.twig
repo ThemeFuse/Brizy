@@ -20,7 +20,7 @@
     </div>
     <div class="brz-demo-items" data-confirm="{{ translations.confirm }}" data-alert="{{ translations.alert }}">
         {% for demo in demos %}
-            <div class="brz-demo-item {{ demo.pro ? 'brz-demo-is-pro' : 'brz-demo-is-free' }}" data-terms="{{ demo.terms|join(',') }}" data-keywords="{{ demo.keywords }}">
+            <div class="brz-demo-item {{ demo.pro ? 'brz-demo-is-pro' : 'brz-demo-is-free' }}" data-terms="{{ demo.terms|join(',') }}" data-keywords="{{ demo.keywords }}" data-name="{{ demo.name }}">
                 <a class="brz-demo-item-link" target="_blank" href="{{ demo.url }}">
                     <span class="brz-demo-badge">
                         {{ demo.pro ? translations.pro : translations.free }}
