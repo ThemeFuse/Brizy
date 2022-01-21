@@ -9,7 +9,7 @@ class Brizy_Import_Import {
 	public function __construct( $demoId ) {
 		$this->demoId    = $demoId;
 		$this->provider  = new Brizy_Import_Providers_Multisite();
-		$this->extractor = new Brizy_Import_Extractors_Xml( $this->provider->getDemoUrl( $this->demoId, $this->getKey() ) );
+		$this->extractor = new Brizy_Import_Extractors_Xml( $this->provider->getExportUrl( $this->demoId, $this->getKey() ) );
 	}
 
 	/**
@@ -19,12 +19,13 @@ class Brizy_Import_Import {
 		$parser = new Brizy_Import_Parsers_Parser( $this->extractor->getFilePath() );
 		$data   = $parser->parse();
 
-		if ( ! empty( $data['plugins'] ) ) {
+		if ( ! empty( $data['importSettings']['plugins'] ) ) {
 			$plugins = new Brizy_Import_Plugins( $data['plugins'] );
 			$plugins->install();
 		}
 
 		$importer = new Brizy_Import_Importers_WordpressImporter( $data );
+		die();
 		$importer->import();
 	}
 

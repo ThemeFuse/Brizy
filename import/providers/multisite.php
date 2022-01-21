@@ -5,7 +5,7 @@ class Brizy_Import_Providers_Multisite {
 	private $mainSite;
 
 	public function __construct() {
-		$this->mainSite = 'https://websitebuilder-demo.net/';
+		$this->mainSite = 'https://websitebuilder-demo.net/wp-json/demos/v1/';
 	}
 
 	/**
@@ -13,7 +13,7 @@ class Brizy_Import_Providers_Multisite {
 	 * @return array
 	 */
 	public function getAllDemos() {
-		$request = wp_remote_get( $this->mainSite . 'wp-json/demos/v1/demos', [
+		$request = wp_remote_get( $this->mainSite . 'demos', [
 			'headers' => [
 				'content-type' => 'application/json'
 			],
@@ -40,7 +40,7 @@ class Brizy_Import_Providers_Multisite {
 		return $demos;
 	}
 
-	public function getDemoUrl( $key, $demo ) {
-		return add_query_arg( [ 'key' => $key ], $this->mainSite . $demo );
+	public function getExportUrl( $demo, $key ) {
+		return add_query_arg( [ 'id' => $demo, 'key' => $key ], $this->mainSite . 'export' );
 	}
 }

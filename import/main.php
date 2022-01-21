@@ -75,8 +75,8 @@ class Brizy_Import_Main {
 		}
 
 		try {
-//			$import = new Brizy_Import_Import( $_POST['demo'] );
-//			$import->import();
+            $import = new Brizy_Import_Import( $_POST['demo'] );
+            $import->import();
 		} catch (Exception $e) {
 			wp_send_json_error( $e->getMessage() );
 		}

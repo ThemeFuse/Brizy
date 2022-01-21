@@ -8,7 +8,7 @@
  */
 class Brizy_Import_Parsers_Simplexml {
 	function parse( $file ) {
-		$authors = $posts = $categories = $tags = $terms = $plugins = array();
+		$authors = $posts = $categories = $tags = $terms = $importSettings = array();
 
 		$internal_errors = libxml_use_internal_errors(true);
 
@@ -214,27 +214,20 @@ class Brizy_Import_Parsers_Simplexml {
 			$posts[] = $post;
 		}
 
-		if ( isset( $xml->channel->plugin ) ) {
-			foreach ( $xml->channel->plugin as $plugin ) {
-				$plugins[] = [
-					'name'        => (string) $plugin->name,
-					'file'        => (string) $plugin->file,
-					'version'     => (string) $plugin->version,
-					'sourceType'  => (string) $plugin->sourceType
-				];
-			}
+		if ( isset( $xml->channel->importSettings ) ) {
+			$importSettings = (array)$xml->channel->importSettings;
 		}
 
-		return array(
-			'authors'       => $authors,
-			'posts'         => $posts,
-			'categories'    => $categories,
-			'tags'          => $tags,
-			'terms'         => $terms,
-			'base_url'      => $base_url,
-			'base_blog_url' => $base_blog_url,
-			'version'       => $wxr_version,
-			'plugins'       => $plugins
-		);
+		return [
+			'authors'        => $authors,
+			'posts'          => $posts,
+			'categories'     => $categories,
+			'tags'           => $tags,
+			'terms'          => $terms,
+			'base_url'       => $base_url,
+			'base_blog_url'  => $base_blog_url,
+			'version'        => $wxr_version,
+			'importSettings' => $importSettings
+		];
 	}
 }

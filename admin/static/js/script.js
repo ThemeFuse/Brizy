@@ -258,7 +258,6 @@ jQuery(document).ready(function ($) {
             selectTerm.select2();
 
             selectTerm.change( function () {
-                console.log( $(this).val() );
                 DemoImport.searchDemo();
             } );
 
@@ -285,7 +284,7 @@ jQuery(document).ready(function ($) {
                     data: {
                         'action': 'brizy-import-demo',
                         'nonce': Brizy_Admin_Data.nonce,
-                        'demo': $( this ).data( 'demo' )
+                        'demo': $( this ).data( 'demo-id' )
                     },
                     success: function( response ) {
                         btns.prop( 'disabled', false );

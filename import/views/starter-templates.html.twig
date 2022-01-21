@@ -39,7 +39,7 @@
                     {% set cannot = demo.pro and not isPro %}
                     <button
                             class="button button-primary{{ cannot ? ' brz-demo-item-gopro' : '' }}"
-                            data-demo="{{ demo.id }}"
+                            data-demo-id="{{ demo.id }}"
                             {% if cannot %}
                                 onclick="window.open('{{ goProUrl }}','_blank')"
                             {% endif %}

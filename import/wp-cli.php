@@ -31,7 +31,7 @@ class Brizy_Import_WpCli extends WP_CLI_Command {
 
 		try {
 
-			//$import->import();
+			$import->import();
 
 			WP_CLI::success( 'Demo imported successfully' );
 		} catch ( Exception $e ) {
