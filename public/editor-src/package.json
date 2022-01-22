@@ -30,7 +30,7 @@
     "lottie-web": "^5.6.8",
     "magnific-popup": "^1.1.0",
     "nanoevents": "^5.0.1",
-    "nanoid": "^0.2.2",
+    "nanoid": "^3.1.31",
     "perfect-scrollbar": "^1.5.0",
     "prop-types": "^15.6.2",
     "quick-lru": "^5.1.1",
