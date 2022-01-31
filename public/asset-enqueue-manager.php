@@ -11,6 +11,7 @@ class Brizy_Public_AssetEnqueueManager {
 	private $enqueued = [];
 	private $mainJsHandle = null;
 	private $mainCssHandle = null;
+	private $urlBuilder;
 
 	/**
 	 * @var Brizy_Editor_Project
@@ -31,7 +32,9 @@ class Brizy_Public_AssetEnqueueManager {
 	 * @throws Exception
 	 */
 	private function __construct() {
-		$this->project = Brizy_Editor_Project::get();
+		$this->project    = Brizy_Editor_Project::get();
+		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $this->project );
+
 		$this->registerActions();
 	}
 
@@ -214,7 +217,7 @@ class Brizy_Public_AssetEnqueueManager {
 				$this->enqueued[ $handle ] = $asset;
 				break;
 			case Asset::TYPE_FILE:
-				wp_register_style( $handle, Brizy_SiteUrlReplacer::restoreAssetUrl( $asset->getUrl() ), [], BRIZY_VERSION );
+				wp_register_style( $handle, $this->getAssetUrl( $asset ), [], apply_filters( 'brizy_asset_version', BRIZY_VERSION, $asset ) );
 				wp_enqueue_style( $handle );
 				$this->enqueued[ $handle ] = $asset;
 				break;
@@ -229,11 +232,20 @@ class Brizy_Public_AssetEnqueueManager {
 				$this->enqueued[ $handle ] = $asset;
 				break;
 			case Asset::TYPE_FILE:
-				wp_register_script( $handle, Brizy_SiteUrlReplacer::restoreAssetUrl( $asset->getUrl() ), [], BRIZY_VERSION, true );
+				wp_register_script( $handle, $this->getAssetUrl( $asset ), [], apply_filters( 'brizy_asset_version', BRIZY_VERSION, $asset ), true );
 				wp_enqueue_script( $handle );
 				$this->enqueued[ $handle ] = $asset;
 				break;
 		}
+	}
+
+	private function getAssetUrl( Asset $asset ) {
+
+		if ( filter_var( $asset->getUrl(), FILTER_VALIDATE_URL ) ) {
+			return $asset->getUrl();
+		}
+
+		return apply_filters( 'brizy_asset_url', $this->urlBuilder->plugin_url( $asset->getUrl() ), $asset );
 	}
 
 	private function getAttributes( $asset ) {
