@@ -122,6 +122,10 @@ class Brizy_Compatibilities_Init {
 		if ( defined( 'PERFMATTERS_VERSION' ) ) {
 			new Brizy_Compatibilities_Perfmatters();
 		}
+
+		if ( class_exists( 'COMPLIANZ' ) ) {
+			new Brizy_Compatibilities_ComplianzGpdr();
+		}
   }
 
 	public function after_setup_theme() {
