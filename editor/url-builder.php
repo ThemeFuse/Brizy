@@ -60,7 +60,6 @@ class Brizy_Editor_UrlBuilder
      */
     public function plugin_url($path = '')
     {
-
         if ($path) {
             $path = '/' . ltrim($path, '/');
         }
@@ -302,13 +301,17 @@ class Brizy_Editor_UrlBuilder
     }
 
     /**
-     * @param null $path
+     * @param string $path
      *
      * @return string
      */
-    public function editor_build_url()
+    public function editor_build_url( $path = '' )
     {
-        return Brizy_Config::EDITOR_BUILD_URL;
+	    if ( $path ) {
+		    $path = '/' . ltrim( $path, '/' );
+	    }
+
+        return $this->plugin_url( Brizy_Config::EDITOR_BUILD_RELATIVE_PATH . $path );
     }
 
     /**
