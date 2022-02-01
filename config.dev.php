@@ -27,7 +27,7 @@ class Brizy_Config {
 	const ABOUT_URL = "https://brizy.io";
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
-	const EDITOR_BUILD_URL = BRIZY_PLUGIN_URL . '/public/editor-build/dev';
+	const EDITOR_BUILD_RELATIVE_PATH = 'public/editor-build/dev';
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
 	const CLOUD_ENDPOINT = 'http://www.brizysites.com';

@@ -319,47 +319,6 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$compiledData             = Brizy_Editor_User::get()->compile_page( Brizy_Editor_Project::get(), $this );
 		$compiledData['pageHtml'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageHtml'] );
 
-		foreach ( $compiledData['pageScripts'] as $i => $set ) { //pro || free
-			foreach ( $set as $k => $scripts ) { // groups
-				if ( $k == 'libsSelectors' ) {
-					continue;
-				}
-				if ( $k == 'main' ) {
-					if ( isset( $compiledData['pageScripts'][ $i ][ $k ]['content']['url'] ) ) {
-						$compiledData['pageScripts'][ $i ][ $k ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageScripts'][ $i ][ $k ]['content']['url'] );
-						continue;
-					}
-				}
-
-				foreach ( $scripts as $l => $script ) {
-					if ( isset( $compiledData['pageScripts'][ $i ][ $k ][ $l ]['content']['url'] ) ) {
-						$compiledData['pageScripts'][ $i ][ $k ][ $l ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl( $script['content']['url'] );
-					}
-				}
-
-			}
-		}
-		foreach ( $compiledData['pageStyles'] as $i => $set ) {
-			foreach ( $set as $k => $styles ) {
-				if ( $k == 'libsSelectors' ) {
-					continue;
-				}
-				if ( $k == 'main' ) {
-					if ( isset( $compiledData['pageStyles'][ $i ][ $k ]['content']['url'] ) ) {
-						$compiledData['pageStyles'][ $i ][ $k ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl( $compiledData['pageStyles'][ $i ][ $k ]['content']['url'] );
-					}
-					continue;
-				}
-				foreach ( $styles as $l => $style ) {
-					if ( isset( $compiledData['pageStyles'][ $i ][ $k ][ $l ]['content']['url'] ) ) {
-						$compiledData['pageStyles'][ $i ][ $k ][ $l ]['content']['url'] = Brizy_SiteUrlReplacer::hideSiteUrl(
-							$style['content']['url']
-						);
-					}
-				}
-			}
-		}
-
 		$this->set_compiled_html( $compiledData['pageHtml'] );
 		$this->set_compiled_html_head( null );
 		$this->set_compiled_html_body( null );

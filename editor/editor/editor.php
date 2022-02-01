@@ -116,7 +116,7 @@ class Brizy_Editor_Editor_Editor
             'urls' => array(
                 'site' => home_url(),
                 'api' => home_url('/wp-json/v1'),
-                'assets' => $this->urlBuilder->editor_build_url(),
+                'assets' => $context == self::COMPILE_CONTEXT ? Brizy_Config::EDITOR_BUILD_RELATIVE_PATH : $this->urlBuilder->editor_build_url(),
                 'image' => $this->urlBuilder->external_media_url() . "",
                 'blockThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
                 'templateThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
