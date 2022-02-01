@@ -27,8 +27,4 @@ class Brizy_SiteUrlReplacer {
 
 		return $content;
 	}
-
-	static public function restoreAssetUrl( $content ) {
-		return preg_replace( Brizy_Config::SITE_URL_PLACEHOLDER_REGEX, get_option( 'siteurl' ), $content );
-	}
 }

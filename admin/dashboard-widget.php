@@ -74,9 +74,9 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 
 			$dom      = Brizy_Parser_Pquery::parseStr( $request['body'] );
 			$news     = [];
-			$titles   = $dom->query( '.brz-wp-title .brz-a .brz-wp-title-content' );
-			$links    = $dom->query( '.brz-wp-title .brz-a' );
-			$excerpts = $dom->query( '.brz-posts .brz-posts__item .brz-css-qtnxu' );
+			$titles   = $dom->query( '.wp-api-title' );
+			$links    = $dom->query( '.wp-api-title .brz-a' );
+			$excerpts = $dom->query( '.wp-api-excerpt' );
 
 			if ( count( $titles ) !== 5 || count( $links ) !== 5 || count( $excerpts ) !== 5 ) {
 				throw new Exception( __( 'Parsing failed!', 'brizy' ) );
@@ -102,23 +102,6 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 		}
 
 		return $news;
-	}
-
-	/**
-	 * @throws Exception
-	 */
-	private function parseQuery( $selector, $dom, &$news, $key, $callback ) {
-		$items = $dom->query( $selector );
-
-		if ( ! $items || count( $items ) !== 5 ) {
-			throw new Exception( __( 'Parsing failed!', 'brizy' ) );
-		}
-
-		foreach ( $items as $i => $item ) {
-			if ( isset( $news[ $i ] ) ) {
-				$news[ $i ][$key] = wp_strip_all_tags( $item->{$callback}() );
-			}
-		}
 	}
 
 	/**

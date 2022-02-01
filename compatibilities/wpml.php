@@ -6,10 +6,13 @@
 class Brizy_Compatibilities_WPML {
 
 	public function __construct() {
-		add_action( 'wp_insert_post', array( $this, 'insertNewPost' ), - 10000, 3 );
-		add_action( 'wp_insert_post', array( $this, 'duplicatePosts' ), - 10000, 3 );
-		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ], 11 );
-		add_action( 'wp_ajax_wpml-ls-save-settings', [ $this, 'save_settings' ] );
+		add_action( 'wp_insert_post',                    [ $this, 'insertNewPost' ], - 10000, 3 );
+		add_action( 'wp_insert_post',                    [ $this, 'duplicatePosts' ], - 10000, 3 );
+		add_action( 'pre_get_posts',                     [ $this, 'pre_get_posts' ], 11 );
+		add_action( 'wp_ajax_wpml-ls-save-settings',     [ $this, 'save_settings' ] );
+		add_action( 'wp_ajax_icl_msync_confirm',         [ $this, 'syncMenus' ] );
+		add_action( 'brizy_create_editor_config_before', [ $this, 'rmMenusDuplicate' ] );
+		add_filter( 'brizy_content',                     [ $this, 'brizyContent' ] );
 	}
 
 	/**
@@ -18,7 +21,6 @@ class Brizy_Compatibilities_WPML {
 	 * @param $postId
 	 * @param $post
 	 *
-	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
 	public function duplicatePosts( $postId, $post ) {
 		global $wpml_post_translations;
@@ -26,8 +28,12 @@ class Brizy_Compatibilities_WPML {
 
 		if ( isset( $_POST['langs'] ) ) {
 			if ( $wpml_post_translations && is_post_type_translated( $postType ) ) {
-				$currentBrizyPost = Brizy_Editor_Post::get( (int) $_POST['post_id'] );
-				$currentBrizyPost->duplicateTo( (int) $postId );
+				try {
+					$currentBrizyPost = Brizy_Editor_Post::get( (int) $_POST['post_id'] );
+					$currentBrizyPost->duplicateTo( (int) $postId );
+				} catch ( Exception $e ) {
+					return;
+				}
 			}
 		}
 
@@ -86,5 +92,44 @@ class Brizy_Compatibilities_WPML {
 		}
 
 		Brizy_Editor_Post::mark_all_for_compilation();
+	}
+
+	/**
+	 * On sync menus recompile everything again
+	 */
+	public function syncMenus() {
+		Brizy_Editor_Post::mark_all_for_compilation();
+	}
+
+	/**
+	 * Remove duplicate menus in the editor
+	 */
+	public function rmMenusDuplicate() {
+
+		$adjustIdUrlCopy = isset( $GLOBALS['icl_adjust_id_url_filter_off'] ) ? $GLOBALS['icl_adjust_id_url_filter_off'] : null;
+
+		$GLOBALS['icl_adjust_id_url_filter_off'] = true;
+
+		add_action( 'brizy_create_editor_config_after', function() use ( $adjustIdUrlCopy ) {
+			$GLOBALS['icl_adjust_id_url_filter_off'] = $adjustIdUrlCopy;
+		} );
+	}
+
+	/**
+	 * Fix the url of the switcher languages in the menu when we have in the url ?preview_id=postId
+	 *
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+	public function brizyContent( $content ) {
+
+		if ( ! is_preview() ) {
+			return $content;
+		}
+
+		add_action( 'wpml_should_filter_preview_lang', '__return_false' );
+
+		return $content;
 	}
 }

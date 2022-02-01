@@ -484,7 +484,7 @@ class Brizy_Public_Main
 
     public function brizy_the_content()
     {
-        echo $this->insert_page_content( 'brz-root__container' );
+        echo do_shortcode( $this->insert_page_content( 'brz-root__container' ) );
     }
 
     /**
