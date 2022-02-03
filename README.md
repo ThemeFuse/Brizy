@@ -1,9 +1,9 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 5.8.3<br>
+Tested up to: 5.9<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.28<br>
+Stable tag: 2.3.29<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,15 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.29 - 2022-02-03
+* Fixed: Font url validation
+* Fixed: Do shortcode on render brizy content of the shop page
+* Fixed: Brizy and Complianz – GDPR/CCPA Cookie Consent plugin incompatibility
+* Fixed: Saves scripts relative to the plugin main folder
+* Fixed: WPML menu switcher, WPML sync menu, WPML fatal error on duplicate non brizy posts
+* Fixed: Brizy Overview dashboard widget
+* Fixed: Allow br tags on render lead list in admin dashboard
 
 ### 2.3.28 - 2022-01-17
 * Fixed: Color and align for text element
