@@ -284,15 +284,20 @@ class Brizy_Admin_FormEntries {
 		}
 
 		$title = '';
-		foreach ( $fields as $i => $field ) {
+		foreach ( $fields as $field ) {
 			if ( strtolower( $field->type ) == 'email' ) {
 				$title = $field->value;
 			}
 
 			// We use htmlentities the user can insert text in some languages like German, Hindi, etc.
 			// and the function json_encode broke the json or encode the characters.
-			$fields[ $i ]->name  = htmlentities( $field->name, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
-			$fields[ $i ]->value = htmlentities( $field->value, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
+			$field->name  = htmlentities( $field->name, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
+
+            if ( $field->type == 'Paragraph' ) {
+	            $field->value = preg_replace( "/\r\n|\r|\n/", '<br/>', $field->value );
+            }
+
+			$field->value = htmlentities( $field->value, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
 		}
 
 		$params = array(
