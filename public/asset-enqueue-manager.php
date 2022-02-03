@@ -241,7 +241,7 @@ class Brizy_Public_AssetEnqueueManager {
 
 	private function getAssetUrl( Asset $asset ) {
 
-		if ( filter_var( $asset->getUrl(), FILTER_VALIDATE_URL ) ) {
+		if ( strpos( $asset->getUrl(), '://' ) ) {
 			return $asset->getUrl();
 		}
 
