@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 5.8.3
+Tested up to: 5.9
 Requires PHP: 5.6.20
-Stable tag: 2.3.28
+Stable tag: 2.3.29
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,15 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.29 - 2022-02-03 =
+* Fixed: Font url validation
+* Fixed: Do shortcode on render brizy content of the shop page
+* Fixed: Brizy and Complianz – GDPR/CCPA Cookie Consent plugin incompatibility
+* Fixed: Saves scripts relative to the plugin main folder
+* Fixed: WPML menu switcher, WPML sync menu, WPML fatal error on duplicate non brizy posts
+* Fixed: Brizy Overview dashboard widget
+* Fixed: Allow br tags on render lead list in admin dashboard
 
 = 2.3.28 - 2022-01-17 =
 * Fixed: Color and align for text element
