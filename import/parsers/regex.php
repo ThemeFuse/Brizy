@@ -9,12 +9,12 @@
 class Brizy_Import_Parsers_Regex {
 	var $authors = array();
 	var $posts = array();
-	var $plugins = array();
 	var $categories = array();
 	var $tags = array();
 	var $terms = array();
 	var $base_url = '';
 	var $base_blog_url = '';
+	var $importSettings = [];
 
 	function __construct() {
 		$this->has_gzip = is_callable( 'gzopen' );
@@ -26,11 +26,11 @@ class Brizy_Import_Parsers_Regex {
 		$multiline_content = '';
 
 		$multiline_tags = array(
-			'item'        => array( 'posts', array( $this, 'process_post' ) ),
-			'plugin'      => array( 'plugins', array( $this, 'process_plugin' ) ),
-			'wp:category' => array( 'categories', array( $this, 'process_category' ) ),
-			'wp:tag'      => array( 'tags', array( $this, 'process_tag' ) ),
-			'wp:term'     => array( 'terms', array( $this, 'process_term' ) ),
+			'item'           => array( 'posts', array( $this, 'process_post' ) ),
+			'wp:category'    => array( 'categories', array( $this, 'process_category' ) ),
+			'wp:tag'         => array( 'tags', array( $this, 'process_tag' ) ),
+			'wp:term'        => array( 'terms', array( $this, 'process_term' ) ),
+			'importSettings' => [ 'importSettings', [ $this, 'processImportSettings' ] ]
 		);
 
 		$fp = $this->fopen( $file, 'r' );
@@ -94,17 +94,17 @@ class Brizy_Import_Parsers_Regex {
 		if ( ! $wxr_version )
 			return new WP_Error( 'WXR_parse_error', __( 'This does not appear to be a WXR file, missing/invalid WXR version number', 'brizy' ) );
 
-		return array(
-			'authors'       => $this->authors,
-			'posts'         => $this->posts,
-			'plugins'       => $this->plugins,
-			'categories'    => $this->categories,
-			'tags'          => $this->tags,
-			'terms'         => $this->terms,
-			'base_url'      => $this->base_url,
-			'base_blog_url' => $this->base_blog_url,
-			'version'       => $wxr_version
-		);
+		return [
+			'authors'        => $this->authors,
+			'posts'          => $this->posts,
+			'categories'     => $this->categories,
+			'tags'           => $this->tags,
+			'terms'          => $this->terms,
+			'base_url'       => $this->base_url,
+			'base_blog_url'  => $this->base_blog_url,
+			'version'        => $wxr_version,
+			'importSettings' => $this->importSettings[0]
+		];
 	}
 
 	function get_tag( $string, $tag ) {
@@ -288,13 +288,26 @@ class Brizy_Import_Parsers_Regex {
 		return $postdata;
 	}
 
-	public function process_plugin( $c ) {
-		return [
-			'name'       => $this->get_tag( $c, 'name' ),
-			'file'       => $this->get_tag( $c, 'file' ),
-			'version'    => $this->get_tag( $c, 'version' ),
-			'sourceType' => $this->get_tag( $c, 'sourceType' )
-		];
+	public function processImportSettings( $settings ) {
+
+		$importSettings = [ 'home' => $this->get_tag( $settings, 'home' ) ];
+
+		preg_match_all( '|<plugins>(.+?)</plugins>|is', $settings, $plugins );
+
+		$plugins = $plugins[1];
+
+		if ( $plugins ) {
+			foreach ( $plugins as $plugin ) {
+				$importSettings['plugins'][] = [
+					'name'       => $this->get_tag( $plugin, 'name' ),
+					'file'       => $this->get_tag( $plugin, 'file' ),
+					'version'    => $this->get_tag( $plugin, 'version' ),
+					'sourceType' => $this->get_tag( $plugin, 'sourceType' )
+				];
+			}
+		}
+
+		return $importSettings;
 	}
 
 	function _normalize_tag( $matches ) {

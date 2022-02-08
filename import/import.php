@@ -20,12 +20,12 @@ class Brizy_Import_Import {
 		$data   = $parser->parse();
 
 		if ( ! empty( $data['importSettings']['plugins'] ) ) {
-			$plugins = new Brizy_Import_Plugins( $data['plugins'] );
+			$plugins = new Brizy_Import_Plugins( $data['importSettings']['plugins'] );
 			$plugins->install();
 		}
 
 		$importer = new Brizy_Import_Importers_WordpressImporter( $data );
-		die();
+
 		$importer->import();
 	}
 

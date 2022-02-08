@@ -1,18 +1,22 @@
 <?php
-/*
-$plugins = [
-	[
-		'name'       => 'Plugin Name',
-		'file'       => 'folder/plugin-name',
-		'version'    => '2.2.10',
-		'sourceType' => 'repo'
-	]
-];
-*/
+
 class Brizy_Import_Plugins {
-	private $plugins = [];
+	private $plugins;
 	private $skin;
 
+	/**
+	 * $plugins = [
+	 *      [
+	 *	        'name'       => 'Plugin Name',
+	 *	        'file'       => 'folder/plugin-name',
+	 *	        'version'    => '2.2.10',
+	 *          'sourceType' => 'repo'
+	 *	    ]
+	 *      ...
+	 * ];
+	 *
+	 * @param $plugins
+	 */
 	public function __construct( $plugins ) {
 
 		if ( ! function_exists( 'is_plugin_active' ) ) {
@@ -168,7 +172,9 @@ class Brizy_Import_Plugins {
 	 * Retrieve the download URL for a package.
 	 *
 	 * @param array $plugin Plugin data.
+	 *
 	 * @return string Plugin download URL or path to local file or empty string if undetermined.
+	 * @throws Exception
 	 */
 	private function getDownloadUrl( $plugin ) {
 		$dl_source = '';

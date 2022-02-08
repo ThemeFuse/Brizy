@@ -216,6 +216,12 @@ class Brizy_Import_Parsers_Simplexml {
 
 		if ( isset( $xml->channel->importSettings ) ) {
 			$importSettings = (array)$xml->channel->importSettings;
+
+			if ( ! empty( $importSettings['plugins'] ) ) {
+				$importSettings['plugins'] = array_map( function( $plugin ) {
+					return (array) $plugin;
+				}, $importSettings['plugins'] );
+			}
 		}
 
 		return [

@@ -66,10 +66,6 @@ class Brizy_Import_Main {
 	public function ajaxImportDemo() {
 		check_ajax_referer( 'brizy-admin-nonce', 'nonce' );
 
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( __( 'You are not allowed to do this.', 'brizy' ) );
-		}
-
 		if ( empty( $_POST['demo'] ) || ! is_numeric( $_POST['demo'] ) ) {
 			wp_send_json_error( __( 'Invalid demo id. Please contact our support.', 'brizy' ) );
 		}

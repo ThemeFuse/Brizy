@@ -13,17 +13,31 @@ class Brizy_Import_Parsers_Xml {
 		'wp:is_sticky', 'wp:term_id', 'wp:category_nicename', 'wp:category_parent', 'wp:cat_name', 'wp:category_description',
 		'wp:tag_slug', 'wp:tag_name', 'wp:tag_description', 'wp:term_taxonomy', 'wp:term_parent',
 		'wp:term_name', 'wp:term_description', 'wp:author_id', 'wp:author_login', 'wp:author_email', 'wp:author_display_name',
-		'wp:author_first_name', 'wp:author_last_name',
+		'wp:author_first_name', 'wp:author_last_name'
 	);
 	var $wp_sub_tags = array(
 		'wp:comment_id', 'wp:comment_author', 'wp:comment_author_email', 'wp:comment_author_url',
 		'wp:comment_author_IP',	'wp:comment_date', 'wp:comment_date_gmt', 'wp:comment_content',
-		'wp:comment_approved', 'wp:comment_type', 'wp:comment_parent', 'wp:comment_user_id',
+		'wp:comment_approved', 'wp:comment_type', 'wp:comment_parent', 'wp:comment_user_id'
 	);
 
 	function parse( $file ) {
-		$this->wxr_version = $this->in_post = $this->in_plugin = $this->cdata = $this->data = $this->sub_data = $this->in_tag = $this->in_sub_tag = false;
-		$this->authors = $this->posts = $this->plugins = $this->term = $this->category = $this->tag = array();
+		$this->wxr_version      = false;
+		$this->in_post          = false;
+		$this->cdata            = false;
+		$this->data             = false;
+		$this->sub_data         = false;
+		$this->in_tag           = false;
+		$this->in_sub_tag       = false;
+		$this->inImportSettings = false;
+		$this->inPlugins        = false;
+
+		$this->authors        = [];
+		$this->posts          = [];
+		$this->term           = [];
+		$this->category       = [];
+		$this->tag            = [];
+		$this->importSettings = [];
 
 		$xml = xml_parser_create( 'UTF-8' );
 		xml_parser_set_option( $xml, XML_OPTION_SKIP_WHITE, 1 );
@@ -33,39 +47,39 @@ class Brizy_Import_Parsers_Xml {
 		xml_set_element_handler( $xml, 'tag_open', 'tag_close' );
 
 		if ( ! xml_parse( $xml, file_get_contents( $file ), true ) ) {
-			$current_line = xml_get_current_line_number( $xml );
+			$current_line   = xml_get_current_line_number( $xml );
 			$current_column = xml_get_current_column_number( $xml );
-			$error_code = xml_get_error_code( $xml );
-			$error_string = xml_error_string( $error_code );
-			return new WP_Error( 'XML_parse_error', sprintf( 'There was an error when reading this WXR file. Line %d, column %d, error: %s', $current_line, $current_column, $error_string ) );
+			$error_code     = xml_get_error_code( $xml );
+			$error_string   = xml_error_string( $error_code );
+
+			return new WP_Error(
+				'XML_parse_error',
+				sprintf(
+					'There was an error when reading this WXR file. Line %d, column %d, error: %s',
+					$current_line,
+					$current_column,
+					$error_string
+				)
+			);
 		}
+
 		xml_parser_free( $xml );
 
-		if ( ! preg_match( '/^\d+\.\d+$/', $this->wxr_version ) )
+		if ( ! preg_match( '/^\d+\.\d+$/', $this->wxr_version ) ) {
 			return new WP_Error( 'WXR_parse_error', __( 'This does not appear to be a WXR file, missing/invalid WXR version number', 'brizy' ) );
+		}
 
-		$return = array(
-			'authors' => $this->authors,
-			'posts' => $this->posts,
-			'plugins' => $this->plugins,
-			'categories' => $this->category,
-			'tags' => $this->tag,
-			'terms' => $this->term,
-			'base_url' => $this->base_url,
-			'base_blog_url' => $this->base_blog_url,
-			'version' => $this->wxr_version
-		);
-
-		return array(
-			'authors' => $this->authors,
-			'posts' => $this->posts,
-			'categories' => $this->category,
-			'tags' => $this->tag,
-			'terms' => $this->term,
-			'base_url' => $this->base_url,
-			'base_blog_url' => $this->base_blog_url,
-			'version' => $this->wxr_version
-		);
+		return [
+			'authors'        => $this->authors,
+			'posts'          => $this->posts,
+			'categories'     => $this->category,
+			'tags'           => $this->tag,
+			'terms'          => $this->term,
+			'base_url'       => $this->base_url,
+			'base_blog_url'  => $this->base_blog_url,
+			'version'        => $this->wxr_version,
+			'importSettings' => $this->importSettings,
+		];
 	}
 
 	function tag_open( $parse, $tag, $attr ) {
@@ -97,11 +111,14 @@ class Brizy_Import_Parsers_Xml {
 			case 'wp:meta_key': $this->in_sub_tag = 'key'; break;
 			case 'wp:meta_value': $this->in_sub_tag = 'value'; break;
 
-			case 'plugin':
-				$this->in_plugin = true;
+			case 'importSettings':
+				$this->inImportSettings = true;
+				break;
+			case 'plugins':
+				$this->inPlugins = true;
 				break;
 			default:
-				if ( $this->in_plugin ) {
+				if ( $this->inImportSettings ) {
 					$this->in_tag = $tag;
 				}
 
@@ -151,10 +168,6 @@ class Brizy_Import_Parsers_Xml {
 				$this->posts[] = $this->data;
 				$this->data = false;
 				break;
-			case 'plugin':
-				$this->plugins[] = $this->data;
-				$this->data = false;
-				break;
 			case 'wp:category':
 			case 'wp:tag':
 			case 'wp:term':
@@ -185,12 +198,24 @@ class Brizy_Import_Parsers_Xml {
 			case 'wp:wxr_version':
 				$this->wxr_version = $this->cdata;
 				break;
-
+			case 'importSettings':
+				$this->importSettings    = $this->data;
+				$this->data              = false;
+				$this-> inImportSettings = false;
+				break;
+			case 'plugins':
+				$this->data['plugins'][] = $this->sub_data;
+				$this->sub_data          = false;
+				$this->inPlugins         = false;
+				break;
 			default:
 
 				$value = ! empty( $this->cdata ) ? $this->cdata : '';
 
-				if ( $this->in_sub_tag ) {
+				if ( $this->inPlugins ) {
+					$this->sub_data[$this->in_tag] = $value;
+					$this->in_tag = false;
+				}else if ( $this->in_sub_tag ) {
 					$this->sub_data[$this->in_sub_tag] = $value;
 					$this->in_sub_tag = false;
 				} else if ( $this->in_tag ) {
