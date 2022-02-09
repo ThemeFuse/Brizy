@@ -31,7 +31,6 @@ import WOOUpsell from "./pro/WOOUpsell.js";
 import WOOBreadcrumbs from "./pro/WOOBreadcrumbs.js";
 import WOOArchives from "./pro/WOOArchives";
 import Review from "./pro/Review.js";
-import Login from "./pro/Login";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -55,11 +54,7 @@ const hasWoocommerce = pluginActivated("woocommerce");
 
 const featuredImage = { component: WPFeaturedImage, pro: true };
 
-const baseWP = [
-  ...base,
-  { component: Search, pro: true },
-  { component: Login, pro: true }
-];
+const baseWP = [...base, { component: Search, pro: true }];
 
 const wordpressShortcodes = [
   ...(hasSidebars() ? [{ component: WPSidebar, pro: false }] : []),

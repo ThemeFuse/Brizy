@@ -11,7 +11,6 @@ import {
 import * as ColorPicker from "visual/component/Options/types/dev/ColorPicker/model";
 import { _setWidthEdge, toggleStyle, toggleWidth } from "./utils";
 import * as Hex from "visual/utils/color/Hex";
-import * as Opacity from "visual/utils/cssProps/opacity";
 import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
 import { mApply } from "visual/utils/value";
 import { Value } from "./entities/Value";
@@ -48,12 +47,11 @@ export const setHex = (v: Hex.Hex, m: Value): Value => {
 };
 
 export const setOpacity = setter2(getOpacity, (v, m) => {
-  const enable = v !== Opacity.empty;
   return _apply(
     [
       [ColorPicker.setOpacity, v],
-      [toggleStyle, enable],
-      [toggleWidth, enable]
+      [toggleStyle, true],
+      [toggleWidth, true]
     ],
     m
   );

@@ -1,11 +1,11 @@
 import {
   IS_SINGLE,
   IS_ARCHIVE,
-  IS_PROTECTED
-  // IS_RESET_PASS,
-  // IS_USER_PAGE
+  IS_PROTECTED,
+  IS_RESET_PASS,
+  IS_USER_PAGE
 } from "visual/utils/env";
-import { IS_STORY } from "visual/utils/models";
+import { IS_STORY, IS_EXTERNAL_POPUP } from "visual/utils/models";
 import { Shortcodes } from "visual/types";
 
 import Text from "./Text";
@@ -27,8 +27,8 @@ import ProgressBar from "./ProgressBar";
 import Accordion from "./Accordion";
 import MenuSimple from "./MenuSimple";
 import ProtectedPage from "./ProtectedPage";
-// import Login from "./pro/Login";
-// import ResetPassword from "./pro/ResetPassword";
+import Login from "./pro/Login";
+import ResetPassword from "./pro/ResetPassword";
 
 import Row from "./Row";
 import Columns from "./Columns";
@@ -37,12 +37,12 @@ import PostTitle from "./PostTitle";
 import Posts from "./Posts";
 import Archive from "./Archive";
 
-// import UserFirstName from "./UserFirstName";
-// import UserLastName from "./UserLastName";
-// import UserEmail from "./UserEmail";
-// import UserPhoneNumber from "./UserPhoneNumber";
-// import UserRoles from "./UserRoles";
-// import UserUsername from "./UserUsername";
+import UserFirstName from "./UserFirstName";
+import UserLastName from "./UserLastName";
+import UserEmail from "./UserEmail";
+import UserPhoneNumber from "./UserPhoneNumber";
+import UserRoles from "./UserRoles";
+import UserUsername from "./UserUsername";
 
 import StoryText from "./story/StoryText";
 import StoryMap from "./story/StoryMap";
@@ -101,14 +101,46 @@ export const base = [
   { component: Table, pro: true },
   { component: Timeline, pro: true },
   { component: Switcher, pro: true },
-  { component: Lottie, pro: true }
-  // { component: Login, pro: true }
+  { component: Lottie, pro: true },
+  { component: Login, pro: true }
 ];
 
 const baseWithPosts = [...base, { component: Posts, pro: false }];
 
+// Without Login & Posts
+const baseExternalPopup = [
+  { component: Text, pro: false },
+  { component: Button, pro: false },
+  { component: Icon, pro: false },
+  { component: Image, pro: false },
+  { component: Audio, pro: false },
+  { component: Video, pro: false },
+  { component: Spacer, pro: false },
+  { component: Line, pro: false },
+  { component: Map, pro: false },
+  { component: Embed, pro: false },
+  { component: Form2, pro: false },
+  { component: IconText, pro: false },
+  { component: Counter, pro: false },
+  { component: Countdown2, pro: false },
+  { component: Tabs, pro: false },
+  { component: ProgressBar, pro: false },
+  { component: Accordion, pro: false },
+  { component: MenuSimple, pro: false },
+
+  { component: ImageGallery, pro: true },
+  { component: Carousel, pro: true },
+  { component: StarRating, pro: true },
+  { component: Menu, pro: true },
+  { component: VideoPlaylist, pro: true },
+  { component: Table, pro: true },
+  { component: Timeline, pro: true },
+  { component: Switcher, pro: true },
+  { component: Lottie, pro: true }
+];
+
 const protectedPage = [{ component: ProtectedPage, pro: false }];
-// const resetPassword = [{ component: ResetPassword, pro: false }];
+const resetPassword = [{ component: ResetPassword, pro: false }];
 
 const baseStory = [
   { component: StoryButton, pro: false },
@@ -148,14 +180,14 @@ const social = [
   { component: FacebookComments, pro: true }
 ];
 
-// const user = [
-//   { component: UserFirstName, pro: false },
-//   { component: UserLastName, pro: false },
-//   { component: UserEmail, pro: false },
-//   { component: UserPhoneNumber, pro: false },
-//   { component: UserRoles, pro: false },
-//   { component: UserUsername, pro: false }
-// ];
+const user = [
+  { component: UserFirstName, pro: false },
+  { component: UserLastName, pro: false },
+  { component: UserEmail, pro: false },
+  { component: UserPhoneNumber, pro: false },
+  { component: UserRoles, pro: false },
+  { component: UserUsername, pro: false }
+];
 
 const config = ((): Shortcodes => {
   if (IS_STORY) {
@@ -164,14 +196,14 @@ const config = ((): Shortcodes => {
     };
   }
 
-  // if (IS_USER_PAGE) {
-  //   return {
-  //     user: user,
-  //     base: baseWithPosts,
-  //     grid,
-  //     social
-  //   };
-  // }
+  if (IS_USER_PAGE) {
+    return {
+      user: user,
+      base: baseWithPosts,
+      grid,
+      social
+    };
+  }
 
   if (IS_PROTECTED) {
     return {
@@ -182,14 +214,14 @@ const config = ((): Shortcodes => {
     };
   }
 
-  // if (IS_RESET_PASS) {
-  //   return {
-  //     systemPages: resetPassword,
-  //     base: baseWithPosts,
-  //     grid,
-  //     social
-  //   };
-  // }
+  if (IS_RESET_PASS) {
+    return {
+      systemPages: resetPassword,
+      base: baseWithPosts,
+      grid,
+      social
+    };
+  }
 
   if (IS_SINGLE) {
     return {
@@ -204,6 +236,14 @@ const config = ((): Shortcodes => {
     return {
       archive: cmsArchive,
       base,
+      grid,
+      social
+    };
+  }
+
+  if (IS_EXTERNAL_POPUP) {
+    return {
+      base: baseExternalPopup,
       grid,
       social
     };

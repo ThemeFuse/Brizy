@@ -116,6 +116,10 @@
       }
 
       function appendStylesheets(data) {
+        var hostLibCSS = hostDocument.querySelector(".brz-link-preview-lib");
+        var hostLibProCSS = hostDocument.querySelector(
+          ".brz-link-preview-lib-pro"
+        );
         var hostPreviewCSS = hostDocument.querySelector(
           "link.brz-link-preview, link#brizy-preview-css"
         );
@@ -123,6 +127,10 @@
           "link.brz-link-preview-pro, link#brizy-pro-preview-css"
         );
 
+        var guestLibCSS = guestDocument.querySelector(".brz-link-preview-lib");
+        var guestLibProCSS = guestDocument.querySelector(
+          ".brz-link-preview-lib-pro"
+        );
         var guestPreviewCSS = guestDocument.querySelector(
           "link.brz-link-preview"
         );
@@ -132,8 +140,56 @@
 
         var promises = [];
 
+        if (guestLibCSS) {
+          var guestLibGroup = guestLibCSS.dataset.group || "";
+          var hostLibGroup = (hostLibCSS && hostLibCSS.dataset.group) || "";
+
+          if (
+            !hostLibCSS ||
+            (hostLibGroup !== "group-all" && guestLibGroup !== hostLibGroup)
+          ) {
+            console.log("loading hostLibCSS", guestLibGroup);
+            loadingPromises["hostLibCSS"] = new Promise(function(res) {
+              guestLibCSS.onload = res;
+              hostDocument.head.appendChild(guestLibCSS);
+            });
+          } else {
+            console.log("not loading hostLibCSS");
+            if (!loadingPromises["hostLibCSS"]) {
+              loadingPromises["hostLibCSS"] = Promise.resolve();
+            }
+          }
+
+          promises.push(loadingPromises["hostLibCSS"]);
+        }
+
+        if (guestLibProCSS) {
+          var guestLibProGroup = guestLibProCSS.dataset.group || "";
+          var hostLibProGroup =
+            (hostLibProCSS && hostLibProCSS.dataset.group) || "";
+
+          if (
+            !hostLibProCSS ||
+            (hostLibProGroup !== "group-all" &&
+              guestLibProGroup !== hostLibProGroup)
+          ) {
+            console.log("loading hostLibProCSS", guestLibProGroup);
+            loadingPromises["hostLibProCSS"] = new Promise(function(res) {
+              guestLibProCSS.onload = res;
+              hostDocument.head.appendChild(guestLibProCSS);
+            });
+          } else {
+            console.log("not loading hostLibProCSS");
+            if (!loadingPromises["hostLibProCSS"]) {
+              loadingPromises["hostLibProCSS"] = Promise.resolve();
+            }
+          }
+
+          promises.push(loadingPromises["hostLibProCSS"]);
+        }
+
         if (guestPreviewCSS) {
-          if (!hostPreviewCSS) {
+          if (!hostPreviewCSS && !hostPreviewProCSS) {
             loadingPromises["hostPreviewCSS"] = new Promise(function(res) {
               guestPreviewCSS.onload = res;
               hostDocument.head.appendChild(guestPreviewCSS);
@@ -196,46 +252,83 @@
       }
 
       function appendScripts(data) {
-        var hostPolyfillJS = hostDocument.querySelector(
-          "script.brz-script-polyfill, script#brizy-preview-polyfill-js"
-        );
-        var guestPolyfillJS = guestDocument.querySelector(
-          "script.brz-script-polyfill"
+        var hostLibJS = hostDocument.querySelector(".brz-script-preview-lib");
+        var hostLibProJS = hostDocument.querySelector(
+          ".brz-script-preview-lib-pro"
         );
         var hostJS = hostDocument.querySelector(
           "script.brz-script-preview, script#brizy-preview-js"
         );
-        var guestJS = guestDocument.querySelector("script.brz-script-preview");
         var hostProJS = hostDocument.querySelector(
           "script.brz-script-preview-pro, script#brizy-pro-preview-js"
         );
+
+        var guestLibJS = guestDocument.querySelector(".brz-script-preview-lib");
+        var guestLibProJS = guestDocument.querySelector(
+          ".brz-script-preview-lib-pro"
+        );
+        var guestJS = guestDocument.querySelector("script.brz-script-preview");
         var guestProJS = guestDocument.querySelector(
           "script.brz-script-preview-pro"
         );
 
         var promises = [];
 
-        if (guestPolyfillJS) {
-          if (!hostPolyfillJS) {
-            loadingPromises["hostPolyfillJS"] = new Promise(function(res) {
+        if (guestLibJS) {
+          var guestLibGroup = guestLibJS.dataset.group || "";
+          var hostLibGroup = (hostLibJS && hostLibJS.dataset.group) || "";
+
+          if (
+            !hostLibJS ||
+            (hostLibGroup !== "group-all" && hostLibGroup !== guestLibGroup)
+          ) {
+            loadingPromises["hostLibJS"] = new Promise(function(res) {
               _appendScript(hostDocument, {
-                className: guestPolyfillJS.className,
-                src: guestPolyfillJS.src,
+                className: guestLibJS.className,
+                src: guestLibJS.src,
+                "data-group": guestLibGroup,
                 onload: res,
                 async: false
               });
             });
           } else {
-            if (!loadingPromises["hostPolyfillJS"]) {
-              loadingPromises["hostPolyfillJS"] = Promise.resolve();
+            if (!loadingPromises["hostLibJS"]) {
+              loadingPromises["hostLibJS"] = Promise.resolve();
             }
           }
 
-          promises.push(loadingPromises["hostPolyfillJS"]);
+          promises.push(loadingPromises["hostLibJS"]);
+        }
+
+        if (guestLibProJS) {
+          var guestLibProGroup = guestLibProJS.dataset.group || "";
+          var hostLibProGroup =
+            (hostLibProJS && hostLibProJS.dataset.group) || "";
+
+          if (
+            !hostLibProJS ||
+            (hostLibProGroup !== "group-all" &&
+              guestLibProGroup !== hostLibProGroup)
+          ) {
+            loadingPromises["hostLibProJS"] = new Promise(function(res) {
+              _appendScript(hostDocument, {
+                className: guestLibProJS.className,
+                src: guestLibProJS.src,
+                onload: res,
+                async: false
+              });
+            });
+          } else {
+            if (!loadingPromises["hostLibProJS"]) {
+              loadingPromises["hostLibProJS"] = Promise.resolve();
+            }
+          }
+
+          promises.push(loadingPromises["hostLibProJS"]);
         }
 
         if (guestJS) {
-          if (!hostJS) {
+          if (!hostJS && !hostProJS) {
             loadingPromises["hostJS"] = new Promise(function(res) {
               _appendScript(hostDocument, {
                 className: guestJS.className,

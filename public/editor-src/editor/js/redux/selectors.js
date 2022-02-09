@@ -95,8 +95,7 @@ export const blocksOrderRawSelector = createSelector(
   blocksOrderSelector,
   globalBlocksSelector,
   (blocksOrder, globalBlocks) => {
-    const globalBlocksIds = Object.keys(globalBlocks);
-    const { top, bottom } = getSurroundedGBIds(blocksOrder, globalBlocksIds);
+    const { top, bottom } = getSurroundedGBIds(blocksOrder, globalBlocks);
 
     return blocksOrder.filter(id => !top.includes(id) && !bottom.includes(id));
   }

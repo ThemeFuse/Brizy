@@ -6,6 +6,8 @@ import { rolesHOC } from "visual/component/Roles";
 import { setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 
 const textsByDeviceMode = {
   desktop: {
@@ -25,6 +27,8 @@ const textsByDeviceMode = {
 class FirstBlockAdder extends React.Component {
   handleOpen = () => {
     const { deviceMode, dispatch, onAddBlock, onAddTemplate } = this.props;
+    const config = Config.getAll();
+    const showGlobal = !(isCloud(config) && isShopify(config));
 
     if (deviceMode === "desktop") {
       Prompts.open({
@@ -32,6 +36,7 @@ class FirstBlockAdder extends React.Component {
         mode: "single",
         props: {
           type: "normal",
+          showGlobal,
           onChangeBlocks: onAddBlock,
           onChangeGlobal: onAddBlock,
           onChangeSaved: onAddTemplate,

@@ -1,8 +1,8 @@
 import $ from "jquery";
-import { LibsPro } from "visual/libs";
+import { getProLibs } from "visual/libs";
 
 export default function($node) {
-  const { Isotope, ImagesLoaded } = LibsPro;
+  const { Isotope, ImagesLoaded } = getProLibs();
 
   if (!Isotope || !ImagesLoaded) {
     return;

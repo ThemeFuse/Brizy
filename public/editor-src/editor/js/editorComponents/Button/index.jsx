@@ -117,12 +117,14 @@ export default class Button extends EditorComponent {
       linkUpload,
       actionClosePopup,
       customClassName,
-      customID
+      customID,
+      cssIDPopulation,
+      cssClassPopulation
     } = v;
 
     const className = classnames(
       "brz-btn",
-      customClassName,
+      cssClassPopulation === "" ? customClassName : cssClassPopulation,
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
@@ -147,7 +149,7 @@ export default class Button extends EditorComponent {
       target: linkExternalBlank,
       rel: linkExternalRel,
       className: className,
-      id: customID
+      id: cssIDPopulation === "" ? customID : cssIDPopulation
     };
 
     if (IS_EDITOR) {

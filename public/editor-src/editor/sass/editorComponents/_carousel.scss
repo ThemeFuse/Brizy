@@ -26,6 +26,8 @@
       opacity: 1;
     }
     > .brz-slick-slider__dots {
+      position: relative;
+      width: max-content;
       bottom: 10px;
     }
     .slick-slide {

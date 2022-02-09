@@ -149,6 +149,8 @@
       & > .brz-tabs__nav--button {
         border-width: 0 !important;
         box-shadow: none !important;
+        width: max-content;
+        align-items: center;
       }
     }
     &__nav--desktop {

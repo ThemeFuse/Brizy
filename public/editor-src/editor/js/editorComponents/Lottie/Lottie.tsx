@@ -7,6 +7,7 @@ type Props = {
   animationData: object;
   speed: number;
   direction: number;
+  renderer: string;
 };
 
 const LottieControl: React.FC<Props> = ({
@@ -14,14 +15,17 @@ const LottieControl: React.FC<Props> = ({
   autoplay = true,
   animationData = {},
   speed = 1,
-  direction = 1
+  direction = 1,
+  renderer = "svg"
 }) => {
   const defaultOptions = {
     loop,
     autoplay,
     animationData,
+    renderer,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
+      preserveAspectRatio:
+        renderer === "svg" ? "xMidYMid slice" : "xMidYMid meet"
     }
   };
 

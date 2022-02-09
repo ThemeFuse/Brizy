@@ -4,7 +4,6 @@ import {
   updateProject as apiUpdateProject,
   updatePage as apiUpdatePage,
   updateCustomerPage as apiUpdateCustomPage,
-  updateExternalPopup as apiUpdateExternalPopup,
   createGlobalBlock as apiCreateGlobalBlock,
   updateGlobalBlock as apiUpdateGlobalBlock,
   updateGlobalBlocks as apiUpdateGlobalBlocks,
@@ -14,41 +13,10 @@ import {
   updatePopupRules as apiUpdatePopupRules,
   sendHeartBeat as apiSendHeartBeat
 } from "visual/utils/api";
-import {
-  IS_WP,
-  IS_PAGE,
-  IS_SINGLE,
-  IS_ARCHIVE,
-  IS_CUSTOMER_PAGE
-} from "visual/utils/env";
-import {
-  IS_INTERNAL_POPUP,
-  IS_EXTERNAL_POPUP,
-  IS_STORY
-} from "visual/utils/models/modes";
+import { IS_CUSTOMER_PAGE } from "visual/utils/env";
 
 const updateFn = (() => {
-  if (IS_WP) {
-    return apiUpdatePage;
-  } else {
-    const err = () => {
-      throw new Error("unknown editor mode");
-    };
-
-    if (IS_PAGE) {
-      return IS_CUSTOMER_PAGE ? apiUpdateCustomPage : apiUpdatePage;
-    }
-
-    if (IS_SINGLE || IS_ARCHIVE || IS_STORY || IS_INTERNAL_POPUP) {
-      return apiUpdatePage;
-    }
-
-    if (IS_EXTERNAL_POPUP) {
-      return apiUpdateExternalPopup;
-    }
-
-    return err();
-  }
+  return IS_CUSTOMER_PAGE ? apiUpdateCustomPage : apiUpdatePage;
 })();
 
 export {

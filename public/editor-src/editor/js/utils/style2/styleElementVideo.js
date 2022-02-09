@@ -39,7 +39,7 @@ export function styleElementVideoCoverSrc({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
   const src = dvv("coverImageSrc");
   const extension = dvv("coverImageExtension");
-  const sizeType = dvv("coverSizeType");
+  const sizeType = dvv("coverSizeType") ?? "custom";
 
   if (src === undefined) {
     return undefined;

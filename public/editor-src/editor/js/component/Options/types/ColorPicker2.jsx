@@ -8,6 +8,11 @@ import SelectItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
 import Range2 from "./Range2";
 import ColorPalette2 from "./ColorPalette2";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+
+const config = Config.getAll();
+const disablePalette = isCloud(config) && isShopify(config);
 
 class ColorPicker2OptionType extends React.Component {
   static defaultProps = {
@@ -234,7 +239,7 @@ class ColorPicker2OptionType extends React.Component {
           disableOpacity={!showOpacity}
           onChange={this.handleChange}
         />
-        {showPalette && this.renderPalette()}
+        {!disablePalette && showPalette && this.renderPalette()}
       </div>
     );
   }

@@ -4,7 +4,7 @@ import {
   isShopify,
   Shopify as ShopifyConf
 } from "visual/global/Config/types/configs/Cloud";
-import { Cloud, Shopify, Subscription } from "./types/List";
+import { Cloud, Shopify } from "./types/List";
 import { getWhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
 import { fromNumber } from "visual/component/LeftSidebar/components/Cms/types/ProjectId";
 import { match } from "fp-utilities";
@@ -71,7 +71,7 @@ const shopify = (config: ShopifyConf): Shopify => {
     previewUrl: config.cms.collectionPreviewUrl,
     mediaUrl: config.urls.image,
     customerPreviewUrl: config.cms.customerPreviewUrl,
-    subscription: Subscription.Free,
+    subscription: config.subscription,
     api: token
       ? { __type: "withToken", token, uri: config.cms.apiUrl }
       : { __type: "withOutToken", uri: config.cms.apiUrl },

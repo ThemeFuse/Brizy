@@ -1,7 +1,7 @@
-import { Libs } from "visual/libs";
+import { getFreeLibs } from "visual/libs";
 
 export default function($node) {
-  const { Animation } = Libs;
+  const { Animation } = getFreeLibs();
   if (!Animation) {
     return;
   }

@@ -24,6 +24,16 @@ const states = IS_STORY
 
 let legacyByDefault = {};
 
+/**
+ *
+ * @param {Object} param
+ * @param {ElementModel} param.v
+ * @param {ElementModel} param.vs
+ * @param {ElementModel} param.vd
+ * @param {object} param.styles
+ * @param {object} [param.props]
+ * @return {string[]}
+ */
 export function renderStyles({ v, vs, vd, styles, props }) {
   if (vd) {
     const { defaultCSS, rulesCSS, customCSS } = loopStyles({

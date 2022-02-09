@@ -1,10 +1,8 @@
 import { StoreChanged } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
 import { Page } from "visual/types";
-import {
-  Shopify,
-  ShopifyTemplate
-} from "visual/global/Config/types/configs/Cloud";
+import { Shopify } from "visual/global/Config/types/configs/Cloud";
+import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 
 export const getTooltipPageTitle = (status: Page["status"]): string => {
   switch (status) {

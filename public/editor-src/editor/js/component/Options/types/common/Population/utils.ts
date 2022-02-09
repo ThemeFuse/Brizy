@@ -7,18 +7,7 @@ import { Choices, OptGroup } from "./types/Choices";
  */
 
 export const bindPopulation = (option: ToolbarItemType): ToolbarItemType => {
-  const {
-    population,
-    label,
-    icon,
-    disabled,
-    display,
-    states,
-    devices,
-    helper,
-    position,
-    ...o
-  } = option;
+  const { population, label, icon, helper, position, ...o } = option;
 
   if (population === undefined || !inDevelopment(o.type)) {
     return option;
@@ -28,10 +17,10 @@ export const bindPopulation = (option: ToolbarItemType): ToolbarItemType => {
     id: o.id,
     label,
     icon,
-    disabled,
-    display,
-    states,
-    devices,
+    disabled: o.disabled,
+    display: o.display,
+    states: o.states,
+    devices: o.devices,
     helper,
     position,
     className: o.className,

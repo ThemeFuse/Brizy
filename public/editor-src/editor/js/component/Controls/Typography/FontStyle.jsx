@@ -4,6 +4,11 @@ import classNames from "classnames";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+
+const config = Config.getAll();
+const disableSettings = isCloud(config) && isShopify(config);
 
 export const FontStyle = props => {
   const className = classNames("brz-ed-control__font-style", props.className);
@@ -23,7 +28,7 @@ export const FontStyle = props => {
           );
         })}
       </Select>
-      {props.openSettings && (
+      {!disableSettings && props.openSettings && (
         <div
           className="brz-ed-control__font-style--settings"
           onClick={props.openSettings}
