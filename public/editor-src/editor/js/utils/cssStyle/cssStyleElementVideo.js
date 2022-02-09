@@ -109,7 +109,7 @@ export function cssStyleElementVideoBgColorRatio({ v, device, state }) {
 export function cssStyleElementVideoCoverSrc({ v, device, state }) {
   const coverSrc = styleElementVideoCoverSrc({ v, device, state });
 
-  return coverSrc === undefined ? "" : `background-image:${coverSrc};`;
+  return coverSrc ? `background-image:${coverSrc};` : "";
 }
 
 export function cssStyleElementVideoCoverPosition({ v, device, state }) {

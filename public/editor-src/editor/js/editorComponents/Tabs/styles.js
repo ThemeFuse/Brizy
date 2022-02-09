@@ -47,6 +47,18 @@ export function styleTabs(v, vs, vd) {
         "cssStyleElementTabsBtnIconJustifyContent"
       ]
     },
+    ".brz && > .brz-tabs__content .brz-tabs__nav--button .brz-icon-svg": {
+      standart: [
+        "cssStyleElementTabsBtnSpacing",
+        "cssStyleElementTabsBtnIconSize"
+      ]
+    },
+    ".brz && > .brz-tabs__content .brz-tabs__nav--button": {
+      standart: [
+        "cssStyleElementTabsBtnIconPosition",
+        "cssStyleElementTabsBtnIconJustifyContent"
+      ]
+    },
     ".brz && > .brz-tabs__nav--style-1 .brz-tabs__nav--active .brz-tabs__nav--button": {
       standart: [
         "cssStyleElementTabsActiveColor",

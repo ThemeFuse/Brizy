@@ -34,10 +34,14 @@
 
   "style": {
     "className": "",
-    
+
     "customClassName": "",
-    
-    "customID":"",
+
+    "customID": "",
+
+    "cssIDPopulation": "",
+
+    "cssClassPopulation": "",
 
     "width": null,
     "widthSuffix": null,

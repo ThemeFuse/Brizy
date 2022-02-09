@@ -18,3 +18,4 @@ export { default as Protected } from "./ProtectedPage/export.ts";
 export { default as Image } from "./Image/export.js";
 export { default as ResetPassword } from "./ResetPassword/export.ts";
 export { default as Login } from "./Login/export";
+export * from "./Shopify/export";

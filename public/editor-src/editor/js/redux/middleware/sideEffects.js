@@ -273,8 +273,8 @@ function handleHiddenElementsChange(callbacks) {
 function handleCurrentRoleChange(callbacks) {
   callbacks.onAfterNext.push(({ config, oldState, action }) => {
     const { document } = config;
-    const oldRole = currentRoleSelector(oldState);
-    const newRole = action.value;
+    const oldRole = currentRoleSelector(oldState).replace(/\//g, "");
+    const newRole = action.value.replace(/\//g, "");
 
     document.body.style.removeProperty(`--role-${oldRole}-block`);
     document.body.style.setProperty(`--role-${newRole}-block`, "block");

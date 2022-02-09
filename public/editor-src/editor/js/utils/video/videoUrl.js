@@ -8,7 +8,16 @@ const DEFAULT_SETTINGS = {
 
 const getYouTubeOptions = (
   key,
-  { autoplay, controls, branding = 1, loop, suggestedVideo, start = 0, end = 0 }
+  {
+    autoplay,
+    controls,
+    branding = 1,
+    loop,
+    suggestedVideo,
+    start = 0,
+    end = 0,
+    hasCover = false
+  }
 ) => {
   let options = {
     autoplay: Number(autoplay),
@@ -20,7 +29,7 @@ const getYouTubeOptions = (
     enablejsapi: 1,
     loop: 0,
     rel: Number(suggestedVideo),
-    ...(autoplay ? { mute: 1 } : {})
+    ...(autoplay && !hasCover ? { mute: 1 } : {})
   };
 
   if (loop) {
@@ -36,7 +45,7 @@ const getYouTubeOptions = (
 
 const getVimeoOptions = (
   key,
-  { intro = 1, autoplay, loop, start = 0, controls = true }
+  { intro = 1, autoplay, loop, start = 0, controls = true, hasCover = false }
 ) => {
   return {
     url: `https://player.vimeo.com/video/${key}`,
@@ -50,7 +59,7 @@ const getVimeoOptions = (
       portrait: intro,
       controls,
       loop: Number(loop),
-      ...(autoplay === true ? { muted: 1 } : {})
+      ...(autoplay === true && !hasCover ? { muted: 1 } : {})
     },
     anchor: `#t=${Number(start)}s`
   };

@@ -6,9 +6,9 @@ import {
   Placement as PopperPlacement
 } from "@popperjs/core";
 import { uuid } from "visual/utils/uuid";
+import { getProLibs } from "visual/libs";
 import { DeviceMode } from "visual/types";
 import { BrizyProLibs } from "visual/types/global";
-import { LibsPro } from "visual/libs";
 import { decodeFromString } from "visual/utils/string";
 import { getParentMegaMenuUid } from "./utils";
 
@@ -293,7 +293,7 @@ const appendItemToRoot = (item: HTMLElement, root: HTMLElement): void => {
 };
 
 const init = (item: HTMLElement, root: HTMLElement): void => {
-  const { CreatePopper } = LibsPro;
+  const { CreatePopper } = getProLibs();
 
   if (!CreatePopper) {
     return;
@@ -396,7 +396,7 @@ const resize = (root: HTMLElement): VoidFunction => (): void => {
 };
 
 export default function($node: JQuery): void {
-  const { MMenu, Dropdown } = LibsPro;
+  const { MMenu, Dropdown } = getProLibs();
 
   if (!MMenu) {
     return;

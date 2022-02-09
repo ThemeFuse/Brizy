@@ -5,6 +5,8 @@ import Prompts from "visual/component/Prompts";
 import RoundPlus from "visual/component/RoundPlus";
 import { rolesHOC } from "visual/component/Roles";
 import { t } from "visual/utils/i18n";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 
 class LastBlockAdder extends React.Component {
   static defaultProps = {
@@ -13,11 +15,15 @@ class LastBlockAdder extends React.Component {
 
   handleOpen = () => {
     const { onAddBlock, onAddTemplate } = this.props;
+    const config = Config.getAll();
+    const showGlobal = !(isCloud(config) && isShopify(config));
+
     Prompts.open({
       prompt: "blocks",
       mode: "single",
       props: {
         type: "normal",
+        showGlobal,
         onChangeBlocks: onAddBlock,
         onChangeTemplate: onAddTemplate,
         onChangeSaved: onAddTemplate,

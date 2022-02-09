@@ -254,7 +254,7 @@ export function cssStyleElementTimelineLineWidthHeightBefore({
   const borderWidth = styleBorderWidthGrouped({ v, device, prefix: "line" });
   const orientation = styleElementTimelineOrientation({ v, device, state });
   if (orientation === "on") {
-    return `height: calc(50% + (${halfIconWidth}px + ${iconWidth}px)); width: ${borderWidth}px;`;
+    return `height: calc(50% - (${halfIconWidth}px)); width: ${borderWidth}px;`;
   } else if (orientation === "off") {
     return `width: calc(100% - ${iconWidth}px); height: ${borderWidth}px;`;
   }
@@ -286,7 +286,7 @@ export function cssStyleElementTimelineLineWidthHeightAfter({
       : 100;
 
   if (orientation === "on") {
-    return `height: calc(${lineOffset}px + (60% - ${halfIconWidth}px)); width: ${borderWidth}px; left: ${borderWidth}px;`;
+    return `height: calc(${lineOffset}px + (50% - ${halfIconWidth}px)); width: ${borderWidth}px; left: ${borderWidth}px;`;
   } else if (orientation === "off") {
     return `width: calc(100% - ${iconWidth}px); height: ${borderWidth}px;`;
   }
@@ -457,8 +457,6 @@ export function cssStyleElementTimelineCustomLineTop({ v, device }) {
   const horizontalLeftPosition =
     customSize + iconPadding * 2 + borderWidth * 2 + 20;
 
-  const afterHeight = halfIconHeight + textHeight - borderWidthLine / 2;
-
   const afterHeight2 =
     halfIconHeight + textHeight + textSpacing - borderWidthLine / 2;
 
@@ -477,13 +475,13 @@ export function cssStyleElementTimelineCustomLineTop({ v, device }) {
   } else if (orientation === "on") {
     switch (style) {
       case "style-1": {
-        return `left: ${verticalPosition}px; top: calc(50% + (${afterHeight}px / 2));`;
+        return `left: ${verticalPosition}px; top: calc(50% + ${halfIconHeight}px);`;
       }
       case "style-2": {
-        return `right: ${verticalPosition}px; left: auto; top: calc(50% + (${afterHeight}px / 2));`;
+        return `right: ${verticalPosition}px; left: auto; top: calc(50% + ${halfIconHeight}px);`;
       }
       case "style-3": {
-        return `left: ${verticalPosition}px; top: calc(50% + (${afterHeight}px / 2));`;
+        return `left: ${verticalPosition}px; top: calc(50% + ${halfIconHeight}px);`;
       }
     }
   }
@@ -945,7 +943,7 @@ export function cssStyleElementTimelineNavTitleSpacing({ v, device }) {
         return `position: relative; margin-top: ${textSpacing}px; left: -10px; top: auto; transform: none;`;
       }
       case "style-3": {
-        return `position: absolute; margin-top: auto; top: ${-textSpacing}px; left: -10px; transform: translateY(-100%);`;
+        return `position: absolute; margin-top: auto; margin-bottom: auto; top: ${-textSpacing}px; left: -10px; transform: translateY(-100%);`;
       }
     }
   } else if (orientation === "on") {

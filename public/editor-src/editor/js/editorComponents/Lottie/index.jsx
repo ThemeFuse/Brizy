@@ -132,7 +132,7 @@ class Lottie extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { speed, loop, autoplay, direction } = v;
+    const { speed, loop, autoplay, direction, renderer } = v;
 
     const { animation } = this.state;
 
@@ -141,7 +141,8 @@ class Lottie extends EditorComponent {
       speed,
       direction,
       loop: loop === "on",
-      autoplay: autoplay === "on"
+      autoplay: autoplay === "on",
+      renderer
     };
 
     const className = classnames(
@@ -179,7 +180,10 @@ class Lottie extends EditorComponent {
               onChange={this.handleResizerChange}
               restrictions={restrictions}
             >
-              <LottieControl {...lottieReactConfig} key={`lottie-${loop}`} />
+              <LottieControl
+                {...lottieReactConfig}
+                key={`lottie-${loop} renderer-${renderer}`}
+              />
             </BoxResizer>
           </Wrapper>
         </Toolbar>
@@ -194,6 +198,7 @@ class Lottie extends EditorComponent {
       loop,
       autoplay,
       direction,
+      renderer,
       animationLink,
       animationFile,
       linkType,
@@ -216,18 +221,24 @@ class Lottie extends EditorComponent {
       "brz-lottie",
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
+
+    const classNameLottie = classnames("brz-lottie-anim", {
+      "brz-lottie__canvas": renderer === "canvas"
+    });
+
     const _animationLink = animationFile
       ? customFileUrl(animationFile)
       : animationLink;
 
     const animDom = (
       <div
-        className="brz-lottie-anim"
+        className={classNameLottie}
         data-animate-name={_animationLink}
         data-anim-speed={speed}
         data-anim-loop={loop}
         data-anim-autoplay={autoplay}
         data-anim-direction={direction}
+        data-render-type={renderer}
       />
     );
 

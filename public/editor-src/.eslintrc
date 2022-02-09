@@ -67,8 +67,8 @@
     "IS_PREVIEW": "readonly",
     "__CONFIG__": "readonly",
     "YT": "readonly",
-    "BrizyLibs": "readonly",
-    "BrizyProLibs": "readonly"
+    "getFreeLibs": "readonly",
+    "getProLibs": "readonly"
   },
   "settings": {
     "react": {

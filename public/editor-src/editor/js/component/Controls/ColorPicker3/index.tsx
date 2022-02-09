@@ -4,6 +4,10 @@ import ColorPicker2 from "visual/component/Controls/ColorPicker2";
 import { ColorPalette } from "visual/component/Controls/ColorPalette";
 import { WithClassName, WithValue } from "visual/utils/options/attributes";
 import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+
+const config = Config.getAll();
 
 export const paletteHex = (
   id: PaletteObject["id"],
@@ -79,12 +83,14 @@ export const ColorPicker3: FC<Props> = ({
         disableOpacity={!opacity}
         onChange={onColorChange}
       />
-      <ColorPalette
-        palette={palette}
-        onChange={onPaletteChange}
-        openSettings={paletteOpenSettings}
-        value={value.palette}
-      />
+      {!(isCloud(config) && isShopify(config)) ? (
+        <ColorPalette
+          palette={palette}
+          onChange={onPaletteChange}
+          openSettings={paletteOpenSettings}
+          value={value.palette}
+        />
+      ) : null}
     </div>
   );
 };

@@ -23,7 +23,6 @@ import {
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
 import { getAllMembershipChoices } from "visual/utils/membership";
-import { IS_WP } from "visual/utils/env";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
@@ -80,7 +79,6 @@ export function getItems({ v, device, component, state, context }) {
         {
           id: "membershipGroup",
           type: "group-dev",
-          disabled: !IS_WP,
           options: [
             {
               id: "membership",
