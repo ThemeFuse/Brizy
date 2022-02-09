@@ -4,6 +4,7 @@ import { WithPayload } from "./Base";
 import { ProjectId } from "visual/component/LeftSidebar/components/Cms/types/ProjectId";
 import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
 import { ActiveItem } from "./ActiveItem";
+import { Subscription } from "visual/global/Config/types/shopify/Subscription";
 
 interface Base {
   development: boolean;
@@ -13,13 +14,6 @@ interface Base {
   activeItem: ActiveItem;
   projectId: ProjectId;
   userApi: Authorize;
-}
-
-export enum Subscription {
-  Free = "free",
-  Silver = "silver",
-  Gold = "gold",
-  Platinum = "platinum"
 }
 
 export interface Cloud extends Base {

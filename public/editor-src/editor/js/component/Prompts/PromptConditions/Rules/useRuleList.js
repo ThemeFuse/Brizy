@@ -155,10 +155,14 @@ export default function useRuleList(rules) {
     try {
       const customers = await getCustomers();
 
-      return customers.map(({ id, firstName, lastName }) => ({
-        title: `${firstName} ${lastName}`,
-        value: id
-      }));
+      return customers.map(({ id, firstName, lastName, email }) => {
+        const fullName = `${firstName ?? ""} ${lastName ?? ""}`.trim();
+
+        return {
+          title: fullName || email,
+          value: id
+        };
+      });
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
         console.log(e);

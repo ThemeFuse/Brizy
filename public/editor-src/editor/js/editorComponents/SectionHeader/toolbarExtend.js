@@ -7,8 +7,6 @@ import {
 } from "visual/utils/toolbar";
 import { getAllMembershipChoices } from "visual/utils/membership";
 
-import { IS_WP } from "visual/utils/env";
-
 export function getItems({ v, device, component }) {
   const config = Config.getAll();
 
@@ -61,7 +59,6 @@ export function getItems({ v, device, component }) {
         {
           id: "membershipGroup",
           type: "group-dev",
-          disabled: !IS_WP,
           options: [
             {
               id: "membership",

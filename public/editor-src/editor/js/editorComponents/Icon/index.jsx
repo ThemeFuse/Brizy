@@ -145,7 +145,9 @@ class Icon extends EditorComponent {
       linkUpload,
       actionClosePopup,
       customID,
-      customClassName
+      customClassName,
+      cssIDPopulation,
+      cssClassPopulation
     } = v;
 
     const hrefs = {
@@ -182,6 +184,13 @@ class Icon extends EditorComponent {
 
     const style = { ...styleCSSVars(v) };
 
+    let props = {
+      style,
+      id: cssIDPopulation === "" ? customID : cssIDPopulation,
+      className:
+        cssClassPopulation === "" ? customClassName : cssClassPopulation
+    };
+
     return (
       <Fragment>
         <Toolbar
@@ -190,10 +199,10 @@ class Icon extends EditorComponent {
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             <Wrapper
               {...this.makeWrapperProps({
+                attributes: props,
                 className: IS_STORY
                   ? styleWrapperClassName(v)
-                  : "brz-icon__container",
-                attributes: { style, id: customID, className: customClassName }
+                  : "brz-icon__container"
               })}
             >
               <BoxResizer

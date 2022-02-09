@@ -86,7 +86,7 @@ export function styleContents(v, vs, vd) {
     ".brz &&:hover .brz-video-playlist-video-elem": {
       standart: ["cssStyleElementVideoPlaylistImageSize"]
     },
-    ".brz &&:hover .brz-iframe, && .brz-video-playlist__cover:before": {
+    ".brz &&:hover .brz-iframe, && .brz-video-playlist__cover:before, .brz && .brz-video-playlist-video-elem": {
       standart: ["cssStyleElementVideoFilter"]
     },
     ".brz &&:hover .brz-video-playlist__cover .brz-video-playlist__cover-icon": {

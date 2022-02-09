@@ -163,18 +163,14 @@ export default class Items extends EditorArrayComponent {
   renderForEdit(v) {
     const { className, showFilter, showPagination, data } = this.props;
     const item = super.renderForEdit(v);
-    const items = Array(
-      Math.min(data.paginationInfo.itemsPerPage, data.paginationInfo.totalCount)
-    )
-      .fill(item)
-      .map((item, index) => (
-        <EditorComponentContext.Provider
-          key={data.context[index].dynamicContent.itemId}
-          value={data.context[index]}
-        >
-          {item}
-        </EditorComponentContext.Provider>
-      ));
+    const items = data?.context.map(context => (
+      <EditorComponentContext.Provider
+        key={context.dynamicContent.itemId}
+        value={context}
+      >
+        {item}
+      </EditorComponentContext.Provider>
+    ));
 
     return (
       <Sortable

@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.9
 Requires PHP: 5.6.20
-Stable tag: 2.3.29
+Stable tag: 2.3.30
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,20 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.30 - 2022-02-09 =
+* Improved: Form element - added Loading animation to button after submit
+* Fixed: Form element - Hidden field not working correctly
+* Fixed: Video element - gets muted after cover image is added
+* Fixed: Tabs element - options not working on responsive views
+* Fixed: Tabs element - orientation and style not working on responsive views
+* Fixed: Tabs element - duplicate options in right sidebar on responsive views
+* Fixed: Blocks get reordered when only global blocks exist in page
+* Fixed: Menu element - jumping on hover when border opacity is 0 in normal mode
+* Fixed: Columns and Rows - image background hover not working 
+* Fixed: Global blocks conditions in custom post types 
+* Fixed: Section Background Video error when loop is enabled
+* Fixed: Slider and Carousel element - dots not positioned correctly
 
 = 2.3.29 - 2022-02-03 =
 * Fixed: Font url validation

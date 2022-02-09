@@ -4,9 +4,9 @@ import Prompts from "visual/component/Prompts";
 import { t } from "visual/utils/i18n";
 import {
   IS_EXTERNAL_POPUP,
-  IS_EXTERNAL_STORY
-  // IS_GLOBAL_POPUP,
-  // IS_STORY
+  IS_EXTERNAL_STORY,
+  IS_GLOBAL_POPUP,
+  IS_STORY
 } from "visual/utils/models";
 import { Base, Shopify } from "./components/AddElements";
 import { BlocksSortable } from "./components/BlocksSortable";
@@ -25,24 +25,24 @@ export default {
     Base,
     ...(isCloud(config) && isShopify(config) ? [Shopify] : []),
     BlocksSortable,
-    Styling
+    ...(isCloud(config) && isShopify(config) ? [] : [Styling])
   ],
   bottom: [
     DeviceModes,
     ...(IS_EXTERNAL_STORY ? [Settings] : []),
-    // {
-    //   id: "popover",
-    //   icon: "nc-page",
-    //   title: t("Page"),
-    //   type: "popover",
-    //   disabled: IS_GLOBAL_POPUP || IS_STORY,
-    //   options: [
-    //     {
-    //       type: "showMembership",
-    //       label: t("View as")
-    //     }
-    //   ]
-    // },
+    {
+      id: "popover",
+      icon: "nc-page",
+      title: t("Page"),
+      type: "popover",
+      disabled: IS_GLOBAL_POPUP || IS_STORY,
+      options: [
+        {
+          type: "showMembership",
+          label: t("View as")
+        }
+      ]
+    },
     {
       id: "popover",
       icon: "nc-back",
