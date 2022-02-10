@@ -2,7 +2,7 @@
 /**
  * WordPress Importer class for managing parsing of WXR files.
  */
-class Brizy_Import_Parsers_Parser {
+class Brizy_Import_Parser {
 
 	private $file;
 

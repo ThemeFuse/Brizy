@@ -6,7 +6,7 @@ class Brizy_Import_Main {
 
 	public function __construct() {
 
-		$this->provider = new Brizy_Import_Providers_Multisite();
+		$this->provider = new Brizy_Import_Provider();
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			WP_CLI::add_command( 'brizy demo', Brizy_Import_WpCli::class );
@@ -70,10 +70,12 @@ class Brizy_Import_Main {
 			wp_send_json_error( __( 'Invalid demo id. Please contact our support.', 'brizy' ) );
 		}
 
+		$import = new Brizy_Import_Import( $_POST['demo'] );
+
 		try {
-            $import = new Brizy_Import_Import( $_POST['demo'] );
             $import->import();
 		} catch (Exception $e) {
+			$import->cleanup();
 			wp_send_json_error( $e->getMessage() );
 		}
 

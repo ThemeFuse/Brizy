@@ -16,23 +16,25 @@ if ( ! class_exists( 'WP_Importer' ) ) {
 /**
  * WordPress importer class.
  */
-class Brizy_Import_Importers_WordpressImporter extends WP_Importer {
+class Brizy_Import_Importer extends WP_Importer {
 
 	private $errors = [];
 	private $missing_menu_items = [];
+	private $extractor;
 
 	/**
-	 * Brizy_Import_Importers_Importer constructor.
-	 *
-	 * @param array $data
+	 * @param $data
+	 * @param Brizy_Import_Extractor $extractor
 	 */
-	public function __construct( $data ) {
+	public function __construct( $data, $extractor ) {
 
 		if ( ! function_exists( 'post_exists' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/post.php';
 		}
 
 		parent::__construct();
+
+		$this->extractor = $extractor;
 
 		$this->version    = $data['version'];
 		$this->authors    = $data['authors'];
@@ -698,127 +700,17 @@ class Brizy_Import_Importers_WordpressImporter extends WP_Importer {
 	 * @return array|WP_Error Local file location details on success, WP_Error otherwise
 	 */
 	function fetch_remote_file( $url, $post ) {
-		// Extract the file name from the URL.
-		$file_name = basename( parse_url( $url, PHP_URL_PATH ) );
 
-		if ( ! $file_name ) {
-			$file_name = md5( $url );
-		}
+		$file_name     = basename( parse_url( $url, PHP_URL_PATH ) );
+		$tmp_file_name = $this->extractor->getPath( $file_name );
+		$uploads       = wp_upload_dir();
 
-		$tmp_file_name = wp_tempnam( $file_name );
-		if ( ! $tmp_file_name ) {
-			return new WP_Error( 'import_no_file', __( 'Could not create temporary file.', 'brizy' ) );
-		}
-
-		// Fetch the remote URL and write it to the placeholder file.
-		$remote_response = wp_safe_remote_get( $url, array(
-			'timeout'    => 300,
-			'stream'     => true,
-			'filename'   => $tmp_file_name,
-			'headers'    => array(
-				'Accept-Encoding' => 'identity',
-			),
-		) );
-
-		if ( is_wp_error( $remote_response ) ) {
-			@unlink( $tmp_file_name );
-			return new WP_Error(
-				'import_file_error',
-				sprintf(
-				/* translators: 1: The WordPress error message. 2: The WordPress error code. */
-					__( 'Request failed due to an error: %1$s (%2$s)', 'brizy' ),
-					esc_html( $remote_response->get_error_message() ),
-					esc_html( $remote_response->get_error_code() )
-				)
-			);
-		}
-
-		$remote_response_code = (int) wp_remote_retrieve_response_code( $remote_response );
-
-		// Make sure the fetch was successful.
-		if ( 200 !== $remote_response_code ) {
-			@unlink( $tmp_file_name );
-			return new WP_Error(
-				'import_file_error',
-				sprintf(
-				/* translators: 1: The HTTP error message. 2: The HTTP error code. */
-					__( 'Remote server returned the following unexpected result: %1$s (%2$s)', 'brizy' ),
-					get_status_header_desc( $remote_response_code ),
-					esc_html( $remote_response_code )
-				)
-			);
-		}
-
-		$headers = wp_remote_retrieve_headers( $remote_response );
-
-		// Request failed.
-		if ( ! $headers ) {
-			@unlink( $tmp_file_name );
-			return new WP_Error( 'import_file_error', __( 'Remote server did not respond', 'brizy' ) );
-		}
-
-		$filesize = (int) filesize( $tmp_file_name );
-
-		if ( 0 === $filesize ) {
-			@unlink( $tmp_file_name );
-			return new WP_Error( 'import_file_error', __( 'Zero size file downloaded', 'brizy' ) );
-		}
-
-		if ( ! isset( $headers['content-encoding'] ) && isset( $headers['content-length'] ) && $filesize !== (int) $headers['content-length'] ) {
-			@unlink( $tmp_file_name );
-			return new WP_Error( 'import_file_error', __( 'Downloaded file has incorrect size', 'brizy' ) );
-		}
-
-		$max_size = (int) $this->max_attachment_size();
-		if ( ! empty( $max_size ) && $filesize > $max_size ) {
-			@unlink( $tmp_file_name );
-			return new WP_Error( 'import_file_error', sprintf(__('Remote file is too large, limit is %s', 'brizy' ), size_format($max_size) ) );
-		}
-
-		// Override file name with Content-Disposition header value.
-		if ( ! empty( $headers['content-disposition'] ) ) {
-			$file_name_from_disposition = self::get_filename_from_disposition( (array) $headers['content-disposition'] );
-			if ( $file_name_from_disposition ) {
-				$file_name = $file_name_from_disposition;
-			}
-		}
-
-		// Set file extension if missing.
-		$file_ext = pathinfo( $file_name, PATHINFO_EXTENSION );
-		if ( ! $file_ext && ! empty( $headers['content-type'] ) ) {
-			$extension = self::get_file_extension_by_mime_type( $headers['content-type'] );
-			if ( $extension ) {
-				$file_name = "{$file_name}.{$extension}";
-			}
-		}
-
-		// Handle the upload like _wp_handle_upload() does.
-		$wp_filetype     = wp_check_filetype_and_ext( $tmp_file_name, $file_name );
-		$ext             = empty( $wp_filetype['ext'] ) ? '' : $wp_filetype['ext'];
-		$type            = empty( $wp_filetype['type'] ) ? '' : $wp_filetype['type'];
-		$proper_filename = empty( $wp_filetype['proper_filename'] ) ? '' : $wp_filetype['proper_filename'];
-
-		// Check to see if wp_check_filetype_and_ext() determined the filename was incorrect.
-		if ( $proper_filename ) {
-			$file_name = $proper_filename;
-		}
-
-		if ( ( ! $type || ! $ext ) && ! current_user_can( 'unfiltered_upload' ) ) {
-			return new WP_Error( 'import_file_error', __( 'Sorry, this file type is not permitted for security reasons.', 'brizy' ) );
-		}
-
-		$uploads = wp_upload_dir( $post['upload_date'] );
-		if ( ! ( $uploads && false === $uploads['error'] ) ) {
-			return new WP_Error( 'upload_dir_error', $uploads['error'] );
-		}
-
-		// Move the file to the uploads dir.
+		// Move the file to the uploads' dir.
 		$file_name     = wp_unique_filename( $uploads['path'], $file_name );
 		$new_file      = $uploads['path'] . "/$file_name";
 		$move_new_file = copy( $tmp_file_name, $new_file );
 
 		if ( ! $move_new_file ) {
-			@unlink( $tmp_file_name );
 			return new WP_Error( 'import_file_error', __( 'The uploaded file could not be moved', 'brizy' ) );
 		}
 
@@ -826,6 +718,8 @@ class Brizy_Import_Importers_WordpressImporter extends WP_Importer {
 		$stat  = stat( dirname( $new_file ) );
 		$perms = $stat['mode'] & 0000666;
 		chmod( $new_file, $perms );
+
+		$wp_filetype = wp_check_filetype_and_ext( $tmp_file_name, $file_name );
 
 		$upload = array(
 			'file'  => $new_file,
@@ -837,9 +731,6 @@ class Brizy_Import_Importers_WordpressImporter extends WP_Importer {
 		// keep track of the old and new urls so we can substitute them later
 		$this->url_remap[$url] = $upload['url'];
 		$this->url_remap[$post['guid']] = $upload['url']; // r13735, really needed?
-		// keep track of the destination if the remote url is redirected somewhere else
-		if ( isset($headers['x-final-location']) && $headers['x-final-location'] != $url )
-			$this->url_remap[$headers['x-final-location']] = $upload['url'];
 
 		return $upload;
 	}

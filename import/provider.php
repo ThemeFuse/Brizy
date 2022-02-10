@@ -1,6 +1,6 @@
 <?php defined( 'ABSPATH' ) or die();
 
-class Brizy_Import_Providers_Multisite {
+class Brizy_Import_Provider {
 
 	private $mainSite;
 
