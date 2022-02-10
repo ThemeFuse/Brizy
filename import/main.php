@@ -75,7 +75,6 @@ class Brizy_Import_Main {
 		try {
             $import->import();
 		} catch (Exception $e) {
-			$import->cleanup();
 			wp_send_json_error( $e->getMessage() );
 		}
 

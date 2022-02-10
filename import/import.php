@@ -17,19 +17,27 @@ class Brizy_Import_Import {
 	 */
 	public function import() {
 
-		$this->extractor->getFiles();
+		try {
+			$this->extractor->getFiles();
 
-		$parser = new Brizy_Import_Parser( $this->extractor->getPath( 'demo.xml' ) );
-		$data   = $parser->parse();
+			$parser = new Brizy_Import_Parser( $this->extractor->getPath( 'demo.xml' ) );
+			$data   = $parser->parse();
 
-		if ( ! empty( $data['importSettings']['plugins'] ) ) {
-			$plugins = new Brizy_Import_Plugins( $data['importSettings']['plugins'] );
-			$plugins->install();
+			if ( ! empty( $data['importSettings']['plugins'] ) ) {
+				$plugins = new Brizy_Import_Plugins( $data['importSettings']['plugins'] );
+				$plugins->install();
+			}
+
+			$importer = new Brizy_Import_Importer( $data, $this->extractor );
+
+			$importer->import();
+
+		} catch ( Exception $e ) {
+			$this->cleanup();
+			throw new Exception( $e->getMessage() );
 		}
 
-		$importer = new Brizy_Import_Importer( $data, $this->extractor );
-
-		$importer->import();
+		$this->cleanup();
 	}
 
 	private function getKey() {
