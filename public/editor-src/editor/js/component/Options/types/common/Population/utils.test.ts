@@ -86,18 +86,13 @@ describe("Testing 'bindPopulation' function", function() {
   };
   const r = bindPopulation(o);
 
-  test.each([
-    "label",
-    "display",
-    "disabled",
-    "states",
-    "devices",
-    "helper",
-    "position"
-  ])("If option has %s, remove it from option and add to population", k => {
-    expect(property(k)(r)).toBe(property(k)(o));
-    expect(property(["options", 0])(r)).not.toHaveProperty(k);
-  });
+  test.each(["label", "helper", "position"])(
+    "If option has %s, remove it from option and add to population",
+    k => {
+      expect(property(k)(r)).toBe(property(k)(o));
+      expect(property(["options", 0])(r)).not.toHaveProperty(k);
+    }
+  );
 
   test.each(["id", "classname"])(
     "If option has %s, add it also to population",

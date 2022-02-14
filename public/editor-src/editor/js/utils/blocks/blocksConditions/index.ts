@@ -4,7 +4,6 @@ import { getStore } from "visual/redux/store";
 import { pageSelector } from "visual/redux/selectors";
 import { pageSplitRules, isIncludeCondition } from "../getAllowedGBIds";
 
-import { IS_WP } from "visual/utils/env";
 import { IS_TEMPLATE } from "visual/utils/models";
 import {
   isCloud,
@@ -18,7 +17,6 @@ import {
   GlobalBlockPosition,
   Page
 } from "visual/types";
-import { Config as ConfigType } from "./config";
 
 export const PAGES_GROUP_ID = 1;
 export const CATEGORIES_GROUP_ID = 2;
@@ -42,6 +40,7 @@ import {
   SurroundedConditionsIds,
   InsertScheme
 } from "./types";
+import { isWp } from "visual/global/Config/types/configs/WP";
 
 function getGBIdsInPage(blocksOrder: PB, globalBlocks: GB): PB {
   return blocksOrder.filter(id => globalBlocks[id]);
@@ -68,7 +67,7 @@ function getGBChunks(
     if (!isSourceGBId) {
       queue.push({
         globalBlockId: id,
-        // write a function which will return top | botoom by id
+        // write a function which will return top | bottom by id
         align: GBTopIds.includes(id) ? "top" : "bottom"
       });
     }
@@ -142,8 +141,6 @@ function replaceSourcePositions(
 }
 
 export function getPositions(blocksOrder: PB, globalBlocks: GB): GBP {
-  const globalBlocksIds = Object.keys(globalBlocks);
-
   const sourcePositionObj = Object.entries(globalBlocks).reduce(
     (acc, [id, block]) => {
       if (block.position) {
@@ -157,7 +154,7 @@ export function getPositions(blocksOrder: PB, globalBlocks: GB): GBP {
 
   const sourcePositionsArr = turnPositionsIntoSortedArray(sourcePositionObj);
 
-  const { top: GBTopIds } = getSurroundedGBIds(blocksOrder, globalBlocksIds);
+  const { top: GBTopIds } = getSurroundedGBIds(blocksOrder, globalBlocks);
 
   const GBIdsInPage = getGBIdsInPage(blocksOrder, globalBlocks);
   const sourceGBIds = GBIdsInPage.filter(id => sourcePositionObj[id]);
@@ -178,41 +175,55 @@ export function getPositions(blocksOrder: PB, globalBlocks: GB): GBP {
   );
   const newBottom = applyScheme(sourceBottom, insertScheme);
 
-  const newPosition = turnPositionsIntoObject(newTop, newBottom);
-
-  return newPosition;
+  return turnPositionsIntoObject(newTop, newBottom);
 }
 
 export const getSurroundedGBIds = (
   pageBlocksIds: PB,
-  globalBlocksIds: GBIds
+  globalBlocks: GB
 ): SurroundedConditionsIds => {
+  const globalBlocksIds = Object.keys(globalBlocks);
   const surroundedConditionsIds: SurroundedConditionsIds = {
     top: [],
     bottom: []
   };
 
   if (pageBlocksIds.length > 0) {
-    let i = 0;
-    while (i <= pageBlocksIds.length - 1) {
-      const currentBlockId = pageBlocksIds[i];
-      if (globalBlocksIds.includes(currentBlockId)) {
-        surroundedConditionsIds.top.push(currentBlockId);
-      } else {
-        break;
-      }
-      i++;
-    }
+    const pageBlocksIsAllGlobalBlocks = pageBlocksIds.every(pageBlockId =>
+      globalBlocksIds.includes(pageBlockId)
+    );
 
-    i = 0;
-    while (i <= pageBlocksIds.length - 1) {
-      const currentBlockId = pageBlocksIds[pageBlocksIds.length - 1 - i];
-      if (globalBlocksIds.includes(currentBlockId)) {
-        surroundedConditionsIds.bottom.push(currentBlockId);
-      } else {
-        break;
+    if (pageBlocksIsAllGlobalBlocks) {
+      pageBlocksIds.forEach(pageBlockId => {
+        const globalBlock = globalBlocks[pageBlockId];
+
+        if (globalBlock?.position) {
+          const { position } = globalBlock;
+          surroundedConditionsIds[position.align].push(pageBlockId);
+        }
+      });
+    } else {
+      let i = 0;
+      while (i <= pageBlocksIds.length - 1) {
+        const currentBlockId = pageBlocksIds[i];
+        if (globalBlocksIds.includes(currentBlockId)) {
+          surroundedConditionsIds.top.push(currentBlockId);
+        } else {
+          break;
+        }
+        i++;
       }
-      i++;
+
+      i = 0;
+      while (i <= pageBlocksIds.length - 1) {
+        const currentBlockId = pageBlocksIds[pageBlocksIds.length - 1 - i];
+        if (globalBlocksIds.includes(currentBlockId)) {
+          surroundedConditionsIds.bottom.push(currentBlockId);
+        } else {
+          break;
+        }
+        i++;
+      }
     }
   }
 
@@ -235,7 +246,7 @@ function turnPositionsIntoSortedArray(
       acc.top.push({
         ...value,
         globalBlockId,
-        // normaly align should always exist.It's needed only
+        // normally align should always exist.It's needed only
         // for old global blocks
         align: value.align || "top"
       });
@@ -321,15 +332,15 @@ export const getCurrentRule = (
     type = CUSTOMER_TYPE;
   }
 
-  if (IS_WP) {
-    const { ruleMatches }: ConfigType["wp"] = Config.get("wp");
-
+  if (isWp(config)) {
     if (IS_TEMPLATE) {
       group = TEMPLATES_GROUP_ID;
       type = TEMPLATE_TYPE;
-    } else if (ruleMatches && ruleMatches[0].entityType === POST_TYPE) {
-      group = PAGES_GROUP_ID;
-      type = POST_TYPE;
+    } else {
+      const { ruleMatches } = config.wp;
+      const rule = ruleMatches[0] ?? { group: PAGES_GROUP_ID, type: "page" };
+      group = rule.group;
+      type = rule.entityType;
     }
   }
 

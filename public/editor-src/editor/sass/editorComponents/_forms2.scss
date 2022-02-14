@@ -6,6 +6,13 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+
+    &-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 
   &__wrap,
@@ -144,6 +151,7 @@
     .brz-btn {
       outline: none;
       width: 100%;
+      position: relative;
     }
     .brz-icon-svg {
       flex-grow: 0;

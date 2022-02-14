@@ -104,7 +104,9 @@ function cssStyleShowMembership(v, display) {
 
   const cssRoles = roles
     .map(item => `, var(--role-${item}-${display}`)
-    .join("");
+    .join("")
+    .replace(/\//g, "");
+
   const closeParentheses = ")".repeat(roles.length + 1);
 
   return `display: var(${displayCss} ${cssRoles}, none${closeParentheses};`;

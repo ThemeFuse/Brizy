@@ -145,6 +145,12 @@ export class Posts extends EditorComponent {
     );
 
     this.props.extendParentToolbar(toolbarExtend);
+
+    const firstItem =
+      toolbarContext?.collectionTypesInfo?.collectionTypes[0]?.id;
+    if (firstItem && !this.getValue2().v.source) {
+      this.patchValue({ source: firstItem });
+    }
   }
 
   componentDidUpdate() {

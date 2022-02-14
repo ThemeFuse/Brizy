@@ -11,6 +11,7 @@
     "loop": "on",
     "autoplay": "on",
     "direction": 1,
+    "renderer": "svg",
 
     "offsetX": 0,
     "offsetY": 0

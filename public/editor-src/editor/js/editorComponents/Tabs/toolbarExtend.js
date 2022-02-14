@@ -47,6 +47,7 @@ export function getItems({ v, device }) {
                   id: "verticalMode",
                   label: t("Orientation"),
                   type: "radioGroup-dev",
+                  devices: "desktop",
                   choices: [
                     { value: "on", icon: "nc-vertical-items" },
                     { value: "off", icon: "nc-horizontal-items" }
@@ -56,6 +57,7 @@ export function getItems({ v, device }) {
                   id: "navStyle",
                   label: t("Style"),
                   type: "radioGroup-dev",
+                  devices: "desktop",
                   choices:
                     v.verticalMode === "off"
                       ? [

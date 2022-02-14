@@ -1,4849 +1,4732 @@
 # Copyright (C) 2022 Brizy.io
 # This file is distributed under the GPLv3.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Brizy 2.3.26\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/brizy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-01-13T13:53:17+02:00\n"
+"POT-Creation-Date: 2022-02-09 09:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Domain: brizy\n"
+"X-Poedit-KeywordsList: __;__bt\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: brizy-pro\n"
+"X-Poedit-SearchPath-1: brizy\n"
+"X-Poedit-SearchPathExcluded-0: brizy/tests\n"
+"X-Poedit-SearchPathExcluded-1: brizy/vendor\n"
+"X-Poedit-SearchPathExcluded-2: brizy-pro/vendor\n"
+"X-Poedit-SearchPathExcluded-3: brizy/public/editor-build\n"
+"X-Poedit-SearchPathExcluded-4: brizy/public/editor-src\n"
 
-#. Plugin Name of the plugin
-msgid "Brizy"
+#: brizy-pro/admin/integrations.php:33 brizy-pro/admin/integrations.php:60
+msgid "Integrations"
 msgstr ""
 
-#. Plugin URI of the plugin
-#. Author URI of the plugin
-msgid "https://brizy.io/"
+#: brizy-pro/admin/license.php:90 brizy-pro/admin/license.php:91
+#: brizy-pro/admin/license.php:132
+msgid "License"
 msgstr ""
 
-#. Description of the plugin
-msgid "A free drag & drop front-end page builder to help you create WordPress pages lightning fast. It's easy with Brizy."
+#: brizy-pro/admin/license.php:120 brizy/admin/views/settings/general.php:12
+msgid "Activate"
 msgstr ""
 
-#. Author of the plugin
-msgid "Brizy.io"
+#: brizy-pro/admin/membership/membership.php:51
+msgid "Add New Role"
 msgstr ""
 
-#: admin/blocks/main.php:108
-msgid "global block."
+#: brizy-pro/admin/membership/membership.php:52
+msgid "New Role"
 msgstr ""
 
-#: admin/dashboard-widget.php:69
-msgid "Something went wrong. There is no a valid response code."
+#: brizy-pro/admin/membership/membership.php:53
+msgid "Edit Role"
 msgstr ""
 
-#: admin/dashboard-widget.php:76
-msgid "The request was blocked, or something is wrong with the remote server."
+#: brizy-pro/admin/membership/membership.php:54
+msgid "View Role"
 msgstr ""
 
-#: admin/dashboard-widget.php:80
-msgid "There is no body in the remote server response."
-msgstr ""
-
-#: admin/dashboard-widget.php:86
-msgid "Filed decode returned json by brizy.io"
-msgstr ""
-
-#: admin/feedback.php:30
-msgid "Hello! Seems like you are using Brizy to build your website - Thanks a lot!"
-msgstr ""
-
-#: admin/feedback.php:32
-msgid "Could you please do us a BIG favor and give it a 5-star rating on WordPress? This would boost our motivation and help other users make a comfortable decision while choosing the Brizy plugin."
-msgstr ""
-
-#: admin/feedback.php:36
-msgid "Ok, you deserve it"
-msgstr ""
-
-#: admin/feedback.php:40
-msgid "Nope, maybe later"
-msgstr ""
-
-#: admin/feedback.php:44
-msgid "I already did"
-msgstr ""
-
-#: admin/feedback.php:111
-msgid "I no longer need the plugin"
-msgstr ""
-
-#: admin/feedback.php:115
-msgid "I found a better plugin"
-msgstr ""
-
-#: admin/feedback.php:116
-msgid "Please share which plugin"
-msgstr ""
-
-#: admin/feedback.php:119
-msgid "I couldn't get the plugin to work"
-msgstr ""
-
-#: admin/feedback.php:123
-msgid "It's a temporary deactivation"
-msgstr ""
-
-#: admin/feedback.php:127
-msgid "I have Brizy Pro"
-msgstr ""
-
-#: admin/feedback.php:129
-msgid "Wait! Don't deactivate Brizy. You have to activate both Brizy and Brizy Pro in order for the plugin to work."
-msgstr ""
-
-#: admin/feedback.php:132
-msgid "Other"
-msgstr ""
-
-#: admin/feedback.php:133
-msgid "Please share the reason"
-msgstr ""
-
-#: admin/feedback.php:142
-msgid "Quick Feedback"
-msgstr ""
-
-#: admin/feedback.php:146
-msgid "If you have a moment, please share why you are deactivating Brizy:"
-msgstr ""
-
-#: admin/fonts/main.php:105
-msgid "font"
-msgstr ""
-
-#: admin/form-entries.php:61
-msgid "Leads details"
-msgstr ""
-
-#: admin/form-entries.php:62
-#: languages/texts.php:314
-#: public/editor-build/214-wp/texts.php:216
-msgid "Date"
-msgstr ""
-
-#: admin/form-entries.php:121
-#: admin/form-entries.php:324
-#: admin/form-entries.php:336
-msgid "Leads"
-msgstr ""
-
-#: admin/form-entries.php:144
-msgid "Disable"
-msgstr ""
-
-#: admin/form-entries.php:148
-msgid "Enable "
-msgstr ""
-
-#: admin/form-entries.php:201
-msgid "Export to .csv"
-msgstr ""
-
-#: admin/form-entries.php:315
-msgctxt "post type general name"
-msgid "Leads"
-msgstr ""
-
-#: admin/form-entries.php:316
-msgctxt "post type singular name"
-msgid "Lead"
-msgstr ""
-
-#: admin/form-entries.php:317
-msgctxt "admin menu"
-msgid "Leads"
-msgstr ""
-
-#: admin/form-entries.php:318
-msgctxt "add new on admin bar"
-msgid "Lead"
-msgstr ""
-
-#: admin/form-entries.php:319
-#: admin/popups/main.php:115
-#: admin/templates.php:245
-#: languages/texts.php:74
-#: public/editor-build/214-wp/texts.php:47
-msgid "Add New"
-msgstr ""
-
-#: admin/form-entries.php:320
-msgid "Add New Lead"
-msgstr ""
-
-#: admin/form-entries.php:321
-msgid "New Lead"
-msgstr ""
-
-#: admin/form-entries.php:322
-msgid "Edit Lead"
-msgstr ""
-
-#: admin/form-entries.php:323
-msgid "View Lead"
-msgstr ""
-
-#: admin/form-entries.php:325
-msgid "Search Leads"
-msgstr ""
-
-#: admin/form-entries.php:326
-msgid "Parent Leads:"
-msgstr ""
-
-#: admin/form-entries.php:327
-msgid "No Leads found."
-msgstr ""
-
-#: admin/form-entries.php:328
-msgid "No Leads found in Trash."
-msgstr ""
-
-#: admin/layouts/main.php:43
-msgid "Layout."
-msgstr ""
-
-#: admin/main.php:248
-#: admin/settings.php:107
-#: admin/settings.php:108
-#: languages/texts.php:181
-#: public/editor-build/214-wp/texts.php:683
-msgid "Settings"
-msgstr ""
-
-#: admin/main.php:256
-#: admin/settings.php:146
-msgid "Go Pro"
-msgstr ""
-
-#: admin/main.php:315
-msgid "Submit & Deactivate"
-msgstr ""
-
-#: admin/main.php:316
-msgid "Skip & Deactivate"
-msgstr ""
-
-#: admin/main.php:430
-#: admin/views/button.php:25
-#: admin/views/button.php:44
-#: compatibilities/gutenberg.php:98
-#: compatibilities/gutenberg.php:112
-msgid "Edit with %s"
-msgstr ""
-
-#: admin/main.php:541
-msgid "Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s "
-msgstr ""
-
-#: admin/membership/membership.php:64
-#: editor/post.php:627
-msgid "Default"
-msgstr ""
-
-#: admin/membership/membership.php:68
-msgid "Not Logged"
-msgstr ""
-
-#: admin/membership/membership.php:72
-#: admin/views/settings/maintenance.php:26
-msgid "Logged In"
-msgstr ""
-
-#: admin/membership/membership.php:79
-msgid "View Page By Roles"
-msgstr ""
-
-#: admin/membership/membership.php:89
-msgid "View Page As %s"
-msgstr ""
-
-#: admin/network-settings.php:82
-#: admin/settings.php:302
-msgid "Full Access"
-msgstr ""
-
-#: admin/popups/main.php:111
-msgctxt "post type general name"
-msgid "Popups"
-msgstr ""
-
-#: admin/popups/main.php:112
-msgctxt "post type singular name"
-msgid "Popup"
-msgstr ""
-
-#: admin/popups/main.php:113
-msgctxt "admin menu"
-msgid "Popups"
-msgstr ""
-
-#: admin/popups/main.php:114
-msgctxt "add new on admin bar"
-msgid "Popup"
-msgstr ""
-
-#: admin/popups/main.php:116
-msgid "Add New Popup"
-msgstr ""
-
-#: admin/popups/main.php:117
-msgid "New Popup"
-msgstr ""
-
-#: admin/popups/main.php:118
-msgid "Edit Popup"
-msgstr ""
-
-#: admin/popups/main.php:119
-msgid "View Popup"
-msgstr ""
-
-#: admin/popups/main.php:120
-#: admin/popups/main.php:134
-#: public/editor-build/214-wp/texts.php:559
-msgid "Popups"
-msgstr ""
-
-#: admin/popups/main.php:121
-msgid "Search Popups"
-msgstr ""
-
-#: admin/popups/main.php:122
-msgid "Parent Popups:"
-msgstr ""
-
-#: admin/popups/main.php:123
-msgid "No Popups found."
-msgstr ""
-
-#: admin/popups/main.php:124
-msgid "No Popups found in Trash."
-msgstr ""
-
-#: admin/popups/main.php:125
-msgid "Popup attributes:"
-msgstr ""
-
-#: admin/rules/api.php:476
-msgid "From"
-msgstr ""
-
-#: admin/rules/api.php:488
-msgid "From any child of"
-msgstr ""
-
-#: admin/rules/api.php:548
-msgid "Specific"
-msgstr ""
-
-#: admin/rules/api.php:558
-msgid "Any child of"
-msgstr ""
-
-#: admin/settings.php:129
-msgid "Get Help"
-msgstr ""
-
-#: admin/settings.php:158
-msgid "General"
-msgstr ""
-
-#: admin/settings.php:164
-msgid "Role Manager"
-msgstr ""
-
-#: admin/settings.php:170
-msgid "Maintenance Mode"
-msgstr ""
-
-#: admin/stories/main.php:39
-msgctxt "post type general name"
-msgid "Stories"
-msgstr ""
-
-#: admin/stories/main.php:40
-msgctxt "post type singular name"
-msgid "Story"
-msgstr ""
-
-#: admin/stories/main.php:41
-msgctxt "admin menu"
-msgid "Stories"
-msgstr ""
-
-#: admin/stories/main.php:42
-msgctxt "add new on admin bar"
-msgid "Story"
-msgstr ""
-
-#: admin/stories/main.php:43
-#: admin/stories/main.php:44
-msgid "Add New Story"
-msgstr ""
-
-#: admin/stories/main.php:45
-msgid "New Story"
-msgstr ""
-
-#: admin/stories/main.php:46
-msgid "Edit Story"
-msgstr ""
-
-#: admin/stories/main.php:47
-msgid "View Story"
-msgstr ""
-
-#: admin/stories/main.php:48
-#: public/editor-build/214-wp/texts.php:743
-msgid "Stories"
-msgstr ""
-
-#: admin/stories/main.php:49
-msgid "Search Stories"
-msgstr ""
-
-#: admin/stories/main.php:50
-msgid "Parent Stories:"
-msgstr ""
-
-#: admin/stories/main.php:51
-msgid "No Stories found."
-msgstr ""
-
-#: admin/stories/main.php:52
-msgid "No Stories found in Trash."
-msgstr ""
-
-#: admin/stories/main.php:60
-#: public/editor-build/214-wp/texts.php:893
-msgid "stories"
-msgstr ""
-
-#: admin/templates.php:125
-msgid "Single"
-msgstr ""
-
-#: admin/templates.php:126
-#: public/editor-build/214-wp/texts.php:74
-msgid "Archive"
-msgstr ""
-
-#: admin/templates.php:131
-#: languages/texts.php:56
-#: public/editor-build/214-wp/texts.php:581
-msgid "Product"
-msgstr ""
-
-#: admin/templates.php:132
-msgid "Product Archive"
-msgstr ""
-
-#: admin/templates.php:241
-msgctxt "post type general name"
-msgid "Templates"
-msgstr ""
-
-#: admin/templates.php:242
-msgctxt "post type singular name"
-msgid "Template"
-msgstr ""
-
-#: admin/templates.php:243
-msgctxt "admin menu"
-msgid "Templates"
-msgstr ""
-
-#: admin/templates.php:244
-msgctxt "add new on admin bar"
-msgid "Template"
-msgstr ""
-
-#: admin/templates.php:246
-msgid "Add New Template"
-msgstr ""
-
-#: admin/templates.php:247
-msgid "New Template"
-msgstr ""
-
-#: admin/templates.php:248
-msgid "Edit Template"
-msgstr ""
-
-#: admin/templates.php:249
-msgid "View Template"
-msgstr ""
-
-#: admin/templates.php:250
-msgid "Templates"
-msgstr ""
-
-#: admin/templates.php:251
-msgid "Search Templates"
-msgstr ""
-
-#: admin/templates.php:252
-msgid "Parent Templates:"
-msgstr ""
-
-#: admin/templates.php:253
-msgid "No Templates found."
-msgstr ""
-
-#: admin/templates.php:254
-msgid "No Templates found in Trash."
-msgstr ""
-
-#: admin/templates.php:263
-msgid "templates"
-msgstr ""
-
-#: admin/templates.php:292
-msgid "Display Conditions"
-msgstr ""
-
-#: admin/templates.php:344
-msgid "Unable to show the rule box."
-msgstr ""
-
-#: admin/templates.php:899
-msgid "Unable to get the rule validator for this post type."
-msgstr ""
-
-#: admin/templates.php:906
-#: admin/templates.php:927
-msgid "Invalid data version."
-msgstr ""
-
-#: admin/views/button.php:19
-#: compatibilities/gutenberg.php:90
-msgid "Back to WordPress Editor"
-msgstr ""
-
-#: admin/views/dashboard-news.php:4
-msgid "News & Updates"
-msgstr ""
-
-#: admin/views/dashboard-news.php:10
-msgid "New"
-msgstr ""
-
-#: admin/views/dashboard-news.php:19
-msgid "No News"
-msgstr ""
-
-#: admin/views/dashboard-posts.php:4
-msgid "Recently Edited"
-msgstr ""
-
-#: admin/views/dashboard.php:12
-#: public/editor-build/214-wp/texts.php:114
-msgid "Blog"
-msgstr ""
-
-#: admin/views/dashboard.php:17
-msgid "Help"
-msgstr ""
-
-#: admin/views/dashboard.php:23
-msgid "Go PRO"
-msgstr ""
-
-#: admin/views/notice.php:14
-msgid "Dismiss this notice"
-msgstr ""
-
-#: admin/views/settings/general.php:60
-#: admin/views/settings/maintenance.php:76
-#: admin/views/settings/roles.php:26
-msgid "Save Changes"
-msgstr ""
-
-#: admin/views/settings/maintenance.php:10
-msgid "Choose Mode"
-msgstr ""
-
-#: admin/views/settings/maintenance.php:14
-msgid "Disabled"
-msgstr ""
-
-#: admin/views/settings/maintenance.php:15
-msgid "Coming Soon"
-msgstr ""
-
-#: admin/views/settings/maintenance.php:16
-msgid "Maintenance"
-msgstr ""
-
-#: admin/views/settings/maintenance.php:22
-msgid "Who Can Access"
-msgstr ""
-
-#: admin/views/settings/maintenance.php:27
-#: languages/texts.php:140
-#: public/editor-build/214-wp/texts.php:206
-msgid "Custom"
-msgstr ""
-
-#: admin/views/settings/maintenance.php:33
-#: public/editor-build/214-wp/texts.php:639
+#: brizy-pro/admin/membership/membership.php:55
+#: brizy-pro/admin/membership/membership.php:215
+#: brizy/admin/views/membership/checklist.php:12
+#: brizy/public/editor-build/216-wp/texts.php:640
 msgid "Roles"
 msgstr ""
 
-#: admin/views/settings/maintenance.php:49
-msgid "Choose a Page"
+#: brizy-pro/admin/membership/membership.php:56
+msgid "Search Role"
 msgstr ""
 
-#: admin/views/settings/maintenance.php:54
-msgid "Select a page"
+#: brizy-pro/admin/membership/membership.php:57
+msgid "Parent Role:"
 msgstr ""
 
-#: admin/views/settings/maintenance.php:60
-msgid "You have no pages. Please %s create %s one."
+#: brizy-pro/admin/membership/membership.php:58
+msgid "No Roles found."
 msgstr ""
 
-#: admin/views/settings/maintenance.php:66
-msgid "Whitelisted IP Addresses"
+#: brizy-pro/admin/membership/membership.php:59
+msgid "No Roles found in Trash."
 msgstr ""
 
-#: brizy.php:66
-#: system-checks.php:37
-msgid "%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>"
+#: brizy-pro/admin/membership/membership.php:66
+#: brizy-pro/admin/white-label.php:264 brizy-pro/brizy-pro.php:57
+#: brizy-pro/brizy-pro.php:63 brizy/admin/blocks/main.php:108
+#: brizy/admin/blocks/main.php:130 brizy/admin/fonts/main.php:105
+#: brizy/admin/main.php:430 brizy/admin/main.php:487
+#: brizy/admin/stories/main.php:60 brizy/admin/templates.php:263
+#: brizy/admin/views/button.php:25 brizy/admin/views/button.php:44
+#: brizy/admin/views/settings/general.php:12 brizy/brizy.php:67
+#: brizy/brizy.php:69 brizy/brizy.php:84 brizy/brizy.php:86
+#: brizy/compatibilities/brizy-pro-compatibility.php:24
+#: brizy/compatibilities/brizy-pro-compatibility.php:25
+#: brizy/compatibilities/gutenberg.php:98
+#: brizy/compatibilities/gutenberg.php:112 brizy/editor.php:279
+#: brizy/editor.php:483 brizy/editor/editor/editor.php:177
+#: brizy/editor/forms/wordpress-integration.php:372 brizy/public/main.php:225
+#: brizy/system-checks.php:38 brizy/system-checks.php:40
+#: brizy/system-checks.php:65
+msgid "brizy"
 msgstr ""
 
-#: brizy.php:83
-msgid "%1$s failed to start. Please contact the support <a href=\"%s\">here</a>."
+#: brizy-pro/admin/membership/membership.php:66
+msgid "roles"
 msgstr ""
 
-#: content/providers/free-provider.php:117
-msgid "%s comment"
-msgid_plural "%s comments"
-msgstr[0] ""
-msgstr[1] ""
-
-#: content/providers/free-provider.php:153
-msgid "Please set a valid product"
-msgstr ""
-
-#: editor.php:286
-msgid " Template"
-msgstr ""
-
-#: editor.php:609
-msgid "Original"
-msgstr ""
-
-#: editor/asset/cleaner.php:86
-msgid "Every Ten Minutes"
-msgstr ""
-
-#: editor/block-screenshot-api.php:61
-msgid "Bad request"
-msgstr ""
-
-#: editor/block-screenshot-api.php:71
-msgid "Invalid uid string"
-msgstr ""
-
-#: editor/block-screenshot-api.php:81
-msgid "Invalid image content"
-msgstr ""
-
-#: languages/texts.php:9
-#: public/editor-build/214-wp/texts.php:656
-msgid "START BUILDING YOUR PAGE"
-msgstr ""
-
-#: languages/texts.php:10
-#: public/editor-build/214-wp/texts.php:575
-msgid "Press the button above to add blocks"
-msgstr ""
-
-#: languages/texts.php:14
-#: public/editor-build/214-wp/texts.php:658
-msgid "SWITCH TO DESKTOP"
-msgstr ""
-
-#: languages/texts.php:15
-#: public/editor-build/214-wp/texts.php:757
-msgid "Switch to desktop to add blocks"
-msgstr ""
-
-#: languages/texts.php:21
-#: public/editor-build/214-wp/texts.php:53
-msgid "Add a new block"
-msgstr ""
-
-#: languages/texts.php:22
-#: public/editor-build/214-wp/texts.php:577
-msgid "Press the button to add blocks"
-msgstr ""
-
-#: languages/texts.php:29
-#: public/editor-build/214-wp/texts.php:45
-msgid "Add Elements"
-msgstr ""
-
-#: languages/texts.php:30
-#: public/editor-build/214-wp/texts.php:779
-msgid "Text"
-msgstr ""
-
-#: languages/texts.php:31
-#: public/editor-build/214-wp/texts.php:134
-msgid "Button"
-msgstr ""
-
-#: languages/texts.php:32
-#: public/editor-build/214-wp/texts.php:381
-msgid "Icon"
-msgstr ""
-
-#: languages/texts.php:33
-#: public/editor-build/214-wp/texts.php:385
-msgid "Image"
-msgstr ""
-
-#: languages/texts.php:34
-#: public/editor-build/214-wp/texts.php:845
-msgid "Video"
-msgstr ""
-
-#: languages/texts.php:35
-#: public/editor-build/214-wp/texts.php:727
-msgid "Spacer"
-msgstr ""
-
-#: languages/texts.php:36
-#: public/editor-build/214-wp/texts.php:425
-msgid "Line"
-msgstr ""
-
-#: languages/texts.php:37
-#: public/editor-build/214-wp/texts.php:450
-msgid "Map"
-msgstr ""
-
-#: languages/texts.php:38
-#: public/editor-build/214-wp/texts.php:256
-msgid "Embed"
-msgstr ""
-
-#: languages/texts.php:39
-#: public/editor-build/214-wp/texts.php:326
-msgid "Form"
-msgstr ""
-
-#: languages/texts.php:40
-#: public/editor-build/214-wp/texts.php:382
-msgid "Icon Box"
-msgstr ""
-
-#: languages/texts.php:41
-msgid "SndCloud"
-msgstr ""
-
-#: languages/texts.php:42
-#: public/editor-build/214-wp/texts.php:198
-msgid "Counter"
-msgstr ""
-
-#: languages/texts.php:43
-#: public/editor-build/214-wp/texts.php:197
-msgid "Countdown"
-msgstr ""
-
-#: languages/texts.php:44
-#: public/editor-build/214-wp/texts.php:768
-msgid "Tabs"
-msgstr ""
-
-#: languages/texts.php:45
-#: public/editor-build/214-wp/texts.php:600
-msgid "Progress"
-msgstr ""
-
-#: languages/texts.php:46
-#: public/editor-build/214-wp/texts.php:38
-msgid "Accordion"
-msgstr ""
-
-#: languages/texts.php:47
-#: public/editor-build/214-wp/texts.php:648
-msgid "Row"
-msgstr ""
-
-#: languages/texts.php:48
-#: public/editor-build/214-wp/texts.php:170
-msgid "Column"
-msgstr ""
-
-#: languages/texts.php:49
-#: public/editor-build/214-wp/texts.php:649
-msgid "Rows"
-msgstr ""
-
-#: languages/texts.php:50
-#: public/editor-build/214-wp/texts.php:171
-msgid "Columns"
-msgstr ""
-
-#: languages/texts.php:51
-#: public/editor-build/214-wp/texts.php:58
-msgid "Add to cart"
-msgstr ""
-
-#: languages/texts.php:52
-#: public/editor-build/214-wp/texts.php:149
-msgid "Categories"
-msgstr ""
-
-#: languages/texts.php:53
-#: public/editor-build/214-wp/texts.php:419
-msgid "Layouts"
-msgstr ""
-
-#: languages/texts.php:54
-#: languages/texts.php:443
-#: public/editor-build/214-wp/texts.php:888
-msgid "layouts"
-msgstr ""
-
-#: languages/texts.php:55
-#: public/editor-build/214-wp/texts.php:887
-msgid "layout"
-msgstr ""
-
-#: languages/texts.php:57
-#: public/editor-build/214-wp/texts.php:596
-msgid "Products"
-msgstr ""
-
-#: languages/texts.php:58
-#: public/editor-build/214-wp/texts.php:691
-msgid "Shortcode"
-msgstr ""
-
-#: languages/texts.php:59
-#: public/editor-build/214-wp/texts.php:461
-msgid "Menu"
-msgstr ""
-
-#: languages/texts.php:60
-msgid "WP Menu"
-msgstr ""
-
-#: languages/texts.php:61
-#: public/editor-build/214-wp/texts.php:571
-msgid "Posts"
-msgstr ""
-
-#: languages/texts.php:62
-#: public/editor-build/214-wp/texts.php:75
-msgid "Archives"
-msgstr ""
-
-#: languages/texts.php:63
-msgid "Taxonomy"
-msgstr ""
-
-#: languages/texts.php:64
-#: public/editor-build/214-wp/texts.php:535
-msgid "Pagination"
-msgstr ""
-
-#: languages/texts.php:65
-#: public/editor-build/214-wp/texts.php:703
-msgid "Sidebar"
-msgstr ""
-
-#: languages/texts.php:67
-#: public/editor-build/214-wp/texts.php:627
-msgid "Reorder Blocks"
-msgstr ""
-
-#: languages/texts.php:68
-#: public/editor-build/214-wp/texts.php:240
-msgid "Drag to reorder"
-msgstr ""
-
-#: languages/texts.php:70
-#: public/editor-build/214-wp/texts.php:748
-msgid "Styling"
-msgstr ""
-
-#: languages/texts.php:71
-msgid "Add New Google Font"
-msgstr ""
-
-#: languages/texts.php:72
-msgid "Type font name"
-msgstr ""
-
-#: languages/texts.php:73
-#: public/editor-build/214-wp/texts.php:56
-msgid "Add new option"
-msgstr ""
-
-#: languages/texts.php:75
-#: public/editor-build/214-wp/texts.php:495
-msgid "New Style #%s"
-msgstr ""
-
-#: languages/texts.php:76
-#: public/editor-build/214-wp/texts.php:183
-msgid "Copy"
-msgstr ""
-
-#: languages/texts.php:77
-#: public/editor-build/214-wp/texts.php:541
-msgid "Paste"
-msgstr ""
-
-#: languages/texts.php:78
-#: public/editor-build/214-wp/texts.php:543
-msgid "Paste Styles"
-msgstr ""
-
-#: languages/texts.php:80
-#: public/editor-build/214-wp/texts.php:480
-msgid "Mobile view"
-msgstr ""
-
-#: languages/texts.php:81
-msgid "Tablet view"
-msgstr ""
-
-#: languages/texts.php:82
-#: public/editor-build/214-wp/texts.php:224
-msgid "Desktop"
-msgstr ""
-
-#: languages/texts.php:83
-#: public/editor-build/214-wp/texts.php:767
-msgid "Tablet"
-msgstr ""
-
-#: languages/texts.php:84
-#: public/editor-build/214-wp/texts.php:479
-msgid "Mobile"
-msgstr ""
-
-#: languages/texts.php:86
-#: public/editor-build/214-wp/texts.php:482
-msgid "More"
-msgstr ""
-
-#: languages/texts.php:87
-msgid "About Brizy"
-msgstr ""
-
-#: languages/texts.php:88
-msgid "Back to Brizy"
-msgstr ""
-
-#: languages/texts.php:89
-#: public/editor-build/214-wp/texts.php:555
-msgid "Plugin Settings"
-msgstr ""
-
-#: languages/texts.php:90
-msgid "Back to WordPress"
-msgstr ""
-
-#: languages/texts.php:91
-#: public/editor-build/214-wp/texts.php:299
-msgid "Featured Image"
-msgstr ""
-
-#: languages/texts.php:92
-msgid "Submit an Issue"
-msgstr ""
-
-#: languages/texts.php:93
-#: public/editor-build/214-wp/texts.php:831
-msgid "Upgrade to Pro"
-msgstr ""
-
-#: languages/texts.php:96
-msgid "Save HTML"
-msgstr ""
-
-#: languages/texts.php:97
-#: public/editor-build/214-wp/texts.php:825
-msgid "Update"
-msgstr ""
-
-#: languages/texts.php:98
-#: public/editor-build/214-wp/texts.php:603
-msgid "Publish"
-msgstr ""
-
-#: languages/texts.php:101
-#: public/editor-build/214-wp/texts.php:483
-msgid "More Settings"
-msgstr ""
-
-#: languages/texts.php:102
-#: public/editor-build/214-wp/texts.php:61
-msgid "Advanced"
-msgstr ""
-
-#: languages/texts.php:103
-#: public/editor-build/214-wp/texts.php:701
-msgid "Show on Desktop"
-msgstr ""
-
-#: languages/texts.php:104
-#: public/editor-build/214-wp/texts.php:226
-msgid "Disable on Mobile"
-msgstr ""
-
-#: languages/texts.php:105
-#: public/editor-build/214-wp/texts.php:227
-msgid "Disable on Tablet"
-msgstr ""
-
-#: languages/texts.php:106
-#: public/editor-build/214-wp/texts.php:258
-msgid "Enable on Mobile"
-msgstr ""
-
-#: languages/texts.php:107
-#: public/editor-build/214-wp/texts.php:259
-msgid "Enable on Tablet"
-msgstr ""
-
-#: languages/texts.php:108
-msgid "Write your CSS here..."
-msgstr ""
-
-#: languages/texts.php:109
-#: public/editor-build/214-wp/texts.php:874
-msgid "Z-index"
-msgstr ""
-
-#: languages/texts.php:110
-msgid "Anchor Name"
-msgstr ""
-
-#: languages/texts.php:111
-#: public/editor-build/214-wp/texts.php:139
-msgid "CSS Class"
-msgstr ""
-
-#: languages/texts.php:112
-#: public/editor-build/214-wp/texts.php:209
-msgid "Custom CSS"
-msgstr ""
-
-#: languages/texts.php:116
-#: public/editor-build/214-wp/texts.php:717
-msgid "Slider"
-msgstr ""
-
-#: languages/texts.php:118
-#: public/editor-build/214-wp/texts.php:448
-msgid "Make it a Slider"
-msgstr ""
-
-#: languages/texts.php:119
-#: public/editor-build/214-wp/texts.php:88
-msgid "Auto Play"
-msgstr ""
-
-#: languages/texts.php:120
-#: public/editor-build/214-wp/texts.php:733
-msgid "Speed"
-msgstr ""
-
-#: languages/texts.php:121
-#: public/editor-build/214-wp/texts.php:493
-msgid "Navigation"
-msgstr ""
-
-#: languages/texts.php:122
-#: public/editor-build/214-wp/texts.php:237
-msgid "Dots"
-msgstr ""
-
-#: languages/texts.php:123
-#: public/editor-build/214-wp/texts.php:499
-msgid "None"
-msgstr ""
-
-#: languages/texts.php:124
-#: public/editor-build/214-wp/texts.php:159
-msgid "Circle"
-msgstr ""
-
-#: languages/texts.php:125
-#: public/editor-build/214-wp/texts.php:225
-msgid "Diamond"
-msgstr ""
-
-#: languages/texts.php:126
-#: public/editor-build/214-wp/texts.php:735
-msgid "Square"
-msgstr ""
-
-#: languages/texts.php:127
-#: public/editor-build/214-wp/texts.php:78
-msgid "Arrows"
-msgstr ""
-
-#: languages/texts.php:128
-#: public/editor-build/214-wp/texts.php:79
-msgid "Arrows Spacing"
-msgstr ""
-
-#: languages/texts.php:129
-#: public/editor-build/214-wp/texts.php:785
-msgid "Thin"
-msgstr ""
-
-#: languages/texts.php:130
-#: public/editor-build/214-wp/texts.php:366
-msgid "Heavy"
-msgstr ""
-
-#: languages/texts.php:131
-#: public/editor-build/214-wp/texts.php:772
-msgid "Tail"
-msgstr ""
-
-#: languages/texts.php:132
-#: public/editor-build/214-wp/texts.php:647
-msgid "Round"
-msgstr ""
-
-#: languages/texts.php:133
-#: public/editor-build/214-wp/texts.php:522
-msgid "Outline"
-msgstr ""
-
-#: languages/texts.php:135
-#: public/editor-build/214-wp/texts.php:337
-msgid "Full Height"
-msgstr ""
-
-#: languages/texts.php:136
-#: public/editor-build/214-wp/texts.php:857
-msgid "Width"
-msgstr ""
-
-#: languages/texts.php:137
-#: public/editor-build/214-wp/texts.php:367
-msgid "Height"
-msgstr ""
-
-#: languages/texts.php:138
-#: public/editor-build/214-wp/texts.php:124
-msgid "Boxed"
-msgstr ""
-
-#: languages/texts.php:139
-#: public/editor-build/214-wp/texts.php:87
-msgid "Auto"
-msgstr ""
-
-#: languages/texts.php:141
-#: public/editor-build/214-wp/texts.php:336
-msgid "Full"
-msgstr ""
-
-#: languages/texts.php:142
-#: public/editor-build/214-wp/texts.php:379
-msgid "Hover Transition"
-msgstr ""
-
-#: languages/texts.php:144
-#: public/editor-build/214-wp/texts.php:145
-msgid "Carousel"
-msgstr ""
-
-#: languages/texts.php:145
-msgid "Swipe"
-msgstr ""
-
-#: languages/texts.php:148
-#: public/editor-build/214-wp/texts.php:478
-msgid "Missing Element"
-msgstr ""
-
-#: languages/texts.php:149
-#: public/editor-build/214-wp/texts.php:192
-msgid "Could not find"
-msgstr ""
-
-#: languages/texts.php:150
-#: public/editor-build/214-wp/texts.php:882
-msgid "component"
-msgstr ""
-
-#: languages/texts.php:153
-#: public/editor-build/214-wp/texts.php:49
-msgid "Add New Column"
-msgstr ""
-
-#: languages/texts.php:155
-#: public/editor-build/214-wp/texts.php:99
-msgid "Background"
-msgstr ""
-
-#: languages/texts.php:156
-#: public/editor-build/214-wp/texts.php:104
-msgid "Bg Size"
-msgstr ""
-
-#: languages/texts.php:157
-#: public/editor-build/214-wp/texts.php:537
-msgid "Parallax"
-msgstr ""
-
-#: languages/texts.php:158
-#: public/editor-build/214-wp/texts.php:311
-msgid "Fixed"
-msgstr ""
-
-#: languages/texts.php:159
-#: public/editor-build/214-wp/texts.php:73
-msgid "Animated"
-msgstr ""
-
-#: languages/texts.php:160
-#: public/editor-build/214-wp/texts.php:741
-msgid "Sticky"
-msgstr ""
-
-#: languages/texts.php:161
-#: public/editor-build/214-wp/texts.php:816
-msgid "URL"
-msgstr ""
-
-#: languages/texts.php:162
-#: public/editor-build/214-wp/texts.php:869
-msgid "YouTube or Vimeo"
-msgstr ""
-
-#: languages/texts.php:163
-msgid "Quality"
-msgstr ""
-
-#: languages/texts.php:164
-msgid "1080p"
-msgstr ""
-
-#: languages/texts.php:165
-msgid "720p"
-msgstr ""
-
-#: languages/texts.php:166
-#: public/editor-build/214-wp/texts.php:439
-msgid "Loop"
-msgstr ""
-
-#: languages/texts.php:167
-#: public/editor-build/214-wp/texts.php:60
-msgid "Address"
-msgstr ""
-
-#: languages/texts.php:168
-#: public/editor-build/214-wp/texts.php:264
-msgid "Enter address"
-msgstr ""
-
-#: languages/texts.php:169
-#: public/editor-build/214-wp/texts.php:875
-msgid "Zoom"
-msgstr ""
-
-#: languages/texts.php:171
-#: public/editor-build/214-wp/texts.php:169
-msgid "Colors"
-msgstr ""
-
-#: languages/texts.php:172
-#: public/editor-build/214-wp/texts.php:168
-msgid "Color"
-msgstr ""
-
-#: languages/texts.php:173
-#: public/editor-build/214-wp/texts.php:524
-msgid "Overlay"
-msgstr ""
-
-#: languages/texts.php:174
-#: public/editor-build/214-wp/texts.php:116
-msgid "Border"
-msgstr ""
-
-#: languages/texts.php:175
-#: public/editor-build/214-wp/texts.php:719
-msgid "Solid"
-msgstr ""
-
-#: languages/texts.php:176
-#: public/editor-build/214-wp/texts.php:353
-msgid "Gradient"
-msgstr ""
-
-#: languages/texts.php:177
-#: public/editor-build/214-wp/texts.php:427
-msgid "Linear"
-msgstr ""
-
-#: languages/texts.php:178
-#: public/editor-build/214-wp/texts.php:607
-msgid "Radial"
-msgstr ""
-
-#: languages/texts.php:180
-#: public/editor-build/214-wp/texts.php:246
-msgid "Dynamic Content"
-msgstr ""
-
-#: languages/texts.php:183
-#: public/editor-build/214-wp/texts.php:242
-msgid "Duplicate"
-msgstr ""
-
-#: languages/texts.php:184
-#: public/editor-build/214-wp/texts.php:220
-msgid "Delete"
-msgstr ""
-
-#: languages/texts.php:186
-#: public/editor-build/214-wp/texts.php:266
-msgid "Entrance Animation"
-msgstr ""
-
-#: languages/texts.php:187
-#: public/editor-build/214-wp/texts.php:244
-msgid "Duration"
-msgstr ""
-
-#: languages/texts.php:188
-#: public/editor-build/214-wp/texts.php:219
-msgid "Delay"
-msgstr ""
-
-#: languages/texts.php:189
-#: public/editor-build/214-wp/texts.php:118
-msgid "Bounce"
-msgstr ""
-
-#: languages/texts.php:190
-#: public/editor-build/214-wp/texts.php:312
-msgid "Flash"
-msgstr ""
-
-#: languages/texts.php:191
-#: public/editor-build/214-wp/texts.php:605
-msgid "Pulse"
-msgstr ""
-
-#: languages/texts.php:192
-#: public/editor-build/214-wp/texts.php:650
-msgid "RubberBand"
-msgstr ""
-
-#: languages/texts.php:193
-#: public/editor-build/214-wp/texts.php:685
-msgid "Shake"
-msgstr ""
-
-#: languages/texts.php:194
-#: public/editor-build/214-wp/texts.php:755
-msgid "Swing"
-msgstr ""
-
-#: languages/texts.php:195
-#: public/editor-build/214-wp/texts.php:770
-msgid "Tada"
-msgstr ""
-
-#: languages/texts.php:196
-#: public/editor-build/214-wp/texts.php:858
-msgid "Wobble"
-msgstr ""
-
-#: languages/texts.php:197
-#: public/editor-build/214-wp/texts.php:412
-msgid "Jello"
-msgstr ""
-
-#: languages/texts.php:198
-#: public/editor-build/214-wp/texts.php:119
-msgid "BounceIn"
-msgstr ""
-
-#: languages/texts.php:199
-#: public/editor-build/214-wp/texts.php:120
-msgid "BounceInDown"
-msgstr ""
-
-#: languages/texts.php:200
-#: public/editor-build/214-wp/texts.php:121
-msgid "BounceInLeft"
-msgstr ""
-
-#: languages/texts.php:201
-#: public/editor-build/214-wp/texts.php:122
-msgid "BounceInRight"
-msgstr ""
-
-#: languages/texts.php:202
-#: public/editor-build/214-wp/texts.php:123
-msgid "BounceInUp"
-msgstr ""
-
-#: languages/texts.php:203
-msgid "BounceOut"
-msgstr ""
-
-#: languages/texts.php:204
-msgid "BounceOutDown"
-msgstr ""
-
-#: languages/texts.php:205
-msgid "BounceOutLeft"
-msgstr ""
-
-#: languages/texts.php:206
-msgid "BounceOutRight"
-msgstr ""
-
-#: languages/texts.php:207
-msgid "BounceOutUp"
-msgstr ""
-
-#: languages/texts.php:208
-#: public/editor-build/214-wp/texts.php:286
-msgid "FadeIn"
-msgstr ""
-
-#: languages/texts.php:209
-#: public/editor-build/214-wp/texts.php:287
-msgid "FadeInDown"
-msgstr ""
-
-#: languages/texts.php:210
-#: public/editor-build/214-wp/texts.php:288
-msgid "FadeInDownBig"
-msgstr ""
-
-#: languages/texts.php:211
-#: public/editor-build/214-wp/texts.php:289
-msgid "FadeInLeft"
-msgstr ""
-
-#: languages/texts.php:212
-#: public/editor-build/214-wp/texts.php:290
-msgid "FadeInLeftBig"
-msgstr ""
-
-#: languages/texts.php:213
-#: public/editor-build/214-wp/texts.php:291
-msgid "FadeInRight"
-msgstr ""
-
-#: languages/texts.php:214
-#: public/editor-build/214-wp/texts.php:292
-msgid "FadeInRightBig"
-msgstr ""
-
-#: languages/texts.php:215
-#: public/editor-build/214-wp/texts.php:293
-msgid "FadeInUp"
-msgstr ""
-
-#: languages/texts.php:216
-#: public/editor-build/214-wp/texts.php:294
-msgid "FadeInUpBig"
-msgstr ""
-
-#: languages/texts.php:217
-msgid "FadeOut"
-msgstr ""
-
-#: languages/texts.php:218
-msgid "FadeOutDown"
-msgstr ""
-
-#: languages/texts.php:219
-msgid "FadeOutDownBig"
-msgstr ""
-
-#: languages/texts.php:220
-msgid "FadeOutLeft"
-msgstr ""
-
-#: languages/texts.php:221
-msgid "FadeOutLeftBig"
-msgstr ""
-
-#: languages/texts.php:222
-msgid "FadeOutRight"
-msgstr ""
-
-#: languages/texts.php:223
-msgid "FadeOutRightBig"
-msgstr ""
-
-#: languages/texts.php:224
-msgid "FadeOutUp"
-msgstr ""
-
-#: languages/texts.php:225
-msgid "FadeOutUpBig"
-msgstr ""
-
-#: languages/texts.php:226
-#: public/editor-build/214-wp/texts.php:313
-msgid "Flip"
-msgstr ""
-
-#: languages/texts.php:227
-#: public/editor-build/214-wp/texts.php:314
-msgid "FlipInX"
-msgstr ""
-
-#: languages/texts.php:228
-#: public/editor-build/214-wp/texts.php:315
-msgid "FlipInY"
-msgstr ""
-
-#: languages/texts.php:229
-msgid "FlipOutX"
-msgstr ""
-
-#: languages/texts.php:230
-msgid "FlipOutY"
-msgstr ""
-
-#: languages/texts.php:231
-#: public/editor-build/214-wp/texts.php:423
-msgid "LightSpeedIn"
-msgstr ""
-
-#: languages/texts.php:232
-#: public/editor-build/214-wp/texts.php:642
-msgid "RotateIn"
-msgstr ""
-
-#: languages/texts.php:233
-#: public/editor-build/214-wp/texts.php:643
-msgid "RotateInDownLeft"
-msgstr ""
-
-#: languages/texts.php:234
-#: public/editor-build/214-wp/texts.php:644
-msgid "RotateInDownRight"
-msgstr ""
-
-#: languages/texts.php:235
-#: public/editor-build/214-wp/texts.php:645
-msgid "RotateInUpLeft"
-msgstr ""
-
-#: languages/texts.php:236
-#: public/editor-build/214-wp/texts.php:646
-msgid "RotateInUpRight"
-msgstr ""
-
-#: languages/texts.php:237
-msgid "RotateOut"
-msgstr ""
-
-#: languages/texts.php:238
-msgid "RotateOutDownLeft"
-msgstr ""
-
-#: languages/texts.php:239
-msgid "RotateOutDownRight"
-msgstr ""
-
-#: languages/texts.php:240
-msgid "RotateOutUpLeft"
-msgstr ""
-
-#: languages/texts.php:241
-msgid "RotateOutUpRight"
-msgstr ""
-
-#: languages/texts.php:242
-#: public/editor-build/214-wp/texts.php:716
-msgid "SlideInUp"
-msgstr ""
-
-#: languages/texts.php:243
-#: public/editor-build/214-wp/texts.php:713
-msgid "SlideInDown"
-msgstr ""
-
-#: languages/texts.php:244
-#: public/editor-build/214-wp/texts.php:714
-msgid "SlideInLeft"
-msgstr ""
-
-#: languages/texts.php:245
-#: public/editor-build/214-wp/texts.php:715
-msgid "SlideInRight"
-msgstr ""
-
-#: languages/texts.php:246
-msgid "SlideOutUp"
-msgstr ""
-
-#: languages/texts.php:247
-msgid "SlideOutDown"
-msgstr ""
-
-#: languages/texts.php:248
-msgid "SlideOutLeft"
-msgstr ""
-
-#: languages/texts.php:249
-msgid "SlideOutRight"
-msgstr ""
-
-#: languages/texts.php:250
-#: public/editor-build/214-wp/texts.php:876
-msgid "ZoomIn"
-msgstr ""
-
-#: languages/texts.php:251
-#: public/editor-build/214-wp/texts.php:877
-msgid "ZoomInDown"
-msgstr ""
-
-#: languages/texts.php:252
-#: public/editor-build/214-wp/texts.php:878
-msgid "ZoomInLeft"
-msgstr ""
-
-#: languages/texts.php:253
-#: public/editor-build/214-wp/texts.php:879
-msgid "ZoomInRight"
-msgstr ""
-
-#: languages/texts.php:254
-#: public/editor-build/214-wp/texts.php:880
-msgid "ZoomInUp"
-msgstr ""
-
-#: languages/texts.php:255
-msgid "ZoomOut"
-msgstr ""
-
-#: languages/texts.php:256
-msgid "ZoomOutDown"
-msgstr ""
-
-#: languages/texts.php:257
-msgid "ZoomOutLeft"
-msgstr ""
-
-#: languages/texts.php:258
-msgid "ZoomOutRight"
-msgstr ""
-
-#: languages/texts.php:259
-msgid "ZoomOutUp"
-msgstr ""
-
-#: languages/texts.php:260
-msgid "Hinge"
-msgstr ""
-
-#: languages/texts.php:261
-#: public/editor-build/214-wp/texts.php:411
-msgid "JackInTheBox"
-msgstr ""
-
-#: languages/texts.php:262
-#: public/editor-build/214-wp/texts.php:640
-msgid "RollIn"
-msgstr ""
-
-#: languages/texts.php:263
-msgid "RollOut"
-msgstr ""
-
-#: languages/texts.php:265
-#: public/editor-build/214-wp/texts.php:179
-msgid "Content"
-msgstr ""
-
-#: languages/texts.php:266
-#: public/editor-build/214-wp/texts.php:62
-msgid "Align"
-msgstr ""
-
-#: languages/texts.php:267
-#: public/editor-build/214-wp/texts.php:562
-msgid "Position"
-msgstr ""
-
-#: languages/texts.php:269
-#: public/editor-build/214-wp/texts.php:813
-msgid "Typography"
-msgstr ""
-
-#: languages/texts.php:270
-#: public/editor-build/214-wp/texts.php:318
-msgid "Font Family"
-msgstr ""
-
-#: languages/texts.php:271
-#: public/editor-build/214-wp/texts.php:705
-msgid "Size"
-msgstr ""
-
-#: languages/texts.php:272
-#: public/editor-build/214-wp/texts.php:426
-msgid "Line Hgt."
-msgstr ""
-
-#: languages/texts.php:273
-#: public/editor-build/214-wp/texts.php:421
-msgid "Letter Sp."
-msgstr ""
-
-#: languages/texts.php:274
-#: public/editor-build/214-wp/texts.php:431
-msgid "List"
-msgstr ""
-
-#: languages/texts.php:275
-#: public/editor-build/214-wp/texts.php:115
-msgid "Bold"
-msgstr ""
-
-#: languages/texts.php:276
-#: public/editor-build/214-wp/texts.php:409
-msgid "Italic"
-msgstr ""
-
-#: languages/texts.php:277
-#: public/editor-build/214-wp/texts.php:344
-msgid "Gap Above"
-msgstr ""
-
-#: languages/texts.php:278
-#: public/editor-build/214-wp/texts.php:345
-msgid "Gap Below"
-msgstr ""
-
-#: languages/texts.php:279
-#: public/editor-build/214-wp/texts.php:361
-msgid "HTML Tag"
-msgstr ""
-
-#: languages/texts.php:280
-#: public/editor-build/214-wp/texts.php:526
-msgid "P"
-msgstr ""
-
-#: languages/texts.php:281
-#: public/editor-build/214-wp/texts.php:355
-msgid "H1"
-msgstr ""
-
-#: languages/texts.php:282
-#: public/editor-build/214-wp/texts.php:356
-msgid "H2"
-msgstr ""
-
-#: languages/texts.php:283
-#: public/editor-build/214-wp/texts.php:357
-msgid "H3"
-msgstr ""
-
-#: languages/texts.php:284
-#: public/editor-build/214-wp/texts.php:358
-msgid "H4"
-msgstr ""
-
-#: languages/texts.php:285
-#: public/editor-build/214-wp/texts.php:359
-msgid "H5"
-msgstr ""
-
-#: languages/texts.php:286
-#: public/editor-build/214-wp/texts.php:360
-msgid "H6"
-msgstr ""
-
-#: languages/texts.php:287
-#: public/editor-build/214-wp/texts.php:527
-msgid "PRE"
-msgstr ""
-
-#: languages/texts.php:288
-#: public/editor-build/214-wp/texts.php:249
-msgid "Editable Text"
-msgstr ""
-
-#: languages/texts.php:290
-#: public/editor-build/214-wp/texts.php:428
-msgid "Link"
-msgstr ""
-
-#: languages/texts.php:291
-msgid "Anchor"
-msgstr ""
-
-#: languages/texts.php:292
-#: public/editor-build/214-wp/texts.php:429
-msgid "Link to"
-msgstr ""
-
-#: languages/texts.php:293
-#: public/editor-build/214-wp/texts.php:516
-msgid "Open In New Tab"
-msgstr ""
-
-#: languages/texts.php:296
-#: public/editor-build/214-wp/texts.php:528
-msgid "Padding"
-msgstr ""
-
-#: languages/texts.php:297
-#: public/editor-build/214-wp/texts.php:451
-msgid "Margin"
-msgstr ""
-
-#: languages/texts.php:298
-#: public/editor-build/214-wp/texts.php:184
-msgid "Corner"
-msgstr ""
-
-#: languages/texts.php:299
-#: public/editor-build/214-wp/texts.php:306
-msgid "Fill"
-msgstr ""
-
-#: languages/texts.php:300
-#: public/editor-build/214-wp/texts.php:728
-msgid "Spacing"
-msgstr ""
-
-#: languages/texts.php:303
-#: public/editor-build/214-wp/texts.php:684
-msgid "Shadow"
-msgstr ""
-
-#: languages/texts.php:306
-#: public/editor-build/214-wp/texts.php:500
-msgid "Normal"
-msgstr ""
-
-#: languages/texts.php:307
-#: public/editor-build/214-wp/texts.php:378
-msgid "Hover"
-msgstr ""
-
-#: languages/texts.php:310
-#: public/editor-build/214-wp/texts.php:636
-msgid "Reverse Columns"
-msgstr ""
-
-#: languages/texts.php:315
-#: public/editor-build/214-wp/texts.php:376
-msgid "Hour"
-msgstr ""
-
-#: languages/texts.php:316
-#: public/editor-build/214-wp/texts.php:477
-msgid "Minutes"
-msgstr ""
-
-#: languages/texts.php:317
-#: public/editor-build/214-wp/texts.php:790
-msgid "Time Zone"
-msgstr ""
-
-#: languages/texts.php:318
-#: public/editor-build/214-wp/texts.php:21
-msgid "- 11:00 (Niue)"
-msgstr ""
-
-#: languages/texts.php:319
-#: public/editor-build/214-wp/texts.php:20
-msgid "- 10:00 (Honolulu, Papeete)"
-msgstr ""
-
-#: languages/texts.php:320
-#: public/editor-build/214-wp/texts.php:30
-msgid "- 9:00 (Anchorage)"
-msgstr ""
-
-#: languages/texts.php:321
-#: public/editor-build/214-wp/texts.php:29
-msgid "- 8:00 (Los Angeles)"
-msgstr ""
-
-#: languages/texts.php:322
-#: public/editor-build/214-wp/texts.php:28
-msgid "- 7:00 (Denver, Phoenix)"
-msgstr ""
-
-#: languages/texts.php:323
-#: public/editor-build/214-wp/texts.php:27
-msgid "- 6:00 (Chicago, Dallas)"
-msgstr ""
-
-#: languages/texts.php:324
-#: public/editor-build/214-wp/texts.php:26
-msgid "- 5:00 (New York, Miami)"
-msgstr ""
-
-#: languages/texts.php:325
-#: public/editor-build/214-wp/texts.php:25
-msgid "- 4:00 (Halifax, Manaus)"
-msgstr ""
-
-#: languages/texts.php:326
-#: public/editor-build/214-wp/texts.php:24
-msgid "- 3:00 (Brasilia, Santiago)"
-msgstr ""
-
-#: languages/texts.php:327
-#: public/editor-build/214-wp/texts.php:23
-msgid "- 2:00 (Noronha)"
-msgstr ""
-
-#: languages/texts.php:328
-#: public/editor-build/214-wp/texts.php:22
-msgid "- 1:00 (Cape Verde)"
-msgstr ""
-
-#: languages/texts.php:329
-#: public/editor-build/214-wp/texts.php:31
-msgid "00:00 (London, Dublin)"
-msgstr ""
-
-#: languages/texts.php:330
-#: public/editor-build/214-wp/texts.php:11
-msgid "+ 1:00 (Berlin, Paris)"
-msgstr ""
-
-#: languages/texts.php:331
-#: public/editor-build/214-wp/texts.php:12
-msgid "+ 2:00 (Athens, Istanbul)"
-msgstr ""
-
-#: languages/texts.php:332
-#: public/editor-build/214-wp/texts.php:13
-msgid "+ 3:00 (Moscow, Baghdad)"
-msgstr ""
-
-#: languages/texts.php:333
-#: public/editor-build/214-wp/texts.php:14
-msgid "+ 4:00 (Dubai, Baku)"
-msgstr ""
-
-#: languages/texts.php:334
-#: public/editor-build/214-wp/texts.php:15
-msgid "+ 5:00 (Yekaterinburg)"
-msgstr ""
-
-#: languages/texts.php:335
-msgid "+ 6:00 (Astana)"
-msgstr ""
-
-#: languages/texts.php:336
-#: public/editor-build/214-wp/texts.php:17
-msgid "+ 7:00 (Bangkok, Jakarta)"
-msgstr ""
-
-#: languages/texts.php:337
-#: public/editor-build/214-wp/texts.php:18
-msgid "+ 8:00 (Singapore, Beijing)"
-msgstr ""
-
-#: languages/texts.php:338
-#: public/editor-build/214-wp/texts.php:19
-msgid "+ 9:00 (Tokyo, Seoul)"
-msgstr ""
-
-#: languages/texts.php:339
-msgid "+ 10:00 (Sidney, Melbourne)"
-msgstr ""
-
-#: languages/texts.php:340
-#: public/editor-build/214-wp/texts.php:9
-msgid "+ 11:00 (Ponape)"
-msgstr ""
-
-#: languages/texts.php:341
-#: public/editor-build/214-wp/texts.php:10
-msgid "+ 12:00 (Auckland)"
-msgstr ""
-
-#: languages/texts.php:342
-#: public/editor-build/214-wp/texts.php:415
-msgid "Language"
-msgstr ""
-
-#: languages/texts.php:343
-#: public/editor-build/214-wp/texts.php:346
-msgid "German"
-msgstr ""
-
-#: languages/texts.php:344
-#: public/editor-build/214-wp/texts.php:263
-msgid "English"
-msgstr ""
-
-#: languages/texts.php:345
-#: public/editor-build/214-wp/texts.php:730
-msgid "Spanish"
-msgstr ""
-
-#: languages/texts.php:346
-#: public/editor-build/214-wp/texts.php:333
-msgid "French"
-msgstr ""
-
-#: languages/texts.php:347
-#: public/editor-build/214-wp/texts.php:408
-msgid "Italian"
-msgstr ""
-
-#: languages/texts.php:348
-#: public/editor-build/214-wp/texts.php:245
-msgid "Dutch"
-msgstr ""
-
-#: languages/texts.php:349
-#: public/editor-build/214-wp/texts.php:651
-msgid "Russian"
-msgstr ""
-
-#: languages/texts.php:351
-#: public/editor-build/214-wp/texts.php:738
-msgid "Start"
+#: brizy-pro/admin/membership/membership.php:133
+#: brizy-pro/admin/membership/membership.php:136
+msgid "Role updated."
 msgstr ""
 
-#: languages/texts.php:352
-#: public/editor-build/214-wp/texts.php:262
-msgid "End"
+#: brizy-pro/admin/membership/membership.php:134
+#: brizy/admin/stories/main.php:95 brizy/admin/templates.php:164
+msgid "Custom field updated."
 msgstr ""
 
-#: languages/texts.php:354
-#: public/editor-build/214-wp/texts.php:545
-msgid "Paste your code here..."
+#: brizy-pro/admin/membership/membership.php:135
+#: brizy/admin/stories/main.php:96 brizy/admin/templates.php:165
+msgid "Custom field deleted."
 msgstr ""
 
-#: languages/texts.php:356
-#: public/editor-build/214-wp/texts.php:301
-msgid "Field"
+#: brizy-pro/admin/membership/membership.php:137
+msgid "Role published."
 msgstr ""
 
-#: languages/texts.php:357
-#: public/editor-build/214-wp/texts.php:302
-msgid "Field Type"
+#: brizy-pro/admin/membership/membership.php:138
+msgid "Role saved."
 msgstr ""
 
-#: languages/texts.php:358
-#: public/editor-build/214-wp/texts.php:414
-msgid "Label"
+#: brizy-pro/admin/membership/membership.php:139
+msgid "Role submitted."
 msgstr ""
 
-#: languages/texts.php:359
-#: public/editor-build/214-wp/texts.php:465
-msgid "Message"
+#: brizy-pro/admin/settings.php:21
+msgid "Limited Access"
 msgstr ""
 
-#: languages/texts.php:360
-#: public/editor-build/214-wp/texts.php:752
-msgid "Success"
+#: brizy-pro/admin/updater.php:288
+msgid "You do not have permission to install plugin updates"
 msgstr ""
 
-#: languages/texts.php:361
-#: public/editor-build/214-wp/texts.php:267
+#: brizy-pro/admin/updater.php:288 brizy/languages/texts.php:361
+#: brizy/public/editor-build/216-wp/texts.php:268
 msgid "Error"
 msgstr ""
 
-#: languages/texts.php:362
-#: public/editor-build/214-wp/texts.php:467
-msgid "Message sent"
-msgstr ""
-
-#: languages/texts.php:363
-#: public/editor-build/214-wp/texts.php:466
-msgid "Message not sent"
-msgstr ""
-
-#: languages/texts.php:364
-#: public/editor-build/214-wp/texts.php:615
-msgid "Redirect"
-msgstr ""
-
-#: languages/texts.php:365
-#: public/editor-build/214-wp/texts.php:351
-msgid "Go to"
-msgstr ""
-
-#: languages/texts.php:366
-#: public/editor-build/214-wp/texts.php:632
-msgid "Required"
-msgstr ""
-
-#: languages/texts.php:367
-#: public/editor-build/214-wp/texts.php:252
-msgid "Email"
-msgstr ""
-
-#: languages/texts.php:368
-#: public/editor-build/214-wp/texts.php:510
-msgid "Number"
-msgstr ""
-
-#: languages/texts.php:369
-#: public/editor-build/214-wp/texts.php:536
-msgid "Paragraph"
-msgstr ""
-
-#: languages/texts.php:370
-#: public/editor-build/214-wp/texts.php:675
-msgid "Select"
-msgstr ""
-
-#: languages/texts.php:373
-#: public/editor-build/214-wp/texts.php:746
-msgid "Style"
-msgstr ""
-
-#: languages/texts.php:374
-msgid "Opacity"
-msgstr ""
-
-#: languages/texts.php:375
-msgid "Contrast"
-msgstr ""
-
-#: languages/texts.php:376
-msgid "Hue"
-msgstr ""
-
-#: languages/texts.php:377
-msgid "Brightness"
-msgstr ""
-
-#: languages/texts.php:378
-msgid "Saturation"
-msgstr ""
-
-#: languages/texts.php:380
-msgid "LightBox"
-msgstr ""
-
-#: languages/texts.php:381
-#: public/editor-build/214-wp/texts.php:517
-msgid "Open in Lightbox"
-msgstr ""
-
-#: languages/texts.php:383
-#: public/editor-build/214-wp/texts.php:341
-msgid "Gallery"
-msgstr ""
-
-#: languages/texts.php:385
-#: public/editor-build/214-wp/texts.php:548
-msgid "Percentage"
-msgstr ""
-
-#: languages/texts.php:386
-msgid "Show Percentage"
-msgstr ""
-
-#: languages/texts.php:387
-#: public/editor-build/214-wp/texts.php:100
-msgid "Bar"
-msgstr ""
-
-#: languages/texts.php:389
-#: public/editor-build/214-wp/texts.php:722
-msgid "SoundCloud"
-msgstr ""
-
-#: languages/texts.php:390
-#: public/editor-build/214-wp/texts.php:723
-msgid "SoundCloud Link"
-msgstr ""
-
-#: languages/texts.php:392
-msgid "Video Link"
-msgstr ""
-
-#: languages/texts.php:393
-#: public/editor-build/214-wp/texts.php:611
-msgid "Ratio"
-msgstr ""
-
-#: languages/texts.php:394
-#: public/editor-build/214-wp/texts.php:182
-msgid "Controls"
-msgstr ""
-
-#: languages/texts.php:395
-#: public/editor-build/214-wp/texts.php:199
-msgid "Cover"
-msgstr ""
-
-#: languages/texts.php:396
-#: public/editor-build/214-wp/texts.php:552
-msgid "Play"
-msgstr ""
-
-#: languages/texts.php:399
-#: public/editor-build/214-wp/texts.php:364
-msgid "Header"
-msgstr ""
-
-#: languages/texts.php:402
-#: public/editor-build/214-wp/texts.php:324
-msgid "Footer"
-msgstr ""
-
-#: languages/texts.php:403
-msgid "MultiPage"
-msgstr ""
-
-#: languages/texts.php:406
-#: public/editor-build/214-wp/texts.php:810
-msgid "Type"
-msgstr ""
-
-#: languages/texts.php:407
-#: public/editor-build/214-wp/texts.php:739
-msgid "Static"
-msgstr ""
-
-#: languages/texts.php:410
-#: public/editor-build/214-wp/texts.php:496
-msgid "No matches found"
-msgstr ""
-
-#: languages/texts.php:413
-#: public/editor-build/214-wp/texts.php:557
-msgid "Popup"
-msgstr ""
-
-#: languages/texts.php:414
-#: public/editor-build/214-wp/texts.php:164
-msgid "Close"
-msgstr ""
-
-#: languages/texts.php:417
-#: public/editor-build/214-wp/texts.php:174
-msgid "Comments"
-msgstr ""
-
-#: languages/texts.php:418
-#: public/editor-build/214-wp/texts.php:424
-msgid "Like"
-msgstr ""
-
-#: languages/texts.php:419
-#: public/editor-build/214-wp/texts.php:614
-msgid "Recommend"
-msgstr ""
-
-#: languages/texts.php:420
-#: public/editor-build/214-wp/texts.php:396
-msgid "Include Share Button"
-msgstr ""
-
-#: languages/texts.php:421
-#: public/editor-build/214-wp/texts.php:696
-msgid "Show Friends' Faces"
-msgstr ""
-
-#: languages/texts.php:422
-#: public/editor-build/214-wp/texts.php:694
-msgid "Show Button Counter"
-msgstr ""
-
-#: languages/texts.php:423
-msgid "Dark Scheme"
-msgstr ""
-
-#: languages/texts.php:424
-#: public/editor-build/214-wp/texts.php:775
-msgid "Target URL"
-msgstr ""
-
-#: languages/texts.php:425
-#: public/editor-build/214-wp/texts.php:205
-msgid "Current Page"
-msgstr ""
-
-#: languages/texts.php:426
-#: public/editor-build/214-wp/texts.php:210
-msgid "Custom Page"
-msgstr ""
-
-#: languages/texts.php:427
-#: public/editor-build/214-wp/texts.php:395
-msgid "Include Full Post"
-msgstr ""
-
-#: languages/texts.php:428
-#: public/editor-build/214-wp/texts.php:338
-msgid "Full Screen"
-msgstr ""
-
-#: languages/texts.php:429
-#: public/editor-build/214-wp/texts.php:91
-msgid "AutoPlay"
-msgstr ""
-
-#: languages/texts.php:430
-#: public/editor-build/214-wp/texts.php:144
-msgid "Captions"
-msgstr ""
-
-#: languages/texts.php:431
-#: public/editor-build/214-wp/texts.php:791
-msgid "Timeline"
-msgstr ""
-
-#: languages/texts.php:432
-#: public/editor-build/214-wp/texts.php:269
-msgid "Events"
-msgstr ""
-
-#: languages/texts.php:433
-#: public/editor-build/214-wp/texts.php:468
-msgid "Messages"
-msgstr ""
-
-#: languages/texts.php:434
-#: public/editor-build/214-wp/texts.php:836
-msgid "Use Small Header"
-msgstr ""
-
-#: languages/texts.php:435
-#: public/editor-build/214-wp/texts.php:371
-msgid "Hide Cover Photo"
-msgstr ""
-
-#: languages/texts.php:436
-#: public/editor-build/214-wp/texts.php:695
-msgid "Show Friend's Faces"
-msgstr ""
-
-#: languages/texts.php:437
-#: public/editor-build/214-wp/texts.php:282
-msgid "Facebook Button"
-msgstr ""
-
-#: languages/texts.php:438
-msgid "Facebook Comments"
-msgstr ""
-
-#: languages/texts.php:439
-#: public/editor-build/214-wp/texts.php:283
-msgid "Facebook Embed"
-msgstr ""
-
-#: languages/texts.php:440
-#: public/editor-build/214-wp/texts.php:285
-msgid "Facebook Page"
-msgstr ""
-
-#: languages/texts.php:442
-#: public/editor-build/214-wp/texts.php:96
-msgid "Back to Layouts"
-msgstr ""
-
-#: languages/texts.php:444
-#: public/editor-build/214-wp/texts.php:391
-msgid "Import This Layout"
-msgstr ""
-
-#: languages/texts.php:445
-#: public/editor-build/214-wp/texts.php:505
-msgid "Nothing here yet, save a block first."
-msgstr ""
-
-#: languages/texts.php:446
-#: public/editor-build/214-wp/texts.php:503
-msgid "Nothing here yet, make a global block first."
-msgstr ""
-
-#: languages/texts.php:448
-#: public/editor-build/214-wp/texts.php:606
-msgid "Query"
-msgstr ""
-
-#: languages/texts.php:449
-#: public/editor-build/214-wp/texts.php:587
-msgid "Product ID"
-msgstr ""
-
-#: languages/texts.php:450
-#: public/editor-build/214-wp/texts.php:588
-msgid "Product ID or SKU"
-msgstr ""
-
-#: languages/texts.php:451
-#: public/editor-build/214-wp/texts.php:597
-msgid "Products Count"
-msgstr ""
-
-#: languages/texts.php:452
-#: public/editor-build/214-wp/texts.php:418
-msgid "Layout"
-msgstr ""
-
-#: languages/texts.php:453
-msgid "Style Add to Cart"
-msgstr ""
-
-#: languages/texts.php:454
-#: public/editor-build/214-wp/texts.php:150
-msgid "Categories Count"
-msgstr ""
-
-#: languages/texts.php:455
-#: public/editor-build/214-wp/texts.php:518
-msgid "Order"
-msgstr ""
-
-#: languages/texts.php:456
-#: public/editor-build/214-wp/texts.php:81
-msgid "Asc"
-msgstr ""
-
-#: languages/texts.php:457
-#: public/editor-build/214-wp/texts.php:221
-msgid "Desc"
-msgstr ""
-
-#: languages/texts.php:458
-#: public/editor-build/214-wp/texts.php:519
-msgid "Order By"
-msgstr ""
-
-#: languages/texts.php:459
-#: public/editor-build/214-wp/texts.php:490
-msgid "Name"
-msgstr ""
-
-#: languages/texts.php:460
-#: public/editor-build/214-wp/texts.php:718
-msgid "Slug"
-msgstr ""
-
-#: languages/texts.php:461
-#: public/editor-build/214-wp/texts.php:222
+#: brizy-pro/admin/white-label.php:105 brizy/languages/texts.php:461
+#: brizy/public/editor-build/216-wp/texts.php:223
 msgid "Description"
 msgstr ""
 
-#: languages/texts.php:462
-#: public/editor-build/214-wp/texts.php:196
+#: brizy-pro/admin/white-label.php:185 brizy-pro/admin/white-label.php:199
+msgid "Settings saved."
+msgstr ""
+
+#: brizy-pro/admin/white-label.php:222 brizy-pro/admin/white-label.php:223
+msgid "White Label"
+msgstr ""
+
+#: brizy-pro/admin/white-label.php:382
+#, php-format
+msgid "There is a new version(%1$s) of %2$s available."
+msgstr ""
+
+#: brizy-pro/admin/white-label.php:389
+#, php-format
+msgid "There is a new version(%1$s) of %2$s available. <em>Automatic update is unavailable for this plugin.</em>"
+msgstr ""
+
+#: brizy-pro/admin/white-label.php:397
+#, php-format
+msgid "There is a new version(%1$s) of %2$s available. Please <a href=\"%3$s\" %4$s>update now</a>."
+msgstr ""
+
+#: brizy-pro/admin/white-label.php:410
+#, php-format
+msgid "There is a new version(%1$s) of %2$s available, but it doesn&#8217;t work with your version of PHP. <a href=\"%3$s\">Learn more about updating PHP</a>."
+msgstr ""
+
+#: brizy-pro/content/placeholders/comments.php:66 brizy/languages/texts.php:459
+#: brizy/public/editor-build/216-wp/texts.php:491
+msgid "Name"
+msgstr ""
+
+#: brizy-pro/content/placeholders/comments.php:74 brizy/languages/texts.php:367
+#: brizy/public/editor-build/216-wp/texts.php:253
+msgid "Email"
+msgstr ""
+
+#: brizy-pro/content/placeholders/comments.php:82
+msgid "Website"
+msgstr ""
+
+#: brizy-pro/content/placeholders/comments.php:94
+#, php-format
+msgid "Required fields are marked %s"
+msgstr ""
+
+#: brizy-pro/content/placeholders/comments.php:113
+#, php-format
+msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
+msgstr ""
+
+#: brizy-pro/content/placeholders/comments.php:121
+#, php-format
+msgid "Logged in as <a href=\"%1$s\">%2$s</a>. <a href=\"%3$s\" title=\"Log out of this account\">Log out?</a>"
+msgstr ""
+
+#: brizy-pro/content/placeholders/comments.php:130
+msgid "Your email address will not be published."
+msgstr ""
+
+#: brizy-pro/content/placeholders/excerpt.php:52
+msgid "There is no excerpt because this is a protected post."
+msgstr ""
+
+#: brizy-pro/content/placeholders/featured-img.php:149
+#: brizy/languages/texts.php:91 brizy/public/editor-build/216-wp/texts.php:300
+msgid "Featured Image"
+msgstr ""
+
+#: brizy-pro/content/providers/woocommerce.php:100
+msgid "Reviews"
+msgstr ""
+
+#: brizy-pro/content/providers/woocommerce.php:169
+msgid "SKU"
+msgstr ""
+
+#: brizy-pro/content/providers/woocommerce.php:389
+msgid "Remove this item"
+msgstr ""
+
+#: brizy-pro/content/providers/wp.php:263
+msgid "User registration URL"
+msgstr ""
+
+#: brizy-pro/main.php:368
+msgid "Dynamic content"
+msgstr ""
+
+#: brizy-pro/templates/comments.php:82
+msgid "Previous"
+msgstr ""
+
+#: brizy-pro/templates/comments.php:83
+msgid "Next"
+msgstr ""
+
+#: brizy-pro/templates/comments.php:88
+msgid "There are no reviews yet."
+msgstr ""
+
+#: brizy-pro/templates/comments.php:95
+msgid "Only logged in customers who have purchased this product may leave a review."
+msgstr ""
+
+#: brizy-pro/templates/comments.php:99
+msgid "Comments are closed."
+msgstr ""
+
+#: brizy/admin/blocks/api.php:108
+msgid "There are no block to be archived"
+msgstr ""
+
+#: brizy/admin/blocks/api.php:145
+msgid "Invalid block file"
+msgstr ""
+
+#: brizy/admin/blocks/api.php:178
+msgid "Invalid zip file provided"
+msgstr ""
+
+#: brizy/admin/blocks/main.php:108 brizy/admin/blocks/main.php:130
+msgid "global block."
+msgstr ""
+
+#: brizy/admin/cloud/cron.php:56
+msgid "Once in 5 minutes"
+msgstr ""
+
+#: brizy/admin/dashboard-widget.php:39
+#, php-format
+msgid "%s Overview"
+msgstr ""
+
+#: brizy/admin/dashboard-widget.php:82
+msgid "Parsing failed!"
+msgstr ""
+
+#: brizy/admin/feedback.php:111
+msgid "I no longer need the plugin"
+msgstr ""
+
+#: brizy/admin/feedback.php:115
+msgid "I found a better plugin"
+msgstr ""
+
+#: brizy/admin/feedback.php:116
+msgid "Please share which plugin"
+msgstr ""
+
+#: brizy/admin/feedback.php:119
+msgid "I couldn't get the plugin to work"
+msgstr ""
+
+#: brizy/admin/feedback.php:123
+msgid "It's a temporary deactivation"
+msgstr ""
+
+#: brizy/admin/feedback.php:127
+msgid "I have Brizy Pro"
+msgstr ""
+
+#: brizy/admin/feedback.php:129
+msgid "Wait! Don't deactivate Brizy. You have to activate both Brizy and Brizy Pro in order for the plugin to work."
+msgstr ""
+
+#: brizy/admin/feedback.php:132
+msgid "Other"
+msgstr ""
+
+#: brizy/admin/feedback.php:133
+msgid "Please share the reason"
+msgstr ""
+
+#: brizy/admin/feedback.php:142
+msgid "Quick Feedback"
+msgstr ""
+
+#: brizy/admin/feedback.php:146
+msgid "If you have a moment, please share why you are deactivating Brizy:"
+msgstr ""
+
+#: brizy/admin/fonts/main.php:105
+msgid "font"
+msgstr ""
+
+#: brizy/admin/form-entries.php:61
+msgid "Leads details"
+msgstr ""
+
+#: brizy/admin/form-entries.php:62 brizy/languages/texts.php:314
+#: brizy/public/editor-build/216-wp/texts.php:217
+msgid "Date"
+msgstr ""
+
+#: brizy/admin/form-entries.php:121 brizy/admin/form-entries.php:329
+#: brizy/admin/form-entries.php:341
+msgid "Leads"
+msgstr ""
+
+#: brizy/admin/form-entries.php:144
+msgid "Disable"
+msgstr ""
+
+#: brizy/admin/form-entries.php:148
+msgid "Enable "
+msgstr ""
+
+#: brizy/admin/form-entries.php:324 brizy/admin/popups/main.php:115
+#: brizy/languages/texts.php:74 brizy/public/editor-build/216-wp/texts.php:47
+msgid "Add New"
+msgstr ""
+
+#: brizy/admin/form-entries.php:325
+msgid "Add New Lead"
+msgstr ""
+
+#: brizy/admin/form-entries.php:326
+msgid "New Lead"
+msgstr ""
+
+#: brizy/admin/form-entries.php:327
+msgid "Edit Lead"
+msgstr ""
+
+#: brizy/admin/form-entries.php:328
+msgid "View Lead"
+msgstr ""
+
+#: brizy/admin/form-entries.php:330
+msgid "Search Leads"
+msgstr ""
+
+#: brizy/admin/form-entries.php:331
+msgid "Parent Leads:"
+msgstr ""
+
+#: brizy/admin/form-entries.php:332
+msgid "No Leads found."
+msgstr ""
+
+#: brizy/admin/form-entries.php:333
+msgid "No Leads found in Trash."
+msgstr ""
+
+#: brizy/admin/layouts/api.php:77
+msgid "There are no layouts to be archived"
+msgstr ""
+
+#: brizy/admin/layouts/main.php:43
+msgid "Layout."
+msgstr ""
+
+#: brizy/admin/main.php:95
+msgid "Edit or Update Image"
+msgstr ""
+
+#: brizy/admin/main.php:224 brizy/admin/network-settings.php:53
+#: brizy/compatibilities/gutenberg.php:128
+#: brizy/compatibilities/gutenberg.php:129
+msgid "brizy-logo"
+msgstr ""
+
+#: brizy/admin/main.php:248 brizy/admin/settings.php:107
+#: brizy/admin/settings.php:108 brizy/languages/texts.php:181
+#: brizy/public/editor-build/216-wp/texts.php:684
+msgid "Settings"
+msgstr ""
+
+#: brizy/admin/main.php:256 brizy/admin/settings.php:146
+msgid "Go Pro"
+msgstr ""
+
+#: brizy/admin/main.php:315
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: brizy/admin/main.php:316
+msgid "Skip & Deactivate"
+msgstr ""
+
+#: brizy/admin/main.php:430
+#, php-format
+msgid "Edit with %s"
+msgstr ""
+
+#: brizy/admin/main.php:486
+msgid "Auto Draft"
+msgstr ""
+
+#: brizy/admin/main.php:541
+#, php-format
+msgid "Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s "
+msgstr ""
+
+#: brizy/admin/network-settings.php:79 brizy/admin/settings.php:299
+msgid "No Access"
+msgstr ""
+
+#: brizy/admin/network-settings.php:82 brizy/admin/settings.php:302
+msgid "Full Access"
+msgstr ""
+
+#: brizy/admin/popups/main.php:116
+msgid "Add New Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:117
+msgid "New Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:118
+msgid "Edit Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:119
+msgid "View Popup"
+msgstr ""
+
+#: brizy/admin/popups/main.php:120 brizy/admin/popups/main.php:134
+#: brizy/public/editor-build/216-wp/texts.php:560
+msgid "Popups"
+msgstr ""
+
+#: brizy/admin/popups/main.php:121
+msgid "Search Popups"
+msgstr ""
+
+#: brizy/admin/popups/main.php:122
+msgid "Parent Popups:"
+msgstr ""
+
+#: brizy/admin/popups/main.php:123
+msgid "No Popups found."
+msgstr ""
+
+#: brizy/admin/popups/main.php:124
+msgid "No Popups found in Trash."
+msgstr ""
+
+#: brizy/admin/popups/main.php:125
+msgid "Popup attributes:"
+msgstr ""
+
+#: brizy/admin/rules/api.php:476
+msgid "From"
+msgstr ""
+
+#: brizy/admin/rules/api.php:488
+msgid "From any child of"
+msgstr ""
+
+#: brizy/admin/rules/api.php:548
+msgid "Specific"
+msgstr ""
+
+#: brizy/admin/rules/api.php:558
+msgid "Any child of"
+msgstr ""
+
+#: brizy/admin/settings.php:129
+msgid "Get Help"
+msgstr ""
+
+#: brizy/admin/settings.php:129 brizy/config.dev.php:89 brizy/config.php:92
+msgid "support-url"
+msgstr ""
+
+#: brizy/admin/settings.php:158
+msgid "General"
+msgstr ""
+
+#: brizy/admin/settings.php:164
+msgid "Role Manager"
+msgstr ""
+
+#: brizy/admin/settings.php:170
+msgid "Maintenance Mode"
+msgstr ""
+
+#: brizy/admin/stories/main.php:43 brizy/admin/stories/main.php:44
+msgid "Add New Story"
+msgstr ""
+
+#: brizy/admin/stories/main.php:45
+msgid "New Story"
+msgstr ""
+
+#: brizy/admin/stories/main.php:46
+msgid "Edit Story"
+msgstr ""
+
+#: brizy/admin/stories/main.php:47 brizy/admin/stories/main.php:117
+msgid "View Story"
+msgstr ""
+
+#: brizy/admin/stories/main.php:48
+#: brizy/public/editor-build/216-wp/texts.php:744
+msgid "Stories"
+msgstr ""
+
+#: brizy/admin/stories/main.php:49
+msgid "Search Stories"
+msgstr ""
+
+#: brizy/admin/stories/main.php:50
+msgid "Parent Stories:"
+msgstr ""
+
+#: brizy/admin/stories/main.php:51
+msgid "No Stories found."
+msgstr ""
+
+#: brizy/admin/stories/main.php:52
+msgid "No Stories found in Trash."
+msgstr ""
+
+#: brizy/admin/stories/main.php:60
+#: brizy/public/editor-build/216-wp/texts.php:894
+msgid "stories"
+msgstr ""
+
+#: brizy/admin/stories/main.php:94 brizy/admin/stories/main.php:97
+msgid "Story updated."
+msgstr ""
+
+#: brizy/admin/stories/main.php:100
+#, php-format
+msgid "Story restored to revision from %s"
+msgstr ""
+
+#: brizy/admin/stories/main.php:103
+msgid "Story published."
+msgstr ""
+
+#: brizy/admin/stories/main.php:104
+msgid "Story saved."
+msgstr ""
+
+#: brizy/admin/stories/main.php:105
+msgid "Story submitted."
+msgstr ""
+
+#: brizy/admin/stories/main.php:107
+#, php-format
+msgid "Story scheduled for: <strong>%1$s</strong>."
+msgstr ""
+
+#: brizy/admin/stories/main.php:109 brizy/admin/templates.php:178
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: brizy/admin/stories/main.php:111
+msgid "Story draft updated."
+msgstr ""
+
+#: brizy/admin/stories/main.php:126
+msgid "Preview Story"
+msgstr ""
+
+#: brizy/admin/templates.php:125
+msgid "Single"
+msgstr ""
+
+#: brizy/admin/templates.php:126 brizy/public/editor-build/216-wp/texts.php:75
+msgid "Archive"
+msgstr ""
+
+#: brizy/admin/templates.php:131 brizy/languages/texts.php:56
+#: brizy/public/editor-build/216-wp/texts.php:582
+msgid "Product"
+msgstr ""
+
+#: brizy/admin/templates.php:132
+msgid "Product Archive"
+msgstr ""
+
+#: brizy/admin/templates.php:163 brizy/admin/templates.php:166
+msgid "Template updated."
+msgstr ""
+
+#: brizy/admin/templates.php:169
+#, php-format
+msgid "Template restored to revision from %s"
+msgstr ""
+
+#: brizy/admin/templates.php:172
+msgid "Template published."
+msgstr ""
+
+#: brizy/admin/templates.php:173
+msgid "Template saved."
+msgstr ""
+
+#: brizy/admin/templates.php:174
+msgid "Template submitted."
+msgstr ""
+
+#: brizy/admin/templates.php:176
+#, php-format
+msgid "Template scheduled for: <strong>%1$s</strong>."
+msgstr ""
+
+#: brizy/admin/templates.php:180
+msgid "Template draft updated."
+msgstr ""
+
+#: brizy/admin/templates.php:186 brizy/admin/templates.php:249
+msgid "View Template"
+msgstr ""
+
+#: brizy/admin/templates.php:195
+msgid "Preview Template"
+msgstr ""
+
+#: brizy/admin/templates.php:246
+msgid "Add New Template"
+msgstr ""
+
+#: brizy/admin/templates.php:247
+msgid "New Template"
+msgstr ""
+
+#: brizy/admin/templates.php:248
+msgid "Edit Template"
+msgstr ""
+
+#: brizy/admin/templates.php:250
+msgid "Templates"
+msgstr ""
+
+#: brizy/admin/templates.php:251
+msgid "Search Templates"
+msgstr ""
+
+#: brizy/admin/templates.php:252
+msgid "Parent Templates:"
+msgstr ""
+
+#: brizy/admin/templates.php:253
+msgid "No Templates found."
+msgstr ""
+
+#: brizy/admin/templates.php:254
+msgid "No Templates found in Trash."
+msgstr ""
+
+#: brizy/admin/templates.php:263
+msgid "templates"
+msgstr ""
+
+#: brizy/admin/templates.php:292
+msgid "Display Conditions"
+msgstr ""
+
+#: brizy/admin/views/button.php:19 brizy/compatibilities/gutenberg.php:90
+msgid "Back to WordPress Editor"
+msgstr ""
+
+#: brizy/admin/views/dashboard-news.php:20
+msgid "No News"
+msgstr ""
+
+#: brizy/admin/views/notice.php:14
+msgid "Dismiss this notice"
+msgstr ""
+
+#: brizy/admin/views/settings/general.php:12
+msgid "For"
+msgstr ""
+
+#: brizy/admin/views/settings/general.php:24
+msgid "Enable SVG uploads"
+msgstr ""
+
+#: brizy/admin/views/settings/general.php:38
+msgid "Enable JSON uploads"
+msgstr ""
+
+#: brizy/admin/views/settings/general.php:60
+#: brizy/admin/views/settings/maintenance.php:76
+#: brizy/admin/views/settings/roles.php:26
+msgid "Save Changes"
+msgstr ""
+
+#: brizy/admin/views/settings/maintenance.php:60
+#, php-format
+msgid "You have no pages. Please %s create %s one."
+msgstr ""
+
+#: brizy/brizy.php:66 brizy/system-checks.php:37
+#, php-format
+msgid "%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>"
+msgstr ""
+
+#: brizy/brizy.php:83
+#, php-format
+msgid "%1$s failed to start. Please contact the support <a href=\"%s\">here</a>."
+msgstr ""
+
+#: brizy/content/providers/free-provider.php:153
+msgid "Please set a valid product"
+msgstr ""
+
+#: brizy/editor.php:279
+msgid " Template"
+msgstr ""
+
+#: brizy/editor.php:602
+msgid "Original"
+msgstr ""
+
+#: brizy/editor/auto-save-aware.php:42
+msgid "There is nothing to save. The autosave and the post content are the same."
+msgstr ""
+
+#: brizy/editor/block-screenshot-api.php:61
+msgid "Bad request"
+msgstr ""
+
+#: brizy/editor/block-screenshot-api.php:71
+msgid "Invalid uid string"
+msgstr ""
+
+#: brizy/editor/block-screenshot-api.php:81
+msgid "Invalid image content"
+msgstr ""
+
+#: brizy/editor/editor/editor.php:127
+msgid "about-url"
+msgstr ""
+
+#: brizy/editor/post.php:586
+msgid "Default"
+msgstr ""
+
+#: brizy/editor/project.php:88
+msgid "Brizy Project."
+msgstr ""
+
+#: brizy/editor/rest-extend.php:27
+msgid "Brizy attached media"
+msgstr ""
+
+#: brizy/editor/zip/archiver.php:34
+msgid "Please install/enable php zip extension. Contact your hosting company for more info and help."
+msgstr ""
+
+#: brizy/editor/zip/archiver.php:69
+msgid "Failed to create archive."
+msgstr ""
+
+#: brizy/editor/zip/archiver.php:116
+msgid "Unable to find the archive."
+msgstr ""
+
+#: brizy/editor/zip/archiver.php:190
+msgid "Unsupported object found in zip file"
+msgstr ""
+
+#: brizy/editor/zip/archiver.php:195
+msgid "Unsupported zip file version"
+msgstr ""
+
+#: brizy/editor/zip/archiver.php:321
+msgid "Filed to write font content"
+msgstr ""
+
+#: brizy/languages/texts.php:9 brizy/public/editor-build/216-wp/texts.php:657
+msgid "START BUILDING YOUR PAGE"
+msgstr ""
+
+#: brizy/languages/texts.php:11 brizy/public/editor-build/216-wp/texts.php:576
+msgid "Press the button above to add blocks"
+msgstr ""
+
+#: brizy/languages/texts.php:14 brizy/public/editor-build/216-wp/texts.php:659
+msgid "SWITCH TO DESKTOP"
+msgstr ""
+
+#: brizy/languages/texts.php:16 brizy/public/editor-build/216-wp/texts.php:758
+msgid "Switch to desktop to add blocks"
+msgstr ""
+
+#: brizy/languages/texts.php:21 brizy/public/editor-build/216-wp/texts.php:54
+msgid "Add a new block"
+msgstr ""
+
+#: brizy/languages/texts.php:23 brizy/public/editor-build/216-wp/texts.php:578
+msgid "Press the button to add blocks"
+msgstr ""
+
+#: brizy/languages/texts.php:29 brizy/public/editor-build/216-wp/texts.php:45
+msgid "Add Elements"
+msgstr ""
+
+#: brizy/languages/texts.php:30 brizy/public/editor-build/216-wp/texts.php:780
+msgid "Text"
+msgstr ""
+
+#: brizy/languages/texts.php:31 brizy/public/editor-build/216-wp/texts.php:135
+msgid "Button"
+msgstr ""
+
+#: brizy/languages/texts.php:32 brizy/public/editor-build/216-wp/texts.php:382
+msgid "Icon"
+msgstr ""
+
+#: brizy/languages/texts.php:33 brizy/public/editor-build/216-wp/texts.php:386
+msgid "Image"
+msgstr ""
+
+#: brizy/languages/texts.php:34 brizy/public/editor-build/216-wp/texts.php:846
+msgid "Video"
+msgstr ""
+
+#: brizy/languages/texts.php:35 brizy/public/editor-build/216-wp/texts.php:728
+msgid "Spacer"
+msgstr ""
+
+#: brizy/languages/texts.php:36 brizy/public/editor-build/216-wp/texts.php:426
+msgid "Line"
+msgstr ""
+
+#: brizy/languages/texts.php:37 brizy/public/editor-build/216-wp/texts.php:451
+msgid "Map"
+msgstr ""
+
+#: brizy/languages/texts.php:38 brizy/public/editor-build/216-wp/texts.php:257
+msgid "Embed"
+msgstr ""
+
+#: brizy/languages/texts.php:39 brizy/public/editor-build/216-wp/texts.php:327
+msgid "Form"
+msgstr ""
+
+#: brizy/languages/texts.php:40 brizy/public/editor-build/216-wp/texts.php:383
+msgid "Icon Box"
+msgstr ""
+
+#: brizy/languages/texts.php:41
+msgid "SndCloud"
+msgstr ""
+
+#: brizy/languages/texts.php:42 brizy/public/editor-build/216-wp/texts.php:199
+msgid "Counter"
+msgstr ""
+
+#: brizy/languages/texts.php:43 brizy/public/editor-build/216-wp/texts.php:198
+msgid "Countdown"
+msgstr ""
+
+#: brizy/languages/texts.php:44 brizy/public/editor-build/216-wp/texts.php:769
+msgid "Tabs"
+msgstr ""
+
+#: brizy/languages/texts.php:45 brizy/public/editor-build/216-wp/texts.php:601
+msgid "Progress"
+msgstr ""
+
+#: brizy/languages/texts.php:46 brizy/public/editor-build/216-wp/texts.php:38
+msgid "Accordion"
+msgstr ""
+
+#: brizy/languages/texts.php:47 brizy/public/editor-build/216-wp/texts.php:649
+msgid "Row"
+msgstr ""
+
+#: brizy/languages/texts.php:48 brizy/public/editor-build/216-wp/texts.php:171
+msgid "Column"
+msgstr ""
+
+#: brizy/languages/texts.php:49 brizy/public/editor-build/216-wp/texts.php:650
+msgid "Rows"
+msgstr ""
+
+#: brizy/languages/texts.php:50 brizy/public/editor-build/216-wp/texts.php:172
+msgid "Columns"
+msgstr ""
+
+#: brizy/languages/texts.php:51 brizy/public/editor-build/216-wp/texts.php:59
+msgid "Add to cart"
+msgstr ""
+
+#: brizy/languages/texts.php:52 brizy/public/editor-build/216-wp/texts.php:150
+msgid "Categories"
+msgstr ""
+
+#: brizy/languages/texts.php:53 brizy/public/editor-build/216-wp/texts.php:420
+msgid "Layouts"
+msgstr ""
+
+#: brizy/languages/texts.php:54 brizy/languages/texts.php:443
+#: brizy/public/editor-build/216-wp/texts.php:889
+msgid "layouts"
+msgstr ""
+
+#: brizy/languages/texts.php:55 brizy/public/editor-build/216-wp/texts.php:888
+msgid "layout"
+msgstr ""
+
+#: brizy/languages/texts.php:57 brizy/public/editor-build/216-wp/texts.php:597
+msgid "Products"
+msgstr ""
+
+#: brizy/languages/texts.php:58 brizy/public/editor-build/216-wp/texts.php:692
+msgid "Shortcode"
+msgstr ""
+
+#: brizy/languages/texts.php:59 brizy/public/editor-build/216-wp/texts.php:462
+msgid "Menu"
+msgstr ""
+
+#: brizy/languages/texts.php:60
+msgid "WP Menu"
+msgstr ""
+
+#: brizy/languages/texts.php:61 brizy/public/editor-build/216-wp/texts.php:572
+msgid "Posts"
+msgstr ""
+
+#: brizy/languages/texts.php:62 brizy/public/editor-build/216-wp/texts.php:76
+msgid "Archives"
+msgstr ""
+
+#: brizy/languages/texts.php:63
+msgid "Taxonomy"
+msgstr ""
+
+#: brizy/languages/texts.php:64 brizy/public/editor-build/216-wp/texts.php:536
+msgid "Pagination"
+msgstr ""
+
+#: brizy/languages/texts.php:65 brizy/public/editor-build/216-wp/texts.php:704
+msgid "Sidebar"
+msgstr ""
+
+#: brizy/languages/texts.php:67 brizy/public/editor-build/216-wp/texts.php:628
+msgid "Reorder Blocks"
+msgstr ""
+
+#: brizy/languages/texts.php:68 brizy/public/editor-build/216-wp/texts.php:241
+msgid "Drag to reorder"
+msgstr ""
+
+#: brizy/languages/texts.php:70 brizy/public/editor-build/216-wp/texts.php:749
+msgid "Styling"
+msgstr ""
+
+#: brizy/languages/texts.php:71
+msgid "Add New Google Font"
+msgstr ""
+
+#: brizy/languages/texts.php:72
+msgid "Type font name"
+msgstr ""
+
+#: brizy/languages/texts.php:73 brizy/public/editor-build/216-wp/texts.php:57
+msgid "Add new option"
+msgstr ""
+
+#: brizy/languages/texts.php:75 brizy/public/editor-build/216-wp/texts.php:496
+#, php-format
+msgid "New Style #%s"
+msgstr ""
+
+#: brizy/languages/texts.php:76 brizy/public/editor-build/216-wp/texts.php:184
+msgid "Copy"
+msgstr ""
+
+#: brizy/languages/texts.php:77 brizy/public/editor-build/216-wp/texts.php:542
+msgid "Paste"
+msgstr ""
+
+#: brizy/languages/texts.php:78 brizy/public/editor-build/216-wp/texts.php:544
+msgid "Paste Styles"
+msgstr ""
+
+#: brizy/languages/texts.php:80 brizy/public/editor-build/216-wp/texts.php:481
+msgid "Mobile view"
+msgstr ""
+
+#: brizy/languages/texts.php:81
+msgid "Tablet view"
+msgstr ""
+
+#: brizy/languages/texts.php:82 brizy/public/editor-build/216-wp/texts.php:225
+msgid "Desktop"
+msgstr ""
+
+#: brizy/languages/texts.php:83 brizy/public/editor-build/216-wp/texts.php:768
+msgid "Tablet"
+msgstr ""
+
+#: brizy/languages/texts.php:84 brizy/public/editor-build/216-wp/texts.php:480
+msgid "Mobile"
+msgstr ""
+
+#: brizy/languages/texts.php:86 brizy/public/editor-build/216-wp/texts.php:483
+msgid "More"
+msgstr ""
+
+#: brizy/languages/texts.php:87
+msgid "About Brizy"
+msgstr ""
+
+#: brizy/languages/texts.php:88
+msgid "Back to Brizy"
+msgstr ""
+
+#: brizy/languages/texts.php:89 brizy/public/editor-build/216-wp/texts.php:556
+msgid "Plugin Settings"
+msgstr ""
+
+#: brizy/languages/texts.php:90
+msgid "Back to WordPress"
+msgstr ""
+
+#: brizy/languages/texts.php:92
+msgid "Submit an Issue"
+msgstr ""
+
+#: brizy/languages/texts.php:93 brizy/public/editor-build/216-wp/texts.php:832
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: brizy/languages/texts.php:96
+msgid "Save HTML"
+msgstr ""
+
+#: brizy/languages/texts.php:97 brizy/public/editor-build/216-wp/texts.php:826
+msgid "Update"
+msgstr ""
+
+#: brizy/languages/texts.php:98 brizy/public/editor-build/216-wp/texts.php:604
+msgid "Publish"
+msgstr ""
+
+#: brizy/languages/texts.php:101 brizy/public/editor-build/216-wp/texts.php:484
+msgid "More Settings"
+msgstr ""
+
+#: brizy/languages/texts.php:102 brizy/public/editor-build/216-wp/texts.php:62
+msgid "Advanced"
+msgstr ""
+
+#: brizy/languages/texts.php:103 brizy/public/editor-build/216-wp/texts.php:702
+msgid "Show on Desktop"
+msgstr ""
+
+#: brizy/languages/texts.php:104 brizy/public/editor-build/216-wp/texts.php:227
+msgid "Disable on Mobile"
+msgstr ""
+
+#: brizy/languages/texts.php:105 brizy/public/editor-build/216-wp/texts.php:228
+msgid "Disable on Tablet"
+msgstr ""
+
+#: brizy/languages/texts.php:106 brizy/public/editor-build/216-wp/texts.php:259
+msgid "Enable on Mobile"
+msgstr ""
+
+#: brizy/languages/texts.php:107 brizy/public/editor-build/216-wp/texts.php:260
+msgid "Enable on Tablet"
+msgstr ""
+
+#: brizy/languages/texts.php:108
+msgid "Write your CSS here..."
+msgstr ""
+
+#: brizy/languages/texts.php:109 brizy/public/editor-build/216-wp/texts.php:875
+msgid "Z-index"
+msgstr ""
+
+#: brizy/languages/texts.php:110
+msgid "Anchor Name"
+msgstr ""
+
+#: brizy/languages/texts.php:111 brizy/public/editor-build/216-wp/texts.php:140
+msgid "CSS Class"
+msgstr ""
+
+#: brizy/languages/texts.php:112 brizy/public/editor-build/216-wp/texts.php:210
+msgid "Custom CSS"
+msgstr ""
+
+#: brizy/languages/texts.php:116 brizy/public/editor-build/216-wp/texts.php:718
+msgid "Slider"
+msgstr ""
+
+#: brizy/languages/texts.php:118 brizy/public/editor-build/216-wp/texts.php:449
+msgid "Make it a Slider"
+msgstr ""
+
+#: brizy/languages/texts.php:119 brizy/public/editor-build/216-wp/texts.php:89
+msgid "Auto Play"
+msgstr ""
+
+#: brizy/languages/texts.php:120 brizy/public/editor-build/216-wp/texts.php:734
+msgid "Speed"
+msgstr ""
+
+#: brizy/languages/texts.php:121 brizy/public/editor-build/216-wp/texts.php:494
+msgid "Navigation"
+msgstr ""
+
+#: brizy/languages/texts.php:122 brizy/public/editor-build/216-wp/texts.php:238
+msgid "Dots"
+msgstr ""
+
+#: brizy/languages/texts.php:123 brizy/public/editor-build/216-wp/texts.php:500
+msgid "None"
+msgstr ""
+
+#: brizy/languages/texts.php:124 brizy/public/editor-build/216-wp/texts.php:160
+msgid "Circle"
+msgstr ""
+
+#: brizy/languages/texts.php:125 brizy/public/editor-build/216-wp/texts.php:226
+msgid "Diamond"
+msgstr ""
+
+#: brizy/languages/texts.php:126 brizy/public/editor-build/216-wp/texts.php:736
+msgid "Square"
+msgstr ""
+
+#: brizy/languages/texts.php:127 brizy/public/editor-build/216-wp/texts.php:79
+msgid "Arrows"
+msgstr ""
+
+#: brizy/languages/texts.php:128 brizy/public/editor-build/216-wp/texts.php:80
+msgid "Arrows Spacing"
+msgstr ""
+
+#: brizy/languages/texts.php:129 brizy/public/editor-build/216-wp/texts.php:786
+msgid "Thin"
+msgstr ""
+
+#: brizy/languages/texts.php:130 brizy/public/editor-build/216-wp/texts.php:367
+msgid "Heavy"
+msgstr ""
+
+#: brizy/languages/texts.php:131 brizy/public/editor-build/216-wp/texts.php:773
+msgid "Tail"
+msgstr ""
+
+#: brizy/languages/texts.php:132 brizy/public/editor-build/216-wp/texts.php:648
+msgid "Round"
+msgstr ""
+
+#: brizy/languages/texts.php:133 brizy/public/editor-build/216-wp/texts.php:523
+msgid "Outline"
+msgstr ""
+
+#: brizy/languages/texts.php:135 brizy/public/editor-build/216-wp/texts.php:338
+msgid "Full Height"
+msgstr ""
+
+#: brizy/languages/texts.php:136 brizy/public/editor-build/216-wp/texts.php:858
+msgid "Width"
+msgstr ""
+
+#: brizy/languages/texts.php:137 brizy/public/editor-build/216-wp/texts.php:368
+msgid "Height"
+msgstr ""
+
+#: brizy/languages/texts.php:138 brizy/public/editor-build/216-wp/texts.php:125
+msgid "Boxed"
+msgstr ""
+
+#: brizy/languages/texts.php:139 brizy/public/editor-build/216-wp/texts.php:88
+msgid "Auto"
+msgstr ""
+
+#: brizy/languages/texts.php:140 brizy/public/editor-build/216-wp/texts.php:207
+msgid "Custom"
+msgstr ""
+
+#: brizy/languages/texts.php:141 brizy/public/editor-build/216-wp/texts.php:337
+msgid "Full"
+msgstr ""
+
+#: brizy/languages/texts.php:142 brizy/public/editor-build/216-wp/texts.php:380
+msgid "Hover Transition"
+msgstr ""
+
+#: brizy/languages/texts.php:144 brizy/public/editor-build/216-wp/texts.php:146
+msgid "Carousel"
+msgstr ""
+
+#: brizy/languages/texts.php:145
+msgid "Swipe"
+msgstr ""
+
+#: brizy/languages/texts.php:148 brizy/public/editor-build/216-wp/texts.php:479
+msgid "Missing Element"
+msgstr ""
+
+#: brizy/languages/texts.php:149 brizy/public/editor-build/216-wp/texts.php:193
+msgid "Could not find"
+msgstr ""
+
+#: brizy/languages/texts.php:150 brizy/public/editor-build/216-wp/texts.php:883
+msgid "component"
+msgstr ""
+
+#: brizy/languages/texts.php:153 brizy/public/editor-build/216-wp/texts.php:49
+msgid "Add New Column"
+msgstr ""
+
+#: brizy/languages/texts.php:155 brizy/public/editor-build/216-wp/texts.php:100
+msgid "Background"
+msgstr ""
+
+#: brizy/languages/texts.php:156 brizy/public/editor-build/216-wp/texts.php:105
+msgid "Bg Size"
+msgstr ""
+
+#: brizy/languages/texts.php:157 brizy/public/editor-build/216-wp/texts.php:538
+msgid "Parallax"
+msgstr ""
+
+#: brizy/languages/texts.php:158 brizy/public/editor-build/216-wp/texts.php:312
+msgid "Fixed"
+msgstr ""
+
+#: brizy/languages/texts.php:159 brizy/public/editor-build/216-wp/texts.php:74
+msgid "Animated"
+msgstr ""
+
+#: brizy/languages/texts.php:160 brizy/public/editor-build/216-wp/texts.php:742
+msgid "Sticky"
+msgstr ""
+
+#: brizy/languages/texts.php:161 brizy/public/editor-build/216-wp/texts.php:817
+msgid "URL"
+msgstr ""
+
+#: brizy/languages/texts.php:162 brizy/public/editor-build/216-wp/texts.php:870
+msgid "YouTube or Vimeo"
+msgstr ""
+
+#: brizy/languages/texts.php:163
+msgid "Quality"
+msgstr ""
+
+#: brizy/languages/texts.php:164
+msgid "1080p"
+msgstr ""
+
+#: brizy/languages/texts.php:165
+msgid "720p"
+msgstr ""
+
+#: brizy/languages/texts.php:166 brizy/public/editor-build/216-wp/texts.php:440
+msgid "Loop"
+msgstr ""
+
+#: brizy/languages/texts.php:167 brizy/public/editor-build/216-wp/texts.php:61
+msgid "Address"
+msgstr ""
+
+#: brizy/languages/texts.php:168 brizy/public/editor-build/216-wp/texts.php:265
+msgid "Enter address"
+msgstr ""
+
+#: brizy/languages/texts.php:169 brizy/public/editor-build/216-wp/texts.php:876
+msgid "Zoom"
+msgstr ""
+
+#: brizy/languages/texts.php:171 brizy/public/editor-build/216-wp/texts.php:170
+msgid "Colors"
+msgstr ""
+
+#: brizy/languages/texts.php:172 brizy/public/editor-build/216-wp/texts.php:169
+msgid "Color"
+msgstr ""
+
+#: brizy/languages/texts.php:173 brizy/public/editor-build/216-wp/texts.php:525
+msgid "Overlay"
+msgstr ""
+
+#: brizy/languages/texts.php:174 brizy/public/editor-build/216-wp/texts.php:117
+msgid "Border"
+msgstr ""
+
+#: brizy/languages/texts.php:175 brizy/public/editor-build/216-wp/texts.php:720
+msgid "Solid"
+msgstr ""
+
+#: brizy/languages/texts.php:176 brizy/public/editor-build/216-wp/texts.php:354
+msgid "Gradient"
+msgstr ""
+
+#: brizy/languages/texts.php:177 brizy/public/editor-build/216-wp/texts.php:428
+msgid "Linear"
+msgstr ""
+
+#: brizy/languages/texts.php:178 brizy/public/editor-build/216-wp/texts.php:608
+msgid "Radial"
+msgstr ""
+
+#: brizy/languages/texts.php:180 brizy/public/editor-build/216-wp/texts.php:247
+msgid "Dynamic Content"
+msgstr ""
+
+#: brizy/languages/texts.php:183 brizy/public/editor-build/216-wp/texts.php:243
+msgid "Duplicate"
+msgstr ""
+
+#: brizy/languages/texts.php:184 brizy/public/editor-build/216-wp/texts.php:221
+msgid "Delete"
+msgstr ""
+
+#: brizy/languages/texts.php:186 brizy/public/editor-build/216-wp/texts.php:267
+msgid "Entrance Animation"
+msgstr ""
+
+#: brizy/languages/texts.php:187 brizy/public/editor-build/216-wp/texts.php:245
+msgid "Duration"
+msgstr ""
+
+#: brizy/languages/texts.php:188 brizy/public/editor-build/216-wp/texts.php:220
+msgid "Delay"
+msgstr ""
+
+#: brizy/languages/texts.php:189 brizy/public/editor-build/216-wp/texts.php:119
+msgid "Bounce"
+msgstr ""
+
+#: brizy/languages/texts.php:190 brizy/public/editor-build/216-wp/texts.php:313
+msgid "Flash"
+msgstr ""
+
+#: brizy/languages/texts.php:191 brizy/public/editor-build/216-wp/texts.php:606
+msgid "Pulse"
+msgstr ""
+
+#: brizy/languages/texts.php:192 brizy/public/editor-build/216-wp/texts.php:651
+msgid "RubberBand"
+msgstr ""
+
+#: brizy/languages/texts.php:193 brizy/public/editor-build/216-wp/texts.php:686
+msgid "Shake"
+msgstr ""
+
+#: brizy/languages/texts.php:194 brizy/public/editor-build/216-wp/texts.php:756
+msgid "Swing"
+msgstr ""
+
+#: brizy/languages/texts.php:195 brizy/public/editor-build/216-wp/texts.php:771
+msgid "Tada"
+msgstr ""
+
+#: brizy/languages/texts.php:196 brizy/public/editor-build/216-wp/texts.php:859
+msgid "Wobble"
+msgstr ""
+
+#: brizy/languages/texts.php:197 brizy/public/editor-build/216-wp/texts.php:413
+msgid "Jello"
+msgstr ""
+
+#: brizy/languages/texts.php:198 brizy/public/editor-build/216-wp/texts.php:120
+msgid "BounceIn"
+msgstr ""
+
+#: brizy/languages/texts.php:199 brizy/public/editor-build/216-wp/texts.php:121
+msgid "BounceInDown"
+msgstr ""
+
+#: brizy/languages/texts.php:200 brizy/public/editor-build/216-wp/texts.php:122
+msgid "BounceInLeft"
+msgstr ""
+
+#: brizy/languages/texts.php:201 brizy/public/editor-build/216-wp/texts.php:123
+msgid "BounceInRight"
+msgstr ""
+
+#: brizy/languages/texts.php:202 brizy/public/editor-build/216-wp/texts.php:124
+msgid "BounceInUp"
+msgstr ""
+
+#: brizy/languages/texts.php:203
+msgid "BounceOut"
+msgstr ""
+
+#: brizy/languages/texts.php:204
+msgid "BounceOutDown"
+msgstr ""
+
+#: brizy/languages/texts.php:205
+msgid "BounceOutLeft"
+msgstr ""
+
+#: brizy/languages/texts.php:206
+msgid "BounceOutRight"
+msgstr ""
+
+#: brizy/languages/texts.php:207
+msgid "BounceOutUp"
+msgstr ""
+
+#: brizy/languages/texts.php:208 brizy/public/editor-build/216-wp/texts.php:287
+msgid "FadeIn"
+msgstr ""
+
+#: brizy/languages/texts.php:209 brizy/public/editor-build/216-wp/texts.php:288
+msgid "FadeInDown"
+msgstr ""
+
+#: brizy/languages/texts.php:210 brizy/public/editor-build/216-wp/texts.php:289
+msgid "FadeInDownBig"
+msgstr ""
+
+#: brizy/languages/texts.php:211 brizy/public/editor-build/216-wp/texts.php:290
+msgid "FadeInLeft"
+msgstr ""
+
+#: brizy/languages/texts.php:212 brizy/public/editor-build/216-wp/texts.php:291
+msgid "FadeInLeftBig"
+msgstr ""
+
+#: brizy/languages/texts.php:213 brizy/public/editor-build/216-wp/texts.php:292
+msgid "FadeInRight"
+msgstr ""
+
+#: brizy/languages/texts.php:214 brizy/public/editor-build/216-wp/texts.php:293
+msgid "FadeInRightBig"
+msgstr ""
+
+#: brizy/languages/texts.php:215 brizy/public/editor-build/216-wp/texts.php:294
+msgid "FadeInUp"
+msgstr ""
+
+#: brizy/languages/texts.php:216 brizy/public/editor-build/216-wp/texts.php:295
+msgid "FadeInUpBig"
+msgstr ""
+
+#: brizy/languages/texts.php:217
+msgid "FadeOut"
+msgstr ""
+
+#: brizy/languages/texts.php:218
+msgid "FadeOutDown"
+msgstr ""
+
+#: brizy/languages/texts.php:219
+msgid "FadeOutDownBig"
+msgstr ""
+
+#: brizy/languages/texts.php:220
+msgid "FadeOutLeft"
+msgstr ""
+
+#: brizy/languages/texts.php:221
+msgid "FadeOutLeftBig"
+msgstr ""
+
+#: brizy/languages/texts.php:222
+msgid "FadeOutRight"
+msgstr ""
+
+#: brizy/languages/texts.php:223
+msgid "FadeOutRightBig"
+msgstr ""
+
+#: brizy/languages/texts.php:224
+msgid "FadeOutUp"
+msgstr ""
+
+#: brizy/languages/texts.php:225
+msgid "FadeOutUpBig"
+msgstr ""
+
+#: brizy/languages/texts.php:226 brizy/public/editor-build/216-wp/texts.php:314
+msgid "Flip"
+msgstr ""
+
+#: brizy/languages/texts.php:227 brizy/public/editor-build/216-wp/texts.php:315
+msgid "FlipInX"
+msgstr ""
+
+#: brizy/languages/texts.php:228 brizy/public/editor-build/216-wp/texts.php:316
+msgid "FlipInY"
+msgstr ""
+
+#: brizy/languages/texts.php:229
+msgid "FlipOutX"
+msgstr ""
+
+#: brizy/languages/texts.php:230
+msgid "FlipOutY"
+msgstr ""
+
+#: brizy/languages/texts.php:231 brizy/public/editor-build/216-wp/texts.php:424
+msgid "LightSpeedIn"
+msgstr ""
+
+#: brizy/languages/texts.php:232 brizy/public/editor-build/216-wp/texts.php:643
+msgid "RotateIn"
+msgstr ""
+
+#: brizy/languages/texts.php:233 brizy/public/editor-build/216-wp/texts.php:644
+msgid "RotateInDownLeft"
+msgstr ""
+
+#: brizy/languages/texts.php:234 brizy/public/editor-build/216-wp/texts.php:645
+msgid "RotateInDownRight"
+msgstr ""
+
+#: brizy/languages/texts.php:235 brizy/public/editor-build/216-wp/texts.php:646
+msgid "RotateInUpLeft"
+msgstr ""
+
+#: brizy/languages/texts.php:236 brizy/public/editor-build/216-wp/texts.php:647
+msgid "RotateInUpRight"
+msgstr ""
+
+#: brizy/languages/texts.php:237
+msgid "RotateOut"
+msgstr ""
+
+#: brizy/languages/texts.php:238
+msgid "RotateOutDownLeft"
+msgstr ""
+
+#: brizy/languages/texts.php:239
+msgid "RotateOutDownRight"
+msgstr ""
+
+#: brizy/languages/texts.php:240
+msgid "RotateOutUpLeft"
+msgstr ""
+
+#: brizy/languages/texts.php:241
+msgid "RotateOutUpRight"
+msgstr ""
+
+#: brizy/languages/texts.php:242 brizy/public/editor-build/216-wp/texts.php:717
+msgid "SlideInUp"
+msgstr ""
+
+#: brizy/languages/texts.php:243 brizy/public/editor-build/216-wp/texts.php:714
+msgid "SlideInDown"
+msgstr ""
+
+#: brizy/languages/texts.php:244 brizy/public/editor-build/216-wp/texts.php:715
+msgid "SlideInLeft"
+msgstr ""
+
+#: brizy/languages/texts.php:245 brizy/public/editor-build/216-wp/texts.php:716
+msgid "SlideInRight"
+msgstr ""
+
+#: brizy/languages/texts.php:246
+msgid "SlideOutUp"
+msgstr ""
+
+#: brizy/languages/texts.php:247
+msgid "SlideOutDown"
+msgstr ""
+
+#: brizy/languages/texts.php:248
+msgid "SlideOutLeft"
+msgstr ""
+
+#: brizy/languages/texts.php:249
+msgid "SlideOutRight"
+msgstr ""
+
+#: brizy/languages/texts.php:250 brizy/public/editor-build/216-wp/texts.php:877
+msgid "ZoomIn"
+msgstr ""
+
+#: brizy/languages/texts.php:251 brizy/public/editor-build/216-wp/texts.php:878
+msgid "ZoomInDown"
+msgstr ""
+
+#: brizy/languages/texts.php:252 brizy/public/editor-build/216-wp/texts.php:879
+msgid "ZoomInLeft"
+msgstr ""
+
+#: brizy/languages/texts.php:253 brizy/public/editor-build/216-wp/texts.php:880
+msgid "ZoomInRight"
+msgstr ""
+
+#: brizy/languages/texts.php:254 brizy/public/editor-build/216-wp/texts.php:881
+msgid "ZoomInUp"
+msgstr ""
+
+#: brizy/languages/texts.php:255
+msgid "ZoomOut"
+msgstr ""
+
+#: brizy/languages/texts.php:256
+msgid "ZoomOutDown"
+msgstr ""
+
+#: brizy/languages/texts.php:257
+msgid "ZoomOutLeft"
+msgstr ""
+
+#: brizy/languages/texts.php:258
+msgid "ZoomOutRight"
+msgstr ""
+
+#: brizy/languages/texts.php:259
+msgid "ZoomOutUp"
+msgstr ""
+
+#: brizy/languages/texts.php:260
+msgid "Hinge"
+msgstr ""
+
+#: brizy/languages/texts.php:261 brizy/public/editor-build/216-wp/texts.php:412
+msgid "JackInTheBox"
+msgstr ""
+
+#: brizy/languages/texts.php:262 brizy/public/editor-build/216-wp/texts.php:641
+msgid "RollIn"
+msgstr ""
+
+#: brizy/languages/texts.php:263
+msgid "RollOut"
+msgstr ""
+
+#: brizy/languages/texts.php:265 brizy/public/editor-build/216-wp/texts.php:180
+msgid "Content"
+msgstr ""
+
+#: brizy/languages/texts.php:266 brizy/public/editor-build/216-wp/texts.php:63
+msgid "Align"
+msgstr ""
+
+#: brizy/languages/texts.php:267 brizy/public/editor-build/216-wp/texts.php:563
+msgid "Position"
+msgstr ""
+
+#: brizy/languages/texts.php:269 brizy/public/editor-build/216-wp/texts.php:814
+msgid "Typography"
+msgstr ""
+
+#: brizy/languages/texts.php:270 brizy/public/editor-build/216-wp/texts.php:319
+msgid "Font Family"
+msgstr ""
+
+#: brizy/languages/texts.php:271 brizy/public/editor-build/216-wp/texts.php:706
+msgid "Size"
+msgstr ""
+
+#: brizy/languages/texts.php:272 brizy/public/editor-build/216-wp/texts.php:427
+msgid "Line Hgt."
+msgstr ""
+
+#: brizy/languages/texts.php:273 brizy/public/editor-build/216-wp/texts.php:422
+msgid "Letter Sp."
+msgstr ""
+
+#: brizy/languages/texts.php:274 brizy/public/editor-build/216-wp/texts.php:432
+msgid "List"
+msgstr ""
+
+#: brizy/languages/texts.php:275 brizy/public/editor-build/216-wp/texts.php:116
+msgid "Bold"
+msgstr ""
+
+#: brizy/languages/texts.php:276 brizy/public/editor-build/216-wp/texts.php:410
+msgid "Italic"
+msgstr ""
+
+#: brizy/languages/texts.php:277 brizy/public/editor-build/216-wp/texts.php:345
+msgid "Gap Above"
+msgstr ""
+
+#: brizy/languages/texts.php:278 brizy/public/editor-build/216-wp/texts.php:346
+msgid "Gap Below"
+msgstr ""
+
+#: brizy/languages/texts.php:279 brizy/public/editor-build/216-wp/texts.php:362
+msgid "HTML Tag"
+msgstr ""
+
+#: brizy/languages/texts.php:280 brizy/public/editor-build/216-wp/texts.php:527
+msgid "P"
+msgstr ""
+
+#: brizy/languages/texts.php:281 brizy/public/editor-build/216-wp/texts.php:356
+msgid "H1"
+msgstr ""
+
+#: brizy/languages/texts.php:282 brizy/public/editor-build/216-wp/texts.php:357
+msgid "H2"
+msgstr ""
+
+#: brizy/languages/texts.php:283 brizy/public/editor-build/216-wp/texts.php:358
+msgid "H3"
+msgstr ""
+
+#: brizy/languages/texts.php:284 brizy/public/editor-build/216-wp/texts.php:359
+msgid "H4"
+msgstr ""
+
+#: brizy/languages/texts.php:285 brizy/public/editor-build/216-wp/texts.php:360
+msgid "H5"
+msgstr ""
+
+#: brizy/languages/texts.php:286 brizy/public/editor-build/216-wp/texts.php:361
+msgid "H6"
+msgstr ""
+
+#: brizy/languages/texts.php:287 brizy/public/editor-build/216-wp/texts.php:528
+msgid "PRE"
+msgstr ""
+
+#: brizy/languages/texts.php:288 brizy/public/editor-build/216-wp/texts.php:250
+msgid "Editable Text"
+msgstr ""
+
+#: brizy/languages/texts.php:290 brizy/public/editor-build/216-wp/texts.php:429
+msgid "Link"
+msgstr ""
+
+#: brizy/languages/texts.php:291
+msgid "Anchor"
+msgstr ""
+
+#: brizy/languages/texts.php:292 brizy/public/editor-build/216-wp/texts.php:430
+msgid "Link to"
+msgstr ""
+
+#: brizy/languages/texts.php:293 brizy/public/editor-build/216-wp/texts.php:517
+msgid "Open In New Tab"
+msgstr ""
+
+#: brizy/languages/texts.php:296 brizy/public/editor-build/216-wp/texts.php:529
+msgid "Padding"
+msgstr ""
+
+#: brizy/languages/texts.php:297 brizy/public/editor-build/216-wp/texts.php:452
+msgid "Margin"
+msgstr ""
+
+#: brizy/languages/texts.php:298 brizy/public/editor-build/216-wp/texts.php:185
+msgid "Corner"
+msgstr ""
+
+#: brizy/languages/texts.php:299 brizy/public/editor-build/216-wp/texts.php:307
+msgid "Fill"
+msgstr ""
+
+#: brizy/languages/texts.php:300 brizy/public/editor-build/216-wp/texts.php:729
+msgid "Spacing"
+msgstr ""
+
+#: brizy/languages/texts.php:303 brizy/public/editor-build/216-wp/texts.php:685
+msgid "Shadow"
+msgstr ""
+
+#: brizy/languages/texts.php:306 brizy/public/editor-build/216-wp/texts.php:501
+msgid "Normal"
+msgstr ""
+
+#: brizy/languages/texts.php:307 brizy/public/editor-build/216-wp/texts.php:379
+msgid "Hover"
+msgstr ""
+
+#: brizy/languages/texts.php:310 brizy/public/editor-build/216-wp/texts.php:637
+msgid "Reverse Columns"
+msgstr ""
+
+#: brizy/languages/texts.php:315 brizy/public/editor-build/216-wp/texts.php:377
+msgid "Hour"
+msgstr ""
+
+#: brizy/languages/texts.php:316 brizy/public/editor-build/216-wp/texts.php:478
+msgid "Minutes"
+msgstr ""
+
+#: brizy/languages/texts.php:317 brizy/public/editor-build/216-wp/texts.php:791
+msgid "Time Zone"
+msgstr ""
+
+#: brizy/languages/texts.php:318 brizy/public/editor-build/216-wp/texts.php:21
+msgid "- 11:00 (Niue)"
+msgstr ""
+
+#: brizy/languages/texts.php:319 brizy/public/editor-build/216-wp/texts.php:20
+msgid "- 10:00 (Honolulu, Papeete)"
+msgstr ""
+
+#: brizy/languages/texts.php:320 brizy/public/editor-build/216-wp/texts.php:30
+msgid "- 9:00 (Anchorage)"
+msgstr ""
+
+#: brizy/languages/texts.php:321 brizy/public/editor-build/216-wp/texts.php:29
+msgid "- 8:00 (Los Angeles)"
+msgstr ""
+
+#: brizy/languages/texts.php:322 brizy/public/editor-build/216-wp/texts.php:28
+msgid "- 7:00 (Denver, Phoenix)"
+msgstr ""
+
+#: brizy/languages/texts.php:323 brizy/public/editor-build/216-wp/texts.php:27
+msgid "- 6:00 (Chicago, Dallas)"
+msgstr ""
+
+#: brizy/languages/texts.php:324 brizy/public/editor-build/216-wp/texts.php:26
+msgid "- 5:00 (New York, Miami)"
+msgstr ""
+
+#: brizy/languages/texts.php:325 brizy/public/editor-build/216-wp/texts.php:25
+msgid "- 4:00 (Halifax, Manaus)"
+msgstr ""
+
+#: brizy/languages/texts.php:326 brizy/public/editor-build/216-wp/texts.php:24
+msgid "- 3:00 (Brasilia, Santiago)"
+msgstr ""
+
+#: brizy/languages/texts.php:327 brizy/public/editor-build/216-wp/texts.php:23
+msgid "- 2:00 (Noronha)"
+msgstr ""
+
+#: brizy/languages/texts.php:328 brizy/public/editor-build/216-wp/texts.php:22
+msgid "- 1:00 (Cape Verde)"
+msgstr ""
+
+#: brizy/languages/texts.php:329 brizy/public/editor-build/216-wp/texts.php:31
+msgid "00:00 (London, Dublin)"
+msgstr ""
+
+#: brizy/languages/texts.php:330 brizy/public/editor-build/216-wp/texts.php:11
+msgid "+ 1:00 (Berlin, Paris)"
+msgstr ""
+
+#: brizy/languages/texts.php:331 brizy/public/editor-build/216-wp/texts.php:12
+msgid "+ 2:00 (Athens, Istanbul)"
+msgstr ""
+
+#: brizy/languages/texts.php:332 brizy/public/editor-build/216-wp/texts.php:13
+msgid "+ 3:00 (Moscow, Baghdad)"
+msgstr ""
+
+#: brizy/languages/texts.php:333 brizy/public/editor-build/216-wp/texts.php:14
+msgid "+ 4:00 (Dubai, Baku)"
+msgstr ""
+
+#: brizy/languages/texts.php:334 brizy/public/editor-build/216-wp/texts.php:15
+msgid "+ 5:00 (Yekaterinburg)"
+msgstr ""
+
+#: brizy/languages/texts.php:335
+msgid "+ 6:00 (Astana)"
+msgstr ""
+
+#: brizy/languages/texts.php:336 brizy/public/editor-build/216-wp/texts.php:17
+msgid "+ 7:00 (Bangkok, Jakarta)"
+msgstr ""
+
+#: brizy/languages/texts.php:337 brizy/public/editor-build/216-wp/texts.php:18
+msgid "+ 8:00 (Singapore, Beijing)"
+msgstr ""
+
+#: brizy/languages/texts.php:338 brizy/public/editor-build/216-wp/texts.php:19
+msgid "+ 9:00 (Tokyo, Seoul)"
+msgstr ""
+
+#: brizy/languages/texts.php:339
+msgid "+ 10:00 (Sidney, Melbourne)"
+msgstr ""
+
+#: brizy/languages/texts.php:340 brizy/public/editor-build/216-wp/texts.php:9
+msgid "+ 11:00 (Ponape)"
+msgstr ""
+
+#: brizy/languages/texts.php:341 brizy/public/editor-build/216-wp/texts.php:10
+msgid "+ 12:00 (Auckland)"
+msgstr ""
+
+#: brizy/languages/texts.php:342 brizy/public/editor-build/216-wp/texts.php:416
+msgid "Language"
+msgstr ""
+
+#: brizy/languages/texts.php:343 brizy/public/editor-build/216-wp/texts.php:347
+msgid "German"
+msgstr ""
+
+#: brizy/languages/texts.php:344 brizy/public/editor-build/216-wp/texts.php:264
+msgid "English"
+msgstr ""
+
+#: brizy/languages/texts.php:345 brizy/public/editor-build/216-wp/texts.php:731
+msgid "Spanish"
+msgstr ""
+
+#: brizy/languages/texts.php:346 brizy/public/editor-build/216-wp/texts.php:334
+msgid "French"
+msgstr ""
+
+#: brizy/languages/texts.php:347 brizy/public/editor-build/216-wp/texts.php:409
+msgid "Italian"
+msgstr ""
+
+#: brizy/languages/texts.php:348 brizy/public/editor-build/216-wp/texts.php:246
+msgid "Dutch"
+msgstr ""
+
+#: brizy/languages/texts.php:349 brizy/public/editor-build/216-wp/texts.php:652
+msgid "Russian"
+msgstr ""
+
+#: brizy/languages/texts.php:351 brizy/public/editor-build/216-wp/texts.php:739
+msgid "Start"
+msgstr ""
+
+#: brizy/languages/texts.php:352 brizy/public/editor-build/216-wp/texts.php:263
+msgid "End"
+msgstr ""
+
+#: brizy/languages/texts.php:354 brizy/public/editor-build/216-wp/texts.php:546
+msgid "Paste your code here..."
+msgstr ""
+
+#: brizy/languages/texts.php:356 brizy/public/editor-build/216-wp/texts.php:302
+msgid "Field"
+msgstr ""
+
+#: brizy/languages/texts.php:357 brizy/public/editor-build/216-wp/texts.php:303
+msgid "Field Type"
+msgstr ""
+
+#: brizy/languages/texts.php:358 brizy/public/editor-build/216-wp/texts.php:415
+msgid "Label"
+msgstr ""
+
+#: brizy/languages/texts.php:359 brizy/public/editor-build/216-wp/texts.php:466
+msgid "Message"
+msgstr ""
+
+#: brizy/languages/texts.php:360 brizy/public/editor-build/216-wp/texts.php:753
+msgid "Success"
+msgstr ""
+
+#: brizy/languages/texts.php:362 brizy/public/editor-build/216-wp/texts.php:468
+msgid "Message sent"
+msgstr ""
+
+#: brizy/languages/texts.php:363 brizy/public/editor-build/216-wp/texts.php:467
+msgid "Message not sent"
+msgstr ""
+
+#: brizy/languages/texts.php:364 brizy/public/editor-build/216-wp/texts.php:616
+msgid "Redirect"
+msgstr ""
+
+#: brizy/languages/texts.php:365 brizy/public/editor-build/216-wp/texts.php:352
+msgid "Go to"
+msgstr ""
+
+#: brizy/languages/texts.php:366 brizy/public/editor-build/216-wp/texts.php:633
+msgid "Required"
+msgstr ""
+
+#: brizy/languages/texts.php:368 brizy/public/editor-build/216-wp/texts.php:511
+msgid "Number"
+msgstr ""
+
+#: brizy/languages/texts.php:369 brizy/public/editor-build/216-wp/texts.php:537
+msgid "Paragraph"
+msgstr ""
+
+#: brizy/languages/texts.php:370 brizy/public/editor-build/216-wp/texts.php:676
+msgid "Select"
+msgstr ""
+
+#: brizy/languages/texts.php:373 brizy/public/editor-build/216-wp/texts.php:747
+msgid "Style"
+msgstr ""
+
+#: brizy/languages/texts.php:374
+msgid "Opacity"
+msgstr ""
+
+#: brizy/languages/texts.php:375
+msgid "Contrast"
+msgstr ""
+
+#: brizy/languages/texts.php:376
+msgid "Hue"
+msgstr ""
+
+#: brizy/languages/texts.php:377
+msgid "Brightness"
+msgstr ""
+
+#: brizy/languages/texts.php:378
+msgid "Saturation"
+msgstr ""
+
+#: brizy/languages/texts.php:380
+msgid "LightBox"
+msgstr ""
+
+#: brizy/languages/texts.php:381 brizy/public/editor-build/216-wp/texts.php:518
+msgid "Open in Lightbox"
+msgstr ""
+
+#: brizy/languages/texts.php:383 brizy/public/editor-build/216-wp/texts.php:342
+msgid "Gallery"
+msgstr ""
+
+#: brizy/languages/texts.php:385 brizy/public/editor-build/216-wp/texts.php:549
+msgid "Percentage"
+msgstr ""
+
+#: brizy/languages/texts.php:386
+msgid "Show Percentage"
+msgstr ""
+
+#: brizy/languages/texts.php:387 brizy/public/editor-build/216-wp/texts.php:101
+msgid "Bar"
+msgstr ""
+
+#: brizy/languages/texts.php:389 brizy/public/editor-build/216-wp/texts.php:723
+msgid "SoundCloud"
+msgstr ""
+
+#: brizy/languages/texts.php:390 brizy/public/editor-build/216-wp/texts.php:724
+msgid "SoundCloud Link"
+msgstr ""
+
+#: brizy/languages/texts.php:392
+msgid "Video Link"
+msgstr ""
+
+#: brizy/languages/texts.php:393 brizy/public/editor-build/216-wp/texts.php:612
+msgid "Ratio"
+msgstr ""
+
+#: brizy/languages/texts.php:394 brizy/public/editor-build/216-wp/texts.php:183
+msgid "Controls"
+msgstr ""
+
+#: brizy/languages/texts.php:395 brizy/public/editor-build/216-wp/texts.php:200
+msgid "Cover"
+msgstr ""
+
+#: brizy/languages/texts.php:396 brizy/public/editor-build/216-wp/texts.php:553
+msgid "Play"
+msgstr ""
+
+#: brizy/languages/texts.php:399 brizy/public/editor-build/216-wp/texts.php:365
+msgid "Header"
+msgstr ""
+
+#: brizy/languages/texts.php:402 brizy/public/editor-build/216-wp/texts.php:325
+msgid "Footer"
+msgstr ""
+
+#: brizy/languages/texts.php:403
+msgid "MultiPage"
+msgstr ""
+
+#: brizy/languages/texts.php:406 brizy/public/editor-build/216-wp/texts.php:811
+msgid "Type"
+msgstr ""
+
+#: brizy/languages/texts.php:407 brizy/public/editor-build/216-wp/texts.php:740
+msgid "Static"
+msgstr ""
+
+#: brizy/languages/texts.php:410 brizy/public/editor-build/216-wp/texts.php:497
+msgid "No matches found"
+msgstr ""
+
+#: brizy/languages/texts.php:413 brizy/public/editor-build/216-wp/texts.php:558
+msgid "Popup"
+msgstr ""
+
+#: brizy/languages/texts.php:414 brizy/public/editor-build/216-wp/texts.php:165
+msgid "Close"
+msgstr ""
+
+#: brizy/languages/texts.php:417 brizy/public/editor-build/216-wp/texts.php:175
+msgid "Comments"
+msgstr ""
+
+#: brizy/languages/texts.php:418 brizy/public/editor-build/216-wp/texts.php:425
+msgid "Like"
+msgstr ""
+
+#: brizy/languages/texts.php:419 brizy/public/editor-build/216-wp/texts.php:615
+msgid "Recommend"
+msgstr ""
+
+#: brizy/languages/texts.php:420 brizy/public/editor-build/216-wp/texts.php:397
+msgid "Include Share Button"
+msgstr ""
+
+#: brizy/languages/texts.php:421 brizy/public/editor-build/216-wp/texts.php:697
+msgid "Show Friends' Faces"
+msgstr ""
+
+#: brizy/languages/texts.php:422 brizy/public/editor-build/216-wp/texts.php:695
+msgid "Show Button Counter"
+msgstr ""
+
+#: brizy/languages/texts.php:423
+msgid "Dark Scheme"
+msgstr ""
+
+#: brizy/languages/texts.php:424 brizy/public/editor-build/216-wp/texts.php:776
+msgid "Target URL"
+msgstr ""
+
+#: brizy/languages/texts.php:425 brizy/public/editor-build/216-wp/texts.php:206
+msgid "Current Page"
+msgstr ""
+
+#: brizy/languages/texts.php:426 brizy/public/editor-build/216-wp/texts.php:211
+msgid "Custom Page"
+msgstr ""
+
+#: brizy/languages/texts.php:427 brizy/public/editor-build/216-wp/texts.php:396
+msgid "Include Full Post"
+msgstr ""
+
+#: brizy/languages/texts.php:428 brizy/public/editor-build/216-wp/texts.php:339
+msgid "Full Screen"
+msgstr ""
+
+#: brizy/languages/texts.php:429 brizy/public/editor-build/216-wp/texts.php:92
+msgid "AutoPlay"
+msgstr ""
+
+#: brizy/languages/texts.php:430 brizy/public/editor-build/216-wp/texts.php:145
+msgid "Captions"
+msgstr ""
+
+#: brizy/languages/texts.php:431 brizy/public/editor-build/216-wp/texts.php:792
+msgid "Timeline"
+msgstr ""
+
+#: brizy/languages/texts.php:432 brizy/public/editor-build/216-wp/texts.php:270
+msgid "Events"
+msgstr ""
+
+#: brizy/languages/texts.php:433 brizy/public/editor-build/216-wp/texts.php:469
+msgid "Messages"
+msgstr ""
+
+#: brizy/languages/texts.php:434 brizy/public/editor-build/216-wp/texts.php:837
+msgid "Use Small Header"
+msgstr ""
+
+#: brizy/languages/texts.php:435 brizy/public/editor-build/216-wp/texts.php:372
+msgid "Hide Cover Photo"
+msgstr ""
+
+#: brizy/languages/texts.php:436 brizy/public/editor-build/216-wp/texts.php:696
+msgid "Show Friend's Faces"
+msgstr ""
+
+#: brizy/languages/texts.php:437 brizy/public/editor-build/216-wp/texts.php:283
+msgid "Facebook Button"
+msgstr ""
+
+#: brizy/languages/texts.php:438
+msgid "Facebook Comments"
+msgstr ""
+
+#: brizy/languages/texts.php:439 brizy/public/editor-build/216-wp/texts.php:284
+msgid "Facebook Embed"
+msgstr ""
+
+#: brizy/languages/texts.php:440 brizy/public/editor-build/216-wp/texts.php:286
+msgid "Facebook Page"
+msgstr ""
+
+#: brizy/languages/texts.php:442 brizy/public/editor-build/216-wp/texts.php:97
+msgid "Back to Layouts"
+msgstr ""
+
+#: brizy/languages/texts.php:444 brizy/public/editor-build/216-wp/texts.php:392
+msgid "Import This Layout"
+msgstr ""
+
+#: brizy/languages/texts.php:445 brizy/public/editor-build/216-wp/texts.php:506
+msgid "Nothing here yet, save a block first."
+msgstr ""
+
+#: brizy/languages/texts.php:446 brizy/public/editor-build/216-wp/texts.php:504
+msgid "Nothing here yet, make a global block first."
+msgstr ""
+
+#: brizy/languages/texts.php:448 brizy/public/editor-build/216-wp/texts.php:607
+msgid "Query"
+msgstr ""
+
+#: brizy/languages/texts.php:449 brizy/public/editor-build/216-wp/texts.php:588
+msgid "Product ID"
+msgstr ""
+
+#: brizy/languages/texts.php:450 brizy/public/editor-build/216-wp/texts.php:589
+msgid "Product ID or SKU"
+msgstr ""
+
+#: brizy/languages/texts.php:451 brizy/public/editor-build/216-wp/texts.php:598
+msgid "Products Count"
+msgstr ""
+
+#: brizy/languages/texts.php:452 brizy/public/editor-build/216-wp/texts.php:419
+msgid "Layout"
+msgstr ""
+
+#: brizy/languages/texts.php:453
+msgid "Style Add to Cart"
+msgstr ""
+
+#: brizy/languages/texts.php:454 brizy/public/editor-build/216-wp/texts.php:151
+msgid "Categories Count"
+msgstr ""
+
+#: brizy/languages/texts.php:455 brizy/public/editor-build/216-wp/texts.php:519
+msgid "Order"
+msgstr ""
+
+#: brizy/languages/texts.php:456 brizy/public/editor-build/216-wp/texts.php:82
+msgid "Asc"
+msgstr ""
+
+#: brizy/languages/texts.php:457 brizy/public/editor-build/216-wp/texts.php:222
+msgid "Desc"
+msgstr ""
+
+#: brizy/languages/texts.php:458 brizy/public/editor-build/216-wp/texts.php:520
+msgid "Order By"
+msgstr ""
+
+#: brizy/languages/texts.php:460 brizy/public/editor-build/216-wp/texts.php:719
+msgid "Slug"
+msgstr ""
+
+#: brizy/languages/texts.php:462 brizy/public/editor-build/216-wp/texts.php:197
 msgid "Count"
 msgstr ""
 
-#: languages/texts.php:463
-#: public/editor-build/214-wp/texts.php:529
+#: brizy/languages/texts.php:463 brizy/public/editor-build/216-wp/texts.php:530
 msgid "Page"
 msgstr ""
 
-#: languages/texts.php:464
-#: public/editor-build/214-wp/texts.php:146
+#: brizy/languages/texts.php:464 brizy/public/editor-build/216-wp/texts.php:147
 msgid "Cart"
 msgstr ""
 
-#: languages/texts.php:465
-#: public/editor-build/214-wp/texts.php:157
+#: brizy/languages/texts.php:465 brizy/public/editor-build/216-wp/texts.php:158
 msgid "Checkout"
 msgstr ""
 
-#: languages/texts.php:466
-#: public/editor-build/214-wp/texts.php:488
+#: brizy/languages/texts.php:466 brizy/public/editor-build/216-wp/texts.php:489
 msgid "My Account"
 msgstr ""
 
-#: languages/texts.php:467
-#: public/editor-build/214-wp/texts.php:520
+#: brizy/languages/texts.php:467 brizy/public/editor-build/216-wp/texts.php:521
 msgid "Order Tracking"
 msgstr ""
 
-#: languages/texts.php:468
-#: public/editor-build/214-wp/texts.php:307
+#: brizy/languages/texts.php:468 brizy/public/editor-build/216-wp/texts.php:308
 msgid "Filter"
 msgstr ""
 
-#: languages/texts.php:469
-#: public/editor-build/214-wp/texts.php:797
+#: brizy/languages/texts.php:469 brizy/public/editor-build/216-wp/texts.php:798
 msgid "Title"
 msgstr ""
 
-#: languages/texts.php:470
-#: public/editor-build/214-wp/texts.php:610
+#: brizy/languages/texts.php:470 brizy/public/editor-build/216-wp/texts.php:611
 msgid "Rating"
 msgstr ""
 
-#: languages/texts.php:471
-#: public/editor-build/214-wp/texts.php:556
+#: brizy/languages/texts.php:471 brizy/public/editor-build/216-wp/texts.php:557
 msgid "Popularity"
 msgstr ""
 
-#: languages/texts.php:472
-#: public/editor-build/214-wp/texts.php:463
+#: brizy/languages/texts.php:472 brizy/public/editor-build/216-wp/texts.php:464
 msgid "Menu Order"
 msgstr ""
 
-#: languages/texts.php:473
-#: public/editor-build/214-wp/texts.php:609
+#: brizy/languages/texts.php:473 brizy/public/editor-build/216-wp/texts.php:610
 msgid "Random"
 msgstr ""
 
-#: languages/texts.php:474
-#: public/editor-build/214-wp/texts.php:380
+#: brizy/languages/texts.php:474 brizy/public/editor-build/216-wp/texts.php:381
 msgid "ID"
 msgstr ""
 
-#: languages/texts.php:475
+#: brizy/languages/texts.php:475
 msgid "Paste your wordpress shortcode here..."
 msgstr ""
 
-#: languages/texts.php:476
-#: public/editor-build/214-wp/texts.php:855
+#: brizy/languages/texts.php:476 brizy/public/editor-build/216-wp/texts.php:856
 msgid "Weight"
 msgstr ""
 
-#: languages/texts.php:477
-#: public/editor-build/214-wp/texts.php:569
+#: brizy/languages/texts.php:477 brizy/public/editor-build/216-wp/texts.php:570
 msgid "Post Type"
 msgstr ""
 
-#: languages/texts.php:478
-#: public/editor-build/214-wp/texts.php:563
+#: brizy/languages/texts.php:478 brizy/public/editor-build/216-wp/texts.php:564
 msgid "Post"
 msgstr ""
 
-#: languages/texts.php:479
+#: brizy/languages/texts.php:479
 msgid "Number posts"
 msgstr ""
 
-#: languages/texts.php:480
-#: public/editor-build/214-wp/texts.php:153
+#: brizy/languages/texts.php:480 brizy/public/editor-build/216-wp/texts.php:154
 msgid "Category"
 msgstr ""
 
-#: languages/texts.php:481
-#: public/editor-build/214-wp/texts.php:86
+#: brizy/languages/texts.php:481 brizy/public/editor-build/216-wp/texts.php:87
 msgid "Author"
 msgstr ""
 
-#: languages/texts.php:482
-#: public/editor-build/214-wp/texts.php:393
+#: brizy/languages/texts.php:482 brizy/public/editor-build/216-wp/texts.php:394
 msgid "Include"
 msgstr ""
 
-#: languages/texts.php:483
-#: public/editor-build/214-wp/texts.php:271
+#: brizy/languages/texts.php:483 brizy/public/editor-build/216-wp/texts.php:272
 msgid "Exclude"
 msgstr ""
 
-#: languages/texts.php:484
-#: public/editor-build/214-wp/texts.php:740
+#: brizy/languages/texts.php:484 brizy/public/editor-build/216-wp/texts.php:741
 msgid "Status"
 msgstr ""
 
-#: languages/texts.php:485
-#: public/editor-build/214-wp/texts.php:340
+#: brizy/languages/texts.php:485 brizy/public/editor-build/216-wp/texts.php:341
 msgid "Future"
 msgstr ""
 
-#: languages/texts.php:486
-#: public/editor-build/214-wp/texts.php:239
+#: brizy/languages/texts.php:486 brizy/public/editor-build/216-wp/texts.php:240
 msgid "Draft"
 msgstr ""
 
-#: languages/texts.php:487
-#: public/editor-build/214-wp/texts.php:546
+#: brizy/languages/texts.php:487 brizy/public/editor-build/216-wp/texts.php:547
 msgid "Pending"
 msgstr ""
 
-#: languages/texts.php:488
-#: public/editor-build/214-wp/texts.php:580
+#: brizy/languages/texts.php:488 brizy/public/editor-build/216-wp/texts.php:581
 msgid "Private"
 msgstr ""
 
-#: languages/texts.php:489
-#: public/editor-build/214-wp/texts.php:803
+#: brizy/languages/texts.php:489 brizy/public/editor-build/216-wp/texts.php:804
 msgid "Trash"
 msgstr ""
 
-#: languages/texts.php:490
-#: public/editor-build/214-wp/texts.php:90
+#: brizy/languages/texts.php:490 brizy/public/editor-build/216-wp/texts.php:91
 msgid "Auto-Draft"
 msgstr ""
 
-#: languages/texts.php:491
-#: public/editor-build/214-wp/texts.php:400
+#: brizy/languages/texts.php:491 brizy/public/editor-build/216-wp/texts.php:401
 msgid "Inherit"
 msgstr ""
 
-#: languages/texts.php:492
-#: public/editor-build/214-wp/texts.php:471
+#: brizy/languages/texts.php:492 brizy/public/editor-build/216-wp/texts.php:472
 msgid "Meta Key"
 msgstr ""
 
-#: languages/texts.php:493
-#: public/editor-build/214-wp/texts.php:472
+#: brizy/languages/texts.php:493 brizy/public/editor-build/216-wp/texts.php:473
 msgid "Meta Value"
 msgstr ""
 
-#: languages/texts.php:494
-#: public/editor-build/214-wp/texts.php:481
+#: brizy/languages/texts.php:494 brizy/public/editor-build/216-wp/texts.php:482
 msgid "Modified"
 msgstr ""
 
-#: languages/texts.php:495
-#: public/editor-build/214-wp/texts.php:538
+#: brizy/languages/texts.php:495 brizy/public/editor-build/216-wp/texts.php:539
 msgid "Parent"
 msgstr ""
 
-#: languages/texts.php:496
-#: public/editor-build/214-wp/texts.php:173
+#: brizy/languages/texts.php:496 brizy/public/editor-build/216-wp/texts.php:174
 msgid "Comment Count"
 msgstr ""
 
-#: languages/texts.php:497
-#: public/editor-build/214-wp/texts.php:308
+#: brizy/languages/texts.php:497 brizy/public/editor-build/216-wp/texts.php:309
 msgid "Filter By"
 msgstr ""
 
-#: languages/texts.php:498
-#: public/editor-build/214-wp/texts.php:108
+#: brizy/languages/texts.php:498 brizy/public/editor-build/216-wp/texts.php:109
 msgid "Block"
 msgstr ""
 
-#: languages/texts.php:499
-#: public/editor-build/214-wp/texts.php:445
+#: brizy/languages/texts.php:499 brizy/public/editor-build/216-wp/texts.php:446
 msgid "Make it Global"
 msgstr ""
 
-#: languages/texts.php:500
-#: public/editor-build/214-wp/texts.php:661
+#: brizy/languages/texts.php:500 brizy/public/editor-build/216-wp/texts.php:662
 msgid "Save"
 msgstr ""
 
-#: languages/texts.php:501
-#: public/editor-build/214-wp/texts.php:113
+#: brizy/languages/texts.php:501 brizy/public/editor-build/216-wp/texts.php:114
 msgid "Blocks"
 msgstr ""
 
-#: languages/texts.php:502
+#: brizy/languages/texts.php:502
 msgid "Saved Blocks"
 msgstr ""
 
-#: languages/texts.php:503
-#: public/editor-build/214-wp/texts.php:348
+#: brizy/languages/texts.php:503 brizy/public/editor-build/216-wp/texts.php:349
 msgid "Global Blocks"
 msgstr ""
 
-#: languages/texts.php:504
-#: public/editor-build/214-wp/texts.php:422
+#: brizy/languages/texts.php:504 brizy/public/editor-build/216-wp/texts.php:423
 msgid "Light"
 msgstr ""
 
-#: languages/texts.php:505
-#: public/editor-build/214-wp/texts.php:215
+#: brizy/languages/texts.php:505 brizy/public/editor-build/216-wp/texts.php:216
 msgid "Dark"
 msgstr ""
 
-#: languages/texts.php:506
-#: public/editor-build/214-wp/texts.php:66
+#: brizy/languages/texts.php:506 brizy/public/editor-build/216-wp/texts.php:67
 msgid "All Categories"
 msgstr ""
 
-#: languages/texts.php:507
+#: brizy/languages/texts.php:507
 msgid "Enter Search Keyword"
 msgstr ""
 
-#: languages/texts.php:508
-#: public/editor-build/214-wp/texts.php:812
+#: brizy/languages/texts.php:508 brizy/public/editor-build/216-wp/texts.php:813
 msgid "Type to search"
 msgstr ""
 
-#: languages/texts.php:509
+#: brizy/languages/texts.php:509
 msgid "Add a blank block"
 msgstr ""
 
-#: languages/texts.php:510
+#: brizy/languages/texts.php:510
 msgid "An error happened while trying to display this block"
 msgstr ""
 
-#: languages/texts.php:511
-#: public/editor-build/214-wp/texts.php:862
+#: brizy/languages/texts.php:511 brizy/public/editor-build/216-wp/texts.php:863
 msgid "You can"
 msgstr ""
 
-#: languages/texts.php:512
-#: public/editor-build/214-wp/texts.php:889
+#: brizy/languages/texts.php:512 brizy/public/editor-build/216-wp/texts.php:890
 msgid "open an issue"
 msgstr ""
 
-#: languages/texts.php:513
-#: public/editor-build/214-wp/texts.php:890
+#: brizy/languages/texts.php:513 brizy/public/editor-build/216-wp/texts.php:891
 msgid "or"
 msgstr ""
 
-#: languages/texts.php:514
+#: brizy/languages/texts.php:514
 msgid "remove this block"
 msgstr ""
 
-#: languages/texts.php:515
-#: public/editor-build/214-wp/texts.php:531
+#: brizy/languages/texts.php:515 brizy/public/editor-build/216-wp/texts.php:532
 msgid "Page Template"
 msgstr ""
 
-#: languages/texts.php:516
-#: public/editor-build/214-wp/texts.php:800
+#: brizy/languages/texts.php:516 brizy/public/editor-build/216-wp/texts.php:801
 msgid "Toggle Menu"
 msgstr ""
 
-#: languages/texts.php:517
-#: public/editor-build/214-wp/texts.php:447
+#: brizy/languages/texts.php:517 brizy/public/editor-build/216-wp/texts.php:448
 msgid "Make it Nofollow"
 msgstr ""
 
-#: languages/texts.php:518
-#: public/editor-build/214-wp/texts.php:232
+#: brizy/languages/texts.php:518 brizy/public/editor-build/216-wp/texts.php:233
 msgid "Dividers"
 msgstr ""
 
-#: languages/texts.php:519
-#: public/editor-build/214-wp/texts.php:77
+#: brizy/languages/texts.php:519 brizy/public/editor-build/216-wp/texts.php:78
 msgid "Arrangement"
 msgstr ""
 
-#: languages/texts.php:520
+#: brizy/languages/texts.php:520
 msgid "Repeat"
 msgstr ""
 
-#: languages/texts.php:521
-#: public/editor-build/214-wp/texts.php:446
+#: brizy/languages/texts.php:521 brizy/public/editor-build/216-wp/texts.php:447
 msgid "Make it Hamburger"
 msgstr ""
 
-#: languages/texts.php:522
+#: brizy/languages/texts.php:522
 msgid "Add a Menu"
 msgstr ""
 
-#: languages/texts.php:523
+#: brizy/languages/texts.php:523
 msgid "Please select a menu"
 msgstr ""
 
-#: languages/texts.php:524
-#: public/editor-build/214-wp/texts.php:677
+#: brizy/languages/texts.php:524 brizy/public/editor-build/216-wp/texts.php:678
 msgid "Select a Menu"
 msgstr ""
 
-#: languages/texts.php:525
-#: public/editor-build/214-wp/texts.php:884
+#: brizy/languages/texts.php:525 brizy/public/editor-build/216-wp/texts.php:885
 msgid "in your WordPress admin"
 msgstr ""
 
-#: languages/texts.php:526
-#: public/editor-build/214-wp/texts.php:241
+#: brizy/languages/texts.php:526 brizy/public/editor-build/216-wp/texts.php:242
 msgid "Drawer Position"
 msgstr ""
 
-#: languages/texts.php:527
+#: brizy/languages/texts.php:527
 msgid "anchor-name"
 msgstr ""
 
-#: languages/texts.php:528
-#: public/editor-build/214-wp/texts.php:35
+#: brizy/languages/texts.php:528 brizy/public/editor-build/216-wp/texts.php:35
 msgid "APPS"
 msgstr ""
 
-#: languages/texts.php:529
-#: public/editor-build/214-wp/texts.php:407
+#: brizy/languages/texts.php:529 brizy/public/editor-build/216-wp/texts.php:408
 msgid "It's a sample"
 msgstr ""
 
-#: maintenance-mode.php:110
+#: brizy/maintenance-mode.php:110
 msgid "Maintenance Mode ON"
 msgstr ""
 
-#: maintenance-mode.php:117
+#: brizy/maintenance-mode.php:117
 msgid "Edit Page"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:6
+#: brizy/public/editor-build/216-wp/editor/js/editor.vendor.js:43
+msgid "def"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/editor.vendor.js:43
+msgid "atom"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/editor.vendor.js:43
+msgid "keyword"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/editor.vendor.js:43
+msgid "number"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/editor.vendor.js:43
+msgid "qualifier"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/editor.vendor.js:43
+msgid "variable callee"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/editor.vendor.js:43
+msgid "property"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/editor.vendor.js:43
+msgid "variable-2"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/editor.vendor.js:43
+msgid "meta"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/editor.vendor.js:43
+msgid "string"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/group-1.js:1
+msgid "ps-scroll-"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/group-1.js:1
+msgid "ps-"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/group-3.js:1
+msgid "."
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/group-3.js:1
+msgid "BeforeChange."
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/group-3.js:1
+msgid "Resize"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/group-3.js:1
+msgid "AfterChange"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/group-3.js:1
+msgid "BuildControls"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/group-3.js:1
+msgid "BeforeChange"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/group-3.js:1
+msgid "UpdateStatus"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/group-3.js:1
+msgid "ImageHasSize."
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/editor/js/group-3.js:1
+msgid "ElementParse."
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/texts.php:6
 msgid " Display Conditions"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:7
+#: brizy/public/editor-build/216-wp/texts.php:7
+#, php-format
 msgid "%s Selected"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:8
+#: brizy/public/editor-build/216-wp/texts.php:8
 msgid "+ 10:00 (Sydney, Melbourne)"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:16
+#: brizy/public/editor-build/216-wp/texts.php:16
 msgid "+ 6:00 (Nur-Sultan)"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:32
+#: brizy/public/editor-build/216-wp/texts.php:32
+#, php-format
 msgid "? (%s)"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:33
+#: brizy/public/editor-build/216-wp/texts.php:33
 msgid "ADD FONT VARIATION"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:34
+#: brizy/public/editor-build/216-wp/texts.php:34
 msgid "ADD GOOGLE FONT"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:36
+#: brizy/public/editor-build/216-wp/texts.php:36
 msgid "About us"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:37
+#: brizy/public/editor-build/216-wp/texts.php:37
 msgid "Access your Library in any WP install by connecting your Account"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:39
+#: brizy/public/editor-build/216-wp/texts.php:39
 msgid "Accordion Items"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:40
+#: brizy/public/editor-build/216-wp/texts.php:40
 msgid "Accordion Tags"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:41
+#: brizy/public/editor-build/216-wp/texts.php:41
 msgid "Accounts are empty. Please connect a new account and try again."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:42
+#: brizy/public/editor-build/216-wp/texts.php:42
 msgid "Action"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:43
+#: brizy/public/editor-build/216-wp/texts.php:43
 msgid "Activate Tab"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:44
+#: brizy/public/editor-build/216-wp/texts.php:44
 msgid "Active"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:46
+#: brizy/public/editor-build/216-wp/texts.php:46
 msgid "Add Font"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:48
+#: brizy/public/editor-build/216-wp/texts.php:48
 msgid "Add New Block / Layout"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:50
+#: brizy/public/editor-build/216-wp/texts.php:50
 msgid "Add New Font"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:51
+#: brizy/public/editor-build/216-wp/texts.php:51
+msgid "Add Shopify Elements"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/texts.php:52
 msgid "Add To Cart"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:52
+#: brizy/public/editor-build/216-wp/texts.php:53
 msgid "Add To Cart Input"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:54
+#: brizy/public/editor-build/216-wp/texts.php:55
 msgid "Add new display condition"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:55
+#: brizy/public/editor-build/216-wp/texts.php:56
 msgid "Add new font variation"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:57
+#: brizy/public/editor-build/216-wp/texts.php:58
 msgid "Add new trigger condition"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:59
+#: brizy/public/editor-build/216-wp/texts.php:60
 msgid "Additionals"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:63
+#: brizy/public/editor-build/216-wp/texts.php:64
 msgid "Aligned Left"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:64
+#: brizy/public/editor-build/216-wp/texts.php:65
 msgid "Aligned Right"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:65
+#: brizy/public/editor-build/216-wp/texts.php:66
 msgid "All"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:67
+#: brizy/public/editor-build/216-wp/texts.php:68
 msgid "All fields cannot be empty"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:68
+#: brizy/public/editor-build/216-wp/texts.php:69
 msgid "All fields marked with an asterisk ( * ) must be completed."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:69
+#: brizy/public/editor-build/216-wp/texts.php:70
 msgid "All fields marked with an asterisk ( * ) must be mapped."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:70
+#: brizy/public/editor-build/216-wp/texts.php:71
 msgid "Allowed File Types"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:71
+#: brizy/public/editor-build/216-wp/texts.php:72
 msgid "Alt Title"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:72
+#: brizy/public/editor-build/216-wp/texts.php:73
 msgid "An error happened while trying to display this element"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:76
+#: brizy/public/editor-build/216-wp/texts.php:77
 msgid "Are you want to delete account"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:80
+#: brizy/public/editor-build/216-wp/texts.php:81
 msgid "Article"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:82
+#: brizy/public/editor-build/216-wp/texts.php:83
 msgid "Aside"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:83
+#: brizy/public/editor-build/216-wp/texts.php:84
 msgid "Attributes"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:84
+#: brizy/public/editor-build/216-wp/texts.php:85
 msgid "Audio"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:85
+#: brizy/public/editor-build/216-wp/texts.php:86
 msgid "Authentication"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:89
+#: brizy/public/editor-build/216-wp/texts.php:90
 msgid "Auto play"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:92
+#: brizy/public/editor-build/216-wp/texts.php:93
 msgid "Automotive"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:93
+#: brizy/public/editor-build/216-wp/texts.php:94
 msgid "Autoplay"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:94
+#: brizy/public/editor-build/216-wp/texts.php:95
 msgid "Avatar"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:95
+#: brizy/public/editor-build/216-wp/texts.php:96
 msgid "Back"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:97
+#: brizy/public/editor-build/216-wp/texts.php:98
 msgid "Back to Login"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:98
+#: brizy/public/editor-build/216-wp/texts.php:99
 msgid "Back to Stories"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:101
+#: brizy/public/editor-build/216-wp/texts.php:102
 msgid "Bcc"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:102
+#: brizy/public/editor-build/216-wp/texts.php:103
 msgid "Between"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:103
+#: brizy/public/editor-build/216-wp/texts.php:104
 msgid "Bg"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:105
+#: brizy/public/editor-build/216-wp/texts.php:106
 msgid "Bg Star"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:106
+#: brizy/public/editor-build/216-wp/texts.php:107
 msgid "Black"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:107
+#: brizy/public/editor-build/216-wp/texts.php:108
 msgid "Blank"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:109
+#: brizy/public/editor-build/216-wp/texts.php:110
 msgid "Block Name"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:110
+#: brizy/public/editor-build/216-wp/texts.php:111
 msgid "Block conditions are available only in PRO"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:111
+#: brizy/public/editor-build/216-wp/texts.php:112
 msgid "Block is synchronized"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:112
+#: brizy/public/editor-build/216-wp/texts.php:113
 msgid "Block will be synchronized"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:117
+#: brizy/public/editor-build/216-wp/texts.php:115
+msgid "Blog"
+msgstr ""
+
+#: brizy/public/editor-build/216-wp/texts.php:118
 msgid "Bottom"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:125
+#: brizy/public/editor-build/216-wp/texts.php:126
 msgid "Branding"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:126
+#: brizy/public/editor-build/216-wp/texts.php:127
 msgid "Breadcrumbs"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:127
+#: brizy/public/editor-build/216-wp/texts.php:128
 msgid "Btn Bg"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:128
+#: brizy/public/editor-build/216-wp/texts.php:129
 msgid "Btn Color"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:129
+#: brizy/public/editor-build/216-wp/texts.php:130
 msgid "Bub."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:130
+#: brizy/public/editor-build/216-wp/texts.php:131
 msgid "Bub. Bg"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:131
+#: brizy/public/editor-build/216-wp/texts.php:132
 msgid "Bubble"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:132
+#: brizy/public/editor-build/216-wp/texts.php:133
 msgid "Business"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:133
+#: brizy/public/editor-build/216-wp/texts.php:134
 msgid "Business Hour"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:135
+#: brizy/public/editor-build/216-wp/texts.php:136
 msgid "Button Size"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:136
+#: brizy/public/editor-build/216-wp/texts.php:137
 msgid "Buttons"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:137
+#: brizy/public/editor-build/216-wp/texts.php:138
 msgid "CMS"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:138
+#: brizy/public/editor-build/216-wp/texts.php:139
 msgid "CREATE LIST"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:140
+#: brizy/public/editor-build/216-wp/texts.php:141
 msgid "CSS ID"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:141
+#: brizy/public/editor-build/216-wp/texts.php:142
 msgid "CTA"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:142
+#: brizy/public/editor-build/216-wp/texts.php:143
 msgid "Cancel"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:143
+#: brizy/public/editor-build/216-wp/texts.php:144
 msgid "Capitalize"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:147
+#: brizy/public/editor-build/216-wp/texts.php:148
 msgid "Cart Items"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:148
+#: brizy/public/editor-build/216-wp/texts.php:149
 msgid "Cart Settings"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:151
+#: brizy/public/editor-build/216-wp/texts.php:152
 msgid "Categories Pagination"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:152
+#: brizy/public/editor-build/216-wp/texts.php:153
 msgid "Categories Tags"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:154
+#: brizy/public/editor-build/216-wp/texts.php:155
 msgid "Cc"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:155
+#: brizy/public/editor-build/216-wp/texts.php:156
 msgid "Check your email address"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:156
+#: brizy/public/editor-build/216-wp/texts.php:157
 msgid "Checkbox"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:158
+#: brizy/public/editor-build/216-wp/texts.php:159
 msgid "Children"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:160
+#: brizy/public/editor-build/216-wp/texts.php:161
 msgid "Classic"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:161
+#: brizy/public/editor-build/216-wp/texts.php:162
 msgid "Clear"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:162
+#: brizy/public/editor-build/216-wp/texts.php:163
 msgid "Clear Layout"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:163
+#: brizy/public/editor-build/216-wp/texts.php:164
 msgid "Click Outside to Close"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:165
+#: brizy/public/editor-build/216-wp/texts.php:166
 msgid "Close Popup"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:166
+#: brizy/public/editor-build/216-wp/texts.php:167
 msgid "Cloud"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:167
+#: brizy/public/editor-build/216-wp/texts.php:168
 msgid "Collapsible"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:172
+#: brizy/public/editor-build/216-wp/texts.php:173
 msgid "Comment"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:175
+#: brizy/public/editor-build/216-wp/texts.php:176
 msgid "Conditions"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:176
+#: brizy/public/editor-build/216-wp/texts.php:177
 msgid "Connect"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:177
+#: brizy/public/editor-build/216-wp/texts.php:178
 msgid "Connect a new account"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:178
+#: brizy/public/editor-build/216-wp/texts.php:179
 msgid "Contact"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:180
+#: brizy/public/editor-build/216-wp/texts.php:181
 msgid "Content Gap"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:181
+#: brizy/public/editor-build/216-wp/texts.php:182
 msgid "Continue"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:185
+#: brizy/public/editor-build/216-wp/texts.php:186
 msgid "Could not Create Global Block"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:186
+#: brizy/public/editor-build/216-wp/texts.php:187
 msgid "Could not Create Global Popup"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:187
+#: brizy/public/editor-build/216-wp/texts.php:188
 msgid "Could not Create Saved Block"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:188
+#: brizy/public/editor-build/216-wp/texts.php:189
 msgid "Could not Create Saved Popup"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:189
+#: brizy/public/editor-build/216-wp/texts.php:190
 msgid "Could not download Saved Layout"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:190
+#: brizy/public/editor-build/216-wp/texts.php:191
 msgid "Could not download Saved Popup"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:191
+#: brizy/public/editor-build/216-wp/texts.php:192
 msgid "Could not download Saved block"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:193
+#: brizy/public/editor-build/216-wp/texts.php:194
 msgid "Could not publish or save page"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:194
+#: brizy/public/editor-build/216-wp/texts.php:195
 msgid "Could not save layout"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:195
+#: brizy/public/editor-build/216-wp/texts.php:196
 msgid "Could not switch to draft"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:200
+#: brizy/public/editor-build/216-wp/texts.php:201
 msgid "Create"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:201
+#: brizy/public/editor-build/216-wp/texts.php:202
 msgid "Create Account & Connect"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:202
+#: brizy/public/editor-build/216-wp/texts.php:203
 msgid "Create a menu"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:203
+#: brizy/public/editor-build/216-wp/texts.php:204
 msgid "Create a new list"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:204
+#: brizy/public/editor-build/216-wp/texts.php:205
 msgid "Create your own"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:207
+#: brizy/public/editor-build/216-wp/texts.php:208
 msgid "Custom Attributes"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:208
+#: brizy/public/editor-build/216-wp/texts.php:209
 msgid "Custom Attributes asd"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:211
+#: brizy/public/editor-build/216-wp/texts.php:212
 msgid "Custom Text"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:212
+#: brizy/public/editor-build/216-wp/texts.php:213
 msgid "Custom Video"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:213
+#: brizy/public/editor-build/216-wp/texts.php:214
 msgid "DELETE"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:214
+#: brizy/public/editor-build/216-wp/texts.php:215
 msgid "DIV"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:217
+#: brizy/public/editor-build/216-wp/texts.php:218
 msgid "Days"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:218
+#: brizy/public/editor-build/216-wp/texts.php:219
 msgid "Default Roles"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:223
+#: brizy/public/editor-build/216-wp/texts.php:224
 msgid "Deselected the “Verify the origin of reCAPTCHA solutions” checkbox within your Google account."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:228
+#: brizy/public/editor-build/216-wp/texts.php:229
 msgid "Disconnect"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:229
+#: brizy/public/editor-build/216-wp/texts.php:230
 msgid "Display Close Button"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:230
+#: brizy/public/editor-build/216-wp/texts.php:231
 msgid "Disqus"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:231
+#: brizy/public/editor-build/216-wp/texts.php:232
 msgid "Div"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:233
+#: brizy/public/editor-build/216-wp/texts.php:234
 msgid "Don't have items"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:234
+#: brizy/public/editor-build/216-wp/texts.php:235
 msgid "Don't have tags"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:235
+#: brizy/public/editor-build/216-wp/texts.php:236
 msgid "Done"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:236
+#: brizy/public/editor-build/216-wp/texts.php:237
 msgid "Done, your library was synced"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:238
+#: brizy/public/editor-build/216-wp/texts.php:239
 msgid "Download this block"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:243
+#: brizy/public/editor-build/216-wp/texts.php:244
 msgid "Duplicate Account"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:247
+#: brizy/public/editor-build/216-wp/texts.php:248
 msgid "EOT File"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:248
+#: brizy/public/editor-build/216-wp/texts.php:249
 msgid "Edit"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:250
+#: brizy/public/editor-build/216-wp/texts.php:251
 msgid "Education"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:251
+#: brizy/public/editor-build/216-wp/texts.php:252
 msgid "Elements"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:253
+#: brizy/public/editor-build/216-wp/texts.php:254
 msgid "Email To"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:254
+#: brizy/public/editor-build/216-wp/texts.php:255
 msgid "Email confirmation to join the list"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:255
+#: brizy/public/editor-build/216-wp/texts.php:256
 msgid "Email to recover password cannot be empty"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:257
+#: brizy/public/editor-build/216-wp/texts.php:258
 msgid "Enable Tags"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:260
+#: brizy/public/editor-build/216-wp/texts.php:261
 msgid "Enable tags"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:261
+#: brizy/public/editor-build/216-wp/texts.php:262
 msgid "Encryption"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:265
+#: brizy/public/editor-build/216-wp/texts.php:266
 msgid "Enter the allowed file types, separated by a comma (jpg, gif, pdf, etc)."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:268
+#: brizy/public/editor-build/216-wp/texts.php:269
 msgid "Established a stable internet connection"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:270
+#: brizy/public/editor-build/216-wp/texts.php:271
 msgid "Excerpt"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:272
+#: brizy/public/editor-build/216-wp/texts.php:273
 msgid "Exclude By"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:273
+#: brizy/public/editor-build/216-wp/texts.php:274
 msgid "Export All Blocks"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:274
+#: brizy/public/editor-build/216-wp/texts.php:275
 msgid "Export All Layouts"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:275
+#: brizy/public/editor-build/216-wp/texts.php:276
 msgid "Export All Popups"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:276
+#: brizy/public/editor-build/216-wp/texts.php:277
 msgid "Extra Bold"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:277
+#: brizy/public/editor-build/216-wp/texts.php:278
 msgid "Extra Light"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:278
+#: brizy/public/editor-build/216-wp/texts.php:279
 msgid "FIELDS"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:279
+#: brizy/public/editor-build/216-wp/texts.php:280
 msgid "FONT VARIATION"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:280
+#: brizy/public/editor-build/216-wp/texts.php:281
 msgid "FORM FIELDS"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:281
+#: brizy/public/editor-build/216-wp/texts.php:282
 msgid "Facebook"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:284
+#: brizy/public/editor-build/216-wp/texts.php:285
 msgid "Facebook Group"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:295
+#: brizy/public/editor-build/216-wp/texts.php:296
 msgid "Failed to fetch api data"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:296
+#: brizy/public/editor-build/216-wp/texts.php:297
 msgid "Failed to reset password"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:297
+#: brizy/public/editor-build/216-wp/texts.php:298
 msgid "Failed to update page"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:298
+#: brizy/public/editor-build/216-wp/texts.php:299
 msgid "Failed to upload file. Please upload a valid JPG, PNG, SVG or GIF image."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:300
+#: brizy/public/editor-build/216-wp/texts.php:301
 msgid "Features"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:303
+#: brizy/public/editor-build/216-wp/texts.php:304
 msgid "Fields are empty"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:304
+#: brizy/public/editor-build/216-wp/texts.php:305
 msgid "Fields are empty. Please add fields and try again."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:305
+#: brizy/public/editor-build/216-wp/texts.php:306
 msgid "File"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:309
+#: brizy/public/editor-build/216-wp/texts.php:310
 msgid "Filters"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:310
+#: brizy/public/editor-build/216-wp/texts.php:311
 msgid "First Name"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:316
+#: brizy/public/editor-build/216-wp/texts.php:317
 msgid "Follow"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:317
+#: brizy/public/editor-build/216-wp/texts.php:318
 msgid "Followers"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:319
+#: brizy/public/editor-build/216-wp/texts.php:320
 msgid "Font Name is Required"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:320
+#: brizy/public/editor-build/216-wp/texts.php:321
 msgid "Font name"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:321
+#: brizy/public/editor-build/216-wp/texts.php:322
 msgid "Font weight"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:322
+#: brizy/public/editor-build/216-wp/texts.php:323
 msgid "Fonts"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:323
+#: brizy/public/editor-build/216-wp/texts.php:324
 msgid "Food"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:325
+#: brizy/public/editor-build/216-wp/texts.php:326
 msgid "Footers"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:327
+#: brizy/public/editor-build/216-wp/texts.php:328
 msgid "Form Fields"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:328
+#: brizy/public/editor-build/216-wp/texts.php:329
 msgid "Form Labels"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:329
+#: brizy/public/editor-build/216-wp/texts.php:330
 msgid "Form Select Dropdowns"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:330
+#: brizy/public/editor-build/216-wp/texts.php:331
 msgid "Form Submit"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:331
+#: brizy/public/editor-build/216-wp/texts.php:332
 msgid "Forms"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:332
+#: brizy/public/editor-build/216-wp/texts.php:333
 msgid "Free"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:334
+#: brizy/public/editor-build/216-wp/texts.php:335
 msgid "From Email"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:335
+#: brizy/public/editor-build/216-wp/texts.php:336
 msgid "From Name"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:339
+#: brizy/public/editor-build/216-wp/texts.php:340
 msgid "Full name"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:342
+#: brizy/public/editor-build/216-wp/texts.php:343
 msgid "Gallery Tags"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:343
+#: brizy/public/editor-build/216-wp/texts.php:344
 msgid "Gaming"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:347
+#: brizy/public/editor-build/216-wp/texts.php:348
 msgid "Get a PRO plan"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:349
+#: brizy/public/editor-build/216-wp/texts.php:350
 msgid "Global Popups"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:350
+#: brizy/public/editor-build/216-wp/texts.php:351
 msgid "Go Back"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:352
+#: brizy/public/editor-build/216-wp/texts.php:353
 msgid "Go to Dashboard"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:354
+#: brizy/public/editor-build/216-wp/texts.php:355
 msgid "Group"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:362
+#: brizy/public/editor-build/216-wp/texts.php:363
 msgid "Handle"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:363
+#: brizy/public/editor-build/216-wp/texts.php:364
 msgid "Head"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:365
+#: brizy/public/editor-build/216-wp/texts.php:366
 msgid "Health / Beauty"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:368
+#: brizy/public/editor-build/216-wp/texts.php:369
 msgid "Hero"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:369
+#: brizy/public/editor-build/216-wp/texts.php:370
 msgid "Hidden"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:370
+#: brizy/public/editor-build/216-wp/texts.php:371
 msgid "Hide"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:372
+#: brizy/public/editor-build/216-wp/texts.php:373
 msgid "Hide Hidden Elements"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:373
+#: brizy/public/editor-build/216-wp/texts.php:374
 msgid "Horizontal Align"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:374
+#: brizy/public/editor-build/216-wp/texts.php:375
 msgid "Horizontal Offset"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:375
+#: brizy/public/editor-build/216-wp/texts.php:376
 msgid "Host"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:377
+#: brizy/public/editor-build/216-wp/texts.php:378
 msgid "Hours"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:383
+#: brizy/public/editor-build/216-wp/texts.php:384
 msgid "Icons"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:384
+#: brizy/public/editor-build/216-wp/texts.php:385
 msgid "If you need to increase max upload size please contact your hosting."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:386
+#: brizy/public/editor-build/216-wp/texts.php:387
 msgid "Image Test"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:387
+#: brizy/public/editor-build/216-wp/texts.php:388
 msgid "Image file is too large."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:388
+#: brizy/public/editor-build/216-wp/texts.php:389
 msgid "Import New Block"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:389
+#: brizy/public/editor-build/216-wp/texts.php:390
 msgid "Import New Layout"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:390
+#: brizy/public/editor-build/216-wp/texts.php:391
 msgid "Import New Popup"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:392
+#: brizy/public/editor-build/216-wp/texts.php:393
 msgid "Import This Story"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:394
+#: brizy/public/editor-build/216-wp/texts.php:395
 msgid "Include By"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:397
+#: brizy/public/editor-build/216-wp/texts.php:398
 msgid "Incorrect"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:398
+#: brizy/public/editor-build/216-wp/texts.php:399
 msgid "Incorrect username or password"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:399
+#: brizy/public/editor-build/216-wp/texts.php:400
 msgid "Info"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:401
+#: brizy/public/editor-build/216-wp/texts.php:402
 msgid "Inline"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:402
+#: brizy/public/editor-build/216-wp/texts.php:403
 msgid "Input"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:403
+#: brizy/public/editor-build/216-wp/texts.php:404
 msgid "Inputted a valid site key"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:404
+#: brizy/public/editor-build/216-wp/texts.php:405
 msgid "Inset"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:405
+#: brizy/public/editor-build/216-wp/texts.php:406
 msgid "Intro"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:406
+#: brizy/public/editor-build/216-wp/texts.php:407
 msgid "Invalid api data"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:410
+#: brizy/public/editor-build/216-wp/texts.php:411
 msgid "Item"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:413
+#: brizy/public/editor-build/216-wp/texts.php:414
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:416
+#: brizy/public/editor-build/216-wp/texts.php:417
 msgid "Last Name"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:417
+#: brizy/public/editor-build/216-wp/texts.php:418
 msgid "Lateral"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:420
+#: brizy/public/editor-build/216-wp/texts.php:421
 msgid "Left"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:430
+#: brizy/public/editor-build/216-wp/texts.php:431
 msgid "Links"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:432
+#: brizy/public/editor-build/216-wp/texts.php:433
 msgid "List are not created please connect the support"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:433
+#: brizy/public/editor-build/216-wp/texts.php:434
 msgid "Lists are empty. Please add a new list and try again."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:434
+#: brizy/public/editor-build/216-wp/texts.php:435
 msgid "Loading..."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:435
+#: brizy/public/editor-build/216-wp/texts.php:436
 msgid "Locked"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:436
+#: brizy/public/editor-build/216-wp/texts.php:437
 msgid "Login"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:437
+#: brizy/public/editor-build/216-wp/texts.php:438
 msgid "Login Submit"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:438
+#: brizy/public/editor-build/216-wp/texts.php:439
 msgid "Logout"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:440
+#: brizy/public/editor-build/216-wp/texts.php:441
 msgid "Lost Password"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:441
+#: brizy/public/editor-build/216-wp/texts.php:442
 msgid "Lottie"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:442
+#: brizy/public/editor-build/216-wp/texts.php:443
 msgid "Lottie File"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:443
+#: brizy/public/editor-build/216-wp/texts.php:444
 msgid "Lottie Link"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:444
+#: brizy/public/editor-build/216-wp/texts.php:445
 msgid "Main"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:449
+#: brizy/public/editor-build/216-wp/texts.php:450
 msgid "Manual"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:452
+#: brizy/public/editor-build/216-wp/texts.php:453
 msgid "Mask"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:453
+#: brizy/public/editor-build/216-wp/texts.php:454
 msgid "Max"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:454
+#: brizy/public/editor-build/216-wp/texts.php:455
 msgid "Max Date"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:455
+#: brizy/public/editor-build/216-wp/texts.php:456
 msgid "Max Time"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:456
+#: brizy/public/editor-build/216-wp/texts.php:457
 msgid "Max. File Size"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:457
+#: brizy/public/editor-build/216-wp/texts.php:458
 msgid "Medium"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:458
+#: brizy/public/editor-build/216-wp/texts.php:459
 msgid "Mega Menu"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:459
+#: brizy/public/editor-build/216-wp/texts.php:460
 msgid "Membership"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:460
+#: brizy/public/editor-build/216-wp/texts.php:461
 msgid "Mention"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:462
+#: brizy/public/editor-build/216-wp/texts.php:463
 msgid "Menu Items"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:464
+#: brizy/public/editor-build/216-wp/texts.php:465
 msgid "Menu order"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:469
+#: brizy/public/editor-build/216-wp/texts.php:470
 msgid "Meta"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:470
+#: brizy/public/editor-build/216-wp/texts.php:471
 msgid "Meta Data"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:473
+#: brizy/public/editor-build/216-wp/texts.php:474
 msgid "Min"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:474
+#: brizy/public/editor-build/216-wp/texts.php:475
 msgid "Min Date"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:475
+#: brizy/public/editor-build/216-wp/texts.php:476
 msgid "Min Time"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:476
+#: brizy/public/editor-build/216-wp/texts.php:477
 msgid "Minimal"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:484
+#: brizy/public/editor-build/216-wp/texts.php:485
 msgid "Move left"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:485
+#: brizy/public/editor-build/216-wp/texts.php:486
 msgid "Move right"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:486
+#: brizy/public/editor-build/216-wp/texts.php:487
 msgid "Multiple Selection"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:487
+#: brizy/public/editor-build/216-wp/texts.php:488
 msgid "Muted"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:489
+#: brizy/public/editor-build/216-wp/texts.php:490
 msgid "N/A"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:491
+#: brizy/public/editor-build/216-wp/texts.php:492
 msgid "Native HTML5"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:492
+#: brizy/public/editor-build/216-wp/texts.php:493
 msgid "Nav"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:494
+#: brizy/public/editor-build/216-wp/texts.php:495
 msgid "Need help"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:497
+#: brizy/public/editor-build/216-wp/texts.php:498
 msgid "No results"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:498
+#: brizy/public/editor-build/216-wp/texts.php:499
 msgid "Non Profit"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:501
+#: brizy/public/editor-build/216-wp/texts.php:502
 msgid "Not Required"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:502
+#: brizy/public/editor-build/216-wp/texts.php:503
 msgid "Nothing Found"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:504
+#: brizy/public/editor-build/216-wp/texts.php:505
 msgid "Nothing here yet, make a global popup first."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:506
+#: brizy/public/editor-build/216-wp/texts.php:507
 msgid "Nothing here yet, save a layout first."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:507
+#: brizy/public/editor-build/216-wp/texts.php:508
 msgid "Nothing here yet, save a popup first."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:508
+#: brizy/public/editor-build/216-wp/texts.php:509
 msgid "Nothing here, please refine your search."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:509
+#: brizy/public/editor-build/216-wp/texts.php:510
 msgid "Nr"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:511
+#: brizy/public/editor-build/216-wp/texts.php:512
 msgid "Number of posts"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:512
+#: brizy/public/editor-build/216-wp/texts.php:513
 msgid "Offset"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:513
+#: brizy/public/editor-build/216-wp/texts.php:514
 msgid "On Click"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:514
+#: brizy/public/editor-build/216-wp/texts.php:515
 msgid "On Hover"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:515
+#: brizy/public/editor-build/216-wp/texts.php:516
 msgid "One Page"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:521
+#: brizy/public/editor-build/216-wp/texts.php:522
 msgid "Orientation"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:523
+#: brizy/public/editor-build/216-wp/texts.php:524
 msgid "Outset"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:525
+#: brizy/public/editor-build/216-wp/texts.php:526
 msgid "Overlay "
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:530
+#: brizy/public/editor-build/216-wp/texts.php:531
 msgid "Page Layout"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:532
+#: brizy/public/editor-build/216-wp/texts.php:533
 msgid "Page Title"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:533
+#: brizy/public/editor-build/216-wp/texts.php:534
 msgid "Page title"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:534
+#: brizy/public/editor-build/216-wp/texts.php:535
 msgid "Pages"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:539
+#: brizy/public/editor-build/216-wp/texts.php:540
 msgid "Password"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:540
+#: brizy/public/editor-build/216-wp/texts.php:541
 msgid "Password and confirm password is not the same"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:542
+#: brizy/public/editor-build/216-wp/texts.php:543
 msgid "Paste Style"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:544
+#: brizy/public/editor-build/216-wp/texts.php:545
 msgid "Paste your WordPress shortcode here ..."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:547
+#: brizy/public/editor-build/216-wp/texts.php:548
 msgid "Percent"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:549
+#: brizy/public/editor-build/216-wp/texts.php:550
 msgid "Phone Number"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:550
+#: brizy/public/editor-build/216-wp/texts.php:551
 msgid "Placeholder"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:551
+#: brizy/public/editor-build/216-wp/texts.php:552
 msgid "Plain"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:553
+#: brizy/public/editor-build/216-wp/texts.php:554
 msgid "Playlist"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:554
+#: brizy/public/editor-build/216-wp/texts.php:555
 msgid "Playlist Items"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:558
+#: brizy/public/editor-build/216-wp/texts.php:559
 msgid "Popup Close Icon"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:560
+#: brizy/public/editor-build/216-wp/texts.php:561
 msgid "Port"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:561
+#: brizy/public/editor-build/216-wp/texts.php:562
 msgid "Portfolio"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:564
+#: brizy/public/editor-build/216-wp/texts.php:565
 msgid "Post Content"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:565
+#: brizy/public/editor-build/216-wp/texts.php:566
 msgid "Post Excerpt"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:566
+#: brizy/public/editor-build/216-wp/texts.php:567
 msgid "Post Info"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:567
+#: brizy/public/editor-build/216-wp/texts.php:568
 msgid "Post Navigation"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:568
+#: brizy/public/editor-build/216-wp/texts.php:569
 msgid "Post Title"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:570
+#: brizy/public/editor-build/216-wp/texts.php:571
 msgid "Post info"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:572
+#: brizy/public/editor-build/216-wp/texts.php:573
 msgid "Posts Pagination"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:573
+#: brizy/public/editor-build/216-wp/texts.php:574
 msgid "Posts Tags"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:574
+#: brizy/public/editor-build/216-wp/texts.php:575
 msgid "Prefix"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:576
+#: brizy/public/editor-build/216-wp/texts.php:577
 msgid "Press the button above to add popup"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:578
+#: brizy/public/editor-build/216-wp/texts.php:579
 msgid "Price"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:579
+#: brizy/public/editor-build/216-wp/texts.php:580
 msgid "Pricing"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:582
+#: brizy/public/editor-build/216-wp/texts.php:583
 msgid "Product Attributes"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:583
+#: brizy/public/editor-build/216-wp/texts.php:584
 msgid "Product Breadcrumbs"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:584
+#: brizy/public/editor-build/216-wp/texts.php:585
 msgid "Product Content"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:585
+#: brizy/public/editor-build/216-wp/texts.php:586
 msgid "Product Excerpt"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:586
+#: brizy/public/editor-build/216-wp/texts.php:587
 msgid "Product Gallery"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:589
+#: brizy/public/editor-build/216-wp/texts.php:590
 msgid "Product Meta"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:590
+#: brizy/public/editor-build/216-wp/texts.php:591
 msgid "Product Price"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:591
+#: brizy/public/editor-build/216-wp/texts.php:592
 msgid "Product Rating"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:592
+#: brizy/public/editor-build/216-wp/texts.php:593
 msgid "Product Sku"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:593
+#: brizy/public/editor-build/216-wp/texts.php:594
 msgid "Product Stock"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:594
+#: brizy/public/editor-build/216-wp/texts.php:595
 msgid "Product Thumbnail"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:595
+#: brizy/public/editor-build/216-wp/texts.php:596
 msgid "Product Title"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:598
+#: brizy/public/editor-build/216-wp/texts.php:599
 msgid "Products Pagination"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:599
+#: brizy/public/editor-build/216-wp/texts.php:600
 msgid "Products Tags"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:601
+#: brizy/public/editor-build/216-wp/texts.php:602
 msgid "Protected Form"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:602
+#: brizy/public/editor-build/216-wp/texts.php:603
 msgid "Protected Page"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:604
+#: brizy/public/editor-build/216-wp/texts.php:605
 msgid "Publish Page"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:608
+#: brizy/public/editor-build/216-wp/texts.php:609
 msgid "Radio"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:612
+#: brizy/public/editor-build/216-wp/texts.php:613
 msgid "ReCAPTCHA"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:613
+#: brizy/public/editor-build/216-wp/texts.php:614
 msgid "Real-Estate"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:616
+#: brizy/public/editor-build/216-wp/texts.php:617
 msgid "Redirect After Login"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:617
+#: brizy/public/editor-build/216-wp/texts.php:618
 msgid "Redirect After Logout"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:618
+#: brizy/public/editor-build/216-wp/texts.php:619
 msgid "Redo"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:619
+#: brizy/public/editor-build/216-wp/texts.php:620
 msgid "Refresh"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:620
+#: brizy/public/editor-build/216-wp/texts.php:621
 msgid "Register"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:621
+#: brizy/public/editor-build/216-wp/texts.php:622
 msgid "Register Info"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:622
+#: brizy/public/editor-build/216-wp/texts.php:623
 msgid "Related Products"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:623
+#: brizy/public/editor-build/216-wp/texts.php:624
 msgid "Related Products Pagination"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:624
+#: brizy/public/editor-build/216-wp/texts.php:625
 msgid "Related Products Tags"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:625
+#: brizy/public/editor-build/216-wp/texts.php:626
 msgid "Religion"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:626
+#: brizy/public/editor-build/216-wp/texts.php:627
 msgid "Remember me"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:628
+#: brizy/public/editor-build/216-wp/texts.php:629
 msgid "Repair"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:629
+#: brizy/public/editor-build/216-wp/texts.php:630
 msgid "Replace global styling"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:630
+#: brizy/public/editor-build/216-wp/texts.php:631
 msgid "Reply"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:631
+#: brizy/public/editor-build/216-wp/texts.php:632
 msgid "Reply-To"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:633
+#: brizy/public/editor-build/216-wp/texts.php:634
 msgid "Reset Password"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:634
+#: brizy/public/editor-build/216-wp/texts.php:635
 msgid "Responsive Zoom In / Out"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:635
+#: brizy/public/editor-build/216-wp/texts.php:636
 msgid "Reverse"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:637
+#: brizy/public/editor-build/216-wp/texts.php:638
 msgid "Review"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:638
+#: brizy/public/editor-build/216-wp/texts.php:639
 msgid "Right"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:641
+#: brizy/public/editor-build/216-wp/texts.php:642
 msgid "Rotate"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:652
+#: brizy/public/editor-build/216-wp/texts.php:653
 msgid "SELECT ACCOUNT"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:653
+#: brizy/public/editor-build/216-wp/texts.php:654
 msgid "SELECT FOR WHAT TEMPLATE IS USED"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:654
+#: brizy/public/editor-build/216-wp/texts.php:655
 msgid "SELECT LIST"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:655
+#: brizy/public/editor-build/216-wp/texts.php:656
 msgid "SPAN"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:657
+#: brizy/public/editor-build/216-wp/texts.php:658
 msgid "START BUILDING YOUR POPUP"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:659
+#: brizy/public/editor-build/216-wp/texts.php:660
 msgid "Sale"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:660
+#: brizy/public/editor-build/216-wp/texts.php:661
 msgid "Same Page"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:662
+#: brizy/public/editor-build/216-wp/texts.php:663
 msgid "Save Draft"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:663
+#: brizy/public/editor-build/216-wp/texts.php:664
 msgid "Save Draft / Update Page"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:664
+#: brizy/public/editor-build/216-wp/texts.php:665
 msgid "Save Layout"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:665
+#: brizy/public/editor-build/216-wp/texts.php:666
 msgid "Saved"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:666
+#: brizy/public/editor-build/216-wp/texts.php:667
 msgid "Saved Library is syncing to your Account"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:667
+#: brizy/public/editor-build/216-wp/texts.php:668
 msgid "Saved Popups"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:668
+#: brizy/public/editor-build/216-wp/texts.php:669
 msgid "Saving"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:669
+#: brizy/public/editor-build/216-wp/texts.php:670
 msgid "Scroll Page Behind"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:670
+#: brizy/public/editor-build/216-wp/texts.php:671
 msgid "Search"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:671
+#: brizy/public/editor-build/216-wp/texts.php:672
 msgid "Search element"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:672
+#: brizy/public/editor-build/216-wp/texts.php:673
 msgid "Searching..."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:673
+#: brizy/public/editor-build/216-wp/texts.php:674
 msgid "Seconds"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:674
+#: brizy/public/editor-build/216-wp/texts.php:675
 msgid "Section"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:676
+#: brizy/public/editor-build/216-wp/texts.php:677
 msgid "Select Parent Element"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:678
+#: brizy/public/editor-build/216-wp/texts.php:679
 msgid "Select a menu from the element options"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:679
+#: brizy/public/editor-build/216-wp/texts.php:680
 msgid "Select an element on the page to display more settings"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:680
+#: brizy/public/editor-build/216-wp/texts.php:681
 msgid "Select tags"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:681
+#: brizy/public/editor-build/216-wp/texts.php:682
 msgid "Semi Bold"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:682
+#: brizy/public/editor-build/216-wp/texts.php:683
 msgid "Separator"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:686
+#: brizy/public/editor-build/216-wp/texts.php:687
 msgid "Shape"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:687
+#: brizy/public/editor-build/216-wp/texts.php:688
 msgid "Shop Cart"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:688
+#: brizy/public/editor-build/216-wp/texts.php:689
 msgid "Shop Categories"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:689
+#: brizy/public/editor-build/216-wp/texts.php:690
 msgid "Shop Pages"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:690
+#: brizy/public/editor-build/216-wp/texts.php:691
 msgid "Shop Products"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:692
+#: brizy/public/editor-build/216-wp/texts.php:693
 msgid "Shortcuts"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:693
+#: brizy/public/editor-build/216-wp/texts.php:694
 msgid "Shortname"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:697
+#: brizy/public/editor-build/216-wp/texts.php:698
 msgid "Show Hidden Elements"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:698
+#: brizy/public/editor-build/216-wp/texts.php:699
 msgid "Show Meta Data"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:699
+#: brizy/public/editor-build/216-wp/texts.php:700
 msgid "Show Social Context"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:700
+#: brizy/public/editor-build/216-wp/texts.php:701
 msgid "Show message"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:702
+#: brizy/public/editor-build/216-wp/texts.php:703
 msgid "Show to"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:704
+#: brizy/public/editor-build/216-wp/texts.php:705
 msgid "SignUp"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:706
+#: brizy/public/editor-build/216-wp/texts.php:707
 msgid "Skin"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:707
+#: brizy/public/editor-build/216-wp/texts.php:708
 msgid "Skin 1"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:708
+#: brizy/public/editor-build/216-wp/texts.php:709
 msgid "Skin 2"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:709
+#: brizy/public/editor-build/216-wp/texts.php:710
 msgid "Skin 3"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:710
+#: brizy/public/editor-build/216-wp/texts.php:711
 msgid "Skin 4"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:711
+#: brizy/public/editor-build/216-wp/texts.php:712
 msgid "Skip"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:712
+#: brizy/public/editor-build/216-wp/texts.php:713
 msgid "Sku"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:720
+#: brizy/public/editor-build/216-wp/texts.php:721
 msgid "Some integrations are available only in PRO"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:721
+#: brizy/public/editor-build/216-wp/texts.php:722
 msgid "Something went wrong"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:724
+#: brizy/public/editor-build/216-wp/texts.php:725
 msgid "Source"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:725
+#: brizy/public/editor-build/216-wp/texts.php:726
 msgid "Source ID"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:726
+#: brizy/public/editor-build/216-wp/texts.php:727
 msgid "Source Type"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:729
+#: brizy/public/editor-build/216-wp/texts.php:730
 msgid "Span"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:731
+#: brizy/public/editor-build/216-wp/texts.php:732
 msgid "Specify a start time (in seconds)"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:732
+#: brizy/public/editor-build/216-wp/texts.php:733
 msgid "Specify an end time (in seconds)"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:734
+#: brizy/public/editor-build/216-wp/texts.php:735
 msgid "Sport"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:736
+#: brizy/public/editor-build/216-wp/texts.php:737
 msgid "Stars"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:737
+#: brizy/public/editor-build/216-wp/texts.php:738
 msgid "Stars Bg"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:742
+#: brizy/public/editor-build/216-wp/texts.php:743
 msgid "Stock"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:744
+#: brizy/public/editor-build/216-wp/texts.php:745
 msgid "Story"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:745
+#: brizy/public/editor-build/216-wp/texts.php:746
 msgid "Strike"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:747
+#: brizy/public/editor-build/216-wp/texts.php:748
 msgid "Styles"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:749
+#: brizy/public/editor-build/216-wp/texts.php:750
 msgid "Sub Title"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:750
+#: brizy/public/editor-build/216-wp/texts.php:751
 msgid "Subject"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:751
+#: brizy/public/editor-build/216-wp/texts.php:752
 msgid "Subtotal"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:753
+#: brizy/public/editor-build/216-wp/texts.php:754
 msgid "Suffix"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:754
+#: brizy/public/editor-build/216-wp/texts.php:755
 msgid "Support"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:756
+#: brizy/public/editor-build/216-wp/texts.php:757
 msgid "Switch to Draft"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:758
+#: brizy/public/editor-build/216-wp/texts.php:759
 msgid "Switch to desktop to add popup"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:759
+#: brizy/public/editor-build/216-wp/texts.php:760
 msgid "Switcher"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:760
+#: brizy/public/editor-build/216-wp/texts.php:761
 msgid "Switcher Tabs"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:761
+#: brizy/public/editor-build/216-wp/texts.php:762
 msgid "Sync Now"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:762
+#: brizy/public/editor-build/216-wp/texts.php:763
 msgid "TTF File"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:763
+#: brizy/public/editor-build/216-wp/texts.php:764
 msgid "Tab"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:764
+#: brizy/public/editor-build/216-wp/texts.php:765
 msgid "Table"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:765
+#: brizy/public/editor-build/216-wp/texts.php:766
 msgid "Table Head"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:766
+#: brizy/public/editor-build/216-wp/texts.php:767
 msgid "Table Sidebar"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:769
+#: brizy/public/editor-build/216-wp/texts.php:770
 msgid "Tabs Items"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:771
+#: brizy/public/editor-build/216-wp/texts.php:772
 msgid "Tags"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:773
+#: brizy/public/editor-build/216-wp/texts.php:774
 msgid "Take over"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:774
+#: brizy/public/editor-build/216-wp/texts.php:775
 msgid "Take over failed please refresh the page"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:776
+#: brizy/public/editor-build/216-wp/texts.php:777
 msgid "Team"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:777
+#: brizy/public/editor-build/216-wp/texts.php:778
 msgid "Tel"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:778
+#: brizy/public/editor-build/216-wp/texts.php:779
 msgid "Testimonials"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:780
+#: brizy/public/editor-build/216-wp/texts.php:781
 msgid "The element you have selected doesn't have more settings"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:781
+#: brizy/public/editor-build/216-wp/texts.php:782
 msgid "The email address format is not valid"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:782
+#: brizy/public/editor-build/216-wp/texts.php:783
 msgid "The integration is not responding, please try again or verify the account credentials"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:783
+#: brizy/public/editor-build/216-wp/texts.php:784
 msgid "Theme"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:784
+#: brizy/public/editor-build/216-wp/texts.php:785
 msgid "There are no choices"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:786
+#: brizy/public/editor-build/216-wp/texts.php:787
 msgid "This is Lottie .json URL. Get more from LottieFiles.com."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:787
+#: brizy/public/editor-build/216-wp/texts.php:788
 msgid "This page needs a refresh. You’ve probably updated this page (or another page) in a different tab or browser."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:788
+#: brizy/public/editor-build/216-wp/texts.php:789
 msgid "Thumbs"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:789
+#: brizy/public/editor-build/216-wp/texts.php:790
 msgid "Time"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:792
+#: brizy/public/editor-build/216-wp/texts.php:793
 msgid "Timeline Items"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:793
+#: brizy/public/editor-build/216-wp/texts.php:794
 msgid "Timeline Labels"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:794
+#: brizy/public/editor-build/216-wp/texts.php:795
 msgid "Timer"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:795
+#: brizy/public/editor-build/216-wp/texts.php:796
 msgid "Tip: Use these shortcodes to populate your template"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:796
+#: brizy/public/editor-build/216-wp/texts.php:797
 msgid "Tip: You can browse the Google font library"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:798
+#: brizy/public/editor-build/216-wp/texts.php:799
 msgid "Titles"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:799
+#: brizy/public/editor-build/216-wp/texts.php:800
 msgid "To Dashboard"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:801
+#: brizy/public/editor-build/216-wp/texts.php:802
 msgid "Top"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:802
+#: brizy/public/editor-build/216-wp/texts.php:803
 msgid "Total"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:804
+#: brizy/public/editor-build/216-wp/texts.php:805
 msgid "Travel"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:805
+#: brizy/public/editor-build/216-wp/texts.php:806
 msgid "Trigger Popup Only Once"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:806
+#: brizy/public/editor-build/216-wp/texts.php:807
 msgid "Triggers"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:807
+#: brizy/public/editor-build/216-wp/texts.php:808
 msgid "Try Again"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:808
+#: brizy/public/editor-build/216-wp/texts.php:809
 msgid "Tweet"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:809
+#: brizy/public/editor-build/216-wp/texts.php:810
 msgid "Twitter"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:811
+#: brizy/public/editor-build/216-wp/texts.php:812
 msgid "Type to Search ..."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:814
+#: brizy/public/editor-build/216-wp/texts.php:815
 msgid "UPLOAD"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:815
+#: brizy/public/editor-build/216-wp/texts.php:816
 msgid "UPLOAD FONT"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:817
+#: brizy/public/editor-build/216-wp/texts.php:818
 msgid "USE CUSTOM TEMPLATE"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:818
+#: brizy/public/editor-build/216-wp/texts.php:819
 msgid "Unable to insert block. Please try again or contact support"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:819
+#: brizy/public/editor-build/216-wp/texts.php:820
 msgid "Unable to insert layout. Please try again or contact support"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:820
+#: brizy/public/editor-build/216-wp/texts.php:821
 msgid "Unable to insert popup. Please try again or contact support"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:821
+#: brizy/public/editor-build/216-wp/texts.php:822
 msgid "Underline"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:822
+#: brizy/public/editor-build/216-wp/texts.php:823
 msgid "Undo"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:823
+#: brizy/public/editor-build/216-wp/texts.php:824
 msgid "Unlocked"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:824
+#: brizy/public/editor-build/216-wp/texts.php:825
 msgid "Unsuccessful sync"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:826
+#: brizy/public/editor-build/216-wp/texts.php:827
 msgid "Upgrade to PRO to use this block"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:827
+#: brizy/public/editor-build/216-wp/texts.php:828
 msgid "Upgrade to PRO to use this element"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:828
+#: brizy/public/editor-build/216-wp/texts.php:829
 msgid "Upgrade to PRO to use this integration"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:829
+#: brizy/public/editor-build/216-wp/texts.php:830
 msgid "Upgrade to PRO to use this layout"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:830
+#: brizy/public/editor-build/216-wp/texts.php:831
 msgid "Upgrade to PRO to use this story"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:832
+#: brizy/public/editor-build/216-wp/texts.php:833
 msgid "Upsell"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:833
+#: brizy/public/editor-build/216-wp/texts.php:834
 msgid "Upsell Pagination"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:834
+#: brizy/public/editor-build/216-wp/texts.php:835
 msgid "Upsell Tags"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:835
+#: brizy/public/editor-build/216-wp/texts.php:836
 msgid "Url"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:837
+#: brizy/public/editor-build/216-wp/texts.php:838
 msgid "Username"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:838
+#: brizy/public/editor-build/216-wp/texts.php:839
 msgid "Users"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:839
+#: brizy/public/editor-build/216-wp/texts.php:840
 msgid "Value"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:840
+#: brizy/public/editor-build/216-wp/texts.php:841
 msgid "Values"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:841
+#: brizy/public/editor-build/216-wp/texts.php:842
 msgid "Verification process failed, please make sure you have done the following three things and try again in a few minutes."
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:842
+#: brizy/public/editor-build/216-wp/texts.php:843
 msgid "Vertical"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:843
+#: brizy/public/editor-build/216-wp/texts.php:844
 msgid "Vertical Align"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:844
+#: brizy/public/editor-build/216-wp/texts.php:845
 msgid "Vertical Offset"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:846
+#: brizy/public/editor-build/216-wp/texts.php:847
 msgid "View as"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:847
+#: brizy/public/editor-build/216-wp/texts.php:848
 msgid "Vimeo"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:848
+#: brizy/public/editor-build/216-wp/texts.php:849
 msgid "Volume"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:849
+#: brizy/public/editor-build/216-wp/texts.php:850
 msgid "WHAT WILL TRIGGER THE POPUP TO OPEN"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:850
+#: brizy/public/editor-build/216-wp/texts.php:851
 msgid "WHERE DO YOU WANT TO DISPLAY IT?"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:851
+#: brizy/public/editor-build/216-wp/texts.php:852
 msgid "WOFF File"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:852
+#: brizy/public/editor-build/216-wp/texts.php:853
 msgid "WOFF2 File"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:853
+#: brizy/public/editor-build/216-wp/texts.php:854
 msgid "WOOCart"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:854
+#: brizy/public/editor-build/216-wp/texts.php:855
 msgid "WOORating"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:856
+#: brizy/public/editor-build/216-wp/texts.php:857
 msgid "When Finished"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:859
+#: brizy/public/editor-build/216-wp/texts.php:860
 msgid "Woo Product"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:860
+#: brizy/public/editor-build/216-wp/texts.php:861
 msgid "WordPress"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:861
+#: brizy/public/editor-build/216-wp/texts.php:862
 msgid "YOUR PAGE IS READY TO PUBLISH!"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:863
+#: brizy/public/editor-build/216-wp/texts.php:864
 msgid "You can't add it again"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:864
+#: brizy/public/editor-build/216-wp/texts.php:865
 msgid "You can’t make changes"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:865
+#: brizy/public/editor-build/216-wp/texts.php:866
 msgid "You have successfully connect the form with"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:866
+#: brizy/public/editor-build/216-wp/texts.php:867
 msgid "You must be have one font added"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:867
+#: brizy/public/editor-build/216-wp/texts.php:868
 msgid "You must be have one selected item"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:868
+#: brizy/public/editor-build/216-wp/texts.php:869
 msgid "You must specify a title"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:870
+#: brizy/public/editor-build/216-wp/texts.php:871
 msgid "Your Plugin version is incompatible with Account version, please update plugin"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:871
+#: brizy/public/editor-build/216-wp/texts.php:872
 msgid "Your block was saved without screenshot, browser is not compatible"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:872
+#: brizy/public/editor-build/216-wp/texts.php:873
 msgid "Your link is not correct"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:873
+#: brizy/public/editor-build/216-wp/texts.php:874
 msgid "Youtube"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:881
+#: brizy/public/editor-build/216-wp/texts.php:882
 msgid "block-name"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:883
+#: brizy/public/editor-build/216-wp/texts.php:884
 msgid "here"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:885
+#: brizy/public/editor-build/216-wp/texts.php:886
 msgid "is already editing project"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:886
+#: brizy/public/editor-build/216-wp/texts.php:887
 msgid "is currently working on this page. Do you want to take over"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:891
+#: brizy/public/editor-build/216-wp/texts.php:892
 msgid "remove this element"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:892
+#: brizy/public/editor-build/216-wp/texts.php:893
 msgid "required"
 msgstr ""
 
-#: public/editor-build/214-wp/texts.php:894
+#: brizy/public/editor-build/216-wp/texts.php:895
 msgid "story"
 msgstr ""
 
-#: public/main.php:225
+#: brizy/public/editor-src/build-utils/wpTranslations.js:127
+msgid "${t}"
+msgstr ""
+
+#: brizy/public/main.php:111
+msgid "Preview"
+msgstr ""
+
+#: brizy/public/main.php:124
+msgid "View"
+msgstr ""
+
+#: brizy/public/main.php:225
+#, php-format
 msgid "Edit %s with %s"
 msgstr ""

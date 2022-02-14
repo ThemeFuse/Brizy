@@ -63,7 +63,9 @@ $.extend(Youtube.prototype, {
     this.player.unMute();
   },
   play: function() {
-    this.player.playVideo();
+    if (this.player && typeof this.player.playVideo === "function") {
+      this.player.playVideo();
+    }
   },
   stop: function() {
     this.player.stopVideo();

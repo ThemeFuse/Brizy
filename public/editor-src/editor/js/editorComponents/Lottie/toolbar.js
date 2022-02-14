@@ -45,6 +45,15 @@ export function getItems({ v, device, component }) {
           value: dvv("animationFile")
         },
         {
+          id: "renderer",
+          type: "select-dev",
+          label: t("Renderer"),
+          choices: [
+            { title: "SVG", value: "svg" },
+            { title: "Canvas", value: "canvas" }
+          ]
+        },
+        {
           id: "autoplay",
           label: t("Auto play"),
           type: "switch-dev"

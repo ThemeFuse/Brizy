@@ -4,6 +4,8 @@ import {
   defaultValueValue,
   saveOnChanges
 } from "visual/utils/onChange";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 
 export function toolbarElementSectionBoxShadow({ v, device, state, onChange }) {
   const boxShadowBlurValue = defaultValueValue({
@@ -83,6 +85,8 @@ export function toolbarElementSectionGlobal({
 }) {
   const dvk = key => defaultValueKey({ key, device, state });
   const componentId = component.getId();
+  const config = Config.getAll();
+  const disabled = isCloud(config) && isShopify(config);
 
   return {
     devices,
@@ -90,6 +94,7 @@ export function toolbarElementSectionGlobal({
     id: dvk("makeItGlobal"),
     label: t("Make it Global"),
     type: "globalBlock",
+    disabled,
     value: {
       _id: componentId,
       parentId: getInstanceParentId(component.props.instanceKey, blockType)

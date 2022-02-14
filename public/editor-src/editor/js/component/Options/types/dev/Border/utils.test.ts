@@ -204,20 +204,6 @@ describe("Testing 'fromElementModel' function", function() {
     });
   });
 
-  test("If opacity is empty, set style, palette and width to their empty values", () => {
-    const _db: ElementModel = { ...db, colorOpacity: Opacity.empty };
-
-    expect(fromElementModel(k => _db[k] as MValue<Literal>)).toMatchObject({
-      style: Style.empty,
-      palette: Palette.empty,
-      width: Width.empty,
-      topWidth: Width.empty,
-      rightWidth: Width.empty,
-      bottomWidth: Width.empty,
-      leftWidth: Width.empty
-    });
-  });
-
   test("If width type is 'grouped' and width is empty, set style, palette and opacity to their empty values", () => {
     const _db: ElementModel = {
       ...db,

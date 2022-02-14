@@ -11,6 +11,8 @@ import { WhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/Wh
 import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
 import { TemplateType } from "../TemplateType";
 import { Role } from "visual/utils/membership";
+import { Subscription } from "visual/global/Config/types/shopify/Subscription";
+import { ShopifyTemplate } from "../shopify/ShopifyTemplate";
 
 //#region Base
 interface Base<Platform> extends ConfigCommon, WithId<number> {
@@ -58,22 +60,13 @@ export const isCMS = (c: Cloud): c is CMS => c.platform === "cms";
 //#endregion
 
 //#region Shopify
-export enum ShopifyTemplate {
-  Product = "shopify-product",
-  Page = "shopify-page",
-  Collection = "shopify-collection",
-  Article = "shopify-article"
-}
-
-export const isShopifyTemplate = (s: string): s is ShopifyTemplate =>
-  Object.values(ShopifyTemplate).includes(s as ShopifyTemplate);
-
 export interface Shopify extends Base<"shopify"> {
   templates: { id: string }[];
   templateType: {
     id: string;
     type: ShopifyTemplate;
   };
+  subscription: Subscription;
 }
 
 export const isShopify = (c: Cloud): c is Shopify => c.platform === "shopify";

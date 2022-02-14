@@ -2,8 +2,6 @@ import jQuery from "jquery";
 import { compose } from "underscore";
 import Config from "visual/global/Config";
 import {
-  parseExternalPopup,
-  stringifyPage,
   parseProject,
   stringifyProject,
   parseGlobalBlock,
@@ -144,60 +142,6 @@ export function addProjectLockedBeacon() {
 export function removeProjectLockedSendBeacon() {
   const projectId = Config.get("project").id;
   return navigator.sendBeacon(`${apiUrl}/projects/${projectId}/remove_locks`);
-}
-
-// popups
-export function getExternalPopups() {
-  const project = Config.get("project").id;
-  const requestData = {
-    project,
-    ...paginationData
-  };
-
-  return persistentRequest({
-    type: "GET",
-    dataType: "json",
-    url: apiUrl + "/external_popups",
-    data: requestData
-  }).then(r => {
-    return r.map(parseExternalPopup);
-  });
-}
-
-// external story
-export function createExternalPopup(data, meta = {}) {
-  const { is_autosave = 0 } = meta;
-  const requestData = {
-    ...data,
-    is_autosave
-  };
-
-  return persistentRequest({
-    type: "POST",
-    dataType: "json",
-    url: apiUrl + "/external_popups",
-    data: requestData
-  }).then(r => {
-    return parseExternalPopup(r);
-  });
-}
-
-export function updateExternalPopup(popup, meta = {}) {
-  const { id, data, dataVersion, status } = stringifyPage(popup);
-  const { is_autosave = 1 } = meta;
-  const requestData = {
-    data,
-    dataVersion,
-    status,
-    is_autosave
-  };
-
-  return persistentRequest({
-    type: "PUT",
-    dataType: "json",
-    url: apiUrl + "/external_popups/" + id,
-    data: requestData
-  });
 }
 
 // global blocks

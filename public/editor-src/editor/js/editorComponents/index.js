@@ -78,6 +78,7 @@ import FacebookPage from "./FacebookPage";
 import FacebookGroup from "./FacebookGroup";
 import Twitter from "./Twitter";
 import Lottie from "./Lottie";
+import * as Shopify from "./Shopify";
 
 import PostTitle from "./PostTitle";
 import PostExcerpt from "./PostExcerpt";
@@ -168,7 +169,10 @@ export default {
   // DC
   PostTitle,
   PostExcerpt,
-  Posts
+  Posts,
+
+  // Shopify
+  ...Shopify
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

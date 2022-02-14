@@ -1,6 +1,11 @@
 // BrizyLibs & BrizyProLibs is created by webpack with library || libraryTarget
 // see BrizyLibs in webpack.config.preview.js and BrizyProLibs in webpack.config.pro.js
-const Libs = window.BrizyLibs || {};
-const LibsPro = window.BrizyProLibs || {};
+const getFreeLibs = () => {
+  return window.BrizyLibs || {};
+};
 
-export { Libs, LibsPro };
+const getProLibs = () => {
+  return window.BrizyProLibs || {};
+};
+
+export { getFreeLibs, getProLibs };

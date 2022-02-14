@@ -236,10 +236,7 @@ export const fromElementModel: GetModel<Value> = get => {
       mPipe(() => get("leftWidth"), Num.read, Width.fromNumber)() ??
       DEFAULT_VALUE.leftWidth
   };
-  const isEmpty =
-    partial.style === Style.empty ||
-    partial.opacity === Opacity.empty ||
-    isEmptyWidth(partial);
+  const isEmpty = partial.style === Style.empty || isEmptyWidth(partial);
 
   return {
     style: isEmpty ? Style.empty : partial.style,

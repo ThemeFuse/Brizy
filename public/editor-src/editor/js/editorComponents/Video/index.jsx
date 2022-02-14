@@ -63,7 +63,8 @@ class Video extends EditorComponent {
           suggestedVideo: false,
           start,
           end,
-          loop: loop === "on"
+          loop: loop === "on",
+          hasCover: !!coverImageSrc
         })
       : "";
   }

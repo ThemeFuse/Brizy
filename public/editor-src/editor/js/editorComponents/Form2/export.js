@@ -1,7 +1,9 @@
 import $ from "jquery";
-import { Libs } from "visual/libs";
+import { getFreeLibs } from "visual/libs";
 import { decodeFromString } from "visual/utils/string";
 import { isNullish } from "visual/utils/value";
+
+let isSubmitEnabled = true;
 
 export default function($node) {
   const root = $node.get(0);
@@ -61,9 +63,10 @@ export default function($node) {
     const minDate = data.min;
     const maxDate = data.max;
     const native = data.native === "true";
+    const { Flatpickr } = getFreeLibs();
 
-    if (!native && Libs.Flatpickr) {
-      Libs.Flatpickr(node, {
+    if (!native && Flatpickr) {
+      Flatpickr(node, {
         minDate: minDate,
         maxDate: maxDate,
         disableMobile: true
@@ -80,9 +83,10 @@ export default function($node) {
     const minDate = data.min;
     const maxDate = data.max;
     const native = data.native === "true";
+    const { Flatpickr } = getFreeLibs();
 
-    if (!native && Libs.Flatpickr) {
-      Libs.Flatpickr(node, {
+    if (!native && Flatpickr) {
+      Flatpickr(node, {
         minDate: minDate,
         maxDate: maxDate,
         enableTime: true,
@@ -123,12 +127,13 @@ export default function($node) {
             .find(".select2-results__options .select2-results__option")
             .css("height")
         );
+        const { Scrollbars } = getFreeLibs();
 
         $dropdown.css("maxHeight", itemHeight * maxItemDropdown);
 
-        if ($dropdown.length && Libs.Scrollbars) {
+        if ($dropdown.length && Scrollbars) {
           const node = $dropdown.get(0);
-          scrollbars = new Libs.Scrollbars(node);
+          scrollbars = new Scrollbars(node);
         }
       }, 0);
     });
@@ -339,6 +344,13 @@ function validateForm(form) {
 function initForm(form) {
   const $form = $(form);
 
+  const submitButton = form.querySelector(".brz-btn");
+  const spinner = form.querySelector(".brz-form-spinner");
+
+  if (submitButton && spinner) {
+    submitButton.appendChild(spinner);
+  }
+
   updatePattern(form);
 
   $form.on("blur", "form input, form textarea, form select", function() {
@@ -373,17 +385,52 @@ function initForm(form) {
     $form.on("submit", "form", function(event) {
       event.preventDefault();
 
-      // validate form
-      const isValid = validateForm(form);
+      if (isSubmitEnabled) {
+        // validate form
+        const isValid = validateForm(form);
 
-      if (!isValid) {
-        return;
+        if (!isValid) {
+          return;
+        }
+
+        // create formData;
+        const data = getFormData(form);
+        handleSubmit(form, data);
+        isSubmitEnabled = false;
       }
-
-      // create formData;
-      const data = getFormData(form);
-      handleSubmit(form, data);
     });
+  }
+}
+
+function setSpinner(submit, isLoading) {
+  if (!submit.children.length) return;
+
+  const _children = Array.from(submit.children);
+  const spinner = _children.find(node =>
+    node.classList.contains("brz-form-spinner")
+  );
+
+  if (isLoading) {
+    submit.classList.add("brz-blocked");
+
+    _children.forEach(node => {
+      node.classList.add("brz-invisible");
+    });
+
+    if (spinner) {
+      spinner.classList.remove("brz-invisible");
+    }
+  } else {
+    submit.classList.remove("brz-blocked");
+
+    _children.forEach(node => {
+      node.classList.remove("brz-invisible");
+    });
+
+    if (spinner) {
+      spinner.classList.add("brz-invisible");
+    }
+    isSubmitEnabled = true;
   }
 }
 
@@ -391,9 +438,8 @@ function handleSubmit(form, allData) {
   // clear form messages
   clearFormMessages(form);
 
-  // block submit button for repeat click
   const submit = form.querySelector(".brz-btn");
-  submit.classList.add("brz-blocked");
+  setSpinner(submit, true);
 
   const nodeForm = form.querySelector("form.brz-form");
 
@@ -439,7 +485,7 @@ function handleSubmit(form, allData) {
   };
 
   const handleAlways = () => {
-    submit.classList.remove("brz-blocked");
+    setSpinner(submit, false);
   };
 
   const callbacks = {
@@ -508,9 +554,6 @@ function getFormData(form) {
 
           dataValue.maxSize = parseInt(node.dataset.fileMaxSize);
           dataValue.extensions = node.getAttribute("accept");
-        }
-        if (type === "Hidden") {
-          dataValue.value = label;
         }
         if (type === "Select") {
           const multiple = node.multiple;
