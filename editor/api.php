@@ -39,6 +39,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     const AJAX_GET_TERMS_BY = '_get_terms_by';
     const AJAX_GET_POST_TAXONOMIES = '_get_post_taxonomies';
 
+
     /**
      * @var Brizy_Editor_Post
      */
