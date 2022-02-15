@@ -1050,6 +1050,7 @@ class Brizy_Editor_Editor_Editor {
             'rulePostsGroupList' => $pref . Brizy_Admin_Rules_Api::RULE_POSTS_GROUP_LIST,
             'ruleArchiveGroupList' => $pref . Brizy_Admin_Rules_Api::RULE_ARCHIVE_GROUP_LIST,
             'ruleTemplateGroupList' => $pref . Brizy_Admin_Rules_Api::RULE_TEMPLATE_GROUP_LIST,
+            'filterPlaceholderContents' => $pref . Brizy_Editor_Filters_Api::AJAX_FILTER_PLACEHOLDERS_CONTENT,
         );
     return $config;
 	}
