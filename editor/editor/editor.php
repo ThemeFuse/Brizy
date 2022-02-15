@@ -1826,12 +1826,13 @@ class Brizy_Editor_Editor_Editor
             'rulePostsGroupList' => $pref.Brizy_Admin_Rules_Api::RULE_POSTS_GROUP_LIST,
             'ruleArchiveGroupList' => $pref.Brizy_Admin_Rules_Api::RULE_ARCHIVE_GROUP_LIST,
             'ruleTemplateGroupList' => $pref.Brizy_Admin_Rules_Api::RULE_TEMPLATE_GROUP_LIST,
-        'symbolCreate'               => $pref.Brizy_Admin_Symbols_Api::CREATE_ACTION,
+            'symbolCreate'               => $pref.Brizy_Admin_Symbols_Api::CREATE_ACTION,
 			'symbolUpdate'               => $pref.Brizy_Admin_Symbols_Api::UPDATE_ACTION,
 			'symbolDelete'               => $pref.Brizy_Admin_Symbols_Api::DELETE_ACTION,
 			'symbolList'                 => $pref.Brizy_Admin_Symbols_Api::LIST_ACTION,
-		'getDynamicContentPlaceholders' => $pref.Brizy_Editor_API::AJAX_GET_DYNAMIC_CONTENT,
-        );
+			'getDynamicContentPlaceholders' => $pref.Brizy_Editor_API::AJAX_GET_DYNAMIC_CONTENT,
+			'filterPlaceholderContents' => $pref . Brizy_Editor_Filters_Api::AJAX_FILTER_PLACEHOLDERS_CONTENT,
+		);
 
         return $actions;
     }

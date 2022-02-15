@@ -332,6 +332,7 @@ class Brizy_Editor {
 				new Brizy_Editor_RestExtend();
 				new Brizy_Editor_API( $post );
 				new Brizy_Editor_BlockScreenshotApi( $post );
+				new Brizy_Editor_Filters_Api(  );
 				Brizy_Editor_Accounts_Api::_init();
 			}
 

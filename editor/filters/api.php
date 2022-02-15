@@ -23,17 +23,39 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi {
 			$this->error(400, 'Please provide the post id');
 		}
 
-		if(empty($postLoopId = $this->param('post_loop_id'))) {
-			$this->error(400, 'Please provide the post loop id');
-		}
-
 		if(empty($placeholders = $this->param('placeholders'))) {
 			$this->error(400, 'Please provide the placeholders param');
 		}
 
+		$placeholderContents = [];
 		$brizyPost = Brizy_Editor_Post::get($postId);
 		$postContent = $this->getBrizyPostContent(Brizy_Editor_Project::get(), $brizyPost);
 
+		$placeholderProvider = new Brizy_Content_PlaceholderProvider();
+		$context = new Brizy_Content_Context(Brizy_Editor_Project::get(),$brizyPost,$brizyPost->getWpPost(),'');
+		$context->setProvider( $placeholderProvider );
+		$extractor           = new \BrizyPlaceholders\Extractor( $placeholderProvider );
+
+		/**
+		 * @var \BrizyPlaceholders\ContentPlaceholder[] $contentPlaceholders;
+		 */
+		list( $contentPlaceholders, $placeholderInstances, $newPostContent ) = $extractor->extract( $postContent );
+		$context->setPlaceholders($contentPlaceholders);
+
+		foreach( $placeholders as $placeholderId) {
+			/**
+			 * @var \BrizyPlaceholders\ContentPlaceholder $placeholder;
+			 */
+			$placeholder = $context->getPlaceholderById($placeholderId);
+			/**
+			 * @var Brizy_Content_Placeholders_Abstract $placeholderInstance;
+			 */
+			$placeholderInstance = $placeholderProvider->getPlaceholderSupportingName($placeholder->getName());
+			$placeholderContents[$placeholderId] = $placeholderInstance->getValue($context,$placeholder);
+		}
+
+
+		$this->success(['placeholders'=>$placeholderContents]);
 	}
 
 	private function getBrizyPostContent(Brizy_Editor_Project $project,Brizy_Editor_Post $post) {
