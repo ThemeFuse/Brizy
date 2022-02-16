@@ -36,7 +36,7 @@ class Brizy_Admin_Blocks_Manager extends Brizy_Admin_Entity_AbstractManager {
 	/**
 	 * @param $uid
 	 *
-	 * @return Brizy_Editor_Block
+	 * @return Brizy_Editor_Block|array
 	 * @throws Exception
 	 */
 	public function getEntity( $uid ) {

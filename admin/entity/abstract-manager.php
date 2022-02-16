@@ -14,32 +14,57 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 	abstract protected function convertWpPostToEntity( $post, $uid = null );
 
 	/**
-	 * @param $type
-	 * @param $uid
+	 * @param string $type
+	 * @param string|array $uids
 	 *
 	 * @return Brizy_Editor_Block|Brizy_Editor_Post|Brizy_Editor_Popup|mixed|null
 	 * @throws Exception
 	 * @todo:  refactor this as a single sql query
 	 *
 	 */
-	protected function getEntityUidAndType( $uid, $type ) {
-		$entities = get_posts( array(
-			'post_type'   => $type,
-			'post_status' => 'any',
-			'meta_key'    => 'brizy_post_uid',
-			'meta_value'  => $uid,
-			'numberposts' => - 1,
-			'orderby'     => 'ID',
-			'order'       => 'DESC',
-		) );
+	protected function getEntityUidAndType( $uids, $type ) {
 
-		if ( isset( $entities[0] ) ) {
-			$entity = $this->convertWpPostToEntity( $entities[0] );
-		} else {
-			$entity = null;
+		if ( ! $uids ) {
+			return null;
 		}
 
-		return $entity;
+		$args = [
+			'post_type'   => $type,
+			'post_status' => 'any',
+			'orderby'     => 'ID',
+			'order'       => 'DESC',
+		];
+
+		if ( is_array( $uids ) ) {
+			$args['numberposts'] = -1;
+			$args['meta_query'] = [
+				[
+					'key'     => 'brizy_post_uid',
+					'value'   => $uids,
+					'compare' => 'IN',
+				]
+			];
+		} else {
+			$args['meta_key']    = 'brizy_post_uid';
+			$args['meta_value']  = $uids;
+			$args['numberposts'] = 1;
+		}
+
+		if ( ! ( $entities = get_posts( $args ) ) ) {
+			return null;
+		}
+
+		if ( is_array( $uids ) ) {
+
+			$converted = [];
+			foreach ( $entities as $entity ) {
+				$converted[ get_post_meta( $entity->ID, 'brizy_post_uid', true ) ] = $this->convertWpPostToEntity( $entity );
+			}
+
+			return $converted;
+		}
+
+		return $this->convertWpPostToEntity( $entities[0] );
 	}
 
 	/**
