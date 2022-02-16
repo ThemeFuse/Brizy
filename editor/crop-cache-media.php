@@ -205,19 +205,15 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			return self::$imgs[ $uid ]->ID;
 		}
 
-		$img = get_posts( [
-			'meta_key'       => 'brizy_attachment_uid',
-			'meta_value'     => $uid,
-			'post_type'      => 'attachment',
-			'fields'         => 'ids',
-			'posts_per_page' => 10
-		] );
+		global $wpdb;
 
-		if ( empty( $img[0] ) ) {
+		$imgId = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key=%s AND meta_value='%s'", 'brizy_attachment_uid', $uid ) );
+
+		if ( ! $imgId ) {
 			throw new Exception( sprintf( 'There is no image with the uid "%s"', $uid ) );
 		}
 
-		return $img[0];
+		return $imgId;
 	}
 
 	/**
