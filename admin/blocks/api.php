@@ -352,15 +352,17 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$blocks      = $bockManager->getEntity( (array) $this->param( 'uid' ) );
 
 			foreach ( (array) $this->param( 'uid' ) as $i => $uid ) {
-				$status = stripslashes( $this->param( 'status' )[ $i ] );
-				$block  = $blocks[ $uid ];
 
 				if ( ! isset( $blocks[ $uid ] ) ) {
 					$this->error( 400, "Global block not found" );
 				}
+
 				/**
-				 * @var Brizy_Editor_Block $block ;
+				 * @var Brizy_Editor_Block $block;
 				 */
+				$status = stripslashes( $this->param( 'status' )[ $i ] );
+				$block  = $blocks[ $uid ];
+
 				$block->setMeta( stripslashes( $this->param( 'meta' )[ $i ] ) );
 
 				if ( isset( $this->param( 'data' )[ $i ] ) && ! empty( $this->param( 'data' )[ $i ] ) ) {
@@ -392,18 +394,12 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 					$block->save();
 
 					do_action( 'brizy_global_block_updated', $block );
-
-					$blocks[ $uid ] = $block;
 				}
 			}
 
 			do_action( 'brizy_global_data_updated' );
 
-			$response = [];
-			foreach ( $blocks as $block ) {
-				$response[] = $block->createResponse();
-			}
-			$this->success( $response );
+			$this->success( [] );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
