@@ -7,6 +7,7 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi {
 
 	protected function initializeApiActions() {
 		$this->addNoPrivAjaxAction( self::AJAX_FILTER_PLACEHOLDERS_CONTENT, array( $this, 'filterPlaceholdersContent' ) );
+		$this->addAjaxAction( self::AJAX_FILTER_PLACEHOLDERS_CONTENT, array( $this, 'filterPlaceholdersContent' ) );
 	}
 
 	protected function getRequestNonce() {
@@ -69,12 +70,6 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi {
 			$content = $compiled_page->get_body();
 		}
 
-		return apply_filters(
-			'brizy_content',
-			$content,
-			$project,
-			$post->getWpPost(),
-			'body'
-		);
+		return $content;
 	}
 }
