@@ -83,15 +83,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 */
 	public function crop_media( $uid, $size ) {
 
-		if ( ! $size ) {
-			throw new InvalidArgumentException( "Invalid crop filter" );
-		}
-
-        if ( array_key_exists( $size, Brizy_Editor::get_all_image_sizes() ) ) {
-			return $this->getImgUrlByWpSize( $uid, $size, true );
-		}
-
-		$resizedImgPath = $this->getResizedMediaPath( $uid, $size );
+		$resizedImgPath = $this->getImgPath( $uid, $size );
 
 		if ( file_exists( $resizedImgPath ) ) {
 			return $resizedImgPath;
@@ -116,23 +108,15 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	/**
 	 * @throws Exception
 	 */
-	public function tryOptimizedPath( $uid, $size, $postId ) {
-
-		$originalPath       = $this->getOriginalPath( $uid );
-		$urlBuilder         = new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $postId );
-		$resized_image_path = $this->buildPath( $urlBuilder->page_upload_path( "/assets/images/" . $size ), $this->basename( $originalPath ) );
-		$optimizedPath      = $this->buildPath( dirname( $resized_image_path ), 'optimized', $this->basename( $resized_image_path ) );
-
-		if ( file_exists( $optimizedPath ) ) {
-			return str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $optimizedPath );
-		}
+	public function getImgPath( $uid, $size ) {
 
 		if ( array_key_exists( $size, Brizy_Editor::get_all_image_sizes() ) ) {
-			return $this->getImgUrlByWpSize( $uid, $size );
+			return $this->getImgPathByWpSize( $uid, $size );
 		}
 
-		$cropper = new Brizy_Editor_Asset_Crop_Cropper();
-		$options = $cropper->getFilterOptions( $originalPath, $size, $this->getOrignalImgSizes( $uid ) );
+		$originalPath = $this->getOriginalPath( $uid );
+		$cropper      = new Brizy_Editor_Asset_Crop_Cropper();
+		$options      = $cropper->getFilterOptions( $originalPath, $size, $this->getOrignalImgSizes( $uid ) );
 
 		if (
 			$options['is_advanced'] === false
@@ -141,34 +125,14 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			&&
 			in_array( $options['requestedData']['imageHeight'], [ 'any', '*', '0' ] )
 		) {
-			return $this->getImgUrlByWpSize( $uid, 'original' );
+			return $originalPath;
 		}
 
-		$croppedPath = $this->getResizedMediaPath( $uid, $size );
-
-		if ( ! file_exists( $croppedPath ) ) {
-			throw new Exception( 'The image was not cropped yet.' );
-		}
-
-		return str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $croppedPath );
-	}
-
-	/**
-	 * @param $uid
-	 * @param $size
-	 *
-	 * @return string
-	 * @throws Exception
-	 */
-	public function getResizedMediaPath( $uid, $size ) {
-
-		$originalPath = $this->getOriginalPath( $uid );
 		$pathinfo     = pathinfo( $originalPath );
 		$size         = strtolower( $size );
 		$size         = str_replace( [ 'iw=', 'ih=', 'ox=', 'oy=', 'cw=', 'ch=' ], '', $size );
 		$size         = str_replace( '&', 'x', $size );
-
-		$name = $pathinfo['filename'] . '-' . $size . 'x' . filemtime( $originalPath ) . '.' . $pathinfo['extension'];
+		$name         = $pathinfo['filename'] . '-' . $size . 'x' . filemtime( $originalPath ) . '.' . $pathinfo['extension'];
 
 		return $this->buildPath( $this->url_builder->brizy_upload_path( 'imgs' ), $name );
 	}
@@ -176,9 +140,31 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	/**
 	 * @throws Exception
 	 */
-	public function getOriginalPath( $hash ) {
+	public function getImgUrl( $uid, $size ) {
+		if ( array_key_exists( $size, Brizy_Editor::get_all_image_sizes() ) ) {
+			return $this->getImgUrlByWpSize( $uid, $size );
+		}
 
-		$id   = $this->getAttachmentId( $hash );
+		$originalPath = $this->getOriginalPath( $uid );
+		$imgPath      = $this->getImgPath( $uid, $size );
+
+		if ( $originalPath === $imgPath ) {
+			return $this->getImgUrlByWpSize( $uid, 'full' );
+		}
+
+		if ( ! file_exists( $imgPath ) ) {
+			throw new Exception( 'The image is not cropped yet' );
+		}
+
+		return str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $imgPath );
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function getOriginalPath( $uid ) {
+
+		$id   = $this->getAttachmentId( $uid );
 		$file = get_attached_file( $id );
 
 		if ( ! $file ) {
@@ -213,6 +199,8 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			throw new Exception( sprintf( 'There is no image with the uid "%s"', $uid ) );
 		}
 
+		self::$imgs[ $uid ] = (object)[ 'ID' => $imgId ];
+
 		return $imgId;
 	}
 
@@ -229,6 +217,8 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	public function cacheImgs( $uids ) {
 
 		global $wpdb;
+
+		$uids = array_diff( array_unique( $uids ), array_keys( self::$imgs ) );
 
 		if ( ! $uids ) {
 			return;
@@ -248,19 +238,29 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	/**
 	 * @throws Exception
 	 */
-	private function getImgUrlByWpSize( $uid, $size, $path = false ) {
+	private function getImgUrlByWpSize( $uid, $size ) {
 		$size   = $size == 'original' ? 'full' : $size;
 		$imgUrl = wp_get_attachment_image_url( $this->getAttachmentId( $uid ), $size );
 
-		if ( ! $imgUrl ) {
-			$imgUrl = str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $this->getOriginalPath( $uid ) );
-		}
-
-        if ( $path ) {
-			return str_replace( $this->url_builder->upload_url(), $this->url_builder->upload_path(), $imgUrl );
+		if ( ! $imgUrl && $size != 'full' ) {
+			$imgUrl = $this->getImgUrlByWpSize( $uid, 'full' );
 		}
 
 		return $imgUrl;
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	private function getImgPathByWpSize( $uid, $size ) {
+
+		$imgPath = str_replace( $this->url_builder->upload_url(), $this->url_builder->upload_path(), $this->getImgUrlByWpSize( $uid, $size ) );
+
+		if ( ! file_exists( $imgPath ) ) {
+			throw new Exception( sprintf( 'The image with uid %s has no this wp size %s', $uid, $size ) );
+		}
+
+		return $imgPath;
 	}
 
 	public function basename( $originalPath ) {

@@ -4,7 +4,6 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
 	const ENDPOINT        = '_media';
 	const ENDPOINT_FILTER = '_crop';
-	const ENDPOINT_POST   = '_post';
 
 	/**
 	 * @return array
@@ -23,11 +22,11 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 	public function process_query() {
 		global $wp_query;
 
-		$vars           = $wp_query->query_vars;
-		$endpointKey    = Brizy_Editor::prefix( self::ENDPOINT );
-		$endpointFilter = Brizy_Editor::prefix( self::ENDPOINT_FILTER );
+		$vars    = $wp_query->query_vars;
+		$uidKey  = Brizy_Editor::prefix( self::ENDPOINT );
+		$sizeKey = Brizy_Editor::prefix( self::ENDPOINT_FILTER );
 
-		if ( empty( $vars[ $endpointKey ] ) || empty( $vars[ $endpointFilter ] ) ) {
+		if ( empty( $vars[ $uidKey ] ) ) {
 			return;
 		}
 
@@ -35,9 +34,9 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
 		try {
 
-			$size        = html_entity_decode( $vars[ $endpointFilter ] );
+			$size        = ! empty( $vars[ $sizeKey ] ) ? html_entity_decode( $vars[ $sizeKey ] ) : 'full';
 			$mediaCache  = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get() );
-			$croppedPath = $mediaCache->crop_media( $vars[ $endpointKey ], $size );
+			$croppedPath = $mediaCache->crop_media( $vars[ $uidKey ], $size );
 
 			do_action( 'brizy_before_send_asset' );
 
