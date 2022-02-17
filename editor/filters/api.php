@@ -6,10 +6,7 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi {
 	const AJAX_FILTER_PLACEHOLDERS_CONTENT = '_filter_placeholders_content';
 
 	protected function initializeApiActions() {
-		if ( ! Brizy_Editor_User::is_user_allowed() ) {
-			return;
-		}
-		$this->addAjaxAction( self::AJAX_FILTER_PLACEHOLDERS_CONTENT, array( $this, 'filterPlaceholdersContent' ) );
+		$this->addNoPrivAjaxAction( self::AJAX_FILTER_PLACEHOLDERS_CONTENT, array( $this, 'filterPlaceholdersContent' ) );
 	}
 
 	protected function getRequestNonce() {
@@ -17,7 +14,6 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function filterPlaceholdersContent() {
-		$this->verifyNonce(self::nonce);
 
 		if(empty($postId = $this->param('post_id'))) {
 			$this->error(400, 'Please provide the post id');
@@ -47,6 +43,9 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi {
 			 * @var \BrizyPlaceholders\ContentPlaceholder $placeholder;
 			 */
 			$placeholder = $context->getPlaceholderById($placeholderId);
+
+			if(!$placeholder) continue;
+
 			/**
 			 * @var Brizy_Content_Placeholders_Abstract $placeholderInstance;
 			 */
