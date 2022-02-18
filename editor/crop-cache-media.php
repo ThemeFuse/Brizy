@@ -21,61 +21,41 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	}
 
 	/**
-	 * @param $madia_name
-	 * @param bool $ignore_wp_media
+	 * @param string $madia_name
 	 *
-	 * @return false|string
-	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @return int
+	 * @throws Exception
 	 */
-	public function download_original_image( $madia_name, $ignore_wp_media = true ) {
+	public function download_original_image( $madia_name ) {
 
-		// Check if user is querying API
 		if ( ! $madia_name ) {
-			Brizy_Logger::instance()->error( 'Empty media file provided' );
-			throw new InvalidArgumentException( "Invalid media file" );
-		}
-
-		if ( $ignore_wp_media && strpos( $madia_name, "wp-" ) === 0 ) {
-			Brizy_Logger::instance()->error( 'Invalid try to download wordpress file from application server' );
-			throw new InvalidArgumentException( "Invalid media file" );
+			throw new InvalidArgumentException( 'Invalid media file' );
 		}
 
 		$external_asset_url = $this->url_builder->external_media_url( "iW=5000&iH=any/" . $madia_name );
 
 		if ( ! ( $attachmentId = $this->getAttachmentByMediaName( $madia_name ) ) ) {
 
-			// /var/www/html/wp-content/uploads/2021/09/mediaName.png
 			$original_asset_path          = $this->url_builder->wp_upload_path( $madia_name );
-			// 2021/09/mediaName.png
 			$original_asset_path_relative = $this->url_builder->wp_upload_relative_path( $madia_name );
 
-			if ( ! file_exists( $original_asset_path ) ) {
-				// I assume that the media was already attached.
-
-				if ( ! $this->store_file( $external_asset_url, $original_asset_path ) ) {
-					// unable to save the attachment
-					Brizy_Logger::instance()->error( 'Unable to store original media file', [
-						'source'      => $external_asset_url,
-						'destination' => $original_asset_path
-					] );
-
-					throw new Exception( 'Unable to cache media' );
-				}
+			if ( ! file_exists( $original_asset_path ) && ! $this->store_file( $external_asset_url, $original_asset_path ) ) {
+				throw new Exception( sprintf( 'Unable to cache media from source %s to %s', $external_asset_url, $original_asset_path ) );
 			}
 
 			$attachmentId = $this->create_attachment( $madia_name, $original_asset_path, $original_asset_path_relative, null, $madia_name );
 		}
 
 		if ( $attachmentId === 0 || is_wp_error( $attachmentId ) ) {
-			Brizy_Logger::instance()->error( 'Unable to attach media file', [ 'media' => $external_asset_url ] );
-			throw new Exception( 'Unable to attach media' );
+			$message = is_wp_error( $attachmentId ) ? $attachmentId->get_error_message() : sprintf( 'Unable to cache media from source %s', $external_asset_url );
+			throw new Exception( $message );
 		}
 
-		return get_attached_file( $attachmentId );
+		return $attachmentId;
 	}
 
 	/**
-	 * @param $original
+	 * @param $uid
 	 * @param $size
 	 *
 	 * @return string|null
@@ -181,7 +161,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	/**
 	 * @throws Exception
 	 */
-	private function getAttachmentId( $uid ) {
+	public function getAttachmentId( $uid ) {
 
 		if ( is_numeric( $uid ) ) {
 			return $uid;
@@ -191,9 +171,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			return self::$imgs[ $uid ]->ID;
 		}
 
-		global $wpdb;
-
-		$imgId = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key=%s AND meta_value=%s", 'brizy_attachment_uid', $uid ) );
+		$imgId = $this->getAttachmentByMediaName( $uid );
 
 		if ( ! $imgId ) {
 			throw new Exception( sprintf( 'There is no image with the uid "%s"', $uid ) );
@@ -218,6 +196,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 		global $wpdb;
 
+		$uids = array_filter( $uids, function( $uid ) { return ! is_numeric( $uid ); } );
 		$uids = array_diff( array_unique( $uids ), array_keys( self::$imgs ) );
 
 		if ( ! $uids ) {

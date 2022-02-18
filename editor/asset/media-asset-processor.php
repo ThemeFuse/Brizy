@@ -36,7 +36,7 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 			return $content;
 		}
 
-		$urls = [];
+		$imgs = [];
 
 		foreach ( $matches[0] as $url ) {
 
@@ -46,29 +46,31 @@ class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_Pro
 				continue;
 			}
 
-			parse_str( $parsedUrl['query'], $args );
+			parse_str( $parsedUrl['query'], $vars );
 
-			if ( empty( $args[ $this->uidKey ] ) ) {
+			if ( empty( $vars[ $this->uidKey ] ) ) {
 				continue;
 			}
 
-			if ( empty( $args[ $this->sizeKey ] ) ) {
+			if ( empty( $vars[ $this->sizeKey ] ) ) {
 				$args[ $this->sizeKey ] = 'full';
 			}
 
-			if ( ! is_numeric( $args[ $this->uidKey ] ) && ! isset( $urls[ $url ] ) ) {
-				$urls[ $url ] = $args;
-			}
+			$imgs[] = [
+				'url'  => $url,
+				'uid'  => $vars[ $this->uidKey ],
+				'size' => $vars[ $this->sizeKey ],
+			];
 		}
 
 		$mediaCache = new Brizy_Editor_CropCacheMedia( $context->getProject() );
 
-		$mediaCache->cacheImgs( array_values( wp_list_pluck( $urls, $this->uidKey ) ) );
+		$mediaCache->cacheImgs( wp_list_pluck( $imgs, 'uid' ) );
 
-		foreach ( $urls as $url => $args ) {
+		foreach ( $imgs as $img ) {
 			try {
-				$croppedUrl = $mediaCache->getImgUrl( $args[ $this->uidKey ], $args[ $this->sizeKey ] );
-				$content    = str_replace( $url, $croppedUrl, $content );
+				$croppedUrl = $mediaCache->getImgUrl( $img['uid'], $img['size'] );
+				$content    = str_replace( $img['url'], $croppedUrl, $content );
 			} catch ( Exception $e ) {
 				continue;
 			}
