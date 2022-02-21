@@ -26,7 +26,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     const AJAX_UPDATE_MENU_DATA = '_update_menu_data';
     const AJAX_UPDATE_EDITOR_META_DATA = '_update_editor_meta_data';
     const AJAX_UPDATE_MENU_ITEM_DATA = '_update_menu_item_data';
-    const AJAX_DOWNLOAD_MEDIA = '_download_media';
     const AJAX_MEDIA_METAKEY = '_get_media_key';
     const AJAX_CREATE_ATTACHMENT_UID = '_create_attachment_uid';
     const AJAX_SET_FEATURED_IMAGE = '_set_featured_image';
@@ -92,7 +91,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         add_action($p . self::AJAX_GET_TERMS, array($this, 'get_terms'));
         add_action($p . self::AJAX_GET_USERS, array($this, 'get_users'));
         add_action($p . self::AJAX_GET_TERMS_BY, array($this, 'get_terms_by'));
-        add_action($p . self::AJAX_DOWNLOAD_MEDIA, array($this, 'download_media'));
         add_action($p . self::AJAX_MEDIA_METAKEY, array($this, 'get_media_key'));
         add_action($p . self::AJAX_CREATE_ATTACHMENT_UID, array($this, 'get_attachment_key'));
         add_action($p . self::AJAX_SET_FEATURED_IMAGE, array($this, 'set_featured_image'));
@@ -948,22 +946,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         );
 
         $this->success($users);
-    }
-
-    public function download_media()
-    {
-        try {
-            $this->verifyNonce(self::nonce);
-
-            $project      = Brizy_Editor_Project::get();
-	        $media_cacher = new Brizy_Editor_CropCacheMedia( $project );
-
-	        $media_cacher->download_original_image( $_REQUEST['media'] );
-
-            $this->success(array(), 200);
-        } catch (Exception $e) {
-            $this->error(500, $e->getMessage());
-        }
     }
 
     public function get_media_key()
