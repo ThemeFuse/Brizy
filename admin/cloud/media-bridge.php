@@ -63,7 +63,7 @@ class Brizy_Admin_Cloud_MediaBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		}
 
 		$media_cacher = new Brizy_Editor_CropCacheMedia( $this->client->getBrizyProject() );
-		$media_cacher->download_original_image( $mediaUid, false );
+		$media_cacher->download_original_image( $mediaUid );
 
 		// disabled it if was disabled before
 		if ( ! $svnUploadEnabled ) {

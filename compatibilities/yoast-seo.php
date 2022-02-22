@@ -8,10 +8,10 @@ class Brizy_Compatibilities_YoastSeo {
 	}
 
 	/**
-	 * Yoast has a feature to add twitter share image.
+	 * Yoast has a feature to add Twitter share image.
 	 * If this image or featured image is not added then
 	 * it takes the first image from the post content.
-	 * These action is made in the hook wp_head and we
+	 * These action is made in the hook wp_head, and we
 	 * haven't replaced the urls yet. Here's why we see:
 	 * <meta name="twitter:image" content="http://@brizy_SITE_URL_PLACEHOLDER@/?
 	 *
@@ -25,9 +25,7 @@ class Brizy_Compatibilities_YoastSeo {
 		try {
 			$project          = Brizy_Editor_Project::get();
 			$context          = Brizy_Content_ContextFactory::createContext( $project, null, null, null );
-			$urlBuilder       = new Brizy_Editor_UrlBuilder( $project, null );
-			$media_storage    = new Brizy_Editor_Asset_MediaProxyStorage( $urlBuilder );
-			$media_processor  = new Brizy_Editor_Asset_MediaAssetProcessor( $media_storage );
+			$media_processor  = new Brizy_Editor_Asset_MediaAssetProcessor();
 			$domain_processor = new Brizy_Editor_Asset_DomainProcessor();
 			$url              = $domain_processor->process( $img_url, $context );
 			$url              = $media_processor->process( $url, $context );

@@ -153,7 +153,6 @@ class Brizy_Editor_Editor_Editor
                 'page' => $wp_post_id,
                 'postType' => get_post_type($wp_post_id),
                 'featuredImage' => $this->getThumbnailData($wp_post_id),
-                'pageAttachments' => array('images' => $this->get_page_attachments()),
                 'templates' => $this->post->get_templates(),
 
                 'plugins' => array(
@@ -241,32 +240,6 @@ class Brizy_Editor_Editor_Editor
         $config['wp']['postTermParents'] = array_values(array_diff_key($this->getAllParents($postTermsByKeys),$postTermsByKeys));
         $config['wp']['postAuthor'] = (int)$this->post->getWpPost()->post_author;
         return $config;
-    }
-
-    /**
-     * @return object
-     */
-    private function get_page_attachments()
-    {
-        global $wpdb;
-        $query = $wpdb->prepare(
-            "SELECT 
-					pm.*
-				FROM 
-					{$wpdb->prefix}postmeta pm 
-				    JOIN {$wpdb->prefix}postmeta pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key='brizy_post_uid' AND pm2.meta_value=%s
-				WHERE pm.meta_key='brizy_attachment_uid'
-				GROUP BY pm.post_id",
-            $this->post->getUid()
-        );
-
-        $results = $wpdb->get_results($query);
-        $attachment_data = array();
-        foreach ($results as $row) {
-            $attachment_data[$row->meta_value] = true;
-        }
-
-        return (object)$attachment_data;
     }
 
     /**
@@ -1026,7 +999,6 @@ class Brizy_Editor_Editor_Editor
             'downloadLayouts' => $pref . Brizy_Admin_Layouts_Api::DOWNLOAD_LAYOUTS,
             'uploadLayouts' => $pref . Brizy_Admin_Layouts_Api::UPLOAD_LAYOUTS,
             'media' => $pref . Brizy_Editor_API::AJAX_MEDIA,
-            'downloadMedia' => $pref . Brizy_Editor_API::AJAX_DOWNLOAD_MEDIA,
             'getMediaUid' => $pref . Brizy_Editor_API::AJAX_MEDIA_METAKEY,
             'getAttachmentUid' => $pref . Brizy_Editor_API::AJAX_CREATE_ATTACHMENT_UID,
             'getServerTimeStamp' => $pref . Brizy_Editor_API::AJAX_TIMESTAMP,
