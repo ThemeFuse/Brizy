@@ -348,20 +348,21 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				}
 			}
 
-			$blocks = [];
+			$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
+			$blocks      = $bockManager->getEntity( (array) $this->param( 'uid' ) );
 
 			foreach ( (array) $this->param( 'uid' ) as $i => $uid ) {
-				$status = stripslashes( $this->param( 'status' )[ $i ] );
 
-				$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
-				$block       = $bockManager->getEntity( $this->param( 'uid' )[ $i ] );
-
-				if ( ! $block ) {
+				if ( ! isset( $blocks[ $uid ] ) ) {
 					$this->error( 400, "Global block not found" );
 				}
+
 				/**
-				 * @var Brizy_Editor_Block $block ;
+				 * @var Brizy_Editor_Block $block;
 				 */
+				$status = stripslashes( $this->param( 'status' )[ $i ] );
+				$block  = $blocks[ $uid ];
+
 				$block->setMeta( stripslashes( $this->param( 'meta' )[ $i ] ) );
 
 				if ( isset( $this->param( 'data' )[ $i ] ) && ! empty( $this->param( 'data' )[ $i ] ) ) {
@@ -390,21 +391,15 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 						$this->ruleManager->setRules( $block->getWpPostId(), $rules );
 					}
 
-					$block->save( 0 );
+					$block->save();
 
 					do_action( 'brizy_global_block_updated', $block );
-					$blocks[] = $block;
 				}
-
 			}
+
 			do_action( 'brizy_global_data_updated' );
-			Brizy_Editor_Block::cleanClassCache();
 
-			$response = [];
-			foreach ( $blocks as $block ) {
-				$response[] = Brizy_Editor_Block::get( $block->getWpPostId() )->createResponse();
-			}
-			$this->success( $response );
+			$this->success( [] );
 
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );

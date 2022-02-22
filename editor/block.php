@@ -384,8 +384,6 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		if ( $autosave !== 1 ) {
 			$this->savePost( true );
-
-			do_action( 'brizy_global_data_updated' );
 		}
 	}
 
