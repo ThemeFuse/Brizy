@@ -290,6 +290,11 @@ jQuery(document).ready(function ($) {
                         btns.prop( 'disabled', false );
                         $( '.spinner' ).remove();
                         alert( response.data );
+                    },
+                    error: function() {
+                        btns.prop( 'disabled', false );
+                        $( '.spinner' ).remove();
+                        alert( 'Importer Failed. Please contact our support.' );
                     }
                 } );
             } );

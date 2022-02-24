@@ -23,27 +23,24 @@ class Brizy_Editor_Data_ProjectMerge82 implements Brizy_Editor_Data_ProjectMerge
 
 	public function merge( $projectData1, $projectData2 ) {
 
-		$result = $projectData1;
-
-		// selected Kit
-		$result->selectedKit = $projectData2->selectedKit;
-
-		// selected Style
+		$result                = $projectData1;
+		$result->selectedKit   = $projectData2->selectedKit;
 		$result->selectedStyle = $projectData2->selectedStyle;
 
-		if ( ! isset( $result->styles ) ) {
-			$result->styles = array();
-		}
+		if ( empty( $result->styles ) ) {
+			$result->styles = $projectData2->styles;
+		} else {
 
-		// merge styles
-		foreach ( $projectData2->styles as $i => $style ) {
-			foreach ( $result->styles as $j => $resultStyle ) {
-				if ( $style->id === $resultStyle->id ) {
-					$result->styles[ $j ] = $style;
-				} else {
-					$result->styles[] = $style;
-				}
+			$resultStyles = [];
+			foreach ( $result->styles as $style ) {
+				$resultStyles[ $style->id ] = $style;
 			}
+
+			foreach ( $projectData2->styles as $style ) {
+				$resultStyles[ $style->id ] = $style;
+			}
+
+			$result->styles = array_values( $resultStyles );
 		}
 
 		// extraFontStyles

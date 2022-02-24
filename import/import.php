@@ -17,6 +17,10 @@ class Brizy_Import_Import {
 	 */
 	public function import() {
 
+		if ( ! class_exists( 'WP_Import' ) ) {
+			new Brizy_Compatibilities_WordpressImporter();
+		}
+
 		try {
 			$this->extractor->getFiles();
 
@@ -32,10 +36,16 @@ class Brizy_Import_Import {
 
 			$importer->import();
 
+			$remap = new Brizy_Import_Remap( $importer, $data );
+
+			$remap->remapping();
+
 		} catch ( Exception $e ) {
 			$this->cleanup();
 			throw new Exception( $e->getMessage() );
 		}
+
+		Brizy_Editor_Post::mark_all_for_compilation();
 
 		$this->cleanup();
 	}
