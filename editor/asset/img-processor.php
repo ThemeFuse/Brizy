@@ -1,7 +1,7 @@
 <?php
 
 
-class Brizy_Editor_Asset_MediaAssetProcessor implements Brizy_Editor_Content_ProcessorInterface {
+class Brizy_Editor_Asset_ImgProcessor implements Brizy_Editor_Content_ProcessorInterface {
 
 	/**
 	 * @var string
