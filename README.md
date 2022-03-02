@@ -1,9 +1,9 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 5.9<br>
+Tested up to: 5.9.1<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.30<br>
+Stable tag: 2.3.31<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,29 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.31 - 2022-03-02
+* New: Collaboration tool option in left sidebar 
+* Improved: Changed max value for counter element 
+* Improved: Selecting dropdown options in Post filter option 
+* Improved: Cache for dynamic content images
+* Improved: Performance on extracting images, avoid creating duplicate of images when the sizes are bigger than image, removed functions and all data sent to editor regards to download_images from s3
+* Improved: SQL query for attachment id
+* Improved: Optimize save global blocks
+* Fixed: Avoid load duplicates images in the editor
+* Fixed: Original image width and height
+* Fixed: Width for sidebar custom attributes 
+* Fixed: Links on buttons when global blocks are missing 
+* Fixed: Gradient color for buttons
+* Fixed: External Popups font assets 
+* Fixed: Form hidden field send only label 
+* Fixed: Premade popup designs available only in PRO 
+* Fixed: View as for membership roles in builder 
+* Fixed: Separators in responsive and hamburger dropdowns in the left sidebar 
+* Fixed: Accordion active tags 
+* Fixed: Hide go to dashboard for reseller partners
+* Fixed: Removed dependency asset storage of asset proxy processor
+* Fixed: Custom fonts endpoint
 
 ### 2.3.30 - 2022-02-09
 * Improved: Form element - added Loading animation to button after submit
