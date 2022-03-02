@@ -12,6 +12,7 @@ import * as Str from "visual/utils/string/specs";
 import { getAttr, getHref, getRel, getTarget } from "./utils";
 import { Type, empty as defaultType } from "./types/Type";
 import { Target, empty as defaultTarget } from "./types/Target";
+import { StoryAnchorAttribute } from "./types/Slide";
 
 type Props = PropsWithChildren<
   WithClassName & {
@@ -19,6 +20,7 @@ type Props = PropsWithChildren<
     target?: Target;
     rel?: string;
     href?: string;
+    slide?: StoryAnchorAttribute;
     type?: Type;
     attr?: JSX.IntrinsicAttributes;
     id?: string;
@@ -36,6 +38,7 @@ const _Link = (
     target = defaultTarget,
     type = defaultType,
     href,
+    slide = {},
     attr = {},
     id = ""
   }: Props,
@@ -60,6 +63,7 @@ const _Link = (
       style={style}
       data-brz-link-type={type}
       onClick={preventDefault}
+      {...slide}
       {...attrs}
       ref={ref}
       id={id}

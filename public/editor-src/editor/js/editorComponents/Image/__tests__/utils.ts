@@ -126,6 +126,7 @@ describe("Testing 'Getters Image' functions", () => {
       offsetY: 0,
       linkType: "anchor",
       linkAnchor: "",
+      linkToSlide: 1,
       linkExternalBlank: "off",
       linkExternalRel: "off",
       linkLightBox: "off",

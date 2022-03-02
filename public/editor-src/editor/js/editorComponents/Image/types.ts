@@ -60,8 +60,16 @@ export type V = {
   positionX: number;
   offsetX: number;
   offsetY: number;
-  linkType: "anchor" | "external" | "popup" | "upload" | "lightBox" | "action";
+  linkType:
+    | "anchor"
+    | "story"
+    | "external"
+    | "popup"
+    | "upload"
+    | "lightBox"
+    | "action";
   linkAnchor: string;
+  linkToSlide: number;
   linkExternalBlank: "on" | "off";
   linkExternalRel: "on" | "off";
   linkLightBox: "on" | "off";

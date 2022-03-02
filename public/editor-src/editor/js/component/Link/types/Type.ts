@@ -3,6 +3,7 @@ import { MRead, Reader } from "visual/utils/types/Type";
 export type Type =
   | "external"
   | "anchor"
+  | "story"
   | "lightBox"
   | "popup"
   | "upload"
@@ -11,6 +12,7 @@ export type Type =
 export const types: Type[] = [
   "external",
   "anchor",
+  "story",
   "lightBox",
   "popup",
   "upload",

@@ -7,8 +7,22 @@ export function style(
   vd: ElementModel
 ): [string, string, string] {
   const styles = {
-    ".brz &&:hover": { standart: ["cssStyleSizeWidth"] },
-    ".brz &&:hover .brz-hr": { standart: ["cssStyleElementLineBorder"] }
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleTypography2FontFamily",
+        "cssStyleTypography2FontSize",
+        "cssStyleTypography2FontWeight",
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleColor",
+        "cssStyleBorder",
+        "cssStyleBgColor",
+        "cssStyleBoxShadow",
+        "cssStyleBorderRadius",
+        "cssStyleElementShopifyQuantityLineHeight",
+        "cssStyleElementShopifyQuantityInputWidth",
+        "cssStyleColor"
+      ]
+    }
   };
 
   return renderStyles({ v, vs, vd, styles }) as [string, string, string];

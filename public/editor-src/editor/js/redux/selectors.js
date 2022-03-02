@@ -677,7 +677,9 @@ export const pageBlocksAssembledRawSelector = createSelector(
       if (block.type === "GlobalBlock") {
         const { _id } = block.value;
 
-        return canUseCondition(globalBlocks[_id], page);
+        if (globalBlocks[_id]?.data) {
+          return canUseCondition(globalBlocks[_id], page);
+        }
       }
 
       return true;

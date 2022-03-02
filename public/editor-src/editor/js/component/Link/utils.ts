@@ -67,6 +67,7 @@ export const getHref = (type: Type, _href: string): string => {
       href = _href;
       break;
     }
+    case "story":
     case "action": {
       href = "#";
       break;

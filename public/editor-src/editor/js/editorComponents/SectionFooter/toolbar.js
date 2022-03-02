@@ -25,6 +25,7 @@ import {
 import { getAllMembershipChoices } from "visual/utils/membership";
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 
 export function getItems({ v, device, component, state, context }) {
   const config = Config.getAll();
@@ -79,6 +80,7 @@ export function getItems({ v, device, component, state, context }) {
         {
           id: "membershipGroup",
           type: "group-dev",
+          disabled: isCloud(config) && isShopify(config),
           options: [
             {
               id: "membership",

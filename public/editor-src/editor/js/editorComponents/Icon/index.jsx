@@ -16,6 +16,9 @@ import { Wrapper } from "../tools/Wrapper";
 import BoxResizer from "visual/component/BoxResizer";
 import { defaultValueKey } from "visual/utils/onChange";
 import { IS_STORY } from "visual/utils/models";
+import { pipe } from "visual/utils/fp";
+import { isNullish } from "visual/utils/value";
+import * as Num from "visual/utils/reader/number";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
@@ -59,6 +62,8 @@ const resizerTransformPatch = patch => {
 
   return patch;
 };
+
+const isNan = pipe(Num.read, isNullish);
 
 class Icon extends EditorComponent {
   static get componentId() {
@@ -138,6 +143,7 @@ class Icon extends EditorComponent {
       name: iconName,
       linkType,
       linkAnchor,
+      linkToSlide,
       linkExternalBlank,
       linkExternalRel,
       linkExternalType,
@@ -149,9 +155,9 @@ class Icon extends EditorComponent {
       cssIDPopulation,
       cssClassPopulation
     } = v;
-
     const hrefs = {
       anchor: linkAnchor,
+      story: !isNan(linkToSlide) ? `slide-${linkToSlide}` : "",
       external: v[linkExternalType],
       popup: linkPopup,
       upload: linkUpload
@@ -163,11 +169,15 @@ class Icon extends EditorComponent {
       </span>
     );
 
-    if (hrefs[linkType] !== "") {
+    if (hrefs[linkType]) {
       const className = classnames({
         "brz-popup2__action-close":
           linkType === "action" && actionClosePopup === "on"
       });
+      const slideAnchor =
+        linkType === "story" && linkToSlide
+          ? { "data-brz-link-story": linkToSlide }
+          : {};
 
       content = (
         <Link
@@ -176,6 +186,7 @@ class Icon extends EditorComponent {
           target={linkExternalBlank}
           rel={linkExternalRel}
           className={className}
+          slide={slideAnchor}
         >
           {content}
         </Link>

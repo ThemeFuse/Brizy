@@ -47,6 +47,7 @@ import { isT, mPipe, pass } from "fp-utilities";
 import * as Arr from "visual/utils/array";
 import { throwOnNullish } from "visual/utils/value";
 import { pipe } from "visual/utils/fp";
+import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 
 const paginationData = {
   page: 1,
@@ -274,6 +275,33 @@ export const uploadSaveLayouts: UploadSavedLayouts = () => {
 };
 
 //#endregion
+
+type T = { by: "id"; value: string } | { by: "slug"; value: ShopifyTemplate };
+
+function getCollectionSourceItems(v: T): Promise<CollectionSourceItem[]> {
+  const config = Config.getAll() as Cloud;
+  const { urls, project } = config;
+  const readCollectionSourceItem = mPipe(
+    pass(Obj.isObject),
+    Obj.readKey("collection"),
+    ArrReader.read,
+    Arr.map(mPipe(pass(Obj.isObject), parseCollectionSourceItem)),
+    Arr.filter(isT)
+  );
+
+  return request2(
+    `${urls.api}/pages/${project.id}/type?searchCriteria=${v.by}&searchValue=${v.value}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  )
+    .then(r => r.json())
+    .then(pipe(readCollectionSourceItem, throwOnNullish("Invalid response")));
+}
+
 export const getCollectionSourceTypes: GetCollectionSourceTypes = async () => {
   const config = Config.getAll() as Cloud;
 
@@ -294,28 +322,17 @@ export const getCollectionSourceTypes: GetCollectionSourceTypes = async () => {
     });
 };
 
-export const getCollectionSourceItems = (
+export const getCollectionSourceItemsById = (
   id: string
 ): Promise<CollectionSourceItem[]> => {
-  const config = Config.getAll() as Cloud;
-  const { urls, project } = config;
-  const readCollectionSourceItem = mPipe(
-    pass(Obj.isObject),
-    Obj.readKey("collection"),
-    ArrReader.read,
-    Arr.map(mPipe(pass(Obj.isObject), parseCollectionSourceItem)),
-    Arr.filter(isT)
-  );
-
-  return request2(`${urls.api}/pages/${project.id}/type?type=${id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-    .then(r => r.json())
-    .then(pipe(readCollectionSourceItem, throwOnNullish("Invalid response")));
+  return getCollectionSourceItems({ by: "id", value: id });
 };
+
+export function getCollectionSourceItemsByType(
+  type: ShopifyTemplate
+): Promise<CollectionSourceItem[]> {
+  return getCollectionSourceItems({ by: "slug", value: type });
+}
 
 //#region page rules
 // right now is used only shopify integration

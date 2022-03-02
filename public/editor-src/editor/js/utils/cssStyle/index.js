@@ -1088,3 +1088,9 @@ export {
 
 //WP Title
 export { cssStyleElementTitleTextShadow } from "./cssStyleElementWPTitle";
+
+// Quantity
+export {
+  cssStyleElementShopifyQuantityLineHeight,
+  cssStyleElementShopifyQuantityInputWidth
+} from "./cssStyleElementShopifyQuantity";

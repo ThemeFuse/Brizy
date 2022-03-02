@@ -31,7 +31,7 @@ class VideoPlaylistItem extends EditorComponent {
   };
 
   getVideoSrc(v) {
-    const { video, controls, start, end, branding, intro } = v;
+    const { video, controls, start, end, branding, intro, loop } = v;
     const videoSrc = getVideoData(video);
 
     return videoSrc
@@ -39,6 +39,7 @@ class VideoPlaylistItem extends EditorComponent {
           controls: controls === "on" ? 1 : 0,
           branding: branding === "off" ? 1 : 0,
           intro: intro === "off" ? 0 : 1,
+          loop: loop === "off" ? 0 : 1,
           suggestedVideo: false,
           start,
           end

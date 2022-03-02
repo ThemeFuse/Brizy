@@ -78,7 +78,10 @@ const translationsMap = {
   WOOAttributes: t("Product Attributes"),
   WOOCategories: t("Shop Categories"),
   WOOProducts: t("Shop Products"),
-  WOOPages: t("Shop Pages")
+  WOOPages: t("Shop Pages"),
+
+  // Shopify
+  Quantity: t("Quantity")
 };
 
 export default {

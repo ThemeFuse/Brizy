@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 5.9
+Tested up to: 5.9.1
 Requires PHP: 5.6.20
-Stable tag: 2.3.30
+Stable tag: 2.3.31
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,29 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.31 - 2022-03-02 =
+* New: Collaboration tool option in left sidebar 
+* Improved: Changed max value for counter element 
+* Improved: Selecting dropdown options in Post filter option 
+* Improved: Cache for dynamic content images
+* Improved: Performance on extracting images, avoid creating duplicate of images when the sizes are bigger than image, removed functions and all data sent to editor regards to download_images from s3
+* Improved: SQL query for attachment id
+* Improved: Optimize save global blocks
+* Fixed: Avoid load duplicates images in the editor
+* Fixed: Original image width and height
+* Fixed: Width for sidebar custom attributes 
+* Fixed: Links on buttons when global blocks are missing 
+* Fixed: Gradient color for buttons
+* Fixed: External Popups font assets 
+* Fixed: Form hidden field send only label 
+* Fixed: Premade popup designs available only in PRO 
+* Fixed: View as for membership roles in builder 
+* Fixed: Separators in responsive and hamburger dropdowns in the left sidebar 
+* Fixed: Accordion active tags 
+* Fixed: Hide go to dashboard for reseller partners
+* Fixed: Removed dependency asset storage of asset proxy processor
+* Fixed: Custom fonts endpoint
 
 = 2.3.30 - 2022-02-09 =
 * Improved: Form element - added Loading animation to button after submit

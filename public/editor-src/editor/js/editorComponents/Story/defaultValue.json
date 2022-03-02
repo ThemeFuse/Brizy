@@ -1,6 +1,12 @@
 {
   "content": {
-    "items": []
+    "items": [],
+
+    "sliderAutoPlay": "off",
+    "sliderAutoPlaySpeed": 3,
+    "sliderAutoPlaySpeedSuffix": "s",
+
+    "sliderLoop": "off"
   },
 
   "style": {

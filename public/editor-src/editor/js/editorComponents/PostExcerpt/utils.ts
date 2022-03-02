@@ -1,24 +1,32 @@
-export const getPlaceholder = (type: string): string => {
+type Types =
+  | "userEmail"
+  | "userFirstName"
+  | "userLastName"
+  | "userUsername"
+  | "userPhoneNumber"
+  | "userRoles"
+  | "wp";
+
+export const getPlaceholder = (type: Types, sourceType: string): string => {
   switch (type) {
     case "userEmail":
-      return "{{ brizy_customer_email }}";
+      return `{{ brizy_customer_email context="${sourceType}" }}`;
     case "userFirstName":
-      return "{{ brizy_customer_fname }}";
+      return `{{ brizy_customer_fname context="${sourceType}" }}`;
     case "userLastName":
-      return "{{ brizy_customer_lname }}";
+      return `{{ brizy_customer_lname context="${sourceType}" }}`;
     case "userUsername":
-      return "{{ brizy_customer_username }}";
+      return `{{ brizy_customer_username context="${sourceType}" }}`;
     case "userPhoneNumber":
-      return "{{ brizy_customer_phone }}";
+      return `{{ brizy_customer_phone context="${sourceType}" }}`;
     case "userRoles":
-      return "{{ brizy_customer_roles }}";
-
-    default:
+      return `{{ brizy_customer_roles context="${sourceType}" }}`;
+    case "wp":
       return "{{ brizy_dc_post_excerpt }}";
   }
 };
 
-export const getPlaceholderIcon = (type: string): string => {
+export const getPlaceholderIcon = (type: Types): string => {
   switch (type) {
     case "userEmail":
       return "user-email";
@@ -30,8 +38,7 @@ export const getPlaceholderIcon = (type: string): string => {
       return "user-phone-number";
     case "userRoles":
       return "user-roles";
-
-    default:
+    case "wp":
       return "wp-excerpt";
   }
 };
