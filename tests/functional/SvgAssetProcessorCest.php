@@ -29,7 +29,7 @@ class SvgAssetProcessorCest {
 			</body>
 			</html>';
 
-		$processor = new Brizy_Editor_Asset_SvgAssetProcessor();
+		$processor = new Brizy_Editor_Asset_MediaProcessor();
 		$content   = $processor->process( $html, new Brizy_Content_Context( Brizy_Editor_Project::get(), null, null, null ) );
 
 		$I->assertStringNotContainsString( '?brizy_attachment=', $content, 'It should not contain an url containing brizy_attachment' );

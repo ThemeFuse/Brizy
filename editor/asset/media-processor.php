@@ -1,8 +1,7 @@
 <?php
 
 
-class Brizy_Editor_Asset_SvgAssetProcessor implements Brizy_Editor_Content_ProcessorInterface {
-
+class Brizy_Editor_Asset_MediaProcessor implements Brizy_Editor_Content_ProcessorInterface {
 
 	/**
 	 * Find and cache all assets and replace the urls with new local ones.
@@ -52,12 +51,13 @@ class Brizy_Editor_Asset_SvgAssetProcessor implements Brizy_Editor_Content_Proce
 				continue;
 			}
 
-			$media_path = $this->get_attachment_file_by_uid( $params[$brizy_attachment] );
+			$mediaUrl = $this->get_attachment_file_by_uid( $params[$brizy_attachment] );
 
-			if ( ! $media_path ) {
-				return $content;
+			if ( ! $mediaUrl ) {
+				continue;
 			}
-			$content = str_replace( $matches[0][ $i ], $media_path, $content );
+
+			$content = str_replace( $matches[0][ $i ], $mediaUrl, $content );
 		}
 
 		return $content;
