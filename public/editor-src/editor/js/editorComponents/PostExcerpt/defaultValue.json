@@ -1,7 +1,8 @@
 {
   "content": {
     "popups": [],
-    "type": "wp"
+    "type": "wp",
+    "sourceType": "auto"
   },
 
   "toolbar": {

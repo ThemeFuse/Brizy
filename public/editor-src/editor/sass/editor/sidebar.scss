@@ -122,53 +122,55 @@
     }
 
     &-cms {
-      .brz-ed-sidebar__control {
-        &__item {
+      > .brz-ed-sidebar__control__options {
+        > .brz-ed-sidebar__control__item {
           padding-top: 23px;
           padding-bottom: 22px;
           max-height: none;
           border-bottom-width: 0;
         }
 
-        &--top {
-          .brz-ed-sidebar__control__item {
-            &:nth-child(n + 2) {
-              padding-bottom: 13px;
+        &.brz-ed-sidebar__control {
+          &--top {
+            > .brz-ed-sidebar__control__item {
+              &:nth-child(n + 2) {
+                padding-bottom: 13px;
+              }
+              &:first-child {
+                border-bottom-width: 1px;
+              }
             }
-            &:first-child {
-              border-bottom-width: 1px;
+          }
+          &--bottom {
+            border-top-width: 0;
+
+            > .brz-ed-sidebar__control__item {
+              &:last-child {
+                border-top-width: 1px;
+              }
+
+              &:nth-child(2) {
+                border-bottom-width: 1px;
+              }
             }
           }
         }
-        &--bottom {
-          border-top-width: 0;
+        &__opened {
+          .brz-ed-sidebar__control {
+            &__item {
+              color: #3a404d;
+              border-bottom-width: 0;
 
-          .brz-ed-sidebar__control__item {
-            &:last-child {
-              border-top-width: 1px;
+              &:hover,
+              &--active {
+                color: $brand-primary;
+              }
             }
-
-            &:nth-child(2) {
-              border-bottom-width: 1px;
-            }
-          }
-        }
-      }
-      &__opened {
-        .brz-ed-sidebar__control {
-          &__item {
-            color: #3a404d;
-            border-bottom-width: 0;
-
-            &:hover,
-            &--active {
-              color: $brand-primary;
-            }
-          }
-          &--bottom .brz-ed-sidebar__control__item:last-child {
-            color: #fff;
-            &:hover {
-              color: $brand-primary;
+            &--bottom .brz-ed-sidebar__control__item:last-child {
+              color: #fff;
+              &:hover {
+                color: $brand-primary;
+              }
             }
           }
         }

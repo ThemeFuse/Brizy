@@ -81,7 +81,7 @@ export function style(v, vs, vd) {
     ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item ": {
       standart: ["cssStyleElementAccordionFilterSpacing"]
     },
-    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item:hover": {
+    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item:not(.brz-accordion__filter__item--active):hover": {
       standart: ["cssStyleElementAccordionFilterColor"]
     },
     ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item--style-1:not(.brz-accordion__filter__item--active):hover": {

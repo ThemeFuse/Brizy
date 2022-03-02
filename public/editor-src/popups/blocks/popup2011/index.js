@@ -7,7 +7,7 @@ module.exports = {
   keywords: "",
   cat: [1652],
   type: 0,
-  pro: false,
+  pro: true,
   resolve: {
     type: "SectionPopup2",
     value: {

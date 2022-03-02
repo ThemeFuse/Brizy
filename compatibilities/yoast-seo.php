@@ -25,7 +25,7 @@ class Brizy_Compatibilities_YoastSeo {
 		try {
 			$project          = Brizy_Editor_Project::get();
 			$context          = Brizy_Content_ContextFactory::createContext( $project, null, null, null );
-			$media_processor  = new Brizy_Editor_Asset_MediaAssetProcessor();
+			$media_processor  = new Brizy_Editor_Asset_ImgProcessor();
 			$domain_processor = new Brizy_Editor_Asset_DomainProcessor();
 			$url              = $domain_processor->process( $img_url, $context );
 			$url              = $media_processor->process( $url, $context );

@@ -91,7 +91,8 @@ export default class PostExcerpt extends EditorComponent {
       linkExternalBlank,
       linkExternalRel,
       linkPopup,
-      linkUpload
+      linkUpload,
+      sourceType
     } = v;
     const className = classnames(
       "brz-wp-post-excerpt",
@@ -110,8 +111,9 @@ export default class PostExcerpt extends EditorComponent {
     };
     const text = (
       <DynamicContentHelper
-        placeholder={getPlaceholder(type)}
+        placeholder={getPlaceholder(type, sourceType)}
         placeholderIcon={getPlaceholderIcon(type)}
+        placeholderHeight={0}
         tagName={v.tagName}
         props={{
           className: "brz-wp-post-excerpt-content"

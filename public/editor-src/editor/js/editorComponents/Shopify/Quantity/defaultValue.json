@@ -1,7 +1,177 @@
 {
   "content": {
-    "itemId": null
+    "itemId": null,
+    "value": 0
   },
   "style": {
+    "customCSS": "",
+
+    "width": 20,
+    "widthSuffix": "%",
+
+    "colorHex": "#1C1C1C",
+    "colorOpacity": 1,
+    "colorPalette": "color2",
+    "tempColorOpacity": 1,
+    "tempColorPalette": "color2",
+    "families": {
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null
+    },
+
+    "fontStyle": "paragraph",
+    "fontFamilyType": "google",
+    "fontSize": 16,
+    "fontSizeSuffix": "px",
+    "fontWeight": 700,
+    "lineHeight": 1,
+    "letterSpacing": 3,
+
+    "tabletFontStyle": "paragraph",
+
+    "tabletFontFamilyType": null,
+    "tabletFontSize": 11,
+    "tabletFontSizeSuffix": "px",
+    "tabletFontWeight": 700,
+    "tabletLineHeight": 1,
+    "tabletLetterSpacing": 1,
+
+    "mobileFontStyle": "paragraph",
+
+    "mobileFontFamilyType": null,
+    "mobileFontSize": 11,
+    "mobileFontSizeSuffix": "px",
+    "mobileFontWeight": 700,
+    "mobileLineHeight": 1,
+    "mobileLetterSpacing": 1,
+
+    "borderRadius": 0,
+    "borderRadiusSuffix": "px",
+
+    "bgColorHex": "#ffffff",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "",
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
+    "borderStyle": "none",
+    "tempBorderStyle": "solid",
+
+    "borderColorHex": "#000000",
+    "borderColorOpacity": 0,
+    "borderColorPalette": "",
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "borderWidthType": "grouped",
+    "borderWidth": 0,
+    "borderTopWidth": 1,
+    "borderRightWidth": 1,
+    "borderBottomWidth": 1,
+    "borderLeftWidth": 1,
+
+    "tempBorderWidth": 1,
+    "tempBorderTopWidth": 1,
+    "tempBorderRightWidth": 1,
+    "tempBorderBottomWidth": 1,
+    "tempBorderLeftWidth": 1,
+
+    "borderRadiusType": "grouped",
+
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
+
+    "boxShadow": "",
+    "tempBoxShadow": "on",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorPalette": "",
+    "boxShadowColorOpacity": 1,
+    "tempBoxShadowColorPalette": "",
+    "tempBoxShadowColorOpacity": 1,
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "tempBoxShadowBlur": 4,
+    "tempBoxShadowSpread": 0,
+    "tempBoxShadowVertical": 2,
+    "tempBoxShadowHorizontal": 1,
+
+    "hoverBoxShadow": null,
+
+    "hoverBgColorHex": null,
+    "hoverBgColorOpacity": null,
+    "hoverBgColorPalette": null,
+
+    "hoverColorHex": null,
+    "hoverColorOpacity": null,
+    "hoverColorPalette": null,
+    "tempHoverColorOpacity": null,
+    "tempHoverColorPalette": null,
+
+    "hoverBoxShadowColorHex": null,
+    "hoverBoxShadowColorPalette": null,
+    "hoverBoxShadowColorOpacity": null,
+    "tempHoverBoxShadowColorPalette": null,
+    "tempHoverBoxShadowColorOpacity": null,
+
+    "hoverBoxShadowBlur": null,
+    "hoverBoxShadowSpread": null,
+    "hoverBoxShadowVertical": null,
+    "hoverBoxShadowHorizontal": null,
+
+    "tempHoverBoxShadowHorizontal": null,
+
+    "tempHoverBgColorOpacity": null,
+    "tempHoverBgColorPalette": null,
+
+    "tempHoverBoxShadow": null,
+    "tempHoverBoxShadowBlur": null,
+    "tempHoverBoxShadowSpread": null,
+    "tempHoverBoxShadowVertical": null,
+
+    "hoverBorderStyle": null,
+    "tempHoverBorderStyle": null,
+
+    "hoverBorderColorHex": null,
+    "hoverBorderColorOpacity": null,
+    "hoverBorderColorPalette": null,
+    "tempHoverBorderColorOpacity": null,
+    "tempHoverBorderColorPalette": null,
+
+    "hoverBorderWidthType": null,
+
+    "hoverBorderWidth": null,
+    "hoverBorderTopWidth": null,
+    "hoverBorderRightWidth": null,
+    "hoverBorderBottomWidth": null,
+    "hoverBorderLeftWidth": null,
+
+    "tempHoverBorderWidth": null,
+    "tempHoverBorderTopWidth": null,
+    "tempHoverBorderLeftWidth": null,
+    "tempHoverBorderRightWidth": null,
+    "tempHoverBorderBottomWidth": null
   }
 }

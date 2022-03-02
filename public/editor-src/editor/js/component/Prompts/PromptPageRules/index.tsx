@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback, useMemo } from "react";
 import Fixed from "visual/component/Prompts/Fixed";
 import {
-  getCollectionSourceItems,
+  getCollectionSourceItemsById,
   getPageRelations,
   shopifySyncRules
 } from "visual/utils/api";
@@ -73,7 +73,7 @@ export const PromptPageRules = (props: Props): ReactElement => {
     const config = Config.getAll();
     if (isCloud(config) && isShopify(config)) {
       const selectedP = getPageRelations(config).then(is => is.map(i => i.id));
-      const itemsP = getCollectionSourceItems(config.templateType.id);
+      const itemsP = getCollectionSourceItemsById(config.templateType.id);
 
       const items = await Promise.all([
         itemsP,

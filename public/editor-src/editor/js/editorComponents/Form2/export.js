@@ -535,7 +535,7 @@ function getFormData(form) {
       } else {
         const [node] = elements;
         const name = node.getAttribute("name");
-        const { type, label } = node.dataset;
+        const { type, label, placeholder } = node.dataset;
         const required = node.required;
         let value = node.value;
 
@@ -564,6 +564,10 @@ function getFormData(form) {
 
             dataValue.value = values.join(",");
           }
+        }
+
+        if (type === "Hidden") {
+          dataValue.value = placeholder || label;
         }
       }
 

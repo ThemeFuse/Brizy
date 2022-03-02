@@ -6,16 +6,11 @@ import jQuery from "jquery";
 if (!window.jQuery) {
   window.jQuery = jQuery;
 } else {
-  const plugins = [
-    "scrollPane",
-    "backgroundVideo",
-    "parallax",
-    "brzSticky",
-    "countdown",
-    "countdown2"
-  ];
+  const plugins = ["scrollPane", "backgroundVideo", "parallax", "brzSticky"];
 
   plugins.forEach(plugin => {
-    window.jQuery.fn[plugin] = jQuery.fn[plugin];
+    if (!window.jQuery.fn[plugin]) {
+      window.jQuery.fn[plugin] = jQuery.fn[plugin];
+    }
   });
 }

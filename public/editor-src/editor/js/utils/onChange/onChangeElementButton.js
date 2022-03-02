@@ -316,20 +316,23 @@ export function onChangeBgColorFieldsButton2({
   const isStartPointer = v.gradientActivePointer === "startPointer";
 
   return isStartPointer
-? {
-    bgColorPalette: isChanged === "hex" ? "" : v.bgColorPalette,
+    ? {
+        bgColorPalette: isChanged === "hex" ? "" : v.bgColorPalette,
+        tempBgColorPalette: isChanged === "hex" ? "" : v.tempBgColorPalette,
 
-    bgColorHex: hex,
+        bgColorHex: hex,
 
-    bgColorOpacity: opacity
-  }
-: {
-    gradientColorPalette: isChanged === "hex" ? "" : v.gradientColorPalette,
+        bgColorOpacity: opacity
+      }
+    : {
+        gradientColorPalette: isChanged === "hex" ? "" : v.gradientColorPalette,
+        tempGradientColorPalette:
+          isChanged === "hex" ? "" : v.tempGradientColorPalette,
 
-    gradientColorHex: hex,
+        gradientColorHex: hex,
 
-    gradientColorOpacity: opacity
-  };
+        gradientColorOpacity: opacity
+      };
 }
 
 export function onChangeHoverBgColorHexButton2({
@@ -431,9 +434,22 @@ export function onChangeHoverBgColorFieldsButton2({
   opacity = undefined,
   isChanged = "hex"
 }) {
-  return {
-    hoverBgColorPalette: isChanged === "hex" ? "" : v.hoverBgColorPalette,
-    hoverBgColorHex: hex,
-    hoverBgColorOpacity: opacity
-  };
+  const isStartPointer = v.hoverGradientActivePointer === "startPointer";
+
+  return isStartPointer
+    ? {
+        hoverBgColorPalette: isChanged === "hex" ? "" : v.hoverBgColorPalette,
+        tempHoverBgColorPalette:
+          isChanged === "hex" ? "" : v.tempHoverBgColorPalette,
+        hoverBgColorHex: hex,
+        hoverBgColorOpacity: opacity
+      }
+    : {
+        hoverGradientColorPalette:
+          isChanged === "hex" ? "" : v.hoverGradientColorPalette,
+        tempHoverGradientColorPalette:
+          isChanged === "hex" ? "" : v.tempHoverGradientColorPalette,
+        hoverGradientColorHex: hex,
+        hoverGradientColorOpacity: opacity
+      };
 }

@@ -1,6 +1,6 @@
 import { Choice } from "visual/component/Options/types/dev/Select/types";
 import {
-  getCollectionSourceItems,
+  getCollectionSourceItemsById,
   getCollectionSourceTypes
 } from "visual/utils/api";
 
@@ -26,7 +26,7 @@ export const getSourceTypeChoices: GetSourceTypeChoices = async () => {
 
 export const getSourceIdChoices: GetSourceIdChoices = async (id: string) => {
   try {
-    const data = await getCollectionSourceItems(id);
+    const data = await getCollectionSourceItemsById(id);
     return data.map(({ id, title }) => ({
       value: id,
       title: title

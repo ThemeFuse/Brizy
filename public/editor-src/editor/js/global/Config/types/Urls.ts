@@ -2,7 +2,6 @@ interface UrlsCommon {
   about: string;
   api: string;
   assets: string;
-  backToDashboard: string;
   customFile: string;
   editorFonts: string;
   image: string;
@@ -17,6 +16,7 @@ interface UrlsCommon {
 
 interface WPUrls extends UrlsCommon {
   assetsExternal: string;
+  backToDashboard: string;
   blockThumbnails: string;
   changeTemplate: string;
   dashboardNavMenu: string;
@@ -32,6 +32,9 @@ interface CloudUrls extends UrlsCommon {
   screenshot: string;
   siteOriginal: string;
   projectSettings: string;
+  backToDashboard: string | undefined;
+  prefetchFonts: string;
+  collaborationToolUrl: string;
 }
 
 type Cnf = {
