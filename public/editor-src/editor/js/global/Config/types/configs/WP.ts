@@ -37,6 +37,7 @@ export interface Prop {
 }
 
 export interface WP extends ConfigCommon {
+  prefix?: string;
   dynamicContent: DynamicContent<"wp">;
   pro?: Pro<"wp">;
   user: User<"wp">;

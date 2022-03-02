@@ -38,7 +38,8 @@ type RState = {
     | "HAS_INPUT"
     | "FETCHING"
     | "FETCH_FOUND"
-    | "FETCH_NOT_FOUND";
+    | "FETCH_NOT_FOUND"
+    | "SELECTED";
   vChoices: ChoicesSync;
   sChoices: ChoicesSync;
   search: string;
@@ -175,6 +176,7 @@ function reducer(state: RState, action: RAction): RState {
         case "value_changed":
           return {
             ...state,
+            state: "SELECTED",
             vChoices: action.choices
           };
         case "search_erased":
@@ -195,6 +197,29 @@ function reducer(state: RState, action: RAction): RState {
       break;
     case "FETCH_NOT_FOUND":
       switch (action.type) {
+        case "search_erased":
+          return {
+            ...state,
+            state: "IDLE",
+            sChoices: [],
+            search: ""
+          };
+        case "search_changed":
+          return {
+            ...state,
+            state: "HAS_INPUT",
+            sChoices: [],
+            search: action.search
+          };
+      }
+      break;
+    case "SELECTED":
+      switch (action.type) {
+        case "value_changed":
+          return {
+            ...state,
+            vChoices: action.choices
+          };
         case "search_erased":
           return {
             ...state,
@@ -238,6 +263,7 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
   const [state, dispatch] = useReducer(reducer, initialState);
   const debouncedSearch = useDebounce(state.search, 1000);
   const currentSearchController = useRef<AbortController>();
+  const initialChoices = useRef<ChoicesSync>([]);
 
   useEffect(() => {
     let controller: AbortController;
@@ -252,6 +278,7 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
         .load(value, controller.signal)
         .then(r => {
           if (!controller.signal.aborted) {
+            initialChoices.current = r;
             dispatch({ type: "load_success", choices: r });
           }
         })
@@ -293,6 +320,25 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
     }
   }, [debouncedSearch]);
 
+  useEffect(() => {
+    if (state.state === "IDLE") {
+      initialChoices.current = state.vChoices;
+    }
+  }, [state.state === "IDLE"]);
+
+  const _choices =
+    state.state === "SELECTED"
+      ? mergeChoices(
+          missingChoices(value, state.vChoices),
+          initialChoices.current,
+          state.sChoices
+        )
+      : mergeChoices(
+          missingChoices(value, state.vChoices),
+          state.vChoices,
+          state.sChoices
+        );
+
   return (
     <Control<ValueItem>
       value={value}
@@ -319,11 +365,7 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
         );
       }}
     >
-      {mergeChoices(
-        missingChoices(value, state.vChoices),
-        state.vChoices,
-        state.sChoices
-      ).map(choiceToItem)}
+      {_choices.map(choiceToItem)}
     </Control>
   );
 };

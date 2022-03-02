@@ -10,7 +10,7 @@ import { Scrollbars } from "react-custom-scrollbars";
 import classNames from "classnames";
 import ClickOutside from "visual/component/ClickOutside";
 import EditorIcon from "visual/component/EditorIcon";
-import { arrangeItems, toggleItemValue, valueTitle } from "./utils";
+import { toggleItemValue, valueTitle } from "./utils";
 import {
   MultiSelectProps as Props,
   MultiSelectItemProps as ItemProps
@@ -199,7 +199,7 @@ function SelectDropdown<T>({
         }}
       >
         <ul className="brz-ul">
-          {arrangeItems(items, value).map(item => (
+          {items.map(item => (
             <SelectItem
               key={String(item.value)}
               title={item.title}

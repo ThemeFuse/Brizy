@@ -1,20 +1,8 @@
-import _ from "underscore";
 import { isPlaceholderStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import Config, { Cloud } from "visual/global/Config";
-import { objectToQueryString, isAbsoluteUrl } from "visual/utils/url";
-
-export type Options = {
-  iW: number;
-  iH: string | number;
-};
-
-export const getFilter = (options: Options): string => {
-  const roundedOptions = _.mapObject(options, val =>
-    typeof val === "number" ? Math.round(val) : val
-  );
-
-  return objectToQueryString(roundedOptions);
-};
+import { isAbsoluteUrl } from "visual/utils/url";
+import { Options } from "./types";
+import { getFilter } from "./utils";
 
 export default function imageUrl(
   src: string,

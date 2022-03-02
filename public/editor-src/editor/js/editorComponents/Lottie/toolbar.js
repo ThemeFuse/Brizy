@@ -1,6 +1,10 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import { toolbarLinkAnchor, toolbarLinkExternal } from "visual/utils/toolbar";
+import {
+  toolbarLinkAnchor,
+  toolbarStoryAnchor,
+  toolbarLinkExternal
+} from "visual/utils/toolbar";
 import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 
 export function getItems({ v, device, component }) {
@@ -96,7 +100,7 @@ export function getItems({ v, device, component }) {
         title: t("Link")
       },
       position: 90,
-      disabled: device === "dekstop",
+      devices: "desktop",
       options: [
         {
           id: "linkType",
@@ -152,6 +156,11 @@ export function getItems({ v, device, component }) {
                   })
                 }
               ]
+            },
+            {
+              id: "story",
+              label: t("Slides"),
+              options: [toolbarStoryAnchor({ disabled: !IS_STORY })]
             }
           ]
         }

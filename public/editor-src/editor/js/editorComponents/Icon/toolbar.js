@@ -8,6 +8,7 @@ import {
 } from "visual/utils/onChange";
 import {
   toolbarLinkAnchor,
+  toolbarStoryAnchor,
   toolbarLinkExternal,
   toolbarBoxShadow2,
   toolbarBoxShadowHexField2,
@@ -1158,6 +1159,11 @@ export function getItemsForDesktop(v, component) {
                   })
                 }
               ]
+            },
+            {
+              id: "story",
+              label: t("Slides"),
+              options: [toolbarStoryAnchor({ disabled: !IS_STORY })]
             }
           ]
         }

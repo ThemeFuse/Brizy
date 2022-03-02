@@ -107,6 +107,12 @@ class StoryItems extends EditorArrayComponent {
           type: "popover-dev",
           disabled: true,
           options: []
+        },
+        {
+          id: "toolbarAutoplay",
+          type: "popover-dev",
+          disabled: true,
+          options: []
         }
       ],
       getItemsForTablet: () => [],
@@ -115,7 +121,8 @@ class StoryItems extends EditorArrayComponent {
   };
 
   getItemProps() {
-    const { meta } = this.props;
+    const { meta, itemProps } = this.props;
+
     const toolbarExtendSettings = {
       getItemsForDesktop: () => [
         {
@@ -139,7 +146,9 @@ class StoryItems extends EditorArrayComponent {
 
     return {
       meta,
-      toolbarExtend
+      toolbarExtend,
+
+      ...itemProps
     };
   }
 
@@ -252,7 +261,7 @@ class StoryItems extends EditorArrayComponent {
           focusOnSelect={false}
           alwaysShowDots={true}
           slidesToShow={1}
-          infinite={false}
+          infinite={true}
           slidesToScroll={1}
           initialSlide={0}
           swipe={false}
@@ -272,6 +281,8 @@ class StoryItems extends EditorArrayComponent {
     }
 
     if (IS_PREVIEW) {
+      const { sliderAutoPlay, sliderAutoPlaySpeed, sliderLoop } = this.props;
+
       const responsive = [
         {
           breakpoint: 767,
@@ -290,7 +301,7 @@ class StoryItems extends EditorArrayComponent {
           data-center-padding="60px"
           data-variable-width={true}
           data-focus-on-select={true}
-          data-infinite={false}
+          data-slider-loop={sliderLoop === "on"}
           data-touch-threshold={15}
           data-slides-to-scroll={1}
           data-arrows={true}
@@ -298,7 +309,8 @@ class StoryItems extends EditorArrayComponent {
           data-dots-class="brz-slick-slider__dots"
           data-fade={false}
           data-vertical={false}
-          data-auto-play={false}
+          data-auto-play={sliderAutoPlay === "on"}
+          data-auto-play-speed={sliderAutoPlaySpeed * 1000}
           data-swipe={true}
           data-responsive={encodeURIComponent(JSON.stringify(responsive))}
           data-speed={300}

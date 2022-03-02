@@ -4,7 +4,6 @@ import { ImageSetter as CloudImageSetter, Value } from "./index.cloud";
 import EditorIcon from "visual/component/EditorIcon";
 import { getImageUid } from "visual/utils/api/index.wp";
 import { getImageFormat, preloadImage } from "visual/utils/image";
-import { imageAttachments } from "visual/utils/image/imageAttachments.wp";
 
 export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
   wpMediaFrame: WPMediaFrame | null = null;
@@ -52,8 +51,6 @@ export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
 
         getImageUid(attachment.get("id"))
           .then(r => {
-            imageAttachments.add(r.uid);
-
             const { x, y } = this.props;
             const { url } = attachment.toJSON();
 

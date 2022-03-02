@@ -241,9 +241,9 @@ export function getGlobalBlocks() {
       .map(parseGlobalBlock)
       .reduce((acc, { uid, data, status, rules, position, meta }) => {
         // was commented because of this cases:
-          // add block to page -> Update the page -> refresh it ->
-          // make block global -> refresh the page -> make the same block global again
-          // if (status === "draft") return acc;
+        // add block to page -> Update the page -> refresh it ->
+        // make block global -> refresh the page -> make the same block global again
+        // if (status === "draft") return acc;
 
         acc[uid] = {
           data,
@@ -361,16 +361,6 @@ export function updateGlobalBlocksPositions(data, extraMeta = {}) {
 }
 
 // image
-
-export function downloadImageFromCloud(id) {
-  const { api: apiConfig, page } = Config.get("wp");
-  const data = {
-    post_id: page,
-    media: id
-  };
-
-  return request(apiConfig.downloadMedia, data).then(({ data }) => data);
-}
 
 export function getImageUid(id) {
   const { api: apiConfig, page } = Config.get("wp");

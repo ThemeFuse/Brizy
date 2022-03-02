@@ -17,6 +17,10 @@ import { styleSection, styleAnimation } from "./styles";
 import SectionItems from "./Items";
 import defaultValue from "./defaultValue.json";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+
+const config = Config.getAll();
 
 export default class Section extends EditorComponent {
   static get componentId() {
@@ -188,7 +192,7 @@ export default class Section extends EditorComponent {
   }
 
   renderMemberShipWrapper(content, v) {
-    if (v.membership === "on") {
+    if (v.membership === "on" && !(isCloud(config) && isShopify(config))) {
       const roles = JSON.parse(v.membershipRoles).join(",");
 
       return (

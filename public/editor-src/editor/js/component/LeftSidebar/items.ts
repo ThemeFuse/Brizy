@@ -1,5 +1,5 @@
 import { MouseEvent } from "react";
-import Config from "visual/global/Config";
+import Config, { Cloud } from "visual/global/Config";
 import Prompts from "visual/component/Prompts";
 import { t } from "visual/utils/i18n";
 import {
@@ -16,8 +16,9 @@ import { Cms } from "./components/Cms";
 import { Settings } from "./components/Settings";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 
-const config = Config.getAll();
-const urls = config.urls;
+const config = Config.getAll() as Cloud;
+
+const { urls } = config;
 
 export default {
   top: [
@@ -25,7 +26,12 @@ export default {
     Base,
     ...(isCloud(config) && isShopify(config) ? [Shopify] : []),
     BlocksSortable,
-    ...(isCloud(config) && isShopify(config) ? [] : [Styling])
+    ...(isCloud(config) && isShopify(config) ? [] : [Styling]),
+    {
+      type: "link",
+      icon: "nc-collab",
+      link: urls.collaborationToolUrl
+    }
   ],
   bottom: [
     DeviceModes,
@@ -35,7 +41,8 @@ export default {
       icon: "nc-page",
       title: t("Page"),
       type: "popover",
-      disabled: IS_GLOBAL_POPUP || IS_STORY,
+      disabled:
+        IS_GLOBAL_POPUP || IS_STORY || (isCloud(config) && isShopify(config)),
       options: [
         {
           type: "showMembership",
@@ -81,7 +88,8 @@ export default {
         {
           type: "link",
           icon: "nc-back",
-          disabled: isCloud(config) && isShopify(config),
+          disabled:
+            !urls.backToDashboard || (isCloud(config) && isShopify(config)),
           label: t("Go to Dashboard"),
           link: urls.backToDashboard
         }
