@@ -72,7 +72,7 @@ class VideoPlaylist extends EditorComponent {
 
   getVideoSrc(v) {
     const itemV = this.getItemValue(v);
-    const { branding, intro, video } = itemV;
+    const { branding, intro, video, loop } = itemV;
 
     const start = itemV.start;
     const end = itemV.end;
@@ -84,6 +84,7 @@ class VideoPlaylist extends EditorComponent {
           controls: itemV.controls === "on" ? 0 : 1,
           branding: branding === "off" ? 1 : 0,
           intro: intro === "off" ? 0 : 1,
+          loop: loop === "off" ? 0 : 1,
           suggestedVideo: false,
           start,
           end

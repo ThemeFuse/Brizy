@@ -18,6 +18,9 @@ import { Wrapper } from "../tools/Wrapper";
 import BoxResizer from "visual/component/BoxResizer";
 import { hasSizing } from "visual/editorComponents/Button/utils";
 import * as State from "visual/utils/stateMode";
+import { pipe } from "visual/utils/fp";
+import { isNullish } from "visual/utils/value";
+import * as Num from "visual/utils/reader/number";
 
 const resizerPoints = [
   "topLeft",
@@ -38,6 +41,8 @@ const restrictions = {
     "%": { min: 5, max: Infinity }
   }
 };
+
+const isNan = pipe(Num.read, isNullish);
 
 export default class Button extends EditorComponent {
   static get componentId() {
@@ -110,6 +115,7 @@ export default class Button extends EditorComponent {
     const {
       linkType,
       linkAnchor,
+      linkToSlide,
       linkExternalBlank,
       linkExternalType,
       linkExternalRel,
@@ -136,8 +142,14 @@ export default class Button extends EditorComponent {
       }
     );
 
+    const slideAnchor =
+      linkType === "story" && !isNan(linkToSlide)
+        ? { "data-brz-link-story": linkToSlide }
+        : {};
+
     const hrefs = {
       anchor: linkAnchor,
+      story: isNan(linkToSlide) ? "" : `slide-${linkToSlide}`,
       external: v[linkExternalType],
       popup: linkPopup,
       upload: linkUpload
@@ -149,7 +161,8 @@ export default class Button extends EditorComponent {
       target: linkExternalBlank,
       rel: linkExternalRel,
       className: className,
-      id: cssIDPopulation === "" ? customID : cssIDPopulation
+      id: cssIDPopulation === "" ? customID : cssIDPopulation,
+      slide: slideAnchor
     };
 
     if (IS_EDITOR) {

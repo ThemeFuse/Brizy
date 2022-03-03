@@ -368,9 +368,9 @@ class Login extends EditorComponent {
   getActions(type) {
     switch (type) {
       case "register":
-        return "{{editor_login_url}}?action=register";
+        return "{{editor_registration_url}}";
       case "forgot":
-        return "{{editor_login_url}}?action=lostpassword";
+        return "{{editor_lostpassword_url}}";
       default:
         return "{{editor_login_url}}";
     }

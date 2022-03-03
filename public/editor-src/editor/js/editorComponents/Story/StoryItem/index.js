@@ -1,5 +1,7 @@
 import React from "react";
 import classnames from "classnames";
+import _ from "underscore";
+
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Items from "./items";
@@ -26,8 +28,14 @@ class StoryItem extends EditorComponent {
 
   collapsibleToolbarRef = React.createRef();
 
+  shouldUpdateBecauseOfParent(nextProps) {
+    return !_.isEqual(this.props.rerender, nextProps.rerender);
+  }
+
   shouldComponentUpdate(nextProps) {
-    return this.optionalSCU(nextProps);
+    return (
+      this.optionalSCU(nextProps) || this.shouldUpdateBecauseOfParent(nextProps)
+    );
   }
 
   handleToolbarEscape = () => {
@@ -60,6 +68,7 @@ class StoryItem extends EditorComponent {
       "brz-container",
       v.containerClassName
     );
+
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       className: classNameContainer,

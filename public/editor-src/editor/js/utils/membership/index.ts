@@ -49,7 +49,7 @@ export const getAllMembershipChoices = (
 }[] => {
   return [
     { title: "Not logged", value: "not_logged" },
-    { title: "Loggged", value: "logged" },
+    { title: "Logged", value: "logged" },
 
     ...getMembershipChoices(config)
   ];

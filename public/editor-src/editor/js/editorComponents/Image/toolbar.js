@@ -9,6 +9,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarImageTags,
   toolbarLinkAnchor,
+  toolbarStoryAnchor,
   toolbarImageLinkExternal
 } from "visual/utils/toolbar";
 
@@ -80,7 +81,11 @@ export const getItems = ({ property }) => ({
   const placeholderData = placeholderObjFromStr(v.imagePopulation);
   const isCustomSizeType =
     (sizeType === "custom" && !placeholderData) ||
-    placeholderData?.attr?.size === undefined;
+    !!(
+      placeholderData &&
+      (placeholderData.attr === undefined ||
+        placeholderData.attr?.size === undefined)
+    );
   const isSvgOrGif =
     (isSVG(v.imageExtension) || isGIF(v.imageExtension)) && !placeholderData;
 
@@ -293,6 +298,11 @@ export const getItems = ({ property }) => ({
                   })
                 }
               ]
+            },
+            {
+              id: "story",
+              label: t("Slides"),
+              options: [toolbarStoryAnchor({ disabled: !IS_STORY })]
             }
           ]
         }

@@ -23,6 +23,20 @@ export function toolbarLinkAnchor({
   };
 }
 
+export function toolbarStoryAnchor({ disabled = false, devices = "all" }) {
+  return {
+    id: "linkToSlide",
+    type: "number-dev",
+    label: t("Slide"),
+    disabled,
+    devices,
+    config: {
+      min: 1,
+      max: 1000000
+    }
+  };
+}
+
 export function toolbarLinkUpload({
   v,
   device,

@@ -59,6 +59,7 @@ export {
 export {
   toolbarLinkAnchor,
   toolbarLinkExternal,
+  toolbarStoryAnchor,
   toolbarLinkExternalBlank,
   toolbarLinkExternalRel,
   toolbarLinkPopup,

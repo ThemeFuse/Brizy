@@ -17,8 +17,13 @@ import { Wrapper } from "../tools/Wrapper";
 import BoxResizer from "visual/component/BoxResizer";
 import Link from "visual/component/Link";
 import { customFileUrl } from "visual/utils/customFile";
+import { pipe } from "visual/utils/fp";
+import { isNullish } from "visual/utils/value";
+import * as Num from "visual/utils/reader/number";
 
 const resizerPoints = ["centerLeft", "centerRight"];
+
+const isNan = pipe(Num.read, isNullish);
 
 class Lottie extends EditorComponent {
   static get componentId() {
@@ -203,6 +208,7 @@ class Lottie extends EditorComponent {
       animationFile,
       linkType,
       linkAnchor,
+      linkToSlide,
       linkExternalBlank,
       linkExternalRel,
       linkExternalType,
@@ -212,6 +218,7 @@ class Lottie extends EditorComponent {
 
     const hrefs = {
       anchor: linkAnchor,
+      story: !isNan(linkToSlide) ? `slide-${linkToSlide}` : "",
       external: v[linkExternalType],
       popup: linkPopup,
       upload: linkUpload
@@ -241,6 +248,10 @@ class Lottie extends EditorComponent {
         data-render-type={renderer}
       />
     );
+    const slideAnchor =
+      linkType !== "story" || !isNan(linkToSlide)
+        ? {}
+        : { "data-brz-link-story": linkToSlide };
 
     return (
       <>
@@ -251,6 +262,7 @@ class Lottie extends EditorComponent {
               type={linkType}
               target={linkExternalBlank}
               rel={linkExternalRel}
+              slide={slideAnchor}
             >
               {animDom}
             </Link>

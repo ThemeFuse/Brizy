@@ -1,5 +1,5 @@
 import { MouseEvent } from "react";
-import Config from "visual/global/Config";
+import Config, { WP } from "visual/global/Config";
 import Prompts from "visual/component/Prompts";
 import { Base } from "./components/AddElements";
 import { BlocksSortable } from "./components/BlocksSortable";
@@ -7,9 +7,12 @@ import { Styling } from "./components/Styling";
 import { DeviceModes } from "./components/DeviceModes";
 import { t } from "visual/utils/i18n";
 import { IS_GLOBAL_POPUP, IS_TEMPLATE, IS_STORY } from "visual/utils/models";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { IS_PRO } from "visual/utils/env";
 
-const urls = Config.get("urls");
-const proEnabled = Boolean(Config.get("pro"));
+const config = Config.getAll() as WP;
+
+const { urls } = config;
 
 export default {
   top: [Base, BlocksSortable, Styling],
@@ -29,7 +32,8 @@ export default {
         },
         {
           type: "showMembership",
-          label: t("View as")
+          label: t("View as"),
+          disabled: isCloud(config) && isShopify(config)
         },
         {
           type: "wpFeatureImage",
@@ -50,7 +54,7 @@ export default {
           label: t("Upgrade to Pro"),
           link: urls.upgradeToPro,
           linkTarget: "_blank",
-          disabled: proEnabled
+          disabled: IS_PRO
         },
         {
           type: "link",

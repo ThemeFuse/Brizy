@@ -48,14 +48,28 @@ class Story extends EditorComponent {
   }
 
   renderItems(v) {
-    const { sliderAutoPlay, sliderAutoPlaySpeed, sliderAnimation } = v;
+    const {
+      sliderLoop,
+      sliderAutoPlay,
+      sliderAutoPlaySpeed,
+      sliderAnimation
+    } = v;
 
     const itemsProps = this.makeSubcomponentProps({
+      sliderLoop,
       sliderAnimation,
+      sliderAutoPlay,
       sliderAutoPlaySpeed,
+
+      itemProps: {
+        rerender: {
+          sliderLoop,
+          sliderAutoPlay,
+          sliderAutoPlaySpeed
+        }
+      },
       bindWithKey: "items",
       meta: this.getMeta(),
-      sliderAutoPlay: sliderAutoPlay === "on",
       toolbarExtend: this.makeToolbarPropsFromConfig2(
         toolbarExtendConfig,
         sidebarExtendConfig

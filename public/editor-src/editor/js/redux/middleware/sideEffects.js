@@ -281,6 +281,24 @@ function handleCurrentRoleChange(callbacks) {
 
     document.body.style.removeProperty(`--role-${oldRole}-flex`);
     document.body.style.setProperty(`--role-${newRole}-flex`, "flex");
+
+    if (
+      oldRole !== "logged" &&
+      oldRole !== "not_logged" &&
+      oldRole !== "default"
+    ) {
+      document.body.style.removeProperty("--role-logged-flex", "flex");
+      document.body.style.removeProperty("--role-logged-block", "block");
+    }
+
+    if (
+      newRole !== "logged" &&
+      newRole !== "not_logged" &&
+      newRole !== "default"
+    ) {
+      document.body.style.setProperty("--role-logged-flex", "flex");
+      document.body.style.setProperty("--role-logged-block", "block");
+    }
   });
 }
 

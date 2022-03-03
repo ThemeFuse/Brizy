@@ -27,41 +27,6 @@
       }
 
       function appendFonts(data) {
-        var googleFontsOptimizations = new Promise(function(res) {
-          var hostGoogleOptimization = hostDocument.querySelectorAll(
-            "link.brz-link-google-preconnect, link.brz-link-google-prefetch"
-          );
-          var guestGoogleOptimization = hostDocument.querySelectorAll(
-            "link.brz-link-google-preconnect, link.brz-link-google-prefetch"
-          );
-
-          if (
-            hostGoogleOptimization.length === 0 &&
-            guestGoogleOptimization.length
-          ) {
-            guestGoogleOptimization.onload = res;
-            hostDocument.head.appendChild(guestGoogleOptimization);
-          } else {
-            res();
-          }
-        });
-
-        var brizyCDN = new Promise(function(res) {
-          var hostCDN = hostDocument.querySelector(
-            "link.brz-link-cdn-preconnect"
-          );
-          var guestCDN = guestDocument.querySelector(
-            "link.brz-link-cdn-preconnect"
-          );
-
-          if (!hostCDN && guestCDN) {
-            guestCDN.onload = res;
-            hostDocument.head.appendChild(guestCDN);
-          } else {
-            res();
-          }
-        });
-
         var googleFonts = new Promise(function(res) {
           var hostGoogleFonts = hostDocument.querySelector(
             "link.brz-link-google"
@@ -105,12 +70,7 @@
           }
         });
 
-        return Promise.all([
-          googleFontsOptimizations,
-          brizyCDN,
-          googleFonts,
-          uploadFonts
-        ]).then(function() {
+        return Promise.all([googleFonts, uploadFonts]).then(function() {
           return data;
         });
       }
@@ -148,13 +108,11 @@
             !hostLibCSS ||
             (hostLibGroup !== "group-all" && guestLibGroup !== hostLibGroup)
           ) {
-            console.log("loading hostLibCSS", guestLibGroup);
             loadingPromises["hostLibCSS"] = new Promise(function(res) {
               guestLibCSS.onload = res;
               hostDocument.head.appendChild(guestLibCSS);
             });
           } else {
-            console.log("not loading hostLibCSS");
             if (!loadingPromises["hostLibCSS"]) {
               loadingPromises["hostLibCSS"] = Promise.resolve();
             }
@@ -173,13 +131,11 @@
             (hostLibProGroup !== "group-all" &&
               guestLibProGroup !== hostLibProGroup)
           ) {
-            console.log("loading hostLibProCSS", guestLibProGroup);
             loadingPromises["hostLibProCSS"] = new Promise(function(res) {
               guestLibProCSS.onload = res;
               hostDocument.head.appendChild(guestLibProCSS);
             });
           } else {
-            console.log("not loading hostLibProCSS");
             if (!loadingPromises["hostLibProCSS"]) {
               loadingPromises["hostLibProCSS"] = Promise.resolve();
             }

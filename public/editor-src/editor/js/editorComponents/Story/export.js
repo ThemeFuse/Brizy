@@ -1,6 +1,9 @@
 import $ from "jquery";
+import * as Num from "visual/utils/reader/number";
 
 export default function($node) {
+  const node = $node.get(0);
+
   const isRtl = $node.closest("[dir='rtl']").length > 0;
   const makeArrow = node => {
     const $svg = $(node)
@@ -45,8 +48,8 @@ export default function($node) {
       focusOnSelect,
       touchThreshold,
       slidesToShow,
-      infinite,
       slidesToScroll,
+      sliderLoop,
       lazyLoad,
       dots,
       dotsClass,
@@ -77,7 +80,7 @@ export default function($node) {
       focusOnSelect,
       touchThreshold,
       slidesToShow,
-      infinite,
+      infinite: sliderLoop,
       slidesToScroll,
       lazyLoad,
       swipe,
@@ -98,6 +101,15 @@ export default function($node) {
       rows: 0
     });
 
+    node.querySelectorAll("[data-brz-link-story]").forEach(item => {
+      const linkIndex = Num.read(item.getAttribute("data-brz-link-story")) ?? 1;
+
+      item.addEventListener("click", e => {
+        e.preventDefault();
+        $slideshow.slick("slickGoTo", linkIndex - 1);
+      });
+    });
+
     $(".brz-slick-slider__arrow-replay").on("click", function() {
       $slideshow.slick("slickGoTo", 0);
     });
@@ -113,6 +125,14 @@ export default function($node) {
       e.preventDefault();
       $slideshow.slick("slickPrev");
     });
+
+    if (!sliderLoop) {
+      $this.on("afterChange", function(...stopOnLast) {
+        if (stopOnLast[2] === $(".brz-slick-slider__dots > li").length - 1) {
+          $slideshow.slick("slickPause");
+        }
+      });
+    }
 
     // Disable Vertical touch move
     window.addEventListener("touchmove", handlePrevent, { passive: false });

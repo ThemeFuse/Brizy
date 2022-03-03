@@ -5,34 +5,37 @@ class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 	const ENDPOINT = '_attachment';
 
 	/**
-	 * @return string
+	 * @return array
 	 */
 	protected function get_endpoint_keys() {
 		return array( Brizy_Editor::prefix( self::ENDPOINT ) );
 	}
 
 	/**
-	 * @return mixed|void
+	 * @return void
 	 * @throws Exception
 	 */
 	public function process_query() {
 		global $wp_query;
 
-		$vars = $wp_query->query_vars;
+		$vars     = $wp_query->query_vars;
 		$ENDPOINT = Brizy_Editor::prefix( self::ENDPOINT );
+
 		if ( isset( $vars[ $ENDPOINT ] ) && is_string( $vars[ $ENDPOINT ] ) && ! empty( $vars[ $ENDPOINT ] ) ) {
 
 			session_write_close();
 
 			try {
-				$attachment = $this->getAttachment( $vars[ $ENDPOINT ] );
+				$uid        = $vars[ $ENDPOINT ];
+				$attachment = $this->getAttachment( $uid );
 
 				if ( ! $attachment ) {
-					status_header( 404 );
-					global $wp_query;
-					$wp_query->set_404();
-
-					return;
+					if ( substr( $uid, 0, 3 ) !== 'wp-' ) {
+						$mediaCache = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get() );
+						$attachment = get_post( $mediaCache->download_original_image( $uid ) );
+					} else {
+						throw new Exception( 'File can not be found by uid: ' . $uid );
+					}
 				}
 
 				$url = wp_get_attachment_url( $attachment->ID );
@@ -40,7 +43,7 @@ class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 				exit;
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->exception( $e );
-				status_header( 404 );
+				status_header( $e->getMessage() );
 				global $wp_query;
 				$wp_query->set_404();
 
@@ -50,7 +53,7 @@ class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 	}
 
 	private function getAttachment( $hash ) {
-		$attachment = null;
+
 		if ( is_numeric( $hash ) ) {
 			$attachment = get_post( (int) $hash );
 		} else {
