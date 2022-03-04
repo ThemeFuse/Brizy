@@ -38,7 +38,12 @@ class Brizy_Public_AssetProxy extends Brizy_Public_AbstractProxy {
 
 		// clean endpoint value
 		$asset_path = "/" . ltrim( $endpoint_value, "/" );
+		$asset_path = str_replace(['../','./','/.'],'',$asset_path);
 		$asset_url  = $this->urlBuilder->external_asset_url( $asset_path );
+
+		if(strpos($asset_path,'/editor/')!==0) {
+			return;
+		}
 
 		$new_path = $this->urlBuilder->page_upload_path( "/assets".str_replace( '/editor', '', $asset_path ) );
 
