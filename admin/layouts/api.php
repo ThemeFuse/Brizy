@@ -134,8 +134,9 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 			$layoutManager = new Brizy_Admin_Layouts_Manager();
 
 			$fields = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
-
-			$layouts = $layoutManager->getEntities( array() );
+			$paged      = $this->param( 'page' ) ? $this->param( 'page' ) : 1;
+			$itemsPerPage      = $this->param( 'count' ) ? $this->param( 'count' ) : -1;
+			$layouts = $layoutManager->getEntities( ['paged'=>(int)$paged,'posts_per_page'=>(int)$itemsPerPage] );
 			$layouts = apply_filters( 'brizy_get_layouts',
 				$layoutManager->createResponseForEntities( $layouts, $fields ),
 				$fields,

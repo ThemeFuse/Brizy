@@ -430,8 +430,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		try {
 			$fields      = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
+			$paged      = $this->param( 'page' ) ? $this->param( 'page' ) : 1;
+			$itemsPerPage      = $this->param( 'count' ) ? $this->param( 'count' ) : -1;
 			$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_SAVED );
-			$blocks      = $bockManager->getEntities( [] );
+			$blocks      = $bockManager->getEntities( ['paged'=>(int)$paged,'posts_per_page'=>(int)$itemsPerPage] );
 			$blocks      = apply_filters( 'brizy_get_saved_blocks',
 				$bockManager->createResponseForEntities( $blocks, $fields ),
 				$fields,
