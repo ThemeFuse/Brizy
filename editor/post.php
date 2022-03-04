@@ -80,6 +80,11 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	protected $plugin_version;
 
 	/**
+	 * @var int
+	 */
+	protected $lastUserEdited;
+
+	/**
 	 * Brizy_Editor_Post2 constructor.
 	 *
 	 * @param $postId
@@ -208,7 +213,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			'plugin_version'                   => $this->plugin_version,
 			'pro_plugin_version'               => $this->pro_plugin_version,
 			'editor_data'                      => $this->editor_data,
-			Brizy_Editor_Constants::USES_BRIZY => $this->uses_editor()
+			Brizy_Editor_Constants::USES_BRIZY => $this->uses_editor(),
+			'lastUserEdited'                   => $this->lastUserEdited
 		);
 	}
 
@@ -698,7 +704,6 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 				$this->setCompiledStyles( $storage_post['compiled_styles'] );
 			}
 
-			$proVersion         = defined( 'BRIZY_PRO_VERSION' ) ? BRIZY_PRO_VERSION : null;
 			$data_needs_compile = isset( $storage_post['needs_compile'] ) ? $storage_post['needs_compile'] : true;
 			$this->set_editor_data( $storage_post['editor_data'] );
 			$this->set_needs_compile( metadata_exists( 'post', $this->getWpPostId(), self::BRIZY_POST_NEEDS_COMPILE_KEY ) ? (bool) get_post_meta( $this->getWpPostId(), self::BRIZY_POST_NEEDS_COMPILE_KEY, true ) : $data_needs_compile );
@@ -708,6 +713,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			$this->set_pro_plugin_version( isset( $storage_post['pro_plugin_version'] ) ? $storage_post['pro_plugin_version'] : null );
 			$this->compiled_html_head = isset( $storage_post['compiled_html_head'] ) ? $storage_post['compiled_html_head'] : null;
 			$this->compiled_html_body = isset( $storage_post['compiled_html_body'] ) ? $storage_post['compiled_html_body'] : null;
+			$this->lastUserEdited = isset( $storage_post['lastUserEdited'] ) ? $storage_post['lastUserEdited'] : null;
 		}
 	}
 
@@ -721,6 +727,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		$autosave->set_editor_data( $this->get_editor_data() );
 		$autosave->set_editor_version( $this->get_editor_version() );
 		$autosave->set_needs_compile( true );
+		$autosave->setLastUserEdited( get_current_user_id() );
 
 		return $autosave;
 	}
@@ -789,6 +796,20 @@ SQL;
 	 */
 	public function get_wp_post() {
 		return $this->getWpPost();
+	}
+
+	/**
+	 * @return int|null
+	 */
+	public function getLastUserEdited() {
+		return $this->lastUserEdited;
+	}
+
+	/**
+	 * @param int $userId
+	 */
+	public function setLastUserEdited( $userId ) {
+		$this->lastUserEdited = $userId;
 	}
 
 }
