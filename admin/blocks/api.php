@@ -190,7 +190,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		try {
 			$fields      = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
 			$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
-			$blocks      = $bockManager->getEntities( ['post_status'=>'any'] );
+			$blocks      = $bockManager->getEntities( [ 'post_status' => 'any' ] );
 			$this->success( $bockManager->createResponseForEntities( $blocks, $fields ) );
 		} catch ( Exception $exception ) {
 			$this->error( 400, $exception->getMessage() );
@@ -358,7 +358,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				}
 
 				/**
-				 * @var Brizy_Editor_Block $block;
+				 * @var Brizy_Editor_Block $block ;
 				 */
 				$status = stripslashes( $this->param( 'status' )[ $i ] );
 				$block  = $blocks[ $uid ];
@@ -429,10 +429,15 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$this->verifyNonce( self::nonce );
 
 		try {
-			$fields      = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
-			$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_SAVED );
-			$blocks      = $bockManager->getEntities( [] );
-			$blocks      = apply_filters( 'brizy_get_saved_blocks',
+			$fields       = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
+			$bockManager  = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_SAVED );
+			$blocks       = $bockManager->getEntities( [
+				'paged'          => (int) ( $this->param( 'page' ) ?: 1 ),
+				'posts_per_page' => (int) ( $this->param( 'count' ) ?: - 1 ),
+				'order'          => $this->param( 'order' ) ?: 'ASC',
+				'orderby'        => $this->param( 'orderby' ) ?: 'ID'
+			] );
+			$blocks       = apply_filters( 'brizy_get_saved_blocks',
 				$bockManager->createResponseForEntities( $blocks, $fields ),
 				$fields,
 				$bockManager );

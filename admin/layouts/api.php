@@ -72,7 +72,7 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 
 				return null;
 			}, $explode );
-			$items = array_filter( $items );
+			$items   = array_filter( $items );
 			if ( count( $items ) == 0 ) {
 				$this->error( 404, __( 'There are no layouts to be archived' ) );
 			}
@@ -133,9 +133,15 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 		try {
 			$layoutManager = new Brizy_Admin_Layouts_Manager();
 
-			$fields = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
-
-			$layouts = $layoutManager->getEntities( array() );
+			$fields  = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
+			$layouts = $layoutManager->getEntities(
+				[
+					'paged'          => (int) ( $this->param( 'page' ) ?: 1 ),
+					'posts_per_page' => (int) ( $this->param( 'count' ) ?: - 1 ),
+					'order'          => $this->param( 'order' ) ?: 'ASC',
+					'orderby'        => $this->param( 'orderby' ) ?: 'ID'
+				]
+			);
 			$layouts = apply_filters( 'brizy_get_layouts',
 				$layoutManager->createResponseForEntities( $layouts, $fields ),
 				$fields,
