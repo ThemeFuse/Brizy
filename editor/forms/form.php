@@ -316,7 +316,7 @@ class Brizy_Editor_Forms_Form extends Brizy_Admin_Serializable {
 
 		$field_string = array();
 		foreach ( $fields as $field ) {
-			$field_string[] = "{$field->label}: " . esc_html( $field->value );
+			$field_string[] = "{$field->label}: " . $field->value;
 		}
 
 		$content = implode( '<br>', $field_string );
