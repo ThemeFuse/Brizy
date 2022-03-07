@@ -442,6 +442,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                 $this->post->save(1);
             } else {
                 $this->post->setDataVersion($dataVersion);
+	            $this->post->setLastUserEdited( get_current_user_id() );
                 $this->post->save(0);
                 $this->post->savePost(true);
             }

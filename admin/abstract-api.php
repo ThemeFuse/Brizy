@@ -39,7 +39,7 @@ abstract class Brizy_Admin_AbstractApi {
 	}
 
 	/**
-	 * @param $name
+	 * @param int|string $name
 	 *
 	 * @return null
 	 */

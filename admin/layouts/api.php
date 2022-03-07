@@ -144,7 +144,12 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
 
             $fields = $this->param('fields') ? $this->param('fields') : [];
 
-            $layouts = $layoutManager->getEntities(array());
+            $layouts = $layoutManager->getEntities([
+					'paged'          => (int) ( $this->param( 'page' ) ?: 1 ),
+					'posts_per_page' => (int) ( $this->param( 'count' ) ?: - 1 ),
+					'order'          => $this->param( 'order' ) ?: 'ASC',
+					'orderby'        => $this->param( 'orderby' ) ?: 'ID'
+				]);
             $layouts = apply_filters(
                 'brizy_get_layouts',
                 $layoutManager->createResponseForEntities($layouts, $fields),
