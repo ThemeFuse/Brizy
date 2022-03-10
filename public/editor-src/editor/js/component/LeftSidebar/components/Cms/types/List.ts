@@ -41,6 +41,11 @@ export interface Cloud extends Base {
   notificationApi: Authorize;
   supportLinks: SupportLinks;
   customersEditorUrl: string;
+  modules: {
+    users: {
+      disabled: boolean;
+    };
+  };
 }
 
 export interface Shopify extends Base {

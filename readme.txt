@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.9.1
 Requires PHP: 5.6.20
-Stable tag: 2.3.32
+Stable tag: 2.3.33
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,21 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.33 - 2022-03-10 =
+* New: Import and Export Saved Blocks, Popups, Layouts 
+* New: Show progress on story when autoplay is on
+* Improved: Increased the number of history snapshots from 10 to 20. Happy Ctrl-Z-ing 
+* Improved: SEO for Video element 
+* Improved: Plugin Cross-Site Scripting
+* Fixed: Link to slide in Web Stories
+* Fixed: Undo and redo in Text element
+* Fixed: Text styles after pasting text from outside the builder
+* Fixed: Random global blocks are not saved in Global block list
+* Fixed: Posts include and exclude select 
+* Fixed: Style for Counter element in Firefox
+* Fixed: Vimeo video background loop
+* Fixed: Countdown restart after finished
 
 = 2.3.32 - 2022-03-04 =
 * Fixed: Security fix

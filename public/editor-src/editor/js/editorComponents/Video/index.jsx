@@ -85,9 +85,9 @@ class Video extends EditorComponent {
     return (
       <div key="cover" className="brz-video__cover">
         <div className="brz-video__cover-icon">
-          <a className="brz-a">
+          <span className="brz-span">
             <ThemeIcon name="play" type="editor" />
-          </a>
+          </span>
         </div>
       </div>
     );

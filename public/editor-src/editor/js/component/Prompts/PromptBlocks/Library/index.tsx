@@ -3,6 +3,7 @@ import produce from "immer";
 import { connect } from "react-redux";
 import { match } from "fp-utilities";
 import _ from "underscore";
+import Config from "visual/global/Config";
 import { ToastNotification } from "visual/component/Notifications";
 import {
   authorizedSelector,
@@ -54,6 +55,7 @@ import { getWhiteLabel } from "visual/utils/whiteLabel";
 import { IS_WP } from "visual/utils/env";
 import { getError, isLayout, isPopup, isBlock } from "../common/utils";
 import { ShowSuccessError } from "./Notification";
+import { isCloud } from "visual/global/Config/types/configs/Cloud";
 
 export type ApiBlockMetaWithType = (SavedLayoutMeta | SavedBlockMeta) & {
   type: BlockTypes;
@@ -134,12 +136,18 @@ class Library extends Component<
   };
 
   unMount = false;
+  withImportExport = true;
 
   async componentDidMount(): Promise<void> {
+    const config = Config.getAll();
     const blocks =
       this.props.type === "normal"
         ? await this.getBlocks()
         : await this.getPopups();
+
+    if (isCloud(config)) {
+      this.withImportExport = !config.user.isGuest;
+    }
 
     if (!this.unMount) {
       this.setState({
@@ -419,7 +427,7 @@ class Library extends Component<
         showSearch={showSearch}
         sidebarSync={!hasWhiteLabel}
         thumbnailSync={IS_WP}
-        thumbnailDownload={IS_WP}
+        thumbnailDownload={this.withImportExport}
         search={search}
         importLoading={importLoading}
         exportLoading={exportLoading}
@@ -427,7 +435,7 @@ class Library extends Component<
         onSuccessSync={this.updateBlocks}
         onChange={this.handleAddItems}
         onDelete={this.handleDeleteItem}
-        onImport={IS_WP ? this.handleImport : undefined}
+        onImport={this.withImportExport ? this.handleImport : undefined}
       />
     );
   }

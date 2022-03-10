@@ -38,7 +38,7 @@ export default class EmbedCode extends EditorComponent {
   handleValueChange(newValue, meta) {
     const config = Config.getAll();
 
-    if (meta.patch.code && isWp(config) && !config.user.isWpAdmin) {
+    if (meta.patch.code && isWp(config) && !config.user.allowScripts) {
       const xssCode = xss(newValue.code, "discard");
       super.handleValueChange({ ...newValue, code: xssCode });
     } else {

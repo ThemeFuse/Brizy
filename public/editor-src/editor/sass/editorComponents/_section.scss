@@ -308,8 +308,24 @@
           }
         }
 
-        > li.slick-active > button {
-          background-color: #fff;
+        > li.slick-active {
+          position: relative;
+          overflow: hidden;
+
+          &::after {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background-color: white;
+            border-radius: 100px;
+          }
+
+          & > button {
+            background-color: #fff;
+          }
         }
 
         > li:last-child {
@@ -412,4 +428,10 @@ _:-ms-lang(x)::-ms-backdrop,
 .brz-section__content .brz-container__wrap {
   -ms-flex: auto !important;
   flex: auto !important;
+}
+
+@keyframes storyProgress {
+  to {
+    width: 100%;
+  }
 }

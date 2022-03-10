@@ -5,6 +5,7 @@ import { renderStatic } from "glamor/server";
 import cheerio from "cheerio";
 import deepMerge from "deepmerge";
 
+import Config from "visual/global/Config";
 import { items as googleFonts } from "visual/config/googleFonts.json";
 
 import * as Str from "visual/utils/reader/string";
@@ -42,6 +43,7 @@ import replaceIcons from "./transforms/replaceIcons";
 import { changeMenuUid } from "./transforms/changeMenuUid";
 import { XSS } from "./transforms/xss";
 import { isCollectionPage } from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
 
 export default async function main({
   pageId,
@@ -117,6 +119,7 @@ async function getPageBlocks({
   const store = createStore();
   const project = parseProject(_project);
   const { fonts, font: projectDefaultFont } = project.data;
+  const config = Config.getAll();
 
   const blocks = getBlocksInPage(page, globalBlocks);
 
@@ -241,7 +244,10 @@ async function getPageBlocks({
   await replaceIcons($pageHTML, buildPath);
   changeRichText($pageHTML);
   changeMenuUid($pageHTML);
-  XSS($pageHTML);
+
+  if (isWp(config) && !config.user.allowScripts) {
+    XSS($pageHTML);
+  }
 
   const { freeScripts, freeStyles, proScripts, proStyles } = getAssets(
     $pageHTML,

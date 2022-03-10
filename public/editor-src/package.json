@@ -151,6 +151,7 @@
     "postcss-reporter": "^5.0.0",
     "postcss-scss": "^1.0.4",
     "prettier": "1.19.1",
+    "quill-delta": "^4.2.2",
     "react-window": "^1.8.5",
     "recursive-readdir": "^2.2.2",
     "stylelint": "^8.4.0",
