@@ -59,7 +59,12 @@ const cloud = (config: CMS): Cloud => {
       : { __type: "withOutToken", uri: config.cms.apiUrl },
     customersSlug: "customers",
     categoriesSlug: "categories",
-    productsSlug: "products"
+    productsSlug: "products",
+    modules: {
+      users: {
+        disabled: config.cms.modules?.users?.disabled ?? false
+      }
+    }
   };
 };
 

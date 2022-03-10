@@ -53,7 +53,7 @@ export function styleWrapper(v, vs, vd) {
         "cssStyleElementVideoPropertyHoverTransition"
       ]
     },
-    ".brz &&:hover .brz-video__cover .brz-video__cover-icon .brz-a": {
+    ".brz &&:hover .brz-video__cover .brz-video__cover-icon .brz-span": {
       standart: ["cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",

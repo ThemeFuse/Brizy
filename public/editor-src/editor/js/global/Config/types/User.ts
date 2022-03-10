@@ -5,12 +5,13 @@ interface UserCommon {
 }
 
 interface UserCloud extends UserCommon {
+  isGuest: boolean;
   isApproved: boolean;
 }
 
 interface UserWP extends UserCommon {
   isGuest: boolean;
-  isWpAdmin: boolean;
+  allowScripts: boolean;
 }
 
 type Cnf = {

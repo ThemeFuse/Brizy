@@ -5,7 +5,6 @@ import { ToastNotification } from "visual/component/Notifications";
 import { t } from "visual/utils/i18n";
 import { BlockTypes } from "../types";
 import {
-  createBlockId,
   getExportBlocksUrls,
   isBlock,
   isLayout,
@@ -53,7 +52,7 @@ export const DownloadBlock = (props: Props): ReactElement => {
 
       if (node) {
         const isPro = blockIsPro({ models: data });
-        const url = getExportBlocksUrls(type, [createBlockId(id, isPro)]);
+        const url = getExportBlocksUrls(type, id, isPro);
         setSrc(url);
         setLoading(false);
       }

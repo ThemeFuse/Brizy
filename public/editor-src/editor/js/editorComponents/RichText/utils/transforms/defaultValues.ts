@@ -5,7 +5,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 // inside className, like a style or attribute
 type HtmlValueType = "class" | "style" | "attribute";
 
-type Values = {
+export type Values = {
   [k in HtmlValueType]: {
     [k in keyof ElementModel]: {
       prefix: string;

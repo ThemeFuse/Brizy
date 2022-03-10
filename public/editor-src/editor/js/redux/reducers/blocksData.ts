@@ -183,6 +183,22 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
       };
     }
 
+    case "MAKE_NORMAL_TO_GLOBAL_BLOCK": {
+      const { data } = action.payload;
+
+      return produce<BlocksData>(state, draft => {
+        draft[data.value._id] = data;
+      });
+    }
+
+    case "DELETE_GLOBAL_BLOCK": {
+      const { id } = action.payload;
+
+      return produce<BlocksData>(state, draft => {
+        draft[id].deleted = true;
+      });
+    }
+
     case "REMOVE_BLOCK": {
       const { index } = action.payload;
       const globalBlocks = globalBlocksSelector(allState);

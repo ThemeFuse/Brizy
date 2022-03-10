@@ -283,21 +283,28 @@ class Brizy_Admin_FormEntries {
 			}
 		}
 
-		$title = '';
-		foreach ( $fields as $field ) {
+		$title      = '';
+		$fieldsCopy = [];
+
+		foreach ( $fields as $i => $field ) {
 			if ( strtolower( $field->type ) == 'email' ) {
 				$title = $field->value;
 			}
 
 			// We use htmlentities the user can insert text in some languages like German, Hindi, etc.
 			// and the function json_encode broke the json or encode the characters.
-			$field->name  = htmlentities( $field->name, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
+			$fieldsCopy[ $i ]        = clone $field;
+			$fieldsCopy[ $i ]->name  = htmlentities( $field->name, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
 
-            if ( $field->type == 'Paragraph' ) {
-	            $field->value = preg_replace( "/\r\n|\r|\n/", '<br/>', $field->value );
-            }
+			if ( $field->type == 'Paragraph' ) {
+                $value        = sanitize_textarea_field( $field->value );
+				$value        = preg_replace( "/\r\n|\r|\n/", '<br>', $value );
+			} else {
+                $value = sanitize_text_field( $field->value );
+			}
 
-			$field->value = htmlentities( $field->value, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
+			$field->value            = $value;
+			$fieldsCopy[ $i ]->value = htmlentities( $value, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
 		}
 
 		$params = array(
@@ -305,7 +312,7 @@ class Brizy_Admin_FormEntries {
 			'post_type'    => self::CP_FORM_ENTRY,
 			'post_status'  => 'publish',
 			'post_content' => json_encode( array( 'formId'   => $form->getId(),
-			                                      'formData' => $fields
+			                                      'formData' => $fieldsCopy
 			), JSON_UNESCAPED_UNICODE )
 		);
 
