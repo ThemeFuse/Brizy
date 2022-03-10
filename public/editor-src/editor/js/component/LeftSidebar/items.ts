@@ -88,8 +88,7 @@ export default {
         {
           type: "link",
           icon: "nc-back",
-          disabled:
-            !urls.backToDashboard || (isCloud(config) && isShopify(config)),
+          disabled: !urls.backToDashboard,
           label: t("Go to Dashboard"),
           link: urls.backToDashboard
         }

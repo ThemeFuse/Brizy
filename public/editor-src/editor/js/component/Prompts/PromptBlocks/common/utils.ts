@@ -10,9 +10,14 @@ export const isPopup = (type: BlockTypes): type is "POPUP" => type === "POPUP";
 export const isLayout = (type: BlockTypes): type is "LAYOUT" =>
   type === "LAYOUT";
 
+export const createBlockId = (id: string, isPro: boolean): string => {
+  return isPro ? `${id}:1` : `${id}:0`;
+};
+
 export const getExportBlocksUrls = (
   type: BlockTypes,
-  ids: string[]
+  id: string,
+  isPro: boolean
 ): string => {
   const config = Config.getAll();
   const { editorVersion } = config;
@@ -26,7 +31,7 @@ export const getExportBlocksUrls = (
     );
     const params = objectToQueryString({
       hash,
-      uid: ids,
+      uid: createBlockId(id, isPro),
       version: editorVersion,
       action: getAction(type),
       type: type.toLowerCase()
@@ -37,25 +42,18 @@ export const getExportBlocksUrls = (
       : `${url}?${params}`;
   }
 
-  const url = config.urls.api;
-  const getAction = match(
-    [isBlock, (): string => "downloadBlocks"],
-    [isLayout, (): string => "downloadLayouts"],
-    [isPopup, (): string => "downloadPopups"]
-  );
-
+  const url = `${config.urls.api}/zip_template/export`;
   const params = objectToQueryString({
-    uid: ids,
+    id,
     version: editorVersion,
-    action: getAction(type),
-    type: type.toLowerCase()
+    type: type.toLowerCase(),
+    pro: isPro ? "1" : "0",
+    ...(TARGET === "Cloud-localhost"
+      ? { "X-AUTH-USER-TOKEN": config.tokenV1 }
+      : {})
   });
 
   return urlContainsQueryString(url) ? `${url}&${params}` : `${url}?${params}`;
-};
-
-export const createBlockId = (id: string, isPro: boolean): string => {
-  return isPro ? `${id}:1` : `${id}:0`;
 };
 
 interface WPErrResponse {
@@ -64,16 +62,19 @@ interface WPErrResponse {
 }
 
 interface CloudErrResponse {
-  code: number;
-  message: string;
+  errors: {
+    message: string;
+    uid: string;
+  }[];
 }
 
 type ResponseError = WPErrResponse | CloudErrResponse;
 
 const isWPError = (e: ResponseError): e is WPErrResponse => "data" in e;
 
-const isCloudError = (e: ResponseError): e is CloudErrResponse =>
-  "message" in e;
+const isCloudError = (e: ResponseError): e is CloudErrResponse => {
+  return "errors" in e && Array.isArray(e.errors);
+};
 
 export const getError = (e: ResponseError): string => {
   if (typeof e !== "object") {
@@ -85,7 +86,7 @@ export const getError = (e: ResponseError): string => {
   }
 
   if (isCloudError(e)) {
-    return e.message;
+    return e.errors[0].message;
   }
 
   return t("Something went wrong");

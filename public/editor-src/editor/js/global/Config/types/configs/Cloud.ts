@@ -27,6 +27,7 @@ interface Base<Platform> extends ConfigCommon, WithId<number> {
   container: {
     id: number;
   };
+  tokenV1?: string;
   tokenV2?: {
     access_token: string;
   };
@@ -45,6 +46,11 @@ interface Base<Platform> extends ConfigCommon, WithId<number> {
     customerPreviewUrl: string;
     collectionPreviewUrl: string;
     translationsApiUrl: string;
+    modules?: {
+      users?: {
+        disabled?: boolean;
+      };
+    };
   };
   whiteLabel?: WhiteLabel;
 }

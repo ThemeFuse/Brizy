@@ -20,7 +20,6 @@ export const createFont = ({ id, name, files }) => {
   formData.append("container", containerId);
   formData.append("uid", id);
   formData.append("family", name);
-  formData.append("container", containerId);
 
   Object.entries(files).forEach(([type, filesType]) => {
     Object.entries(filesType).forEach(([fileType, file]) => {

@@ -1,14 +1,42 @@
 import { renderStyles } from "visual/utils/cssStyle";
-import { ElementModel } from "visual/component/Elements/Types";
+import { Value } from ".";
 
 export function style(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
+  v: Value,
+  vs: Value,
+  vd: Value
 ): [string, string, string] {
   const styles = {
-    ".brz &&:hover": { standart: ["cssStyleSizeWidth"] },
-    ".brz &&:hover .brz-hr": { standart: ["cssStyleElementLineBorder"] }
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleColor",
+        "cssStyleBgColor",
+        "cssStyleBgGradient",
+        "cssStyleBoxShadow",
+        "cssStyleBorder",
+        "cssStyleBorderRadius",
+
+        "cssStyleTypography2FontFamily",
+        "cssStyleTypography2FontSize",
+        "cssStyleTypography2LineHeight",
+        "cssStyleTypography2FontWeight",
+        "cssStyleTypography2LetterSpacing",
+
+        "cssStyleElementShopifyAddToCartSize",
+        "cssStyleElementButtonIconPosition"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementShopifyAddToCartPropertyHoverTransition"
+      ]
+    },
+    ".brz &&:hover .brz-shopify-icon-cart": {
+      standart: [
+        "cssStyleElementButtonIconFontSize",
+        "cssStyleElementButtonIconMargin",
+        "cssStyleElementIconStrokeWidth"
+      ]
+    }
   };
 
   return renderStyles({ v, vs, vd, styles }) as [string, string, string];

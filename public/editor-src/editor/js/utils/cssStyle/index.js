@@ -1028,6 +1028,13 @@ export {
 // Transform
 export { cssStyleRotate } from "./cssStyleTransform";
 
+// Story
+
+export {
+  cssStyleStoryFristSlideProgress,
+  cssStyleStoryProgress
+} from "./cssStyleStory";
+
 //WOOAddToCart
 export {
   cssStyleElementWOOAddToCartSize,
@@ -1094,3 +1101,12 @@ export {
   cssStyleElementShopifyQuantityLineHeight,
   cssStyleElementShopifyQuantityInputWidth
 } from "./cssStyleElementShopifyQuantity";
+
+// ShopifyAddToCart
+export {
+  cssStyleElementShopifyAddToCartSize,
+  cssStyleElementShopifyAddToCartPropertyHoverTransition,
+  cssStyleElementShopifyAddToCartBorderRadius,
+  cssStyleElementShopifyAddToCartBorderBorder,
+  cssStyleElementShopifyAddToCartButtonColor
+} from "./cssStyleElementShopifyAddToCart";

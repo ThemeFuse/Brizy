@@ -47,7 +47,7 @@ export class History<Snapshot extends UnknownDict> {
     maxSize: number;
     collapseFrequency: number;
   } = {
-    maxSize: 10,
+    maxSize: 20,
     collapseFrequency: 2000
   };
 

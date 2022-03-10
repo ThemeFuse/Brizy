@@ -197,7 +197,7 @@ export const getSurroundedGBIds = (
       pageBlocksIds.forEach(pageBlockId => {
         const globalBlock = globalBlocks[pageBlockId];
 
-        if (globalBlock?.position) {
+        if (globalBlock?.position && globalBlock.position.align) {
           const { position } = globalBlock;
           surroundedConditionsIds[position.align].push(pageBlockId);
         }

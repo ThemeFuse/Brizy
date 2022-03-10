@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { uuid } from "visual/utils/uuid";
 import { currentStyleSelector } from "visual/redux/selectors";
 import { unDeletedFontSelector } from "visual/redux/selectors-new";
-import { getStore } from "visual/redux/store";
 import { css1 } from "visual/utils/cssStyle";
 import Quill from "./utils/quill";
 import bindings from "./utils/bindings";
@@ -50,8 +49,11 @@ class QuillComponent extends React.Component<Props> {
   quill: null | Quill = null;
   currentSelection: null | RangeStatic = null;
 
+  private lastUpdatedValue = "";
+
   componentDidMount(): void {
     const { initDelay } = this.props;
+    this.lastUpdatedValue = this.props.value;
 
     if (initDelay > 0) {
       setTimeout(() => {
@@ -70,9 +72,7 @@ class QuillComponent extends React.Component<Props> {
     currentStyle,
     fonts
   }: Props): void {
-    let reInitPlugin =
-      value !== this.props.value &&
-      (forceUpdate || getStore().getState().historyTravelling);
+    let reInitPlugin = value !== this.lastUpdatedValue || forceUpdate;
 
     if (
       currentStyle !== this.props.currentStyle ||
@@ -212,12 +212,11 @@ class QuillComponent extends React.Component<Props> {
       }
     ] = quill.getLeaf(index + length);
     const quillFormat = quill.getFormat();
-    const formats = getFormats(jQuery($selectedDomNode), quillFormat);
-
-    return formats;
+    return getFormats(jQuery($selectedDomNode), quillFormat);
   }
 
   save = _.debounce((text: string) => {
+    this.lastUpdatedValue = text;
     this.props.onTextChange(text);
   }, 1000);
 

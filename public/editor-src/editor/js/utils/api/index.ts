@@ -186,18 +186,66 @@ export const deleteSavedBlock: DeleteSavedBlockById = id => {
   });
 };
 
-export const uploadSaveBlocks: UploadSavedBlocks = () => {
-  // Right now in CLOud don't implemented this functionality
-  return Promise.reject("Not implemented");
+export const uploadSaveBlocks: UploadSavedBlocks = async files => {
+  const config = Config.getAll() as Cloud;
+  const { project, urls } = config;
+  const version = config.editorVersion;
+  const formData = new FormData();
+
+  for (const file of files) {
+    formData.append("importTemplate[]", file);
+  }
+
+  formData.append("version", version);
+  formData.append("type", "block");
+
+  const r = await request2(`${urls.api}/zip_templates/${project.id}/imports`, {
+    method: "POST",
+    body: formData
+  });
+  const rj = await r.json();
+
+  if (rj.success && rj.errors && rj.success) {
+    return {
+      errors: rj.errors,
+      success: rj.success.map(parseSavedBlock)
+    };
+  }
+
+  throw rj;
 };
 
 //#endregion
 
 //#region saved popups
 
-export const uploadSavePopups: UploadSavedPopups = () => {
-  // Right now in CLOud don't implemented this functionality
-  return Promise.reject("Not implemented");
+export const uploadSavePopups: UploadSavedPopups = async files => {
+  const config = Config.getAll() as Cloud;
+  const { project, urls } = config;
+  const version = config.editorVersion;
+  const formData = new FormData();
+
+  for (const file of files) {
+    formData.append("importTemplate[]", file);
+  }
+
+  formData.append("version", version);
+  formData.append("type", "popup");
+
+  const r = await request2(`${urls.api}/zip_templates/${project.id}/imports`, {
+    method: "POST",
+    body: formData
+  });
+  const rj = await r.json();
+
+  if (rj.success && rj.errors && rj.success) {
+    return {
+      errors: rj.errors,
+      success: rj.success.map(parseSavedBlock)
+    };
+  }
+
+  throw rj;
 };
 
 //#endregion
@@ -269,9 +317,33 @@ export const deleteSavedLayout: DeleteSavedLayoutById = id => {
   });
 };
 
-export const uploadSaveLayouts: UploadSavedLayouts = () => {
-  // Right now in CLOud don't implemented this functionality
-  return Promise.reject("Not implemented");
+export const uploadSaveLayouts: UploadSavedLayouts = async files => {
+  const config = Config.getAll() as Cloud;
+  const { project, urls } = config;
+  const version = config.editorVersion;
+  const formData = new FormData();
+
+  for (const file of files) {
+    formData.append("importTemplate[]", file);
+  }
+
+  formData.append("version", version);
+  formData.append("type", "layout");
+
+  const r = await request2(`${urls.api}/zip_templates/${project.id}/imports`, {
+    method: "POST",
+    body: formData
+  });
+  const rj = await r.json();
+
+  if (rj.success && rj.errors && rj.success) {
+    return {
+      errors: rj.errors,
+      success: rj.success.map(parseSavedLayout)
+    };
+  }
+
+  throw rj;
 };
 
 //#endregion
