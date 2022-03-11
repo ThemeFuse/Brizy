@@ -57,6 +57,23 @@ export const getUsedModelsUpload = ({
         files.add(animationFile);
       }
     },
+    Video({ type, value }: Block) {
+      const defaultContent = getComponentDefaultValue(type).content || {};
+      const fileName = value.custom || defaultContent.custom;
+      const videoType = value.type || defaultContent.type;
+
+      if (videoType === "custom" && fileName) {
+        files.add(fileName);
+      }
+    },
+    Audio({ type, value }: Block) {
+      const defaultContent = getComponentDefaultValue(type).content || {};
+      const audioName = value.audio || defaultContent.audio;
+
+      if (audioName) {
+        files.add(audioName);
+      }
+    },
     GlobalBlock({ value: { _id } }: Block) {
       const globalBlockValue = globalBlocks && globalBlocks[_id];
 

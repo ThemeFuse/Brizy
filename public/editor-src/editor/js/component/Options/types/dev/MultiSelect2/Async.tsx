@@ -6,6 +6,7 @@ import React, {
   ReactElement,
   FC
 } from "react";
+import _ from "underscore";
 import {
   MultiSelect as Control,
   MultiSelectItem as ControlItem
@@ -348,10 +349,21 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
       searchIsLoading={state.state === "FETCHING"}
       searchIsEmpty={state.state === "FETCH_NOT_FOUND"}
       onChange={(v): void => {
-        const allChoices = [...state.vChoices, ...state.sChoices];
+        const { vChoices, sChoices } = state;
+        const cachedChoices = initialChoices.current;
+        const allChoices = [...vChoices, ...sChoices];
         const choices = v
           .map(vv => allChoices.find(item => item.value === vv))
           .filter(item => item !== undefined) as ChoicesSync;
+        const diffBySearch = _.difference(v, _.pluck(sChoices, "value"));
+
+        if (
+          sChoices.length === 0 ||
+          diffBySearch.length > 0 ||
+          choices.length < cachedChoices.length
+        ) {
+          initialChoices.current = choices;
+        }
 
         dispatch({ type: "value_changed", choices });
         onChange(toElement(v));

@@ -29,12 +29,13 @@ const Video: React.FC<Props> = ({ video, videoLoop, videoStart, children }) => {
   const iframeStyle = {
     display: video ? "block" : "none"
   };
+
   const settings = {
     autoplay: true,
     background: true,
     controls: false,
     suggestedVideo: false,
-    loop: false
+    loop: videoLoop
   };
 
   const dataType = video ? video.type : undefined;

@@ -45,7 +45,14 @@ const getYouTubeOptions = (
 
 const getVimeoOptions = (
   key,
-  { intro = 1, autoplay, loop, start = 0, controls = true, hasCover = false }
+  {
+    intro = 1,
+    autoplay,
+    loop = false,
+    start = 0,
+    controls = true,
+    hasCover = false
+  }
 ) => {
   return {
     url: `https://player.vimeo.com/video/${key}`,

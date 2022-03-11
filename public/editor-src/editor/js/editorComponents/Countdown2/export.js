@@ -49,17 +49,7 @@ export default function($node) {
         $minutesNumber.text(leftPadWith0(remaining.minutes));
         $secondsNumber.text(leftPadWith0(remaining.seconds));
 
-        var $daysNumberValue = $daysNumber.text();
-        var $hoursNumberValue = $hoursNumber.text();
-        var $minutesNumberValue = $minutesNumber.text();
-        var $secondsNumberValue = $secondsNumber.text();
-
-        if (
-          $daysNumberValue == 0 &&
-          $hoursNumberValue == 0 &&
-          $minutesNumberValue == 0 &&
-          $secondsNumberValue == 0
-        ) {
+        if (Object.values(remaining).every(value => value === 0)) {
           if (linkAction === "redirect") {
             window.location.href = redirect;
           } else if (actions === "showMessage") {

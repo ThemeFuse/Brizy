@@ -1,5 +1,6 @@
 /* eslint-disable no-inner-declarations */
 import Quill from "quill";
+import parchment from "parchment";
 import Link from "./formats/Link";
 import BlockColor from "./formats/BlockColor";
 import BlockOpacity from "./formats/BlockOpacity";
@@ -12,13 +13,26 @@ import BackgroundGradient from "./formats/BackgroundGradient";
 
 import PlainClipboard from "./formats/PlainClipboard";
 
+import { Values } from "./transforms/defaultValues";
 import { blockValues, inlineValues, legacyValues } from "./transforms";
+import ClassAttributor from "parchment/dist/src/attributor/class";
+import Attributor from "parchment/dist/src/attributor/attributor";
+import StyleAttributor from "parchment/dist/src/attributor/style";
+
+type Attributors = ClassAttributor | StyleAttributor | Attributor;
+type P = typeof parchment;
+type Scope = "block" | "inline";
 
 if (IS_EDITOR) {
-  let Parchment = Quill.import("parchment");
+  const Parchment: P = Quill.import("parchment");
   Quill.debug("error");
 
-  function getParchment(key, prefix, type = "class", scopeType = "block") {
+  function getParchment(
+    key: string,
+    prefix: string,
+    type = "class",
+    scopeType: Scope = "block"
+  ): Attributors {
     const scope = {
       scope:
         scopeType === "inline" ? Parchment.Scope.INLINE : Parchment.Scope.BLOCK
@@ -34,7 +48,7 @@ if (IS_EDITOR) {
     }
   }
 
-  function registerParchmentScope(values, scope) {
+  function registerParchmentScope(values: Values, scope: Scope): void {
     Object.entries(values).forEach(([type, value]) => {
       if (value) {
         Object.entries(value).forEach(([key, { prefix }]) => {

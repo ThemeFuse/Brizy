@@ -155,6 +155,10 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
 
         const currentRule = getCurrentRule();
 
+        if (Object.prototype.hasOwnProperty.call(blockData, "deleted")) {
+          blockData.deleted = false;
+        }
+
         const globalBlock: GlobalBlock = {
           meta,
           status: "draft",

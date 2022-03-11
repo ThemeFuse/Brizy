@@ -20,8 +20,14 @@ const excludeWrapper = (
   };
 };
 
-// we have some exceptions element is from free but have some extra key for pro
+// we have some exceptions' element is from free but have some extra key for pro
 const exceptions = ["WPFeaturedImage"];
+const proSections = [
+  "SectionPopup2",
+  "SectionPopup",
+  "SectionFooter",
+  "SectionHeader"
+];
 
 export const blockIsPro = ({
   models,
@@ -33,7 +39,9 @@ export const blockIsPro = ({
     .map(excludeWrapper);
 
   const { obj } = findDeep(models, (model: ElementModel) => {
-    if (model.type === "GlobalBlock" && globalBlocks) {
+    const type = String(model.type);
+
+    if (type === "GlobalBlock" && globalBlocks) {
       const id = getIn(model, ["value", "_id"]) as string | undefined;
 
       if (id && globalBlocks[id]) {
@@ -41,8 +49,12 @@ export const blockIsPro = ({
       }
     }
 
+    if (proSections.includes(type)) {
+      return true;
+    }
+
     return shortcodes.find(({ resolve, id }) => {
-      const isType = resolve.type === model.type;
+      const isType = resolve.type === type;
       if (isType && exceptions.includes(id)) {
         return false;
       }

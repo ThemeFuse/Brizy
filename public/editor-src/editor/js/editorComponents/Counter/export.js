@@ -73,7 +73,7 @@ function animate(value) {
   var step = function(countNum) {
     $figures.text(formatNumber(countNum, separator));
     $chart &&
-      $chart.css("stroke-dasharray", "calc(" + countNum + " + 0.5) 100");
+      $chart.css("stroke-dasharray", "calc(" + (countNum + 0.5) + "px) 100");
   };
 
   $({ countNum: Number(value.start) }).animate(

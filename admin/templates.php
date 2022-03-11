@@ -15,6 +15,8 @@ class Brizy_Admin_Templates
     const TYPE_SINGLE_PRODUCT = 'single_product';
     const TYPE_PRODUCT_ARCHIVE = 'product_archive';
 
+    private $isExcerpt;
+
     /**
      * @var Brizy_Editor_Post
      */
@@ -486,6 +488,8 @@ class Brizy_Admin_Templates
                 add_action('brizy_template_content', array($this, 'showTemplateContent'), -12000);
                 add_action('wp_enqueue_scripts', array($this, 'enqueue_preview_assets'), 9999);
 	            add_filter( 'the_content', [ $this, 'filterPageContent' ], - 12000 );
+	            add_filter( 'get_the_excerpt', [ $this, 'start_the_excerpt' ], 1 );
+	            add_filter( 'get_the_excerpt', [ $this, 'end_the_excerpt' ], 20 );
             }
 
         } catch (Exception $e) {
@@ -594,7 +598,7 @@ class Brizy_Admin_Templates
      */
     public function filterPageContent($content)
     {
-        if (!self::getTemplate() || doing_filter('brizy_content')) {
+        if (!self::getTemplate() || doing_filter('brizy_content') || $this->isExcerpt) {
             return $content;
         }
 
@@ -953,6 +957,17 @@ class Brizy_Admin_Templates
     {
         update_post_meta($id, self::TEMPLATE_TYPE_KEY, $type);
     }
+
+	public function start_the_excerpt( $excerpt ) {
+		$this->isExcerpt = true;
+		return $excerpt;
+	}
+
+	public function end_the_excerpt( $excerpt ) {
+		$this->isExcerpt = false;
+		return $excerpt;
+	}
+
 }
 
 

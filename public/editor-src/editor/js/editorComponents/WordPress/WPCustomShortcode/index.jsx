@@ -26,7 +26,7 @@ class WPCustomShortcode extends EditorComponent {
   handleValueChange(newValue, meta) {
     const config = Config.getAll();
 
-    if (meta.patch.shortcode && !config.user.isWpAdmin) {
+    if (meta.patch.shortcode && !config.user.allowScripts) {
       const xssShortcode = xss(newValue.shortcode, "discard");
       super.handleValueChange({ ...newValue, shortcode: xssShortcode });
     } else {
