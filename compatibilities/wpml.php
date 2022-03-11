@@ -6,6 +6,7 @@
 class Brizy_Compatibilities_WPML {
 
 	public function __construct() {
+
 		add_action( 'wp_insert_post',                    [ $this, 'insertNewPost' ], - 10000, 3 );
 		add_action( 'wp_insert_post',                    [ $this, 'duplicatePosts' ], - 10000, 3 );
 		add_action( 'pre_get_posts',                     [ $this, 'pre_get_posts' ], 11 );
@@ -13,6 +14,11 @@ class Brizy_Compatibilities_WPML {
 		add_action( 'wp_ajax_icl_msync_confirm',         [ $this, 'syncMenus' ] );
 		add_action( 'brizy_create_editor_config_before', [ $this, 'rmMenusDuplicate' ] );
 		add_filter( 'brizy_content',                     [ $this, 'brizyContent' ] );
+		add_filter( 'icl_wpml_config_array',             [ $this, 'wpmlConfig' ] );
+		add_filter( 'wpml_pb_should_body_be_translated', [ $this, 'remove_body' ], 10, 2 );
+		add_action( 'wpml_pro_translation_completed',    [ $this, 'save_post' ], 10, 3 );
+		//add_filter( 'wpml_document_view_item_link',      '__return_empty_string' );
+		//add_filter( 'wpml_document_edit_item_link',      '__return_empty_string' );
 	}
 
 	/**
@@ -131,5 +137,117 @@ class Brizy_Compatibilities_WPML {
 		add_action( 'wpml_should_filter_preview_lang', '__return_false' );
 
 		return $content;
+	}
+
+	/**
+	 * Remove body from the translation editor because it is generated automatically.
+	 *
+	 * @param bool $translate Does body need to be translated.
+	 * @param WP_Post $post The post we are translating.
+	 *
+	 * @return bool
+	 */
+	public function remove_body( $translate, $post ) {
+
+		try {
+			$brizyPost = Brizy_Editor_Post::get( $post );
+		} catch ( Exception $e ) {
+			return $translate;
+		}
+
+		if ( $brizyPost->uses_editor() ) {
+			$translate = false;
+		}
+
+		return $translate;
+	}
+
+	public function wpmlConfig( $config ) {
+
+		if ( ! isset( $config['wpml-config']['custom-types']['custom-type'] ) ) {
+			$config['wpml-config']['custom-types']['custom-type'] = [];
+		}
+
+		$postTypes      = $config['wpml-config']['custom-types']['custom-type'];
+		$addedPostTypes = wp_list_pluck( $postTypes, 'value' );
+
+		foreach ( [ Brizy_Admin_Blocks_Main::CP_GLOBAL, Brizy_Admin_Blocks_Main::CP_SAVED ] as $postType ) {
+			if ( ! in_array( $postType, $addedPostTypes ) ) {
+				$postTypes[] = [
+					'value' => $postType,
+					'attr'  => [
+						'translate' => '0'
+					]
+				];
+			}
+		}
+
+		if ( ! in_array( Brizy_Admin_Templates::CP_TEMPLATE, $addedPostTypes ) ) {
+			$postTypes[] = [
+				'value' => Brizy_Admin_Templates::CP_TEMPLATE,
+				'attr'  => [
+					'translate'             => '1',
+					'display-as-translated' => '1',
+				]
+			];
+		}
+
+		$config['wpml-config']['custom-types']['custom-type'] = $postTypes;
+
+		$fields = [
+			'brizy',
+			'brizy_enabled',
+			'brizy_post_uid',
+			'brizy-need-compile',
+			'brizy-post-plugin-version',
+			'brizy-post-editor-version',
+			'brizy-post-compiler-version',
+		];
+
+		foreach ( $fields as $field ) {
+			$config['wpml-config']['custom-fields']['custom-field'][] = [
+				'value' => $field,
+				'attr'  => [
+					'action' => 'ignore'
+				]
+			];
+		}
+
+		return $config;
+	}
+
+	/**
+	 * Compile translated brizy pages.
+	 *
+	 * @param int $post_id The ID of the translated post.
+	 *
+	 */
+	public function save_post( $post_id, $fields, $job ) {
+
+		try {
+			$originalPost = Brizy_Editor_Post::get( $job->original_doc_id );
+		} catch ( Exception $e ) {
+			return;
+		}
+
+		if ( ! $originalPost->uses_editor() ) {
+			return;
+		}
+
+		try {
+			$translatedPost = Brizy_Editor_Post::get( $post_id );
+		} catch ( Exception $e ) {
+			return;
+		}
+
+		try {
+			$translatedPost->set_uses_editor( true );
+		} catch ( Exception $e ) {
+			return;
+		}
+
+		$translatedPost->set_needs_compile( true );
+
+		$translatedPost->saveStorage();
 	}
 }
