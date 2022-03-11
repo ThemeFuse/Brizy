@@ -25,7 +25,7 @@ class Brizy_Compatibilities_Init {
 			new Brizy_Compatibilities_Autoptimize();
 		}
 
-		if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
+		if ( apply_filters( 'wpml_setting', false, 'setup_complete' ) ) {
 			new Brizy_Compatibilities_WPML();
 		}
 
