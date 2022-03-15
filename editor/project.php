@@ -99,36 +99,26 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	}
 
 	/**
-	 * @return Brizy_Editor_Project|mixed
+	 * @param null $postId
+	 * @param null $uid
+	 *
+	 * @return Brizy_Editor_Project|null
 	 * @throws Exception
 	 */
-	public static function get( $apost = null, $uid = null ) {
+	public static function get( $postId = null, $uid = null ) {
 
-		$wp_post_id = $apost;
-		if ( $apost instanceof WP_Post ) {
-			$wp_post_id = $apost->ID;
-		}
-
-		if ( ! $wp_post_id && isset( self::$instance[ $wp_post_id ] ) ) {
-			return self::$instance[ $wp_post_id ];
+		if ( self::$instance ) {
+			return self::$instance;
 		}
 
 		try {
-			if ( is_null( $wp_post_id ) ) {
-				$wp_post = self::getPost();
-			} else {
-				$wp_post = get_post( $wp_post_id );
-			}
-
-			if ( isset( self::$instance[ $wp_post->ID ] ) ) {
-				return self::$instance[ $wp_post->ID ];
-			}
+			$wp_post = self::getPost();
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 			throw $e;
 		}
 
-		return self::$instance[ $wp_post->ID ] = new self( $wp_post );
+		return self::$instance = new self( $wp_post );
 	}
 
 	/**
