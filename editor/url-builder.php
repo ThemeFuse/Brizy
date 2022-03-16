@@ -253,8 +253,6 @@ class Brizy_Editor_UrlBuilder
      */
     public function page_upload_path($path = null, $post_id = null)
     {
-	    $path = self::cleanPath($path);
-
         if (is_null($post_id) && $this->post_id) {
             $post_id = (int)$this->post_id;
         }
@@ -268,9 +266,6 @@ class Brizy_Editor_UrlBuilder
 
     public function page_upload_relative_path($path = null, $post_id = null)
     {
-
-	    $path = self::cleanPath($path);
-
         if (is_null($post_id) && $this->post_id) {
             $post_id = (int)$this->post_id;
         }
@@ -290,9 +285,6 @@ class Brizy_Editor_UrlBuilder
      */
     public function page_upload_url($path = null, $post_id = null)
     {
-
-	    $path = self::cleanPath($path);
-
         if (is_null($post_id) && $this->post_id) {
             $post_id = (int)$this->post_id;
         }
@@ -312,9 +304,6 @@ class Brizy_Editor_UrlBuilder
      */
     public function editor_asset_path($path = null)
     {
-
-	    $path = self::cleanPath($path);
-
         if ($path) {
             $path = '/' . ltrim($path, '/');
         }
@@ -329,8 +318,6 @@ class Brizy_Editor_UrlBuilder
      */
     public function editor_build_url( $path = '' )
     {
-	    $path = self::cleanPath($path);
-
 	    if ( $path ) {
 		    $path = '/' . ltrim( $path, '/' );
 	    }
@@ -363,8 +350,6 @@ class Brizy_Editor_UrlBuilder
      */
     public function media_asset_path($path = null)
     {
-	    $path = self::cleanPath($path);
-
         if ($path) {
             $path = '/' . ltrim($path, '/');
         }
@@ -379,8 +364,6 @@ class Brizy_Editor_UrlBuilder
      */
     public function media_asset_url($path = null)
     {
-	    $path = self::cleanPath($path);
-
         if ($path) {
             $path = "/" . ltrim($path, "/");
         }
