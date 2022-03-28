@@ -1,0 +1,143 @@
+<wpml-config>
+    <custom-types>
+        <custom-type translate="1" display-as-translated="1">brizy-global-block</custom-type>
+        <custom-type translate="1" display-as-translated="1">brizy-saved-block</custom-type>
+        <custom-type translate="1" display-as-translated="1">brizy_template</custom-type>
+    </custom-types>
+    <custom-fields>
+        <custom-field action="ignore">brizy_post_uid</custom-field>
+        <custom-field action="ignore">brizy-need-compile</custom-field>
+        <custom-field action="ignore">brizy-post-plugin-version</custom-field>
+        <custom-field action="ignore">brizy-post-editor-version</custom-field>
+        <custom-field action="ignore">brizy-post-compiler-version</custom-field>
+        <custom-field action="translate">brizy</custom-field>
+    </custom-fields>
+    <custom-fields-texts>
+        <key name="brizy">
+            <key name="brizy-post">
+                <key name="editor_data">
+                    <key name="value">
+                        <key name="text" />
+                        <key name="items">
+                            <key name="*">
+                                <key name="value">
+                                    <key name="text" />
+                                    <key name="items">
+                                        <key name="*">
+                                            <key name="value">
+                                                <key name="text" />
+                                                <key name="items">
+                                                    <key name="*">
+                                                        <key name="value">
+                                                            <key name="text" />
+                                                            <key name="items">
+                                                                <key name="*">
+                                                                    <key name="value">
+                                                                        <key name="text" />
+                                                                        <key name="items">
+                                                                            <key name="*">
+                                                                                <key name="value">
+                                                                                    <key name="text" />
+                                                                                    <key name="items">
+                                                                                        <key name="*">
+                                                                                            <key name="value">
+                                                                                                <key name="text" />
+                                                                                                <key name="items">
+                                                                                                    <key name="*">
+                                                                                                        <key name="value">
+                                                                                                            <key name="text" />
+                                                                                                            <key name="items">
+                                                                                                                <key name="*">
+                                                                                                                    <key name="value">
+                                                                                                                        <key name="text" />
+                                                                                                                        <key name="items">
+                                                                                                                            <key name="*">
+                                                                                                                                <key name="value">
+                                                                                                                                    <key name="text" /></key>
+                                                                                                                            </key>
+                                                                                                                        </key>
+                                                                                                                    </key>
+                                                                                                                </key>
+                                                                                                            </key>
+                                                                                                        </key>
+                                                                                                    </key>
+                                                                                                </key>
+                                                                                            </key>
+                                                                                        </key>
+                                                                                    </key>
+                                                                                </key>
+                                                                            </key>
+                                                                        </key>
+                                                                    </key>
+                                                                </key>
+                                                            </key>
+                                                        </key>
+                                                    </key>
+                                                </key>
+                                            </key>
+                                        </key>
+                                    </key>
+                                </key>
+                            </key>
+                        </key>
+                    </key>
+                    <key name="items">
+                        <key name="*">
+                            <key name="value">
+                                <key name="text" />
+                                <key name="items">
+                                    <key name="*">
+                                        <key name="value">
+                                            <key name="text" />
+                                            <key name="items">
+                                                <key name="*">
+                                                    <key name="value">
+                                                        <key name="text" />
+                                                        <key name="items">
+                                                            <key name="*">
+                                                                <key name="value">
+                                                                    <key name="text" />
+                                                                    <key name="items">
+                                                                        <key name="*">
+                                                                            <key name="value">
+                                                                                <key name="text" />
+                                                                                <key name="items">
+                                                                                    <key name="*">
+                                                                                        <key name="value">
+                                                                                            <key name="text" />
+                                                                                            <key name="items">
+                                                                                                <key name="*">
+                                                                                                    <key name="value">
+                                                                                                        <key name="text" />
+                                                                                                        <key name="items">
+                                                                                                            <key name="*">
+                                                                                                                <key name="value">
+                                                                                                                    <key name="text" /></key>
+                                                                                                            </key>
+                                                                                                        </key>
+                                                                                                    </key>
+                                                                                                </key>
+                                                                                            </key>
+                                                                                        </key>
+                                                                                    </key>
+                                                                                </key>
+                                                                            </key>
+                                                                        </key>
+                                                                    </key>
+                                                                </key>
+                                                            </key>
+                                                        </key>
+                                                    </key>
+                                                </key>
+                                            </key>
+                                        </key>
+                                    </key>
+                                </key>
+                            </key>
+                        </key>
+                    </key>
+                </key>
+            </key>
+        </key>
+    </custom-fields-texts>
+</wpml-config>

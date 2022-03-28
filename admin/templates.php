@@ -363,14 +363,13 @@ class Brizy_Admin_Templates
         list($applyFor, $entityType, $entityValues) = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
 
         $is_preview = is_preview();
+	    $args = [
+		    'post_type'   => self::CP_TEMPLATE,
+		    'numberposts' => - 1,
+		    'post_status' => $is_preview ? 'any' : 'publish'
+	    ];
 
-        $templates = get_posts(
-            array(
-                'post_type' => self::CP_TEMPLATE,
-                'numberposts' => -1,
-                'post_status' => $is_preview ? 'any' : 'publish',
-            )
-        );
+	    $templates = get_posts( apply_filters( 'brizy_get_posts_current_template', $args ) );
 
         $templates = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight(
             $templates,
