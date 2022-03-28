@@ -7,6 +7,7 @@ class Brizy_Compatibilities_WPML {
 
 	public function __construct() {
 
+		//add_filter( 'wp',                                [ $this, 'wp' ] );
 		add_action( 'wp_insert_post',                    [ $this, 'insertNewPost' ], - 10000, 3 );
 		add_action( 'wp_insert_post',                    [ $this, 'duplicatePosts' ], - 10000, 3 );
 		add_action( 'pre_get_posts',                     [ $this, 'pre_get_posts' ], 11 );
@@ -17,8 +18,15 @@ class Brizy_Compatibilities_WPML {
 		add_filter( 'icl_wpml_config_array',             [ $this, 'wpmlConfig' ] );
 		add_filter( 'wpml_pb_should_body_be_translated', [ $this, 'remove_body' ], 10, 2 );
 		add_action( 'wpml_pro_translation_completed',    [ $this, 'save_post' ], 10, 3 );
-		//add_filter( 'wpml_document_view_item_link',      '__return_empty_string' );
-		//add_filter( 'wpml_document_edit_item_link',      '__return_empty_string' );
+		add_filter( 'wpml_document_view_item_link',      '__return_empty_string' );
+		add_filter( 'wpml_document_edit_item_link',      '__return_empty_string' );
+		add_action( 'brizy_get_posts_rules_args',        [ $this, 'changeSuppressFilter' ] );
+		add_action( 'brizy_get_posts_current_template',  [ $this, 'changeSuppressFilter' ] );
+		add_action( 'brizy_get_posts_global_popups',     [ $this, 'changeSuppressFilter' ] );
+		add_action( 'brizy_get_posts_saved_popups',      [ $this, 'changeSuppressFilter' ] );
+		add_filter( 'wpml_decode_custom_field',          [ $this, 'decode_custom_field' ], 10, 2 );
+		add_filter( 'wpml_encode_custom_field',          [ $this, 'encode_custom_field' ], 10, 2 );
+		add_filter( 'wpml_basket_base64_item',           '__return_false' );
 	}
 
 	/**
@@ -249,5 +257,56 @@ class Brizy_Compatibilities_WPML {
 		$translatedPost->set_needs_compile( true );
 
 		$translatedPost->saveStorage();
+	}
+
+	public function wp() {
+		if ( isset( $_REQUEST[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) && Brizy_Editor_User::is_user_allowed() ) {
+			$pid = Brizy_Editor::get()->currentPostId();
+			if ( Brizy_Editor_Entity::isBrizyEnabled( $pid ) ) {
+				update_post_meta( $pid, WPML_TM_Post_Edit_TM_Editor_Mode::POST_META_KEY_USE_NATIVE, 'yes' );
+			}
+		}
+	}
+
+	public function changeSuppressFilter( $args ) {
+		$args['suppress_filters'] = false;
+
+		return $args;
+	}
+
+	/**
+	 * Decodes editor_data to send for translation.
+	 *
+	 * @param array  $value The value of the custom field.
+	 * @param string $key   The key of the custom field.
+	 * @return array
+	 */
+	public function decode_custom_field( $value, $key ) {
+		// We only need to handle this for 'brizy' custom field.
+		if ( 'brizy' === $key ) {
+			// WPML calls this filter twice, so we need to check if it was already decoded.
+			if ( isset( $value['brizy-post']['editor_data'] ) && is_scalar( $value['brizy-post']['editor_data'] ) ) {
+				$value['brizy-post']['editor_data'] = json_decode( base64_decode( $value['brizy-post']['editor_data'], true ), true );
+			}
+		}
+		return $value;
+	}
+
+	/**
+	 * Encode editor_data after its translated.
+	 *
+	 * @param array  $value The value of the custom field.
+	 * @param string $key   The key of the custom field.
+	 * @return array
+	 */
+	public function encode_custom_field( $value, $key ) {
+		// We only need to handle this for 'brizy' custom field.
+		if ( 'brizy' === $key ) {
+			// WPML calls this filter twice, so we need to check if it was already encoded.
+			if ( isset( $value['brizy-post']['editor_data'] ) && ! is_scalar( $value['brizy-post']['editor_data'] ) ) {
+				$value['brizy-post']['editor_data'] = base64_encode( json_encode( $value['brizy-post']['editor_data'] ) );
+			}
+		}
+		return $value;
 	}
 }

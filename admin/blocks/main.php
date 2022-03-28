@@ -51,13 +51,15 @@ class Brizy_Admin_Blocks_Main {
 			$globalData = (object) array( 'globalBlocks' => array(), 'savedBlocks' => array() );
 		}
 
-		$blocks = get_posts( array(
+		$args = [
 			'post_type'      => Brizy_Admin_Blocks_Main::CP_GLOBAL,
 			'posts_per_page' => - 1,
 			'post_status'    => 'publish',
 			'orderby'        => 'ID',
 			'order'          => 'ASC',
-		) );
+		];
+
+		$blocks = get_posts( apply_filters( 'brizy_get_posts_global_popups', $args ) );
 
 		foreach ( $blocks as $block ) {
 			$brizy_editor_block               = Brizy_Editor_Block::get( $block );
@@ -70,17 +72,19 @@ class Brizy_Admin_Blocks_Main {
 			);
 		}
 
-		$blocks = get_posts( array(
+		$args = [
 			'post_type'      => Brizy_Admin_Blocks_Main::CP_SAVED,
 			'posts_per_page' => - 1,
 			'post_status'    => 'publish',
 			'orderby'        => 'ID',
 			'order'          => 'ASC',
-		) );
+		];
+
+		$blocks = get_posts( apply_filters( 'brizy_get_posts_saved_popups', $args ) );
 
 		foreach ( $blocks as $block ) {
 			$brizy_editor_block        = Brizy_Editor_Block::get( $block );
-			$block_data                       = $brizy_editor_block->convertToOptionValue();
+			$block_data                = $brizy_editor_block->convertToOptionValue();
 			$globalData->savedBlocks[] = array(
 				'data' => json_decode( $brizy_editor_block->get_editor_data() ),
 				'rules'    => $block_data['rules']

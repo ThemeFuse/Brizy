@@ -97,7 +97,7 @@ abstract class Brizy_Admin_Rules_AbstractValidator implements Brizy_Admin_Rules_
 
 		$r = wp_parse_args( $args, $defaults );
 
-		$templates = get_posts( $r );
+		$templates = get_posts( apply_filters( 'brizy_get_posts_rules_args', $r ) );
 
 		$rules = array();
 
