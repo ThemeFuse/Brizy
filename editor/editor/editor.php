@@ -202,7 +202,7 @@ class Brizy_Editor_Editor_Editor {
 		$types  = get_post_types( [ 'public' => true ] );
 		$result = [];
 		foreach ( $types as $type ) {
-			if (in_array($type->name,$excludePostTypes)) {
+			if (in_array($type,$excludePostTypes)) {
 				continue;
 			}
 			$typeObj = get_post_type_object( $type );
