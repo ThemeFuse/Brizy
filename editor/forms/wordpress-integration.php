@@ -74,7 +74,8 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 		}
 
 		if ( $this->getReplayTo() ) {
-			$headers[] = "Reply-To: {$this->getReplayTo()}";
+			$replay_to = apply_filters( 'brizy_replay_to', $this->getReplayTo(), $fields, $form );
+			$headers[] = "Reply-To: {$replay_to}";
 		}
 
 		if ( $this->getFromEmail() ) {
