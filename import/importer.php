@@ -20,6 +20,8 @@ class Brizy_Import_Importer extends WP_Importer {
 
 	private $errors = [];
 	private $missing_menu_items = [];
+	private $menu_item_orphans = [];
+	private $post_orphans = [];
 	private $extractor;
 
 	/**

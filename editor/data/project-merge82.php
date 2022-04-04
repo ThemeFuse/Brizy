@@ -23,6 +23,10 @@ class Brizy_Editor_Data_ProjectMerge82 implements Brizy_Editor_Data_ProjectMerge
 
 	public function merge( $projectData1, $projectData2 ) {
 
+		if ( count( get_object_vars( $projectData1 ) ) == 0 ) {
+			return $projectData2;
+		}
+
 		$result                = $projectData1;
 		$result->selectedKit   = $projectData2->selectedKit;
 		$result->selectedStyle = $projectData2->selectedStyle;

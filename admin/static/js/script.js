@@ -231,27 +231,31 @@ jQuery(document).ready(function ($) {
 
         registerEvents: function () {
             var searchInput = $( '.js-demo-input-search' ),
-                selectTerm = $( '.brz-demo-filter-terms select' );
+                selectTerm  = $( '.brz-demo-filter-terms select' ),
+                filterLinks = $( '.brz-wrap-demodata .js-filter-link' );
 
             if ( ! searchInput.length ) {
                 return;
             }
 
-            searchInput.focus( function () {
-                $( '.js-demo-search-icon' ).hide();
-            } );
+            filterLinks.click( function( e ) {
+                e.preventDefault();
+                filterLinks.removeClass( 'current' );
+                $( this ).addClass( 'current' );
 
-            searchInput.hover( function () {
-                if ( $( this ).val() ) {
-                    $( '.js-demo-search-icon' ).hide();
+                if ( ! $( this ).attr( 'data-sort' ) ) {
+                    searchInput.val( '' );
+                    selectTerm.val( '' ).trigger( 'change' );
                 }
+
+                DemoImport.searchDemo();
             } );
 
-            searchInput.focusout( function () {
-                $( '.js-demo-search-icon' ).show();
+            $( '.theme-screenshot, .more-details, .theme-name' ).click( function( e ) {
+                window.open( $( this ).closest( '.theme' ).attr( 'data-preview-link' ), '_blank' );
             } );
 
-            searchInput.on('keyup change click search', function() {
+            searchInput.on('keyup change search', function() {
                 DemoImport.searchDemo();
             });
 
@@ -261,22 +265,28 @@ jQuery(document).ready(function ($) {
                 DemoImport.searchDemo();
             } );
 
-            $( '.brz-demo-item-actions button:not(.brz-demo-item-gopro)' ).click( function ( e ) {
+            $( '.load-customize' ).click( function( e ) {
                 e.preventDefault();
+                $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-install' ).html() );
+                $( '.brz-demo-modal' ).addClass( 'brz-demo-show-modal' );
+                $( '.js-demo-install' ).attr( 'data-demo-id', $( this ).attr( 'data-demo-id' ) );
+            } );
 
-                var container = $( '.brz-demo-items' );
+            $( document ).on( 'click', '.js-demo-data-close-modal, .brz-demo-show-modal', function( e ) {
 
-                if ( ! window.confirm( container.data( 'confirm' ) ) ) {
-                    return;
+                var it = $( e.target );
+
+                if ( ( it.closest( '.brz-demo-modal-content' ).length !== 0 || ! $( '.brz-demo-modal-content-install-container' ).length ) && ! it.is( '.js-demo-data-close-modal' ) ) {
+                   return;
                 }
 
-                alert( container.data( 'alert' ) );
+                $( '.brz-demo-modal' ).removeClass( 'brz-demo-show-modal' );
+            } );
 
-                var btns = $( '.brz-demo-item-actions button:not(.brz-demo-item-gopro)' );
+            $( document ).on( 'click', '.js-demo-install', function( e ) {
+                e.preventDefault();
 
-                $( this ).before('<span class="spinner is-active"></span>');
-
-                btns.prop( 'disabled', true );
+                $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-installing' ).html() );
 
                 $.ajax( {
                     url: Brizy_Admin_Data.url,
@@ -284,17 +294,14 @@ jQuery(document).ready(function ($) {
                     data: {
                         'action': 'brizy-import-demo',
                         'nonce': Brizy_Admin_Data.nonce,
-                        'demo': $( this ).data( 'demo-id' )
+                        'demo': $( this ).attr( 'data-demo-id' ),
+                        'rmContent': $( this ).attr( 'data-rm-content' )
                     },
-                    success: function( response ) {
-                        btns.prop( 'disabled', false );
-                        $( '.spinner' ).remove();
-                        alert( response.data );
+                    success: function() {
+                        $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-success' ).html() );
                     },
                     error: function() {
-                        btns.prop( 'disabled', false );
-                        $( '.spinner' ).remove();
-                        alert( 'Importer Failed. Please contact our support.' );
+                        $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-error' ).html() );
                     }
                 } );
             } );
@@ -302,21 +309,27 @@ jQuery(document).ready(function ($) {
         searchDemo: function () {
             var search      = $( '.js-demo-input-search' ).val(),
                 searchRegex = new RegExp( search.replace(/[.*+?^${}()|[\]\\]/g, ''), 'i' ),
-                term        = $( '.brz-demo-filter-terms select' ).val();
+                term        = $( '.brz-demo-filter-terms select' ).val(),
+                filterLink  = $( '.js-filter-link.current' ).attr( 'data-sort' ),
+                count       = 0;
 
-            $( '.brz-demo-item' ).each(function() {
-                var keywords      = $( this ).data( 'keywords' ),
-                    name          = $( this ).data( 'name' ),
-                    terms         = String( $( this ).data( 'terms' ) ).split(','),
-                    matchBySearch = search === '' || searchRegex.test( keywords ) || searchRegex.test( name ),
-                    matchByTerms  = term === '' || terms.includes( term );
+            $( '.themes .theme' ).each( function() {
+                var keywords          = $( this ).data( 'keywords' ),
+                    name              = $( this ).data( 'name' ),
+                    terms             = String( $( this ).data( 'terms' ) ).split(','),
+                    matchBySearch     = search === '' || searchRegex.test( keywords ) || searchRegex.test( name ),
+                    matchByTerms      = term === '' || terms.includes( term ),
+                    matchByFilterLink = filterLink === '' || ( filterLink === 'pro' && $( this ).hasClass( 'brz-demo-is-pro' ) ) || ( filterLink === 'free' && $( this ).hasClass( 'brz-demo-is-free' ) );
 
-                if ( matchBySearch && matchByTerms ) {
+                if ( matchBySearch && matchByTerms && matchByFilterLink ) {
                     $( this ).fadeIn( 'slow' );
+                    count++;
                 } else {
                     $( this ).fadeOut( 'slow' );
                 }
             });
+
+            $( '.brz-wrap-demodata .count' ).text( count );
         }
     };
 
