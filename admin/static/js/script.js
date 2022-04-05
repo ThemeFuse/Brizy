@@ -227,10 +227,117 @@ jQuery(document).ready(function ($) {
         }
     };
 
+    var DemoImport = {
+
+        registerEvents: function () {
+            var searchInput = $( '.js-demo-input-search' ),
+                selectTerm  = $( '.brz-demo-filter-terms select' ),
+                filterLinks = $( '.brz-wrap-demodata .js-filter-link' );
+
+            if ( ! searchInput.length ) {
+                return;
+            }
+
+            filterLinks.click( function( e ) {
+                e.preventDefault();
+                filterLinks.removeClass( 'current' );
+                $( this ).addClass( 'current' );
+
+                if ( ! $( this ).attr( 'data-sort' ) ) {
+                    searchInput.val( '' );
+                    selectTerm.val( '' ).trigger( 'change' );
+                }
+
+                DemoImport.searchDemo();
+            } );
+
+            $( '.theme-screenshot, .more-details, .theme-name' ).click( function( e ) {
+                window.open( $( this ).closest( '.theme' ).attr( 'data-preview-link' ), '_blank' );
+            } );
+
+            searchInput.on('keyup change search', function() {
+                DemoImport.searchDemo();
+            });
+
+            selectTerm.select2();
+
+            selectTerm.change( function () {
+                DemoImport.searchDemo();
+            } );
+
+            $( '.load-customize' ).click( function( e ) {
+                e.preventDefault();
+                $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-install' ).html() );
+                $( '.brz-demo-modal' ).addClass( 'brz-demo-show-modal' );
+                $( '.js-demo-install' ).attr( 'data-demo-id', $( this ).attr( 'data-demo-id' ) );
+            } );
+
+            $( document ).on( 'click', '.js-demo-data-close-modal, .brz-demo-show-modal', function( e ) {
+
+                var it = $( e.target );
+
+                if ( ( it.closest( '.brz-demo-modal-content' ).length !== 0 || ! $( '.brz-demo-modal-content-install-container' ).length ) && ! it.is( '.js-demo-data-close-modal' ) ) {
+                   return;
+                }
+
+                $( '.brz-demo-modal' ).removeClass( 'brz-demo-show-modal' );
+            } );
+
+            $( document ).on( 'click', '.js-demo-install', function( e ) {
+                e.preventDefault();
+
+                $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-installing' ).html() );
+
+                $.ajax( {
+                    url: Brizy_Admin_Data.url,
+                    type: 'POST',
+                    data: {
+                        'action': 'brizy-import-demo',
+                        'nonce': Brizy_Admin_Data.nonce,
+                        'demo': $( this ).attr( 'data-demo-id' ),
+                        'rmContent': $( this ).attr( 'data-rm-content' )
+                    },
+                    success: function() {
+                        $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-success' ).html() );
+                    },
+                    error: function() {
+                        $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-error' ).html() );
+                    }
+                } );
+            } );
+        },
+        searchDemo: function () {
+            var search      = $( '.js-demo-input-search' ).val(),
+                searchRegex = new RegExp( search.replace(/[.*+?^${}()|[\]\\]/g, ''), 'i' ),
+                term        = $( '.brz-demo-filter-terms select' ).val(),
+                filterLink  = $( '.js-filter-link.current' ).attr( 'data-sort' ),
+                count       = 0;
+
+            $( '.themes .theme' ).each( function() {
+                var keywords          = $( this ).data( 'keywords' ),
+                    name              = $( this ).data( 'name' ),
+                    terms             = String( $( this ).data( 'terms' ) ).split(','),
+                    matchBySearch     = search === '' || searchRegex.test( keywords ) || searchRegex.test( name ),
+                    matchByTerms      = term === '' || terms.includes( term ),
+                    matchByFilterLink = filterLink === '' || ( filterLink === 'pro' && $( this ).hasClass( 'brz-demo-is-pro' ) ) || ( filterLink === 'free' && $( this ).hasClass( 'brz-demo-is-free' ) );
+
+                if ( matchBySearch && matchByTerms && matchByFilterLink ) {
+                    $( this ).fadeIn( 'slow' );
+                    count++;
+                } else {
+                    $( this ).fadeOut( 'slow' );
+                }
+            });
+
+            $( '.brz-wrap-demodata .count' ).text( count );
+        }
+    };
+
     $( function () {
         BrizyGutenberg.init();
         BrizyFeedbackDialog.init();
         BrizyMaintenance.init();
+        DemoImport.registerEvents();
     } );
 });
 

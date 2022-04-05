@@ -27,4 +27,25 @@ class Brizy_Compatibilities_BrizyProCompatibility {
 			</div>
 		<?php
 	}
+
+	static public function isPro() {
+        if ( ! defined( 'BRIZY_PRO_VERSION' ) || ! class_exists( 'BrizyPro_Admin_License' ) ) {
+            return false;
+        }
+
+        $license = BrizyPro_Admin_License::_init();
+
+		if ( method_exists( $license, 'isValidLicense' ) ) {
+			if ( BrizyPro_Admin_License::_init()->isValidLicense() ) {
+				return true;
+			}
+		} else {
+            $licenseData = BrizyPro_Admin_License::_init()->getCurrentLicense();
+			if ( ! empty( $licenseData['key'] ) ) {
+				return true;
+			}
+		}
+
+        return false;
+	}
 }
