@@ -25,7 +25,7 @@ class Brizy_Import_WpCli extends WP_CLI_Command {
 			WP_CLI::error( 'Please specify the id off the demo to import' );
 		}
 
-		WP_CLI::line( 'Demo import started...' );
+		WP_CLI::log( 'Demo import started...' );
 
 		$import = new Brizy_Import_Import( $args[0] );
 
