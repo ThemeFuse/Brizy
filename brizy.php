@@ -38,6 +38,7 @@ if ( BRIZY_DEVELOPMENT ) {
 }
 
 add_action( 'plugins_loaded', 'brizy_load' );
+add_action( 'init', 'brizy_load_text_domain' );
 add_action( 'upgrader_process_complete', 'brizy_upgrade_completed', 10, 2 );
 
 register_activation_hook( BRIZY_FILE, 'brizy_install' );
@@ -113,6 +114,10 @@ function brizy_clean() {
 	Brizy_Logger::clean();
 	add_option( 'brizy-regenerate-permalinks', 1 );
 	do_action( 'brizy-deactivated' );
+}
+
+function brizy_load_text_domain() {
+	load_plugin_textdomain( 'brizy', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 
 new Brizy_Compatibilities_Init();

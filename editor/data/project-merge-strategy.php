@@ -23,7 +23,7 @@ class Brizy_Editor_Data_ProjectMergeStrategy {
 	 * @return bool
 	 */
 	static public function checkVersionCompatibility( $version ) {
-		if ( version_compare( $version, '1.0.81' ) > 0 && version_compare( $version, BRIZY_VERSION ) <= 0 ) {
+		if ( version_compare( $version, BRIZY_VERSION ) <= 0 ) {
 			return true;
 		}
 
