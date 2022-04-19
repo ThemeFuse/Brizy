@@ -197,9 +197,7 @@ class Brizy_Editor {
 
 		if ( ! class_exists( 'BrizyPro_Admin_WhiteLabel' ) || ! BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
 			if ( current_user_can( 'manage_options' ) ) {
-				add_action( 'wp_dashboard_setup', function () {
-					Brizy_Admin_DashboardWidget::_init();
-				} );
+				add_action( 'wp_dashboard_setup', 'Brizy_Admin_DashboardWidget::_init' );
 			}
 		}
 
