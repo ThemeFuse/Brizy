@@ -23,6 +23,7 @@ export default {
                 : Config.get("cms")
                 ? Config.get("cms").blogId
                 : undefined,
+            querySource: IS_CLOUD ? Config.getAll().cms.blogId : undefined,
             orderBy: "id",
             order: "DESC",
             items: [

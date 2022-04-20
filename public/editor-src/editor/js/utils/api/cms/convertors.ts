@@ -124,6 +124,11 @@ export const itemCustomerToPage = (item: CustomerItem): PageCustomer => {
     data: (readData(item.pageData) as PageCustomer["data"]) ?? {
       items: []
     },
+    groups:
+      item.customerGroups?.map(({ name, id }) => ({
+        id,
+        name: name ?? id
+      })) ?? [],
     status: "publish",
     dataVersion: 0
   };

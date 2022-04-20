@@ -54,10 +54,25 @@ export function cssStyleElementRichTextGradient({
 }
 
 export function cssStyleElementRichTextFontSize(d: CSSValue): string {
-  return IS_STORY
-    ? `font-size:${styleTypography2FontSize({ ...d, prefix: "typography" }) *
-        0.23}%;`
-    : cssStyleTypography3FontSize(d);
+  const { v, device, state } = d;
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const fontStyle = dvv("typographyFontStyle");
+  if (IS_STORY) {
+    if (fontStyle) {
+      return `font-size:var(--brz-${fontStyle}StoryFontSize);`;
+    } else {
+      const fontSize = styleTypography2FontSize({
+        ...d,
+        prefix: "typography"
+      });
+
+      return `font-size:${fontSize * 0.23}%;`;
+    }
+  }
+
+  return cssStyleTypography3FontSize(d);
 }
 
 export function cssStyleElementRichTextBgImage({

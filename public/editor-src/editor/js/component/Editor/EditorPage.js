@@ -37,8 +37,6 @@ const areStatesEqual = (state, prevState) =>
   state.blocksData === prevState.blocksData &&
   state.globalBlocks === prevState.globalBlocks &&
   state.currentStyleId === prevState.currentStyleId &&
-  state.currentStyle === prevState.currentStyle &&
-  state.extraFontStyles === prevState.extraFontStyles &&
   state.fonts === prevState.fonts &&
   state.copiedElement === prevState.copiedElement;
 

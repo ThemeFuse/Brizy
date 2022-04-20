@@ -1,4 +1,4 @@
-export { default as Map } from "./Map/export.js";
+export { default as Map } from "./Map/export.ts";
 export { default as Counter } from "./Counter/export.js";
 export { default as Form } from "./Form/export.js";
 export { default as Form2 } from "./Form2/export.js";

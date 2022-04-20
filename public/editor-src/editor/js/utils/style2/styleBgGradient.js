@@ -1,7 +1,6 @@
 import { defaultValueValue } from "visual/utils/onChange";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { styleState } from "visual/utils/style";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function styleBgGradient({ v, device, state }) {
   state = getState(v, state);
@@ -11,15 +10,11 @@ export function styleBgGradient({ v, device, state }) {
   const bgColorType = dvv("bgColorType");
   const gradientType = dvv("gradientType");
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
-    dvv("bgColorHex"),
-    dvv("bgColorPalette")
-  );
+  const bgColorHex = dvv("bgColorHex");
+  const bgColorPalette = dvv("bgColorPalette");
 
-  const { hex: gradientColorHex } = getOptionColorHexByPalette(
-    dvv("gradientColorHex"),
-    dvv("gradientColorPalette")
-  );
+  const gradientColorHex = dvv("gradientColorHex");
+  const gradientColorPalette = dvv("gradientColorPalette");
 
   const bgColorOpacity = dvv("bgColorOpacity");
   const gradientColorOpacity = dvv("gradientColorOpacity");
@@ -30,22 +25,17 @@ export function styleBgGradient({ v, device, state }) {
   const gradientLinearDegree = dvv("gradientLinearDegree");
   const gradientRadialDegree = dvv("gradientRadialDegree");
 
+  const bgColor = getColor(bgColorPalette, bgColorHex, bgColorOpacity);
+  const bgGradientColor = getColor(
+    gradientColorPalette,
+    gradientColorHex,
+    gradientColorOpacity
+  );
+
   return bgColorType === "gradient"
     ? gradientType === "linear"
-      ? `linear-gradient(${gradientLinearDegree}deg, ${hexToRgba(
-          bgColorHex,
-          bgColorOpacity
-        )} ${gradientStartPointer}%, ${hexToRgba(
-          gradientColorHex,
-          gradientColorOpacity
-        )} ${gradientFinishPointer}%)`
-      : `radial-gradient(circle ${gradientRadialDegree}px, ${hexToRgba(
-          bgColorHex,
-          bgColorOpacity
-        )} ${gradientStartPointer}%, ${hexToRgba(
-          gradientColorHex,
-          gradientColorOpacity
-        )} ${gradientFinishPointer}%)`
+      ? `linear-gradient(${gradientLinearDegree}deg, ${bgColor} ${gradientStartPointer}%, ${bgGradientColor} ${gradientFinishPointer}%)`
+      : `radial-gradient(circle ${gradientRadialDegree}px, ${bgColor} ${gradientStartPointer}%, ${bgGradientColor} ${gradientFinishPointer}%)`
     : "none";
 }
 

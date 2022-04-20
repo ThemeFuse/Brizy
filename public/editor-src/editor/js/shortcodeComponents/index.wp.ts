@@ -109,14 +109,16 @@ const productArchiveShortcodes = hasWoocommerce
   ? [
       { component: WOOArchives, pro: true },
       { component: PostTitle, pro: true },
-      { component: PostExcerpt, pro: true }
+      { component: PostExcerpt, pro: true },
+      { component: Posts, pro: true }
     ]
   : [];
 
 const postArchiveShortcodes = [
   { component: Archive, pro: true },
   { component: PostTitle, pro: true },
-  { component: PostExcerpt, pro: true }
+  { component: PostExcerpt, pro: true },
+  { component: Posts, pro: true }
 ];
 
 const config = ((): Shortcodes => {

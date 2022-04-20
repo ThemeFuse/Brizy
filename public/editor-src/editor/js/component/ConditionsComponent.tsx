@@ -97,6 +97,7 @@ export function getOptions(
           title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
           asyncGetValue,
           onChange: data => {
+            // @ts-expect-error: Type 'string' is not assignable to type '"UPDATE_BLOCKS"'.
             getStore().dispatch(updatePopupRules(data));
           }
         });

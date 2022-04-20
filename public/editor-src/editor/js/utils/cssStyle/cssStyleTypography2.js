@@ -15,7 +15,7 @@ export function cssStyleTypography2FontSize({ v, device, prefix = "" }) {
   const fontSize = styleTypography2FontSize({ v, device, prefix });
   const fontSizeSuffix = styleTypography2FontSizeSuffix({ v, device, prefix });
 
-  return `font-size:${fontSize}${fontSizeSuffix || "px"};`;
+  return `font-size:${fontSize}${fontSizeSuffix};`;
 }
 
 export function cssStyleTypography2LineHeight({ v, device, prefix = "" }) {
@@ -26,12 +26,18 @@ export function cssStyleTypography2FontWeight({ v, device, prefix = "" }) {
   return `font-weight:${styleTypography2FontWeight({ v, device, prefix })};`;
 }
 
-export function cssStyleTypography2LetterSpacing({ v, device, prefix = "" }) {
+export function cssStyleTypography2LetterSpacing({
+  v,
+  device,
+  state,
+  prefix = ""
+}) {
   return `letter-spacing:${styleTypography2LetterSpacing({
     v,
     device,
+    state,
     prefix
-  })}px;`;
+  })};`;
 }
 
 export function cssStyleTypography3FontFamily({ v, device }) {

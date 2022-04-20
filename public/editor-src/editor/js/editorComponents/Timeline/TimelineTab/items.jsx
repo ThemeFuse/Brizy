@@ -95,7 +95,7 @@ export default class TimelineTabItems extends EditorArrayComponent {
       return (
         <div className={className}>
           <SortableEmpty
-            path={this.getPath()}
+            path={this.getId()}
             type="column"
             acceptElements={this.handleSortableAcceptElements}
           />
@@ -105,7 +105,7 @@ export default class TimelineTabItems extends EditorArrayComponent {
 
     return (
       <Sortable
-        path={this.getPath()}
+        path={this.getId()}
         type="column"
         acceptElements={this.handleSortableAcceptElements}
       >

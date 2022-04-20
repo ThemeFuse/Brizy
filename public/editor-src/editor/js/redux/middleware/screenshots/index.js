@@ -24,10 +24,12 @@ import {
   globalBlocksSelector as getGlobalBlocks,
   blocksDataSelector as getBlocksData,
   screenshotsSelector,
-  deviceModeSelector
+  deviceModeSelector,
+  globalBlocksAssembledSelector
 } from "visual/redux/selectors";
 import { makeNodeScreenshot } from "visual/utils/screenshots";
 import { makeTaskQueue, debounceAdvanced } from "./utils";
+import { createFullModelPath } from "visual/utils/models";
 
 const TASK_QUEUE_INTERVAL = 2000;
 const DEBOUNCE_INTERVAL = 2000;
@@ -403,9 +405,10 @@ async function globalBlockTaskCb(store, next, options, _id, enqueueAgain) {
   }
 }
 async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
-  const { path, domId: popupDOMId } = options.popup;
-  const pathToPopupInBlocks = path.slice(1, -1);
+  const { dbId: popupDBId, domId: popupDOMId } = options.popup;
   const pageBlocks = getPageBlocks(store.getState());
+  const path = createFullModelPath(pageBlocks, [popupDBId]);
+  const pathToPopupInBlocks = path.slice(0, -1);
   const popup = getIn(pageBlocks, pathToPopupInBlocks);
   const popupId = popup.value._id;
   let screenshotId;
@@ -509,11 +512,23 @@ async function popupBlockInsideGlobalBlockTaskCb(
   enqueueAgain
 ) {
   const { domId: popupDOMId, dbId: popupDbId } = options.popup;
-  const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
+  const globalBlock = globalBlocksAssembledSelector(store.getState())[
+    globalBlockId
+  ];
+
+  if (!globalBlock) {
+    return;
+  }
+
   const { obj: popupData } = findDeep(
     globalBlock,
     obj => obj && obj.value && obj.value._id === popupDbId
   );
+
+  if (!popupData) {
+    return;
+  }
+
   const popupId = popupData.value._id;
   const popupIsGlobal = popupData === globalBlock.data;
   let screenshotId;
@@ -540,7 +555,14 @@ async function popupBlockInsideGlobalBlockTaskCb(
 
   // upload screenshot
   {
-    const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
+    const globalBlock = globalBlocksAssembledSelector(store.getState())[
+      globalBlockId
+    ];
+
+    if (!globalBlock) {
+      return;
+    }
+
     const { obj: popup } = findDeep(
       globalBlock,
       obj => obj && obj.value && obj.value._id === popupDbId
@@ -596,7 +618,14 @@ async function popupBlockInsideGlobalBlockTaskCb(
 
   // update store
   {
-    const globalBlock = getGlobalBlocks(store.getState())[globalBlockId];
+    const globalBlock = globalBlocksAssembledSelector(store.getState())[
+      globalBlockId
+    ];
+
+    if (!globalBlock) {
+      return;
+    }
+
     const { obj: popup } = findDeep(
       globalBlock,
       obj => obj && obj.value && obj.value._id === popupDbId

@@ -437,6 +437,10 @@ export function getAttachmentById(id) {
   return request(apiConfig.getAttachmentUid, data).then(({ data }) => data);
 }
 
+/**
+ * @param {string} postType
+ * @return {Promise<{posts:[]}[]>}
+ */
 export function getPostObjects(postType) {
   const apiConfig = Config.get("wp").api;
   return request(apiConfig.getPostObjects, { postType }).then(

@@ -5,7 +5,6 @@ import { classNamesToV } from "./transforms";
 // have problems with cheerio it declared _ as global variables
 const $doc = IS_EDITOR ? require("jquery") : require("cheerio");
 
-
 export function mapBlockElements(html, fn) {
   let $ = getWrapper(html);
   const nodes = getParagraphsArray($);
@@ -53,7 +52,33 @@ const flatFormats = format => {
   }, {});
 };
 
+const getCSSVarValue = cssVar => {
+  return getComputedStyle(document.documentElement).getPropertyValue(cssVar);
+};
+
 const parseShadow = (str = "") => {
+  if (str.includes("var")) {
+    const regExp = /rgba\(var\((.*?)\),(\d+(?:\.\d+)?)\)+\s+(\d+px)\s?(\d+px)\s?(\d+px)/;
+    const [, cssVar, opacity, horizontal, vertical, blur] =
+      regExp.exec(str) ?? [];
+
+    const hex = getCSSVarValue(cssVar);
+    const rgba = `rgba(${hex}, ${opacity})`;
+    const result = rgbaTohex(rgba);
+
+    if (hex && result) {
+      return {
+        hex: result.hex ?? "#000000",
+        opacity: result.opacity ?? 1,
+        vertical: parseInt(vertical ?? 5),
+        horizontal: parseInt(horizontal ?? 5),
+        blur: parseInt(blur ?? 5)
+      };
+    }
+
+    return {};
+  }
+
   const [, rgba, shadow] = str.split(", rgb")[0].match(/^(rgb.*\)) (.*)/) || [];
 
   if (rgba && shadow) {
@@ -100,7 +125,8 @@ const getLink = (value = "{}") => {
     population = "",
     externalType = "external",
     popup = "",
-    upload = ""
+    upload = "",
+    linkToSlide = 1
   } = decodeFromString(value);
 
   return {
@@ -112,7 +138,8 @@ const getLink = (value = "{}") => {
     linkPopulation: population,
     linkExternalType: externalType,
     linkPopup: popup.replace("#", ""),
-    linkUpload: upload
+    linkUpload: upload,
+    linkToSlide
   };
 };
 

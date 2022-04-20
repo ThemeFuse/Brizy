@@ -4,6 +4,75 @@ import {
   videoUrl as getVideoUrl
 } from "visual/utils/video";
 
+let isYoutubeReady = false;
+
+const youtubeLoadScript = () => {
+  const candidate = document.querySelector(
+    "script[src='https://www.youtube.com/iframe_api']"
+  );
+
+  if (!candidate) {
+    const script = document.createElement("script");
+    script.src = "https://www.youtube.com/iframe_api";
+    document.head.append(script);
+  }
+};
+
+const isIOS = () => {
+  return (
+    [
+      "iPad Simulator",
+      "iPhone Simulator",
+      "iPod Simulator",
+      "iPad",
+      "iPhone",
+      "iPod"
+    ].includes(navigator.platform) ||
+    // iPad on iOS 13 detection
+    (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+  );
+};
+
+const loadYoutubeVideo = (
+  player,
+  autoplay,
+  loop,
+  start,
+  end,
+  isCovered,
+  isIos
+) => {
+  return new YT.Player(player, {
+    events: {
+      onReady: function(event) {
+        if (isIos) {
+          event.target.pauseVideo();
+        }
+        if (!autoplay) {
+          event.target.unMute();
+        }
+        if (autoplay || (isCovered && !isIos)) {
+          event.target.seekTo(start);
+          event.target.playVideo();
+        }
+      },
+      onStateChange: function(event) {
+        if (loop) {
+          if (event.data == YT.PlayerState.PLAYING) {
+            if (end > start) {
+              const duration = end - start;
+              setTimeout(() => event.target.seekTo(start), duration * 1000);
+            } else {
+              const duration = event.target.getDuration() - start;
+              setTimeout(() => event.target.seekTo(start), duration * 1000);
+            }
+          }
+        }
+      }
+    }
+  });
+};
+
 function hideVideos($node) {
   $node.find(".brz-video .brz-iframe").each(function() {
     $(this).remove();
@@ -81,17 +150,66 @@ export default function($node) {
     hideVideos($(popup));
   });
 
-  $node.find(".brz-vimeo-video, .brz-youtube-video").each(function() {
-    var $this = $(this);
-    var $videoData = $this.find(".brz-video-data");
-    var $coverElem = $this.find(".brz-video__cover");
-    var population = $videoData.attr("data-population");
+  const parentElements = [];
+  const players = [];
+  const isIos = isIOS();
 
-    if ($coverElem.length) {
-      $coverElem.click(insertVideoIframe.bind(null, $this));
-    } else if (population) {
-      insertVideoIframe($this);
-    }
+  youtubeLoadScript();
+  if (window.onYouTubeIframeAPIReady === undefined) {
+    window.onYouTubeIframeAPIReady = () => {
+      if (window.Brz) {
+        window.Brz.emit("elements.video.iframe.ready");
+      }
+    };
+  }
+  window.Brz.on("elements.video.iframe.ready", () => {
+    isYoutubeReady = true;
+
+    $node.find(".brz-vimeo-video, .brz-youtube-video").each(function(index) {
+      const isYoutube = this.classList.contains("brz-youtube-video");
+
+      const $this = $(this);
+      const player = this.querySelector("iframe");
+      const $videoData = $this.find(".brz-video-data");
+      const $coverElem = $this.find(".brz-video__cover");
+      const population = $videoData.attr("data-population");
+      const loop = $videoData.attr("data-loop") === "true";
+      const start = Number($videoData.attr("data-start"));
+      const end = Number($videoData.attr("data-end"));
+      const autoplay = $videoData.attr("data-autoplay") === "on";
+
+      if (isIos && isYoutube) {
+        parentElements.push($this);
+      }
+
+      if ($coverElem.length) {
+        if (isIos && isYoutube) {
+          // this className is needed to set opacity 0
+          // in case if image height is smaller than iframe and iframe can be seen below
+          this.classList.add("brz-video__ios");
+          $coverElem.get(0).addEventListener("click", () => {
+            if (players[index].playVideo) {
+              this.classList.remove("brz-video__ios");
+              players[index].playVideo();
+              $coverElem.remove();
+            }
+          });
+        } else {
+          $coverElem.click(insertVideoIframe.bind(null, $this, false));
+        }
+      } else if (population) {
+        insertVideoIframe($this);
+      } else {
+        if (isYoutube && player) {
+          loadYoutubeVideo(player, autoplay, loop, start, end, false);
+        }
+      }
+    });
+
+    parentElements.forEach(item => {
+      const player = insertVideoIframe(item, isIos);
+      players.push(player);
+    });
   });
 
   // Function init click Play & Pause Button
@@ -205,26 +323,53 @@ function getVideoSrc($elem) {
   return src;
 }
 
-function insertVideoIframe($elem) {
-  var $videoWrapper = $elem.find(".video-wrapper");
-  var $coverElem = $elem.find(".brz-video__cover");
+function insertVideoIframe($elem, isIos) {
+  const $videoWrapper = $elem.find(".video-wrapper");
+  const $coverElem = $elem.find(".brz-video__cover");
+  const $videoData = $elem.find(".brz-video-data");
+  const loop = $videoData.attr("data-loop") === "true";
+  const start = Number($videoData.attr("data-start"));
+  const end = Number($videoData.attr("data-end"));
+  const autoplay = $videoData.attr("data-autoplay") === "on";
+  const isYoutube = $elem[0].classList.contains("brz-youtube-video");
 
-  var src = getVideoSrc($elem);
+  const src = getVideoSrc($elem);
 
   // intrinsic-ignore - this class is needed for WP theme twentytwenty(themes/twentytwenty/assets/js/index.js?ver=1.1)
   // intrinsicRatioVideos - property contain function - makeFit which changes iframes width
   // and breaks our code(video, map inside megamenu isn't showing as example)
-  var iframe = $("<iframe/>", {
+  const $iframe = $("<iframe/>", {
     class: "brz-iframe intrinsic-ignore",
     allowfullscreen: true,
     allow: "autoplay",
-    src: src
+    src
   });
 
   setTimeout(() => {
-    $videoWrapper.append(iframe);
-    $coverElem.remove();
+    if (isYoutube) {
+      if (isYoutubeReady) {
+        $videoWrapper.append($iframe);
+        if (!isIos) {
+          $coverElem.remove();
+        }
+      }
+    } else {
+      $videoWrapper.append($iframe);
+      $coverElem.remove();
+    }
   }, 0);
+
+  if (isYoutube && isYoutubeReady) {
+    return loadYoutubeVideo(
+      $iframe.get(0),
+      autoplay,
+      loop,
+      start,
+      end,
+      true,
+      isIos
+    );
+  }
 }
 
 function formatTime(time) {

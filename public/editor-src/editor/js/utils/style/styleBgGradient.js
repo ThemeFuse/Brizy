@@ -1,10 +1,13 @@
 import { defaultValueValue } from "visual/utils/onChange";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { styleState } from "visual/utils/style";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function styleBgGradient({ v, device, state }) {
-  const isHover = styleState({ v, state });
+  const isHover = styleState({ v, state }) === "hover";
+
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvvH = key => defaultValueValue({ v, key, device, state: "hover" });
+
   const bgColorType = defaultValueValue({
     v,
     key: "bgColorType",
@@ -24,17 +27,10 @@ export function styleBgGradient({ v, device, state }) {
     state
   });
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "bgColorHex", device, state }),
-    defaultValueValue({ v, key: "bgColorPalette", device, state })
-  );
+  const bgColorHex = dvv("bgColorHex");
+  const bgColorPalette = dvv("bgColorPalette");
+  const bgColorOpacity = dvv("bgColorOpacity");
 
-  const bgColorOpacity = defaultValueValue({
-    v,
-    key: "bgColorOpacity",
-    device,
-    state
-  });
   const gradientStartPointer = defaultValueValue({
     v,
     key: "gradientStartPointer",
@@ -42,17 +38,10 @@ export function styleBgGradient({ v, device, state }) {
     state
   });
 
-  const { hex: gradientColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "gradientColorHex", device, state }),
-    defaultValueValue({ v, key: "gradientColorPalette", device, state })
-  );
+  const gradientColorHex = dvv("gradientColorHex");
+  const gradientColorPalette = dvv("gradientColorPalette");
+  const gradientColorOpacity = dvv("gradientColorOpacity");
 
-  const gradientColorOpacity = defaultValueValue({
-    v,
-    key: "gradientColorOpacity",
-    device,
-    state
-  });
   const gradientFinishPointer = defaultValueValue({
     v,
     key: "gradientFinishPointer",
@@ -85,17 +74,9 @@ export function styleBgGradient({ v, device, state }) {
     state: "hover"
   });
 
-  const { hex: hoverBgColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "bgColorHex", device, state: "hover" }),
-    defaultValueValue({ v, key: "bgColorPalette", device, state: "hover" })
-  );
-
-  const hoverBgColorOpacity = defaultValueValue({
-    v,
-    key: "bgColorOpacity",
-    device,
-    state: "hover"
-  });
+  const hoverBgColorHex = dvvH("bgColorHex");
+  const hoverBgColorPalette = dvvH("bgColorPalette");
+  const hoverBgColorOpacity = dvvH("bgColorOpacity");
   const hoverGradientStartPointer = defaultValueValue({
     v,
     key: "gradientStartPointer",
@@ -103,27 +84,10 @@ export function styleBgGradient({ v, device, state }) {
     state: "hover"
   });
 
-  const { hex: hoverGradientColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({
-      v,
-      key: "gradientColorHex",
-      device,
-      state: "hover"
-    }),
-    defaultValueValue({
-      v,
-      key: "gradientColorPalette",
-      device,
-      state: "hover"
-    })
-  );
+  const hoverGradientColorHex = dvvH("gradientColorHex");
+  const hoverGradientColorPalette = dvvH("gradientColorPalette");
+  const hoverGradientColorOpacity = dvvH("gradientColorOpacity");
 
-  const hoverGradientColorOpacity = defaultValueValue({
-    v,
-    key: "gradientColorOpacity",
-    device,
-    state: "hover"
-  });
   const hoverGradientFinishPointer = defaultValueValue({
     v,
     key: "gradientFinishPointer",
@@ -137,39 +101,39 @@ export function styleBgGradient({ v, device, state }) {
     state: "hover"
   });
 
-  return isHover === "hover" && hoverBgColorType === "gradient"
+  const hoverBg = getColor(
+    hoverBgColorPalette,
+    hoverBgColorHex,
+    hoverBgColorOpacity
+  );
+
+  const hoverGradient = getColor(
+    hoverGradientColorPalette,
+    hoverGradientColorHex,
+    hoverGradientColorOpacity
+  );
+
+  const bg = getColor(bgColorPalette, bgColorHex, bgColorOpacity);
+
+  const bgGradient = getColor(
+    gradientColorPalette,
+    gradientColorHex,
+    gradientColorOpacity
+  );
+
+  return isHover && hoverBgColorType === "gradient"
     ? hoverGradientType === "linear"
-      ? `linear-gradient(${hoverGradientLinearDegree}deg, ${hexToRgba(
-          hoverBgColorHex,
-          hoverBgColorOpacity
-        )} ${hoverGradientStartPointer}%, ${hexToRgba(
-          hoverGradientColorHex,
-          hoverGradientColorOpacity
-        )} ${hoverGradientFinishPointer}%)`
-      : `radial-gradient(circle ${hoverGradientRadialDegree}px,${hexToRgba(
-          hoverBgColorHex,
-          hoverBgColorOpacity
-        )} ${hoverGradientStartPointer}%, ${hexToRgba(
-          hoverGradientColorHex,
-          hoverGradientColorOpacity
-        )} ${hoverGradientFinishPointer}%)`
-    : isHover === "hover" && hoverBgColorType === "solid"
+      ? `linear-gradient(${hoverGradientLinearDegree}deg, ${hoverBg} ${hoverGradientStartPointer}%,
+         ${hoverGradient} ${hoverGradientFinishPointer}%)`
+      : `radial-gradient(circle ${hoverGradientRadialDegree}px,${hoverBg} ${hoverGradientStartPointer}%,
+         ${hoverGradient} ${hoverGradientFinishPointer}%)`
+    : isHover && hoverBgColorType === "solid"
     ? "none"
     : bgColorType === "gradient"
     ? gradientType === "linear"
-      ? `linear-gradient(${gradientLinearDegree}deg, ${hexToRgba(
-          bgColorHex,
-          bgColorOpacity
-        )} ${gradientStartPointer}%, ${hexToRgba(
-          gradientColorHex,
-          gradientColorOpacity
-        )} ${gradientFinishPointer}%)`
-      : `radial-gradient(circle ${gradientRadialDegree}px, ${hexToRgba(
-          bgColorHex,
-          bgColorOpacity
-        )} ${gradientStartPointer}%, ${hexToRgba(
-          gradientColorHex,
-          gradientColorOpacity
-        )} ${gradientFinishPointer}%)`
+      ? `linear-gradient(${gradientLinearDegree}deg, ${bg} ${gradientStartPointer}%,
+         ${bgGradient} ${gradientFinishPointer}%)`
+      : `radial-gradient(circle ${gradientRadialDegree}px, ${bg} ${gradientStartPointer}%,
+         ${bgGradient} ${gradientFinishPointer}%)`
     : "none";
 }

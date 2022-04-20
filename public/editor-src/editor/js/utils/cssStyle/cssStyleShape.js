@@ -12,16 +12,24 @@ import {
   styleShapeBottomFlip,
   styleShapeBottomIndex
 } from "visual/utils/style2";
+import { defaultValueValue } from "../onChange";
 
 export function cssStyleShapeTopType({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
   const shapeTopType = styleShapeTopType({ v, device, state });
   const shapeTopSvg = styleShapeTopSvg({ v, device, state });
+  const shapeTopColorPalette = dvv("shapeTopColorPalette");
+  const shapeTopColorOpacity = dvv("shapeTopColorOpacity");
+
+  const shape = shapeTopColorPalette
+    ? `background-color: rgba(var(--brz-global-${shapeTopColorPalette}), ${shapeTopColorOpacity}); -webkit-mask-image: url("${shapeTopSvg}");-webkit-mask-size:100% 100%;`
+    : `background-image: url(${shapeTopSvg});`;
 
   return shapeTopType === undefined
     ? ""
     : shapeTopType === "none"
-    ? "background-image: none;"
-    : `background-image: url(${shapeTopSvg});`;
+    ? "background-image: none; -webkit-mask-image: none;"
+    : shape;
 }
 
 export function cssStyleShapeTopHeight({ v, device, state }) {
@@ -47,14 +55,21 @@ export function cssStyleShapeTopIndex({ v, device, state }) {
 }
 
 export function cssStyleShapeBottomType({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
   const shapeBottomType = styleShapeBottomType({ v, device, state });
   const shapeBottomSvg = styleShapeBottomSvg({ v, device, state });
+  const shapeBottomColorPalette = dvv("shapeBottomColorPalette");
+  const shapeBottomColorOpacity = dvv("shapeBottomColorOpacity");
+
+  const shape = shapeBottomColorPalette
+    ? `background-color: rgba(var(--brz-global-${shapeBottomColorPalette}), ${shapeBottomColorOpacity}); -webkit-mask-image: url("${shapeBottomSvg}");-webkit-mask-size:100% 100%;`
+    : `background-image: url(${shapeBottomSvg});`;
 
   return shapeBottomType === undefined
     ? ""
     : shapeBottomType === "none"
-    ? "background-image: none;"
-    : `background-image: url(${shapeBottomSvg});`;
+    ? "background-image: none; -webkit-mask-image: none;"
+    : shape;
 }
 
 export function cssStyleShapeBottomHeight({ v, device, state }) {

@@ -96,7 +96,6 @@ class GlobalBlock extends EditorComponent {
           {...this.props}
           {...otherData}
           _id={this.getId()}
-          path={this.getPath()}
           meta={meta}
           dbValue={value}
           toolbarExtend={this.props.toolbarExtend}
@@ -110,7 +109,6 @@ class GlobalBlock extends EditorComponent {
 
       return (
         <NotFoundComponent
-          path={this.getPath()}
           meta={meta}
           dbValue={value}
           toolbarExtend={this.props.toolbarExtend}

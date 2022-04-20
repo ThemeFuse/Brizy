@@ -4,9 +4,13 @@ import {
   getDefaultFont,
   makeDefaultFontCSS,
   makeUploadFontsUrl,
-  projectFontsData
+  projectFontsData,
+  makeGlobalStylesTypography
 } from "visual/utils/fonts";
-import { makeRichTextColorPaletteCSS } from "visual/utils/color";
+import {
+  makeRichTextColorPaletteCSS,
+  makeGlobalStylesColorPallete
+} from "visual/utils/color";
 import { addClass, removeClass } from "visual/utils/dom/classNames";
 import {
   currentStyleSelector,
@@ -33,6 +37,7 @@ import { makeSubsetGoogleFontsUrl } from "visual/utils/fonts";
 import { UNDO, REDO } from "../history/types";
 import { historySelector } from "../history/selectors";
 import { StoreChanged } from "visual/redux/types";
+import { extraFontStylesSelector } from "../selectors-new";
 
 export default config => store => next => action => {
   const callbacks = {
@@ -129,7 +134,12 @@ function handleHydrate(callbacks) {
   callbacks.onAfterNext.push(({ state, store, config }) => {
     const { document, parentDocument } = config;
     const currentFonts = projectFontsData(unDeletedFontSelector(state));
-    const { colorPalette } = currentStyleSelector(state);
+    const { colorPalette, fontStyles: _fontStyles } = currentStyleSelector(
+      state
+    );
+    const extraFontStyles = extraFontStylesSelector(state);
+    const fontStyles = [..._fontStyles, ...extraFontStyles];
+
     const defaultFont = getDefaultFont(state);
 
     // Generate default @fontFace uses in project font
@@ -160,11 +170,22 @@ function handleHydrate(callbacks) {
       jQuery("head", parentDocument).append($uploadFonts.clone());
     }
 
+    // Typography
+    const typographyStyle = jQuery("<style>")
+      .attr("id", "brz-typography-styles")
+      .html(makeGlobalStylesTypography(fontStyles));
+    jQuery("head", document).append(typographyStyle);
+
     // ColorPalette
     const $richTextPaletteStyle = jQuery("<style>")
       .attr("id", "brz-rich-text-colors")
       .html(makeRichTextColorPaletteCSS(colorPalette));
+    const $globalColorStyles = jQuery("<style>")
+      .attr("id", "brz-global-colors")
+      .html(makeGlobalStylesColorPallete(colorPalette));
+
     jQuery("head", document).append($richTextPaletteStyle);
+    jQuery("head", document).append($globalColorStyles);
 
     // Hidden Elements
     document.body.style.setProperty("--elements-visibility", "none");
@@ -213,10 +234,22 @@ function handleFontsChange(callbacks) {
 
 function handleStylesChange(callbacks) {
   callbacks.onAfterNext.push(({ state }) => {
-    const { colorPalette } = currentStyleSelector(state);
+    const { colorPalette, fontStyles: _fontStyles } = currentStyleSelector(
+      state
+    );
+    const extraFontStyles = extraFontStylesSelector(state);
+    const fontStyles = [..._fontStyles, ...extraFontStyles];
 
     jQuery("#brz-rich-text-colors").html(
       makeRichTextColorPaletteCSS(colorPalette)
+    );
+
+    jQuery("#brz-global-colors").html(
+      makeGlobalStylesColorPallete(colorPalette)
+    );
+
+    jQuery("#brz-typography-styles").html(
+      makeGlobalStylesTypography(fontStyles)
     );
   });
 }
@@ -322,10 +355,22 @@ function handleHistoryChange(callbacks) {
     const prevStyle = prevSnapshot.currentStyle;
 
     if (currStyleId !== prevStyleId || currStyle !== prevStyle) {
-      const { colorPalette } = currentStyleSelector(state);
+      const { colorPalette, fontStyles: _fontStyles } = currentStyleSelector(
+        state
+      );
+      const extraFontStyles = extraFontStylesSelector(state);
+      const fontStyles = [..._fontStyles, ...extraFontStyles];
+
+      jQuery("#brz-typography-styles").html(
+        makeGlobalStylesTypography(fontStyles)
+      );
 
       jQuery("#brz-rich-text-colors").html(
         makeRichTextColorPaletteCSS(colorPalette)
+      );
+
+      jQuery("#brz-global-colors").html(
+        makeGlobalStylesColorPallete(colorPalette)
       );
     }
   });

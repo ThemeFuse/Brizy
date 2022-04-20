@@ -122,7 +122,11 @@ export function cssStyleElementVideoCoverPosition({ v, device, state }) {
 }
 
 export function cssStyleElementVideoPropertyHoverTransition() {
-  return "transition-property: box-shadow, border, border-radius, background-color, color, transform;";
+  return "transition-property: border, border-radius, background-color, color, transform;";
+}
+
+export function cssStyleElementVideoHoverBoxShadowTransition() {
+  return "transition-property: box-shadow;";
 }
 
 export function cssStyleVideoControlsBgColor({ v, device, state }) {
@@ -143,4 +147,10 @@ export function cssStyleElementVideoControlsIconFontSize({ v, device, state }) {
   return controlsIconCustomSize === undefined
     ? ""
     : `font-size:${controlsIconCustomSize}px;`;
+}
+
+export function cssStyleElementVideoMask() {
+  // the -webkit-mask-image: -webkit-radial-gradient(white, black); need only for safari
+  // border-radios conflicts with <video> tag elements
+  return "-webkit-mask-image: -webkit-radial-gradient(white, black);";
 }

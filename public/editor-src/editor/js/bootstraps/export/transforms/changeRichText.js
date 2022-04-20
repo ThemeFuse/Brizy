@@ -53,10 +53,20 @@ export default function changeRichText($) {
           : "";
 
       let url = newData[data.type];
-      if (url) {
+
+      if (data.type === "linkToSlide") {
         $this.replaceWith(
           `<a
-            href="${getLinkContentByType(data.type, url)}"
+          href="#"
+          style="${style}"
+          class="${className}"
+          data-brz-link-story="${newData.linkToSlide}"
+          >${html}</a>`
+        );
+      } else if (url) {
+        $this.replaceWith(
+          `<a
+            href='${getLinkContentByType(data.type, url)}'
             ${target}
             ${rel}
             style="${style}"
@@ -158,6 +168,7 @@ function getLinkContentByType(type, href) {
     case "popup":
     case "lightBox":
     case "external":
+    case "story":
       return href;
   }
 

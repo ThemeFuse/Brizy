@@ -67,6 +67,7 @@ export default function($node) {
 
     $this.on("init", function() {
       handleResize($this);
+      window.Brz.emit("elements.story.init", $this.get(0));
     });
 
     $this.on("breakpoint", function() {

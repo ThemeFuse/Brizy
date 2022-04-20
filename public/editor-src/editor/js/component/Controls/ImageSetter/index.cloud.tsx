@@ -81,10 +81,13 @@ export class ImageSetter<T extends ReactText> extends React.Component<
     this.mounted = true;
   }
 
-  componentWillReceiveProps(nextProps: Props<T>): void {
+  componentDidUpdate(nextProps: Props<T>): void {
     if (this.props.src !== nextProps.src) {
       this.setState({
-        src: nextProps.src
+        src: this.props.src,
+        width: this.props.width,
+        height: this.props.height,
+        extension: this.props.extension
       });
     }
   }
@@ -172,7 +175,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
 
     const content = [
       <Image
-        key="image"
+        key={src}
         src={src}
         width={width}
         height={height}

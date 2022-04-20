@@ -1,36 +1,24 @@
 import { defaultValueValue } from "visual/utils/onChange";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { styleState } from "visual/utils/style";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function styleColor({ v, device, state, prefix = "color" }) {
-  const isHover = styleState({ v, state });
+  const isHover = styleState({ v, state }) === "hover";
 
-  const { hex: colorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: `${prefix}Hex`, device, state }),
-    defaultValueValue({ v, key: `${prefix}Palette`, device, state })
-  );
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvvH = key => defaultValueValue({ v, key, device, state: "hover" });
 
-  const colorOpacity = defaultValueValue({
-    v,
-    key: `${prefix}Opacity`,
-    device,
-    state
-  });
+  const colorHex = dvv(`${prefix}Hex`);
+  const colorPalette = dvv(`${prefix}Palette`);
+  const colorOpacity = dvv(`${prefix}Opacity`);
 
-  const { hex: hoverColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: `${prefix}Hex`, device, state: "hover" }),
-    defaultValueValue({ v, key: `${prefix}Palette`, device, state: "hover" })
-  );
+  const hoverColorHex = dvvH(`${prefix}Hex`);
+  const hoverColorPalette = dvvH(`${prefix}Palette`);
+  const hoverColorOpacity = dvvH(`${prefix}Opacity`);
 
-  const hoverColorOpacity = defaultValueValue({
-    v,
-    device,
-    key: `${prefix}Opacity`,
-    state: "hover"
-  });
-
-  return isHover === "hover"
-    ? hexToRgba(hoverColorHex, hoverColorOpacity)
-    : hexToRgba(colorHex, colorOpacity);
+  if (isHover) {
+    return getColor(hoverColorPalette, hoverColorHex, hoverColorOpacity);
+  } else {
+    return getColor(colorPalette, colorHex, colorOpacity);
+  }
 }

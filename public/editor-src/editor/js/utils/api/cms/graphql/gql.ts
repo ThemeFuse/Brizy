@@ -40,6 +40,10 @@ import {
   GetCustomers,
   GetCustomersVariables
 } from "visual/utils/api/cms/graphql/types/GetCustomers";
+import {
+  GetCustomerAndCollection,
+  GetCustomerAndCollectionVariables
+} from "visual/utils/api/cms/graphql/types/GetCustomerAndCollection";
 
 //#region CollectionItem fragment
 const collectionItemFragment = gql`
@@ -345,6 +349,10 @@ export const getCustomer = (
         customer(id: $id) {
           id
           pageData
+          customerGroups {
+            id
+            name
+          }
         }
       }
     `,
@@ -382,6 +390,63 @@ export const getCustomers = (
             email
             firstName
             lastName
+          }
+        }
+      }
+    `,
+    variables
+  });
+
+//#endregion
+
+//#refion Customers with Collection
+export const getCustomersAndCollectionTypes = (
+  apolloClient: ApolloClient,
+  variables: GetCustomerAndCollectionVariables
+): Promise<FetchResult<GetCustomerAndCollection>> =>
+  apolloClient.query<
+    GetCustomerAndCollection,
+    GetCustomerAndCollectionVariables
+  >({
+    query: gql`
+      query GetCustomerAndCollection($page: Int, $itemsPerPage: Int) {
+        customers(page: $page, itemsPerPage: $itemsPerPage) {
+          collection {
+            id
+            email
+            firstName
+            lastName
+          }
+        }
+        customerGroups(page: $page) {
+          collection {
+            id
+            name
+          }
+        }
+        collectionTypes {
+          id
+          slug
+          title
+          fields {
+            id
+            type
+            ... on CollectionTypeFieldReference {
+              referenceSettings {
+                collectionType {
+                  id
+                  title
+                }
+              }
+            }
+            ... on CollectionTypeFieldMultiReference {
+              multiReferenceSettings {
+                collectionType {
+                  id
+                  title
+                }
+              }
+            }
           }
         }
       }

@@ -1,36 +1,28 @@
 import { defaultValueValue } from "visual/utils/onChange";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { styleState } from "visual/utils/style";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function styleBorderColor({ v, device, state }) {
-  const isHover = styleState({ v, state });
+  const isHover = styleState({ v, state }) === "hover";
 
-  const { hex: borderColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "borderColorHex", device, state }),
-    defaultValueValue({ v, key: "borderColorPalette", device, state })
-  );
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvvH = key => defaultValueValue({ v, key, device, state: "hover" });
 
-  const borderColorOpacity = defaultValueValue({
-    v,
-    key: "borderColorOpacity",
-    device,
-    state
-  });
+  const borderColorHex = dvv("borderColorHex");
+  const borderColorPalette = dvv("borderColorPalette");
+  const borderColorOpacity = dvv("borderColorOpacity");
 
-  const { hex: hoverBorderColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "borderColorHex", device, state: "hover" }),
-    defaultValueValue({ v, key: "borderColorPalette", device, state: "hover" })
-  );
+  const hoverBorderColorHex = dvvH("borderColorHex");
+  const hoverBorderPalette = dvvH("borderColorPalette");
+  const hoverBorderColorOpacity = dvvH("borderColorOpacity");
 
-  const hoverBorderColorOpacity = defaultValueValue({
-    v,
-    key: "borderColorOpacity",
-    device,
-    state: "hover"
-  });
-
-  return isHover === "hover"
-    ? hexToRgba(hoverBorderColorHex, hoverBorderColorOpacity)
-    : hexToRgba(borderColorHex, borderColorOpacity);
+  if (isHover) {
+    return getColor(
+      hoverBorderPalette,
+      hoverBorderColorHex,
+      hoverBorderColorOpacity
+    );
+  } else {
+    return getColor(borderColorPalette, borderColorHex, borderColorOpacity);
+  }
 }

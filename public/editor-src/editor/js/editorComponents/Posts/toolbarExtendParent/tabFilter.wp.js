@@ -1,6 +1,6 @@
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
-import { decodeV } from "../utils.common";
+import { CURRENT_CONTEXT_TYPE, decodeV } from "../utils.common";
 import {
   authorsLoad,
   authorsSearch,
@@ -21,10 +21,19 @@ export function tabFilter(v) {
   }
 
   const vd = decodeV(v);
+  const isCurrentQuery = vd.source === CURRENT_CONTEXT_TYPE;
 
   const source = getSource(vd);
-  const includeBy = getIncludeExclude("include", vd);
-  const excludeBy = getIncludeExclude("exclude", vd);
+  const includeBy = getIncludeExclude(
+    "include",
+    vd,
+    (!isPosts && !isProducts) || isCurrentQuery
+  );
+  const excludeBy = getIncludeExclude(
+    "exclude",
+    vd,
+    (!isPosts && !isProducts) || isCurrentQuery
+  );
 
   return {
     id: "filter",
@@ -70,11 +79,17 @@ function getSource(vd) {
   let choices = [];
 
   if (isPosts) {
-    const configPostTypes = Config.getAll().wp?.postTypes ?? [];
-    choices = configPostTypes.map(({ label, name }) => ({
-      title: label,
-      value: name
-    }));
+    const configPostTypes = (Config.getAll().wp?.postTypes ?? []).map(
+      ({ label, name }) => ({
+        title: label,
+        value: name
+      })
+    );
+
+    choices = [
+      { value: CURRENT_CONTEXT_TYPE, title: t("Current Query") },
+      ...configPostTypes
+    ];
   }
 
   return {
@@ -87,10 +102,7 @@ function getSource(vd) {
   };
 }
 
-function getIncludeExclude(type, vd) {
-  const isPosts = vd.type === "posts";
-  const isProducts = vd.type === "products";
-
+function getIncludeExclude(type, vd, disabled) {
   const include = type === "include";
   const prefix = include ? "inc" : "exc";
   const source = vd.source;
@@ -150,6 +162,6 @@ function getIncludeExclude(type, vd) {
     id: `${prefix}By-group`,
     type: "group-dev",
     options: [lvl1Option, ...lvl2Options],
-    disabled: !isPosts && !isProducts
+    disabled
   };
 }

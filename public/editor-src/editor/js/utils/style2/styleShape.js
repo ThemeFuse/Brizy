@@ -1,31 +1,17 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { svgToUri } from "visual/utils/icons";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function styleShapeTopType({ v, device, state }) {
   return defaultValueValue({ v, key: "shapeTopType", device, state });
 }
 
 export function styleShapeTopSvg({ v, device, state }) {
-  const { hex: shapeTopColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "shapeTopColorHex", device, state }),
-    defaultValueValue({ v, key: "shapeTopColorPalette", device, state })
-  );
+  const dvv = key => defaultValueValue({ v, key, device, state });
 
-  const shapeTopColorOpacity = defaultValueValue({
-    v,
-    key: "shapeTopColorOpacity",
-    device,
-    state
-  });
-
-  const shapeTopType = defaultValueValue({
-    v,
-    key: "shapeTopType",
-    device,
-    state
-  });
+  const shapeTopColorHex = dvv("shapeTopColorHex");
+  const shapeTopColorOpacity = dvv("shapeTopColorOpacity");
+  const shapeTopType = dvv("shapeTopType");
 
   return svgToUri(
     shapeTopType,
@@ -54,22 +40,11 @@ export function styleShapeBottomType({ v, device, state }) {
 }
 
 export function styleShapeBottomSvg({ v, device, state }) {
-  const { hex: shapeBottomColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "shapeBottomColorHex", device, state }),
-    defaultValueValue({ v, key: "shapeBottomColorPalette", device, state })
-  );
-  const shapeBottomColorOpacity = defaultValueValue({
-    v,
-    key: "shapeBottomColorOpacity",
-    device,
-    state
-  });
-  const shapeBottomType = defaultValueValue({
-    v,
-    key: "shapeBottomType",
-    device,
-    state
-  });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  const shapeBottomColorHex = dvv("shapeBottomColorHex");
+  const shapeBottomColorOpacity = dvv("shapeBottomColorOpacity");
+  const shapeBottomType = dvv("shapeBottomType");
 
   return svgToUri(
     shapeBottomType,

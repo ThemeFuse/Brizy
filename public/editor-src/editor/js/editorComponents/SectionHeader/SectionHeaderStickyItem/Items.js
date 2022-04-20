@@ -89,7 +89,7 @@ class SectionHeaderStickyItemItems extends EditorArrayComponent {
 
     return (
       <Sortable
-        path={this.getPath()}
+        path={this.getId()}
         type="section"
         acceptElements={["row", "column", "shortcode", "addable"]}
       >

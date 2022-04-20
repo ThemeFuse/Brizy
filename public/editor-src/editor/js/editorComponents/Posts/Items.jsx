@@ -174,7 +174,7 @@ export default class Items extends EditorArrayComponent {
 
     return (
       <Sortable
-        path={this.getPath()}
+        path={this.getId()}
         type="posts"
         acceptElements={this.handleSortableAcceptElements}
       >

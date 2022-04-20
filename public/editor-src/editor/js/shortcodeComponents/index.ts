@@ -1,6 +1,5 @@
 import {
   IS_SINGLE,
-  IS_ARCHIVE,
   IS_PROTECTED,
   IS_RESET_PASS,
   IS_USER_PAGE
@@ -35,7 +34,6 @@ import Columns from "./Columns";
 
 import PostTitle from "./PostTitle";
 import Posts from "./Posts";
-import Archive from "./Archive";
 
 import UserFirstName from "./UserFirstName";
 import UserLastName from "./UserLastName";
@@ -169,10 +167,6 @@ const cmsSingle = [
   { component: PostTitle, pro: false },
   { component: Posts, pro: false }
 ];
-const cmsArchive = [
-  { component: Archive, pro: false },
-  { component: PostTitle, pro: false }
-];
 
 const social = [
   { component: Facebook, pro: true },
@@ -226,15 +220,6 @@ const config = ((): Shortcodes => {
   if (IS_SINGLE) {
     return {
       dynamic: cmsSingle,
-      base,
-      grid,
-      social
-    };
-  }
-
-  if (IS_ARCHIVE) {
-    return {
-      archive: cmsArchive,
       base,
       grid,
       social

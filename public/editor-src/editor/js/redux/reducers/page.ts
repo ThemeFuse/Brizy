@@ -6,7 +6,8 @@ import {
 } from "visual/redux/selectors";
 import { ReduxState } from "../types";
 import { ReduxAction } from "../actions2";
-import { isShopifyPage, ShopifyPage } from "visual/types";
+import { ShopifyPage } from "visual/types";
+import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
 
 type Page = ReduxState["page"];
 type RPage = (s: Page, a: ReduxAction, f: ReduxState) => Page;
