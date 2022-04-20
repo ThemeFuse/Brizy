@@ -92,7 +92,7 @@ class TabItems extends EditorArrayComponent {
 
     return (
       <Sortable
-        path={this.getPath()}
+        path={this.getId()}
         type="column"
         acceptElements={this.handleSortableAcceptElements}
       >

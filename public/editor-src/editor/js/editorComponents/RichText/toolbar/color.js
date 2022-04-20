@@ -23,6 +23,10 @@ import { DCTypes } from "visual/global/Config/types/DynamicContent";
 const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
 
 const shadowToString = value => {
+  if (value.palette) {
+    return `rgba(var(--brz-global-${value.palette}),${value.opacity}) ${value.horizontal}px ${value.vertical}px ${value.blur}px`;
+  }
+
   return `${getColorValue({
     hex: value.hex,
     opacity: value.opacity
@@ -59,6 +63,7 @@ const changeShadow = (shadow, value) => {
   };
 
   const newShadow = Object.assign({}, DEFAULT_SHADOW, shadow);
+  const palette = value.palette;
 
   switch (value.isChanged) {
     case "select":
@@ -70,7 +75,8 @@ const changeShadow = (shadow, value) => {
       return {
         shadow: shadowToString({
           ...newShadow,
-          hex: value.hex
+          hex: value.hex,
+          palette: null
         }),
         shadowColorPalette: null
       };
@@ -78,16 +84,15 @@ const changeShadow = (shadow, value) => {
       return {
         shadow: shadowToString({
           ...newShadow,
-          opacity: value.opacity
+          opacity: value.opacity,
+          palette
         })
       };
     default: {
-      const { hex } = getColorPaletteColor(value.palette);
-
       return {
         shadow: shadowToString({
           ...newShadow,
-          hex
+          palette
         }),
         shadowColorPalette: value.palette
       };
@@ -612,7 +617,8 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                             ...v.shadow,
                             blur,
                             vertical,
-                            horizontal
+                            horizontal,
+                            palette: v.shadowColorPalette
                           })
                         });
                       }

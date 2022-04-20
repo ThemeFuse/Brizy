@@ -85,7 +85,7 @@ class ControlInner extends Component<Props, State> {
 
     const toContainerPath = to.sortableNode
       .getAttribute("data-sortable-path")
-      ?.split(".");
+      ?.split("-");
     const toContainerType = to.sortableNode.getAttribute("data-sortable-type");
     const toItemPath = [...(toContainerPath ?? []), String(to.elementIndex)];
 
@@ -107,7 +107,7 @@ class ControlInner extends Component<Props, State> {
   handleClick = (shortcodes: Shortcode[], elementIndex: number): void => {
     const { component, pro } = shortcodes[elementIndex];
 
-        if (!pro || IS_PRO) {
+    if (!pro || IS_PRO) {
       const itemData = setIds(component.resolve);
       const slickContainer = document.querySelector(
         ".slick-list .slick-active"
@@ -118,7 +118,7 @@ class ControlInner extends Component<Props, State> {
 
       const containerPath = sortableContainer
         ?.getAttribute("data-sortable-path")
-        ?.split(".");
+        ?.split("-");
       const containerType = "section";
       const itemIndex = slickContainer?.getAttribute("data-index");
       const toItemPath = [...(containerPath ?? []), String(itemIndex)];

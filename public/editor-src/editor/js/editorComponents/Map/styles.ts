@@ -1,0 +1,54 @@
+import { renderStyles } from "visual/utils/cssStyle";
+import { Value } from "./index";
+
+export function style(v: Value, vs: Value, vd: Value): string[] {
+  const styles = {
+    ".brz &&:hover": {
+      standart: ["cssStyleSizeSize", "cssStyleSizeHeightPxOnly"]
+    },
+
+    ".brz &&:hover:before": {
+      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementMapPropertyHoverTransition"
+      ]
+    },
+
+    ".brz &&:hover:after": {
+      standart: ["cssStyleSizeHeightPercentOnly"]
+    },
+
+    ".brz &&:hover > .brz-ed-box__resizer": {
+      standart: IS_EDITOR ? ["cssStyleElementMapPropertyPositionFixed"] : []
+    },
+
+    ".brz &&:hover .brz-map-content": {
+      standart: [
+        "cssStyleBorderRadius",
+        ...(IS_PREVIEW ? ["cssStyleElementMapPropertyPositionFixed"] : [])
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementMapPropertyHoverTransition"
+      ]
+    },
+    ".brz &&:hover .brz-iframe": {
+      standart: ["cssStyleFilter"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementMapPropertyHoverTransition"
+      ]
+    },
+    ".brz && .brz-map__cover": {
+      standart: [
+        "cssStyleFilter",
+        "cssStyleElementMapCoverSrc",
+        "cssStyleElementMapCoverPosition",
+        "cssStyleElementMapBgSize"
+      ]
+    }
+  };
+
+  return renderStyles({ v, vs, vd, styles });
+}

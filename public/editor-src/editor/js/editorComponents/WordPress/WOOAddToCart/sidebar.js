@@ -51,6 +51,18 @@ export function getItems({ v, device }) {
               devices: "desktop",
               helper: { content: helperHTML },
               placeholder: "element { CSS goes here }"
+            },
+            {
+              id: "hoverTransition",
+              label: t("Hover Transition"),
+              devices: "desktop",
+              position: 100,
+              type: "slider-dev",
+              config: {
+                min: 0,
+                max: 99,
+                units: [{ title: "ms", value: "ms" }]
+              }
             }
           ]
         }

@@ -1,7 +1,7 @@
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import { createBlockScreenshot } from "visual/utils/api";
-import { findDeep } from "visual/utils/object";
-import { Block, Screenshot } from "visual/types";
+
+import { Screenshot } from "visual/types";
 
 export const createScreenshot = async (
   node: HTMLElement
@@ -22,8 +22,4 @@ export const createScreenshot = async (
       _thumbnailTime: Date.now()
     };
   }
-};
-
-export const getBlockData = (blocks: Block[], id: string): Block | null => {
-  return findDeep(blocks, ({ value }: Block) => value && value._id === id).obj;
 };

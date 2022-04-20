@@ -106,6 +106,7 @@ class Video extends EditorComponent {
       loop
     } = v;
     const videoSrc = this.getVideoSrc(v);
+    const _end = loop === "on" && end ? end + 1 : end;
 
     const videoDataElem = (
       <div
@@ -117,7 +118,7 @@ class Video extends EditorComponent {
         data-branding={branding === "on"}
         data-intro={intro === "on"}
         data-start={start}
-        data-end={end}
+        data-end={_end}
         data-loop={loop === "on"}
         data-autoplay={this.getAutoplay(v)}
       />

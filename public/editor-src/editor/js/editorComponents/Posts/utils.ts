@@ -3,7 +3,7 @@
 
 import { Dictionary } from "visual/types/utils";
 import * as Union from "visual/utils/reader/union";
-import { decodeV } from "./utils.common";
+import { decodeV, CURRENT_CONTEXT_TYPE } from "./utils.common";
 import {
   V,
   VDecoded,
@@ -50,6 +50,7 @@ export function archiveQuery(v: V): CloudArchiveQuery {
 export function postsQuery(v: V): CloudPostsQuery {
   const {
     source,
+    querySource,
     gridRow,
     gridColumn,
     offset,
@@ -62,6 +63,7 @@ export function postsQuery(v: V): CloudPostsQuery {
   const include = includeSymbols
     ? includeExcludeAttribute(symbols, "inc", source, includeSymbols)
     : {};
+  const isCurrentContext = source === CURRENT_CONTEXT_TYPE;
 
   const excludeSymbols = symbols[`${source}_excBy`];
   const exclude = excludeSymbols
@@ -71,6 +73,7 @@ export function postsQuery(v: V): CloudPostsQuery {
   return {
     type: "posts",
     collection_type: source,
+    collection_type_query: isCurrentContext ? querySource : undefined,
     include,
     exclude,
     count: gridRow * gridColumn,

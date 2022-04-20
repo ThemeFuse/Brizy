@@ -4,7 +4,11 @@ import { produce } from "immer";
 import Config from "visual/global/Config";
 import { getStore } from "visual/redux/store";
 import { rolesHOC } from "visual/component/Roles";
-import { getClosestParent, mapModels } from "visual/utils/models";
+import {
+  getClosestParent,
+  mapModels,
+  createFullModelPath
+} from "visual/utils/models";
 import {
   pageDataNoRefsSelector,
   copiedElementNoRefsSelector
@@ -89,11 +93,12 @@ class HotKeys extends React.Component {
       return [];
     }
 
-    const activeElementPath = activeEditorComponent.getPath();
+    const activeElementId = activeEditorComponent.getId();
 
     const state = getStore().getState();
     const data = pageDataNoRefsSelector(state);
     const copiedElement = copiedElementNoRefsSelector(state);
+    const activeElementPath = createFullModelPath(data, [activeElementId]);
     const copiedPath = [...activeElementPath];
 
     const _data = attachMenu(data);

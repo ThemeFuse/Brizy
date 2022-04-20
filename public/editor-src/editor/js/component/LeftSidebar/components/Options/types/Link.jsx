@@ -36,25 +36,19 @@ export default class DrawerPopoverItem extends React.Component {
 
     const className = classnames("brz-ed-sidebar-bottom__option", _className);
 
-    let content = (
-      <React.Fragment>
+    const content = (
+      <div className={className} title={title} onClick={this.handleClick}>
         {icon && <EditorIcon icon={icon} />}
         {label && <span className="brz-span">{label}</span>}
-      </React.Fragment>
+      </div>
     );
 
-    if (link !== "") {
-      content = (
-        <a href={link} target={linkTarget} className="brz-a">
-          {content}
-        </a>
-      );
-    }
-
-    return (
-      <div className={className} title={title} onClick={this.handleClick}>
+    return link !== "" ? (
+      <a href={link} target={linkTarget} className="brz-a">
         {content}
-      </div>
+      </a>
+    ) : (
+      content
     );
   }
 }

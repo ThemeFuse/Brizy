@@ -274,7 +274,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		if ( $noFilters ) {
 			$content = $post->post_content;
 		} else {
-			$context             = new Brizy_Content_Context( Brizy_Editor_Project::get(), null, $post, null );
+			$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
 			$placeholderProvider = new Brizy_Content_PlaceholderWpProvider( $context );
 			$context->setProvider( $placeholderProvider );
 			$extractor = new \BrizyPlaceholders\Extractor( $placeholderProvider );

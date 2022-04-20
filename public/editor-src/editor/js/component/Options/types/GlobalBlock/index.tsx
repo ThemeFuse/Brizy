@@ -23,6 +23,7 @@ import {
   ActionUpdateBlocks
 } from "visual/redux/actions2";
 import {
+  getBlockData,
   IS_EXTERNAL_POPUP,
   IS_INTERNAL_POPUP,
   setIds
@@ -31,7 +32,7 @@ import { isPopup } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
-import { createScreenshot, getBlockData } from "./utils";
+import { createScreenshot } from "./utils";
 import { PortalLoading } from "./PortalLoading";
 import {
   APIGlobalBlockData,

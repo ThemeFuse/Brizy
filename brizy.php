@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 2.3.33
+ * Version: 2.3.34
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -19,10 +19,10 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && stripos( $_SERVER['HTTP_X_FO
 
 define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
-define( 'BRIZY_VERSION', '2.3.33' );
+define( 'BRIZY_VERSION', '2.3.34' );
 define( 'BRIZY_MINIMUM_PRO_VERSION', '2.3.0' );
-define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '221-wp' );
-define( 'BRIZY_SYNC_VERSION', '221' );
+define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '231-wp' );
+define( 'BRIZY_SYNC_VERSION', '231' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
@@ -38,6 +38,7 @@ if ( BRIZY_DEVELOPMENT ) {
 }
 
 add_action( 'plugins_loaded', 'brizy_load' );
+add_action( 'init', 'brizy_load_text_domain' );
 add_action( 'upgrader_process_complete', 'brizy_upgrade_completed', 10, 2 );
 
 register_activation_hook( BRIZY_FILE, 'brizy_install' );
@@ -113,6 +114,10 @@ function brizy_clean() {
 	Brizy_Logger::clean();
 	add_option( 'brizy-regenerate-permalinks', 1 );
 	do_action( 'brizy-deactivated' );
+}
+
+function brizy_load_text_domain() {
+	load_plugin_textdomain( 'brizy', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 
 new Brizy_Compatibilities_Init();

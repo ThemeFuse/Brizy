@@ -11,7 +11,7 @@
 
   "style": {
     "customCSS": "",
-    
+
     "width": 100,
     "widthSuffix": "%",
 
@@ -103,7 +103,7 @@
     "linkUpload": "",
     "linkPopup": "",
     "actionClosePopup": "off",
-
+    "linkToSlide": 1,
     "tabletLinkType": null,
     "tabletLinkPopup": null,
 

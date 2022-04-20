@@ -17,7 +17,7 @@ export function cssStyleTypographyFontSize({ v, device, state }) {
   const fontSizeSuffix = styleTypographyFontSizeSuffix({ v, device, state });
   return fontSize === undefined
     ? ""
-    : `font-size:${fontSize}${fontSizeSuffix || "px"};`;
+    : `font-size:${fontSize}${fontSizeSuffix};`;
 }
 
 export function cssStyleTypographyLineHeight({ v, device, state }) {
@@ -44,7 +44,5 @@ export function cssStyleTypographyLetterSpacing({ v, device, state }) {
     device,
     state
   });
-  return letterSpacing === undefined
-    ? ""
-    : `letter-spacing:${letterSpacing}px;`;
+  return letterSpacing === undefined ? "" : `letter-spacing:${letterSpacing};`;
 }

@@ -179,3 +179,7 @@ export function cssStyleElementImageGalleryFilterActiveBorder({ v, device }) {
 export function cssStyleElementImageGalleryFilterActiveShadow({ v, device }) {
   return cssStyleBoxShadow({ v, device, state: "active", prefix: "filter" });
 }
+
+export function cssStyleElementImageGalleryPropertyHoverTransition() {
+  return "transition-property: color, background, border-color, box-shadow;";
+}

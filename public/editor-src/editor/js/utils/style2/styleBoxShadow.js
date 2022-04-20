@@ -1,7 +1,6 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleState } from "visual/utils/style";
-import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { getColor } from "visual/utils/color";
 import { capByPrefix } from "visual/utils/string";
 
 const getState = (v, state) =>
@@ -20,12 +19,11 @@ export function styleBoxShadowColor({ v, device, state, prefix = "" }) {
 
   const dvv = key => defaultValueValue({ v, key, device, state });
   const boxShadow = capByPrefix(prefix, "boxShadow");
-  const colorHex = capByPrefix(boxShadow, "colorHex");
-  const colorOpacity = capByPrefix(boxShadow, "colorOpacity");
-  const colorPalette = capByPrefix(boxShadow, "colorPalette");
-  const { hex } = getOptionColorHexByPalette(dvv(colorHex), dvv(colorPalette));
+  const colorHex = dvv(capByPrefix(boxShadow, "colorHex"));
+  const colorOpacity = dvv(capByPrefix(boxShadow, "colorOpacity"));
+  const colorPalette = dvv(capByPrefix(boxShadow, "colorPalette"));
 
-  return hexToRgba(hex, dvv(colorOpacity));
+  return getColor(colorPalette, colorHex, colorOpacity);
 }
 
 export function styleBoxShadowHorizontal({ v, device, state, prefix = "" }) {

@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 5.9.1
+Tested up to: 5.9.3
 Requires PHP: 5.6.20
-Stable tag: 2.3.33
+Stable tag: 2.3.34
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,26 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.34 - 2022-04-20 =
+* New: Added hover Transition for elements: Accordion, ProgressBar and Tabs 
+* New: Added cover image option for the Map element 
+* Fixed: Cover images not displaying in Playlist element
+* Fixed: YouTube loop when you set start-end options
+* Fixed: Changed size for Image option upload field
+* Fixed: Text element blinks when changing align options
+* Fixed: Layout Carwash was changed to PRO 
+* Fixed: Layout Scooter Rental was changed to PRO 
+* Fixed: Active border size for element Tabs 
+* Fixed: Style 3 for Tabs element 
+* Fixed: Center align option for arrows in the Accordion element
+* Fixed: Cover image repeat issue
+* New: Auto install for Brizy Starter Templates 
+* Fixed: Fixed attachment post type exclusion
+* Fixed: Remove attachment post type from post type list from editor config
+* Fixed: Lost global colour styling 
+* Fixed: Include inline JS scripts depending on their priority
+* Fixed: Preventing directory traversal on get icon 
 
 = 2.3.33 - 2022-03-10 =
 * New: Import and Export Saved Blocks, Popups, Layouts 

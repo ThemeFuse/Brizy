@@ -23,7 +23,9 @@ import {
   isGlobalPopup
 } from "./modes";
 import { setOffsetsToElementFromWrapper } from "./setDataInElement";
+import { getBlockData } from "./getBlockData";
 import { mapWithStructuralSharing } from "../object/mapWithStructuralSharing";
+import { createFullModelPath } from "./path";
 
 const isModel = obj => hasProps(["type", "value"], obj);
 
@@ -52,5 +54,7 @@ export {
   IS_STORY,
   IS_INTERNAL_STORY,
   IS_EXTERNAL_STORY,
-  isGlobalPopup
+  isGlobalPopup,
+  getBlockData,
+  createFullModelPath
 };

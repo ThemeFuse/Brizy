@@ -29,7 +29,7 @@ export const getFetchUrl = (elementType: ElementType): string => {
 const getRequiredInputsSelector = (elementType: ElementType): string => {
   switch (elementType) {
     case ElementType.login:
-      return "input[name='email'], input[name='password'], input[name='passwordConfirm']";
+      return "input[name='email'], input[name='password'], input[name='passwordConfirm'], input[name='rememberme']";
     case ElementType.register:
       return "input[name='firstName'], input[name='lastName'], input[name='userName'], input[name='email'], input[name='password'], input[name='passwordConfirm'], input[name='phone']";
     case ElementType.forgot:
@@ -78,16 +78,42 @@ export const getData = (
 
   const data: Record<string, unknown> = {};
 
-  inputs.forEach(item => {
-    const { name, value } = item;
+  switch (elementType) {
+    case ElementType.register: {
+      inputs.forEach(item => {
+        const { name, value } = item;
 
-    data[name] = value;
-  });
+        data[name] = value;
+      });
 
-  if (elementType === ElementType.register) {
-    const defaultRoles = form.getAttribute("data-defaultrole") || "";
+      const defaultRoles = form.getAttribute("data-defaultrole") || "";
+      data.customerGroups = parseCustomerGroups(defaultRoles);
 
-    data.customerGroups = parseCustomerGroups(defaultRoles);
+      break;
+    }
+    case ElementType.forgot: {
+      inputs.forEach(item => {
+        const { name, value } = item;
+
+        data[name] = value;
+      });
+
+      break;
+    }
+    case ElementType.login: {
+      inputs.forEach(item => {
+        const { type } = item;
+
+        if (["text", "password"].includes(type)) {
+          const { name, value } = item;
+
+          data[name] = value;
+        } else if ("checkbox" === type) {
+          data.rememberMe = item.checked ? "on" : "off";
+        }
+      });
+      break;
+    }
   }
 
   return JSON.stringify(data);

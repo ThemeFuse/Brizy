@@ -14,9 +14,7 @@ export function styleTabs(v, vs, vd) {
     ".brz && > .brz-tabs__nav.brz-tabs__nav--horizontal": {
       standart: ["cssStyleElementTabsNavAlign"]
     },
-    ".brz &&.brz-tabs--style-3:hover": {
-      standart: ["cssStyleBgColor"]
-    },
+
     ".brz && > .brz-tabs__nav.brz-tabs__nav--horizontal.brz-tabs__nav--style-2": {
       standart: ["cssStyleElementTabsAfterSpacing"]
     },
@@ -31,6 +29,10 @@ export function styleTabs(v, vs, vd) {
         "cssStyleElementTabsContentBgColor",
         "cssStyleElementTabsContentBorder",
         "cssStyleElementTabsContentShadow"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
       ]
     },
     ".brz && > .brz-tabs__nav .brz-tabs__nav--item:not(.brz-tabs__nav--active) .brz-tabs__nav--button:hover": {
@@ -39,6 +41,17 @@ export function styleTabs(v, vs, vd) {
         "cssStyleBgColor",
         "cssStyleBorder",
         "cssStyleBoxShadow"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
+      ]
+    },
+    ".brz && > .brz-tabs__nav .brz-tabs__nav--item.brz-tabs__nav--active .brz-tabs__nav--button": {
+      standart: [
+        "cssStyleElementTabsActiveColor",
+        "cssStyleElementTabsActiveBgColor",
+        "cssStyleElementTabsActiveShadow"
       ]
     },
     ".brz && > .brz-tabs__nav .brz-tabs__nav--button:hover": {
@@ -92,13 +105,25 @@ export function styleTabs(v, vs, vd) {
       ]
     },
     ".brz && > .brz-tabs__nav--horizontal.brz-tabs__nav--style-1 .brz-tabs__nav--active .brz-tabs__nav--button:hover": {
-      standart: ["cssStyleElementTabsBtnActiveBorderBottomColor"]
+      standart: ["cssStyleElementTabsBtnActiveBorderBottomColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
+      ]
     },
     ".brz && > .brz-tabs__nav--vertical.brz-tabs__nav--style-1.brz-tabs__nav--left .brz-tabs__nav--active .brz-tabs__nav--button:hover": {
-      standart: ["cssStyleElementTabsBtnActiveBorderRightColor"]
+      standart: ["cssStyleElementTabsBtnActiveBorderRightColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
+      ]
     },
     ".brz && > .brz-tabs__nav--vertical.brz-tabs__nav--style-1.brz-tabs__nav--right .brz-tabs__nav--active .brz-tabs__nav--button:hover": {
-      standart: ["cssStyleElementTabsBtnActiveBorderLeftColor"]
+      standart: ["cssStyleElementTabsBtnActiveBorderLeftColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
+      ]
     },
     ".brz && > .brz-tabs__nav--horizontal .brz-tabs__nav--item": {
       standart: ["cssStyleElementTabsNavAlign"]
@@ -108,6 +133,10 @@ export function styleTabs(v, vs, vd) {
         "cssStyleElementTabsActiveBeforeAfterColor",
         "cssStyleElementTabsActiveBeforeHeight",
         "cssStyleElementTabsBeforeAfterRightWidth"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
       ]
     },
     ".brz && > .brz-tabs__nav--horizontal .brz-tabs__nav--active::before:hover": {
@@ -115,6 +144,10 @@ export function styleTabs(v, vs, vd) {
         "cssStyleElementTabsActiveBeforeAfterColor",
         "cssStyleElementTabsActiveBeforeHeight",
         "cssStyleElementTabsBeforeAfterLeftWidth"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
       ]
     },
     ".brz && > .brz-tabs__nav--vertical .brz-tabs__nav--active::after:hover": {
@@ -122,6 +155,10 @@ export function styleTabs(v, vs, vd) {
         "cssStyleElementTabsActiveBeforeAfterColor",
         "cssStyleElementTabsActiveBeforeWidth",
         "cssStyleElementTabsBeforeAfterTop"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
       ]
     },
     ".brz && > .brz-tabs__nav--vertical .brz-tabs__nav--active::before:hover": {
@@ -129,6 +166,10 @@ export function styleTabs(v, vs, vd) {
         "cssStyleElementTabsActiveBeforeAfterColor",
         "cssStyleElementTabsActiveBeforeWidth",
         "cssStyleElementTabsBeforeAfterBottom"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
       ]
     },
     ".brz && .brz-tabs__item--content": {
@@ -144,14 +185,22 @@ export function styleTabs(v, vs, vd) {
 
     //style-3
 
-    ".brz &&.brz-tabs.brz-tabs--style-3:hover": {
-      standart: ["cssStylePaddingFourFields"]
+    ".brz &&.brz-tabs.brz-tabs--style-3": {
+      standart: ["cssStyleElementTabsBgColor", "cssStylePaddingFourFields"]
     },
     ".brz && > .brz-tabs__nav.brz-tabs__nav--style-3 .brz-tabs__nav--item::before:hover": {
-      standart: ["cssStyleElementTabsNavBorderBottom"]
+      standart: ["cssStyleElementTabsNavBorderBottom"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
+      ]
     },
     ".brz && > .brz-tabs__nav.brz-tabs__nav--style-3 .brz-tabs__nav--item::after:hover": {
-      standart: ["cssStyleElementTabsNavBorderBottom"]
+      standart: ["cssStyleElementTabsNavBorderBottom"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
+      ]
     },
     ".brz && > .brz-tabs__nav.brz-tabs__nav--style-3 .brz-tabs__nav--active .brz-tabs__nav--button:before": {
       standart: ["cssStyleElementTabsNavStyle3Before"]

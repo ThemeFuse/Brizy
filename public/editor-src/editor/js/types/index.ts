@@ -3,7 +3,6 @@ import { ElementModel } from "editor/js/component/Elements/Types";
 import { Palette as ColorPalette } from "visual/utils/color/Palette";
 import { Hex } from "visual/utils/color/Hex";
 import Config from "visual/global/Config";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 
@@ -94,7 +93,7 @@ export type GlobalBlockPosition = {
 
 //#region Page
 
-interface DataCommon {
+export interface DataCommon {
   id: string;
   data: {
     items: Block[];
@@ -136,11 +135,16 @@ export interface PageCollection extends PageCommon {
   fields: CollectionItem["fields"] | null;
 }
 
-export type PageCustomer = DataWithTitle;
+export interface PageCustomer extends DataWithTitle {
+  groups: {
+    id: string;
+    name: string;
+  }[];
+}
 
-export type CloudPopup = PageCollection & {
+export interface CloudPopup extends PageCollection {
   rules: Rule[];
-};
+}
 
 export type ExternalPopupCloud = DataCommon;
 
@@ -150,11 +154,6 @@ export interface ShopifyPage extends PageCommon {
     value: string | undefined;
   };
 }
-
-export const isShopifyPage = (page: Page): page is ShopifyPage => {
-  const config = Config.getAll();
-  return isCloud(config) && isShopify(config) && !("rules" in page);
-};
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const isWPPage = (page: Page): page is PageWP => {

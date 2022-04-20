@@ -6,11 +6,20 @@ export function styleContent(v, vs, vd) {
       standart: [
         "cssStyleElementVideoBgColorRatio",
         "cssStyleSizeMaxWidthSize",
-        "cssStyleBorderRadius"
+        "cssStyleBorderRadius",
+        "cssStyleBoxShadow"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementVideoHoverBoxShadowTransition"
       ]
     },
     ".brz &&:hover .brz-video-content": {
-      standart: ["cssStyleBorderRadius", "cssStyleBoxShadow", "cssStyleBorder"],
+      standart: [
+        "cssStyleBorder",
+        "cssStyleBorderRadius",
+        "cssStyleElementVideoMask"
+      ],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementVideoPropertyHoverTransition"

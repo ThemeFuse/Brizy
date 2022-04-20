@@ -200,6 +200,12 @@
             div = hostDocument.createElement("div");
             div.classList.add("brz", "brz-external-popup-elem");
             div.appendChild(popup);
+
+            var embeds = div.querySelectorAll(".brz-embed-code script");
+
+            for (var i = 0; i < embeds.length; i++) {
+              overrideScripts(hostDocument, embeds[i]);
+            }
             hostDocument.body.appendChild(div);
           }
 
@@ -408,5 +414,19 @@
     });
 
     doc.body.appendChild(script);
+  }
+
+  function overrideScripts(doc, script) {
+    var docScript = doc.createElement("script");
+    var attributes = script.attributes;
+
+    docScript.innerHTML = script.innerHTML;
+
+    for (var i = 0; i < attributes.length; i++) {
+      var attrs = attributes[i];
+      docScript.setAttribute(attrs.name, attrs.value);
+    }
+
+    script.replaceWith(docScript);
   }
 })(window, document);

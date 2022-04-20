@@ -4,7 +4,7 @@ class Brizy_Compatibilities_Init {
 
 	public function __construct() {
 		$this->load_compatibilites();
-		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ), 9 );
+		add_action( 'plugins_loaded',    [ $this, 'action_plugins_loaded' ], 9 );
 		add_action( 'after_setup_theme', [ $this, 'after_setup_theme' ] );
 	}
 
@@ -125,6 +125,10 @@ class Brizy_Compatibilities_Init {
 
 		if ( class_exists( 'COMPLIANZ' ) ) {
 			new Brizy_Compatibilities_ComplianzGpdr();
+		}
+
+		if ( class_exists( 'WP_Import' ) ) {
+			new Brizy_Compatibilities_WordpressImporter();
 		}
   }
 

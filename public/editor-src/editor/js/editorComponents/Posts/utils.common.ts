@@ -74,6 +74,7 @@ export function decodeV(v: V): VDecoded {
     gridRow,
     gridColumn,
     source,
+    querySource,
     offset,
     orderBy,
     order,
@@ -85,6 +86,7 @@ export function decodeV(v: V): VDecoded {
     gridRow: Num.read(gridRow) ?? 1,
     gridColumn: Num.read(gridColumn) ?? 1,
     source: Str.read(source) ?? "",
+    querySource: Str.read(querySource) ?? "",
     offset: Num.read(offset) ?? 0,
     orderBy: Str.read(orderBy) ?? "",
     order: Str.read(order) ?? "",
@@ -125,3 +127,5 @@ export function encodeSymbols(v: V): V {
     }
   });
 }
+
+export const CURRENT_CONTEXT_TYPE = "brz_current_context";

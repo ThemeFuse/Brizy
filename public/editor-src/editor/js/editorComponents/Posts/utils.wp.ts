@@ -12,7 +12,7 @@ import {
   WPTagsQuery,
   WPTaxQuery
 } from "./types";
-import { decodeV } from "./utils.common";
+import { decodeV, CURRENT_CONTEXT_TYPE } from "./utils.common";
 
 function parseTerms(terms: string[]): [string, string][] {
   return terms
@@ -171,6 +171,12 @@ function archiveQuery(v: V): WPArchiveQuery {
 }
 
 export function getLoopAttributes(v: V): WPQuery {
+  const isCurrentContext = v.source === CURRENT_CONTEXT_TYPE;
+
+  if (isCurrentContext) {
+    return archiveQuery(v);
+  }
+
   switch (v.type) {
     case "archives":
     case "archives-product":

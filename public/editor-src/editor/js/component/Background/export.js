@@ -63,5 +63,11 @@ export default function($node) {
     const { type, loop, start } = $this.data();
 
     $this.backgroundVideo({ type, loop, start });
+
+    window.Brz.on("elements.story.init", element => {
+      if (element.contains($this.get(0))) {
+        $this.backgroundVideo("typeChange", { type, loop, start });
+      }
+    });
   });
 }

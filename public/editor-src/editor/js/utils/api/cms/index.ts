@@ -1,4 +1,3 @@
-import { orElse } from "fp-utilities";
 import { CustomError } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import { MNullish, isNullish, isT } from "visual/utils/value";
@@ -7,8 +6,12 @@ import * as Gql from "./graphql/gql";
 import { getConnection } from "./graphql/apollo";
 import { GetCollectionTypesWithFields_collectionTypes as CollectionTypesWithFields } from "./graphql/types/GetCollectionTypesWithFields";
 import { GetCollectionItem_collectionItem as CollectionItem } from "./graphql/types/GetCollectionItem";
-import { GetCustomers_customers_collection as Customers } from "./graphql/types/GetCustomers";
 import * as TMP from "./correctors";
+import {
+  GetCustomerAndCollection_customers_collection as CustomerAndCollectionCustomer,
+  GetCustomerAndCollection_customerGroups_collection as CustomerAndCollectionCustomerGroups,
+  GetCustomerAndCollection_collectionTypes as CustomerAndCollectionCollection
+} from "visual/utils/api/cms/graphql/types/GetCustomerAndCollection";
 
 const errOnEmpty = (m: string) => <T>(t: MNullish<T>): T => {
   if (isNullish(t)) {
@@ -95,13 +98,33 @@ export function getReferencedCollectionItems(
   );
 }
 
-export function getCustomers(): Promise<Customers[]> {
+//#region Customer & Collections
+interface CustomerAndCollectionTypes {
+  customers: CustomerAndCollectionCustomer[];
+  customerGroups: CustomerAndCollectionCustomerGroups[];
+  collectionTypes: CustomerAndCollectionCollection[];
+}
+
+export function getCustomersAndCollectionTypes(): Promise<
+  CustomerAndCollectionTypes
+> {
   const page = paginationData.page;
   const itemsPerPage = paginationData.count;
 
-  return Gql.getCustomers(getConnection(), { page, itemsPerPage })
-    .then(r => r.data?.customers?.collection)
-    .then(items => items?.filter(isT))
-    .then(orElse<Customers[]>([]))
+  return Gql.getCustomersAndCollectionTypes(getConnection(), {
+    page,
+    itemsPerPage
+  })
+    .then(r => ({
+      customers: r.data?.customers?.collection,
+      customerGroups: r.data?.customerGroups?.collection,
+      collectionTypes: r.data?.collectionTypes
+    }))
+    .then(({ customers, customerGroups, collectionTypes }) => ({
+      customers: customers ? customers.filter(isT) : [],
+      customerGroups: customerGroups ? customerGroups.filter(isT) : [],
+      collectionTypes: collectionTypes ? collectionTypes.filter(isT) : []
+    }))
     .catch(onCatch(t("Failed to fetch api data")));
 }
+//#endregion

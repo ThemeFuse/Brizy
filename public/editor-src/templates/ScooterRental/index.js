@@ -9,7 +9,7 @@ const ScooterRentalStyle = require("./styles/ScooterRental");
 module.exports = {
   name: "Scooter Rental",
   color: "#08C9AA",
-  cat: [0, 100, 1, 5, 13],
+  cat: [0, 1, 5, 13],
   pages: [Homepage, About, HowItWorks, Contact, Vehicles, Pricing],
   styles: [ScooterRentalStyle]
 };

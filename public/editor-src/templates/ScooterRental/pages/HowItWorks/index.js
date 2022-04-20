@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 1358,
   title: "How It Works",
   keywords: "scooter, rental, pricing, timeline",
-  cat: [0, 100, 1, 5, 13],
-  pro: false,
+  cat: [0, 1, 5, 13],
+  pro: true,
   resolve: {
     blocks: [
       {

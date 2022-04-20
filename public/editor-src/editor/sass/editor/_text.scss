@@ -1,6 +1,7 @@
 .brz-rich-text {
   .link--anchor,
   .link--external,
+  .link--story,
   .link--popup {
     &:not(.is-empty) {
       text-decoration: $link-is-not-empty;
@@ -43,6 +44,17 @@
     padding-bottom: 0;
     text-transform: initial;
     text-decoration: initial;
+  }
+}
+
+// With Dynamic content Excerpt
+.brz-rich-text__population-cloud {
+  a {
+    text-decoration: $link-is-not-empty;
+
+    @include hover {
+      text-decoration: $link-is-not-empty;
+    }
   }
 }
 

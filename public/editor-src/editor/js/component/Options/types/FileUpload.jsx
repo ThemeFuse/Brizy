@@ -3,6 +3,10 @@ import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import { uploadFile } from "visual/utils/api";
+import { ToastNotification } from "visual/component/Notifications";
+import { t } from "visual/utils/i18n";
+import * as Num from "visual/utils/reader/number";
+import Config from "visual/global/Config";
 
 class FileUpload extends React.Component {
   static defaultProps = {
@@ -39,27 +43,39 @@ class FileUpload extends React.Component {
       loading: true
     });
 
-    try {
-      const { name, filename } = await uploadFile(files[0]);
-      const value = `${name}|||${filename}`;
+    const sizeFileMB = files[0].size / 1000000;
 
-      if (this.mounted) {
-        this.setState({
-          value,
-          loading: false
-        });
-      }
+    const { maxUploadFileSize } = Config.getAll().server;
+    const maxFileUpload = Num.read(maxUploadFileSize) ?? 40;
 
-      this.props.onChange(value);
-    } catch (e) {
-      if (this.mounted) {
-        this.setState({
-          loading: false,
-          value: ""
-        });
-      }
-      if (process.env.NODE_ENV === "development") {
-        console.error("Image upload error", e);
+    if (sizeFileMB > maxFileUpload) {
+      ToastNotification.error(t("File too large."));
+    } else {
+      try {
+        const { name, filename } = await uploadFile(files[0]);
+        const value = `${name}|||${filename}`;
+
+        if (this.mounted) {
+          this.setState({
+            value,
+            loading: false
+          });
+        }
+
+        this.props.onChange(value);
+      } catch (e) {
+        if (this.mounted) {
+          this.setState({
+            loading: false,
+            value: ""
+          });
+        }
+
+        ToastNotification.error(t("File upload error"));
+
+        if (process.env.NODE_ENV === "development") {
+          console.error("File upload error", e);
+        }
       }
     }
   };

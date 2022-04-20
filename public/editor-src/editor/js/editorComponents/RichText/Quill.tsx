@@ -66,18 +66,10 @@ class QuillComponent extends React.Component<Props> {
     }
   }
 
-  componentWillReceiveProps({
-    value,
-    forceUpdate,
-    currentStyle,
-    fonts
-  }: Props): void {
+  componentWillReceiveProps({ value, forceUpdate, fonts }: Props): void {
     let reInitPlugin = value !== this.lastUpdatedValue || forceUpdate;
 
-    if (
-      currentStyle !== this.props.currentStyle ||
-      fonts !== this.props.fonts
-    ) {
+    if (!_.isEqual(fonts, this.props.fonts)) {
       reInitPlugin = true;
     }
 
