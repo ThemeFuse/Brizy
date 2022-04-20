@@ -59,7 +59,7 @@ class Brizy_Import_Main {
 				't7'            => __( 'Installing Starter Template', 'brizy' ),
 				't8'            => __( 'Please don’t close this window until the installation is finished. This might take up to a couple of minutes (five min, usually less).', 'brizy' ),
 				't9'            => __( 'Keep existing content', 'brizy' ),
-				't10'           => __( 'Choose this option if you want to keep your current content. If you are using Brizy, some of the global options might overlap.', 'brizy' ),
+				't10'           => sprintf( __( 'Choose this option if you want to keep your current content. If you are using %s, some of the global options might overlap.', 'brizy' ), __bt( 'brizy', 'Brizy' ) ),
 				't11'           => __( 'Install Template', 'brizy' ),
 				't12'           => __( 'Delete existing content', 'brizy' ),
 				't13'           => __( 'Choose this option if you want to start fresh and delete your current content. A backup is advisable, there is no turning back from this.', 'brizy' ),
