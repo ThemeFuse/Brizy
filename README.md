@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.9.3<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.34<br>
+Stable tag: 2.3.35<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.35 - 2022-04-21
+* Fixed: Text blink
+* Fixed: Section Dividers
 
 ### 2.3.34 - 2022-04-20
 * New: Added hover Transition for elements: Accordion, ProgressBar and Tabs 

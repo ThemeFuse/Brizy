@@ -1870,10 +1870,22 @@ body {
   pointer-events: none; }
   .brz .brz-bg-shape__top {
     top: 0; }
+    .brz .brz-bg-shape__top::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; }
   .brz .brz-bg-shape__bottom {
     bottom: 0;
     -webkit-transform: rotateX(180deg);
             transform: rotateX(180deg); }
+    .brz .brz-bg-shape__bottom::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; }
 
 .brz .brz-bg-image-parallax {
   width: 100%;

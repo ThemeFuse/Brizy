@@ -34,19 +34,23 @@ export function styleSection(v, vs, vd) {
     },
     ".brz &&:hover > .brz-bg > .brz-bg-shape__top": {
       standart: [
-        "cssStyleShapeTopType",
         "cssStyleShapeTopHeight",
         "cssStyleShapeTopFlip",
         "cssStyleShapeTopIndex"
       ]
     },
+    ".brz &&:hover > .brz-bg > .brz-bg-shape__top::after": {
+      standart: ["cssStyleShapeTopType"]
+    },
     ".brz &&:hover > .brz-bg > .brz-bg-shape__bottom": {
       standart: [
-        "cssStyleShapeBottomType",
         "cssStyleShapeBottomHeight",
         "cssStyleShapeBottomFlip",
         "cssStyleShapeBottomIndex"
       ]
+    },
+    ".brz &&:hover > .brz-bg > .brz-bg-shape__bottom::after": {
+      standart: ["cssStyleShapeBottomType"]
     },
     ".brz &&:hover > .brz-ed-draggable__padding--top": {
       standart: [
