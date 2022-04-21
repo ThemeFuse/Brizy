@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.9.3
 Requires PHP: 5.6.20
-Stable tag: 2.3.34
+Stable tag: 2.3.35
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,10 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.35 - 2022-04-21 =
+* Fixed: Text blink
+* Fixed: Section Dividers
 
 = 2.3.34 - 2022-04-20 =
 * New: Added hover Transition for elements: Accordion, ProgressBar and Tabs 
