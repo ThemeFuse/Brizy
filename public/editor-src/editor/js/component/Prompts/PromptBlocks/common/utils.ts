@@ -49,7 +49,7 @@ export const getExportBlocksUrls = (
     type: type.toLowerCase(),
     pro: isPro ? "1" : "0",
     ...(TARGET === "Cloud-localhost"
-      ? { "X-AUTH-USER-TOKEN": config.tokenV1 }
+      ? { "X-AUTH-USER-TOKEN": config.tokenV1 ?? "" }
       : {})
   });
 

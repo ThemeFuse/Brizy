@@ -290,7 +290,7 @@ var lastVisit = Number(localStorage.getItem("brz-lastVisit")) || Date.now();
         options.currentDate.forEach(function(item) {
           var timeStamp = new Date(
             item.value
-              .split("/")
+              .split(/[/.-]/)
               .reverse()
               .join(" ")
           ).getTime();
@@ -384,7 +384,7 @@ var lastVisit = Number(localStorage.getItem("brz-lastVisit")) || Date.now();
         options.lastVisitDate.forEach(function(item) {
           var timeStamp = new Date(
             item.value
-              .split("/")
+              .split(/[/.-]/)
               .reverse()
               .join(" ")
           ).getTime();

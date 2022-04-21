@@ -654,3 +654,163 @@ box-shadow: 0px 2px 0px 0px #e3e3e3;
     cursor: default;
     opacity: 0.5;
 }
+
+/* Demo Import Page */
+
+.brz-demo-filter-terms {
+    padding-right: 10px;
+    width: 230px;
+}
+.brz-demo-filter-terms .select2-selection__rendered {
+    line-height: 33px !important;
+}
+.brz-demo-filter-terms .select2-container .select2-selection--single {
+    height: 33px !important;
+    border: 1px solid #dadada;
+}
+.brz-demo-filter-terms .select2-selection__arrow {
+    height: 33px !important;
+}
+.brz-wrap-demodata .themes {
+    display: grid;
+    grid-gap: 40px 4%;
+    grid-template-columns: 30.6% 30.6% 30.6%;
+}
+.brz-wrap-demodata .themes .theme {
+    width: 100% !important;
+    margin: 0 !important;
+}
+@media screen and (max-width: 600px) {
+    .brz-wrap-demodata .themes {
+        display: block;
+    }
+    .brz-wrap-demodata .themes .theme {
+        margin-bottom: 4% !important;
+    }
+}
+@media screen and (max-width: 1120px) {
+    .brz-wrap-demodata .themes {
+        grid-gap: 40px 5%;
+        grid-template-columns: 47.5% 47.5%;
+    }
+}
+@media screen and (min-width: 1640px) {
+    .brz-wrap-demodata .themes {
+        grid-gap: 50px 3%;
+        grid-template-columns: 22.7% 22.7% 22.7% 22.7%;
+    }
+}
+@media screen and (min-width: 2000px) {
+    .brz-wrap-demodata .themes {
+        grid-gap: 65px 3%;
+        grid-template-columns: 17.6% 17.6% 17.6% 17.6% 17.6%;
+    }
+}
+.brz-demo-badge {
+    display: inline-block;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border-radius: 5px;
+    padding: 2px 8px;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1px;
+    font-weight: normal;
+}
+.brz-demo-is-pro .brz-demo-badge {
+    background-color: #d62c64;
+    color: #fff;
+}
+.brz-demo-is-free .brz-demo-badge {
+    background-color: #ffffff;
+    color: #9094a6;
+    border: 1px solid #9094a6;
+}
+.theme:hover .brz-demo-badge {
+    opacity: 0.6;
+}
+.brz-wrap-demodata .theme-actions .brz-demo-item-gopro {
+    background: #d62c64;
+    border-color: #d62c64;
+    color: #fff;
+}
+.brz-wrap-demodata .theme-actions .brz-demo-item-gopro:hover {
+    background: #bc2456;
+    border-color: #bc2456;
+}
+.brz-demo-modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: scale(1.1);
+    visibility: hidden;
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+.brz-demo-modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 700px;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.brz-demo-close-button:hover {
+    opacity: .8;
+}
+.brz-demo-show-modal {
+    opacity: 1;
+    transform: scale(1.0);
+    visibility: visible;
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+    text-align: center;
+}
+.brz-demo-modal-content-install-container {
+    display: flex;
+}
+.brz-demo-modal-content-install-container > div {
+    padding: 0 65px;
+}
+.brz-demo-modal-content-install-container > div:first-child {
+    border-right: 1px solid #E4E4E4;
+}
+.brz-demo-modal-content-h3,
+.brz-demo-modal-content-p:not(.brz-demo-modal-content-install-notice),
+.brz-demo-modal-content-button {
+    margin-top: 30px !important;
+    margin-bottom: 0;
+}
+.brz-demo-modal-content-h3 {
+    color: #03080F;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 23px;
+}
+.brz-demo-modal-content-p:not(.brz-demo-modal-content-install-notice) {
+    color: #818A91;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 23px;
+}
+.brz-demo-modal-content-install-notice {
+    font-style: italic;
+    color: #C50101;
+}
+.brz-demo-modal-content-response {
+    padding: 0 200px;
+}
+.brz-demo-modal-content-response .spinner {
+    float: none;
+    visibility: visible;
+    margin-top: 30px;
+}
+/* End Demo Import Page */

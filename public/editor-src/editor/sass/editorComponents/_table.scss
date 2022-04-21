@@ -3,7 +3,18 @@
   display: table;
   table-layout: fixed;
   margin: 0;
-  font-size: initial;
+
+  .brz-table__tr:nth-child(even) .brz-table__td {
+    font-size: initial;
+    font-style: inherit;
+    font-family: inherit;
+  }
+
+  .brz-table__tr:nth-child(2n + 1) .brz-table__td {
+    font-size: initial;
+    font-style: inherit;
+    font-family: inherit;
+  }
 
   &__th--btn {
     display: flex;

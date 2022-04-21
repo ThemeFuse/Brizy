@@ -196,5 +196,5 @@ export function cssStyleElementAccordionAnimDuration({ v }) {
 }
 
 export function cssStyleElementAccordionPropertyHoverTransition() {
-  return "transition-property: color, box-shadow, background, border;";
+  return "transition-property: color, box-shadow, background, border-color;";
 }

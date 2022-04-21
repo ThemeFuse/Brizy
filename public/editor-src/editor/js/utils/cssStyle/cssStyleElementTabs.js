@@ -1,6 +1,5 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  styleBorderStyle,
   styleBorderWidthGrouped,
   styleBorderColor,
   styleBgColor
@@ -55,10 +54,16 @@ export function cssStyleElementTabsBtnActiveBorderLeftColor({ v }) {
   return `border-left-color: ${borderColor};`;
 }
 
-export function cssStyleElementTabsActiveBeforeAfterColor({ v }) {
-  const dvv = key => defaultValueValue({ v, key });
-  const borderColorHex = dvv("borderColorHex");
-  return `background-color: ${borderColorHex}; z-index: 1;`;
+export function cssStyleElementTabsActiveBeforeAfterColor({
+  v,
+  device,
+  state
+}) {
+  return `background-color: ${styleBorderColor({
+    v,
+    device,
+    state
+  })}; z-index: 1;`;
 }
 
 export function cssStyleElementTabsActiveBeforeHeight({ v, device, state }) {
@@ -185,7 +190,7 @@ export function cssStyleElementTabsNavBorderBottom({ v, device, state }) {
     if (width === 0) {
       width = 1;
     }
-    return `content: ""; width: 100vw; height: ${width}px;  background-color: ${color}; position: absolute; top: auto; bottom: 0; z-index: 1;`;
+    return `content: ""; width: 105vw; height: ${width}px;  background-color: ${color}; position: absolute; top: auto; bottom: 0; z-index: 1;`;
   } else if (verticalMode === "on") {
     if (verticalAlign === "left") {
       return `content: ""; width: ${width}px; height: 100vh;  background-color: ${color}; top: auto; left: auto; right: 0; `;
@@ -224,11 +229,8 @@ export function cssStyleElementTabsActiveShadow({ v }) {
   return cssStyleBoxShadow({ v, state: ACTIVE });
 }
 
-export function cssStyleElementTabsActiveBorder({ v }) {
-  const borderWidth = styleBorderWidthGrouped({ v, state: "normal" });
-  const borderStyle = styleBorderStyle({ v, state: "normal" });
-  const borderColor = styleBorderColor({ v, state: ACTIVE });
-  return `border: ${borderWidth}px ${borderStyle} ${borderColor};`;
+export function cssStyleElementTabsActiveBorder({ v, device }) {
+  return cssStyleBorder({ v, device, state: "active" });
 }
 
 export function cssStyleElementTabsContentBgColor({ v, device, state }) {
@@ -254,4 +256,12 @@ export function cssStyleElementTabsContentShadow({
   prefix = "content"
 }) {
   return cssStyleBoxShadow({ v, device, state, prefix });
+}
+
+export function cssStyleElementTabsBgColor({ v, device }) {
+  return cssStyleBgColor({ v, device });
+}
+
+export function cssStyleElementTabsPropertyHoverTransition() {
+  return "transition-property: color, box-shadow, background, border-color;";
 }

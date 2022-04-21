@@ -51,6 +51,13 @@
     "tempBgColorOpacity": 1,
     "tempBgColorPalette": "",
 
+    "hoverBgColorHex": null,
+    "hoverBgColorOpacity": null,
+    "hoverBgColorPalette": null,
+
+    "tempHoverBgColorOpacity": null,
+    "tempHoverBgColorPalette": null,
+
     "borderWidthType": "grouped",
     "borderWidth": 0,
     "borderTopWidth": 0,
@@ -151,8 +158,8 @@
     "postButtonColorOpacity": 1,
     "postButtonColorPalette": "color6",
 
-    "temppostButtonColorOpacity": 1,
-    "temppostButtonColorPalette": "color6",
+    "tempPostButtonColorOpacity": 1,
+    "tempPostButtonColorPalette": "color6",
 
     "hoverPostButtonColorHex": null,
     "hoverPostButtonColorOpacity": null,
@@ -160,6 +167,20 @@
 
     "tempHoverPostButtonColorOpacity": 1,
     "tempHoverPostButtonColorPalette": "color6",
+
+    "hoverNameColorHex": null,
+    "hoverNameColorOpacity": null,
+    "hoverNameColorPalette": null,
+
+    "tempHoverNameColorOpacity": null,
+    "tempHoverNameColorPalette": null,
+
+    "hoverCommentsColorHex": null,
+    "hoverCommentsColorOpacity": null,
+    "hoverCommentsColorPalette": null,
+
+    "tempHoverCommentsColorOpacity": null,
+    "tempHoverCommentsColorPalette": null,
 
     "starsColorType": "solid",
     "starsColorHex": "#ffb900",

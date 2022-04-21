@@ -1,8 +1,10 @@
 {
   "content": {
     "items": [],
+
     "lightBox": "off",
     "enableTags": "on",
+
     "gridColumn": 2,
     "gridColumnSuffix": null,
 
@@ -18,14 +20,20 @@
 
     "spacing": 5,
     "spacingSuffix": null,
+
     "filterSpacing": 10,
     "filterSpacingSuffix": null,
+
     "afterFilterSpacing": 20,
     "afterFilterSpacingSuffix": null,
+
     "filterStyle": "style-1",
     "filterHorizontalAlign": "left",
 
     "customCSS": "",
+
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
 
     "families": {
       "filterFontFamily": "lato",

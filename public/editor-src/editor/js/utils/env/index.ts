@@ -52,8 +52,6 @@ export const IS_COLLECTION_PAGE =
 
 export const IS_SINGLE = config.mode === "single";
 
-export const IS_ARCHIVE = config.mode === "archive";
-
 export const IS_PRODUCT_PAGE = config.mode === "product";
 
 export const IS_SINGLE_TEMPLATE = isTemplate(config, "single");

@@ -4,7 +4,7 @@ import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { getOptionFontByGlobal } from "visual/utils/options";
 import { getFontById } from "visual/utils/fonts";
-
+import { styleTypography2FontFamily } from "visual/utils/style2";
 export function styleElementRichTextMarginTop({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
 
@@ -83,24 +83,29 @@ export function styleElementRichTextFontFamily({
   const fontFamilyKey = capByPrefix(prefix, "fontFamily");
   const fontFamilyTypeKey = capByPrefix(prefix, "fontFamilyType");
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
+  const fontStyle = dvv(fontStyleKey);
 
-  const fontFamily = getOptionFontByGlobal(
-    "fontFamily",
-    v[fontFamilyKey],
-    dvv(fontStyleKey)
-  );
-  const fontFamilyType = getOptionFontByGlobal(
-    "fontFamilyType",
-    v[fontFamilyTypeKey],
-    dvv(fontStyleKey)
-  );
+  if (fontStyle) {
+    return styleTypography2FontFamily({ v, device, state, prefix });
+  } else {
+    const fontFamily = getOptionFontByGlobal(
+      "fontFamily",
+      v[fontFamilyKey],
+      dvv(fontStyleKey)
+    );
+    const fontFamilyType = getOptionFontByGlobal(
+      "fontFamilyType",
+      v[fontFamilyTypeKey],
+      dvv(fontStyleKey)
+    );
 
-  if (!fontFamily) {
-    return undefined;
+    if (!fontFamily) {
+      return undefined;
+    }
+
+    return getFontById({
+      type: fontFamilyType,
+      family: fontFamily
+    }).family;
   }
-
-  return getFontById({
-    type: fontFamilyType,
-    family: fontFamily
-  }).family;
 }

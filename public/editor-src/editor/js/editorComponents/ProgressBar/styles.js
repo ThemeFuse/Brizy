@@ -10,16 +10,32 @@ export function styleBg(v, vs, vd) {
       ]
     },
     ".brz &&:hover.brz-progress-bar-style1": {
-      standart: ["cssStyleBg2Color", "cssStyleBorderRadius"]
+      standart: ["cssStyleBg2Color", "cssStyleBorderRadius"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementProgressBarPropertyHoverTransition"
+      ]
     },
     ".brz &&:hover.brz-progress-bar-style1::after": {
-      standart: ["cssStyleBoxShadow", "cssStyleBorderRadius"]
+      standart: ["cssStyleBoxShadow", "cssStyleBorderRadius"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementProgressBarPropertyHoverTransition"
+      ]
     },
     ".brz &&:hover.brz-progress-bar-style2 .brz-progress-bar-overlay": {
-      standart: ["cssStyleBg2Color", "cssStyleBorderRadius"]
+      standart: ["cssStyleBg2Color", "cssStyleBorderRadius"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementProgressBarPropertyHoverTransition"
+      ]
     },
     ".brz &&:hover.brz-progress-bar-style2 .brz-progress-bar-overlay::after": {
-      standart: ["cssStyleBoxShadow", "cssStyleBorderRadius"]
+      standart: ["cssStyleBoxShadow", "cssStyleBorderRadius"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementProgressBarPropertyHoverTransition"
+      ]
     },
     ".brz &&:hover .brz-progress-bar__wrapper": {
       standart: ["cssStyleBgColor", "cssStyleBorderRadius"],
@@ -43,6 +59,10 @@ export function styleBg(v, vs, vd) {
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementProgressBarPropertyHoverTransition"
       ]
     },
     ".brz &&:hover .brz-progress-bar__percent": {
@@ -53,6 +73,10 @@ export function styleBg(v, vs, vd) {
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementProgressBarPropertyHoverTransition"
       ]
     }
   };

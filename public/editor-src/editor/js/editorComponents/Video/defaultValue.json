@@ -2,9 +2,7 @@
   "content": {
     "type": "youtube",
     "ratio": "16:9",
-    "video": "",
     "custom": "",
-    "videoPopulation": "",
     "controls": "on",
     "branding": "on",
     "intro": "on",
@@ -46,6 +44,11 @@
     "mobileCoverSizeType": null,
     "mobileCoverZoom": null,
     "mobileCoverZoomSuffix": null
+  },
+
+  "link": {
+    "video": "https://www.youtube.com/watch?v=4dzj5rEFAdk",
+    "videoPopulation": ""
   },
 
   "toolbar": {

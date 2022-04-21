@@ -315,7 +315,7 @@ class RowItems extends EditorArrayComponent {
 
     return (
       <Sortable
-        path={this.getPath()}
+        path={this.getId()}
         type="row"
         isGrid={true}
         acceptElements={this.handleSortableAcceptElements}

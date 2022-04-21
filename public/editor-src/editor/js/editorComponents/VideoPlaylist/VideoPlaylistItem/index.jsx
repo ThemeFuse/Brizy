@@ -14,6 +14,7 @@ import { styleContent } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import { imageSpecificSize, imageUrl } from "visual/utils/image";
 import defaultValue from "./defaultValue.json";
+import { getUrlQueryParam } from "visual/utils/url";
 
 class VideoPlaylistItem extends EditorComponent {
   static get componentId() {
@@ -47,6 +48,20 @@ class VideoPlaylistItem extends EditorComponent {
       : "";
   }
 
+  getImageHref(v) {
+    const { video } = v;
+    const linkType = video && video.includes("youtube.com") ? "long" : "short";
+
+    switch (linkType) {
+      case "long":
+        return getUrlQueryParam(video, "v");
+      case "short":
+        return video.split("/")[3];
+      default:
+        return "";
+    }
+  }
+
   renderForEdit(v, vs, vd) {
     const {
       video,
@@ -72,8 +87,8 @@ class VideoPlaylistItem extends EditorComponent {
         styleContent(v, vs, vd)
       )
     );
-    // eslint-disable-next-line no-unused-vars
-    const [_, imgHref = ""] = video.split("=");
+
+    const imgHref = this.getImageHref(v);
     const content = v.coverImageSrc ? (
       <img className="brz-img" src={coverUrl} alt="cover" />
     ) : video ? (

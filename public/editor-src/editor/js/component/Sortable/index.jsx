@@ -13,7 +13,7 @@ const onSort = data => {
 
   const fromContainerPath = from.sortableNode
     .getAttribute("data-sortable-path")
-    .split(".");
+    .split("-");
   const fromContainerType = from.sortableNode.getAttribute(
     "data-sortable-type"
   );
@@ -21,7 +21,7 @@ const onSort = data => {
 
   const toContainerPath = to.sortableNode
     .getAttribute("data-sortable-path")
-    .split(".");
+    .split("-");
   const toContainerType = to.sortableNode.getAttribute("data-sortable-type");
   const toItemPath = [...toContainerPath, String(to.elementIndex)];
 
@@ -129,7 +129,7 @@ class Sortable extends React.Component {
         <div
           className="brz-ed-sortable--empty"
           data-sortable-type={type}
-          data-sortable-path={path.join(".")}
+          data-sortable-path={path}
           data-sortable-disabled={disabled}
         >
           <div
@@ -147,7 +147,7 @@ class Sortable extends React.Component {
 
     return React.cloneElement(React.Children.only(children), {
       "data-sortable-type": type,
-      "data-sortable-path": path.join("."),
+      "data-sortable-path": path,
       "data-sortable-disabled": disabled
     });
   }

@@ -289,7 +289,8 @@ const getItems = (v, onChange) => ({ device, component, context }) => {
                                     : "population",
                                 population: linkPopulation,
                                 popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                                upload: v.linkUpload
+                                upload: v.linkUpload,
+                                linkToSlide: v.linkToSlide
                               })
                             });
                           }
@@ -313,7 +314,8 @@ const getItems = (v, onChange) => ({ device, component, context }) => {
                               externalType: v.linkExternalType,
                               population: v.linkPopulation,
                               popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                              upload: v.linkUpload
+                              upload: v.linkUpload,
+                              linkToSlide: v.linkToSlide
                             })
                           })
                       })
@@ -335,7 +337,8 @@ const getItems = (v, onChange) => ({ device, component, context }) => {
                               externalType: v.linkExternalType,
                               population: v.linkPopulation,
                               popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                              upload: v.linkUpload
+                              upload: v.linkUpload,
+                              linkToSlide: v.linkToSlide
                             })
                           })
                       })
@@ -363,7 +366,8 @@ const getItems = (v, onChange) => ({ device, component, context }) => {
                               externalType: v.linkExternalType,
                               population: v.linkPopulation,
                               popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                              upload: v.linkUpload
+                              upload: v.linkUpload,
+                              linkToSlide: v.linkToSlide
                             })
                           })
                       })
@@ -392,7 +396,8 @@ const getItems = (v, onChange) => ({ device, component, context }) => {
                               externalType: v.linkExternalType,
                               population: v.linkPopulation,
                               popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                              upload
+                              upload,
+                              linkToSlide: v.linkToSlide
                             })
                           })
                       })
@@ -424,11 +429,43 @@ const getItems = (v, onChange) => ({ device, component, context }) => {
                               externalType: v.linkExternalType,
                               population: v.linkPopulation,
                               popup: linkPopup ? `#${linkPopup}` : "",
-                              upload: v.linkUpload
+                              upload: v.linkUpload,
+                              linkToSlide: v.linkToSlide
                             }),
                             popups
                           })
                       })
+                }
+              ]
+            },
+            {
+              id: "linkToSlide",
+              label: t("Slides"),
+              options: [
+                {
+                  id: "linkToSlide",
+                  type: "number-dev",
+                  label: t("Slide"),
+                  disabled: !IS_STORY,
+                  config: {
+                    min: 1,
+                    max: 1000000
+                  },
+                  dependencies: ({ linkToSlide }) => {
+                    onChange({
+                      link: encodeToString({
+                        type: v.linkType,
+                        anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
+                        external: v.linkExternal,
+                        externalBlank: v.linkExternalBlank,
+                        externalRel: v.linkExternalRel,
+                        externalType: v.linkExternalType,
+                        population: v.linkPopulation,
+                        popup: v.linkPopup ? `#${v.linkPopup}` : "",
+                        linkToSlide: linkToSlide
+                      })
+                    });
+                  }
                 }
               ]
             }
@@ -448,7 +485,8 @@ const getItems = (v, onChange) => ({ device, component, context }) => {
                       externalType: v.linkExternalType,
                       population: v.linkPopulation,
                       popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                      upload: v.linkUpload
+                      upload: v.linkUpload,
+                      linkToSlide: v.linkToSlide
                     })
                   });
                 }

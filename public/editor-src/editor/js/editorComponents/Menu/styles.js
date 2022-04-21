@@ -60,14 +60,14 @@ export function styleMenu(v, vs, vd) {
     },
 
     // Current
-    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current:hover": {
+    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current:not(.brz-menu__item.brz-menu__item--current:active):hover": {
       standart: [
         "cssStyleElementMenuCurrentColor",
         "cssStyleElementMenuCurrentBgColor",
         "cssStyleElementMenuCurrentBorder"
       ]
     },
-    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:hover": {
+    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:not(.brz-a:active):hover": {
       standart: [
         "cssStyleElementMenuCurrentColor",
         "cssStyleElementMenuCurrentLinkBgColor"

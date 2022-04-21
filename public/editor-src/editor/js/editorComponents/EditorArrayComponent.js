@@ -10,7 +10,10 @@ import {
   pageDataNoRefsSelector,
   copiedElementNoRefsSelector
 } from "visual/redux/selectors";
-import { setOffsetsToElementFromWrapper } from "visual/utils/models";
+import {
+  setOffsetsToElementFromWrapper,
+  createFullModelPath
+} from "visual/utils/models";
 import { updateCopiedElement } from "visual/redux/actions";
 import EditorComponent from "./EditorComponent";
 import ErrorBoundary from "visual/component/ErrorBoundary";
@@ -258,7 +261,6 @@ export default class EditorArrayComponent extends EditorComponent {
     const defaultValue = this.getDefaultValue();
 
     const itemProps = this.getItemProps(itemData, itemIndex, items);
-    const itemPath = [...this.getPath(), itemIndex, "value"];
     const itemDefaultValue =
       defaultValue[itemIndex] && defaultValue[itemIndex].value;
     const itemDBValue = value;
@@ -288,7 +290,6 @@ export default class EditorArrayComponent extends EditorComponent {
         >
           <ItemComponent
             {...itemProps}
-            path={itemPath}
             defaultValue={itemDefaultValue}
             dbValue={itemDBValue}
             reduxState={this.getReduxState()}
@@ -304,7 +305,6 @@ export default class EditorArrayComponent extends EditorComponent {
         <NotFoundComponent
           {...itemProps}
           key={itemKey}
-          path={itemPath}
           defaultValue={itemDefaultValue}
           dbValue={itemDBValue}
           reduxState={this.getReduxState()}
@@ -353,10 +353,20 @@ export default class EditorArrayComponent extends EditorComponent {
     return this.renderItemsContainer(items, v);
   }
 
+  getIdBindKey() {
+    const id = this.getId();
+    const [uid, bindWithKey] = id.split("-");
+
+    return {
+      id: uid,
+      bindKey: bindWithKey
+    };
+  }
+
   getCurrentCopiedElement = () => {
     const { path, value } = copiedElementNoRefsSelector(getStore().getState());
 
-    if (value) {
+    if (value && path.length > 0) {
       return getIn(attachMenu(value), path);
     }
 
@@ -366,18 +376,17 @@ export default class EditorArrayComponent extends EditorComponent {
   changeVerticalAlign(index, alignDirection) {
     const v = this.getValue();
     const data = pageDataNoRefsSelector(getStore().getState());
-    const activeElementPath = global.Brizy.activeEditorComponent.getPath();
+    const activeElementId = global.Brizy.activeEditorComponent.getId();
+    const activeElementPath = createFullModelPath(data, [activeElementId]);
 
-    const {
-      path,
-      value: { type, value }
-    } = getParentWhichContainsStyleProperty(
+    const { path, value: parentValue } = getParentWhichContainsStyleProperty(
       activeElementPath,
       data,
       "verticalAlign"
     );
 
-    if (value) {
+    if (parentValue && path) {
+      const { type, value } = parentValue;
       const alignList = ["top", "center", "bottom"];
       const {
         defaultValue: {
@@ -391,7 +400,9 @@ export default class EditorArrayComponent extends EditorComponent {
         alignDirection
       );
 
-      const currentPath = this.getPath();
+      const { id, bindKey } = this.getIdBindKey();
+      const pathUid = bindKey ? [id, bindKey, `${index}`] : [id, `${index}`];
+      const currentPath = createFullModelPath(data, pathUid);
       const newPath = path.reduce((acc, item, index) => {
         if (currentPath[index] === undefined) {
           acc.push(path[index]);
@@ -400,32 +411,45 @@ export default class EditorArrayComponent extends EditorComponent {
         return acc;
       }, []);
 
-      const newValue = setIn(v, [...newPath, "value"], {
-        ...value,
-        verticalAlign: nextAlign
-      });
+      if (newPath.length === 0) {
+        const newValue = setIn(v, [index, "value"], {
+          ...value,
+          verticalAlign: nextAlign
+        });
 
-      this.updateItem(index, newValue[index].value);
+        this.updateItem(index, newValue[index].value);
+      } else {
+        const newValue = setIn(v, [...newPath, "value"], {
+          ...value,
+          verticalAlign: nextAlign
+        });
+
+        this.updateItem(index, newValue[index].value);
+      }
     }
   }
 
   changeHorizontalAlign(index, alignDirection) {
     const v = this.getValue();
-    const activeElementPath = global.Brizy.activeEditorComponent.getPath();
+    const activeElementId = global.Brizy.activeEditorComponent.getId();
     const state = getStore().getState();
     const data = pageDataNoRefsSelector(state);
+    const activeElementPath = createFullModelPath(data, [activeElementId]);
+
     const { deviceMode } = state.ui;
     const alignName =
       deviceMode === "desktop"
         ? "horizontalAlign"
         : `${deviceMode}HorizontalAlign`;
 
-    const {
-      path,
-      value: { type, value }
-    } = getParentWhichContainsStyleProperty(activeElementPath, data, alignName);
+    const { path, value: parentValue } = getParentWhichContainsStyleProperty(
+      activeElementPath,
+      data,
+      alignName
+    );
 
-    if (value) {
+    if (parentValue && path) {
+      const { type, value } = parentValue;
       const alignList = ["left", "center", "right"];
       const {
         defaultValue: { style }
@@ -437,7 +461,9 @@ export default class EditorArrayComponent extends EditorComponent {
         alignDirection
       );
 
-      const currentPath = this.getPath();
+      const { id, bindKey } = this.getIdBindKey();
+      const pathUid = bindKey ? [id, bindKey, `${index}`] : [id, `${index}`];
+      const currentPath = createFullModelPath(data, pathUid);
       const newPath = path.reduce((acc, item, index) => {
         if (currentPath[index] === undefined) {
           acc.push(path[index]);
@@ -446,21 +472,31 @@ export default class EditorArrayComponent extends EditorComponent {
         return acc;
       }, []);
 
-      const newValue = setIn(v, [...newPath, "value"], {
-        ...value,
-        [alignName]: nextAlign
-      });
+      if (newPath.length === 0) {
+        const newValue = setIn(v, [index, "value"], {
+          ...value,
+          [alignName]: nextAlign
+        });
 
-      this.updateItem(index, newValue[index].value);
+        this.updateItem(index, newValue[index].value);
+      } else {
+        const newValue = setIn(v, [...newPath, "value"], {
+          ...value,
+          [alignName]: nextAlign
+        });
+
+        this.updateItem(index, newValue[index].value);
+      }
     }
   }
 
   copy(index) {
     const dispatch = this.getReduxDispatch();
-    const shortcodePath = [...this.getPath(), index];
-    const pageData = attachMenu(
-      pageDataDraftBlocksSelector(this.getReduxState())
-    );
+    const data = pageDataDraftBlocksSelector(this.getReduxState());
+    const { id, bindKey } = this.getIdBindKey();
+    const pathUid = bindKey ? [id, bindKey, `${index}`] : [id, `${index}`];
+    const shortcodePath = createFullModelPath(data, pathUid);
+    const pageData = attachMenu(data);
 
     dispatch(updateCopiedElement({ value: pageData, path: shortcodePath }));
   }

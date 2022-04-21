@@ -103,7 +103,8 @@ export {
   cssStyleElementImageGalleryFilterActiveColor,
   cssStyleElementImageGalleryFilterActiveBgColor,
   cssStyleElementImageGalleryFilterActiveBorder,
-  cssStyleElementImageGalleryFilterActiveShadow
+  cssStyleElementImageGalleryFilterActiveShadow,
+  cssStyleElementImageGalleryPropertyHoverTransition
 } from "./cssStyleElementImageGallery";
 
 // Border Radius
@@ -235,7 +236,10 @@ export { cssStyleElementFacebookPagePropertyHoverTransition } from "./cssStyleEl
 //Element Map
 export {
   cssStyleElementMapPropertyHoverTransition,
-  cssStyleElementMapPropertyPositionFixed
+  cssStyleElementMapPropertyPositionFixed,
+  cssStyleElementMapCoverSrc,
+  cssStyleElementMapCoverPosition,
+  cssStyleElementMapBgSize
 } from "./cssStyleElementMap";
 
 //Element SoundCloud
@@ -326,8 +330,10 @@ export {
   cssStyleElementVideoCoverSrc,
   cssStyleElementVideoCoverPosition,
   cssStyleElementVideoPropertyHoverTransition,
+  cssStyleElementVideoHoverBoxShadowTransition,
   cssStyleVideoControlsBgColor,
-  cssStyleVideoIconControls
+  cssStyleVideoIconControls,
+  cssStyleElementVideoMask
 } from "./cssStyleElementVideo";
 
 // Element Video Playlist
@@ -348,7 +354,8 @@ export {
   cssStyleElementVideoPlaylistItemActiveBg,
   cssStyleElementVideoPlaylistBorderItemActive,
   cssStyleElementVideoPlaylistItemActiveColor,
-  cssStyleElementVideoPlaylistItemSubtitleActiveColor
+  cssStyleElementVideoPlaylistItemSubtitleActiveColor,
+  cssStyleElementVideoPlaylistPropertyHoverTransition
 } from "./cssStyleElementVideoPlaylist";
 
 // Element Media
@@ -760,7 +767,9 @@ export {
   cssStyleElementTabsActiveShadow,
   cssStyleElementTabsContentBgColor,
   cssStyleElementTabsContentBorder,
-  cssStyleElementTabsContentShadow
+  cssStyleElementTabsContentShadow,
+  cssStyleElementTabsBgColor,
+  cssStyleElementTabsPropertyHoverTransition
 } from "./cssStyleElementTabs";
 
 // Element Comments
@@ -1076,7 +1085,8 @@ export {
   cssStyleElementWOOAddToCartTableBg,
   cssStyleElementWOOAddToCartTableBoxShadow,
   cssStyleElementWOOAddToCartBorder,
-  cssStyleElementWOOAddToCartBorderRadius
+  cssStyleElementWOOAddToCartBorderRadius,
+  cssStyleElementWOOAddToCartPropertyHoverTransition
 } from "./cssStyleElementWOOAddToCart";
 
 //WOOGalery

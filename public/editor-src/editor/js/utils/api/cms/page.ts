@@ -14,7 +14,8 @@ import * as Gql from "./graphql/gql";
 import { errOnEmpty, onCatch } from "./utils";
 import { UpdateCollectionItem_updateCollectionItem_collectionItem } from "./graphql/types/UpdateCollectionItem";
 import { UpdateCustomer_updateCustomer_customer } from "visual/utils/api/cms/graphql/types/UpdateCustomer";
-import { isShopifyPage, ShopifyPage } from "visual/types";
+import { ShopifyPage } from "visual/types";
+import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
 
 export function getPages(
   collectionTypeId: string

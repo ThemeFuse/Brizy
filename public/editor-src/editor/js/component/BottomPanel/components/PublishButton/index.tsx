@@ -35,12 +35,11 @@ import {
 } from "./utils";
 import {
   isShopify,
+  isShopifyPage,
   isCMS,
   isCloud
 } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
-import { isShopifyPage } from "visual/types";
-
 type Page = ReduxState["page"];
 
 const _getMode = match(

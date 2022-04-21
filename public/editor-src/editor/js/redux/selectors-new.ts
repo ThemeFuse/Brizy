@@ -1,7 +1,7 @@
 import { ReduxState, StoreChanged } from "visual/redux/types";
 import { Authorized, SyncAllowed } from "visual/types";
 import { createSelector } from "reselect";
-import { isShopifyPage } from "visual/types";
+import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
 
 // === 0 DEPENDENCIES ===
 export const projectSelector = (state: ReduxState): ReduxState["project"] =>

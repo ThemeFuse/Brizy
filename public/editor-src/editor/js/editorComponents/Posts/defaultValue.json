@@ -6,6 +6,7 @@
     "type": "posts",
 
     "source": "post",
+    "querySource": "",
     "tagsSource": "",
     "offset": 0,
     "orderBy": "id",

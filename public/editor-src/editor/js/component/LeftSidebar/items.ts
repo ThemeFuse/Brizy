@@ -15,10 +15,21 @@ import { DeviceModes } from "./components/DeviceModes";
 import { Cms } from "./components/Cms";
 import { Settings } from "./components/Settings";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { getStore } from "visual/redux/store";
 
 const config = Config.getAll() as Cloud;
 
 const { urls } = config;
+
+const handleCollabClick = (): void => {
+  const currentDeviceMode = getStore().getState().ui.deviceMode;
+
+  const { collaborationToolUrl } = urls;
+
+  if (collaborationToolUrl) {
+    window.location.href = `${collaborationToolUrl}&device=${currentDeviceMode}`;
+  }
+};
 
 export default {
   top: [
@@ -30,7 +41,8 @@ export default {
     {
       type: "link",
       icon: "nc-collab",
-      link: urls.collaborationToolUrl
+      title: t("Collaborate"),
+      onClick: handleCollabClick
     }
   ],
   bottom: [
