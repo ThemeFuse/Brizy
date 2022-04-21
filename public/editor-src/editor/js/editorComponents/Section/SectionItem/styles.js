@@ -18,9 +18,7 @@ export function style(v, vs, vd, props) {
       interval: ["cssStyleBgImageAttachment"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
-      standart: [
-        "cssStyleBgImageHover",
-      ],
+      standart: ["cssStyleBgImageHover"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
       standart: ["cssStyleBgColor", "cssStyleBgGradient"]
@@ -33,19 +31,23 @@ export function style(v, vs, vd, props) {
     },
     ".brz &&:hover > .brz-bg > .brz-bg-shape__top": {
       standart: [
-        "cssStyleShapeTopType",
         "cssStyleShapeTopHeight",
         "cssStyleShapeTopFlip",
         "cssStyleShapeTopIndex"
       ]
     },
+    ".brz &&:hover > .brz-bg > .brz-bg-shape__top::after": {
+      standart: ["cssStyleShapeTopType"]
+    },
     ".brz &&:hover > .brz-bg > .brz-bg-shape__bottom": {
       standart: [
-        "cssStyleShapeBottomType",
         "cssStyleShapeBottomHeight",
         "cssStyleShapeBottomFlip",
         "cssStyleShapeBottomIndex"
       ]
+    },
+    ".brz &&:hover > .brz-bg > .brz-bg-shape__bottom::after": {
+      standart: ["cssStyleShapeBottomType"]
     },
     ".brz &&:hover > .brz-ed-draggable__padding--top": {
       standart: [
