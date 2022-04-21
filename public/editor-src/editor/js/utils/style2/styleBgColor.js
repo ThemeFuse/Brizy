@@ -1,6 +1,6 @@
 import { capByPrefix } from "visual/utils/string";
 import { defaultValueValue } from "visual/utils/onChange";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { styleState } from "visual/utils/style";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 
@@ -12,12 +12,11 @@ export function styleBgColor({ v, device, state, prefix = "bg" }) {
 
   const dvv = key => defaultValueValue({ v, key, device, state });
 
-  const { hex } = getOptionColorHexByPalette(
-    dvv(capByPrefix(prefix, "colorHex")),
-    dvv(capByPrefix(prefix, "colorPalette"))
-  );
+  const palette = dvv(capByPrefix(prefix, "colorPalette"));
+  const hex = dvv(capByPrefix(prefix, "colorHex"));
+  const opacity = dvv(capByPrefix(prefix, "colorOpacity"));
 
-  return hexToRgba(hex, dvv(capByPrefix(prefix, "colorOpacity")));
+  return getColor(palette, hex, opacity);
 }
 
 export function styleBgColorHex({ v, device, state, prefix = "bg" }) {

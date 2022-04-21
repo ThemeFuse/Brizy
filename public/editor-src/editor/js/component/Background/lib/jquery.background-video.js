@@ -6,23 +6,48 @@ var isAlreadyMounted = false;
 function youtubeLoadScript(cb) {
   if (!isAlreadyMounted) {
     if (callbacks.length === 0) {
-      var script = document.createElement("script");
-      script.async = true;
-      script.src = "https://www.youtube.com/iframe_api";
+      const candidate = document.querySelector(
+        "script[src='https://www.youtube.com/iframe_api']"
+      );
 
-      script.onerror = function() {
-        cb(new Error("Failed to load" + script.src));
-      };
+      if (!candidate) {
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = "https://www.youtube.com/iframe_api";
 
-      window.onYouTubeIframeAPIReady = function() {
-        isAlreadyMounted = true;
-        callbacks.forEach(function(cb) {
-          cb();
+        script.onerror = function() {
+          cb(new Error("Failed to load" + script.src));
+        };
+
+        const firstScriptTag = document.getElementsByTagName("script")[0];
+        firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
+      }
+
+      if (window.onYouTubeIframeAPIReady === undefined) {
+        window.onYouTubeIframeAPIReady = () => {
+          if (window.Brz) {
+            window.Brz.emit("elements.video.iframe.ready");
+          }
+        };
+      }
+
+      if (window.Brz === undefined) {
+        window.onYouTubeIframeAPIReady = () => {
+          isAlreadyMounted = true;
+          callbacks.forEach(function(cb) {
+            cb();
+          });
+        };
+      }
+
+      if (window.Brz) {
+        window.Brz.on("elements.video.iframe.ready", () => {
+          isAlreadyMounted = true;
+          callbacks.forEach(function(cb) {
+            cb();
+          });
         });
-      };
-
-      var firstScriptTag = document.getElementsByTagName("script")[0];
-      firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
+      }
     }
 
     callbacks.push(cb);
@@ -247,6 +272,7 @@ function Vimeo($iframe, settings) {
       if (type === "typeChange") {
         this._player.destroy();
         this._init(value);
+        this._setSizes();
       } else if (type === "resize") {
         this._setSizes();
       } else {

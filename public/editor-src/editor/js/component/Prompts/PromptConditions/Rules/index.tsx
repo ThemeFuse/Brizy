@@ -9,7 +9,7 @@ import { IS_CLOUD, IS_PRO } from "visual/utils/env";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import Buttons from "../Buttons";
 import ConditionChoices from "./ConditionChoices";
-import { filterRules } from "./utils";
+import { getUniqRules } from "./utils";
 import { Rule, CollectionTypeRule } from "visual/types";
 import {
   CUSTOMER_TYPE,
@@ -114,7 +114,7 @@ const Rules = (props: Props): ReactElement => {
 
       onChange({
         data: {
-          rules: filterRules(rules)
+          rules: getUniqRules(rules)
         },
         meta: {
           syncSuccess: (): void => setLoading(false),

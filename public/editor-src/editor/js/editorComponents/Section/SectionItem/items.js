@@ -92,7 +92,7 @@ class SectionItemItems extends EditorArrayComponent {
     if (items.length) {
       return (
         <Sortable
-          path={this.getPath()}
+          path={this.getId()}
           type="section"
           acceptElements={["row", "column", "shortcode", "addable"]}
         >
@@ -103,7 +103,7 @@ class SectionItemItems extends EditorArrayComponent {
       return (
         <div className={className}>
           <SortableEmpty
-            path={this.getPath()}
+            path={this.getId()}
             type="section"
             acceptElements={["row", "column", "shortcode", "addable"]}
           />

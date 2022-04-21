@@ -1,27 +1,32 @@
 import { t } from "visual/utils/i18n";
-import { decodeV } from "../utils.common";
+import { CURRENT_CONTEXT_TYPE, decodeV } from "../utils.common";
 import { lvl2MultiSelectLoad, lvl2MultiSelectSearch } from "./utils";
 
 export function tabFilter(v, context) {
   const vd = decodeV(v);
   const isPosts = vd.type === "posts";
-  const sourceChoices = context.collectionTypesInfo.collectionTypes.map(
+  const isCurrentQuery = vd.source === CURRENT_CONTEXT_TYPE;
+  const collectionChoices = context.collectionTypesInfo.collectionTypes.map(
     collectionType => ({
       value: collectionType.id,
       title: collectionType.title
     })
   );
+  const sourceChoices = [
+    { value: CURRENT_CONTEXT_TYPE, title: t("Current Query") },
+    ...collectionChoices
+  ];
   const includeBy = getIncludeExclude({
     type: "include",
     vd,
     context,
-    disabled: !isPosts
+    disabled: !isPosts || isCurrentQuery
   });
   const excludeBy = getIncludeExclude({
     type: "exclude",
     vd,
     context,
-    disabled: !isPosts
+    disabled: !isPosts || isCurrentQuery
   });
 
   return {
@@ -35,6 +40,14 @@ export function tabFilter(v, context) {
         devices: "desktop",
         choices: sourceChoices,
         disabled: !isPosts
+      },
+      {
+        id: "querySource",
+        type: "select-dev",
+        label: t("Query Source"),
+        devices: "desktop",
+        choices: collectionChoices,
+        disabled: !isCurrentQuery
       },
       includeBy,
       excludeBy,

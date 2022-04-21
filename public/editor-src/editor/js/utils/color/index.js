@@ -47,6 +47,28 @@ export function hexToRgba(hex, opacity) {
   return undefined;
 }
 
+export function hexToRgb(hex) {
+  if (isHex(hex)) {
+    hex = hex.replace("#", "");
+
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+
+    return `${r}, ${g}, ${b}`;
+  }
+
+  return undefined;
+}
+
+export function getColor(palette, hex, opacity) {
+  if (palette) {
+    return `rgba(var(--brz-global-${palette}),${opacity})`;
+  } else {
+    return hexToRgba(hex, opacity);
+  }
+}
+
 function rgbToHex(rgb) {
   return (
     "#" +
@@ -70,3 +92,4 @@ export { getColorPaletteColors } from "./getColorPaletteColors";
 export { getColorPaletteColor } from "./getColorPaletteColor";
 export { makeRichTextColorPaletteCSS } from "./makeRichTextColorPaletteCSS";
 export { makeRichTextDCColorCSS } from "./makeRichTextDCColorCSS";
+export { makeGlobalStylesColorPallete } from "./makeGlobalStylesColorPallete";

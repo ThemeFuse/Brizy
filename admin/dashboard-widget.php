@@ -1,6 +1,5 @@
 <?php
 
-
 class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 
 	public static function _init() {
@@ -40,6 +39,7 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 	}
 
 	public function render() {
+
 		try {
 			$news = $this->getNews();
 		} catch ( Exception $e ) {
@@ -58,6 +58,10 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 	 */
 	private function getNews() {
 
+		if ( ! extension_loaded( 'dom' ) || ! extension_loaded( 'libxml' ) ) {
+			throw new Exception( 'In order to see these news you need to activate the php dom and libxml extensions' );
+		}
+
 		$transient_key = 'brizy_feed_news';
 
 		if ( ! ( $news = get_transient( $transient_key ) ) ) {
@@ -72,30 +76,42 @@ class Brizy_Admin_DashboardWidget extends Brizy_Admin_AbstractWidget {
 				throw new Exception( esc_html__( 'There is no body in the remote server response.', 'brizy' ) );
 			}
 
-			$dom      = Brizy_Parser_Pquery::parseStr( $request['body'] );
-			$news     = [];
-			$titles   = $dom->query( '.wp-api-title' );
-			$links    = $dom->query( '.wp-api-title .brz-a' );
-			$excerpts = $dom->query( '.wp-api-excerpt' );
+			$news = [];
+			$doc  = new DOMDocument();
 
-			if ( count( $titles ) !== 5 || count( $links ) !== 5 || count( $excerpts ) !== 5 ) {
-				throw new Exception( __( 'Parsing failed!', 'brizy' ) );
-			}
+			libxml_use_internal_errors( true );
 
-			foreach ( $titles as $title ) {
-				$news[]['title'] = $title->getInnerText();
-			}
+			$doc->loadHTML( $request['body'] );
 
-			foreach ( $links as $i => $link ) {
-				if ( isset( $news[ $i ] ) ) {
-					$news[ $i ]['url'] = esc_url( 'https://www.brizy.io' . $link->getAttribute( 'href' ) );
+			$xpath = new DOMXpath( $doc );
+			$items = $xpath->query( "//*[contains(@class, 'brz-posts__item')]" );
+
+			$getItem = function( $contextNode, $class ) use ( $xpath ) {
+				$childs = $xpath->query( ".//*[contains(@class, '{$class}')]", $contextNode );
+
+				if ( ! $childs || $childs->length === 0 ) {
+					throw new Exception( sprintf(
+						__( '%1$s failed to extract the latest news. Please contact our %2$ssupport%3$s.', 'brizy' ),
+						ucfirst( __bt( 'brizy', 'Brizy' ) ),
+						'<a href="' . apply_filters( 'brizy_support_url', Brizy_Config::getSupportUrl() ) . '">',
+						'</a>'
+					) );
 				}
-			}
 
-			foreach ( $excerpts as $i => $excerpt ) {
-				if ( isset( $news[ $i ] ) ) {
-					$news[ $i ]['excerpt'] = wp_trim_words( wp_strip_all_tags( $excerpt->getInnerText() ), 40, '...' );
-				}
+				return $childs->item( 0 );
+			};
+
+			foreach ( $items as $item ) {
+				$title   = $getItem( $item, 'wp-api-title' );
+				$link    = $getItem( $title, 'brz-a' );
+				$href    = $link->attributes->getNamedItem( 'href' )->nodeValue;
+				$excerpt = $getItem( $item, 'wp-api-excerpt' );
+
+				$news[] = [
+					'title'   => $title->textContent,
+					'url'     => esc_url( 'https://www.brizy.io' . $href ),
+					'excerpt' => wp_trim_words( wp_strip_all_tags( $excerpt->textContent ), 40, '...' ),
+				];
 			}
 
 			set_transient( $transient_key, $news, 5 * DAY_IN_SECONDS );

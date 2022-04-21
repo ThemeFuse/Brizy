@@ -94,7 +94,7 @@ class StoryItemItems extends EditorArrayComponent {
       return (
         <div className={this.props.className}>
           <SortableEmpty
-            path={this.getPath()}
+            path={this.getId()}
             type="section"
             acceptElements={["row", "column", "shortcode", "addable"]}
           />
@@ -104,7 +104,7 @@ class StoryItemItems extends EditorArrayComponent {
 
     return (
       <Sortable
-        path={this.getPath()}
+        path={this.getId()}
         type="section"
         acceptElements={["row", "column", "shortcode", "addable"]}
       >

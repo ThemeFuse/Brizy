@@ -8,6 +8,9 @@
 
     "customCSS": "",
 
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
+
     "spacing": 5,
     "spacingSuffix": "px",
 

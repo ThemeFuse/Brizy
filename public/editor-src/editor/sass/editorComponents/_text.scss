@@ -105,22 +105,12 @@
   ul ol {
     margin: 0;
   }
-  a {
-    text-decoration: $link-decoration;
-    background-color: transparent; // Remove the gray background on active links in IE 10.
-    -webkit-text-decoration-skip: objects; // Remove gaps in links underline in iOS 8+ and Safari 8+.
-
-    &[href] :not(.brz-ed-content-dc-link) {
-      @include hover {
-        text-decoration: $link-hover-decoration;
-      }
-    }
-  }
   strong {
     font-weight: bold;
   }
   .link--anchor,
   .link--external,
+  .link--story,
   .link--popup {
     text-decoration: $link-decoration;
 
@@ -137,6 +127,87 @@
   .brz-tp__dc-block video,
   .brz-tp__dc-block img {
     max-width: 100%;
+  }
+}
+
+// RichText with QuillJs
+.brz-rich-text__custom {
+  a {
+    text-decoration: $link-decoration;
+    background-color: transparent; // Remove the gray background on active links in IE 10.
+    -webkit-text-decoration-skip: objects; // Remove gaps in links underline in iOS 8+ and Safari 8+.
+
+    &[href] :not(.brz-ed-content-dc-link) {
+      @include hover {
+        text-decoration: $link-hover-decoration;
+      }
+    }
+  }
+}
+
+// RichText with Dynamic content
+.brz-rich-text__population-cloud {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+  }
+  a {
+    color: inherit;
+    text-decoration: $link-decoration;
+
+    @include hover {
+      text-decoration: $link-hover-decoration;
+    }
+  }
+  blockquote {
+    border-left: 4px solid #ccc;
+    margin: 5px 0 5px;
+    padding: 0 0 0 16px;
+  }
+
+  // Indent
+  .ql-indent-1 {
+    text-indent: 3em;
+  }
+  .ql-indent-2 {
+    text-indent: 6em;
+  }
+  .ql-indent-3 {
+    text-indent: 9em;
+  }
+  .ql-indent-4 {
+    text-indent: 12em;
+  }
+  .ql-indent-5 {
+    text-indent: 15em;
+  }
+  .ql-indent-6 {
+    text-indent: 18em;
+  }
+  .ql-indent-7 {
+    text-indent: 21em;
+  }
+  .ql-indent-8 {
+    text-indent: 24em;
+  }
+  .ql-indent-9 {
+    text-indent: 27em;
+  }
+
+  // Align
+  .ql-align-center {
+    text-align: center;
+  }
+  .ql-align-right {
+    text-align: right;
+  }
+  .ql-align-justify {
+    text-align: justify;
   }
 }
 

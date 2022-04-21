@@ -94,8 +94,7 @@ class SectionPopup extends EditorComponent {
       Object.assign(meta, {
         SectionPopup: {
           dbId: this.getDBValue()._id,
-          domId: this.getId(),
-          path: this.getPath()
+          domId: this.getId()
         }
       })
     );

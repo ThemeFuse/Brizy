@@ -29,6 +29,7 @@ import { DraggableOverlay } from "visual/component/DraggableOverlay";
 import { attachRef } from "visual/utils/react";
 import { getParentMegaMenuUid } from "visual/editorComponents/Menu/utils";
 import { IS_WP } from "visual/utils/env";
+import { uuid } from "visual/utils/uuid";
 
 const IS_PRO = Config.get("pro");
 let openedMegaMenu = null;
@@ -437,17 +438,18 @@ class MenuItem extends EditorComponent {
 
     if (IS_PREVIEW) {
       if (IS_WP) {
+        const placeholderUid = uuid(8);
         return (
           <>
             {IS_PRO &&
-              `{{ nav_item_${level} menuId='${menuSelected}' itemId='${v.id}' }}`}
+              `{{ nav_item_${placeholderUid} menuId='${menuSelected}' itemId='${v.id}' }}`}
             <li className={className} data-menu-item-id={v.id}>
               {this.renderLink(v, vs, vd, content)}
               {v.megaMenu === "off"
                 ? this.renderDropDown(v, vs, vd)
                 : this.renderMegaMenu(v, vs, vd)}
             </li>
-            {IS_PRO && `{{ end_nav_item_${level} }}`}
+            {IS_PRO && `{{ end_nav_item_${placeholderUid} }}`}
           </>
         );
       }
@@ -549,17 +551,18 @@ class MenuItem extends EditorComponent {
       const className = styleMmMenuClassName(v);
 
       if (IS_WP) {
+        const placeholderUid = uuid(8);
         return (
           <>
             {IS_PRO &&
-              `{{ nav_item_${level} menuId='${menuSelected}' itemId='${v.id}' }}`}
+              `{{ nav_item_${placeholderUid} menuId='${menuSelected}' itemId='${v.id}' }}`}
             <li className={className} data-menu-item-id={v.id}>
               {this.renderLink(v, vs, vd, content)}
               {isDropDown
                 ? this.renderDropDown(v, vs, vd)
                 : this.renderMegaMenu(v, vs, vd)}
             </li>
-            {IS_PRO && `{{ end_nav_item_${level} }}`}
+            {IS_PRO && `{{ end_nav_item_${placeholderUid} }}`}
           </>
         );
       }

@@ -338,7 +338,10 @@ export const getCurrentRule = (
       type = TEMPLATE_TYPE;
     } else {
       const { ruleMatches } = config.wp;
-      const rule = ruleMatches[0] ?? { group: PAGES_GROUP_ID, type: "page" };
+      const rule = ruleMatches[0] ?? {
+        group: PAGES_GROUP_ID,
+        entityType: "page"
+      };
       group = rule.group;
       type = rule.entityType;
     }
@@ -422,14 +425,7 @@ export const changeRule = (
   page: Page
 ): GlobalBlock => {
   const currentRule = getCurrentRule(page);
-  // when types for getAllowedGBIds will be done replace this line
-  const {
-    level2,
-    level3
-  }: { level2: boolean; level3: boolean } = pageSplitRules(
-    globalBlock.rules,
-    page
-  );
+  const { level2, level3 } = pageSplitRules(globalBlock.rules, page);
 
   let newGlobalBlock = {
     ...globalBlock,

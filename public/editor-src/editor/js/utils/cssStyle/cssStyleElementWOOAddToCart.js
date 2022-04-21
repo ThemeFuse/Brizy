@@ -266,3 +266,7 @@ export function cssStyleElementWOOAddToCartBorder({ v, device }) {
 export function cssStyleElementWOOAddToCartBorderRadius({ v, device }) {
   return cssStyleBorderRadius({ v, device, prefix: "button" });
 }
+
+export function cssStyleElementWOOAddToCartPropertyHoverTransition() {
+  return "transition-property: color, box-shadow, background, border-color;";
+}

@@ -19,6 +19,9 @@
   "style": {
     "className": "",
 
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": null,
+
     "horizontalAlign": "left",
 
     "iconSize": "small",

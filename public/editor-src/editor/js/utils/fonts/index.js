@@ -14,6 +14,8 @@ export {
 } from "./makeRichTextFontStylesCSS";
 export { getGoogleFonts } from "./getGoogleFonts";
 
+export { makeGlobalStylesTypography } from "./makeGlobalStylesTypography";
+
 // Transforms
 export {
   fontTransform,
@@ -23,8 +25,10 @@ export {
   projectFontsData,
   normalizeFonts,
   normalizeStyles,
-  normalizeFontStyles
+  normalizeFontStyles,
+  tripId
 } from "./transform";
 
 // Default Font CSS
 export { makeDefaultFontCSS } from "./makeDefaultFontCSS";
+export { getFontCssStyle, getFontCssStyleOldType } from "./getFontCssStyle";

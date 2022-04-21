@@ -7,10 +7,17 @@
 // GraphQL query operation: GetCustomer
 // ====================================================
 
+export interface GetCustomer_customer_customerGroups {
+  __typename: "CustomerGroup";
+  id: string;
+  name: string | null;
+}
+
 export interface GetCustomer_customer {
   __typename: "Customer";
   id: string;
   pageData: string | null;
+  customerGroups: GetCustomer_customer_customerGroups[] | null;
 }
 
 export interface GetCustomer {

@@ -27,6 +27,12 @@ import BoxResizer from "visual/component/BoxResizer";
 import { css } from "visual/utils/cssStyle";
 import { style, styleDC } from "./styles";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import * as Num from "visual/utils/reader/number";
+import { isNullish } from "visual/utils/value";
+import { pipe } from "visual/utils/fp";
+import { IS_CLOUD } from "visual/utils/env";
+
+const isNan = pipe(Num.read, isNullish);
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -42,7 +48,6 @@ class RichText extends EditorComponent {
 
   state = {
     formats: {},
-    isToolbarOpened: false,
     prepopulation: null,
     population: null,
     selectionCoords: null
@@ -124,14 +129,6 @@ class RichText extends EditorComponent {
     });
   };
 
-  handleToolbarOpen = () => {
-    this.setState({ isToolbarOpened: true });
-  };
-
-  handleToolbarClose = () => {
-    this.setState({ isToolbarOpened: false });
-  };
-
   handleChange = values => {
     // after Quill applies formatting it steals the focus to itself,
     // we try to fight back by remembering the previous focused element
@@ -167,7 +164,11 @@ class RichText extends EditorComponent {
 
     return classNames(
       "brz-rich-text",
-      { notranslate: IS_EDITOR },
+      {
+        notranslate: IS_EDITOR,
+        "brz-rich-text__custom": !v.textPopulation,
+        "brz-rich-text__population-cloud": v.textPopulation && IS_CLOUD
+      },
       v.className,
       css(this.constructor.componentId, this.getId(), style(v, vs, vd)),
       cssDCStyle
@@ -304,11 +305,13 @@ class RichText extends EditorComponent {
       linkExternalType,
       linkPopup,
       linkUpload,
+      linkToSlide,
       text
     } = v;
 
     const hrefs = {
       anchor: linkAnchor,
+      linkToSlide: !isNan(linkToSlide) ? `slide-${linkToSlide}` : "",
       external: v[linkExternalType],
       popup: linkPopup,
       upload: linkUpload
@@ -321,12 +324,23 @@ class RichText extends EditorComponent {
     );
 
     if (this._dc?.lastCache?.text || IS_PREVIEW) {
-      const className = IS_PREVIEW ? "" : "brz-blocked";
-
-      content = <span className={className}>{text}</span>;
+      if (IS_PREVIEW) {
+        content = text;
+      } else {
+        content = (
+          <span
+            className="brz-blocked"
+            dangerouslySetInnerHTML={{ __html: text }}
+          />
+        );
+      }
     }
 
     if (hrefs[linkType] !== "") {
+      const slideAnchor = !isNaN(linkToSlide)
+        ? { "data-brz-link-story": linkToSlide }
+        : {};
+
       return (
         <Link
           className="brz-ed-content-dc-link"
@@ -334,6 +348,7 @@ class RichText extends EditorComponent {
           href={hrefs[linkType]}
           target={linkExternalBlank}
           rel={linkExternalRel}
+          slide={slideAnchor}
         >
           {content}
         </Link>
@@ -344,7 +359,7 @@ class RichText extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { prepopulation, population, isToolbarOpened } = this.state;
+    const { prepopulation, population } = this.state;
     const { meta = {} } = this.props;
     const inPopup = Boolean(meta.sectionPopup);
     const inPopup2 = Boolean(meta.sectionPopup2);
@@ -373,7 +388,6 @@ class RichText extends EditorComponent {
         ref={this.quillRef}
         componentId={this.getId()}
         value={v.text}
-        forceUpdate={!isToolbarOpened}
         onSelectionChange={this.handleSelectionChange}
         onTextChange={this.handleTextChange}
         initDelay={inPopup || inPopup2 || IS_GLOBAL_POPUP ? 1000 : 0}
@@ -381,8 +395,6 @@ class RichText extends EditorComponent {
     );
     let toolbarOptions = {
       manualControl: true,
-      onOpen: this.handleToolbarOpen,
-      onClose: this.handleToolbarClose,
       repositionOnUpdates: true
     };
     if (v.textPopulation) {

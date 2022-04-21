@@ -18,7 +18,7 @@ type SortType =
   | "cloneable"
   | "addable";
 
-type SortData = {
+interface SortData {
   from: {
     sortableNode: HTMLElement;
     elementNode: HTMLElement;
@@ -29,20 +29,20 @@ type SortData = {
     sortableNode: HTMLElement;
     elementIndex: number;
   };
-};
+}
 
 const onSort: SortablePluginOptions["onSort"] = (data): void => {
   const { from, to } = data;
 
   const fromContainerPath =
-    from.sortableNode.getAttribute("data-sortable-path")?.split(".") || [];
+    from.sortableNode.getAttribute("data-sortable-path")?.split("-") || [];
   const fromContainerType = from.sortableNode.getAttribute(
     "data-sortable-type"
   );
   const fromItemPath = [...fromContainerPath, String(from.elementIndex)];
 
   const toContainerPath =
-    to.sortableNode?.getAttribute("data-sortable-path")?.split(".") || [];
+    to.sortableNode?.getAttribute("data-sortable-path")?.split("-") || [];
   const toContainerType = to.sortableNode.getAttribute("data-sortable-type");
   const toItemPath = [...toContainerPath, String(to.elementIndex)];
 
@@ -142,7 +142,7 @@ class Sortable extends Component<Props> {
       <div
         className="brz-ed-sortable--empty"
         data-sortable-type={type}
-        data-sortable-path={path.join(".")}
+        data-sortable-path={path}
         data-sortable-disabled={disabled}
       >
         <div

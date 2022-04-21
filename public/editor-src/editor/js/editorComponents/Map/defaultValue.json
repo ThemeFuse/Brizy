@@ -7,7 +7,10 @@
     "zoomSuffix": null,
 
     "offsetX": 0,
-    "offsetY": 0
+    "offsetY": 0,
+
+    "coverImageSrc": "",
+    "coverImageExtension": ""
   },
 
   "toolbar": {
@@ -26,6 +29,17 @@
     "test": "",
     "testActive": "",
     "className": "",
+
+    "coverSizeType": "custom",
+
+    "coverImageWidth": 0,
+    "coverImageHeight": 0,
+
+    "coverPositionY": 50,
+    "coverPositionX": 50,
+
+    "coverZoom": 100,
+    "coverZoomSuffix": "%",
 
     "brightness": 100,
     "hue": 0,

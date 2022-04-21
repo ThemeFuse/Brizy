@@ -91,7 +91,7 @@ class AccordionItemItems extends EditorArrayComponent {
 
     return (
       <Sortable
-        path={this.getPath()}
+        path={this.getId()}
         type="column"
         disabled={!isActive}
         acceptElements={this.handleSortableAcceptElements}

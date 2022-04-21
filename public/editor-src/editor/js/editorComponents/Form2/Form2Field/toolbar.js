@@ -23,8 +23,8 @@ export function getItems({ v, device }) {
 
   let fileUploadSizes = [];
   if (isFileUpload) {
-    const { maxUploadSize } = Config.get("server") || {};
-    const maxFileUpload = Number(maxUploadSize);
+    const { maxUploadFileSize } = Config.getAll().server || {};
+    const maxFileUpload = Number(maxUploadFileSize);
     for (let idx = 1; idx <= maxFileUpload; idx++) {
       fileUploadSizes.push({ title: `${idx} MB`, value: `${idx}mb` });
     }

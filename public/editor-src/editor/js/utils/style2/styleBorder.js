@@ -1,7 +1,6 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleState } from "visual/utils/style";
-import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { getColor } from "visual/utils/color";
 import { capByPrefix } from "visual/utils/string";
 
 const getState = (v, state) =>
@@ -21,12 +20,12 @@ export function styleBorderColor({ v, device, state, prefix = "" }) {
 
   const dvv = key => defaultValueValue({ v, key, device, state });
   const border = capByPrefix(prefix, "border");
-  const colorHex = capByPrefix(border, "colorHex");
-  const colorOpacity = capByPrefix(border, "colorOpacity");
-  const colorPalette = capByPrefix(border, "colorPalette");
-  const { hex } = getOptionColorHexByPalette(dvv(colorHex), dvv(colorPalette));
 
-  return hexToRgba(hex, dvv(colorOpacity));
+  const colorHex = dvv(capByPrefix(border, "colorHex"));
+  const colorOpacity = dvv(capByPrefix(border, "colorOpacity"));
+  const colorPalette = dvv(capByPrefix(border, "colorPalette"));
+
+  return getColor(colorPalette, colorHex, colorOpacity);
 }
 
 export function styleBorderWidthType({ v, device, state, prefix = "" }) {

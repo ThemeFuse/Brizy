@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 680,
   title: "Contact",
   keywords: "scooter, rental, contact, form, info",
-  cat: [0, 100, 1, 5, 13],
-  pro: false,
+  cat: [0, 1, 5, 13],
+  pro: true,
   resolve: {
     blocks: [
       {

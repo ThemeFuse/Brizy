@@ -5,6 +5,12 @@
   display: inline-block;
   vertical-align: middle;
 
+  &__ios {
+    iframe {
+      opacity: 0;
+    }
+  }
+
   &:before {
     content: "";
     width: 100%;
@@ -39,6 +45,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 
     &:before {
       content: "";

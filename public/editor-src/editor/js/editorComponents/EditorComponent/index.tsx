@@ -213,39 +213,14 @@ export class EditorComponent<
       return true;
     }
 
-    if (props.reduxState.currentStyle !== nextProps.reduxState.currentStyle) {
-      // console.log("scu", this.constructor.componentId, "project", true);
-      return true;
-    }
-
-    if (
-      props.reduxState.extraFontStyles !== nextProps.reduxState.extraFontStyles
-    ) {
-      // console.log("scu", this.constructor.componentId, "project", true);
-      return true;
-    }
-
     if (props.reduxState.fonts !== nextProps.reduxState.fonts) {
       // console.log("scu", this.constructor.componentId, "project", true);
       return true;
     }
 
+    // TODO: Here is a problems when try co copy an element all page is rerender
     if (props.reduxState.copiedElement !== nextProps.reduxState.copiedElement) {
       return true;
-    }
-
-    // check path
-    const curPath = props.path || [];
-    const nextPath = nextProps.path || [];
-    if (curPath.length !== nextPath.length) {
-      // console.log("scu", this.constructor.componentId, "path", true);
-      return true;
-    }
-    for (let i = 0, len = curPath.length; i < len; i++) {
-      if (curPath[i] !== nextPath[i]) {
-        // console.log("scu", this.constructor.componentId, "path", true);
-        return true;
-      }
     }
 
     // console.log("scu", this.constructor.componentId, false);
@@ -260,10 +235,6 @@ export class EditorComponent<
     };
 
     return this.props._id || Str.read(this.getDBValue()._id) || raiseError();
-  }
-
-  getPath(): string[] {
-    return this.props.path || [];
   }
 
   getReduxState(): Props<M, P>["reduxState"] {
@@ -531,7 +502,6 @@ export class EditorComponent<
     return {
       ...otherProps,
       _id: `${this.getId()}-${bindWithKey}`,
-      path: [...this.getPath(), bindWithKey],
       defaultValue: defaultValue && defaultValue[bindWithKey],
       dbValue: dbValue && dbValue[bindWithKey],
       reduxState: this.getReduxState(),

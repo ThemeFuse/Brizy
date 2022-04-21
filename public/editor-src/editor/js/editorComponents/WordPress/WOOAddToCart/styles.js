@@ -32,16 +32,28 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartInputBg",
         "cssStyleElementWOOAddToCartInputBorder",
         "cssStyleElementWOOAddToCartInputBoxShadow"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementButtonPropertyHoverTransition"
       ]
     },
     ".brz &&:hover .woocommerce-grouped-product-list-item__quantity input[type=number].input-text": {
       standart: [
         "cssStyleElementWOOAddToCartTableBorder",
         "cssStyleElementWOOAddToCartTableBg"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementButtonPropertyHoverTransition"
       ]
     },
     ".brz &&:hover input[type=number].input-text::placeholder": {
-      standart: ["cssStyleElementWOOAddToCartInputColor"]
+      standart: ["cssStyleElementWOOAddToCartInputColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementButtonPropertyHoverTransition"
+      ]
     },
     ".brz &&:hover .single_variation": {
       standart: [
@@ -51,6 +63,10 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartValueLineHeight",
         "cssStyleElementWOOAddToCartValueFontWeight",
         "cssStyleElementWOOAddToCartValueLetterSpacing"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementButtonPropertyHoverTransition"
       ]
     },
     ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button": {
@@ -67,6 +83,10 @@ export function style(v, vs, vd) {
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementButtonPropertyHoverTransition"
       ]
     },
     ".brz &&:hover td label": {
@@ -77,6 +97,10 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartLabelLineHeight",
         "cssStyleElementWOOAddToCartLabelFontWeight",
         "cssStyleElementWOOAddToCartLabelLetterSpacing"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementButtonPropertyHoverTransition"
       ]
     },
     ".brz &&:hover td.value .reset_variations": {
@@ -87,6 +111,10 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartClearLineHeight",
         "cssStyleElementWOOAddToCartClearFontWeight",
         "cssStyleElementWOOAddToCartClearLetterSpacing"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementButtonPropertyHoverTransition"
       ]
     },
 
@@ -95,10 +123,18 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartTableMargin",
         "cssStyleElementWOOAddToCartTableBg",
         "cssStyleElementWOOAddToCartTableBoxShadow"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementButtonPropertyHoverTransition"
       ]
     },
     ".brz &&:hover table td": {
-      standart: ["cssStyleElementWOOAddToCartTableBorder"]
+      standart: ["cssStyleElementWOOAddToCartTableBorder"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementButtonPropertyHoverTransition"
+      ]
     },
     ".brz &&:hover td.value select": {
       standart: [
@@ -110,6 +146,10 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartValueLineHeight",
         "cssStyleElementWOOAddToCartValueFontWeight",
         "cssStyleElementWOOAddToCartValueLetterSpacing"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementButtonPropertyHoverTransition"
       ]
     },
     ".brz &&:hover td.woocommerce-grouped-product-list-item__price": {
@@ -120,6 +160,10 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartValueLineHeight",
         "cssStyleElementWOOAddToCartValueFontWeight",
         "cssStyleElementWOOAddToCartValueLetterSpacing"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementButtonPropertyHoverTransition"
       ]
     }
   };

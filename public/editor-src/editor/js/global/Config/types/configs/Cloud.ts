@@ -1,3 +1,4 @@
+import Config from "visual/global/Config";
 import { WithId } from "visual/utils/options/attributes";
 import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { Pro } from "visual/global/Config/types/Pro";
@@ -6,7 +7,7 @@ import { Urls } from "visual/global/Config/types/Urls";
 import { Project } from "visual/global/Config/types/Project";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Config as Config_ } from "visual/global/Config/types";
-import { Page, PageCollection } from "visual/types";
+import { Page, PageCollection, PageCustomer, ShopifyPage } from "visual/types";
 import { WhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
 import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
 import { TemplateType } from "../TemplateType";
@@ -94,5 +95,13 @@ export const isCloud = (config: Config_): config is Cloud =>
 //#region Page
 export const isCollectionPage = (p: Page): p is PageCollection => {
   return "collectionType" in p;
+};
+export const isShopifyPage = (page: Page): page is ShopifyPage => {
+  const config = Config.getAll();
+  return isCloud(config) && isShopify(config) && !("rules" in page);
+};
+
+export const isCustomerPage = (page: Page): page is PageCustomer => {
+  return "groups" in page;
 };
 //#endregion

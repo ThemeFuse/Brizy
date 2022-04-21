@@ -29,6 +29,7 @@ type V_ = {
   gridRow: number;
   gridColumn: number;
   source: string;
+  querySource: string;
   offset: number;
   orderBy: string;
   order: string;
@@ -42,6 +43,7 @@ export type VDecoded = {
   gridRow: number;
   gridColumn: number;
   source: string;
+  querySource: string;
   offset: number;
   orderBy: string;
   order: string;
@@ -57,6 +59,7 @@ export type CloudQuery = CloudPostsQuery | CloudArchiveQuery;
 export type CloudPostsQuery = {
   type: "posts";
   collection_type: string;
+  collection_type_query: string | undefined;
   include: Dictionary<string[]>;
   exclude: Dictionary<string[]>;
   count: number;

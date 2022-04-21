@@ -13,17 +13,21 @@ export default class linkType extends Link {
   static formats(domNode) {
     return domNode.getAttribute("data-href");
   }
+
   static setAttributes(node, link) {
     const value = decodeFromString(link);
-    const { type } = value;
+
+    const { type, linkToSlide } = value;
 
     node.removeAttribute("href");
+
     node.removeAttribute("target");
     node.setAttribute("data-href", link);
     node.classList.remove(
       "link--anchor",
       "link--external",
       "link--popup",
+      "link--story",
       "is-empty"
     );
 
@@ -36,14 +40,19 @@ export default class linkType extends Link {
     if (type === "popup") {
       node.classList.add("link--popup");
     }
+    if (type === "linkToSlide") {
+      node.classList.add("link--story");
+      node.setAttribute("data-brz-link-story", linkToSlide);
+    }
 
     if (!value[type]) {
       node.classList.add("is-empty");
     }
   }
   format(name, value) {
-    if (name !== this.statics.blotName || !value)
+    if (name !== this.statics.blotName || !value) {
       return super.format(name, value);
+    }
     value = this.constructor.sanitize(value);
     this.constructor.setAttributes(this.domNode, value);
   }

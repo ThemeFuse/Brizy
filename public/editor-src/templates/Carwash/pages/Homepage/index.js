@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 2312,
   title: "Homepage",
   keywords: "Carwash, details, features, pricing, business, carousel, landing",
-  cat: [0, 100, 1, 5, 11],
-  pro: false,
+  cat: [0, 1, 5, 11],
+  pro: true,
   resolve: {
     blocks: [
       {
