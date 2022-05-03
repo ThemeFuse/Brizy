@@ -268,10 +268,6 @@ module.exports = {
       tempBorderBottomLeftRadius: 0,
       tempBorderBottomRightRadius: 0,
       closeAlign: "topRight",
-      _thumbnailSrc: 8364581,
-      _thumbnailWidth: 600,
-      _thumbnailHeight: 310,
-      _thumbnailTime: 1634307535883,
       mobileClosePosition: "inside"
     },
     blockId: "Blank0001Popup2"

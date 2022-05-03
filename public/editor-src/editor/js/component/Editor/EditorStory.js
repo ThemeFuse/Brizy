@@ -43,9 +43,7 @@ const areStatesEqual = (state, prevState) =>
   state.blocksOrder === prevState.blocksOrder &&
   state.blocksData === prevState.blocksData &&
   state.globalBlocks === prevState.globalBlocks &&
-  state.currentStyleId === prevState.currentStyleId &&
-  state.fonts === prevState.fonts &&
-  state.copiedElement === prevState.copiedElement;
+  state.fonts === prevState.fonts;
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {
   areStatesEqual

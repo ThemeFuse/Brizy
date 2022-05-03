@@ -1,5 +1,3 @@
-import { capitalize } from "../string";
-
 export const getFontCssStyle = ({
   fontStyle,
   key,
@@ -10,9 +8,9 @@ export const getFontCssStyle = ({
   device: string;
 }): string | undefined => {
   if (fontStyle) {
-    const _device = device !== "desktop" ? capitalize(device) : "";
-
-    return `var(--brz-${fontStyle}${_device}${capitalize(key)})`;
+    const _device = device !== "desktop" ? device : "";
+    // Keys is lowercase because have problems in backend export HTML
+    return `var(--brz-${fontStyle}${_device}${key})`.toLowerCase();
   }
 };
 
@@ -26,8 +24,8 @@ export const getFontCssStyleOldType = ({
   device: string;
 }): string | undefined => {
   if (fontStyle) {
-    const _device = device !== "desktop" ? capitalize(device) : "";
-
-    return `var(--brz-${fontStyle}${_device}${capitalize(key)})`;
+    const _device = device !== "desktop" ? device : "";
+    // Keys is lowercase because have problems in backend export HTML
+    return `var(--brz-${fontStyle}${_device}${key})`.toLowerCase();
   }
 };

@@ -78,10 +78,10 @@ type ContextMenuItem = {
   items?: ContextMenuItem[];
 };
 
-type ContextMenuProps = {
+type ContextMenuProps<M extends ElementModel> = {
   id: string;
   componentId: string;
-  items: ContextMenuItem[];
+  getItems: (v: M, c: EditorComponent<M>) => ContextMenuItem[];
 };
 
 type SidebarConfig<M> = {
@@ -206,20 +206,8 @@ export class EditorComponent<
     }
 
     // check redux
-    if (
-      props.reduxState.currentStyleId !== nextProps.reduxState.currentStyleId
-    ) {
-      // console.log("scu", this.constructor.componentId, "project", true);
-      return true;
-    }
-
     if (props.reduxState.fonts !== nextProps.reduxState.fonts) {
       // console.log("scu", this.constructor.componentId, "project", true);
-      return true;
-    }
-
-    // TODO: Here is a problems when try co copy an element all page is rerender
-    if (props.reduxState.copiedElement !== nextProps.reduxState.copiedElement) {
       return true;
     }
 
@@ -515,14 +503,14 @@ export class EditorComponent<
       getItems: (v: M, context?: unknown) => ContextMenuItem[];
     },
     extraProps = {}
-  ): ContextMenuProps {
+  ): ContextMenuProps<M> {
     const componentId = this.getComponentId();
     const v = this.getValue();
 
     return {
       id: uuid(3),
       componentId,
-      items: config.getItems(v, this),
+      getItems: config.getItems.bind(null, v, this),
       ...extraProps
     };
   }

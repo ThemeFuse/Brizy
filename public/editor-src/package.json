@@ -38,7 +38,7 @@
     "rc-slider": "8.6.1",
     "react": "16.8.6",
     "react-codemirror": "github:bagrinsergiu/react-codemirror#v1.0.2",
-    "react-contexify": "github:bagrinsergiu/react-contexify#v3.0.3-custom",
+    "react-contexify": "^5.0.0",
     "react-custom-scrollbars": "github:bagrinsergiu/react-custom-scrollbars#4.2.1-rc",
     "react-dom": "16.8.6",
     "react-draggable": "^4.2.0",

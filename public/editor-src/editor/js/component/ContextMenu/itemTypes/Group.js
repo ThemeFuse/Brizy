@@ -31,7 +31,6 @@ export default class Group extends React.Component {
         <Submenu
           className="react-contexify__item__submenu"
           label={title}
-          hoverDelay={0}
           arrow=""
         >
           <Items data={items} meta={{ ...itemsMeta, isInSubMenu: true }} />

@@ -11,7 +11,8 @@ export function styleTypography2FontFamily({ v, device, state, prefix = "" }) {
   const fontStyle = dvv(fontStyleKey);
 
   if (fontStyle) {
-    return `var(--brz-${fontStyle}FontFamily)`;
+    // Keys is lowercase because have problems in backend export HTML
+    return `var(--brz-${fontStyle}fontFamily)`.toLowerCase();
   } else {
     const fontFamily = getOptionFontByGlobal(
       "fontFamily",

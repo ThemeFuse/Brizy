@@ -428,10 +428,6 @@ module.exports = {
       tempBorderBottomRightRadius: 0,
       width: 1170,
       widthSuffix: "px",
-      _thumbnailSrc: 8404418,
-      _thumbnailWidth: 600,
-      _thumbnailHeight: 297,
-      _thumbnailTime: 1634642061857,
       closePosition: "inside",
       tabletWidth: 1170,
       tabletWidthSuffix: "px"

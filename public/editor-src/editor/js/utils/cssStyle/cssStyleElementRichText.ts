@@ -61,7 +61,8 @@ export function cssStyleElementRichTextFontSize(d: CSSValue): string {
   const fontStyle = dvv("typographyFontStyle");
   if (IS_STORY) {
     if (fontStyle) {
-      return `font-size:var(--brz-${fontStyle}StoryFontSize);`;
+      // Keys is lowercase because have problems in backend export HTML
+      return `font-size:var(--brz-${fontStyle}StoryFontSize);`.toLowerCase();
     } else {
       const fontSize = styleTypography2FontSize({
         ...d,

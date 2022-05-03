@@ -3,7 +3,8 @@ import React, {
   FC,
   ReactElement,
   ReactNode,
-  MouseEventHandler
+  MouseEventHandler,
+  useMemo
 } from "react";
 import classnames from "classnames";
 import { EditorIcon } from "visual/component/EditorIcon";
@@ -26,30 +27,32 @@ export interface Props {
 }
 
 const Addons = ({ items }: { items: Item[] }): ReactElement => {
-  const overlay = items.map((item, index) => {
-    const { title, icon, roles = [], loading, onClick } = item;
-    const content = (
-      <TooltipItem
-        className="brz-ed-fixed-bottom-panel-popover__item"
-        onClick={onClick}
-      >
-        {loading ? (
-          <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
-        ) : icon !== undefined ? (
-          <EditorIcon icon={icon} />
-        ) : null}
-        <span className="brz-span">{title}</span>
-      </TooltipItem>
-    );
+  const overlay = useMemo(() => {
+    return items.map((item, index) => {
+      const { title, icon, roles = [], loading, onClick } = item;
+      const content = (
+        <TooltipItem
+          className="brz-ed-fixed-bottom-panel-popover__item"
+          onClick={onClick}
+        >
+          {loading ? (
+            <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
+          ) : icon !== undefined ? (
+            <EditorIcon icon={icon} />
+          ) : null}
+          <span className="brz-span">{title}</span>
+        </TooltipItem>
+      );
 
-    return roles.length > 0 ? (
-      <Roles key={index} allow={roles}>
-        {content}
-      </Roles>
-    ) : (
-      <Fragment key={index}>{content}</Fragment>
-    );
-  });
+      return roles.length > 0 ? (
+        <Roles key={index} allow={roles}>
+          {content}
+        </Roles>
+      ) : (
+        <Fragment key={index}>{content}</Fragment>
+      );
+    });
+  }, [items]);
 
   return (
     <Tooltip
