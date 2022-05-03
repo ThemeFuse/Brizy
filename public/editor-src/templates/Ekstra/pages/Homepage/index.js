@@ -5,8 +5,8 @@ module.exports = {
   title: "Homepage",
   keywords:
     "Ekstra, homepage, landing, page, application, app, features, about, details, counters, gallery, pricing, prices, packages, blog, posts, articles, video, cta",
-  cat: [0, 1, 11, 100],
-  pro: false,
+  cat: [0, 1, 11],
+  pro: true,
   resolve: {
     blocks: [
       {

@@ -80,7 +80,7 @@ $resize-width: 20px;
 
 // Hide Resize for last-child on desktop
 &.brz-ed--desktop {
-  .brz-columns:last-child .brz-ed-draggable__column--right {
+  .brz-columns:last-child > .brz-ed-draggable__column--right {
     display: none;
   }
 }

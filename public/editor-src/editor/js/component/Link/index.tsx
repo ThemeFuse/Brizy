@@ -1,10 +1,11 @@
 import React, {
   CSSProperties,
   forwardRef,
-  MouseEventHandler,
   PropsWithChildren,
   ReactElement,
-  Ref
+  Ref,
+  useEffect,
+  useRef
 } from "react";
 import classNames from "classnames";
 import { WithClassName } from "visual/utils/options/attributes";
@@ -13,6 +14,7 @@ import { getAttr, getHref, getRel, getTarget } from "./utils";
 import { Type, empty as defaultType } from "./types/Type";
 import { Target, empty as defaultTarget } from "./types/Target";
 import { StoryAnchorAttribute } from "./types/Slide";
+import { attachRef } from "visual/utils/react";
 
 type Props = PropsWithChildren<
   WithClassName & {
@@ -26,8 +28,6 @@ type Props = PropsWithChildren<
     id?: string;
   }
 >;
-
-const preventDefault: MouseEventHandler = (e): void => e.preventDefault();
 
 const _Link = (
   {
@@ -44,6 +44,7 @@ const _Link = (
   }: Props,
   ref: Ref<HTMLAnchorElement>
 ): ReactElement => {
+  const innerRef = useRef<HTMLAnchorElement>();
   const _className = classNames(
     "brz-a",
     { "brz-anchor": type === "anchor" },
@@ -54,6 +55,19 @@ const _Link = (
   const attrs = getAttr(attr);
   const _rel = getRel(Str.mRead(rel), _target);
 
+  useEffect(() => {
+    const node = innerRef.current;
+
+    if (node) {
+      // added native preventDefault
+      // because some library like Google Tag Manager
+      // attach onclick event before react events
+      node.addEventListener("click", e => {
+        e.preventDefault();
+      });
+    }
+  }, []);
+
   return (
     <a
       className={_className}
@@ -62,10 +76,12 @@ const _Link = (
       rel={_rel}
       style={style}
       data-brz-link-type={type}
-      onClick={preventDefault}
       {...slide}
       {...attrs}
-      ref={ref}
+      ref={(v: HTMLAnchorElement | null): void => {
+        attachRef(v, ref || null);
+        attachRef(v, innerRef || null);
+      }}
       id={id}
     >
       {children}

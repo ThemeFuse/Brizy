@@ -503,10 +503,6 @@ module.exports = {
       tempBorderBottomRightRadius: 0,
       width: 1041,
       widthSuffix: "px",
-      _thumbnailSrc: 8404582,
-      _thumbnailWidth: 600,
-      _thumbnailHeight: 297,
-      _thumbnailTime: 1634642925296,
       closePosition: "inside"
     },
     blockId: "Blank0001Popup2"

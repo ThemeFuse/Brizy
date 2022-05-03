@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
-import { ContextMenu, ContextMenuProvider } from "react-contexify";
+import { contextMenu } from "react-contexify";
 import { rolesHOC } from "visual/component/Roles";
-import Items from "./Items";
+import { Dropdown } from "./Dropdown";
 import { mergeItems, concatItems, filterItems } from "./utils";
+
+const meta = {
+  depth: 0
+};
 
 // this component is a temporary hacky solution
 // to avoid ContextMenuProvider to render a wrapper div
@@ -29,8 +33,12 @@ class TmpContextMenuWrapper extends Component {
   }
 
   handleContextMenu = e => {
-    e.nativeEvent = e;
-    this.props.onContextMenu(e);
+    if (!e.shiftKey) {
+      contextMenu.show({
+        id: this.props.id,
+        event: e
+      });
+    }
   };
 
   render() {
@@ -41,7 +49,7 @@ class TmpContextMenuWrapper extends Component {
 class ContextMenuComponent extends Component {
   static defaultProps = {
     id: "",
-    items: []
+    getItems: () => []
   };
 
   static contextTypes = {
@@ -58,11 +66,12 @@ class ContextMenuComponent extends Component {
   }
 
   getItems = () => {
-    let { componentId, items } = this.props;
+    let { componentId, getItems: _getItems } = this.props;
     const {
       getParentContextMenuExtendItems,
       getParentContextMenuItems
     } = this.context;
+    let items = _getItems();
 
     items = [
       componentId,
@@ -97,41 +106,23 @@ class ContextMenuComponent extends Component {
     ).items;
   }
 
-  renderProvider = props => {
-    return (
-      <TmpContextMenuWrapper {...props}>
-        {this.props.children}
-      </TmpContextMenuWrapper>
-    );
+  getSquashedItems = () => {
+    const items = this.squashItems(this.getItems());
+    return filterItems(items, meta);
   };
 
   render() {
-    if (IS_PREVIEW) {
-      return this.props.children;
-    }
-
     const { id, children } = this.props;
-    const items = this.squashItems(this.getItems());
-    const itemsMeta = {
-      depth: 0
-    };
 
-    if (filterItems(items, itemsMeta).length === 0) {
+    if (IS_PREVIEW) {
       return children;
     }
 
     return (
-      <React.Fragment>
-        <ContextMenuProvider id={id} render={this.renderProvider}>
-          {children}
-        </ContextMenuProvider>
-        {ReactDOM.createPortal(
-          <ContextMenu id={id}>
-            <Items data={items} meta={itemsMeta} />
-          </ContextMenu>,
-          document.body
-        )}
-      </React.Fragment>
+      <>
+        <TmpContextMenuWrapper id={id}>{children}</TmpContextMenuWrapper>
+        <Dropdown id={id} getItems={this.getSquashedItems} itemsMeta={meta} />
+      </>
     );
   }
 }
