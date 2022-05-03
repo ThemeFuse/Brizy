@@ -8,7 +8,8 @@ import React, {
 import classNames from "classnames";
 import EditorComponent, {
   OnChangeMeta,
-  ToolbarExtend
+  ToolbarExtend,
+  Props as EDProps
 } from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { Roles, currentUserRole } from "visual/component/Roles";
@@ -89,6 +90,10 @@ export default class Wrapper extends EditorComponent<Value, Props> {
   childToolbarExtend?: ToolbarExtend;
 
   toolbarRef = createRef<PortalToolbar>();
+
+  shouldComponentUpdate(nextProps: EDProps<Value, Props>): boolean {
+    return this.optionalSCU(nextProps);
+  }
 
   handleValueChange(value: Value, meta: OnChangeMeta<Value>): void {
     if (value.items.length === 0) {
@@ -288,7 +293,13 @@ export default class Wrapper extends EditorComponent<Value, Props> {
               {(ref, className): ReactNode =>
                 isRelative
                   ? this.renderStatic({ v, vs, vd, extraAttr })
-                  : this.renderStatic({ v, vs, vd, className, ref })
+                  : this.renderStatic({
+                      v,
+                      vs,
+                      vd,
+                      className,
+                      ref
+                    })
               }
             </Draggable>
           );

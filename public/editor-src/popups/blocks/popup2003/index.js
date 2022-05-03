@@ -325,11 +325,7 @@ module.exports = {
       tempCloseColorOpacity: 1,
       tempCloseColorPalette: "color3",
       closeSize: "medium",
-      closeCustomSize: 24,
-      _thumbnailSrc: 8404065,
-      _thumbnailWidth: 600,
-      _thumbnailHeight: 279,
-      _thumbnailTime: 1634639803222
+      closeCustomSize: 24
     },
     blockId: "Blank0001Popup2"
   }

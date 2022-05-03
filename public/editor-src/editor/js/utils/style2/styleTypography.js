@@ -12,7 +12,8 @@ export function styleTypographyFontFamily({ v, device, state }) {
   });
 
   if (fontStyle) {
-    return `var(--brz-${fontStyle}FontFamily)`;
+    // Keys is lowercase because have problems in backend export HTML
+    return `var(--brz-${fontStyle}fontFamily)`.toLowerCase();
   } else {
     return fontFamily === undefined
       ? fontFamily

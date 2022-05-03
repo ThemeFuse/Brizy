@@ -12,7 +12,7 @@ class ContextMenuExtend extends React.Component {
   }
 
   getItems = () => {
-    return this.props.items;
+    return this.props.getItems();
   };
 
   render() {

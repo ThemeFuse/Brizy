@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.9.3
 Requires PHP: 5.6.20
-Stable tag: 2.3.35
+Stable tag: 2.3.36
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,15 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.3.36 - 2022-05-03 =
+* Improved: Improved performance when you have a lot of columns on the page 
+* Improved: Improved performance when you change global styling
+* Improved: Improved performance when you copy paste styles
+* Fixed: Mouse cursor when hovering the UI on the left sidebar 
+* Fixed: Moved layout Ekstra to PRO 
+* Fixed: Import Blocks button in Safari  
+* Fixed: Buttons conflicts with GTM 
 
 = 2.3.35 - 2022-04-21 =
 * Fixed: Text blink
