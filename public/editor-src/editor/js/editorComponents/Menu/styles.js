@@ -181,9 +181,6 @@ export function styleMenu(v, vs, vd) {
     ".brz &&:hover .brz-menu__sub-menu .brz-a": {
       standart: ["cssStyleElementMenuSubMenuIconPosition"]
     },
-    ".brz &&:hover .brz-menu__sub-menu .brz-a:hover": {
-      standart: ["cssStyleElementMenuSubMenuHoverColor"]
-    },
     ".brz &&:hover .brz-menu__sub-item__icon": {
       standart: [
         "cssStyleElementMenuSubMenuIconSpacing",
@@ -201,6 +198,9 @@ export function styleMenu(v, vs, vd) {
     ".brz &&:hover .brz-menu__dropdown > .brz-menu__item.brz-menu__item--current:hover": {
       standart: ["cssStyleElementMenuSubMenuCurrentBgColor"]
     },
+    ".brz &&:hover .brz-menu__dropdown > .brz-menu__item.brz-menu__item--current:hover > .brz-a": {
+      standart: ["cssStyleElementMenuSubMenuCurrentColor"]
+    },
     ".brz &&:hover .brz-menu__item--current .brz-menu__sub-menu": {
       standart: ["cssStyleElementMenuSubMenuCurrentBoxShadow"]
     },
@@ -208,6 +208,9 @@ export function styleMenu(v, vs, vd) {
     // Background Color for Dropdown
     ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item": {
       standart: ["cssStyleElementMenuSubMenuBgColor"]
+    },
+    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item:hover > .brz-a": {
+      standart: ["cssStyleElementMenuSubMenuHoverColor"]
     },
     ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item:hover": {
       standart: ["cssStyleElementMenuSubMenuHoverBgColor"]

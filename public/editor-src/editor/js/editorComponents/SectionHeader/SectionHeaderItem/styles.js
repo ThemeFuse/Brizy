@@ -32,7 +32,7 @@ export function styleSection(v, vs, vd) {
       ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-shape__top::after": {
-      standart: ["cssStyleShapeTopType"]
+      standart: ["cssStyleShapeTopType", "cssStyleShapeTopHeight"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-shape__bottom": {
       standart: [
@@ -42,7 +42,7 @@ export function styleSection(v, vs, vd) {
       ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-shape__bottom::after": {
-      standart: ["cssStyleShapeBottomType"]
+      standart: ["cssStyleShapeBottomType", "cssStyleShapeBottomHeight"]
     },
     ".brz &&:hover > .brz-ed-draggable__padding--top": {
       standart: [
