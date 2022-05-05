@@ -1,0 +1,797 @@
+{
+  "items": [
+    {
+      "type": "Section",
+      "value": {
+        "_styles": [
+          "section"
+        ],
+        "items": [
+          {
+            "type": "SectionItem",
+            "value": {
+              "_styles": [
+                "section-item"
+              ],
+              "items": [
+                {
+                  "type": "Row",
+                  "value": {
+                    "_styles": [
+                      "row",
+                      "hide-row-borders",
+                      "padding-0"
+                    ],
+                    "items": [
+                      {
+                        "type": "Column",
+                        "value": {
+                          "_styles": [
+                            "column"
+                          ],
+                          "items": [
+                            {
+                              "type": "Row",
+                              "value": {
+                                "_styles": [
+                                  "row",
+                                  "hide-row-borders",
+                                  "padding-0"
+                                ],
+                                "items": [
+                                  {
+                                    "type": "Column",
+                                    "value": {
+                                      "_styles": [
+                                        "column"
+                                      ],
+                                      "items": [
+                                        {
+                                          "type": "Wrapper",
+                                          "value": {
+                                            "_styles": [
+                                              "wrapper",
+                                              "wrapper--richText"
+                                            ],
+                                            "items": [
+                                              {
+                                                "type": "RichText",
+                                                "value": {
+                                                  "_styles": [
+                                                    "richText"
+                                                  ],
+                                                  "_id": "sigwxyuyiprxicpmmggfajwouvxddixuosgi",
+                                                  "text": "<p class=\"brz-tp-lg-paragraph\" data-uniq-id=\"vrjrp\" data-generated-css=\"brz-css-ubmwq\">Column,c,Aa</p>"
+                                                }
+                                              }
+                                            ],
+                                            "_id": "wdwxlhxnvdzgjqdtishkpoiflftcuydmodkn"
+                                          }
+                                        }
+                                      ],
+                                      "_id": "oifsuwtlycfueolyhywhfufksnzvuktdakuq",
+                                      "width": 33.3
+                                    }
+                                  },
+                                  {
+                                    "type": "Column",
+                                    "value": {
+                                      "_styles": [
+                                        "column"
+                                      ],
+                                      "items": [
+                                        {
+                                          "type": "Wrapper",
+                                          "value": {
+                                            "_styles": [
+                                              "wrapper",
+                                              "wrapper--richText"
+                                            ],
+                                            "items": [
+                                              {
+                                                "type": "RichText",
+                                                "value": {
+                                                  "_styles": [
+                                                    "richText"
+                                                  ],
+                                                  "_id": "ykpldzlfgtxfhvcimcheiirhrkugbietmgur",
+                                                  "text": "<p class=\"brz-tp-lg-paragraph\" data-generated-css=\"brz-css-ltekz\" data-uniq-id=\"jknsq\">Column,c,B</p>"
+                                                }
+                                              }
+                                            ],
+                                            "_id": "lcoednbcpstfchwhwmtoabjgygjwogrpopmm"
+                                          }
+                                        }
+                                      ],
+                                      "_id": "uvocpjsmvllivgdzshvbutzyeapumrlsuzcl",
+                                      "width": 33.3
+                                    }
+                                  },
+                                  {
+                                    "type": "Column",
+                                    "value": {
+                                      "_styles": [
+                                        "column"
+                                      ],
+                                      "items": [
+                                        {
+                                          "type": "Wrapper",
+                                          "value": {
+                                            "_styles": [
+                                              "wrapper",
+                                              "wrapper--richText"
+                                            ],
+                                            "items": [
+                                              {
+                                                "type": "RichText",
+                                                "value": {
+                                                  "_styles": [
+                                                    "richText"
+                                                  ],
+                                                  "_id": "anvmtintpmhppbtawjnzwzacjclgfkkkadao",
+                                                  "text": "<p class=\"brz-tp-lg-paragraph\" data-uniq-id=\"pmrju\" data-generated-css=\"brz-css-qihiv\">Column,c,C</p>"
+                                                }
+                                              }
+                                            ],
+                                            "_id": "xarbigqzxfuiyfosquyvdjughmpupfrsfsnh"
+                                          }
+                                        }
+                                      ],
+                                      "_id": "tzstrevqwxlottmogcwhziturkjefzusvjpg",
+                                      "width": 33.4
+                                    }
+                                  }
+                                ],
+                                "_id": "ovzjbmdhmddfjovnvrswbznetwwbuiaeuwbu"
+                              }
+                            }
+                          ],
+                          "_id": "vxrdocncrbtdusaqdpmjfawuldvytdeozplu"
+                        }
+                      },
+                      {
+                        "type": "Column",
+                        "value": {
+                          "_styles": [
+                            "column"
+                          ],
+                          "items": [
+                            {
+                              "type": "Wrapper",
+                              "value": {
+                                "_styles": [
+                                  "wrapper",
+                                  "wrapper--richText"
+                                ],
+                                "items": [
+                                  {
+                                    "type": "RichText",
+                                    "value": {
+                                      "_styles": [
+                                        "richText"
+                                      ],
+                                      "_id": "njkdqqdjvyzvetofmxjawgflfmdmesweacwy",
+                                      "text": "<p class=\"brz-tp-lg-paragraph brz-text-lg-center\" data-uniq-id=\"rxfvi\" data-generated-css=\"brz-css-vwagf\">Column,c,D</p>"
+                                    }
+                                  }
+                                ],
+                                "_id": "bguospxoyhgcarbkonmqftqijyhhzsgeukyc"
+                              }
+                            }
+                          ],
+                          "_id": "ecntvrlmammaxwgflfkmktbnpktvexcyasdu"
+                        }
+                      }
+                    ],
+                    "_id": "wepxmxyawhosmlelismenalxtrjikvfxbeux"
+                  }
+                }
+              ],
+              "_id": "mzuzcqxbrgkyhpawaeoisqeqcnqtwylfmwei",
+              "paddingType": "ungrouped",
+              "paddingBottom": 15
+            }
+          }
+        ],
+        "_id": "abzujxkzvtcnviicuulzmdnawyxqgbblvpjk",
+        "_thumbnailSrc": "ggnbtaslwpjxdwwvmucacgbuyhfakgfa",
+        "_thumbnailWidth": 600,
+        "_thumbnailHeight": 49,
+        "_thumbnailTime": 1651651496182
+      },
+      "blockId": "Kit2Blank000Light"
+    },
+    {
+      "type": "Section",
+      "value": {
+        "_styles": [
+          "section"
+        ],
+        "items": [
+          {
+            "type": "SectionItem",
+            "value": {
+              "_styles": [
+                "section-item"
+              ],
+              "items": [
+                {
+                  "type": "Wrapper",
+                  "value": {
+                    "_styles": [
+                      "wrapper",
+                      "wrapper--carousel"
+                    ],
+                    "items": [
+                      {
+                        "type": "Carousel",
+                        "value": {
+                          "_styles": [
+                            "carousel"
+                          ],
+                          "items": [
+                            {
+                              "type": "Column",
+                              "value": {
+                                "_styles": [
+                                  "column",
+                                  "column--carousel"
+                                ],
+                                "items": [
+                                  {
+                                    "type": "Wrapper",
+                                    "value": {
+                                      "_styles": [
+                                        "wrapper",
+                                        "wrapper--richText"
+                                      ],
+                                      "items": [
+                                        {
+                                          "type": "RichText",
+                                          "value": {
+                                            "_styles": [
+                                              "richText",
+                                              "richText--carousel"
+                                            ],
+                                            "_id": "lxegvuuzkurljxxasyizuyzlpkoguooaxbqq",
+                                            "text": "<p class=\"brz-tp-lg-paragraph brz-text-lg-center\" data-generated-css=\"brz-css-dphgy\" data-uniq-id=\"hlkfb\"><span class=\"brz-cp-color7\">Carousel,c,A</span></p>"
+                                          }
+                                        }
+                                      ],
+                                      "_id": "gqamadgtydtnqlgpitkauyqotctimjjwedvo"
+                                    }
+                                  },
+                                  {
+                                    "type": "Row",
+                                    "value": {
+                                      "_styles": [
+                                        "row",
+                                        "hide-row-borders",
+                                        "padding-0"
+                                      ],
+                                      "items": [
+                                        {
+                                          "type": "Column",
+                                          "value": {
+                                            "_styles": [
+                                              "column"
+                                            ],
+                                            "items": [
+                                              {
+                                                "type": "Wrapper",
+                                                "value": {
+                                                  "_styles": [
+                                                    "wrapper",
+                                                    "wrapper--richText"
+                                                  ],
+                                                  "items": [
+                                                    {
+                                                      "type": "RichText",
+                                                      "value": {
+                                                        "_styles": [
+                                                          "richText",
+                                                          "richText--carousel"
+                                                        ],
+                                                        "_id": "dnmivrotismrzqixzafdtgqhdkbpxmwvyzyl",
+                                                        "text": "<p class=\"brz-tp-lg-paragraph brz-text-lg-center\" data-generated-css=\"brz-css-nvvky\" data-uniq-id=\"zblnt\"><span class=\"brz-cp-color7\">Carousel,c,c,A</span></p>"
+                                                      }
+                                                    }
+                                                  ],
+                                                  "_id": "llugherqrlejwmstbbgyymajevdxytljjcct"
+                                                }
+                                              },
+                                              {
+                                                "type": "Row",
+                                                "value": {
+                                                  "_styles": [
+                                                    "row",
+                                                    "hide-row-borders",
+                                                    "padding-0"
+                                                  ],
+                                                  "items": [
+                                                    {
+                                                      "type": "Column",
+                                                      "value": {
+                                                        "_styles": [
+                                                          "column"
+                                                        ],
+                                                        "items": [
+                                                          {
+                                                            "type": "Wrapper",
+                                                            "value": {
+                                                              "_styles": [
+                                                                "wrapper",
+                                                                "wrapper--richText"
+                                                              ],
+                                                              "items": [
+                                                                {
+                                                                  "type": "RichText",
+                                                                  "value": {
+                                                                    "_styles": [
+                                                                      "richText",
+                                                                      "richText--carousel"
+                                                                    ],
+                                                                    "_id": "kqqsixrrsqpmfqsyzpsscsoutzdjhcxwmvvp",
+                                                                    "text": "<p class=\"brz-tp-lg-paragraph brz-text-lg-center\" data-generated-css=\"brz-css-bfhgb\" data-uniq-id=\"aseeb\"><span class=\"brz-cp-color7\" style=\"color: rgb(119, 138, 155);\">Carousel,c,c,c,A</span></p>"
+                                                                  }
+                                                                }
+                                                              ],
+                                                              "_id": "rzneespalmywjoapikoqtcbnyshbgaqmpfyc"
+                                                            }
+                                                          },
+                                                          {
+                                                            "type": "Cloneable",
+                                                            "value": {
+                                                              "_styles": [
+                                                                "wrapper-clone",
+                                                                "wrapper-clone--button"
+                                                              ],
+                                                              "items": [
+                                                                {
+                                                                  "type": "Button",
+                                                                  "value": {
+                                                                    "_styles": [
+                                                                      "button"
+                                                                    ],
+                                                                    "_id": "fifdxrcryopsvkykasidzzeqzjcnbsuxuppg",
+                                                                    "text": "Carousel,c,c,c,B",
+                                                                    "size": "small",
+                                                                    "fontSize": 11,
+                                                                    "paddingTB": 11,
+                                                                    "paddingTop": 11,
+                                                                    "paddingBottom": 11,
+                                                                    "tempPaddingTB": 11,
+                                                                    "tempPaddingTop": 11,
+                                                                    "tempPaddingBottom": 11,
+                                                                    "paddingRL": 0,
+                                                                    "paddingRight": 0,
+                                                                    "paddingLeft": 0,
+                                                                    "tempPaddingRL": 26,
+                                                                    "tempPaddingRight": 26,
+                                                                    "tempPaddingLeft": 26,
+                                                                    "borderRadius": 2,
+                                                                    "borderWidth": 0,
+                                                                    "tempBorderWidth": 2,
+                                                                    "borderRadiusType": "square",
+                                                                    "fillType": "filled",
+                                                                    "borderColorOpacity": 0,
+                                                                    "borderColorPalette": "",
+                                                                    "bgColorOpacity": 1,
+                                                                    "bgColorPalette": "",
+                                                                    "hoverBgColorOpacity": 0.8,
+                                                                    "iconSpacing": 10,
+                                                                    "tempBorderRadiusType": "square",
+                                                                    "hoverBorderColorOpacity": 0,
+                                                                    "tempFillType": "outline",
+                                                                    "gradientColorOpacity": 0,
+                                                                    "gradientColorPalette": "",
+                                                                    "bgColorHex": "#3e9ac9",
+                                                                    "tempBgColorPalette": "",
+                                                                    "tempBgColorOpacity": 1,
+                                                                    "borderColorHex": "#239ddb",
+                                                                    "tempBorderColorPalette": "color3",
+                                                                    "hoverBorderColorHex": "#1ea0e2",
+                                                                    "colorHex": "#000000",
+                                                                    "colorOpacity": 1,
+                                                                    "colorPalette": "",
+                                                                    "tempColorOpacity": 1,
+                                                                    "hoverColorHex": "#000000",
+                                                                    "hoverColorOpacity": 1
+                                                                  }
+                                                                }
+                                                              ],
+                                                              "_id": "npabbxrafsjrrrafjrqhwyyczktnpcdscesn",
+                                                              "marginTopSuffix": "px",
+                                                              "marginTop": 0,
+                                                              "margin": 0,
+                                                              "marginSuffix": "px",
+                                                              "marginType": "ungrouped",
+                                                              "paddingType": "grouped",
+                                                              "marginBottomSuffix": "px",
+                                                              "marginBottom": 0
+                                                            }
+                                                          }
+                                                        ],
+                                                        "_id": "mgtszchfzoeraugkziswwiwjheokihtfzzke",
+                                                        "width": 50
+                                                      }
+                                                    },
+                                                    {
+                                                      "type": "Column",
+                                                      "value": {
+                                                        "_styles": [
+                                                          "column"
+                                                        ],
+                                                        "items": [
+                                                          {
+                                                            "type": "Wrapper",
+                                                            "value": {
+                                                              "_styles": [
+                                                                "wrapper",
+                                                                "wrapper--richText"
+                                                              ],
+                                                              "items": [
+                                                                {
+                                                                  "type": "RichText",
+                                                                  "value": {
+                                                                    "_styles": [
+                                                                      "richText",
+                                                                      "richText--carousel"
+                                                                    ],
+                                                                    "_id": "oddbxwzwdeyslugwtpkypisrowzspkeavuwc",
+                                                                    "text": "<p class=\"brz-tp-lg-paragraph brz-text-lg-center\" data-generated-css=\"brz-css-czjnr\" data-uniq-id=\"siodm\"><span class=\"brz-cp-color7\" style=\"color: rgb(119, 138, 155);\">Carousel,c,c,c,B</span></p>"
+                                                                  }
+                                                                }
+                                                              ],
+                                                              "_id": "vjmgpewmmratrvojfdesbgalnsofstfiqwox"
+                                                            }
+                                                          }
+                                                        ],
+                                                        "_id": "worsudrwrbsftxsfsqvhkzovxgliqpoulfdk",
+                                                        "width": 50
+                                                      }
+                                                    }
+                                                  ],
+                                                  "_id": "jfcosrpewcotaqnobolabwktffyirhmdtjsx"
+                                                }
+                                              }
+                                            ],
+                                            "_id": "vfudiuutengzfpmxtqmuckmwiiqtusmribdy"
+                                          }
+                                        },
+                                        {
+                                          "type": "Column",
+                                          "value": {
+                                            "_styles": [
+                                              "column"
+                                            ],
+                                            "items": [
+                                              {
+                                                "type": "Wrapper",
+                                                "value": {
+                                                  "_styles": [
+                                                    "wrapper",
+                                                    "wrapper--richText"
+                                                  ],
+                                                  "items": [
+                                                    {
+                                                      "type": "RichText",
+                                                      "value": {
+                                                        "_styles": [
+                                                          "richText",
+                                                          "richText--carousel"
+                                                        ],
+                                                        "_id": "raohxojwyjvsthfdkpdkofhhbrwxhtzhdubw",
+                                                        "text": "<p class=\"brz-tp-lg-paragraph brz-text-lg-center\" data-generated-css=\"brz-css-ckatz\" data-uniq-id=\"qhhzq\"><span class=\"brz-cp-color7\" style=\"color: rgb(119, 138, 155);\">Carousel,c,c,B</span></p>"
+                                                      }
+                                                    }
+                                                  ],
+                                                  "_id": "vzpqbickbdfxzysbzcgtrcrrsajkgpubmuva"
+                                                }
+                                              }
+                                            ],
+                                            "_id": "oojhinyylykomghqmsmagmycjyzvnmyxxgvg"
+                                          }
+                                        }
+                                      ],
+                                      "_id": "ftnjwwcjhpdkjoptzsnlypracjmpurmfznjl"
+                                    }
+                                  },
+                                  {
+                                    "type": "Cloneable",
+                                    "value": {
+                                      "_styles": [
+                                        "wrapper-clone",
+                                        "wrapper-clone--button"
+                                      ],
+                                      "items": [
+                                        {
+                                          "type": "Button",
+                                          "value": {
+                                            "_styles": [
+                                              "button"
+                                            ],
+                                            "_id": "xfavisqjxsbfguokihnrgvaylwzcdbgepeli",
+                                            "text": "BUTTON A"
+                                          }
+                                        }
+                                      ],
+                                      "_id": "awzsstsccltncfmttawjfubmpmjpqnbtmsgi"
+                                    }
+                                  }
+                                ],
+                                "_id": "yyzpsyiysljfshyjucjxlvdnisitrvcpdtrs",
+                                "width": 100
+                              }
+                            },
+                            {
+                              "type": "Column",
+                              "value": {
+                                "_styles": [
+                                  "column",
+                                  "column--carousel"
+                                ],
+                                "items": [
+                                  {
+                                    "type": "Wrapper",
+                                    "value": {
+                                      "_styles": [
+                                        "wrapper",
+                                        "wrapper--richText"
+                                      ],
+                                      "items": [
+                                        {
+                                          "type": "RichText",
+                                          "value": {
+                                            "_styles": [
+                                              "richText",
+                                              "richText--carousel"
+                                            ],
+                                            "_id": "fxalowwwcudbgclgrnjxmhllsqecltzszrcj",
+                                            "text": "<p class=\"brz-tp-lg-paragraph brz-text-lg-center\" data-generated-css=\"brz-css-xqgsd\" data-uniq-id=\"igtcd\"><span class=\"brz-cp-color7\" style=\"color: rgb(119, 138, 155);\">Carousel,c,B</span></p>"
+                                          }
+                                        }
+                                      ],
+                                      "_id": "xrgfeyfhktqazchteixnjsebwospwhvuvzsv"
+                                    }
+                                  },
+                                  {
+                                    "type": "Cloneable",
+                                    "value": {
+                                      "_styles": [
+                                        "wrapper-clone",
+                                        "wrapper-clone--button"
+                                      ],
+                                      "items": [
+                                        {
+                                          "type": "Button",
+                                          "value": {
+                                            "_styles": [
+                                              "button"
+                                            ],
+                                            "_id": "hplycaefvdyrovjnqtgtmxszptqtjmpqrhhu",
+                                            "text": "BUTTON B"
+                                          }
+                                        }
+                                      ],
+                                      "_id": "ciegzpeknplxjetwhedxobhauvjpwezwehnr"
+                                    }
+                                  }
+                                ],
+                                "_id": "qdcfythwduwbulgdjwedvsfeipnvulwcqlog",
+                                "width": 100
+                              }
+                            }
+                          ],
+                          "_id": "kzyduvqocvymooqeiyfwxkphsgvdfbsytnqp",
+                          "columns": 3,
+                          "slidesToShow": 2,
+                          "slidesToShowSuffix": ""
+                        }
+                      }
+                    ],
+                    "_id": "foytndcoouondmhqvwrmzwrqyuaybdbjspdw"
+                  }
+                }
+              ],
+              "_id": "xzgpkvaqifmbekpkpelrfkqpahhejsdcporg",
+              "paddingType": "ungrouped",
+              "paddingBottom": 15,
+              "paddingTop": 15
+            }
+          }
+        ],
+        "_id": "fbjumewmigotjvkqaeauvsntkjlhzltcdoyf",
+        "_thumbnailSrc": "dkqskirnqrrnvypqctixlxbtepzfmpbd",
+        "_thumbnailWidth": 600,
+        "_thumbnailHeight": 128,
+        "_thumbnailTime": 1651652454778
+      },
+      "blockId": "Kit2Blank000Light"
+    },
+    {
+      "type": "Section",
+      "value": {
+        "_styles": [
+          "section"
+        ],
+        "items": [
+          {
+            "type": "SectionItem",
+            "value": {
+              "_styles": [
+                "section-item"
+              ],
+              "items": [
+                {
+                  "type": "Wrapper",
+                  "value": {
+                    "_styles": [
+                      "wrapper",
+                      "wrapper--form2"
+                    ],
+                    "items": [
+                      {
+                        "type": "Form2",
+                        "value": {
+                          "_styles": [
+                            "form2"
+                          ],
+                          "items": [
+                            {
+                              "type": "Form2Fields",
+                              "value": {
+                                "items": [
+                                  {
+                                    "type": "Form2Field",
+                                    "value": {
+                                      "type": "Text",
+                                      "label": "Text Label",
+                                      "required": "on",
+                                      "options": [
+                                        "Option 1",
+                                        "Option 2"
+                                      ],
+                                      "_id": "oivebhbvcvxxkewoqonxstqcziqhplapvupr",
+                                      "placeholder": "Text Placeholder"
+                                    }
+                                  },
+                                  {
+                                    "type": "Form2Field",
+                                    "value": {
+                                      "type": "Email",
+                                      "label": "Email Label",
+                                      "required": "off",
+                                      "options": [
+                                        "Option 1",
+                                        "Option 2"
+                                      ],
+                                      "_id": "elkwbfbtaybbxqjwwlnkoqqqogzyzsgechij",
+                                      "placeholder": "Email Placeholder"
+                                    }
+                                  },
+                                  {
+                                    "type": "Form2Field",
+                                    "value": {
+                                      "type": "Number",
+                                      "label": "Number Label",
+                                      "required": "off",
+                                      "options": [
+                                        "Option 1",
+                                        "Option 2"
+                                      ],
+                                      "_id": "yqqsrehstofdpgnscpmtoidvexwkpldnfcqd",
+                                      "placeholder": "Number "
+                                    }
+                                  },
+                                  {
+                                    "type": "Form2Field",
+                                    "value": {
+                                      "type": "Paragraph",
+                                      "label": "Paragraph Label",
+                                      "required": "off",
+                                      "options": [
+                                        "Option 1",
+                                        "Option 2"
+                                      ],
+                                      "_id": "ultozkjbyuoypfiwuatfagqwmpvwdivirdda",
+                                      "placeholder": "Paragraph Placeholder"
+                                    }
+                                  },
+                                  {
+                                    "type": "Form2Field",
+                                    "value": {
+                                      "type": "Select",
+                                      "label": "Select Label",
+                                      "required": "off",
+                                      "options": [
+                                        "Option 1",
+                                        "Option 2"
+                                      ],
+                                      "_id": "dpvhfbahvpzpuwpahozxbmzvieywzridblbo",
+                                      "placeholder": "Select Placeholder"
+                                    }
+                                  },
+                                  {
+                                    "type": "Form2Field",
+                                    "value": {
+                                      "type": "Radio",
+                                      "label": "Radio Label",
+                                      "required": "off",
+                                      "options": [
+                                        "Radio 1",
+                                        "Radio 2"
+                                      ],
+                                      "_id": "mgeeeamwrlaurpuwvagfiifsasojvvmoyrtu",
+                                      "placeholder": "Select"
+                                    }
+                                  },
+                                  {
+                                    "type": "Form2Field",
+                                    "value": {
+                                      "type": "Checkbox",
+                                      "label": "Checkbox Label",
+                                      "required": "off",
+                                      "options": [
+                                        "Checkbox 1",
+                                        "Checkbox 2"
+                                      ],
+                                      "_id": "thtsirkfahvgwstmvzzkwysglrnuekradnad",
+                                      "placeholder": "Select"
+                                    }
+                                  },
+                                  {
+                                    "type": "Form2Field",
+                                    "value": {
+                                      "type": "Date",
+                                      "label": "Date Label",
+                                      "required": "off",
+                                      "options": [
+                                        "Checkbox 1",
+                                        "Checkbox 2"
+                                      ],
+                                      "_id": "yccchgqqapvunjlexnqnmqtvxipuqzxvatgv",
+                                      "placeholder": "Date Placeholder"
+                                    }
+                                  }
+                                ],
+                                "_id": "nwfqityfhuazpkvcgyjfgareafogyvrnqbev"
+                              }
+                            },
+                            {
+                              "type": "Button",
+                              "value": {
+                                "_styles": [
+                                  "button",
+                                  "submit"
+                                ],
+                                "_id": "cpcijnzmbpdqevcjcdbwqkvqqdbjmtxnljfm",
+                                "text": "Form Btn Text "
+                              }
+                            }
+                          ],
+                          "_id": "rsnhelcbhoftedascibkrosqffloqveucyfy",
+                          "label": "on"
+                        }
+                      }
+                    ],
+                    "_id": "htfstagjupgydyosshbvnjrxxrluppyjuzyo"
+                  }
+                }
+              ],
+              "_id": "wfziocllsnjdtxwnhdwowgbgjyedohvyfcel",
+              "paddingType": "ungrouped",
+              "paddingTop": 15
+            }
+          }
+        ],
+        "_id": "wwyorqlthuslzibjhzqvbcurbtunykwhtgur",
+        "_thumbnailSrc": "sixuzqzzkknoovepdpyghsoyvxzyzaot",
+        "_thumbnailWidth": 600,
+        "_thumbnailHeight": 365,
+        "_thumbnailTime": 1651652179404
+      },
+      "blockId": "Kit2Blank000Light"
+    }
+  ]
+}

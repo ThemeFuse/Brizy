@@ -6,8 +6,6 @@
 class Brizy_Compatibilities_WPML {
 
 	public function __construct() {
-
-		//add_filter( 'wp',                                [ $this, 'wp' ] );
 		add_action( 'wp_insert_post',                    [ $this, 'insertNewPost' ], - 10000, 3 );
 		add_action( 'wp_insert_post',                    [ $this, 'duplicatePosts' ], - 10000, 3 );
 		add_action( 'pre_get_posts',                     [ $this, 'pre_get_posts' ], 11 );
@@ -15,8 +13,7 @@ class Brizy_Compatibilities_WPML {
 		add_action( 'wp_ajax_icl_msync_confirm',         [ $this, 'syncMenus' ] );
 		add_action( 'brizy_create_editor_config_before', [ $this, 'rmMenusDuplicate' ] );
 		add_filter( 'brizy_content',                     [ $this, 'brizyContent' ] );
-		add_filter( 'icl_wpml_config_array',             [ $this, 'wpmlConfig' ] );
-		add_filter( 'wpml_pb_should_body_be_translated', [ $this, 'remove_body' ], 10, 2 );
+		add_filter( 'wpml_pb_should_body_be_translated', [ $this, 'remove_body' ], PHP_INT_MAX, 2 );
 		add_action( 'wpml_pro_translation_completed',    [ $this, 'save_post' ], 10, 3 );
 		add_filter( 'wpml_document_view_item_link',      '__return_empty_string' );
 		add_filter( 'wpml_document_edit_item_link',      '__return_empty_string' );
@@ -170,65 +167,10 @@ class Brizy_Compatibilities_WPML {
 		return $translate;
 	}
 
-	public function wpmlConfig( $config ) {
-
-		if ( ! isset( $config['wpml-config']['custom-types']['custom-type'] ) ) {
-			$config['wpml-config']['custom-types']['custom-type'] = [];
-		}
-
-		$postTypes      = $config['wpml-config']['custom-types']['custom-type'];
-		$addedPostTypes = wp_list_pluck( $postTypes, 'value' );
-
-		foreach ( [ Brizy_Admin_Blocks_Main::CP_GLOBAL, Brizy_Admin_Blocks_Main::CP_SAVED ] as $postType ) {
-			if ( ! in_array( $postType, $addedPostTypes ) ) {
-				$postTypes[] = [
-					'value' => $postType,
-					'attr'  => [
-						'translate' => '0'
-					]
-				];
-			}
-		}
-
-		if ( ! in_array( Brizy_Admin_Templates::CP_TEMPLATE, $addedPostTypes ) ) {
-			$postTypes[] = [
-				'value' => Brizy_Admin_Templates::CP_TEMPLATE,
-				'attr'  => [
-					'translate'             => '1',
-					'display-as-translated' => '1',
-				]
-			];
-		}
-
-		$config['wpml-config']['custom-types']['custom-type'] = $postTypes;
-
-		$fields = [
-			'brizy',
-			'brizy_enabled',
-			'brizy_post_uid',
-			'brizy-need-compile',
-			'brizy-post-plugin-version',
-			'brizy-post-editor-version',
-			'brizy-post-compiler-version',
-		];
-
-		foreach ( $fields as $field ) {
-			$config['wpml-config']['custom-fields']['custom-field'][] = [
-				'value' => $field,
-				'attr'  => [
-					'action' => 'ignore'
-				]
-			];
-		}
-
-		return $config;
-	}
-
 	/**
 	 * Compile translated brizy pages.
 	 *
 	 * @param int $post_id The ID of the translated post.
-	 *
 	 */
 	public function save_post( $post_id, $fields, $job ) {
 
@@ -244,28 +186,13 @@ class Brizy_Compatibilities_WPML {
 
 		try {
 			$translatedPost = Brizy_Editor_Post::get( $post_id );
-		} catch ( Exception $e ) {
-			return;
-		}
-
-		try {
 			$translatedPost->set_uses_editor( true );
 		} catch ( Exception $e ) {
 			return;
 		}
 
 		$translatedPost->set_needs_compile( true );
-
 		$translatedPost->saveStorage();
-	}
-
-	public function wp() {
-		if ( isset( $_REQUEST[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) && Brizy_Editor_User::is_user_allowed() ) {
-			$pid = Brizy_Editor::get()->currentPostId();
-			if ( Brizy_Editor_Entity::isBrizyEnabled( $pid ) ) {
-				update_post_meta( $pid, WPML_TM_Post_Edit_TM_Editor_Mode::POST_META_KEY_USE_NATIVE, 'yes' );
-			}
-		}
 	}
 
 	public function changeSuppressFilter( $args ) {
