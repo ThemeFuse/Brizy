@@ -16,103 +16,136 @@
         <key name="brizy">
             <key name="brizy-post">
                 <key name="editor_data">
-                    <key name="value">
-                        <key name="text" />
-                        <key name="items">
-                            <key name="*">
-                                <key name="value">
-                                    <key name="text" />
-                                    <key name="items">
-                                        <key name="*">
-                                            <key name="value">
-                                                <key name="text" />
-                                                <key name="items">
-                                                    <key name="*">
-                                                        <key name="value">
-                                                            <key name="text" />
-                                                            <key name="items">
-                                                                <key name="*">
-                                                                    <key name="value">
-                                                                        <key name="text" />
-                                                                        <key name="items">
-                                                                            <key name="*">
-                                                                                <key name="value">
-                                                                                    <key name="text" />
-                                                                                    <key name="items">
-                                                                                        <key name="*">
-                                                                                            <key name="value">
-                                                                                                <key name="text" />
-                                                                                                <key name="items">
-                                                                                                    <key name="*">
-                                                                                                        <key name="value">
-                                                                                                            <key name="text" />
-                                                                                                            <key name="items">
-                                                                                                                <key name="*">
-                                                                                                                    <key name="value">
-                                                                                                                        <key name="text" />
-                                                                                                                        <key name="items">
-                                                                                                                            <key name="*">
-                                                                                                                                <key name="value">
-                                                                                                                                    <key name="text" /></key>
-                                                                                                                            </key>
-                                                                                                                        </key>
-                                                                                                                    </key>
-                                                                                                                </key>
-                                                                                                            </key>
-                                                                                                        </key>
-                                                                                                    </key>
-                                                                                                </key>
-                                                                                            </key>
-                                                                                        </key>
-                                                                                    </key>
-                                                                                </key>
-                                                                            </key>
-                                                                        </key>
-                                                                    </key>
-                                                                </key>
-                                                            </key>
-                                                        </key>
-                                                    </key>
-                                                </key>
-                                            </key>
-                                        </key>
-                                    </key>
-                                </key>
-                            </key>
-                        </key>
-                    </key>
                     <key name="items">
                         <key name="*">
                             <key name="value">
                                 <key name="text" />
+                                <key name="placeholder" />
+                                <key name="label" />
                                 <key name="items">
                                     <key name="*">
                                         <key name="value">
                                             <key name="text" />
+                                            <key name="placeholder" />
+                                            <key name="label" />
                                             <key name="items">
                                                 <key name="*">
                                                     <key name="value">
                                                         <key name="text" />
+                                                        <key name="placeholder" />
+                                                        <key name="label" />
                                                         <key name="items">
                                                             <key name="*">
                                                                 <key name="value">
                                                                     <key name="text" />
+                                                                    <key name="placeholder" />
+                                                                    <key name="label" />
                                                                     <key name="items">
                                                                         <key name="*">
                                                                             <key name="value">
                                                                                 <key name="text" />
+                                                                                <key name="placeholder" />
+                                                                                <key name="label" />
                                                                                 <key name="items">
                                                                                     <key name="*">
                                                                                         <key name="value">
                                                                                             <key name="text" />
+                                                                                            <key name="placeholder" />
+                                                                                            <key name="label" />
                                                                                             <key name="items">
                                                                                                 <key name="*">
                                                                                                     <key name="value">
                                                                                                         <key name="text" />
+                                                                                                        <key name="placeholder" />
+                                                                                                        <key name="label" />
                                                                                                         <key name="items">
                                                                                                             <key name="*">
                                                                                                                 <key name="value">
-                                                                                                                    <key name="text" /></key>
+                                                                                                                    <key name="text" />
+                                                                                                                    <key name="placeholder" />
+                                                                                                                    <key name="label" />
+                                                                                                                    <key name="items">
+                                                                                                                        <key name="*">
+                                                                                                                            <key name="value">
+                                                                                                                                <key name="text" />
+                                                                                                                                <key name="placeholder" />
+                                                                                                                                <key name="label" />
+                                                                                                                                <key name="items">
+                                                                                                                                    <key name="*">
+                                                                                                                                        <key name="value">
+                                                                                                                                            <key name="text" />
+                                                                                                                                            <key name="placeholder" />
+                                                                                                                                            <key name="label" />
+                                                                                                                                            <key name="items">
+                                                                                                                                                <key name="*">
+                                                                                                                                                    <key name="value">
+                                                                                                                                                        <key name="text" />
+                                                                                                                                                        <key name="placeholder" />
+                                                                                                                                                        <key name="label" />
+                                                                                                                                                        <key name="items">
+                                                                                                                                                            <key name="*">
+                                                                                                                                                                <key name="value">
+                                                                                                                                                                    <key name="text" />
+                                                                                                                                                                    <key name="placeholder" />
+                                                                                                                                                                    <key name="label" />
+                                                                                                                                                                    <key name="items">
+                                                                                                                                                                        <key name="*">
+                                                                                                                                                                            <key name="value">
+                                                                                                                                                                                <key name="text" />
+                                                                                                                                                                                <key name="placeholder" />
+                                                                                                                                                                                <key name="label" />
+                                                                                                                                                                                <key name="items">
+                                                                                                                                                                                    <key name="*">
+                                                                                                                                                                                        <key name="value">
+                                                                                                                                                                                            <key name="text" />
+                                                                                                                                                                                            <key name="placeholder" />
+                                                                                                                                                                                            <key name="label" />
+                                                                                                                                                                                            <key name="items">
+                                                                                                                                                                                                <key name="*">
+                                                                                                                                                                                                    <key name="value">
+                                                                                                                                                                                                        <key name="text" />
+                                                                                                                                                                                                        <key name="placeholder" />
+                                                                                                                                                                                                        <key name="label" />
+                                                                                                                                                                                                        <key name="items">
+                                                                                                                                                                                                            <key name="*">
+                                                                                                                                                                                                                <key name="value">
+                                                                                                                                                                                                                    <key name="text" />
+                                                                                                                                                                                                                    <key name="placeholder" />
+                                                                                                                                                                                                                    <key name="label" />
+                                                                                                                                                                                                                    <key name="items">
+                                                                                                                                                                                                                        <key name="*">
+                                                                                                                                                                                                                            <key name="value">
+                                                                                                                                                                                                                                <key name="text" />
+                                                                                                                                                                                                                                <key name="placeholder" />
+                                                                                                                                                                                                                                <key name="label" />
+                                                                                                                                                                                                                            </key>
+                                                                                                                                                                                                                        </key>
+                                                                                                                                                                                                                    </key>
+                                                                                                                                                                                                                </key>
+                                                                                                                                                                                                            </key>
+                                                                                                                                                                                                        </key>
+                                                                                                                                                                                                    </key>
+                                                                                                                                                                                                </key>
+                                                                                                                                                                                            </key>
+                                                                                                                                                                                        </key>
+                                                                                                                                                                                    </key>
+                                                                                                                                                                                </key>
+                                                                                                                                                                            </key>
+                                                                                                                                                                        </key>
+                                                                                                                                                                    </key>
+                                                                                                                                                                </key>
+                                                                                                                                                            </key>
+                                                                                                                                                        </key>
+                                                                                                                                                    </key>
+                                                                                                                                                </key>
+                                                                                                                                            </key>
+                                                                                                                                        </key>
+                                                                                                                                    </key>
+                                                                                                                                </key>
+                                                                                                                            </key>
+                                                                                                                        </key>
+                                                                                                                    </key>
+                                                                                                                </key>
                                                                                                             </key>
                                                                                                         </key>
                                                                                                     </key>
