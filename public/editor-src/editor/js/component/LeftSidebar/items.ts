@@ -42,7 +42,8 @@ export default {
       type: "link",
       icon: "nc-collab",
       title: t("Collaborate"),
-      onClick: handleCollabClick
+      onClick: handleCollabClick,
+      disabled: IS_GLOBAL_POPUP || IS_STORY
     }
   ],
   bottom: [
