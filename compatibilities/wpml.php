@@ -2,10 +2,13 @@
 
 /**
  * Compatibility with WPML
+ * vioreleremia
+ *
  */
 class Brizy_Compatibilities_WPML {
 
 	public function __construct() {
+		add_action( 'init',                              [ $this, 'init' ] );
 		add_action( 'wp_insert_post',                    [ $this, 'insertNewPost' ], - 10000, 3 );
 		add_action( 'wp_insert_post',                    [ $this, 'duplicatePosts' ], - 10000, 3 );
 		add_action( 'pre_get_posts',                     [ $this, 'pre_get_posts' ], 11 );
@@ -13,7 +16,7 @@ class Brizy_Compatibilities_WPML {
 		add_action( 'wp_ajax_icl_msync_confirm',         [ $this, 'syncMenus' ] );
 		add_action( 'brizy_create_editor_config_before', [ $this, 'rmMenusDuplicate' ] );
 		add_filter( 'brizy_content',                     [ $this, 'brizyContent' ] );
-		add_filter( 'wpml_pb_should_body_be_translated', [ $this, 'remove_body' ], PHP_INT_MAX, 2 );
+		//add_filter( 'wpml_pb_should_body_be_translated', [ $this, 'remove_body' ], PHP_INT_MAX, 2 );
 		add_action( 'wpml_pro_translation_completed',    [ $this, 'save_post' ], 10, 3 );
 		add_filter( 'wpml_document_view_item_link',      '__return_empty_string' );
 		add_filter( 'wpml_document_edit_item_link',      '__return_empty_string' );
@@ -24,6 +27,13 @@ class Brizy_Compatibilities_WPML {
 		add_filter( 'wpml_decode_custom_field',          [ $this, 'decode_custom_field' ], 10, 2 );
 		add_filter( 'wpml_encode_custom_field',          [ $this, 'encode_custom_field' ], 10, 2 );
 		add_filter( 'wpml_basket_base64_item',           '__return_false' );
+		add_filter( 'icl_job_elements',                  [ $this, 'icl_job_elements' ], 10, 2 );
+	}
+
+	public function init() {
+		if ( isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) || isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
+			add_filter( 'wpml_ls_html', '__return_empty_string' );
+		}
 	}
 
 	/**
@@ -154,13 +164,7 @@ class Brizy_Compatibilities_WPML {
 	 */
 	public function remove_body( $translate, $post ) {
 
-		try {
-			$brizyPost = Brizy_Editor_Post::get( $post );
-		} catch ( Exception $e ) {
-			return $translate;
-		}
-
-		if ( $brizyPost->uses_editor() ) {
+		if ( $this->isUsingEditor( $post->ID ) ) {
 			$translate = false;
 		}
 
@@ -174,13 +178,7 @@ class Brizy_Compatibilities_WPML {
 	 */
 	public function save_post( $post_id, $fields, $job ) {
 
-		try {
-			$originalPost = Brizy_Editor_Post::get( $job->original_doc_id );
-		} catch ( Exception $e ) {
-			return;
-		}
-
-		if ( ! $originalPost->uses_editor() ) {
+		if ( ! $this->isUsingEditor( $job->original_doc_id ) ) {
 			return;
 		}
 
@@ -235,5 +233,42 @@ class Brizy_Compatibilities_WPML {
 			}
 		}
 		return $value;
+	}
+
+	/**
+	 * @param array $elements Array of fields to translate.
+	 * @param object $postId The ID of the post being translated.
+	 *
+	 * @return array
+	 */
+	public function icl_job_elements( $elements, $postId ) {
+
+		if ( ! $this->isUsingEditor( $postId ) ) {
+			return $elements;
+		}
+
+		foreach ( $elements as $index => $element ) {
+			if ( $element->field_type == 'body' ) {
+				unset( $elements[ $index ] );
+				break;
+			}
+		}
+
+		return $elements;
+	}
+
+	/**
+	 * @param $postId
+	 *
+	 * @return bool
+	 */
+	private function isUsingEditor( $postId ) {
+		try {
+			$originalPost = Brizy_Editor_Post::get( $postId );
+		} catch ( Exception $e ) {
+			return false;
+		}
+
+		return $originalPost->uses_editor();
 	}
 }
