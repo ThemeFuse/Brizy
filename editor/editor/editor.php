@@ -166,7 +166,7 @@ class Brizy_Editor_Editor_Editor {
 				),
 			),
 			'server'          => array(
-				'maxUploadSize' => $this->fileUploadMaxSize(),
+				'maxUploadFileSize' => $this->fileUploadMaxSize(),
 			),
 			'branding'        => array( 'name' => __bt( 'brizy', 'Brizy' ) ),
 			'prefix'          => Brizy_Editor::prefix(),
