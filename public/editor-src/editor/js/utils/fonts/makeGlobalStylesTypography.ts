@@ -10,7 +10,8 @@ interface FontStyle extends _FontStyle {
 export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
   const vars = fontStyles
     .map(style => {
-      const { id } = style;
+      const { id: _id } = style;
+      const id = _id.toLowerCase();
       const fontFamily = getFontById({
         family: style.fontFamily,
         type: style.fontFamilyType
@@ -18,30 +19,31 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
 
       const storyRichTextFontSize = `${style.fontSize * 0.23}%`;
 
-      return `--brz-${id}FontFamily:${fontFamily};--brz-${id}FontFamilyType:${
+      // Keys is lowercase because have problems in backend export HTML
+      return `--brz-${id}fontfamily:${fontFamily};--brz-${id}fontfamilytype:${
         style.fontFamilyType
-      };--brz-${id}FontSize:${style.fontSize}${style.fontSizeSuffix ??
-        "px"};--brz-${id}FontSizeSuffix:${
+      };--brz-${id}fontsize:${style.fontSize}${style.fontSizeSuffix ??
+        "px"};--brz-${id}fontsizesuffix:${
         style.fontSizeSuffix
-      };--brz-${id}FontWeight:${style.fontWeight};--brz-${id}LetterSpacing:${
+      };--brz-${id}fontweight:${style.fontWeight};--brz-${id}letterspacing:${
         style.letterSpacing
-      }px;--brz-${id}LineHeight:${style.lineHeight};--brz-${id}MobileFontSize:${
+      }px;--brz-${id}lineheight:${style.lineHeight};--brz-${id}mobilefontsize:${
         style.mobileFontSize
-      }${style.mobileFontSizeSuffix ?? "px"};--brz-${id}MobileFontWeight:${
+      }${style.mobileFontSizeSuffix ?? "px"};--brz-${id}mobilefontweight:${
         style.mobileFontWeight
-      };--brz-${id}MobileLetterSpacing:${
+      };--brz-${id}mobileletterspacing:${
         style.mobileLetterSpacing
-      }px;--brz-${id}MobileLineHeight:${
+      }px;--brz-${id}mobilelineheight:${
         style.mobileLineHeight
-      };--brz-${id}TabletFontSize:${
+      };--brz-${id}tabletfontsize:${
         style.tabletFontSize
-      }${style.tabletFontSizeSuffix ?? "px"};--brz-${id}TabletFontWeight:${
+      }${style.tabletFontSizeSuffix ?? "px"};--brz-${id}tabletfontweight:${
         style.tabletFontWeight
-      };--brz-${id}TabletLetterSpacing:${
+      };--brz-${id}tabletletterspacing:${
         style.tabletLetterSpacing
-      }px;--brz-${id}TabletLineHeight:${
+      }px;--brz-${id}tabletlineheight:${
         style.tabletLineHeight
-      };--brz-${id}StoryFontSize:${storyRichTextFontSize};`;
+      };--brz-${id}storyfontsize:${storyRichTextFontSize};`;
     })
     .join("");
 

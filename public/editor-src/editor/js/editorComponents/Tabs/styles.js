@@ -98,6 +98,9 @@ export function styleTabs(v, vs, vd) {
         "cssStyleElementTabsActiveBgColor"
       ]
     },
+    ".brz && > .brz-tabs__content > .brz-tabs__items > .brz-tabs__nav--mobile .brz-tabs__nav--button": {
+      standart: ["cssStyleBgColor"]
+    },
     ".brz && > .brz-tabs__nav .brz-tabs__nav--button .brz-icon-svg": {
       standart: [
         "cssStyleElementTabsBtnSpacing",

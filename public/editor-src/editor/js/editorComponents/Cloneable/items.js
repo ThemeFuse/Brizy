@@ -4,7 +4,7 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
-import { hideToolbar } from "visual/component/Toolbar/index";
+import { hideToolbar } from "visual/component/Toolbar";
 import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";

@@ -51,7 +51,11 @@ function blockScreenshotData(block, options) {
   if (block.type === "GlobalBlock") {
     block = globalBlocksAssembledSelector(getStore().getState())[
       block.value._id
-    ].data;
+    ];
+    block = {
+      ...block.data,
+      meta: block.meta
+    };
   }
 
   if (options.searchScreenshotInStoreFirst === true) {

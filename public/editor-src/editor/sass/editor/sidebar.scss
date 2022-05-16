@@ -115,7 +115,6 @@
     }
     &__options .brz-ed-sidebar__control__options {
       .brz-ed-sidebar__control__item {
-        cursor: auto;
         width: auto;
         max-height: none;
       }
@@ -537,6 +536,7 @@
     height: auto;
     padding-top: 14px;
     padding-bottom: 17px;
+    cursor: auto !important;
 
     // label
     .brz-ed-option__label {
@@ -569,6 +569,7 @@
     display: block;
     padding-top: 14px;
     padding-bottom: 17px;
+    cursor: auto !important;
 
     .brz-ed-control__focal-point {
       display: inline-block;

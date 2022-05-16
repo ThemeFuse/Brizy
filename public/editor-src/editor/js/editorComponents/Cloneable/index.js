@@ -45,6 +45,10 @@ export default class Cloneable extends EditorComponent {
 
   containerBorder = React.createRef();
 
+  shouldComponentUpdate(nextProps) {
+    return this.optionalSCU(nextProps);
+  }
+
   handleValueChange(value, meta) {
     if (value.items.length === 0) {
       this.selfDestruct();

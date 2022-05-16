@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 5.9.3<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.3.34<br>
+Stable tag: 2.3.37<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,24 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.3.37 - 2022-05-05
+* Fixed: Section dividers on Firefox
+* Fixed: Tab background color on mobile responsive view
+* Fixed: Unexpected token h in JSON at position 0 error when saving a layout
+
+### 2.3.36 - 2022-05-03
+* Improved: Improved performance when you have a lot of columns on the page 
+* Improved: Improved performance when you change global styling
+* Improved: Improved performance when you copy paste styles
+* Fixed: Mouse cursor when hovering the UI on the left sidebar 
+* Fixed: Moved layout Ekstra to PRO 
+* Fixed: Import Blocks button in Safari  
+* Fixed: Buttons conflicts with GTM 
+
+### 2.3.35 - 2022-04-21
+* Fixed: Text blink
+* Fixed: Section Dividers
 
 ### 2.3.34 - 2022-04-20
 * New: Added hover Transition for elements: Accordion, ProgressBar and Tabs 

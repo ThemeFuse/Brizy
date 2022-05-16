@@ -31,15 +31,21 @@ export const getUsedModelsUpload = ({
       let hrefs;
 
       while ((hrefs = hrefRgx.exec(text))) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const [_, href] = hrefs;
-        const { type, upload } = decodeFromString<{
-          type: string;
-          upload: string;
-        }>(href);
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const [_, href] = hrefs;
+          const { type, upload } = decodeFromString<{
+            type: string;
+            upload: string;
+          }>(href);
 
-        if (type === "upload" && upload) {
-          files.add(upload);
+          if (type === "upload" && upload) {
+            files.add(upload);
+          }
+        } catch (e) {
+          if (process.env.NODE_ENV === "development") {
+            console.log(e);
+          }
         }
       }
     },
