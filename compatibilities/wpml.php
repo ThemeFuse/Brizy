@@ -2,8 +2,6 @@
 
 /**
  * Compatibility with WPML
- * vioreleremia
- *
  */
 class Brizy_Compatibilities_WPML {
 
@@ -24,8 +22,8 @@ class Brizy_Compatibilities_WPML {
 		add_action( 'brizy_get_posts_current_template',  [ $this, 'changeSuppressFilter' ] );
 		add_action( 'brizy_get_posts_global_popups',     [ $this, 'changeSuppressFilter' ] );
 		add_action( 'brizy_get_posts_saved_popups',      [ $this, 'changeSuppressFilter' ] );
-		add_filter( 'wpml_decode_custom_field',          [ $this, 'decode_custom_field' ], 10, 2 );
-		add_filter( 'wpml_encode_custom_field',          [ $this, 'encode_custom_field' ], 10, 2 );
+//		add_filter( 'wpml_decode_custom_field',          [ $this, 'decode_custom_field' ], 10, 2 );
+//		add_filter( 'wpml_encode_custom_field',          [ $this, 'encode_custom_field' ], 10, 2 );
 		add_filter( 'wpml_basket_base64_item',           '__return_false' );
 		add_filter( 'icl_job_elements',                  [ $this, 'icl_job_elements' ], 10, 2 );
 	}
@@ -178,13 +176,23 @@ class Brizy_Compatibilities_WPML {
 	 */
 	public function save_post( $post_id, $fields, $job ) {
 
-		if ( ! $this->isUsingEditor( $job->original_doc_id ) ) {
+		try {
+			$originalPost = Brizy_Editor_Post::get( $job->original_doc_id );
+		} catch ( Exception $e ) {
+			return;
+		}
+
+		if ( ! $originalPost->uses_editor() ) {
 			return;
 		}
 
 		try {
 			$translatedPost = Brizy_Editor_Post::get( $post_id );
-			$translatedPost->set_uses_editor( true );
+
+			if ( ! $translatedPost->uses_editor() ) {
+				$originalPost->duplicateTo( $post_id );
+			}
+
 		} catch ( Exception $e ) {
 			return;
 		}
@@ -247,9 +255,23 @@ class Brizy_Compatibilities_WPML {
 			return $elements;
 		}
 
-		foreach ( $elements as $index => $element ) {
+		$editor = Brizy_Editor_Post::get( $postId );
+
+//		if ( ! $editor->isCompiledWithCurrentVersion() || $editor->get_needs_compile() ) {
+//			try {
+//				$editor->compile_page();
+//				$editor->saveStorage();
+//				$editor->savePost();
+//			} catch ( Exception $e ) {
+//				$test = 0;
+//			}
+//		}
+
+		$body = $editor->get_encoded_compiled_html();
+
+		foreach ( $elements as $element ) {
 			if ( $element->field_type == 'body' ) {
-				unset( $elements[ $index ] );
+				$element->field_data = $body;
 				break;
 			}
 		}
