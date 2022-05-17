@@ -37,28 +37,6 @@ if ( BRIZY_DEVELOPMENT ) {
 	$dotenv->loadEnv( __DIR__ . '/.env' );
 }
 
-add_action( 'wp', function() {
-
-	if ( ! isset( $_GET['brz-page-id'] ) ) {
-		return;
-	}
-
-	try {
-        $editor = Brizy_Editor_Post::get( $_GET['brz-page-id'] );
-
-        $editor->set_editor_data( file_get_contents( BRIZY_PLUGIN_PATH . '/fixture.json' ) );
-		$editor->enable_editor();
-        $editor->compile_page();
-		$editor->saveStorage();
-		$editor->savePost();
-	} catch ( Exception $e ) {
-        die( $e->getMessage() );
-    }
-
-	die( 'Done!' );
-} );
-
-
 add_action( 'plugins_loaded', 'brizy_load' );
 add_action( 'init', 'brizy_load_text_domain' );
 add_action( 'upgrader_process_complete', 'brizy_upgrade_completed', 10, 2 );
