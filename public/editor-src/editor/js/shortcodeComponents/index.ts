@@ -1,3 +1,6 @@
+import Config from "visual/global/Config";
+import { baseCommon, baseStory, social, grid } from "./index.common";
+import Ecwid from "./Ecwid";
 import {
   IS_SINGLE,
   IS_PROTECTED,
@@ -5,32 +8,12 @@ import {
   IS_USER_PAGE
 } from "visual/utils/env";
 import { IS_STORY, IS_EXTERNAL_POPUP } from "visual/utils/models";
-import { Shortcodes } from "visual/types";
+import { Shortcode, Shortcodes } from "visual/types";
 
-import Text from "./Text";
-import Button from "./Button";
-import Icon from "./Icon";
-import Image from "./Image";
-import Audio from "./Audio";
-import Video from "./Video";
-import Spacer from "./Spacer";
-import Line from "./Line";
-import Map from "./Map";
-import Embed from "./Embed";
-import Form2 from "./Form2";
-import IconText from "./IconText";
-import Counter from "./Counter";
-import Countdown2 from "./Countdown2";
-import Tabs from "./Tabs";
-import ProgressBar from "./ProgressBar";
-import Accordion from "./Accordion";
-import MenuSimple from "./MenuSimple";
 import ProtectedPage from "./ProtectedPage";
-import Login from "./pro/Login";
-import ResetPassword from "./pro/ResetPassword";
+import Translation from "./Translation";
 
-import Row from "./Row";
-import Columns from "./Columns";
+import ResetPassword from "./pro/ResetPassword";
 
 import PostTitle from "./PostTitle";
 import Posts from "./Posts";
@@ -42,136 +25,28 @@ import UserPhoneNumber from "./UserPhoneNumber";
 import UserRoles from "./UserRoles";
 import UserUsername from "./UserUsername";
 
-import StoryText from "./story/StoryText";
-import StoryMap from "./story/StoryMap";
-import StoryVideo from "./story/StoryVideo";
-import StoryProgressBar from "./story/StoryProgressBar";
-import StoryLine from "./story/StoryLine";
-import StoryCountdown2 from "./story/StoryCountdown2";
-import StoryCounter from "./story/StoryCounter";
-import StoryEmbed from "./story/StoryEmbed";
-import StoryIcon from "./story/StoryIcon";
-import StoryShape from "./story/StoryShape";
-import StoryImage from "./story/StoryImage";
-import StoryButton from "./story/StoryButton";
-import StoryForm2 from "./story/StoryForm2";
+import Login from "./pro/Login";
+import { match } from "fp-utilities";
+import { isWp } from "visual/global/Config/types/configs/WP";
+import { isCloud } from "visual/global/Config/types/configs/Cloud";
 
-import ImageGallery from "./pro/ImageGallery";
-import Carousel from "./pro/Carousel";
-import StarRating from "./pro/StarRating";
-import Menu from "./pro/Menu";
-import FacebookComments from "./pro/FacebookComments";
-import VideoPlaylist from "./pro/VideoPlaylist";
-import Timeline from "./pro/Timeline";
-import Switcher from "./pro/Switcher";
-import Facebook from "./pro/Facebook";
-import Twitter from "./pro/Twitter";
-import Lottie from "./pro/Lottie";
-import Table from "./pro/Table";
-import StoryStarRating from "./pro/story/StoryStarRating";
-import StoryLottie from "./pro/story/StoryLottie";
+const baseCloud = [...baseCommon, { component: Translation, pro: false }];
 
-export const base = [
-  { component: Text, pro: false },
-  { component: Button, pro: false },
-  { component: Icon, pro: false },
-  { component: Image, pro: false },
-  { component: Audio, pro: false },
-  { component: Video, pro: false },
-  { component: Spacer, pro: false },
-  { component: Line, pro: false },
-  { component: Map, pro: false },
-  { component: Embed, pro: false },
-  { component: Form2, pro: false },
-  { component: IconText, pro: false },
-  { component: Counter, pro: false },
-  { component: Countdown2, pro: false },
-  { component: Tabs, pro: false },
-  { component: ProgressBar, pro: false },
-  { component: Accordion, pro: false },
-  { component: MenuSimple, pro: false },
+const baseWithPosts = [...baseCloud, { component: Posts, pro: false }];
 
-  { component: ImageGallery, pro: true },
-  { component: Carousel, pro: true },
-  { component: StarRating, pro: true },
-  { component: Menu, pro: true },
-  { component: VideoPlaylist, pro: true },
-  { component: Table, pro: true },
-  { component: Timeline, pro: true },
-  { component: Switcher, pro: true },
-  { component: Lottie, pro: true },
-  { component: Login, pro: true }
-];
-
-const baseWithPosts = [...base, { component: Posts, pro: false }];
-
-// Without Login & Posts
-const baseExternalPopup = [
-  { component: Text, pro: false },
-  { component: Button, pro: false },
-  { component: Icon, pro: false },
-  { component: Image, pro: false },
-  { component: Audio, pro: false },
-  { component: Video, pro: false },
-  { component: Spacer, pro: false },
-  { component: Line, pro: false },
-  { component: Map, pro: false },
-  { component: Embed, pro: false },
-  { component: Form2, pro: false },
-  { component: IconText, pro: false },
-  { component: Counter, pro: false },
-  { component: Countdown2, pro: false },
-  { component: Tabs, pro: false },
-  { component: ProgressBar, pro: false },
-  { component: Accordion, pro: false },
-  { component: MenuSimple, pro: false },
-
-  { component: ImageGallery, pro: true },
-  { component: Carousel, pro: true },
-  { component: StarRating, pro: true },
-  { component: Menu, pro: true },
-  { component: VideoPlaylist, pro: true },
-  { component: Table, pro: true },
-  { component: Timeline, pro: true },
-  { component: Switcher, pro: true },
-  { component: Lottie, pro: true }
-];
+// Without Login
+const baseExternalPopup = baseCommon.reduce(
+  (acc: Shortcode[], curr: Shortcode) =>
+    curr.component !== Login ? [...acc, curr] : acc,
+  []
+);
 
 const protectedPage = [{ component: ProtectedPage, pro: false }];
 const resetPassword = [{ component: ResetPassword, pro: false }];
 
-const baseStory = [
-  { component: StoryButton, pro: false },
-  { component: StoryImage, pro: false },
-  { component: StoryIcon, pro: false },
-  { component: StoryEmbed, pro: false },
-  { component: StoryText, pro: false },
-  { component: StoryMap, pro: false },
-  { component: StoryVideo, pro: false },
-  { component: StoryProgressBar, pro: false },
-  { component: StoryLine, pro: false },
-  { component: StoryCountdown2, pro: false },
-  { component: StoryCounter, pro: false },
-  { component: StoryShape, pro: false },
-  { component: StoryForm2, pro: false },
-  { component: StoryStarRating, pro: true },
-  { component: StoryLottie, pro: true }
-];
-
-const grid = [
-  { component: Row, pro: false },
-  { component: Columns, pro: false }
-];
-
 const cmsSingle = [
   { component: PostTitle, pro: false },
   { component: Posts, pro: false }
-];
-
-const social = [
-  { component: Facebook, pro: true },
-  { component: Twitter, pro: true },
-  { component: FacebookComments, pro: true }
 ];
 
 const user = [
@@ -182,6 +57,21 @@ const user = [
   { component: UserRoles, pro: false },
   { component: UserUsername, pro: false }
 ];
+
+const shop: Shortcode[] = match(
+  [isWp, () => []],
+  [
+    isCloud,
+    (v): Shortcode[] => {
+      switch (v.modules?.shop?.type) {
+        case undefined:
+          return [];
+        case "ecwid":
+          return Ecwid;
+      }
+    }
+  ]
+)(Config.getAll());
 
 const config = ((): Shortcodes => {
   if (IS_STORY) {
@@ -195,7 +85,8 @@ const config = ((): Shortcodes => {
       user: user,
       base: baseWithPosts,
       grid,
-      social
+      social,
+      shop
     };
   }
 
@@ -204,7 +95,8 @@ const config = ((): Shortcodes => {
       systemPages: protectedPage,
       base: baseWithPosts,
       grid,
-      social
+      social,
+      shop
     };
   }
 
@@ -213,16 +105,18 @@ const config = ((): Shortcodes => {
       systemPages: resetPassword,
       base: baseWithPosts,
       grid,
-      social
+      social,
+      shop
     };
   }
 
   if (IS_SINGLE) {
     return {
       dynamic: cmsSingle,
-      base,
+      base: baseCloud,
       grid,
-      social
+      social,
+      shop
     };
   }
 
@@ -237,7 +131,8 @@ const config = ((): Shortcodes => {
   return {
     base: baseWithPosts,
     grid,
-    social
+    social,
+    shop
   };
 })();
 

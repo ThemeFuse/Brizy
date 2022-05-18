@@ -4,7 +4,6 @@ import { NORMAL, HOVER } from "visual/utils/stateMode";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarElementForm2BorderRadius,
   toolbarElementForm2Size,
   toolbarElementLoginSpacingPx
 } from "visual/utils/toolbar";
@@ -44,16 +43,17 @@ export function getItems({ v, device }) {
                   v,
                   device
                 }),
-                toolbarElementForm2BorderRadius({
-                  v,
-                  device,
-                  state: "normal",
+                {
+                  id: "borderRadius",
+                  type: "slider-dev",
+                  label: t("Corner"),
                   devices: "desktop",
-                  onChange: [
-                    "onChangeBorderRadiusGrouped",
-                    "onChangeBorderRadiusGroupedDependencies"
-                  ]
-                }),
+                  config: {
+                    min: 0,
+                    max: 100,
+                    units: [{ value: "px", title: "px" }]
+                  }
+                },
                 toolbarElementLoginSpacingPx({ v, device, state: "normal" })
               ]
             },

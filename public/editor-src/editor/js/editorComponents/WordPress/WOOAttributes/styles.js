@@ -35,7 +35,7 @@ export function style(v, vs, vd) {
     ".brz && table tr:last-child th, .brz && table tr:last-child td": {
       standart: ["cssStyleElementWOOAttributesLastElementBorder"]
     },
-    ".brz &&:hover .brz-woo-attributes_title ": {
+    ".brz &&:hover h2": {
       standart: [
         "cssStyleElementWOOAdditionalTitleFontFamily",
         "cssStyleElementWOOAdditionalTitleFontSize",

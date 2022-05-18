@@ -14,48 +14,59 @@ const helperHTML = `
 export function getItems(): ToolbarItemType[] {
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
-      config: {
-        align: "start"
-      },
-      devices: "desktop",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       tabs: [
         {
-          id: "settingsStyling",
+          id: "styles",
+          title: t("Styling"),
           label: t("Styling"),
-          icon: "nc-styling",
-          options: []
-        },
-        {
-          id: "moreSettingsAdvanced",
-          label: t("Advanced"),
-          icon: "nc-cog",
           options: [
             {
-              id: "customCSS",
-              label: t("Custom CSS"),
-              type: "codeMirror-dev",
-              position: 45,
-              display: "block",
+              id: "settingsTabs",
+              type: "tabs-dev",
+              config: {
+                align: "start"
+              },
               devices: "desktop",
-              helper: { content: helperHTML },
-              placeholder: "element { CSS goes here }"
-            },
-            {
-              id: "tagName",
-              label: t("HTML Tag"),
-              type: "select-dev",
-              choices: [
-                { title: t("Span"), value: "span" },
-                { title: t("P"), value: "p" },
-                { title: t("H1"), value: "h1" },
-                { title: t("H2"), value: "h2" },
-                { title: t("H3"), value: "h3" },
-                { title: t("H4"), value: "h4" },
-                { title: t("H5"), value: "h5" },
-                { title: t("H6"), value: "h6" },
-                { title: t("PRE"), value: "pre" }
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  options: []
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  options: [
+                    {
+                      id: "customCSS",
+                      label: t("Custom CSS"),
+                      type: "codeMirror-dev",
+                      position: 45,
+                      display: "block",
+                      devices: "desktop",
+                      helper: { content: helperHTML },
+                      placeholder: "element { CSS goes here }"
+                    },
+                    {
+                      id: "tagName",
+                      label: t("HTML Tag"),
+                      type: "select-dev",
+                      choices: [
+                        { title: t("Span"), value: "span" },
+                        { title: t("P"), value: "p" },
+                        { title: t("H1"), value: "h1" },
+                        { title: t("H2"), value: "h2" },
+                        { title: t("H3"), value: "h3" },
+                        { title: t("H4"), value: "h4" },
+                        { title: t("H5"), value: "h5" },
+                        { title: t("H6"), value: "h6" },
+                        { title: t("PRE"), value: "pre" }
+                      ]
+                    }
+                  ]
+                }
               ]
             }
           ]

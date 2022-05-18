@@ -29,6 +29,16 @@ class Facebook extends EditorComponent {
     };
   }
 
+  tabs = v => {
+    const { pageTabs } = v;
+
+    try {
+      return JSON.parse(pageTabs);
+    } catch {
+      return pageTabs;
+    }
+  };
+
   renderForEdit(v, vs, vd) {
     const {
       className: _className,
@@ -49,7 +59,6 @@ class Facebook extends EditorComponent {
       facebookEmbedVideoAutoPlay,
       facebookEmbedVideoCaptions,
       facebookPageHref,
-      pageTabs,
       height,
       smallHeader,
       hideCover,
@@ -125,9 +134,9 @@ class Facebook extends EditorComponent {
         width: "500",
         href:
           facebookPageHref === ""
-            ? "https://facebook.com/brizy.io"
+            ? "https://www.facebook.com/techcrunch/"
             : facebookPageHref,
-        tabs: pageTabs,
+        tabs: this.tabs(v),
         height,
         smallHeader: smallHeader === "on",
         hideCover: hideCover === "on",
@@ -139,7 +148,7 @@ class Facebook extends EditorComponent {
         width,
         href:
           facebookGroupHref === ""
-            ? "https://www.facebook.com/groups/brizy/"
+            ? "https://www.facebook.com/groups/669915249871846"
             : facebookGroupHref,
         skin,
         showSocialContext: showSocialContext === "on",
@@ -185,7 +194,6 @@ class Facebook extends EditorComponent {
       facebookEmbedVideoAutoPlay,
       facebookEmbedVideoCaptions,
       facebookPageHref,
-      pageTabs,
       height,
       smallHeader,
       hideCover,
@@ -254,7 +262,7 @@ class Facebook extends EditorComponent {
             },
       page: {
         "data-width": "500",
-        "data-tabs": pageTabs,
+        "data-tabs": this.tabs(v),
         "data-height": height,
         "data-small-header": smallHeader === "on",
         "data-hide-cover": hideCover === "on",
@@ -262,7 +270,7 @@ class Facebook extends EditorComponent {
         "data-show-facepile": showFacepile === "on",
         "data-href":
           facebookPageHref === ""
-            ? "https://facebook.com/brizy.io"
+            ? "https://www.facebook.com/techcrunch/"
             : facebookPageHref,
         "data-lang": appData.lang
       },
@@ -270,7 +278,7 @@ class Facebook extends EditorComponent {
         "data-width": width,
         "data-href":
           facebookGroupHref === ""
-            ? "https://www.facebook.com/groups/brizy/"
+            ? "https://www.facebook.com/groups/669915249871846"
             : facebookGroupHref,
         "data-show-social-context": showSocialContext === "on",
         "data-show-metadata": showMetaData === "on",

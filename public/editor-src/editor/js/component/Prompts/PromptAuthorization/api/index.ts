@@ -19,10 +19,8 @@ export const signUp = (data: SignUp): Promise<Response> => {
     method: "POST",
     body: new URLSearchParams({
       email,
-      /* eslint-disable @typescript-eslint/camelcase */
       new_password: password,
       confirm_password: confirmPassword
-      /* eslint-enable @typescript-eslint/camelcase */
     })
   });
 };

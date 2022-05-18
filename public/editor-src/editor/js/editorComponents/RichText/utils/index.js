@@ -1,3 +1,4 @@
+import Config from "visual/global/Config";
 import { isHex } from "visual/utils/color";
 import { getDynamicContentByPlaceholder } from "visual/utils/options";
 import { decodeFromString } from "visual/utils/string";
@@ -68,11 +69,11 @@ const parseShadow = (str = "") => {
 
     if (hex && result) {
       return {
-        hex: result.hex ?? "#000000",
-        opacity: result.opacity ?? 1,
-        vertical: parseInt(vertical ?? 5),
-        horizontal: parseInt(horizontal ?? 5),
-        blur: parseInt(blur ?? 5)
+        textShadowColorHex: result.hex ?? "#000000",
+        textShadowColorOpacity: result.opacity ?? 1,
+        textShadowVertical: parseInt(vertical ?? 5),
+        textShadowHorizontal: parseInt(horizontal ?? 5),
+        textShadowBlur: parseInt(blur ?? 5)
       };
     }
 
@@ -81,21 +82,30 @@ const parseShadow = (str = "") => {
 
   const [, rgba, shadow] = str.split(", rgb")[0].match(/^(rgb.*\)) (.*)/) || [];
 
+  let textShadowColorHex = "#000000";
+  let textShadowColorOpacity = 0;
+  let textShadowVertical = 0;
+  let textShadowHorizontal = 0;
+  let textShadowBlur = 0;
+
   if (rgba && shadow) {
     let { hex, opacity } = rgbaTohex(rgba);
     const [horizontal, vertical, blur] = shadow.split(" ");
-    opacity = parseFloat(opacity);
 
-    return {
-      hex,
-      opacity: !isNaN(opacity) ? opacity : 1,
-      vertical: parseInt(vertical),
-      horizontal: parseInt(horizontal),
-      blur: parseInt(blur)
-    };
+    textShadowColorHex = hex;
+    textShadowColorOpacity = !isNaN(parseFloat(opacity)) ? opacity : 1;
+    textShadowVertical = parseInt(vertical);
+    textShadowHorizontal = parseInt(horizontal);
+    textShadowBlur = parseInt(blur);
   }
 
-  return {};
+  return {
+    textShadowColorHex,
+    textShadowColorOpacity,
+    textShadowVertical,
+    textShadowHorizontal,
+    textShadowBlur
+  };
 };
 
 /* eslint-disable no-unused-vars */
@@ -145,6 +155,7 @@ const getLink = (value = "{}") => {
 
 export const getFormats = ($elem, format = {}, deviceMode) => {
   const v = classNamesToV($elem.closest("p, :header, pre, li"));
+  const dynamicContent = Config.get("dynamicContent") || {};
   format = flatFormats(format);
 
   const cssColor = $elem.css("color");
@@ -219,8 +230,8 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     },
     colorPalette: palette,
 
-    shadow: parseShadow(format.shadow || cssShadow),
-    shadowColorPalette: format.shadowColorPalette || "",
+    ...parseShadow(format.shadow),
+    textShadowColorPalette: format.shadowColorPalette || null,
 
     backgroundImage: format.backgroundImage || null,
     backgroundGradient: format.backgroundGradient || null,
@@ -234,10 +245,11 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
       ? {
           population: format.population,
           label: $elem.closest("[data-population]").text(),
-          display: getDynamicContentByPlaceholder(
-            "richText",
-            `{{${format.population}}}`
-          ).display
+          display:
+            getDynamicContentByPlaceholder(
+              dynamicContent,
+              `{{${format.population}}}`
+            )?.display ?? "inline"
         }
       : null,
     prepopulation: format.prepopulation

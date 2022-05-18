@@ -18,6 +18,14 @@
   background-repeat: no-repeat;
   background-position: center;
   margin-top: -7px;
+  cursor: pointer;
+  transition: border-color .2s ease, box-shadow .2s ease;
+
+  &:active {
+    border-color: #57c5f7;
+    box-shadow: 0 0 5px #57c5f7;
+    cursor: grabbing;
+  }
 }
 
 @mixin track {

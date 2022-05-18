@@ -1,17 +1,17 @@
 import { Literal, read as readLiteral } from "visual/utils/types/Literal";
-import { GetElementModel, GetModel } from "visual/component/Options/Type";
+import {
+  ToElementModel,
+  FromElementModel
+} from "visual/component/Options/Type";
 import { ElementModelValue, ChoicesSync, ChoicesAsync } from "./types";
 
-export const getModel: GetModel<ElementModelValue> = get => ({
+export const getModel: FromElementModel<ElementModelValue> = get => ({
   value: readLiteral(get("value"))
 });
 
-export const getElementModel: GetElementModel<ElementModelValue> = (
-  values,
-  get
-) => {
+export const getElementModel: ToElementModel<ElementModelValue> = values => {
   return {
-    [get("value")]: values.value
+    value: values.value
   };
 };
 

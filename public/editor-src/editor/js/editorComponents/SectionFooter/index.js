@@ -2,12 +2,17 @@ import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import classnames from "classnames";
-import { validateKeyByProperty } from "visual/utils/onChange";
+import {
+  defaultValueValue,
+  validateKeyByProperty
+} from "visual/utils/onChange";
 import SectionFooterItems from "./Items";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { Roles } from "visual/component/Roles";
+import { ProBlocked } from "visual/component/ProBlocked";
+import { IS_PRO } from "visual/utils/env";
 import {
   wInBoxedPage,
   wInTabletPage,
@@ -75,6 +80,10 @@ class SectionFooter extends EditorComponent {
 
   handlePaddingResizerChange = patch => this.patchValue(patch);
 
+  handleRemove = () => {
+    this.selfDestruct();
+  };
+
   getMeta(v) {
     const { meta } = this.props;
     const containerType = styleElementSectionContainerType({ v });
@@ -97,6 +106,28 @@ class SectionFooter extends EditorComponent {
       mobileWNoSpacing: mobileW
     };
   }
+
+  getAnimationClassName = (v, vs, vd) => {
+    if (!validateKeyByProperty(v, "animationName", "none")) {
+      return undefined;
+    }
+
+    const animationName = defaultValueValue({ v, key: "animationName" });
+    const animationDuration = defaultValueValue({
+      v,
+      key: "animationDuration"
+    });
+    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
+    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+
+    return classnames(
+      css(
+        `${this.getComponentId()}-animation-${slug}`,
+        `${this.getId()}-animation-${slug}`,
+        styleAnimation(v, vs, vd)
+      )
+    );
+  };
 
   renderToolbar(v) {
     const { globalBlockId } = this.props.meta;
@@ -149,27 +180,7 @@ class SectionFooter extends EditorComponent {
       customAttributes
     } = v;
 
-    const classNameSection = classnames(
-      "brz-footer",
-      className,
-      cssClassPopulation === "" ? customClassName : cssClassPopulation,
-      css(
-        `${this.constructor.componentId}-section`,
-        `${this.getId()}-section`,
-        styleSection(v, vs, vd)
-      )
-    );
-
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
-
-    return (
+    return IS_PRO ? (
       <ContainerBorder
         type="footer"
         hiddenInResponsive={true}
@@ -185,9 +196,20 @@ class SectionFooter extends EditorComponent {
                 ...containerBorderAttr,
                 "data-block-id": this.props.blockId,
                 id: this.getId(),
-                className: classNameSection
+                className: classnames(
+                  "brz-footer",
+                  className,
+                  cssClassPopulation === ""
+                    ? customClassName
+                    : cssClassPopulation,
+                  css(
+                    `${this.constructor.componentId}-section`,
+                    `${this.getId()}-section`,
+                    styleSection(v, vs, vd)
+                  )
+                )
               }}
-              animationClass={animationClassName}
+              animationClass={this.getAnimationClassName(v, vs, vd)}
             >
               <Roles
                 allow={["admin"]}
@@ -202,6 +224,10 @@ class SectionFooter extends EditorComponent {
           </CustomCSS>
         )}
       </ContainerBorder>
+    ) : (
+      <footer className="brz-footer">
+        <ProBlocked text={"Footer"} onRemove={this.handleRemove} />
+      </footer>
     );
   }
 
@@ -232,45 +258,38 @@ class SectionFooter extends EditorComponent {
     } = v;
     const { sectionPopup, sectionPopup2 } = this.props.meta;
 
-    const classNameSection = classnames(
-      "brz-footer",
-      className,
-      cssClassPopulation === "" ? customClassName : cssClassPopulation,
-      css(
-        `${this.constructor.componentId}-section`,
-        `${this.getId()}-section`,
-        styleSection(v, vs, vd)
-      )
-    );
-
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
-
-    const props = {
-      ...parseCustomAttributes(customAttributes),
-      "data-uid": this.getId(),
-      id:
-        cssIDPopulation === "" ? v.anchorName || this.getId() : cssIDPopulation,
-      className: classNameSection
-    };
-
-    const content = (
+    const content = IS_PRO ? (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <Animation
           iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
           component={tagName}
-          componentProps={props}
-          animationClass={animationClassName}
+          componentProps={{
+            ...parseCustomAttributes(customAttributes),
+            "data-uid": this.getId(),
+            id:
+              cssIDPopulation === ""
+                ? v.anchorName || this.getId()
+                : cssIDPopulation,
+            className: classnames(
+              "brz-footer",
+              className,
+              cssClassPopulation === "" ? customClassName : cssClassPopulation,
+              css(
+                `${this.getComponentId()}-section`,
+                `${this.getId()}-section`,
+                styleSection(v, vs, vd)
+              )
+            )
+          }}
+          animationClass={this.getAnimationClassName(v, vs, vd)}
         >
           {this.renderItems(v, vs, vd)}
         </Animation>
       </CustomCSS>
+    ) : (
+      <section className="brz-footer">
+        <ProBlocked text={"Footer"} />
+      </section>
     );
 
     return this.renderMemberShipWrapper(content, v);

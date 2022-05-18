@@ -7,14 +7,10 @@ import {
   styleTypography2LetterSpacing
 } from "visual/utils/style2";
 
+import { cssStyleColor } from "visual/utils/cssStyle";
+
 export function cssStyleElementWPPostContentH1Color({ v, device, state }) {
-  const color = styleColor({
-    v,
-    device,
-    prefix: "h1Color",
-    state
-  });
-  return color === undefined ? "" : `color:${color};`;
+  return cssStyleColor({ v, device, state, prefix: "h1Color" });
 }
 
 export function cssStyleElementWPPostContentH2Color({ v, device, state }) {

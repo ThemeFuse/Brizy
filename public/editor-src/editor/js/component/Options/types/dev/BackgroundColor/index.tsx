@@ -1,5 +1,4 @@
 import React, { ComponentProps, FC, useCallback } from "react";
-import _ from "underscore";
 import { getColorPaletteColors as paletteColors } from "visual/utils/color";
 import * as O from "visual/component/Options/Type";
 import { BackgroundColor as Bg } from "visual/component/Controls/BackgroundColor";
@@ -22,8 +21,8 @@ import * as Hex from "visual/utils/color/Hex";
 import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
 
 export type Props = O.Props<Value> & {
-  config: {
-    opacity: boolean;
+  config?: {
+    opacity?: boolean;
   };
 };
 
@@ -46,26 +45,19 @@ export const BackgroundColor: FC<Props> & O.OptionType<Value> = ({
       const isStart = !(value.type === "gradient" && value.active === "end");
       switch (m.isChanged) {
         case "type":
-          onChange(toElementModel(Model.setType(v.type, value), _.identity));
+          onChange(Model.setType(v.type, value));
           break;
         case "gradientType":
-          onChange(
-            toElementModel(
-              Model.setGradientType(v.gradientType, value),
-              _.identity
-            )
-          );
+          onChange(Model.setGradientType(v.gradientType, value));
           break;
         case "start":
-          onChange(toElementModel(Model.setStart(v.start, value), _.identity));
+          onChange(Model.setStart(v.start, value));
           break;
         case "end":
-          onChange(toElementModel(Model.setEnd(v.end, value), _.identity));
+          onChange(Model.setEnd(v.end, value));
           break;
         case "active":
-          onChange(
-            toElementModel(Model.setActive(v.active, value), _.identity)
-          );
+          onChange(Model.setActive(v.active, value));
           break;
         case "degree": {
           if (value.type === "gradient") {
@@ -73,34 +65,27 @@ export const BackgroundColor: FC<Props> & O.OptionType<Value> = ({
               value.gradientType === "radial"
                 ? Model.setRadialDegree
                 : Model.setLinearDegree;
-            onChange(toElementModel(setter(v.degree, value), _.identity));
+            onChange(setter(v.degree, value));
           }
           break;
         }
         case "hex": {
           const setter = isStart ? Model.setHex : Model.setGradientHex;
           const hex = Hex.fromString(v.hex);
-          hex !== undefined &&
-            onChange(toElementModel(setter(hex, value), _.identity));
+          hex !== undefined && onChange(setter(hex, value));
           break;
         }
         case "opacity": {
           const setter = isStart ? Model.setOpacity : Model.setGradientOpacity;
           const opacity = Opacity.fromNumber(v.opacity);
           opacity !== undefined &&
-            onChange(
-              toElementModel(
-                setOpacity(setter, opacity, value, !!m.opacityDragEnd),
-                _.identity
-              )
-            );
+            onChange(setOpacity(setter, opacity, value, !!m.opacityDragEnd));
           break;
         }
         case "palette": {
           const setter = isStart ? Model.setPalette : Model.setGradientPalette;
           const palette = Palette.fromString(v.palette);
-          palette !== undefined &&
-            onChange(toElementModel(setter(palette, value), _.identity));
+          palette !== undefined && onChange(setter(palette, value));
           break;
         }
       }
@@ -125,10 +110,8 @@ export const BackgroundColor: FC<Props> & O.OptionType<Value> = ({
   );
 };
 
-BackgroundColor.getModel = fromElementModel;
+BackgroundColor.fromElementModel = fromElementModel;
 
-BackgroundColor.getElementModel = toElementModel;
+BackgroundColor.toElementModel = toElementModel;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
 BackgroundColor.defaultValue = DEFAULT_VALUE;

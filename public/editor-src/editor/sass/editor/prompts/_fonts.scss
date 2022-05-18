@@ -40,6 +40,12 @@
       transition: 0.3s ease-in-out border-color;
     }
   }
+  &__item--selected .brz-ed-popup-fonts__item-logo:after {
+    border-color: #48be24;
+  }
+  &__item--selected .brz-ed-popup-integrations__app-icon {
+    background-color: #48be24;
+  }
   &__item-title {
     font-family: inherit;
     font-size: 13px;

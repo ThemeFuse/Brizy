@@ -12,7 +12,7 @@ import Population from "./Population";
 
 import withLink from "./withLink";
 import { ImageProps, Styles } from "../types";
-import { isSVG, isGIF } from "../utils";
+import { isSVG, isGIF, showOriginalImage } from "../utils";
 
 const Content: React.FC<ImageProps> = props => {
   const {
@@ -40,7 +40,10 @@ const Content: React.FC<ImageProps> = props => {
           // `${componentId}-picture`,
           `${componentId}-${_id}-picture`,
           `${_id}-picture`,
-          stylePicture(v, vs, vd, wrapperSizes) as Styles
+          stylePicture(v, vs, vd, {
+            ...wrapperSizes,
+            showOriginalImage: showOriginalImage(v)
+          }) as Styles
         )
       );
 
@@ -55,7 +58,7 @@ const Content: React.FC<ImageProps> = props => {
   // imagePopulation is rendering during compilation time as usual Image
   if (imageSrc || imagePopulation) {
     const content =
-      isSVG(imageExtension) || isGIF(imageExtension) ? (
+      isSVG(imageExtension) || isGIF(imageExtension) || showOriginalImage(v) ? (
         <SvgImage
           v={v}
           vs={vs}

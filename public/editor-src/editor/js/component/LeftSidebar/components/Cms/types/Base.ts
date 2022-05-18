@@ -17,7 +17,9 @@ export const isNoPayload = <T, P>(m: Base<T, P>): m is NoPayload<T> =>
 export const isWithPayload = <T, P>(m: Base<T, P>): m is WithPayload<T, P> =>
   (m as WithPayload<unknown, unknown>).payload !== undefined;
 
-export const fromObject = (o: object): Base<unknown, unknown> | undefined => {
+export const fromObject = (
+  o: Record<string, unknown>
+): Base<unknown, unknown> | undefined => {
   const type = (o as Base<unknown, unknown>).type;
   const payload = (o as WithPayload<unknown, unknown>).payload;
 

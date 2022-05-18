@@ -2,7 +2,6 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
-import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
@@ -176,8 +175,8 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
+      devices: "desktop",
       type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
       roles: ["admin"],
       position: 110,
       icon: "nc-cog",
@@ -186,13 +185,7 @@ export function getItems({ v, device }) {
     {
       id: "toolbarSettings",
       type: "popover-dev",
-      disabled: true,
-      options: [
-        toolbarDisabledAdvancedSettings({
-          device,
-          state: "normal"
-        })
-      ]
+      disabled: true
     }
   ];
 }

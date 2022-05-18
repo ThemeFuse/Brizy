@@ -45,9 +45,6 @@
     "tempHoverColorOpacity": null,
     "tempHoverColorPalette": null,
 
-    "textShadow": "",
-    "tempTextShadow": "on",
-
     "textShadowColorHex": "#000000",
     "textShadowColorOpacity": 1,
     "textShadowColorPalette": "",
@@ -56,12 +53,10 @@
     "tempTextShadowColorPalette": "",
 
     "textShadowBlur": 0,
-    "textShadowSpread": 0,
     "textShadowVertical": 0,
     "textShadowHorizontal": 0,
 
     "tempTextShadowBlur": 4,
-    "tempTextShadowSpread": 0,
     "tempTextShadowVertical": 2,
     "tempTextShadowHorizontal": 1,
 

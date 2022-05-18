@@ -35,21 +35,18 @@ export const Switch: FC<Props> & Option.OptionType<SimpleValue<Literal>> = ({
   );
 };
 
-const getModel: Option.GetModel<SimpleValue<Literal>> = get => ({
+const getModel: Option.FromElementModel<SimpleValue<Literal>> = get => ({
   value: read(get("value"))
 });
 
-const getElementModel: Option.GetElementModel<SimpleValue<Literal>> = (
-  values,
-  get
-) => {
+const getElementModel: Option.ToElementModel<SimpleValue<Literal>> = values => {
   return {
-    [get("value")]: values.value
+    value: values.value
   };
 };
 
-Switch.getModel = getModel;
+Switch.fromElementModel = getModel;
 
-Switch.getElementModel = getElementModel;
+Switch.toElementModel = getElementModel;
 
 Switch.defaultValue = { value: "" };

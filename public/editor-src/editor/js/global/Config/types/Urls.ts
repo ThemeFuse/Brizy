@@ -35,6 +35,8 @@ interface CloudUrls extends UrlsCommon {
   backToDashboard: string | undefined;
   prefetchFonts: string;
   collaborationToolUrl: string;
+  flags: string;
+  worker: string;
 }
 
 type Cnf = {

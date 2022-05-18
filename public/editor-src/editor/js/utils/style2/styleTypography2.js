@@ -2,6 +2,7 @@ import { capByPrefix } from "visual/utils/string";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getFontById, getFontCssStyle } from "visual/utils/fonts";
 import { getOptionFontByGlobal } from "visual/utils/options";
+import { isNullish } from "visual/utils/value";
 
 export function styleTypography2FontFamily({ v, device, state, prefix = "" }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
@@ -24,6 +25,10 @@ export function styleTypography2FontFamily({ v, device, state, prefix = "" }) {
       v[fontFamilyTypeKey],
       dvv(fontStyleKey)
     );
+
+    if (isNullish(fontFamily) || isNullish(fontFamilyType)) {
+      return;
+    }
 
     return getFontById({ type: fontFamilyType, family: fontFamily }).family;
   }

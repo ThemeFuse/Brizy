@@ -1,10 +1,12 @@
 import React from "react";
 import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { ScrollMotion } from "visual/component/ScrollMotions";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import { hideToolbar } from "visual/component/Toolbar";
+import { attachRef } from "visual/utils/react";
 import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
@@ -23,7 +25,8 @@ class Items extends EditorArrayComponent {
     maxItems: 9999,
     toolbarExtend: null,
     meta: {},
-    itemProps: {}
+    itemProps: {},
+    motion: undefined
   };
 
   getItemProps(itemData, itemIndex, items) {
@@ -31,7 +34,7 @@ class Items extends EditorArrayComponent {
       getItems: () => [
         {
           id: "order",
-          type: "cloneable-order",
+          type: "order-dev",
           devices: "desktop",
           position: 105,
           roles: ["admin"],
@@ -39,16 +42,16 @@ class Items extends EditorArrayComponent {
           config: {
             disable:
               itemIndex === 0
-                ? "left"
+                ? "prev"
                 : itemIndex === items.length - 1
-                ? "right"
+                ? "next"
                 : undefined,
             onChange: v => {
               switch (v) {
-                case "left":
+                case "prev":
                   this.reorderItem(itemIndex, itemIndex - 1);
                   break;
-                case "right":
+                case "next":
                   this.reorderItem(itemIndex, itemIndex + 1);
                   break;
               }
@@ -92,26 +95,57 @@ class Items extends EditorArrayComponent {
   }
 
   // Div
-  renderItemsContainerDiv(items) {
-    const { containerClassName: className } = this.props;
-    return <div className={className}>{items}</div>;
+  renderItemsContainerDiv(items, sortableRef, sortableAttr) {
+    const { motion, containerClassName } = this.props;
+
+    return (
+      <ScrollMotion options={motion}>
+        {(scrollMotionRef, scrollMotionAttr) => (
+          <div
+            {...sortableAttr}
+            {...scrollMotionAttr?.options}
+            ref={v => {
+              attachRef(v, sortableRef);
+              attachRef(v, scrollMotionRef);
+            }}
+            className={classnames(containerClassName, scrollMotionAttr?.class)}
+          >
+            {items}
+          </div>
+        )}
+      </ScrollMotion>
+    );
   }
 
   // List
-  renderItemsContainerList(items) {
-    const className = classnames(
-      "brz-ul brz-list",
-      this.props.containerClassName
+  renderItemsContainerList(items, sortableRef, sortableAttr) {
+    const { motion, containerClassName } = this.props;
+
+    return (
+      <ScrollMotion options={motion}>
+        {(scrollMotionRef, scrollMotionAttr) => (
+          <ul
+            {...sortableAttr}
+            {...scrollMotionAttr?.options}
+            ref={v => {
+              attachRef(v, sortableRef);
+              attachRef(v, scrollMotionRef);
+            }}
+            className={classnames(
+              "brz-ul brz-list",
+              containerClassName,
+              scrollMotionAttr?.class
+            )}
+          >
+            {items}
+          </ul>
+        )}
+      </ScrollMotion>
     );
-    return <ul className={className}>{items}</ul>;
   }
 
   renderItemsContainer(items) {
     const { blockType, onSortableStart, onSortableEnd } = this.props;
-    const content =
-      blockType === "div"
-        ? this.renderItemsContainerDiv(items)
-        : this.renderItemsContainerList(items);
 
     return (
       <Sortable
@@ -121,7 +155,11 @@ class Items extends EditorArrayComponent {
         onStart={onSortableStart}
         onEnd={onSortableEnd}
       >
-        {content}
+        {(sortableRef, sortableAttr) => {
+          return blockType === "div"
+            ? this.renderItemsContainerDiv(items, sortableRef, sortableAttr)
+            : this.renderItemsContainerList(items, sortableRef, sortableAttr);
+        }}
       </Sortable>
     );
   }
@@ -147,7 +185,8 @@ class Items extends EditorArrayComponent {
         "copy",
         "paste",
         "pasteStyles",
-        "delete"
+        "delete",
+        "showToolbar"
       ];
 
       content = (
@@ -194,7 +233,9 @@ class Items extends EditorArrayComponent {
         "copy",
         "paste",
         "pasteStyles",
-        "delete"
+        "delete",
+        "showSidebarStyling",
+        "showSidebarAdvanced"
       ];
       return (
         <ContextMenuExtend

@@ -122,7 +122,9 @@ export default class TimelineTabItems extends EditorArrayComponent {
       "paste",
       "pasteStyles",
       "delete",
-      "horizontalAlign"
+      "horizontalAlign",
+      "showSidebarStyling",
+      "showSidebarAdvanced"
     ];
 
     return (

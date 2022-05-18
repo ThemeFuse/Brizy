@@ -19,6 +19,7 @@
     "navIcon": "none",
 
     "enableTags": "on",
+    "allTag": "All",
 
     "tagName": "span"
   },
@@ -138,6 +139,12 @@
     "borderBottomRightRadius": 0,
     "borderBottomLeftRadius": 0,
 
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
     "hoverBorderRadiusType": null,
     "hoverBorderRadius": null,
     "hoverBorderTopLeftRadius": null,
@@ -150,6 +157,12 @@
     "tempBorderTopRightRadius": 0,
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
+
+    "tempBorderRadiusSuffix": "px",
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
 
     "tempHoverBorderRadius": null,
     "tempHoverBorderTopLeftRadius": null,
@@ -238,6 +251,12 @@
     "filterBorderBottomRightRadius": 0,
     "filterBorderBottomLeftRadius": 0,
 
+    "filterBorderRadiusSuffix": "px",
+    "filterBorderTopLeftRadiusSuffix": "px",
+    "filterBorderTopRightRadiusSuffix": "px",
+    "filterBorderBottomRightRadiusSuffix": "px",
+    "filterBorderBottomLeftRadiusSuffix": "px",
+
     "hoverFilterBorderRadiusType": null,
     "hoverFilterBorderRadius": null,
     "hoverFilterBorderTopLeftRadius": null,
@@ -250,6 +269,12 @@
     "tempFilterBorderTopRightRadius": 0,
     "tempFilterBorderBottomRightRadius": 0,
     "tempFilterBorderBottomLeftRadius": 0,
+
+    "tempFilterBorderRadiusSuffix": "px",
+    "tempFilterBorderTopLeftRadiusSuffix": "px",
+    "tempFilterBorderTopRightRadiusSuffix": "px",
+    "tempFilterBorderBottomRightRadiusSuffix": "px",
+    "tempFilterBorderBottomLeftRadiusSuffix": "px",
 
     "tempHoverFilterBorderRadius": null,
     "tempHoverFilterBorderTopLeftRadius": null,
@@ -479,6 +504,87 @@
     "tempActiveFilterBoxShadowVertical": null,
     "tempActiveFilterBoxShadowHorizontal": null,
 
+    "titlePaddingType": "ungrouped",
+    "titleTempPaddingType": "ungrouped",
+
+    "titlePadding": 10,
+    "titlePaddingTop": 10,
+    "titlePaddingRight": 15,
+    "titlePaddingBottom": 10,
+    "titlePaddingLeft": 15,
+
+    "tempTitlePadding": 10,
+    "tempTitlePaddingTop": 10,
+    "tempTitlePaddingRight": 15,
+    "tempTitlePaddingBottom": 10,
+    "tempTitlePaddingLeft": 15,
+
+    "titlePaddingSuffix": "px",
+    "titlePaddingTopSuffix": "px",
+    "titlePaddingRightSuffix": "px",
+    "titlePaddingBottomSuffix": "px",
+    "titlePaddingLeftSuffix": "px",
+
+    "tempTitlePaddingSuffix": "px",
+    "tempTitlePaddingTopSuffix": "px",
+    "tempTitlePaddingRightSuffix": "px",
+    "tempTitlePaddingBottomSuffix": "px",
+    "tempTitlePaddingLeftSuffix": "px",
+
+    "tabletTitlePaddingType": null,
+    "tabletTitleTempPaddingType": null,
+
+    "tabletTitlePadding": null,
+    "tabletTitlePaddingTop": null,
+    "tabletTitlePaddingRight": null,
+    "tabletTitlePaddingBottom": null,
+    "tabletTitlePaddingLeft": null,
+
+    "tempTabletTitlePadding": null,
+    "tempTabletTitlePaddingTop": null,
+    "tempTabletTitlePaddingRight": null,
+    "tempTabletTitlePaddingBottom": null,
+    "tempTabletTitlePaddingLeft": null,
+
+    "tabletTitlePaddingSuffix": null,
+    "tabletTitlePaddingTopSuffix": null,
+    "tabletTitlePaddingRightSuffix": null,
+    "tabletTitlePaddingBottomSuffix": null,
+    "tabletTitlePaddingLeftSuffix": null,
+
+    "tempTabletTitlePaddingSuffix": null,
+    "tempTabletTitlePaddingTopSuffix": null,
+    "tempTabletTitlePaddingRightSuffix": null,
+    "tempTabletTitlePaddingBottomSuffix": null,
+    "tempTabletTitlePaddingLeftSuffix": null,
+
+    "mobileTitlePaddingType": null,
+    "mobileTitleTempPaddingType": null,
+
+    "mobileTitlePadding": null,
+    "mobileTitlePaddingTop": null,
+    "mobileTitlePaddingRight": null,
+    "mobileTitlePaddingBottom": null,
+    "mobileTitlePaddingLeft": null,
+
+    "tempMobileTitlePadding": null,
+    "tempMobileTitlePaddingTop": null,
+    "tempMobileTitlePaddingRight": null,
+    "tempMobileTitlePaddingBottom": null,
+    "tempMobileTitlePaddingLeft": null,
+
+    "mobileTitlePaddingSuffix": null,
+    "mobileTitlePaddingTopSuffix": null,
+    "mobileTitlePaddingRightSuffix": null,
+    "mobileTitlePaddingBottomSuffix": null,
+    "mobileTitlePaddingLeftSuffix": null,
+
+    "tempMobileTitlePaddingSuffix": null,
+    "tempMobileTitlePaddingTopSuffix": null,
+    "tempMobileTitlePaddingRightSuffix": null,
+    "tempMobileTitlePaddingBottomSuffix": null,
+    "tempMobileTitlePaddingLeftSuffix": null,
+
     "filterPaddingType": "grouped",
     "tempFilterPaddingType": "grouped",
 
@@ -618,6 +724,18 @@
     "tempTabletBorderBottomRightRadius": null,
     "tempTabletBorderBottomLeftRadius": null,
 
+    "tabletBorderRadiusSuffix": null,
+    "tabletBorderTopLeftRadiusSuffix": null,
+    "tabletBorderTopRightRadiusSuffix": null,
+    "tabletBorderBottomRightRadiusSuffix": null,
+    "tabletBorderBottomLeftRadiusSuffix": null,
+
+    "tempTabletBorderRadiusSuffix": null,
+    "tempTabletBorderTopLeftRadiusSuffix": null,
+    "tempTabletBorderTopRightRadiusSuffix": null,
+    "tempTabletBorderBottomRightRadiusSuffix": null,
+    "tempTabletBorderBottomLeftRadiusSuffix": null,
+
     "tabletBorderColorHex": null,
     "tabletBorderColorOpacity": null,
     "tabletBorderColorPalette": null,
@@ -753,6 +871,18 @@
     "tempMobileBorderTopRightRadius": null,
     "tempMobileBorderBottomRightRadius": null,
     "tempMobileBorderBottomLeftRadius": null,
+
+    "mobileBorderRadiusSuffix": null,
+    "mobileBorderTopLeftRadiusSuffix": null,
+    "mobileBorderTopRightRadiusSuffix": null,
+    "mobileBorderBottomRightRadiusSuffix": null,
+    "mobileBorderBottomLeftRadiusSuffix": null,
+
+    "tempMobileBorderRadiusSuffix": null,
+    "tempMobileBorderTopLeftRadiusSuffix": null,
+    "tempMobileBorderTopRightRadiusSuffix": null,
+    "tempMobileBorderBottomRightRadiusSuffix": null,
+    "tempMobileBorderBottomLeftRadiusSuffix": null,
 
     "mobileBorderColorHex": null,
     "mobileBorderColorOpacity": null,

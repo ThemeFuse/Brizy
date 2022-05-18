@@ -1,0 +1,104 @@
+@import "../../variables";
+
+// Gallery
+.brz-ed-control__gallery {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(42px, 1fr));
+  justify-content: start;
+  gap: 7px;
+  min-width: 140px;
+
+  &__draggable {
+    pointer-events: all !important;
+    z-index: 100000;
+    opacity: 0.8;
+  }
+
+  &__item {
+    background: $focal-point-background-upload;
+    position: relative;
+
+    &--loading,
+    &--add,
+    &--error {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: dashed 1px $focal-point-border-color;
+    }
+
+    &--loading,
+    &--thumbnail,
+    &--error {
+      cursor: grabbing;
+    }
+
+    &--add {
+      cursor: pointer;
+    }
+
+    &--thumbnail {
+      &__image {
+        display: block;
+        width: 100%;
+        padding-top: 100%;
+        background-size: cover;
+      }
+    }
+
+    &__icon {
+      font-size: $toolbar-font-size;
+      color: #fff;
+      opacity: 15%;
+    }
+
+    &__remove {
+      border: none;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      top: -$toolbar-static-font-size/2;
+      right: -$toolbar-static-font-size/2;
+      cursor: pointer;
+      outline: none;
+      background: #000;
+      border-radius: 100%;
+      display: block;
+      line-height: 0;
+
+      &__icon {
+        pointer-events: none;
+        font-size: $toolbar-static-font-size;
+        color: $sidebar-font-color;
+      }
+    }
+  }
+
+  .brz-ed-control__gallery__draggable {
+    opacity: 1;
+  }
+
+  .brz-ed-control__gallery__item {
+    &--loading,
+    &--thumbnail,
+    &--error {
+      cursor: grab;
+    }
+  }
+
+  .brz-ed-tooltip__overlay {
+    background-color: $options-control-background;
+    color: #fff;
+    border-radius: 4px;
+    padding: 10px 20px;
+    width: 25px;
+
+    .brz-ed-arrow--top:after {
+      border-top-color: $options-control-background;
+    }
+    .brz-ed-arrow--bottom:after {
+      border-bottom-color: $options-control-background;
+    }
+  }
+}

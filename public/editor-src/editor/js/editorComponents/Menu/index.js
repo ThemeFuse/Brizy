@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import _ from "underscore";
-import produce from "immer";
 import classnames from "classnames";
 import Config from "visual/global/Config";
 import UIEvents from "visual/global/UIEvents";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Portal from "visual/component/Portal";
-import { mapModels, setIds } from "visual/utils/models";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import ClickOutside from "visual/component/ClickOutside";
 import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
@@ -30,6 +28,7 @@ import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { styleElementMenuMode, styleElementMMenu } from "visual/utils/style2";
 import { wInMMenu } from "visual/config/columns";
 import { Wrapper } from "../tools/Wrapper";
+import { normalizeMenuItems, itemsToSymbols, symbolsToItems } from "./utils";
 
 const IS_PRO = Config.get("pro");
 
@@ -39,6 +38,8 @@ export default class Menu extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  static experimentalDynamicContent = true;
 
   static defaultProps = {
     extendParentToolbar: _.noop,
@@ -345,7 +346,8 @@ export default class Menu extends EditorComponent {
       ".brz-ed-sidebar__right",
       ".brz-menu",
       ".brz-menu__container",
-      ".brz-ed-fixed"
+      ".brz-ed-fixed",
+      ".media-modal"
     ];
     const className = classnames(
       "brz-menu__container",
@@ -541,63 +543,5 @@ function CloudCreateMenuButton({ children }) {
         onClose={() => setOpened(false)}
       />
     </>
-  );
-}
-
-const configKeys = [
-  "id",
-  "title",
-  "url",
-  "target",
-  "items",
-  "megaMenuItems",
-  "attrTitle",
-  "classes",
-  "current"
-];
-
-export function normalizeMenuItems(items) {
-  return setIds(
-    mapModels(
-      ({ type, value }) => ({
-        type,
-        value: _.pick(value, configKeys)
-      }),
-      items
-    )
-  );
-}
-
-export function symbolsToItems(items, symbols) {
-  return items.map(item =>
-    produce(item, draft => {
-      Object.assign(draft.value, symbols[item.value.id]);
-
-      if (!draft.value.megaMenuItems) {
-        const megaMenu = setIds({
-          type: "SectionMegaMenu",
-          value: { items: [] }
-        });
-
-        draft.value.megaMenuItems = [megaMenu];
-      }
-
-      draft.value.items = symbolsToItems(item.value.items, symbols);
-    })
-  );
-}
-
-export function itemsToSymbols(items) {
-  return items.reduce(
-    (acc, item) => ({
-      ...acc,
-      [item.value.id]: _.omit(item.value, [
-        // megaMenuItems should stay
-        ...configKeys.filter(k => k !== "megaMenuItems"),
-        "_id"
-      ]),
-      ...(item.value.items.length > 0 ? itemsToSymbols(item.value.items) : {})
-    }),
-    {}
   );
 }

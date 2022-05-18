@@ -1,18 +1,18 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Select2 } from "visual/component/Controls/Select2";
-import { GetModel, OptionType } from "visual/component/Options/Type";
+import { FromElementModel, OptionType } from "visual/component/Options/Type";
 import * as Option from "visual/component/Options/Type";
 import {
   WithClassName,
   WithConfig,
   WithSize
 } from "visual/utils/options/attributes";
-import { mApply, MValue } from "visual/utils/value";
+import { MValue } from "visual/utils/value";
 import { Item } from "visual/component/Controls/MultiSelect/Item";
-import { trimTitle, toElementValue } from "./utils";
+import { trimTitle } from "./utils";
 import { getPosts } from "./store";
 import { Post, read } from "./types/Post";
-import { empty } from "./types/ElementValue";
+import { pipe } from "visual/utils/fp";
 
 export type Props = Option.Props<MValue<Post>> &
   WithConfig<WithSize> &
@@ -33,13 +33,10 @@ export const InternalLink: Component = ({
   const ref = useRef<boolean>();
   const [items, setItems] = useState<Post[]>(value ? [value] : []);
   const _onChange = useCallback(
-    (v: number) =>
-      onChange(
-        mApply(
-          toElementValue,
-          items.find(i => i.id === v)
-        ) ?? empty
-      ),
+    pipe(
+      (v: number): Post | undefined => items.find(i => i.id === v),
+      onChange
+    ),
     [onChange, items]
   );
   const loadPosts = (): void => {
@@ -82,27 +79,25 @@ export const InternalLink: Component = ({
   );
 };
 
-const getModel: GetModel<MValue<Post>> = get =>
+const getModel: FromElementModel<MValue<Post>> = get =>
   read({
     id: get("value"),
     title: get("title")
   });
 
-const getElementModel: Option.GetElementModel<MValue<Post>> = (values, get) => {
+const getElementModel: Option.ToElementModel<MValue<Post>> = values => {
   return {
-    [get("value")]: values?.id,
-    [get("title")]: values?.title
+    value: values?.id,
+    title: values?.title
   };
 };
 
-InternalLink.getModel = getModel;
+InternalLink.fromElementModel = getModel;
 
-InternalLink.getElementModel = getElementModel;
+InternalLink.toElementModel = getElementModel;
 
-// TODO. What default value(id) should be?
 InternalLink.defaultValue = {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
+  // @ts-expect-error: What default value(id) should be?
   id: null,
   title: ""
 };

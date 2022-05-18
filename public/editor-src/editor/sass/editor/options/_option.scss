@@ -40,12 +40,13 @@
     }
     &:last-child {
       padding-bottom: 15px;
-      min-height: 56px;
+      min-height: $options-item-height;
     }
   }
 
   &.brz-ed-option-type__tabs,
-  &.brz-ed-option-type__tabs-dev {
+  &.brz-ed-option-type__tabs-dev,
+  &.brz-ed-option-type__stateMode-dev {
     padding: 0;
   }
 }
@@ -114,23 +115,26 @@
   }
   &__advanced {
     padding-top: 15px;
-    min-height: initial !important;
     color: $brand-primary;
     transition: color 0.2s linear;
     font-size: 0;
 
+    &:hover {
+      color: #fff;
+    }
+    .brz-icon-svg {
+      font-size: 16px;
+    }
+    .brz-ed-option__icon {
+      font-size: 0;
+    }
     .brz-ed-option__label {
       flex-basis: 100%;
       color: inherit;
       font-weight: 600;
-      margin: 0;
-      margin-left: 9px;
+      margin: 0 0 0 9px;
       cursor: pointer;
       font-size: $options-item-font-size;
-    }
-
-    &:hover {
-      color: #fff;
     }
   }
 
@@ -160,6 +164,13 @@
       padding-top: 0;
     }
   }
+
+  &.brz-ed-grid,
+  &.brz-ed-grid:first-child,
+  &.brz-ed-grid:last-child {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 
 // Popover Options
@@ -167,10 +178,6 @@
   height: 100%;
   width: 100%;
   flex-basis: 100%;
-
-  .brz-ed-option__advanced .brz-icon-svg {
-    font-size: 14px;
-  }
 }
 
 // Toolbar

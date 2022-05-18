@@ -4,7 +4,8 @@ import React, {
   useEffect,
   useRef,
   ReactElement,
-  FC
+  FC,
+  useCallback
 } from "react";
 import _ from "underscore";
 import {
@@ -12,8 +13,9 @@ import {
   MultiSelectItem as ControlItem
 } from "visual/component/Controls/MultiSelect2";
 import { MultiSelectItemProps as ControlItemProps } from "visual/component/Controls/MultiSelect2/types";
-import { ValueItem, Props, ChoicesSync, ChoicesAsync } from "./types";
-import { toElement, mergeChoices, missingChoices } from "./utils";
+import { ValueItem, Value, Props, ChoicesSync, ChoicesAsync } from "./types";
+import { mergeChoices, missingChoices } from "./utils";
+import { OnChange } from "visual/component/Options/Type";
 
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -265,6 +267,30 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
   const debouncedSearch = useDebounce(state.search, 1000);
   const currentSearchController = useRef<AbortController>();
   const initialChoices = useRef<ChoicesSync>([]);
+  const { vChoices, sChoices } = state;
+
+  const _onChange = useCallback<OnChange<Value>>(
+    (v): void => {
+      const cachedChoices = initialChoices.current;
+      const allChoices = [...vChoices, ...sChoices];
+      const choices = v
+        .map(vv => allChoices.find(item => item.value === vv))
+        .filter(item => item !== undefined) as ChoicesSync;
+      const diffBySearch = _.difference(v, _.pluck(sChoices, "value"));
+
+      if (
+        sChoices.length === 0 ||
+        diffBySearch.length > 0 ||
+        choices.length < cachedChoices.length
+      ) {
+        initialChoices.current = choices;
+      }
+
+      dispatch({ type: "value_changed", choices });
+      onChange({ value: v });
+    },
+    [onChange, vChoices, sChoices]
+  );
 
   useEffect(() => {
     let controller: AbortController;
@@ -348,26 +374,7 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
       search={true}
       searchIsLoading={state.state === "FETCHING"}
       searchIsEmpty={state.state === "FETCH_NOT_FOUND"}
-      onChange={(v): void => {
-        const { vChoices, sChoices } = state;
-        const cachedChoices = initialChoices.current;
-        const allChoices = [...vChoices, ...sChoices];
-        const choices = v
-          .map(vv => allChoices.find(item => item.value === vv))
-          .filter(item => item !== undefined) as ChoicesSync;
-        const diffBySearch = _.difference(v, _.pluck(sChoices, "value"));
-
-        if (
-          sChoices.length === 0 ||
-          diffBySearch.length > 0 ||
-          choices.length < cachedChoices.length
-        ) {
-          initialChoices.current = choices;
-        }
-
-        dispatch({ type: "value_changed", choices });
-        onChange(toElement(v));
-      }}
+      onChange={_onChange}
       onSearchChange={(s): void => {
         currentSearchController.current?.abort();
         dispatch(

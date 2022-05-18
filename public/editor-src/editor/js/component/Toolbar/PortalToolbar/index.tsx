@@ -1,4 +1,6 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
+import { connect } from "react-redux";
+import { isT } from "fp-utilities";
 import ReactDOM from "react-dom";
 import ClickOutside from "visual/component/ClickOutside";
 import HotKeys from "visual/component/HotKeys";
@@ -11,9 +13,20 @@ import {
   PortalToolbarPositionerProps
 } from "./PortalToolbarPositioner";
 import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
-import { monitor, ToolbarMonitorHandler } from "../monitor";
-import { selectorSearchCoordinates, selectorSearchDomTree } from "./utils";
-import { OptionDefinition } from "visual/component/Options/Type";
+import {
+  monitor,
+  DeactivationOptions,
+  ToolbarMonitorHandler
+} from "../monitor";
+import {
+  filterOptions,
+  selectorSearchCoordinates,
+  selectorSearchDomTree
+} from "./utils";
+import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { currentUserRole } from "visual/component/Roles";
+import { ReduxState } from "visual/redux/types";
+import { DeviceMode } from "visual/types";
 
 const portalNodesByDocument: Map<Document, HTMLElement> = new Map();
 
@@ -39,9 +52,13 @@ type ToolbarClickEvent = Event & {
   brzToolbarHandled?: boolean;
 };
 
-export default class PortalToolbar
+interface PropsWithState extends PortalToolbarProps {
+  device: DeviceMode;
+}
+
+class _PortalToolbar
   extends React.Component<
-    PortalToolbarProps,
+    PropsWithChildren<PropsWithState>,
     PortalToolbarState,
     ToolbarExtendContextType
   >
@@ -86,7 +103,7 @@ export default class PortalToolbar
     }
   }
 
-  componentDidUpdate({ manualControl = false }): void {
+  componentDidUpdate({ manualControl = false }: PortalToolbarProps): void {
     if (manualControl !== this.props.manualControl) {
       if (manualControl === true) {
         this.makeComponentControlled();
@@ -148,9 +165,11 @@ export default class PortalToolbar
           this.selectorNode = target;
           this.show();
         } else if (target !== this.selectorNode) {
-          this.hide(() => {
-            this.selectorNode = target;
-            this.show();
+          this.hide({
+            onComplete: () => {
+              this.selectorNode = target;
+              this.show();
+            }
           });
         }
       } else {
@@ -223,8 +242,8 @@ export default class PortalToolbar
     this.show();
   }
 
-  handleMonitorDeactivationRequest(): void {
-    this.hide();
+  handleMonitorDeactivationRequest(config?: DeactivationOptions): void {
+    this.hide({ eventDetail: config });
   }
 
   show(): void {
@@ -248,7 +267,10 @@ export default class PortalToolbar
     }
   }
 
-  hide(cb?: () => void): void {
+  hide(config?: {
+    onComplete?: () => void;
+    eventDetail?: DeactivationOptions;
+  }): void {
     if (this.state.opened) {
       const { onBeforeClose, onClose } = this.props;
 
@@ -258,12 +280,13 @@ export default class PortalToolbar
 
         if (this.node !== null) {
           const e = new CustomEvent("brz.toolbar.close", {
-            bubbles: true
+            bubbles: true,
+            detail: config?.eventDetail
           });
           this.node.dispatchEvent(e);
         }
 
-        cb?.();
+        config?.onComplete?.();
       });
     }
   }
@@ -277,7 +300,7 @@ export default class PortalToolbar
     }
   };
 
-  getOutSideExceptions = (): (string | Function)[] => {
+  getOutSideExceptions = (): (string | ((t: HTMLElement) => void))[] => {
     return [
       ".brz-ed-sidebar__right",
       ".brz-ed-tooltip__content-portal",
@@ -293,6 +316,28 @@ export default class PortalToolbar
     ];
   };
 
+  getItems = (): OptionDefinition[] => {
+    const device = this.props.device;
+    const role = currentUserRole();
+
+    return this.props
+      .getItems()
+      .map(filterOptions(device, role))
+      .filter(isT);
+  };
+
+  getSidebarItems = (): OptionDefinition[] => {
+    const device = this.props.device;
+    const role = currentUserRole();
+
+    return this.props.getSidebarItems
+      ? this.props
+          .getSidebarItems()
+          .map(filterOptions(device, role))
+          .filter(isT)
+      : [];
+  };
+
   renderToolbar(): React.ReactNode {
     if (this.node === null) {
       return;
@@ -301,7 +346,7 @@ export default class PortalToolbar
       return;
     }
 
-    const items = this.props.getItems();
+    const items = this.getItems();
 
     if (!items || items.length === 0) {
       return;
@@ -332,7 +377,7 @@ export default class PortalToolbar
           </ClickOutside>
           {ownProps.getSidebarItems && (
             <RightSidebarItems
-              getItems={ownProps.getSidebarItems}
+              getItems={this.getSidebarItems}
               getTitle={ownProps.getSidebarTitle}
             />
           )}
@@ -359,3 +404,15 @@ export default class PortalToolbar
     );
   }
 }
+
+export type PortalToolbar = InstanceType<typeof _PortalToolbar>;
+
+export default connect<
+  { device: DeviceMode },
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  {},
+  PortalToolbarProps,
+  ReduxState
+>(s => ({ device: s.ui.deviceMode }), null, null, { forwardRef: true })(
+  _PortalToolbar
+);

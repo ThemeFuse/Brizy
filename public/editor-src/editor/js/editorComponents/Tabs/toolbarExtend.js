@@ -1,12 +1,10 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
-import { capitalize } from "visual/utils/string";
+import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL, ACTIVE } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ key, v, device });
 
   // Color
@@ -124,25 +122,15 @@ export function getItems({ v, device }) {
                   type: "group-dev",
                   options: [
                     {
-                      id: dvk("iconSize"),
+                      id: "iconSize",
                       label: t("Size"),
-                      type: "radioGroup",
+                      type: "radioGroup-dev",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
                         { value: "large", icon: "nc-32" },
                         { value: "custom", icon: "nc-more" }
-                      ],
-                      value: dvv("iconSize"),
-                      onChange: value => {
-                        return {
-                          [dvk("iconSize")]: value,
-                          [dvk("iconCustomSize")]:
-                            value !== "custom"
-                              ? dvv(`icon${capitalize(value)}Size`)
-                              : dvv("iconCustomSize")
-                        };
-                      }
+                      ]
                     },
                     {
                       id: "iconCustomSize",

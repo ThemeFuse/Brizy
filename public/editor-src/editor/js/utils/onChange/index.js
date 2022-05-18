@@ -37,14 +37,6 @@ export {
   onChangeBorderWidthUngroupedDependencies2
 } from "./onChangeBorder";
 
-// Border Radius
-export {
-  onChangeBorderRadiusGrouped,
-  onChangeBorderRadiusGroupedDependencies,
-  onChangeBorderRadiusUngrouped,
-  onChangeBorderRadiusUngroupedDependencies
-} from "./onChangeBorderRadius";
-
 // Color
 export {
   onChangeColorHexAndOpacity,
@@ -125,9 +117,6 @@ export {
 } from "./onChangeElementIcon";
 
 export {
-  onChangeElementButtonBorderColorHex2,
-  onChangeElementButtonBorderColorPalette2,
-  onChangeElementButtonBorderColorFields2,
   onChangeElementButtonBorderHoverColorHex2,
   onChangeElementButtonBorderHoverColorPalette2,
   onChangeElementButtonBorderHoverColorFields2,
@@ -189,7 +178,6 @@ export {
   //BG
   onChangeBgColorHexMMenu2,
   onChangeBgColorPaletteMMenu2,
-  onChangeBgColorFieldsMMenu2,
   onChangeBgColorHexSubMenu2,
   onChangeBgColorPaletteSubMenu2,
   onChangeBgColorFieldsSubMenu2,

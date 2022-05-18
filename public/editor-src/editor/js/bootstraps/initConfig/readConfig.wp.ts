@@ -21,7 +21,7 @@ const tParser = parseStrict<unknown, Rule>({
   ),
   entityType: pipe(
     mPipe(
-      pass<unknown, object>(Obj.isObject),
+      pass<unknown, Record<string, unknown>>(Obj.isObject),
       Obj.readKey("entityType"),
       Str.read
     ),

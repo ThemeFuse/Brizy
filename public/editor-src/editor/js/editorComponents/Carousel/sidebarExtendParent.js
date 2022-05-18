@@ -1,9 +1,5 @@
 import { t } from "visual/utils/i18n";
-
-import {
-  toolbarDisabledPadding,
-  toolbarElementCarouselPadding
-} from "visual/utils/toolbar";
+import { toolbarElementCarouselPadding } from "visual/utils/toolbar";
 
 export const title = t("Carousel");
 
@@ -17,57 +13,71 @@ const helperHTML = `
 
 export function getItems({ v, device }) {
   return [
-    toolbarDisabledPadding({
-      device,
-      devices: "responsive",
-      state: "normal"
-    }),
-    toolbarElementCarouselPadding({
-      v,
-      device,
-      devices: "responsive",
-      state: "normal"
-    }),
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
-      devices: "desktop",
-      config: {
-        align: "start"
-      },
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       tabs: [
         {
-          id: "settingsStyling",
+          id: "styles",
+          title: t("Styling"),
           label: t("Styling"),
-          icon: "nc-styling",
           options: [
-            toolbarDisabledPadding({
-              device,
-              devices: "desktop",
-              state: "normal"
-            }),
+            {
+              id: "padding",
+              type: "padding-dev",
+              disabled: true
+            },
             toolbarElementCarouselPadding({
               v,
               device,
-              devices: "desktop",
+              devices: "responsive",
               state: "normal"
-            })
-          ]
-        },
-        {
-          id: "moreSettingsAdvanced",
-          label: t("Advanced"),
-          icon: "nc-cog",
-          options: [
+            }),
             {
-              id: "customCSS",
-              label: t("Custom CSS"),
-              type: "codeMirror-dev",
-              position: 45,
-              display: "block",
+              id: "settingsTabs",
+              type: "tabs-dev",
+              config: {
+                align: "start"
+              },
               devices: "desktop",
-              helper: { content: helperHTML },
-              placeholder: "element { CSS goes here }"
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  position: 10,
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding-dev",
+                      disabled: true
+                    },
+                    toolbarElementCarouselPadding({
+                      v,
+                      device,
+                      devices: "desktop",
+                      state: "normal"
+                    })
+                  ]
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  icon: "nc-cog",
+                  options: [
+                    {
+                      id: "customCSS",
+                      label: t("Custom CSS"),
+                      type: "codeMirror-dev",
+                      position: 45,
+                      display: "block",
+                      devices: "desktop",
+                      helper: { content: helperHTML },
+                      placeholder: "element { CSS goes here }"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

@@ -1,7 +1,8 @@
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { hideToolbar } from "visual/component/Toolbar/index";
+import { hideToolbar } from "visual/component/Toolbar";
 import Sortable from "visual/component/Sortable";
+import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import contextMenuExtendConfigFn from "./contextMenu";
@@ -86,9 +87,17 @@ class TabItems extends EditorArrayComponent {
       return items;
     }
 
-    const sortableContent = items.length ? (
-      <div className={this.props.className}>{items}</div>
-    ) : null;
+    if (items.length === 0) {
+      return (
+        <div className={this.props.className}>
+          <SortableEmpty
+            path={this.getId()}
+            type="column"
+            acceptElements={this.handleSortableAcceptElements}
+          />
+        </div>
+      );
+    }
 
     return (
       <Sortable
@@ -96,7 +105,7 @@ class TabItems extends EditorArrayComponent {
         type="column"
         acceptElements={this.handleSortableAcceptElements}
       >
-        {sortableContent}
+        <div className={this.props.className}>{items}</div>
       </Sortable>
     );
   }
@@ -110,7 +119,9 @@ class TabItems extends EditorArrayComponent {
       "paste",
       "pasteStyles",
       "delete",
-      "horizontalAlign"
+      "horizontalAlign",
+      "showSidebarStyling",
+      "showSidebarAdvanced"
     ];
 
     return (

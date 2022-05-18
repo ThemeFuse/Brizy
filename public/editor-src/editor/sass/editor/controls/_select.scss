@@ -164,6 +164,7 @@ $scroll-border-radius: 4px;
 .brz-control__select-optgroup {
   &-label {
     cursor: auto;
+    color: $brand-options;
   }
   .brz-control__select-option {
     padding-left: 20px;

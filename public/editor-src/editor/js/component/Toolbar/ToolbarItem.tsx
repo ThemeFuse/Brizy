@@ -1,10 +1,11 @@
 import React from "react";
 import Option from "visual/component/Options/Option";
-import { OptionDefinition } from "visual/component/Options/Type";
+import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 
 type ToolbarItemProps = {
   data: OptionDefinition;
-  toolbar: object;
+  toolbar: ToolbarItemsInstance;
 };
 
 export const ToolbarItem: React.FC<ToolbarItemProps> = ({ data, toolbar }) => {

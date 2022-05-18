@@ -1,4 +1,3 @@
-import * as cheerio from "cheerio";
 import { xss } from "visual/utils/xss";
 
 export function XSS($: cheerio.Root): void {

@@ -2,7 +2,6 @@ const path = require("path");
 const webpack = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
-const WorkerPlugin = require("worker-plugin");
 const babelrc = require("./babelrc.config.all");
 
 const getExtensions = target => {
@@ -69,13 +68,7 @@ module.exports = (options = {}) => {
         TARGET: JSON.stringify(options.TARGET),
         IS_EDITOR: true,
         IS_PREVIEW: false
-      }),
-      new WorkerPlugin({
-        globalObject: false
-      }),
-      ...(options.BUNDLE_ANALYZER === "editor"
-        ? [new BundleAnalyzerPlugin()]
-        : [])
+      })
     ],
     optimization: {
       splitChunks: {

@@ -1,12 +1,17 @@
 @import "../../variables";
 
 // --- Tabs
+.brz-ed-control__tabs-wrapper {
+  width: 100%;
+}
+
 .brz-ed-control__tabs .brz-ed-control__tab {
   // Reset margin that may be set from outside
   margin: 0;
 }
 .brz-ed-control__tab__content {
   flex: 1 1 auto;
+  max-width: 100%;
 }
 .brz-ed-control__tabs:not(.brz-ed-control__tabs__left) {
   display: flex;

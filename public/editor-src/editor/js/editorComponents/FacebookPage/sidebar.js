@@ -1,7 +1,5 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Facebook Page");
-
 const helperHTML = `
 <p class="brz-p">You can use the following selectors to create targeted CSS.</p>
 <p class="brz-p">
@@ -13,45 +11,51 @@ const helperHTML = `
 export function getItems() {
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
-      config: {
-        align: "start"
-      },
-      devices: "desktop",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       tabs: [
         {
-          id: "settingsStyling",
+          id: "styles",
+          title: t("Styling"),
           label: t("Styling"),
-          icon: "nc-styling",
-          options: []
-        },
-        {
-          id: "moreSettingsAdvanced",
-          label: t("Advanced"),
-          icon: "nc-cog",
           options: [
             {
-              id: "customCSS",
-              label: t("Custom CSS"),
-              type: "codeMirror-dev",
-              position: 45,
-              display: "block",
-              devices: "desktop",
-              helper: { content: helperHTML },
-              placeholder: "element { CSS goes here }"
-            },
-            {
-              id: "hoverTransition",
-              label: t("Hover Transition"),
-              type: "slider-dev",
-              devices: "desktop",
-              position: 100,
+              id: "settingsTabs",
+              type: "tabs-dev",
               config: {
-                min: 0,
-                max: 99,
-                units: [{ title: "ms", value: "ms" }]
-              }
+                align: "start"
+              },
+              devices: "desktop",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  options: []
+                },
+                {
+                  id: "customCSS",
+                  label: t("Custom CSS"),
+                  type: "codeMirror-dev",
+                  position: 45,
+                  display: "block",
+                  devices: "desktop",
+                  helper: { content: helperHTML },
+                  placeholder: "element { CSS goes here }"
+                },
+                {
+                  id: "hoverTransition",
+                  label: t("Hover Transition"),
+                  type: "slider-dev",
+                  devices: "desktop",
+                  position: 100,
+                  config: {
+                    min: 0,
+                    max: 99,
+                    units: [{ title: "ms", value: "ms" }]
+                  }
+                }
+              ]
             }
           ]
         }

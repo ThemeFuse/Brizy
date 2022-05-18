@@ -1,7 +1,7 @@
 import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { ImageProps } from "../types";
 
-import { isSVG, isGIF } from "../utils";
+import { isSVG, isGIF, showOriginalImage } from "../utils";
 import { SizeRestriction, WidthHeightRestriction } from "./type";
 import { getSizeRestriction, getWidthRestriction } from "./utils";
 
@@ -20,6 +20,7 @@ const POINTS = {
   ],
   gallery: ["bottomCenter"],
   svg: resize,
+  originalImage: ["topLeft", "topRight", "bottomLeft", "bottomRight"],
   gif: resize,
   sizeType: resize,
   population: resize
@@ -76,7 +77,9 @@ const useResizerPoints: UseResizerPoints = ({ v, meta }) => {
       points = POINTS.svg;
     } else if (isGIF(imageExtension)) {
       points = POINTS.gif;
-    }
+    } else if (showOriginalImage(v)) {
+    points = POINTS.originalImage;
+  }
 
     return {
       points: points,

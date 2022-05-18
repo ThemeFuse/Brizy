@@ -1,8 +1,8 @@
 export function getItems() {
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       disabled: true
     }
   ];

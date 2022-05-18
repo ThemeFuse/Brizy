@@ -94,11 +94,10 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "gridTypography",
-                  type: "grid",
+                  type: "grid-dev",
                   columns: [
                     {
-                      width: 95,
-                      vAlign: "center",
+                      id: "col-1",
                       options: [
                         {
                           id: "typography",
@@ -113,8 +112,8 @@ export function getItems({ v, device, context }) {
                       ]
                     },
                     {
-                      width: 5,
-                      vAlign: "center",
+                      id: "col-2",
+                      align: "center",
                       options: [
                         {
                           id: "text",
@@ -139,11 +138,10 @@ export function getItems({ v, device, context }) {
               label: t("Percent"),
               options: [
                 {
-                  type: "grid",
+                  type: "grid-dev",
                   columns: [
                     {
-                      width: 95,
-                      vAlign: "center",
+                      id: "col-1",
                       options: [
                         {
                           id: "",
@@ -156,8 +154,8 @@ export function getItems({ v, device, context }) {
                       ]
                     },
                     {
-                      width: 5,
-                      vAlign: "center",
+                      id: "col-2",
+                      align: "center",
                       options: [
                         {
                           id: "percentage",
@@ -286,11 +284,43 @@ export function getItems({ v, device, context }) {
           }
         },
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          label: t("More Settings"),
-          position: 110,
-          icon: "nc-cog"
+          id: "grid",
+          type: "grid-dev",
+          config: {
+            separator: true
+          },
+          columns: [
+            {
+              id: "col-1",
+              size: 1,
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            },
+            {
+              id: "col-2",
+              size: 1,
+              options: [
+                {
+                  id: "effects",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "effects",
+                    text: t("Effects"),
+                    icon: "nc-flash"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -299,6 +329,7 @@ export function getItems({ v, device, context }) {
       type: "advancedSettings",
       disabled: !IS_STORY,
       position: 110,
+      devices: "desktop",
       icon: "nc-cog"
     }
   ];

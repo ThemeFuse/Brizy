@@ -2,8 +2,9 @@ import React from "react";
 import classnames from "classnames";
 import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import { uuid } from "visual/utils/uuid";
+import Toolbar from "visual/component/Toolbar";
 
 export default class RadioItem extends React.Component {
   static defaultProps = {
@@ -23,7 +24,8 @@ export default class RadioItem extends React.Component {
       checkIcon,
       unCheckIcon,
       children,
-      onClick
+      onClick,
+      toolbarIcon = null
     } = this.props;
     const className = classnames(
       "brz-control__radio-option",
@@ -36,10 +38,19 @@ export default class RadioItem extends React.Component {
 
     return (
       <div className={className} onClick={onClick}>
-        <EditorIcon
-          className={iconClassName}
-          icon={active ? `nc-${checkIcon}` : `nc-${unCheckIcon}`}
-        />
+        {toolbarIcon ? (
+          <Toolbar {...toolbarIcon}>
+            <EditorIcon
+              className={iconClassName}
+              icon={active ? `nc-${checkIcon}` : `nc-${unCheckIcon}`}
+            />
+          </Toolbar>
+        ) : (
+          <EditorIcon
+            className={iconClassName}
+            icon={active ? `nc-${checkIcon}` : `nc-${unCheckIcon}`}
+          />
+        )}
         {children}
       </div>
     );

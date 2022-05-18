@@ -100,11 +100,11 @@
       padding-right: 10px;
       cursor: pointer;
       border-radius: 0 15px 15px 0;
-      transition: 0.2s linear color;
+      transition: 0.2s linear all;
     }
     .brz-button:hover {
       color: #03080f;
-      transition: 0.2s linear color;
+      transition: 0.2s linear all;
     }
     .brz-button:after {
       content: "";
@@ -118,6 +118,25 @@
     }
     .brz-button .brz-icon-svg {
       font-size: 8px;
+    }
+    &-disabled {
+      .brz-ed-fixed-bottom-panel__btn-loading {
+        &,
+        &:hover {
+          color: rgba(255, 255, 255, 0.35);
+          background-color: #0c5876;
+        }
+      }
+      .brz-ed-tooltip__static .brz-button {
+        color: rgba(255, 255, 255, 0.35);
+        background-color: #0c5876;
+      }
+      &:hover {
+        .brz-button {
+          color: #fff;
+          background-color: #0085ba;
+        }
+      }
     }
   }
   &__btn-loading {

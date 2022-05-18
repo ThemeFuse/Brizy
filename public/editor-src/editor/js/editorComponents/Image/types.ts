@@ -73,6 +73,7 @@ export type V = {
   linkExternalBlank: "on" | "off";
   linkExternalRel: "on" | "off";
   linkLightBox: "on" | "off";
+  showOriginalImage: "on" | "off";
   linkExternalType: string;
   linkPopup: string;
   linkUpload: string;
@@ -93,8 +94,8 @@ type GetResponsiveUrls = (
 
 export type ImageProps = {
   v: V;
-  vs: object;
-  vd: object;
+  vs: V;
+  vd: V;
   _id: string;
   componentId: string;
   meta: Meta;
@@ -102,6 +103,8 @@ export type ImageProps = {
   getResponsiveUrls: GetResponsiveUrls;
   extraAttributes?: React.HTMLAttributes<HTMLImageElement>;
   onChange: (arg0: Patch) => void;
+  onStart?: VoidFunction;
+  onEnd?: VoidFunction;
 };
 
 export type Styles = [string, string, string];

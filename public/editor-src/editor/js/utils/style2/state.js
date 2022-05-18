@@ -1,6 +1,6 @@
 // Style State
-export function styleState({ v }) {
-  const { tabsState } = v;
+import { mRead } from "visual/utils/stateMode";
 
-  return tabsState === "tabHover" ? "hover" : "normal";
+export function styleState({ v }) {
+  return mRead(v.tabsState);
 }

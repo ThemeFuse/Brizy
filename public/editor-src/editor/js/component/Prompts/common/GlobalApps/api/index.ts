@@ -31,8 +31,7 @@ const normalizeAccounts: NormalizeAccounts = res => {
 };
 
 export const getAccounts = ({
-  group,
-  services // eslint-disable-line @typescript-eslint/no-unused-vars
+  group
 }: {
   group: string;
   services: string;

@@ -33,18 +33,6 @@ class RangeOptionType extends React.Component {
     this.state = { ...value };
   }
 
-  componentWillReceiveProps({ value }) {
-    if (
-      value.startPointer !== this.state.startPointer ||
-      value.finishPointer !== this.state.finishPointer ||
-      value.activePointer !== this.state.activePointer ||
-      value.bgColorHex !== this.state.bgColorHex ||
-      value.gradientColorHex !== this.state.gradientColorHex
-    ) {
-      this.setState({ ...value });
-    }
-  }
-
   handleOnMouseDown = index => {
     const activePointer = index === 0 ? "startPointer" : "finishPointer";
     this.handleChange({ activePointer });

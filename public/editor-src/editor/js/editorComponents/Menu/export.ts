@@ -10,7 +10,7 @@ import { getProLibs } from "visual/libs";
 import { DeviceMode } from "visual/types";
 import { BrizyProLibs } from "visual/types/global";
 import { decodeFromString } from "visual/utils/string";
-import { getParentMegaMenuUid } from "./utils";
+import { getParentMegaMenuUid } from "./utils.common";
 
 interface Settings {
   widths?: {
@@ -303,11 +303,11 @@ const init = (item: HTMLElement, root: HTMLElement): void => {
   const device = lastCurrentDevice;
 
   // destroy popper if has initialized
-  // @ts-expect-error
+  // @ts-expect-error: Property 'popper' does not exist on type 'HTMLElement'.
   if (item.popper) {
-    // @ts-expect-error
+    // @ts-expect-error: Property 'popper' does not exist on type 'HTMLElement'.
     item.popper.destroy();
-    // @ts-expect-error
+    // @ts-expect-error: Property 'popper' does not exist on type 'HTMLElement'.
     item.popper = null;
   }
 
@@ -364,7 +364,7 @@ const init = (item: HTMLElement, root: HTMLElement): void => {
     );
     const temporaryUid = item.getAttribute("data-mega-menu-open-uid") ?? "";
 
-    // @ts-expect-error
+    // @ts-expect-error: Property 'popper' does not exist on type 'HTMLElement'.
     item.popper = popper;
     item.addEventListener("mouseenter", setOpen(popper, item, temporaryUid));
   }
@@ -458,22 +458,20 @@ export default function($node: JQuery): void {
       hooks: {
         "openPanel:after": (panel: HTMLElement): void => {
           // Emit Menu panel opened
-          // @ts-expect-error
           window.Brz.emit("elements.mmenu.panel.opened", panel);
         },
         "closePanel:after": (panel: HTMLElement): void => {
           // Emit Menu panel opened
-          // @ts-expect-error
           window.Brz.emit("elements.mmenu.panel.closed", panel);
         },
         "open:start": function(): void {
           // Emit Menu panel opened
-          // @ts-expect-error
+          // @ts-expect-error: mmenu function context
           window.Brz.emit("elements.mmenu.open", this.node.pnls);
         },
         "close:start": function(): void {
           // Emit Menu panel opened
-          // @ts-expect-error
+          // @ts-expect-error: mmenu function context
           window.Brz.emit("elements.mmenu.close", this.node.pnls);
           currentMenuOpened = undefined;
         },
@@ -537,7 +535,6 @@ export default function($node: JQuery): void {
         menuAPI?.open();
       }
     });
-    // @ts-expect-error
     window.Brz.on("elements.anchor.startScrolled", () => {
       menuAPI?.close();
     });
@@ -546,7 +543,6 @@ export default function($node: JQuery): void {
   // Added listener when close Header
   // need close Mega Menu
   if (root.querySelector(".brz-menu__item-mega-menu")) {
-    // @ts-expect-error
     window.Brz.on(
       "elements.headerSticky.show",
       ({ type }: { node: HTMLElement; type: string }) => {
@@ -560,7 +556,6 @@ export default function($node: JQuery): void {
       }
     );
 
-    // @ts-expect-error
     window.Brz.on(
       "elements.headerSticky.hide",
       ({ node, type }: { node: HTMLElement; type: string }) => {

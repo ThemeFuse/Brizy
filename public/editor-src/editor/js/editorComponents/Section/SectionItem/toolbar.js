@@ -7,11 +7,6 @@ import {
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarBgVideoUrl,
-  toolbarGradientType,
-  toolbarBgColorHexField2,
-  toolbarBgColor2,
-  toolbarGradientLinearDegree,
-  toolbarGradientRadialDegree,
   toolbarBorder2,
   toolbarBorderColorHexField2,
   toolbarBorderWidthFourFields2,
@@ -81,11 +76,32 @@ export function getItems({ v, device, component, state, context }) {
                   population: imageDynamicContentChoices
                 },
                 {
+                  id: "bgSize",
+                  label: t("Size"),
+                  type: "select-dev",
+                  disabled: dvv("media") !== "image",
+                  choices: [
+                    { title: t("Cover"), value: "cover" },
+                    { title: t("Contain"), value: "contain" },
+                    { title: t("Auto"), value: "auto" }
+                  ]
+                },
+                {
+                  id: "bgRepeat",
+                  label: t("Repeat"),
+                  type: "switch-dev",
+                  disabled:
+                    dvv("media") !== "image" || dvv("bgSize") === "cover"
+                },
+                {
                   id: "bgAttachment",
                   label: t("Parallax"),
                   type: "select-dev",
                   devices: "desktop",
-                  disabled: dvv("media") !== "image" || inSlider,
+                  disabled:
+                    dvv("media") !== "image" ||
+                    dvv("bgSize") !== "cover" ||
+                    inSlider,
                   choices: [
                     { title: t("None"), value: "none" },
                     { title: t("Fixed"), value: "fixed" },
@@ -167,96 +183,10 @@ export function getItems({ v, device, component, state, context }) {
               id: "tabOverlay",
               label: t("Overlay"),
               options: [
-                toolbarBgColor2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  onChangeType: ["onChangeBgColorType2"],
-                  onChangeHex: [
-                    "onChangeBgColorHexAndOpacity2",
-                    "onChangeBgColorHexAndOpacityPalette2",
-                    "onChangeBgColorHexAndOpacityDependencies2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBgColorPalette2",
-                    "onChangeBgColorPaletteOpacity2",
-                    "onChangeBgColorHexAndOpacityDependencies2"
-                  ],
-                  onChangeGradientHex: [
-                    "onChangeBgColorHexAndOpacity2",
-                    "onChangeBgColorHexAndOpacityPalette2",
-                    "onChangeBgColorHexAndOpacityDependencies2"
-                  ],
-                  onChangeGradientPalette: [
-                    "onChangeBgColorPalette2",
-                    "onChangeBgColorPaletteOpacity2",
-                    "onChangeBgColorHexAndOpacityDependencies2"
-                  ],
-                  onChangeGradient: ["onChangeGradientRange2"]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 30,
-                      options: [
-                        toolbarBgColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          prefix:
-                            dvv("gradientActivePointer") === "startPointer"
-                              ? "bg"
-                              : "gradient",
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity2",
-                            "onChangeBgColorHexAndOpacityPalette2",
-                            "onChangeBgColorHexAndOpacityDependencies2"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 52,
-                      options: [
-                        toolbarGradientType({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          className:
-                            "brz-ed__select--transparent brz-ed__select--align-right",
-                          disabled: dvv("bgColorType") === "solid"
-                        })
-                      ]
-                    },
-                    {
-                      width: 18,
-                      options: [
-                        toolbarGradientLinearDegree({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          disabled:
-                            dvv("bgColorType") === "solid" ||
-                            dvv("gradientType") === "radial"
-                        }),
-                        toolbarGradientRadialDegree({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          disabled:
-                            dvv("bgColorType") === "solid" ||
-                            dvv("gradientType") === "linear"
-                        })
-                      ]
-                    }
-                  ]
+                  id: "",
+                  type: "backgroundColor-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -381,12 +311,41 @@ export function getItems({ v, device, component, state, context }) {
           }
         },
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          devices: "desktop",
-          sidebarLabel: t("More Settings"),
-          label: t("More Settings"),
-          icon: "nc-cog"
+          id: "grid",
+          type: "grid",
+          separator: true,
+          columns: [
+            {
+              id: "grid-settings",
+              width: 50,
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            },
+            {
+              id: "grid-effects",
+              width: 50,
+              options: [
+                {
+                  id: "effects",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "effects",
+                    text: t("Effects"),
+                    icon: "nc-flash"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }

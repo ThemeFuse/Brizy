@@ -127,7 +127,7 @@ $option-color: #626b70;
     position: absolute;
     width: 24px;
     height: 24px;
-    font-size: 24px;
+    font-size: 0;
     top: -8px;
     right: -8px;
     border-radius: 50%;
@@ -139,6 +139,9 @@ $option-color: #626b70;
     i {
       font-size: 12px;
       line-height: 16px;
+    }
+    .brz-icon-svg {
+      font-size: 24px;
     }
   }
   &__app-icon--pro {
@@ -646,39 +649,6 @@ $option-color: #626b70;
         font-size: 13px;
         font-weight: 500;
       }
-    }
-  }
-  &-email__info {
-    color: #91cb8a;
-    padding: 20px;
-
-    .brz-icon-svg {
-      font-size: 8px;
-      margin-right: auto;
-      vertical-align: middle;
-      color: rgba(#fff, 0.6);
-      opacity: 0;
-      transition: 0.2s linear opacity;
-    }
-    .brz-ed-animated {
-      animation-duration: 0.7s;
-    }
-    .brz-p {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      .brz-span:first-child {
-        margin-right: 7px;
-      }
-    }
-    .brz-p:hover .brz-icon-svg {
-      opacity: 1;
-      transition: 0.2s linear opacity;
-    }
-    .brz-p:not(:last-child) {
-      margin-bottom: 3px;
     }
   }
   &-email__tooltip {

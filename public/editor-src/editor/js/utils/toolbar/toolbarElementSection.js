@@ -95,6 +95,7 @@ export function toolbarElementSectionGlobal({
     label: t("Make it Global"),
     type: "globalBlock",
     disabled,
+    position: 125,
     value: {
       _id: componentId,
       parentId: getInstanceParentId(component.props.instanceKey, blockType)

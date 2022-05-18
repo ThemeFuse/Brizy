@@ -1,5 +1,5 @@
 import { getStore } from "visual/redux/store";
-import { unDeletedFontSelector } from "visual/redux/selectors-new";
+import { unDeletedFontsSelector } from "visual/redux/selectors-new";
 
 export function getUsedFontsDetails() {
   const {
@@ -7,7 +7,7 @@ export function getUsedFontsDetails() {
     blocks = {},
     google = {},
     upload = {}
-  } = unDeletedFontSelector(getStore().getState());
+  } = unDeletedFontsSelector(getStore().getState());
 
   return {
     config: config.data || [],

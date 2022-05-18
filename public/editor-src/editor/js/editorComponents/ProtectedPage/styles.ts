@@ -57,6 +57,6 @@ export function styles(
       ]
     }
   };
-  // @ts-expect-error: RenderStyles will be in the next css generator
+
   return renderStyles({ v, vs, vd, styles });
 }

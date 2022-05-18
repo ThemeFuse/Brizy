@@ -1,7 +1,6 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useMemo } from "react";
 import classNames from "classnames";
 import { getColorPaletteColors } from "visual/utils/color";
-import { identity } from "underscore";
 import {
   BoxShadow as ShadowControl,
   Props as ShadowProps
@@ -17,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { updateUI } from "visual/redux/actions2";
 import * as Option from "visual/component/Options/Type";
 import { Value } from "./entities/Value";
+import * as Type from "./entities/Type";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 import { Config } from "./entities/Config";
 import { OptionType } from "visual/component/Options/Type";
@@ -32,6 +32,8 @@ import {
   setType,
   setVertical
 } from "visual/component/Options/types/dev/BoxShadow/model";
+import { TypeObject } from "visual/component/Controls/BoxShadow/types";
+import { pipe } from "visual/utils/fp";
 
 export interface Props
   extends Option.Props<Value>,
@@ -46,50 +48,52 @@ export const BoxShadow: OptionType<Value> & FC<Props> = ({
 }) => {
   const dispatch = useDispatch();
   const _className = classNames("brz-ed-option__boxShadow", className);
+  const types: TypeObject[] = useMemo(
+    pipe(
+      () => config?.type,
+      Type.read,
+      (t): Type.Type[] => (t ? ["none", t] : Type.types),
+      getTypesItems
+    ),
+    [config?.type]
+  );
   const onValueChange = useCallback<ShadowProps["onChange"]>(
     (m, meta) => {
       switch (meta.isChanged) {
         case "opacity": {
           const opacity = Opacity.fromNumber(m.opacity);
           opacity !== undefined &&
-            onChange(
-              toElementModel(
-                _setOpacity(opacity, value, !!meta.isChanged),
-                identity
-              )
-            );
+            onChange(_setOpacity(opacity, value, !!meta.isChanged));
           break;
         }
         case "type": {
-          onChange(toElementModel(setType(m.type, value), identity));
+          onChange(setType(m.type, value));
           break;
         }
         case "blur": {
           const blur = Blur.fromNumber(m.blur);
-          blur && onChange(toElementModel(setBlur(blur, value), identity));
+          blur && onChange(setBlur(blur, value));
           break;
         }
         case "hex": {
           const hex = Hex.fromString(m.hex);
-          hex && onChange(toElementModel(setHex(hex, value), identity));
+          hex && onChange(setHex(hex, value));
           break;
         }
         case "spread": {
-          onChange(toElementModel(setSpread(m.spread, value), identity));
+          onChange(setSpread(m.spread, value));
           break;
         }
         case "palette": {
-          onChange(toElementModel(setPalette(m.palette, value), identity));
+          onChange(setPalette(m.palette, value));
           break;
         }
         case "horizontal": {
-          onChange(
-            toElementModel(setHorizontal(m.horizontal, value), identity)
-          );
+          onChange(setHorizontal(m.horizontal, value));
           break;
         }
         case "vertical": {
-          onChange(toElementModel(setVertical(m.vertical, value), identity));
+          onChange(setVertical(m.vertical, value));
           break;
         }
       }
@@ -113,7 +117,7 @@ export const BoxShadow: OptionType<Value> & FC<Props> = ({
       className={_className}
       value={value}
       onChange={onValueChange}
-      types={getTypesItems()}
+      types={types}
       palette={getColorPaletteColors()}
       paletteOpenSettings={openPaletteSidebar}
     />
@@ -124,8 +128,8 @@ export const BoxShadow: OptionType<Value> & FC<Props> = ({
  * @param {(function(key: string): string|number)} get
  * @returns {{}}
  */
-BoxShadow.getModel = fromElementModel;
+BoxShadow.fromElementModel = fromElementModel;
 
-BoxShadow.getElementModel = toElementModel;
+BoxShadow.toElementModel = toElementModel;
 
 BoxShadow.defaultValue = DEFAULT_VALUE;

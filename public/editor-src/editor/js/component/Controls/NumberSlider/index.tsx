@@ -41,6 +41,7 @@ export function NumberSlider<U>({
     (v: Value<U>): void => onChange(v, { editing: false }),
     [onChange]
   );
+
   return (
     <div className={classNames("brz-ed__control--number-slider", className)}>
       <Slider2

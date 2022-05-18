@@ -10,8 +10,9 @@ import { connect, ConnectedProps } from "react-redux";
 import Config from "visual/global/Config";
 import EditorIcon from "visual/component/EditorIcon";
 import Scrollbars from "react-custom-scrollbars";
-import { stylesSelector, fontSelector } from "visual/redux/selectors";
+import { stylesSelector, fontsSelector } from "visual/redux/selectors";
 import ImageLoad from "../common/ImageLoad";
+import { Button } from "../../common/Button";
 import { templateThumbnailUrl } from "visual/utils/templates";
 import {
   getUsedModelsFonts,
@@ -47,7 +48,7 @@ const mapState = (
   projectFonts: ReduxState["fonts"];
 } => ({
   projectStyles: stylesSelector(state),
-  projectFonts: fontSelector(state)
+  projectFonts: fontsSelector(state)
 });
 
 const connector = connect(mapState);
@@ -67,6 +68,7 @@ interface State {
   active: string;
   thumbnailHeight: number;
   transition: number;
+  loading: boolean;
   previewPointer: "none" | "auto";
   replaceStyle: boolean;
 }
@@ -92,7 +94,8 @@ class Details extends Component<AllProps, State> {
     thumbnailHeight: 0,
     transition: 0,
     previewPointer: "none",
-    replaceStyle: false
+    replaceStyle: false,
+    loading: false
   };
 
   thumbnailDetails = React.createRef<HTMLDivElement>();
@@ -149,7 +152,15 @@ class Details extends Component<AllProps, State> {
       onAddBlocks,
       onClose
     } = this.props;
-    const { active: pageId, replaceStyle } = this.state;
+    const { active: pageId, replaceStyle, loading } = this.state;
+
+    if (loading) {
+      return;
+    }
+
+    this.setState({
+      loading: true
+    });
 
     const page = await fetch(getBlockDataUrl(type, pageId));
     const { blocks }: { blocks: Block[] } = await page.json();
@@ -170,13 +181,15 @@ class Details extends Component<AllProps, State> {
       getBlocksStylesFonts(modelFonts, usedFonts)
     );
 
-    onAddBlocks({
-      blocks,
-      styles,
-      fonts,
-      currentStyleId: replaceStyle ? data.styles?.[0]?.id : undefined
+    this.setState({ loading: false }, () => {
+      onAddBlocks({
+        blocks,
+        styles,
+        fonts,
+        currentStyleId: replaceStyle ? data.styles?.[0]?.id : undefined
+      });
+      onClose();
     });
-    onClose();
   };
 
   handleReplaceStyling = (): void => {
@@ -204,7 +217,8 @@ class Details extends Component<AllProps, State> {
       active,
       thumbnailHeight,
       previewPointer,
-      replaceStyle
+      replaceStyle,
+      loading
     } = this.state;
     const isStory = type === "stories";
     const currentPage = pages.find(({ id }) => id === active);
@@ -341,22 +355,26 @@ class Details extends Component<AllProps, State> {
                   )}
                 </div>
                 {pageIsPro ? (
-                  <a
-                    className="brz-ed-btn brz-ed-btn-width-2 brz-ed-btn-sm brz-ed-btn-icon brz-ed-btn-icon--left brz-ed-btn-rounded brz-ed-btn-pro"
+                  <Button
+                    type="link"
+                    color="pro"
+                    size={2}
                     href={urls.upgradeToPro}
-                    rel="noopener noreferrer"
                     target="_blank"
+                    leftIcon="nc-lock"
                   >
-                    <EditorIcon icon="nc-lock" />
                     {t("Get a PRO plan")}
-                  </a>
+                  </Button>
                 ) : (
-                  <div
-                    className="brz-ed-popup-two-details-footer-render-button"
+                  <Button
+                    type="button"
+                    color="teal"
+                    size={2}
+                    loading={loading}
                     onClick={this.handleThumbnailAdd}
                   >
                     {isStory ? t("Import This Story") : t("Import This Layout")}
-                  </div>
+                  </Button>
                 )}
               </div>
             </div>

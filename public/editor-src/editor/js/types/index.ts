@@ -5,6 +5,7 @@ import { Hex } from "visual/utils/color/Hex";
 import Config from "visual/global/Config";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
+import { FontFamilyType } from "visual/utils/fonts/familyType";
 
 export type V = Dictionary<unknown>;
 
@@ -155,7 +156,7 @@ export interface ShopifyPage extends PageCommon {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// @ts-expect-error: is declared but its value is never read.
 export const isWPPage = (page: Page): page is PageWP => {
   return isWp(Config.getAll());
 };
@@ -197,6 +198,8 @@ export type UploadedFont = {
   deleted?: boolean;
 };
 
+export type Font = GoogleFont | UploadedFont;
+
 // authorized
 
 export type Authorized = "pending" | "connected" | "disconnect";
@@ -225,7 +228,7 @@ export interface FontStyle {
   id: string;
   title: string;
   fontFamily: string;
-  fontFamilyType: string;
+  fontFamilyType: FontFamilyType;
   fontSize: number;
   fontWeight: number;
   lineHeight: number;
@@ -273,3 +276,7 @@ export type Shortcode = {
 export type Shortcodes = {
   [k: string]: Shortcode[];
 };
+
+export type UserRole = string;
+
+export type ExportFunction = ($el: JQuery) => void;

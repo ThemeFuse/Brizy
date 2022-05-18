@@ -3,7 +3,7 @@ import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import Toolbar from "visual/component/Toolbar";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
 import * as toolbar from "./toolbar";
@@ -42,8 +42,8 @@ export default class TimelineTab extends EditorComponent {
       "brz-timeline__tab",
       `brz-timeline__tab--${timelineStyle}`,
       verticalMode === "on"
-        ? "brz-timeline__tabs--vertical"
-        : "brz-timeline__tabs--horizontal",
+        ? "brz-timeline__tab--vertical"
+        : "brz-timeline__tab--horizontal",
       customClassName,
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );

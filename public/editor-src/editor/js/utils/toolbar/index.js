@@ -13,13 +13,6 @@ export { toolbarBgImage } from "./toolbarBgImage";
 // BG Video
 export { toolbarBgVideoUrl } from "./toolbarBgVideo";
 
-// Border Radius
-export {
-  toolbarBorderRadius,
-  toolbarBorderRadiusGrouped,
-  toolbarBorderRadiusUngrouped
-} from "./toolbarBorderRadius";
-
 // Color
 export { toolbarColor2, toolbarColorHexField2 } from "./toolbarColor";
 
@@ -66,15 +59,6 @@ export {
   toolbarLinkUpload
 } from "./toolbarLink";
 
-// Size
-export { toolbarSizeContainerSize } from "./toolbarSize";
-
-// Padding
-export {
-  toolbarPaddingFourFields,
-  toolbarPaddingFourFieldsPxSuffix
-} from "./toolbarPadding";
-
 // Margin
 export { toolbarMargin } from "./toolbarMargin";
 
@@ -87,9 +71,6 @@ export {
 
 // Custom CSS Class
 export { toolbarCustomCSSClass } from "./toolbarCustomCSSClass";
-
-// Custom CSS
-export { toolbarCustomCSS } from "./toolbarCustomCSS";
 
 // Entrance Animation
 export { toolbarEntranceAnimation } from "./toolbarAnimation";
@@ -104,7 +85,6 @@ export {
 
 // Disabled
 export {
-  toolbarDisabledAdvancedSettings,
   toolbarDisabledShowOnResponsive,
   toolbarDisabledToolbarSettings,
   toolbarDisabledShowOnTablet,
@@ -130,9 +110,6 @@ export {
   toolbarElementVideoUpload,
   toolbarElementVideoPlaySize
 } from "./toolbarElementVideo";
-
-//Element Counter
-export { toolbarElementCounterStyles } from "./toolbarElementCounter";
 
 // Element SoundCloud
 export { toolbarElementSoundCloudStyle } from "./toolbarElementSoundCloud";
@@ -164,8 +141,7 @@ export { toolbarElementWPPostsNumber } from "./toolbarElementWPPosts";
 export {
   toolbarElementForm2SpacingPx,
   toolbarElementForm2Apps,
-  toolbarElementForm2Size,
-  toolbarElementForm2BorderRadius
+  toolbarElementForm2Size
 } from "./toolbarElementForm2";
 
 // Element Login
@@ -195,7 +171,6 @@ export {
 // Element Carousel
 export {
   toolbarElementCarouselTaxonomy,
-  toolbarElementCarouselOrder,
   toolbarElementCarouselPadding
 } from "./toolbarElementCarousel";
 

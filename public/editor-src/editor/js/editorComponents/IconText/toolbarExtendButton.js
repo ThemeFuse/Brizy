@@ -1,11 +1,12 @@
-import {
-  toolbarDisabledAdvancedSettings,
-  toolbarDisabledShowOnResponsive
-} from "visual/utils/toolbar";
+import { toolbarDisabledShowOnResponsive } from "visual/utils/toolbar";
 
 export function getItems({ device }) {
   return [
-    toolbarDisabledAdvancedSettings({ device }),
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      disabled: true
+    },
     toolbarDisabledShowOnResponsive({ device })
   ];
 }

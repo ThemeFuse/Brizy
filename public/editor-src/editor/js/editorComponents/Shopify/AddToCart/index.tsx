@@ -11,9 +11,11 @@ import * as toolbar from "./toolbar";
 import * as sidebar from "./sidebar";
 import { style } from "./styles";
 import { Text } from "visual/component/ContentOptions/types";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 
 export interface Value extends ElementModel {
+  iconName: string;
+  iconType: string;
   itemId: string;
   text: string;
 }
@@ -53,7 +55,9 @@ export class AddToCart extends EditorComponent<Value> {
           <Wrapper
             {...this.makeWrapperProps({
               className,
-              attributes: { "data-product-handle": v.itemId }
+              attributes: {
+                "data-product-handle": String(v.itemId)
+              }
             })}
             component={"button"}
           >

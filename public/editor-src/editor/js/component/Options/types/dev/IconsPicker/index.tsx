@@ -1,13 +1,11 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import * as Option from "visual/component/Options/Type";
 import { WithClassName } from "visual/utils/options/attributes";
 import classNames from "classnames";
 import { Value, Choice } from "./types";
-import { identity } from "underscore";
 import { FatIconsGrid } from "visual/component/FatIconsGrid";
 import { getElementModel, getModel } from "./utils";
 import { FatCheckIcon } from "visual/component/Controls/FatCheckIcon";
-import { OnChange } from "visual/component/Options/Type";
 
 export interface Props extends Option.Props<Value>, WithClassName {
   choices?: Choice[];
@@ -20,10 +18,6 @@ export const IconsPicker: React.FC<Props> & Option.OptionType<Value> = ({
   onChange,
   value
 }) => {
-  const _onChange = useCallback<OnChange<Value>>(
-    v => onChange(getElementModel(v, identity)),
-    [onChange]
-  );
   const icons = useMemo(
     () =>
       choices?.map(({ icon, title, value: id }) => {
@@ -38,13 +32,13 @@ export const IconsPicker: React.FC<Props> & Option.OptionType<Value> = ({
             active={active}
             checked={checked}
             onClick={(): void =>
-              _onChange({
+              onChange({
                 value: checked ? value.value : [...value.value, id],
                 active: active ? undefined : id
               })
             }
             onCheck={(): void => {
-              _onChange({
+              onChange({
                 value: checked
                   ? value.value.filter(i => i !== id)
                   : [...value.value, id],
@@ -65,9 +59,8 @@ export const IconsPicker: React.FC<Props> & Option.OptionType<Value> = ({
   );
 };
 
-IconsPicker.getModel = getModel;
-IconsPicker.getElementModel = getElementModel;
+IconsPicker.fromElementModel = getModel;
+IconsPicker.toElementModel = getElementModel;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
+// @ts-expect-error: Type 'undefined' is not assignable to type 'Value'.
 IconsPicker.defaultValue = undefined;

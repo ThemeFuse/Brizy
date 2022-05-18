@@ -22,27 +22,14 @@ export function getItems({ v, device }) {
       position: 60,
       options: [
         {
-          id: "titleGroup",
-          type: "group-dev",
-          options: [
-            {
-              id: "title",
-              label: t("Title"),
-              devices: "desktop",
-              type: "switch-dev"
-            },
-            {
-              id: "titleSpacing",
-              label: t("Spacing"),
-              type: "slider-dev",
-              disabled: v.title === "odd",
-              config: {
-                min: 0,
-                max: 100,
-                units: [{ value: "px", title: "px" }]
-              }
-            }
-          ]
+          id: "titleSpacing",
+          label: t("Title"),
+          type: "slider-dev",
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
         },
         {
           id: "style",
@@ -209,11 +196,41 @@ export function getItems({ v, device }) {
           }
         },
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          label: t("More Settings"),
-          position: 110,
-          icon: "nc-cog"
+          id: "grid",
+          type: "grid",
+          separator: true,
+          columns: [
+            {
+              id: "grid-settings",
+              width: 50,
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            },
+            {
+              id: "grid-effects",
+              width: 50,
+              options: [
+                {
+                  id: "effects",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "effects",
+                    text: t("Effects"),
+                    icon: "nc-flash"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }

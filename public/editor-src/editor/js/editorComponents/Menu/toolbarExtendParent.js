@@ -8,7 +8,6 @@ import {
   tabletSyncOnChange,
   mobileSyncOnChange
 } from "visual/utils/onChange";
-import { toolbarColor2, toolbarColorHexField2 } from "visual/utils/toolbar";
 
 const configMenuValue = Config.get("menuData");
 const getMenuChoices = () => {
@@ -20,7 +19,7 @@ const getMenuChoices = () => {
   return menus.length ? menus : [{ title: "-", value: "-" }];
 };
 
-export function getItems({ v, device, state }) {
+export function getItems({ v, device }) {
   const dvk = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device });
 
@@ -39,25 +38,6 @@ export function getItems({ v, device, state }) {
       ? tabletSyncOnChange(v, "mMenuIconColorOpacity")
       : mobileSyncOnChange(v, "mMenuIconColorOpacity")
   );
-
-  const mMenuIconColorOnChange =
-    device === "desktop"
-      ? [
-          "onChangeColorHexIconMenu2",
-          "onChangeColorPaletteIconMenu2",
-          "onChangeColorFieldsIconMenu2"
-        ]
-      : device === "tablet"
-      ? [
-          "onChangeTabletColorHexIconMMenu2",
-          "onChangeTabletColorPaletteIconMMenu2",
-          "onChangeTabletColorFieldsIconMMenu2"
-        ]
-      : [
-          "onChangeMobileColorHexIconMMenu2",
-          "onChangeMobileColorPaletteIconMMenu2",
-          "onChangeMobileColorFieldsIconMMenu2"
-        ];
 
   return [
     {
@@ -125,14 +105,13 @@ export function getItems({ v, device, state }) {
         {
           id: "mMenuPosition",
           label: t("Drawer Position"),
-          type: "radioGroup",
+          type: "radioGroup-dev",
           disabled: dvv("mMenu") === "off",
           position: 40,
           choices: [
             { value: "left", icon: "nc-align-left" },
             { value: "right", icon: "nc-align-right" }
-          ],
-          value: v.mMenuPosition
+          ]
         },
         {
           id: dvk("itemPadding"),
@@ -185,31 +164,9 @@ export function getItems({ v, device, state }) {
       position: 20,
       disabled: dvv("mMenu") === "off",
       options: [
-        toolbarColor2({
-          v,
-          device,
-          state,
-          prefix: dvk("mMenuIconColor"),
-          onChangeHex: [mMenuIconColorOnChange[0]],
-          onChangePalette: [mMenuIconColorOnChange[1]]
-        }),
         {
-          type: "grid",
-          className: "brz-ed-grid__color-fileds",
-          columns: [
-            {
-              width: 100,
-              options: [
-                toolbarColorHexField2({
-                  v,
-                  device,
-                  state,
-                  prefix: dvk("mMenuIconColor"),
-                  onChange: [mMenuIconColorOnChange[2]]
-                })
-              ]
-            }
-          ]
+          id: "mMenuIconColor",
+          type: "colorPicker-dev"
         }
       ]
     }

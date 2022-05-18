@@ -1,6 +1,9 @@
 import React, { Fragment } from "react";
 import classnames from "classnames";
-import { validateKeyByProperty } from "visual/utils/onChange";
+import {
+  defaultValueValue,
+  validateKeyByProperty
+} from "visual/utils/onChange";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
@@ -9,9 +12,10 @@ import SortableHandle from "visual/component/Sortable/SortableHandle";
 import ContainerBorder from "visual/component/ContainerBorder";
 import Background from "visual/component/Background";
 import Animation from "visual/component/Animation";
+import { ScrollMotion } from "visual/component/ScrollMotions";
+import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
 import { Roles } from "visual/component/Roles";
 import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
-import { getStore } from "visual/redux/store";
 import { blocksDataSelector } from "visual/redux/selectors";
 import * as Str from "visual/utils/string/specs";
 import * as toolbarConfig from "./toolbar";
@@ -28,6 +32,9 @@ import { styleRow, styleContainer, styleAnimation } from "./styles";
 import defaultValue from "./defaultValue.json";
 import { styleSizeSize } from "visual/utils/style2";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import classNames from "classnames";
+import { getStore } from "visual/redux/store";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 
 class Row extends EditorComponent {
   static get componentId() {
@@ -124,6 +131,28 @@ class Row extends EditorComponent {
     return meta.row !== undefined;
   }
 
+  getAnimationClassName = (v, vs, vd) => {
+    if (!validateKeyByProperty(v, "animationName", "none")) {
+      return undefined;
+    }
+
+    const animationName = defaultValueValue({ v, key: "animationName" });
+    const animationDuration = defaultValueValue({
+      v,
+      key: "animationDuration"
+    });
+    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
+    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+
+    return classNames(
+      css(
+        `${this.getComponentId()}-animation-${slug}`,
+        `${this.getId()}-animation-${slug}`,
+        styleAnimation(v, vs, vd)
+      )
+    );
+  };
+
   renderToolbar = ContainerBorderButton => {
     return (
       <Toolbar
@@ -170,30 +199,7 @@ class Row extends EditorComponent {
     );
   }
 
-  renderPopups(v) {
-    const { popups, linkType, linkPopup } = v;
-
-    if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
-      return null;
-    }
-
-    const normalizePopups = popups.reduce((acc, popup) => {
-      let itemData = popup;
-
-      if (itemData.type === "GlobalBlock") {
-        // TODO: some kind of error handling
-        itemData = blocksDataSelector(getStore().getState())[
-          itemData.value._id
-        ];
-      }
-
-      return itemData ? [...acc, itemData] : acc;
-    }, []);
-
-    if (normalizePopups.length === 0) {
-      return null;
-    }
-
+  renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
@@ -204,9 +210,8 @@ class Row extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const blockData = blocksDataSelector(getStore().getState())[
-            itemData.value._id
-          ];
+          const globalBlocks = blocksDataSelector(getStore().getState());
+          const blockData = globalBlocks[itemData.value._id];
 
           popupId = blockData.value.popupId;
         }
@@ -246,22 +251,15 @@ class Row extends EditorComponent {
       cssClassPopulation === "" ? customClassName : cssClassPopulation
     );
 
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
+    const animationClassName = this.getAnimationClassName(v, vs, vd);
 
     if (showToolbar === "off") {
       return (
         <SortableElement type="row" useHandle={true}>
-          {sortableElementAtts => (
+          {sortableElementAttr => (
             <Animation
               component={"div"}
-              componentProps={sortableElementAtts}
+              componentProps={sortableElementAttr}
               className={classNameRowContainer}
               animationClass={animationClassName}
             >
@@ -271,6 +269,12 @@ class Row extends EditorComponent {
         </SortableElement>
       );
     }
+
+    const content = (
+      <ScrollMotion options={makeOptionValueToMotion(v)}>
+        {this.renderContent(v, vs, vd)}
+      </ScrollMotion>
+    );
 
     return (
       <Fragment>
@@ -306,12 +310,9 @@ class Row extends EditorComponent {
                     <ContextMenu
                       {...this.makeContextMenuProps(contextMenuConfig)}
                     >
-                      <Roles
-                        allow={["admin"]}
-                        fallbackRender={() => this.renderContent(v, vs, vd)}
-                      >
+                      <Roles allow={["admin"]} fallbackRender={() => content}>
                         <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                          {this.renderContent(v, vs, vd)}
+                          {content}
                         </ToolbarExtend>
                         {ContainerBorderButton}
                         {ContainerBorderBorder}
@@ -323,7 +324,8 @@ class Row extends EditorComponent {
             </ContainerBorder>
           )}
         </SortableElement>
-        {this.renderPopups(v)}
+        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+          this.renderPopups()}
       </Fragment>
     );
   }
@@ -365,20 +367,7 @@ class Row extends EditorComponent {
       cssClassPopulation === "" ? customClassName : cssClassPopulation
     );
 
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
-
-    const props = {
-      ...parseCustomAttributes(customAttributes),
-      id: cssIDPopulation ?? customID,
-      className: classNameRowContainer
-    };
+    const animationClassName = this.getAnimationClassName(v, vs, vd);
 
     return (
       <Fragment>
@@ -386,10 +375,16 @@ class Row extends EditorComponent {
           <Animation
             iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
             component={tagName}
-            componentProps={props}
+            componentProps={{
+              ...parseCustomAttributes(customAttributes),
+              id: cssIDPopulation ?? customID,
+              className: classNameRowContainer
+            }}
             animationClass={animationClassName}
           >
-            {this.renderContent(v, vs, vd)}
+            <ScrollMotion options={makeOptionValueToMotion(v)}>
+              {this.renderContent(v, vs, vd)}
+            </ScrollMotion>
             {linkHrefs[linkType] !== "" && (
               <Link
                 className="brz-link-container"
@@ -401,7 +396,8 @@ class Row extends EditorComponent {
             )}
           </Animation>
         </CustomCSS>
-        {this.renderPopups(v)}
+        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+          this.renderPopups()}
       </Fragment>
     );
   }

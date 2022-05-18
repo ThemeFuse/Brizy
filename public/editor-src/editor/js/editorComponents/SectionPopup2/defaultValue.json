@@ -49,7 +49,7 @@
     "tabletBgImageHeight": null,
     "tabletBgPositionX": null,
     "tabletBgPositionY": null,
-    "tabletBgPopulation": null,
+    "tabletBgPopulation": "",
     "tabletBgImageExtension": null,
 
     "tabletBrightness": null,
@@ -65,7 +65,7 @@
     "mobileBgImageHeight": null,
     "mobileBgPositionX": null,
     "mobileBgPositionY": null,
-    "mobileBgPopulation": null,
+    "mobileBgPopulation": "",
     "mobileBgImageExtension": null,
 
     "mobileBrightness": null,
@@ -89,7 +89,7 @@
     "className": "",
 
     "customAttributes": "",
-    "customAttributesPopulation": null,
+    "customAttributesPopulation": "",
 
     "closePosition": "outside",
 
@@ -119,10 +119,13 @@
 
     "tempCloseBorderRadius": 2,
 
+    "closeBorderRadiusSuffix": "px",
+
     "closeBgSize": 0,
     "closeBgSizeSuffix": "px",
 
     "tempCloseBgSize": 5,
+    "closeBgSizeSuffix": "px",
 
     "closeColorHex": "#ffffff",
     "closeColorOpacity": 1,

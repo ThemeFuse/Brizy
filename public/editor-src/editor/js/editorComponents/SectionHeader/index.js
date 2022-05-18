@@ -1,12 +1,17 @@
 import React from "react";
 import classnames from "classnames";
-import { validateKeyByProperty } from "visual/utils/onChange";
+import {
+  defaultValueValue,
+  validateKeyByProperty
+} from "visual/utils/onChange";
 import ResizeAware from "react-resize-aware";
 import jQuery from "jquery";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Portal from "visual/component/Portal";
 import Sticky from "visual/component/Sticky";
+import { ProBlocked } from "visual/component/ProBlocked";
+import { IS_PRO } from "visual/utils/env";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { ToolbarExtend, hideToolbar } from "visual/component/Toolbar";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
@@ -90,6 +95,10 @@ export default class SectionHeader extends EditorComponent {
     this.props.onChange(newValue, meta);
   }
 
+  handleRemove = () => {
+    this.selfDestruct();
+  };
+
   handleStickyChange = isSticky => {
     hideToolbar();
 
@@ -157,7 +166,18 @@ export default class SectionHeader extends EditorComponent {
       cssIDPopulation,
       cssClassPopulation,
       customAttributes,
-      customAttributesPopulation
+      customAttributesPopulation,
+      animationName,
+      animationDuration,
+      animationDelay,
+      tabletAnimationName,
+      tabletAnimationDuration,
+      tabletAnimationDelay,
+      mobileAnimationName,
+      mobileAnimationDuration,
+      mobileAnimationDelay,
+      translations,
+      translationsLangs
     } = v;
 
     return {
@@ -169,9 +189,42 @@ export default class SectionHeader extends EditorComponent {
       cssIDPopulation,
       cssClassPopulation,
       customAttributes,
-      customAttributesPopulation
+      customAttributesPopulation,
+      animationName,
+      animationDuration,
+      animationDelay,
+      tabletAnimationName,
+      tabletAnimationDuration,
+      tabletAnimationDelay,
+      mobileAnimationName,
+      mobileAnimationDuration,
+      mobileAnimationDelay,
+      translations,
+      translationsLangs
     };
   }
+
+  getAnimationClassName = (v, vs, vd) => {
+    if (!validateKeyByProperty(v, "animationName", "none")) {
+      return undefined;
+    }
+
+    const animationName = defaultValueValue({ v, key: "animationName" });
+    const animationDuration = defaultValueValue({
+      v,
+      key: "animationDuration"
+    });
+    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
+    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+
+    return classnames(
+      css(
+        `${this.getComponentId()}-animation-${slug}`,
+        `${this.getId()}-animation-${slug}`,
+        styleAnimation(v, vs, vd)
+      )
+    );
+  };
 
   renderAnimated({ v, vs, vd }) {
     let sticky = (
@@ -208,7 +261,7 @@ export default class SectionHeader extends EditorComponent {
       { "brz-section__header--animated-closed": IS_EDITOR && !isSticky },
       { "brz-section__header--animated-opened": isSticky },
       css(
-        `${this.constructor.componentId}`,
+        `${this.getComponentId()}`,
         `${this.getId()}`,
         styleSection(v, vs, vd)
       )
@@ -294,42 +347,37 @@ export default class SectionHeader extends EditorComponent {
       tagName
     } = v;
 
-    const classNameSection = classnames(
-      "brz-section brz-section__header",
-      className,
-      cssClassPopulation === "" ? customClassName : cssClassPopulation,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styleSection(v, vs, vd)
-      )
-    );
-
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
-
-    const props = {
-      ...parseCustomAttributes(customAttributes),
-      id: this.getId(),
-      style: this.getStyle(v),
-      ref: this.sectionNode,
-      className: classNameSection
-    };
-
-    return (
+    return IS_PRO ? (
       <Animation
         component={tagName}
-        componentProps={props}
-        animationClass={animationClassName}
+        componentProps={{
+          ...parseCustomAttributes(customAttributes),
+          id: this.getId(),
+          style: this.getStyle(v),
+          ref: this.sectionNode,
+          className: classnames(
+            "brz-section brz-section__header",
+            className,
+            cssClassPopulation === "" ? customClassName : cssClassPopulation,
+            css(
+              `${this.getComponentId()}`,
+              `${this.getId()}`,
+              styleSection(v, vs, vd)
+            )
+          )
+        }}
+        animationClass={this.getAnimationClassName(v, vs, vd)}
       >
         {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
       </Animation>
+    ) : (
+      <header className="brz-section brz-section__header">
+        <ProBlocked
+          text="Header"
+          absolute={false}
+          onRemove={this.handleRemove}
+        />
+      </header>
     );
   }
 
@@ -359,44 +407,37 @@ export default class SectionHeader extends EditorComponent {
       customAttributes
     } = v;
 
-    const classNameSection = classnames(
-      "brz-section brz-section__header",
-      className,
-      cssClassPopulation === "" ? customClassName : cssClassPopulation,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styleSection(v, vs, vd)
-      )
-    );
-
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
-
-    const props = {
-      ...parseCustomAttributes(customAttributes),
-      id:
-        cssIDPopulation === "" ? v.anchorName || this.getId() : cssIDPopulation,
-      style: this.getStyle(v),
-      ref: this.sectionNode,
-      className: classNameSection,
-      "data-uid": this.getId()
-    };
-
-    const content = (
+    const content = IS_PRO ? (
       <Animation
         component={tagName}
-        componentProps={props}
-        animationClass={animationClassName}
+        componentProps={{
+          ...parseCustomAttributes(customAttributes),
+          id:
+            cssIDPopulation === ""
+              ? v.anchorName || this.getId()
+              : cssIDPopulation,
+          style: this.getStyle(v),
+          ref: this.sectionNode,
+          className: classnames(
+            "brz-section brz-section__header",
+            className,
+            cssClassPopulation === "" ? customClassName : cssClassPopulation,
+            css(
+              `${this.getComponentId()}`,
+              `${this.getId()}`,
+              styleSection(v, vs, vd)
+            )
+          ),
+          "data-uid": this.getId()
+        }}
+        animationClass={this.getAnimationClassName(v, vs, vd)}
       >
         {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
       </Animation>
+    ) : (
+      <header className="brz-section brz-section__header">
+        <ProBlocked text="Header" absolute={false} />
+      </header>
     );
 
     return this.renderMemberShipWrapper(content, v);

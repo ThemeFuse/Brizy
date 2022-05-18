@@ -30,7 +30,7 @@ export class Quantity extends EditorComponent<Value> {
           <Wrapper
             {...this.makeWrapperProps({
               className,
-              attributes: { "data-product-handle": v.itemId }
+              attributes: { "data-product-handle": String(v.itemId) }
             })}
           >
             <input

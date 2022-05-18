@@ -1,3 +1,4 @@
+import { defaultValueValue } from "../onChange";
 import {
   styleElementSectionSliderHeight,
   styleElementSectionHeight,
@@ -139,4 +140,18 @@ export function cssStyleSectionPaddingsForEditorResize({ v, device, state }) {
 
     return `margin-left: -${_paddingLeft}; margin-right: -${_paddingRight}; width: calc(100% + ${_paddingRight} + ${_paddingLeft});`;
   }
+}
+
+export function cssStyleSectionBgSize({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const bgSize = dvv("bgSize");
+
+  return `background-size:${bgSize};`;
+}
+
+export function cssStyleSectionBgRepeat({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const bgRepeat = dvv("bgRepeat");
+
+  return `background-repeat:${bgRepeat === "on" ? "repeat" : "no-repeat"};`;
 }

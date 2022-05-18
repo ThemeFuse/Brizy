@@ -1,6 +1,10 @@
+export interface DeactivationOptions {
+  hideContainerBorder?: boolean;
+}
+
 export interface ToolbarMonitorHandler {
   handleMonitorActivationRequest: () => void;
-  handleMonitorDeactivationRequest: () => void;
+  handleMonitorDeactivationRequest: (o?: DeactivationOptions) => void;
 }
 
 let lastActive: ToolbarMonitorHandler | null = null;
@@ -17,16 +21,14 @@ export const monitor = {
   },
   unsetIfActive(instance: ToolbarMonitorHandler): void {
     if (instance === active) {
-      lastActive = instance;
-      active = null;
-      lastActive.handleMonitorDeactivationRequest();
+      this.unsetActive();
     }
   },
-  unsetActive(): void {
+  unsetActive(options?: DeactivationOptions): void {
     if (active !== null) {
       lastActive = active;
       active = null; // setting active to null before calling the method ensures correct behavior
-      lastActive.handleMonitorDeactivationRequest();
+      lastActive.handleMonitorDeactivationRequest(options);
     }
   },
   activateLastActive(): void {

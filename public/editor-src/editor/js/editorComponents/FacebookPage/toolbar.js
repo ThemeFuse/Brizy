@@ -142,6 +142,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "advancedSettings",
+      devices: "desktop",
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],

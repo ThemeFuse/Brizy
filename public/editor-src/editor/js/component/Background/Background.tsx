@@ -5,8 +5,6 @@ import React, {
   RefObject
 } from "react";
 import classnames from "classnames";
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
 import ResizeAware from "react-resize-aware";
 import UIEvents from "visual/global/UIEvents";
 

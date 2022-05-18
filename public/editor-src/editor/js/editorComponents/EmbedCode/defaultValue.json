@@ -53,6 +53,12 @@
     "borderBottomRightRadius": 0,
     "borderBottomLeftRadius": 0,
 
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
     "hoverBorderRadiusType": null,
     "hoverBorderRadius": null,
     "hoverBorderTopLeftRadius": null,
@@ -65,6 +71,12 @@
     "tempBorderTopRightRadius": 0,
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
+
+    "tempBorderRadiusSuffix": "px",
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
 
     "tempHoverBorderRadius": null,
     "tempHoverBorderTopLeftRadius": null,
@@ -168,6 +180,18 @@
     "tempTabletBorderBottomRightRadius": null,
     "tempTabletBorderBottomLeftRadius": null,
 
+    "tabletBorderRadiusSuffix": null,
+    "tabletBorderTopLeftRadiusSuffix": null,
+    "tabletBorderTopRightRadiusSuffix": null,
+    "tabletBorderBottomRightRadiusSuffix": null,
+    "tabletBorderBottomLeftRadiusSuffix": null,
+
+    "tempTabletBorderRadiusSuffix": null,
+    "tempTabletBorderTopLeftRadiusSuffix": null,
+    "tempTabletBorderTopRightRadiusSuffix": null,
+    "tempTabletBorderBottomRightRadiusSuffix": null,
+    "tempTabletBorderBottomLeftRadiusSuffix": null,
+
     "tabletBorderColorHex": null,
     "tabletBorderColorOpacity": null,
     "tabletBorderColorPalette": null,
@@ -228,6 +252,18 @@
     "tempMobileBorderTopRightRadius": null,
     "tempMobileBorderBottomRightRadius": null,
     "tempMobileBorderBottomLeftRadius": null,
+
+    "mobileBorderRadiusSuffix": null,
+    "mobileBorderTopLeftRadiusSuffix": null,
+    "mobileBorderTopRightRadiusSuffix": null,
+    "mobileBorderBottomRightRadiusSuffix": null,
+    "mobileBorderBottomLeftRadiusSuffix": null,
+
+    "tempMobileBorderRadiusSuffix": null,
+    "tempMobileBorderTopLeftRadiusSuffix": null,
+    "tempMobileBorderTopRightRadiusSuffix": null,
+    "tempMobileBorderBottomRightRadiusSuffix": null,
+    "tempMobileBorderBottomLeftRadiusSuffix": null,
 
     "mobileBorderColorHex": null,
     "mobileBorderColorOpacity": null,

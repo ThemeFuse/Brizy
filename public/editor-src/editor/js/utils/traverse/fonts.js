@@ -11,6 +11,13 @@ export const getUsedModelsFonts = ({ models = {}, globalBlocks = {} }) => {
   modelTraverse(models, {
     Component({ type, value }) {
       const defaultStyle = getComponentDefaultValue(type).style || {};
+      const style = { ...defaultStyle, ...value };
+
+      // if exist fontStyle don't need current fontFamily
+      // in this case fontFamily is global
+      if (style.fontStyle) {
+        return;
+      }
 
       Object.entries(defaultStyle.families || {}).forEach(fontKeys => {
         const [key, keyValue] = fontKeys;

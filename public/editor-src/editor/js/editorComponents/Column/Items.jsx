@@ -2,6 +2,7 @@ import React from "react";
 import deepMerge from "deepmerge";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component/Sortable";
+import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
@@ -94,6 +95,10 @@ class Items extends EditorArrayComponent {
     };
   }
 
+  getAlignments() {
+    return ["top", "center", "bottom", "between"];
+  }
+
   renderItemWrapper(item, itemKey, itemIndex) {
     const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
 
@@ -103,7 +108,9 @@ class Items extends EditorArrayComponent {
       "paste",
       "pasteStyles",
       "delete",
-      "horizontalAlign"
+      "horizontalAlign",
+      "showSidebarStyling",
+      "showSidebarAdvanced"
     ];
 
     return (
@@ -123,13 +130,21 @@ class Items extends EditorArrayComponent {
   }
 
   renderItemsContainer(items) {
+    const { containerClassName: className } = this.props;
+
     if (IS_PREVIEW) {
-      return <div className={this.props.containerClassName}>{items}</div>;
+      return <div className={className}>{items}</div>;
     }
 
-    const sortableContent = items.length ? (
-      <div className={this.props.containerClassName}>{items}</div>
-    ) : null;
+    if (items.length === 0) {
+      return (
+        <SortableEmpty
+          path={this.getId()}
+          type="column"
+          acceptElements={this.handleSortableAcceptElements}
+        />
+      );
+    }
 
     return (
       <Sortable
@@ -137,7 +152,7 @@ class Items extends EditorArrayComponent {
         type="column"
         acceptElements={this.handleSortableAcceptElements}
       >
-        {sortableContent}
+        <div className={className}>{items}</div>
       </Sortable>
     );
   }

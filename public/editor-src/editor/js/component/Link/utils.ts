@@ -39,8 +39,6 @@ export const getHref = (type: Type, _href: string): string => {
         // while the orthodox way of getting data from the store is be using connect from react-redux
         // it could be problematic in this case because of potential problems caused be rerenders triggered by connect
         // because Link can hold in children heavy react trees (like columns)
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         const pageDataNoRefs = pageDataNoRefsSelector(
           getStore().getState()
         ) as MValue<Data>;

@@ -20,14 +20,14 @@ export const FatIcon = ({
   return (
     <div
       className={classNames(className, "brz-ed--fat-icon", {
-        "brz-ed--active": !!active
+        "brz-ed--fat-icon__active": !!active
       })}
       onClick={onClick}
     >
-      <div className={"brz-ed--icon-wrapper"}>
+      <div className={"brz-ed--fat-icon__wrapper"}>
         <EditorIcon icon={icon} />
       </div>
-      <div className={"brz-ed-label"}>{label}</div>
+      <div className={"brz-ed--fat-icon__label"}>{label}</div>
     </div>
   );
 };

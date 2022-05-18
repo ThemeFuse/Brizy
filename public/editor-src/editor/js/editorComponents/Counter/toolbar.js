@@ -5,7 +5,6 @@ import {
 } from "visual/utils/options";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { toolbarElementCounterStyles } from "visual/utils/toolbar";
 import { IS_STORY } from "visual/utils/models";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
@@ -26,6 +25,8 @@ export function getItems({ v, device, context }) {
 
   const isRadial = type === "radial";
   const isSimple = type === "simple";
+  const isEmpty = type === "empty";
+  const isPie = type === "pie";
 
   return [
     {
@@ -41,17 +42,26 @@ export function getItems({ v, device, context }) {
         {
           id: "tabsCurrentElement",
           type: "tabs-dev",
+          config: {
+            showSingle: true
+          },
           tabs: [
             {
               id: "tabCurrentElementCounter",
               label: t("Counter"),
               options: [
-                toolbarElementCounterStyles({
-                  v,
-                  device,
+                {
+                  id: "type",
+                  label: t("Style"),
+                  type: "radioGroup-dev",
                   devices: "desktop",
-                  state: "normal"
-                }),
+                  choices: [
+                    { value: "simple", icon: "nc-counter-style-1" },
+                    { value: "radial", icon: "nc-counter-style-2" },
+                    { value: "empty", icon: "nc-counter-style-3" },
+                    { value: "pie", icon: "nc-counter-style-4" }
+                  ]
+                },
                 {
                   id: "start",
                   type: "number-dev",
@@ -78,17 +88,6 @@ export function getItems({ v, device, context }) {
                     spinner: false
                   },
                   population: richTextDC
-                },
-                {
-                  id: "strokeWidth",
-                  label: t("Width"),
-                  type: "slider-dev",
-                  devices: "desktop",
-                  disabled: isSimple || type === "pie",
-                  config: {
-                    min: 1,
-                    max: 32
-                  }
                 },
                 {
                   id: "duration",
@@ -157,6 +156,7 @@ export function getItems({ v, device, context }) {
                   label: t("Separator"),
                   type: "inputText-dev",
                   placeholder: ",",
+                  disabled: isEmpty || isPie,
                   config: {
                     size: "medium"
                   },
@@ -238,7 +238,29 @@ export function getItems({ v, device, context }) {
                 {
                   id: "strokeColor",
                   type: "colorPicker-dev",
-                  disabled: isSimple,
+                  disabled: v.type !== "pie",
+                  states: [NORMAL, HOVER]
+                },
+                {
+                  id: "stroke",
+                  type: "border-dev",
+                  disabled: isSimple || isPie,
+                  states: [NORMAL, HOVER],
+                  config: {
+                    width: ["grouped"],
+                    styles: ["solid"]
+                  }
+                }
+              ]
+            },
+            {
+              id: "tabTextShadow",
+              label: t("Shadow"),
+              options: [
+                {
+                  id: "textShadow",
+                  type: "textShadow-dev",
+                  disabled: !isSimple && !isRadial,
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -272,10 +294,41 @@ export function getItems({ v, device, context }) {
           }
         },
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog"
+          id: "grid",
+          type: "grid",
+          separator: true,
+          columns: [
+            {
+              id: "grid-settings",
+              width: 50,
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            },
+            {
+              id: "grid-effects",
+              width: 50,
+              options: [
+                {
+                  id: "effects",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "effects",
+                    text: t("Effects"),
+                    icon: "nc-flash"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -287,7 +340,8 @@ export function getItems({ v, device, context }) {
       disabled: !isSimple && !IS_STORY,
       title: t("Settings"),
       roles: ["admin"],
-      icon: "nc-cog"
+      icon: "nc-cog",
+      devices: "desktop"
     }
   ];
 }

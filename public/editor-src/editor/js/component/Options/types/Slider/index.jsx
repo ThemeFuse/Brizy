@@ -44,13 +44,11 @@ class SliderOptionType extends React.Component {
     this.state = { ...value };
   }
 
-  componentWillReceiveProps({ value }) {
-    if (
-      value.value !== this.state.value ||
-      value.suffix !== this.state.suffix
-    ) {
-      this.setState({ ...value });
+  static getDerivedStateFromProps({ value }, state) {
+    if (value.value !== state.value || value.suffix !== state.suffix) {
+      return { ...value };
     }
+    return null;
   }
 
   handleSliderChange = value => {

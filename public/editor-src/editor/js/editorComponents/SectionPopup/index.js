@@ -6,7 +6,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { Roles } from "visual/component/Roles";

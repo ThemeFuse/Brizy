@@ -12,7 +12,7 @@ export function styleSection(v, vs, vd) {
   };
 
   if (IS_EDITOR) {
-    styles[".brz &&:hover"].interval.push("cssStyleShowMembershipBlock");
+    styles[".brz &&:hover"].interval.push("cssStyleShowBlock");
 
     styles[".brz &&:hover .brz-container"] = {
       interval: ["cssStyleVisibleMode|||editor"]

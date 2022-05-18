@@ -8,8 +8,6 @@ const scrollTo = (config: {
   new Promise(resolve => {
     const { endLocation, duration, targetNode } = config;
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-expect-error
     window.Brz.emit("elements.anchor.startScrolled", targetNode);
 
     const element = document.scrollingElement;

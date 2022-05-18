@@ -21,6 +21,32 @@ class Items extends EditorArrayComponent {
       getItems: () => {
         return [
           {
+            id: "order",
+            type: "order-dev",
+            devices: "desktop",
+            position: 105,
+            roles: ["admin"],
+            disabled: items.length < 2,
+            config: {
+              disable:
+                itemIndex === 0
+                  ? "prev"
+                  : itemIndex === items.length - 1
+                  ? "next"
+                  : undefined,
+              onChange: v => {
+                switch (v) {
+                  case "prev":
+                    this.reorderItem(itemIndex, itemIndex - 1);
+                    break;
+                  case "next":
+                    this.reorderItem(itemIndex, itemIndex + 1);
+                    break;
+                }
+              }
+            }
+          },
+          {
             id: "duplicate",
             type: "button",
             icon: "nc-duplicate",

@@ -117,11 +117,13 @@ class FirstPopupBlockAdder extends Component<FirstPopupBlockAdderProps> {
   }
 }
 
-const mapStateToProps = (state: ReduxState): object => ({
+const mapStateToProps = (state: ReduxState): { deviceMode: DeviceMode } => ({
   deviceMode: deviceModeSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): object => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch
+): { setDeviceMode: (d: DeviceMode) => ActionUpdateUI } => ({
   setDeviceMode: (device: DeviceMode): ActionUpdateUI =>
     dispatch(setDeviceMode(device))
 });

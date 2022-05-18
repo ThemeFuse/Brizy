@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { Textarea as Control } from "visual/component/Controls/Textarea";
 import { String } from "visual/utils/string/specs";
 import * as Option from "visual/component/Options/Type";
-import { debouncedEffect } from "visual/component/hooks";
+import { useDebouncedEffect } from "visual/component/hooks";
 import {
   WithClassName,
   WithConfig,
@@ -29,7 +29,7 @@ export const Textarea: FC<Props> & Option.OptionType<Model> = ({
 }) => {
   const [_value, setValue] = useState(value);
 
-  debouncedEffect(
+  useDebouncedEffect(
     () => {
       if (value !== _value) {
         onChange({ value: _value });
@@ -54,19 +54,19 @@ export const Textarea: FC<Props> & Option.OptionType<Model> = ({
   );
 };
 
-const getModel: Option.GetModel<Model> = get => ({
+const getModel: Option.FromElementModel<Model> = get => ({
   value: String.read(get("value"))
 });
 
-const getElementModel: Option.GetElementModel<Model> = (values, get) => {
+const getElementModel: Option.ToElementModel<Model> = values => {
   return {
-    [get("value")]: values.value
+    value: values.value
   };
 };
 
-Textarea.getModel = getModel;
+Textarea.fromElementModel = getModel;
 
-Textarea.getElementModel = getElementModel;
+Textarea.toElementModel = getElementModel;
 
 Textarea.defaultValue = {
   value: ""

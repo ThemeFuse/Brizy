@@ -26,8 +26,11 @@ import {
   getParentWhichContainsStyleProperty,
   mapModels
 } from "visual/utils/models";
-import { symbolsToItems } from "visual/editorComponents/Menu";
+import { symbolsToItems } from "visual/editorComponents/Menu/utils";
 import { move } from "visual/utils/array";
+import { updateUI } from "visual/redux/actions2";
+import { uiSelector } from "visual/redux/selectors";
+
 const menusConfig = Config.get("menuData");
 
 const emptyTarget = value => (Array.isArray(value) ? [] : {});
@@ -62,7 +65,9 @@ export default class EditorArrayComponent extends EditorComponent {
     const dbValue = this.getDBValue() || [];
     const updatedValue = insert(dbValue, itemIndex, itemDataWithIds);
 
-    this.handleValueChange(updatedValue, { arrayOperation: "insert" });
+    this.handleValueChange(updatedValue, {
+      arrayOperation: "insert"
+    });
   }
 
   insertItemsBatch(itemIndex, itemsData) {
@@ -74,7 +79,9 @@ export default class EditorArrayComponent extends EditorComponent {
       return insert(acc, itemIndex + index, itemDataWithIds);
     }, dbValue);
 
-    this.handleValueChange(updatedValue, { arrayOperation: "insert_bulk" });
+    this.handleValueChange(updatedValue, {
+      arrayOperation: "insert_bulk"
+    });
   }
 
   updateItem(itemIndex, itemValue, updateMeta = {}) {
@@ -91,11 +98,15 @@ export default class EditorArrayComponent extends EditorComponent {
     const dbValue = this.getDBValue() || [];
     const updatedValue = removeAt(dbValue, itemIndex);
 
-    this.handleValueChange(updatedValue, { arrayOperation: "remove" });
+    this.handleValueChange(updatedValue, {
+      arrayOperation: "remove"
+    });
   }
 
   replaceItem(itemIndex, itemData, meta) {
-    const itemDataStripped = stripSystemKeys(itemData, { exclude: ["_id"] });
+    const itemDataStripped = stripSystemKeys(itemData, {
+      exclude: ["_id"]
+    });
     const itemDataWithIds = setIds(itemDataStripped, meta.idOptions);
     const dbValue = this.getDBValue() || [];
     const updatedValue = replaceAt(dbValue, itemIndex, itemDataWithIds);
@@ -124,6 +135,24 @@ export default class EditorArrayComponent extends EditorComponent {
       arrayOperation: "moveItem"
     });
   }
+  handleOpenRightSidebar(tab) {
+    const state = this.getReduxState();
+    const dispatch = this.getReduxDispatch();
+
+    const { rightSidebar, activeTab } = uiSelector(state);
+
+    if (!rightSidebar.isOpen || activeTab !== tab) {
+      this.setState({ isSidebarOpen: true }, () => {
+        dispatch(
+          updateUI("rightSidebar", {
+            ...rightSidebar,
+            isOpen: true,
+            activeTab: tab
+          })
+        );
+      });
+    }
+  }
 
   handleKeyDown = (e, { keyName, id }) => {
     e.preventDefault();
@@ -136,6 +165,16 @@ export default class EditorArrayComponent extends EditorComponent {
       case "cmd+N":
       case "right_cmd+N":
         this.addColumn(itemIndex + 1);
+        return;
+      case "ctrl+M":
+      case "cmd+M":
+      case "right_cmd+M":
+        this.handleOpenRightSidebar("styles");
+        return;
+      case "ctrl+K":
+      case "cmd+K":
+      case "right_cmd+K":
+        this.handleOpenRightSidebar("effects");
         return;
       case "alt+D":
       case "ctrl+D":
@@ -343,6 +382,10 @@ export default class EditorArrayComponent extends EditorComponent {
     }
   };
 
+  getAlignments() {
+    return ["top", "center", "bottom"];
+  }
+
   renderItemsContainer(items) {
     return items;
   }
@@ -387,7 +430,7 @@ export default class EditorArrayComponent extends EditorComponent {
 
     if (parentValue && path) {
       const { type, value } = parentValue;
-      const alignList = ["top", "center", "bottom"];
+      const alignList = this.getAlignments();
       const {
         defaultValue: {
           style: { verticalAlign }
@@ -498,7 +541,12 @@ export default class EditorArrayComponent extends EditorComponent {
     const shortcodePath = createFullModelPath(data, pathUid);
     const pageData = attachMenu(data);
 
-    dispatch(updateCopiedElement({ value: pageData, path: shortcodePath }));
+    dispatch(
+      updateCopiedElement({
+        value: pageData,
+        path: shortcodePath
+      })
+    );
   }
 
   // cb = v => v -> it's needed for cases when we want to change somehow final value

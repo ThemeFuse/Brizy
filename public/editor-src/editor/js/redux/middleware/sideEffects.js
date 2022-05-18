@@ -1,7 +1,6 @@
 import jQuery from "jquery";
 import _ from "underscore";
 import {
-  getDefaultFont,
   makeDefaultFontCSS,
   makeUploadFontsUrl,
   projectFontsData,
@@ -15,8 +14,11 @@ import { addClass, removeClass } from "visual/utils/dom/classNames";
 import {
   currentStyleSelector,
   currentRoleSelector,
-  unDeletedFontSelector,
-  storeWasChangedSelector
+  fontsSelector,
+  unDeletedFontsSelector,
+  getDefaultFontDetailsSelector,
+  storeWasChangedSelector,
+  currentLanguageSelector
 } from "../selectors";
 import {
   HYDRATE,
@@ -25,17 +27,22 @@ import {
   COPY_ELEMENT,
   updateCopiedElement,
   UPDATE_CURRENT_STYLE_ID,
-  UPDATE_CURRENT_STYLE,
-  IMPORT_TEMPLATE,
-  IMPORT_KIT,
-  ADD_FONTS,
-  DELETE_FONTS
+  UPDATE_CURRENT_STYLE
 } from "../actions";
-import { IMPORT_STORY, UPDATE_EXTRA_FONT_STYLES } from "../actions2";
+import {
+  IMPORT_STORY,
+  IMPORT_KIT,
+  IMPORT_TEMPLATE,
+  UPDATE_EXTRA_FONT_STYLES,
+  ADD_FONTS,
+  DELETE_FONTS,
+  UPDATE_DEFAULT_FONT
+} from "../actions2";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
 import { makeSubsetGoogleFontsUrl } from "visual/utils/fonts";
 import { UNDO, REDO } from "../history/types";
 import { historySelector } from "../history/selectors";
+import { defaultFontSelector } from "../selectors-new";
 import { StoreChanged } from "visual/redux/types";
 import { extraFontStylesSelector } from "../selectors-new";
 
@@ -56,10 +63,11 @@ export default config => store => next => action => {
   if (
     action.type === IMPORT_TEMPLATE ||
     action.type === IMPORT_KIT ||
+    action.type === IMPORT_STORY ||
     action.type === ADD_BLOCK ||
     action.type === ADD_FONTS ||
     action.type === DELETE_FONTS ||
-    action.type === IMPORT_STORY
+    action.type === UPDATE_DEFAULT_FONT
   ) {
     handleFontsChange(callbacks);
   }
@@ -92,6 +100,10 @@ export default config => store => next => action => {
 
   if (action.type === UNDO || action.type === REDO) {
     handleHistoryChange(callbacks);
+  }
+
+  if (action.type === UPDATE_UI && action.key === "currentLanguage") {
+    handleCurrentLanguageChange(callbacks);
   }
 
   const oldState = store.getState();
@@ -133,14 +145,14 @@ function handleStoreChange(callbacks) {
 function handleHydrate(callbacks) {
   callbacks.onAfterNext.push(({ state, store, config }) => {
     const { document, parentDocument } = config;
-    const currentFonts = projectFontsData(unDeletedFontSelector(state));
+    const currentFonts = projectFontsData(unDeletedFontsSelector(state));
     const { colorPalette, fontStyles: _fontStyles } = currentStyleSelector(
       state
     );
     const extraFontStyles = extraFontStylesSelector(state);
     const fontStyles = [..._fontStyles, ...extraFontStyles];
 
-    const defaultFont = getDefaultFont(state);
+    const defaultFont = getDefaultFontDetailsSelector(state);
 
     // Generate default @fontFace uses in project font
     const $defaultFonts = jQuery("<style>")
@@ -151,16 +163,18 @@ function handleHydrate(callbacks) {
     jQuery("head", parentDocument).append($defaultFonts.clone());
 
     // added project fonts to Head
-    const $googleFonts = jQuery("<link>").attr({
-      href: makeSubsetGoogleFontsUrl(currentFonts.google),
-      type: "text/css",
-      rel: "stylesheet"
-    });
+    if (currentFonts.google?.length) {
+      const $googleFonts = jQuery("<link>").attr({
+        href: makeSubsetGoogleFontsUrl(currentFonts.google),
+        type: "text/css",
+        rel: "stylesheet"
+      });
 
-    jQuery("head", document).append($googleFonts);
-    jQuery("head", parentDocument).append($googleFonts.clone());
+      jQuery("head", document).append($googleFonts);
+      jQuery("head", parentDocument).append($googleFonts.clone());
+    }
 
-    if (currentFonts.upload && currentFonts.upload.length > 0) {
+    if (currentFonts.upload?.length) {
       const $uploadFonts = jQuery("<link>").attr({
         href: makeUploadFontsUrl(currentFonts.upload),
         type: "text/css",
@@ -190,10 +204,6 @@ function handleHydrate(callbacks) {
     // Hidden Elements
     document.body.style.setProperty("--elements-visibility", "none");
 
-    // Hidden Membership Blocks
-    document.body.style.setProperty("--role-default-block", "block");
-    document.body.style.setProperty("--role-default-flex", "flex");
-
     // clipboard sync between tabs
     jQuery(window).on("storage", e => {
       const { key, newValue, oldValue } = e.originalEvent;
@@ -206,7 +216,12 @@ function handleHydrate(callbacks) {
 
 function handleFontsChange(callbacks) {
   callbacks.onAfterNext.push(({ config, state, oldState, action }) => {
-    if (state.fonts === oldState.fonts) {
+    const oldFonts = fontsSelector(oldState);
+    const oldDefaultFont = defaultFontSelector(oldState);
+    const newFonts = fontsSelector(state);
+    const newDefaultFont = defaultFontSelector(state);
+
+    if (newFonts === oldFonts && newDefaultFont === oldDefaultFont) {
       return;
     }
 
@@ -309,28 +324,24 @@ function handleCurrentRoleChange(callbacks) {
     const oldRole = currentRoleSelector(oldState).replace(/\//g, "");
     const newRole = action.value.replace(/\//g, "");
 
-    document.body.style.removeProperty(`--role-${oldRole}-block`);
-    document.body.style.setProperty(`--role-${newRole}-block`, "block");
+    document.body.style.removeProperty(`--role-${oldRole}`);
 
-    document.body.style.removeProperty(`--role-${oldRole}-flex`);
-    document.body.style.setProperty(`--role-${newRole}-flex`, "flex");
-
-    if (
-      oldRole !== "logged" &&
-      oldRole !== "not_logged" &&
-      oldRole !== "default"
-    ) {
-      document.body.style.removeProperty("--role-logged-flex", "flex");
-      document.body.style.removeProperty("--role-logged-block", "block");
+    if (newRole !== "default") {
+      document.body.style.setProperty(`--role-${newRole}`, "none");
     }
+  });
+}
 
-    if (
-      newRole !== "logged" &&
-      newRole !== "not_logged" &&
-      newRole !== "default"
-    ) {
-      document.body.style.setProperty("--role-logged-flex", "flex");
-      document.body.style.setProperty("--role-logged-block", "block");
+function handleCurrentLanguageChange(callbacks) {
+  callbacks.onAfterNext.push(({ config, oldState, action }) => {
+    const { document } = config;
+    const oldLanguage = currentLanguageSelector(oldState).replace(/\//g, "");
+    const newLanguage = action.value.replace(/\//g, "");
+
+    document.body.style.removeProperty(`--lang-${oldLanguage}`);
+
+    if (newLanguage !== "default") {
+      document.body.style.setProperty(`--lang-${newLanguage}`, "none");
     }
   });
 }

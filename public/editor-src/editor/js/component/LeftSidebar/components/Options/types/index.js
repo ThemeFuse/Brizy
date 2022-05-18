@@ -5,6 +5,7 @@ import Drawer from "./Drawer";
 import Custom from "./Custom";
 import { Roles } from "./Roles";
 import Template from "./Template";
+import { Languages } from "./Languages";
 
 export default {
   button: Button,
@@ -13,5 +14,6 @@ export default {
   drawer: Drawer,
   custom: Custom,
   showMembership: Roles,
-  template: Template
+  template: Template,
+  language: Languages
 };

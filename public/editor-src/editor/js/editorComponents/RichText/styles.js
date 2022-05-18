@@ -5,7 +5,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function style(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleSizeWidth"]
+      standart: ["cssStyleSizeWidth", "cssStyleBlendMode"]
     }
   };
 
@@ -16,10 +16,10 @@ export function styleDC(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
       standart: [
-        "cssStyleColor",
-        "cssStyleTextShadow",
+        "cssStyleElementRichTextDCColor",
+        "cssStyleElementRichTextDCGradient",
+        "cssStyleElementTitleTextShadow",
         "cssStyleContentAlign",
-        "cssStyleElementRichTextGradient",
         "cssStyleElementRichTextFontFamily",
         "cssStyleElementRichTextFontSize",
         "cssStyleTypography3LineHeight",
@@ -33,6 +33,77 @@ export function styleDC(v, vs, vd) {
         "cssStyleColor",
         "cssStyleElementRichTextGradient",
         "cssStyleTextShadow"
+      ]
+    },
+    ".brz && h1": {
+      standart: [
+        "cssStyleElementRichTextH1FontFamily",
+        "cssStyleElementRichTextH1FontSize",
+        "cssStyleElementRichTextH1LineHeight",
+        "cssStyleElementRichTextH1FontWeight",
+        "cssStyleElementRichTextH1LetterSpacing"
+      ]
+    },
+    ".brz && h2": {
+      standart: [
+        "cssStyleElementRichTextH2FontFamily",
+        "cssStyleElementRichTextH2FontSize",
+        "cssStyleElementRichTextH2LineHeight",
+        "cssStyleElementRichTextH2FontWeight",
+        "cssStyleElementRichTextH2LetterSpacing"
+      ]
+    },
+    ".brz && h3": {
+      standart: [
+        "cssStyleElementRichTextH3FontFamily",
+        "cssStyleElementRichTextH3FontSize",
+        "cssStyleElementRichTextH3LineHeight",
+        "cssStyleElementRichTextH3FontWeight",
+        "cssStyleElementRichTextH3LetterSpacing"
+      ]
+    },
+    ".brz && h4": {
+      standart: [
+        "cssStyleElementRichTextH4FontFamily",
+        "cssStyleElementRichTextH4FontSize",
+        "cssStyleElementRichTextH4LineHeight",
+        "cssStyleElementRichTextH4FontWeight",
+        "cssStyleElementRichTextH4LetterSpacing"
+      ]
+    },
+    ".brz && h5": {
+      standart: [
+        "cssStyleElementRichTextH5FontFamily",
+        "cssStyleElementRichTextH5FontSize",
+        "cssStyleElementRichTextH5LineHeight",
+        "cssStyleElementRichTextH5FontWeight",
+        "cssStyleElementRichTextH5LetterSpacing"
+      ]
+    },
+    ".brz && h6": {
+      standart: [
+        "cssStyleElementRichTextH6FontFamily",
+        "cssStyleElementRichTextH6FontSize",
+        "cssStyleElementRichTextH6LineHeight",
+        "cssStyleElementRichTextH6FontWeight",
+        "cssStyleElementRichTextH6LetterSpacing"
+      ]
+    },
+    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span)": {
+      standart: [
+        "cssStyleElementRichTextFontFamily",
+        "cssStyleElementRichTextFontSize",
+        "cssStyleTypography3LineHeight",
+        "cssStyleTypography3FontWeight",
+        "cssStyleTypography3LetterSpacing"
+      ]
+    },
+    ".brz && strong, .brz && b": {
+      standart: [
+        "cssStyleElementRichTextFontFamily",
+        "cssStyleElementRichTextFontSize",
+        "cssStyleTypography3LineHeight",
+        "cssStyleTypography3LetterSpacing"
       ]
     }
   };

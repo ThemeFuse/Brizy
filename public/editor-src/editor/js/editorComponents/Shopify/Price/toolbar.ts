@@ -12,7 +12,7 @@ export const getItems = (): ToolbarItemType[] => {
         icon: "nc-woo-add-to-cart"
       },
       devices: "desktop",
-      priority: 90,
+      position: 90,
       options: [
         {
           id: "itemId",

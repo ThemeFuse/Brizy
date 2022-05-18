@@ -13,7 +13,7 @@ export { default as hubspot } from "./Hubspot";
 export { default as mailerlite } from "./Mailerlite";
 export { default as drip } from "./Drip";
 export { default as smtp } from "./Smtp";
-export { default as gmail_smtp } from "./Gmail"; // eslint-disable-line @typescript-eslint/camelcase
+export { default as gmail_smtp } from "./Gmail";
 
 // Not Implemented
 export { default as mailgun } from "./Mailgun";

@@ -47,6 +47,13 @@
     "tempHoverBgColorOpacity": null,
     "tempHoverBgColorPalette": null,
 
+    "sidebarBgColorHex": "#ffffff",
+    "sidebarBgColorOpacity": 1,
+    "sidebarBgColorPalette": "",
+
+    "tempSidebarBgColorOpacity": 1,
+    "tempSidebarBgColorPalette": "",
+
     "bubbleBgColorHex": "#d9534f",
     "bubbleBgColorOpacity": 1,
     "bubbleBgColorPalette": "",
@@ -321,24 +328,27 @@
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
 
-    "buttonBorderRadiusType": "grouped",
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "tempBorderRadiusSuffix": "px",
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
+
+    "buttonBorderRadiusType": "square",
     "buttonBorderRadius": 0,
-    "buttonBorderTopLeftRadius": 0,
-    "buttonBorderTopRightRadius": 0,
-    "buttonBorderBottomRightRadius": 0,
-    "buttonBorderBottomLeftRadius": 0,
+    "buttonBorderRadiusSuffix": "px",
 
-    "buttonTempBorderRadius": 0,
-    "buttonTempBorderTopLeftRadius": 0,
-    "buttonTempBorderTopRightRadius": 0,
-    "buttonTempBorderBottomRightRadius": 0,
-    "buttonTempBorderBottomLeftRadius": 0,
-
-    "tempButtonBorderRadius": 0,
-    "tempButtonBorderTopLeftRadius": 0,
-    "tempButtonBorderTopRightRadius": 0,
-    "tempButtonBorderBottomLeftRadius": 0,
-    "tempButtonBorderBottomRightRadius": 0,
+    "tempButtonBorderRadiusSuffix": "px",
+    "tempButtonBorderTopLeftRadiusSuffix": "px",
+    "tempButtonBorderTopRightRadiusSuffix": "px",
+    "tempButtonBorderBottomLeftRadiusSuffix": "px",
+    "tempButtonBorderBottomRightRadiusSuffix": "px",
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": null,

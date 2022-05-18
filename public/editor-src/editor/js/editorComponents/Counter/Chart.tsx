@@ -24,7 +24,7 @@ export const Chart: React.FC<Props> = ({
         {type === "radial" && (
           <circle
             className="brz-counter-radial-chart"
-            r={16 - strokeW / 4}
+            r={16 - (strokeW > 64 ? 16 : strokeW / 4)}
             cx="16"
             cy="16"
           ></circle>
@@ -32,7 +32,7 @@ export const Chart: React.FC<Props> = ({
         {type === "empty" && (
           <circle
             className="brz-counter-radial-chart"
-            r={16 - strokeW / 4}
+            r={16 - (strokeW > 64 ? 16 : strokeW / 4)}
             cx="16"
             cy="16"
           ></circle>

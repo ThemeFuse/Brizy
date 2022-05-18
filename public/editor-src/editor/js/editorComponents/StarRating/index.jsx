@@ -3,7 +3,7 @@ import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
@@ -26,9 +26,9 @@ export default class StarRating extends EditorComponent {
   };
 
   renderStars(v) {
-    const { iconName, iconType, rating } = v;
+    const { iconName, iconType, rating, ratingScale } = v;
 
-    const stars = Array(5)
+    const stars = Array(ratingScale)
       .fill()
       .map((_, i) => (
         <div key={i} className="brz-starrating-icon-wrap">

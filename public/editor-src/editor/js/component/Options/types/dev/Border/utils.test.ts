@@ -291,7 +291,7 @@ describe("Testing 'toElementModel' function", function() {
       tempLeftWidth: model.tempLeftWidth
     };
 
-    expect(toElementModel(m, k => k)).toMatchObject(r);
+    expect(toElementModel(m)).toMatchObject(r);
   });
 
   test("If key exists and value is valid, use key value", () => {
@@ -327,7 +327,7 @@ describe("Testing 'toElementModel' function", function() {
       tempColorPalette: tempPalette
     };
 
-    expect(toElementModel(m, k => k)).toMatchObject(r);
+    expect(toElementModel(m)).toMatchObject(r);
   });
 });
 
@@ -336,7 +336,12 @@ describe("Testing 'getStyleObject' function", function() {
     ["none", { id: BorderStyle.NONE, title: t("None") }],
     ["solid", { id: BorderStyle.SOLID, icon: "nc-solid" }],
     ["dashed", { id: BorderStyle.DASHED, icon: "nc-dashed" }],
-    ["dotted", { id: BorderStyle.DOTTED, icon: "nc-dotted" }]
+    ["dotted", { id: BorderStyle.DOTTED, icon: "nc-dotted" }],
+    ["double", { id: BorderStyle.DOUBLE, icon: "nc-double" }],
+    ["groove", { id: BorderStyle.GROOVE, icon: "nc-groove" }],
+    ["ridge", { id: BorderStyle.RIDGE, icon: "nc-ridge" }],
+    ["inset", { id: BorderStyle.INSET, icon: "nc-inset" }],
+    ["outset", { id: BorderStyle.OUTSET, icon: "nc-outset" }]
   ];
 
   test.each(objects)("The '%s' style has object", (k, obj) =>

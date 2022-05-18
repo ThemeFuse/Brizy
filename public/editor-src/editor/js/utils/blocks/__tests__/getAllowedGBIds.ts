@@ -75,7 +75,8 @@ const configWp = {
     getPostObjects: ""
   },
   ruleMatches: [],
-  availableRoles: []
+  availableRoles: [],
+  availableTranslations:[]
 };
 
 const pageCommon: PageCommon = {
@@ -463,7 +464,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         customerEditorUrl: "",
         customerPreviewUrl: "",
         collectionPreviewUrl: "",
-        translationsApiUrl: ""
+        translationsApiUrl: "",
+        notificationsApiUrl: ""
       },
       urls: {
         ...urlsCommon,

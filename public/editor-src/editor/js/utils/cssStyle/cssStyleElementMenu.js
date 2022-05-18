@@ -43,9 +43,11 @@ import {
   styleItemPaddingBottom,
   styleItemPaddingLeft,
   styleElementMMenuSize,
-  styleElementMMenuHoverColor,
   styleElementMenuSize
 } from "visual/utils/style2";
+import { defaultValueValue } from "../onChange";
+import { cssStyleFilter } from "./cssStyleFilter";
+import { cssStyleBgGradient } from "./cssStyleBgGradient";
 
 export function cssStyleElementMenuAlign({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
@@ -150,30 +152,30 @@ export function cssStyleElementMenuPadding({ v, device, state }) {
 }
 
 export function cssStyleElementMenuActiveColor({ v, device }) {
-  return cssStyleColor({ v, device, state: "hover" });
+  return cssStyleColor({ v, device, state: ACTIVE });
 }
 
 export function cssStyleElementMenuActiveLinkBgColor({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
 
   if (mode === "horizontal") {
-    return cssStyleBgColor({ v, device, state: "hover", prefix: "menuBg" });
+    return cssStyleBgColor({ v, device, state: ACTIVE, prefix: "menuBg" });
   }
 
   return "background-color: transparent;";
 }
 
 export function cssStyleElementMenuActiveBgColor({ v, device }) {
-  return cssStyleBgColor({ v, device, state: "hover", prefix: "menuBg" });
+  return cssStyleBgColor({ v, device, state: ACTIVE, prefix: "menuBg" });
 }
 
 export function cssStyleElementMenuActiveBorder({ v, device }) {
-  return cssStyleBorder({ v, device, state: "hover", prefix: "menu" });
+  return cssStyleBorder({ v, device, state: ACTIVE, prefix: "menu" });
 }
 
 // Current
 export function cssStyleElementMenuCurrentColor({ v, device }) {
-  return cssStyleColor({ v, device, state: "active" });
+  return cssStyleColor({ v, device, state: ACTIVE });
 }
 
 export function cssStyleElementMenuCurrentBgColor({ v, device }) {
@@ -230,14 +232,16 @@ export function cssStyleElementMMenuColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "mMenuColor" });
 }
 
-export function cssStyleElementMMenuHoverColor({ v, device }) {
-  const hoverColor = styleElementMMenuHoverColor({ v, device });
-
-  return `color: ${hoverColor};`;
+export function cssStyleElementMMenuTitleColor({ v, device }) {
+  return cssStyleColor({ v, device, prefix: "mMenuColor" });
 }
 
 export function cssStyleElementMMenuActiveColor({ v, device }) {
-  return cssStyleColor({ v, device, state: "active", prefix: "mMenuColor" });
+  return cssStyleColor({ v, device, state: ACTIVE, prefix: "mMenuColor" });
+}
+
+export function cssStyleElementMenuColor({ v, device, state }) {
+  return cssStyleColor({ v, device, state });
 }
 
 export function cssStyleElementMMenuBorderColor({ v, device, state }) {
@@ -247,9 +251,30 @@ export function cssStyleElementMMenuBorderColor({ v, device, state }) {
 }
 
 export function cssStyleElementMMenuBackgroundColor({ v, device, state }) {
-  const bgColor = styleBgColor({ v, device, state, prefix: "mMenuBg" });
+  return cssStyleBgColor({ v, device, state, prefix: "mMenuBg" });
+}
 
-  return `background-color: ${bgColor};`;
+export function cssStyleElementMMenuDynamicImage({ v, device, state }) {
+  const bgPopulation = defaultValueValue({
+    v,
+    device,
+    key: "bgPopulation",
+    state
+  });
+
+  const bg = defaultValueValue({ v, key: "bg", device, state });
+
+  return bgPopulation !== "" ? `background-image: url(${bg})` : "";
+}
+
+export function cssStyleElementMMenuImageFilter({ v, device, state }) {
+  const imageSrc = defaultValueValue({ v, device, state, key: "bgImageSrc" });
+
+  return imageSrc !== "" ? cssStyleFilter({ v, device, state }) : "";
+}
+
+export function cssStyleElementMMenuGradientBgColor({ v, state, device }) {
+  return cssStyleBgGradient({ v, state, device, prefix: "mMenu" });
 }
 
 export function cssStyleElementMMenuItemHorizontalAlign({ v, device, state }) {
@@ -410,10 +435,6 @@ export function cssStyleElementMenuSubMenuColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "subMenuColor" });
 }
 
-export function cssStyleElementMenuSubMenuHoverColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "subMenuHoverColor" });
-}
-
 export function cssStyleElementMenuSubMenuIconPosition({ v, device, state }) {
   const iconPosition = styleElementMenuSubMenuIconPosition({
     v,
@@ -454,12 +475,6 @@ export function cssStyleElementMenuSubMenuBgColor({ v, device, state }) {
   return `background-color: ${bgColor};`;
 }
 
-export function cssStyleElementMenuSubMenuHoverBgColor({ v, device, state }) {
-  const bgColor = styleBgColor({ v, device, state, prefix: "subMenuHoverBg" });
-
-  return `background-color: ${bgColor};`;
-}
-
 export function cssStyleElementMenuSubMenuBorderColor({ v, device, state }) {
   const color = styleColor({ v, device, state, prefix: "subMenuColor" });
 
@@ -484,7 +499,7 @@ export function cssStyleElementMenuSubMenuCurrentColor({ v, device }) {
   return cssStyleColor({
     v,
     device,
-    state: "active",
+    state: ACTIVE,
     prefix: "subMenuColor"
   });
 }
@@ -501,7 +516,7 @@ export function cssStyleElementMenuSubMenuCurrentBgColor({ v, device }) {
 }
 
 export function cssStyleElementMenuSubMenuCurrentBoxShadow({ v, device }) {
-  return cssStyleBoxShadow({ v, device, state: "active" });
+  return cssStyleBoxShadow({ v, device, state: ACTIVE });
 }
 
 // Dropdown Open / Close

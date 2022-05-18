@@ -16,7 +16,11 @@ export function style(v, vs, vd, props) {
       ]
     },
     ".brz &&:hover:after": {
-      standart: ["cssStyleBoxShadow|||preview"],
+      standart: [
+        "cssStyleBoxShadow|||preview",
+        "cssStyleBgColor|||preview",
+        "cssStyleBgGradient|||preview"
+      ],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementImageTransitionProperty"
@@ -71,7 +75,11 @@ export function styleWrapper(v, vs, vd, props) {
       ]
     },
     ".brz &&:hover:after": {
-      standart: ["cssStyleBoxShadow|||editor"],
+      standart: [
+        "cssStyleBoxShadow|||editor",
+        "cssStyleBgColor|||editor",
+        "cssStyleBgGradient|||editor"
+      ],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementImageTransitionProperty"

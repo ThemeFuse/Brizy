@@ -1,0 +1,76 @@
+@import "../../variables";
+
+.brz-ed__control--range-slider {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template: "left inputs right";
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+
+  @mixin track {
+    background: transparent;
+    box-shadow: none;
+    height: 0;
+  }
+
+  &__inputs {
+    grid-area: inputs;
+    position: relative;
+  }
+
+  .brz-ed-component__label {
+    margin: 0;
+  }
+
+  &__left-label {
+    grid-area: left;
+  }
+
+  &__right-label {
+    grid-area: right;
+  }
+
+  &__sliders {
+    position: relative;
+    display: flex;
+  }
+
+  &__to.brz-ed-control--slider2 {
+    position: absolute;
+    height: 0;
+
+    &::-moz-range-track {
+      @include track;
+    }
+    &::-webkit-slider-runnable-track {
+      @include track;
+    }
+  }
+
+  &__values {
+    display: flex;
+    justify-content: space-between;
+    color: $options-border-hover-color;
+    font-size: 9px;
+    margin: 0 9px;
+    height: 0;
+    position: absolute;
+    width: calc(100% - 18px);
+    top: 15px;
+
+    span {
+      width: 18px;
+      text-align: center;
+    }
+
+    &__from {
+      direction: rtl;
+      margin-right: 2px;
+    }
+
+    &__to {
+      margin-left: 2px;
+    }
+  }
+}

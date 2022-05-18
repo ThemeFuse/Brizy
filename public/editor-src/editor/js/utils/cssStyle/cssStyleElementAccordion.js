@@ -106,7 +106,7 @@ export function cssStyleElementAccordionNavAlign({ v, device, state }) {
     : "";
 }
 
-export function cssStyleElementAccordionNavTextAlign({ v, device, state }) {
+export function cssStyleElementAccordionNavAlignText({ v, device, state }) {
   const horizontalAlign = styleElementAccordionNavAlign({ v, device, state });
 
   return `text-align: ${horizontalAlign};`;
@@ -147,12 +147,8 @@ export function cssStyleElementAccordionFilterHorizontalAlign({
   return `justify-content:${alignItems};`;
 }
 
-export function cssStyleElementAccordionFilterPaddingFourFields({
-  v,
-  device,
-  state
-}) {
-  return cssStylePaddingFourFields({ v, device, state, prefix: "filter" });
+export function cssStyleElementAccordionFilterPaddingFourFields({ v, device }) {
+  return cssStylePaddingFourFields({ v, device, prefix: "filter" });
 }
 
 export function cssStyleElementAccordion3FontFamily({ v, device }) {
@@ -193,6 +189,10 @@ export function cssStyleElementAccordionActiveShadow({ v, device }) {
 
 export function cssStyleElementAccordionAnimDuration({ v }) {
   return `transition: height ${v.animDuration}s ease-out;`;
+}
+
+export function cssStyleElementAccordionTitlePadding({ v, device }) {
+  return cssStylePaddingFourFields({ v, device, prefix: "title" });
 }
 
 export function cssStyleElementAccordionPropertyHoverTransition() {

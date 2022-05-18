@@ -413,7 +413,7 @@ describe("Testing 'toElementModel' function", function() {
       horizontal: 0,
       tempHorizontal: 0
     };
-    expect(toElementModel(model, k => k)).toEqual(result);
+    expect(toElementModel(model)).toEqual(result);
   });
 });
 

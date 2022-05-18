@@ -206,7 +206,6 @@ export const patchOnImageChange = (
 
 export const patchOnSizeTypeChange = (
   cW: number,
-  v: Value,
   patch: SizeTypePatch
 ): PatchSize => {
   const type = patch.sizeType;

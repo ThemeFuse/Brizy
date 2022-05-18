@@ -1,0 +1,170 @@
+{
+  "content": {
+    "items": [],
+    "title": "",
+    "filterType": "select",
+    "checkRangeMin": "0",
+    "checkRangeMax": "100",
+    "checkLabel": "Shoes",
+    "checkValue": "shoes",
+    "checkRangeLabel": "[min]$ - [max]$",
+    "checkSelectValue": "AA",
+    "selectPlaceholder": "Choose...",
+    "selectDataSource": "manual",
+    "checkColorSize": 36,
+    "checkColorSizeSuffix": "px",
+    "media": "image",
+
+    "images": {
+      "bgImageSrc": "",
+      "hoverBgImageSrc": null,
+      "tabletBgImageSrc": null,
+      "mobileBgImageSrc": null
+    },
+
+    "bgImageWidth": 0,
+    "bgImageHeight": 0,
+    "bgPositionY": 50,
+    "bgPositionX": 50,
+    "bgPopulation": "",
+    "bgImageExtension": ""
+  },
+
+  "style": {
+    "className": "",
+    "customCSS": "",
+
+    "checkStyle3BgColorType": "solid",
+
+    "hoverCheckStyle3BgColorType": null,
+
+    "activeCheckStyle3BgColorType": null,
+
+    "checkStyle3BgColorHex": "#ffffff",
+    "checkStyle3BgColorOpacity": 1,
+    "checkStyle3BgColorPalette": "",
+
+    "tempCheckStyle3BgColorOpacity": 1,
+    "tempCheckStyle3BgColorPalette": "",
+
+    "hoverCheckStyle3BgColorHex": null,
+    "hoverCheckStyle3BgColorOpacity": null,
+    "hoverCheckStyle3BgColorPalette": null,
+
+    "tempHoverCheckStyle3BgColorOpacity": null,
+    "tempHoverCheckStyle3BgColorPalette": null,
+
+    "activeCheckStyle3BgColorHex": null,
+    "activeCheckStyle3BgColorOpacity": null,
+    "activeCheckStyle3BgColorPalette": null,
+
+    "tempActiveCheckStyle3BgColorOpacity": null,
+    "tempActiveCheckStyle3BgColorPalette": null,
+
+    "checkStyle3BorderStyle": null,
+
+    "checkStyle3BorderColorHex": null,
+    "checkStyle3BorderColorOpacity": 1,
+    "checkStyle3BorderColorPalette": "",
+
+    "tempCheckStyle3BorderColorOpacity": 1,
+    "tempCheckStyle3BorderColorPalette": "",
+
+    "hoverCheckStyle3BorderColorHex": null,
+    "hoverCheckStyle3BorderColorOpacity": null,
+    "hoverCheckStyle3BorderColorPalette": null,
+
+    "tempHoverCheckStyle3BorderColorOpacity": null,
+    "tempHoverCheckStyle3BorderColorPalette": null,
+
+    "tempCheckStyle3BorderStyle": null,
+
+    "hoverCheckStyle3BorderStyle": null,
+
+    "tempHoverCheckStyle3BorderStyle": null,
+
+    "checkStyle3BorderWidthType": "grouped",
+    "checkStyle3BorderWidth": 1,
+    "checkStyle3BorderTopWidth": 1,
+    "checkStyle3BorderRightWidth": 1,
+    "checkStyle3BorderBottomWidth": 1,
+    "checkStyle3BorderLeftWidth": 1,
+
+    "tempCheckStyle3BorderWidth": 1,
+    "tempCheckStyle3BorderTopWidth": 1,
+    "tempCheckStyle3BorderRightWidth": 1,
+    "tempCheckStyle3BorderBottomWidth": 1,
+    "tempCheckStyle3BorderLeftWidth": 1,
+
+    "hoverCheckStyle3BorderWidthType": null,
+    "hoverCheckStyle3BorderWidth": null,
+    "hoverCheckStyle3BorderTopWidth": null,
+    "hoverCheckStyle3BorderRightWidth": null,
+    "hoverCheckStyle3BorderBottomWidth": null,
+    "hoverCheckStyle3BorderLeftWidth": null,
+
+    "tempHoverCheckStyle3BorderWidth": null,
+    "tempHoverCheckStyle3BorderTopWidth": null,
+    "tempHoverCheckStyle3BorderRightWidth": null,
+    "tempHoverCheckStyle3BorderBottomWidth": null,
+    "tempHoverCheckStyle3BorderLeftWidth": null,
+
+    "checkStyle3BoxShadow": "",
+
+    "tempCheckStyle3BoxShadow": "on",
+
+    "checkStyle3BoxShadowColorHex": "#000000",
+    "checkStyle3BoxShadowColorOpacity": 1,
+    "checkStyle3BoxShadowColorPalette": "",
+
+    "tempCheckStyle3BoxShadowColorOpacity": 1,
+    "tempCheckStyle3BoxShadowColorPalette": "",
+
+    "checkStyle3BoxShadowHex": "#000000",
+    "checkStyle3BoxShadowOpacity": 1,
+    "checkStyle3BoxShadowPalette": "",
+
+    "tempCheckStyle3BoxShadowOpacity": 1,
+    "tempCheckStyle3BoxShadowPalette": "",
+
+    "checkStyle3BoxShadowBlur": 0,
+    "checkStyle3BoxShadowSpread": 0,
+    "checkStyle3BoxShadowVertical": 0,
+    "checkStyle3BoxShadowHorizontal": 0,
+
+    "tempCheckStyle3BoxShadowBlur": 4,
+    "tempCheckStyle3BoxShadowSpread": 0,
+    "tempCheckStyle3BoxShadowVertical": 2,
+    "tempCheckStyle3BoxShadowHorizontal": 1,
+
+    "hoverCheckStyle3BoxShadow": null,
+
+    "tempHoverCheckStyle3BoxShadow": null,
+
+    "hoverCheckStyle3BoxShadowColorHex": null,
+    "hoverCheckStyle3BoxShadowColorOpacity": null,
+    "hoverCheckStyle3BoxShadowColorPalette": null,
+
+    "tempHoverCheckStyle3BoxShadowColorPalette": null,
+    "tempHoverCheckStyle3BoxShadowColorOpacity": null,
+
+    "hoverCheckStyle3BoxShadowBlur": null,
+    "hoverCheckStyle3BoxShadowSpread": null,
+    "hoverCheckStyle3BoxShadowVertical": null,
+    "hoverCheckStyle3BoxShadowHorizontal": null,
+
+    "tempHoverCheckStyle3BoxShadowBlur": null,
+    "tempHoverCheckStyle3BoxShadowSpread": null,
+    "tempHoverCheckStyle3BoxShadowVertical": null,
+    "tempHoverCheckStyle3BoxShadowHorizontal": null,
+
+    "bgColorOpacity": 0,
+    "tempBgColorOpacity": 1,
+
+    "tabletSize": "small",
+
+    "mobileSize": "small",
+    "mobilePaddingRight": 0,
+    "mobilePaddingLeft": 0
+  }
+}

@@ -10,11 +10,13 @@ describe("Testing 'readWithParser' function", function() {
   type User = {
     userName: string;
     userAge: string;
+    email: string | null;
   };
 
   type Person = {
     name: string;
     age: Positive.Positive;
+    email: string | null;
   };
 
   test("If object passes all parsers, return values", () => {
@@ -22,11 +24,12 @@ describe("Testing 'readWithParser' function", function() {
       readWithParser<User, Person>(
         {
           name: mPipe(prop("userName"), Str.read),
-          age: mPipe(prop("userAge"), Num.read, Positive.fromNumber)
+          age: mPipe(prop("userAge"), Num.read, Positive.fromNumber),
+          email: v => v.email
         },
-        { userName: "Tom", userAge: "23" }
+        { userName: "Tom", userAge: "23", email: null }
       )
-    ).toEqual({ name: "Tom", age: 23 });
+    ).toEqual({ name: "Tom", age: 23, email: null });
   });
 
   test("If object does not pass at least one parser, return undefined", () => {
@@ -34,9 +37,10 @@ describe("Testing 'readWithParser' function", function() {
       readWithParser<User, Person>(
         {
           name: mPipe(prop("userName"), Str.read),
-          age: mPipe(prop("userAge"), Num.read, Positive.fromNumber)
+          age: mPipe(prop("userAge"), Num.read, Positive.fromNumber),
+          email: v => v.email
         },
-        { userName: "Tom", userAge: "-44" }
+        { userName: "Tom", userAge: "-44", email: null }
       )
     ).toBe(undefined);
   });

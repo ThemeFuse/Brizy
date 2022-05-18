@@ -1,7 +1,36 @@
 import { renderStyles } from "visual/utils/cssStyle";
+import { fromElementModel } from "visual/component/Options/types/dev/Motion/types/Value";
+import { defaultValueValue } from "visual/utils/onChange";
+import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
+import { types as Devices } from "visual/utils/responsiveMode";
+import { NORMAL } from "visual/utils/stateMode";
 
 export function styleColumn(v, vs, vd) {
-  const styles = {
+  const get = k => {
+    return Devices.some(device => {
+      return defaultValueValue({
+        v,
+        device,
+        key: createOptionId("motion", k),
+        state: NORMAL
+      });
+    });
+  };
+  const motion = fromElementModel(get);
+
+  const enabledMotion =
+    motion.vertical ||
+    motion.horizontal ||
+    motion.transparency ||
+    motion.blur ||
+    motion.rotate ||
+    motion.scale ||
+    motion.mouseTrack ||
+    motion.mouseTilt;
+
+  let innerDivFromMotion = enabledMotion ? "div > " : "";
+
+  let styles = {
     ".brz &&:hover": {
       standart: [
         "cssStyleZIndex|||preview",
@@ -10,29 +39,37 @@ export function styleColumn(v, vs, vd) {
         "cssStyleFlexColumnVerticalAlign"
       ]
     },
-    ".brz &&:hover > .brz-bg": {
+    [`.brz &&:hover > ${innerDivFromMotion}.brz-bg`]: {
       standart: [
         "cssStyleBorder",
         "cssStyleBorderRadius",
         "cssStyleBoxShadow",
-        "cssStyleMargin"
+        "cssStyleMargin",
+        "cssStyleBlendMode"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
-    ".brz &&:hover > .brz-bg > .brz-bg-image": {
+    [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-image`]: {
       standart: [
         "cssStyleBgImage",
         "cssStyleFilter",
-        "cssStyleBgImagePosition"
+        "cssStyleBgImagePosition",
+        "cssStyleBgMediaImage"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
-    ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
+    [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-image:after`]: {
       standart: ["cssStyleBgImageHover"]
     },
-    ".brz &&:hover > .brz-bg > .brz-bg-color": {
+    [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-color`]: {
       standart: ["cssStyleBgColor", "cssStyleBgGradient"],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+    },
+    [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-map`]: {
+      standart: ["cssStyleFilter", "cssStyleBgMediaMap"]
+    },
+    [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-video`]: {
+      standart: ["cssStyleFilter", "cssStyleBgMediaVideo"]
     }
   };
 
@@ -40,8 +77,10 @@ export function styleColumn(v, vs, vd) {
     styles[".brz &&:hover > *"] = {
       interval: ["cssStyleVisibleEditorDisplayNoneOrBlock|||editor"]
     };
-    styles[".brz &&:hover > .brz-bg"].interval.push("cssStyleVisible|||editor");
-    styles[".brz &&:hover > .brz-column__items"] = {
+    styles[`.brz &&:hover > ${innerDivFromMotion}.brz-bg`].interval.push(
+      "cssStyleVisible|||editor"
+    );
+    styles[`.brz &&:hover > ${innerDivFromMotion}.brz-column__items`] = {
       interval: ["cssStyleVisible|||editor"]
     };
   } else {
@@ -60,7 +99,9 @@ export function styleItems(v, vs, vd) {
         "cssStyleZIndex|||editor",
         "cssStyleMargin",
         "cssStyleBorderTransparentColor",
-        "cssStylePaddingFourFields"
+        "cssStylePaddingFourFields",
+        "cssStyleColumnHeight",
+        "cssStyleColumnVerticalAlignItems"
       ],
       interval: [
         "cssStyleDisplayFlex",

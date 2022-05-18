@@ -67,7 +67,9 @@ class StoryItemItems extends EditorArrayComponent {
       "copy",
       "paste",
       "pasteStyles",
-      "delete"
+      "delete",
+      "showSidebarStyling",
+      "showSidebarAdvanced"
     ];
     return (
       <ContextMenuExtend

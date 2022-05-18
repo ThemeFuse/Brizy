@@ -27,15 +27,16 @@ import { css } from "visual/utils/cssStyle";
 import { style, styleContent } from "./styles";
 import { Wrapper } from "../tools/Wrapper";
 import {
+  showOriginalImage,
   calcWrapperOriginalSizes,
   calcWrapperPredefinedSizes,
   calcWrapperSizes,
   getImageSize,
   getSizeType,
   isGIF,
+  isSVG,
   isOriginalSize,
-  isPredefinedSize,
-  isSVG
+  isPredefinedSize
 } from "./utils";
 import { isNumber } from "visual/utils/math";
 
@@ -54,6 +55,7 @@ import {
   placeholderObjFromStr,
   placeholderObjToStr
 } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 
 class Image extends EditorComponent {
   static get componentId() {
@@ -81,7 +83,9 @@ class Image extends EditorComponent {
     this.state = {
       containerWidth: desktopW,
       tabletContainerWidth: tabletW,
-      mobileContainerWidth: mobileW
+      mobileContainerWidth: mobileW,
+      isDragging: false,
+      sizePatch: null
     };
   }
 
@@ -143,7 +147,7 @@ class Image extends EditorComponent {
     if (imageSizeType !== undefined && imageSizeType.sizeType !== sizeType) {
       const containerWidth = this.getContainerSize()[device];
 
-      return patchOnSizeTypeChange(containerWidth, value, imageSizeType);
+      return patchOnSizeTypeChange(containerWidth, imageSizeType);
     }
 
     return {};
@@ -158,6 +162,25 @@ class Image extends EditorComponent {
 
   handleChange = patch => {
     this.patchValue(patch);
+  };
+
+  handleBoxResizerChange = patch => {
+    if (this.state.isDragging) {
+      this.setState({ sizePatch: patch });
+    } else {
+      this.handleChange(patch);
+    }
+  };
+
+  onDragStart = () => {
+    this.setState({ isDragging: true });
+  };
+
+  onDragEnd = () => {
+    const sizePatch = this.state.sizePatch;
+    this.setState({ isDragging: false, sizePatch: null }, () =>
+      this.handleBoxResizerChange(sizePatch)
+    );
   };
 
   getWidth = () => {
@@ -476,9 +499,12 @@ class Image extends EditorComponent {
       }
     }
 
+    const sizeValue = this.state.sizePatch ?? {};
+
     return {
       ...dbValue,
-      ...value
+      ...value,
+      ...sizeValue
     };
   }
 
@@ -517,31 +543,7 @@ class Image extends EditorComponent {
     });
   }
 
-  renderPopups(v) {
-    const { popups, linkLightBox, linkPopup } = v;
-    const linkType = linkLightBox === "on" ? "lightBox" : v.linkType;
-
-    if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
-      return null;
-    }
-
-    const normalizePopups = popups.reduce((acc, popup) => {
-      let itemData = popup;
-
-      if (itemData.type === "GlobalBlock") {
-        // TODO: some kind of error handling
-        itemData = blocksDataSelector(getStore().getState())[
-          itemData.value._id
-        ];
-      }
-
-      return itemData ? [...acc, itemData] : acc;
-    }, []);
-
-    if (normalizePopups.length === 0) {
-      return null;
-    }
-
+  renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
@@ -552,9 +554,8 @@ class Image extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const blockData = blocksDataSelector(getStore().getState())[
-            itemData.value._id
-          ];
+          const globalBlocks = blocksDataSelector(getStore().getState());
+          const blockData = globalBlocks[itemData.value._id];
 
           popupId = blockData.value.popupId;
         }
@@ -613,7 +614,10 @@ class Image extends EditorComponent {
         // `${this.constructor.componentId}-content`,
         `${this.constructor.componentId}-${this.getId()}-content`,
         `${this.getId()}-content`,
-        styleContent(v, vs, vd, wrapperSizes)
+        styleContent(v, vs, vd, {
+          ...wrapperSizes,
+          showOriginalImage: showOriginalImage(v)
+        })
       )
     );
 
@@ -645,7 +649,9 @@ class Image extends EditorComponent {
                 componentId={this.constructor.componentId}
                 wrapperSizes={wrapperSizes}
                 meta={meta}
-                onChange={this.handleChange}
+                onChange={this.handleBoxResizerChange}
+                onStart={this.onDragStart}
+                onEnd={this.onDragEnd}
               >
                 <ImageContent
                   v={v}
@@ -661,7 +667,8 @@ class Image extends EditorComponent {
           </Toolbar>
         </Wrapper>
         {IS_EDITOR && <ResizeAware onResize={this.handleResize} />}
-        {this.renderPopups(v)}
+        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+          this.renderPopups()}
       </Fragment>
     );
   }
@@ -721,7 +728,8 @@ class Image extends EditorComponent {
             />
           </CustomCSS>
         </Wrapper>
-        {this.renderPopups(v)}
+        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+          this.renderPopups()}
       </Fragment>
     );
   }

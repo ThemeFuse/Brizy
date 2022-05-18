@@ -16,19 +16,21 @@ import * as Responsive from "visual/utils/responsiveMode";
 import {
   createOptionId,
   inDevelopment,
-  optionMode,
-  optionState,
-  setOptionPrefix,
   makeToolbarPropsFromConfigDefaults,
   flattenDefaultValue
 } from "./utils";
-import { getOptionModel } from "visual/component/Options/types";
+import {
+  fromElementModel,
+  toElementModel
+} from "visual/component/Options/types";
 import { wrapOption } from "visual/utils/options/utils";
 import { ElementModel } from "visual/component/Elements/Types";
 import * as Str from "visual/utils/reader/string";
 import { Literal } from "visual/utils/types/Literal";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { OptionDefinition } from "visual/component/Options/Type";
+import {
+  OptionDefinition,
+  ToolbarItemType
+} from "visual/editorComponents/ToolbarItemType";
 import { MValue } from "visual/utils/value";
 import { WithClassName } from "visual/utils/options/attributes";
 import { Props as WrapperProps } from "visual/editorComponents/tools/Wrapper";
@@ -51,7 +53,7 @@ const capitalize = ([first, ...rest]: string, lowerRest = false): string =>
   first.toUpperCase() +
   (lowerRest ? rest.join("").toLowerCase() : rest.join(""));
 
-type Rule = string | { rule: string; mapper: Function };
+type Rule = string | { rule: string; mapper: <T>(m: T) => void };
 
 type Model<M> = M & {
   _id?: string;
@@ -70,12 +72,14 @@ export type OnChangeMeta<M> = Meta & {
   intent?: "replace_all" | "remove_all";
 };
 
-type ContextMenuItem = {
+export type ContextMenuItem = {
   id: string;
   type: "group" | "button";
-  title: string;
+  title?: string;
   icon?: string;
   items?: ContextMenuItem[];
+  helperText?: () => string;
+  onChange?: () => void;
 };
 
 type ContextMenuProps<M extends ElementModel> = {
@@ -135,7 +139,11 @@ export interface ComponentsMeta {
   [k: string]: unknown;
 }
 
-export type Props<M extends ElementModel, P> = WithClassName & {
+export type Props<
+  M extends ElementModel,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  P extends Record<any, any>
+> = WithClassName & {
   _id: string;
   dbValue: Model<M>;
   defaultValue: Model<M>;
@@ -156,8 +164,11 @@ export type Props<M extends ElementModel, P> = WithClassName & {
 
 export class EditorComponent<
   M extends ElementModel,
-  P = {}
-> extends React.Component<Props<M, P>> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  P = Record<any, any>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  S = Record<any, any>
+> extends React.Component<Props<M, P>, S> {
   /**
    * @return {string}
    */
@@ -170,6 +181,7 @@ export class EditorComponent<
    * @type {object}
    */
   static defaultProps = {
+    meta: {},
     onToolbarOpen: _.noop,
     onToolbarClose: _.noop,
     onToolbarEnter: _.noop,
@@ -207,6 +219,14 @@ export class EditorComponent<
 
     // check redux
     if (props.reduxState.fonts !== nextProps.reduxState.fonts) {
+      // console.log("scu", this.constructor.componentId, "project", true);
+      return true;
+    }
+
+    if (
+      props.reduxState.project.data.font !==
+      nextProps.reduxState.project.data.font
+    ) {
       // console.log("scu", this.constructor.componentId, "project", true);
       return true;
     }
@@ -357,7 +377,7 @@ export class EditorComponent<
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getDCValueHook(keys: ECKeyDCInfo[], v: M): ECKeyDCInfo[] {
+  getDCValueHook(keys: ECKeyDCInfo[], _v: M): ECKeyDCInfo[] {
     return keys;
   }
 
@@ -405,19 +425,17 @@ export class EditorComponent<
     });
 
     if (missingKeys.length) {
+      const component = (this.constructor as typeof EditorComponent)
+        .componentId;
+      const missingKeysFormatted = JSON.stringify(missingKeys, null, 2);
+      const valueFormatted = JSON.stringify(
+        value,
+        (_, v) => (Array.isArray(v) ? "[...]" : v),
+        2
+      );
+
       console.error(
-        `${
-          (this.constructor as typeof EditorComponent).componentId
-        } element\n\nKeys not in defaultValue:\n${JSON.stringify(
-          missingKeys,
-          null,
-          2
-        )}
-        \nTried to update with:\n${JSON.stringify(
-          value,
-          (k, v) => (Array.isArray(v) ? "[...]" : v),
-          2
-        )}`
+        `${component} element\n\nKeys not in defaultValue:\n${missingKeysFormatted}\nTried to update with:\n${valueFormatted}`
       );
     }
   }
@@ -443,7 +461,7 @@ export class EditorComponent<
     const attributes = {
       ...(extend.attributes || {}),
       ...(props.attributes || {})
-    } as P;
+    } as Record<string, string | number>;
 
     return {
       ...extend,
@@ -451,9 +469,7 @@ export class EditorComponent<
       className,
       attributes,
       id: this.getId(),
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      componentId: this.constructor.componentId,
+      componentId: this.getComponentId(),
       meta: this.props.meta,
       ...this.getValue2(),
       // ! is it ok to use here type assertion - as Partial<Model<M>> ?!
@@ -545,7 +561,7 @@ export class EditorComponent<
     // and thus we might get false (outdated) results
     const getItems = (
       deviceMode = deviceModeSelector(getStore().getState())
-    ): ToolbarItemType[] => {
+    ): OptionDefinition[] => {
       const getItemsFnName = `getItemsFor${capitalize(
         deviceMode,
         true
@@ -708,13 +724,9 @@ export class EditorComponent<
       getSidebarItems,
       getSidebarTitle,
       onBeforeOpen: (): void => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         global.Brizy.activeEditorComponent = this;
       },
       onBeforeClose: (): void => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         global.Brizy.activeEditorComponent = null;
       },
       onOpen: onToolbarOpen,
@@ -737,48 +749,49 @@ export class EditorComponent<
     state: State.State,
     items: ToolbarItemType[]
   ): OptionDefinition[] {
-    return optionMap(option => {
-      const { id, type, onChange: oldOnchange } = option;
-      const stateOnChange = (mode: State.State): void =>
-        this.patchValue({ tabsState: mode } as Partial<Model<M>>);
-
-      if (Responsive.empty === device) {
-        // Apply state mode only in desktop device mode
-        option = bindStateToOption(
-          GlobalState.states,
-          state,
-          stateOnChange,
-          option
-        );
-      }
-
-      //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
-      const inDev = inDevelopment(type);
-      const defaultOnChange = (id: keyof M, v: Literal): Partial<M> | null =>
-        v !== undefined ? ({ [id]: v } as Partial<M>) : null;
-      const deps = option.dependencies || _.identity;
-
-      if (inDev) {
-        option.value = getOptionModel(type)(key => {
-          return defaultValueValue({
-            v,
+    const getKey = (id: string, key: string, isDev: boolean) => {
+      return id === "tabsState" || !isDev
+        ? id
+        : defaultValueKey({
             key: createOptionId(id, key),
             device,
             state
           });
-        });
+    };
+
+    return optionMap(option => {
+      const { id, type, onChange: oldOnchange } = option;
+
+      if (Responsive.empty === device) {
+        // Apply state mode only in desktop device mode
+        option = bindStateToOption(GlobalState.states, option);
       }
 
+      //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
+      const isDev = inDevelopment(type);
+      const defaultOnChange = (id: keyof M, v: Literal): Partial<M> | null =>
+        v !== undefined ? ({ [id]: v } as Partial<M>) : null;
+      const deps = option.dependencies || _.identity;
+
+      if (isDev) {
+        option.value = fromElementModel(type)(key =>
+          defaultValueValue({
+            v,
+            key: createOptionId(id, key),
+            device,
+            state
+          })
+        );
+      }
+
+      const elementModel = toElementModel<typeof type>(type, key =>
+        getKey(id, key, isDev)
+      );
+
       option.onChange = (value: ElementModel | Literal, meta: Meta): void => {
-        const id = inDev
-          ? defaultValueKey({
-              key: option.id,
-              device: optionMode(device, option),
-              state: optionState(state, option)
-            })
-          : option.id;
-        const patch: Partial<Model<M>> = inDev
-          ? deps(setOptionPrefix(id, value as ElementModel))
+        const id = getKey(option.id, "", isDev);
+        const patch: Partial<Model<M>> = isDev
+          ? deps(elementModel(value))
           : oldOnchange
           ? oldOnchange(value, meta)
           : defaultOnChange(id, value as Literal);
@@ -794,7 +807,7 @@ export class EditorComponent<
 
   makeToolbarPropsFromConfig2(
     config: NewToolbarConfig<M>,
-    sidebarConfig: SidebarConfig<M>,
+    sidebarConfig?: SidebarConfig<M>,
     options = {}
   ): ToolbarExtend {
     const {
@@ -823,7 +836,7 @@ export class EditorComponent<
     // and thus we might get false (outdated) results
     const getItems = (
       deviceMode = deviceModeSelector(getStore().getState())
-    ): ToolbarItemType[] => {
+    ): OptionDefinition[] => {
       if (process.env.NODE_ENV === "development") {
         if (!config.getItems) {
           // eslint-disable-next-line no-console
@@ -1000,13 +1013,9 @@ export class EditorComponent<
       getSidebarItems,
       getSidebarTitle,
       onBeforeOpen: (): void => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         global.Brizy.activeEditorComponent = this;
       },
       onBeforeClose: (): void => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         global.Brizy.activeEditorComponent = null;
       },
       onOpen: onToolbarOpen,
@@ -1028,12 +1037,9 @@ export class EditorComponent<
     }
   }
 
-  /* eslint-disable no-unused-vars */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   renderForEdit(v: M, vs: M, vd: M): ReactNode {
-    throw "renderForEdit: Not Implemented";
+    throw new Error("renderForEdit: Not Implemented" + v + vs + vd);
   }
-  /* eslint-enabled no-unused-vars */
 
   renderForView(v: M, vs: M, vd: M): ReactNode {
     return this.renderForEdit(v, vs, vd);

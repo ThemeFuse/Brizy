@@ -11,26 +11,24 @@ import { getItems as toolbar } from "./toolbar";
 import { getItems as sidebar } from "./sidebar";
 import { style } from "./styles";
 
-export class Variations extends EditorComponent<ElementModel> {
+export interface Value extends ElementModel {
+  itemId: string;
+}
+
+export class Variations extends EditorComponent<Value> {
   static get componentId(): "Variations" {
     return "Variations";
   }
 
   static defaultValue = defaultValue;
 
-  handleTextChange = (patch: ElementModel): void => this.patchValue(patch);
+  handleTextChange = (patch: Value): void => this.patchValue(patch);
 
-  renderForEdit(
-    v: ElementModel,
-    vs: ElementModel,
-    vd: ElementModel
-  ): React.ReactNode {
+  renderForEdit(v: Value, vs: Value, vd: Value): React.ReactNode {
     const className = classnames(
       "brz-shopify-variations",
       css(this.getId(), this.getId(), style(v, vs, vd))
     );
-
-    const handle = String(v.itemId);
 
     return (
       <PortalToolbar
@@ -47,13 +45,13 @@ export class Variations extends EditorComponent<ElementModel> {
             })}
           >
             <div>
-              <input type="radio" data-product-handle={handle} value={0} /> S
+              <input type="radio" data-product-handle={v.itemId} value={0} /> S
             </div>
             <div>
-              <input type="radio" data-product-handle={handle} value={1} /> M
+              <input type="radio" data-product-handle={v.itemId} value={1} /> M
             </div>
             <div>
-              <input type="radio" data-product-handle={handle} value={2} /> L
+              <input type="radio" data-product-handle={v.itemId} value={2} /> L
             </div>
           </Wrapper>
         </CustomCSS>

@@ -23,6 +23,16 @@ export function getItems() {
       id: "horizontalAlign",
       type: "toggle-dev",
       disabled: true
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      sidebarLabel: t("More Settings"),
+      roles: ["admin"],
+      position: 110,
+      icon: "nc-cog",
+      title: t("Settings"),
+      align: "left"
     }
   ];
 }

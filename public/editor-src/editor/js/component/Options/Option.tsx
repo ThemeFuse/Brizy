@@ -4,19 +4,25 @@ import { types } from "./types";
 import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 import { WithClassName } from "visual/utils/options/attributes";
-import { OptionDefinition } from "visual/component/Options/Type";
 import { OptionLabel } from "visual/component/OptionLabel";
+import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
+import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 
 export interface Props extends WithClassName {
   data: OptionDefinition;
-  toolbar?: object;
+  toolbar?: ToolbarItemsInstance;
   location?: string;
 }
 
 export interface LegacyProps extends WithClassName {
-  toolbar: object | null;
+  toolbar: ToolbarItemsInstance | null;
   location?: string;
 }
+
+type ComponentOptionProps = Omit<Props["data"], "label"> & {
+  toolbar?: ToolbarItemsInstance;
+  label: ReactElement;
+};
 
 class Option extends React.Component<Props> {
   renderLegacy(Component: ComponentType<LegacyProps>): ReactElement {
@@ -39,9 +45,9 @@ class Option extends React.Component<Props> {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  renderNew(Component): ReactElement {
+  renderNew(
+    Component: ComponentType<Partial<ComponentOptionProps>>
+  ): ReactElement {
     const {
       data: {
         label,
@@ -96,9 +102,9 @@ class Option extends React.Component<Props> {
     }
 
     return inDevelopment(this.props.data.type)
-      ? this.renderNew(Component)
-      : // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
+      ? // @ts-expect-error: need migrate all option to new option type
+        this.renderNew(Component)
+      : // @ts-expect-error: need migrate all option to new option type
         this.renderLegacy(Component);
   }
 }

@@ -16,8 +16,6 @@ export const useStateReducer = <
   onSave: (v: Valid) => Promise<void>,
   onClose: () => void
 ): [State<Invalid, Valid>, (a: Actions.PublicActions | A) => void] => {
-  type _Actions = Actions.Actions<Invalid> | A;
-
   const [state, dispatch] = useReducer(
     reducer,
     loading({ activeTab: Tabs.page })

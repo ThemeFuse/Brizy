@@ -96,29 +96,11 @@ describe("Testing 'elementModelToValue' function", () => {
 describe("Testing 'Patches for image' functions", () => {
   test("patchOnSizeTypeChange", () => {
     const cW = 400;
-    const v: Value = {
-      imageExtension: "",
-      mobileHeight: undefined,
-      mobileHeightSuffix: undefined,
-      mobileWidth: undefined,
-      mobileWidthSuffix: undefined,
-      tabletHeight: undefined,
-      tabletHeightSuffix: undefined,
-      tabletWidth: undefined,
-      tabletWidthSuffix: undefined,
-      width: 200,
-      height: 200,
-      widthSuffix: "px",
-      heightSuffix: "px",
-      size: 2,
-      sizeType: "",
-      imagePopulation: undefined
-    };
 
     const customPatch: SizeTypePatch = {
       sizeType: "custom"
     };
-    expect(patchOnSizeTypeChange(cW, v, customPatch)).toStrictEqual({
+    expect(patchOnSizeTypeChange(cW, customPatch)).toStrictEqual({
       sizeType: "custom",
       width: 100,
       height: 100,
@@ -129,7 +111,7 @@ describe("Testing 'Patches for image' functions", () => {
     const originalPatch: SizeTypePatch = {
       sizeType: "original"
     };
-    expect(patchOnSizeTypeChange(cW, v, originalPatch)).toStrictEqual({
+    expect(patchOnSizeTypeChange(cW, originalPatch)).toStrictEqual({
       sizeType: "original",
       size: 100
     });
@@ -139,7 +121,7 @@ describe("Testing 'Patches for image' functions", () => {
     const thumbnailPatch: SizeTypePatch = {
       sizeType: "thumbnail"
     };
-    expect(patchOnSizeTypeChange(cW, v, thumbnailPatch)).toStrictEqual({
+    expect(patchOnSizeTypeChange(cW, thumbnailPatch)).toStrictEqual({
       sizeType: "thumbnail",
       size: 37.5
     });
@@ -148,7 +130,7 @@ describe("Testing 'Patches for image' functions", () => {
     const mediumPatch: SizeTypePatch = {
       sizeType: "medium"
     };
-    expect(patchOnSizeTypeChange(cW, v, mediumPatch)).toStrictEqual({
+    expect(patchOnSizeTypeChange(cW, mediumPatch)).toStrictEqual({
       sizeType: "medium",
       size: 75
     });
@@ -157,7 +139,7 @@ describe("Testing 'Patches for image' functions", () => {
     const largePatch: SizeTypePatch = {
       sizeType: "large"
     };
-    expect(patchOnSizeTypeChange(cW, v, largePatch)).toStrictEqual({
+    expect(patchOnSizeTypeChange(cW, largePatch)).toStrictEqual({
       sizeType: "large",
       size: 100
     });
@@ -166,7 +148,7 @@ describe("Testing 'Patches for image' functions", () => {
     const patch1536x1536: SizeTypePatch = {
       sizeType: "1536x1536"
     };
-    expect(patchOnSizeTypeChange(cW, v, patch1536x1536)).toStrictEqual({
+    expect(patchOnSizeTypeChange(cW, patch1536x1536)).toStrictEqual({
       sizeType: "1536x1536",
       size: 100
     });

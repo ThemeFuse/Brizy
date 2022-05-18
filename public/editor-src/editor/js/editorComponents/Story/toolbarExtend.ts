@@ -4,13 +4,11 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { ToolbarItemType } from "../ToolbarItemType";
 
-export type Value = ElementModel & {};
-
 export function getItems({
   v,
   device
 }: {
-  v: Value;
+  v: ElementModel;
   device: ResponsiveMode;
 }): ToolbarItemType[] {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });

@@ -793,19 +793,19 @@ export function cssStyleElementTimelineTabContentArrowColor({ v, device }) {
   if (orientation === "off") {
     switch (style) {
       case "style-1": {
-        return "border-right: transparent ; border-bottom: transparent ; border-left: inherit ; border-top: inherit ;";
+        return "border-right: transparent; border-bottom: transparent; border-left: inherit; border-top: inherit;";
       }
       case "style-2": {
-        return "border-left: transparent ; border-top: transparent ; border-right: inherit ; border-bottom: inherit ;";
+        return "border-left: transparent; border-top: transparent; border-right: inherit; border-bottom: inherit;";
       }
     }
   } else if (orientation === "on") {
     switch (style) {
       case "style-1": {
-        return "border-top: transparent ; border-right: transparent ; border-left: inherit ; border-bottom: inherit ;";
+        return "border-top: transparent; border-right: transparent; border-left: inherit; border-bottom: inherit;";
       }
       case "style-2": {
-        return "border-left: transparent ; border-bottom: transparent ; border-right: inherit ; border-top: inherit ;";
+        return "border-left: transparent; border-bottom: transparent; border-right: inherit; border-top: inherit;";
       }
     }
   }
@@ -851,26 +851,22 @@ export function cssStyleElementTimelineTab({ v, device }) {
 
   if (orientation === "off") {
     switch (style) {
-      case "style-1": {
+      case "style-1":
+      case "style-3": {
         return "display: flex; align-items: normal; flex-direction: column;";
       }
       case "style-2": {
         return "display: flex; align-items: normal; flex-direction: column-reverse;";
       }
-      case "style-3": {
-        return "display: flex; align-items: normal; flex-direction: column;";
-      }
     }
   } else if (orientation === "on") {
     switch (style) {
-      case "style-1": {
+      case "style-1":
+      case "style-3": {
         return "display: flex; align-items: center; flex-direction: row;";
       }
       case "style-2": {
         return "display: flex; align-items: center; flex-direction: row-reverse;";
-      }
-      case "style-3": {
-        return "display: flex; align-items: center; flex-direction: row;";
       }
     }
   }
@@ -1002,9 +998,7 @@ export function cssStyleElementTimelineTabCustomStyle({ v, device }) {
       case "style-1": {
         return "flex-direction: column;";
       }
-      case "style-2": {
-        return "flex-direction: column-reverse;";
-      }
+      case "style-2":
       case "style-3": {
         return "flex-direction: column-reverse;";
       }
@@ -1014,9 +1008,7 @@ export function cssStyleElementTimelineTabCustomStyle({ v, device }) {
       case "style-1": {
         return "flex-direction: row;";
       }
-      case "style-2": {
-        return "flex-direction: row-reverse;";
-      }
+      case "style-2":
       case "style-3": {
         return "flex-direction: row-reverse;";
       }
@@ -1030,26 +1022,22 @@ export function cssStyleElementTimelineTabHorizontalStyle3Odd({ v, device }) {
 
   if (orientation === "on") {
     switch (style) {
-      case "style-1": {
+      case "style-1":
+      case "style-3": {
         return "flex-direction: row;";
       }
       case "style-2": {
         return "flex-direction: row-reverse;";
       }
-      case "style-3": {
-        return "flex-direction: row;";
-      }
     }
   } else if (orientation === "off") {
     switch (style) {
-      case "style-1": {
+      case "style-1":
+      case "style-3": {
         return "flex-direction: column;";
       }
       case "style-2": {
         return "flex-direction: column-reverse;";
-      }
-      case "style-3": {
-        return "flex-direction: column;";
       }
     }
   }

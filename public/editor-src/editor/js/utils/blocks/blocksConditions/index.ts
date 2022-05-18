@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import Config from "visual/global/Config";
 import { getStore } from "visual/redux/store";
 import { pageSelector } from "visual/redux/selectors";

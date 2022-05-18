@@ -6,7 +6,6 @@ import { Reader } from "visual/utils/types/Type";
 import { NumberSpec } from "visual/utils/math/number";
 import { String } from "visual/utils/string/specs";
 import { toObject } from "visual/utils/object";
-import { ElementValue } from "visual/component/Options/types/dev/InternalLink/types/ElementValue";
 
 const readPost: Reader<Post> = v => {
   type _Post = {
@@ -32,8 +31,3 @@ export const toPosts = mCompose(
   property("posts"),
   toObject
 );
-
-export const toElementValue = (p: Post): ElementValue => ({
-  value: p.id,
-  title: p.title
-});

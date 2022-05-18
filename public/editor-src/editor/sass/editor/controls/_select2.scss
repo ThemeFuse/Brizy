@@ -75,6 +75,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: $brand-options;
 
     &:last-child {
       border-bottom-color: transparent;

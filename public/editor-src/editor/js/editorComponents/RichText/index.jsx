@@ -107,7 +107,6 @@ class RichText extends EditorComponent {
   handlePopulationSet = value => {
     const dcOption = getDynamicContentByPlaceholder(
       this.context.dynamicContent.config,
-      DCTypes.richText,
       value
     );
 
@@ -129,6 +128,25 @@ class RichText extends EditorComponent {
     });
   };
 
+  handleBlockTag = value => {
+    switch (value) {
+      case "paragraph":
+        return { pre: false, header: null };
+      case "heading1":
+        return { pre: false, header: "h1" };
+      case "heading2":
+        return { pre: false, header: "h2" };
+      case "heading3":
+        return { pre: false, header: "h3" };
+      case "heading4":
+        return { pre: false, header: "h4" };
+      case "heading5":
+        return { pre: false, header: "h5" };
+      case "heading6":
+        return { pre: false, header: "h6" };
+    }
+  };
+
   handleChange = values => {
     // after Quill applies formatting it steals the focus to itself,
     // we try to fight back by remembering the previous focused element
@@ -145,6 +163,20 @@ class RichText extends EditorComponent {
     // eslint-disable-next-line react/no-find-dom-node
     if (!ReactDOM.findDOMNode(this).contains(prevActive)) {
       prevActive.focus && prevActive.focus();
+    }
+
+    switch (values.typographyFontStyle) {
+      case "paragraph":
+      case "heading1":
+      case "heading2":
+      case "heading3":
+      case "heading4":
+      case "heading5":
+      case "heading6":
+        this.quillRef.current.formatMultiple(
+          this.handleBlockTag(values.typographyFontStyle)
+        );
+        break;
     }
 
     this.quillRef.current.formatMultiple(values);

@@ -1,7 +1,6 @@
 import { t } from "visual/utils/i18n";
-import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 
-export function getItems({ device }) {
+export function getItems() {
   return [
     {
       id: "toolbarCurrentShortcode",
@@ -60,7 +59,11 @@ export function getItems({ device }) {
       position: 90,
       devices: "desktop",
       choices: [
-        { icon: "nc-ver-align-top", title: t("Vertical Align"), value: "top" },
+        {
+          icon: "nc-ver-align-top",
+          title: t("Vertical Align"),
+          value: "top"
+        },
         {
           icon: "nc-ver-align-middle",
           title: t("Vertical Align"),
@@ -73,6 +76,10 @@ export function getItems({ device }) {
         }
       ]
     },
-    toolbarDisabledAdvancedSettings({ device })
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      disabled: true
+    }
   ];
 }

@@ -38,8 +38,8 @@ export const getButtonLabel = (
           return t("Save");
         }
       }
-      break;
     }
+    //@eslint-disable-next-line: ESLint: Expected a 'break' statement before 'case'.(no-fallthrough)
     case StoreChanged.pending: {
       return t("Saving");
     }

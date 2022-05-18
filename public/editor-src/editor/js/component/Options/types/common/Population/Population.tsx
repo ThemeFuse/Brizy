@@ -1,5 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import classNames from "classnames";
+import { isT } from "fp-utilities";
 import Input from "./Input";
 import Select from "./Select";
 import * as O from "visual/component/Options/Type";
@@ -10,14 +11,14 @@ import {
   PopulationOptgroupMethod
 } from "./types/PopulationMethod";
 import {
-  GetModel,
-  GetElementModel,
-  OptionDefinition
+  FromElementModel,
+  ToElementModel
 } from "visual/component/Options/Type";
 import Options from "visual/component/Options";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 import { t } from "visual/utils/i18n";
 import { isOptgroup } from "./utils";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { findDeep } from "visual/utils/object";
 
 interface Config {
@@ -26,10 +27,13 @@ interface Config {
 }
 
 interface Props extends O.Props<Value>, WithConfig<Config>, WithClassName {
-  options?: OptionDefinition[];
+  options?: ToolbarItemType[];
 }
 
-interface Type extends FC<Props>, O.OptionType<Value>, O.SelfFilter<Props> {}
+interface Type
+  extends FC<Props>,
+    O.OptionType<Value>,
+    O.SelfFilter<"population-dev"> {}
 
 export const Population: Type = ({
   config,
@@ -107,22 +111,28 @@ export const Population: Type = ({
   );
 };
 
-const getModel: GetModel<Value> = get => ({
+const getModel: FromElementModel<Value> = get => ({
   population: String.read(get("population"))
 });
 
-const getElementModel: GetElementModel<Value> = (values, get) => {
+const getElementModel: ToElementModel<Value> = values => {
   return {
-    [get("population")]: values.population
+    population: values.population
   };
 };
 
-Population.getModel = getModel;
-Population.getElementModel = getElementModel;
+Population.fromElementModel = getModel;
+Population.toElementModel = getElementModel;
 
 Population.defaultValue = {
   population: ""
 };
 
-Population.shouldOptionBeFiltered = ({ config, value }): boolean =>
-  !!config?.iconOnly && config?.choices?.length === 0 && eq(value, empty);
+Population.filter = (f, t) => ({
+  ...t,
+  options: t.options?.map(f).filter(isT)
+});
+
+Population.reduce = (fn, t0, item) => item.options?.reduce(fn, t0) ?? t0;
+
+Population.map = (fn, item) => ({ ...item, options: item.options?.map(fn) });

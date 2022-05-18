@@ -4,21 +4,38 @@ import { MValue } from "visual/utils/value";
 import { mPipe, pass } from "visual/utils/fp";
 import * as Str from "visual/utils/string/specs";
 
-/**
- * @typedef {"none"|"solid"|"dashed"|"dotted"} Style
- **/
-
 export const NONE = "none";
 export const SOLID = "solid";
 export const DASHED = "dashed";
 export const DOTTED = "dotted";
+export const DOUBLE = "double";
+export const GROOVE = "groove";
+export const RIDGE = "ridge";
+export const INSET = "inset";
+export const OUTSET = "outset";
 
-export type Style = "none" | "solid" | "dashed" | "dotted";
+export type Style =
+  | "none"
+  | "solid"
+  | "dashed"
+  | "dotted"
+  | "double"
+  | "groove"
+  | "ridge"
+  | "inset"
+  | "outset";
 
-/**
- * @type {Style[]}
- */
-export const styles: Style[] = ["none", "solid", "dashed", "dotted"];
+export const styles: Style[] = [
+  "none",
+  "solid",
+  "dashed",
+  "dotted",
+  "double",
+  "groove",
+  "ridge",
+  "inset",
+  "outset"
+];
 
 export const is = (s: string): s is Style => styles.includes(s as Style);
 

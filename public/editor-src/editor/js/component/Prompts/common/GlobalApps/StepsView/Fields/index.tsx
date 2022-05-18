@@ -25,6 +25,8 @@ import {
 
 export class Fields extends Component<Props> {
   static defaultProps: Props = {
+    formId: "",
+    formFields: [],
     id: "",
     headTitle: "",
     headDescription: "",
@@ -93,7 +95,7 @@ export class Fields extends Component<Props> {
           className="brz-input"
           required
           type={name === "password" ? "password" : "text"}
-          value={value}
+          value={value ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             this.props.onActive(name, e.target.value);
           }}
@@ -122,7 +124,7 @@ export class Fields extends Component<Props> {
     value,
     choices
   }: SearchData): ReactElement => {
-    const nValue = Boolean(value) && multiple ? value.split(",") : value;
+    const nValue = Boolean(value) && multiple ? value?.split(",") : value;
 
     return (
       <div className="brz-ed-popup-integrations-step__fields-select">
@@ -147,6 +149,27 @@ export class Fields extends Component<Props> {
     [isSwitch, this.renderSwitch]
   );
 
+  getHelper(
+    helper: string | ((fields: Props["formFields"]) => ReactElement)
+  ): ReactNode {
+    switch (typeof helper) {
+      case "string": {
+        return (
+          <div
+            className="brz-ed-popup-integrations-fields__info"
+            dangerouslySetInnerHTML={{ __html: helper }}
+          />
+        );
+      }
+      case "function": {
+        return helper(this.props.formFields);
+      }
+      default: {
+        return helper;
+      }
+    }
+  }
+
   renderOptions(): ReactElement {
     const options = this.props.data.map((option, index) => {
       const { title, required, helper } = option;
@@ -168,12 +191,8 @@ export class Fields extends Component<Props> {
                 className="brz-ed-popup-integrations-fields__tooltip"
                 openOnClick={false}
                 inPortal={true}
-                overlay={
-                  <div
-                    className="brz-ed-popup-integrations-fields__info"
-                    dangerouslySetInnerHTML={{ __html: helper }}
-                  />
-                }
+                closeDelay={600}
+                overlay={this.getHelper(helper)}
               >
                 <EditorIcon icon="nc-alert-circle-que" />
               </Tooltip>

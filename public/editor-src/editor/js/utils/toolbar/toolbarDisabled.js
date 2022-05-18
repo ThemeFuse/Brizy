@@ -1,19 +1,6 @@
 import { defaultValueKey } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 
-export function toolbarDisabledAdvancedSettings({
-  device,
-  devices = "all",
-  state
-}) {
-  return {
-    id: defaultValueKey({ key: "advancedSettings", device, state }),
-    type: "advancedSettings",
-    devices,
-    disabled: true
-  };
-}
-
 export function toolbarDisabledToolbarSettings({ devices = "all" }) {
   return {
     id: "toolbarSettings",

@@ -16,7 +16,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleSizeWidth"]
     },
     ".brz &&:hover .brz-counter-figures": {
-      standart: ["cssStyleColor"],
+      standart: ["cssStyleColor", "cssStyleElementCounterTextShadow"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementCounterTransitionHoverProperty"
@@ -29,21 +29,21 @@ export function style(v, vs, vd) {
       standart: ["cssStyleElementCounterChartWidth"]
     },
     ".brz &&:hover .brz-counter-pie-chart": {
-      standart: ["cssStyleElementCounterStrokeColor"],
+      standart: ["cssStyleStroke"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementCounterTransitionHoverProperty"
       ]
     },
     ".brz &&:hover .brz-counter-radial-chart": {
-      standart: ["cssStyleElementCounterFillColor"],
+      standart: ["cssStyleFill"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementCounterTransitionHoverProperty"
       ]
     },
     ".brz &&:hover .brz-counter-chart-pie": {
-      standart: ["cssStyleElementCounterFillColor"],
+      standart: ["cssStyleFill"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementCounterTransitionHoverProperty"

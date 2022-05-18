@@ -230,7 +230,7 @@
   color: #78b9a1;
 }
 .cm-s-default .cm-def {
-  color: #00f;
+  color: #8abeff;
 }
 .cm-s-default .cm-variable,
 .cm-s-default .cm-punctuation,
@@ -238,17 +238,17 @@
 .cm-s-default .cm-operator {
 }
 .cm-s-default .cm-variable-2 {
-  color: #05a;
+  color: #2f97ff;
 }
 .cm-s-default .cm-variable-3,
 .cm-s-default .cm-type {
-  color: #085;
+  color: rgb(22, 170, 116);
 }
 .cm-s-default .cm-comment {
   color: #ea9e53;
 }
 .cm-s-default .cm-string {
-  color: #a11;
+  color: #fd7e7e;
 }
 .cm-s-default .cm-string-2 {
   color: #f50;
@@ -269,13 +269,13 @@
   color: #91cb8a;
 }
 .cm-s-default .cm-attribute {
-  color: #00c;
+  color: #55b0ff;
 }
 .cm-s-default .cm-hr {
   color: #999;
 }
 .cm-s-default .cm-link {
-  color: #00c;
+  color: #55b0ff;
 }
 
 .cm-s-default .cm-error {
@@ -312,7 +312,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 .CodeMirror {
   position: relative;
   overflow: hidden;
-  background: #383e48;
+  background: #292b2e;
   color: white;
 }
 

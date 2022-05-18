@@ -29,8 +29,12 @@ export default function($node) {
       $(wrapper).data("isotope", iso);
     });
 
+    _this
+      .querySelector("ul.brz-image__gallery-filter")
+      ?.firstChild.classList.add("brz-image__gallery-filter__item--active");
+
     $(".brz-image__gallery--filter-wrapper", _this).on("click", e => {
-      const node = e.target;
+      const node = e.target.closest(".brz-image__gallery-filter__item");
       const activeClass = "brz-image__gallery-filter__item--active";
 
       if (!$(node).hasClass(activeClass)) {
@@ -40,7 +44,7 @@ export default function($node) {
           .removeClass(activeClass);
       }
 
-      if (node.className.includes("brz-image__gallery-filter__item")) {
+      if (node?.className.includes("brz-image__gallery-filter__item")) {
         const { filter = "*" } = node.dataset;
 
         iso.arrange({

@@ -6,8 +6,7 @@ import {
 } from "./convertors";
 import {
   collectionItemAddPrefix,
-  collectionTypeAddPrefix,
-  templateAddPrefix
+  collectionTypeAddPrefix
 } from "./graphql/convertors";
 import { CollectionItemStatus } from "./graphql/types/entities";
 import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";

@@ -119,6 +119,14 @@ export default class PromptKeyHelper extends Component {
                   {t("Vertical Align")}
                 </span>
               </div>
+              <div className="brz-ed-hotkeys-combination-container-column-list">
+                <span className="brz-ed-hotkeys-combination-container-column-label">
+                  {isMac ? "esc" : "Esc"}
+                </span>
+                <span className="brz-ed-hotkeys-combination-container-column-label-2">
+                  {t("Select Parent Element")}
+                </span>
+              </div>
             </div>
             <div className="brz-ed-hotkeys-combination-container-column">
               <div className="brz-ed-hotkeys-combination-container-column-list">
@@ -182,12 +190,21 @@ export default class PromptKeyHelper extends Component {
                   {t("Add New Block / Layout")}
                 </span>
               </div>
+
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "esc" : "Esc"}
+                  {isMac ? "cmd + M" : "Ctrl + M"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  {t("Select Parent Element")}
+                  {t("Styling")}
+                </span>
+              </div>
+              <div className="brz-ed-hotkeys-combination-container-column-list">
+                <span className="brz-ed-hotkeys-combination-container-column-label">
+                  {isMac ? "cmd + K" : "Ctrl + K"}
+                </span>
+                <span className="brz-ed-hotkeys-combination-container-column-label-2">
+                  {t("Effects")}
                 </span>
               </div>
             </div>

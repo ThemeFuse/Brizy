@@ -31,6 +31,7 @@
     "popups": [],
     "tags": "",
     "alt": "",
+    "showOriginalImage": "off",
 
     "offsetX": 0,
     "offsetY": 0
@@ -147,6 +148,58 @@
     "tempBorderTopRightRadiusSuffix": "px",
     "tempBorderBottomRightRadiusSuffix": "px",
     "tempBorderBottomLeftRadiusSuffix": "px",
+
+    "bgColorHex": "#ffffff",
+    "bgColorType": "none",
+    "bgColorOpacity": 0,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+    "tempGradientColorOpacity": 1,
+
+    "gradientType": "linear",
+
+    "gradientColorHex": "#009900",
+    "gradientColorOpacity": 1,
+    "gradientColorPalette": "",
+
+    "tempGradientColorPalette": "",
+
+    "gradientActivePointer": "startPointer",
+    "gradientStartPointer": 0,
+    "gradientFinishPointer": 100,
+
+    "gradientLinearDegree": 90,
+    "gradientRadialDegree": 90,
+
+    "hoverBgColorType": null,
+
+    "hoverBgColorHex": null,
+    "hoverBgColorOpacity": null,
+    "hoverBgColorPalette": null,
+
+    "tempBgColorType": "solid",
+
+    "hoverGradientColorHex": null,
+    "hoverGradientColorOpacity": null,
+    "hoverGradientColorPalette": null,
+
+    "tempHoverGradientColorPalette": null,
+    "tempHoverGradientColorOpacity": null,
+
+    "hoverGradientType": null,
+
+    "hoverGradientActivePointer": null,
+    "hoverGradientStartPointer": null,
+    "hoverGradientFinishPointer": null,
+
+    "hoverGradientLinearDegree": null,
+    "hoverGradientRadialDegree": null,
+
+    "tempHoverBgColorType": null,
+    "tempHoverBgColorOpacity": null,
+    "tempHoverBgColorPalette": null,
 
     "boxShadow": "",
 

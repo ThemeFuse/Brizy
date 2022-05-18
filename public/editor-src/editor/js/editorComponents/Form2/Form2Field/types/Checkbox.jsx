@@ -6,7 +6,7 @@ import CheckboxControls, {
   CheckGroupItem as CheckboxControlsItem
 } from "visual/component/Controls/CheckGroup";
 import EditorIcon from "visual/component/EditorIcon";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 
 export default class Checkbox extends TextField {
   static get componentTitle() {

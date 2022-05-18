@@ -48,6 +48,18 @@
     "tempButtonBorderBottomRightRadius": 2,
     "tempButtonBorderBottomLeftRadius": 2,
 
+    "buttonBorderRadiusSuffix": "px",
+    "buttonBorderTopLeftRadiusSuffix": "px",
+    "buttonBorderTopRightRadiusSuffix": "px",
+    "buttonBorderBottomRightRadiusSuffix": "px",
+    "buttonBorderBottomLeftRadiusSuffix": "px",
+
+    "tempButtonBorderRadiusSuffix": "px",
+    "tempButtonBorderTopLeftRadiusSuffix": "px",
+    "tempButtonBorderTopRightRadiusSuffix": "px",
+    "tempButtonBorderBottomRightRadiusSuffix": "px",
+    "tempButtonBorderBottomLeftRadiusSuffix": "px",
+
     "families": {
       "inputFontFamily": "lato",
       "typographyFontFamily": "lato",
@@ -211,6 +223,18 @@
     "tempInputBorderBottomRightRadius": 2,
     "tempInputBorderBottomLeftRadius": 2,
 
+    "inputBorderRadiusSuffix": "px",
+    "inputBorderTopLeftRadiusSuffix": "px",
+    "inputBorderTopRightRadiusSuffix": "px",
+    "inputBorderBottomRightRadiusSuffix": "px",
+    "inputBorderBottomLeftRadiusSuffix": "px",
+
+    "tempInputBorderRadiusSuffix": "px",
+    "tempInputBorderTopLeftRadiusSuffix": "px",
+    "tempInputBorderTopRightRadiusSuffix": "px",
+    "tempInputBorderBottomRightRadiusSuffix": "px",
+    "tempInputBorderBottomLeftRadiusSuffix": "px",
+
     "inputBgColorHex": "#ffffff",
     "inputBgColorOpacity": 1,
     "inputBgColorPalette": "",
@@ -225,8 +249,21 @@
     "tempHoverInputBgColorOpacity": null,
     "tempHoverInputBgColorPalette": null,
 
-    "inputBoxShadow": "",
+    "labelBgColorHex": "#ffffff",
+    "labelBgColorOpacity": 1,
+    "labelBgColorPalette": "",
 
+    "tempLabelBgColorOpacity": 1,
+    "tempLabelBgColorPalette": "",
+
+    "hoverLabelBgColorHex": null,
+    "hoverLabelBgColorOpacity": null,
+    "hoverLabelBgColorPalette": null,
+
+    "tempHoverLabelBgColorOpacity": null,
+    "tempHoverLabelBgColorPalette": null,
+
+    "inputBoxShadow": "",
     "tempInputBoxShadow": "on",
 
     "inputBoxShadowColorHex": "#000000",

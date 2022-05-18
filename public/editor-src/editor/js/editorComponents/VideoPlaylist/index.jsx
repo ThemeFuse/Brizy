@@ -4,7 +4,7 @@ import classnames from "classnames";
 import CustomCSS from "visual/component/CustomCSS";
 import BoxResizer from "visual/component/BoxResizer";
 import Placeholder from "visual/component/Placeholder";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import {
   videoData as getVideoData,
   videoUrl as getVideoUrl

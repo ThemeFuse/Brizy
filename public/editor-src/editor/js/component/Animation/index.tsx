@@ -14,7 +14,7 @@ import * as Observer from "./Observer";
 import { mApply } from "visual/utils/value";
 import { WithClassName } from "visual/utils/options/attributes";
 
-type CProps = PropsWithRef<{}> & WithClassName;
+type CProps = PropsWithRef<unknown> & WithClassName;
 type Component<P> = ComponentType<P> | keyof JSX.IntrinsicElements;
 
 type Props<P extends CProps> = PropsWithChildren<
@@ -29,15 +29,22 @@ type Props<P extends CProps> = PropsWithChildren<
 
 type State = {
   isVisible: boolean;
+  animationClass?: string;
 };
 
-// eslint-disable-next-line @typescript-eslint/class-name-casing
 class _Animation<
   T extends ComponentType<WithClassName> | keyof JSX.IntrinsicElements
 > extends React.Component<Props<ComponentProps<T>>, State> {
-  state = {
-    isVisible: false
-  };
+  constructor(props: Props<ComponentProps<T>>) {
+    super(props);
+
+    this.state = {
+      isVisible: false,
+      animationClass: props.animationClass
+    };
+  }
+
+  private updateId?: number;
 
   componentDidMount(): void {
     this.updateRef();
@@ -59,6 +66,11 @@ class _Animation<
           n => Observer.connect(n, this.handleIntersection),
           this.ref.current
         );
+
+        mApply(cancelAnimationFrame, this.updateId);
+        this.updateId = requestAnimationFrame(() => {
+          this.setState({ animationClass: this.props.animationClass });
+        });
       } else {
         mApply(Observer.disconnect, this.ref.current);
       }
@@ -67,6 +79,7 @@ class _Animation<
 
   componentWillUnmount(): void {
     mApply(Observer.disconnect, this.ref.current);
+    mApply(cancelAnimationFrame, this.updateId);
   }
 
   handleIntersection = ({
@@ -82,9 +95,6 @@ class _Animation<
   renderForEdit(): ReactElement {
     const {
       component,
-      animationClass = "",
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      forwardedRef,
       children,
       className: _className,
       componentProps: { className: __className, ...otherProps }
@@ -96,7 +106,7 @@ class _Animation<
     const className = classNames(_className, __className, {
       "brz-observer__animation": hasAnimation,
       "brz-animated": hasAnimation,
-      [animationClass]: isActive,
+      [this.getAnimationClass() ?? ""]: isActive,
       "brz-animate": isActive,
       "brz-animate-opacity": isActive
     });
@@ -107,21 +117,16 @@ class _Animation<
       ref: this.ref
     };
 
-    // todo: find why this does not type check
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
+    // @ts-expect-error: find why this does not type check
     return createElement<T>(component, props, children);
   }
 
   renderForView(): ReactElement {
     const {
       component,
-      animationClass = "",
       iterationCount = 1,
       children,
       className: _className,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      forwardedRef,
       componentProps: { className, ...otherProps }
     } = this.props;
     const hasAnimation = this.hasAnimation();
@@ -130,14 +135,12 @@ class _Animation<
       ...(hasAnimation ? { "data-iteration-count": iterationCount } : {}),
       className: classNames(_className, className, {
         "brz-animated": hasAnimation,
-        [animationClass]: hasAnimation
+        [this.getAnimationClass() ?? ""]: hasAnimation
       }),
       ref: this.ref
     };
 
-    // todo: find why this does not type check
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
+    // @ts-expect-error: find why this does not type check
     return createElement<T>(component, props, children);
   }
 
@@ -158,7 +161,13 @@ class _Animation<
     }
   };
 
-  hasAnimation = (): boolean => !!this.props.animationClass;
+  hasAnimation = (): boolean => !!this.state.animationClass;
+
+  getAnimationClass = (): string | undefined => {
+    return this.props.animationClass !== this.state.animationClass
+      ? undefined
+      : this.state.animationClass;
+  };
 }
 
 function _withRef<
@@ -167,9 +176,8 @@ function _withRef<
   props: Props<ComponentProps<T>> & { ref?: Ref<Element> },
   ref: Ref<Element>
 ): ReactElement {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  return <_Animation<P, T> {...props} forwardedRef={ref} />;
+  // @ts-expect-error: have problems with generic jsx and tsc
+  return <_Animation {...props} forwardedRef={ref} />;
 }
 
 // eslint-disable-next-line react/display-name,@typescript-eslint/no-explicit-any

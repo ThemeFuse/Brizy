@@ -54,7 +54,7 @@ export function style(v, vs, vd) {
     ".brz &&:hover .brz-woocart__icon .brz-icon-svg": {
       standart: [
         "cssStyleElementWOOCartIconColor",
-        "cssStyleIconSize",
+        "cssStyleElementWOOCartIconSize",
         "cssStyleTypography3LineHeight"
       ],
       interval: [
@@ -67,7 +67,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOCartSidebarWidth",
         "cssStyleElementWOOCartSidebarHeight",
         "cssStyleElementWOOCartSidebarHorizontalAlign",
-        "cssStyleElementWOOCartSidebarVerticalAlign"
+        "cssStyleElementWOOCartSidebarVerticalAlign",
+        "cssStyleElementWOOCartSidebarBgColor"
       ]
     },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar__product-name .brz-a:hover": {

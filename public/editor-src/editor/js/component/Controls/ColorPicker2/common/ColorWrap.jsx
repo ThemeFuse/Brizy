@@ -8,7 +8,8 @@ export const ColorWrap = Picker => {
       super();
 
       this.state = {
-        ...color.toState(props.color, 0, null)
+        ...color.toState(props.color, 0, null),
+        prevColor: props.color
       };
 
       this.debounce = _.debounce((fn, data, event) => {
@@ -16,14 +17,15 @@ export const ColorWrap = Picker => {
       }, 100);
     }
 
-    componentWillReceiveProps(nextProps) {
-      // there were ...color.toState(nextProps.color, this.state.oldHue, this.state.hsv)
-      // in old variant. if we put this.state.hsv - plugin works only as uncontrolled
-      // component and doesn't update himself if props change
-      // there isn't this parameter(this.state.hsv) in the original plugin at github
-      this.setState({
-        ...color.toState(nextProps.color, this.state.oldHue)
-      });
+    static getDerivedStateFromProps(nextProps, state) {
+      if (state.prevColor !== nextProps.color) {
+        return {
+          ...color.toState(nextProps.color, state.oldHue),
+          prevColor: nextProps.color
+        };
+      }
+
+      return null;
     }
 
     handleChange = (data, event) => {

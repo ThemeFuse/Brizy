@@ -6,14 +6,16 @@ export function style(v, vs, vd, props) {
       standart: ["cssStylePaddingPreview", "cssStylePaddingRightLeftForEditor"]
     },
     ".brz &&:hover > .brz-bg": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius"]
+      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBlendMode"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
       standart: [
         "cssStyleBgImage",
         "cssStyleFilter",
         "cssStyleBgImagePosition",
-        "cssStyleBgMediaImage"
+        "cssStyleBgMediaImage",
+        "cssStyleSectionBgSize",
+        "cssStyleSectionBgRepeat"
       ],
       interval: ["cssStyleBgImageAttachment"]
     },

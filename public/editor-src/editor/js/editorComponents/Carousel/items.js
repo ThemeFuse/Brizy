@@ -4,7 +4,7 @@ import SlickSlider from "react-slick";
 import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component/Sortable";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
 import HotKeys from "visual/component/HotKeys";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
@@ -135,7 +135,7 @@ class Items extends EditorArrayComponent {
           },
           {
             id: "order",
-            type: "cloneable-order",
+            type: "order-dev",
             devices: "desktop",
             position: 95,
             roles: ["admin"],
@@ -143,16 +143,16 @@ class Items extends EditorArrayComponent {
             config: {
               disable:
                 itemIndex === 0
-                  ? "left"
+                  ? "prev"
                   : itemIndex === items.length - 1
-                  ? "right"
+                  ? "next"
                   : undefined,
               onChange: v => {
                 switch (v) {
-                  case "left":
+                  case "prev":
                     this.reorderItem(itemIndex, itemIndex - 1);
                     break;
-                  case "right":
+                  case "next":
                     this.reorderItem(itemIndex, itemIndex + 1);
                     break;
                 }
@@ -200,6 +200,7 @@ class Items extends EditorArrayComponent {
     const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
 
     const keyNames = [
+      "ctrl+M",
       "alt+N",
       "ctrl+N",
       "cmd+N",
@@ -221,7 +222,9 @@ class Items extends EditorArrayComponent {
       "pasteStyles",
       "delete",
       "horizontalAlign",
-      "verticalAlign"
+      "verticalAlign",
+      "showSidebarStyling",
+      "showSidebarAdvanced"
     ];
 
     return (

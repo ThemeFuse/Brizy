@@ -1,66 +1,16 @@
 import Config from "visual/global/Config";
-import { WithId } from "visual/utils/options/attributes";
-import { DynamicContent } from "visual/global/Config/types/DynamicContent";
-import { Pro } from "visual/global/Config/types/Pro";
-import { User } from "visual/global/Config/types/User";
-import { Urls } from "visual/global/Config/types/Urls";
-import { Project } from "visual/global/Config/types/Project";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Config as Config_ } from "visual/global/Config/types";
 import { Page, PageCollection, PageCustomer, ShopifyPage } from "visual/types";
-import { WhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
-import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
 import { TemplateType } from "../TemplateType";
-import { Role } from "visual/utils/membership";
 import { Subscription } from "visual/global/Config/types/shopify/Subscription";
 import { ShopifyTemplate } from "../shopify/ShopifyTemplate";
-
-//#region Base
-interface Base<Platform> extends ConfigCommon, WithId<number> {
-  availableRoles: Role[];
-  page: {
-    id: string;
-    isProtected: boolean;
-    provider: "customers" | "collections";
-    isCustomersPage: boolean;
-    isResetPassPage: boolean;
-  };
-  container: {
-    id: number;
-  };
-  tokenV1?: string;
-  tokenV2?: {
-    access_token: string;
-  };
-  platform: Platform;
-  dynamicContent: DynamicContent<"cloud">;
-  pro: Pro<"cloud">;
-  user: User<"cloud">;
-  urls: Urls<"cloud">;
-  project: Project<"cloud">;
-  cms: {
-    adminUrl: string;
-    apiUrl: string;
-    blogId: string;
-    supportLinks: SupportLinks;
-    customerEditorUrl: string;
-    customerPreviewUrl: string;
-    collectionPreviewUrl: string;
-    translationsApiUrl: string;
-    modules?: {
-      users?: {
-        disabled?: boolean;
-      };
-    };
-  };
-  whiteLabel?: WhiteLabel;
-}
-
-//#endregion
+import { Language } from "visual/utils/multilanguages";
+import { Base } from "./Base";
 
 //#region CMS
 export interface CMS extends Base<"cms"> {
   templateType?: TemplateType;
+  availableTranslations: Language[];
 }
 
 export const isCMS = (c: Cloud): c is CMS => c.platform === "cms";
@@ -88,7 +38,7 @@ export const isCollection = (c: CMS): boolean =>
 
 export type Cloud = CMS | Shopify;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// @ts-expect-error: unused variable
 export const isCloud = (config: Config_): config is Cloud =>
   TARGET === "Cloud" || TARGET === "Cloud-localhost";
 

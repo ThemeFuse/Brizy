@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import ClickOutside from "visual/component/ClickOutside";
 import { DraggableDiv } from "visual/component/DraggableDiv";
 import { clamp } from "visual/utils/math";
-
 import { Patch, Point, SimpleRestriction, RestrictionMapping } from "./types";
 import {
   calcRectangleSide,
@@ -10,17 +9,11 @@ import {
   calcMaxHeightBasedOnWidth
 } from "visual/component/BoxResizer/utils";
 
-const arrayToObject = (points: Point[]): Record<Point, true> =>
-  points.reduce((result, item) => {
-    result[item] = true;
-    return result;
-  }, {} as Record<Point, true>);
-
-type State = {
+interface State {
   showPoints: boolean;
-};
+}
 
-type Props = {
+interface Props {
   keepAspectRatio: boolean;
   points: Point[];
   restrictions?: SimpleRestriction;
@@ -30,10 +23,15 @@ type Props = {
   onStart?: () => void;
   onEnd?: () => void;
   onChange: (data: Patch) => void;
-};
+}
 
-type DragInfo = { deltaX: number; deltaY: number };
-type DragHandler = (dragInfo: DragInfo) => void;
+interface DragInfo {
+  deltaX: number;
+  deltaY: number;
+}
+interface DragHandler {
+  (dragInfo: DragInfo): void;
+}
 
 export class Resizer extends Component<Props, State> {
   static defaultProps: Partial<Props> = {
@@ -62,14 +60,6 @@ export class Resizer extends Component<Props, State> {
 
   startRect?: DOMRect;
 
-  cachedPoints = arrayToObject(this.props.points);
-
-  componentWillReceiveProps(nextProps: Props): void {
-    if (this.props.points !== nextProps.points) {
-      this.cachedPoints = arrayToObject(nextProps.points);
-    }
-  }
-
   handleClick = (): void => {
     this.setState({ showPoints: true });
   };
@@ -88,14 +78,14 @@ export class Resizer extends Component<Props, State> {
       this.startRect = node.getBoundingClientRect();
     }
 
-    this.props.onStart && this.props.onStart();
+    this.props.onStart?.();
   };
 
   handleDragEnd = (): void => {
     this.startValue = undefined;
     this.startRect = undefined;
 
-    this.props.onEnd && this.props.onEnd();
+    this.props.onEnd?.();
   };
 
   handleDrag(point: Point, { deltaX, deltaY }: DragInfo): void {
@@ -188,7 +178,7 @@ export class Resizer extends Component<Props, State> {
       }
     }
 
-    const patch = patchData.reduce((acc, [key, delta], i, arr) => {
+    const patch = patchData.reduce((acc, [key, delta], _i, arr) => {
       const kValue = startValue[key];
 
       if (kValue === undefined) {
@@ -270,7 +260,7 @@ export class Resizer extends Component<Props, State> {
 
   render(): React.ReactNode {
     const { showPoints } = this.state;
-    const { children } = this.props;
+    const { points, children } = this.props;
     const {
       topCenter,
       topRight,
@@ -280,7 +270,10 @@ export class Resizer extends Component<Props, State> {
       bottomRight,
       centerLeft,
       topLeft
-    } = this.cachedPoints;
+    } = points.reduce((acc, point) => {
+      acc[point] = true;
+      return acc;
+    }, {} as Record<string, true | undefined>);
 
     return (
       <ClickOutside onClickOutside={this.handleClickOutside}>

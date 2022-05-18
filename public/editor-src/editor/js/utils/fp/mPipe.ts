@@ -308,8 +308,9 @@ export function mPipe<V0, V1, V2, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
   fn9: (x: T9) => MNullish<T10>
 ): (x0: V0, x1: V1, x2: V2) => T10 | undefined;
 export function mPipe(
-  ...[h, ...fns]: [Function, ...Function[]]
+  ...[h, ...fns]: [F, ...F[]]
 ): (...args: unknown[]) => unknown {
   return (...args: unknown[]): unknown =>
     fns.reduce((v, fn) => (isNullish(v) ? undefined : fn(v)), h(...args));
 }
+type F = (...args: unknown[]) => unknown;

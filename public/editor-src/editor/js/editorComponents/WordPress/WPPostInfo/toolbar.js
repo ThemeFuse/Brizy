@@ -25,6 +25,7 @@ export function getItems({ v, device }) {
           id: "postElements",
           type: "multiSelect-dev",
           label: t("Elements"),
+          placeholder: t("0 Selected"),
           devices: "desktop",
           config: {
             size: "medium"
@@ -127,7 +128,7 @@ export function getItems({ v, device }) {
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
+      devices: "desktop",
       icon: "nc-cog",
       position: 150
     }

@@ -1,3 +1,6 @@
+import { Type } from "./Type";
+
 export interface Config {
-  opacity: boolean;
+  type?: Exclude<Type, "none">;
+  opacity?: boolean;
 }

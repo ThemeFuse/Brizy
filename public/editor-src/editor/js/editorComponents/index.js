@@ -78,7 +78,12 @@ import FacebookPage from "./FacebookPage";
 import FacebookGroup from "./FacebookGroup";
 import Twitter from "./Twitter";
 import Lottie from "./Lottie";
+import Filters from "./Filters";
+import FiltersItem from "./Filters/FiltersItem";
+import FiltersOption from "./Filters/FiltersOption";
 import * as Shopify from "./Shopify";
+import * as Ecwid from "./Ecwid";
+import Translation from "./Translation";
 
 import PostTitle from "./PostTitle";
 import PostExcerpt from "./PostExcerpt";
@@ -165,6 +170,10 @@ export default {
   Lottie,
   StoryWrapper,
   Shape,
+  Filters,
+  FiltersItem,
+  FiltersOption,
+  Translation,
 
   // DC
   PostTitle,
@@ -172,7 +181,10 @@ export default {
   Posts,
 
   // Shopify
-  ...Shopify
+  ...Shopify,
+
+  // Ecwid
+  ...Ecwid
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

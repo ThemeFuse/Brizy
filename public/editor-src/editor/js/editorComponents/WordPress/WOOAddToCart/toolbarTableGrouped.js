@@ -22,104 +22,14 @@ export function getItems({ v, device, state }) {
       position: 10,
       options: [
         {
-          id: "tabsCurrentElement",
-          type: "tabs-dev",
-          tabs: [
-            {
-              id: "tabInput",
-              label: t("Input"),
-              options: [
-                {
-                  id: "inputSizeGroup",
-                  type: "group-dev",
-                  options: [
-                    {
-                      id: "inputSize",
-                      label: t("Size"),
-                      type: "radioGroup-dev",
-                      choices: [
-                        { value: "small", icon: "nc-small" },
-                        { value: "medium", icon: "nc-medium" },
-                        { value: "large", icon: "nc-large" },
-                        { value: "custom", icon: "nc-more" }
-                      ]
-                    },
-                    {
-                      id: "inputWidth",
-                      label: t("Width"),
-                      type: "slider-dev",
-                      disabled: dvv("inputSize") !== "custom",
-                      config: {
-                        min: 20,
-                        max: 100,
-                        units:
-                          v.inputPosition === "left" ||
-                          v.inputPosition === "right"
-                            ? [{ value: "px", title: "px" }]
-                            : [
-                                { value: "px", title: "px" },
-                                { value: "%", title: "%" }
-                              ]
-                      }
-                    },
-                    {
-                      id: "inputHeight",
-                      label: t("Height"),
-                      type: "slider-dev",
-                      disabled: dvv("inputSize") !== "custom",
-                      config: {
-                        min: 20,
-                        max: 100,
-                        units: [{ value: "px", title: "px" }]
-                      }
-                    }
-                  ]
-                },
-                {
-                  id: "inputBorderRadiusTypeGroup",
-                  type: "group-dev",
-                  options: [
-                    {
-                      id: "inputBorderRadiusType",
-                      label: t("Corner"),
-                      type: "radioGroup-dev",
-                      choices: [
-                        { value: "square", icon: "nc-corners-square" },
-                        { value: "rounded", icon: "nc-corners-round" },
-                        { value: "custom", icon: "nc-more" }
-                      ]
-                    },
-                    {
-                      id: "inputBorderRadius",
-                      type: "slider-dev",
-                      disabled: dvv("inputBorderRadiusType") !== "custom",
-                      config: {
-                        min: 0,
-                        max: 100,
-                        units: [{ value: "px", title: "px" }]
-                      }
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "tabTable",
-              label: t("Table"),
-              options: [
-                {
-                  id: "tableSpacing",
-                  label: t("Spacing"),
-                  type: "slider-dev",
-                  config: {
-                    min: 0,
-                    max: 100,
-                    units: [{ value: "px", title: "px" }]
-                  }
-                }
-              ]
-            }
-          ]
+          id: "tableSpacing",
+          label: t("Spacing"),
+          type: "slider-dev",
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
         }
       ]
     },
@@ -188,18 +98,6 @@ export function getItems({ v, device, state }) {
           type: "tabs-dev",
           tabs: [
             {
-              id: "inputColorTab",
-              label: t("Input"),
-              options: [
-                {
-                  id: "inputColor",
-                  type: "colorPicker-dev",
-                  devices: "desktop",
-                  states: [NORMAL, HOVER]
-                }
-              ]
-            },
-            {
               id: "labelColorTab",
               label: t("Label"),
               options: [
@@ -212,11 +110,11 @@ export function getItems({ v, device, state }) {
               ]
             },
             {
-              id: "valueColorTab",
-              label: t("Value"),
+              id: "labelBgTab",
+              label: t("Bg"),
               options: [
                 {
-                  id: "valueColor",
+                  id: "labelBgColor",
                   type: "colorPicker-dev",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
@@ -224,11 +122,11 @@ export function getItems({ v, device, state }) {
               ]
             },
             {
-              id: "bgTab",
-              label: t("Bg"),
+              id: "valueColorTab",
+              label: t("Value"),
               options: [
                 {
-                  id: "tableBgColor",
+                  id: "valueColor",
                   type: "colorPicker-dev",
                   devices: "desktop",
                   states: [NORMAL, HOVER]

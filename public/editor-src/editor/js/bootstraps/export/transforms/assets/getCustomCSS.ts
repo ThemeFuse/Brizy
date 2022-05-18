@@ -1,5 +1,3 @@
-import * as cheerio from "cheerio";
-
 export const getCustomCSS = ($: cheerio.CheerioAPI): string[] => {
   let styles = "";
 

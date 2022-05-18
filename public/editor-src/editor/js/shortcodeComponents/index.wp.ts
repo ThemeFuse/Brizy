@@ -32,9 +32,7 @@ import WOOBreadcrumbs from "./pro/WOOBreadcrumbs.js";
 import WOOArchives from "./pro/WOOArchives";
 import Review from "./pro/Review.js";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import nonWP, { base } from "./index.ts";
+import { baseCommon, baseStory, grid, social } from "./index.common";
 
 import { hasSidebars, pluginActivated } from "visual/utils/wp";
 import { IS_STORY } from "visual/utils/models";
@@ -54,7 +52,7 @@ const hasWoocommerce = pluginActivated("woocommerce");
 
 const featuredImage = { component: WPFeaturedImage, pro: true };
 
-const baseWP = [...base, { component: Search, pro: true }];
+const baseWP = [...baseCommon, { component: Search, pro: true }];
 
 const wordpressShortcodes = [
   ...(hasSidebars() ? [{ component: WPSidebar, pro: false }] : []),
@@ -123,15 +121,16 @@ const postArchiveShortcodes = [
 
 const config = ((): Shortcodes => {
   if (IS_STORY) {
-    return nonWP;
+    return { base: baseStory };
   }
 
   if (IS_PRODUCT_TEMPLATE || IS_PRODUCT_PAGE) {
     return {
       product: productShortcodes,
       woocommerce: woocommerceShortcodes,
-      ...nonWP,
       base: baseWP,
+      grid: grid,
+      social: social,
       wordpress: wordpressShortcodes
     };
   }
@@ -140,8 +139,9 @@ const config = ((): Shortcodes => {
     return {
       archive: productArchiveShortcodes,
       woocommerce: woocommerceShortcodes,
-      ...nonWP,
       base: baseWP,
+      grid: grid,
+      social: social,
       wordpress: wordpressShortcodes
     };
   }
@@ -149,8 +149,9 @@ const config = ((): Shortcodes => {
   if (IS_ARCHIVE_TEMPLATE) {
     return {
       archive: postArchiveShortcodes,
-      ...nonWP,
       base: baseWP,
+      grid: grid,
+      social: social,
       wordpress: wordpressShortcodes,
       woocommerce: woocommerceShortcodes
     };
@@ -160,15 +161,17 @@ const config = ((): Shortcodes => {
     return {
       single: singleShortcodes,
       wordpress: wordpressShortcodes,
-      ...nonWP,
       base: baseWP,
+      grid: grid,
+      social: social,
       woocommerce: woocommerceShortcodes
     };
   }
 
   return {
-    ...nonWP,
     base: baseWP,
+    grid: grid,
+    social: social,
     single: singleShortcodes,
     wordpress: wordpressShortcodes,
     woocommerce: woocommerceShortcodes

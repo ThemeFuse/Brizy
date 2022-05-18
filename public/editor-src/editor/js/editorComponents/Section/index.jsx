@@ -1,6 +1,11 @@
 import React from "react";
 import classnames from "classnames";
-import { validateKeyByProperty } from "visual/utils/onChange";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import {
+  defaultValueValue,
+  validateKeyByProperty
+} from "visual/utils/onChange";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Animation from "visual/component/Animation";
 import {
@@ -17,10 +22,20 @@ import { styleSection, styleAnimation } from "./styles";
 import SectionItems from "./Items";
 import defaultValue from "./defaultValue.json";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import Config from "visual/global/Config";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { fromElementModel } from "visual/component/Options/types/dev/Margin/utils";
+import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
+import { NORMAL } from "visual/utils/stateMode";
 
 const config = Config.getAll();
+
+const getV = (v, device) => key =>
+  defaultValueValue({
+    v,
+    key: createOptionId("margin", key),
+    device,
+    state: NORMAL
+  });
 
 export default class Section extends EditorComponent {
   static get componentId() {
@@ -78,7 +93,32 @@ export default class Section extends EditorComponent {
     }
   }
 
+  getAnimationClassName = (v, vs, vd) => {
+    if (!validateKeyByProperty(v, "animationName", "none")) {
+      return undefined;
+    }
+
+    const animationName = defaultValueValue({ v, key: "animationName" });
+    const animationDuration = defaultValueValue({
+      v,
+      key: "animationDuration"
+    });
+    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
+    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+
+    return classnames(
+      css(
+        `${this.getComponentId()}-animation-${slug}`,
+        `${this.getId()}-animation-${slug}`,
+        styleAnimation(v, vs, vd)
+      )
+    );
+  };
+
   renderItems(v) {
+    const device = deviceModeSelector(this.getReduxState());
+    const margin = fromElementModel(getV(v, device));
+
     const {
       membership,
       membershipRoles,
@@ -102,7 +142,18 @@ export default class Section extends EditorComponent {
       customAttributesPopulation,
       marginType,
       tabletMarginType,
-      mobileMarginType
+      mobileMarginType,
+      animationName,
+      animationDuration,
+      animationDelay,
+      tabletAnimationName,
+      tabletAnimationDuration,
+      tabletAnimationDelay,
+      mobileAnimationName,
+      mobileAnimationDuration,
+      mobileAnimationDelay,
+      translations,
+      translationsLangs
     } = v;
 
     const itemsProps = this.makeSubcomponentProps({
@@ -136,7 +187,19 @@ export default class Section extends EditorComponent {
           membership,
           membershipRoles,
           tabletMarginType,
-          mobileMarginType
+          mobileMarginType,
+          animationName,
+          animationDuration,
+          animationDelay,
+          tabletAnimationName,
+          tabletAnimationDuration,
+          tabletAnimationDelay,
+          mobileAnimationName,
+          mobileAnimationDuration,
+          mobileAnimationDelay,
+          translations,
+          translationsLangs,
+          ...margin
         }
       }
     });
@@ -163,14 +226,7 @@ export default class Section extends EditorComponent {
       )
     );
 
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
+    const animationClassName = this.getAnimationClassName(v, vs, vd);
 
     const props = {
       ...parseCustomAttributes(customAttributes),
@@ -229,14 +285,7 @@ export default class Section extends EditorComponent {
       )
     );
 
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
+    const animationClassName = this.getAnimationClassName(v, vs, vd);
 
     const props = {
       ...parseCustomAttributes(customAttributes),

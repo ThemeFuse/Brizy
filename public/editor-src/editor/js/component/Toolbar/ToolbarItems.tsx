@@ -1,7 +1,6 @@
 import React from "react";
-import { filterOptionsData } from "visual/component/Options";
 import { ToolbarItem } from "./ToolbarItem";
-import { OptionDefinition } from "visual/component/Options/Type";
+import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 
 export type ToolbarItemsItems = OptionDefinition[];
 export type ToolbarItemsRenderer = (
@@ -20,6 +19,13 @@ export type ToolbarItemsProps = {
 };
 export type ToolbarItemsState = {
   itemsRenderer: ToolbarItemsRenderer | undefined;
+};
+
+export type ToolbarItemsInstance = typeof ToolbarItems & {
+  toolbarRef: React.RefObject<HTMLDivElement>;
+  toolbarCSSPosition: ToolbarItemsProps["position"];
+  toolbarItemIndex: number;
+  toolbarItemsLength: number;
 };
 
 export class ToolbarItems extends React.Component<
@@ -55,6 +61,7 @@ export class ToolbarItems extends React.Component<
       <ToolbarItem
         key={item.id}
         data={item}
+        // @ts-expect-error: need review this code and eliminate the toolbar instance
         toolbar={{
           ...this,
           toolbarRef: containerRef ?? this.containerRef,
@@ -83,9 +90,8 @@ export class ToolbarItems extends React.Component<
       onMouseLeave
     } = this.props;
     const { itemsRenderer } = this.state;
-    const filteredItems = filterOptionsData(items);
 
-    if (!filteredItems.length) {
+    if (!items.length) {
       return null;
     }
 
@@ -98,8 +104,8 @@ export class ToolbarItems extends React.Component<
         onMouseLeave={onMouseLeave}
       >
         {itemsRenderer !== undefined
-          ? itemsRenderer(filteredItems)
-          : this.renderItems(filteredItems)}
+          ? itemsRenderer(items)
+          : this.renderItems(items)}
         {arrow && (
           <div
             ref={arrowRef ?? this.arrowRef}

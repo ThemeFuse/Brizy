@@ -5,8 +5,6 @@ import * as WidthType from "./widthType";
 import { testReader } from "visual/utils/types/Type.test";
 import { testMonoid } from "visual/utils/types/Monoid.test";
 
-const invalidTypes = [undefined, null, "test", 1];
-
 describe("Testing GROUPED constant", function() {
   test("Should be 'grouped'", () => {
     expect(GROUPED).toBe("grouped");

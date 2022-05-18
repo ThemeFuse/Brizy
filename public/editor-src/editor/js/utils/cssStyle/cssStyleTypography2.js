@@ -8,7 +8,10 @@ import {
 } from "visual/utils/style2";
 
 export function cssStyleTypography2FontFamily({ v, device, prefix = "" }) {
-  return `font-family:${styleTypography2FontFamily({ v, device, prefix })};`;
+  const fontFamily = styleTypography2FontFamily({ v, device, prefix });
+  return fontFamily
+    ? `font-family:${styleTypography2FontFamily({ v, device, prefix })};`
+    : "";
 }
 
 export function cssStyleTypography2FontSize({ v, device, prefix = "" }) {
@@ -38,6 +41,70 @@ export function cssStyleTypography2LetterSpacing({
     state,
     prefix
   })};`;
+}
+
+export function cssStyleTypography2FontFamilyImportant({
+  v,
+  device,
+  prefix = ""
+}) {
+  const fontFamily = styleTypography2FontFamily({ v, device, prefix });
+  return fontFamily
+    ? `font-family:${styleTypography2FontFamily({
+        v,
+        device,
+        prefix
+      })}!important;`
+    : "";
+}
+
+export function cssStyleTypography2FontSizeImportant({
+  v,
+  device,
+  prefix = ""
+}) {
+  const fontSize = styleTypography2FontSize({ v, device, prefix });
+  const fontSizeSuffix = styleTypography2FontSizeSuffix({ v, device, prefix });
+
+  return `font-size:${fontSize}${fontSizeSuffix}!important;`;
+}
+
+export function cssStyleTypography2LineHeightImportant({
+  v,
+  device,
+  prefix = ""
+}) {
+  return `line-height:${styleTypography2LineHeight({
+    v,
+    device,
+    prefix
+  })}!important;`;
+}
+
+export function cssStyleTypography2FontWeightImportant({
+  v,
+  device,
+  prefix = ""
+}) {
+  return `font-weight:${styleTypography2FontWeight({
+    v,
+    device,
+    prefix
+  })}!important;`;
+}
+
+export function cssStyleTypography2LetterSpacingImportant({
+  v,
+  device,
+  state,
+  prefix = ""
+}) {
+  return `letter-spacing:${styleTypography2LetterSpacing({
+    v,
+    device,
+    state,
+    prefix
+  })}!important;`;
 }
 
 export function cssStyleTypography3FontFamily({ v, device }) {

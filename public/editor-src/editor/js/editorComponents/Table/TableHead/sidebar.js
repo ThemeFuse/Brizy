@@ -1,36 +1,50 @@
 import { t } from "visual/utils/i18n";
-import { toolbarPaddingFourFieldsPxSuffix } from "visual/utils/toolbar";
 
 export const title = t("Table Head");
 
-export function getItems({ v, device }) {
+export function getItems() {
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
-      config: {
-        align: "start"
-      },
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       tabs: [
         {
-          id: "settingsStyling",
+          id: "styles",
+          title: t("Styling"),
           label: t("Styling"),
-          icon: "nc-styling",
           options: [
-            toolbarPaddingFourFieldsPxSuffix({
-              v,
-              device,
-              state: "normal",
-              onChangeGrouped: ["onChangePaddingGrouped"],
-              onChangeUngrouped: ["onChangePaddingUngrouped"]
-            })
+            {
+              id: "settingsTabs",
+              type: "tabs-dev",
+              config: {
+                align: "start"
+              },
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding-dev",
+                      label: t("Padding"),
+                      position: 50,
+                      config: {
+                        units: ["px"]
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  icon: "nc-cog",
+                  options: []
+                }
+              ]
+            }
           ]
-        },
-        {
-          id: "moreSettingsAdvanced",
-          label: t("Advanced"),
-          icon: "nc-cog",
-          options: []
         }
       ]
     }

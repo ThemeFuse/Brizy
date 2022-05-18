@@ -31,7 +31,7 @@ export const getItems = ({
         icon: "nc-woo-add-to-cart"
       },
       devices: "desktop",
-      position: 10,
+      position: 90,
       options: [
         {
           id: "itemId",
@@ -160,6 +160,7 @@ export const getItems = ({
         },
         {
           id: "advancedSettings",
+          // @ts-expect-error: Type '"advancedSettings"' is not assignable to type
           type: "advancedSettings",
           label: t("More Settings"),
           devices: "desktop",

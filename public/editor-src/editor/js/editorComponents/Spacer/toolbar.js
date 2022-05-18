@@ -1,6 +1,9 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 
-export function getItems() {
+export function getItems({ v, device }) {
+  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+
   return [
     {
       id: "toolbarSettings",
@@ -15,9 +18,13 @@ export function getItems() {
           label: t("Height"),
           type: "slider-dev",
           config: {
-            min: 10,
-            max: 200,
-            units: [{ value: "px", title: "px" }]
+            min: dvv("heightSuffix") === "px" ? 10 : 1,
+            max: dvv("heightSuffix") === "px" ? 200 : 100,
+            units: [
+              { value: "px", title: "px" },
+              { value: "vh", title: "vh" },
+              { value: "em", title: "em" }
+            ]
           }
         }
       ]

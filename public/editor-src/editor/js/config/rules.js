@@ -38,6 +38,9 @@ export default {
   "wrapper--switcher": {
     showToolbar: "on"
   },
+  "wrapper--filters": {
+    showToolbar: "on"
+  },
   "wrapper--spacer": {
     marginTop: 0,
     marginBottom: 0,
@@ -56,6 +59,12 @@ export default {
     paddingBottom: 10,
     paddingLeft: 15,
     paddingRight: 15
+  },
+  "wrapper-ecwid-my-account": {
+    showToolbar: "on"
+  },
+  "wrapper-ecwid-cart": {
+    showToolbar: "on"
   },
   "column--carousel": {
     width: 100
