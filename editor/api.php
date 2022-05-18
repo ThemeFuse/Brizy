@@ -559,7 +559,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 	private function getPostSample( $templateId ) {
 		global $wp_query;
 
-		global $wp_query;$wp_post = get_post( $templateId );
+		global $wp_query;
+        $wp_post = get_post( $templateId );
 		if ( $wp_post->post_type !== Brizy_Admin_Templates::CP_TEMPLATE ) {
 			return $wp_post;
 		}
