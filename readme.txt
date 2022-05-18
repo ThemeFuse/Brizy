@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 5.9.3
 Requires PHP: 5.6.20
-Stable tag: 2.3.37
+Stable tag: 2.4.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,73 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.0 - 2022-05-18 =
+* New: Counter width changing the location in color section of toolbar
+* New: Possibility to add URL for video like .mp4 URLs
+* New: Added block bg. options: auto, contain, cover and bg. repeat
+* New: More options for SoundCloud
+* New: Added background map and video for columns
+* New: Added Overlay color for image
+* New: Added example for Shortcode element
+* New: Added reorder option for columns
+* New: Added new line styles
+* New: RichText Matching HTML tag with typography font style
+* New: Added new align option for column, auto and custom height
+* New: Created possibility to change default font
+* New: Added order to tabs
+* New: Section Added slider reorder
+* New: Counter added text shadow
+* New: Added Form reorder option
+* New: Add New Block Divider
+* New: Added Accordion Title padding
+* New: Added reorder option to accordion
+* New: Moved entrance animation effects functionality in right sidebar
+* New: Added vh and em suffixes to Spacer
+* New: Add new style blending mode for certain elements 
+* New: Added Column width option
+* New: Added status badge in the block display conditions popup 
+* New: Added support for placeholders in email templates
+* Improved: Added new shortcut Ctrl+M opens Styling right panel
+* Improved: Added new shortcut Ctrl + K opens Effects right panel
+* Improved: All options in the builder were refactored
+* Improved: Publish Update button state
+* Improved: Added input value change on scroll
+* Improved: Toolbar option for shortcode element
+* Improved: Added additional animation styles for tabs and accordions
+* Improved: Added new icon for breadcrumbs
+* Improved: Added Autoplay and loop for Youtube and Vimeo
+* Improved: Removed separator option for Counter types Empty and Pie
+* Improved: Can change name for All tag in Accordion element
+* Improved: Reply-to user email placeholder for contact forms
+* Improved: More settings icon alignment
+* Improved: Added typography value boundaries
+* Improved: Added loading icon when importing a Layout
+* Improved: Enabled swipe option for slider
+* Improved: Working with code in Embed element
+* Improved: Opacity value for colors is displayed on hover
+* Improved: Tabs hover transition
+* Fixed: Sidebar update for Switcher, Table, Tabs
+* Fixed: The scale option for Rating appears only for desktop view
+* Fixed: Counter suffix option when working with dynamic values
+* Fixed: Filters Hover for certain elements
+* Fixed: Rename size to width for Map element
+* Fixed: Overlay option for Images appears only for desktop view
+* Fixed: Countdown redirect label
+* Fixed: Accordion item head align and css
+* Fixed: Responsive slider dots option with a lot of slides
+* Fixed: Outline border when resizing an element from the resize dots
+* Fixed: Remove Products from single template type
+* Fixed: Added option to allow json file upload
+* Fixed: Fixed placeholder strip on post save.
+* Fixed: Cast rule values to int on serialization
+* Fixed: Refactor post_type to postType in editor config
+* Fixed: Show Products post type in global block rules
+* Fixed: Send post_term_parents as an array not object when the array is not empty
+* Fixed: Added additional data about the post in editor config.
+* Fixed: Return all global block ignoring the status
+* Fixed: Added post_status in brizy_get_posts actions
+* Fixed: Change the Pages group name to Main Content in template rule form
 
 = 2.3.37 - 2022-05-05 =
 * Fixed: Section dividers on Firefox
