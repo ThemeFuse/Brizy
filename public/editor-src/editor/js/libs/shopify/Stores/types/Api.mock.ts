@@ -283,7 +283,7 @@ export class ProductApiMock implements ProductApi {
     ]
   };
 
-  get(handle: ProductHandle): Promise<Product> {
+  get(_handle: ProductHandle): Promise<Product> {
     return of(this.product)
       .pipe(delay(2000))
       .toPromise();

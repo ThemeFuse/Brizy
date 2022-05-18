@@ -5,7 +5,8 @@ export function styleAlignFlexVerticalAlign({ v, device, state, prefix = "" }) {
   const aligns = {
     top: "flex-start",
     center: "center",
-    bottom: "flex-end"
+    bottom: "flex-end",
+    between: "space-between"
   };
   const dvv = key => defaultValueValue({ v, key, device, state });
 

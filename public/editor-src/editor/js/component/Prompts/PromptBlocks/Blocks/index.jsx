@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import {
   projectSelector,
   stylesSelector,
-  fontSelector
+  fontsSelector
 } from "visual/redux/selectors";
-import { importKit, updateCurrentKitId } from "visual/redux/actions";
+import { importKit, updateCurrentKitId } from "visual/redux/actions2";
 import { blockTemplateThumbnailUrl } from "visual/utils/blocks";
 import { IS_EXTERNAL_POPUP } from "visual/utils/models";
 import { assetUrl } from "visual/utils/asset";
@@ -218,7 +218,7 @@ class BlocksContainer extends Component {
 
 const mapStateToProps = state => ({
   selectedKit: projectSelector(state).data.selectedKit,
-  projectFonts: fontSelector(state),
+  projectFonts: fontsSelector(state),
   projectStyles: stylesSelector(state)
 });
 const mapDispatchToProps = dispatch => ({

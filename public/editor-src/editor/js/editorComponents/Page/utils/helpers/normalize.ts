@@ -9,7 +9,7 @@ import {
   itemsToSymbols,
   normalizeMenuItems,
   symbolsToItems
-} from "visual/editorComponents/Menu";
+} from "visual/editorComponents/Menu/utils";
 import { ElementModel } from "visual/component/Elements/Types";
 
 import { FromTo } from "../types";
@@ -46,7 +46,6 @@ export function attachGlobalBlocks(
 
           if (gb[_id]) {
             Object.assign(cursor, gb[_id].data, {
-              // eslint-disable-next-line @typescript-eslint/camelcase
               __tmp_global_original__: JSON.stringify(cursor)
             });
           }

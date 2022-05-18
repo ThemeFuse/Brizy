@@ -15,10 +15,12 @@ export default function($node) {
         .find(".brz-counter")
         .each(function() {
           var $this = $(this);
+          const start =
+            $this.attr("data-type") === "simple" ? $this.attr("data-start") : 0;
 
           animate({
             elem: this,
-            start: $this.attr("data-start"),
+            start: start,
             end: $this.attr("data-end"),
             duration: $this.attr("data-duration"),
             separator: $this.attr("data-separator")
@@ -28,9 +30,11 @@ export default function($node) {
   } else {
     $node.find(".brz-counter").each(function() {
       var $this = $(this);
+      const start =
+        $this.attr("data-type") === "simple" ? $this.attr("data-start") : 0;
       elements.push({
         elem: this,
-        start: $this.attr("data-start"),
+        start: start,
         end: $this.attr("data-end"),
         duration: $this.attr("data-duration"),
         separator: $this.attr("data-separator")

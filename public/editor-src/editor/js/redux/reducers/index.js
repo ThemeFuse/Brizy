@@ -1,7 +1,5 @@
 import produce from "immer";
-import { fromJS } from "immutable";
 import {
-  projectAssembled,
   blocksOrderSelector,
   globalBlocksSelector
 } from "visual/redux/selectors";
@@ -9,6 +7,7 @@ import { objectTraverse2 } from "visual/utils/object";
 import { PROJECT_LOCKED_ERROR } from "visual/utils/errors";
 import { historyReducerEnhancer } from "../history/reducers";
 
+import { project } from "./project";
 import { page } from "./page";
 import { blocksOrder } from "./blocksOrder";
 import { blocksData } from "./blocksData";
@@ -18,140 +17,26 @@ import {
   HYDRATE,
   UPDATE_GB_RULES,
   COPY_ELEMENT,
-  IMPORT_TEMPLATE,
-  IMPORT_KIT,
-  ADD_BLOCK,
-  UPDATE_CURRENT_KIT_ID,
   UPDATE_CURRENT_STYLE_ID,
   UPDATE_CURRENT_STYLE,
-  ADD_FONTS,
-  DELETE_FONTS,
   UPDATE_SCREENSHOT,
-  UPDATE_DISABLED_ELEMENTS,
   UPDATE_ERROR,
   MAKE_NORMAL_TO_GLOBAL_BLOCK,
   REMOVE_BLOCK,
-  REMOVE_BLOCKS,
-  ADD_GLOBAL_BLOCK
+  REMOVE_BLOCKS
 } from "../actions";
-import { PUBLISH, IMPORT_STORY } from "../actions2";
+import {
+  PUBLISH,
+  IMPORT_STORY,
+  IMPORT_KIT,
+  IMPORT_TEMPLATE
+} from "../actions2";
 import { extraFontStyles } from "./extraFontStyles";
 import { ui } from "./ui";
 import { syncAllowed } from "./syncAllowed";
 import { authorized } from "./authorized";
+import { fonts } from "./fonts";
 import { storeWasChanged } from "./storeWasChanged";
-
-// project
-
-export function project(state = {}, action, fullState) {
-  switch (action.type) {
-    case HYDRATE: {
-      const { project } = action.payload;
-
-      return project;
-    }
-    case PUBLISH: {
-      const oldState = fromJS(state);
-      const newState = fromJS(projectAssembled(fullState));
-
-      if (oldState.equals(newState)) {
-        return state;
-      }
-
-      return produce(projectAssembled(fullState), draft => {
-        draft.dataVersion = draft.dataVersion + 1;
-      });
-    }
-    case UPDATE_DISABLED_ELEMENTS: {
-      const disabledElements = action.payload;
-
-      return produce(state, draft => {
-        draft.data.disabledElements = disabledElements;
-        draft.dataVersion = draft.dataVersion + 1;
-      });
-    }
-    case IMPORT_KIT: {
-      const { selectedKit } = action.payload;
-
-      return produce(state, draft => {
-        draft.data.selectedKit = selectedKit;
-        draft.dataVersion = draft.dataVersion + 1;
-      });
-    }
-    case UPDATE_CURRENT_KIT_ID: {
-      const selectedKit = action.payload;
-
-      return produce(state, draft => {
-        draft.data.selectedKit = selectedKit;
-        draft.dataVersion = draft.dataVersion + 1;
-      });
-    }
-    case IMPORT_STORY:
-    case IMPORT_TEMPLATE: {
-      const { styles, fonts } = action.payload;
-
-      if (styles?.length || fonts?.length) {
-        return produce(state, draft => {
-          draft.dataVersion = draft.dataVersion + 1;
-        });
-      }
-
-      return state;
-    }
-    case ADD_FONTS:
-    case DELETE_FONTS: {
-      return produce(state, draft => {
-        draft.dataVersion = draft.dataVersion + 1;
-      });
-    }
-
-    default:
-      return state;
-  }
-}
-
-// fonts
-
-export function fonts(state = {}, action) {
-  switch (action.type) {
-    case HYDRATE: {
-      const { fonts } = action.payload;
-
-      return fonts;
-    }
-    case ADD_FONTS:
-    case DELETE_FONTS: {
-      const fonts = action.payload;
-
-      if (!fonts || fonts.length === 0) {
-        return state;
-      }
-
-      return { ...state, ...fonts };
-    }
-    case IMPORT_STORY:
-    case IMPORT_TEMPLATE:
-    case IMPORT_KIT:
-    case ADD_BLOCK:
-    case ADD_GLOBAL_BLOCK: {
-      const { fonts } = action.payload;
-
-      if (!fonts || fonts.length === 0) {
-        return state;
-      }
-
-      return produce(state, draft => {
-        fonts.forEach(({ type, fonts }) => {
-          draft[type] = draft[type] || { data: [] };
-
-          draft[type].data.push(...fonts);
-        });
-      });
-    }
-    default:
-      return state;
-  }
-}
 
 // styles
 

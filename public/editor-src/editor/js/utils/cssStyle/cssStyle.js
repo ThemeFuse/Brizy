@@ -32,7 +32,7 @@ let legacyByDefault = {};
  * @param {ElementModel} param.vd
  * @param {object} param.styles
  * @param {object} [param.props]
- * @return {string[]}
+ * @return {[string, string, string]}
  */
 export function renderStyles({ v, vs, vd, styles, props }) {
   if (vd) {

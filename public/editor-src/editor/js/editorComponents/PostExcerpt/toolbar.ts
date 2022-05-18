@@ -137,11 +137,9 @@ export function getItems({
               id: "external",
               label: t("URL"),
               options: [
+                // @ts-expect-error: need to transform to new option
                 toolbarLinkExternal({
                   v,
-                  //@ts-expect-error unknown property
-                  device,
-                  state: "normal",
                   config: component.context.dynamicContent.config,
                   devices: "desktop"
                 }),
@@ -163,6 +161,7 @@ export function getItems({
               id: "anchor",
               label: t("Block"),
               options: [
+                // @ts-expect-error: need to transform to new option
                 toolbarLinkAnchor({
                   v,
                   device,
@@ -176,6 +175,7 @@ export function getItems({
               id: "popup",
               label: t("Popup"),
               options: [
+                // @ts-expect-error: need to transform to new option
                 toolbarLinkPopup({
                   v,
                   device,
@@ -212,11 +212,13 @@ export function getItems({
     },
     {
       id: "advancedSettings",
+      // @ts-expect-error: need to transform to new option
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,
       title: t("Settings"),
       roles: ["admin"],
+      devices: "desktop",
       icon: "nc-cog"
     }
   ];

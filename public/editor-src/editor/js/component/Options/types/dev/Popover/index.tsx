@@ -4,11 +4,12 @@ import {
   Props as ControlProps
 } from "visual/component/Controls/Popover";
 import * as Option from "visual/component/Options/Type";
-import Options, { filterOptionsData } from "visual/component/Options";
+import Options from "visual/component/Options";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { OptionDefinition } from "visual/component/Options/Type";
 import { Html } from "./triggers/Html";
 import { Icon } from "./triggers/Icon";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { withOptions } from "visual/component/Options/utils/filters";
 
 type Icon = string | ComponentProps<typeof Html>;
 
@@ -22,7 +23,7 @@ export type Config = {
 export type Props = Option.Props<undefined> &
   WithConfig<Config> &
   WithClassName & {
-    options: OptionDefinition[];
+    options?: ToolbarItemType[];
   };
 
 export const getTrigger = (t: Icon): ReactElement => {
@@ -36,8 +37,13 @@ export const getTrigger = (t: Icon): ReactElement => {
 
 export const Popover: FC<Props> &
   Option.OptionType<undefined> &
-  Option.SelfFilter<Props> = ({ className, config, options, toolbar }) => {
-  return (
+  Option.SelfFilter<"popover-dev"> = ({
+  className,
+  config,
+  options,
+  toolbar
+}) => {
+  return options?.length ? (
     <Control
       title={config?.title}
       trigger={getTrigger(config?.icon ?? "nc-cog")}
@@ -58,18 +64,20 @@ export const Popover: FC<Props> &
     >
       <Options wrapOptions={false} data={options} toolbar={toolbar} />
     </Control>
-  );
+  ) : null;
 };
 
-const getModel: Option.GetModel<undefined> = () => undefined;
-const getElementModel: Option.GetElementModel<undefined> = () => ({});
+const getModel: Option.FromElementModel<undefined> = () => undefined;
+const getElementModel: Option.ToElementModel<undefined> = () => ({});
 
-Popover.getModel = getModel;
-Popover.getElementModel = getElementModel;
+Popover.fromElementModel = getModel;
+Popover.toElementModel = getElementModel;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
+// @ts-expect-error: Variable 'defaultValue' implicitly has an 'any' type.
 Popover.defaultValue = undefined;
 
-Popover.shouldOptionBeFiltered = ({ options }): boolean =>
-  filterOptionsData(options ?? []).length === 0;
+Popover.filter = withOptions;
+
+Popover.reduce = (fn, t0, item) => item.options?.reduce(fn, t0) ?? t0;
+
+Popover.map = (fn, item) => ({ ...item, options: item.options?.map(fn) });

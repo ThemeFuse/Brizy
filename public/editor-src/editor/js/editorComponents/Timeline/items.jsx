@@ -21,12 +21,42 @@ export default class TimelineItems extends EditorArrayComponent {
       getItems: () => {
         return [
           {
+            id: "order",
+            type: "order-dev",
+            devices: "desktop",
+            position: 105,
+            roles: ["admin"],
+            disabled: items.length < 2,
+            config: {
+              align:
+                this.props.itemProps.verticalMode == "off"
+                  ? "horizontal"
+                  : "vertical",
+              disable:
+                itemIndex === 0
+                  ? "prev"
+                  : itemIndex === items.length - 1
+                  ? "next"
+                  : undefined,
+              onChange: v => {
+                switch (v) {
+                  case "prev":
+                    this.reorderItem(itemIndex, itemIndex - 1);
+                    break;
+                  case "next":
+                    this.reorderItem(itemIndex, itemIndex + 1);
+                    break;
+                }
+              }
+            }
+          },
+          {
             id: "duplicate",
             type: "button",
             icon: "nc-duplicate",
             title: t("Duplicate"),
             devices: "desktop",
-            position: 200,
+            position: 210,
             onChange: () => {
               this.cloneItem(itemIndex);
             }
@@ -37,7 +67,7 @@ export default class TimelineItems extends EditorArrayComponent {
             icon: "nc-trash",
             title: t("Delete"),
             devices: "desktop",
-            position: 210,
+            position: 220,
             disabled: items.length === 1,
             onChange: () => {
               hideToolbar();

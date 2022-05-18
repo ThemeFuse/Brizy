@@ -8,7 +8,6 @@ import {
 } from "visual/utils/api/cms/graphql/types/entities";
 import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import { GetCustomer_customer as CustomerItem } from "visual/utils/api/cms/graphql/types/GetCustomer";
-// eslint-disable-next-line @typescript-eslint/camelcase
 import { CollectionItemFragment_fields_CollectionItemFieldText } from "./graphql/types/CollectionItemFragment";
 import { pipe } from "visual/utils/fp";
 import {
@@ -47,7 +46,6 @@ export const itemLayoutToPageLayout = (
   // Check for field in collection type, because collectionItem.fields fetches only fields that have value,
   // but wee need the field type id
   const id = item.type.fields?.find(
-    // eslint-disable-next-line @typescript-eslint/camelcase
     item =>
       item.slug === "layout-template-id" &&
       item.__typename === "CollectionTypeFieldText"
@@ -60,7 +58,6 @@ export const itemLayoutToPageLayout = (
   }
 
   const layout = item.fields?.find(
-    // eslint-disable-next-line @typescript-eslint/camelcase
     (item): item is CollectionItemFragment_fields_CollectionItemFieldText =>
       item.type.id === id
   );

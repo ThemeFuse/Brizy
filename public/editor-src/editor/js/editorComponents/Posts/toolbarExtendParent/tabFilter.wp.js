@@ -132,7 +132,7 @@ function getIncludeExclude(type, vd, disabled) {
 
   const lvl1Option = {
     id: `symbol_${source}_${prefix}By`,
-    type: "multiSelect2-dev",
+    type: "multiSelect-dev",
     label: include ? t("Include By") : t("Exclude By"),
     devices: "desktop",
     placeholder: multiSelectPlaceholder,
@@ -148,7 +148,7 @@ function getIncludeExclude(type, vd, disabled) {
       return {
         id,
         label,
-        type: "multiSelect2-dev",
+        type: "multiSelect-dev",
         devices: "desktop",
         placeholder: multiSelectPlaceholder,
         choices: {

@@ -3,7 +3,7 @@ module.exports = {
     "^visual/(.*)$": "<rootDir>/editor/js/$1"
   },
   transform: {
-    "\\.(tsx|ts|js)?$": "ts-jest"
+    "\\.(tsx|ts|js|jsx)?$": "ts-jest"
   },
   globals: {
     TARGET: "Jest",

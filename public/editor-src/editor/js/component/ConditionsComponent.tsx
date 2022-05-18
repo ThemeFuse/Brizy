@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import React from "react";
 import Prompts from "visual/component/Prompts";
 import { t } from "visual/utils/i18n";
@@ -85,9 +84,8 @@ export function getOptions(
         // CollectionItemId, wp is expecting nothing
         const asyncGetValue = IS_CLOUD
           ? (): Promise<Rule[]> => getRulesList(Config.get("page")?.id)
-          : // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            (): Promise<Rule[]> => getRulesList();
+          :
+            (): Promise<Rule[]> => getRulesList("");
 
         options.push({
           id: "rules",

@@ -135,7 +135,7 @@ export function getItems({ v, device, component }) {
               options: [
                 {
                   id: "textShadow",
-                  type: "boxShadow-dev",
+                  type: "textShadow-dev",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -244,6 +244,7 @@ export function getItems({ v, device, component }) {
       position: 110,
       title: t("Settings"),
       roles: ["admin"],
+      devices: "desktop",
       icon: "nc-cog"
     }
   ];

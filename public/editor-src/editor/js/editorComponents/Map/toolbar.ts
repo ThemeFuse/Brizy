@@ -10,7 +10,6 @@ import { Value } from "./index";
 import { DeviceMode } from "visual/types";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
 import { ToolbarItemType } from "../ToolbarItemType";
-import { DynamicContentCloud } from "visual/global/Config/types/DynamicContent";
 
 export function getItems({
   v,
@@ -30,7 +29,7 @@ export function getItems({
   );
 
   const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config as DynamicContentCloud,
+    context.dynamicContent.config,
     DCTypes.richText
   );
 
@@ -164,7 +163,7 @@ export function getItems({
       options: [
         {
           id: "size",
-          label: t("Size"),
+          label: t("Width"),
           type: "slider-dev",
           position: 80,
           config: {
@@ -190,17 +189,51 @@ export function getItems({
           }
         },
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog",
-          devices: "desktop"
+          id: "grid",
+          type: "grid-dev",
+          config: {
+            separator: true
+          },
+          columns: [
+            {
+              id: "grid-settings",
+              size: 1,
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            },
+            {
+              id: "grid-effects",
+              size: 1,
+              options: [
+                {
+                  id: "effects",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "effects",
+                    text: t("Effects"),
+                    icon: "nc-flash"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
     {
       id: "advancedSettings",
+      // @ts-expect-error: Missing in new option-types
       type: "advancedSettings",
+      devices: "desktop",
       icon: "nc-cog",
       position: 110,
       disabled: !IS_STORY

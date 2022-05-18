@@ -1,7 +1,10 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import { validateKeyByProperty } from "visual/utils/onChange";
+import {
+  defaultValueValue,
+  validateKeyByProperty
+} from "visual/utils/onChange";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import * as Str from "visual/utils/string/specs";
@@ -13,7 +16,8 @@ import SortableHandle from "visual/component/Sortable/SortableHandle";
 import Animation from "visual/component/Animation";
 import { Roles } from "visual/component/Roles";
 import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
-import { getStore } from "visual/redux/store";
+import { ScrollMotion } from "visual/component/ScrollMotions";
+import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
 import { blocksDataSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
@@ -28,6 +32,8 @@ import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import { styleSizeWidth } from "visual/utils/style2";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { getStore } from "visual/redux/store";
 
 class Column extends EditorComponent {
   static get componentId() {
@@ -116,11 +122,11 @@ class Column extends EditorComponent {
     return _.extend({}, meta, {
       column: {
         width,
+        tabletWidth,
+        mobileWidth,
         verticalAlign,
         tabletVerticalAlign,
-        mobileVerticalAlign,
-        tabletWidth,
-        mobileWidth
+        mobileVerticalAlign
       },
       desktopW,
       desktopWNoSpacing,
@@ -136,6 +142,28 @@ class Column extends EditorComponent {
 
     return meta.row && meta.row.isInner;
   }
+
+  getAnimationClassName = (v, vs, vd) => {
+    if (!validateKeyByProperty(v, "animationName", "none")) {
+      return undefined;
+    }
+
+    const animationName = defaultValueValue({ v, key: "animationName" });
+    const animationDuration = defaultValueValue({
+      v,
+      key: "animationDuration"
+    });
+    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
+    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+
+    return classnames(
+      css(
+        `${this.getComponentId()}-animation-${slug}`,
+        `${this.getId()}-animation-${slug}`,
+        styleAnimation(v, vs, vd)
+      )
+    );
+  };
 
   renderToolbar = ContainerBorderButton => {
     return (
@@ -202,30 +230,7 @@ class Column extends EditorComponent {
     );
   }
 
-  renderPopups(v) {
-    const { popups, linkType, linkPopup } = v;
-
-    if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
-      return null;
-    }
-
-    const normalizePopups = popups.reduce((acc, popup) => {
-      let itemData = popup;
-
-      if (itemData.type === "GlobalBlock") {
-        // TODO: some kind of error handling
-        itemData = blocksDataSelector(getStore().getState())[
-          itemData.value._id
-        ];
-      }
-
-      return itemData ? [...acc, itemData] : acc;
-    }, []);
-
-    if (normalizePopups.length === 0) {
-      return null;
-    }
-
+  renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
@@ -236,10 +241,8 @@ class Column extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const blockData = blocksDataSelector(getStore().getState())[
-            itemData.value._id
-          ];
-
+          const globalBlocks = blocksDataSelector(getStore().getState());
+          const blockData = globalBlocks[itemData.value._id];
           popupId = blockData.value.popupId;
         }
 
@@ -278,13 +281,12 @@ class Column extends EditorComponent {
       cssClassPopulation === "" ? customClassName : cssClassPopulation
     );
 
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
+    const animationClassName = this.getAnimationClassName(v, vs, vd);
+
+    const content = (
+      <ScrollMotion options={makeOptionValueToMotion(v)}>
+        {this.renderContent(v, vs, vd)}
+      </ScrollMotion>
     );
 
     return (
@@ -320,14 +322,11 @@ class Column extends EditorComponent {
                         className: classNameColumn
                       }}
                     >
-                      <Roles
-                        allow={["admin"]}
-                        fallbackRender={() => this.renderContent(v, vs, vd)}
-                      >
+                      <Roles allow={["admin"]} fallbackRender={() => content}>
                         {this.renderResizer("left")}
                         {this.renderResizer("right")}
                         <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                          {this.renderContent(v, vs, vd)}
+                          {content}
                         </ToolbarExtend>
                         {ContainerBorderButton}
                         {ContainerBorderBorder}
@@ -339,7 +338,8 @@ class Column extends EditorComponent {
             </ContextMenu>
           )}
         </SortableElement>
-        {this.renderPopups(v)}
+        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+          this.renderPopups()}
       </>
     );
   }
@@ -378,20 +378,7 @@ class Column extends EditorComponent {
       cssClassPopulation === "" ? customClassName : cssClassPopulation
     );
 
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
-
-    const props = {
-      ...parseCustomAttributes(customAttributes),
-      id: cssIDPopulation ?? customID,
-      className: classNameColumn
-    };
+    const animationClassName = this.getAnimationClassName(v, vs, vd);
 
     return (
       <>
@@ -399,10 +386,16 @@ class Column extends EditorComponent {
           <Animation
             iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
             component={tagName}
-            componentProps={props}
+            componentProps={{
+              ...parseCustomAttributes(customAttributes),
+              id: cssIDPopulation ?? customID,
+              className: classNameColumn
+            }}
             animationClass={animationClassName}
           >
-            {this.renderContent(v, vs, vd)}
+            <ScrollMotion options={makeOptionValueToMotion(v)}>
+              {this.renderContent(v, vs, vd)}
+            </ScrollMotion>
             {linkHrefs[linkType] !== "" && (
               <Link
                 className="brz-container-link"
@@ -414,7 +407,8 @@ class Column extends EditorComponent {
             )}
           </Animation>
         </CustomCSS>
-        {this.renderPopups(v)}
+        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+          this.renderPopups()}
       </>
     );
   }

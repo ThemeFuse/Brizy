@@ -12,7 +12,6 @@ import {
   styleElementWOOCartSidebarHeightSuffix,
   styleElementWOOCartPurchasesType
 } from "visual/utils/style2";
-
 import {
   cssStyleColor,
   cssStyleTypography2FontFamily,
@@ -23,8 +22,7 @@ import {
   cssStyleBgColor,
   cssStyleBgColorHex
 } from "visual/utils/cssStyle";
-
-import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
+import { defaultValueValue } from "visual/utils/onChange";
 
 export function cssStyleElementWOOCartIconColor({
   v,
@@ -307,6 +305,15 @@ export function cssStyleElementWOOCartButtonBgColor({
   return cssStyleBgColor({ v, device, state, prefix });
 }
 
+export function cssStyleElementWOOCartSidebarBgColor({
+  v,
+  device,
+  state,
+  prefix = "sidebarBg"
+}) {
+  return cssStyleBgColor({ v, device, state, prefix });
+}
+
 export function cssStyleElementWOOCartButtonDirection({ v, device, state }) {
   const direction =
     styleElementWOOCartButtonDirection({ v, device, state }) === "inline"
@@ -327,8 +334,12 @@ export function cssStyleElementWOOCartButtonSpacing({ v, device, state }) {
     : `width: 100%; margin-bottom: ${spacing}px;`;
 }
 
-export function cssStyleElementWOOCartButtonBorderRadius({ v, device, state }) {
-  return cssStyleBorderRadius({ v, device, state, prefix: "button" });
+export function cssStyleElementWOOCartButtonBorderRadius({ v }) {
+  return v.buttonBorderRadiusType === "square"
+    ? "border-radius:0;"
+    : v.buttonBorderRadiusType === "rounded"
+    ? "border-radius:400px;"
+    : `border-radius:${v.buttonBorderRadius}${v.buttonBorderRadiusSuffix};`;
 }
 
 export function cssStyleElementWOOCartSidebarHorizontalAlign({
@@ -440,4 +451,11 @@ export function cssStyleElementWOOCartBubbleBg({
   return styleElementWOOCartPurchasesType({ v, device, state }) !== "bubble"
     ? "background-color: transparent;"
     : cssStyleBgColorHex({ v, device, state, prefix });
+}
+
+export function cssStyleElementWOOCartIconSize({ v, device }) {
+  const dvv = key => defaultValueValue({ v, key, device });
+  const iconCustomSize = dvv("iconCustomSize");
+
+  return `font-size: ${iconCustomSize}px;`;
 }

@@ -37,15 +37,6 @@ class InputOptionType extends React.Component {
 
   isFocused = false;
 
-  componentWillReceiveProps(nextProps) {
-    const value = nextProps?.value?.value ?? "";
-    if (this.lastChange !== value) {
-      this.setState({ value }, () => {
-        this.lastChange = this.state.value;
-      });
-    }
-  }
-
   componentWillUnmount() {
     this.isFocused && this.handleInputBlur();
   }

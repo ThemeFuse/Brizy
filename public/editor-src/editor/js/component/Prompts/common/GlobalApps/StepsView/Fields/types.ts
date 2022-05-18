@@ -1,18 +1,23 @@
+import { ReactElement } from "react";
+import { FormField } from "../../type";
+
+export type HelperFn = (f: FormField[]) => ReactElement;
+
 export interface BaseData {
   title: string;
-  required: boolean;
   name: string;
-  helper?: null | string;
+  required?: boolean;
+  helper?: null | string | HelperFn;
 }
 
 export interface InputData extends BaseData {
-  type: undefined;
-  value: string;
+  type: "input";
+  value: string | null;
 }
 
 export interface SelectData extends BaseData {
   type: "select";
-  value: string;
+  value: string | null;
   choices: {
     title: string;
     name: string;
@@ -21,12 +26,12 @@ export interface SelectData extends BaseData {
 
 export interface SwitchData extends BaseData {
   type: "switch";
-  value: boolean;
+  value: boolean | null;
 }
 
 export interface SearchData extends BaseData {
   type: "search";
-  value: string;
+  value: string | null;
   multiple: boolean;
   choices: {
     title: string;
@@ -37,6 +42,8 @@ export interface SearchData extends BaseData {
 export type AllData = InputData | SelectData | SwitchData | SearchData;
 
 export interface Props {
+  formId: string;
+  formFields: FormField[];
   id: string;
   headTitle?: string;
   headDescription?: string;
@@ -51,7 +58,7 @@ export interface Props {
 }
 
 export const isInput = (o: AllData): o is InputData => {
-  return o.type === undefined;
+  return o.type === undefined || o.type === "input";
 };
 
 export const isSelect = (o: AllData): o is SelectData => {

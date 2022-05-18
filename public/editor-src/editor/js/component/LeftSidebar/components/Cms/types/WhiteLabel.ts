@@ -1,4 +1,4 @@
-import { CMS, Shopify } from "visual/global/Config/types/configs/Cloud";
+import { Cloud } from "visual/global/Config/types/configs/Cloud";
 
 export interface WhiteLabel {
   brandingName: string;
@@ -7,7 +7,7 @@ export interface WhiteLabel {
   aboutUsLink: string;
 }
 
-export const getWhiteLabel = (fromConfig: CMS | Shopify): WhiteLabel => {
+export const getWhiteLabel = (fromConfig: Cloud): WhiteLabel => {
   return {
     brandingName: fromConfig.branding.name,
     updateToProLink: fromConfig.urls.upgradeToPro,

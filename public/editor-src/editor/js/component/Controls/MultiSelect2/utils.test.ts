@@ -1,4 +1,4 @@
-import { arrangeItems, toggleItemValue, _valueTitle } from "./utils";
+import { toggleItemValue, _valueTitle } from "./utils";
 
 test.each([
   [
@@ -51,76 +51,6 @@ test.each([
   const valueTitle = _valueTitle(t);
 
   expect(valueTitle(items, value)).toEqual(expected);
-});
-
-test.each([
-  [
-    [
-      { title: "A", value: "a" },
-      { title: "B", value: "b" },
-      { title: "C", value: "c" }
-    ],
-    ["a"],
-    [
-      { title: "A", value: "a" },
-      { title: "B", value: "b" },
-      { title: "C", value: "c" }
-    ]
-  ],
-  [
-    [
-      { title: "A", value: "a" },
-      { title: "B", value: "b" },
-      { title: "C", value: "c" }
-    ],
-    ["b"],
-    [
-      { title: "B", value: "b" },
-      { title: "A", value: "a" },
-      { title: "C", value: "c" }
-    ]
-  ],
-  [
-    [
-      { title: "A", value: "a" },
-      { title: "B", value: "b" },
-      { title: "C", value: "c" }
-    ],
-    ["a", "c"],
-    [
-      { title: "A", value: "a" },
-      { title: "C", value: "c" },
-      { title: "B", value: "b" }
-    ]
-  ],
-  [
-    [
-      { title: "A", value: "a" },
-      { title: "B", value: "b" },
-      { title: "C", value: "c" }
-    ],
-    ["c", "b", "a"],
-    [
-      { title: "A", value: "a" },
-      { title: "B", value: "b" },
-      { title: "C", value: "c" }
-    ]
-  ],
-  [
-    [
-      { title: "A", value: "a" },
-      { title: "B", value: "b" },
-      { title: "C", value: "c" }
-    ],
-    ["x", "y"],
-    [
-      { title: "A", value: "a" },
-      { title: "B", value: "b" },
-      { title: "C", value: "c" }
-    ]
-  ]
-])("Testing 'arrangeItems' function", (items, value, expected) => {
-  expect(arrangeItems(items, value)).toEqual(expected);
 });
 
 test.each([

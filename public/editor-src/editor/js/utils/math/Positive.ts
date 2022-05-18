@@ -5,7 +5,7 @@ enum positive {
   positive = "positive"
 }
 
-export type Positive = NewType<number, positive.positive>;
+export type Positive = 0 | NewType<number, positive.positive>;
 
 export const is = (n: number): n is Positive => n >= 0;
 

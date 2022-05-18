@@ -2,7 +2,7 @@ import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Prompts from "visual/component/Prompts";
 
 export default class IconSetter extends React.Component {

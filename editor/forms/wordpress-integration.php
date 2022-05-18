@@ -74,7 +74,8 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 		}
 
 		if ( $this->getReplayTo() ) {
-			$headers[] = "Reply-To: {$this->getReplayTo()}";
+			$replay_to = apply_filters( 'brizy_replay_to', $this->getReplayTo(), $fields, $form );
+			$headers[] = "Reply-To: {$replay_to}";
 		}
 
 		if ( $this->getFromEmail() ) {
@@ -104,7 +105,7 @@ class Brizy_Editor_Forms_WordpressIntegration extends Brizy_Editor_Forms_Abstrac
 		}
 
 		return wp_mail(
-			$this->getEmailTo(),
+            apply_filters( 'brizy_form_email_to', $this->getEmailTo(), $fields, $form ),
 			$email_subject,
 			$email_body,
 			$headers

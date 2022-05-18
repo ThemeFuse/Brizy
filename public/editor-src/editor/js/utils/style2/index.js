@@ -176,7 +176,7 @@ export {
 } from "./styleFilter";
 
 // Icon
-export { styleIconSpacing, styleIconSize } from "./styleIcon";
+export { styleIconSpacing } from "./styleIcon";
 
 // Element Row
 export {
@@ -200,18 +200,8 @@ export {
   styleElementCountdown2Spacing
 } from "./styleElementCountdown";
 
-// Element Counter
-export {
-  styleElementCounterStrokeColor,
-  styleElementCounterFillColor
-} from "./styleElementCounter";
-
 // Element IconBox
-export {
-  styleElementIconBoxIconPosition,
-  styleElementIconBoxMarginLeft,
-  styleElementIconBoxMarginRight
-} from "./styleElementIconBox";
+export { styleElementIconBoxIconPosition } from "./styleElementIconBox";
 
 // Element Image Gallery
 export {
@@ -319,7 +309,9 @@ export {
 export {
   styleElementSwitcherSize,
   styleElementSwitcherWidth,
-  styleElementSwitcherSpacing
+  styleElementSwitcherSpacing,
+  styleElementSwitcherIconSize,
+  styleElementSwitcherIconCustomSize
 } from "./styleElementSwitcher";
 
 // Element Search
@@ -369,7 +361,6 @@ export {
   styleElementMMenuIconPosition,
   styleElementMMenuIconSpacing,
   styleElementMMenuIconSize,
-  styleElementMMenuHoverColor,
   styleElementMenuSubMenuIconPosition,
   styleElementMenuSubMenuIconSpacing,
   styleElementMenuSubMenuIconSize
@@ -395,9 +386,46 @@ export {
   styleElementTableColumns,
   styleElementTableHorizontalAlign,
   styleElementTableIconPosition,
-  styleElementTableIconSize,
   styleElementTableIconSpacing
 } from "./styleElementTable";
+
+// Filters
+export {
+  styleElementFiltersGap,
+  styleElementFiltersSpacing,
+  styleElementFiltersTitleSpacing,
+  styleElementFiltersLabelSpacing,
+  styleElementFiltersCheckboxOrientation,
+  styleElementFiltersCheckboxColumns,
+  styleElementFiltersActiveColumns,
+  styleElementFiltersBtnWidth,
+  styleElementFiltersBtnHeight,
+  styleElementFiltersBtnSpacing,
+  styleElementFiltersHorizontalAlignBtn,
+  styleElementFiltersCheckboxType,
+  styleElementFiltersHorizontalAlignOption,
+  styleElementFiltersDateOptionWidth,
+  styleElementFiltersActiveOrientation,
+  styleElementFiltersOptionWidth,
+  styleElementFiltersOptionWidthSuffix,
+  styleElementFiltersCheckboxShowCounter,
+  styleElementFiltersType,
+  styleElementFiltersOptionsAlign,
+  styleElementFiltersOptionSpacing,
+  styleElementFiltersHierarchicalSpacing,
+  styleElementFiltersDataSource,
+  styleElementFiltersCheckSize,
+  styleElementFiltersCheckColorSize,
+  styleElementFiltersCheckImgHeight,
+  styleElementFiltersCheckImgWidth,
+  styleElementFiltersHorizontalAlignLabel,
+  styleElementFiltersShowApply,
+  styleElementFiltersRangeDots,
+  styleElementFiltersCheckboxOrientationCustomStyles,
+  styleElementFiltersCheckboxColumnsCustomStyles,
+  styleElementFiltersIconSize,
+  styleElementFiltersIconCustomSize
+} from "./styleElementFiters";
 
 // Animation
 export {

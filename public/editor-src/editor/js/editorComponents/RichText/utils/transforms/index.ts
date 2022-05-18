@@ -70,13 +70,13 @@ export const getElementValues = (
   $elem: cheerio.Cheerio | JQuery
 ): ElementModel => {
   const acc: ElementModel = {};
-  const classNameAsString = Str.read($elem.attr("class"));
+  const classNameAsString: string | undefined = Str.read($elem.attr("class"));
   // add conditions for data attributes and styles if it's needed
 
   if (classNameAsString) {
     const regex = new RegExp("^(.*)-(.*$)");
 
-    const classNames = classNameAsString.split(" ");
+    const classNames: string[] = classNameAsString.split(" ");
 
     classNames.forEach(className => {
       const result = className.match(regex);

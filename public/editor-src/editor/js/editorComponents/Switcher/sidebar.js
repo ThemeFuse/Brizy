@@ -1,29 +1,74 @@
 import { t } from "visual/utils/i18n";
-import {
-  toolbarBorderRadius,
-  toolbarEntranceAnimation,
-  toolbarPaddingFourFieldsPxSuffix
-} from "visual/utils/toolbar";
 
-export const title = t("Switcher Tabs");
-
-export function getItems({ v, device }) {
+export function getItems({ v }) {
   return [
-    toolbarPaddingFourFieldsPxSuffix({
-      v,
-      device,
-      disabled: v.switcherStyle === "style-2",
-      state: "normal",
-      onChangeGrouped: ["onChangePaddingGrouped"],
-      onChangeUngrouped: ["onChangePaddingUngrouped"]
-    }),
-    toolbarBorderRadius({
-      v,
-      device,
-      state: "normal",
-      onChangeGrouped: ["onChangeBorderRadiusGrouped"],
-      onChangeUngrouped: ["onChangeBorderRadiusUngrouped"]
-    }),
-    toolbarEntranceAnimation({ v, device })
+    {
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
+      tabs: [
+        {
+          id: "styles",
+          title: t("Styling"),
+          label: t("Styling"),
+          options: [
+            {
+              id: "tabs",
+              type: "tabs-dev",
+              config: {
+                align: "start"
+              },
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Styling"),
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding-dev",
+                      label: t("Padding"),
+                      position: 50,
+                      disabled: v.switcherStyle === "style-2"
+                    },
+
+                    {
+                      id: "border",
+                      type: "corners-dev",
+                      label: t("Corner"),
+                      position: 65
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "effects",
+          title: t("Effects"),
+          label: t("Effects"),
+          options: [
+            {
+              id: "tabs",
+              type: "tabs-dev",
+              config: {
+                align: "start"
+              },
+              tabs: [
+                {
+                  id: "entrance",
+                  label: t("Entrance"),
+                  options: [
+                    {
+                      id: "animation",
+                      type: "animation-dev"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
   ];
 }

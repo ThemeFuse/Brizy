@@ -356,7 +356,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi
 
         if ($templateType == 'single' || $templateType == 'single_product' || $context == 'popup-rules') {
             $groups[] = array(
-                'title' => 'Pages',
+                'title' => 'Main Content',
                 'value' => Brizy_Admin_Rule::POSTS,
                 'items' => array_map($closure, $this->getCustomPostsList(Brizy_Admin_Rule::POSTS, $templateType, $context))
             );

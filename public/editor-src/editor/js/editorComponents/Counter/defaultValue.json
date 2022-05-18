@@ -1,28 +1,29 @@
 {
   "content": {
     "start": 0,
-    "startPopulation": null,
+    "startPopulation": "",
 
     "end": 100,
-    "endPopulation": null,
+    "endPopulation": "",
 
     "duration": 2,
-    "durationSuffix": null,
+    "durationSuffix": "",
 
     "prefixLabel": "",
-    "prefixLabelPopulation": null,
+    "prefixLabelPopulation": "",
 
     "suffixLabel": "",
-    "suffixLabelPopulation": null,
+    "suffixLabelPopulation": "",
 
     "prefixLabelRadial": "",
-    "prefixLabelRadialPopulation": null,
+    "prefixLabelRadialPopulation": "",
+    "suffixLabelRadialPopulation": "",
 
     "suffixLabelRadial": "%",
-    "suffixLabelRadial2Population": null,
+    "suffixLabelRadial2Population": "",
 
     "separator": ",",
-    "separatorPopulation": null,
+    "separatorPopulation": "",
 
     "offsetX": 0,
     "offsetY": 0
@@ -71,6 +72,35 @@
 
     "strokeColorType": "solid",
 
+    "strokeStyle": "solid",
+    "strokeWidthType": "grouped",
+    "strokeTopWidth": 7,
+    "strokeRightWidth": 7,
+    "strokeBottomWidth": 7,
+    "strokeLeftWidth": 7,
+
+    "hoverStrokeStyle": null,
+    "hoverStrokeWidthType": null,
+    "hoverStrokeWidth": null,
+    "hoverStrokeTopWidth": null,
+    "hoverStrokeRightWidth": null,
+    "hoverStrokeBottomWidth": null,
+    "hoverStrokeLeftWidth": null,
+
+    "tempStrokeStyle": "solid",
+    "tempStrokeWidth": "grouped",
+    "tempStrokeTopWidth": 7,
+    "tempStrokeRightWidth": 7,
+    "tempStrokeBottomWidth": 7,
+    "tempStrokeLeftWidth": 7,
+
+    "tempHoverStrokeStyle": null,
+    "tempHoverStrokeWidth": 7,
+    "tempHoverStrokeTopWidth": 7,
+    "tempHoverStrokeRightWidth": 7,
+    "tempHoverStrokeBottomWidth": 7,
+    "tempHoverStrokeLeftWidth": 7,
+
     "strokeColorHex": "#eeeeee",
     "strokeColorOpacity": 1,
     "strokeColorPalette": "color3",
@@ -86,6 +116,36 @@
 
     "tempStrokeColorOpacity": 1,
     "tempStrokeColorPalette": "color3",
+
+    "textShadowColorHex": "#000000",
+    "textShadowColorOpacity": 0,
+    "textShadowColorPalette": "",
+
+    "tempTextShadowColorOpacity": 1,
+    "tempTextShadowColorPalette": "",
+
+    "textShadowBlur": 4,
+    "textShadowVertical": 2,
+    "textShadowHorizontal": 1,
+
+    "tempTextShadowBlur": 4,
+    "tempTextShadowVertical": 2,
+    "tempTextShadowHorizontal": 1,
+
+    "hoverTextShadowColorHex": null,
+    "hoverTextShadowColorOpacity": null,
+    "hoverTextShadowColorPalette": null,
+
+    "tempHoverTextShadowColorOpacity": null,
+    "tempHoverTextShadowColorPalette": null,
+
+    "hoverTextShadowBlur": null,
+    "hoverTextShadowVertical": null,
+    "hoverTextShadowHorizontal": null,
+
+    "tempHoverTextShadowBlur": null,
+    "tempHoverTextShadowVertical": null,
+    "tempHoverTextShadowHorizontal": null,
 
     "fillColorType": "solid",
 

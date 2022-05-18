@@ -16,6 +16,7 @@ const Vinyl = require("vinyl");
 // webpack
 const webpack = require("webpack");
 const webpackConfigEditor = require("./webpack.config.editor");
+const webpackConfigWorker = require("./webpack.config.worker");
 const webpackConfigExport = require("./webpack.config.export");
 const webpackConfigPreview = require("./webpack.config.preview");
 const webpackConfigPro = require("./webpack.config.pro");
@@ -57,7 +58,8 @@ const {
   VERSION_PRO,
   NO_WATCH,
   NO_VERIFICATION,
-  BUNDLE_ANALYZER,
+  ANALYZE_EXPORT,
+  ANALYZE_PREVIEW,
   paths
 } = argvVars(process.argv);
 const WP = TARGET === "WP";
@@ -117,13 +119,20 @@ function editorJS(done) {
     IS_EXPORT,
     BUILD_PATH: paths.build,
     BUILD_DIR_PRO: paths.buildPro,
-    BUNDLE_ANALYZER,
     NO_WATCH
   };
-  const config = webpackConfigEditor(options);
+  const config = [webpackConfigEditor(options), webpackConfigWorker(options)];
 
   let doneCalled = false;
   webpack(config, (err, stats) => {
+    // TODO: uncomment when we'll have more time to deal with all the warnings
+    // if (stats.hasErrors() || stats.hasWarnings()) {
+    //   gulpPlugins.util.log(
+    //     `[webpack] ${stats.hasErrors() ? "error" : "warning"}`,
+    //     stats.toString("errors-warnings")
+    //   );
+    // }
+
     if (stats.hasErrors()) {
       gulpPlugins.util.log("[webpack] error", stats.toString("errors-only"));
     } else {
@@ -196,7 +205,7 @@ function editorKitIcons() {
   const src = paths.editor + "/icons/**/*";
   const dest = paths.build + "/editor/icons";
   const { encrypt } = require(paths.editor +
-    "/js/component/ThemeIcon/utils.js");
+    "/js/component/ThemeIcon/utils-node.js");
 
   const svgEncrypt = content => {
     const base64 = Buffer.from(content).toString("base64");
@@ -249,23 +258,50 @@ function exportJS(done) {
     IS_EXPORT,
     BUILD_PATH: paths.build,
     BUILD_DIR_PRO: paths.buildPro,
-    NO_WATCH
+    NO_WATCH,
+    ANALYZE: ANALYZE_EXPORT || ANALYZE_PREVIEW
   };
-  const config = [webpackConfigExport(options)];
+  let config = [];
 
-  if (IS_EXPORT) {
+  if (!ANALYZE_EXPORT && !ANALYZE_PREVIEW) {
     config.push(
+      webpackConfigExport(options),
       webpackConfigPreview.preview(options),
       webpackConfigPreview.libs(options)
     );
+  } else {
+    if (ANALYZE_EXPORT) {
+      config.push(webpackConfigExport(options));
+    }
+    if (ANALYZE_PREVIEW) {
+      config.push(webpackConfigPreview.preview(options));
+    }
   }
 
   let doneCalled = false;
   webpack(config, (err, stats) => {
-    if (stats.hasErrors()) {
-      gulpPlugins.util.log("[webpack] error", stats.toString("errors-only"));
+    if (stats.hasErrors() || stats.hasWarnings()) {
+      gulpPlugins.util.log(
+        `[webpack] ${stats.hasErrors() ? "error" : "warning"}`,
+        stats.toString("errors-warnings")
+      );
     } else {
       gulpPlugins.util.log("[webpack] success");
+
+      if (ANALYZE_EXPORT) {
+        fs.writeFileSync(
+          path.resolve(paths.build, "editor/js/export.js.webpack-stats.json"),
+          JSON.stringify(stats.toJson().children[0]),
+          "utf8"
+        );
+      }
+      if (ANALYZE_PREVIEW) {
+        fs.writeFileSync(
+          path.resolve(paths.build, "editor/js/preview.js.webpack-stats.json"),
+          JSON.stringify(stats.toJson().children[0]),
+          "utf8"
+        );
+      }
     }
 
     if (!doneCalled) {
@@ -1273,3 +1309,7 @@ exports.libs = gulp.series.apply(undefined, [
   generateLibs,
   generateLibsConfig
 ]);
+
+exports.analyze_export = gulp.series(clean, exportJS);
+
+exports.analyze_preview = gulp.series(clean, exportJS);

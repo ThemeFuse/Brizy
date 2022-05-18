@@ -69,21 +69,20 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
                 // @ts-expect-error need transformer to ts getPostObjects
                 const { posts } = await getPostObjects(rule.entityType);
                 // @ts-expect-error need transformer to ts getPostObjects
-                newItems = posts.map(({ ID, title }) => ({
+                newItems = posts.map(({ ID, title, post_status }) => ({
                   title: title,
-                  value: ID
+                  value: ID,
+                  status: post_status
                 }));
                 break;
               }
               case CATEGORIES_GROUP_ID: {
                 const terms = await getTerms(rule.entityType);
-                /* eslint-disable @typescript-eslint/camelcase */
                 // @ts-expect-error need transformer to ts getPostObjects
                 newItems = terms.map(({ name, term_id }) => ({
                   title: name,
                   value: term_id
                 }));
-                /* eslint-enable */
                 break;
               }
             }

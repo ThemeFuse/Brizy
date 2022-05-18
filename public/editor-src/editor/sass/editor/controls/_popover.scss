@@ -10,7 +10,11 @@
     min-height: $options-item-height;
     border-bottom: 1px solid $brand-options-border;
     margin-bottom: -1px;
-    flex: 1 1 auto;
+    flex: 0 1 auto;
+
+    .brz-ed-option__icon {
+      display: flex;
+    }
 
     &:first-child {
       padding-top: 15px;
@@ -18,7 +22,6 @@
     }
     &:last-child {
       padding-bottom: 15px;
-      min-height: 56px;
       border-bottom-color: transparent;
     }
   }

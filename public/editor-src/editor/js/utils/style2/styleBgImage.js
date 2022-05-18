@@ -1,6 +1,16 @@
 import { styleState } from "visual/utils/style";
 import { defaultValueValue } from "visual/utils/onChange";
-import { imageUrl, svgUrl, imagePopulationUrl } from "visual/utils/image";
+import {
+  imageUrl,
+  svgUrl,
+  imageSpecificSize,
+  imagePopulationUrl
+} from "visual/utils/image";
+import {
+  getImageSize,
+  isPredefinedSize,
+  isOriginalSize
+} from "../../editorComponents/Image/utils";
 
 const isSVG = extension => extension === "svg";
 
@@ -10,6 +20,15 @@ export function styleBgImage({ v, device, state }) {
   const media = defaultValueValue({ v, key: "media", device, state });
 
   const bgImageSrc = defaultValueValue({ v, key: "bgImageSrc", device, state });
+
+  const bgSizeType = defaultValueValue({
+    v,
+    key: "bgSizeType",
+    device,
+    state
+  });
+
+  const bgSize = getImageSize(bgSizeType);
 
   const bgImageExtension = defaultValueValue({
     v,
@@ -53,8 +72,12 @@ export function styleBgImage({ v, device, state }) {
     state: "hover"
   });
 
+  if (isPredefinedSize(bgSize) || isOriginalSize(bgSize)) {
+    return `url(${imageSpecificSize(bgImageSrc, bgSizeType)})`;
+  }
+
   const hover =
-    hoverMedia === "image" && hoverBgImageSrc !== "" && hoverBgPopulation === ""
+    hoverMedia === "image" && hoverBgImageSrc !== "" && !hoverBgPopulation
       ? `url(${
           isSVG(hoverBgImageExtension)
             ? svgUrl(hoverBgImageSrc)
@@ -129,7 +152,7 @@ export function styleBgPositionX({ v, device, state }) {
     state: "hover"
   });
 
-  return isHover === "hover" && hoverBgPopulation === ""
+  return isHover === "hover" && !hoverBgPopulation
     ? `${hoverBgPositionX}%`
     : bgPopulation === ""
     ? `${bgPositionX}%`
@@ -163,7 +186,7 @@ export function styleBgPositionY({ v, device, state }) {
     state: "hover"
   });
 
-  return isHover === "hover" && hoverBgPopulation === ""
+  return isHover === "hover" && !hoverBgPopulation
     ? `${hoverBgPositionY}%`
     : bgPopulation === ""
     ? `${bgPositionY}%`

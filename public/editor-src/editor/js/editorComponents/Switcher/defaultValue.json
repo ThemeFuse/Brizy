@@ -2,15 +2,40 @@
   "content": {
     "items": [],
     "activeTab": 0,
+
     "spacing": 20,
     "spacingSuffix": null,
+
+    "tabletSpacing": null,
+    "tabletSpacingSuffix": null,
+
+    "mobileSpacing": null,
+    "mobileSpacingSuffix": null,
+
     "navStyle2Size": 50,
     "navStyle2SizeSuffix": null,
+
+    "tabletNavStyle2Size": null,
+    "tabletNavStyle2SizeSuffix": null,
+
+    "mobileNavStyle2Size": null,
+    "mobileNavStyle2SizeSuffix": null,
+
     "navStyle1Width": 200,
     "navStyle1WidthSuffix": null,
+
     "switcherStyle": "style-1",
+    "tabletSwitcherStyle": "style-1",
+    "mobileSwitcherStyle": "style-1",
+
     "labelText1": "Tab 1",
-    "labelText2": "Tab 2"
+    "labelText2": "Tab 2",
+
+    "firstIconType": "",
+    "firstIconName": "",
+
+    "secondIconType": "",
+    "secondIconName": ""
   },
 
   "toolbar": {
@@ -25,6 +50,33 @@
       "tabletTypographyFontFamily": null,
       "mobileTypographyFontFamily": null
     },
+
+    "iconSize": "small",
+    "tabletIconSize": null,
+    "mobileIconSize": null,
+
+    "iconCustomSize": 16,
+    "iconCustomSizeSuffix": "px",
+    "tabletIconCustomSize": null,
+    "tabletIconCustomSizeSuffix": null,
+    "mobileIconCustomSize": null,
+    "mobileIconCustomSizeSuffix": null,
+
+    "iconPosition": "left",
+    "tabletIconPosition": null,
+    "mobileIconPosition": null,
+
+    "iconSpacing": 10,
+    "iconSpacingSuffix": "px",
+    "tabletIconSpacing": null,
+    "tabletIconSpacingSuffix": null,
+    "mobileIconSpacing": null,
+    "mobileIconSpacingSuffix": null,
+
+    "iconStrokeWidth": 1,
+
+    "custom": "",
+    "value": "",
 
     "typographyFontStyle": "",
     "typographyFontFamilyType": "google",
@@ -63,6 +115,18 @@
     "tempBorderTopRightRadius": 0,
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
+
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "tempBorderRadiusSuffix": "px",
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
 
     "borderColorHex": "#e5e5e5",
     "borderColorOpacity": 1,
@@ -202,6 +266,18 @@
     "tempTabletBorderBottomLeftRadius": null,
     "tempTabletBorderBottomRightRadius": null,
 
+    "tabletBorderRadiusSuffix": null,
+    "tabletBorderTopLeftRadiusSuffix": null,
+    "tabletBorderTopRightRadiusSuffix": null,
+    "tabletBorderBottomLeftRadiusSuffix": null,
+    "tabletBorderBottomRightRadiusSuffix": null,
+
+    "tempTabletBorderRadiusSuffix": null,
+    "tempTabletBorderTopLeftRadiusSuffix": null,
+    "tempTabletBorderTopRightRadiusSuffix": null,
+    "tempTabletBorderBottomLeftRadiusSuffix": null,
+    "tempTabletBorderBottomRightRadiusSuffix": null,
+
     "mobileNavStyle1Width": null,
     "mobileNavStyle1WidthSuffix": null,
 
@@ -251,7 +327,19 @@
     "tempMobileBorderTopLeftRadius": null,
     "tempMobileBorderTopRightRadius": null,
     "tempMobileBorderBottomLeftRadius": null,
-    "tempMobileBorderBottomRightRadius": null
+    "tempMobileBorderBottomRightRadius": null,
+
+    "mobileBorderRadiusSuffix": null,
+    "mobileBorderTopLeftRadiusSuffix": null,
+    "mobileBorderTopRightRadiusSuffix": null,
+    "mobileBorderBottomLeftRadiusSuffix": null,
+    "mobileBorderBottomRightRadiusSuffix": null,
+
+    "tempMobileBorderRadiusSuffix": null,
+    "tempMobileBorderTopLeftRadiusSuffix": null,
+    "tempMobileBorderTopRightRadiusSuffix": null,
+    "tempMobileBorderBottomLeftRadiusSuffix": null,
+    "tempMobileBorderBottomRightRadiusSuffix": null
   },
 
   "animation": {

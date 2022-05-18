@@ -1,13 +1,14 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 const editorConfigFn = require("./webpack.config.editor");
 const babelrc = require("./babelrc.config.all");
 const LibsConfig = require("./editor/js/bootstraps/libs.json");
 
 exports.preview = options => {
   const editorConfig = editorConfigFn(options);
-
-  return {
+  const config = {
     mode: editorConfig.mode,
     entry: "./editor/js/bootstraps/preview/index.js",
     output: {
@@ -17,7 +18,8 @@ exports.preview = options => {
     resolve: {
       alias: {
         "visual/libs": path.resolve(__dirname, "editor/js/libs"),
-        "visual/utils": path.resolve(__dirname, "editor/js/utils")
+        "visual/utils": path.resolve(__dirname, "editor/js/utils"),
+        "visual/global": path.resolve(__dirname, "editor/js/global")
       },
       extensions: editorConfig.resolve.extensions
     },
@@ -34,9 +36,20 @@ exports.preview = options => {
     externals: {
       jquery: "jQuery"
     },
+    performance: {
+      hints: false
+    },
     devtool: editorConfig.devtool,
     watch: editorConfig.watch
   };
+
+  const configAnalyze = {
+    mode: "production",
+    plugins: [new BundleAnalyzerPlugin()],
+    watch: false
+  };
+
+  return options.ANALYZE ? { ...config, ...configAnalyze } : config;
 };
 
 exports.libs = options => {
@@ -48,6 +61,7 @@ exports.libs = options => {
   }, {});
 
   return {
+    mode: editorConfig.mode,
     entry: entry,
     output: {
       path: path.resolve(options.BUILD_PATH, "editor/js"),
@@ -82,6 +96,9 @@ exports.libs = options => {
       ]
     },
     externals: editorConfig.externals,
+    performance: {
+      hints: false
+    },
     devtool: editorConfig.devtool,
     watch: editorConfig.watch
   };

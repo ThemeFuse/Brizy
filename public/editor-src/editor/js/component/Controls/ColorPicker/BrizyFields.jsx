@@ -15,16 +15,19 @@ export default class BrizyFields extends Component {
     super(props);
 
     this.state = {
-      hex: props.value.hex || DEFAULT_HEX
+      hex: props.value.hex || DEFAULT_HEX,
+      prevHex: props.value.hex || DEFAULT_HEX
     };
   }
 
-  componentWillReceiveProps({ value: { hex } }) {
-    if (hex !== this.state.hex) {
-      this.setState({
-        hex: hex || DEFAULT_HEX
-      });
+  static getDerivedStateFromProps({ value: { hex } }, state) {
+    if (hex !== state.prevHex) {
+      return {
+        hex: hex || DEFAULT_HEX,
+        prevHex: hex
+      };
     }
+    return null;
   }
 
   onHexChange = ({ target: { value: hex } }) => {

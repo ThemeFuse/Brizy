@@ -48,11 +48,10 @@ export function set<K extends keyof M, M>(key: K, value: M[K], m: M): M {
  * @return {object}
  * @deprecated use apply
  */
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-export function _apply<M>(fs, m: M): M {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
+
+// eslint-disable-next-line
+export function _apply<M>(fs: any, m: M): M {
+  // @ts-expect-error Type 'unknown' is not assignable to type 'M'.
   return toArray(fs).reduce((m, [f, ...args]) => (f && f(...args, m)) || m, m);
 }
 

@@ -17,14 +17,16 @@ import {
   Value
 } from "./types/Value";
 import {
-  optional,
   parseStrict,
   readWithParser
 } from "visual/utils/reader/readWithParser";
-import { mPipe } from "visual/utils/fp";
-import { MValue } from "visual/utils/value";
+import { mPipe, pipe } from "visual/utils/fp";
+import { MValue, onNullish } from "visual/utils/value";
 import { Literal } from "visual/utils/types/Literal";
-import { GetElementModel, GetModel } from "visual/component/Options/Type";
+import {
+  ToElementModel,
+  FromElementModel
+} from "visual/component/Options/Type";
 import { Value as NV } from "visual/component/Controls/NumberUnit/types";
 import { Props as SP } from "visual/component/Controls/Spacing";
 import { Edge } from "visual/component/Controls/Spacing/types";
@@ -33,84 +35,109 @@ import { Setter } from "visual/utils/model";
 type Get = (k: string) => MValue<Literal>;
 const call = (k: string) => (get: Get): MValue<Literal> => get(k);
 
-export const fromElementModel: GetModel<Value> = parseStrict<
+export const fromElementModel: FromElementModel<Value> = parseStrict<
   Get,
-  Partial<Value>
+  Value
 >({
-  type: optional(mPipe(call("radiusType"), Str.read, Type.fromString)),
-  value: optional(mPipe(call("radius"), Num.read, Positive.fromNumber)),
-  unit: optional(mPipe(call("radiusSuffix"), Str.read, Unit.fromString)),
-  topLeft: optional(
-    mPipe(call("topLeftRadius"), Num.read, Positive.fromNumber)
+  type: pipe(
+    mPipe(call("radiusType"), Str.read, Type.fromString),
+    onNullish<Type.Type>("grouped")
   ),
-  tempTopLeft: optional(
-    mPipe(call("tempTopLeftRadius"), Num.read, Positive.fromNumber)
+  value: pipe(
+    mPipe(call("radius"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
   ),
-  topLeftUnit: optional(
-    mPipe(call("topLeftRadiusSuffix"), Str.read, Unit.fromString)
+  unit: pipe(
+    mPipe(call("radiusSuffix"), Str.read, Unit.fromString),
+    onNullish<Unit.Unit>("px")
   ),
-  tempTopLeftUnit: optional(
-    mPipe(call("tempTopLeftRadiusSuffix"), Str.read, Unit.fromString)
+  topLeft: pipe(
+    mPipe(call("topLeftRadius"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
   ),
-  topRight: optional(
-    mPipe(call("topRightRadius"), Num.read, Positive.fromNumber)
+  tempTopLeft: pipe(
+    mPipe(call("tempTopLeft"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
   ),
-  tempTopRight: optional(
-    mPipe(call("tempTopRightRadius"), Num.read, Positive.fromNumber)
+  topLeftUnit: pipe(
+    mPipe(call("topLeftRadiusSuffix"), Str.read, Unit.fromString),
+    onNullish<Unit.Unit>("px")
   ),
-  topRightUnit: optional(
-    mPipe(call("topRightRadiusSuffix"), Str.read, Unit.fromString)
+  tempTopLeftUnit: pipe(
+    mPipe(call("tempTopLeftRadiusSuffix"), Str.read, Unit.fromString),
+    onNullish<Unit.Unit>("px")
   ),
-  tempTopRightUnit: optional(
-    mPipe(call("tempTopRightRadiusSuffix"), Str.read, Unit.fromString)
+  topRight: pipe(
+    mPipe(call("topRightRadius"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
   ),
-  bottomRight: optional(
-    mPipe(call("bottomRightRadius"), Num.read, Positive.fromNumber)
+  tempTopRight: pipe(
+    mPipe(call("tempTopRightRadius"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
   ),
-  tempBottomRight: optional(
-    mPipe(call("tempBottomRightRadius"), Num.read, Positive.fromNumber)
+  topRightUnit: pipe(
+    mPipe(call("topRightRadiusSuffix"), Str.read, Unit.fromString),
+    onNullish<Unit.Unit>("px")
   ),
-  bottomRightUnit: optional(
-    mPipe(call("bottomRightRadiusSuffix"), Str.read, Unit.fromString)
+  tempTopRightUnit: pipe(
+    mPipe(call("tempTopRightRadiusSuffix"), Str.read, Unit.fromString),
+    onNullish<Unit.Unit>("px")
   ),
-  tempBottomRightUnit: optional(
-    mPipe(call("tempBottomRightRadiusSuffix"), Str.read, Unit.fromString)
+  bottomRight: pipe(
+    mPipe(call("bottomRightRadius"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
   ),
-  bottomLeft: optional(
-    mPipe(call("bottomLeftRadius"), Num.read, Positive.fromNumber)
+  tempBottomRight: pipe(
+    mPipe(call("tempBottomRight"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
   ),
-  tempBottomLeft: optional(
-    mPipe(call("tempBottomLeftRadius"), Num.read, Positive.fromNumber)
+  bottomRightUnit: pipe(
+    mPipe(call("bottomRightRadiusSuffix"), Str.read, Unit.fromString),
+    onNullish<Unit.Unit>("px")
   ),
-  bottomLeftUnit: optional(
-    mPipe(call("bottomLeftRadiusSuffix"), Str.read, Unit.fromString)
+  tempBottomRightUnit: pipe(
+    mPipe(call("tempBottomRightRadiusSuffix"), Str.read, Unit.fromString),
+    onNullish<Unit.Unit>("px")
   ),
-  tempBottomLeftUnit: optional(
-    mPipe(call("tempBottomLeftRadiusSuffix"), Str.read, Unit.fromString)
+  bottomLeft: pipe(
+    mPipe(call("bottomLeftRadius"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
+  ),
+  tempBottomLeft: pipe(
+    mPipe(call("tempBottomLeftRadius"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
+  ),
+  bottomLeftUnit: pipe(
+    mPipe(call("bottomLeftRadiusSuffix"), Str.read, Unit.fromString),
+    onNullish<Unit.Unit>("px")
+  ),
+  tempBottomLeftUnit: pipe(
+    mPipe(call("tempBottomLeftRadiusSuffix"), Str.read, Unit.fromString),
+    onNullish<Unit.Unit>("px")
   )
 });
 
-export const toElementModel: GetElementModel<Value> = (v, get) => {
+export const toElementModel: ToElementModel<Value> = v => {
   return {
-    [get("radiusType")]: v.type,
-    [get("radius")]: v.value,
-    [get("radiusSuffix")]: v.unit,
-    [get("topLeftRadius")]: v.topLeft,
-    [get("tempTopLeftRadius")]: v.tempTopLeft,
-    [get("topLeftRadiusSuffix")]: v.topLeftUnit,
-    [get("tempTopLeftRadiusSuffix")]: v.tempTopLeftUnit,
-    [get("topRightRadius")]: v.topRight,
-    [get("tempTopRightRadius")]: v.tempTopRight,
-    [get("topRightRadiusSuffix")]: v.topRightUnit,
-    [get("tempTopRightRadiusSuffix")]: v.tempTopRightUnit,
-    [get("bottomRightRadius")]: v.bottomRight,
-    [get("tempBottomRightRadius")]: v.tempBottomRight,
-    [get("bottomRightRadiusSuffix")]: v.bottomRightUnit,
-    [get("tempBottomRightRadiusSuffix")]: v.tempBottomRightUnit,
-    [get("bottomLeftRadius")]: v.bottomLeft,
-    [get("tempBottomLeftRadius")]: v.tempBottomLeft,
-    [get("bottomLeftRadiusSuffix")]: v.bottomLeftUnit,
-    [get("tempBottomLeftRadiusSuffix")]: v.tempBottomLeftUnit
+    radiusType: v.type,
+    radius: v.value,
+    radiusSuffix: v.unit,
+    topLeftRadius: v.topLeft,
+    tempTopLeftRadius: v.tempTopLeft,
+    topLeftRadiusSuffix: v.topLeftUnit,
+    tempTopLeftRadiusSuffix: v.tempTopLeftUnit,
+    topRightRadius: v.topRight,
+    tempTopRightRadius: v.tempTopRight,
+    topRightRadiusSuffix: v.topRightUnit,
+    tempTopRightRadiusSuffix: v.tempTopRightUnit,
+    bottomRightRadius: v.bottomRight,
+    tempBottomRightRadius: v.tempBottomRight,
+    bottomRightRadiusSuffix: v.bottomRightUnit,
+    tempBottomRightRadiusSuffix: v.tempBottomRightUnit,
+    bottomLeftRadius: v.bottomLeft,
+    tempBottomLeftRadius: v.tempBottomLeft,
+    bottomLeftRadiusSuffix: v.bottomLeftUnit,
+    tempBottomLeftRadiusSuffix: v.tempBottomLeftUnit
   };
 };
 
@@ -144,7 +171,7 @@ export const fromNumberSlider = readWithParser<
   unit: v => v.unit
 });
 
-export const getIcon: SP<Unit.Unit>["getIcon"] = e => {
+export const getIcon: SP<Unit.Unit, Edge>["getIcon"] = e => {
   switch (e) {
     case "grouped":
       return "nc-corners-all";
@@ -176,7 +203,7 @@ export const valueSetter = (e: Edge): Setter<Positive.Positive, Value> => {
   }
 };
 
-export const unitSetter = (e: Edge): Setter<"px", Value> => {
+export const unitSetter = (e: Edge): Setter<Unit.Unit, Value> => {
   switch (e) {
     case "all":
       return setUnit;
@@ -188,5 +215,13 @@ export const unitSetter = (e: Edge): Setter<"px", Value> => {
       return setBottomRightUnit;
     case "left":
       return setBottomLeftUnit;
+  }
+};
+
+export const unitTitle = (unit: Unit.Unit): string => {
+  switch (unit) {
+    case "%":
+    case "px":
+      return unit;
   }
 };

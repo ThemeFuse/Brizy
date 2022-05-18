@@ -1,6 +1,4 @@
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { hexToRgba } from "visual/utils/color";
 
 export function styleElementMenuIconPosition({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
@@ -61,16 +59,6 @@ export function styleElementMMenuIconSize({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   return dvv("mMenuIconSize");
-}
-
-export function styleElementMMenuHoverColor({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
-  const { hex } = getOptionColorHexByPalette(
-    dvv("mMenuHoverColorHex"),
-    dvv("mMenuHoverColorPalette")
-  );
-
-  return hexToRgba(hex, dvv("mMenuHoverColorOpacity"));
 }
 
 // SubMenu

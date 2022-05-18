@@ -1,5 +1,3 @@
-import { foldr } from "underscore";
-
 export type MValue<A> = A | undefined;
 export type ToValue<A> = (v: unknown, orElse?: A) => MValue<A>;
 export type Nullish = undefined | null;
@@ -120,8 +118,7 @@ export function mCompose<T1, T2, T3, T4, T5, T6, T7>(
 export function mCompose<R>(...fns: Array<MFn<any, any>>): MFn<any, R> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (v: any): MValue<R> =>
-    foldr(
-      fns,
+    fns.reduceRight(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (r, fn: MFn<any, any>) => (!isNullish(r) ? fn(r) : undefined),
       v
@@ -137,3 +134,5 @@ export const isT = <T>(t: MNullish<T>): t is T => !isNullish(t);
  * Check whenever a list of values has undefined values or not
  */
 export const isTs = <T>(ts: MNullish<T>[]): ts is T[] => ts.every(isT);
+
+export const is = <B, A extends B>(a: A) => (b: B): b is A => a === b;

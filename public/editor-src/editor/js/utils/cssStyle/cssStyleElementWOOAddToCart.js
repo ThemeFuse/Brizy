@@ -239,6 +239,15 @@ export function cssStyleElementWOOAddToCartTableBg({ v, device, state }) {
   })};`;
 }
 
+export function cssStyleElementWOOAddToCartLabelBg({ v, device, state }) {
+  return `background-color: ${styleColor({
+    v,
+    device,
+    state,
+    prefix: "labelBgColor"
+  })};`;
+}
+
 export function cssStyleElementWOOAddToCartInputBorder({ v, device, state }) {
   return cssStyleBorder({ v, device, prefix: "input", state });
 }

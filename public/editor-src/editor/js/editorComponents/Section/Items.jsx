@@ -3,7 +3,7 @@ import SlickSlider from "react-slick";
 import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorIcon from "visual/component/EditorIcon";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 
@@ -29,9 +29,9 @@ class SectionItems extends EditorArrayComponent {
     showSlider: this.props.meta.section.isSlider
   };
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const isSliderChanged =
-      this.props.meta.section.isSlider !== nextProps.meta.section.isSlider;
+      prevProps.meta.section.isSlider !== this.props.meta.section.isSlider;
 
     if (isSliderChanged) {
       this.setState(
@@ -42,7 +42,7 @@ class SectionItems extends EditorArrayComponent {
           setTimeout(() => {
             this.setState(
               {
-                showSlider: nextProps.meta.section.isSlider
+                showSlider: this.props.meta.section.isSlider
               },
               () => {
                 setTimeout(() => {
@@ -58,17 +58,43 @@ class SectionItems extends EditorArrayComponent {
     }
   }
 
-  getItemProps(itemData, itemIndex) {
+  getItemProps(itemData, itemIndex, items) {
     const { showSlider } = this.state;
     const { meta, itemProps } = this.props;
     const desktopItems = showSlider
       ? [
           {
+            id: "order",
+            type: "order-dev",
+            devices: "desktop",
+            position: 105,
+            roles: ["admin"],
+            disabled: items.length < 2,
+            config: {
+              disable:
+                itemIndex === 0
+                  ? "prev"
+                  : itemIndex === items.length - 1
+                  ? "next"
+                  : undefined,
+              onChange: v => {
+                switch (v) {
+                  case "prev":
+                    this.reorderItem(itemIndex, itemIndex - 1);
+                    break;
+                  case "next":
+                    this.reorderItem(itemIndex, itemIndex + 1);
+                    break;
+                }
+              }
+            }
+          },
+          {
             id: "duplicate",
             type: "button",
             icon: "nc-duplicate",
             title: t("Duplicate"),
-            position: 200,
+            position: 225,
             onChange: () => {
               this.cloneItem(itemIndex);
             }

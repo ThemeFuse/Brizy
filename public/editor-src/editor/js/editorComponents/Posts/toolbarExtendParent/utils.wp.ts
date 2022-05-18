@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
-import { Choice } from "visual/component/Options/types/dev/MultiSelect/types";
+import { Choice } from "visual/component/Options/types/dev/MultiSelect2/types";
 import {
   getAuthors,
   getPosts,

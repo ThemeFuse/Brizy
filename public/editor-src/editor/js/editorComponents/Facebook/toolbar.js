@@ -5,10 +5,7 @@ import {
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  toolbarDisabledAdvancedSettings,
-  toolbarDisabledToolbarSettings
-} from "visual/utils/toolbar";
+import { toolbarDisabledToolbarSettings } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
@@ -127,10 +124,12 @@ export function getItems({ v, device, state, context }) {
                 },
                 {
                   id: "pageTabs",
-                  label: t("Tab"),
-                  type: "select-dev",
+                  label: t("Layout"),
+                  type: "multiSelect-dev",
+                  placeholder: t("0 Selected"),
                   devices: "desktop",
                   disabled: v.facebookType !== "page",
+                  config: { size: "medium" },
                   choices: [
                     { title: t("Timeline"), value: "timeline" },
                     { title: t("Events"), value: "events" },
@@ -388,10 +387,41 @@ export function getItems({ v, device, state, context }) {
               }
             },
             {
-              id: "advancedSettings",
-              type: "advancedSettings",
-              label: t("More Settings"),
-              icon: "nc-cog"
+              id: "grid",
+              type: "grid",
+              separator: true,
+              columns: [
+                {
+                  id: "grid-settings",
+                  width: 50,
+                  options: [
+                    {
+                      id: "styles",
+                      type: "sidebarTabsButton-dev",
+                      config: {
+                        tabId: "styles",
+                        text: t("Styling"),
+                        icon: "nc-cog"
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "grid-effects",
+                  width: 50,
+                  options: [
+                    {
+                      id: "effects",
+                      type: "sidebarTabsButton-dev",
+                      config: {
+                        tabId: "effects",
+                        text: t("Effects"),
+                        icon: "nc-flash"
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -400,11 +430,14 @@ export function getItems({ v, device, state, context }) {
       ? {
           id: "advancedSettings",
           type: "advancedSettings",
-          sidebarLabel: t("More Settings"),
           position: 110,
           icon: "nc-cog"
         }
-      : toolbarDisabledAdvancedSettings({ device }),
+      : {
+          id: "advancedSettings",
+          type: "advancedSettings",
+          disabled: true
+        },
     v.facebookType === "page" || v.facebookType === "embed"
       ? {
           id: "horizontalAlign",

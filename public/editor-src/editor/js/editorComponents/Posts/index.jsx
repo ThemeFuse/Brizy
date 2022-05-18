@@ -46,6 +46,10 @@ export class Posts extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  handleAllTagChange = allTag => {
+    this.patchValue({ allTag });
+  };
+
   static defaultProps = {
     extendParentToolbar: noop
   };
@@ -235,13 +239,15 @@ export class Posts extends EditorComponent {
       return <Placeholder icon="posts" style={{ height: "300px" }} />;
     }
 
-    const { type, pagination, filter, filterStyle } = v;
+    const { type, pagination, filter, filterStyle, allTag } = v;
     const className = classnames(
       "brz-posts",
       { "brz-posts--masonry": filter === "on" },
       css(this.getComponentId(), this.getId(), style(v, vs, vd))
     );
     const itemsProps = this.makeSubcomponentProps({
+      allTag,
+      handleAllTagChange: this.handleAllTagChange,
       bindWithKey: "items",
       className,
       type,
@@ -287,9 +293,10 @@ export class Posts extends EditorComponent {
     );
     const tagsAttribute = getLoopTagsAttributes(v);
     const itemsProps = this.makeSubcomponentProps({
-      bindWithKey: "items",
       type,
       className,
+      handleAllTagChange: this.handleAllTagChange,
+      bindWithKey: "items",
       meta: this.getMeta(v),
       showPagination: pagination === "on",
       showFilter: filter === "on" && tagsAttribute,

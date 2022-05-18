@@ -18,6 +18,7 @@ import {
   styleBgColor,
   styleAlignFlexVerticalAlign
 } from "visual/utils/style2";
+import { defaultValueValue } from "visual/utils/onChange";
 
 export function cssStyleContainerPopup2ContainerWidth({ v, device, state }) {
   const maxWidth = styleContainerPopup2ContainerWidth({ v, device, state });
@@ -48,28 +49,38 @@ export function cssStyleContainerPopup2CloseColor({ v, device, state }) {
 }
 
 export function cssStyleContainerPopup2CloseFontSize({ v, device, state }) {
-  const customSize = styleContainerPopup2CloseCustomSize({ v, device, state });
-  const closeBgSize = styleContainerPopup2CloseBgSize({ v, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const closeSize = dvv("closeSize");
+  const closeCustomSize = dvv("closeCustomSize");
+  const closeBgSize = dvv("closeBgSize");
 
-  return customSize === undefined || closeBgSize === undefined
-    ? ""
-    : `font-size:${customSize + closeBgSize * 2}px;`;
+  switch (closeSize) {
+    case "small":
+      return `font-size:${16 + closeBgSize * 2}px;`;
+    case "medium":
+      return `font-size:${24 + closeBgSize * 2}px;`;
+    case "large":
+      return `font-size:${32 + closeBgSize * 2}px;`;
+    case "custom":
+      return `font-size:${closeCustomSize + closeBgSize * 2}px;`;
+  }
 }
 
 export function cssStyleContainerPopup2CloseBgSize({ v, device, state }) {
-  const closeBgSize = styleContainerPopup2CloseBgSize({ v, device, state });
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const closeBgSize = dvv("closeBgSize");
 
-  return closeBgSize === undefined ? "" : `padding:${closeBgSize}px;`;
+  return `padding:${closeBgSize}px;`;
 }
 
 export function cssStyleContainerPopup2CloseBorderRadius({ v, device, state }) {
-  const borderRadius = styleContainerPopup2CloseBorderRadius({
+  const closeBorderRadius = styleContainerPopup2CloseBorderRadius({
     v,
     device,
     state
   });
 
-  return borderRadius === undefined ? "" : `border-radius:${borderRadius}px;`;
+  return `border-radius:${closeBorderRadius}px;`;
 }
 
 export function cssStyleContainerPopup2CloseBgColor({ v, device, state }) {

@@ -176,7 +176,7 @@ export const testSetterTemp = <
   V extends T[keyof T]
 >(
   setter: Setter<V, T>,
-  getter: Getter<V, T>,
+  _getter: Getter<V, T>,
   tempGetter: Getter<V, T>,
   m: T,
   empty: V,

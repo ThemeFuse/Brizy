@@ -127,7 +127,11 @@ export default class ContainerBorder extends React.Component {
     }
   };
 
-  handleToolbarClose = () => {
+  handleToolbarClose = e => {
+    if (e.detail?.hideContainerBorder === false) {
+      return;
+    }
+
     this.setActive(false, false);
 
     // we have a little clipping when close / opened toolbar

@@ -8,7 +8,7 @@ import classnames from "classnames";
 import { css } from "visual/utils/cssStyle";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
 import EditorIcon from "visual/component/EditorIcon";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import { IS_WP } from "visual/utils/env";
 
 const readRegisterWpType = type => {

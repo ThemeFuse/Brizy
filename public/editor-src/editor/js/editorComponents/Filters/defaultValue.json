@@ -1,0 +1,1713 @@
+{
+  "content": {
+    "items": [],
+    "titleSpacing": 10,
+    "titleSpacingSuffix": "px",
+    "bottomSpacing": 10,
+    "bottomSpacingSuffix": "px",
+    "title": "Checkboxes Filter",
+    "filterType": "checkbox",
+    "labelSpacing": 5,
+    "labelSpacingSuffix": "px",
+    "spacing": 10,
+    "spacingSuffix": "px",
+    "btnSpacing": 10,
+    "btnSpacingSuffix": "px",
+    "gap": 10,
+    "gapSuffix": "px",
+    "iconName": "shape-star",
+    "iconType": "glyph",
+    "checkColumns": "2",
+    "checkColumnsCustom": "2",
+    "activeColumns": "2",
+    "checkOrientation": "on",
+    "checkOrientationCustom": "inline",
+    "checkboxType": "style-1",
+    "activeOrientation": "on",
+    "showCounter": "on",
+    "applyType": "test1",
+    "applyOn": "test1",
+    "activeStyle": "style-1",
+    "showApply": "off",
+    "showLabel": "on",
+    "showRangeText": "on",
+    "btnWidth": 100,
+    "btnWidthSuffix": "%",
+    "btnHeight": 14,
+    "btnHeightSuffix": "px",
+    "btnText": "Apply",
+    "ratingSuffix": "px",
+    "widthDateOption": 100,
+    "widthDateOptionSuffix": "%",
+    "optionWidth": 100,
+    "optionWidthSuffix": "%",
+    "optionSpacing": 10,
+    "optionSpacingSuffix": "px",
+    "starCount": "5",
+    "ratingEquality": "one",
+    "hierarchical": "off",
+    "hierarchicalSpacing": 10,
+    "hierarchicalSpacingSuffix": "px",
+    "dataSource": "manual",
+    "searchText": "Choose Season",
+    "taxonomy": "one",
+    "labelDateFrom": "Dates From",
+    "labelDateTo": "Dates To",
+    "textDateFrom": "2018-05-10",
+    "textDateTo": "2020-05-10",
+    "dateType": "off",
+    "checkSize": 16,
+    "checkSizeSuffix": "px",
+    "checkColorSize": 36,
+    "checkColorSizeSuffix": "px",
+    "imgWidth": 100,
+    "imgWidthSuffix": "px",
+    "imgHeight": 100,
+    "imgHeightSuffix": "px",
+    "rangeMin": 0,
+    "rangeMax": 100,
+    "rangeStep": 1,
+    "rangeLabel": "$[min] - $[max]"
+  },
+  "style": {
+    "className": "",
+
+    "iconSize": "small",
+    "iconCustomSize": 32,
+    "iconCustomSizeSuffix": null,
+
+    "iconSpacing": 3,
+    "iconSpacingSuffix": null,
+
+    "horizontalAlign": "left",
+
+    "horizontalAlignBtn": "left",
+
+    "horizontalAlignOption": "left",
+
+    "horizontalAlignLabel": "left",
+
+    "families": {
+      "titleFontFamily": "lato",
+      "tabletTitleFontFamily": null,
+      "mobileTitleFontFamily": null,
+      "checkFontFamily": "lato",
+      "tabletCheckFontFamily": null,
+      "mobileCheckFontFamily": null,
+      "btnFontFamily": "lato",
+      "tabletBtnFontFamily": null,
+      "mobileBtnFontFamily": null,
+      "optionsFontFamily": "lato",
+      "tabletOptionsFontFamily": null,
+      "mobileOptionsFontFamily": null,
+      "selectOptionFontFamily": "lato",
+      "tabletSelectOptionFontFamily": null,
+      "mobileSelectOptionFontFamily": null,
+      "labelFontFamily": "lato",
+      "tabletLabelFontFamily": null,
+      "mobileLabelFontFamily": null,
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null
+    },
+
+    "fontStyle": "button",
+    "fontFamilyType": "google",
+    "fontSize": 12,
+    "fontSizeSuffix": "px",
+    "fontWeight": 700,
+    "lineHeight": 1.8,
+    "letterSpacing": 3,
+
+    "btnFontStyle": "button",
+    "btnFontFamilyType": "google",
+    "btnFontSize": 12,
+    "btnFontSizeSuffix": "px",
+    "btnFontWeight": 700,
+    "btnLineHeight": 1.8,
+    "btnLetterSpacing": 3,
+
+    "optionsFontStyle": "",
+    "optionsFontFamilyType": "google",
+    "optionsFontSize": 18,
+    "optionsFontSizeSuffix": "px",
+    "optionsFontWeight": 400,
+    "optionsLineHeight": 1.5,
+    "optionsLetterSpacing": 0,
+
+    "selectOptionFontStyle": "",
+    "selectOptionFontFamilyType": "google",
+    "selectOptionFontSize": 18,
+    "selectOptionFontSizeSuffix": "px",
+    "selectOptionFontWeight": 400,
+    "selectOptionLineHeight": 1.5,
+    "selectOptionLetterSpacing": 0,
+
+    "labelFontStyle": "",
+    "labelFontFamilyType": "google",
+    "labelFontSize": 16,
+    "labelFontSizeSuffix": "px",
+    "labelFontWeight": 400,
+    "labelLineHeight": 1,
+    "labelLetterSpacing": 0,
+
+    "checkFontStyle": "",
+    "checkFontFamilyType": "google",
+    "checkFontSize": 16,
+    "checkFontSizeSuffix": "px",
+    "checkFontWeight": 400,
+    "checkLineHeight": 1.5,
+    "checkLetterSpacing": 0,
+
+    "titleFontStyle": "",
+    "titleFontFamilyType": "google",
+    "titleFontSize": 16,
+    "titleFontSizeSuffix": "px",
+    "titleFontWeight": 400,
+    "titleLineHeight": 1.5,
+    "titleLetterSpacing": 0,
+
+    "checkIconColorHex": "#73777f",
+    "checkIconColorOpacity": 0.75,
+    "checkIconColorPalette": "color7",
+
+    "tempCheckIconColorOpacity": 0.75,
+    "tempCheckIconColorPalette": "color7",
+
+    "hoverCheckIconColorHex": null,
+    "hoverCheckIconColorOpacity": null,
+    "hoverCheckIconColorPalette": null,
+
+    "tempHoverCheckIconColorOpacity": null,
+    "tempHoverCheckIconColorPalette": null,
+
+    "activeCheckIconColorHex": null,
+    "activeCheckIconColorOpacity": null,
+    "activeCheckIconColorPalette": null,
+
+    "tempActiveCheckIconColorOpacity": null,
+    "tempActiveCheckIconColorPalette": null,
+
+    "checkIconBorderStyle": "none",
+
+    "checkIconBorderColorHex": "#dcdee1",
+    "checkIconBorderColorOpacity": 1,
+    "checkIconBorderColorPalette": "",
+
+    "tempCheckIconBorderColorOpacity": 1,
+    "tempCheckIconBorderColorPalette": "",
+
+    "hoverCheckIconBorderColorHex": null,
+    "hoverCheckIconBorderColorOpacity": null,
+    "hoverCheckIconBorderColorPalette": null,
+
+    "tempHoverCheckIconBorderColorOpacity": null,
+    "tempHoverCheckIconBorderColorPalette": null,
+
+    "activeCheckIconBorderColorHex": null,
+    "activeCheckIconBorderColorOpacity": null,
+    "activeCheckIconBorderColorPalette": null,
+
+    "tempActiveCheckIconBorderColorOpacity": null,
+    "tempActiveCheckIconBorderColorPalette": null,
+
+    "tempCheckIconBorderStyle": "solid",
+
+    "hoverCheckIconBorderStyle": null,
+
+    "tempHoverCheckIconBorderStyle": null,
+
+    "activeCheckIconBorderStyle": null,
+
+    "tempActiveCheckIconBorderStyle": null,
+
+    "checkIconBorderWidthType": "grouped",
+    "checkIconBorderWidth": 1,
+    "checkIconBorderTopWidth": 1,
+    "checkIconBorderRightWidth": 1,
+    "checkIconBorderBottomWidth": 1,
+    "checkIconBorderLeftWidth": 1,
+
+    "tempCheckIconBorderWidth": 1,
+    "tempCheckIconBorderTopWidth": 1,
+    "tempCheckIconBorderRightWidth": 1,
+    "tempCheckIconBorderBottomWidth": 1,
+    "tempCheckIconBorderLeftWidth": 1,
+
+    "hoverCheckIconBorderWidthType": null,
+    "hoverCheckIconBorderWidth": null,
+    "hoverCheckIconBorderTopWidth": null,
+    "hoverCheckIconBorderRightWidth": null,
+    "hoverCheckIconBorderBottomWidth": null,
+    "hoverCheckIconBorderLeftWidth": null,
+
+    "tempHoverCheckIconBorderWidth": null,
+    "tempHoverCheckIconBorderTopWidth": null,
+    "tempHoverCheckIconBorderRightWidth": null,
+    "tempHoverCheckIconBorderBottomWidth": null,
+    "tempHoverCheckIconBorderLeftWidth": null,
+
+    "activeCheckIconBorderWidthType": null,
+    "activeCheckIconBorderWidth": null,
+    "activeCheckIconBorderTopWidth": null,
+    "activeCheckIconBorderRightWidth": null,
+    "activeCheckIconBorderBottomWidth": null,
+    "activeCheckIconBorderLeftWidth": null,
+
+    "tempActiveCheckIconBorderWidth": null,
+    "tempActiveCheckIconBorderTopWidth": null,
+    "tempActiveCheckIconBorderRightWidth": null,
+    "tempActiveCheckIconBorderBottomWidth": null,
+    "tempActiveCheckIconBorderLeftWidth": null,
+
+    "checkIconBorderRadiusType": "grouped",
+    "tempCheckIconBorderRadiusType": "grouped",
+
+    "checkIconBorderRadius": 0,
+    "checkIconBorderTopLeftRadius": 0,
+    "checkIconBorderTopRightRadius": 0,
+    "checkIconBorderBottomRightRadius": 0,
+    "checkIconBorderBottomLeftRadius": 0,
+
+    "tempCheckIconBorderRadius": 0,
+    "tempCheckIconBorderTopLeftRadius": 0,
+    "tempCheckIconBorderTopRightRadius": 0,
+    "tempCheckIconBorderBottomRightRadius": 0,
+    "tempCheckIconBorderBottomLeftRadius": 0,
+
+    "checkIconBorderRadiusSuffix": "px",
+    "checkIconBorderTopLeftRadiusSuffix": "px",
+    "checkIconBorderTopRightRadiusSuffix": "px",
+    "checkIconBorderBottomRightRadiusSuffix": "px",
+    "checkIconBorderBottomLeftRadiusSuffix": "px",
+
+    "tempCheckIconBorderRadiusSuffix": "px",
+    "tempCheckIconBorderTopLeftRadiusSuffix": "px",
+    "tempCheckIconBorderTopRightRadiusSuffix": "px",
+    "tempCheckIconBorderBottomRightRadiusSuffix": "px",
+    "tempCheckIconBorderBottomLeftRadiusSuffix": "px",
+
+    "checkIconBoxShadow": "",
+
+    "tempCheckIconBoxShadow": "on",
+
+    "checkIconBoxShadowColorHex": "#000000",
+    "checkIconBoxShadowColorOpacity": 1,
+    "checkIconBoxShadowColorPalette": "",
+
+    "tempCheckIconBoxShadowColorOpacity": 1,
+    "tempCheckIconBoxShadowColorPalette": "",
+
+    "checkIconBoxShadowHex": "#000000",
+    "checkIconBoxShadowOpacity": 1,
+    "checkIconBoxShadowPalette": "",
+
+    "tempCheckIconBoxShadowOpacity": 1,
+    "tempCheckIconBoxShadowPalette": "",
+
+    "checkIconBoxShadowBlur": 0,
+    "checkIconBoxShadowSpread": 0,
+    "checkIconBoxShadowVertical": 0,
+    "checkIconBoxShadowHorizontal": 0,
+
+    "tempCheckIconBoxShadowBlur": 4,
+    "tempCheckIconBoxShadowSpread": 0,
+    "tempCheckIconBoxShadowVertical": 2,
+    "tempCheckIconBoxShadowHorizontal": 1,
+
+    "hoverCheckIconBoxShadow": null,
+
+    "tempHoverCheckIconBoxShadow": null,
+
+    "hoverCheckIconBoxShadowColorHex": null,
+    "hoverCheckIconBoxShadowColorOpacity": null,
+    "hoverCheckIconBoxShadowColorPalette": null,
+
+    "tempHoverCheckIconBoxShadowColorPalette": null,
+    "tempHoverCheckIconBoxShadowColorOpacity": null,
+
+    "hoverCheckIconBoxShadowBlur": null,
+    "hoverCheckIconBoxShadowSpread": null,
+    "hoverCheckIconBoxShadowVertical": null,
+    "hoverCheckIconBoxShadowHorizontal": null,
+
+    "tempHoverCheckIconBoxShadowBlur": null,
+    "tempHoverCheckIconBoxShadowSpread": null,
+    "tempHoverCheckIconBoxShadowVertical": null,
+    "tempHoverCheckIconBoxShadowHorizontal": null,
+
+    "activeCheckIconBoxShadow": null,
+
+    "tempActiveCheckIconBoxShadow": null,
+
+    "activeCheckIconBoxShadowColorHex": null,
+    "activeCheckIconBoxShadowColorOpacity": null,
+    "activeCheckIconBoxShadowColorPalette": null,
+
+    "tempActiveCheckIconBoxShadowColorPalette": null,
+    "tempActiveCheckIconBoxShadowColorOpacity": null,
+
+    "activeCheckIconBoxShadowBlur": null,
+    "activeCheckIconBoxShadowSpread": null,
+    "activeCheckIconBoxShadowVertical": null,
+    "activeCheckIconBoxShadowHorizontal": null,
+
+    "tempActiveCheckIconBoxShadowBlur": null,
+    "tempActiveCheckIconBoxShadowSpread": null,
+    "tempActiveCheckIconBoxShadowVertical": null,
+    "tempActiveCheckIconBoxShadowHorizontal": null,
+
+    "textColorHex": "#73777f",
+    "textColorOpacity": 0.75,
+    "textColorPalette": "color7",
+
+    "tempTextColorOpacity": 0.75,
+    "tempTextColorPalette": "color7",
+
+    "hoverTextColorHex": null,
+    "hoverTextColorOpacity": null,
+    "hoverTextColorPalette": null,
+
+    "tempHoverTextColorOpacity": null,
+    "tempHoverTextColorPalette": null,
+
+    "titleColorHex": "#73777f",
+    "titleColorOpacity": 0.75,
+    "titleColorPalette": "color7",
+
+    "tempTitleColorOpacity": 0.75,
+    "tempTitleColorPalette": "color7",
+
+    "customCSS": "",
+
+    "optionsBgColorType": "solid",
+
+    "hoverOptionsBgColorType": null,
+
+    "optionsBgColorHex": "#ffffff",
+    "optionsBgColorOpacity": 1,
+    "optionsBgColorPalette": "",
+
+    "tempOptionsBgColorOpacity": 1,
+    "tempOptionsBgColorPalette": "",
+
+    "hoverOptionsBgColorHex": null,
+    "hoverOptionsBgColorOpacity": null,
+    "hoverOptionsBgColorPalette": null,
+
+    "tempHoverOptionsBgColorOpacity": null,
+    "tempHoverOptionsBgColorPalette": null,
+
+    "optionsColorHex": "#73777f",
+    "optionsColorOpacity": 0.75,
+    "optionsColorPalette": "color7",
+
+    "tempOptionsColorOpacity": 0.75,
+    "tempOptionsColorPalette": "color7",
+
+    "hoverOptionsColorHex": null,
+    "hoverOptionsColorOpacity": null,
+    "hoverOptionsColorPalette": null,
+
+    "tempHoverOptionsColorOpacity": null,
+    "tempHoverOptionsColorPalette": null,
+
+    "optionsBorderStyle": "solid",
+
+    "optionsBorderColorHex": "#dcdee1",
+    "optionsBorderColorOpacity": 1,
+    "optionsBorderColorPalette": "",
+
+    "tempOptionsBorderColorOpacity": 1,
+    "tempOptionsBorderColorPalette": "",
+
+    "hoverOptionsBorderColorHex": null,
+    "hoverOptionsBorderColorOpacity": null,
+    "hoverOptionsBorderColorPalette": null,
+
+    "tempHoverOptionsBorderColorOpacity": null,
+    "tempHoverOptionsBorderColorPalette": null,
+
+    "tempOptionsBorderStyle": "solid",
+
+    "hoverOptionsBorderStyle": null,
+
+    "tempHoverOptionsBorderStyle": null,
+
+    "optionsBorderWidthType": "grouped",
+    "optionsBorderWidth": 1,
+    "optionsBorderTopWidth": 1,
+    "optionsBorderRightWidth": 1,
+    "optionsBorderBottomWidth": 1,
+    "optionsBorderLeftWidth": 1,
+
+    "tempOptionsBorderWidth": 1,
+    "tempOptionsBorderTopWidth": 1,
+    "tempOptionsBorderRightWidth": 1,
+    "tempOptionsBorderBottomWidth": 1,
+    "tempOptionsBorderLeftWidth": 1,
+
+    "hoverOptionsBorderWidthType": null,
+    "hoverOptionsBorderWidth": null,
+    "hoverOptionsBorderTopWidth": null,
+    "hoverOptionsBorderRightWidth": null,
+    "hoverOptionsBorderBottomWidth": null,
+    "hoverOptionsBorderLeftWidth": null,
+
+    "tempHoverOptionsBorderWidth": null,
+    "tempHoverOptionsBorderTopWidth": null,
+    "tempHoverOptionsBorderRightWidth": null,
+    "tempHoverOptionsBorderBottomWidth": null,
+    "tempHoverOptionsBorderLeftWidth": null,
+
+    "optionsBorderRadiusType": "grouped",
+    "tempOptionsBorderRadiusType": "grouped",
+
+    "optionsBorderRadius": 0,
+    "optionsBorderTopLeftRadius": 0,
+    "optionsBorderTopRightRadius": 0,
+    "optionsBorderBottomRightRadius": 0,
+    "optionsBorderBottomLeftRadius": 0,
+
+    "tempOptionsBorderRadius": 0,
+    "tempOptionsBorderTopLeftRadius": 0,
+    "tempOptionsBorderTopRightRadius": 0,
+    "tempOptionsBorderBottomRightRadius": 0,
+    "tempOptionsBorderBottomLeftRadius": 0,
+
+    "optionsBorderRadiusSuffix": "px",
+    "optionsBorderTopLeftRadiusSuffix": "px",
+    "optionsBorderTopRightRadiusSuffix": "px",
+    "optionsBorderBottomRightRadiusSuffix": "px",
+    "optionsBorderBottomLeftRadiusSuffix": "px",
+
+    "tempOptionsBorderRadiusSuffix": "px",
+    "tempOptionsBorderTopLeftRadiusSuffix": "px",
+    "tempOptionsBorderTopRightRadiusSuffix": "px",
+    "tempOptionsBorderBottomRightRadiusSuffix": "px",
+    "tempOptionsBorderBottomLeftRadiusSuffix": "px",
+
+    "optionsPaddingType": "ungrouped",
+    "tempOptionsPaddingType": "ungrouped",
+
+    "optionsPadding": 0,
+    "optionsPaddingTop": 14,
+    "optionsPaddingRight": 24,
+    "optionsPaddingBottom": 14,
+    "optionsPaddingLeft": 24,
+
+    "tempOptionsPadding": 0,
+    "tempOptionsPaddingTop": 14,
+    "tempOptionsPaddingRight": 24,
+    "tempOptionsPaddingBottom": 14,
+    "tempOptionsPaddingLeft": 24,
+
+    "optionsPaddingSuffix": "px",
+    "optionsPaddingTopSuffix": "px",
+    "optionsPaddingRightSuffix": "px",
+    "optionsPaddingBottomSuffix": "px",
+    "optionsPaddingLeftSuffix": "px",
+
+    "tempOptionsPaddingSuffix": "px",
+    "tempOptionsPaddingTopSuffix": "px",
+    "tempOptionsPaddingRightSuffix": "px",
+    "tempOptionsPaddingBottomSuffix": "px",
+    "tempOptionsPaddingLeftSuffix": "px",
+
+    "hoverOptionsPaddingType": null,
+    "tempHoverOptionsPaddingType": null,
+
+    "hoverOptionsPadding": null,
+    "hoverOptionsPaddingTop": null,
+    "hoverOptionsPaddingRight": null,
+    "hoverOptionsPaddingBottom": null,
+    "hoverOptionsPaddingLeft": null,
+
+    "tempHoverOptionsPadding": null,
+    "tempHoverOptionsPaddingTop": null,
+    "tempHoverOptionsPaddingRight": null,
+    "tempHoverOptionsPaddingBottom": null,
+    "tempHoverOptionsPaddingLeft": null,
+
+    "hoverOptionsPaddingSuffix": null,
+    "hoverOptionsPaddingTopSuffix": null,
+    "hoverOptionsPaddingRightSuffix": null,
+    "hoverOptionsPaddingBottomSuffix": null,
+    "hoverOptionsPaddingLeftSuffix": null,
+
+    "tempHoverOptionsPaddingSuffix": null,
+    "tempHoverOptionsPaddingTopSuffix": null,
+    "tempHoverOptionsPaddingRightSuffix": null,
+    "tempHoverOptionsPaddingBottomSuffix": null,
+    "tempHoverOptionsPaddingLeftSuffix": null,
+
+    "selectItemPaddingType": "ungrouped",
+    "tempSelectItemPaddingType": "ungrouped",
+
+    "selectItemPadding": 0,
+    "selectItemPaddingTop": 14,
+    "selectItemPaddingRight": 24,
+    "selectItemPaddingBottom": 14,
+    "selectItemPaddingLeft": 24,
+
+    "tempSelectItemPadding": 0,
+    "tempSelectItemPaddingTop": 14,
+    "tempSelectItemPaddingRight": 24,
+    "tempSelectItemPaddingBottom": 14,
+    "tempSelectItemPaddingLeft": 24,
+
+    "selectItemPaddingSuffix": "px",
+    "selectItemPaddingTopSuffix": "px",
+    "selectItemPaddingRightSuffix": "px",
+    "selectItemPaddingBottomSuffix": "px",
+    "selectItemPaddingLeftSuffix": "px",
+
+    "tempSelectItemPaddingSuffix": "px",
+    "tempSelectItemPaddingTopSuffix": "px",
+    "tempSelectItemPaddingRightSuffix": "px",
+    "tempSelectItemPaddingBottomSuffix": "px",
+    "tempSelectItemPaddingLeftSuffix": "px",
+
+    "hoverSelectItemPaddingType": null,
+    "tempHoverSelectItemPaddingType": null,
+
+    "hoverSelectItemPadding": null,
+    "hoverSelectItemPaddingTop": null,
+    "hoverSelectItemPaddingRight": null,
+    "hoverSelectItemPaddingBottom": null,
+    "hoverSelectItemPaddingLeft": null,
+
+    "tempHoverSelectItemPadding": null,
+    "tempHoverSelectItemPaddingTop": null,
+    "tempHoverSelectItemPaddingRight": null,
+    "tempHoverSelectItemPaddingBottom": null,
+    "tempHoverSelectItemPaddingLeft": null,
+
+    "hoverSelectItemPaddingSuffix": null,
+    "hoverSelectItemPaddingTopSuffix": null,
+    "hoverSelectItemPaddingRightSuffix": null,
+    "hoverSelectItemPaddingBottomSuffix": null,
+    "hoverSelectItemPaddingLeftSuffix": null,
+
+    "tempHoverSelectItemPaddingSuffix": null,
+    "tempHoverSelectItemPaddingTopSuffix": null,
+    "tempHoverSelectItemPaddingRightSuffix": null,
+    "tempHoverSelectItemPaddingBottomSuffix": null,
+    "tempHoverSelectItemPaddingLeftSuffix": null,
+
+    "checkboxBgColorType": "solid",
+
+    "hoverCheckboxBgColorType": null,
+
+    "activeCheckboxBgColorType": null,
+
+    "checkboxBgColorHex": "#ffffff",
+    "checkboxBgColorOpacity": 0,
+    "checkboxBgColorPalette": "",
+
+    "tempCheckboxBgColorOpacity": 0,
+    "tempCheckboxBgColorPalette": "",
+
+    "hoverCheckboxBgColorHex": null,
+    "hoverCheckboxBgColorOpacity": null,
+    "hoverCheckboxBgColorPalette": null,
+
+    "tempHoverCheckboxBgColorOpacity": null,
+    "tempHoverCheckboxBgColorPalette": null,
+
+    "activeCheckboxBgColorHex": null,
+    "activeCheckboxBgColorOpacity": null,
+    "activeCheckboxBgColorPalette": null,
+
+    "tempActiveCheckboxBgColorOpacity": null,
+    "tempActiveCheckboxBgColorPalette": null,
+
+    "checkboxTextColorHex": "#73777f",
+    "checkboxTextColorOpacity": 0.75,
+    "checkboxTextColorPalette": "color7",
+
+    "tempCheckboxTextColorOpacity": 0.75,
+    "tempCheckboxTextColorPalette": "color7",
+
+    "hoverCheckboxTextColorHex": null,
+    "hoverCheckboxTextColorOpacity": null,
+    "hoverCheckboxTextColorPalette": null,
+
+    "tempHoverCheckboxTextColorOpacity": null,
+    "tempHoverCheckboxTextColorPalette": null,
+
+    "activeCheckboxTextColorHex": null,
+    "activeCheckboxTextColorOpacity": null,
+    "activeCheckboxTextColorPalette": null,
+
+    "tempActiveCheckboxTextColorOpacity": null,
+    "tempActiveCheckboxTextColorPalette": null,
+
+    "checkboxBorderStyle": "",
+
+    "checkboxBorderColorHex": "#66738d",
+    "checkboxBorderColorOpacity": 0,
+    "checkboxBorderColorPalette": "",
+
+    "tempCheckboxBorderColorOpacity": 1,
+    "tempCheckboxBorderColorPalette": "",
+
+    "hoverCheckboxBorderColorHex": null,
+    "hoverCheckboxBorderColorOpacity": null,
+    "hoverCheckboxBorderColorPalette": null,
+
+    "tempHoverCheckboxBorderColorOpacity": null,
+    "tempHoverCheckboxBorderColorPalette": null,
+
+    "activeCheckboxBorderColorHex": null,
+    "activeCheckboxBorderColorOpacity": null,
+    "activeCheckboxBorderColorPalette": null,
+
+    "tempActiveCheckboxBorderColorOpacity": null,
+    "tempActiveCheckboxBorderColorPalette": null,
+
+    "tempCheckboxBorderStyle": "solid",
+
+    "hoverCheckboxBorderStyle": null,
+
+    "tempHoverCheckboxBorderStyle": null,
+
+    "activeCheckboxBorderStyle": null,
+
+    "tempActiveCheckboxBorderStyle": null,
+
+    "checkboxBorderWidthType": "grouped",
+    "checkboxBorderWidth": 0,
+    "checkboxBorderTopWidth": 0,
+    "checkboxBorderRightWidth": 0,
+    "checkboxBorderBottomWidth": 0,
+    "checkboxBorderLeftWidth": 0,
+
+    "tempCheckboxBorderWidth": 2,
+    "tempCheckboxBorderTopWidth": 2,
+    "tempCheckboxBorderRightWidth": 2,
+    "tempCheckboxBorderBottomWidth": 2,
+    "tempCheckboxBorderLeftWidth": 2,
+
+    "hoverCheckboxBorderWidthType": null,
+    "hoverCheckboxBorderWidth": null,
+    "hoverCheckboxBorderTopWidth": null,
+    "hoverCheckboxBorderRightWidth": null,
+    "hoverCheckboxBorderBottomWidth": null,
+    "hoverCheckboxBorderLeftWidth": null,
+
+    "tempHoverCheckboxBorderWidth": null,
+    "tempHoverCheckboxBorderTopWidth": null,
+    "tempHoverCheckboxBorderRightWidth": null,
+    "tempHoverCheckboxBorderBottomWidth": null,
+    "tempHoverCheckboxBorderLeftWidth": null,
+
+    "activeCheckboxBorderWidthType": null,
+    "activeCheckboxBorderWidth": null,
+    "activeCheckboxBorderTopWidth": null,
+    "activeCheckboxBorderRightWidth": null,
+    "activeCheckboxBorderBottomWidth": null,
+    "activeCheckboxBorderLeftWidth": null,
+
+    "tempActiveCheckboxBorderWidth": null,
+    "tempActiveCheckboxBorderTopWidth": null,
+    "tempActiveCheckboxBorderRightWidth": null,
+    "tempActiveCheckboxBorderBottomWidth": null,
+    "tempActiveCheckboxBorderLeftWidth": null,
+
+    "checkboxBorderRadiusType": "grouped",
+    "tempCheckboxBorderRadiusType": "grouped",
+
+    "checkboxBorderRadius": 0,
+    "checkboxBorderTopLeftRadius": 0,
+    "checkboxBorderTopRightRadius": 0,
+    "checkboxBorderBottomRightRadius": 0,
+    "checkboxBorderBottomLeftRadius": 0,
+
+    "tempCheckboxBorderRadius": 0,
+    "tempCheckboxBorderTopLeftRadius": 0,
+    "tempCheckboxBorderTopRightRadius": 0,
+    "tempCheckboxBorderBottomRightRadius": 0,
+    "tempCheckboxBorderBottomLeftRadius": 0,
+
+    "checkboxBorderRadiusSuffix": "px",
+    "checkboxBorderTopLeftRadiusSuffix": "px",
+    "checkboxBorderTopRightRadiusSuffix": "px",
+    "checkboxBorderBottomRightRadiusSuffix": "px",
+    "checkboxBorderBottomLeftRadiusSuffix": "px",
+
+    "tempCheckboxBorderRadiusSuffix": "px",
+    "tempCheckboxBorderTopLeftRadiusSuffix": "px",
+    "tempCheckboxBorderTopRightRadiusSuffix": "px",
+    "tempCheckboxBorderBottomRightRadiusSuffix": "px",
+    "tempCheckboxBorderBottomLeftRadiusSuffix": "px",
+
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "tempBorderRadiusSuffix": "px",
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
+
+    "checkboxCustomStylesBorderRadiusType": "grouped",
+    "tempCheckboxCustomStylesBorderRadiusType": "grouped",
+
+    "checkboxCustomStylesBorderRadius": 50,
+    "checkboxCustomStylesBorderTopLeftRadius": 50,
+    "checkboxCustomStylesBorderTopRightRadius": 50,
+    "checkboxCustomStylesBorderBottomRightRadius": 50,
+    "checkboxCustomStylesBorderBottomLeftRadius": 50,
+
+    "tempCheckboxCustomStylesBorderRadius": 50,
+    "tempCheckboxCustomStylesBorderTopLeftRadius": 50,
+    "tempCheckboxCustomStylesBorderTopRightRadius": 50,
+    "tempCheckboxCustomStylesBorderBottomRightRadius": 50,
+    "tempCheckboxCustomStylesBorderBottomLeftRadius": 50,
+
+    "checkboxCustomStylesBorderRadiusSuffix": "px",
+    "checkboxCustomStylesBorderTopLeftRadiusSuffix": "px",
+    "checkboxCustomStylesBorderTopRightRadiusSuffix": "px",
+    "checkboxCustomStylesBorderBottomRightRadiusSuffix": "px",
+    "checkboxCustomStylesBorderBottomLeftRadiusSuffix": "px",
+
+    "tempCheckboxCustomStylesBorderRadiusSuffix": "px",
+    "tempCheckboxCustomStylesBorderTopLeftRadiusSuffix": "px",
+    "tempCheckboxCustomStylesBorderTopRightRadiusSuffix": "px",
+    "tempCheckboxCustomStylesBorderBottomRightRadiusSuffix": "px",
+    "tempCheckboxCustomStylesBorderBottomLeftRadiusSuffix": "px",
+
+    "checkboxCustomStylesRadiusType": "grouped",
+    "tempCheckboxCustomStylesRadiusType": "grouped",
+
+    "checkboxCustomStylesRadius": 50,
+    "checkboxCustomStylesTopLeftRadius": 50,
+    "checkboxCustomStylesTopRightRadius": 50,
+    "checkboxCustomStylesBottomRightRadius": 50,
+    "checkboxCustomStylesBottomLeftRadius": 50,
+
+    "tempCheckboxCustomStylesRadius": 50,
+    "tempCheckboxCustomStylesTopLeftRadius": 50,
+    "tempCheckboxCustomStylesTopRightRadius": 50,
+    "tempCheckboxCustomStylesBottomRightRadius": 50,
+    "tempCheckboxCustomStylesBottomLeftRadius": 50,
+
+    "checkboxCustomStylesRadiusSuffix": "px",
+    "checkboxCustomStylesTopLeftRadiusSuffix": "px",
+    "checkboxCustomStylesTopRightRadiusSuffix": "px",
+    "checkboxCustomStylesBottomRightRadiusSuffix": "px",
+    "checkboxCustomStylesBottomLeftRadiusSuffix": "px",
+
+    "tempCheckboxCustomStylesRadiusSuffix": "px",
+    "tempCheckboxCustomStylesTopLeftRadiusSuffix": "px",
+    "tempCheckboxCustomStylesTopRightRadiusSuffix": "px",
+    "tempCheckboxCustomStylesBottomRightRadiusSuffix": "px",
+    "tempCheckboxCustomStylesBottomLeftRadiusSuffix": "px",
+
+    "checkboxBoxShadow": "",
+
+    "tempCheckboxBoxShadow": "on",
+
+    "checkboxBoxShadowColorHex": "#000000",
+    "checkboxBoxShadowColorOpacity": 1,
+    "checkboxBoxShadowColorPalette": "",
+
+    "tempCheckboxBoxShadowColorOpacity": 1,
+    "tempCheckboxBoxShadowColorPalette": "",
+
+    "checkboxBoxShadowHex": "#000000",
+    "checkboxBoxShadowOpacity": 1,
+    "checkboxBoxShadowPalette": "",
+
+    "tempCheckboxBoxShadowOpacity": 1,
+    "tempCheckboxBoxShadowPalette": "",
+
+    "checkboxBoxShadowBlur": 0,
+    "checkboxBoxShadowSpread": 0,
+    "checkboxBoxShadowVertical": 0,
+    "checkboxBoxShadowHorizontal": 0,
+
+    "tempCheckboxBoxShadowBlur": 4,
+    "tempCheckboxBoxShadowSpread": 0,
+    "tempCheckboxBoxShadowVertical": 2,
+    "tempCheckboxBoxShadowHorizontal": 1,
+
+    "hoverCheckboxBoxShadow": null,
+
+    "tempHoverCheckboxBoxShadow": null,
+
+    "hoverCheckboxBoxShadowColorHex": null,
+    "hoverCheckboxBoxShadowColorOpacity": null,
+    "hoverCheckboxBoxShadowColorPalette": null,
+
+    "tempHoverCheckboxBoxShadowColorPalette": null,
+    "tempHoverCheckboxBoxShadowColorOpacity": null,
+
+    "hoverCheckboxBoxShadowBlur": null,
+    "hoverCheckboxBoxShadowSpread": null,
+    "hoverCheckboxBoxShadowVertical": null,
+    "hoverCheckboxBoxShadowHorizontal": null,
+
+    "tempHoverCheckboxBoxShadowBlur": null,
+    "tempHoverCheckboxBoxShadowSpread": null,
+    "tempHoverCheckboxBoxShadowVertical": null,
+    "tempHoverCheckboxBoxShadowHorizontal": null,
+
+    "activeCheckboxBoxShadow": null,
+
+    "tempActiveCheckboxBoxShadow": null,
+
+    "activeCheckboxBoxShadowColorHex": null,
+    "activeCheckboxBoxShadowColorOpacity": null,
+    "activeCheckboxBoxShadowColorPalette": null,
+
+    "tempActiveCheckboxBoxShadowColorPalette": null,
+    "tempActiveCheckboxBoxShadowColorOpacity": null,
+
+    "activeCheckboxBoxShadowBlur": null,
+    "activeCheckboxBoxShadowSpread": null,
+    "activeCheckboxBoxShadowVertical": null,
+    "activeCheckboxBoxShadowHorizontal": null,
+
+    "tempActiveCheckboxBoxShadowBlur": null,
+    "tempActiveCheckboxBoxShadowSpread": null,
+    "tempActiveCheckboxBoxShadowVertical": null,
+    "tempActiveCheckboxBoxShadowHorizontal": null,
+
+    "checkboxPaddingType": "grouped",
+    "tempCheckboxPaddingType": "grouped",
+
+    "checkboxPadding": 0,
+    "checkboxPaddingTop": 0,
+    "checkboxPaddingRight": 0,
+    "checkboxPaddingBottom": 0,
+    "checkboxPaddingLeft": 0,
+
+    "tempCheckboxPadding": 0,
+    "tempCheckboxPaddingTop": 0,
+    "tempCheckboxPaddingRight": 0,
+    "tempCheckboxPaddingBottom": 0,
+    "tempCheckboxPaddingLeft": 0,
+
+    "checkboxPaddingSuffix": "px",
+    "checkboxPaddingTopSuffix": "px",
+    "checkboxPaddingRightSuffix": "px",
+    "checkboxPaddingBottomSuffix": "px",
+    "checkboxPaddingLeftSuffix": "px",
+
+    "tempCheckboxPaddingSuffix": "px",
+    "tempCheckboxPaddingTopSuffix": "px",
+    "tempCheckboxPaddingRightSuffix": "px",
+    "tempCheckboxPaddingBottomSuffix": "px",
+    "tempCheckboxPaddingLeftSuffix": "px",
+
+    "hoverCheckboxPaddingType": null,
+    "tempHoverCheckboxPaddingType": null,
+
+    "hoverCheckboxPadding": null,
+    "hoverCheckboxPaddingTop": null,
+    "hoverCheckboxPaddingRight": null,
+    "hoverCheckboxPaddingBottom": null,
+    "hoverCheckboxPaddingLeft": null,
+
+    "tempHoverCheckboxPadding": null,
+    "tempHoverCheckboxPaddingTop": null,
+    "tempHoverCheckboxPaddingRight": null,
+    "tempHoverCheckboxPaddingBottom": null,
+    "tempHoverCheckboxPaddingLeft": null,
+
+    "hoverCheckboxPaddingSuffix": null,
+    "hoverCheckboxPaddingTopSuffix": null,
+    "hoverCheckboxPaddingRightSuffix": null,
+    "hoverCheckboxPaddingBottomSuffix": null,
+    "hoverCheckboxPaddingLeftSuffix": null,
+
+    "tempHoverCheckboxPaddingSuffix": null,
+    "tempHoverCheckboxPaddingTopSuffix": null,
+    "tempHoverCheckboxPaddingRightSuffix": null,
+    "tempHoverCheckboxPaddingBottomSuffix": null,
+    "tempHoverCheckboxPaddingLeftSuffix": null,
+
+    "checkboxCustomStylesPaddingType": "grouped",
+    "tempCheckboxCustomStylesPaddingType": "grouped",
+
+    "checkboxCustomStylesPadding": 0,
+    "checkboxCustomStylesPaddingTop": 0,
+    "checkboxCustomStylesPaddingRight": 0,
+    "checkboxCustomStylesPaddingBottom": 0,
+    "checkboxCustomStylesPaddingLeft": 0,
+
+    "tempCheckboxCustomStylesPadding": 0,
+    "tempCheckboxCustomStylesPaddingTop": 0,
+    "tempCheckboxCustomStylesPaddingRight": 0,
+    "tempCheckboxCustomStylesPaddingBottom": 0,
+    "tempCheckboxCustomStylesPaddingLeft": 0,
+
+    "checkboxCustomStylesPaddingSuffix": "px",
+    "checkboxCustomStylesPaddingTopSuffix": "px",
+    "checkboxCustomStylesPaddingRightSuffix": "px",
+    "checkboxCustomStylesPaddingBottomSuffix": "px",
+    "checkboxCustomStylesPaddingLeftSuffix": "px",
+
+    "tempCheckboxCustomStylesPaddingSuffix": "px",
+    "tempCheckboxCustomStylesPaddingTopSuffix": "px",
+    "tempCheckboxCustomStylesPaddingRightSuffix": "px",
+    "tempCheckboxCustomStylesPaddingBottomSuffix": "px",
+    "tempCheckboxCustomStylesPaddingLeftSuffix": "px",
+
+    "hoverCheckboxCustomStylesPaddingType": null,
+    "tempHoverCheckboxCustomStylesPaddingType": null,
+
+    "hoverCheckboxCustomStylesPadding": null,
+    "hoverCheckboxCustomStylesPaddingTop": null,
+    "hoverCheckboxCustomStylesPaddingRight": null,
+    "hoverCheckboxCustomStylesPaddingBottom": null,
+    "hoverCheckboxCustomStylesPaddingLeft": null,
+
+    "tempHoverCheckboxCustomStylesPadding": null,
+    "tempHoverCheckboxCustomStylesPaddingTop": null,
+    "tempHoverCheckboxCustomStylesPaddingRight": null,
+    "tempHoverCheckboxCustomStylesPaddingBottom": null,
+    "tempHoverCheckboxCustomStylesPaddingLeft": null,
+
+    "hoverCheckboxCustomStylesPaddingSuffix": null,
+    "hoverCheckboxCustomStylesPaddingTopSuffix": null,
+    "hoverCheckboxCustomStylesPaddingRightSuffix": null,
+    "hoverCheckboxCustomStylesPaddingBottomSuffix": null,
+    "hoverCheckboxCustomStylesPaddingLeftSuffix": null,
+
+    "tempHoverCheckboxCustomStylesPaddingSuffix": null,
+    "tempHoverCheckboxCustomStylesPaddingTopSuffix": null,
+    "tempHoverCheckboxCustomStylesPaddingRightSuffix": null,
+    "tempHoverCheckboxCustomStylesPaddingBottomSuffix": null,
+    "tempHoverCheckboxCustomStylesPaddingLeftSuffix": null,
+
+    "selectOptionBgColorType": "solid",
+
+    "hoverSelectOptionBgColorType": null,
+
+    "selectOptionBgColorHex": "#ffffff",
+    "selectOptionBgColorOpacity": 1,
+    "selectOptionBgColorPalette": "",
+
+    "tempSelectOptionBgColorOpacity": 1,
+    "tempSelectOptionBgColorPalette": "",
+
+    "hoverSelectOptionBgColorHex": null,
+    "hoverSelectOptionBgColorOpacity": null,
+    "hoverSelectOptionBgColorPalette": null,
+
+    "tempHoverSelectOptionBgColorOpacity": null,
+    "tempHoverSelectOptionBgColorPalette": null,
+
+    "selectOptionColorHex": "#73777f",
+    "selectOptionColorOpacity": 0.75,
+    "selectOptionColorPalette": "color7",
+
+    "tempSelectOptionColorOpacity": 0.75,
+    "tempSelectOptionColorPalette": "color7",
+
+    "hoverSelectOptionColorHex": null,
+    "hoverSelectOptionColorOpacity": null,
+    "hoverSelectOptionColorPalette": null,
+
+    "tempHoverSelectOptionColorOpacity": null,
+    "tempHoverSelectOptionColorPalette": null,
+
+    "selectOptionBorderStyle": "solid",
+
+    "selectOptionBorderColorHex": "#dcdee1",
+    "selectOptionBorderColorOpacity": 1,
+    "selectOptionBorderColorPalette": "",
+
+    "tempSelectOptionBorderColorOpacity": 1,
+    "tempSelectOptionBorderColorPalette": "",
+
+    "hoverSelectOptionBorderColorHex": null,
+    "hoverSelectOptionBorderColorOpacity": null,
+    "hoverSelectOptionBorderColorPalette": null,
+
+    "tempHoverSelectOptionBorderColorOpacity": null,
+    "tempHoverSelectOptionBorderColorPalette": null,
+
+    "tempSelectOptionBorderStyle": "solid",
+
+    "hoverSelectOptionBorderStyle": null,
+
+    "tempHoverSelectOptionBorderStyle": null,
+
+    "selectOptionBorderWidthType": "grouped",
+    "selectOptionBorderWidth": 1,
+    "selectOptionBorderTopWidth": 1,
+    "selectOptionBorderRightWidth": 1,
+    "selectOptionBorderBottomWidth": 1,
+    "selectOptionBorderLeftWidth": 1,
+
+    "tempSelectOptionBorderWidth": 1,
+    "tempSelectOptionBorderTopWidth": 1,
+    "tempSelectOptionBorderRightWidth": 1,
+    "tempSelectOptionBorderBottomWidth": 1,
+    "tempSelectOptionBorderLeftWidth": 1,
+
+    "hoverSelectOptionBorderWidthType": null,
+    "hoverSelectOptionBorderWidth": null,
+    "hoverSelectOptionBorderTopWidth": null,
+    "hoverSelectOptionBorderRightWidth": null,
+    "hoverSelectOptionBorderBottomWidth": null,
+    "hoverSelectOptionBorderLeftWidth": null,
+
+    "tempHoverSelectOptionBorderWidth": null,
+    "tempHoverSelectOptionBorderTopWidth": null,
+    "tempHoverSelectOptionBorderRightWidth": null,
+    "tempHoverSelectOptionBorderBottomWidth": null,
+    "tempHoverSelectOptionBorderLeftWidth": null,
+
+    "selectOptionBoxShadow": "",
+
+    "tempSelectOptionBoxShadow": "on",
+
+    "selectOptionBoxShadowColorHex": "#000000",
+    "selectOptionBoxShadowColorOpacity": 1,
+    "selectOptionBoxShadowColorPalette": "",
+
+    "tempSelectOptionBoxShadowColorOpacity": 1,
+    "tempSelectOptionBoxShadowColorPalette": "",
+
+    "selectOptionBoxShadowHex": "#000000",
+    "selectOptionBoxShadowOpacity": 1,
+    "selectOptionBoxShadowPalette": "",
+
+    "tempSelectOptionBoxShadowOpacity": 1,
+    "tempSelectOptionBoxShadowPalette": "",
+
+    "selectOptionBoxShadowBlur": 0,
+    "selectOptionBoxShadowSpread": 0,
+    "selectOptionBoxShadowVertical": 0,
+    "selectOptionBoxShadowHorizontal": 0,
+
+    "tempSelectOptionBoxShadowBlur": 4,
+    "tempSelectOptionBoxShadowSpread": 0,
+    "tempSelectOptionBoxShadowVertical": 2,
+    "tempSelectOptionBoxShadowHorizontal": 1,
+
+    "hoverSelectOptionBoxShadow": null,
+
+    "tempHoverSelectOptionBoxShadow": null,
+
+    "hoverSelectOptionBoxShadowColorHex": null,
+    "hoverSelectOptionBoxShadowColorOpacity": null,
+    "hoverSelectOptionBoxShadowColorPalette": null,
+
+    "tempHoverSelectOptionBoxShadowColorPalette": null,
+    "tempHoverSelectOptionBoxShadowColorOpacity": null,
+
+    "hoverSelectOptionBoxShadowBlur": null,
+    "hoverSelectOptionBoxShadowSpread": null,
+    "hoverSelectOptionBoxShadowVertical": null,
+    "hoverSelectOptionBoxShadowHorizontal": null,
+
+    "tempHoverSelectOptionBoxShadowBlur": null,
+    "tempHoverSelectOptionBoxShadowSpread": null,
+    "tempHoverSelectOptionBoxShadowVertical": null,
+    "tempHoverSelectOptionBoxShadowHorizontal": null,
+
+    "bgColorType": "solid",
+
+    "tempBgColorType": null,
+
+    "gradientActivePointer": "startPointer",
+    "gradientStartPointer": 0,
+    "gradientFinishPointer": 100,
+
+    "gradientType": "linear",
+
+    "gradientLinearDegree": 90,
+    "gradientRadialDegree": 90,
+
+    "hoverBgColorType": "solid",
+
+    "tempHoverBgColorType": "solid",
+
+    "hoverGradientActivePointer": "startPointer",
+    "hoverGradientStartPointer": 0,
+    "hoverGradientFinishPointer": 100,
+
+    "hoverGradientType": "linear",
+
+    "hoverGradientLinearDegree": 90,
+    "hoverGradientRadialDegree": 90,
+
+    "bgColorHex": "#239ddb",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "color3",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "color3",
+
+    "hoverBgColorHex": "#239ddb",
+    "hoverBgColorOpacity": 0.8,
+    "hoverBgColorPalette": "color3",
+
+    "tempHoverBgColorOpacity": 0.8,
+    "tempHoverBgColorPalette": "color3",
+
+    "gradientColorHex": "#009900",
+    "gradientColorOpacity": 0.8,
+    "gradientColorPalette": "",
+
+    "tempGradientColorOpacity": 0.8,
+    "tempGradientColorPalette": "",
+
+    "hoverGradientColorHex": "#009900",
+    "hoverGradientColorOpacity": 0,
+    "hoverGradientColorPalette": "",
+
+    "tempHoverGradientColorOpacity": 0.8,
+    "tempHoverGradientColorPalette": "",
+
+    "rangeBorderStyle": null,
+
+    "rangeBorderColorHex": "#73777f",
+    "rangeBorderColorOpacity": 1,
+    "rangeBorderColorPalette": "",
+
+    "tempRangeBorderColorOpacity": null,
+    "tempRangeBorderColorPalette": null,
+
+    "tempRangeBorderStyle": null,
+
+    "rangeBorderWidthType": "grouped",
+    "rangeBorderWidth": 1,
+    "rangeBorderTopWidth": 1,
+    "rangeBorderRightWidth": 1,
+    "rangeBorderBottomWidth": 1,
+    "rangeBorderLeftWidth": 1,
+
+    "tempRangeBorderWidth": 1,
+    "tempRangeBorderTopWidth": 1,
+    "tempRangeBorderRightWidth": 1,
+    "tempRangeBorderBottomWidth": 1,
+    "tempRangeBorderLeftWidth": 1,
+
+    "rangeStrokeBorderStyle": "solid",
+
+    "rangeStrokeBorderColorHex": "#73777f",
+    "rangeStrokeBorderColorOpacity": 1,
+    "rangeStrokeBorderColorPalette": "",
+
+    "tempRangeStrokeBorderColorOpacity": null,
+    "tempRangeStrokeBorderColorPalette": null,
+
+    "hoverRangeStrokeBorderColorHex": null,
+    "hoverRangeStrokeBorderColorOpacity": null,
+    "hoverRangeStrokeBorderColorPalette": null,
+
+    "tempHoverRangeStrokeBorderColorOpacity": null,
+    "tempHoverRangeStrokeBorderColorPalette": null,
+
+    "activeRangeStrokeBorderColorHex": "#73777f",
+    "activeRangeStrokeBorderColorOpacity": 1,
+    "activeRangeStrokeBorderColorPalette": "",
+
+    "tempActiveRangeStrokeBorderColorOpacity": 1,
+    "tempActiveRangeStrokeBorderColorPalette": "",
+
+    "tempRangeStrokeBorderStyle": "solid",
+
+    "hoverRangeStrokeBorderStyle": "solid",
+
+    "tempHoverRangeStrokeBorderStyle": "solid",
+
+    "activeRangeStrokeBorderStyle": "solid",
+
+    "tempActiveRangeStrokeBorderStyle": "solid",
+
+    "rangeStrokeBorderWidthType": "grouped",
+    "rangeStrokeBorderWidth": 5,
+    "rangeStrokeBorderTopWidth": 5,
+    "rangeStrokeBorderRightWidth": 5,
+    "rangeStrokeBorderBottomWidth": 5,
+    "rangeStrokeBorderLeftWidth": 5,
+
+    "tempRangeStrokeBorderWidth": 5,
+    "tempRangeStrokeBorderTopWidth": 5,
+    "tempRangeStrokeBorderRightWidth": 5,
+    "tempRangeStrokeBorderBottomWidth": 5,
+    "tempRangeStrokeBorderLeftWidth": 5,
+
+    "hoverRangeStrokeBorderWidthType": null,
+    "hoverRangeStrokeBorderWidth": null,
+    "hoverRangeStrokeBorderTopWidth": null,
+    "hoverRangeStrokeBorderRightWidth": null,
+    "hoverRangeStrokeBorderBottomWidth": null,
+    "hoverRangeStrokeBorderLeftWidth": null,
+
+    "tempHoverRangeStrokeBorderWidth": null,
+    "tempHoverRangeStrokeBorderTopWidth": null,
+    "tempHoverRangeStrokeBorderRightWidth": null,
+    "tempHoverRangeStrokeBorderBottomWidth": null,
+    "tempHoverRangeStrokeBorderLeftWidth": null,
+
+    "activeRangeStrokeBorderWidthType": null,
+    "activeRangeStrokeBorderWidth": null,
+    "activeRangeStrokeBorderTopWidth": null,
+    "activeRangeStrokeBorderRightWidth": null,
+    "activeRangeStrokeBorderBottomWidth": null,
+    "activeRangeStrokeBorderLeftWidth": null,
+
+    "tempActiveRangeStrokeBorderWidth": null,
+    "tempActiveRangeStrokeBorderTopWidth": null,
+    "tempActiveRangeStrokeBorderRightWidth": null,
+    "tempActiveRangeStrokeBorderBottomWidth": null,
+    "tempActiveRangeStrokeBorderLeftWidth": null,
+
+    "rangePointsBorderStyle": "solid",
+
+    "rangePointsBorderColorHex": "#73777f",
+    "rangePointsBorderColorOpacity": 1,
+    "rangePointsBorderColorPalette": "",
+
+    "tempRangePointsBorderColorOpacity": null,
+    "tempRangePointsBorderColorPalette": null,
+
+    "hoverRangePointsBorderColorHex": null,
+    "hoverRangePointsBorderColorOpacity": null,
+    "hoverRangePointsBorderColorPalette": null,
+
+    "tempHoverRangePointsBorderColorOpacity": null,
+    "tempHoverRangePointsBorderColorPalette": null,
+
+    "tempRangePointsBorderStyle": "solid",
+
+    "hoverRangePointsBorderStyle": "solid",
+
+    "tempHoverRangePointsBorderStyle": "solid",
+
+    "rangePointsBorderWidthType": "grouped",
+    "rangePointsBorderWidth": 15,
+    "rangePointsBorderTopWidth": 15,
+    "rangePointsBorderRightWidth": 15,
+    "rangePointsBorderBottomWidth": 15,
+    "rangePointsBorderLeftWidth": 15,
+
+    "tempRangePointsBorderWidth": 15,
+    "tempRangePointsBorderTopWidth": 15,
+    "tempRangePointsBorderRightWidth": 15,
+    "tempRangePointsBorderBottomWidth": 15,
+    "tempRangePointsBorderLeftWidth": 15,
+
+    "hoverRangePointsBorderWidthType": null,
+    "hoverRangePointsBorderWidth": null,
+    "hoverRangePointsBorderTopWidth": null,
+    "hoverRangePointsBorderRightWidth": null,
+    "hoverRangePointsBorderBottomWidth": null,
+    "hoverRangePointsBorderLeftWidth": null,
+
+    "tempHoverRangePointsBorderWidth": null,
+    "tempHoverRangePointsBorderTopWidth": null,
+    "tempHoverRangePointsBorderRightWidth": null,
+    "tempHoverRangePointsBorderBottomWidth": null,
+    "tempHoverRangePointsBorderLeftWidth": null,
+
+    "colorHex": "#ffffff",
+    "colorOpacity": 1,
+    "colorPalette": "color8",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "color8",
+
+    "hoverColorHex": "#ffffff",
+    "hoverColorOpacity": 1,
+    "hoverColorPalette": "color8",
+
+    "tempHoverColorOpacity": 1,
+    "tempHoverColorPalette": "color8",
+
+    "labelColorHex": "#73777f",
+    "labelColorOpacity": 0.75,
+    "labelColorPalette": "color7",
+
+    "tempLabelColorOpacity": 0.75,
+    "tempLabelColorPalette": "color7",
+
+    "ratingActiveColorHex": "#73777f",
+    "ratingActiveColorOpacity": 0.75,
+    "ratingActiveColorPalette": "color7",
+
+    "tempRatingActiveColorOpacity": 0.75,
+    "tempRatingActiveColorPalette": "color7",
+
+    "hoverRatingActiveColorHex": null,
+    "hoverRatingActiveColorOpacity": null,
+    "hoverRatingActiveColorPalette": null,
+
+    "tempHoverRatingActiveColorOpacity": null,
+    "tempHoverRatingActiveColorPalette": null,
+
+    "activeRatingActiveColorHex": null,
+    "activeRatingActiveColorOpacity": null,
+    "activeRatingActiveColorPalette": null,
+
+    "tempActiveRatingActiveColorOpacity": null,
+    "tempActiveRatingActiveColorPalette": null,
+
+    "borderStyle": "",
+
+    "borderColorHex": "#66738d",
+    "borderColorOpacity": 0,
+    "borderColorPalette": "",
+
+    "tempBorderColorOpacity": 1,
+    "tempBorderColorPalette": "",
+
+    "hoverBorderColorHex": null,
+    "hoverBorderColorOpacity": null,
+    "hoverBorderColorPalette": null,
+
+    "tempHoverBorderColorOpacity": null,
+    "tempHoverBorderColorPalette": null,
+
+    "tempBorderStyle": "solid",
+
+    "hoverBorderStyle": null,
+
+    "tempHoverBorderStyle": null,
+
+    "borderWidthType": "grouped",
+    "borderWidth": 0,
+    "borderTopWidth": 0,
+    "borderRightWidth": 0,
+    "borderBottomWidth": 0,
+    "borderLeftWidth": 0,
+
+    "tempBorderWidth": 2,
+    "tempBorderTopWidth": 2,
+    "tempBorderRightWidth": 2,
+    "tempBorderBottomWidth": 2,
+    "tempBorderLeftWidth": 2,
+
+    "hoverBorderWidthType": null,
+    "hoverBorderWidth": null,
+    "hoverBorderTopWidth": null,
+    "hoverBorderRightWidth": null,
+    "hoverBorderBottomWidth": null,
+    "hoverBorderLeftWidth": null,
+
+    "tempHoverBorderWidth": null,
+    "tempHoverBorderTopWidth": null,
+    "tempHoverBorderRightWidth": null,
+    "tempHoverBorderBottomWidth": null,
+    "tempHoverBorderLeftWidth": null,
+
+    "borderRadiusType": "grouped",
+    "tempBorderRadiusType": "grouped",
+
+    "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "tempBorderRadius": 0,
+    "tempBorderTopLeftRadius": 0,
+    "tempBorderTopRightRadius": 0,
+    "tempBorderBottomRightRadius": 0,
+    "tempBorderBottomLeftRadius": 0,
+
+    "boxShadow": "",
+
+    "tempBoxShadow": "on",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 1,
+    "boxShadowColorPalette": "",
+
+    "tempBoxShadowColorOpacity": 1,
+    "tempBoxShadowColorPalette": "",
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "tempBoxShadowBlur": 4,
+    "tempBoxShadowSpread": 0,
+    "tempBoxShadowVertical": 2,
+    "tempBoxShadowHorizontal": 1,
+
+    "hoverBoxShadow": null,
+
+    "tempHoverBoxShadow": null,
+
+    "hoverBoxShadowColorHex": null,
+    "hoverBoxShadowColorOpacity": null,
+    "hoverBoxShadowColorPalette": null,
+
+    "tempHoverBoxShadowColorPalette": null,
+    "tempHoverBoxShadowColorOpacity": null,
+
+    "hoverBoxShadowBlur": null,
+    "hoverBoxShadowSpread": null,
+    "hoverBoxShadowVertical": null,
+    "hoverBoxShadowHorizontal": null,
+
+    "tempHoverBoxShadowBlur": null,
+    "tempHoverBoxShadowSpread": null,
+    "tempHoverBoxShadowVertical": null,
+    "tempHoverBoxShadowHorizontal": null,
+
+    "tabletOptionWidth": 100,
+    "tabletOptionWidthSuffix": "%",
+
+    "tabletCheckSize": 16,
+    "tabletCheckSizeSuffix": "px",
+
+    "tabletWidthDateOption": 100,
+    "tabletWidthDateOptionSuffix": "%",
+
+    "tabletHorizontalAlign": null,
+
+    "tabletHorizontalAlignBtn": null,
+
+    "tabletHorizontalAlignOption": null,
+
+    "tabletHorizontalAlignLabel": null,
+
+    "tabletIconSize": null,
+    "tabletIconCustomSize": null,
+    "tabletIconCustomSizeSuffix": null,
+
+    "tabletIconSmallSize": null,
+    "tabletIconMediumSize": null,
+    "tabletIconLargeSize": null,
+
+    "tabletIconSpacing": null,
+
+    "tabletBoxShadow": null,
+
+    "tabletBoxShadowColorHex": null,
+    "tabletBoxShadowColorOpacity": null,
+    "tabletBoxShadowColorPalette": null,
+
+    "tempTabletBoxShadowColorPalette": null,
+    "tempTabletBoxShadowColorOpacity": null,
+
+    "tabletBoxShadowBlur": null,
+    "tabletBoxShadowSpread": null,
+    "tabletBoxShadowVertical": null,
+    "tabletBoxShadowHorizontal": null,
+
+    "tempTabletBoxShadowBlur": null,
+    "tempTabletBoxShadowSpread": null,
+    "tempTabletBoxShadowVertical": null,
+    "tempTabletBoxShadowHorizontal": null,
+
+    "tabletTitleFontStyle": "",
+    "tabletTitleFontFamilyType": null,
+    "tabletTitleFontSize": 18,
+    "tabletTitleFontSizeSuffix": "px",
+    "tabletTitleFontWeight": 400,
+    "tabletTitleLineHeight": 1,
+    "tabletTitleLetterSpacing": 1,
+
+    "tabletCheckFontStyle": "",
+    "tabletCheckFontFamilyType": null,
+    "tabletCheckFontSize": 18,
+    "tabletCheckFontSizeSuffix": "px",
+    "tabletCheckFontWeight": 400,
+    "tabletCheckLineHeight": 1,
+    "tabletCheckLetterSpacing": 1,
+
+    "tabletFontFamilyType": null,
+    "tabletFontStyle": "button",
+    "tabletFontSize": 11,
+    "tabletFontSizeSuffix": "px",
+    "tabletFontWeight": 700,
+    "tabletLineHeight": 1.8,
+    "tabletLetterSpacing": 1,
+
+    "tabletOptionsFontStyle": "",
+    "tabletOptionsFontFamilyType": null,
+    "tabletOptionsFontSize": 18,
+    "tabletOptionsFontSizeSuffix": "px",
+    "tabletOptionsFontWeight": 400,
+    "tabletOptionsLineHeight": 1,
+    "tabletOptionsLetterSpacing": 1,
+
+    "tabletSelectOptionFontStyle": "",
+    "tabletSelectOptionFontFamilyType": null,
+    "tabletSelectOptionFontSize": 18,
+    "tabletSelectOptionFontSizeSuffix": "px",
+    "tabletSelectOptionFontWeight": 400,
+    "tabletSelectOptionLineHeight": 1,
+    "tabletSelectOptionLetterSpacing": 1,
+
+    "tabletLabelFontStyle": "",
+    "tabletLabelFontFamilyType": null,
+    "tabletLabelFontSize": 18,
+    "tabletLabelFontSizeSuffix": "px",
+    "tabletLabelFontWeight": 400,
+    "tabletLabelLineHeight": 1,
+    "tabletLabelLetterSpacing": 1,
+
+    "tabletBtnFontStyle": "",
+    "tabletBtnFontFamilyType": null,
+    "tabletBtnFontSize": 16,
+    "tabletBtnFontSizeSuffix": "px",
+    "tabletBtnFontWeight": 400,
+    "tabletBtnLineHeight": 1,
+    "tabletBtnLetterSpacing": 1,
+
+    "tabletOptionsPadding": 11,
+    "tabletOptionsPaddingTB": 11,
+    "tabletOptionsPaddingRL": 26,
+    "tempOptionsTabletPaddingTB": 11,
+    "tempOptionsTabletPaddingRL": 26,
+
+    "tabletOptionsPaddingTop": 11,
+    "tabletOptionsPaddingRight": 26,
+    "tabletOptionsPaddingBottom": 11,
+    "tabletOptionsPaddingLeft": 26,
+
+    "tabletOptionsPaddingSuffix": "px",
+    "tabletOptionsPaddingTopSuffix": "px",
+    "tabletOptionsPaddingRightSuffix": "px",
+    "tabletOptionsPaddingBottomSuffix": "px",
+    "tabletOptionsPaddingLeftSuffix": "px",
+
+    "tempOptionsTabletPadding": 11,
+    "tempOptionsTabletPaddingTop": 11,
+    "tempOptionsTabletPaddingRight": 26,
+    "tempOptionsTabletPaddingBottom": 11,
+    "tempOptionsTabletPaddingLeft": 26,
+
+    "tabletCheckboxPadding": 11,
+    "tabletCheckboxPaddingTB": 11,
+    "tabletCheckboxPaddingRL": 26,
+    "tempCheckboxTabletPaddingTB": 11,
+    "tempCheckboxTabletPaddingRL": 26,
+
+    "tabletCheckboxPaddingTop": 11,
+    "tabletCheckboxPaddingRight": 26,
+    "tabletCheckboxPaddingBottom": 11,
+    "tabletCheckboxPaddingLeft": 26,
+
+    "tabletCheckboxPaddingSuffix": "px",
+    "tabletCheckboxPaddingTopSuffix": "px",
+    "tabletCheckboxPaddingRightSuffix": "px",
+    "tabletCheckboxPaddingBottomSuffix": "px",
+    "tabletCheckboxPaddingLeftSuffix": "px",
+
+    "tempCheckboxTabletPadding": 11,
+    "tempCheckboxTabletPaddingTop": 11,
+    "tempCheckboxTabletPaddingRight": 26,
+    "tempCheckboxTabletPaddingBottom": 11,
+    "tempCheckboxTabletPaddingLeft": 26,
+
+    "mobileOptionWidth": 100,
+    "mobileOptionWidthSuffix": "%",
+
+    "mobileCheckSize": 16,
+    "mobileCheckSizeSuffix": "px",
+
+    "mobileWidthDateOption": 100,
+    "mobileWidthDateOptionSuffix": "%",
+
+    "mobileHorizontalAlign": null,
+
+    "mobileHorizontalAlignBtn": null,
+
+    "mobileHorizontalAlignOption": null,
+
+    "mobileHorizontalAlignLabel": null,
+
+    "mobileIconSize": null,
+    "mobileIconCustomSize": null,
+    "mobileIconCustomSizeSuffix": null,
+
+    "mobileIconSmallSize": null,
+    "mobileIconMediumSize": null,
+    "mobileIconLargeSize": null,
+
+    "mobileIconSpacing": null,
+
+    "mobileBoxShadow": null,
+
+    "mobileBoxShadowColorHex": null,
+    "mobileBoxShadowColorOpacity": null,
+    "mobileBoxShadowColorPalette": null,
+
+    "tempMobileBoxShadowColorPalette": null,
+    "tempMobileBoxShadowColorOpacity": null,
+
+    "mobileBoxShadowBlur": null,
+    "mobileBoxShadowSpread": null,
+    "mobileBoxShadowVertical": null,
+    "mobileBoxShadowHorizontal": null,
+
+    "tempMobileBoxShadowBlur": null,
+    "tempMobileBoxShadowSpread": null,
+    "tempMobileBoxShadowVertical": null,
+    "tempMobileBoxShadowHorizontal": null,
+
+    "mobileTitleFontStyle": "",
+    "mobileTitleFontFamilyType": null,
+    "mobileTitleFontSize": 18,
+    "mobileTitleFontSizeSuffix": "px",
+    "mobileTitleFontWeight": 400,
+    "mobileTitleLineHeight": 1,
+    "mobileTitleLetterSpacing": 1,
+
+    "mobileFontFamilyType": null,
+    "mobileFontStyle": "button",
+    "mobileFontSize": 11,
+    "mobileFontSizeSuffix": "px",
+    "mobileFontWeight": 700,
+    "mobileLineHeight": 1.8,
+    "mobileLetterSpacing": 1,
+
+    "mobileCheckFontStyle": "",
+    "mobileCheckFontFamilyType": null,
+    "mobileCheckFontSize": 18,
+    "mobileCheckFontSizeSuffix": "px",
+    "mobileCheckFontWeight": 400,
+    "mobileCheckLineHeight": 1,
+    "mobileCheckLetterSpacing": 1,
+
+    "mobileOptionsFontStyle": "",
+    "mobileOptionsFontFamilyType": null,
+    "mobileOptionsFontSize": 18,
+    "mobileOptionsFontSizeSuffix": "px",
+    "mobileOptionsFontWeight": 400,
+    "mobileOptionsLineHeight": 1,
+    "mobileOptionsLetterSpacing": 1,
+
+    "mobileSelectOptionFontStyle": "",
+    "mobileSelectOptionFontFamilyType": null,
+    "mobileSelectOptionFontSize": 18,
+    "mobileSelectOptionFontSizeSuffix": "px",
+    "mobileSelectOptionFontWeight": 400,
+    "mobileSelectOptionLineHeight": 1,
+    "mobileSelectOptionLetterSpacing": 1,
+
+    "mobileLabelFontStyle": "",
+    "mobileLabelFontFamilyType": null,
+    "mobileLabelFontSize": 18,
+    "mobileLabelFontSizeSuffix": "px",
+    "mobileLabelFontWeight": 400,
+    "mobileLabelLineHeight": 1,
+    "mobileLabelLetterSpacing": 1,
+
+    "mobileBtnFontStyle": "",
+    "mobileBtnFontFamilyType": null,
+    "mobileBtnFontSize": 18,
+    "mobileBtnFontSizeSuffix": "px",
+    "mobileBtnFontWeight": 400,
+    "mobileBtnLineHeight": 1,
+    "mobileBtnLetterSpacing": 1
+  }
+}

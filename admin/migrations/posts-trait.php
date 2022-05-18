@@ -21,8 +21,6 @@ trait Brizy_Admin_Migrations_PostsTrait {
 			OBJECT
 		);
 
-		$projectPost = null;
-
 		if ( isset( $row[0] ) ) {
 			return self::$project = $row[0];
 		}

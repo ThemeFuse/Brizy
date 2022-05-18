@@ -46,16 +46,13 @@ export function styleMenu(v, vs, vd) {
       ]
     },
     ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--opened > .brz-a:hover": {
-      standart: [
-        "cssStyleElementMenuActiveColor",
-        "cssStyleElementMenuActiveLinkBgColor"
-      ]
+      standart: ["cssStyleElementMenuColor", "cssStyleElementMenuLinkBgColor"]
     },
     ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--opened:hover": {
       standart: [
-        "cssStyleElementMenuActiveColor",
-        "cssStyleElementMenuActiveBgColor",
-        "cssStyleElementMenuActiveBorder"
+        "cssStyleElementMenuColor",
+        "cssStyleElementMenuBgColor",
+        "cssStyleElementMenuBorder"
       ]
     },
 
@@ -73,7 +70,6 @@ export function styleMenu(v, vs, vd) {
         "cssStyleElementMenuCurrentLinkBgColor"
       ]
     },
-
     ".brz &&:hover > .brz-ed-border": {
       interval: ["cssStyleVisibleEditorDisplayNoneOrBlock|||editor"]
     },
@@ -81,9 +77,12 @@ export function styleMenu(v, vs, vd) {
       interval: ["cssStyleElementMenuIconSize"],
       standart: ["cssStyleElementMenuIconSpacing"]
     },
-
     ".brz && .brz-menu__ul > .brz-menu__item:hover": {
-      standart: ["cssStyleElementMenuBgColor", "cssStyleElementMenuBorder"],
+      standart: [
+        "cssStyleElementMenuColor",
+        "cssStyleElementMenuBgColor",
+        "cssStyleElementMenuBorder"
+      ],
       interval: ["cssStyleElementMMenuItemPadding"]
     },
     ".brz && .brz-menu__ul > .brz-menu__item:first-child": {
@@ -94,7 +93,7 @@ export function styleMenu(v, vs, vd) {
     },
 
     // MMenu
-    ".brz && .brz-mm-menu__item": {
+    ".brz && .brz-mm-menu__item:hover": {
       interval: [
         "cssStyleElementMMenuFontSize",
         "cssStyleElementMMenuFontWeight",
@@ -117,7 +116,7 @@ export function styleMenu(v, vs, vd) {
       ]
     },
     ".brz &&:hover .brz-mm-menu__item:hover > .brz-mm-listitem__text": {
-      standart: ["cssStyleElementMMenuHoverColor"]
+      standart: ["cssStyleElementMMenuColor"]
     },
     ".brz &&:hover .brz-mm-menu__item .brz-a": {
       interval: ["cssStyleElementMMenuItemHorizontalAlign"]
@@ -137,7 +136,7 @@ export function styleMenu(v, vs, vd) {
         "cssStyleElementMMenuLetterSpacing",
         "cssStyleElementMMenuBorderColor"
       ],
-      standart: ["cssStyleElementMMenuColor"]
+      standart: ["cssStyleElementMMenuTitleColor"]
     },
     ".brz &&:hover .brz-mm-menu__item.brz-mm-listitem_opened": {
       standart: ["cssStyleElementMMenuColor"]
@@ -145,8 +144,22 @@ export function styleMenu(v, vs, vd) {
     ".brz &&:hover.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
       interval: ["cssStyleElementMMenuBtnNext"]
     },
+    ".brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-panels, .brz &&:hover .brz-mm-panels > .brz-mm-panel:before": {
+      standart: [
+        "cssStyleElementMMenuGradientBgColor",
+        "cssStyleElementMMenuBackgroundColor"
+      ]
+    },
     ".brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-panels, .brz &&:hover .brz-mm-panels > .brz-mm-panel": {
-      standart: ["cssStyleElementMMenuBackgroundColor"]
+      standart: [
+        "cssStyleElementMMenuBackgroundColor",
+        "cssStyleElementMMenuImageFilter",
+        "cssStyleBgImagePosition",
+        "cssStyleElementMMenuDynamicImage"
+      ]
+    },
+    ".brz &&:hover .brz-mm-panels > .brz-mm-panel": {
+      standart: ["cssStyleBgImage"]
     },
     ".brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-navbar.brz-mm-listitem .brz-mm-listitem_opened > .brz-mm-listitem__text:after": {
       standart: ["cssStyleElementMMenuBorderColor"]
@@ -156,15 +169,15 @@ export function styleMenu(v, vs, vd) {
     },
 
     // Current
-    ".brz && .brz-mm-menu__item.brz-mm-menu__item--current": {
+    ".brz && .brz-mm-menu__item.brz-mm-menu__item--current:not(.brz-mm-menu__item.brz-mm-menu__item--current:active):hover": {
       standart: ["cssStyleElementMMenuActiveColor"]
     },
-    ".brz:hover && .brz-mm-menu__item.brz-mm-menu__item--current:hover > .brz-mm-listitem__text": {
+    ".brz:hover && .brz-mm-menu__item.brz-mm-menu__item--current:not(brz-mm-menu__item.brz-mm-menu__item--current:active):hover > .brz-mm-listitem__text": {
       standart: ["cssStyleElementMMenuActiveColor"]
     },
 
     // SubMenu
-    ".brz &&:hover .brz-menu__sub-menu": {
+    ".brz && .brz-menu__sub-menu:hover": {
       interval: [
         "cssStyleElementMenuSubMenuFontSize",
         "cssStyleElementMenuSubMenuFontWeight",
@@ -174,12 +187,16 @@ export function styleMenu(v, vs, vd) {
       standart: [
         "cssStyleElementMenuSubMenuFontFamily",
         "cssStyleElementMenuSubMenuColor",
+        "cssStyleElementMenuSubMenuBgColor",
         "cssStyleBoxShadow",
         "cssStyleBorderRadius"
       ]
     },
     ".brz &&:hover .brz-menu__sub-menu .brz-a": {
       standart: ["cssStyleElementMenuSubMenuIconPosition"]
+    },
+    ".brz &&:hover .brz-menu__sub-menu .brz-a:hover": {
+      standart: ["cssStyleElementMenuSubMenuColor"]
     },
     ".brz &&:hover .brz-menu__sub-item__icon": {
       standart: [
@@ -198,26 +215,20 @@ export function styleMenu(v, vs, vd) {
     ".brz &&:hover .brz-menu__dropdown > .brz-menu__item.brz-menu__item--current:hover": {
       standart: ["cssStyleElementMenuSubMenuCurrentBgColor"]
     },
-    ".brz &&:hover .brz-menu__dropdown > .brz-menu__item.brz-menu__item--current:hover > .brz-a": {
-      standart: ["cssStyleElementMenuSubMenuCurrentColor"]
-    },
     ".brz &&:hover .brz-menu__item--current .brz-menu__sub-menu": {
       standart: ["cssStyleElementMenuSubMenuCurrentBoxShadow"]
     },
 
     // Background Color for Dropdown
-    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item": {
-      standart: ["cssStyleElementMenuSubMenuBgColor"]
-    },
-    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item:hover > .brz-a": {
-      standart: ["cssStyleElementMenuSubMenuHoverColor"]
-    },
-    ".brz &&:hover .brz-menu__item-dropdown .brz-menu__item:hover": {
-      standart: ["cssStyleElementMenuSubMenuHoverBgColor"]
+    ".brz && .brz-menu__item-dropdown .brz-menu__item:hover": {
+      standart: [
+        "cssStyleElementMenuSubMenuBgColor",
+        "cssStyleElementMenuSubMenuColor"
+      ]
     },
 
     // Color for dropdown arrow
-    ".brz &&:hover .brz-menu__dropdown .brz-menu__item-dropdown .brz-a:after": {
+    ".brz && .brz-menu__dropdown .brz-menu__item-dropdown:hover .brz-a:hover:after": {
       standart: ["cssStyleElementMenuSubMenuBorderColor"]
     },
 

@@ -1,0 +1,10 @@
+.brz-ecwid-wrapper {
+  .ecwid,
+  .ec-cart-widget {
+    pointer-events: none;
+  }
+}
+
+.brz-ecwid-products-wrapper .grid__categories {
+  display: none !important;
+}

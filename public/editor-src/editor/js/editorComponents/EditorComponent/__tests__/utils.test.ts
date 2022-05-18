@@ -2,14 +2,64 @@ import {
   createOptionId,
   inDevelopment,
   optionMode,
-  optionState,
   setOptionPrefix,
   makeToolbarPropsFromConfigDefaults,
   flattenDefaultValue_
 } from "../utils";
-import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { MOBILE, TABLET, empty } from "visual/utils/responsiveMode";
 import { DESKTOP, RESPONSIVE } from "visual/utils/devices";
+
+// region Mocks
+jest.mock("visual/component/Options/types/GlobalBlock/index.tsx", () => {});
+jest.mock("visual/component/Options/types/AdvancedSettings.jsx", () => {});
+jest.mock("visual/component/Options/types/BlockThumbnail.jsx", () => {});
+jest.mock("visual/component/Options/types/Button.jsx", () => {});
+jest.mock("visual/component/Options/types/ButtonTooltip.jsx", () => {});
+jest.mock("visual/component/Options/types/CheckGroup.jsx", () => {});
+jest.mock("visual/component/Options/types/CodeMirror.js", () => {});
+jest.mock("visual/component/Options/types/ColorFields.jsx", () => {});
+jest.mock("visual/component/Options/types/ColorPalette.jsx", () => {});
+jest.mock("visual/component/Options/types/ColorPalette2.jsx", () => {});
+jest.mock("visual/component/Options/types/ColorPaletteEditor.jsx", () => {});
+jest.mock("visual/component/Options/types/ColorPicker.jsx", () => {});
+jest.mock("visual/component/Options/types/ColorPicker2.jsx", () => {});
+jest.mock("visual/component/Options/types/FileUpload.jsx", () => {});
+jest.mock("visual/component/Options/types/FileUpload.wp.jsx", () => {});
+jest.mock("visual/component/Options/types/FontFamily.jsx", () => {});
+jest.mock("visual/component/Options/types/FontStyle.jsx", () => {});
+jest.mock("visual/component/Options/types/FontStyleEditor.jsx", () => {});
+jest.mock("visual/component/Options/types/FormApps.js", () => {});
+jest.mock("visual/component/Options/types/GBConditions.tsx", () => {});
+jest.mock("visual/component/Options/types/Grid.jsx", () => {});
+jest.mock("visual/component/Options/types/IconSetter.jsx", () => {});
+jest.mock("visual/component/Options/types/ImageSetter.jsx", () => {});
+jest.mock("visual/component/Options/types/Input.jsx", () => {});
+jest.mock("visual/component/Options/types/InputNumber.js", () => {});
+jest.mock("visual/component/Options/types/IntegrationsApps.js", () => {});
+jest.mock("visual/component/Options/types/MultiInput.js", () => {});
+jest.mock(
+  "visual/component/Options/types/MultiInputPickerOptionType.js",
+  () => {}
+);
+jest.mock("visual/component/Options/types/MultiPicker.jsx", () => {});
+jest.mock("visual/component/Options/types/Popover.jsx", () => {});
+jest.mock("visual/component/Options/types/PopupConditions.jsx", () => {});
+jest.mock("visual/component/Options/types/PromptAddPopup.tsx", () => {});
+jest.mock("visual/component/Options/types/PromptIcon.jsx", () => {});
+jest.mock("visual/component/Options/types/RadioGroup.jsx", () => {});
+jest.mock("visual/component/Options/types/Range.jsx", () => {});
+jest.mock("visual/component/Options/types/Range2.jsx", () => {});
+jest.mock("visual/component/Options/types/SavedBlock.tsx", () => {});
+jest.mock("visual/component/Options/types/Select.jsx", () => {});
+jest.mock("visual/component/Options/types/Stepper.jsx", () => {});
+jest.mock("visual/component/Options/types/Switch.jsx", () => {});
+jest.mock("visual/component/Options/types/Tabs.jsx", () => {});
+jest.mock("visual/component/Options/types/Textarea.jsx", () => {});
+jest.mock("visual/component/Options/types/Toggle.jsx", () => {});
+jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
+  Typography: {}
+}));
+// endregion
 
 describe("Testing 'createOptionId' function", function() {
   test("The result is a string in camelCase style", () => {
@@ -70,17 +120,6 @@ describe("Testing 'inDevelopment' function", () => {
     ["", "test", "test-Dev"].forEach(type =>
       expect(inDevelopment(type)).toBe(false)
     );
-  });
-});
-
-describe("Testing 'optionState' function", function() {
-  test("Return 'hover' if the option supports hover state", () => {
-    expect(optionState(HOVER, { states: [NORMAL, HOVER] })).toBe(HOVER);
-  });
-
-  test("Return 'normal' if the option does not support the provided state", () => {
-    expect(optionState(HOVER, { states: [NORMAL] })).toBe(NORMAL);
-    expect(optionState(HOVER, { states: [] })).toBe(NORMAL);
   });
 });
 
@@ -283,7 +322,7 @@ describe("Testing 'makeToolbarPropsFromConfigDefaults' function", () => {
         allowSidebarExtendFromThirdParty: false
       }
     ]
-  ])("%s", (testId, options, expected) => {
+  ])("%s", (_testTitle, options, expected) => {
     expect(makeToolbarPropsFromConfigDefaults(options)).toEqual(expected);
   });
 });

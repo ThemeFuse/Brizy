@@ -7,6 +7,11 @@ import { TypeChoices } from "./types";
 
 type Options = DynamicContent<"wp"> | DynamicContent<"cloud">;
 
+const isCloudDynamicContent = (
+  options: Options
+): options is DynamicContent<"cloud"> =>
+  "reference" in options && "multiReference" in options;
+
 export interface Choice {
   title: string;
   value: string;
@@ -49,28 +54,29 @@ const optionsToChoices = <T extends keyof Options>(
 };
 
 export const getDynamicContentChoices = (
-  // take a look later. This fn is using reference & multiReference
-  // which are available only in DynamicContent<"cloud">
-  options: DynamicContent<"cloud">,
+  options: DynamicContent<"wp"> | DynamicContent<"cloud">,
   type: TypeChoices
 ): (Choice | OptGroup)[] => {
   if (!options) {
     return [];
   }
   const choices = optionsToChoices(options[type]);
+
   const choicesReference: OptGroup[] = [];
 
-  // extract all options inclusive reference & multiReference
-  const { reference, multiReference } = options;
-  const refs = [...(reference ?? []), ...(multiReference ?? [])];
+  if (isCloudDynamicContent(options)) {
+    // extract all options inclusive reference & multiReference
+    const { reference, multiReference } = options;
+    const refs = [...(reference ?? []), ...(multiReference ?? [])];
 
-  refs.forEach(({ title, dynamicContent }) => {
-    const optgroup = optionsToChoices(dynamicContent[type]);
+    refs.forEach(({ title, dynamicContent }) => {
+      const optgroup = optionsToChoices(dynamicContent[type]);
 
-    if (optgroup.length) {
-      choicesReference.push({ optgroup, title });
-    }
-  });
+      if (optgroup.length) {
+        choicesReference.push({ optgroup, title });
+      }
+    });
+  }
 
   return [...choices, ...choicesReference];
 };

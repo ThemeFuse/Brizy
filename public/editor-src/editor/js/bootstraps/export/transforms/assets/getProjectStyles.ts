@@ -1,4 +1,3 @@
-import * as cheerio from "cheerio";
 import {
   getColorPaletteColors,
   makeRichTextColorPaletteCSS,

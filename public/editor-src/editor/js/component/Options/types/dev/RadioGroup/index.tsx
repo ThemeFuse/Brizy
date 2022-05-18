@@ -42,21 +42,18 @@ export const RadioGroup: FC<Props> & O.OptionType<SimpleValue<Literal>> = ({
   );
 };
 
-const getModel: O.GetModel<SimpleValue<Literal>> = get => ({
+const getModel: O.FromElementModel<SimpleValue<Literal>> = get => ({
   value: L.read(get("value"))
 });
 
-const getElementModel: O.GetElementModel<SimpleValue<Literal>> = (
-  values,
-  get
-) => {
+const getElementModel: O.ToElementModel<SimpleValue<Literal>> = values => {
   return {
-    [get("value")]: values.value
+    value: values.value
   };
 };
 
-RadioGroup.getModel = getModel;
+RadioGroup.fromElementModel = getModel;
 
-RadioGroup.getElementModel = getElementModel;
+RadioGroup.toElementModel = getElementModel;
 
 RadioGroup.defaultValue = { value: "" };

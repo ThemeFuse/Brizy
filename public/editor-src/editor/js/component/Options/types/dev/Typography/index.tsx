@@ -1,16 +1,19 @@
 import React, { FC, useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Prompts from "visual/component/Prompts";
 import { Typography as Control } from "visual/component/Controls/Typography";
 import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import {
   DEFAULT_VALUE,
-  fromGlobal,
-  getModel,
+  getValue,
   getElementModel,
-  patchFontFamily
+  getModel
 } from "./componentUtils";
-import { unDeletedFontSelector } from "visual/redux/selectors-new";
-import { useSelector } from "react-redux";
+import {
+  deviceModeSelector,
+  getDefaultFontDetailsSelector,
+  unDeletedFontsSelector
+} from "visual/redux/selectors";
 import {
   fontTransform,
   getFontStyles,
@@ -18,21 +21,17 @@ import {
 } from "visual/utils/fonts";
 import { currentUserRole } from "visual/component/Roles";
 import { t } from "visual/utils/i18n";
-import { getStore } from "visual/redux/store";
 import { updateUI } from "visual/redux/actions2";
-import * as Model from "./model";
 import { Config } from "./types/Config";
-import { FontSettings, Value } from "./types/Value";
+import { Value } from "./types/Value";
 import * as Option from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 import { OptionType } from "visual/component/Options/Type";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
-import { FontObject } from "./types/FontObject";
+import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { FontsBlock } from "./types/FontsBlocks";
 import { ReduxState } from "visual/redux/types";
 import { Font } from "./types/Font";
-import { Patch } from "./types/Patch";
-import { NoEmptyString } from "visual/utils/string/NoEmptyString";
-import { pipe } from "visual/utils/fp";
+import * as Patch from "./types/Patch";
+import * as FontWeight from "visual/utils/fonts/Weight";
 
 const openFontsUploader = (): void => {
   Prompts.open({
@@ -41,36 +40,22 @@ const openFontsUploader = (): void => {
   });
 };
 
-const openFontStyle = (): void => {
-  getStore().dispatch(
-    updateUI("leftSidebar", {
-      isOpen: true,
-      drawerContentType: "styling"
-    })
-  );
-};
-
-type FontsBlock = Partial<{
-  config: FontObject[];
-  blocks: FontObject[];
-  [FontFamilyType.google]: FontObject[];
-  [FontFamilyType.upload]: FontObject[];
-}>;
-
 export interface Props
-  extends Option.Props<Value>,
+  extends Option.Props<Value, Patch.Patch>,
     WithConfig<Config>,
     WithClassName {}
 
-export const Typography: OptionType<Value, Patch> & FC<Props> = ({
+export const Typography: OptionType<Value, Patch.Patch> & FC<Props> = ({
   value,
   onChange,
   config
 }) => {
-  const fontFamily = config?.fontFamily ?? true;
+  const dispatch = useDispatch();
   const unDeletedFonts = useSelector<ReduxState, ReduxState["fonts"]>(
-    unDeletedFontSelector
+    unDeletedFontsSelector
   );
+  const device = useSelector(deviceModeSelector);
+  const defaultFont = useSelector(getDefaultFontDetailsSelector);
   const fonts = useMemo<FontsBlock>(
     () =>
       Object.entries(unDeletedFonts).reduce((acc: FontsBlock, [k, d]) => {
@@ -80,45 +65,59 @@ export const Typography: OptionType<Value, Patch> & FC<Props> = ({
       }, {}),
     [unDeletedFonts]
   );
+  const _value = getValue(device, fonts, defaultFont, value);
+  const _onChange = useCallback(
+    (v: Value[keyof Value] | Font, meta: { isChanged: keyof Value }): void => {
+      const withFontFamily = config?.fontFamily !== false;
 
-  const patch = useCallback(
-    (
-      v: Value[keyof Value] | Font,
-      { isChanged }: { isChanged: keyof Value }
-    ): Patch => {
-      switch (isChanged) {
-        case "fontStyle":
-          return Model.patchFontStyle((v || undefined) as NoEmptyString);
-        case "fontFamily":
-        case "fontFamilyType":
-          return patchFontFamily(v as Font, fromGlobal(value));
+      switch (meta.isChanged) {
+        case "fontFamily": {
+          const { id, type, weights } = v as Font;
+          const patch = Patch.fontFamily({
+            ..._value,
+            fontFamily: id,
+            fontWeight: weights.includes(_value.fontWeight)
+              ? _value.fontWeight
+              : FontWeight.empty,
+            fontFamilyType: type
+          });
+          return withFontFamily
+            ? onChange({ ..._value, ...patch })
+            : onChange(patch);
+        }
+        case "fontStyle": {
+          return onChange(Patch.fontStyle(v as string));
+        }
         case "fontSize":
-        case "fontSizeSuffix":
         case "fontWeight":
         case "letterSpacing":
-        case "lineHeight": {
-          return fontFamily
-            ? Model.patchFontFamily(
-                isChanged as keyof FontSettings,
-                v as FontSettings[keyof FontSettings],
-                fromGlobal(value)
-              )
-            : Model.patchFontSettings(
-                isChanged as keyof FontSettings,
-                v as FontSettings[keyof FontSettings],
-                fromGlobal(value)
-              );
+        case "lineHeight":
+        case "fontSizeSuffix": {
+          const value = withFontFamily
+            ? Patch.fullFont({
+                ..._value,
+                [meta.isChanged]: v as Patch.FontSettings[keyof Patch.FontSettings]
+              })
+            : Patch.fontSettings({
+                ..._value,
+                [meta.isChanged]: v as Patch.FontSettings[keyof Patch.FontSettings]
+              });
+          return onChange(value);
         }
       }
     },
-    [onChange, value, fontFamily]
-  );
-  const _onChange = useCallback(
-    pipe(patch, v => getElementModel(v, k => k), onChange),
-    [patch, onChange]
+    [onChange, _value]
   );
 
-  const _value = fromGlobal(value);
+  const handleOpenStyles = useCallback(() => {
+    dispatch(
+      updateUI("leftSidebar", {
+        isOpen: true,
+        drawerContentType: "styling"
+      })
+    );
+  }, []);
+
   const styles = [{ id: "", title: t("Custom") }, ...getFontStyles()];
   const weights = getWeightChoices({
     type: _value.fontFamilyType,
@@ -128,14 +127,14 @@ export const Typography: OptionType<Value, Patch> & FC<Props> = ({
   return (
     <Control
       onChange={_onChange}
-      fontFamily={fontFamily}
+      fontFamily={config?.fontFamily}
       fonts={fonts}
       font={_value.fontFamily}
       fontAdd={currentUserRole() === "admin" ? openFontsUploader : undefined}
       fontAddLabel={t("Add New Font")}
       styles={styles}
       style={_value.fontStyle}
-      styleOpenSettings={openFontStyle}
+      styleOpenSettings={handleOpenStyles}
       size={_value.fontSize}
       sizeSuffix={_value.fontSizeSuffix}
       sizeSuffixes={SizeSuffix.getSuffixChoices}
@@ -143,12 +142,21 @@ export const Typography: OptionType<Value, Patch> & FC<Props> = ({
       weight={_value.fontWeight}
       lineHeight={_value.lineHeight}
       letterSpacing={_value.letterSpacing}
+      letterSpacingMin={config?.letterSpacing?.min ?? -20}
+      letterSpacingMax={config?.letterSpacing?.max ?? 20}
+      letterSpacingStep={0.1}
+      lineHeightMin={config?.lineHeight?.min ?? 1}
+      lineHeightMax={config?.lineHeight?.max ?? 10}
+      lineHeightStep={0.1}
+      sizeMin={config?.fontSize?.min ?? 0}
+      sizeMax={config?.fontSize?.max ?? 100}
+      sizeStep={1}
     />
   );
 };
 
-Typography.getModel = getModel;
+Typography.fromElementModel = getModel;
 
-Typography.getElementModel = getElementModel;
+Typography.toElementModel = getElementModel;
 
 Typography.defaultValue = DEFAULT_VALUE;

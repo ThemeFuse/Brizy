@@ -52,6 +52,7 @@ const loadYoutubeVideo = (
           event.target.unMute();
         }
         if (autoplay || (isCovered && !isIos)) {
+          event.target.mute();
           event.target.seekTo(start);
           event.target.playVideo();
         }
@@ -295,7 +296,6 @@ export default function($node) {
 function getVideoSrc($elem) {
   var $videoData = $elem.find(".brz-video-data");
   var $coverElem = $elem.find(".brz-video__cover");
-
   var src = $videoData.attr("data-src");
   var population = $videoData.attr("data-population");
   var controls = $videoData.attr("data-controls");

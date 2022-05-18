@@ -1,0 +1,45 @@
+@import "../mixins/shadow-dom";
+
+.brz-ed-control__filters {
+  &__hue {
+    @include slider-track(
+      (
+        "background-image":
+          linear-gradient(
+            to left,
+            #e1451d 0,
+            #fdff47 17%,
+            #86f9fe 50%,
+            #2900f8 65%,
+            #6e00f8 74%,
+            #e33df9 83%,
+            #e14423 100%
+          )
+      )
+    );
+  }
+
+  &__saturation {
+    @include slider-track(
+      (
+        "background-image": linear-gradient(to right, #40444d 30%, #0fe6a2 100%)
+      )
+    );
+  }
+
+  &__brightness {
+    @include slider-track(
+      (
+        "background-image": linear-gradient(to right, #40444d 0%, #f8f9fc 100%)
+      )
+    );
+  }
+
+  &__contrast {
+    @include slider-track(
+      (
+        "background-color": #454a50
+      )
+    );
+  }
+}

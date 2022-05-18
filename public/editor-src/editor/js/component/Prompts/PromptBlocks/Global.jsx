@@ -12,7 +12,7 @@ import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import {
   globalBlocksAssembledSelector,
   globalBlocksInPageSelector,
-  fontSelector
+  fontsSelector
 } from "visual/redux/selectors";
 import { deleteGlobalBlock } from "visual/redux/actions2";
 import {
@@ -224,7 +224,7 @@ class Global extends Component {
 const mapStateToProps = state => ({
   globalBlocks: globalBlocksAssembledSelector(state),
   globalBlocksInPage: globalBlocksInPageSelector(state),
-  projectFonts: fontSelector(state)
+  projectFonts: fontsSelector(state)
 });
 const mapDispatchToProps = dispatch => ({
   dispatch

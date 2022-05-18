@@ -1,15 +1,13 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
-import { capitalize } from "visual/utils/string";
+import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentChoices } from "visual/utils/options";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export function getItems({ v, device, context }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const isStyle1 = v.ratingStyle === "style1";
@@ -25,6 +23,8 @@ export function getItems({ v, device, context }) {
     context.dynamicContent.config,
     DCTypes.richText
   );
+
+  const { ratingScale } = v;
 
   return [
     {
@@ -45,6 +45,16 @@ export function getItems({ v, device, context }) {
               label: t("Rating"),
               roles: ["admin"],
               options: [
+                {
+                  id: "ratingScale",
+                  label: t("Rating scale"),
+                  type: "select-dev",
+                  devices: "desktop",
+                  choices: [
+                    { title: t("0-5"), value: 5 },
+                    { title: t("0-10"), value: 10 }
+                  ]
+                },
                 {
                   id: "ratingStyle",
                   label: t("Style"),
@@ -101,14 +111,14 @@ export function getItems({ v, device, context }) {
                   devices: "desktop",
                   config: {
                     min: 0,
-                    max: 5,
+                    max: ratingScale,
                     step: 0.1,
                     inputMin: 0,
-                    inputMax: 5,
+                    inputMax: ratingScale,
                     units: [
                       {
-                        title: "/5",
-                        value: "/5"
+                        title: `/${ratingScale}`,
+                        value: `/${ratingScale}`
                       }
                     ]
                   },
@@ -142,25 +152,15 @@ export function getItems({ v, device, context }) {
                   disabled: !isStyle1 && v.label === "off",
                   options: [
                     {
-                      id: dvk("iconSize"),
+                      id: "iconSize",
                       label: t("Size"),
-                      type: "radioGroup",
+                      type: "radioGroup-dev",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
                         { value: "large", icon: "nc-32" },
                         { value: "custom", icon: "nc-more" }
-                      ],
-                      value: dvv("iconSize"),
-                      onChange: value => {
-                        return {
-                          [dvk("iconSize")]: value,
-                          [dvk("iconCustomSize")]:
-                            value !== "custom"
-                              ? dvv(`icon${capitalize(value)}Size`)
-                              : dvv("iconCustomSize")
-                        };
-                      }
+                      ]
                     },
                     {
                       id: "iconCustomSize",
@@ -308,7 +308,8 @@ export function getItems({ v, device, context }) {
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
+      devices: "desktop",
+      sidebarLabel: t("Styling"),
       roles: ["admin"],
       position: 110,
       icon: "nc-cog"

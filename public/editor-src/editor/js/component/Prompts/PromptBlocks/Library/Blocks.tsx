@@ -8,17 +8,17 @@ import React, {
 import _ from "underscore";
 import Scrollbars from "react-custom-scrollbars";
 import classnames from "classnames";
+import { isT } from "fp-utilities";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import EditorIcon from "visual/component/EditorIcon";
-import { ArrayType } from "visual/utils/array/types";
 import SearchInput from "../common/SearchInput";
 import ThumbnailGrid from "../common/ThumbnailGrid";
 import DataFilter from "../common/DataFilter";
 import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
 import CloudConnect from "./CloudConnect";
-import { BlockCategory } from "../types";
-import { ApiBlockMetaWithType, BlocksThumbs } from "./index";
+import { BlockCategory, BlockTypes } from "../types";
+import { BlockData } from "./index";
 import { Button } from "../../common/Button";
 import { Footer } from "../common/Footer";
 
@@ -32,19 +32,19 @@ export interface Props {
   exportLoading?: boolean;
   search: string;
   loading: boolean;
-  items: BlocksThumbs;
+  items: Partial<Record<BlockTypes, BlockData[]>>;
   types: BlockCategory[];
   HeaderSlotLeft: ComponentType;
-  onChange: (b: ApiBlockMetaWithType) => void;
-  onDelete: (b: ApiBlockMetaWithType) => void;
-  onSync?: (b: ApiBlockMetaWithType) => void;
-  onExport?: (i: string[], type: BlockCategory["id"]) => void;
-  onImport?: (f: FileList, type: BlockCategory["id"]) => void;
+  onChange: (b: BlockData) => void;
+  onDelete: (b: BlockData) => void;
+  onSync?: (b: BlockData) => void;
+  onExport?: (i: string[], type: BlockTypes) => void;
+  onImport?: (f: FileList, type: BlockTypes) => void;
   onSuccessSync: VoidFunction;
 }
 
 interface BlocksFilter {
-  type: BlockCategory["id"];
+  type: BlockTypes;
   search: string;
 }
 
@@ -63,7 +63,7 @@ class Blocks extends Component<Props> {
     sidebarSync: true,
     search: "",
     loading: false,
-    items: [],
+    items: {},
     types: [],
     HeaderSlotLeft: Component,
     onChange: _.noop,
@@ -91,21 +91,21 @@ class Blocks extends Component<Props> {
 
   getTypesCounters = (): Counters => {
     const { items, types } = this.props;
+    const blocks = Object.values(items)
+      .filter(isT)
+      .flatMap(i => i);
     const counters: Counters = types.reduce((acc, { id }) => {
       return { ...acc, [id]: 0 };
     }, {});
 
-    items.forEach(({ type }) => {
+    blocks.forEach(({ type }) => {
       counters[type]++;
     });
 
     return counters;
   };
 
-  filterData = (
-    item: ArrayType<BlocksThumbs>,
-    currentFilter: BlocksFilter
-  ): boolean => {
+  filterData = (item: BlockData, currentFilter: BlocksFilter): boolean => {
     const typeMatch = currentFilter.type === item.type;
     const searchMatch =
       currentFilter.search === "" ||
@@ -128,7 +128,7 @@ class Blocks extends Component<Props> {
       onImport(files, type);
 
       // reset value after input have some files
-      if (node) {
+      if (node !== null) {
         node.value = "";
       }
     }
@@ -136,9 +136,11 @@ class Blocks extends Component<Props> {
 
   handleExport = (): void => {
     const { items, types, onExport } = this.props;
-    if (typeof onExport === "function") {
-      const type = this.getActiveType(types);
-      const blockIds = items
+    const type = this.getActiveType(types);
+    const blocks = items[type];
+
+    if (typeof onExport === "function" && blocks) {
+      const blockIds = blocks
         .filter(item => this.filterData(item, this.currentFilter))
         .map(block => block.uid);
 
@@ -206,7 +208,7 @@ class Blocks extends Component<Props> {
     );
   }
 
-  renderItems(items: BlocksThumbs): ReactElement {
+  renderItems(items: BlockData[]): ReactElement {
     const {
       thumbnailSync,
       thumbnailDownload,
@@ -222,7 +224,7 @@ class Blocks extends Component<Props> {
     return (
       <div className="brz-ed-popup-two-body__content brz-flex-xs-column">
         <Scrollbars style={scrollStyle}>
-          <ThumbnailGrid
+          <ThumbnailGrid<BlockData>
             showSync={thumbnailSync}
             showDownload={thumbnailDownload}
             data={items}
@@ -303,10 +305,13 @@ class Blocks extends Component<Props> {
       HeaderSlotLeft,
       onSuccessSync
     } = this.props;
+    const data = Object.values(items)
+      .filter(isT)
+      .flatMap(i => i);
 
     return (
-      <DataFilter<ArrayType<BlocksThumbs>, BlocksFilter>
-        data={items}
+      <DataFilter<BlockData, BlocksFilter>
+        data={data}
         filterFn={this.filterData}
         defaultFilter={this.getDefaultFilter(types)}
       >

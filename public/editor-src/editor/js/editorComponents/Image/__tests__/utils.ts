@@ -132,7 +132,8 @@ describe("Testing 'Getters Image' functions", () => {
       linkLightBox: "off",
       linkExternalType: "",
       linkPopup: "",
-      linkUpload: ""
+      linkUpload: "",
+      showOriginalImage: "off"
     };
 
     // without population

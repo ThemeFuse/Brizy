@@ -4,8 +4,8 @@ import EditorIcon from "visual/component/EditorIcon";
 
 export interface Props {
   className?: string;
-  type?: "button" | "link";
   color?: "gray" | "teal" | "red" | "default" | "pro";
+  type?: "button" | "link";
   size?: 1 | 2 | 3 | 4;
   rightIcon?: string;
   leftIcon?: string;
@@ -53,13 +53,26 @@ export const Button: FC<Props> = props => {
     </React.Fragment>
   );
 
-  return type === "button" ? (
-    <button className={className} onClick={onClick}>
-      {content}
-    </button>
-  ) : (
-    <a href={href} target={target} className={className} onClick={onClick}>
-      {content}
-    </a>
-  );
+  switch (type) {
+    case "link": {
+      return (
+        <a
+          className={className}
+          target={target}
+          href={href}
+          rel="noopener noreferrer"
+          onClick={onClick}
+        >
+          {content}
+        </a>
+      );
+    }
+    case "button": {
+      return (
+        <button className={className} onClick={onClick}>
+          {content}
+        </button>
+      );
+    }
+  }
 };

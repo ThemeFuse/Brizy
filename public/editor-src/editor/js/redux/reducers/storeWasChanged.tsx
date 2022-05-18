@@ -11,6 +11,7 @@ export const storeWasChanged: RStoreWasChanged = (state, action) => {
     }
     case "ADD_BLOCK":
     case "REMOVE_BLOCK":
+    case "REMOVE_BLOCKS":
     case "REORDER_BLOCKS":
     case "UPDATE_BLOCKS":
     case "UPDATE_GLOBAL_BLOCK": // @ts-expect-error: don't have in ts

@@ -37,14 +37,6 @@ class MenuDropDown extends Component<Props, State> {
     this.reposition();
   }
 
-  componentWillReceiveProps(): void {
-    const { position } = this.props;
-
-    if (this.state.position !== position) {
-      this.setState({ position });
-    }
-  }
-
   componentDidUpdate(): void {
     if (this.isReposition) {
       return;

@@ -21,7 +21,7 @@ import * as Blur from "visual/utils/cssProps/Blur";
 import * as Str from "visual/utils/string/specs";
 import * as Num from "visual/utils/math/number";
 import { Value } from "./entities/Value";
-import { GetModel } from "visual/component/Options/Type";
+import { FromElementModel } from "visual/component/Options/Type";
 import { mPipe } from "visual/utils/fp";
 import { TypeObject } from "visual/component/Controls/BoxShadow/types";
 import { ElementModel } from "visual/component/Elements/Types";
@@ -126,8 +126,8 @@ export const getTypeTitle = (type: T.Type): string => {
   }
 };
 
-export const getTypesItems = (): TypeObject[] =>
-  T.types.map(id => ({ id, title: getTypeTitle(id) }));
+export const getTypesItems = (ts: T.Type[]): TypeObject[] =>
+  ts.map(id => ({ id, title: getTypeTitle(id) }));
 
 /**
  * Converts a legacy box shadow value to a valid box shadow type value
@@ -160,7 +160,7 @@ export const toLegacyType = (v: T.Type): "" | "on" | T.Type => {
  * @param get
  * @return {object}
  */
-export const fromElementModel: GetModel<Value> = get => {
+export const fromElementModel: FromElementModel<Value> = get => {
   const partial = {
     type: mPipe(() => get("value"), Str.read, fromLegacyType)() ?? T.empty,
     opacity:
@@ -214,26 +214,23 @@ export const fromElementModel: GetModel<Value> = get => {
 /**
  * Converts box shadow model to db model
  */
-export const toElementModel = (
-  m: Value,
-  get: (k: string) => string
-): ElementModel => {
+export const toElementModel = (m: Value): ElementModel => {
   return {
-    [get("value")]: toLegacyType(m.type),
-    [get("tempValue")]: toLegacyType(m.tempType),
-    [get("colorHex")]: m.hex,
-    [get("colorPalette")]: m.palette,
-    [get("tempColorPalette")]: m.tempPalette,
-    [get("colorOpacity")]: m.opacity,
-    [get("tempColorOpacity")]: m.tempOpacity,
-    [get("blur")]: m.blur,
-    [get("tempBlur")]: m.tempBlur,
-    [get("spread")]: m.spread,
-    [get("tempSpread")]: m.tempSpread,
-    [get("vertical")]: m.vertical,
-    [get("tempVertical")]: m.tempVertical,
-    [get("horizontal")]: m.horizontal,
-    [get("tempHorizontal")]: m.tempHorizontal
+    value: toLegacyType(m.type),
+    tempValue: toLegacyType(m.tempType),
+    colorHex: m.hex,
+    colorPalette: m.palette,
+    tempColorPalette: m.tempPalette,
+    colorOpacity: m.opacity,
+    tempColorOpacity: m.tempOpacity,
+    blur: m.blur,
+    tempBlur: m.tempBlur,
+    spread: m.spread,
+    tempSpread: m.tempSpread,
+    vertical: m.vertical,
+    tempVertical: m.tempVertical,
+    horizontal: m.horizontal,
+    tempHorizontal: m.tempHorizontal
   };
 };
 

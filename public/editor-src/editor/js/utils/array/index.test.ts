@@ -215,7 +215,7 @@ describe("Testing 'read' function", function() {
   });
 
   test("If the value is an empty array, return empty array, regardless of reader", () => {
-    const reader = (i: unknown): undefined => undefined;
+    const reader = (): undefined => undefined;
     expect(read(reader, [])).toEqual([]);
   });
 
@@ -405,7 +405,7 @@ describe("Testing 'fromString' function", () => {
   });
 
   test("If the value is an empty array, return empty array, regardless of reader", () => {
-    const reader = (i: unknown): undefined => undefined;
+    const reader = (): undefined => undefined;
     expect(fromString(reader, "[]")).toEqual([]);
   });
 

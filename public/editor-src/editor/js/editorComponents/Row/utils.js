@@ -20,3 +20,13 @@ export function normalizeRowColumns(columns) {
     return setIn(column, ["value", "width"], width);
   });
 }
+
+export function getElemWidthWithoutPaddings(node) {
+  const styles = window.getComputedStyle(node);
+
+  return (
+    node.clientWidth -
+    parseFloat(styles.paddingLeft) -
+    parseFloat(styles.paddingRight)
+  );
+}

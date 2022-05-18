@@ -1,11 +1,13 @@
 import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Items from "./items";
 import defaultValue from "./defaultValue.json";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import Toolbar from "visual/component/Toolbar";
 import Animation from "visual/component/Animation";
+import * as toolbarConfig from "./toolbar";
 
 class SwitcherTab extends EditorComponent {
   static get componentId() {
@@ -23,18 +25,23 @@ class SwitcherTab extends EditorComponent {
   };
 
   renderNav(v) {
-    const { labelText } = v;
-    const { active, onChangeNav, toolbarExtend } = this.props;
+    const { iconName, iconType, labelText } = v;
+    const { active, onChangeNav } = this.props;
     const className = classnames("brz-switcher__nav--item", {
       "brz-switcher__nav--item--active": active
     });
 
     return (
-      <Toolbar {...toolbarExtend}>
-        <div className={className} onClick={onChangeNav}>
-          <TextEditor value={labelText} onChange={this.handleLabelChange} />
-        </div>
-      </Toolbar>
+      <div className={className} onClick={onChangeNav}>
+        <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+          <div className="brz-switcher__nav--button">
+            {iconName && iconType && (
+              <ThemeIcon name={iconName} type={iconType} />
+            )}
+            <TextEditor value={labelText} onChange={this.handleLabelChange} />
+          </div>
+        </Toolbar>
+      </div>
     );
   }
 
@@ -48,7 +55,7 @@ class SwitcherTab extends EditorComponent {
     const className = classnames(
       "brz-switcher__content--tab",
       "brz-flex-xs-column",
-      { "brz-switcher__content--tab--active": active, }
+      { "brz-switcher__content--tab--active": active }
     );
     const itemsProps = this.makeSubcomponentProps({
       meta,
@@ -61,7 +68,7 @@ class SwitcherTab extends EditorComponent {
         iterationCount={
           IS_PREVIEW && (sectionPopup || sectionPopup2) ? Infinity : 1
         }
-        component={"div"}
+        component="div"
         componentProps={{ className }}
         animationClass={animationClassName}
       >

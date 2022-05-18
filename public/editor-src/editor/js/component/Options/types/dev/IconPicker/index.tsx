@@ -3,7 +3,6 @@ import * as Option from "visual/component/Options/Type";
 import { WithClassName } from "visual/utils/options/attributes";
 import classNames from "classnames";
 import { Value, Choice } from "./types";
-import { identity } from "underscore";
 import { FatIcon } from "visual/component/Controls/FatIcon";
 import { FatIconsGrid } from "visual/component/FatIconsGrid";
 import { getElementModel, getModel } from "./utils";
@@ -27,7 +26,7 @@ export const IconPicker: React.FC<Props> & Option.OptionType<Value> = ({
           icon={icon}
           label={title}
           active={id === value}
-          onClick={(): void => onChange(getElementModel(id, identity))}
+          onClick={(): void => onChange(id)}
         />
       )),
     [choices]
@@ -41,9 +40,7 @@ export const IconPicker: React.FC<Props> & Option.OptionType<Value> = ({
   );
 };
 
-IconPicker.getModel = getModel;
-IconPicker.getElementModel = getElementModel;
+IconPicker.fromElementModel = getModel;
+IconPicker.toElementModel = getElementModel;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
 IconPicker.defaultValue = undefined;

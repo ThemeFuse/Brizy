@@ -23,12 +23,11 @@ export const Alert: React.FC<Props> & Option.OptionType<undefined> = ({
   );
 };
 
-const getModel: Option.GetModel<undefined> = () => undefined;
-const getElementModel: Option.GetElementModel<undefined> = () => ({});
+const getModel: Option.FromElementModel<undefined> = () => undefined;
+const getElementModel: Option.ToElementModel<undefined> = () => ({});
 
-Alert.getModel = getModel;
-Alert.getElementModel = getElementModel;
+Alert.fromElementModel = getModel;
+Alert.toElementModel = getElementModel;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
+// @ts-expect-error: Variable 'defaultValue' implicitly has an 'any' type
 Alert.defaultValue = undefined;

@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Toolbar from "visual/component/Toolbar";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import Items from "./Items";
 import * as toolbarConfig from "./toolbar";

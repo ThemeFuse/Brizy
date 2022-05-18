@@ -11,6 +11,7 @@ export interface Props extends WithClassName {
   onCheck?: VoidFunction;
   active?: boolean;
   checked?: boolean;
+  disabled?: boolean;
 }
 
 export const FatCheckIcon = ({
@@ -20,7 +21,8 @@ export const FatCheckIcon = ({
   icon,
   label,
   onCheck,
-  onClick
+  onClick,
+  disabled
 }: Props): ReactElement => {
   const _onCheck = useCallback<MouseEventHandler>(
     e => {
@@ -32,16 +34,27 @@ export const FatCheckIcon = ({
 
   return (
     <div
-      className={classNames(className, "brz-ed--fat-check-icon", {
-        "brz-ed--active": !!active
-      })}
+      className={classNames(
+        className,
+        "brz-ed--fat-icon",
+        "brz-ed--fat-check-icon",
+        {
+          "brz-ed--fat-icon__active": !!active,
+          "brz-ed--fat-icon__disabled": !!disabled
+        }
+      )}
       onClick={onClick}
+      title={label}
     >
-      <div className={"brz-ed--icon-wrapper"}>
-        <CheckMark checked={!!checked} onClick={_onCheck} className={"check"} />
+      <div className={"brz-ed--fat-icon__wrapper"}>
+        <CheckMark
+          checked={!!checked}
+          onClick={_onCheck}
+          className={"brz-ed--fat-check-icon__check"}
+        />
         <EditorIcon icon={icon} />
       </div>
-      <div className={"brz-ed-label"}>{label}</div>
+      <div className={"brz-ed--fat-icon__label"}>{label}</div>
     </div>
   );
 };

@@ -1,25 +1,53 @@
 import { t } from "visual/utils/i18n";
-import {
-  toolbarEntranceAnimation,
-  toolbarPaddingFourFields
-} from "visual/utils/toolbar";
-import { getAnimationsTabs } from "visual/utils/options/getAnimations";
+import { tabEffects } from "visual/component/Options/types/dev/Animation/utils";
 
-export const title = t("Tabs Items");
-
-export function getItems({ v, device }) {
+export function getItems() {
   return [
-    toolbarPaddingFourFields({
-      v,
-      device,
-      state: "normal",
-      onChangeGrouped: ["onChangePaddingGrouped"],
-      onChangeUngrouped: ["onChangePaddingUngrouped"]
-    }),
-    toolbarEntranceAnimation({
-      v,
-      device,
-      choices: getAnimationsTabs()
-    })
+    {
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
+      tabs: [
+        {
+          id: "styles",
+          title: t("Styling"),
+          label: t("Styling"),
+          options: [
+            {
+              id: "padding",
+              type: "padding-dev",
+              label: t("Padding"),
+              position: 50
+            }
+          ]
+        },
+        {
+          id: "effects",
+          title: t("Effects"),
+          label: t("Effects"),
+          options: [
+            {
+              id: "tabs",
+              type: "tabs-dev",
+
+              tabs: [
+                {
+                  id: "entrance",
+                  label: t("Entrance"),
+                  options: [
+                    {
+                      id: "animation",
+                      type: "animation-dev",
+                      config: {
+                        types: tabEffects
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
   ];
 }

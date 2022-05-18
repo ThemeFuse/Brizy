@@ -3,7 +3,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
 import CustomCSS from "visual/component/CustomCSS";
 import BoxResizer from "visual/component/BoxResizer";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
@@ -18,6 +18,7 @@ import { css } from "visual/utils/cssStyle";
 import { customFileUrl } from "visual/utils/customFile";
 import defaultValue from "./defaultValue.json";
 import { Wrapper } from "../tools/Wrapper";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 
 const resizerPoints = [
   "topLeft",
@@ -111,15 +112,42 @@ class Audio extends EditorComponent {
   }
 
   renderSoundCloud(v) {
-    const { url, autoPlay, showArtwork } = v;
+    const {
+      url,
+      autoPlay,
+      showArtwork,
+      likeButton,
+      buyButton,
+      downloadButton,
+      shareButton,
+      comments,
+      playCounts,
+      username,
+      artWork,
+      controlsHex,
+      controlsPalette
+    } = v;
     // intrinsic-ignore - this class is needed for WP theme twentytwenty(themes/twentytwenty/assets/js/index.js?ver=1.1)
     // intrinsicRatioVideos - property contain function - makeFit which changes iframes width
     // and breaks our code(video, map inside megamenu isn't showing as example)
-    const wrapperClassName = classnames("brz-iframe","intrinsic-ignore", {
+    const wrapperClassName = classnames("brz-iframe", "intrinsic-ignore", {
       "brz-blocked": IS_EDITOR
     });
-    const src = `https://w.soundcloud.com/player/?url=${url}&amp;auto_play=${autoPlay ===
-      "on"}&amp;how_teaser=true&amp;visual=${showArtwork === "on"}&amp;`;
+
+    const { hex: controlsColorHex } = getOptionColorHexByPalette(
+      controlsHex,
+      controlsPalette
+    );
+
+    const controlsColor = controlsColorHex.split("#")[1];
+
+    const src = `https://w.soundcloud.com/player/?url=${url}&auto_play=${autoPlay ===
+      "on"}&how_teaser=true&visual=${showArtwork ===
+      "on"}&color=${controlsColor}&buying=${buyButton ===
+      "on"}&sharing=${shareButton === "on"}&download=${downloadButton ===
+      "on"}&show_artwork=${artWork === "on"}&show_playcount=${playCounts ===
+      "on"}&show_user=${username === "on"}&show_comments=${comments ===
+      "on"}&liking=${likeButton === "on"}&`;
 
     return url ? (
       <div className="brz-soundCloud-content">

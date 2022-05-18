@@ -1,6 +1,4 @@
-import { read, isObject, hasKey, hasKeys } from "./object";
-import { read as readString } from "./string";
-import { read as readNumber } from "./number";
+import { isObject, hasKey, hasKeys } from "./object";
 
 test("Testing 'isObject' function", () => {
   expect(isObject(undefined)).toBe(false);
@@ -25,10 +23,6 @@ test("Testing 'hasKey' function", () => {
   expect(hasKey("a", { a: "a" })).toEqual(true);
   expect(hasKey("a", { aa: "aa" })).toEqual(false);
   expect(hasKey("b", { a: "a" })).toEqual(false);
-
-  expect(hasKey("length", [])).toEqual(true);
-  expect(hasKey("0", ["a"])).toEqual(true);
-  expect(hasKey("0", [])).toEqual(false);
 });
 
 test("Testing 'hasKeys' function", () => {

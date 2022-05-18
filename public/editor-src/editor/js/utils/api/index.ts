@@ -119,9 +119,15 @@ export const updateBlockScreenshot: UpdateScreenshot = ({ id, base64 }) => {
 
 //#region saved blocks
 
-export const getSavedBlocks: GetSavedBlocksMeta = () => {
+export const getSavedBlocks: GetSavedBlocksMeta = pagination => {
+  // TODO: right now cloud doesn't support orderBy
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { order, ..._pagination } = pagination || {};
   const requestData = {
     ...paginationData,
+    ..._pagination,
+    // TODO: Temporary need review api
+    // orderBy: pagination?.order ?? "ASC",
     "fields[0]": "id",
     "fields[1]": "meta"
   };
@@ -156,14 +162,14 @@ export const createSavedBlock: CreateSavedBlock = (
   const apiUrl = Config.get("urls").api;
   const { data, dataVersion, uid, meta } = stringifySavedBlock(savedBlock);
   const containerId = Config.get("container").id;
-  const { is_autosave = 0 } = extraMeta; // eslint-disable-line @typescript-eslint/camelcase
+  const { is_autosave = 0 } = extraMeta;
   const media = makeBlockMeta(savedBlock);
 
   const requestData = {
     uid,
     data,
     dataVersion,
-    is_autosave, // eslint-disable-line @typescript-eslint/camelcase
+    is_autosave,
     meta,
     media,
     container: containerId
@@ -252,9 +258,15 @@ export const uploadSavePopups: UploadSavedPopups = async files => {
 
 //#region saved layouts
 
-export const getSavedLayouts: GetSavedLayoutsMeta = () => {
+export const getSavedLayouts: GetSavedLayoutsMeta = pagination => {
+  // TODO: right now cloud doesn't support orderBy
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { order, ..._pagination } = pagination || {};
   const requestData = {
     ...paginationData,
+    ..._pagination,
+    // TODO: Temporary need review api
+    // orderBy: pagination?.order ?? "ASC",
     "fields[0]": "id",
     "fields[1]": "meta"
   };
@@ -288,13 +300,13 @@ export const createSavedLayout: CreateSavedLayout = (
   const apiUrl = Config.get("urls").api;
   const { data, dataVersion, uid, meta } = stringifySavedBlock(savedLayout);
   const containerId = Config.get("container").id;
-  const { is_autosave = 0 } = extraMeta; // eslint-disable-line @typescript-eslint/camelcase
+  const { is_autosave = 0 } = extraMeta;
   const media = makeBlockMeta(savedLayout);
   const requestData = {
     data,
     dataVersion,
     uid,
-    is_autosave, // eslint-disable-line @typescript-eslint/camelcase
+    is_autosave,
     meta,
     media,
     container: containerId
@@ -450,7 +462,7 @@ export const shopifySyncRules = (
 
   const body = new URLSearchParams({
     page: `${page.id}`,
-    // eslint-disable-next-line @typescript-eslint/camelcase, @typescript-eslint/no-unused-vars
+     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     assigned_items: JSON.stringify(rules.map(({ selected, ...i }) => i)),
     title
   });
@@ -475,9 +487,7 @@ export const shopifySyncArticle = (
 
   const body = new URLSearchParams({
     page: `${page.id}`,
-    // eslint-disable-next-line @typescript-eslint/camelcase
     blog_id: blogId,
-    // eslint-disable-next-line @typescript-eslint/camelcase
     blog_title: blogTitle,
     title: title
   });
@@ -498,7 +508,6 @@ export const shopifySyncPage = (title: string): Promise<void> => {
 
   const body = new URLSearchParams({
     page: `${page.id}`,
-    // eslint-disable-next-line @typescript-eslint/camelcase
     blog_title: title,
     title
   });

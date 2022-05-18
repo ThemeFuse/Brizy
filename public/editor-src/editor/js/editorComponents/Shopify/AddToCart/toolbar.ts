@@ -44,6 +44,7 @@ export const getItems = ({
                 {
                   id: "iconImage",
                   label: t("Icon"),
+                  // @ts-expect-error old option
                   type: "iconSetter",
                   canDelete: true,
                   value: {
@@ -217,7 +218,8 @@ export const getItems = ({
       id: "toolbarSettings",
       type: "popover-dev",
       config: {
-        icon: "nc-cog"
+        icon: "nc-cog",
+        title: t("Settings")
       },
       position: 110,
       options: [
@@ -243,6 +245,7 @@ export const getItems = ({
         },
         {
           id: "advancedSettings",
+          // @ts-expect-error old option
           type: "advancedSettings",
           devices: "desktop",
           label: t("More Settings"),

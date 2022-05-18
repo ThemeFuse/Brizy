@@ -61,7 +61,7 @@ export const getItems = canRegister => ({ v }) => {
                 },
                 {
                   id: "defaultRoles",
-                  type: "multiSelect2-dev",
+                  type: "multiSelect-dev",
                   label: t("Default Roles"),
                   devices: "desktop",
                   placeholder: "none",

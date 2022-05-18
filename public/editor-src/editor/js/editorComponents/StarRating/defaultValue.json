@@ -22,14 +22,15 @@
     "className": "",
 
     "label": "on",
+    "ratingScale": 5,
     "ratingStyle": "style1",
 
     "text": "Rating",
-    "textPopulation": null,
+    "textPopulation": "",
 
     "rating": 2.5,
     "ratingSuffix": null,
-    "ratingPopulation": null,
+    "ratingPopulation": "",
 
     "spacing": 15,
     "spacingSuffix": null,
@@ -135,6 +136,8 @@
     "tabletIconLargeSize": null,
 
     "tabletIconSpacing": null,
+    "tabletIconSpacingSuffix": null,
+
     "tabletBorderRadius": null,
     "tabletBorderRadiusSuffix": null,
 
@@ -158,6 +161,8 @@
     "mobileIconLargeSize": null,
 
     "mobileIconSpacing": null,
+    "mobileIconSpacingSuffix": null,
+
     "mobileBorderRadius": null,
     "mobileBorderRadiusSuffix": null,
 

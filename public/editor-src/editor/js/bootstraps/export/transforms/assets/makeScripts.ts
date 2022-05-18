@@ -1,4 +1,3 @@
-import * as cheerio from "cheerio";
 import Config from "visual/global/Config";
 import LibsConfig from "visual/bootstraps/libs.json";
 import { assetUrl } from "visual/utils/asset";

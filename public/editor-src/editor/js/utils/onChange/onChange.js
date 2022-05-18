@@ -1,4 +1,4 @@
-import { capitalize, capByPrefix } from "visual/utils/string";
+import { capitalize } from "visual/utils/string";
 import * as onChanges from "visual/utils/onChange";
 import { defaultValueKey, defaultValueValue } from "./device";
 
@@ -545,30 +545,6 @@ export function onChangeDependeciesGrouped({
         return arr;
       }, {})
     );
-
-    return arr;
-  }, {});
-
-  return r;
-}
-
-export function onChangeDependeciesGrouped2({
-  v,
-  device = "desktop",
-  state = "normal",
-  value,
-  dependencies
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  const r = dependencies.reduce((arr, item) => {
-    arr[dvk(item)] =
-      value === 0 || value === ""
-        ? isNaN(dvv(item))
-          ? ""
-          : 0
-        : dvv(capByPrefix("temp", capitalize(item)));
 
     return arr;
   }, {});

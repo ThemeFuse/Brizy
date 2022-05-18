@@ -99,6 +99,18 @@
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
 
+    "borderRadiusSuffix": 0,
+    "borderTopLeftRadiusSuffix": 0,
+    "borderTopRightRadiusSuffix": 0,
+    "borderBottomRightRadiusSuffix": 0,
+    "borderBottomLeftRadiusSuffix": 0,
+
+    "tempBorderRadiusSuffix": 0,
+    "tempBorderTopLeftRadiusSuffix": 0,
+    "tempBorderTopRightRadiusSuffix": 0,
+    "tempBorderBottomRightRadiusSuffix": 0,
+    "tempBorderBottomLeftRadiusSuffix": 0,
+
     "hoverBorderRadiusType": null,
     "hoverBorderRadius": null,
     "hoverBorderTopLeftRadius": null,
@@ -125,6 +137,18 @@
     "tempTabletBorderBottomLeftRadius": null,
     "tempTabletBorderBottomRightRadius": null,
 
+    "tabletBorderRadiusSuffix": null,
+    "tabletBorderTopLeftRadiusSuffix": null,
+    "tabletBorderTopRightRadiusSuffix": null,
+    "tabletBorderBottomLeftRadiusSuffix": null,
+    "tabletBorderBottomRightRadiusSuffix": null,
+
+    "tempTabletBorderRadiusSuffix": null,
+    "tempTabletBorderTopLeftRadiusSuffix": null,
+    "tempTabletBorderTopRightRadiusSuffix": null,
+    "tempTabletBorderBottomLeftRadiusSuffix": null,
+    "tempTabletBorderBottomRightRadiusSuffix": null,
+
     "mobileBorderRadiusType": null,
     "mobileBorderRadius": null,
     "mobileBorderTopLeftRadius": null,
@@ -137,6 +161,18 @@
     "tempMobileBorderTopRightRadius": null,
     "tempMobileBorderBottomLeftRadius": null,
     "tempMobileBorderBottomRightRadius": null,
+
+    "mobileBorderRadiusSuffix": null,
+    "mobileBorderTopLeftRadiusSuffix": null,
+    "mobileBorderTopRightRadiusSuffix": null,
+    "mobileBorderBottomLeftRadiusSuffix": null,
+    "mobileBorderBottomRightRadiusSuffix": null,
+
+    "tempMobileBorderRadiusSuffix": null,
+    "tempMobileBorderTopLeftRadiusSuffix": null,
+    "tempMobileBorderTopRightRadiusSuffix": null,
+    "tempMobileBorderBottomLeftRadiusSuffix": null,
+    "tempMobileBorderBottomRightRadiusSuffix": null,
 
     "borderColorHex": "#66738d",
     "borderColorOpacity": 0,
@@ -196,6 +232,18 @@
     "tempThumbnailBorderBottomRightRadius": 0,
     "tempThumbnailBorderBottomLeftRadius": 0,
 
+    "thumbnailBorderRadiusSuffix": "px",
+    "thumbnailBorderTopLeftRadiusSuffix": "px",
+    "thumbnailBorderTopRightRadiusSuffix": "px",
+    "thumbnailBorderBottomRightRadiusSuffix": "px",
+    "thumbnailBorderBottomLeftRadiusSuffix": "px",
+
+    "tempThumbnailBorderRadiusSuffix": "px",
+    "tempThumbnailBorderTopLeftRadiusSuffix": "px",
+    "tempThumbnailBorderTopRightRadiusSuffix": "px",
+    "tempThumbnailBorderBottomRightRadiusSuffix": "px",
+    "tempThumbnailBorderBottomLeftRadiusSuffix": "px",
+
     "hoverThumbnailBorderRadiusType": null,
     "hoverThumbnailBorderRadius": null,
     "hoverThumbnailBorderTopLeftRadius": null,
@@ -222,6 +270,18 @@
     "tempTabletThumbnailBorderBottomLeftRadius": null,
     "tempTabletThumbnailBorderBottomRightRadius": null,
 
+    "tabletThumbnailBorderRadiusSuffix": null,
+    "tabletThumbnailBorderTopLeftRadiusSuffix": null,
+    "tabletThumbnailBorderTopRightRadiusSuffix": null,
+    "tabletThumbnailBorderBottomLeftRadiusSuffix": null,
+    "tabletThumbnailBorderBottomRightRadiusSuffix": null,
+
+    "tempTabletThumbnailBorderRadiusSuffix": null,
+    "tempTabletThumbnailBorderTopLeftRadiusSuffix": null,
+    "tempTabletThumbnailBorderTopRightRadiusSuffix": null,
+    "tempTabletThumbnailBorderBottomLeftRadiusSuffix": null,
+    "tempTabletThumbnailBorderBottomRightRadiusSuffix": null,
+
     "mobileThumbnailBorderRadiusType": null,
     "mobileThumbnailBorderRadius": null,
     "mobileThumbnailBorderTopLeftRadius": null,
@@ -234,6 +294,18 @@
     "tempMobileThumbnailBorderTopRightRadius": null,
     "tempMobileThumbnailBorderBottomLeftRadius": null,
     "tempMobileThumbnailBorderBottomRightRadius": null,
+
+    "mobileThumbnailBorderRadiusSuffix": null,
+    "mobileThumbnailBorderTopLeftRadiusSuffix": null,
+    "mobileThumbnailBorderTopRightRadiusSuffix": null,
+    "mobileThumbnailBorderBottomLeftRadiusSuffix": null,
+    "mobileThumbnailBorderBottomRightRadiusSuffix": null,
+
+    "tempMobileThumbnailBorderRadiusSuffix": null,
+    "tempMobileThumbnailBorderTopLeftRadiusSuffix": null,
+    "tempMobileThumbnailBorderTopRightRadiusSuffix": null,
+    "tempMobileThumbnailBorderBottomLeftRadiusSuffix": null,
+    "tempMobileThumbnailBorderBottomRightRadiusSuffix": null,
 
     "thumbnailBorderColorHex": "#66738d",
     "thumbnailBorderColorOpacity": 0,

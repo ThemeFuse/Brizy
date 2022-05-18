@@ -3,14 +3,9 @@ import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import { getStore } from "visual/redux/store";
 import { updateUI } from "visual/redux/actions2";
-import { deviceModeSelector, uiSelector } from "visual/redux/selectors";
-import { DESKTOP } from "visual/utils/responsiveMode";
+import { uiSelector } from "visual/redux/selectors";
 
 export default class AdvancedSettingsOptionType extends React.Component {
-  static shouldOptionBeFiltered() {
-    return deviceModeSelector(getStore().getState()) !== DESKTOP;
-  }
-
   static defaultProps = {
     className: "",
     icon: "nc-cog",

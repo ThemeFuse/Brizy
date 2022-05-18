@@ -25,5 +25,9 @@
     > .brz-bg {
       left: auto;
     }
+    [data-scroll-motion] {
+      width: 100%;
+      max-width: 100%;
+    }
   }
 }

@@ -88,7 +88,7 @@ export type CreateIntegrationAccount = (data: {
 export type CreateIntegrationList = (data: {
   formId: string;
   id: string;
-  data: {};
+  data: Record<string, string>;
   usedAccount: string;
 }) => Promise<Response>;
 
@@ -113,10 +113,9 @@ export type CreateSmptIntegration = (data: {
 }) => Promise<SmptIntegrationResponse>;
 
 export type UpdateSmptIntegration = (data: {
+  [k: string]: string | boolean;
   formId: string;
-  id: string;
-  subject: string;
-  emailTo: string;
+  completed: boolean;
 }) => Promise<SmptIntegrationResponse>;
 
 // Recaptcha

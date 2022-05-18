@@ -304,7 +304,12 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return string[]
 	 */
 	public function getEntityValues() {
-		return $this->entityValues;
+        return array_map(function ($v) {
+			if(is_numeric($v))
+                return (int)$v;
+			else
+				return $v;
+        }, $this->entityValues);
 	}
 
 	/**

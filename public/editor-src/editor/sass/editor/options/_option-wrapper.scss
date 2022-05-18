@@ -6,18 +6,16 @@
 
     & > * {
       flex: 1 1 auto;
+      max-width: 100%;
     }
-
     & > .brz-ed-option__label,
     & > .brz-control__select-population {
       flex: none;
     }
-
     & > .brz-ed-option__label {
       width: 100%;
     }
   }
-
   &.brz-ed-grid__option {
     padding: 0;
   }

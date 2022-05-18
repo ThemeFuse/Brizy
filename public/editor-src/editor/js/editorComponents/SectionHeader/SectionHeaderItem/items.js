@@ -1,6 +1,7 @@
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Sortable from "visual/component/Sortable";
+import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
@@ -60,7 +61,9 @@ class SectionHeaderItemItems extends EditorArrayComponent {
       "paste",
       "pasteStyles",
       "delete",
-      "horizontalAlign"
+      "horizontalAlign",
+      "showSidebarStyling",
+      "showSidebarAdvanced"
     ];
 
     return (
@@ -84,9 +87,17 @@ class SectionHeaderItemItems extends EditorArrayComponent {
       return <div className={this.props.className}>{items}</div>;
     }
 
-    const sortableContent = items.length ? (
-      <div className={this.props.className}>{items}</div>
-    ) : null;
+    if (items.length === 0) {
+      return (
+        <div className={this.props.className}>
+          <SortableEmpty
+            path={this.getId()}
+            type="section"
+            acceptElements={["row", "column", "shortcode", "addable"]}
+          />
+        </div>
+      );
+    }
 
     return (
       <Sortable
@@ -94,7 +105,7 @@ class SectionHeaderItemItems extends EditorArrayComponent {
         type="section"
         acceptElements={["row", "column", "shortcode", "addable"]}
       >
-        {sortableContent}
+        <div className={this.props.className}>{items}</div>
       </Sortable>
     );
   }

@@ -141,7 +141,8 @@ export default class Timeline extends EditorComponent {
         meta: this.getMeta(v),
         toolbarExtendLabel: this.makeToolbarPropsFromConfig2(
           toolbarExtendLabel,
-          sidebarExtendLabel
+          sidebarExtendLabel,
+          { allowExtend: false }
         )
       },
       toolbarExtend: this.makeToolbarPropsFromConfig2(

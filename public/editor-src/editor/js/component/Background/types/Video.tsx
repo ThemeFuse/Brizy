@@ -100,8 +100,6 @@ const Video: React.FC<Props> = ({ video, videoLoop, videoStart, children }) => {
       src={src}
       data-src={src}
       className="brz-iframe intrinsic-ignore brz-bg-video__cover"
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
       loading="lazy"
       style={iframeStyle}
     />

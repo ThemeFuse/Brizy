@@ -39,6 +39,7 @@ class WPBreadcrumbs extends EditorComponent {
           <Wrapper {...this.makeWrapperProps({ className: classNameBC })}>
             <DynamicContentHelper
               placeholder="{{editor_breadcrumbs}}"
+              placeholderIcon="wp-breadcrumbs"
               tagName="div"
               blocked={false}
             />

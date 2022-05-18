@@ -1,9 +1,8 @@
 import { ElementType } from "react";
 
 class BaseAppElement {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   static onBeforeLoad(c: unknown, p: unknown): void | Promise<void> {
-    console.log("onBeforeLoad");
+    console.log("onBeforeLoad", c, p);
   }
 }
 

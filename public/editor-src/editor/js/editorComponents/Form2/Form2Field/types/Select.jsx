@@ -6,7 +6,7 @@ import { replaceAt, addLast, removeAt } from "timm";
 import TextField from "./common/TextField";
 import Portal from "visual/component/Portal";
 import EditorIcon from "visual/component/EditorIcon";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import ClickOutside from "visual/component/ClickOutside";
 import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";

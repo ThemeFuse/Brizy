@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useCallback } from "react";
 import { rolesHOC } from "visual/component/Roles";
 import { hideToolbar, showLastHiddenToolbar } from "visual/component/Toolbar";
@@ -22,6 +21,8 @@ type Props = {
   value: V;
   meta?: Meta;
   onChange: (data: Patch["patch"]) => void;
+  onStart?: VoidFunction;
+  onEnd?: VoidFunction;
 };
 
 let startValue: RM | null = null;
@@ -63,12 +64,22 @@ const BoxResizer: React.FC<Props> = ({
   // add useCallback hook
   const handleStart = (): void => {
     startValue = getValue();
-    hideToolbar();
+    hideToolbar({ hideContainerBorder: false });
+
+    const { onStart } = props;
+    if (typeof onStart === "function") {
+      onStart();
+    }
   };
 
   const handleEnd = (): void => {
     startValue = null;
     showLastHiddenToolbar();
+
+    const { onEnd } = props;
+    if (typeof onEnd === "function") {
+      onEnd();
+    }
   };
 
   const _onChange = useCallback(
@@ -103,8 +114,6 @@ const BoxResizer: React.FC<Props> = ({
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
 export default rolesHOC({
   allow: ["admin"],
   component: BoxResizer,

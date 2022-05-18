@@ -61,8 +61,9 @@ const mapState = (
     page: pageSelector(state),
     pageData: pageDataNoRefsSelector(state),
     extraFontStyles: extraFontStylesSelector(state),
-    mode: _getMode(config),
-    storeWasChanged: storeWasChangedSelector(state)
+
+    storeWasChanged: storeWasChangedSelector(state),
+    mode: _getMode(config)
   };
 };
 const mapDispatch = { updatePageStatus, removeBlocks, fetchPageSuccess };
@@ -423,11 +424,24 @@ class PublishButton extends Component<Props, State> {
     }
   }
 
+  updateOnKeyDown = (e: MouseEvent): void => {
+    e.preventDefault();
+    const { storeWasChanged, page } = this.props;
+
+    storeWasChanged === "changed" &&
+      (page.status === "publish"
+        ? this.handlePublish("updateLoading")
+        : this.handleDraft("updateLoading"));
+  };
+
   render(): ReactElement {
+    const { storeWasChanged } = this.props;
+
     return (
       <>
         <BottomPanelItem paddingSize="small">
           <Controls
+            disabled={storeWasChanged !== "changed"}
             addonAfter={this.getTooltipItems()}
             onClick={(): void => {
               switch (this.props.page.status) {
@@ -445,15 +459,7 @@ class PublishButton extends Component<Props, State> {
         <HotKeys
           id="key-helper-update-page"
           keyNames={["ctrl+S", "cmd+S", "right_cmd+S"]}
-          onKeyDown={(e: MouseEvent): void => {
-            e.preventDefault();
-
-            if (this.props.storeWasChanged) {
-              this.props.page.status === "publish"
-                ? this.handlePublish("updateLoading")
-                : this.handleDraft("updateLoading");
-            }
-          }}
+          onKeyDown={this.updateOnKeyDown}
         />
       </>
     );

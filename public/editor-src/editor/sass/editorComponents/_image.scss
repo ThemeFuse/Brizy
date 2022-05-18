@@ -41,7 +41,9 @@
       height: 100%;
 
       &-svg {
-        position: absolute;
+        &:not(.brz-img__original) {
+          position: absolute;
+        }
       }
     }
     &__lightbox * {

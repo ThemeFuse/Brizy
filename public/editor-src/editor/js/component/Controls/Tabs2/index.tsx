@@ -5,20 +5,19 @@ import {
   WithOnChange,
   WithValue
 } from "visual/utils/options/attributes";
-import { Literal } from "visual/utils/types/Literal";
 import { TabList } from "./TabList";
 import * as Tab from "./Tab";
 
-export type Props = WithClassName &
-  WithValue<Literal> &
-  WithOnChange<Literal> & {
+export type Props<T> = WithClassName &
+  WithValue<T> &
+  WithOnChange<T> & {
     showSingle: boolean;
     align: "start" | "center" | "end";
     position: "top" | "left";
-    children: ReactElement<Tab.Props>[];
+    children: ReactElement<Tab.Props<T>>[];
   };
 
-export const Tabs = ({
+export function Tabs<T>({
   className,
   showSingle,
   children,
@@ -26,7 +25,7 @@ export const Tabs = ({
   onChange,
   align,
   position
-}: Props): ReactElement | null => {
+}: Props<T>): ReactElement | null {
   const _className = classNames("brz-ed-control__tabs-wrapper", className);
 
   if (children.length === 0) {
@@ -49,7 +48,7 @@ export const Tabs = ({
 
   return showTabs ? (
     <div className={_className}>
-      <TabList
+      <TabList<T>
         active={active.props.value}
         align={align}
         position={position}
@@ -62,4 +61,4 @@ export const Tabs = ({
   ) : (
     activeTab
   );
-};
+}

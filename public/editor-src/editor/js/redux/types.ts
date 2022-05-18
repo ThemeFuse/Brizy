@@ -8,7 +8,8 @@ import {
   Block,
   SyncAllowed,
   Style,
-  ExtraFontStyle
+  ExtraFontStyle,
+  UserRole
 } from "visual/types";
 import { HistoryEnhancerState } from "./history/types";
 
@@ -69,9 +70,11 @@ export type ReduxState = {
       isOpen: boolean;
       lock: "manual" | "auto" | undefined;
       alignment: "right" | "left";
+      activeTab: string | undefined;
     };
     showHiddenElements: boolean;
-    currentRole: string;
+    currentRole: UserRole;
+    currentLanguage: string;
   };
   styles: Style[];
   extraFontStyles: ExtraFontStyle[];

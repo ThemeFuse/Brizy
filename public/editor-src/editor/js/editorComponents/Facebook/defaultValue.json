@@ -14,7 +14,7 @@
     "facebookEmbedVideoAutoPlay": "off",
     "facebookEmbedVideoCaptions": "off",
 
-    "pageTabs": "timeline",
+    "pageTabs": "[ \"timeline\"]",
 
     "smallHeader": "off",
     "hideCover": "off",
@@ -27,19 +27,19 @@
     "targetUrl": "current",
 
     "href": "",
-    "hrefPopulation": null,
+    "hrefPopulation": "",
 
-    "facebookEmbedPostHref": "https://www.facebook.com/brizy.io/posts/1382471355229091",
-    "facebookEmbedPostHrefPopulation": null,
+    "facebookEmbedPostHref": "https://www.facebook.com/dji.europe/posts/2786565258230244",
+    "facebookEmbedPostHrefPopulation": "",
 
-    "facebookEmbedVideoHref": "https://www.facebook.com/brizy.io/videos/1941346902610185",
-    "facebookEmbedVideoHrefPopulation": null,
+    "facebookEmbedVideoHref": "https://www.facebook.com/ISS/videos/2889900194627264",
+    "facebookEmbedVideoHrefPopulation": "",
 
-    "facebookPageHref": "https://facebook.com/brizy.io",
-    "facebookPageHrefPopulation": null,
+    "facebookPageHref": "https://www.facebook.com/techcrunch/",
+    "facebookPageHrefPopulation": "",
 
-    "facebookGroupHref": "https://www.facebook.com/groups/brizy/",
-    "facebookGroupHrefPopulation": null
+    "facebookGroupHref": "https://www.facebook.com/groups/669915249871846",
+    "facebookGroupHrefPopulation": ""
   },
   "style": {
     "width": 300,

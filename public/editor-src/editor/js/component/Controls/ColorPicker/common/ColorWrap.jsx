@@ -16,12 +16,6 @@ export const ColorWrap = Picker => {
       }, 100);
     }
 
-    componentWillReceiveProps(nextProps) {
-      this.setState({
-        ...color.toState(nextProps.color, this.state.oldHue, this.state.hsv)
-      });
-    }
-
     handleChange = (data, event) => {
       const isValidColor = color.simpleCheckForValidColor(data);
       if (isValidColor) {

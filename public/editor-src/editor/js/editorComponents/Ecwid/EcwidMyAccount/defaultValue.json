@@ -1,0 +1,155 @@
+{
+  "content": {
+    "footerDisplay": "on",
+
+    "signInDisplay": "on"
+  },
+
+  "style": {
+    "families": {
+      "footerFontFamily": "lato",
+
+      "titleFontFamily": "lato",
+
+      "descriptionFontFamily": "lato",
+
+      "inputFontFamily": "lato",
+
+      "agreementFontFamily": "lato"
+    },
+
+    "footerFontStyle": "",
+    "footerFontFamilyType": "google",
+    "footerFontSize": 16,
+    "footerFontSizeSuffix": "px",
+    "footerFontWeight": 400,
+    "footerLetterSpacing": 1.3,
+    "footerLineHeight": 1,
+
+    "footerColorHex": "#000000",
+    "footerColorOpacity": 1,
+    "footerColorPalette": "color2",
+    "tempFooterColorOpacity": 1,
+    "tempFooterColorPalette": "color2",
+
+    "hoverFooterColorHex": null,
+    "hoverFooterColorOpacity": null,
+    "hoverFooterColorPalette": null,
+    "tempHoverFooterColorOpacity": null,
+    "tempHoverFooterColorPalette": null,
+
+    "titleHorizontalAlign": "left",
+
+    "titleFontStyle": "",
+    "titleFontFamilyType": "google",
+    "titleFontSize": 30,
+    "titleFontSizeSuffix": "px",
+    "titleFontWeight": 600,
+    "titleLetterSpacing": 1.3,
+    "titleLineHeight": 1,
+
+    "titleColorHex": "#000000",
+    "titleColorOpacity": 1,
+    "titleColorPalette": "color2",
+    "tempTitleColorOpacity": 1,
+    "tempTitleColorPalette": "color2",
+
+    "descriptionHorizontalAlign": "left",
+
+    "descriptionFontStyle": "",
+    "descriptionFontFamilyType": "google",
+    "descriptionFontSize": 14,
+    "descriptionFontSizeSuffix": "px",
+    "descriptionFontWeight": 600,
+    "descriptionLetterSpacing": 1.3,
+    "descriptionLineHeight": 1,
+
+    "descriptionColorHex": "#000000",
+    "descriptionColorOpacity": 1,
+    "descriptionColorPalette": "color2",
+    "tempDescriptionColorOpacity": 1,
+    "tempDescriptionColorPalette": "color2",
+
+    "inputColorHex": "#000000",
+    "inputColorOpacity": 0.1,
+    "inputColorPalette": "color2",
+    "tempInputColorOpacity": 0.1,
+    "tempInputColorPalette": "color2",
+
+    "inputFontStyle": "",
+    "inputFontFamilyType": "google",
+    "inputFontSize": 20,
+    "inputFontSizeSuffix": "px",
+    "inputFontWeight": 400,
+    "inputLetterSpacing": 1.3,
+    "inputLineHeight": 1,
+
+    "inputBorderRadius": 0,
+    "inputBorderRadiusSuffix": "px",
+
+    "inputSize": "medium",
+
+    "inputBgColorHex": "#000000",
+    "inputBgColorOpacity": 0,
+    "inputBgColorPalette": "",
+    "tempInputBgColorOpacity": 1,
+    "tempInputBgColorPalette": "",
+
+    "inputBorderStyle": "solid",
+    "inputBorderColorHex": "#ffffff",
+    "inputBorderColorOpacity": 0.1,
+    "inputBorderColorPalette": "",
+    "tempInputBorderStyle": "solid",
+    "tempInputBorderColorOpacity": 1,
+    "tempInputBorderColorPalette": "",
+
+    "inputBorderWidthType": "grouped",
+    "inputBorderWidth": 1,
+    "inputBorderTopWidth": 1,
+    "inputBorderRightWidth": 1,
+    "inputBorderBottomWidth": 1,
+    "inputBorderLeftWidth": 1,
+
+    "tempInputBorderWidth": 1,
+    "tempInputBorderTopWidth": 1,
+    "tempInputBorderRightWidth": 1,
+    "tempInputBorderBottomWidth": 1,
+    "tempInputBorderLeftWidth": 1,
+
+    "inputBoxShadow": "",
+
+    "tempInputBoxShadow": "on",
+
+    "inputBoxShadowColorHex": "#000000",
+    "inputBoxShadowColorOpacity": 1,
+    "inputBoxShadowColorPalette": "",
+    "tempInputBoxShadowColorOpacity": 1,
+    "tempInputBoxShadowColorPalette": "",
+
+    "inputBoxShadowBlur": 0,
+    "inputBoxShadowSpread": 0,
+    "inputBoxShadowVertical": 0,
+    "inputBoxShadowHorizontal": 0,
+
+    "tempInputBoxShadowBlur": 4,
+    "tempInputBoxShadowSpread": 0,
+    "tempInputBoxShadowVertical": 2,
+    "tempInputBoxShadowHorizontal": 1,
+
+    "agreementHorizontalAlign": "left",
+
+    "agreementFontStyle": "",
+    "agreementFontFamilyType": "google",
+    "agreementFontSize": 14,
+    "agreementFontSizeSuffix": "px",
+    "agreementFontWeight": 600,
+    "agreementLetterSpacing": 1.3,
+    "agreementLineHeight": 1,
+
+    "agreementColorHex": "#000000",
+    "agreementColorOpacity": 1,
+    "agreementColorPalette": "color2",
+    "tempAgreementColorOpacity": 1,
+    "tempAgreementColorPalette": "color2"
+  }
+}

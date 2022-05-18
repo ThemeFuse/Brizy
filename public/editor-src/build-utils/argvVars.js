@@ -14,7 +14,8 @@ module.exports = function(argv) {
   const NO_WATCH = argv_["watch"] === false;
   const NO_VERIFICATION = argv_["verification"] === false;
   const PORT = argv_.port || 3000;
-  const BUNDLE_ANALYZER = argv_["bundle-analyzer"];
+  const ANALYZE_EXPORT = Boolean(argv_["analyze_export"]);
+  const ANALYZE_PREVIEW = Boolean(argv_["analyze_preview"]);
   const COMPILER_URL =
     argv_["compiler-url"] || "http://localhost:5000/compile/v3";
 
@@ -41,7 +42,8 @@ module.exports = function(argv) {
     NO_WATCH,
     NO_VERIFICATION,
     PORT,
-    BUNDLE_ANALYZER,
+    ANALYZE_EXPORT,
+    ANALYZE_PREVIEW,
     COMPILER_URL,
     paths
   };

@@ -41,8 +41,52 @@ export function cssStyleBoxShadowSuffixForGlamour({
   }
 }
 
+export function cssStyleBoxShadowSuffixForGlamourImportant({
+  v,
+  device,
+  state,
+  prefix = ""
+}) {
+  const type = styleBoxShadowType({ v, device, state, prefix });
+  const color = styleBoxShadowColor({ v, device, state, prefix });
+  const blur = styleBoxShadowBlur({ v, device, state, prefix });
+  const spread = styleBoxShadowSpread({ v, device, state, prefix });
+  const horizontal =
+    type === "inset"
+      ? styleBoxShadowHorizontal({ v, device, state, prefix }) * -1
+      : styleBoxShadowHorizontal({ v, device, state, prefix });
+  const vertical =
+    type === "inset"
+      ? styleBoxShadowVertical({ v, device, state, prefix }) * -1
+      : styleBoxShadowVertical({ v, device, state, prefix });
+
+  if (
+    type === "" ||
+    type === "off" ||
+    (horizontal === 0 && vertical === 0 && blur === 0 && spread === 0)
+  ) {
+    return "";
+  } else {
+    const inset = type === "inset" ? "inset " : "";
+
+    return `${inset}${horizontal}px ${vertical}px ${blur}px ${spread}px ${color}!important;`;
+  }
+}
+
 export function cssStyleBoxShadow({ v, device, state, prefix = "" }) {
   const shadow = cssStyleBoxShadowSuffixForGlamour({
+    v,
+    device,
+    state,
+    prefix
+  });
+
+  if (shadow === "") return "";
+  else return `box-shadow:${shadow};`;
+}
+
+export function cssStyleBoxShadowImportant({ v, device, state, prefix = "" }) {
+  const shadow = cssStyleBoxShadowSuffixForGlamourImportant({
     v,
     device,
     state,

@@ -7,6 +7,18 @@
   padding-bottom: 7px;
   display: inline-block;
 
+  &-container::before,
+  &-container::after {
+    content: "";
+    flex-grow: 1;
+  }
+
+  &-container {
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
   .brz-hr {
     border-right-width: 0;
     border-bottom-width: 0;

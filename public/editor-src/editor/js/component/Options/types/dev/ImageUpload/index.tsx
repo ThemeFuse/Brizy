@@ -7,10 +7,8 @@ import { Image } from "./model";
 import { Component } from "./Types";
 import {
   DEFAULT_VALUE,
-  getModel,
-  getElementModel,
-  patchPosition,
-  patchImageData,
+  fromElementModel,
+  toElementModel,
   configSizeToSize
 } from "./utils";
 
@@ -37,14 +35,20 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
       switch (meta.isChanged) {
         case "image":
           {
-            const patch = patchImageData(v, value);
-            patch && onChange(patch);
+            onChange({
+              imageSrc: v.src,
+              imageExtension: v.extension,
+              imageWidth: v.width,
+              imageHeight: v.height
+            });
           }
           break;
         case "pointer":
           {
-            const patch = patchPosition(v, value);
-            patch && onChange(patch);
+            onChange({
+              positionX: v.x,
+              positionY: v.y
+            });
           }
           break;
       }
@@ -83,8 +87,8 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
   );
 };
 
-ImageUpload.getModel = getModel;
+ImageUpload.fromElementModel = fromElementModel;
 
-ImageUpload.getElementModel = getElementModel;
+ImageUpload.toElementModel = toElementModel;
 
 ImageUpload.defaultValue = DEFAULT_VALUE;

@@ -4,6 +4,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarInput from "./toolbarInput";
+import * as toolbarInputGrouped from "./toolbarInputGrouped";
 import * as toolbarTableVariations from "./toolbarTableVariations";
 import * as toolbarTableGrouped from "./toolbarTableGrouped";
 import * as sidebarConfig from "./sidebar";
@@ -63,21 +64,32 @@ export default class WOOAddToCart extends EditorComponent {
                   allowExtend: false
                 }
               )}
-              selector=".brz-woo-add-to-cart:not(.grouped_form) .quantity"
+              selector=".brz-woo-add-to-cart .cart:not(.grouped_form) .quantity"
             >
-              <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-                <Wrapper
-                  {...this.makeWrapperProps({
-                    className
-                  })}
-                >
-                  <DynamicContentHelper
-                    placeholder="{{editor_product_add_to_cart_btn}}"
-                    placeholderIcon="woo-addToCart"
-                    tagName="div"
-                  />
-                </Wrapper>
-              </CustomCSS>
+              <Toolbar
+                {...this.makeToolbarPropsFromConfig2(
+                  toolbarInputGrouped,
+                  sidebarInputConfig,
+                  {
+                    allowExtend: false
+                  }
+                )}
+                selector=".brz-woo-add-to-cart .grouped_form .quantity"
+              >
+                <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+                  <Wrapper
+                    {...this.makeWrapperProps({
+                      className
+                    })}
+                  >
+                    <DynamicContentHelper
+                      placeholder="{{editor_product_add_to_cart_btn}}"
+                      placeholderIcon="woo-addToCart"
+                      tagName="div"
+                    />
+                  </Wrapper>
+                </CustomCSS>
+              </Toolbar>
             </Toolbar>
           </Toolbar>
         </Toolbar>

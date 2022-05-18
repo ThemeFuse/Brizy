@@ -9,12 +9,12 @@ import classnames from "classnames";
 import ToastNotification from "cogo-toast";
 import EditorIcon from "visual/component/EditorIcon";
 import {
-  uploadImage,
   preloadImage,
   imageUrl,
   svgUrl,
   getImageFormat
 } from "visual/utils/image";
+import { uploadImage } from "visual/utils/image/uploadImage";
 import { t } from "visual/utils/i18n";
 
 import Image from "./Image";
@@ -152,8 +152,10 @@ export class ImageSetter<T extends ReactText> extends React.Component<
       onError: e => {
         let errorMsg;
 
-        if (e.status === 413) {
-          errorMsg = e.message || t("Image file is too large.");
+        if ((e as { status: number }).status === 413) {
+          errorMsg =
+            (e as { message?: string }).message ||
+            t("Image file is too large.");
         } else {
           errorMsg = t(
             "Failed to upload file. Please upload a valid JPG, PNG, SVG or GIF image."

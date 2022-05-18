@@ -70,7 +70,7 @@ type PromptsState = {
   prompts: (PromptsProps & { opened: boolean })[];
 };
 
-class Prompts extends Component<{}, PromptsState> {
+class Prompts extends Component<Record<string, never>, PromptsState> {
   state: PromptsState = {
     prompts: []
   };

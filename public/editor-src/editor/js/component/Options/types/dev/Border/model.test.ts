@@ -1,6 +1,5 @@
 import { times, identity as id } from "underscore";
 import {
-  testGetterValidation,
   testSetterTemp,
   testSetterValidation
 } from "visual/utils/model/utilities.test";
@@ -11,7 +10,6 @@ import * as Palette from "visual/component/Options/types/dev/ColorPicker/entitie
 import {
   getStyle,
   setStyle,
-  getHex,
   setHex,
   getOpacity,
   setOpacity,

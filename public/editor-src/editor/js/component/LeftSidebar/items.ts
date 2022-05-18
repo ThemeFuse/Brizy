@@ -25,9 +25,11 @@ const handleCollabClick = (): void => {
   const currentDeviceMode = getStore().getState().ui.deviceMode;
 
   const { collaborationToolUrl } = urls;
-
   if (collaborationToolUrl) {
-    window.location.href = `${collaborationToolUrl}&device=${currentDeviceMode}`;
+    window.open(
+      `${collaborationToolUrl}&device=${currentDeviceMode}`,
+      "_blank"
+    );
   }
 };
 
@@ -35,9 +37,9 @@ export default {
   top: [
     ...(!IS_EXTERNAL_STORY && !IS_EXTERNAL_POPUP ? [Cms] : []),
     Base,
-    ...(isCloud(config) && isShopify(config) ? [Shopify] : []),
+    ...(isShopify(config) ? [Shopify] : []),
     BlocksSortable,
-    ...(isCloud(config) && isShopify(config) ? [] : [Styling]),
+    ...(isShopify(config) ? [] : [Styling]),
     {
       type: "link",
       icon: "nc-collab",
@@ -60,6 +62,10 @@ export default {
         {
           type: "showMembership",
           label: t("View as")
+        },
+        {
+          type: "language",
+          label: t("Show If Language")
         }
       ]
     },

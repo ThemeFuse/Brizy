@@ -5,6 +5,7 @@ import { removeAt } from "timm";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 
 class AccordionItems extends EditorArrayComponent {
   static get componentId() {
@@ -19,7 +20,7 @@ class AccordionItems extends EditorArrayComponent {
   };
 
   state = {
-    visibleTag: "All"
+    visibleTag: this.props.allTag
   };
 
   tags = new Set();
@@ -38,7 +39,8 @@ class AccordionItems extends EditorArrayComponent {
       collapsible,
       animDuration,
       animationClassName,
-      tagName
+      tagName,
+      allTag
     } = this.props;
 
     const { tags = "" } = itemData.value;
@@ -46,6 +48,33 @@ class AccordionItems extends EditorArrayComponent {
 
     const cloneRemoveConfig = {
       getItems: () => [
+        {
+          id: "order",
+          type: "order-dev",
+          devices: "desktop",
+          position: 105,
+          roles: ["admin"],
+          disabled: items.length < 2,
+          config: {
+            align: "vertical",
+            disable:
+              itemIndex === 0
+                ? "prev"
+                : itemIndex === items.length - 1
+                ? "next"
+                : undefined,
+            onChange: v => {
+              switch (v) {
+                case "prev":
+                  this.reorderItem(itemIndex, itemIndex - 1);
+                  break;
+                case "next":
+                  this.reorderItem(itemIndex, itemIndex + 1);
+                  break;
+              }
+            }
+          }
+        },
         {
           id: "duplicate",
           type: "button",
@@ -85,6 +114,7 @@ class AccordionItems extends EditorArrayComponent {
       tagName,
       activeAccordionItem: activeAccordionItem === itemIndex,
       visibleTag: this.state.visibleTag,
+      allTag,
       handleAccordion: () => {
         this.handleAccordionActive(itemIndex);
       }
@@ -128,9 +158,22 @@ class AccordionItems extends EditorArrayComponent {
     this.updateTags(itemValue.tag);
   }
 
+  handleMainTagChange = allTag => {
+    const {
+      handleAllTagChange,
+    } = this.props;
+
+    handleAllTagChange(allTag);
+    this.setState({ visibleTag: allTag });
+  };
+
   renderTags() {
-    const tags = ["All", ...this.tags];
-    const { toolbarExtendFilter, filterStyle } = this.props;
+    const {
+      allTag,
+      toolbarExtendFilter,
+      filterStyle
+    } = this.props;
+    const tags = [allTag, ...this.tags];
     const filterClassName = classnames(
       "brz-accordion__filter",
       `brz-accordion__filter--${filterStyle}`
@@ -155,12 +198,16 @@ class AccordionItems extends EditorArrayComponent {
                         : ""
                     }`
                   }
-                  data-filter={tag === "All" ? "*" : tag}
+                  data-filter={tag === allTag ? "*" : tag}
                   onClick={() => {
                     this.handleFilterClick(tag);
                   }}
                 >
-                  {tag}
+                  {tag === allTag ? (
+                    <TextEditor value={allTag} onChange={this.handleMainTagChange} />
+                  ) : (
+                    tag
+                  )}
                 </li>
               </Toolbar>
             );

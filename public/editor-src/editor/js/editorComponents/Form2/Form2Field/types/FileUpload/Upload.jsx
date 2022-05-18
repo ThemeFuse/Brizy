@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 
 class Upload extends Component {

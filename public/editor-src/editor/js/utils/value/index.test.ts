@@ -6,7 +6,8 @@ import {
   throwOnNullish,
   onUndefined,
   mApply,
-  mCompose
+  mCompose,
+  is
 } from "visual/utils/value/index";
 import { testMonoidBehavior } from "visual/utils/value/utilites.test";
 
@@ -128,7 +129,7 @@ describe("Testing 'mApply' function", function() {
 
   test("If any callback return undefined, return undefined", () => {
     const f = (v: number) => v + 1;
-    const g = (v: number) => undefined;
+    const g = (_: number) => undefined;
     const h = (v: number) => v + 3;
 
     expect(mApply(f, mApply(g, mApply(h, 3)))).toBe(undefined);
@@ -149,5 +150,19 @@ describe("Testing 'mCompose' function", function() {
     const h = (v: number) => v + 3;
 
     expect(mCompose(f, g, h)(3)).toBe(undefined);
+  });
+});
+
+describe("Testing 'is' function", () => {
+  test("Should work exactly like triple equality (===)", () => {
+    const object = {};
+    const seed: Array<[unknown, unknown]> = [
+      [1, 2],
+      ["", ""],
+      [{}, {}],
+      [object, object]
+    ];
+
+    seed.forEach(([a, b]) => expect(is(a)(b)).toBe(a === b));
   });
 });

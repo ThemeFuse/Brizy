@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import React, { CSSProperties, FC, ReactNode } from "react";
 import classNames from "classnames";
 import { Range as RCRange } from "rc-slider";
 import { WithClassName, WithOnChange } from "visual/utils/options/attributes";
@@ -11,7 +11,7 @@ export type Props = WithClassName &
     startPointer: number;
     finishPointer: number;
     allowCross?: boolean;
-    railStyle?: object;
+    railStyle?: CSSProperties;
     handle?: (props: unknown) => ReactNode;
   };
 

@@ -144,6 +144,18 @@
     "tempBorderBottomRightRadius": 2,
     "tempBorderBottomLeftRadius": 2,
 
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "tempBorderRadiusSuffix": "px",
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
+
     "hoverBorderRadiusType": null,
     "hoverBorderRadius": null,
     "hoverBorderTopLeftRadius": null,
@@ -257,6 +269,19 @@
     "tempTabletBorderBottomLeftRadius": null,
     "tempTabletBorderBottomRightRadius": null,
 
+    "tabletBorderRadiusTypeSuffix": null,
+    "tabletBorderRadiusSuffix": null,
+    "tabletBorderTopLeftRadiusSuffix": null,
+    "tabletBorderTopRightRadiusSuffix": null,
+    "tabletBorderBottomLeftRadiusSuffix": null,
+    "tabletBorderBottomRightRadiusSuffix": null,
+
+    "tempTabletBorderRadiusSuffix": null,
+    "tempTabletBorderTopLeftRadiusSuffix": null,
+    "tempTabletBorderTopRightRadiusSuffix": null,
+    "tempTabletBorderBottomLeftRadiusSuffix": null,
+    "tempTabletBorderBottomRightRadiusSuffix": null,
+
     "tabletBgColorHex": null,
     "tabletBgColorOpacity": null,
     "tabletBgColorPalette": null,
@@ -315,6 +340,19 @@
     "tempMobileBorderTopRightRadius": null,
     "tempMobileBorderBottomLeftRadius": null,
     "tempMobileBorderBottomRightRadius": null,
+
+    "mobileBorderRadiusTypeSuffix": null,
+    "mobileBorderRadiusSuffix": null,
+    "mobileBorderTopLeftRadiusSuffix": null,
+    "mobileBorderTopRightRadiusSuffix": null,
+    "mobileBorderBottomLeftRadiusSuffix": null,
+    "mobileBorderBottomRightRadiusSuffix": null,
+
+    "tempMobileBorderRadiusSuffix": null,
+    "tempMobileBorderTopLeftRadiusSuffix": null,
+    "tempMobileBorderTopRightRadiusSuffix": null,
+    "tempMobileBorderBottomLeftRadiusSuffix": null,
+    "tempMobileBorderBottomRightRadiusSuffix": null,
 
     "mobileWidth": null,
     "mobileWidthSuffix": null

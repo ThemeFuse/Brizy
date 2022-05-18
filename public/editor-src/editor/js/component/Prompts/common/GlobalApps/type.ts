@@ -10,7 +10,7 @@ export type FormField = {
 
 export interface BaseIntegrationProps {
   className: string;
-  tab: object;
+  tab: Record<string, unknown>;
   stage: string;
   stages: AppData["stages"];
   onLoading: (l: boolean) => void;
@@ -34,12 +34,12 @@ export interface BaseIntegrationState {
 }
 
 export interface BaseIntegrationContext {
-  app: object;
+  app: Record<string, unknown>;
   connectedApps: Array<string>;
   stages: AppData["stages"];
   stage: string;
   oldStage: string;
-  onChange: (id: string, data: object) => void;
+  onChange: (id: string, data: Record<string, unknown>) => void;
   onChangeNext: (stage: BaseKey) => void;
   onChangePrev: (stage: BaseKey) => void;
   onConnectApp: (data: AppData) => void;

@@ -199,7 +199,8 @@ class Counter extends EditorComponent {
                 "data-start": start,
                 "data-end": end,
                 "data-duration": duration,
-                "data-separator": separator
+                "data-separator": separator,
+                "data-type": type
               }
             })}
           >

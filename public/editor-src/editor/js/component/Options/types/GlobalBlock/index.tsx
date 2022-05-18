@@ -18,9 +18,7 @@ import {
   makeNormalToGlobalBlock,
   makeGlobalToNormalBlock,
   makePopupToGlobalBlock,
-  makeGlobalBlockToPopup,
-  updateBlocks,
-  ActionUpdateBlocks
+  makeGlobalBlockToPopup
 } from "visual/redux/actions2";
 import {
   getBlockData,
@@ -94,8 +92,7 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
     makeNormalToGlobalBlock: noop,
     makeGlobalToNormalBlock: noop,
     makePopupToGlobalBlock: noop,
-    makeGlobalBlockToPopup: noop,
-    updateBlocks: noop
+    makeGlobalBlockToPopup: noop
   };
 
   mounted = false;
@@ -304,7 +301,6 @@ const mapDispatchToProps = (
     | ActionMakeNormalToGlobalBlock
     | ActionMakePopupToGlobalBlock
     | ActionMakeGlobalBlockToPopup
-    | ActionUpdateBlocks
   >
 ): GlobalBlockMapDispatch => ({
   makeNormalToGlobalBlock: (globalBlock): ActionMakeNormalToGlobalBlock =>
@@ -317,9 +313,7 @@ const mapDispatchToProps = (
     dispatch(makePopupToGlobalBlock(globalBlock)),
 
   makeGlobalBlockToPopup: (data): ActionMakeGlobalBlockToPopup =>
-    dispatch(makeGlobalBlockToPopup(data)),
-
-  updateBlocks: (page): ActionUpdateBlocks => dispatch(updateBlocks(page))
+    dispatch(makeGlobalBlockToPopup(data))
 });
 
 export default connect(

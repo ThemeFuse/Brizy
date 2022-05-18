@@ -154,7 +154,7 @@ export function _parse<P extends Parser<any, any>>(
 
     const v: B[typeof p] | undefined = call(parsers[p], object);
 
-    if (!isOptional(parsers[p]) && isNullish(v)) {
+    if (!isOptional(parsers[p]) && v === undefined) {
       return undefined as ParserTarget<P>;
     }
 

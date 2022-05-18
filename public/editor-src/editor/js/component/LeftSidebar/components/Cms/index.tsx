@@ -8,12 +8,12 @@ import React, {
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
-import Config from "visual/global/Config";
+import Config, { Cloud } from "visual/global/Config";
 import Portal from "visual/component/Portal";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 import { IS_PRO } from "visual/utils/env";
-import { mPipe, pass } from "fp-utilities";
+import { match, mPipe, pass } from "fp-utilities";
 import * as Obj from "visual/utils/reader/object";
 import { uiSelector } from "visual/redux/selectors";
 import { updateUI } from "visual/redux/actions2";
@@ -21,17 +21,12 @@ import Link from "../Options/types/Link";
 import * as Base from "./types/Base";
 import * as Messages from "./types/Messages";
 import * as List from "./types/List";
-import {
-  CMS,
-  isCloud,
-  isCMS,
-  isShopify,
-  Shopify
-} from "visual/global/Config/types/configs/Cloud";
+import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { getContext } from "visual/component/LeftSidebar/components/Cms/utils";
+import { isWp } from "visual/global/Config/types/configs/WP";
 
 export interface Props {
-  config: CMS | Shopify;
+  config: Cloud;
 }
 
 const Component = ({ config }: Props): ReactElement => {
@@ -148,10 +143,9 @@ const Component = ({ config }: Props): ReactElement => {
 
 const _Component = (): ReactNode => {
   const config = Config.getAll();
+  const node = useCallback(getConfigComponent, []);
 
-  return isCloud(config) && (isCMS(config) || isShopify(config)) ? (
-    <Component config={config} />
-  ) : null;
+  return node(config);
 };
 
 export const Cms = {
@@ -159,3 +153,8 @@ export const Cms = {
   type: "custom",
   Component: _Component
 };
+
+const getConfigComponent = match(
+  [isWp, () => null],
+  [isCloud, config => <Component config={config} />]
+);

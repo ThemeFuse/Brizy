@@ -7,8 +7,8 @@ type Props<T extends keyof JSX.IntrinsicElements> = {
   placeholder: string;
   tagName: T;
   props?: JSX.IntrinsicElements[T];
-  placeholderIcon: string;
-  placeholderHeight: number;
+  placeholderIcon?: string;
+  placeholderHeight?: number;
   onSuccess?: (data: string) => void;
   blocked?: boolean;
   fallbackComponent?: ReactElement;

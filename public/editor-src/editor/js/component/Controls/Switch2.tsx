@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useCallback } from "react";
 import classNames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import {
@@ -10,7 +10,7 @@ import {
 export type Props = WithClassName & WithOnChange<boolean> & WithValue<boolean>;
 
 export function Switch({ className, value, onChange }: Props): ReactElement {
-  const toggle = (): void => onChange(!value);
+  const toggle = useCallback((): void => onChange(!value), [onChange, value]);
   const _className = classNames({
     [className || ""]: true,
     "brz-ed-control__switch2": true,

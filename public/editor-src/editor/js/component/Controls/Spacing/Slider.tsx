@@ -1,4 +1,5 @@
 import React, { ReactElement, useCallback, useMemo } from "react";
+import classNames from "classnames";
 import {
   NumberSlider,
   Props as NP
@@ -8,6 +9,7 @@ import { OnChange } from "visual/component/Options/Type";
 import { OptionLabel } from "visual/component/OptionLabel";
 
 export type Props<U> = {
+  className?: string;
   value: number;
   unit: U;
   onValue: OnChange<number>;
@@ -30,7 +32,8 @@ export function Slider<U>({
   units,
   min,
   max,
-  step
+  step,
+  className
 }: Props<U>): ReactElement {
   const _value = useMemo(() => ({ number: value, unit }), [value, unit]);
 
@@ -48,7 +51,10 @@ export function Slider<U>({
   );
 
   return (
-    <OptionWrapper className={"brz-ed-option"} display={"inline"}>
+    <OptionWrapper
+      className={classNames("brz-ed-option", className)}
+      display={"inline"}
+    >
       <OptionLabel label={label} icon={icon} />
       <NumberSlider<U>
         value={_value}

@@ -3,7 +3,7 @@ import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Link from "visual/component/Link";
 import { Text } from "visual/component/ContentOptions/types";
 import Toolbar from "visual/component/Toolbar";
@@ -21,6 +21,7 @@ import * as State from "visual/utils/stateMode";
 import { pipe } from "visual/utils/fp";
 import { isNullish } from "visual/utils/value";
 import * as Num from "visual/utils/reader/number";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 
 const resizerPoints = [
   "topLeft",
@@ -194,30 +195,7 @@ export default class Button extends EditorComponent {
     );
   }
 
-  renderPopups(v) {
-    const { popups, linkType, linkPopup } = v;
-
-    if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
-      return null;
-    }
-
-    const normalizePopups = popups.reduce((acc, popup) => {
-      let itemData = popup;
-
-      if (itemData.type === "GlobalBlock") {
-        // TODO: some kind of error handling
-        itemData = blocksDataSelector(getStore().getState())[
-          itemData.value._id
-        ];
-      }
-
-      return itemData ? [...acc, itemData] : acc;
-    }, []);
-
-    if (normalizePopups.length === 0) {
-      return null;
-    }
-
+  renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
@@ -228,9 +206,8 @@ export default class Button extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const blockData = blocksDataSelector(getStore().getState())[
-            itemData.value._id
-          ];
+          const globalBlocks = blocksDataSelector(getStore().getState());
+          const blockData = globalBlocks[itemData.value._id];
 
           popupId = blockData.value.popupId;
         }
@@ -295,7 +272,8 @@ export default class Button extends EditorComponent {
               : this.renderSubmit(v, vs, vd, content)}
           </CustomCSS>
         </Toolbar>
-        {this.renderPopups(v)}
+        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+          this.renderPopups()}
       </>
     );
   }

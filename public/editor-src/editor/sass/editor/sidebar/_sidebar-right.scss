@@ -39,14 +39,10 @@
       }
     }
   }
-  .brz-ed-sidebar__main {
-    padding-top: 17px;
-
-    .brz-ed-control__tabs {
-      margin-bottom: 15px;
-      padding-left: 0;
-      padding-right: 0;
-    }
+  .brz-ed-sidebar__main .brz-ed-control__tabs {
+    margin-bottom: 15px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   // Icons
@@ -111,9 +107,6 @@
   }
 
   // Tabs
-  &__tabs {
-    padding: 0 30px 30px;
-  }
 
   .brz-ed-popover__tooltip--icon-custom {
     width: 23px;
@@ -164,6 +157,14 @@
           }
         }
       }
+    }
+  }
+
+  &__tabs > .brz-ed-option {
+    padding: 23px 30px 30px;
+
+    &.brz-ed-option-type__sidebarTabs-dev {
+      padding: 0;
     }
   }
 }

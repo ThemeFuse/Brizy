@@ -1,8 +1,4 @@
 import { t } from "visual/utils/i18n";
-import {
-  toolbarBorderRadius,
-  toolbarPaddingFourFieldsPxSuffix
-} from "visual/utils/toolbar";
 
 export const title = ({ v }) => {
   switch (v.type) {
@@ -21,23 +17,22 @@ export const title = ({ v }) => {
   }
 };
 
-export function getItems({ v, device }) {
+export function getItems() {
   return [
-    toolbarPaddingFourFieldsPxSuffix({
-      v,
-      device,
-      prefix: "filter",
-      state: "normal",
-      onChangeGrouped: ["onChangePaddingGrouped"],
-      onChangeUngrouped: ["onChangePaddingUngrouped"]
-    }),
-    toolbarBorderRadius({
-      v,
-      device,
-      prefix: "filter",
-      state: "normal",
-      onChangeGrouped: ["onChangeBorderRadiusGrouped"],
-      onChangeUngrouped: ["onChangeBorderRadiusUngrouped"]
-    })
+    {
+      id: "filterPadding",
+      type: "padding-dev",
+      label: t("Padding"),
+      position: 50,
+      config: {
+        units: ["px"]
+      }
+    },
+    {
+      id: "filterBorder",
+      type: "corners-dev",
+      label: t("Corner"),
+      position: 65
+    }
   ];
 }

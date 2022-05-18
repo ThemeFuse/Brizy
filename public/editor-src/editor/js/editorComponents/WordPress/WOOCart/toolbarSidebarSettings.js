@@ -1,8 +1,15 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { hexToRgba } from "visual/utils/color";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function getItems({ v, device }) {
   const dvv = key => defaultValueValue({ v, key, device });
+
+  const { hex: colorHex } = getOptionColorHexByPalette(
+    dvv("sidebarBgColorHex"),
+    dvv("sidebarBgColorPalette")
+  );
 
   return [
     {
@@ -29,6 +36,27 @@ export function getItems({ v, device }) {
         { icon: "nc-ver-align-top", title: t("Align"), value: "top" },
         { icon: "nc-ver-align-middle", title: t("Align"), value: "center" },
         { icon: "nc-ver-align-bottom", title: t("Align"), value: "bottom" }
+      ]
+    },
+    {
+      id: "toolbarColor",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(colorHex, dvv("sidebarBgColorOpacity"))
+          }
+        }
+      },
+      position: 80,
+      devices: "desktop",
+      options: [
+        {
+          id: "sidebarBgColor",
+          type: "colorPicker-dev"
+        }
       ]
     },
     {

@@ -147,20 +147,37 @@ export function parseStrict<A, B extends Record<any, any> | undefined>(
  */
 export function or<A, B>(...args: [NonEmptyArray<Pure<A, B>>]): (v: A) => B;
 export function or<A, B>(...args: [NonEmptyArray<Pure<A, B>>, A]): B;
-export function or<A, B>(
-  ...args: [NonEmptyArray<Pure<A, B>>] | [NonEmptyArray<Pure<A, B>>, A]
-): ((v: A) => B) | B;
-export function or<A, B>(
-  ...args: [NonEmptyArray<ParseFunction<A, B>>]
-): (v: A) => B | undefined;
-export function or<A, B>(
-  ...args: [NonEmptyArray<ParseFunction<A, B>>, A]
-): B | undefined;
-export function or<A, B>(
-  ...args:
-    | [NonEmptyArray<ParseFunction<A, B>>]
-    | [NonEmptyArray<ParseFunction<A, B>>, A]
-): ((v: A) => B | undefined) | B | undefined {
+// prettier-ignore
+export function or<A, B>(...args: [[ParseFunction<A, B>, Pure<A, B>]]): (v: A) => B;
+// prettier-ignore
+export function or<A, B>(...args: [[ParseFunction<A, B>,ParseFunction<A, B>,  Pure<A, B>]]): (v: A) => B;
+// prettier-ignore
+export function or<A, B>(...args: [[ParseFunction<A, B>,ParseFunction<A, B>, ParseFunction<A, B>,  Pure<A, B>]]): (v: A) => B;
+// prettier-ignore
+export function or<A, B>(...args: [[ParseFunction<A, B>,ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>,  Pure<A, B>]]): (v: A) => B;
+// prettier-ignore
+export function or<A, B>(...args: [[ParseFunction<A, B>,ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>,  Pure<A, B>]]): (v: A) => B;
+// prettier-ignore
+export function or<A, B>(...args: [[ParseFunction<A, B>,ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>,  Pure<A, B>]]): (v: A) => B;
+export function or<A, B>(...args: [[ParseFunction<A, B>, Pure<A, B>], A]): B;
+// prettier-ignore
+export function or<A, B>(...args: [[ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>], A]): B;
+// prettier-ignore
+export function or<A, B>(...args: [[ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>], A]): B;
+// prettier-ignore
+export function or<A, B>(...args: [[ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>], A]): B;
+// prettier-ignore
+export function or<A, B>(...args: [[ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>], A]): B;
+// prettier-ignore
+export function or<A, B>(...args: [[ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>], A]): B;
+// prettier-ignore
+export function or<A, B>(...args: [NonEmptyArray<Pure<A, B>>] | [NonEmptyArray<Pure<A, B>>, A]): ((v: A) => B) | B;
+// prettier-ignore
+export function or<A, B>(...args: [NonEmptyArray<ParseFunction<A, B>>]): (v: A) => B | undefined;
+// prettier-ignore
+export function or<A, B>(...args: [NonEmptyArray<ParseFunction<A, B>>, A]): B | undefined;
+// prettier-ignore
+export function or<A, B>(...args: | [NonEmptyArray<ParseFunction<A, B>>] | [NonEmptyArray<ParseFunction<A, B>>, A]): ((v: A) => B | undefined) | B | undefined {
   return args.length === 1
     ? (a: A): B | undefined => _or(args[0], a)
     : _or(args[0], args[1]);

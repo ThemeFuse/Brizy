@@ -109,7 +109,8 @@ export function getItems({ v, device }) {
       sidebarLabel: t("More Settings"),
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog"
+      icon: "nc-cog",
+      devices: "desktop"
     }
   ];
 }

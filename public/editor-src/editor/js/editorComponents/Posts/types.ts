@@ -76,7 +76,7 @@ export type CloudArchiveQuery = {
   offset: number;
 };
 
-export type CloudTagsQuery = {};
+export type CloudTagsQuery = Record<string, unknown>;
 
 //#endregion
 
@@ -90,6 +90,7 @@ export type WPPostsQuery = {
 };
 
 export interface WPTagsQuery extends WPPostsQuery {
+  allTag: string;
   tax: string;
   ulClassName: string;
   liClassName: string;

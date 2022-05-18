@@ -2,6 +2,7 @@ import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { hideToolbar } from "visual/component/Toolbar";
 import Sortable from "visual/component/Sortable";
+import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
@@ -89,6 +90,19 @@ class AccordionItemItems extends EditorArrayComponent {
       return <div className={className}>{items}</div>;
     }
 
+    if (items.length === 0) {
+      return (
+        <div className={className}>
+          <SortableEmpty
+            path={this.getId()}
+            disabled={!isActive}
+            type="column"
+            acceptElements={this.handleSortableAcceptElements}
+          />
+        </div>
+      );
+    }
+
     return (
       <Sortable
         path={this.getId()}
@@ -96,7 +110,7 @@ class AccordionItemItems extends EditorArrayComponent {
         disabled={!isActive}
         acceptElements={this.handleSortableAcceptElements}
       >
-        {items.length > 0 && <div className={className}>{items}</div>}
+        <div className={className}>{items}</div>
       </Sortable>
     );
   }
@@ -110,7 +124,9 @@ class AccordionItemItems extends EditorArrayComponent {
       "paste",
       "pasteStyles",
       "delete",
-      "horizontalAlign"
+      "horizontalAlign",
+      "showSidebarStyling",
+      "showSidebarAdvanced"
     ];
 
     return (

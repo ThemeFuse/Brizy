@@ -5,7 +5,7 @@ import SlickSlider from "react-slick";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorIcon from "visual/component/EditorIcon";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
 import Toolbar from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";

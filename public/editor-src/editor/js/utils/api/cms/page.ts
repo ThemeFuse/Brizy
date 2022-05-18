@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { PageCollection, PageCustomer } from "visual/types";
 import { isT } from "visual/utils/value";
 import { t } from "visual/utils/i18n";

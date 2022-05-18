@@ -7,6 +7,11 @@ describe("Testing border style constructors", function() {
   test("SOLID should be 'solid'", () => expect(Style.SOLID).toBe("solid"));
   test("DASHED should be 'dashed'", () => expect(Style.DASHED).toBe("dashed"));
   test("DOTTED should be 'dotted'", () => expect(Style.DOTTED).toBe("dotted"));
+  test("DOUBLE should be 'double'", () => expect(Style.DOUBLE).toBe("double"));
+  test("GROOVE should be 'groove'", () => expect(Style.GROOVE).toBe("groove"));
+  test("RIDGE should be 'ridge'", () => expect(Style.RIDGE).toBe("ridge"));
+  test("INSET should be 'inset'", () => expect(Style.INSET).toBe("inset"));
+  test("OUTSET should be 'outset'", () => expect(Style.OUTSET).toBe("outset"));
 });
 
 describe("Testing 'empty' value", function() {
@@ -21,7 +26,12 @@ describe("Testing 'styles' value", function() {
       Style.NONE,
       Style.SOLID,
       Style.DASHED,
-      Style.DOTTED
+      Style.DOTTED,
+      Style.DOUBLE,
+      Style.GROOVE,
+      Style.RIDGE,
+      Style.INSET,
+      Style.OUTSET
     ]);
   });
 });

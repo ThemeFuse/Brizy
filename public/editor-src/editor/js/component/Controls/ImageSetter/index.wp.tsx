@@ -15,7 +15,6 @@ export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
       return;
     }
 
-    // @ts-expect-error, we expect window to have wp property
     const wp = global.wp || global.parent.wp;
 
     if (!wp) {

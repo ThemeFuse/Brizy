@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshots Default view 1`] = `
+<div
+  class="brz-ed--fat-icon brz-ed--fat-check-icon"
+  title="Test"
+>
+  <div
+    class="brz-ed--fat-icon__wrapper"
+  >
+    <span
+      class="brz-ed--check-mark brz-ed--fat-check-icon__check"
+    >
+      <svg
+        class="brz-icon-svg brz-ed-icon-svg"
+      >
+        <use
+          xlink:href="//icons.svg#nc-check-circle"
+        />
+      </svg>
+    </span>
+    <svg
+      class="brz-icon-svg brz-ed-icon-svg"
+    >
+      <use
+        xlink:href="//icons.svg#nc-button"
+      />
+    </svg>
+  </div>
+  <div
+    class="brz-ed--fat-icon__label"
+  >
+    Test
+  </div>
+</div>
+`;

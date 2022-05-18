@@ -1,7 +1,10 @@
 import React, { ReactElement } from "react";
 import { HelperPlacement } from "visual/utils/options/attributes";
 import EditorIcon from "visual/component/EditorIcon";
-import Tooltip from "visual/component/Controls/Tooltip";
+import {
+  Tooltip,
+  Props as TooltipProps
+} from "visual/component/Controls/Tooltip";
 
 export interface Props {
   label?: string;
@@ -30,7 +33,7 @@ export const OptionLabel = ({
       {helper && (
         <div className="brz-ed-option__helper">
           <Tooltip
-            placement={helperPlacement}
+            placement={helperPlacement as TooltipProps["placement"]}
             openOnClick={false}
             overlay={
               <div

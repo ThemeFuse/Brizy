@@ -512,14 +512,6 @@ export function onChangeBgColorPaletteMMenu2({ v, palette }) {
   };
 }
 
-export function onChangeBgColorFieldsMMenu2({ v, hex, opacity, isChanged }) {
-  return {
-    mMenuBgColorPalette: isChanged === "hex" ? "" : v.mMenuBgColorPalette,
-    mMenuBgColorHex: hex,
-    mMenuBgColorOpacity: opacity
-  };
-}
-
 // subMenuBgColor
 export function onChangeBgColorHexSubMenu2({
   v,

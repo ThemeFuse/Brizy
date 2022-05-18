@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react";
-import { Block, GlobalBlock } from "visual/types";
+import { Block, GlobalBlock, Screenshot } from "visual/types";
 import { ReduxState } from "visual/redux/types";
 
 export type GlobalBlockMeta = {
@@ -13,7 +13,7 @@ export type GlobalBlockMeta = {
 
 export type PageBlocks = {
   blocks: Block[];
-  meta?: object;
+  meta?: Screenshot;
 };
 
 export type APIGlobalBlockData = {
@@ -36,7 +36,7 @@ export type GlobalBlockProps = {
     parentId?: string;
   };
   className?: string;
-  attr?: HTMLAttributes<object>;
+  attr?: HTMLAttributes<Element>;
   label?: string;
   helper?: boolean;
 } & GlobalBlockMapDispatch &
@@ -61,5 +61,4 @@ export type GlobalBlockMapDispatch = {
     fromBlockId: string;
     parentId: string;
   }) => void;
-  updateBlocks: (data: PageBlocks) => void;
 };

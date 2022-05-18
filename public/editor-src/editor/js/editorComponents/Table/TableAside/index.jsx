@@ -2,7 +2,7 @@ import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import defaultValue from "./defaultValue.json";
 import { TextEditor } from "visual/component/Controls/TextEditor";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import { css } from "visual/utils/cssStyle";

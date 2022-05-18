@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import {
-  getModel,
-  getElementModel,
+  fromElementModel,
+  toElementModel,
   DEFAULT_VALUE,
   isChoicesSync
 } from "./utils";
@@ -26,6 +26,6 @@ export const MultiSelect: FC<Props> & StaticProps = props => {
     );
   }
 };
-MultiSelect.getModel = getModel;
-MultiSelect.getElementModel = getElementModel;
+MultiSelect.fromElementModel = fromElementModel;
+MultiSelect.toElementModel = toElementModel;
 MultiSelect.defaultValue = DEFAULT_VALUE;

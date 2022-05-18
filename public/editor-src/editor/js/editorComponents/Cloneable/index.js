@@ -26,6 +26,8 @@ import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { attachRef } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import classNames from "classnames";
+import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
 
 export default class Cloneable extends EditorComponent {
   static get componentId() {
@@ -121,6 +123,28 @@ export default class Cloneable extends EditorComponent {
     });
   }
 
+  getAnimationClassName = (v, vs, vd) => {
+    if (!validateKeyByProperty(v, "animationName", "none")) {
+      return undefined;
+    }
+
+    const animationName = defaultValueValue({ v, key: "animationName" });
+    const animationDuration = defaultValueValue({
+      v,
+      key: "animationDuration"
+    });
+    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
+    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+
+    return classNames(
+      css(
+        `${this.getComponentId()}-animation-${slug}`,
+        `${this.getId()}-animation-${slug}`,
+        styleAnimation(v, vs, vd)
+      )
+    );
+  };
+
   renderContent(v, vs, vd) {
     const { className, itemClassName } = v;
 
@@ -145,10 +169,12 @@ export default class Cloneable extends EditorComponent {
     );
 
     const { minItems, maxItems, blockType } = v;
+    const motion = makeOptionValueToMotion(v);
     const itemsProps = this.makeSubcomponentProps({
       blockType,
       minItems,
       maxItems,
+      motion,
       bindWithKey: "items",
       containerClassName: classNameContainer,
       itemClassName: classNameItem,
@@ -187,14 +213,7 @@ export default class Cloneable extends EditorComponent {
     const customID = Str.mRead(v.customID) || undefined;
     const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
 
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
+    const animationClassName = this.getAnimationClassName(v, vs, vd);
 
     const className = classnames(
       "brz-wrapper-clone",
@@ -246,6 +265,7 @@ export default class Cloneable extends EditorComponent {
                     componentProps={{
                       ...parseCustomAttributes(customAttributes),
                       ...containerBorderAttr,
+
                       id: cssIDPopulation === "" ? customID : cssIDPopulation,
                       className: classnames(className, draggableClassName)
                     }}
@@ -314,14 +334,7 @@ export default class Cloneable extends EditorComponent {
       meta: { sectionPopup, sectionPopup2 }
     } = this.props;
 
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
+    const animationClassName = this.getAnimationClassName(v, vs, vd);
 
     const className = classnames(
       "brz-wrapper-clone",
@@ -334,17 +347,15 @@ export default class Cloneable extends EditorComponent {
       propsClassName
     );
 
-    const props = {
-      ...parseCustomAttributes(customAttributes),
-      id: cssIDPopulation ?? customID,
-      className
-    };
-
     return (
       <Animation
         iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
         component={"div"}
-        componentProps={props}
+        componentProps={{
+          ...parseCustomAttributes(customAttributes),
+          id: cssIDPopulation ?? customID,
+          className
+        }}
         animationClass={animationClassName}
       >
         {this.renderContent(v, vs, vd)}

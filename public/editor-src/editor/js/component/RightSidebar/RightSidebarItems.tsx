@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { OptionDefinition } from "visual/component/Options/Type";
 import { instance } from "./index";
+import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 
 type RightSidebarItemsProps = {
   getItems: () => OptionDefinition[];

@@ -1,11 +1,34 @@
 import React from "react";
-import Options, { filterOptionsData } from "visual/component/Options";
+import Options from "visual/component/Options";
 import { Tabs, Tab } from "visual/component/Controls/Tabs";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
+import { isT } from "visual/utils/value";
 
 class TabsOptionType extends React.Component {
-  static shouldOptionBeFiltered({ tabs }) {
-    return tabs.every(tab => filterOptionsData(tab.options).length === 0);
+  static filter(f, t) {
+    return {
+      ...t,
+      tabs:
+        t.tabs
+          ?.map(tab => ({
+            ...tab,
+            options: tab?.options?.map(f).filter(isT)
+          }))
+          .filter(tab => tab?.options?.length > 0) ?? []
+    };
+  }
+
+  static reduce(fn, t0, item) {
+    return (
+      item.tabs?.reduce((acc, tab) => tab?.options?.reduce(fn, acc), t0) ?? t0
+    );
+  }
+
+  static map(fn, item) {
+    return {
+      ...item,
+      tabs: item.tabs?.map(tab => ({ ...tab, options: tab.options.map(fn) }))
+    };
   }
 
   static defaultProps = {
@@ -20,7 +43,7 @@ class TabsOptionType extends React.Component {
   constructor(props) {
     super(props);
 
-    const [firstTab] = this.filterTabs(props.tabs);
+    const [firstTab] = props.tabs;
 
     this.state = {
       activeTab: firstTab && (firstTab.id || firstTab.label || firstTab.tabIcon)
@@ -31,7 +54,7 @@ class TabsOptionType extends React.Component {
 
   getActiveTab() {
     const { tabs, value } = this.props;
-    const hasTabByValue = this.filterTabs(tabs).some(({ id }) => id === value);
+    const hasTabByValue = tabs.some(({ id }) => id === value);
 
     return this.isControlled && hasTabByValue ? value : this.state.activeTab;
   }
@@ -57,10 +80,6 @@ class TabsOptionType extends React.Component {
     }
   };
 
-  filterTabs(tabs) {
-    return tabs.filter(tab => filterOptionsData(tab.options).length !== 0);
-  }
-
   sortTabs(tabs) {
     // try to avoid creating a new object when unnecessary
     for (const tab of tabs) {
@@ -85,7 +104,7 @@ class TabsOptionType extends React.Component {
       location,
       toolbar
     } = this.props;
-    const items = this.sortTabs(this.filterTabs(tabs)).map(
+    const items = this.sortTabs(tabs).map(
       ({ id, title, label, options, tabIcon }) => {
         const newValue = id || label || tabIcon;
         return (

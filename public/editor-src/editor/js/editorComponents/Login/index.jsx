@@ -13,6 +13,9 @@ import toolbarExtendParentFn from "./toolbarExtendParent";
 import * as sidebarExtendParent from "./sidebarExtendParent";
 import * as toolbarExtendLabel from "./toolbarExtendLabel";
 import * as sidebarExtendLabel from "./sidebarExtendLabel";
+import * as sidebarExtendLostPassword from "./sidebarAutorized";
+import * as sidebarAutorized from "./sidebarAutorized";
+import * as sidebarLoginLink from "./sidebarLoginLink";
 import * as toolbarExtendCheckbox from "./toolbarExtendCheckbox";
 import * as toolbarExtendButton from "visual/editorComponents/Login/toolbarExtendButton";
 import * as sidebarExtendButton from "visual/editorComponents/Login/sidebarExtendButton";
@@ -238,7 +241,10 @@ class Login extends EditorComponent {
   renderLostYourPasswordLink(lostPassword) {
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarExtendLostPasswordConfig)}
+        {...this.makeToolbarPropsFromConfig2(
+          toolbarExtendLostPasswordConfig,
+          sidebarExtendLostPassword
+        )}
         key="forgot"
       >
         <div className="brz-login-form__field brz-login-form__field-lost-password">
@@ -267,7 +273,10 @@ class Login extends EditorComponent {
   renderLoginLink(loginLink) {
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarLoginLink)}
+        {...this.makeToolbarPropsFromConfig2(
+          toolbarLoginLink,
+          sidebarLoginLink
+        )}
         key="login"
       >
         <div className="brz-login-form__field brz-login-form__field-login-link">
@@ -350,7 +359,12 @@ class Login extends EditorComponent {
     const fallbackComponent = <p>John Doe</p>;
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarAutorized)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(
+          toolbarAutorized,
+          sidebarAutorized
+        )}
+      >
         <div className="brz-login__authorized">
           {v.showName === "on" && (
             <DynamicContentHelper

@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 
 export default class Placeholder extends React.Component {
   static defaultProps = {

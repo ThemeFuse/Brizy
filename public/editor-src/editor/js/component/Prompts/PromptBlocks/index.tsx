@@ -219,7 +219,7 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
   renderContent(): ReactElement {
     const { currentTab } = this.state;
     const { renderTab } = TABS.find(({ id }) => id === currentTab) || TABS[0];
-    const HeaderSlotLeft = (props: object): ReactElement => (
+    const HeaderSlotLeft = (props: Record<string, unknown>): ReactElement => (
       <HeaderSlot {...props} slot="left" />
     );
 

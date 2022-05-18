@@ -28,7 +28,10 @@ import { Value } from "./entities/Value";
 import * as ColorUtils from "visual/component/Options/types/dev/ColorPicker/utils";
 import { Black } from "visual/utils/color/Hex";
 import { StyleObject } from "visual/component/Controls/Border";
-import { GetElementModel, GetModel } from "visual/component/Options/Type";
+import {
+  ToElementModel,
+  FromElementModel
+} from "visual/component/Options/Type";
 
 export const DEFAULT_VALUE: Value = {
   style: Style.empty,
@@ -209,7 +212,7 @@ export const toggleWidth = (enable: boolean, m: Value): Value => {
  * @param {function(k:string):string|number} get
  * @return {Border}
  */
-export const fromElementModel: GetModel<Value> = get => {
+export const fromElementModel: FromElementModel<Value> = get => {
   const partial = {
     style:
       mPipe(() => get("style"), Str.read, Style.fromString)() ??
@@ -284,26 +287,26 @@ export const fromElementModel: GetModel<Value> = get => {
   };
 };
 
-export const toElementModel: GetElementModel<Value> = (m, get) => {
+export const toElementModel: ToElementModel<Value> = m => {
   return {
-    [get("style")]: m.style,
-    [get("tempStyle")]: m.tempStyle,
-    [get("colorHex")]: m.hex,
-    [get("colorOpacity")]: m.opacity,
-    [get("tempColorOpacity")]: m.tempOpacity,
-    [get("colorPalette")]: m.palette,
-    [get("tempColorPalette")]: m.tempPalette,
-    [get("widthType")]: m.widthType,
-    [get("width")]: m.width,
-    [get("tempWidth")]: m.tempWidth,
-    [get("topWidth")]: m.topWidth,
-    [get("tempTopWidth")]: m.tempTopWidth,
-    [get("rightWidth")]: m.rightWidth,
-    [get("tempRightWidth")]: m.tempRightWidth,
-    [get("bottomWidth")]: m.bottomWidth,
-    [get("tempBottomWidth")]: m.tempBottomWidth,
-    [get("leftWidth")]: m.leftWidth,
-    [get("tempLeftWidth")]: m.tempLeftWidth
+    style: m.style,
+    tempStyle: m.tempStyle,
+    colorHex: m.hex,
+    colorOpacity: m.opacity,
+    tempColorOpacity: m.tempOpacity,
+    colorPalette: m.palette,
+    tempColorPalette: m.tempPalette,
+    widthType: m.widthType,
+    width: m.width,
+    tempWidth: m.tempWidth,
+    topWidth: m.topWidth,
+    tempTopWidth: m.tempTopWidth,
+    rightWidth: m.rightWidth,
+    tempRightWidth: m.tempRightWidth,
+    bottomWidth: m.bottomWidth,
+    tempBottomWidth: m.tempBottomWidth,
+    leftWidth: m.leftWidth,
+    tempLeftWidth: m.tempLeftWidth
   };
 };
 
@@ -326,6 +329,16 @@ export const getStyleObject = (style: Style.Style): StyleObject => {
       return { id: BorderStyle.DASHED, icon: "nc-dashed" };
     case "dotted":
       return { id: BorderStyle.DOTTED, icon: "nc-dotted" };
+    case "double":
+      return { id: BorderStyle.DOUBLE, icon: "nc-double" };
+    case "groove":
+      return { id: BorderStyle.GROOVE, icon: "nc-groove" };
+    case "ridge":
+      return { id: BorderStyle.RIDGE, icon: "nc-ridge" };
+    case "inset":
+      return { id: BorderStyle.INSET, icon: "nc-inset" };
+    case "outset":
+      return { id: BorderStyle.OUTSET, icon: "nc-outset" };
   }
 };
 

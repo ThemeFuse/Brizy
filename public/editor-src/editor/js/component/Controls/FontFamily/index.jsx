@@ -14,14 +14,6 @@ const fontSizeMap = {
 };
 
 export class FontFamily extends Component {
-  checkCurrentFont() {
-    const { fonts, value } = this.props;
-
-    return Object.entries(fonts).some(fontList =>
-      fontList.some(font => font.id === value)
-    );
-  }
-
   handleOpenFonts = event => {
     event.preventDefault();
 
@@ -61,7 +53,6 @@ export class FontFamily extends Component {
       google: googleFonts = [],
       upload: uploadFonts = []
     } = this.props.fonts;
-    const existedFonts = this.checkCurrentFont();
     const needSeparator = uploadFonts.length > 0 || googleFonts.length > 0;
     const className = classNames(
       "brz-ed-font__typography",
@@ -74,17 +65,14 @@ export class FontFamily extends Component {
           className="brz-ed-scroll--dark brz-ed-scroll--small"
           style={{ height: "100%" }}
         >
-          {uploadFonts.length > 0 &&
-            this.renderFontList(uploadFonts, "upload", existedFonts)}
+          {uploadFonts.length > 0 && this.renderFontList(uploadFonts, "upload")}
 
-          {googleFonts.length > 0 &&
-            this.renderFontList(googleFonts, "google", existedFonts)}
+          {googleFonts.length > 0 && this.renderFontList(googleFonts, "google")}
 
           {needSeparator && <hr className="brz-hr brz-ed-font__separator" />}
 
-          {blocksFonts &&
-            this.renderFontList(blocksFonts, "google", existedFonts)}
-          {this.renderFontList(configFonts, "google", existedFonts)}
+          {blocksFonts && this.renderFontList(blocksFonts, "google")}
+          {this.renderFontList(configFonts, "google")}
         </ScrollPane>
         {this.props.addFont && (
           <div

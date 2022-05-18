@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { difference as diff } from "underscore";
 import { isT } from "visual/utils/value";
 import * as Union from "visual/utils/reader/union";
@@ -188,8 +187,9 @@ export function getLoopAttributes(v: V): WPQuery {
 }
 
 export function getLoopTagsAttributes(v: V): WPTagsQuery | undefined {
-  const { tagsSource, filterStyle, type } = v;
+  const { tagsSource, filterStyle, type, allTag } = v;
   const tax = Str.toString(tagsSource);
+  const tag = Str.toString(allTag) ?? "";
 
   if (!tax || (type !== "posts" && type !== "products")) {
     return undefined;
@@ -200,8 +200,13 @@ export function getLoopTagsAttributes(v: V): WPTagsQuery | undefined {
 
   return {
     tax,
+    allTag: tag,
     ulClassName: `brz-posts__filter--${filterStyle}`,
     liClassName: `brz-posts__filter__item--${filterStyle}`,
     ...postLoopAttribute
   };
+}
+
+export function getCollectionTypesInfo(): Promise<void> {
+  return Promise.reject();
 }

@@ -1,13 +1,11 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
-import { capitalize } from "visual/utils/string";
+import { defaultValueValue } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device, state: "normal" });
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: closeColorHex } = getOptionColorHexByPalette(
@@ -58,25 +56,15 @@ export function getItems({ v, device }) {
                   type: "group-dev",
                   options: [
                     {
-                      id: dvk("closeSize"),
+                      id: "closeSize",
                       label: t("Size"),
-                      type: "radioGroup",
+                      type: "radioGroup-dev",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
                         { value: "large", icon: "nc-32" },
                         { value: "custom", icon: "nc-more" }
-                      ],
-                      value: dvv("closeSize"),
-                      onChange: value => {
-                        return {
-                          [dvk("closeSize")]: value,
-                          [dvk("closeCustomSize")]:
-                            value !== "custom"
-                              ? dvv(`close${capitalize(value)}Size`)
-                              : dvv("closeCustomSize")
-                        };
-                      }
+                      ]
                     },
                     {
                       id: "closeCustomSize",
@@ -111,28 +99,14 @@ export function getItems({ v, device }) {
                   type: "group-dev",
                   options: [
                     {
-                      id: dvk("closeBorderRadiusShape"),
+                      id: "closeBorderRadiusShape",
                       label: t("Corner"),
-                      type: "radioGroup",
+                      type: "radioGroup-dev",
                       choices: [
                         { value: "square", icon: "nc-corners-square" },
                         { value: "rounded", icon: "nc-corners-round" },
                         { value: "custom", icon: "nc-more" }
-                      ],
-                      value: dvv("closeBorderRadiusShape"),
-                      onChange: value => {
-                        return {
-                          [dvk("closeBorderRadiusShape")]: value,
-                          [dvk("tempCloseBorderRadiusShape")]:
-                            value !== ""
-                              ? value
-                              : defaultValueValue("tempCloseBorderRadiusShape"),
-                          [dvk("closeBorderRadius")]:
-                            value === "rounded"
-                              ? 50
-                              : dvv("tempCloseBorderRadius")
-                        };
-                      }
+                      ]
                     },
                     {
                       id: "closeBorderRadius",

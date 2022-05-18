@@ -4,6 +4,7 @@
 
     "lightBox": "off",
     "enableTags": "on",
+    "allTag": "All",
 
     "gridColumn": 2,
     "gridColumnSuffix": null,
@@ -326,6 +327,74 @@
     "filterBorderBottomRightRadius": 0,
     "filterBorderBottomLeftRadius": 0,
 
+    "filterBorderRadiusSuffix": "px",
+    "filterBorderTopLeftRadiusSuffix": "px",
+    "filterBorderTopRightRadiusSuffix": "px",
+    "filterBorderBottomRightRadiusSuffix": "px",
+    "filterBorderBottomLeftRadiusSuffix": "px",
+
+    "tempFilterBorderRadius": 0,
+    "tempFilterBorderTopLeftRadius": 0,
+    "tempFilterBorderTopRightRadius": 0,
+    "tempFilterBorderBottomRightRadius": 0,
+    "tempFilterBorderBottomLeftRadius": 0,
+
+    "tempFilterBorderRadiusSuffix": "px",
+    "tempFilterBorderTopLeftRadiusSuffix": "px",
+    "tempFilterBorderTopRightRadiusSuffix": "px",
+    "tempFilterBorderBottomRightRadiusSuffix": "px",
+    "tempFilterBorderBottomLeftRadiusSuffix": "px",
+
+    "tabletFilterBorderRadiusType": null,
+    "tabletFilterBorderRadius": null,
+    "tabletFilterBorderTopLeftRadius": null,
+    "tabletFilterBorderTopRightRadius": null,
+    "tabletFilterBorderBottomRightRadius": null,
+    "tabletFilterBorderBottomLeftRadius": null,
+
+    "tabletFilterBorderRadiusSuffix": null,
+    "tabletFilterBorderTopLeftRadiusSuffix": null,
+    "tabletFilterBorderTopRightRadiusSuffix": null,
+    "tabletFilterBorderBottomRightRadiusSuffix": null,
+    "tabletFilterBorderBottomLeftRadiusSuffix": null,
+
+    "tempTabletFilterBorderRadius": null,
+    "tempTabletFilterBorderTopLeftRadius": null,
+    "tempTabletFilterBorderTopRightRadius": null,
+    "tempTabletFilterBorderBottomRightRadius": null,
+    "tempTabletFilterBorderBottomLeftRadius": null,
+
+    "tempTabletFilterBorderRadiusSuffix": null,
+    "tempTabletFilterBorderTopLeftRadiusSuffix": null,
+    "tempTabletFilterBorderTopRightRadiusSuffix": null,
+    "tempTabletFilterBorderBottomRightRadiusSuffix": null,
+    "tempTabletFilterBorderBottomLeftRadiusSuffix": null,
+
+    "mobileFilterBorderRadiusType": null,
+    "mobileFilterBorderRadius": null,
+    "mobileFilterBorderTopLeftRadius": null,
+    "mobileFilterBorderTopRightRadius": null,
+    "mobileFilterBorderBottomRightRadius": null,
+    "mobileFilterBorderBottomLeftRadius": null,
+
+    "mobileFilterBorderRadiusSuffix": null,
+    "mobileFilterBorderTopLeftRadiusSuffix": null,
+    "mobileFilterBorderTopRightRadiusSuffix": null,
+    "mobileFilterBorderBottomRightRadiusSuffix": null,
+    "mobileFilterBorderBottomLeftRadiusSuffix": null,
+
+    "tempMobileFilterBorderRadius": null,
+    "tempMobileFilterBorderTopLeftRadius": null,
+    "tempMobileFilterBorderTopRightRadius": null,
+    "tempMobileFilterBorderBottomRightRadius": null,
+    "tempMobileFilterBorderBottomLeftRadius": null,
+
+    "tempMobileFilterBorderRadiusSuffix": null,
+    "tempMobileFilterBorderTopLeftRadiusSuffix": null,
+    "tempMobileFilterBorderTopRightRadiusSuffix": null,
+    "tempMobileFilterBorderBottomRightRadiusSuffix": null,
+    "tempMobileFilterBorderBottomLeftRadiusSuffix": null,
+
     "hoverFilterBorderRadiusType": null,
     "hoverFilterBorderRadius": null,
     "hoverFilterBorderTopLeftRadius": null,
@@ -339,12 +408,6 @@
     "activeFilterBorderTopRightRadius": null,
     "activeFilterBorderBottomRightRadius": null,
     "activeFilterBorderBottomLeftRadius": null,
-
-    "tempFilterBorderRadius": 0,
-    "tempFilterBorderTopLeftRadius": 0,
-    "tempFilterBorderTopRightRadius": 0,
-    "tempFilterBorderBottomRightRadius": 0,
-    "tempFilterBorderBottomLeftRadius": 0,
 
     "tempHoverFilterBorderRadius": null,
     "tempHoverFilterBorderTopLeftRadius": null,

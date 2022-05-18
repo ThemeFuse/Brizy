@@ -5,8 +5,8 @@ import { EditorComponentContext } from "visual/editorComponents/EditorComponent/
 import Sortable from "visual/component/Sortable";
 import Toolbar from "visual/component/Toolbar";
 import { IS_WP } from "visual/utils/env";
-import { t } from "visual/utils/i18n";
 import { stringifyAttributes } from "./utils.common";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 
 export default class Items extends EditorArrayComponent {
   static get componentId() {
@@ -89,10 +89,15 @@ export default class Items extends EditorArrayComponent {
   }
 
   renderTagsForEdit() {
-    const { toolbarExtendFilter, filterStyle, data } = this.props;
+    const {
+      toolbarExtendFilter,
+      filterStyle,
+      allTag,
+      data,
+      handleAllTagChange
+    } = this.props;
     const { tags = [] } = data;
-    // In preview the All tag is translatable with backend
-    const allTags = [{ name: t("All") }, ...tags];
+    const allTags = [{ name: allTag }, ...tags];
     const listClassName = classnames(
       "brz-ul brz-posts__filter",
       `brz-posts__filter--${filterStyle}`
@@ -111,7 +116,13 @@ export default class Items extends EditorArrayComponent {
 
               return (
                 <Toolbar key={index} {...toolbarExtendFilter}>
-                  <li className={itemClassName}>{tag.name}</li>
+                  <li className={itemClassName}>
+                  {tag.name === allTag ? (
+                    <TextEditor value={allTag} onChange={handleAllTagChange} />
+                  ) : (
+                    tag.name
+                  )}
+                </li>
                 </Toolbar>
               );
             })}

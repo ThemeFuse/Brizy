@@ -11,6 +11,7 @@ $brand-options-border: rgba(255, 255, 255, 0.1);
 $link-color: $brand-primary;
 $link-hover-color: darken($brand-primary, 10%);
 $required: #ff0e0e;
+$green: #48be24;
 
 // Options
 //
@@ -204,7 +205,7 @@ $options-handle-font-size: 14px;
 $options-handle-font-size-small: 12px;
 
 // Options Item
-$options-item-height: 51px;
+$options-item-height: 52px;
 $options-item-padding: 17px;
 $options-item-font-size: 13px;
 $options-label-color: $gray-light;

@@ -18,12 +18,39 @@ class Form2FieldsItems extends EditorArrayComponent {
     const cloneRemoveConfig = {
       getItems: () => [
         {
+          id: "order",
+          type: "order-dev",
+          devices: "desktop",
+          position: 105,
+          roles: ["admin"],
+          disabled: items.length < 2,
+          config: {
+            align: "vertical",
+            disable:
+              itemIndex === 0
+                ? "prev"
+                : itemIndex === items.length - 1
+                ? "next"
+                : undefined,
+            onChange: v => {
+              switch (v) {
+                case "prev":
+                  this.reorderItem(itemIndex, itemIndex - 1);
+                  break;
+                case "next":
+                  this.reorderItem(itemIndex, itemIndex + 1);
+                  break;
+              }
+            }
+          }
+        },
+        {
           id: "duplicate",
           type: "button",
           devices: "desktop",
           icon: "nc-duplicate",
           title: t("Duplicate"),
-          position: 200,
+          position: 225,
           onChange: () => {
             this.cloneItem(itemIndex);
           }

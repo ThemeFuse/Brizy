@@ -1,5 +1,4 @@
 import { t } from "visual/utils/i18n";
-import { toolbarBorderRadius } from "visual/utils/toolbar";
 
 const helperHTML = `
 <p class="brz-p">You can use the following selectors to create targeted CSS.</p>
@@ -11,63 +10,68 @@ const helperHTML = `
 
 export const title = t("Product Gallery");
 
-export function getItems({ v, device }) {
+export function getItems() {
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
-      config: {
-        align: "start"
-      },
-      devices: "desktop",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       tabs: [
         {
-          id: "settingsStyling",
+          id: "styles",
+          title: t("Styling"),
           label: t("Styling"),
-          icon: "nc-styling",
-          options: [
-            toolbarBorderRadius({
-              v,
-              device,
-              state: "normal",
-              position: 70,
-              onChangeGrouped: [
-                "onChangeBorderRadiusGrouped",
-                "onChangeBorderRadiusGroupedDependencies"
-              ],
-              onChangeUngrouped: [
-                "onChangeBorderRadiusUngrouped",
-                "onChangeBorderRadiusUngroupedDependencies"
-              ]
-            })
-          ]
-        },
-        {
-          id: "moreSettingsAdvanced",
-          label: t("Advanced"),
-          icon: "nc-cog",
           options: [
             {
-              id: "customCSS",
-              label: t("Custom CSS"),
-              type: "codeMirror-dev",
-              position: 45,
-              display: "block",
-              devices: "desktop",
-              helper: { content: helperHTML },
-              placeholder: "element { CSS goes here }"
-            },
-            {
-              id: "hoverTransition",
-              label: t("Hover Transition"),
-              type: "slider-dev",
-              devices: "desktop",
-              position: 100,
+              id: "settingsTabs",
+              type: "tabs-dev",
               config: {
-                min: 0,
-                max: 99,
-                units: [{ title: "ms", value: "ms" }]
-              }
+                align: "start"
+              },
+              devices: "desktop",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  options: [
+                    {
+                      id: "border",
+                      type: "corners-dev",
+                      label: t("Corner"),
+                      position: 70
+                    }
+                  ]
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  icon: "nc-cog",
+                  options: [
+                    {
+                      id: "customCSS",
+                      label: t("Custom CSS"),
+                      type: "codeMirror-dev",
+                      position: 45,
+                      display: "block",
+                      devices: "desktop",
+                      helper: { content: helperHTML },
+                      placeholder: "element { CSS goes here }"
+                    },
+                    {
+                      id: "hoverTransition",
+                      label: t("Hover Transition"),
+                      type: "slider-dev",
+                      devices: "desktop",
+                      position: 100,
+                      config: {
+                        min: 0,
+                        max: 99,
+                        units: [{ title: "ms", value: "ms" }]
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

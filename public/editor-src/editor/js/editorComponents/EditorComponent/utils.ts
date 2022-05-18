@@ -1,12 +1,20 @@
+import { getIn } from "timm";
+import { intersection } from "underscore";
+import Shortcodes from "visual/shortcodeComponents";
 import * as Obj from "visual/utils/reader/object";
 import { camelCase } from "visual/utils/string";
-import * as State from "visual/utils/stateMode";
-import { hasState } from "visual/utils/stateMode/editorComponent";
 import * as Responsive from "visual/utils/responsiveMode";
 import * as Device from "visual/utils/devices";
 import { getDevice, supportsMode } from "visual/utils/devices";
 import { ElementModel } from "visual/component/Elements/Types";
 import { Dictionary } from "visual/types/utils";
+import { DeviceMode } from "visual/types";
+import {
+  OptionDefinition,
+  ToolbarItemType
+} from "visual/editorComponents/ToolbarItemType";
+import { IS_PRO } from "visual/utils/env";
+import { NoEmptyString } from "visual/utils/string/NoEmptyString";
 
 /**
  * Create an complete option id that consists from 2 parts: base id and suffix
@@ -60,20 +68,6 @@ export const inDevelopment = (type: string): boolean =>
   String(type).endsWith("-dev");
 
 /**
- * Checks if the option supports provided state
- *  - if it does, return the current state
- *  - if it doesn't, return default state mode
- *
- * @param {string} state
- * @param {object} option
- * @returns {string}
- */
-export const optionState = (
-  state: State.State,
-  option: { states: State.State[] }
-): State.State => (hasState(state, option) ? state : State.empty);
-
-/**
  * Checks if the option supports provided responsive mode
  *  - if it does, return the current mode
  *  - if it doesn't, return default mode
@@ -88,10 +82,24 @@ export const optionMode = (
 ): Responsive.ResponsiveMode =>
   supportsMode(mode, getDevice(option)) ? mode : Responsive.empty;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const makeToolbarPropsFromConfigDefaults = options => {
+export interface ToolbarPropsFromConfig {
+  allowExtend?: boolean;
+  allowExtendFromParent?: boolean;
+  allowExtendFromChild?: boolean;
+  allowExtendFromThirdParty?: boolean;
+  allowSidebarExtend?: boolean;
+  allowSidebarExtendFromParent?: boolean;
+  allowSidebarExtendFromChild?: boolean;
+  allowSidebarExtendFromThirdParty?: boolean;
+  parentItemsFilter?: (o: OptionDefinition[]) => OptionDefinition[];
+  parentExtendProp?: string;
+  thirdPartyExtendId?: string;
+  sidebarThirdPartyExtendId?: string;
+}
+
+export const makeToolbarPropsFromConfigDefaults = (
+  options: ToolbarPropsFromConfig
+): ToolbarPropsFromConfig => {
   const allowExtend = options.allowExtend ?? true;
   const allowExtendFromParent = options.allowExtendFromParent ?? allowExtend;
   const allowExtendFromChild = options.allowExtendFromChild ?? allowExtend;
@@ -159,3 +167,64 @@ export const flattenDefaultValue = flattenDefaultValue_([
   "symbols",
   "toolbar"
 ]);
+
+export const filterToolbarItems = (deviceMode: DeviceMode, role: string) => <
+  T extends ToolbarItemType
+>(
+  item: T
+): boolean => {
+  const { type, disabled, devices, roles } = item;
+
+  if (!type) {
+    return false;
+  }
+
+  if (disabled === true) {
+    return false;
+  }
+
+  if (devices && devices !== "all") {
+    if (devices === "desktop" && deviceMode !== "desktop") {
+      return false;
+    }
+
+    if (devices === "responsive" && deviceMode === "desktop") {
+      return false;
+    }
+  }
+
+  if (Array.isArray(roles) && !roles.includes(role)) {
+    return false;
+  }
+
+  return true;
+};
+
+export const getProTitle = (
+  type: NoEmptyString,
+  model: ElementModel
+): string | undefined => {
+  const element = Object.values(Shortcodes)
+    .flat()
+    .filter(item => item.pro)
+    .map(item => ({
+      title: item.component.title,
+      type: getIn(item.component.resolve, ["value", "items", 0, "type"]) ?? ""
+    }))
+    .filter(item => {
+      if (item.type === "Image") {
+        return (
+          Array.isArray(model._styles) &&
+          intersection(model._styles, ["image--dynamic"]).length > 0
+        );
+      }
+      return true;
+    })
+    .find(item => item.type === type);
+
+  if (element !== undefined && !IS_PRO) {
+    return element.title;
+  }
+
+  return undefined;
+};

@@ -54,10 +54,15 @@ const getBorder = v => {
 };
 
 const getParallax = (v, meta = {}) => {
-  const { bgAttachment } = v;
+  const { bgAttachment, bgSize } = v;
   const { section } = meta;
 
-  return bgAttachment && bgAttachment === "animated" && !section.isSlider;
+  return (
+    bgSize === "cover" &&
+    bgAttachment &&
+    bgAttachment === "animated" &&
+    !section.isSlider
+  );
 };
 
 const getMedia = v => {

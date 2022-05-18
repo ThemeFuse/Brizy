@@ -12,11 +12,13 @@ import {
   UPDATE_GLOBAL_BLOCK,
   UPDATE_CURRENT_STYLE_ID,
   UPDATE_CURRENT_STYLE,
-  IMPORT_TEMPLATE,
-  ADD_BLOCK,
-  ADD_GLOBAL_BLOCK
+  ADD_BLOCK
 } from "visual/redux/actions";
-import { UPDATE_EXTRA_FONT_STYLES } from "visual/redux/actions2";
+import {
+  IMPORT_TEMPLATE,
+  UPDATE_EXTRA_FONT_STYLES,
+  ADD_GLOBAL_BLOCK
+} from "visual/redux/actions2";
 import { UNDO, REDO } from "visual/redux/history/types";
 import { updateScreenshot } from "visual/redux/actions";
 import {

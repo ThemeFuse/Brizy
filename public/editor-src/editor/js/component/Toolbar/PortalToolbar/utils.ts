@@ -1,4 +1,8 @@
 import { isInsideRect } from "visual/component/Sortable/plugin/utils";
+import { DeviceMode, UserRole } from "visual/types";
+import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { filter } from "visual/component/Options/types/utils/filter";
+import { filterToolbarItems } from "visual/editorComponents/EditorComponent/utils";
 
 export function selectorSearchDomTree(
   node: Element,
@@ -51,3 +55,11 @@ export function selectorSearchCoordinates(
 
   return null;
 }
+
+export const filterOptions = (
+  device: DeviceMode,
+  role: UserRole
+): ((o: OptionDefinition) => OptionDefinition) =>
+  // @ts-expect-error, OptionDefinition type is not same ToolbarItemType, but it extends.
+  // Anyway, we need to fix this
+  filter(filterToolbarItems(device, role));

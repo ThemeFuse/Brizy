@@ -27,53 +27,66 @@ const toolbarTagsChoices = [
 export function getItems() {
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       devices: "desktop",
-      config: {
-        align: "start"
-      },
       tabs: [
         {
-          id: "settingsStyling",
+          id: "styles",
+          title: t("Styling"),
           label: t("Styling"),
-          icon: "nc-styling",
-          options: []
-        },
-        {
-          id: "moreSettingsAdvanced",
-          label: t("Advanced"),
-          icon: "nc-cog",
           options: [
             {
-              id: "customCSS",
-              label: t("Custom CSS"),
-              type: "codeMirror-dev",
-              position: 45,
-              display: "block",
-              devices: "desktop",
-              helper: { content: helperHTML },
-              placeholder: "element { CSS goes here }"
-            },
-            {
-              id: "tagName",
-              label: t("HTML Tag"),
-              type: "select-dev",
-              devices: "desktop",
-              position: 100,
-              choices: toolbarTagsChoices
-            },
-            {
-              id: "hoverTransition",
-              label: t("Hover Transition"),
-              devices: "desktop",
-              position: 110,
-              type: "slider-dev",
+              id: "settingsTabs",
+              type: "tabs-dev",
               config: {
-                min: 0,
-                max: 99,
-                units: [{ title: "ms", value: "ms" }]
-              }
+                align: "start"
+              },
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  options: []
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  icon: "nc-cog",
+                  options: [
+                    {
+                      id: "customCSS",
+                      label: t("Custom CSS"),
+                      type: "codeMirror-dev",
+                      position: 45,
+                      display: "block",
+                      devices: "desktop",
+                      helper: { content: helperHTML },
+                      placeholder: "element { CSS goes here }"
+                    },
+                    {
+                      id: "tagName",
+                      label: t("HTML Tag"),
+                      type: "select-dev",
+                      devices: "desktop",
+                      position: 100,
+                      choices: toolbarTagsChoices
+                    },
+                    {
+                      id: "hoverTransition",
+                      label: t("Hover Transition"),
+                      devices: "desktop",
+                      position: 110,
+                      type: "slider-dev",
+                      config: {
+                        min: 0,
+                        max: 99,
+                        units: [{ title: "ms", value: "ms" }]
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

@@ -6,12 +6,6 @@ export function styleElementTableWidth({ v, device, state }) {
   return dvv("width");
 }
 
-export function styleElementTableIconSize({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return dvv("iconCustomSize");
-}
-
 export function styleElementTableIconPosition({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
 

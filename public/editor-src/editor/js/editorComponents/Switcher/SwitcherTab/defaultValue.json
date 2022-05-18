@@ -1,7 +1,10 @@
 {
   "content": {
     "items": [],
-    "labelText": ""
+    "labelText": "",
+    
+    "iconType": "",
+    "iconName": ""
   },
 
   "style": {

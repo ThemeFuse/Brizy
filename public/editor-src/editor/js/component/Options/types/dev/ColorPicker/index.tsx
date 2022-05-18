@@ -14,8 +14,8 @@ import * as Utils from "./utils";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
 import { paletteHex } from "./utils";
 import {
-  GetElementModel,
-  GetModel,
+  ToElementModel,
+  FromElementModel,
   OptionType
 } from "visual/component/Options/Type";
 import * as Option from "visual/component/Options/Type";
@@ -122,7 +122,7 @@ const DEFAULT_VALUE: Value = {
   tempPalette: ""
 };
 
-const getModel: GetModel<Value> = get => {
+const getModel: FromElementModel<Value> = get => {
   const palette =
     mPipe(() => get("palette"), Str.read, Palette.fromString)() ??
     DEFAULT_VALUE.palette;
@@ -145,18 +145,18 @@ const getModel: GetModel<Value> = get => {
   };
 };
 
-const getElementModel: GetElementModel<Value> = (values, get) => {
+const getElementModel: ToElementModel<Value> = values => {
   return {
-    [get("hex")]: values.hex,
-    [get("opacity")]: values.opacity,
-    [get("palette")]: values.palette,
-    [get("tempOpacity")]: values.tempOpacity,
-    [get("tempPalette")]: values.tempPalette
+    hex: values.hex,
+    opacity: values.opacity,
+    palette: values.palette,
+    tempOpacity: values.tempOpacity,
+    tempPalette: values.tempPalette
   };
 };
 
 ColorPicker.defaultValue = DEFAULT_VALUE;
 
-ColorPicker.getModel = getModel;
+ColorPicker.fromElementModel = getModel;
 
-ColorPicker.getElementModel = getElementModel;
+ColorPicker.toElementModel = getElementModel;

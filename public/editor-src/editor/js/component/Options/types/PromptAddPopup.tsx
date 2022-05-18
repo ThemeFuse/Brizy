@@ -140,7 +140,6 @@ class PromptAddPopupOptionType extends React.Component<Props> {
               }
             }),
             meta: {
-              // eslint-disable-next-line @typescript-eslint/camelcase
               is_autosave: 0
             }
           })
@@ -345,6 +344,6 @@ const mapStateToProps = (state: ReduxState): StateProps => ({
   globalBlocks: globalBlocksSelector(state)
 });
 
-export default connect<StateProps, {}, OwnProps, ReduxState>(mapStateToProps)(
-  PromptAddPopupOptionType
-);
+export default connect<StateProps, Record<string, never>, OwnProps, ReduxState>(
+  mapStateToProps
+)(PromptAddPopupOptionType);

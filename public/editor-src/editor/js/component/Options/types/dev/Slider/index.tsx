@@ -3,18 +3,17 @@ import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 import * as Option from "visual/component/Options/Type";
 import { NumberSlider } from "visual/component/Controls/NumberSlider";
 import { NumberSpec } from "visual/utils/math/number";
-import { throttleEffect } from "visual/component/hooks";
+import { useThrottleEffect } from "visual/component/hooks";
 import { String } from "visual/utils/string/specs";
 import { Unit } from "visual/component/Controls/NumberUnit/types";
 import { Value, eq } from "./types/Value";
-import { fromValue } from "visual/component/Options/types/dev/Slider/utils";
 
 export type Config = {
   min?: number;
   max?: number;
   step?: number;
   debounceUpdate?: boolean;
-  updateRate: number;
+  updateRate?: number;
   inputMin?: number;
   inputMax?: number;
   units?: Unit<string>[];
@@ -44,10 +43,10 @@ export const Slider: FC<Props> & Option.OptionType<Value> = ({
     [setValue, setEdit]
   );
 
-  throttleEffect(
+  useThrottleEffect(
     () => {
       if (!eq(value, _value) && (!onEdit || !editing)) {
-        onChange(fromValue(_value));
+        onChange(_value);
         ref.current = _value;
       }
     },
@@ -79,23 +78,23 @@ export const Slider: FC<Props> & Option.OptionType<Value> = ({
   );
 };
 
-const getModel: Option.GetModel<Value> = get => {
+const getModel: Option.FromElementModel<Value> = get => {
   return {
     value: NumberSpec.read(get("value")),
     unit: String.read(get("suffix"))
   };
 };
 
-const getElementModel: Option.GetElementModel<Value> = (values, get) => {
+const getElementModel: Option.ToElementModel<Value> = values => {
   return {
-    [get("value")]: values.value,
-    [get("suffix")]: values.unit
+    value: values.value,
+    suffix: values.unit
   };
 };
 
-Slider.getModel = getModel;
+Slider.fromElementModel = getModel;
 
-Slider.getElementModel = getElementModel;
+Slider.toElementModel = getElementModel;
 
 Slider.defaultValue = {
   value: 0,

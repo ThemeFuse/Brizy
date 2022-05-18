@@ -2,14 +2,6 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  toolbarBorder2,
-  toolbarBorderColorHexField2,
-  toolbarBorderWidthOneField2,
-  toolbarBoxShadow2,
-  toolbarBoxShadowHexField2,
-  toolbarBoxShadowFields2
-} from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
   const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
@@ -65,61 +57,12 @@ export function getItems({ v, device }) {
               id: "tabSelectBorder",
               label: t("Border"),
               options: [
-                toolbarBorder2({
-                  v,
-                  device,
-                  prefix: "select",
-                  state: "normal",
-                  devices: "desktop",
-                  onChangeStyle: [
-                    "onChangeBorderStyle2",
-                    "onChangeElementBorderStyleDependencies2"
-                  ],
-                  onChangeHex: [
-                    "onChangeBorderColorHexAndOpacity2",
-                    "onChangeBorderColorHexAndOpacityPalette2",
-                    "onChangeElementBorderColorHexAndOpacityDependencies2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBorderColorPalette2",
-                    "onChangeBorderColorPaletteOpacity2",
-                    "onChangeElementBorderColorHexAndOpacityDependencies2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 38,
-                      options: [
-                        toolbarBorderColorHexField2({
-                          v,
-                          device,
-                          prefix: "select",
-                          state: "normal",
-                          devices: "desktop",
-                          onChange: [
-                            "onChangeBorderColorHexAndOpacity2",
-                            "onChangeBorderColorHexAndOpacityPalette2",
-                            "onChangeElementBorderColorHexAndOpacityDependencies2"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 54,
-                      options: [
-                        toolbarBorderWidthOneField2({
-                          v,
-                          device,
-                          prefix: "select",
-                          state: "normal",
-                          onChange: ["onChangeBorderWidthGrouped2"]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "selectBorder",
+                  type: "border-dev",
+                  config: {
+                    width: ["grouped"]
+                  }
                 }
               ]
             },
@@ -127,65 +70,9 @@ export function getItems({ v, device }) {
               id: "tabSelectBoxShadow",
               label: t("Shadow"),
               options: [
-                toolbarBoxShadow2({
-                  v,
-                  device,
-                  prefix: "select",
-                  state: "normal",
-                  devices: "desktop",
-                  onChangeType: [
-                    "onChangeBoxShadowType2",
-                    "onChangeBoxShadowTypeDependencies2"
-                  ],
-                  onChangeHex: [
-                    "onChangeBoxShadowHexAndOpacity2",
-                    "onChangeBoxShadowHexAndOpacityPalette2",
-                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBoxShadowPalette2",
-                    "onChangeBoxShadowPaletteOpacity2",
-                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 41,
-                      options: [
-                        toolbarBoxShadowHexField2({
-                          v,
-                          device,
-                          prefix: "select",
-                          state: "normal",
-                          devices: "desktop",
-                          onChange: [
-                            "onChangeBoxShadowHexAndOpacity2",
-                            "onChangeBoxShadowHexAndOpacityPalette2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 59,
-                      options: [
-                        toolbarBoxShadowFields2({
-                          v,
-                          device,
-                          prefix: "select",
-                          state: "normal",
-                          devices: "desktop",
-                          onChange: [
-                            "onChangeBoxShadowFields2",
-                            "onChangeBoxShadowFieldsDependencies2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "selectBoxShadow",
+                  type: "boxShadow-dev"
                 }
               ]
             }

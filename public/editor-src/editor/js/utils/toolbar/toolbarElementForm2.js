@@ -1,10 +1,6 @@
 import _ from "underscore";
 import { t } from "visual/utils/i18n";
-import {
-  defaultValueKey,
-  defaultValueValue,
-  saveOnChanges
-} from "visual/utils/onChange";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 
 export function toolbarElementForm2SpacingPx({
   v,
@@ -83,45 +79,5 @@ export function toolbarElementForm2Size({ v, device, state, devices = "all" }) {
       [dvk("paddingBottom")]: sizeToPadding[size],
       [dvk("paddingLeft")]: sizeToPadding[size] + 10
     })
-  };
-}
-
-export function toolbarElementForm2BorderRadius({
-  v,
-  device,
-  state,
-  onChange,
-  devices = "all"
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    devices,
-    id: dvk("borderRadius"),
-    label: t("Corner"),
-    type: "slider",
-    slider: {
-      min: 0,
-      max: 100
-    },
-    input: {
-      show: true,
-      min: 0
-    },
-    suffix: {
-      show: true,
-      choices: [{ title: "px", value: "px" }]
-    },
-    value: {
-      value: dvv("borderRadius")
-    },
-    onChange: ({ value }, { sliderDragEnd }) => {
-      const values = {
-        ...{ v, device, state, onChange },
-        ...{ value, sliderDragEnd }
-      };
-      return saveOnChanges(values);
-    }
   };
 }

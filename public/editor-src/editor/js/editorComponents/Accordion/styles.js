@@ -30,11 +30,14 @@ export function style(v, vs, vd) {
       ]
     },
     ".brz && > .brz-accordion__item > .brz-accordion__nav": {
-      standart: ["cssStyleElementAccordionNavAlign"]
+      standart: [
+        "cssStyleElementAccordionNavAlign",
+        "cssStyleElementAccordionTitlePadding"
+      ]
     },
     ".brz && > .brz-accordion__item > .brz-accordion__nav .brz-accordion__nav-title": {
       standart: [
-        "cssStyleElementAccordionNavTextAlign",
+        "cssStyleElementAccordionNavAlignText",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
@@ -42,10 +45,7 @@ export function style(v, vs, vd) {
         "cssStyleTypography2LetterSpacing"
       ]
     },
-    ".brz && > .brz-accordion__item > .brz-accordion__nav .brz-span": {
-      standart: ["cssStyleElementAccordionNavTextAlign"]
-    },
-    ".brz && > .brz-accordion__item > .brz-accordion__nav .brz-accordion--icon-wrapper": {
+    ".brz && > .brz-accordion__item .brz-accordion--icon-wrapper": {
       standart: ["cssStyleElementAccordionNavIconSpacing"]
     },
     ".brz && > .brz-accordion__item > .brz-accordion__nav .brz-accordion--icon-wrapper .brz-icon-svg": {

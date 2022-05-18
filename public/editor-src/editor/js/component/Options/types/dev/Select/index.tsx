@@ -26,6 +26,6 @@ export const Select: FC<Props> & StaticProps = props => {
     );
   }
 };
-Select.getModel = getModel;
-Select.getElementModel = getElementModel;
+Select.fromElementModel = getModel;
+Select.toElementModel = getElementModel;
 Select.defaultValue = defaultValue;

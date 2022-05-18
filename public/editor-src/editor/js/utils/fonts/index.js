@@ -25,8 +25,7 @@ export {
   projectFontsData,
   normalizeFonts,
   normalizeStyles,
-  normalizeFontStyles,
-  tripId
+  normalizeFontStyles
 } from "./transform";
 
 // Default Font CSS

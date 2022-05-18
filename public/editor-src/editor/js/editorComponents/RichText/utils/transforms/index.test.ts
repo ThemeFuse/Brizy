@@ -1,5 +1,5 @@
 import cheerio from "cheerio";
-import { VToClassNames, classNamesToV2 } from "./index";
+import { classNamesToV2 } from "./index";
 
 // +---------+----------------+---------------------+----------------+------------+--------------+----------------------+-----------------+
 // |         | Old Typography |    New Typography   |     Change     |  onChange  | Intermediate | Empty classNames for |       Tags      |

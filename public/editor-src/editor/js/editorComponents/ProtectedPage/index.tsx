@@ -48,6 +48,7 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
 
   componentDidMount(): void {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
+      // @ts-expect-error: Need transform all toolbars config to ts
       toolbarExtendParent,
       sidebarExtendParent,
       {
@@ -101,6 +102,7 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
     };
 
     return (
+      // @ts-expect-error: Need transform all toolbars config to ts
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
         <CustomCSS selectorName={this.getId()} css={customCSS}>
           <Wrapper<Props> {...this.makeWrapperProps({ className })}>

@@ -6,6 +6,7 @@ import * as Str from "visual/utils/reader/string";
 import * as Obj from "visual/utils/reader/object";
 import * as Arr from "visual/utils/reader/array";
 import * as Union from "visual/utils/reader/union";
+import { ElementModel } from "visual/component/Elements/Types";
 
 type V2 = {
   type: "posts" | "archives" | "products" | "archives-product" | "upsell";
@@ -21,7 +22,7 @@ function never(_: never): never {
   throw new Error("Didn't expect to get here");
 }
 
-function determineType(v: object): V2["type"] {
+function determineType(v: ElementModel): V2["type"] {
   let type: V2["type"] = "posts";
 
   if (Obj.hasKey("type", v)) {
@@ -56,7 +57,7 @@ function determineType(v: object): V2["type"] {
   return type;
 }
 
-function migrateSymbols(v: object, source: V2["source"]): V2["symbols"] {
+function migrateSymbols(v: ElementModel, source: V2["source"]): V2["symbols"] {
   if (Obj.hasKey("taxonomy", v) && Obj.hasKey("taxonomyId", v)) {
     const taxonomy = Str.read(v.taxonomy);
     const taxonomyId = Str.read(v.taxonomyId);
@@ -72,7 +73,7 @@ function migrateSymbols(v: object, source: V2["source"]): V2["symbols"] {
   return undefined;
 }
 
-function migrateOrderBy(v: object): V2["orderBy"] {
+function migrateOrderBy(v: ElementModel): V2["orderBy"] {
   if (Obj.hasKey("orderBy", v)) {
     const orderBy = Str.read(v.orderBy) || "id";
     return orderBy === "ID" ? "id" : orderBy;
@@ -81,7 +82,7 @@ function migrateOrderBy(v: object): V2["orderBy"] {
   return undefined;
 }
 
-function migrateOrder(v: object): V2["order"] {
+function migrateOrder(v: ElementModel): V2["order"] {
   if (Obj.hasKey("order", v)) {
     const order =
       Union.readWithChoices<"ASC" | "asc" | "DESC" | "desc">([
@@ -96,7 +97,7 @@ function migrateOrder(v: object): V2["order"] {
   return undefined;
 }
 
-function removeUndefinedKeys(v: object): object {
+function removeUndefinedKeys(v: ElementModel): Record<string, unknown> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const filtered = Object.entries(v).filter(([_, val]) => val !== undefined);
 

@@ -85,8 +85,6 @@ export class Draggable<R extends HTMLElement> extends React.Component<
   startDrag = (client: Position): void => {
     const { draggingCursor, onDragStart } = this.props;
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     global.BRZ_IS_DRAGGING = true;
 
     this.isMouseDown = true;
@@ -103,6 +101,7 @@ export class Draggable<R extends HTMLElement> extends React.Component<
 
     if (overlayNodes.length) {
       overlayNodes.forEach(overlayNode => {
+        overlayNode.style.willChange = "pointer-events";
         overlayNode.style.pointerEvents = "all";
 
         if (draggingCursor) {
@@ -145,6 +144,7 @@ export class Draggable<R extends HTMLElement> extends React.Component<
 
     if (overlayNodes.length) {
       overlayNodes.forEach(overlayNode => {
+        overlayNode.style.willChange = "";
         overlayNode.style.pointerEvents = "none";
 
         if (draggingCursor) {
@@ -153,8 +153,6 @@ export class Draggable<R extends HTMLElement> extends React.Component<
       });
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     global.BRZ_IS_DRAGGING = false;
 
     this.isMouseDown = false;

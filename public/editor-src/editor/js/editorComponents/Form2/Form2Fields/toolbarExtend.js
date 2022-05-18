@@ -2,18 +2,12 @@ import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  toolbarBorder2,
-  toolbarBorderColorHexField2,
-  toolbarBorderWidthFourFields2,
-  toolbarElementForm2Size,
-  toolbarElementForm2BorderRadius
-} from "visual/utils/toolbar";
+import { toolbarElementForm2Size } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
-export function getItems({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+export function getItems({ v, device }) {
+  const dvv = key => defaultValueValue({ v, key, device });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -41,16 +35,17 @@ export function getItems({ v, device, state }) {
                   device,
                   devices: "desktop"
                 }),
-                toolbarElementForm2BorderRadius({
-                  v,
-                  device,
-                  state: "normal",
+                {
+                  id: "borderRadius",
+                  type: "slider-dev",
+                  label: t("Corner"),
                   devices: "desktop",
-                  onChange: [
-                    "onChangeBorderRadiusGrouped",
-                    "onChangeBorderRadiusGroupedDependencies"
-                  ]
-                })
+                  config: {
+                    min: 0,
+                    max: 100,
+                    units: [{ value: "px", title: "px" }]
+                  }
+                }
               ]
             }
           ]
@@ -147,70 +142,10 @@ export function getItems({ v, device, state }) {
               id: "tabBorder",
               label: t("Border"),
               options: [
-                toolbarBorder2({
-                  v,
-                  device,
-                  state,
-                  states: [NORMAL, HOVER],
-                  devices: "desktop",
-                  onChangeStyle: [
-                    "onChangeBorderStyle2",
-                    "onChangeElementBorderStyleDependencies2"
-                  ],
-                  onChangeHex: [
-                    "onChangeBorderColorHexAndOpacity2",
-                    "onChangeBorderColorHexAndOpacityPalette2",
-                    "onChangeElementBorderColorHexAndOpacityDependencies2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBorderColorPalette2",
-                    "onChangeBorderColorPaletteOpacity2",
-                    "onChangeElementBorderColorHexAndOpacityDependencies2"
-                  ]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 38,
-                      options: [
-                        toolbarBorderColorHexField2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          devices: "desktop",
-                          onChange: [
-                            "onChangeBorderColorHexAndOpacity2",
-                            "onChangeBorderColorHexAndOpacityPalette2",
-                            "onChangeElementBorderColorHexAndOpacityDependencies2"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 54,
-                      options: [
-                        toolbarBorderWidthFourFields2({
-                          v,
-                          device,
-                          state,
-                          states: [NORMAL, HOVER],
-                          devices: "desktop",
-                          onChangeType: ["onChangeBorderWidthType2"],
-                          onChangeGrouped: [
-                            "onChangeBorderWidthGrouped2",
-                            "onChangeBorderWidthGroupedDependencies2"
-                          ],
-                          onChangeUngrouped: [
-                            "onChangeBorderWidthUngrouped2",
-                            "onChangeBorderWidthUngroupedDependencies2"
-                          ]
-                        })
-                      ]
-                    }
-                  ]
+                  id: "border",
+                  type: "border-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },

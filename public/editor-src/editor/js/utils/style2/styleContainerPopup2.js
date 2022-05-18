@@ -72,8 +72,14 @@ export function styleContainerPopup2CloseBgSize({ v, device, state }) {
 
 export function styleContainerPopup2CloseBorderRadius({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const closeBorderRadiusShape = dvv("closeBorderRadiusShape");
+  const closeBorderRadius = dvv("closeBorderRadius");
 
-  return dvv("closeBorderRadius");
+  return closeBorderRadiusShape === "square"
+    ? 0
+    : closeBorderRadiusShape === "rounded"
+    ? 50
+    : closeBorderRadius;
 }
 
 export function styleContainerPopup2CloseAlign({ v, device, state }) {
