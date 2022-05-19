@@ -282,6 +282,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 			list( $placeholders, $placeholderInstances, $content ) = $extractor->extract( $this->get_compiled_page()->getPageContent() );
 
+            $context->setPlaceholders($placeholders);
+
 			$replacer = new \BrizyPlaceholders\Replacer( $placeholderProvider );
 			$content  = $replacer->replaceWithExtractedData( $placeholders, $placeholderInstances, $content, $context );
 
