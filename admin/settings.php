@@ -39,9 +39,10 @@ class Brizy_Admin_Settings {
 		add_action( 'admin_menu', array( $this, 'actionRegisterSettingsPage' ) );
 
 		if ( ! is_network_admin() ) {
-			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuSettingsPage' ), 9 );
+			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuSettingsPage' ), 11 );
 			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuGetHelpLink' ), 20 );
 			add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuGoProPage' ), 20 );
+			add_action( 'wp_ajax_brizy_replace_url', [ $this, 'replaceUrl' ] );
 		}
 
 		add_action( 'submenu_file', array( $this, 'submenu_file' ), 10, 2 );
@@ -103,12 +104,24 @@ class Brizy_Admin_Settings {
 	 * @internal
 	 */
 	function actionRegisterSubMenuSettingsPage() {
-		add_submenu_page( self::menu_slug(),
+		add_submenu_page(
+            self::menu_slug(),
 			__( 'Settings', 'brizy' ),
 			__( 'Settings', 'brizy' ),
 			'manage_options',
 			self::menu_slug(),
-			array( $this, 'render' )
+			[ $this, 'render' ],
+            0
+		);
+
+        add_submenu_page(
+            self::menu_slug(),
+			__( 'Tools', 'brizy' ),
+			__( 'Tools', 'brizy' ),
+			'manage_options',
+	        Brizy_Editor::prefix( '-tools' ),
+			[ $this, 'renderPageTools' ],
+            6
 		);
 	}
 
@@ -353,6 +366,17 @@ class Brizy_Admin_Settings {
 		}
 	}
 
+    public function renderPageTools() {
+
+		if ( is_network_admin() ) {
+			return;
+		}
+
+		try {
+			echo Brizy_Admin_View::render( 'settings/tools', [] );
+		} catch ( Exception $e ) {}
+	}
+
 	public function render_tabs() {
 		$tabs = $this->get_tabs();
 		foreach ( $tabs as $tab ) {
@@ -510,6 +534,69 @@ class Brizy_Admin_Settings {
 			<?php echo $type['name']; ?>
         </label>
 		<?php
+	}
+
+    public function replaceUrl() {
+	    check_ajax_referer( 'brizy-admin-nonce', 'nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( [ 'message' => __( 'You must be an administrator running a replace URL session', 'brizy' ) ] );
+        }
+
+	    $from        = trim( $_POST['from'] );
+	    $to          = trim( $_POST['to'] );
+        $fromEncoded = urlencode( $from );
+        $toEncoded   = urlencode( $to );
+
+	    if ( $from === $to ) {
+		    wp_send_json_error( [ 'message' => __( "The old and new URLs must be different", 'brizy' ) ] );
+	    }
+
+	    if ( ! filter_var( $from, FILTER_VALIDATE_URL ) || ! filter_var( $to, FILTER_VALIDATE_URL ) ) {
+		    wp_send_json_error( [ 'message' => esc_html__( "The old and new URLs must be valid URLs", 'brizy' ) ] );
+	    }
+
+	    wp_raise_memory_limit( 'admin' );
+
+	    global $wpdb;
+
+	    $offset = 0;
+
+        while ( true ) {
+
+	        $rows = $wpdb->get_results( "SELECT meta_value, post_id from {$wpdb->postmeta} WHERE meta_key = 'brizy' LIMIT {$offset}, 100", ARRAY_A );
+
+            if ( empty( $rows ) ) {
+                break;
+            }
+
+	        foreach ( $rows as $row ) {
+
+		        if ( ( $data = maybe_unserialize( $row['meta_value'] ) ) === false || empty( $data['brizy-post']['editor_data'] ) ) {
+			        continue;
+		        }
+
+		        $json = base64_decode( $data['brizy-post']['editor_data'] );
+
+		        if ( ! $json || ( ! strpos( $json, $from ) && ! strpos( $json, $fromEncoded ) ) ) {
+			        continue;
+		        }
+
+		        $json = str_replace( $from, $to, $json );
+		        $json = str_replace( $fromEncoded, $toEncoded, $json );
+
+		        $data['brizy-post']['editor_data'] = base64_encode( $json );
+		        $data['brizy-post']['compiled_html'] = '';
+
+		        update_post_meta( $row['post_id'], 'brizy', $data );
+	        }
+
+            $offset += 100;
+        }
+
+	    Brizy_Editor_Post::mark_all_for_compilation();
+
+        wp_send_json_success( [ 'message' => __( 'The replacement was successful', 'brizy' ) ] );
 	}
 }
 
