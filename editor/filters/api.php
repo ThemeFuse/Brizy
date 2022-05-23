@@ -40,18 +40,22 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi {
 		$context->setPlaceholders($contentPlaceholders);
 
 		foreach( $placeholders as $placeholderId) {
-			/**
-			 * @var \BrizyPlaceholders\ContentPlaceholder $placeholder;
-			 */
-			$placeholder = $context->getPlaceholderById($placeholderId);
+			try {
+				/**
+				 * @var \BrizyPlaceholders\ContentPlaceholder $placeholder;
+				 */
+				$placeholder = $context->getPlaceholderById($placeholderId);
 
-			if(!$placeholder) continue;
+				if(!$placeholder) continue;
 
-			/**
-			 * @var Brizy_Content_Placeholders_Abstract $placeholderInstance;
-			 */
-			$placeholderInstance = $placeholderProvider->getPlaceholderSupportingName($placeholder->getName());
-			$placeholderContents[$placeholderId] = $placeholderInstance->getValue($context,$placeholder);
+				/**
+				 * @var Brizy_Content_Placeholders_Abstract $placeholderInstance;
+				 */
+				$placeholderInstance = $placeholderProvider->getPlaceholderSupportingName($placeholder->getName());
+				$placeholderContents[$placeholderId] = $placeholderInstance->getValue($context,$placeholder);
+			} catch (\Exception $e) {
+				$placeholderContents[$placeholderId] = null;
+			}
 		}
 
 

@@ -36,7 +36,7 @@ class Brizy_Content_DynamicContentProcessor implements Brizy_Editor_Content_Proc
                  */
                 list($newContentPlaceholders, $placeholderInstances, $newPostContent) = $extractor->extract($postContent);
 
-                $context->setPlaceholders(array_merge($contentPlaceholders,$newContentPlaceholders));
+                $context->afterExtract($newContentPlaceholders, $placeholderInstances, $newPostContent);
             }
 
             $replacer = new Replacer($placeholderProvider);
