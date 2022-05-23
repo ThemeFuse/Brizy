@@ -22,7 +22,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	const AJAX_HEARTBEAT = '_heartbeat';
 	const AJAX_TAKE_OVER = '_take_over';
 	const AJAX_DOWNLOAD_MEDIA = '_download_media';
-    const AJAX_JWT_TOKEN = '_multipass_create';
+	const AJAX_JWT_TOKEN = '_multipass_create';
 	const AJAX_UPDATE_MENU_DATA = '_update_menu_data';
 	const AJAX_UPDATE_EDITOR_META_DATA = '_update_editor_meta_data';
 	const AJAX_UPDATE_MENU_ITEM_DATA = '_update_menu_item_data';
@@ -136,10 +136,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$provider     = new Brizy_Content_PlaceholderProvider( $context );
 		$placeholders = $provider->getGroupedPlaceholdersForApiResponse();
 
-		return $this->success( $placeholders );
-	}
-
-	public function lock_project() {
+        return $this->success($placeholders);
+    }public function lock_project() {
 		$this->verifyNonce( self::nonce );
 
 		if ( Brizy_Editor::get()->checkIfProjectIsLocked() === false ) {
@@ -323,12 +321,10 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				throw new Exception( '', 400 );
 			}
 
-            if (!$compiledStyles) {
+			if (!$compiledStyles) {
                 Brizy_Logger::instance()->error('Invalid project styles provided', ['compiled' => $compiledStyles]);
                 throw new Exception('', 400);
-            }
-
-			if ( ! $dataVersion ) {
+            }if (!$dataVersion ) {
 				Brizy_Logger::instance()->error( 'No data version provided', [ 'data' => $dataVersion ] );
 				throw new Exception( '', 400 );
 			}
@@ -337,10 +333,10 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$project->setDataAsJson( $meta );
 			$project->setDataVersion( $dataVersion );
 
+
 			if ( (int) $this->param( 'is_autosave' ) === 1 ) {
 				$project->save( 1 );
-			} else {
-				$project->setCompiledStyles( $compiledStyles );
+			} else {$project->setCompiledStyles( $compiledStyles );
 				$project->set_compiler(Brizy_Editor_Entity::COMPILER_BROWSER );
 				$project->save();
 				$project->savePost();
@@ -454,15 +450,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				// there is no need to make it true as we already receive the compiled html from editor
 				$this->post->set_needs_compile( false );
 				$this->post->set_compiler( Brizy_Editor_Entity::COMPILER_BROWSER );
-			}
-
-			if ( $atemplate ) {
+			}if ( $atemplate ) {
 				$this->post->set_template( $atemplate );
 			}
 
 			if ( $data ) {
 				$this->post->set_editor_data( $data );
 				$this->post->set_editor_version( BRIZY_EDITOR_VERSION );
+
 			}
 
 			$this->post->getWpPost()->post_status = $status;
@@ -472,7 +467,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			} else {
 				$this->post->setDataVersion( $dataVersion );
 				$this->post->setLastUserEdited( get_current_user_id() );
-
 				$this->post->save( 0 );
 				$this->post->savePost( true );
 			}
@@ -543,28 +537,30 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				$contents[]  = apply_filters( 'brizy_content', $placeholder, Brizy_Editor_Project::get(), $post );
 			}
 
-            $this->success(array('placeholders' => $contents));
-        } catch (Exception $exception) {
-            Brizy_Logger::instance()->exception($exception);
-            $this->error($exception->getCode(), $exception->getMessage());
-        }
-    }
+			$this->success( array( 'placeholders' => $contents ) );
+		} catch ( Exception $exception ) {
+			Brizy_Logger::instance()->exception( $exception );
+			$this->error( $exception->getCode(), $exception->getMessage() );
+		}
+	}
 
 	public function placeholders_content() {
 		global $post, $wp_query;
-		try {
-			$this->verifyNonce( self::nonce );
-			$posts    = $this->param( 'p' );
-			$contents = [];
-			foreach ( $posts as $postId => $placeholders ) {
-				$post                = $this->getPostSample( $postId );
-				$contents[ $postId ] = [];
 
-				if ( $post instanceof WP_Post ) {
-					setup_postdata( $post );
-					$wp_query->is_single = true;
-				}
-				foreach ( $placeholders as $placeholder ) {
+		$this->verifyNonce( self::nonce );
+		$posts    = $this->param( 'p' );
+		$contents = [];
+		foreach ( $posts as $postId => $placeholders ) {
+
+			$post                = $this->getPostSample( $postId );
+			$contents[ $postId ] = [];
+
+			if ( $post instanceof WP_Post ) {
+				setup_postdata( $post );
+				$wp_query->is_single = true;
+			}
+			foreach ( $placeholders as $placeholder ) {
+				try {
 					$placeholder           = stripslashes( $placeholder );
 					$contents[ $postId ][] = apply_filters(
 						'brizy_content',
@@ -572,13 +568,19 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 						Brizy_Editor_Project::get(),
 						$post
 					);
+				} catch ( Exception $exception ) {
+					Brizy_Logger::instance()->exception( $exception );
+					continue;
 				}
 			}
-			$this->success( array( 'placeholders' => $contents ) );
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			$this->error( $exception->getCode(), $exception->getMessage() );
+
+
 		}
+		$this->success(
+			array(
+				'placeholders' => $contents)
+		);
+
 	}
 
 	private function getPostSample( $templateId ) {
@@ -618,16 +620,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 						],
 					];
 
-                    $values = $rule->getEntityValues();
-                    $posts = [];
-                    if (empty($values[0])) {
-                        // For All condition
-                        $posts = get_posts($args);
-
-						} else {
-
-
-                        $filter = $values[0];
+					$values = $rule->getEntityValues();
+					$posts = [];
+					if ( empty( $values[0] ) ) {
+						// For All condition
+						$posts = get_posts( $args );
+					} else {
+						$filter = $values[0];
 
 						if ( is_numeric( $filter ) ) {
 							$args['post__in'] = [ $filter ];
@@ -684,6 +683,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 						$wp_query->is_tax = true;
 					}
+
 
 					return array_pop( $terms );
 
