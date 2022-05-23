@@ -767,25 +767,21 @@ class Brizy_Editor_Editor_Editor {
 	 * @throws Exception
 	 */
 	private function getTexts() {
-		if ( BRIZY_DEVELOPMENT ) {
-			$brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_Dev_Texts';
-		} else {
-			$version = '';
-			foreach ( explode( '-', BRIZY_EDITOR_VERSION ) as $tmp ) {
-				$version .= ucfirst( $tmp );
-			}
-			$brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_' . $version . '_Texts';
-		}
+        $version = '';
+        foreach (explode('-', BRIZY_EDITOR_VERSION) as $tmp) {
+            $version .= ucfirst($tmp);
+        }
+        $brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_' . $version . '_Texts';
 
-		if ( ! class_exists( $brizy_public_editor_build_texts ) ) {
-			if ( BRIZY_DEVELOPMENT ) {
-				throw new \Exception( 'You must build the editor first.' );
-			} else {
-				throw new \Exception( 'Unable to find class ' . $brizy_public_editor_build_texts );
-			}
-		}
+        if (!class_exists($brizy_public_editor_build_texts)) {
+            if (BRIZY_DEVELOPMENT) {
+                throw new \Exception('You must build the editor first.');
+            } else {
+                throw new \Exception('Unable to find class ' . $brizy_public_editor_build_texts);
+            }
+        }
 
-		return (object) $brizy_public_editor_build_texts::get_editor_texts();
+        return (object)$brizy_public_editor_build_texts::get_editor_texts();
 	}
 
 	private function addTemplateFields( $config, $is_template, $wp_post_id, $context ) {

@@ -26,8 +26,8 @@ class Brizy_Config {
 	const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://brizy.io";
 	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/brizy-pro-pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
-	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
-	const EDITOR_BUILD_RELATIVE_PATH = 'public/editor-build/dev';
+	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . BRIZY_EDITOR_VERSION;
+	const EDITOR_BUILD_RELATIVE_PATH = 'public/editor-build/' . BRIZY_EDITOR_VERSION;
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
 	const CLOUD_ENDPOINT = 'http://www.brizysites.com';
@@ -52,7 +52,7 @@ class Brizy_Config {
 		$host = $_ENV['COMPILER_HOST'] ?? $_SERVER['COMPILER_HOST'];
 		return new Brizy_Admin_UrlIterator(
 			array(
-				"http://{$host}/compile/v3"
+				"http://{$host}/compile/v4"
 			)
 		);
 	}
@@ -78,11 +78,6 @@ class Brizy_Config {
 	static public function getFontsUrl() {
 		$host = $_ENV['EDITOR_HOST'] ?? $_SERVER['EDITOR_HOST'];
 		return  "http://{$host}/static";
-	}
-
-	static public function getCompilerDownloadUrl() {
-		$host = $_ENV['COMPILER_DOWNLOAD_HOST'] ?? $_SERVER['COMPILER_DOWNLOAD_HOST'];
-		return  'http://'.$host.'/wp-content/plugins/brizy/public/editor-build/dev';
 	}
 
 	static public function getSupportUrl() {
