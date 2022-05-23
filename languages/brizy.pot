@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-23T11:41:41+03:00\n"
+"POT-Creation-Date: 2022-05-23T12:03:50+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: brizy\n"
@@ -120,6 +120,7 @@ msgid "Leads details"
 msgstr ""
 
 #: admin/form-entries.php:62
+#: public/editor-build/236-wp/texts.php:247
 msgid "Date"
 msgstr ""
 
@@ -164,6 +165,7 @@ msgstr ""
 #: admin/form-entries.php:331
 #: admin/popups/main.php:115
 #: admin/templates.php:247
+#: public/editor-build/236-wp/texts.php:51
 msgid "Add New"
 msgstr ""
 
@@ -206,6 +208,7 @@ msgstr ""
 #: admin/main.php:242
 #: admin/settings.php:109
 #: admin/settings.php:110
+#: public/editor-build/236-wp/texts.php:770
 msgid "Settings"
 msgstr ""
 
@@ -296,6 +299,7 @@ msgstr ""
 
 #: admin/popups/main.php:120
 #: admin/popups/main.php:134
+#: public/editor-build/236-wp/texts.php:636
 msgid "Popups"
 msgstr ""
 
@@ -346,6 +350,7 @@ msgid "Get Help"
 msgstr ""
 
 #: admin/settings.php:171
+#: public/editor-build/236-wp/texts.php:400
 msgid "General"
 msgstr ""
 
@@ -411,6 +416,7 @@ msgid "View Story"
 msgstr ""
 
 #: admin/stories/main.php:48
+#: public/editor-build/236-wp/texts.php:845
 msgid "Stories"
 msgstr ""
 
@@ -431,6 +437,7 @@ msgid "No Stories found in Trash."
 msgstr ""
 
 #: admin/stories/main.php:60
+#: public/editor-build/236-wp/texts.php:1012
 msgid "stories"
 msgstr ""
 
@@ -439,10 +446,12 @@ msgid "Single"
 msgstr ""
 
 #: admin/templates.php:128
+#: public/editor-build/236-wp/texts.php:83
 msgid "Archive"
 msgstr ""
 
 #: admin/templates.php:133
+#: public/editor-build/236-wp/texts.php:658
 msgid "Product"
 msgstr ""
 
@@ -549,6 +558,7 @@ msgid "Recently Edited"
 msgstr ""
 
 #: admin/views/dashboard.php:12
+#: public/editor-build/236-wp/texts.php:128
 msgid "Blog"
 msgstr ""
 
@@ -591,10 +601,12 @@ msgid "Who Can Access"
 msgstr ""
 
 #: admin/views/settings/maintenance.php:27
+#: public/editor-build/236-wp/texts.php:236
 msgid "Custom"
 msgstr ""
 
 #: admin/views/settings/maintenance.php:33
+#: public/editor-build/236-wp/texts.php:723
 msgid "Roles"
 msgstr ""
 
@@ -721,6 +733,7 @@ msgid "Starter Templates"
 msgstr ""
 
 #: import/main.php:45
+#: public/editor-build/236-wp/texts.php:72
 msgid "All"
 msgstr ""
 
@@ -733,6 +746,7 @@ msgid "Install"
 msgstr ""
 
 #: import/main.php:48
+#: public/editor-build/236-wp/texts.php:384
 msgid "Free"
 msgstr ""
 
@@ -741,14 +755,17 @@ msgid "Pro"
 msgstr ""
 
 #: import/main.php:50
+#: public/editor-build/236-wp/texts.php:757
 msgid "Search"
 msgstr ""
 
 #: import/main.php:51
+#: public/editor-build/236-wp/texts.php:73
 msgid "All Categories"
 msgstr ""
 
 #: import/main.php:53
+#: public/editor-build/236-wp/texts.php:820
 msgid "Something went wrong"
 msgstr ""
 
@@ -834,6 +851,3970 @@ msgstr ""
 
 #: maintenance-mode.php:117
 msgid "Edit Page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:6
+msgid " Display Conditions"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:7
+msgid "%s Selected"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:8
+msgid "+ 10:00 (Sydney, Melbourne)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:9
+msgid "+ 11:00 (Ponape)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:10
+msgid "+ 12:00 (Auckland)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:11
+msgid "+ 1:00 (Berlin, Paris)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:12
+msgid "+ 2:00 (Athens, Istanbul)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:13
+msgid "+ 3:00 (Moscow, Baghdad)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:14
+msgid "+ 4:00 (Dubai, Baku)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:15
+msgid "+ 5:00 (Yekaterinburg)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:16
+msgid "+ 6:00 (Nur-Sultan)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:17
+msgid "+ 7:00 (Bangkok, Jakarta)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:18
+msgid "+ 8:00 (Singapore, Beijing)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:19
+msgid "+ 9:00 (Tokyo, Seoul)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:20
+msgid "- 10:00 (Honolulu, Papeete)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:21
+msgid "- 11:00 (Niue)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:22
+msgid "- 1:00 (Cape Verde)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:23
+msgid "- 2:00 (Noronha)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:24
+msgid "- 3:00 (Brasilia, Santiago)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:25
+msgid "- 4:00 (Halifax, Manaus)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:26
+msgid "- 5:00 (New York, Miami)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:27
+msgid "- 6:00 (Chicago, Dallas)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:28
+msgid "- 7:00 (Denver, Phoenix)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:29
+msgid "- 8:00 (Los Angeles)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:30
+msgid "- 9:00 (Anchorage)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:31
+msgid "0 Selected"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:32
+msgid "0-10"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:33
+msgid "0-5"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:34
+msgid "00:00 (London, Dublin)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:35
+msgid "3D Tilt"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:36
+msgid "? (%s)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:37
+msgid "ADD FONT VARIATION"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:38
+msgid "ADD GOOGLE FONT"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:39
+msgid "APPS"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:40
+msgid "About us"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:41
+msgid "Access your Library in any WP install by connecting your Account"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:42
+msgid "Accordion"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:43
+msgid "Accordion Items"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:44
+msgid "Accordion Tags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:45
+msgid "Accounts are empty. Please connect a new account and try again."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:46
+msgid "Action"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:47
+msgid "Activate Tab"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:48
+msgid "Active"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:49
+msgid "Add Elements"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:50
+msgid "Add Font"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:52
+msgid "Add New Block / Layout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:53
+msgid "Add New Column"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:54
+msgid "Add New Font"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:55
+msgid "Add Shopify Elements"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:56
+msgid "Add To Cart"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:57
+msgid "Add To Cart Input"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:58
+msgid "Add a new block"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:59
+msgid "Add new display condition"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:60
+msgid "Add new font variation"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:61
+msgid "Add new option"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:62
+msgid "Add new trigger condition"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:63
+msgid "Add to Cart"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:64
+msgid "Add to cart"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:65
+msgid "Additionals"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:66
+msgid "Address"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:67
+msgid "Advanced"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:68
+msgid "Agreement"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:69
+msgid "Align"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:70
+msgid "Aligned Left"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:71
+msgid "Aligned Right"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:74
+msgid "All fields cannot be empty"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:75
+msgid "All fields marked with an asterisk ( * ) must be completed."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:76
+msgid "All fields marked with an asterisk ( * ) must be mapped."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:77
+msgid "Allowed File Types"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:78
+msgid "Alt Title"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:79
+msgid "An error happened while trying to display this element"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:80
+msgid "Animated"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:81
+msgid "Apply on"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:82
+msgid "Apply type"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:84
+msgid "Archives"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:85
+msgid "Are you want to delete account"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:86
+msgid "Arrangement"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:87
+msgid "Arrows"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:88
+msgid "Arrows Spacing"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:89
+msgid "Article"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:90
+msgid "Artwork"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:91
+msgid "Asc"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:92
+msgid "Aside"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:93
+msgid "Attention"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:94
+msgid "Attributes"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:95
+msgid "Audio"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:96
+msgid "Authentication"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:97
+msgid "Author"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:98
+msgid "Auto"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:99
+msgid "Auto Play"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:100
+msgid "Auto play"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:101
+msgid "Auto-Draft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:102
+msgid "AutoPlay"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:103
+msgid "Automotive"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:104
+msgid "Autoplay"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:105
+msgid "Avatar"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:106
+msgid "Back"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:107
+msgid "Back to Layouts"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:108
+msgid "Back to Login"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:109
+msgid "Back to Stories"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:110
+msgid "Background"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:111
+msgid "Bar"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:112
+msgid "Basic"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:113
+msgid "Bcc"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:114
+msgid "Between"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:115
+msgid "Bg"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:116
+msgid "Bg Size"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:117
+msgid "Bg Star"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:118
+msgid "Big"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:119
+msgid "Black"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:120
+msgid "Blank"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:121
+msgid "Blending Mode"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:122
+msgid "Block"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:123
+msgid "Block Name"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:124
+msgid "Block conditions are available only in PRO"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:125
+msgid "Block is synchronized"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:126
+msgid "Block will be synchronized"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:127
+msgid "Blocks"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:129
+msgid "Blog Title"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:130
+msgid "Blur"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:131
+msgid "Bold"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:132
+msgid "Border"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:133
+msgid "Bottom"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:134
+msgid "Bounce"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:135
+msgid "BounceIn"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:136
+msgid "BounceInDown"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:137
+msgid "BounceInLeft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:138
+msgid "BounceInRight"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:139
+msgid "BounceInUp"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:140
+msgid "Boxed"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:141
+msgid "Branding"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:142
+msgid "Breadcrumbs"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:143
+msgid "Btn Bg"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:144
+msgid "Btn Color"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:145
+msgid "Bub."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:146
+msgid "Bub. Bg"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:147
+msgid "Bubble"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:148
+msgid "Business"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:149
+msgid "Business Hour"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:150
+msgid "Button"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:151
+msgid "Button Size"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:152
+msgid "Buttons"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:153
+msgid "Buy Button"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:154
+msgid "CMS"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:155
+msgid "CREATE LIST"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:156
+msgid "CSS Class"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:157
+msgid "CSS ID"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:158
+msgid "CTA"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:159
+msgid "Cancel"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:160
+msgid "Capitalize"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:161
+msgid "Captions"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:162
+msgid "Carousel"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:163
+msgid "Cart"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:164
+msgid "Cart Items"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:165
+msgid "Cart Settings"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:166
+msgid "Categories"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:167
+msgid "Categories Count"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:168
+msgid "Categories Pagination"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:169
+msgid "Categories Tags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:170
+msgid "Category"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:171
+msgid "Cc"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:172
+msgid "Center"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:173
+msgid "Check your email address"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:174
+msgid "Checkbox"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:175
+msgid "Checkout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:176
+msgid "Children"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:177
+msgid "Circle"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:178
+msgid "Classic"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:179
+msgid "Clear"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:180
+msgid "Clear Layout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:181
+msgid "Click Outside to Close"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:182
+msgid "Close"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:183
+msgid "Close Popup"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:184
+msgid "Cloud"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:185
+msgid "Collaborate"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:186
+msgid "Collapsible"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:187
+msgid "Collection Title"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:188
+msgid "Color"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:189
+msgid "Color Burn"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:190
+msgid "Color Dodge"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:191
+msgid "ColorBurn"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:192
+msgid "ColorDodge"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:193
+msgid "Colors"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:194
+msgid "Column"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:195
+msgid "Columns"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:196
+msgid "Comment"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:197
+msgid "Comment Count"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:198
+msgid "Comments"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:199
+msgid "Conditions"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:200
+msgid "Connect"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:201
+msgid "Connect a new account"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:202
+msgid "Contact"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:203
+msgid "Contain"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:204
+msgid "Content"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:205
+msgid "Content Gap"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:206
+msgid "Content Padding"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:207
+msgid "Context"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:208
+msgid "Context Type"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:209
+msgid "Continue"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:210
+msgid "Controls"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:211
+msgid "Copy"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:212
+msgid "Corner"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:213
+msgid "Could not Create Global Block"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:214
+msgid "Could not Create Global Popup"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:215
+msgid "Could not Create Saved Block"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:216
+msgid "Could not Create Saved Popup"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:217
+msgid "Could not download Saved Layout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:218
+msgid "Could not download Saved Popup"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:219
+msgid "Could not download Saved block"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:220
+msgid "Could not find"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:221
+msgid "Could not publish or save page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:222
+msgid "Could not save layout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:223
+msgid "Could not switch to draft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:224
+msgid "Count"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:225
+msgid "Countdown"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:226
+msgid "Counter"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:227
+msgid "Country Code"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:228
+msgid "Cover"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:229
+msgid "Create"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:230
+msgid "Create Account & Connect"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:231
+msgid "Create a menu"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:232
+msgid "Create a new list"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:233
+msgid "Create your own"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:234
+msgid "Current Page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:235
+msgid "Current Query"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:237
+msgid "Custom Attributes"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:238
+msgid "Custom Attributes asd"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:239
+msgid "Custom CSS"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:240
+msgid "Custom Page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:241
+msgid "Custom Text"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:242
+msgid "Custom Video"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:243
+msgid "DELETE"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:244
+msgid "Dark"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:245
+msgid "Darken"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:246
+msgid "Data Source"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:248
+msgid "Days"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:249
+msgid "Default Roles"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:250
+msgid "Default font (can’t be deleted)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:251
+msgid "Delay"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:252
+msgid "Delete"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:253
+msgid "Desc"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:254
+msgid "Description"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:255
+msgid "Deselected the “Verify the origin of reCAPTCHA solutions” checkbox within your Google account."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:256
+msgid "Desktop"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:257
+msgid "Diamond"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:258
+msgid "Difference"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:259
+msgid "Direct"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:260
+msgid "Direction"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:261
+msgid "Disable on Mobile"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:262
+msgid "Disable on Tablet"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:263
+msgid "Disconnect"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:264
+msgid "Display"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:265
+msgid "Display Close Button"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:266
+msgid "Disqus"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:267
+msgid "Div"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:268
+msgid "Dividers"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:269
+msgid "Don't have items"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:270
+msgid "Don't have tags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:271
+msgid "Done"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:272
+msgid "Done, your library was synced"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:273
+msgid "Dots"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:274
+msgid "Down"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:275
+msgid "DownLeft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:276
+msgid "DownRight"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:277
+msgid "DownUp"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:278
+msgid "Download Button"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:279
+msgid "Download this block"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:280
+msgid "Draft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:281
+msgid "Drag to reorder"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:282
+msgid "Drawer Position"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:283
+msgid "Duplicate"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:284
+msgid "Duplicate Account"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:285
+msgid "Duration"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:286
+msgid "Dutch"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:287
+msgid "Dynamic Content"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:288
+msgid "EOT File"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:289
+msgid "Ecwid Cart"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:290
+msgid "Ecwid My Account"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:291
+msgid "Edit"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:292
+msgid "Editable Text"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:293
+msgid "Education"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:294
+msgid "Effects"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:295
+msgid "Elements"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:296
+msgid "Email"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:297
+msgid "Email To"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:298
+msgid "Email confirmation to join the list"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:299
+msgid "Email to recover password cannot be empty"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:300
+msgid "Embed"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:301
+msgid "Enable Tags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:302
+msgid "Enable on Mobile"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:303
+msgid "Enable on Tablet"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:304
+msgid "Enable tags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:305
+msgid "Encryption"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:306
+msgid "End"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:307
+msgid "English"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:308
+msgid "Enter address"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:309
+msgid "Enter the allowed file types, separated by a comma (jpg, gif, pdf, etc)."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:310
+msgid "Entrance"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:311
+msgid "Entrance Animation"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:312
+msgid "Error"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:313
+msgid "Established a stable internet connection"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:314
+msgid "Events"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:315
+msgid "Example [gallery id='123' size='medium']"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:316
+msgid "Excerpt"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:317
+msgid "Exclude"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:318
+msgid "Exclude By"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:319
+msgid "Exclusion"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:320
+msgid "Export All Blocks"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:321
+msgid "Export All Layouts"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:322
+msgid "Export All Popups"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:323
+msgid "Extra Bold"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:324
+msgid "Extra Light"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:325
+msgid "FIELDS"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:326
+msgid "FONT VARIATION"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:327
+msgid "FORM FIELDS"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:328
+msgid "Facebook"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:329
+msgid "Facebook Button"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:330
+msgid "Facebook Embed"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:331
+msgid "Facebook Group"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:332
+msgid "Facebook Page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:333
+msgid "Fade"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:334
+msgid "FadeIn"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:335
+msgid "FadeInDown"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:336
+msgid "FadeInDownBig"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:337
+msgid "FadeInLeft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:338
+msgid "FadeInLeftBig"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:339
+msgid "FadeInRight"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:340
+msgid "FadeInRightBig"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:341
+msgid "FadeInUp"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:342
+msgid "FadeInUpBig"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:343
+msgid "Failed to fetch api data"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:344
+msgid "Failed to reset password"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:345
+msgid "Failed to update page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:346
+msgid "Failed to upload file. Please upload a valid JPG, PNG, SVG or GIF image."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:347
+msgid "Featured Image"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:348
+msgid "Features"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:349
+msgid "Field"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:350
+msgid "Field Type"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:351
+msgid "Fields are empty"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:352
+msgid "Fields are empty. Please add fields and try again."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:353
+msgid "File"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:354
+msgid "File too large."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:355
+msgid "File upload error"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:356
+msgid "Fill"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:357
+msgid "Filter"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:358
+msgid "Filter By"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:359
+msgid "Filter Item"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:360
+msgid "Filters"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:361
+msgid "First Name"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:362
+msgid "Fixed"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:363
+msgid "Flag"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:364
+msgid "Flags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:365
+msgid "Flash"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:366
+msgid "Flip"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:367
+msgid "FlipInX"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:368
+msgid "FlipInY"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:369
+msgid "Follow"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:370
+msgid "Followers"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:371
+msgid "Font Family"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:372
+msgid "Font Name is Required"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:373
+msgid "Font name"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:374
+msgid "Font weight"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:375
+msgid "Fonts"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:376
+msgid "Food"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:377
+msgid "Footer"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:378
+msgid "Footer Color"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:379
+msgid "Footers"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:380
+msgid "Form"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:381
+msgid "Form Fields"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:382
+msgid "Form Submit"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:383
+msgid "Forms"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:385
+msgid "French"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:386
+msgid "From Email"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:387
+msgid "From Name"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:388
+msgid "Full"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:389
+msgid "Full Height"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:390
+msgid "Full Name"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:391
+msgid "Full Screen"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:392
+msgid "Full name"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:393
+msgid "Future"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:394
+msgid "Gallery"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:395
+msgid "Gallery Tags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:396
+msgid "Gaming"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:397
+msgid "Gap"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:398
+msgid "Gap Above"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:399
+msgid "Gap Below"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:401
+msgid "German"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:402
+msgid "Get a PRO plan"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:403
+msgid "Global Blocks"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:404
+msgid "Global Popups"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:405
+msgid "Go Back"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:406
+msgid "Go to"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:407
+msgid "Go to Dashboard"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:408
+msgid "Gradient"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:409
+msgid "Group"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:410
+msgid "H1"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:411
+msgid "H2"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:412
+msgid "H3"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:413
+msgid "H4"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:414
+msgid "H5"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:415
+msgid "H6"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:416
+msgid "HTML Tag"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:417
+msgid "Handle"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:418
+msgid "Head"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:419
+msgid "Header"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:420
+msgid "Health / Beauty"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:421
+msgid "Heavy"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:422
+msgid "Height"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:423
+msgid "Hero"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:424
+msgid "Hidden"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:425
+msgid "Hide"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:426
+msgid "Hide Cover Photo"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:427
+msgid "Hide Hidden Elements"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:428
+msgid "Hierarchical"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:429
+msgid "Horizontal"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:430
+msgid "Horizontal Align"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:431
+msgid "Horizontal Offset"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:432
+msgid "Host"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:433
+msgid "Hour"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:434
+msgid "Hours"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:435
+msgid "Hover"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:436
+msgid "Hover Transition"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:437
+msgid "Hue"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:438
+msgid "ID"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:439
+msgid "Icon"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:440
+msgid "Icon Box"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:441
+msgid "Icon Styles"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:442
+msgid "Icons"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:443
+msgid "If you need to have multiple emails you can separate them by commas"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:444
+msgid "If you need to increase max upload size please contact your hosting."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:445
+msgid "Image"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:446
+msgid "Image Test"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:447
+msgid "Image file is too large."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:448
+msgid "Import New Block"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:449
+msgid "Import New Layout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:450
+msgid "Import New Popup"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:451
+msgid "Import This Layout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:452
+msgid "Import This Story"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:453
+msgid "In"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:454
+msgid "InOut"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:455
+msgid "Include"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:456
+msgid "Include By"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:457
+msgid "Include Full Post"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:458
+msgid "Include Share Button"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:459
+msgid "Incorrect"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:460
+msgid "Incorrect username or password"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:461
+msgid "Inequality operator"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:462
+msgid "Info"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:463
+msgid "Inherit"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:464
+msgid "Inline"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:465
+msgid "Input"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:466
+msgid "Inputted a valid site key"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:467
+msgid "Inset"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:468
+msgid "Intro"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:469
+msgid "Invalid api data"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:470
+msgid "It's a sample"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:471
+msgid "Italian"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:472
+msgid "Italic"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:473
+msgid "Item"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:474
+msgid "JackInTheBox"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:475
+msgid "Jello"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:476
+msgid "Keyboard Shortcuts"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:477
+msgid "Label"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:478
+msgid "Label Bg"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:479
+msgid "Language"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:480
+msgid "Languages"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:481
+msgid "Last Name"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:482
+msgid "Lateral"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:483
+msgid "Layout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:484
+msgid "Layouts"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:485
+msgid "Left"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:486
+msgid "Letter Sp."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:487
+msgid "Level"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:488
+msgid "Light"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:489
+msgid "LightSpeedIn"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:490
+msgid "Lighten"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:491
+msgid "Like"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:492
+msgid "Like Button"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:493
+msgid "Line"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:494
+msgid "Line Hgt."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:495
+msgid "Linear"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:496
+msgid "Link"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:497
+msgid "Link to"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:498
+msgid "Links"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:499
+msgid "List"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:500
+msgid "List are not created please connect the support"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:501
+msgid "Lists are empty. Please add a new list and try again."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:502
+msgid "Locked"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:503
+msgid "Login"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:504
+msgid "Logout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:505
+msgid "Loop"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:506
+msgid "Lost Password"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:507
+msgid "Lottie"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:508
+msgid "Lottie File"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:509
+msgid "Lottie Link"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:510
+msgid "Luminosity"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:511
+msgid "Main"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:512
+msgid "Make it Global"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:513
+msgid "Make it Hamburger"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:514
+msgid "Make it Nofollow"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:515
+msgid "Make it a Slider"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:516
+msgid "Manual"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:517
+msgid "Map"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:518
+msgid "Margin"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:519
+msgid "Mask"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:520
+msgid "Max"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:521
+msgid "Max Date"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:522
+msgid "Max Time"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:523
+msgid "Max. File Size"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:524
+msgid "Medium"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:525
+msgid "Mega Menu"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:526
+msgid "Membership"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:527
+msgid "Mention"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:528
+msgid "Menu"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:529
+msgid "Menu Items"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:530
+msgid "Menu Order"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:531
+msgid "Menu order"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:532
+msgid "Message"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:533
+msgid "Message not sent"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:534
+msgid "Message sent"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:535
+msgid "Messages"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:536
+msgid "Meta"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:537
+msgid "Meta Data"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:538
+msgid "Meta Key"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:539
+msgid "Meta Value"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:540
+msgid "Min"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:541
+msgid "Min Date"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:542
+msgid "Min Time"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:543
+msgid "Minimal"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:544
+msgid "Minutes"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:545
+msgid "Missing Element"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:546
+msgid "Mobile"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:547
+msgid "Mobile view"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:548
+msgid "Modified"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:549
+msgid "More"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:550
+msgid "More Settings"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:551
+msgid "MouseTrack"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:552
+msgid "Move down"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:553
+msgid "Move left"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:554
+msgid "Move right"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:555
+msgid "Move up"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:556
+msgid "Multi-Language"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:557
+msgid "Multiple Selection"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:558
+msgid "Multiply"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:559
+msgid "Muted"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:560
+msgid "My Account"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:561
+msgid "MyAccount"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:562
+msgid "N/A"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:563
+msgid "Name"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:564
+msgid "Native HTML5"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:565
+msgid "Nav"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:566
+msgid "Navigation"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:567
+msgid "Need help"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:568
+msgid "New Style #%s"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:569
+msgid "No matches found"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:570
+msgid "No results"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:571
+msgid "Non Profit"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:572
+msgid "None"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:573
+msgid "Normal"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:574
+msgid "Not Required"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:575
+msgid "Nothing Found"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:576
+msgid "Nothing here yet, make a global block first."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:577
+msgid "Nothing here yet, make a global popup first."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:578
+msgid "Nothing here yet, save a block first."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:579
+msgid "Nothing here yet, save a layout first."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:580
+msgid "Nothing here yet, save a popup first."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:581
+msgid "Nothing here, please refine your search."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:582
+msgid "Nr"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:583
+msgid "Number"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:584
+msgid "Number of posts"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:585
+msgid "Offset"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:586
+msgid "On Click"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:587
+msgid "On Hover"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:588
+msgid "One Page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:589
+msgid "Open In New Tab"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:590
+msgid "Open in Lightbox"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:591
+msgid "Opposite"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:592
+msgid "Order"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:593
+msgid "Order By"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:594
+msgid "Order Tracking"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:595
+msgid "Orientation"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:596
+msgid "Out"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:597
+msgid "OutIn"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:598
+msgid "Outline"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:599
+msgid "Outset"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:600
+msgid "Overlay"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:601
+msgid "Overlay "
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:602
+msgid "P"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:603
+msgid "PRE"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:604
+msgid "Padding"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:605
+msgid "Page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:606
+msgid "Page Layout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:607
+msgid "Page Template"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:608
+msgid "Page Title"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:609
+msgid "Page title"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:610
+msgid "Pages"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:611
+msgid "Pagination"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:612
+msgid "Paragraph"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:613
+msgid "Parallax"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:614
+msgid "Parent"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:615
+msgid "Password"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:616
+msgid "Password and confirm password is not the same"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:617
+msgid "Paste"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:618
+msgid "Paste Style"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:619
+msgid "Paste Styles"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:620
+msgid "Paste your HTML code here..."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:621
+msgid "Pending"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:622
+msgid "Percent"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:623
+msgid "Percentage"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:624
+msgid "Phone Number"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:625
+msgid "Placeholder"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:626
+msgid "Plain"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:627
+msgid "Play"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:628
+msgid "Play Counts"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:629
+msgid "Playlist"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:630
+msgid "Playlist Items"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:631
+msgid "Plugin Settings"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:632
+msgid "Points"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:633
+msgid "Popularity"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:634
+msgid "Popup"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:635
+msgid "Popup Close Icon"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:637
+msgid "Port"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:638
+msgid "Portfolio"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:639
+msgid "Position"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:640
+msgid "Post"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:641
+msgid "Post Content"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:642
+msgid "Post Excerpt"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:643
+msgid "Post Info"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:644
+msgid "Post Navigation"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:645
+msgid "Post Title"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:646
+msgid "Post Type"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:647
+msgid "Post info"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:648
+msgid "Posts"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:649
+msgid "Posts Pagination"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:650
+msgid "Posts Tags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:651
+msgid "Prefix"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:652
+msgid "Press the button above to add blocks"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:653
+msgid "Press the button above to add popup"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:654
+msgid "Press the button to add blocks"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:655
+msgid "Price"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:656
+msgid "Pricing"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:657
+msgid "Private"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:659
+msgid "Product Attributes"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:660
+msgid "Product Breadcrumbs"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:661
+msgid "Product Content"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:662
+msgid "Product Excerpt"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:663
+msgid "Product Gallery"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:664
+msgid "Product ID"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:665
+msgid "Product ID or SKU"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:666
+msgid "Product Meta"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:667
+msgid "Product Price"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:668
+msgid "Product Rating"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:669
+msgid "Product Review"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:670
+msgid "Product Sku"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:671
+msgid "Product Stock"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:672
+msgid "Product Thumbnail"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:673
+msgid "Product Title"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:674
+msgid "Products"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:675
+msgid "Products Count"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:676
+msgid "Products Pagination"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:677
+msgid "Products Tags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:678
+msgid "Progress"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:679
+msgid "Protected Form"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:680
+msgid "Protected Page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:681
+msgid "Publish"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:682
+msgid "Publish Page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:683
+msgid "Pulse"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:684
+msgid "Quantity"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:685
+msgid "Query"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:686
+msgid "Query Source"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:687
+msgid "Radial"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:688
+msgid "Radio"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:689
+msgid "Random"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:690
+msgid "Rating"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:691
+msgid "Rating scale"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:692
+msgid "Ratio"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:693
+msgid "ReCAPTCHA"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:694
+msgid "Real-Estate"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:695
+msgid "Recommend"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:696
+msgid "Redirect"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:697
+msgid "Redirect After Login"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:698
+msgid "Redirect After Logout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:699
+msgid "Redo"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:700
+msgid "Refresh"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:701
+msgid "Register"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:702
+msgid "Register Info"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:703
+msgid "Related Products"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:704
+msgid "Related Products Pagination"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:705
+msgid "Related Products Tags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:706
+msgid "Religion"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:707
+msgid "Remember me"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:708
+msgid "Renderer"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:709
+msgid "Reorder Blocks"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:710
+msgid "Repair"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:711
+msgid "Repeat"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:712
+msgid "Replace global styling"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:713
+msgid "Replay Animation"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:714
+msgid "Reply"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:715
+msgid "Reply-To"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:716
+msgid "Required"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:717
+msgid "Reset Password"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:718
+msgid "Responsive Zoom In / Out"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:719
+msgid "Reverse"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:720
+msgid "Reverse Columns"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:721
+msgid "Review"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:722
+msgid "Right"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:724
+msgid "RollIn"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:725
+msgid "Rotate"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:726
+msgid "RotateIn"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:727
+msgid "RotateInDownLeft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:728
+msgid "RotateInDownRight"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:729
+msgid "RotateInUpLeft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:730
+msgid "RotateInUpRight"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:731
+msgid "Round"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:732
+msgid "Row"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:733
+msgid "Rows"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:734
+msgid "RubberBand"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:735
+msgid "Russian"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:736
+msgid "SELECT ACCOUNT"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:737
+msgid "SELECT FOR WHAT TEMPLATE IS USED"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:738
+msgid "SELECT LIST"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:739
+msgid "START BUILDING YOUR PAGE"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:740
+msgid "START BUILDING YOUR POPUP"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:741
+msgid "SWITCH TO DESKTOP"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:742
+msgid "Sale"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:743
+msgid "Same Page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:744
+msgid "Saturation"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:745
+msgid "Save"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:746
+msgid "Save Draft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:747
+msgid "Save Draft / Update Page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:748
+msgid "Save Layout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:749
+msgid "Saved"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:750
+msgid "Saved Library is syncing to your Account"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:751
+msgid "Saved Popups"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:752
+msgid "Saving"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:753
+msgid "Scale"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:754
+msgid "Screen"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:755
+msgid "Scroll"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:756
+msgid "Scroll Page Behind"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:758
+msgid "Search element"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:759
+msgid "Seconds"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:760
+msgid "Section"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:761
+msgid "Select"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:762
+msgid "Select Item"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:763
+msgid "Select Parent Element"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:764
+msgid "Select a Menu"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:765
+msgid "Select a menu from the element options"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:766
+msgid "Select an element on the page to display more settings"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:767
+msgid "Select tags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:768
+msgid "Semi Bold"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:769
+msgid "Separator"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:771
+msgid "Shadow"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:772
+msgid "Shake"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:773
+msgid "Shape"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:774
+msgid "Share Button"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:775
+msgid "Shop Cart"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:776
+msgid "Shop Categories"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:777
+msgid "Shop Pages"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:778
+msgid "Shop Products"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:779
+msgid "Shopping Bag"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:780
+msgid "Shortcode"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:781
+msgid "Shortcuts"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:782
+msgid "Shortname"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:783
+msgid "Show Apply"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:784
+msgid "Show Button Counter"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:785
+msgid "Show Counter"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:786
+msgid "Show Friend's Faces"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:787
+msgid "Show Friends' Faces"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:788
+msgid "Show Hidden Elements"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:789
+msgid "Show If Language"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:790
+msgid "Show Label"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:791
+msgid "Show Meta Data"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:792
+msgid "Show Original image"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:793
+msgid "Show Social Context"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:794
+msgid "Show Text"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:795
+msgid "Show message"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:796
+msgid "Show on Desktop"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:797
+msgid "Show to"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:798
+msgid "Sidebar"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:799
+msgid "Sign-in link"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:800
+msgid "SignUp"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:801
+msgid "Size"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:802
+msgid "Size 2"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:803
+msgid "Skin"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:804
+msgid "Skin 1"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:805
+msgid "Skin 2"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:806
+msgid "Skin 3"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:807
+msgid "Skin 4"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:808
+msgid "Skip"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:809
+msgid "Sku"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:810
+msgid "Slide"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:811
+msgid "SlideInDown"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:812
+msgid "SlideInLeft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:813
+msgid "SlideInRight"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:814
+msgid "SlideInUp"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:815
+msgid "Slider"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:816
+msgid "Slides"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:817
+msgid "Slug"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:818
+msgid "Solid"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:819
+msgid "Some integrations are available only in PRO"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:821
+msgid "SoundCloud"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:822
+msgid "SoundCloud Link"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:823
+msgid "Source"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:824
+msgid "Source ID"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:825
+msgid "Source Type"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:826
+msgid "Spacer"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:827
+msgid "Spacing"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:828
+msgid "Span"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:829
+msgid "Spanish"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:830
+msgid "Specific User"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:831
+msgid "Specify a start time (in seconds)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:832
+msgid "Specify an end time (in seconds)"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:833
+msgid "Speed"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:834
+msgid "Sport"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:835
+msgid "Square"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:836
+msgid "Stars"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:837
+msgid "Stars Bg"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:838
+msgid "Stars count"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:839
+msgid "Start"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:840
+msgid "Static"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:841
+msgid "Status"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:842
+msgid "Step"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:843
+msgid "Sticky"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:844
+msgid "Stock"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:846
+msgid "Story"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:847
+msgid "Strike"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:848
+msgid "Stroke"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:849
+msgid "Style"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:850
+msgid "Styles"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:851
+msgid "Styling"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:852
+msgid "Sub Title"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:853
+msgid "Subject"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:854
+msgid "Subtotal"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:855
+msgid "Success"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:856
+msgid "Suffix"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:857
+msgid "Support"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:858
+msgid "Swing"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:859
+msgid "Switch to Draft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:860
+msgid "Switch to desktop to add blocks"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:861
+msgid "Switch to desktop to add popup"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:862
+msgid "Switcher"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:863
+msgid "Sync Now"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:864
+msgid "TTF File"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:865
+msgid "Tab"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:866
+msgid "Table"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:867
+msgid "Table Head"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:868
+msgid "Table Sidebar"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:869
+msgid "Tablet"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:870
+msgid "Tabs"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:871
+msgid "Tada"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:872
+msgid "Tags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:873
+msgid "Tail"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:874
+msgid "Take over"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:875
+msgid "Take over failed please refresh the page"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:876
+msgid "Target URL"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:877
+msgid "Taxonomy"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:878
+msgid "Team"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:879
+msgid "Tel"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:880
+msgid "Testimonials"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:881
+msgid "Text"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:882
+msgid "Text Shadow"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:883
+msgid "The element you have selected doesn't have more settings"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:884
+msgid "The email address format is not valid"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:885
+msgid "The integration is not responding, please try again or verify the account credentials"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:886
+msgid "Theme"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:887
+msgid "There are no choices"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:888
+msgid "Thin"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:889
+msgid "This is Lottie .json URL. Get more from LottieFiles.com."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:890
+msgid "This page needs a refresh. You’ve probably updated this page (or another page) in a different tab or browser."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:891
+msgid "Thumbs"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:892
+msgid "Time"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:893
+msgid "Time Zone"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:894
+msgid "Timeline"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:895
+msgid "Timeline Items"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:896
+msgid "Timeline Labels"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:897
+msgid "Timer"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:898
+msgid "Tip: Use these shortcodes to populate your template"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:899
+msgid "Tip: You can browse the Google font library"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:900
+msgid "Title"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:901
+msgid "Title Padding"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:902
+msgid "Titles"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:903
+msgid "To Dashboard"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:904
+msgid "Toggle Menu"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:905
+msgid "Top"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:906
+msgid "Total"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:907
+msgid "Translation"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:908
+msgid "Transparency"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:909
+msgid "Trash"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:910
+msgid "Travel"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:911
+msgid "Trigger Popup Only Once"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:912
+msgid "Triggers"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:913
+msgid "Try Again"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:914
+msgid "Tweet"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:915
+msgid "Twitter"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:916
+msgid "Type"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:917
+msgid "Type to Search ..."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:918
+msgid "Type to search"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:919
+msgid "Typography"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:920
+msgid "UPLOAD"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:921
+msgid "UPLOAD FONT"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:922
+msgid "URL"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:923
+msgid "USE CUSTOM TEMPLATE"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:924
+msgid "Unable to insert block. Please try again or contact support"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:925
+msgid "Unable to insert layout. Please try again or contact support"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:926
+msgid "Unable to insert popup. Please try again or contact support"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:927
+msgid "Unable to upload"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:928
+msgid "Underline"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:929
+msgid "Undo"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:930
+msgid "Unlocked"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:931
+msgid "Unsuccessful sync"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:932
+msgid "Up"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:933
+msgid "UpDown"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:934
+msgid "UpLeft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:935
+msgid "UpRight"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:936
+msgid "Update"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:937
+msgid "Upgrade to PRO to use this"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:938
+msgid "Upgrade to PRO to use this block"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:939
+msgid "Upgrade to PRO to use this element"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:940
+msgid "Upgrade to PRO to use this integration"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:941
+msgid "Upgrade to PRO to use this layout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:942
+msgid "Upgrade to PRO to use this story"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:943
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:944
+msgid "Upsell"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:945
+msgid "Upsell Pagination"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:946
+msgid "Upsell Tags"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:947
+msgid "Url"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:948
+msgid "Use Small Header"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:949
+msgid "Username"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:950
+msgid "Users"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:951
+msgid "Value"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:952
+msgid "Value Bg"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:953
+msgid "Values"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:954
+msgid "Variations"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:955
+msgid "Verification process failed, please make sure you have done the following three things and try again in a few minutes."
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:956
+msgid "Vertical"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:957
+msgid "Vertical Align"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:958
+msgid "Vertical Offset"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:959
+msgid "Video"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:960
+msgid "View as"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:961
+msgid "Vimeo"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:962
+msgid "Volume"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:963
+msgid "WHAT WILL TRIGGER THE POPUP TO OPEN"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:964
+msgid "WHERE DO YOU WANT TO DISPLAY IT?"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:965
+msgid "WOFF File"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:966
+msgid "WOFF2 File"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:967
+msgid "WOOCart"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:968
+msgid "WOORating"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:969
+msgid "Weight"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:970
+msgid "When Finished"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:971
+msgid "Width"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:972
+msgid "Width Option"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:973
+msgid "Wobble"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:974
+msgid "Woo Product"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:975
+msgid "WordPress"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:976
+msgid "X"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:977
+msgid "Y"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:978
+msgid "YOUR PAGE IS READY TO PUBLISH!"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:979
+msgid "You can"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:980
+msgid "You can use these shortcodes in your email: "
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:981
+msgid "You can't add it again"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:982
+msgid "You can’t make changes"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:983
+msgid "You have successfully connect the form with"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:984
+msgid "You must be have one font added"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:985
+msgid "You must be have one selected item"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:986
+msgid "You must specify a title"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:987
+msgid "YouTube or Vimeo"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:988
+msgid "Your Plugin version is incompatible with Account version, please update plugin"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:989
+msgid "Your block was saved without screenshot, browser is not compatible"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:990
+msgid "Your link is not correct"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:991
+msgid "Youtube"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:992
+msgid "Z-index"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:993
+msgid "Zoom"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:994
+msgid "ZoomIn"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:995
+msgid "ZoomInDown"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:996
+msgid "ZoomInLeft"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:997
+msgid "ZoomInRight"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:998
+msgid "ZoomInUp"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:999
+msgid "block-name"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1000
+msgid "component"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1001
+msgid "element"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1002
+msgid "here"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1003
+msgid "in your WordPress admin"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1004
+msgid "is already editing project"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1005
+msgid "is currently working on this page. Do you want to take over"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1006
+msgid "layout"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1007
+msgid "layouts"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1008
+msgid "open an issue"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1009
+msgid "or"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1010
+msgid "remove this element"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1011
+msgid "required"
+msgstr ""
+
+#: public/editor-build/236-wp/texts.php:1013
+msgid "story"
 msgstr ""
 
 #: public/main.php:225
