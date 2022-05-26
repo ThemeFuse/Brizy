@@ -13,6 +13,7 @@ import { getUniqRules } from "./utils";
 import { Rule, CollectionTypeRule } from "visual/types";
 import {
   CUSTOMER_TYPE,
+  ECWID_PRODUCT_TYPE,
   PAGES_GROUP_ID
 } from "visual/utils/blocks/blocksConditions";
 
@@ -22,7 +23,8 @@ import {
   isCloud,
   isCMS,
   isCollectionPage,
-  isCustomer
+  isCustomer,
+  isEcwidProductPage
 } from "visual/global/Config/types/configs/Cloud";
 
 type AsyncGetValue = () => Rule[];
@@ -92,6 +94,10 @@ const Rules = (props: Props): ReactElement => {
 
       if (isCollectionPage(page)) {
         newRule.entityType = page.collectionType.id;
+      }
+
+      if (isEcwidProductPage(page)) {
+        newRule.entityType = ECWID_PRODUCT_TYPE;
       }
 
       if (isCloud(config) && isCMS(config) && isCustomer(config)) {

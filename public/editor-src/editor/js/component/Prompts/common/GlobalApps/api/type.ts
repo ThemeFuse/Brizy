@@ -1,4 +1,5 @@
 import { Response } from "visual/utils/api/response";
+import { ResponseWithBody } from "visual/component/Prompts/common/utils/Request";
 
 export type AccountsResolve = {
   status: Response["status"];
@@ -14,6 +15,6 @@ export type AddAccount = (data: {
   group: string;
   service: string;
   [apiKey: string]: string;
-}) => Promise<Response>;
+}) => Promise<ResponseWithBody<unknown>>;
 
-export type DeleteAccount = (id: string) => Promise<Response>;
+export type DeleteAccount = (id: string) => Promise<ResponseWithBody<unknown>>;

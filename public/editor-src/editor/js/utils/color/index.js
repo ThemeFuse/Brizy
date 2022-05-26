@@ -1,4 +1,9 @@
+import Config from "visual/global/Config";
 import { is as _isHex } from "visual/utils/color/Hex";
+import {
+  makeGlobalStylesColorPalette,
+  makeStylePaletteCSSVar
+} from "./makeGlobalStylesColorPallete";
 
 const rgbRegex = /^rgb\s*[(]\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*[)]$/;
 const rgbaRegex = /^rgba\s*[(]\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(0*(?:\.\d+)?|1(?:\.0*)?)\s*[)]$/;
@@ -63,7 +68,8 @@ export function hexToRgb(hex) {
 
 export function getColor(palette, hex, opacity) {
   if (palette) {
-    return `rgba(var(--brz-global-${palette}),${opacity})`;
+    const config = Config.getAll();
+    return `rgba(var(${makeStylePaletteCSSVar(palette, config)}),${opacity})`;
   } else {
     return hexToRgba(hex, opacity);
   }
@@ -88,8 +94,8 @@ function parseRgba(colorString) {
   return matches && matches.slice(1).map(Number);
 }
 
-export { getColorPaletteColors } from "./getColorPaletteColors";
 export { getColorPaletteColor } from "./getColorPaletteColor";
+export { getColorPaletteColors } from "./getColorPaletteColors";
 export { makeRichTextColorPaletteCSS } from "./makeRichTextColorPaletteCSS";
 export { makeRichTextDCColorCSS } from "./makeRichTextDCColorCSS";
-export { makeGlobalStylesColorPallete } from "./makeGlobalStylesColorPallete";
+export { makeGlobalStylesColorPalette, makeStylePaletteCSSVar };

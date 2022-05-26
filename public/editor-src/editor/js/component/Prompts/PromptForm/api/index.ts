@@ -19,6 +19,7 @@ import {
   CreateIntegrationList,
   AddRecaptcha
 } from "./types";
+import { FormData } from "./types";
 
 // Form
 const normalizeForm = (res: FormResponse): FormResponse => {
@@ -57,7 +58,7 @@ export const getForm: GetForm = ({ formId }) => {
       "Content-Type": "application/json; charset=utf-8"
     }
   })
-    .then(parseJSON)
+    .then(r => parseJSON<FormData>(r))
     .then(normalizeForm);
 };
 
@@ -75,7 +76,7 @@ export const createForm: CreateForm = ({ formId }) => {
       container: containerId
     })
   })
-    .then(parseJSON)
+    .then(r => parseJSON<FormData>(r))
     .then(res => res);
 };
 
@@ -116,9 +117,12 @@ export const getIntegration: GetIntegration = ({ formId, id }) => {
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      subject: string;
+      emailTo: string;
+    } | null>(r)
+  );
 };
 
 export const createIntegration: CreateIntegration = ({ formId, id }) => {
@@ -134,9 +138,12 @@ export const createIntegration: CreateIntegration = ({ formId, id }) => {
       type: id,
       container: containerId
     })
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      subject: string;
+      emailTo: string;
+    } | null>(r)
+  );
 };
 
 export const updateIntegration: UpdateIntegration = ({
@@ -165,9 +172,12 @@ export const updateIntegration: UpdateIntegration = ({
       ...data,
       container: containerId
     })
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      subject: string;
+      emailTo: string;
+    } | null>(r)
+  );
 };
 
 export const getIntegrationAccountApiKey: GetIntegrationAccountApiKey = ({
@@ -181,7 +191,11 @@ export const getIntegrationAccountApiKey: GetIntegrationAccountApiKey = ({
       "Content-Type": "application/json; charset=utf-8"
     }
   })
-    .then(parseJSON)
+    .then(r =>
+      parseJSON<{
+        accountProperties: Array<{ name: string }>;
+      } | null>(r)
+    )
     .then(({ status, data }) => ({
       status,
       data: data?.accountProperties || []
@@ -206,7 +220,13 @@ export const createIntegrationAccount: CreateIntegrationAccount = ({
       data: JSON.stringify(data)
     })
   })
-    .then(parseJSON)
+    .then(r =>
+      parseJSON<{
+        id: number;
+        type: string;
+        name: string;
+      } | null>(r)
+    )
     .then(res => res);
 };
 
@@ -224,9 +244,14 @@ export const createIntegrationList: CreateIntegrationList = ({
     body: JSON.stringify({
       data: JSON.stringify(data)
     })
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      formId: string;
+      id: string;
+      data: Record<string, string>;
+      usedAccount: string;
+    }>(r)
+  );
 };
 
 // Email smtp, gmailSmtp
@@ -243,9 +268,12 @@ export const getSmtpIntegration: GetSmptIntegration = ({ formId, id }) => {
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      subject: string;
+      emailTo: string;
+    } | null>(r)
+  );
 };
 
 export const createSmtpIntegration: CreateSmptIntegration = ({ formId }) => {
@@ -260,9 +288,12 @@ export const createSmtpIntegration: CreateSmptIntegration = ({ formId }) => {
     body: JSON.stringify({
       container: containerId
     })
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      subject: string;
+      emailTo: string;
+    } | null>(r)
+  );
 };
 
 export const updateSmtpIntegration: UpdateSmptIntegration = ({
@@ -278,9 +309,12 @@ export const updateSmtpIntegration: UpdateSmptIntegration = ({
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify(data)
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      subject: string;
+      emailTo: string;
+    } | null>(r)
+  );
 };
 
 // Recaptcha
@@ -299,7 +333,5 @@ export const addRecaptcha: AddRecaptcha = ({ group, service, ...data }) => {
       container: containerId,
       data: JSON.stringify(data)
     })
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(parseJSON);
 };

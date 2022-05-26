@@ -33,6 +33,7 @@ export interface Prop {
   };
 
   availableRoles: Role[];
+  page: string;
 }
 
 export interface WP extends ConfigCommon {

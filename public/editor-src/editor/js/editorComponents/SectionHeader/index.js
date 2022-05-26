@@ -1,29 +1,29 @@
-import React from "react";
 import classnames from "classnames";
+import jQuery from "jquery";
+import React from "react";
+import ResizeAware from "react-resize-aware";
+import Animation from "visual/component/Animation";
+import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
+import Portal from "visual/component/Portal";
+import { ProBlocked } from "visual/component/ProBlocked";
+import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
+import Sticky from "visual/component/Sticky";
+import { hideToolbar, ToolbarExtend } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { getOpenedMegaMenu } from "visual/editorComponents/Menu/MenuItem";
+import { css } from "visual/utils/cssStyle";
+import { IS_PRO } from "visual/utils/env";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
-import ResizeAware from "react-resize-aware";
-import jQuery from "jquery";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Portal from "visual/component/Portal";
-import Sticky from "visual/component/Sticky";
-import { ProBlocked } from "visual/component/ProBlocked";
-import { IS_PRO } from "visual/utils/env";
-import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
-import { ToolbarExtend, hideToolbar } from "visual/component/Toolbar";
-import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import { capitalize } from "visual/utils/string";
-import { css } from "visual/utils/cssStyle";
-import defaultValue from "./defaultValue.json";
-import * as toolbarExtendConfig from "./toolbarExtend";
-import * as sidebarExtendConfig from "./sidebarExtend";
-import { styleSection, styleAnimation } from "./styles";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import { getOpenedMegaMenu } from "visual/editorComponents/Menu/MenuItem";
-import Animation from "visual/component/Animation";
+import defaultValue from "./defaultValue.json";
+import * as sidebarExtendConfig from "./sidebarExtend";
+import { styleAnimation, styleSection } from "./styles";
+import * as toolbarExtendConfig from "./toolbarExtend";
 
 const STICKY_ITEM_INDEX = 1;
 
@@ -99,7 +99,7 @@ export default class SectionHeader extends EditorComponent {
     this.selfDestruct();
   };
 
-  handleStickyChange = isSticky => {
+  handleStickyChange = (isSticky) => {
     hideToolbar();
 
     const tooltip = getCurrentTooltip();
@@ -231,7 +231,9 @@ export default class SectionHeader extends EditorComponent {
       <Sticky
         refSelector={`#${this.getId()}`}
         type="animated"
-        render={isSticky => this.renderAnimatedSticky({ v, vs, vd, isSticky })}
+        render={(isSticky) =>
+          this.renderAnimatedSticky({ v, vs, vd, isSticky })
+        }
         onChange={this.handleStickyChange}
       />
     );
@@ -296,7 +298,7 @@ export default class SectionHeader extends EditorComponent {
       <Sticky
         refSelector={`#${this.getId()}`}
         type="fixed"
-        render={isSticky => this.renderFixedSticky({ v, isSticky })}
+        render={(isSticky) => this.renderFixedSticky({ v, isSticky })}
         onChange={this.handleStickyChange}
       />
     );
@@ -398,30 +400,23 @@ export default class SectionHeader extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const {
-      tagName,
-      className,
-      customClassName,
-      cssIDPopulation,
-      cssClassPopulation,
-      customAttributes
-    } = v;
-
-    const content = IS_PRO ? (
+    const content = (
       <Animation
-        component={tagName}
+        component={v.tagName}
         componentProps={{
-          ...parseCustomAttributes(customAttributes),
+          ...parseCustomAttributes(v.customAttributes),
           id:
-            cssIDPopulation === ""
+            v.cssIDPopulation === ""
               ? v.anchorName || this.getId()
-              : cssIDPopulation,
+              : v.cssIDPopulation,
           style: this.getStyle(v),
           ref: this.sectionNode,
           className: classnames(
             "brz-section brz-section__header",
-            className,
-            cssClassPopulation === "" ? customClassName : cssClassPopulation,
+            v.className,
+            v.cssClassPopulation === ""
+              ? v.customClassName
+              : v.cssClassPopulation,
             css(
               `${this.getComponentId()}`,
               `${this.getId()}`,
@@ -434,10 +429,6 @@ export default class SectionHeader extends EditorComponent {
       >
         {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
       </Animation>
-    ) : (
-      <header className="brz-section brz-section__header">
-        <ProBlocked text="Header" absolute={false} />
-      </header>
     );
 
     return this.renderMemberShipWrapper(content, v);

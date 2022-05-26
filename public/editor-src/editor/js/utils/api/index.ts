@@ -9,7 +9,7 @@ import Config from "visual/global/Config";
 import * as Obj from "visual/utils/reader/object";
 import * as ArrReader from "visual/utils/reader/array";
 import * as Str from "visual/utils/reader/string";
-import { request2, persistentRequest } from "./index-legacy";
+import { persistentRequest } from "./index-legacy";
 import {
   makeBlockMeta,
   parseBlogSourceItem,
@@ -462,7 +462,7 @@ export const shopifySyncRules = (
 
   const body = new URLSearchParams({
     page: `${page.id}`,
-     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     assigned_items: JSON.stringify(rules.map(({ selected, ...i }) => i)),
     title
   });
@@ -564,3 +564,31 @@ export const shopifyUnpublishPage = (config: Shopify): Promise<void> => {
   });
 };
 //#endregion
+
+// a thin wrapper around fetch
+export function request2(
+  url: string,
+  config: RequestInit = {}
+): Promise<Response> {
+  if (TARGET === "Cloud-localhost") {
+    return fetch(url, {
+      ...config,
+      headers: {
+        ...config.headers,
+        "x-editor-version": Config.get("editorVersion"),
+        "x-auth-user-token": Config.get("tokenV1")
+      }
+    });
+  } else {
+    return fetch(url, {
+      credentials: "same-origin",
+      ...config,
+      headers: {
+        ...config.headers,
+        "x-editor-version": Config.get("editorVersion")
+      }
+    });
+  }
+}
+
+// pending request

@@ -9,6 +9,12 @@ import {
 } from "./adapter";
 import * as Response from "./response";
 import { apiUrl, paginationData } from "./const";
+import { request2 as _request2 } from "./index";
+
+/**
+ * @deprecated, use request2 from index.ts
+ */
+export const request2 = _request2;
 
 const hardcodedAjaxSettings = {
   xhrFields: {
@@ -68,31 +74,6 @@ export function persistentRequest(ajaxSettings) {
     });
   });
 }
-
-// a thin wrapper around fetch
-export function request2(url, config = {}) {
-  if (TARGET === "Cloud-localhost") {
-    return fetch(url, {
-      ...config,
-      headers: {
-        ...config.headers,
-        "x-editor-version": Config.get("editorVersion"),
-        "x-auth-user-token": Config.get("tokenV1")
-      }
-    });
-  } else {
-    return fetch(url, {
-      credentials: "same-origin",
-      ...config,
-      headers: {
-        ...config.headers,
-        "x-editor-version": Config.get("editorVersion")
-      }
-    });
-  }
-}
-
-// pending request
 
 export function pendingRequest(time = 650) {
   return new Promise(res => {

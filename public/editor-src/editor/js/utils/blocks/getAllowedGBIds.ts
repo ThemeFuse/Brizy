@@ -221,11 +221,10 @@ export function pageSplitRules(rules: Rule[] = [], page: Page): SplitRules {
   );
 }
 
-function pageCMSSplitRules(rules: Rule[] = [], page: Page): Rule | undefined {
-  if (!isCollectionPage(page)) {
-    return undefined;
-  }
-
+function pageCMSSplitRules(
+  rules: Rule[] = [],
+  page: PageCollection
+): Rule | undefined {
   const { fields } = page;
   const refs: FieldsReferences[] | undefined = getFieldsReferences(fields);
 
@@ -272,7 +271,9 @@ export function canUseConditionInPage(
 
   const referenceCustomerRule = pageCustomerSplitRules(rules, page);
 
-  const referenceRule: Rule | undefined = pageCMSSplitRules(rules, page);
+  const referenceRule: Rule | undefined = isCollectionPage(page)
+    ? pageCMSSplitRules(rules, page)
+    : undefined;
 
   if (level1Rule) {
     return isIncludeCondition(level1Rule);

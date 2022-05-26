@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, {
   ComponentType,
   createRef,
@@ -6,62 +7,61 @@ import React, {
   ReactNode,
   Ref
 } from "react";
-import classNames from "classnames";
+import Animation from "visual/component/Animation";
+import ContainerBorder from "visual/component/ContainerBorder";
+import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
+import { ElementModel } from "visual/component/Elements/Types";
+import { ProBlocked } from "visual/component/ProBlocked";
+import { currentUserRole, Roles } from "visual/component/Roles";
+import { ScrollMotion } from "visual/component/ScrollMotions";
+import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
+import {
+  SortableElement,
+  SortableElementDataAttributes
+} from "visual/component/Sortable/SortableElement";
+import SortableHandle from "visual/component/Sortable/SortableHandle";
+import Toolbar, {
+  ToolbarExtend as _ToolbarExtend
+} from "visual/component/Toolbar";
+import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
   OnChangeMeta,
-  ToolbarExtend,
-  Props as EDProps
+  Props as EDProps,
+  ToolbarExtend
 } from "visual/editorComponents/EditorComponent";
-import * as NoEmptyString from "visual/utils/string/NoEmptyString";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { Roles, currentUserRole } from "visual/component/Roles";
-import { getWrapperContainerW } from "visual/utils/meta";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import * as toolbarExtendConfig from "./toolbarExtend";
-import * as sidebarExtendConfig from "./sidebarExtend";
-import contextMenuConfig from "./contextMenu";
-import contextMenuConfigPro from "./contextMenuPro";
-import defaultValue from "./defaultValue.json";
-import { ElementModel } from "visual/component/Elements/Types";
+import { getProTitle } from "visual/editorComponents/EditorComponent/utils";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
-import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
-import * as Position from "visual/utils/position/element";
-import { MValue } from "visual/utils/value";
-import { Literal } from "visual/utils/types/Literal";
+import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
+import { getWrapperContainerW } from "visual/utils/meta";
 import {
   defaultValueKey,
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
-import * as State from "visual/utils/stateMode";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
-import ContainerBorder from "visual/component/ContainerBorder";
-import Toolbar, {
-  ToolbarExtend as _ToolbarExtend
-} from "visual/component/Toolbar";
-import SortableHandle from "visual/component/Sortable/SortableHandle";
-import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
-import { css } from "visual/utils/cssStyle";
-import * as Str from "visual/utils/string/specs";
-import { styleWrapper, styleAnimation } from "./styles";
-import * as Attr from "visual/utils/string/parseCustomAttributes";
-import Animation from "visual/component/Animation";
-import {
-  SortableElement,
-  SortableElementDataAttributes
-} from "visual/component/Sortable/SortableElement";
 import { WithClassName } from "visual/utils/options/attributes";
+import * as Position from "visual/utils/position/element";
 import { attachRef } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
-import { ScrollMotion } from "visual/component/ScrollMotions";
-import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
-import { ProBlocked } from "visual/component/ProBlocked";
-import { getProTitle } from "visual/editorComponents/EditorComponent/utils";
+import * as State from "visual/utils/stateMode";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
+import * as Attr from "visual/utils/string/parseCustomAttributes";
+import * as Str from "visual/utils/string/specs";
+import { Literal } from "visual/utils/types/Literal";
+import { MValue } from "visual/utils/value";
+import contextMenuConfig from "./contextMenu";
+import contextMenuConfigPro from "./contextMenuPro";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import * as sidebarExtendConfig from "./sidebarExtend";
+import { styleAnimation, styleWrapper } from "./styles";
+import * as toolbarConfig from "./toolbar";
+import * as toolbarExtendConfig from "./toolbarExtend";
 
 export type Value = ElementModel & {
   items: ElementModel[];
@@ -181,7 +181,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       v.showToolbar === "on" || currentUserRole() !== "admin"
         ? (toolbarExtendItems: ToolbarItemType[]): ToolbarItemType[] =>
             toolbarExtendItems.filter(
-              item => item.id !== "duplicate" && item.id !== "remove"
+              (item) => item.id !== "duplicate" && item.id !== "remove"
             )
         : null;
     const itemsProps = this.makeSubcomponentProps({
@@ -418,15 +418,6 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const { sectionPopup, sectionPopup2 } = this.props.meta;
     const customID = Str.mRead(v.customID) || undefined;
     const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
-    const proTitleElement = this.getTitleIfPro();
-
-    const content = proTitleElement ? (
-      <ProBlocked text={proTitleElement} absolute={false} />
-    ) : (
-      <ScrollMotion options={makeOptionValueToMotion(v)}>
-        {this.renderContent(v)}
-      </ScrollMotion>
-    );
 
     return (
       <Animation<"div">
@@ -439,7 +430,9 @@ export default class Wrapper extends EditorComponent<Value, Props> {
           id: cssIDPopulation ?? customID
         }}
       >
-        {content}
+        <ScrollMotion options={makeOptionValueToMotion(v)}>
+          {this.renderContent(v)}
+        </ScrollMotion>
       </Animation>
     );
   }

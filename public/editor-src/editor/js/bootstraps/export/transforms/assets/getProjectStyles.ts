@@ -1,13 +1,13 @@
 import {
   getColorPaletteColors,
-  makeRichTextColorPaletteCSS,
-  makeGlobalStylesColorPallete
+  makeGlobalStylesColorPalette,
+  makeRichTextColorPaletteCSS
 } from "visual/utils/color";
 import {
-  getFontStyles,
   dynamicStyleIds,
-  makeRichTextDynamicFontStylesCSS,
-  makeGlobalStylesTypography
+  getFontStyles,
+  makeGlobalStylesTypography,
+  makeRichTextDynamicFontStylesCSS
 } from "visual/utils/fonts";
 import { IS_EXTERNAL_POPUP } from "visual/utils/models";
 
@@ -52,7 +52,7 @@ export const getProjectStyles = ($: cheerio.CheerioAPI): string => {
     getClassName
   );
 
-  const globalStyleColorPalette = makeGlobalStylesColorPallete(
+  const globalStyleColorPalette = makeGlobalStylesColorPalette(
     getColorPaletteColors()
   );
 

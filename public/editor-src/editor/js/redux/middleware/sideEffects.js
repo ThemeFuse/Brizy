@@ -8,7 +8,7 @@ import {
 } from "visual/utils/fonts";
 import {
   makeRichTextColorPaletteCSS,
-  makeGlobalStylesColorPallete
+  makeGlobalStylesColorPalette
 } from "visual/utils/color";
 import { addClass, removeClass } from "visual/utils/dom/classNames";
 import {
@@ -196,7 +196,7 @@ function handleHydrate(callbacks) {
       .html(makeRichTextColorPaletteCSS(colorPalette));
     const $globalColorStyles = jQuery("<style>")
       .attr("id", "brz-global-colors")
-      .html(makeGlobalStylesColorPallete(colorPalette));
+      .html(makeGlobalStylesColorPalette(colorPalette));
 
     jQuery("head", document).append($richTextPaletteStyle);
     jQuery("head", document).append($globalColorStyles);
@@ -260,7 +260,7 @@ function handleStylesChange(callbacks) {
     );
 
     jQuery("#brz-global-colors").html(
-      makeGlobalStylesColorPallete(colorPalette)
+      makeGlobalStylesColorPalette(colorPalette)
     );
 
     jQuery("#brz-typography-styles").html(
@@ -381,7 +381,7 @@ function handleHistoryChange(callbacks) {
       );
 
       jQuery("#brz-global-colors").html(
-        makeGlobalStylesColorPallete(colorPalette)
+        makeGlobalStylesColorPalette(colorPalette)
       );
     }
   });

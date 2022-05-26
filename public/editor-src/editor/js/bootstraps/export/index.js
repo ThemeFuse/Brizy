@@ -63,7 +63,10 @@ export default async function main({
             collectionType: page.collectionType,
             fields: page.fields
           }
-        : parsedPage;
+        : {
+            ...parsedPage,
+            __type: page.__type
+          };
     })
 
     .find(page => {

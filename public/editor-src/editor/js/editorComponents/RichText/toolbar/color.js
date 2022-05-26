@@ -1,27 +1,35 @@
 import { setIn } from "timm";
-import { hexToRgba, getColorPaletteColor } from "visual/utils/color";
-import { encodeToString } from "visual/utils/string";
+import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import {
+  getColorPaletteColor,
+  hexToRgba,
+  makeStylePaletteCSSVar
+} from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { t } from "visual/utils/i18n";
-
+import { encodeToString } from "visual/utils/string";
 import {
   toolbarBgColor2,
   toolbarBgColorHexField2,
-  toolbarGradientType,
   toolbarGradientLinearDegree,
-  toolbarGradientRadialDegree
+  toolbarGradientRadialDegree,
+  toolbarGradientType
 } from "visual/utils/toolbar";
-import { defaultValueValue } from "visual/utils/onChange";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
 
-const shadowToString = value => {
+const shadowToString = (value, config) => {
   if (value.palette) {
-    return `rgba(var(--brz-global-${value.palette}),${value.opacity}) ${value.horizontal}px ${value.vertical}px ${value.blur}px`;
+    const { palette, opacity, horizontal, vertical, blur } = value;
+    return `rgba(var(${makeStylePaletteCSSVar(
+      palette,
+      config
+    )}),${opacity}) ${horizontal}px ${vertical}px ${blur}px`;
   }
 
   return `${getColorValue({
@@ -336,6 +344,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
     width = null,
     height = null
   } = v.backgroundImage || {};
+  const config = Config.getAll();
 
   const {
     type,
@@ -355,7 +364,6 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
   let colorV = {};
   let colorFieldsV = {};
 
-  // is gradient
   if (startHex) {
     const startIsActive = activePointer === "startPointer";
 
@@ -532,7 +540,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                 }
 
                 onChange({
-                  shadow: shadowToString(shadow),
+                  shadow: shadowToString(shadow, config),
                   shadowColorPalette
                 });
               }

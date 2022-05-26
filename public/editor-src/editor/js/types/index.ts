@@ -6,6 +6,7 @@ import Config from "visual/global/Config";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
+import { EcwidProductId } from "visual/global/Ecwid";
 
 export type V = Dictionary<unknown>;
 
@@ -156,6 +157,11 @@ export interface ShopifyPage extends PageCommon {
   };
 }
 
+export interface EcwidProductPage extends DataWithTitle {
+  __type: "ecwid-product";
+  productId: EcwidProductId;
+}
+
 // @ts-expect-error: is declared but its value is never read.
 export const isWPPage = (page: Page): page is PageWP => {
   return isWp(Config.getAll());
@@ -165,6 +171,7 @@ export type Page =
   | PageWP
   | PageCollection
   | ShopifyPage
+  | EcwidProductPage
   | PageCustomer
   | InternalPopupCloud
   | ExternalPopupCloud
@@ -280,3 +287,17 @@ export type Shortcodes = {
 export type UserRole = string;
 
 export type ExportFunction = ($el: JQuery) => void;
+
+// region CustomerId
+declare const _customerId: unique symbol;
+
+export type CustomerId = string & { [_customerId]: "CustomerId" };
+// endregion
+
+// region CollectionItemId
+declare const _collectionItemId: unique symbol;
+
+export type CollectionItemId = string & {
+  [_collectionItemId]: "CollectionItemId";
+};
+// endregion

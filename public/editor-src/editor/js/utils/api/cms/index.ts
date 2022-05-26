@@ -123,7 +123,9 @@ export function getCustomersAndCollectionTypes(): Promise<
     .then(({ customers, customerGroups, collectionTypes }) => ({
       customers: customers ? customers.filter(isT) : [],
       customerGroups: customerGroups ? customerGroups.filter(isT) : [],
-      collectionTypes: collectionTypes ? collectionTypes.filter(isT) : []
+      collectionTypes: collectionTypes
+        ? collectionTypes.filter(isT).filter(c => c.settings.hidden !== true)
+        : []
     }))
     .catch(onCatch(t("Failed to fetch api data")));
 }

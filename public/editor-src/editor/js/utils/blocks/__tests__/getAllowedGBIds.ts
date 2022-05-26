@@ -76,7 +76,7 @@ const configWp = {
   },
   ruleMatches: [],
   availableRoles: [],
-  availableTranslations:[]
+  availableTranslations: []
 };
 
 const pageCommon: PageCommon = {
@@ -168,6 +168,7 @@ describe("testing WP getAllowedGBIds", () => {
       },
       wp: {
         ...configWp,
+        page: "1",
         ruleMatches: [
           {
             group: PAGES_GROUP_ID,

@@ -1,16 +1,18 @@
+import Config from "visual/global/Config";
+import { makeStylePaletteCSSVar } from "visual/utils/color";
 import {
-  styleShapeTopType,
-  styleShapeTopSvg,
-  styleShapeTopHeight,
-  styleShapeTopHeightSuffix,
-  styleShapeTopFlip,
-  styleShapeTopIndex,
-  styleShapeBottomType,
-  styleShapeBottomSvg,
+  styleShapeBottomFlip,
   styleShapeBottomHeight,
   styleShapeBottomHeightSuffix,
-  styleShapeBottomFlip,
-  styleShapeBottomIndex
+  styleShapeBottomIndex,
+  styleShapeBottomSvg,
+  styleShapeBottomType,
+  styleShapeTopFlip,
+  styleShapeTopHeight,
+  styleShapeTopHeightSuffix,
+  styleShapeTopIndex,
+  styleShapeTopSvg,
+  styleShapeTopType
 } from "visual/utils/style2";
 import { defaultValueValue } from "../onChange";
 
@@ -20,9 +22,13 @@ export function cssStyleShapeTopType({ v, device, state }) {
   const shapeTopSvg = styleShapeTopSvg({ v, device, state });
   const shapeTopColorPalette = dvv("shapeTopColorPalette");
   const shapeTopColorOpacity = dvv("shapeTopColorOpacity");
+  const config = Config.getAll();
 
   const shape = shapeTopColorPalette
-    ? `background-color: rgba(var(--brz-global-${shapeTopColorPalette}), ${shapeTopColorOpacity}); -webkit-mask-image: url("${shapeTopSvg}");-webkit-mask-size:100% 100%;`
+    ? `background-color: rgba(var(${makeStylePaletteCSSVar(
+        shapeTopColorPalette,
+        config
+      )}), ${shapeTopColorOpacity}); -webkit-mask-image: url("${shapeTopSvg}");-webkit-mask-size:100% 100%;`
     : `background-image: url(${shapeTopSvg});`;
 
   return shapeTopType === undefined
@@ -60,9 +66,12 @@ export function cssStyleShapeBottomType({ v, device, state }) {
   const shapeBottomSvg = styleShapeBottomSvg({ v, device, state });
   const shapeBottomColorPalette = dvv("shapeBottomColorPalette");
   const shapeBottomColorOpacity = dvv("shapeBottomColorOpacity");
-
+  const config = Config.getAll();
   const shape = shapeBottomColorPalette
-    ? `background-color: rgba(var(--brz-global-${shapeBottomColorPalette}), ${shapeBottomColorOpacity}); -webkit-mask-image: url("${shapeBottomSvg}");-webkit-mask-size:100% 100%;`
+    ? `background-color: rgba(var(${makeStylePaletteCSSVar(
+        shapeBottomColorPalette,
+        config
+      )}), ${shapeBottomColorOpacity}); -webkit-mask-image: url("${shapeBottomSvg}");-webkit-mask-size:100% 100%;`
     : `background-image: url(${shapeBottomSvg});`;
 
   return shapeBottomType === undefined

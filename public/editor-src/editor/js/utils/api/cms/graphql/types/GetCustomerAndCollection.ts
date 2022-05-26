@@ -33,6 +33,11 @@ export interface GetCustomerAndCollection_customerGroups {
   collection: (GetCustomerAndCollection_customerGroups_collection | null)[] | null;
 }
 
+export interface GetCustomerAndCollection_collectionTypes_settings {
+  __typename: "CollectionTypeSettings";
+  hidden: boolean;
+}
+
 export interface GetCustomerAndCollection_collectionTypes_fields_CollectionTypeFieldCheck {
   __typename: "CollectionTypeFieldCheck" | "CollectionTypeFieldColor" | "CollectionTypeFieldDateTime" | "CollectionTypeFieldEmail" | "CollectionTypeFieldFile" | "CollectionTypeFieldGallery" | "CollectionTypeFieldImage" | "CollectionTypeFieldLink" | "CollectionTypeFieldMap" | "CollectionTypeFieldNumber" | "CollectionTypeFieldPassword" | "CollectionTypeFieldPhone" | "CollectionTypeFieldRichText" | "CollectionTypeFieldSelect" | "CollectionTypeFieldSwitch" | "CollectionTypeFieldText" | "CollectionTypeFieldVideoLink";
   id: string;
@@ -82,6 +87,7 @@ export interface GetCustomerAndCollection_collectionTypes {
   id: string;
   slug: string;
   title: string;
+  settings: GetCustomerAndCollection_collectionTypes_settings;
   /**
    * fixme: must be `[CollectionTypeFieldInterface!]!`.
    */

@@ -542,7 +542,7 @@ export function onChangeBgColorHexSubMenu2({
 
     subMenuHoverBgColorOpacity:
       v.subMenuBgColorOpacity === v.subMenuHoverBgColorOpacity
-        ? hex
+        ? opacity
         : v.subMenuHoverBgColorOpacity,
 
     // Sync MMenu

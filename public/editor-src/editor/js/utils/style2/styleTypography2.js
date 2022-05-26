@@ -1,6 +1,12 @@
+import Config from "visual/global/Config";
+import { DESKTOP } from "visual/utils/responsiveMode";
 import { capByPrefix } from "visual/utils/string";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import { getFontById, getFontCssStyle } from "visual/utils/fonts";
+import {
+  getFontById,
+  getFontCssStyle,
+  makeStyleCSSVar
+} from "visual/utils/fonts";
 import { getOptionFontByGlobal } from "visual/utils/options";
 import { isNullish } from "visual/utils/value";
 
@@ -12,8 +18,12 @@ export function styleTypography2FontFamily({ v, device, state, prefix = "" }) {
   const fontStyle = dvv(fontStyleKey);
 
   if (fontStyle) {
-    // Keys is lowercase because have problems in backend export HTML
-    return `var(--brz-${fontStyle}fontFamily)`.toLowerCase();
+    return `var(${makeStyleCSSVar({
+      id: fontStyle,
+      device: DESKTOP,
+      key: "fontFamily",
+      config: Config.getAll()
+    })})`;
   } else {
     const fontFamily = getOptionFontByGlobal(
       "fontFamily",

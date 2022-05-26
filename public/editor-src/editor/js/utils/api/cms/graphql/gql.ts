@@ -428,6 +428,9 @@ export const getCustomersAndCollectionTypes = (
           id
           slug
           title
+          settings {
+            hidden
+          }
           fields {
             id
             type

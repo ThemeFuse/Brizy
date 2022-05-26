@@ -14,7 +14,10 @@ export {
 } from "./makeRichTextFontStylesCSS";
 export { getGoogleFonts } from "./getGoogleFonts";
 
-export { makeGlobalStylesTypography } from "./makeGlobalStylesTypography";
+export {
+  makeGlobalStylesTypography,
+  makeStyleCSSVar
+} from "./makeGlobalStylesTypography";
 
 // Transforms
 export {
@@ -30,4 +33,4 @@ export {
 
 // Default Font CSS
 export { makeDefaultFontCSS } from "./makeDefaultFontCSS";
-export { getFontCssStyle, getFontCssStyleOldType } from "./getFontCssStyle";
+export { getFontCssStyle } from "./getFontCssStyle";

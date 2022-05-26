@@ -1,4 +1,5 @@
 import { Response } from "visual/utils/api/response";
+import { ResponseWithBody } from "visual/component/Prompts/common/utils/Request";
 
 // Forms
 
@@ -7,15 +8,15 @@ type IntegrationType = {
   type: string;
   completed: boolean;
 };
-export type FormResponse = {
-  status: Response["status"];
-  data: {
-    integrations: IntegrationType[];
-    notifications?: IntegrationType[];
-    emailTemplate: string;
-    hasEmailTemplate: boolean;
-  } | null;
+
+export type FormData = {
+  integrations: IntegrationType[];
+  notifications?: IntegrationType[];
+  emailTemplate: string;
+  hasEmailTemplate: boolean;
 };
+
+export type FormResponse = ResponseWithBody<FormData | undefined>;
 
 export type GetForm = (data: { formId: string }) => Promise<FormResponse>;
 
@@ -61,9 +62,7 @@ export type UpdateIntegration = (data: {
 
 export type IntegrationAccountApiKeyResponse = {
   status: Response["status"];
-  data: {
-    accountProperties: Array<{ name: string }>;
-  } | null;
+  data: Array<{ name: string }>;
 };
 export type GetIntegrationAccountApiKey = (data: {
   formId: string;
@@ -90,7 +89,14 @@ export type CreateIntegrationList = (data: {
   id: string;
   data: Record<string, string>;
   usedAccount: string;
-}) => Promise<Response>;
+}) => Promise<
+  ResponseWithBody<{
+    formId: string;
+    id: string;
+    data: Record<string, string>;
+    usedAccount: string;
+  }>
+>;
 
 // Smtp
 
@@ -126,4 +132,4 @@ export type AddRecaptcha = (data: {
   sitekey: string;
   secretkey: string;
   response: string;
-}) => Promise<Response>;
+}) => Promise<ResponseWithBody<unknown>>;

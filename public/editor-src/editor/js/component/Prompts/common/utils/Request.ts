@@ -1,14 +1,25 @@
-export const makeUrl = (baseUrl, params = {}) => {
-  let url = new URL(baseUrl);
+export const makeUrl = (
+  baseUrl: string,
+  params: Record<string, string> = {}
+): string => {
+  const url = new URL(baseUrl);
 
   Object.entries(params).forEach(([key, value]) => {
     url.searchParams.append(key, value);
   });
 
-  return url;
+  return url.toString();
 };
 
-export const parseJSON = response => {
+export interface ResponseWithBody<T> {
+  status: number;
+  ok: boolean;
+  data: T;
+}
+
+export const parseJSON = <T>(
+  response: Response
+): Promise<ResponseWithBody<T>> => {
   return response
     .json()
     .then(body => ({
