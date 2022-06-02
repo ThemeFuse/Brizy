@@ -55,6 +55,8 @@ class Brizy_Admin_Main {
 		add_action( 'admin_head', array( $this, 'custom_css_btns' ) );
 		add_action( 'brizy_global_data_updated', array( $this, 'global_data_updated' ) );
 		add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array( $this, 'plugin_action_links' ) );
+		add_action( 'in_plugin_update_message-' . BRIZY_PLUGIN_BASE, [ $this, 'version_update_warning' ] );
+
 		add_filter( 'display_post_states', array( $this, 'display_post_states' ), 10, 2 );
 
 		//add_filter( 'save_post', array( $this, 'save_post' ), 10, 2 );
@@ -515,5 +517,38 @@ class Brizy_Admin_Main {
 	 */
 	public function global_data_updated() {
 		Brizy_Editor_Post::mark_all_for_compilation();
+	}
+
+	public function version_update_warning( $data ) {
+
+		$current_version_minor_part = explode( '.', BRIZY_VERSION )[1];
+		$new_version_minor_part     = explode( '.', $data['new_version'] )[1];
+
+		if ( $current_version_minor_part === $new_version_minor_part ) {
+			return;
+		}
+		?>
+		<hr class="brz-major-update-warning__separator" />
+		<div class="brz-major-update-warning">
+			<div class="brz-major-update-warning__icon">
+                <i class="dashicons dashicons-warning"></i>
+			</div>
+			<div>
+				<div class="brz-major-update-warning__title">
+					<?php echo esc_html__( 'Heads up, Please backup before upgrade!', 'brizy' ); ?>
+				</div>
+				<div class="brz-major-update-warning__message">
+					<?php
+					printf(
+					/* translators: %1$s Link open tag, %2$s: Link close tag. */
+						esc_html__( 'The latest update includes some substantial changes across different areas of the plugin. We highly recommend you %1$sbackup your site before upgrading%2$s, and make sure you first update in a staging environment', 'brizy' ),
+						'<a href="https://wordpress.org/support/article/wordpress-backups/">',
+						'</a>'
+					);
+					?>
+				</div>
+			</div>
+		</div>
+		<?php
 	}
 }
