@@ -130,7 +130,6 @@ export function getItems({ v, device, context }) {
                   id: "groupSettings",
                   type: "group-dev",
                   devices: "desktop",
-                  disabled: v.type === "vimeo",
                   options: [
                     {
                       id: "controls",

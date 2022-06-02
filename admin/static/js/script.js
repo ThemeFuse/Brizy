@@ -2,7 +2,7 @@ jQuery(document).ready(function ($) {
 
     $( '.brz-review-deserve, .brz-review-later, .brz-review-done' ).on( 'click', function ( e ) {
 
-        var btn = $( this );
+        var btn    = $( this ),
             notice = btn.closest( '.brz-notice' );
 
         if ( ! btn.hasClass( 'brz-review-deserve' ) ) {
@@ -24,6 +24,41 @@ jQuery(document).ready(function ($) {
         }, 1000, function() {
             notice.remove();
         });
+    } );
+
+    $( '#brz-replace-url-button' ).on( 'click', function ( e ) {
+        e.preventDefault();
+
+        var self = $( this ),
+            tr   = self.parents( 'tr' ),
+            from = tr.find( '[name="from"]' ),
+            to   = tr.find( '[name="to"]' );
+
+        self.removeClass( 'success' ).addClass( 'loading' );
+
+        if ( ! self.hasClass( 'loading' ) ) {
+           return;
+        }
+
+        $.post( Brizy_Admin_Data.url, {
+            action: 'brizy_replace_url',
+            from: from.val(),
+            to: to.val(),
+            nonce: Brizy_Admin_Data.nonce
+        } ).done( function ( response ) {
+            self.removeClass( 'loading' );
+
+            if ( response.success ) {
+                self.addClass( 'success' );
+            }
+
+           alert( response.data.message );
+        } ).error( function( response ) {
+
+            self.removeClass( 'success' ).removeClass( 'loading' );
+
+            alert( response.responseText );
+        } );
     } );
 
     var BrizyFeedbackDialog = {

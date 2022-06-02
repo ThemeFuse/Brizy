@@ -2,14 +2,14 @@ import jQuery from "jquery";
 import Promise from "promise";
 import Config from "visual/global/Config";
 import {
-  parsePageWP,
-  stringifyPage,
-  parseProject,
-  stringifyProject,
+  makeBlockMeta,
   parseGlobalBlock,
-  stringifyGlobalBlock
+  parsePageWP,
+  parseProject,
+  stringifyGlobalBlock,
+  stringifyPage,
+  stringifyProject
 } from "./adapter";
-import { makeBlockMeta } from "./adapter";
 
 const apiUrl = Config.get("wp").api.url;
 
@@ -22,7 +22,7 @@ export function request(action, data) {
     jQuery
       .post(url, data_)
       .done(resolve)
-      .fail(jqXHR => reject(jqXHR.responseText))
+      .fail((jqXHR) => reject(jqXHR.responseText))
   );
 }
 
@@ -81,7 +81,7 @@ export function request2(url, config = {}) {
 // pending request
 
 export function pendingRequest(time = 650) {
-  return new Promise(res => {
+  return new Promise((res) => {
     setTimeout(() => {
       res(true);
     }, time);
@@ -131,8 +131,8 @@ export function addProjectLockedBeacon() {
       action: lockProject
     })
   })
-    .then(r => r.json())
-    .then(rj => {
+    .then((r) => r.json())
+    .then((rj) => {
       if (rj.success) {
         return rj.data;
       }
@@ -166,7 +166,7 @@ export function getPages() {
 }
 
 export function getPage(pageId) {
-  return getPages().then(pages => pages.find(p => p.id === pageId));
+  return getPages().then((pages) => pages.find((p) => p.id === `${pageId}`));
 }
 
 export function updatePage(page, meta = {}) {
@@ -223,7 +223,7 @@ export function getRulesList() {
       hash
     })
   })
-    .then(r => r.json())
+    .then((r) => r.json())
     .then(({ data }) => data);
 }
 
@@ -307,9 +307,8 @@ export function updateGlobalBlocks(globalBlocks, extraMeta = {}) {
 
   const data = Object.entries(globalBlocks).reduce(
     (acc, [uid, globalBlock]) => {
-      const { data, position, rules, meta, status } = stringifyGlobalBlock(
-        globalBlock
-      );
+      const { data, position, rules, meta, status } =
+        stringifyGlobalBlock(globalBlock);
 
       acc.uid.push(uid);
       acc.status.push(status);
@@ -468,8 +467,8 @@ export function sendHeartBeat() {
       hash
     })
   })
-    .then(r => r.json())
-    .then(rj => {
+    .then((r) => r.json())
+    .then((rj) => {
       if (rj.success) {
         return rj.data;
       }
@@ -491,8 +490,8 @@ export function sendHearBeatTakeOver() {
       hash
     })
   })
-    .then(r => r.json())
-    .then(rj => {
+    .then((r) => r.json())
+    .then((rj) => {
       if (rj.success) {
         return rj.data;
       }

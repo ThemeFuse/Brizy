@@ -8,7 +8,8 @@ import {
   isCloud,
   isCMS,
   isCollectionPage,
-  isCustomer
+  isCustomer,
+  isEcwidProductPage
 } from "visual/global/Config/types/configs/Cloud";
 import {
   CollectionTypeRule,
@@ -21,11 +22,11 @@ export const PAGES_GROUP_ID = 1;
 export const CATEGORIES_GROUP_ID = 2;
 export const TEMPLATES_GROUP_ID = 16;
 
-// take a look where we can move this constantes
+// take a look where we can move this constants
 
-export const POST_TYPE = "post";
 export const TEMPLATE_TYPE = "brizy_template";
 export const CUSTOMER_TYPE = "customer";
+export const ECWID_PRODUCT_TYPE = "ecwid-product";
 
 import {
   PB,
@@ -322,6 +323,7 @@ export const getCurrentRule = (
   const config = Config.getAll();
   let group = PAGES_GROUP_ID;
   let type = "page";
+  let id = page.id;
 
   if (isCollectionPage(page)) {
     type = page.collectionType.id;
@@ -329,6 +331,11 @@ export const getCurrentRule = (
 
   if (isCloud(config) && isCMS(config) && isCustomer(config)) {
     type = CUSTOMER_TYPE;
+  }
+
+  if (isEcwidProductPage(page)) {
+    type = ECWID_PRODUCT_TYPE;
+    id = page.productId;
   }
 
   if (isWp(config)) {
@@ -349,7 +356,7 @@ export const getCurrentRule = (
   return {
     group,
     type,
-    id: page.id
+    id
   };
 };
 

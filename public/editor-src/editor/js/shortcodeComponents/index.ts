@@ -1,12 +1,7 @@
 import Config from "visual/global/Config";
 import { baseCommon, baseStory, social, grid } from "./index.common";
 import Ecwid from "./Ecwid";
-import {
-  IS_SINGLE,
-  IS_PROTECTED,
-  IS_RESET_PASS,
-  IS_USER_PAGE
-} from "visual/utils/env";
+import { IS_PROTECTED, IS_RESET_PASS, IS_USER_PAGE } from "visual/utils/env";
 import { IS_STORY, IS_EXTERNAL_POPUP } from "visual/utils/models";
 import { Shortcode, Shortcodes } from "visual/types";
 
@@ -110,16 +105,6 @@ const config = ((): Shortcodes => {
     };
   }
 
-  if (IS_SINGLE) {
-    return {
-      dynamic: cmsSingle,
-      base: baseCloud,
-      grid,
-      social,
-      shop
-    };
-  }
-
   if (IS_EXTERNAL_POPUP) {
     return {
       base: baseExternalPopup,
@@ -129,8 +114,9 @@ const config = ((): Shortcodes => {
   }
 
   return {
-    base: baseWithPosts,
     grid,
+    dynamic: cmsSingle,
+    base: baseCloud,
     social,
     shop
   };

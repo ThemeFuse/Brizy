@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 5.9.3
+Tested up to: 6.0
 Requires PHP: 5.6.20
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,22 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.1 - 2022-06-02 =
+* Improved: Saved blocks lazy load
+* Improved: Performance on columns drag and drop
+* Improved: Performance on videos and images resize
+* Improved: Performance on column resize
+* Improved: Section padding resize 
+* Fixed: Column issue when is inside a Tab element 
+* Fixed: Featured image on columns hover did not inherit image from normal state 
+* Fixed: The right sidebar on Tab element was messed up 
+* Fixed: Endless spinning on the Video element 
+* Fixed: Block margin in px and % 
+* Fixed: Block border radius on color hover
+* Fixed: YouTube header script 
+* Fixed: Do not render PRO elements in preview 
+* Fixed: Added controls option for Vimeo videos
 
 = 2.4.0 - 2022-05-18 =
 * New: Counter width changing the location in color section of toolbar

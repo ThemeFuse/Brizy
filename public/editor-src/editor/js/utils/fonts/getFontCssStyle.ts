@@ -1,3 +1,7 @@
+import Config from "visual/global/Config";
+import { makeStyleCSSVar } from "visual/utils/fonts";
+import { ResponsiveMode } from "visual/utils/responsiveMode";
+
 export const getFontCssStyle = ({
   fontStyle,
   key,
@@ -5,27 +9,14 @@ export const getFontCssStyle = ({
 }: {
   fontStyle: string;
   key: string;
-  device: string;
+  device: ResponsiveMode;
 }): string | undefined => {
   if (fontStyle) {
-    const _device = device !== "desktop" ? device : "";
-    // Keys is lowercase because have problems in backend export HTML
-    return `var(--brz-${fontStyle}${_device}${key})`.toLowerCase();
-  }
-};
-
-export const getFontCssStyleOldType = ({
-  fontStyle,
-  key,
-  device
-}: {
-  fontStyle: string;
-  key: string;
-  device: string;
-}): string | undefined => {
-  if (fontStyle) {
-    const _device = device !== "desktop" ? device : "";
-    // Keys is lowercase because have problems in backend export HTML
-    return `var(--brz-${fontStyle}${_device}${key})`.toLowerCase();
+    return `var(${makeStyleCSSVar({
+      id: fontStyle,
+      device,
+      key,
+      config: Config.getAll()
+    })})`;
   }
 };

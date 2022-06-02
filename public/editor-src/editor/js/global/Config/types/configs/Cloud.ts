@@ -1,16 +1,23 @@
 import Config from "visual/global/Config";
 import { Config as Config_ } from "visual/global/Config/types";
-import { Page, PageCollection, PageCustomer, ShopifyPage } from "visual/types";
+import {
+  EcwidProductPage,
+  Page,
+  PageCollection,
+  PageCustomer,
+  ShopifyPage
+} from "visual/types";
 import { TemplateType } from "../TemplateType";
 import { Subscription } from "visual/global/Config/types/shopify/Subscription";
 import { ShopifyTemplate } from "../shopify/ShopifyTemplate";
 import { Language } from "visual/utils/multilanguages";
-import { Base } from "./Base";
+import { Base, CollectionPage } from "./Base";
 
 //#region CMS
 export interface CMS extends Base<"cms"> {
   templateType?: TemplateType;
   availableTranslations: Language[];
+  x_auth_user_token?: string;
 }
 
 export const isCMS = (c: Cloud): c is CMS => c.platform === "cms";
@@ -18,6 +25,7 @@ export const isCMS = (c: Cloud): c is CMS => c.platform === "cms";
 
 //#region Shopify
 export interface Shopify extends Base<"shopify"> {
+  page: CollectionPage;
   templates: { id: string }[];
   templateType: {
     id: string;
@@ -43,9 +51,14 @@ export const isCloud = (config: Config_): config is Cloud =>
   TARGET === "Cloud" || TARGET === "Cloud-localhost";
 
 //#region Page
+export const isEcwidProductPage = (p: Page): p is EcwidProductPage => {
+  return "__type" in p && p.__type === "ecwid-product";
+};
+
 export const isCollectionPage = (p: Page): p is PageCollection => {
   return "collectionType" in p;
 };
+
 export const isShopifyPage = (page: Page): page is ShopifyPage => {
   const config = Config.getAll();
   return isCloud(config) && isShopify(config) && !("rules" in page);

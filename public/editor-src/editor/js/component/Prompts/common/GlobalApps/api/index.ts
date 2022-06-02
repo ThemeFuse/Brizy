@@ -49,7 +49,7 @@ export const getAccounts = ({
       "Content-Type": "application/json; charset=utf-8"
     }
   })
-    .then(parseJSON)
+    .then(r => parseJSON<Array<{ type: string }> | null>(r))
     .then(normalizeAccounts);
 };
 

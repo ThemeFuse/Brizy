@@ -71,7 +71,12 @@ class PaddingResizerHandle extends Component {
   };
 
   handleDragStart = () => {
+    const { onStart } = this.props;
+
     this.isDragging = true;
+    if (typeof onStart === "function") {
+      onStart();
+    }
 
     if (!this.state.active) {
       this.setState({
@@ -89,6 +94,12 @@ class PaddingResizerHandle extends Component {
   };
 
   handleDragEnd = () => {
+    const { onEnd } = this.props;
+
+    if (typeof onEnd === "function") {
+      onEnd();
+    }
+
     if (!this.state.active) {
       return;
     }

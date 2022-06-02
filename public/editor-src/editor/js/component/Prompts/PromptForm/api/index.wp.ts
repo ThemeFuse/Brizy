@@ -15,6 +15,7 @@ import {
   UpdateIntegration,
   UpdateSmptIntegration
 } from "./types";
+import { FormData } from "./types";
 
 // Form
 export const getForm: GetForm = ({ formId }) => {
@@ -33,7 +34,7 @@ export const getForm: GetForm = ({ formId }) => {
       "Content-Type": "application/json; charset=utf-8"
     }
   })
-    .then(parseJSON)
+    .then(r => parseJSON<FormData>(r))
     .then(res => res);
 };
 
@@ -52,9 +53,7 @@ export const createForm: CreateForm = ({ formId }) => {
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify({ id: formId })
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r => parseJSON<FormData>(r));
 };
 
 export const updateForm: UpdateForm = ({
@@ -99,9 +98,12 @@ export const getIntegration: GetIntegration = ({ formId, id }) => {
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      subject: string;
+      emailTo: string;
+    } | null>(r)
+  );
 };
 
 export const createIntegration: CreateIntegration = ({ formId, id }) => {
@@ -120,9 +122,12 @@ export const createIntegration: CreateIntegration = ({ formId, id }) => {
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify({ id })
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      subject: string;
+      emailTo: string;
+    } | null>(r)
+  );
 };
 
 export const updateIntegration: UpdateIntegration = ({
@@ -153,9 +158,12 @@ export const updateIntegration: UpdateIntegration = ({
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify(data)
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      subject: string;
+      emailTo: string;
+    } | null>(r)
+  );
 };
 
 export const getIntegrationAccountApiKey: GetIntegrationAccountApiKey = ({
@@ -177,9 +185,7 @@ export const getIntegrationAccountApiKey: GetIntegrationAccountApiKey = ({
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r => parseJSON<Array<{ name: string }>>(r));
 };
 
 export const createIntegrationAccount: CreateIntegrationAccount = ({
@@ -203,9 +209,13 @@ export const createIntegrationAccount: CreateIntegrationAccount = ({
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify(data)
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      id: number;
+      type: string;
+      name: string;
+    } | null>(r)
+  );
 };
 
 export const createIntegrationList: CreateIntegrationList = ({
@@ -229,9 +239,14 @@ export const createIntegrationList: CreateIntegrationList = ({
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify(data)
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      formId: string;
+      id: string;
+      data: Record<string, string>;
+      usedAccount: string;
+    }>(r)
+  );
 };
 
 // Email smtp, gmailSmpt
@@ -260,9 +275,12 @@ export const updateSmtpIntegration: UpdateSmptIntegration = ({
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify(appData)
-  })
-    .then(parseJSON)
-    .then(res => res);
+  }).then(r =>
+    parseJSON<{
+      subject: string;
+      emailTo: string;
+    } | null>(r)
+  );
 };
 
 // Recaptcha

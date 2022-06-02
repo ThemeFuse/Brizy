@@ -77,7 +77,15 @@ const cloud = (config: CMS): Cloud => {
             type: "ecwid",
             storeId: v.storeId,
             subscriptionType: v.subscriptionType,
-            daysLeft: v.daysLeft
+            daysLeft: v.daysLeft,
+            authorize: token
+              ? { __type: "withToken", uri: v.apiUrl, token: token }
+              : { __type: "withOutToken", uri: v.apiUrl },
+            adminPanelUrl: `${v.userSessionUrl}${
+              config.x_auth_user_token
+                ? `?X-AUTH-USER-TOKEN=${config.x_auth_user_token}`
+                : ""
+            }`
           })
         ]
       )(config.modules?.shop),

@@ -125,6 +125,8 @@ export default class PaddingResizer extends Component {
       mobilePaddingBottom
     } = this.props.value;
 
+    const { onStart, onEnd } = this.props;
+
     if (paddingType === "grouped") {
       paddingTop = paddingBottom = padding;
     }
@@ -138,6 +140,8 @@ export default class PaddingResizer extends Component {
       <React.Fragment>
         <Handle
           position="top"
+          onStart={onStart}
+          onEnd={onEnd}
           onDrag={this.handleTopDrag}
           onDragEnd={this.handleDragEnd}
           value={`${paddingTop}px`}
@@ -147,6 +151,8 @@ export default class PaddingResizer extends Component {
         {this.props.children}
         <Handle
           position="bottom"
+          onStart={onStart}
+          onEnd={onEnd}
           onDrag={this.handleBottomDrag}
           onDragEnd={this.handleDragEnd}
           value={`${paddingBottom}px`}

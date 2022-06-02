@@ -1,37 +1,38 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
 import classnames from "classnames";
+import React from "react";
+import { mergeDeep } from "timm";
+import Animation from "visual/component/Animation";
+import Background from "visual/component/Background";
+import ContainerBorder from "visual/component/ContainerBorder";
+import CustomCSS from "visual/component/CustomCSS";
+import PaddingResizer from "visual/component/PaddingResizer";
+import { ProBlocked } from "visual/component/ProBlocked";
+import { Roles } from "visual/component/Roles";
+import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
+import {
+  wInBoxedPage,
+  wInFullPage,
+  wInMobilePage,
+  wInTabletPage
+} from "visual/config/columns";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
+import { IS_PRO } from "visual/utils/env";
+import { hasMembership } from "visual/utils/membership";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
-import SectionFooterItems from "./Items";
-import Background from "visual/component/Background";
-import ContainerBorder from "visual/component/ContainerBorder";
-import PaddingResizer from "visual/component/PaddingResizer";
-import { Roles } from "visual/component/Roles";
-import { ProBlocked } from "visual/component/ProBlocked";
-import { IS_PRO } from "visual/utils/env";
-import {
-  wInBoxedPage,
-  wInTabletPage,
-  wInMobilePage,
-  wInFullPage
-} from "visual/config/columns";
-import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import { styleSection, styleContainer, styleAnimation } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import defaultValue from "./defaultValue.json";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import {
   styleElementSectionContainerType,
   styleSizeContainerSize
 } from "visual/utils/style2";
-import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import Animation from "visual/component/Animation";
-import { hasMembership } from "visual/utils/membership";
+import defaultValue from "./defaultValue.json";
+import SectionFooterItems from "./Items";
+import * as sidebarConfig from "./sidebar";
+import { styleAnimation, styleContainer, styleSection } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class SectionFooter extends EditorComponent {
   static get componentId() {
@@ -50,12 +51,25 @@ class SectionFooter extends EditorComponent {
 
   collapsibleToolbarRef = React.createRef();
 
+  state = {
+    isDragging: false,
+    paddingPatch: null
+  };
+
+  getDBValue() {
+    if (this.state.paddingPatch) {
+      return mergeDeep(this.props.dbValue, this.state.paddingPatch);
+    } else {
+      return this.props.dbValue;
+    }
+  }
+
   componentDidMount() {
     this.mounted = true;
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.optionalSCU(nextProps);
+    return this.optionalSCU(nextProps) || this.state.paddingPatch;
   }
 
   componentWillUnmount() {
@@ -78,7 +92,24 @@ class SectionFooter extends EditorComponent {
     this.collapsibleToolbarRef.current.open();
   };
 
-  handlePaddingResizerChange = patch => this.patchValue(patch);
+  onPaddingResizerStart = () => {
+    this.setState({ isDragging: true });
+  };
+
+  handlePaddingResizerChange = (patch) => {
+    if (this.state.isDragging) {
+      this.setState({ paddingPatch: patch });
+    } else {
+      this.patchValue(patch);
+    }
+  };
+
+  onPaddingResizerEnd = () => {
+    const paddingPatch = this.state.paddingPatch;
+    this.setState({ isDragging: false, paddingPatch: null }, () =>
+      this.handlePaddingResizerChange(paddingPatch)
+    );
+  };
 
   handleRemove = () => {
     this.selfDestruct();
@@ -165,7 +196,12 @@ class SectionFooter extends EditorComponent {
 
     return (
       <Background value={v} meta={meta}>
-        <PaddingResizer value={v} onChange={this.handlePaddingResizerChange}>
+        <PaddingResizer
+          value={v}
+          onStart={this.onPaddingResizerStart}
+          onChange={this.handlePaddingResizerChange}
+          onEnd={this.onPaddingResizerEnd}
+        >
           <SectionFooterItems {...itemsProps} />
         </PaddingResizer>
       </Background>
@@ -173,12 +209,8 @@ class SectionFooter extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const {
-      className,
-      customClassName,
-      cssClassPopulation,
-      customAttributes
-    } = v;
+    const { className, customClassName, cssClassPopulation, customAttributes } =
+      v;
 
     return IS_PRO ? (
       <ContainerBorder
@@ -248,32 +280,25 @@ class SectionFooter extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const {
-      className,
-      customClassName,
-      cssIDPopulation,
-      cssClassPopulation,
-      customAttributes,
-      tagName
-    } = v;
     const { sectionPopup, sectionPopup2 } = this.props.meta;
-
-    const content = IS_PRO ? (
+    const content = (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <Animation
           iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
-          component={tagName}
+          component={v.tagName}
           componentProps={{
-            ...parseCustomAttributes(customAttributes),
+            ...parseCustomAttributes(v.customAttributes),
             "data-uid": this.getId(),
             id:
-              cssIDPopulation === ""
+              v.cssIDPopulation === ""
                 ? v.anchorName || this.getId()
-                : cssIDPopulation,
+                : v.cssIDPopulation,
             className: classnames(
               "brz-footer",
-              className,
-              cssClassPopulation === "" ? customClassName : cssClassPopulation,
+              v.className,
+              v.cssClassPopulation === ""
+                ? v.customClassName
+                : v.cssClassPopulation,
               css(
                 `${this.getComponentId()}-section`,
                 `${this.getId()}-section`,
@@ -286,10 +311,6 @@ class SectionFooter extends EditorComponent {
           {this.renderItems(v, vs, vd)}
         </Animation>
       </CustomCSS>
-    ) : (
-      <section className="brz-footer">
-        <ProBlocked text={"Footer"} />
-      </section>
     );
 
     return this.renderMemberShipWrapper(content, v);

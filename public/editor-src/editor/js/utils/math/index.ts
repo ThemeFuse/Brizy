@@ -34,7 +34,7 @@ export function roundTo(num: number, places: number): number {
  * @param {number} n
  * @returns {boolean}
  */
-export const isNumber = (n: unknown): boolean => typeof n === "number";
+export const isNumber = (n: unknown): n is number => typeof n === "number";
 
 export const isNumeric = (n: unknown): boolean => {
   switch (typeof n) {

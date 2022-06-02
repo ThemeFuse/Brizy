@@ -9,18 +9,52 @@ import { Project } from "visual/global/Config/types/Project";
 import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
 import { WhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
 import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
+import { EcwidProductId } from "visual/global/Ecwid";
+import { CollectionItemId, CustomerId } from "visual/types";
 
 export type ShopModules = undefined | Ecwid;
 
+// region Page
+interface BasePage<Id extends string> {
+  id: Id;
+  isProtected: boolean;
+  isResetPassPage: boolean;
+}
+
+// region CollectionPage
+export interface CollectionPage extends BasePage<CollectionItemId> {
+  provider: "collections";
+}
+
+export const isCollectionPage = (p: Page): p is CollectionPage =>
+  p.provider === "collections";
+// endregion
+
+// region CustomerPage
+export interface CustomerPage extends BasePage<CustomerId> {
+  provider: "customers";
+}
+
+export const isCustomerPage = (p: Page): p is CustomerPage =>
+  p.provider === "customers";
+// endregion
+
+// region EcwidProduct
+export interface EcwidProduct extends BasePage<CollectionItemId> {
+  provider: "ecwid-product";
+  productId: EcwidProductId;
+}
+
+export const isEcwidProduct = (p: Page): p is EcwidProduct =>
+  p.provider === "ecwid-product";
+// endregion
+
+export type Page = CollectionPage | CustomerPage | EcwidProduct;
+// endregion
+
 export interface Base<Platform> extends ConfigCommon, WithId<number> {
   availableRoles: Role[];
-  page: {
-    id: string;
-    isProtected: boolean;
-    provider: "customers" | "collections";
-    isCustomersPage: boolean;
-    isResetPassPage: boolean;
-  };
+  page: Page;
   container: {
     id: number;
   };

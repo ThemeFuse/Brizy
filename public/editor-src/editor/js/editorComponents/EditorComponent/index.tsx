@@ -1,53 +1,53 @@
+import classNames from "classnames";
 import React, { Component, ReactNode } from "react";
 import _ from "underscore";
-import classNames from "classnames";
-import { mergeOptions, optionMap } from "visual/component/Options/utils";
-import { uuid } from "visual/utils/uuid";
-import { getStore } from "visual/redux/store";
-import { rulesSelector, deviceModeSelector } from "visual/redux/selectors";
-import { applyFilter } from "visual/utils/filters";
-import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
-import {
-  defaultValueKey,
-  defaultValueValue
-} from "visual/utils/onChange/device";
-import * as State from "visual/utils/stateMode";
-import * as Responsive from "visual/utils/responsiveMode";
-import {
-  createOptionId,
-  inDevelopment,
-  makeToolbarPropsFromConfigDefaults,
-  flattenDefaultValue
-} from "./utils";
+import { ElementModel } from "visual/component/Elements/Types";
 import {
   fromElementModel,
   toElementModel
 } from "visual/component/Options/types";
-import { wrapOption } from "visual/utils/options/utils";
-import { ElementModel } from "visual/component/Elements/Types";
-import * as Str from "visual/utils/reader/string";
-import { Literal } from "visual/utils/types/Literal";
+import { mergeOptions, optionMap } from "visual/component/Options/utils";
 import {
   OptionDefinition,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
-import { MValue } from "visual/utils/value";
-import { WithClassName } from "visual/utils/options/attributes";
 import { Props as WrapperProps } from "visual/editorComponents/tools/Wrapper";
-import { ReduxState } from "visual/redux/types";
-import { attachRef } from "visual/utils/react";
 import * as GlobalState from "visual/global/StateMode";
+import { deviceModeSelector, rulesSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { ReduxState } from "visual/redux/types";
+import { applyFilter } from "visual/utils/filters";
+import {
+  defaultValueKey,
+  defaultValueValue
+} from "visual/utils/onChange/device";
+import { WithClassName } from "visual/utils/options/attributes";
+import { wrapOption } from "visual/utils/options/utils";
+import { attachRef } from "visual/utils/react";
+import * as Str from "visual/utils/reader/string";
+import * as Responsive from "visual/utils/responsiveMode";
+import * as State from "visual/utils/stateMode";
+import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
+import { Literal } from "visual/utils/types/Literal";
+import { uuid } from "visual/utils/uuid";
+import { MValue } from "visual/utils/value";
+import {
+  DCObjResult,
+  getDCObjEditor,
+  getDCObjPreview
+} from "./DynamicContent/getDCObj";
+import { dcKeyToKey, isDCKey, keyDCInfo } from "./DynamicContent/utils";
 import {
   EditorComponentContext,
   EditorComponentContextValue
 } from "./EditorComponentContext";
 import { ECDC, ECKeyDCInfo } from "./types";
-import { isDCKey, dcKeyToKey, keyDCInfo } from "./DynamicContent/utils";
 import {
-  getDCObjEditor,
-  getDCObjPreview,
-  DCObjResult
-} from "./DynamicContent/getDCObj";
+  createOptionId,
+  flattenDefaultValue,
+  inDevelopment,
+  makeToolbarPropsFromConfigDefaults
+} from "./utils";
 
 const capitalize = ([first, ...rest]: string, lowerRest = false): string =>
   first.toUpperCase() +
@@ -414,37 +414,72 @@ export class EditorComponent<
     });
   }
 
-  validateValue(value: Model<M>): void {
+  validatePatch(
+    patch: Partial<Model<M>>,
+    item: ToolbarItemType,
+    state: State.State,
+    device: Responsive.ResponsiveMode
+  ): void {
     const defaultValue = this.getDefaultValue();
-    const missingKeys = Object.keys(value).filter(k => {
-      const isInDefaultValue = k in defaultValue;
-      const isCoreKey = k[0] === "_" || ["tabsState"].includes(k);
-      const isLegacyKey = ["tabsCurrentElement"].includes(k);
+    const missingKeys = Object.keys(patch).filter((k): boolean => {
+      // identified in defaultValue
+      if (k in defaultValue) return false;
 
-      return !isInDefaultValue && !isCoreKey && !isLegacyKey;
+      // is core key
+      if (k[0] === "_" || k === "tabsState") return false;
+
+      // is legacy key
+      if (k === "tabsCurrentElement") return false;
+
+      // No need to notify about `temp` keys
+      if (
+        k.startsWith(
+          defaultValueKey({
+            key: createOptionId("temp", item.id),
+            state,
+            device
+          })
+        )
+      ) {
+        return false;
+      }
+
+      // No need to notify about State and Device keys
+      if (State.empty !== state || Responsive.empty !== device) {
+        if (k.startsWith(defaultValueKey({ key: item.id, state, device }))) {
+          return false;
+        }
+
+        if (
+          k.startsWith(
+            defaultValueKey({
+              key: createOptionId("temp", item.id),
+              state,
+              device
+            })
+          )
+        )
+          return false;
+      }
+
+      return true;
     });
 
     if (missingKeys.length) {
-      const component = (this.constructor as typeof EditorComponent)
-        .componentId;
       const missingKeysFormatted = JSON.stringify(missingKeys, null, 2);
       const valueFormatted = JSON.stringify(
-        value,
+        patch,
         (_, v) => (Array.isArray(v) ? "[...]" : v),
         2
       );
 
       console.error(
-        `${component} element\n\nKeys not in defaultValue:\n${missingKeysFormatted}\nTried to update with:\n${valueFormatted}`
+        `${this.getComponentId()} element\n\nKeys not in defaultValue:\n${missingKeysFormatted}\nTried to update with:\n${valueFormatted}`
       );
     }
   }
 
   handleValueChange(newValue: Model<M>, meta: OnChangeMeta<M>): void {
-    if (process.env.NODE_ENV === "development") {
-      this.validateValue(newValue);
-    }
-
     this.props.onChange(newValue, meta);
   }
 
@@ -797,6 +832,9 @@ export class EditorComponent<
           : defaultOnChange(id, value as Literal);
 
         if (patch) {
+          if (process.env.NODE_ENV === "development") {
+            this.validatePatch(patch, option, state, device);
+          }
           this.patchValue(patch);
         }
       };

@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Public_EditorBuild_236Wp_Texts {
+class Brizy_Public_EditorBuild_237Wp_Texts {
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			" Display Conditions" => __(" Display Conditions", "brizy"),
@@ -827,6 +827,7 @@ class Brizy_Public_EditorBuild_236Wp_Texts {
 			"Spacing" => __("Spacing", "brizy"),
 			"Span" => __("Span", "brizy"),
 			"Spanish" => __("Spanish", "brizy"),
+			"Specific Product" => __("Specific Product", "brizy"),
 			"Specific User" => __("Specific User", "brizy"),
 			"Specify a start time (in seconds)" => __("Specify a start time (in seconds)", "brizy"),
 			"Specify an end time (in seconds)" => __("Specify an end time (in seconds)", "brizy"),

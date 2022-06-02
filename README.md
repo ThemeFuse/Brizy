@@ -1,9 +1,9 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 5.9.3<br>
+Tested up to: 6.0<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.4.0<br>
+Stable tag: 2.4.1<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,22 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.1 - 2022-06-02
+* Improved: Saved blocks lazy load
+* Improved: Performance on columns drag and drop
+* Improved: Performance on videos and images resize
+* Improved: Performance on column resize
+* Improved: Section padding resize 
+* Fixed: Column issue when is inside a Tab element 
+* Fixed: Featured image on columns hover did not inherit image from normal state 
+* Fixed: The right sidebar on Tab element was messed up 
+* Fixed: Endless spinning on the Video element 
+* Fixed: Block margin in px and % 
+* Fixed: Block border radius on color hover
+* Fixed: YouTube header script 
+* Fixed: Do not render PRO elements in preview 
+* Fixed: Added controls option for Vimeo videos
 
 ### 2.4.0 - 2022-05-18
 * New: Counter width changing the location in color section of toolbar

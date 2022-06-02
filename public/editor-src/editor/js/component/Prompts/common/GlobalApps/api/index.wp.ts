@@ -19,8 +19,8 @@ export const getAccounts: GetAccount = data => {
       "Content-Type": "application/json; charset=utf-8"
     }
   })
-    .then(parseJSON)
-    .then(res => res);
+    .then(r => parseJSON<Array<{ group: string; services: string }>>(r))
+    .then(r => r.data);
 };
 
 export const addAccount: AddAccount = body => {
