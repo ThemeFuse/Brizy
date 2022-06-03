@@ -11,8 +11,11 @@ class Brizy_Compatibilities_WpCopyrightProtection {
 	}
 
 	public function disable_js_optimize() {
-		if ( isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) || isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
-			remove_action('wp_head', 'wp_copyright_protection');
+
+		if ( ! Brizy_Public_Main::is_editing() ) {
+			return;
 		}
+
+		remove_action('wp_head', 'wp_copyright_protection');
 	}
 }
