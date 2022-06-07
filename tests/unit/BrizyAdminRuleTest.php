@@ -91,8 +91,8 @@ class BrizyAdminRuleTest extends \Codeception\TestCase\WPTestCase  {
 				true
 			],
 			[
-				new \Brizy_Admin_Rule( 2, $incl, $btempl, 'brizy_template', [] ),
-				[ 'applyFor' => $btempl, 'entityType' => 'brizy_template', 'entityValues' => [] ],
+				new \Brizy_Admin_Rule( 2, $incl, $btempl, 'editor-template', [] ),
+				[ 'applyFor' => $btempl, 'entityType' => 'editor-template', 'entityValues' => [] ],
 				true
 			],
 			[
