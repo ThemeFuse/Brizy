@@ -54,13 +54,18 @@ class Brizy_Content_DynamicContentProcessor implements Brizy_Editor_Content_Proc
 
     private function getBrizyPostContent(Brizy_Editor_Project $project, Brizy_Editor_Post $post)
     {
+        if($post->get_needs_compile())
+        {
+            $post->compile_page();
+        }
+
         if ( ! $post->get_compiled_html()) {
             $compiled_html_body = $post->get_compiled_html_body();
             $content            = Brizy_SiteUrlReplacer::restoreSiteUrl($compiled_html_body);
             $post->set_needs_compile(true)->saveStorage();
         } else {
             $compiled_page = $post->get_compiled_page();
-            $content       = $compiled_page->get_body();
+            $content       = $compiled_page->getBody();
         }
 
         return $content;
