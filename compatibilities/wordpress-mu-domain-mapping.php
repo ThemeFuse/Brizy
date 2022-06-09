@@ -10,8 +10,10 @@ class Brizy_Compatibilities_WordpressMuDomainMapping {
 
 	public function remove_redirect_to_mapped_domain() {
 
-		if (  isset( $_GET[Brizy_Editor::prefix('-edit')] ) || isset( $_GET[Brizy_Editor::prefix('-edit-iframe')] ) ) {
-			remove_action( 'template_redirect', 'redirect_to_mapped_domain' );
+		if ( ! Brizy_Public_Main::is_editing() ) {
+			return;
 		}
+
+		remove_action( 'template_redirect', 'redirect_to_mapped_domain' );
 	}
 }

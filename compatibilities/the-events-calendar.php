@@ -27,7 +27,7 @@ class Brizy_Compatibilities_TheEventsCalendar {
 			return false;
 		}
 
-		if ( isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) || isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
+		if ( Brizy_Public_Main::is_editing() ) {
 			return true;
 		}
 
