@@ -12,7 +12,11 @@ class Brizy_Compatibilities_BrizyProCompatibility {
 
         if ( version_compare( BRIZY_PRO_VERSION, '2.4.2', '<' ) ) {
 	        $proMain = new BrizyPro_Main();
-	        add_action( 'wp_loaded', [ $proMain, 'wordpressLoaded' ], 11 );
+
+            if ( method_exists( $proMain, 'wordpressLoaded' ) ) {
+	            add_action( 'wp_loaded', [ $proMain, 'wordpressLoaded' ], 11 );
+            }
+
 	        add_action( 'site_transient_update_plugins', [ $this, 'getSiteTransientUpdatePlugins' ] );
         }
 	}
