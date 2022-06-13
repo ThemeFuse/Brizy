@@ -46,7 +46,10 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi {
 				 */
 				$placeholder = $context->getPlaceholderById($placeholderId);
 
-				if(!$placeholder) continue;
+				if(!$placeholder) {
+                    $placeholderContents[$placeholderId] = '';
+                    continue;
+                }
 
 				/**
 				 * @var Brizy_Content_Placeholders_Abstract $placeholderInstance;
