@@ -5,12 +5,12 @@
 class Brizy_Compatibilities_Phastpress {
 
 	public function __construct() {
-		add_action( 'plugins_loaded', [ $this, 'disable_phastpress' ], 9 );
+		add_action( 'plugins_loaded',  array( $this, 'disable_phastpress' ), 9 );
 	}
 
 	public function disable_phastpress() {
 
-		if ( ! Brizy_Public_Main::is_editing() ) {
+		if (  ! isset( $_GET[Brizy_Editor::prefix('-edit')] ) && ! isset( $_GET[Brizy_Editor::prefix('-edit-iframe')] ) ) {
 			return;
 		}
 

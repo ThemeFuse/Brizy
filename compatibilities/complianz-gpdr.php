@@ -6,7 +6,7 @@
 class Brizy_Compatibilities_ComplianzGpdr {
 
 	public function __construct() {
-		if ( Brizy_Public_Main::is_editing() ) {
+		if ( isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) || isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
 			add_action( 'template_redirect', [ $this, 'template_redirect' ], 9 );
 			add_action( 'shutdown',          [ $this, 'shutdown' ], 998 );
 		}

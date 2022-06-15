@@ -10,11 +10,8 @@ class Brizy_Compatibilities_LiteSpeed {
 	}
 
 	public function litespeed_init() {
-
-		if ( ! Brizy_Public_Main::is_editing() ) {
-			return;
-		}
-
-		do_action( 'litespeed_disable_all', 'brizy edit mode' );
+        if ( isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) || isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
+            do_action( 'litespeed_disable_all', 'brizy edit mode' );
+        }
     }
 }

@@ -11,7 +11,7 @@ class Brizy_Compatibilities_FastVelocityMinify {
 
 	public function remove_actions() {
 
-		if ( ! Brizy_Public_Main::is_editing() ) {
+		if ( ! isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) && ! isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
 			return;
 		}
 

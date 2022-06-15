@@ -24,7 +24,7 @@ class Brizy_Compatibilities_Woocommerce {
 
 	public function wp_enqueue_scripts() {
 
-		if ( ! Brizy_Public_Main::is_editing() ) {
+		if ( ! isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) && ! isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
 			return;
 		}
 

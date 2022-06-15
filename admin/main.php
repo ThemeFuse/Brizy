@@ -395,7 +395,10 @@ class Brizy_Admin_Main {
 				'id'             => get_the_ID(),
 				'post'           => $p,
 				'is_using_brizy' => $is_using_brizy,
-				'url'            => Brizy_Editor_Entity::getEditUrl( get_the_ID() )
+				'url'            => add_query_arg(
+					array( Brizy_Editor::prefix( '-edit' ) => '' ),
+					get_permalink( get_the_ID() )
+				)
 			) );
 		}
 	}

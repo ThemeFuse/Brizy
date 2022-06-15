@@ -28,7 +28,7 @@ class Brizy_Admin_Popups_Main
             add_action('admin_menu', [$this, 'removePageAttributes']);
         }
 
-        if ( ! Brizy_Public_Main::is_editing() ) {
+        if ( ! isset($_GET[Brizy_Editor::prefix('-edit')]) && ! isset($_GET[Brizy_Editor::prefix('-edit-iframe')])) {
             add_action('wp_enqueue_scripts', [$this, 'enqueuePopupScripts']);
             add_action('wp_head', [$this, 'wpHeadAppentPopupHtml']);
             add_action('wp_footer', [$this, 'wpFooterAppendPopupHtml']);

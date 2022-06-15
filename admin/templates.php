@@ -55,7 +55,7 @@ class Brizy_Admin_Templates
         } elseif (!defined('DOING_AJAX') &&
             !is_admin() &&
             !isset($_REQUEST[Brizy_Editor::prefix('_media')]) &&
-            !Brizy_Public_Main::is_editing() &&
+            !isset($_REQUEST[Brizy_Editor::prefix('-edit-iframe')]) &&
             !isset($_REQUEST[Brizy_Editor::prefix('_file')]) &&
             !isset($_REQUEST[Brizy_Editor::prefix('_attachment')]) &&
             !isset($_REQUEST[Brizy_Editor::prefix('_block_screenshot')]) &&
