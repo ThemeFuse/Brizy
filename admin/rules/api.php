@@ -712,7 +712,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 			$list[] = array(
 				'title'      => 'Brizy Templates',
-				'value'      => 'editor-template',
+				'value'      => 'brizy_template',
 				'groupValue' => Brizy_Admin_Rule::BRIZY_TEMPLATE
 			);
 		}

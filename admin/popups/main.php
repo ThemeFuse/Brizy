@@ -3,7 +3,7 @@
 class Brizy_Admin_Popups_Main
 {
 
-    const CP_POPUP = 'editor-popup';
+    const CP_POPUP = 'brizy-popup';
 
     /**
      * @return Brizy_Admin_Popups_Main
@@ -136,7 +136,7 @@ class Brizy_Admin_Popups_Main
                 'show_ui'             => defined('BRIZY_PRO_VERSION'),
                 'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
                 'query_var'           => false,
-                'rewrite'             => array('slug' => 'editor-popup'),
+                'rewrite'             => array('slug' => 'brizy-popup'),
                 'capability_type'     => 'page',
                 'hierarchical'        => false,
                 'show_in_rest'        => false,

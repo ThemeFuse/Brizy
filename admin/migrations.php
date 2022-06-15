@@ -66,7 +66,6 @@ class Brizy_Admin_Migrations {
 			new Brizy_Admin_Migrations_ScreenshotMigration,
 			new Brizy_Admin_Migrations_UseEditorMigration,
 			new Brizy_Admin_Migrations_AttachmentUidMigration,
-			new Brizy_Admin_Migrations_ChangePostTypesNames,
 		);
 
 		usort( $migrations, function ( $a, $b ) {
