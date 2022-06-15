@@ -5,7 +5,6 @@ class Brizy_Compatibilities_Woocommerce {
 	public function __construct() {
 		add_action( 'woocommerce_checkout_terms_and_conditions', [ $this, 'woocommerce_checkout_terms_and_conditions' ], 29 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ], 11 );
-		add_filter( 'brizy_html_entity_decode', '__return_false' );
 		add_filter( 'brizy_template_content_compiled', [ $this, 'insertWooNotice' ] );
 	}
 

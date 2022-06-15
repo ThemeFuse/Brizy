@@ -3,26 +3,30 @@
 class Brizy_Compatibilities_BrizyProCompatibility {
 
 	public function __construct() {
-		if(version_compare(BRIZY_MINIMUM_PRO_VERSION, BRIZY_PRO_VERSION)>0) {
-			$proMain = new BrizyPro_Main();
-			add_action( 'wp_loaded', [ $proMain, 'wordpressLoaded' ], 11 );
+		if ( version_compare( BRIZY_MINIMUM_PRO_VERSION, BRIZY_PRO_VERSION ) > 0 ) {
 			add_action( 'admin_notices', [ $this, 'brizypro_upgrade_required' ] );
-            add_action( 'brizy_allow_plugin_included', '__return_false' );
-            // Avoid fatal errors for pro versions older than 0.0.37
+			add_action( 'brizy_allow_plugin_included', '__return_false' );
+			// Avoid fatal errors for pro versions older than 0.0.37
 			remove_action( 'plugins_loaded', 'brizy_pro_load' );
 		}
+
+        if ( version_compare( BRIZY_PRO_VERSION, '2.4.2', '<' ) ) {
+	        $proMain = new BrizyPro_Main();
+
+            if ( method_exists( $proMain, 'wordpressLoaded' ) ) {
+	            add_action( 'wp_loaded', [ $proMain, 'wordpressLoaded' ], 11 );
+            }
+
+	        add_action( 'site_transient_update_plugins', [ $this, 'getSiteTransientUpdatePlugins' ] );
+        }
 	}
 
-	/**
-	 * @param $upgrader_object
-	 * @param $options
-	 */
 	public function brizypro_upgrade_required() {
 		?>
 			<div class="notice notice-error is-dismissible">
 				<p>
-					<b><?php echo strtoupper( __bt( 'brizy', 'Brizy' ) ) ?> PRO IS NOT RUNNING. </b><br>
-					Please update <?php echo __bt( 'brizy', 'Brizy' ) ?> PRO to the latest version.
+					<b><?php printf( __( '%s PRO IS NOT RUNNING.', 'brizy' ), strtoupper( __bt( 'brizy', 'Brizy' ) ) ); ?></b><br>
+					<?php printf( __( 'Please update %s PRO to the latest version.', 'brizy' ), __bt( 'brizy', 'Brizy' ) ); ?>
 				</p>
 			</div>
 		<?php
@@ -48,4 +52,19 @@ class Brizy_Compatibilities_BrizyProCompatibility {
 
         return false;
 	}
+
+    public function getSiteTransientUpdatePlugins( $updates ) {
+        if ( isset( $updates->response['brizy-pro/brizy-pro.php'] ) ) {
+	        $updates->response['brizy-pro/brizy-pro.php']->plugin = 'brizy-pro/brizy-pro.php';
+	        $updates->checked['brizy-pro/brizy-pro.php']  = $updates->response['brizy-pro/brizy-pro.php']->new_version;
+        } else {
+	        global $wpdb;
+
+	        $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE ('brizy_update__transient_%')" );
+
+            set_site_transient( 'update_plugins', $updates );
+        }
+
+        return $updates;
+    }
 }

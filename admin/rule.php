@@ -11,7 +11,6 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	const ARCHIVE = 4;
 	const TEMPLATE = 8; // author/search/home_page...
 	const BRIZY_TEMPLATE = 16; // brizy template
-	const ANY_CHILD_TAXONOMY = 128;
 	const WOO_SHOP_PAGE = 256;
 	const DATE_ARCHIVE = self::ARCHIVE | 512;
 	const YEAR_ARCHIVE = self::DATE_ARCHIVE | 1024;

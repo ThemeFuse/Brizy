@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.0<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.4.1<br>
+Stable tag: 2.4.2<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,13 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.2 - 2022-06-15
+* Fixed: Template Conditions
+* Fixed: Polylang fix home url in breadcrumbs
+* Fixed: Remove logs for cropping images 
+* Fixed: Escape the script contents for non adminstrators users. This vulnerability was discovered by Vishnupriya Ilango of Fortinets FortiGuard Labs
+* Fixed: Fix autoupdate of the pro version, added an admin notice in the plugins list page when a major update is available
 
 ### 2.4.1 - 2022-06-02
 * Improved: Saved blocks lazy load
