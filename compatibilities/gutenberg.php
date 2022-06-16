@@ -10,7 +10,6 @@ class Brizy_Compatibilities_Gutenberg {
 		add_action( 'admin_head', [ $this, 'admin_head' ] );
 	}
 
-
 	public function filter_the_content( $content ) {
 		remove_filter( 'the_content', 'gutenberg_wpautop', 6 );
 
@@ -75,11 +74,6 @@ class Brizy_Compatibilities_Gutenberg {
 			return;
 		}
 
-		$continueUrl = add_query_arg(
-			array( Brizy_Editor::prefix('-edit') => '' ),
-			get_permalink( get_the_ID() )
-		);
-
 		try {
 			if ( Brizy_Editor_Entity::isBrizyEnabled( get_the_ID() ) ) {
 				$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_disable&post=' . get_the_ID() ) );
@@ -93,7 +87,7 @@ class Brizy_Compatibilities_Gutenberg {
                 </script>
                 <script id="brizy-gutenberg-btn-middle" type="text/html">
                     <div class="brizy-buttons brizy-buttons-gutenberg">
-                        <a href="<?php echo $continueUrl; ?>" class="">
+                        <a href="<?php echo Brizy_Editor_Entity::getEditUrl( get_the_ID() ); ?>" class="">
                             <div class="button button-primary button-large">
 	                            <?php printf( esc_html__( 'Edit with %s', 'brizy' ), __bt( 'brizy', 'Brizy' ) ); ?>
                             </div>
