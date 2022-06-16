@@ -3,7 +3,7 @@
 class Brizy_Admin_Templates
 {
 
-    const CP_TEMPLATE = 'brizy_template';
+    const CP_TEMPLATE = 'editor-template';
     const TEMPLATE_TYPE_KEY = 'brizy_template_type';
     const CP_TEMPLATES = 'brizy_templates';
     const RULE_LIST_VEIW = 'brizy_rule_list_view';
@@ -267,7 +267,7 @@ class Brizy_Admin_Templates
                 'show_ui' => true,
                 'show_in_menu' => Brizy_Admin_Settings::menu_slug(),
                 'query_var' => false,
-                'rewrite' => array('slug' => 'brizy-template'),
+                'rewrite' => array('slug' => 'editor-template'),
                 'capability_type' => 'page',
                 'hierarchical' => false,
                 'show_in_rest' => false,

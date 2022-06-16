@@ -15,7 +15,7 @@ class PopupDefaultRulesCest {
 	 */
 	public function settingsPopupLayoutTest( AcceptanceTester $I ) {
 
-		$I->amOnPage( '/wp-admin/edit.php?post_type=brizy-popup' );
+		$I->amOnPage( '/wp-admin/edit.php?post_type=editor-popup' );
 		//$I->waitForPageLoad( $I );
 
 		// click on Add new
