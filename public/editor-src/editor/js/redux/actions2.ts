@@ -10,14 +10,28 @@ import {
   GlobalBlock,
   GoogleFont,
   UploadedFont,
-  Style
+  Style,
+  Font
 } from "visual/types";
-import { fontSelector } from "visual/redux/selectors";
+import { ArrayType } from "visual/utils/array/types";
+import { fontsSelector } from "visual/redux/selectors";
 import { ShopifyPage } from "visual/types";
 
 type UIState = ReduxState["ui"];
 
 type SyncAllowed = ReduxState["syncAllowed"];
+
+type RFonts = ReduxState["fonts"];
+
+type StrictFonts = Required<RFonts>;
+export type FontKeyTypes = keyof StrictFonts;
+
+type FontPayload<T extends FontKeyTypes> = {
+  type: T;
+  fonts: ArrayType<StrictFonts[T]["data"]>[];
+};
+
+export type FontsPayload = FontPayload<FontKeyTypes>[];
 
 /// actions
 
@@ -31,7 +45,7 @@ export type ActionHydrate = {
     };
     blocksThumbnailSizes: [];
     globalBlocks: ReduxState["globalBlocks"];
-    fonts: ReduxState["fonts"];
+    fonts: RFonts;
     page: ReduxState["page"];
     authorized: ReduxState["authorized"];
     syncAllowed: ReduxState["syncAllowed"];
@@ -80,23 +94,40 @@ export type ActionUpdateGlobalBlock = {
   };
 };
 
+export const UPDATE_DISABLED_ELEMENTS = "UPDATE_DISABLED_ELEMENTS";
+
+export type ActionDisabledElements = {
+  type: typeof UPDATE_DISABLED_ELEMENTS;
+  payload: string[];
+};
+
+export const UPDATE_CURRENT_KIT_ID = "UPDATE_CURRENT_KIT_ID";
+
+export type ActionUpdateKitId = {
+  type: typeof UPDATE_CURRENT_KIT_ID;
+  payload: string;
+};
+
+export const ADD_FONTS = "ADD_FONTS";
+
 export type ActionAddFonts = {
   type: "ADD_FONTS";
-  payload: {
-    config?: {
-      data: GoogleFont[];
-    };
-    blocks?: {
-      data: GoogleFont[];
-    };
-    google?: {
-      data: GoogleFont[];
-    };
-    upload?: {
-      data: UploadedFont[];
-    };
-  };
+  payload: RFonts;
 };
+
+export const DELETE_FONTS = "DELETE_FONTS";
+
+export type ActionDeleteFont = {
+  type: typeof DELETE_FONTS;
+  payload: RFonts;
+};
+
+export const UPDATE_DEFAULT_FONT = "UPDATE_DEFAULT_FONT";
+
+export interface ActionUpdateDefaultFont {
+  type: typeof UPDATE_DEFAULT_FONT;
+  payload: string;
+}
 
 export type ActionUpdateTriggers = {
   type: "UPDATE_TRIGGERS";
@@ -119,8 +150,10 @@ type ActionUpdateUITmp<K extends keyof UIState> = {
 };
 export type ActionUpdateUI = ActionUpdateUITmp<keyof UIState>;
 
+export const ADD_GLOBAL_BLOCK = "ADD_GLOBAL_BLOCK";
+
 export type ActionAddGlobalBlock = {
-  type: "ADD_GLOBAL_BLOCK";
+  type: typeof ADD_GLOBAL_BLOCK;
   payload: {
     block: Block;
     fonts: FontsPayload;
@@ -191,16 +224,21 @@ export type ReduxAction =
   | ActionHydrate
   | ActionUpdateGlobalBlock
   | ActionAddFonts
+  | ActionDeleteFont
+  | ActionUpdateDefaultFont
   | ActionUpdateUI
   | ActionUpdateAuthorized
   | ActionUpdateSyncAllowed
   | ActionUpdateTriggers
   | ActionUpdatePopupRules
   | ActionUpdatePageStatus
+  | ActionUpdateKitId
+  | ActionDisabledElements
   | ActionUpdatePageLayout
   | ActionFetchPageSuccess
   | ActionUpdateExtraFontStyles
   | ActionImportTemplate
+  | ActionImportKit
   | ActionImportStory
   | ActionAddBlock
   | ActionAddGlobalBlock
@@ -217,8 +255,10 @@ export type ReduxAction =
   | ActionStoreWasChanged
   | ActionUpdatePageTitle;
 
+export const IMPORT_TEMPLATE = "IMPORT_TEMPLATE";
+
 export type ActionImportTemplate = {
-  type: "IMPORT_TEMPLATE";
+  type: typeof IMPORT_TEMPLATE;
   payload: {
     blocks: Block[];
     fonts: FontsPayload;
@@ -231,7 +271,19 @@ export type ActionImportTemplate = {
   };
 };
 
+export const IMPORT_KIT = "IMPORT_KIT";
+
+export interface ActionImportKit {
+  type: typeof IMPORT_KIT;
+  payload: {
+    selectedKit: string;
+    styles: Style[];
+    fonts: FontsPayload;
+  };
+}
+
 export const IMPORT_STORY = "IMPORT_STORY";
+
 export type ActionImportStory = {
   type: typeof IMPORT_STORY;
   payload: {
@@ -260,11 +312,6 @@ export type ActionUpdateSyncAllowed = {
   type: "UPDATE_SYNC_ALLOWED";
   payload: SyncAllowed;
 };
-
-export type FontsPayload = {
-  type: "config" | "blocks" | "google" | "upload";
-  fonts: (GoogleFont | UploadedFont)[];
-}[];
 
 export const PUBLISH = "PUBLISH";
 
@@ -362,7 +409,7 @@ export function updateGlobalBlock({
   meta
 }: {
   id: string;
-  data: object;
+  data: GlobalBlock["data"];
   meta?: {
     is_autosave?: 1 | 0;
     sourceBlockId?: string;
@@ -375,12 +422,29 @@ export function updateGlobalBlock({
       data
     },
     meta: {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       is_autosave: 1,
       ...meta
     }
   };
 }
+
+// project
+
+export const updateCurrentKitId = (payload: string): ActionUpdateKitId => {
+  return {
+    type: "UPDATE_CURRENT_KIT_ID",
+    payload
+  };
+};
+
+export const updateDisabledElements = (
+  payload: string[]
+): ActionDisabledElements => {
+  return {
+    type: "UPDATE_DISABLED_ELEMENTS",
+    payload
+  };
+};
 
 type ThunkAddFonts = (
   a: FontsPayload
@@ -390,7 +454,7 @@ export const addFonts: ThunkAddFonts = addedFonts => (
   dispatch,
   getState
 ): ActionAddFonts => {
-  const usedFonts = fontSelector(getState());
+  const usedFonts = fontsSelector(getState());
   const newFonts = addedFonts.reduce((acc, curr) => {
     const { type, fonts } = curr;
 
@@ -424,6 +488,40 @@ export const addFonts: ThunkAddFonts = addedFonts => (
     type: "ADD_FONTS",
     payload: mergeDeep(usedFonts, newFonts)
   });
+};
+
+type ThunkDeleteFonts = (
+  a: FontPayload<FontKeyTypes>
+) => ThunkAction<void, ReduxState, unknown, ActionDeleteFont>;
+
+export const deleteFont: ThunkDeleteFonts = payload => (
+  dispatch,
+  getState
+): ActionDeleteFont => {
+  const { type, fonts: removedFonts } = payload;
+  const fonts = fontsSelector(getState());
+  const fontData: Font[] = (fonts[type] && fonts[type]?.data) || [];
+  const dataFonts = {
+    [type]: {
+      data: fontData.map(font =>
+        removedFonts.some(({ brizyId }) => brizyId === font.brizyId)
+          ? { ...font, deleted: true }
+          : font
+      )
+    }
+  };
+
+  return dispatch({
+    type: "DELETE_FONTS",
+    payload: mergeDeep(fonts, dataFonts)
+  });
+};
+
+export const updateDefaultFont = (font: string): ActionUpdateDefaultFont => {
+  return {
+    type: "UPDATE_DEFAULT_FONT",
+    payload: font
+  };
 };
 
 export const updateExtraFontStyles = (
@@ -472,7 +570,6 @@ export function updateBlocks({
       blocks
     },
     meta: {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       is_autosave: 1,
       ...meta
     }
@@ -627,6 +724,21 @@ export function importTemplate(
     payload: template
   };
 }
+
+// kit
+
+interface Kit {
+  selectedKit: string;
+  styles: Style[];
+  fonts: FontsPayload;
+}
+
+export const importKit = (payload: Kit): ActionImportKit => {
+  return {
+    type: "IMPORT_KIT",
+    payload
+  };
+};
 
 // UI
 

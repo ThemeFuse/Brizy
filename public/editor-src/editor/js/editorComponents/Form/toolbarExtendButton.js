@@ -1,12 +1,15 @@
 import _ from "underscore";
 import { t } from "visual/utils/i18n";
-import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+export function getItems({ v }) {
   const fields = _.pluck(v.items[0].value.items, "value");
 
   return [
-    toolbarDisabledAdvancedSettings({ device }),
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      disabled: true
+    },
     {
       id: "toolbarFormLink",
       type: "popover-dev",

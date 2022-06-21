@@ -1,7 +1,6 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueKey } from "visual/utils/onChange";
 
-export function getItems({ device }) {
+export function getItems() {
   return [
     {
       id: "toolbarWPCustomShortcode",
@@ -15,9 +14,12 @@ export function getItems({ device }) {
       options: [
         {
           id: "shortcode",
-          type: "textarea-dev",
+          type: "codeMirror-dev",
           devices: "desktop",
-          placeholder: t("Paste your WordPress shortcode here ...")
+          placeholder: t("Example [gallery id='123' size='medium']"),
+          config: {
+            language: "html"
+          }
         }
       ]
     },
@@ -38,14 +40,41 @@ export function getItems({ device }) {
           }
         },
         {
-          id: defaultValueKey({
-            key: "advancedSettings",
-            device,
-            state: "normal"
-          }),
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog"
+          id: "grid",
+          type: "grid",
+          separator: true,
+          columns: [
+            {
+              id: "grid-settings",
+              width: 50,
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            },
+            {
+              id: "grid-effects",
+              width: 50,
+              options: [
+                {
+                  id: "effects",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "effects",
+                    text: t("Effects"),
+                    icon: "nc-flash"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }

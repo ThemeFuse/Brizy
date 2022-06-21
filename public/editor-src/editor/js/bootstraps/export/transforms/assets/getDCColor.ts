@@ -1,10 +1,17 @@
-import * as cheerio from "cheerio";
 import { uuid } from "visual/utils/uuid";
 import { makeRichTextDCColorCSS } from "visual/utils/color";
 import { decodeFromString } from "visual/utils/string";
 import { Hex } from "visual/utils/color/Hex";
 import { Opacity } from "visual/utils/cssProps/opacity";
 import { Palette } from "visual/utils/color/Palette";
+
+interface DecodedColor {
+  [k: string]: {
+    hex: Hex | undefined;
+    opacity: Opacity | undefined;
+    colorPalette: Palette[] | undefined;
+  };
+}
 
 export const getDCColor = ($: cheerio.CheerioAPI): string[] => {
   const rules: string[] = [];
@@ -15,9 +22,7 @@ export const getDCColor = ($: cheerio.CheerioAPI): string[] => {
     .each(function(this: cheerio.Element) {
       const $this = $(this);
       const color = $this.attr("data-color") || "";
-      const decodedColor = decodeFromString<
-        Record<string, { hex: Hex; opacity: Opacity; colorPalette: Palette }>
-      >(color);
+      const decodedColor = decodeFromString<DecodedColor>(color);
       const className = `dc-color-${uuid(5)}`;
       $this.addClass(className);
       $this.removeAttr("data-color");

@@ -306,6 +306,18 @@
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
 
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "tempBorderRadiusSuffix": "px",
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
+
     "hoverBorderRadiusType": null,
     "hoverBorderRadius": null,
     "hoverBorderTopLeftRadius": null,
@@ -438,6 +450,19 @@
     "marginBottomSuffix": "px",
     "marginLeftSuffix": "px",
 
+    "tempMarginType": "ungrouped",
+    "tempMargin": 0,
+    "tempMarginTop": 0,
+    "tempMarginRight": 0,
+    "tempMarginBottom": 0,
+    "tempMarginLeft": 0,
+
+    "tempMarginSuffix": "px",
+    "tempMarginTopSuffix": "px",
+    "tempMarginRightSuffix": "px",
+    "tempMarginBottomSuffix": "px",
+    "tempMarginLeftSuffix": "px",
+
     "hoverTransition": 50,
     "hoverTransitionSuffix": null,
 
@@ -490,6 +515,18 @@
     "tempTabletBorderBottomLeftRadius": null,
     "tempTabletBorderBottomRightRadius": null,
 
+    "tabletBorderRadiusSuffix": null,
+    "tabletBorderTopLeftRadiusSuffix": null,
+    "tabletBorderTopRightRadiusSuffix": null,
+    "tabletBorderBottomLeftRadiusSuffix": null,
+    "tabletBorderBottomRightRadiusSuffix": null,
+
+    "tempTabletBorderRadiusSuffix": null,
+    "tempTabletBorderTopLeftRadiusSuffix": null,
+    "tempTabletBorderTopRightRadiusSuffix": null,
+    "tempTabletBorderBottomLeftRadiusSuffix": null,
+    "tempTabletBorderBottomRightRadiusSuffix": null,
+
     "tabletBorderColorHex": null,
     "tabletBorderColorOpacity": null,
     "tabletBorderColorPalette": null,
@@ -526,6 +563,18 @@
     "tempTabletItemBorderTopRightRadius": null,
     "tempTabletItemBorderBottomLeftRadius": null,
     "tempTabletItemBorderBottomRightRadius": null,
+
+    "tabletItemBorderRadiusSuffix": null,
+    "tabletItemBorderTopLeftRadiusSuffix": null,
+    "tabletItemBorderTopRightRadiusSuffix": null,
+    "tabletItemBorderBottomLeftRadiusSuffix": null,
+    "tabletItemBorderBottomRightRadiusSuffix": null,
+
+    "tempTabletItemBorderRadiusSuffix": null,
+    "tempTabletItemBorderTopLeftRadiusSuffix": null,
+    "tempTabletItemBorderTopRightRadiusSuffix": null,
+    "tempTabletItemBorderBottomLeftRadiusSuffix": null,
+    "tempTabletItemBorderBottomRightRadiusSuffix": null,
 
     "tabletItemBorderColorHex": null,
     "tabletItemBorderColorOpacity": null,
@@ -600,6 +649,19 @@
     "tabletMarginBottomSuffix": "px",
     "tabletMarginLeftSuffix": "px",
 
+    "tempTabletMarginType": "ungrouped",
+    "tempTabletMargin": 0,
+    "tempTabletMarginTop": 0,
+    "tempTabletMarginRight": 0,
+    "tempTabletMarginBottom": 0,
+    "tempTabletMarginLeft": 0,
+
+    "tempTabletMarginSuffix": "px",
+    "tempTabletMarginTopSuffix": "px",
+    "tempTabletMarginRightSuffix": "px",
+    "tempTabletMarginBottomSuffix": "px",
+    "tempTabletMarginLeftSuffix": "px",
+
     "mobileCoverImageWidth": null,
     "mobileCoverImageHeight": null,
 
@@ -649,6 +711,18 @@
     "tempMobileBorderBottomLeftRadius": null,
     "tempMobileBorderBottomRightRadius": null,
 
+    "mobileBorderRadiusSuffix": null,
+    "mobileBorderTopLeftRadiusSuffix": null,
+    "mobileBorderTopRightRadiusSuffix": null,
+    "mobileBorderBottomLeftRadiusSuffix": null,
+    "mobileBorderBottomRightRadiusSuffix": null,
+
+    "tempMobileBorderRadiusSuffix": null,
+    "tempMobileBorderTopLeftRadiusSuffix": null,
+    "tempMobileBorderTopRightRadiusSuffix": null,
+    "tempMobileBorderBottomLeftRadiusSuffix": null,
+    "tempMobileBorderBottomRightRadiusSuffix": null,
+
     "mobileBorderColorHex": null,
     "mobileBorderColorOpacity": null,
     "mobileBorderColorPalette": null,
@@ -685,6 +759,18 @@
     "tempMobileItemBorderTopRightRadius": null,
     "tempMobileItemBorderBottomLeftRadius": null,
     "tempMobileItemBorderBottomRightRadius": null,
+
+    "mobileItemBorderRadiusSuffix": null,
+    "mobileItemBorderTopLeftRadiusSuffix": null,
+    "mobileItemBorderTopRightRadiusSuffix": null,
+    "mobileItemBorderBottomLeftRadiusSuffix": null,
+    "mobileItemBorderBottomRightRadiusSuffix": null,
+
+    "tempMobileItemBorderRadiusSuffix": null,
+    "tempMobileItemBorderTopLeftRadiusSuffix": null,
+    "tempMobileItemBorderTopRightRadiusSuffix": null,
+    "tempMobileItemBorderBottomLeftRadiusSuffix": null,
+    "tempMobileItemBorderBottomRightRadiusSuffix": null,
 
     "mobileItemBorderColorHex": null,
     "mobileItemBorderColorOpacity": null,
@@ -757,6 +843,19 @@
     "mobileMarginTopSuffix": "px",
     "mobileMarginRightSuffix": "px",
     "mobileMarginBottomSuffix": "px",
-    "mobileMarginLeftSuffix": "px"
+    "mobileMarginLeftSuffix": "px",
+
+    "tempMobileMarginType": "ungrouped",
+    "tempMobileMargin": 0,
+    "tempMobileMarginTop": 0,
+    "tempMobileMarginRight": 0,
+    "tempMobileMarginBottom": 0,
+    "tempMobileMarginLeft": 0,
+
+    "tempMobileMarginSuffix": "px",
+    "tempMobileMarginTopSuffix": "px",
+    "tempMobileMarginRightSuffix": "px",
+    "tempMobileMarginBottomSuffix": "px",
+    "tempMobileMarginLeftSuffix": "px"
   }
 }

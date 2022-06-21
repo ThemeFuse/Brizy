@@ -113,7 +113,7 @@ const getItemsSimple = level => ({ v }) => {
               },
               {
                 id: "subMenuIconSpacing",
-                type: "slider",
+                type: "slider-dev",
                 disabled: true
               }
             ]

@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { sortBy } from "underscore";
-import Options, { filterOptionsData } from "visual/component/Options";
+import Options from "visual/component/Options";
 import * as Option from "visual/component/Options/Type";
 import { Literal, read } from "visual/utils/types/Literal";
 import { SimpleValue } from "visual/component/Options/Type";
@@ -9,36 +9,35 @@ import {
   WithConfig,
   WithId
 } from "visual/utils/options/attributes";
-import { OptionDefinition } from "visual/component/Options/Type";
 import { Tabs as Control } from "visual/component/Controls/Tabs2";
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
 import { Props as CProps } from "visual/component/Controls/Tabs2";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { withTabs } from "visual/component/Options/utils/filters";
 
 export type Config = {
   showSingle?: boolean;
   saveTab?: boolean;
-  position?: CProps["position"];
-  align?: CProps["align"];
+  position?: CProps<Literal>["position"];
+  align?: CProps<Literal>["align"];
 };
 
 export type Props = Option.Props<SimpleValue<Literal>> &
   WithConfig<Config> &
   WithClassName & {
-    toolbar: object;
-    tabs: (WithId<Literal> &
+    tabs?: (WithId<Literal> &
       WithClassName & {
         title?: string;
-        icon?: string;
         label?: string;
         position?: number;
-        options: OptionDefinition[];
+        options?: ToolbarItemType[];
       })[];
   };
 
 export const Tabs: FC<Props> &
   Option.OptionType<SimpleValue<Literal>> &
-  Option.SelfFilter<Props> = ({
-  tabs,
+  Option.SelfFilter<"tabs-dev"> = ({
+  tabs = [],
   onChange,
   value: { value },
   config,
@@ -56,8 +55,6 @@ export const Tabs: FC<Props> &
     }
   }, [_value]);
 
-  const tabsList = tabs.filter(t => filterOptionsData(t.options).length > 0);
-
   return (
     <Control
       align={align}
@@ -67,15 +64,14 @@ export const Tabs: FC<Props> &
       showSingle={config?.showSingle ?? false}
       className={className}
     >
-      {sortBy(tabsList, ({ position = 100 }) => position).map(
-        ({ id, title, label, options, className, icon }) => {
+      {sortBy(tabs, ({ position = 100 }) => position).map(
+        ({ id, title, label, options, className }) => {
           return (
             <Tab
               key={id}
               value={id}
               title={title}
               label={label}
-              icon={icon}
               className={className}
             >
               <Options wrapOptions={false} data={options} toolbar={toolbar} />
@@ -87,24 +83,32 @@ export const Tabs: FC<Props> &
   );
 };
 
-export const getModel: Option.GetModel<SimpleValue<Literal>> = get => ({
+export const getModel: Option.FromElementModel<SimpleValue<Literal>> = get => ({
   value: read(get("value"))
 });
 
-const getElementModel: Option.GetElementModel<SimpleValue<Literal>> = (
-  values,
-  get
-) => {
+const getElementModel: Option.ToElementModel<SimpleValue<Literal>> = values => {
   return {
-    [get("value")]: values.value
+    value: values.value
   };
 };
 
-Tabs.getModel = getModel;
+Tabs.fromElementModel = getModel;
 
-Tabs.getElementModel = getElementModel;
+Tabs.toElementModel = getElementModel;
 
 Tabs.defaultValue = { value: "" };
 
-Tabs.shouldOptionBeFiltered = ({ tabs = [] }): boolean =>
-  tabs.every(tab => filterOptionsData(tab?.options ?? []).length === 0);
+Tabs.filter = withTabs;
+
+Tabs.reduce = (fn, t0, item) => {
+  return (
+    item.tabs?.reduce((acc, tab) => tab.options?.reduce(fn, acc) ?? t0, t0) ??
+    t0
+  );
+};
+
+Tabs.map = (fn, item) => ({
+  ...item,
+  tabs: item.tabs?.map(tab => ({ ...tab, options: tab.options?.map(fn) }))
+});

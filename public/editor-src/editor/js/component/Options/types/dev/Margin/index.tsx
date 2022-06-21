@@ -1,5 +1,4 @@
 import React, { FC, useCallback, useMemo } from "react";
-import { identity } from "underscore";
 import { Value } from "./types/Value";
 import * as V from "./types/Value";
 import * as Option from "visual/component/Options/Type";
@@ -9,77 +8,56 @@ import {
   fromElementModel,
   getIcon,
   toElementModel,
-  units,
+  toSpacingValue,
   unitSetter,
   valueSetter
 } from "./utils";
 import { pipe } from "visual/utils/fp";
-import { ElementValue } from "visual/component/Options/types/dev/InternalLink/types/ElementValue";
 import { Spacing, Props as SP } from "visual/component/Controls/Spacing";
 import { SpacingUnit } from "visual/component/Options/utils/SpacingUnit";
 import { Edge } from "visual/component/Controls/Spacing/types";
 import { Type } from "visual/component/Options/utils/Type";
+import { WithConfig } from "visual/utils/options/attributes";
+import { Config } from "./types/Config";
+import { ToSpacingEdges } from "./types/ToSpacingEdges";
 
-const toElement = (v: Value): ElementValue => toElementModel(v, identity);
-
-export type Props = Option.Props<Value>;
+export interface Props extends Option.Props<Value>, WithConfig<Config> {}
 
 export const Margin: OptionType<Value> & FC<Props> = ({
   value,
   onChange,
-  label
+  label,
+  config
 }) => {
+  const edges = config?.edges ?? "all";
+  type E = ToSpacingEdges<typeof edges>;
   const onType = useCallback(
-    pipe((v: Type): Value => V.setType(v, value), toElement, onChange),
+    pipe((v: Type): Value => V.setType(v, value), onChange),
     [value, onChange]
   );
 
-  const {
-    value: margin,
-    unit,
-    top,
-    topUnit,
-    right,
-    rightUnit,
-    bottom,
-    bottomUnit,
-    left,
-    leftUnit
-  } = value;
-  const _value = useMemo<SP<SpacingUnit>["value"]>(
-    () => ({
-      all: margin,
-      top: top,
-      right: right,
-      bottom: bottom,
-      left: left
-    }),
-    [value, top, right, bottom, left]
+  const _value = useMemo<SP<SpacingUnit, E>["value"]>(
+    () => toSpacingValue(edges, value) as SP<SpacingUnit, E>["value"],
+    [value]
   );
 
-  const onValue = useCallback<SP<SpacingUnit>["onValue"]>(
-    pipe((e: Edge, v: number) => valueSetter(e)(v, value), toElement, onChange),
+  const onValue = useCallback<SP<SpacingUnit, E>["onValue"]>(
+    pipe((e: Edge, v: number) => valueSetter(e)(v, value), onChange),
     [onChange, value]
   );
 
-  const _unit = useMemo<SP<SpacingUnit>["unit"]>(
-    () => ({
-      all: unit,
-      top: topUnit,
-      right: rightUnit,
-      bottom: bottomUnit,
-      left: leftUnit
-    }),
-    [unit, topUnit, rightUnit, bottomUnit, leftUnit]
+  const onUnit = useCallback<SP<SpacingUnit, E>["onUnit"]>(
+    pipe((e: Edge, v: SpacingUnit) => unitSetter(e)(v, value), onChange),
+    [onChange, value]
   );
 
-  const onUnit = useCallback<SP<SpacingUnit>["onUnit"]>(
-    pipe(
-      (e: Edge, v: SpacingUnit) => unitSetter(e)(v, value),
-      toElement,
-      onChange
-    ),
-    [onChange, value]
+  const units = useMemo<SP<SpacingUnit, E>["units"]>(
+    () =>
+      (config?.units ?? ["px", "%"]).map(value => ({
+        value,
+        title: value
+      })),
+    [config]
   );
 
   return (
@@ -87,7 +65,6 @@ export const Margin: OptionType<Value> & FC<Props> = ({
       label={label}
       type={value.type}
       value={_value}
-      unit={_unit}
       units={units}
       onType={onType}
       onValue={onValue}
@@ -100,8 +77,8 @@ export const Margin: OptionType<Value> & FC<Props> = ({
   );
 };
 
-Margin.getModel = fromElementModel;
+Margin.fromElementModel = fromElementModel;
 
-Margin.getElementModel = toElementModel;
+Margin.toElementModel = toElementModel;
 
 Margin.defaultValue = defaultValue;

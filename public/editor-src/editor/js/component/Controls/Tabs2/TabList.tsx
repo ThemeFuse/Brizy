@@ -1,26 +1,25 @@
-import React, { FC, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import classNames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import { WithClassName, WithOnChange } from "visual/utils/options/attributes";
-import { Literal } from "visual/utils/types/Literal";
 import { Props as TabProps } from "./Tab";
 
-export type Props = WithClassName &
-  WithOnChange<Literal> & {
-    active: Literal;
+export type Props<T> = WithClassName &
+  WithOnChange<T> & {
+    active: T;
     align: "start" | "center" | "end";
     position: "top" | "left";
-    children: ReactElement<TabProps>[];
+    children: ReactElement<TabProps<T>>[];
   };
 
-export const TabList: FC<Props> = ({
+export function TabList<T>({
   className,
   active,
   onChange,
   align,
   position,
   children
-}) => {
+}: Props<T>): ReactElement {
   const _className = classNames(
     "brz-ul brz-ed-control__tabs",
     `brz-justify-content-xs-${align}`,
@@ -47,4 +46,4 @@ export const TabList: FC<Props> = ({
     );
   });
   return <ul className={_className}>{items}</ul>;
-};
+}

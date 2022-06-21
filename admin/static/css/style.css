@@ -814,3 +814,62 @@ box-shadow: 0px 2px 0px 0px #e3e3e3;
     margin-top: 30px;
 }
 /* End Demo Import Page */
+
+/* Replace URL Tab under Brizy -> Tools admin page */
+
+.brz-button-spinner:before {
+    font: normal 20px/.5 dashicons;
+    speak: none;
+    display: inline-block;
+    padding: 0;
+    top: 8px;
+    left: -4px;
+    position: relative;
+    vertical-align: top;
+    content: "\f463";
+}
+.brz-button-spinner.loading:before {
+    -webkit-animation: rotation 1s infinite linear;
+    animation: rotation 1s infinite linear;
+}
+.brz-button-spinner.success:before {
+    content: "\f147";
+    color: #46b450;
+}
+
+/* END Replace URL Tab under Brizy -> Tools admin page */
+
+.brz-major-update-warning {
+    margin-bottom: 5px;
+    max-width: 1000px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+.brz-major-update-warning__separator {
+    margin: 15px -12px;
+}
+.brz-major-update-warning__icon {
+    font-size: 17px;
+    margin-right: 9px;
+    margin-left: 2px;
+}
+.brz-major-update-warning__title {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.brz-major-update-warning + p {
+    display: none;
+}
+.notice-success .brz-major-update-warning__separator {
+    border: 1px solid #46b450;
+}
+.notice-success .brz-major-update-warning__icon {
+    color: #79ba49;
+}
+.notice-warning .brz-major-update-warning__separator {
+    border: 1px solid #ffb900;
+}
+.notice-warning .brz-major-update-warning__icon {
+    color: #f56e28;
+}

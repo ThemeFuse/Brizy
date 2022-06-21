@@ -1,7 +1,7 @@
 import Config from "visual/global/Config";
 import * as Str from "visual/utils/string/specs";
 import { clamp, roundTo } from "visual/utils/math";
-import { ImageSize, Unit, V as _V } from "./types";
+import { ImageSize, Unit, V } from "./types";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { defaultValueValue } from "visual/utils/onChange";
 import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
@@ -17,7 +17,7 @@ export interface ImageValue {
   heightSuffix: Unit;
 }
 
-interface V extends ImageValue {
+interface Value extends ImageValue {
   zoom: number;
   positionX: number;
   positionY: number;
@@ -163,7 +163,7 @@ export const calcWrapperOriginalSizes = (
 };
 
 export const calcImageSizes = (
-  v: V,
+  v: Value,
   cW: number,
   isPreview = false
 ): ImageSize => {
@@ -258,7 +258,7 @@ export const getImageSize = (size: string): ALLSizes => {
   return "original";
 };
 
-export const getSizeType = (v: _V, device: ResponsiveMode): string => {
+export const getSizeType = (v: V, device: ResponsiveMode): string => {
   if (v.imagePopulation) {
     const placeholderData = placeholderObjFromStr(v.imagePopulation);
 
@@ -272,3 +272,11 @@ export const getSizeType = (v: _V, device: ResponsiveMode): string => {
 
   return defaultValueValue({ v, device, key: "sizeType" });
 };
+
+export const showOriginalImage = (v: V): boolean =>
+  Boolean(
+    !isSVG(v.imageExtension) &&
+      !isGIF(v.imageExtension) &&
+      v.imageSrc &&
+      v.showOriginalImage === "on"
+  );

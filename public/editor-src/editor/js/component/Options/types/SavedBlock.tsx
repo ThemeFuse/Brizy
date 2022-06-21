@@ -28,7 +28,7 @@ type SavedBlockMapStateToProps = {
 
 type SavedBlockProps = SavedBlockMapStateToProps & {
   className: string;
-  attr: HTMLAttributes<object>;
+  attr: HTMLAttributes<Element>;
   icon: string;
   title: string;
   tooltipContent: string;
@@ -261,8 +261,6 @@ class OptionTypeSavedBlock extends Component<SavedBlockProps, SavedBlockState> {
 const mapStateToProps = (state: ReduxState): SavedBlockMapStateToProps => ({
   isAuthorized:
     state.authorized === "connected" || state.authorized === "pending",
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   pageBlocks: pageDataNoRefsSelector(state),
   extraFontStyles: extraFontStylesSelector(state)
 });

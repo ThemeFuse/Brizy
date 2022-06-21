@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { setIn } from "timm";
 import { t } from "visual/utils/i18n";
 import {
@@ -9,21 +9,72 @@ import {
 } from "./utils";
 import { getCustomerAndCollectionTypes, Refs as RefsById } from "./utils/api";
 import { getCollectionItems } from "visual/utils/api/cms";
-import { CUSTOMER_TYPE } from "visual/utils/blocks/blocksConditions";
+import {
+  CUSTOMER_TYPE,
+  ECWID_PRODUCT_TYPE
+} from "visual/utils/blocks/blocksConditions";
 import { CollectionItemRule, CollectionTypeRule, Rule } from "visual/types";
-import { RuleList, RuleListItem } from "./types";
+import { CmsListItem, RuleList, RuleListItem } from "./types";
 import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks";
+import { isCloud, isCMS } from "visual/global/Config/types/configs/Cloud";
+import Config from "visual/global/Config";
+import { isOneOf } from "visual/utils/fp/isOneOf";
+import { from, of } from "rxjs";
+import { Products } from "visual/libs/EcwidSdk/products";
+import { catchError, map, tap } from "rxjs/operators";
 
 export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
   const [collectionRuleList, setCollectionRuleList] = useState<RuleList[]>([]);
   const [customerRuleList, setCustomerRuleList] = useState<RuleList[]>([]);
+  const [ecwidProductsList, setEcwidProductsList] = useState<
+    | { type: "ready"; items: CmsListItem[] }
+    | { type: "init" }
+    | { type: "loading" }
+  >({ type: "init" });
   const [listLoading, setListLoading] = useState(true);
 
   // it's needed only for cms!
   const [refsById, setRefsById] = useState<RefsById>({});
+
+  const ecwidClient = useMemo((): Products | undefined => {
+    const config = Config.getAll();
+
+    if (isCloud(config) && isCMS(config) && config.modules?.shop) {
+      return new Products(config.modules.shop.apiUrl);
+    }
+
+    return undefined;
+  }, []);
+  const ecwidRules = useMemo((): RuleList[] => {
+    if (!ecwidClient) {
+      return [];
+    }
+
+    switch (ecwidProductsList.type) {
+      case "init":
+      case "loading":
+        return [
+          {
+            title: "Ecwid",
+            groupValue: 1,
+            value: ECWID_PRODUCT_TYPE,
+            items: []
+          }
+        ];
+      case "ready":
+        return [
+          {
+            title: "Ecwid",
+            groupValue: 1,
+            value: ECWID_PRODUCT_TYPE,
+            items: ecwidProductsList.items
+          }
+        ];
+    }
+  }, [ecwidProductsList]);
 
   useEffect(() => {
     async function fetchData(): Promise<void> {
@@ -125,7 +176,45 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
     setCustomerRuleList(disableAlreadyUsedRules(rules, customerRuleList));
   }, [rules, customerRuleList]);
 
-  return [listLoading, [...collectionRuleList, ...customerRuleList]];
+  useEffect(() => {
+    if (
+      ecwidClient &&
+      ecwidProductsList.type === "init" &&
+      rules
+        .filter(isOneOf([isCollectionTypeRule, isCollectionItemRule]))
+        .some(r => r.entityType === ECWID_PRODUCT_TYPE)
+    ) {
+      setEcwidProductsList({ type: "loading" });
+      setListLoading(true);
+      const fetch$ = from(ecwidClient.search())
+        .pipe(
+          map((r): CmsListItem[] => {
+            return [
+              {
+                title: t("Specific Product"),
+                value: ECWID_PRODUCT_TYPE,
+                mode: "specific",
+                items: r.items.map(i => ({
+                  title: i.name,
+                  value: i.id
+                }))
+              }
+            ];
+          }),
+          catchError(() => of([])),
+          map(items => ({ type: "ready", items } as const)),
+          tap(() => setListLoading(false))
+        )
+        .subscribe(setEcwidProductsList);
+
+      return () => fetch$.unsubscribe();
+    }
+  }, [rules]);
+
+  return [
+    listLoading,
+    [...collectionRuleList, ...customerRuleList, ...ecwidRules]
+  ];
 
   async function fetchRuleListItems(
     rule: CollectionTypeRule | CollectionItemRule,

@@ -1,12 +1,11 @@
 import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue, defaultValueKey } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
-  const dvkn = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
@@ -176,9 +175,9 @@ export function getItems({ v, device, state }) {
       ]
     },
     {
-      id: dvkn("advancedSettings"),
+      id: "advancedSettings",
+      devices: "desktop",
       type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
       roles: ["admin"],
       position: 110,
       icon: "nc-cog"

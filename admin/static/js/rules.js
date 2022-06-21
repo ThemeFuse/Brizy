@@ -10,10 +10,11 @@ var RULE_TEMPLATE = 8;
 var RULE_BRIZY_TEMPLATE = 16;
 var ANY_CHILD_TAXONOMY = 128;
 var WOO_PAGES = 256;
-var RULE_DATE_ARCHIVE = 512;
-var RULE_YEAR_ARCHIVE = 1024;
-var RULE_MONTH_ARCHIVE = 2048;
-var RULE_DAY_ARCHIVE = 4096;
+var RULE_DATE_ARCHIVE = 516;
+var RULE_YEAR_ARCHIVE = 1540;
+var RULE_MONTH_ARCHIVE = 2564;
+var RULE_DAY_ARCHIVE = 4612;
+
 
 var defaultTemplateType = Brizy_Admin_Rules.templateType !== '' ? Brizy_Admin_Rules.templateType : 'single';
 var defaultAppliedFor = null;
@@ -223,7 +224,14 @@ var actions = {
                     defaultAppliedFor = RULE_TAXONOMY;
                     defaultEntityType = 'category';
                     break;
-
+                case 'single_product':
+                    defaultAppliedFor = RULE_POSTS;
+                    defaultEntityType = 'product';
+                    break;
+                case 'product_archive':
+                    defaultAppliedFor = WOO_PAGES;
+                    defaultEntityType = 'shop_page';
+                    break;
                 default:
                     defaultAppliedFor = RULE_POSTS;
                     defaultEntityType = 'post';
@@ -254,7 +262,14 @@ var actions = {
                     defaultAppliedFor = RULE_TAXONOMY;
                     defaultEntityType = 'category';
                     break;
-
+                case 'product_archive':
+                    defaultAppliedFor = WOO_PAGES;
+                    defaultEntityType = 'shop_page';
+                    break;
+                case 'single_product':
+                    defaultAppliedFor = RULE_POSTS;
+                    defaultEntityType = 'product';
+                    break;
                 default:
                     defaultAppliedFor = RULE_POSTS;
                     defaultEntityType = 'post';
@@ -439,7 +454,7 @@ var RulePostsGroupSelectField = function (params) {
 
                     if (group.items.length > 0) {
                         group.items.forEach(function (option) {
-                            var optionValue = String(option.value);
+                            var optionValue = option.value;
                             var selected = params.rule.entityValues.includes(optionValue);
                             groupElement.appendChild(new Option(option.title, optionValue, false, selected))
                         });
@@ -495,7 +510,10 @@ var RuleArchiveGroupSelectField = function (params) {
 
                     if (group.items.length > 0) {
                         group.items.forEach(function (option) {
-                            var optionValue = String(option.value);
+
+                            var targetValue = parseInt( option.value ),
+                                optionValue =  isNaN( targetValue ) ? String(option.value) : targetValue;
+
                             groupElement.appendChild(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)))
                         });
                         groups.push(groupElement);
@@ -549,7 +567,9 @@ var RuleAuthorGroupSelectField = function (params) {
 
                     if (group.items.length > 0) {
                         group.items.forEach(function (option) {
-                            var optionValue = String(option.value);
+                            var targetValue = parseInt( option.value ),
+                                optionValue =  isNaN( targetValue ) ? String(option.value) : targetValue;
+
                             groupElement.appendChild(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)))
                         });
                         groups.push(groupElement);
@@ -588,6 +608,7 @@ var RuleApplyGroupField = function (params) {
         var entityType = params.rule.entityType;
         var value = appliedFor + "|" + entityType;
         var groups = [];
+        var inList = params.name;
 
         params.groups.forEach(function (group) {
             var options = [];
@@ -637,10 +658,12 @@ var RuleApplyGroupField = function (params) {
                             key: params.type + appliedFor + value,
                             rule: params.rule,
                             type: params.type,
-                            name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
+                            name: inList ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                             onChange: function (e) {
+                                var targetValue = parseInt( e.target.value );
+
                                 actions.rule.update({
-                                    entityValues: e.target.value ? [e.target.value] : [],
+                                    entityValues: e.target.value ? [ isNaN( targetValue ) ? e.target.value : targetValue ] : [],
                                 });
                             }
                         })
@@ -655,16 +678,23 @@ var RuleApplyGroupField = function (params) {
                             rule: params.rule,
                             type: params.type,
                             taxonomy: entityType,
-                            name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
+                            name: inList ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                             onChange: function (e) {
+                                var targetValue = parseInt( e.target.value );
+
                                 actions.rule.update({
-                                    entityValues: e.target.value ? [e.target.value] : [],
+                                    entityValues: e.target.value ? [ isNaN( targetValue ) ? e.target.value : targetValue ] : [],
                                 });
                             }
                         })
                     ]));
                 break;
-
+            case RULE_DATE_ARCHIVE:
+            case RULE_YEAR_ARCHIVE:
+            case RULE_MONTH_ARCHIVE:
+            case RULE_DAY_ARCHIVE:
+            case WOO_PAGES:
+            case RULE_ARCHIVE:
             case RULE_TEMPLATE:
                 if (entityType === 'author') {
                     elements.push(
@@ -674,18 +704,26 @@ var RuleApplyGroupField = function (params) {
                                 key: params.type + appliedFor + value,
                                 rule: params.rule,
                                 type: params.type,
-                                name: params.type ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
+                                name: inList ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                                 onChange: function (e) {
+
+                                    var targetValue = parseInt( e.target.value );
+
                                     actions.rule.update({
-                                        entityValues: e.target.value ? [e.target.value] : [],
+                                        entityValues: e.target.value ? [ isNaN( targetValue ) ? e.target.value : targetValue ] : [],
                                     });
                                 }
                             })
                         ]));
+                } else
+                {
+                    elements.push( h("input", {
+                        type: "hidden",
+                        value: "",
+                        name: inList ? 'brizy-' + params.type + '-rule-entity-values[]' : ''
+                    }));
                 }
                 break;
-
-
         }
         return h("span", {}, elements);
     };

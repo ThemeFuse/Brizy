@@ -1,16 +1,10 @@
 import { t } from "visual/utils/i18n";
 import { getDynamicContentChoices } from "visual/utils/options";
-import {
-  toolbarPaddingFourFields,
-  toolbarMargin,
-  toolbarBorderRadius,
-  toolbarEntranceAnimation
-} from "visual/utils/toolbar";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export const title = t("Column");
 
-export function getItems({ v, device, context }) {
+export function getItems({ context }) {
   const toolbarTagsChoices = [
     { title: t("Div"), value: "div" },
     { title: t("Header"), value: "header" },
@@ -28,187 +22,225 @@ export function getItems({ v, device, context }) {
 
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
-      config: {
-        align: "start"
-      },
-      devices: "desktop",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       tabs: [
         {
-          id: "settingsStyling",
+          id: "styles",
+          title: t("Styling"),
           label: t("Styling"),
-          icon: "nc-styling",
           options: [
-            toolbarPaddingFourFields({
-              v,
-              device,
-              state: "normal",
-              devices: "desktop"
-            }),
-            toolbarMargin({
-              v,
-              device,
-              state: "normal",
+            {
+              id: "tabs",
+              type: "tabs-dev",
+              config: {
+                align: "start"
+              },
               devices: "desktop",
-              onChangeGrouped: ["onChangeMarginGrouped"],
-              onChangeUngrouped: ["onChangeMarginUngrouped"]
-            }),
-            toolbarBorderRadius({
-              v,
-              device,
-              state: "normal",
-              devices: "desktop",
-              onChangeGrouped: [
-                "onChangeBorderRadiusGrouped",
-                "onChangeBorderRadiusGroupedDependencies"
-              ],
-              onChangeUngrouped: [
-                "onChangeBorderRadiusUngrouped",
-                "onChangeBorderRadiusUngroupedDependencies"
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding-dev",
+                      label: t("Padding"),
+                      devices: "desktop",
+                      position: 50
+                    },
+                    {
+                      id: "margin",
+                      label: t("Margin"),
+                      type: "margin-dev",
+                      devices: "desktop",
+                      position: 60
+                    },
+                    {
+                      id: "border",
+                      type: "corners-dev",
+                      label: t("Corner"),
+                      devices: "desktop",
+                      position: 65
+                    },
+                    {
+                      id: "blendMode",
+                      label: t("Blending Mode"),
+                      type: "select-dev",
+                      devices: "desktop",
+                      position: 80,
+                      choices: [
+                        { title: t("Normal"), value: "normal" },
+                        { title: t("Color"), value: "color" },
+                        { title: t("ColorBurn"), value: "color-burn" },
+                        { title: t("ColorDodge"), value: "color-dodge" },
+                        { title: t("Darken"), value: "darken" },
+                        { title: t("Difference"), value: "difference" },
+                        { title: t("Exclusion"), value: "exclusion" },
+                        { title: t("Hue"), value: "hue" },
+                        { title: t("Lighten"), value: "lighten" },
+                        { title: t("Luminosity"), value: "luminosity" },
+                        { title: t("Multiply"), value: "multiply" },
+                        { title: t("Overlay"), value: "overlay" },
+                        { title: t("Saturation"), value: "saturation" },
+                        { title: t("Screen"), value: "screen" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  icon: "nc-cog",
+                  options: [
+                    {
+                      id: "showOnDesktop",
+                      label: t("Show on Desktop"),
+                      type: "switch-dev",
+                      devices: "desktop",
+                      closeTooltip: true,
+                      position: 10
+                    },
+                    {
+                      id: "zIndex",
+                      type: "slider-dev",
+                      position: 20,
+                      label: t("Z-index"),
+                      devices: "desktop",
+                      config: {
+                        min: 0,
+                        max: 100
+                      }
+                    },
+                    {
+                      id: "cssID",
+                      label: t("CSS ID"),
+                      type: "population-dev",
+                      position: 30,
+                      devices: "desktop",
+                      display: "block",
+                      helper: {
+                        content:
+                          "Add your custom ID without the #pound, example: my-id"
+                      },
+                      config: {
+                        choices: richTextDC
+                      },
+                      options: [
+                        {
+                          id: "customID",
+                          type: "inputText-dev"
+                        }
+                      ]
+                    },
+                    {
+                      id: "cssClass",
+                      label: t("CSS Class"),
+                      type: "population-dev",
+                      position: 40,
+                      devices: "desktop",
+                      display: "block",
+                      helper: {
+                        content:
+                          "Add your custom class without the .dot, example: my-class"
+                      },
+                      config: {
+                        choices: richTextDC
+                      },
+                      options: [
+                        {
+                          id: "customClassName",
+                          type: "inputText-dev"
+                        }
+                      ]
+                    },
+                    {
+                      id: "customAttributes",
+                      label: t("Custom Attributes"),
+                      type: "codeMirror-dev",
+                      position: 45,
+                      placeholder: "key1:value1\nkey2:value2",
+                      display: "block",
+                      devices: "desktop",
+                      helper: {
+                        content:
+                          "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+                      },
+                      population: richTextDC
+                    },
+                    {
+                      id: "hoverTransition",
+                      label: t("Hover Transition"),
+                      devices: "desktop",
+                      position: 60,
+                      type: "slider-dev",
+                      config: {
+                        min: 0,
+                        max: 99,
+                        units: [{ title: "ms", value: "ms" }]
+                      }
+                    },
+                    {
+                      id: "tagName",
+                      label: t("HTML Tag"),
+                      type: "select-dev",
+                      choices: toolbarTagsChoices
+                    }
+                  ]
+                }
               ]
-            })
+            },
+            {
+              id: "padding",
+              type: "padding-dev",
+              label: t("Padding"),
+              devices: "responsive",
+              position: 50
+            },
+            {
+              id: "margin",
+              label: t("Margin"),
+              type: "margin-dev",
+              devices: "responsive",
+              position: 60
+            },
+            {
+              id: "border",
+              type: "corners-dev",
+              label: t("Corner"),
+              devices: "responsive",
+              position: 65
+            }
           ]
         },
         {
-          id: "moreSettingsAdvanced",
-          label: t("Advanced"),
-          icon: "nc-cog",
+          id: "effects",
+          title: t("Effects"),
+          label: t("Effects"),
           options: [
             {
-              id: "showOnDesktop",
-              label: t("Show on Desktop"),
-              type: "switch-dev",
-              devices: "desktop",
-              closeTooltip: true,
-              position: 10
-            },
-            {
-              id: "zIndex",
-              type: "slider-dev",
-              position: 20,
-              label: t("Z-index"),
-              devices: "desktop",
+              id: "tabs",
+              type: "tabs-dev",
               config: {
-                min: 0,
-                max: 100
-              }
-            },
-            {
-              id: "cssID",
-              label: t("CSS ID"),
-              type: "population-dev",
-              position: 30,
-              devices: "desktop",
-              display: "block",
-              helper: {
-                content: "Add your custom ID without the #pound, example: my-id"
+                align: "start"
               },
-              config: {
-                choices: richTextDC
-              },
-              options: [
+              tabs: [
                 {
-                  id: "customID",
-                  type: "inputText-dev"
+                  id: "entrance",
+                  label: t("Entrance"),
+                  options: [
+                    {
+                      id: "animation",
+                      type: "animation-dev"
+                    }
+                  ]
                 }
               ]
-            },
-            {
-              id: "cssClass",
-              label: t("CSS Class"),
-              type: "population-dev",
-              position: 40,
-              devices: "desktop",
-              display: "block",
-              helper: {
-                content:
-                  "Add your custom class without the .dot, example: my-class"
-              },
-              config: {
-                choices: richTextDC
-              },
-              options: [
-                {
-                  id: "customClassName",
-                  type: "inputText-dev"
-                }
-              ]
-            },
-            {
-              id: "customAttributes",
-              label: t("Custom Attributes"),
-              type: "codeMirror-dev",
-              position: 45,
-              placeholder: "key1:value1\nkey2:value2",
-              display: "block",
-              devices: "desktop",
-              helper: {
-                content:
-                  "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
-              },
-              population: richTextDC
-            },
-            {
-              id: "hoverTransition",
-              label: t("Hover Transition"),
-              devices: "desktop",
-              position: 60,
-              type: "slider-dev",
-              config: {
-                min: 0,
-                max: 99,
-                units: [{ title: "ms", value: "ms" }]
-              }
-            },
-            toolbarEntranceAnimation({
-              v,
-              device,
-              state: "normal"
-            }),
-            {
-              id: "tagName",
-              label: t("HTML Tag"),
-              type: "select-dev",
-              choices: toolbarTagsChoices
             }
           ]
         }
       ]
-    },
-    toolbarPaddingFourFields({
-      v,
-      device,
-      state: "normal",
-      devices: "responsive"
-    }),
-    toolbarMargin({
-      v,
-      device,
-      state: "normal",
-      devices: "responsive",
-      onChangeGrouped: ["onChangeMarginGrouped"],
-      onChangeUngrouped: ["onChangeMarginUngrouped"]
-    }),
-    toolbarBorderRadius({
-      v,
-      device,
-      state: "normal",
-      devices: "responsive",
-      onChangeGrouped: [
-        "onChangeBorderRadiusGrouped",
-        "onChangeBorderRadiusGroupedDependencies"
-      ],
-      onChangeUngrouped: [
-        "onChangeBorderRadiusUngrouped",
-        "onChangeBorderRadiusUngroupedDependencies"
-      ]
-    }),
-    toolbarEntranceAnimation({
-      v,
-      device,
-      devices: "responsive",
-      state: "normal"
-    })
+    }
   ];
 }

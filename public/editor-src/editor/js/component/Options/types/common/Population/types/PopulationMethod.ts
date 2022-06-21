@@ -11,7 +11,7 @@ export interface PopulationMethod {
 
 export interface PopulationOptgroupMethod {
   title: string;
-  optgroup: PopulationMethod[];
+  optgroup: (PopulationMethod | PopulationOptgroupMethod)[];
   icon?: string;
 }
 

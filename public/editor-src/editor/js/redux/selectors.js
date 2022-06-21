@@ -10,8 +10,9 @@ import {
   getSurroundedGBIds
 } from "visual/utils/blocks/blocksConditions";
 import {
+  projectSelector,
   pageSelector,
-  fontSelector,
+  fontsSelector,
   extraFontStylesSelector,
   uiSelector
 } from "./selectors-new";
@@ -29,8 +30,6 @@ export const changedGBIdsSelector = state => state.changedGBIds || {};
 export const blocksDataSelector = state => state.blocksData || {};
 
 export const blocksOrderSelector = state => state.blocksOrder || [];
-
-export const projectSelector = state => state.project || {};
 
 export const stylesSelector = state => state.styles || [];
 
@@ -80,11 +79,6 @@ export const deviceModeSelector = createSelector(
 export const showHiddenElementsSelector = createSelector(
   uiSelector,
   ui => ui.showHiddenElements
-);
-
-export const currentRoleSelector = createSelector(
-  uiSelector,
-  ui => ui.currentRole
 );
 
 // === END 1 DEPENDENCY ===
@@ -519,7 +513,7 @@ export const pageBlocksRawSelector = createSelector(
 
 export const projectAssembled = createSelector(
   projectSelector,
-  fontSelector,
+  fontsSelector,
   stylesSelector,
   currentStyleIdSelector,
   currentStyleSelector,

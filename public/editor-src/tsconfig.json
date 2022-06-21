@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
+    "strict": true,
+    "allowUnreachableCode": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
     "allowJs": true,
     "checkJs": false,
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
     "noEmit": true,
-    "strict": true,
     "isolatedModules": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,

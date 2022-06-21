@@ -1,11 +1,17 @@
-/* eslint-disable @typescript-eslint/camelcase */
-import { PageCollection, PageCustomer } from "visual/types";
+import {
+  CollectionItemId,
+  CustomerId,
+  EcwidProductPage,
+  PageCollection,
+  PageCustomer
+} from "visual/types";
 import { isT } from "visual/utils/value";
 import { t } from "visual/utils/i18n";
 import { paginationData } from "visual/utils/api/const";
 import {
   getConverter,
   itemCustomerToPage,
+  itemToPageCollection,
   pageFieldsToItemFields,
   pageStatusToItemStatus
 } from "./convertors";
@@ -16,6 +22,10 @@ import { UpdateCollectionItem_updateCollectionItem_collectionItem } from "./grap
 import { UpdateCustomer_updateCustomer_customer } from "visual/utils/api/cms/graphql/types/UpdateCustomer";
 import { ShopifyPage } from "visual/types";
 import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
+import { GetCollectionItem_collectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
+import { EcwidProductId } from "visual/global/Ecwid";
+import { Products } from "visual/libs/EcwidSdk/products";
+import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
 
 export function getPages(
   collectionTypeId: string
@@ -34,11 +44,12 @@ export function getPages(
     .catch(onCatch(t("Failed to fetch api data")));
 }
 
-export function getPage(id: string): Promise<PageCollection | ShopifyPage> {
+export function getPage(
+  id: CollectionItemId
+): Promise<GetCollectionItem_collectionItem> {
   return Gql.getCollectionItem(getConnection(), { id })
     .then(r => r?.data?.collectionItem)
     .then(errOnEmpty(t("Invalid api data")))
-    .then(getConverter())
     .catch(onCatch(t("Failed to fetch api data")));
 }
 
@@ -72,7 +83,7 @@ export function updatePage(
 }
 
 //#region Customer
-export function getCustomerPage(id: string): Promise<PageCustomer> {
+export function getCustomerPage(id: CustomerId): Promise<PageCustomer> {
   return Gql.getCustomer(getConnection(), { id })
     .then(r => r?.data?.customer)
     .then(errOnEmpty(t("Invalid api data")))
@@ -143,3 +154,23 @@ export function updateCustomerPage(
 //     .then(() => undefined)
 //     .catch(onCatch("Failed to remove page"));
 // }
+
+// region EcwidProduct
+export async function getEcwidProduct(
+  id: CollectionItemId,
+  config: Ecwid
+): Promise<EcwidProductPage> {
+  const page = await getPage(id).then(itemToPageCollection);
+  const ecwidProductId = page.title as EcwidProductId;
+  const client = new Products(config.apiUrl);
+  const product = await client.getById(ecwidProductId);
+
+  return {
+    ...page,
+    productId: ecwidProductId,
+    title: product.name,
+    status: product.enabled ? "publish" : "draft",
+    __type: "ecwid-product"
+  };
+}
+// endregion

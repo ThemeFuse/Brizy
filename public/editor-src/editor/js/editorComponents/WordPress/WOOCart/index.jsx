@@ -5,7 +5,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
-import { makeEmptySidebarConfig } from "visual/utils/toolbar";
 import { css } from "visual/utils/cssStyle";
 import { t } from "visual/utils/i18n";
 import defaultValue from "./defaultValue.json";
@@ -16,12 +15,9 @@ import * as toolbarProductPrice from "./toolbarProductPrice";
 import * as toolbarProductSubtotal from "./toolbarProductSubtotal";
 import * as toolbarProductButton from "./toolbarProductButton";
 import * as toolbarSidebarSettings from "./toolbarSidebarSettings";
+import * as sidebarProduct from "./sidebarProduct";
+import * as sidebarSidebarSettings from "./sidebarSettings";
 import { style } from "./styles";
-
-const sidebarProduct = makeEmptySidebarConfig({ title: t("Product") });
-const sidebarSidebarSettings = makeEmptySidebarConfig({
-  title: t("Settings")
-});
 
 export default class WOOCart extends EditorComponent {
   static get componentId() {

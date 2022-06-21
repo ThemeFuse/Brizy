@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import EditorGlobal from "visual/global/Editor";
 import { pageDataDraftBlocksSelector } from "visual/redux/selectors";
 import { updateBlocks } from "visual/redux/actions2";
+import { areStatesEqual } from "./utils";
 
 class EditorPage extends Component {
   handlePageChange = ({ items: blocks }, meta) => {
@@ -31,12 +32,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   reduxDispatch: dispatch
 });
-
-const areStatesEqual = (state, prevState) =>
-  state.blocksOrder === prevState.blocksOrder &&
-  state.blocksData === prevState.blocksData &&
-  state.globalBlocks === prevState.globalBlocks &&
-  state.fonts === prevState.fonts;
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {
   areStatesEqual

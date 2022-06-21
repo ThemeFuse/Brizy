@@ -9,6 +9,9 @@
     "membership": "off",
     "membershipRoles": "[]",
 
+    "translations": "off",
+    "translationsLangs": "[]",
+
     "fullHeight": "off",
     "tagName": "section",
 
@@ -89,7 +92,7 @@
     "cssClassPopulation": "",
 
     "customAttributes": "",
-    "customAttributesPopulation": null,
+    "customAttributesPopulation": "",
 
     "sliderDots": "circle",
 

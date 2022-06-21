@@ -1,30 +1,35 @@
 import { setIn } from "timm";
-import { hexToRgba, getColorPaletteColor } from "visual/utils/color";
-import { encodeToString } from "visual/utils/string";
+import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import {
+  getColorPaletteColor,
+  hexToRgba,
+  makeStylePaletteCSSVar
+} from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { t } from "visual/utils/i18n";
-
+import { encodeToString } from "visual/utils/string";
 import {
   toolbarBgColor2,
-  toolbarTextShadowHexField2,
-  toolbarTextShadow,
-  toolbarTextShadowFields2,
   toolbarBgColorHexField2,
-  toolbarGradientType,
   toolbarGradientLinearDegree,
-  toolbarGradientRadialDegree
+  toolbarGradientRadialDegree,
+  toolbarGradientType
 } from "visual/utils/toolbar";
-import { defaultValueValue } from "visual/utils/onChange";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
 
-const shadowToString = value => {
+const shadowToString = (value, config) => {
   if (value.palette) {
-    return `rgba(var(--brz-global-${value.palette}),${value.opacity}) ${value.horizontal}px ${value.vertical}px ${value.blur}px`;
+    const { palette, opacity, horizontal, vertical, blur } = value;
+    return `rgba(var(${makeStylePaletteCSSVar(
+      palette,
+      config
+    )}),${opacity}) ${horizontal}px ${vertical}px ${blur}px`;
   }
 
   return `${getColorValue({
@@ -51,53 +56,6 @@ const getPopulationColor = (populationColor, type, value) => {
     value.palette
   );
   return encodeToString(setIn(newValue, [type, "hex"], null));
-};
-
-const changeShadow = (shadow, value) => {
-  const DEFAULT_SHADOW = {
-    hex: "#000000",
-    opacity: 1,
-    vertical: 5,
-    horizontal: 5,
-    blur: 5
-  };
-
-  const newShadow = Object.assign({}, DEFAULT_SHADOW, shadow);
-  const palette = value.palette;
-
-  switch (value.isChanged) {
-    case "select":
-      return {
-        shadow: value.select === "none" ? null : shadowToString(newShadow),
-        shadowColorPalette: null
-      };
-    case "hex":
-      return {
-        shadow: shadowToString({
-          ...newShadow,
-          hex: value.hex,
-          palette: null
-        }),
-        shadowColorPalette: null
-      };
-    case "opacity":
-      return {
-        shadow: shadowToString({
-          ...newShadow,
-          opacity: value.opacity,
-          palette
-        })
-      };
-    default: {
-      return {
-        shadow: shadowToString({
-          ...newShadow,
-          palette
-        }),
-        shadowColorPalette: value.palette
-      };
-    }
-  }
 };
 
 const changeColor = (backgroundGradient, value) => {
@@ -386,6 +344,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
     width = null,
     height = null
   } = v.backgroundImage || {};
+  const config = Config.getAll();
 
   const {
     type,
@@ -405,7 +364,6 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
   let colorV = {};
   let colorFieldsV = {};
 
-  // is gradient
   if (startHex) {
     const startIsActive = activePointer === "startPointer";
 
@@ -554,78 +512,38 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
           label: t("Shadow"),
           options: [
             {
-              id: "color",
-              type: "colorPicker2",
-              select: {
-                show: true,
-                choices: [
-                  {
-                    title: t("Shadow"),
-                    value: "shadow"
-                  },
-                  {
-                    title: t("None"),
-                    value: "none"
-                  }
-                ]
-              },
-              value: {
-                select: v.shadow.hex ? "shadow" : "none",
-                hex: v.shadow.hex,
-                opacity: v.shadow.opacity,
-                palette: v.shadowColorPalette
-              },
-              onChange: value => onChange(changeShadow(v.shadow, value))
-            },
-            {
-              type: "grid",
-              className: "brz-ed-grid__color-fileds",
-              columns: [
-                {
-                  width: 50,
-                  options: [
-                    {
-                      id: "bgColorFields",
-                      type: "colorFields",
-                      position: 30,
-                      value: {
-                        hex: v.shadow.hex,
-                        opacity: v.shadow.opacity
-                      },
-                      onChange: value => onChange(changeShadow(v.shadow, value))
-                    }
-                  ]
-                },
-                {
-                  width: 50,
-                  options: [
-                    {
-                      id: "texShadow",
-                      type: "multiInput",
-                      config: {
-                        defaultIcon: ["nc-shadow"],
-                        icons: ["nc-blur", "nc-vertical", "nc-horizontal"]
-                      },
-                      value: [
-                        v.shadow.blur,
-                        v.shadow.vertical,
-                        v.shadow.horizontal
-                      ],
-                      onChange: ([blur, vertical, horizontal]) => {
-                        return onChange({
-                          shadow: shadowToString({
-                            ...v.shadow,
-                            blur,
-                            vertical,
-                            horizontal,
-                            palette: v.shadowColorPalette
-                          })
-                        });
-                      }
-                    }
-                  ]
+              id: "textShadow",
+              type: "textShadow-dev",
+              icon: "nc-bold",
+              title: t("Text Shadow"),
+              dependencies: ({
+                textShadowBlur,
+                textShadowColorHex,
+                textShadowHorizontal,
+                textShadowColorOpacity,
+                textShadowColorPalette,
+                textShadowVertical
+              }) => {
+                let shadow = {
+                  hex: textShadowColorHex,
+                  opacity: textShadowColorOpacity,
+                  horizontal: textShadowHorizontal,
+                  vertical: textShadowVertical,
+                  blur: textShadowBlur
+                };
+
+                let shadowColorPalette = null;
+
+                if (textShadowColorPalette) {
+                  shadow = { ...shadow, palette: textShadowColorPalette };
+                  shadowColorPalette = textShadowColorPalette;
                 }
-              ]
+
+                onChange({
+                  shadow: shadowToString(shadow, config),
+                  shadowColorPalette
+                });
+              }
             }
           ]
         },
@@ -682,7 +600,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
   ];
 }
 
-function getTextPopulationOptions(v, { device }) {
+function getTextPopulationOptions() {
   return [
     {
       id: "tabsColor",
@@ -693,124 +611,9 @@ function getTextPopulationOptions(v, { device }) {
           id: "tabBg",
           label: t("Bg"),
           options: [
-            toolbarBgColor2({
-              v,
-              device,
-              prefix: "",
-              state: "normal",
-              onChangeType: ["onChangeElementRichTextBgColorType2"],
-              onChangeHex: [
-                "onChangeBgColorHexAndOpacity2",
-                "onChangeBgColorHexAndOpacityPalette2"
-              ],
-              onChangePalette: [
-                "onChangeBgColorPalette2",
-                "onChangeBgColorPaletteOpacity2"
-              ],
-              onChangeGradientHex: [
-                "onChangeBgColorHexAndOpacity2",
-                "onChangeBgColorHexAndOpacityPalette2"
-              ],
-              onChangeGradientPalette: [
-                "onChangeBgColorPalette2",
-                "onChangeBgColorPaletteOpacity2"
-              ],
-              onChangeGradient: ["onChangeGradientRange2"]
-            }),
             {
-              type: "grid",
-              className: "brz-ed-grid__color-fileds",
-              columns: [
-                {
-                  width: 30,
-                  options: [
-                    toolbarBgColorHexField2({
-                      v,
-                      device,
-                      state: "normal",
-                      prefix:
-                        defaultValueValue({
-                          v,
-                          key: "gradientActivePointer",
-                          device,
-                          state: "normal"
-                        }) === "startPointer"
-                          ? ""
-                          : "gradient",
-                      onChange: [
-                        "onChangeBgColorHexAndOpacity2",
-                        "onChangeBgColorHexAndOpacityPalette2"
-                      ]
-                    })
-                  ]
-                },
-                {
-                  width: 52,
-                  options: [
-                    toolbarGradientType({
-                      v,
-                      prefix: "",
-                      device,
-                      state: "normal",
-                      className:
-                        "brz-ed__select--transparent brz-ed__select--align-right",
-                      disabled:
-                        defaultValueValue({
-                          v,
-                          key: "colorType",
-                          device,
-                          prefix: "",
-                          state: "normal"
-                        }) === "solid"
-                    })
-                  ]
-                },
-                {
-                  width: 18,
-                  options: [
-                    toolbarGradientLinearDegree({
-                      v,
-                      prefix: "",
-                      device,
-                      state: "normal",
-                      disabled:
-                        defaultValueValue({
-                          v,
-                          key: "colorType",
-                          prefix: "",
-                          device,
-                          state: "normal"
-                        }) === "solid" ||
-                        defaultValueValue({
-                          v,
-                          key: "gradientType",
-                          device,
-                          state: "normal"
-                        }) === "radial"
-                    }),
-                    toolbarGradientRadialDegree({
-                      v,
-                      prefix: "",
-                      device,
-                      state: "normal",
-                      disabled:
-                        defaultValueValue({
-                          v,
-                          key: "colorType",
-                          prefix: "",
-                          device,
-                          state: "normal"
-                        }) === "solid" ||
-                        defaultValueValue({
-                          v,
-                          key: "gradientType",
-                          device,
-                          state: "normal"
-                        }) === "linear"
-                    })
-                  ]
-                }
-              ]
+              id: "",
+              type: "backgroundColor-dev"
             }
           ]
         },
@@ -818,50 +621,9 @@ function getTextPopulationOptions(v, { device }) {
           id: "tabShadow",
           label: t("Shadow"),
           options: [
-            toolbarTextShadow({
-              v,
-              device,
-              state: "normal",
-              onChangeType: ["onChangeTextShadowType"],
-              onChangeHex: [
-                "onChangeTextShadowHexAndOpacity",
-                "onChangeTextShadowHexAndOpacityPalette"
-              ],
-              onChangePalette: [
-                "onChangeTextShadowPalette",
-                "onChangeTextShadowPaletteOpacity"
-              ]
-            }),
             {
-              type: "grid",
-              className: "brz-ed-grid__color-fileds",
-              columns: [
-                {
-                  width: 41,
-                  options: [
-                    toolbarTextShadowHexField2({
-                      v,
-                      device,
-                      state: "normal",
-                      onChange: [
-                        "onChangeTextShadowHexAndOpacity",
-                        "onChangeTextShadowHexAndOpacityPalette"
-                      ]
-                    })
-                  ]
-                },
-                {
-                  width: 59,
-                  options: [
-                    toolbarTextShadowFields2({
-                      v,
-                      device,
-                      state: "normal",
-                      onChange: ["onChangeTextShadowFields"]
-                    })
-                  ]
-                }
-              ]
+              id: "textShadow",
+              type: "textShadow-dev"
             }
           ]
         },
@@ -912,7 +674,7 @@ const getColorToolbar = (v, { device, context }, onChange) => {
     options: isPopulationBlock
       ? getPopulationColorOptions({ populationColor }, onChange)
       : v.textPopulation
-      ? getTextPopulationOptions(v, { device }, onChange)
+      ? getTextPopulationOptions()
       : getSimpleColorOptions(v, { device, context }, onChange)
   };
 };

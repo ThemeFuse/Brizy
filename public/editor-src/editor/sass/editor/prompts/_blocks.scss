@@ -1,3 +1,6 @@
+@import "../../variables";
+
+// Blocks
 .brz-ed-popup-two {
   &-btn-close {
     position: absolute;
@@ -638,7 +641,7 @@
       margin: 0 3px;
     }
     &-sync--uploaded {
-      color: #48be24;
+      color: $green;
     }
     &-download .brz-icon-svg,
     &-sync .brz-icon-svg {
@@ -893,31 +896,13 @@
       }
       &-render {
         display: flex;
-
-        &-button {
-          margin-left: 11.5px;
-          background-color: $brand-primary;
-          color: #fff;
-          font-family: $font-family-1;
-          font-size: 15px;
-          font-weight: 600;
-          line-height: 18px;
-          padding: 9px 32px;
-          border-radius: 3px;
-          cursor: pointer;
-          transition: background-color 150ms linear;
-
-          &:hover {
-            background-color: rgba(61, 191, 232, 0.8);
-          }
-        }
       }
       &-radio {
         display: flex;
         align-items: center;
 
         &-button {
-          margin-right: 25px;
+          margin-right: 36px;
           color: #818a91;
           font-family: $font-family-1;
           font-size: 13px;

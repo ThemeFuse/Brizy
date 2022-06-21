@@ -1,5 +1,11 @@
+import Config from "visual/global/Config";
+import {
+  getFontById,
+  getFontCssStyle,
+  makeStyleCSSVar
+} from "visual/utils/fonts";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getFontById, getFontCssStyleOldType } from "visual/utils/fonts";
+import { DESKTOP } from "visual/utils/responsiveMode";
 
 export function styleTypographyFontFamily({ v, device, state }) {
   const { fontFamily, fontFamilyType } = v;
@@ -12,8 +18,12 @@ export function styleTypographyFontFamily({ v, device, state }) {
   });
 
   if (fontStyle) {
-    // Keys is lowercase because have problems in backend export HTML
-    return `var(--brz-${fontStyle}fontFamily)`.toLowerCase();
+    return `var(${makeStyleCSSVar({
+      id: fontStyle,
+      device: DESKTOP,
+      key: "fontFamily",
+      config: Config.getAll()
+    })})`;
   } else {
     return fontFamily === undefined
       ? fontFamily
@@ -24,7 +34,7 @@ export function styleTypographyFontFamily({ v, device, state }) {
 export function styleTypographyFontSize({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
   const fontStyle = dvv("fontStyle");
-  const globalStyle = getFontCssStyleOldType({
+  const globalStyle = getFontCssStyle({
     fontStyle,
     key: "fontSize",
     device
@@ -67,7 +77,7 @@ export function styleTypographyLineHeight({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   const fontStyle = dvv("fontStyle");
-  const globalStyle = getFontCssStyleOldType({
+  const globalStyle = getFontCssStyle({
     fontStyle,
     key: "lineHeight",
     device
@@ -82,7 +92,7 @@ export function styleTypographyFontWeight({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
 
   const fontStyle = dvv("fontStyle");
-  const globalStyle = getFontCssStyleOldType({
+  const globalStyle = getFontCssStyle({
     fontStyle,
     key: "fontWeight",
     device
@@ -98,7 +108,7 @@ export function styleTypographyLetterSpacing({ v, device, state }) {
 
   const fontStyle = dvv("fontStyle");
   const suffix = fontStyle ? "" : "px";
-  const globalStyle = getFontCssStyleOldType({
+  const globalStyle = getFontCssStyle({
     fontStyle,
     key: "letterSpacing",
     device

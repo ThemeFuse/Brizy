@@ -69,8 +69,12 @@
 .brz-ed-grid__typography--sidebar .brz-ed-control__tabs {
   margin-bottom: 5px;
 }
-.brz-ed-option-wrapper.brz-ed-option.brz-ed-option-type__tabs,
-.brz-ed-option-wrapper.brz-ed-option.brz-ed-option-type__tabs-dev {
+.brz-ed-control__popover--content
+   .brz-ed-option-wrapper.brz-ed-option.brz-ed-option-type__tabs,
+.brz-ed-control__popover--content
+   .brz-ed-option-wrapper.brz-ed-option.brz-ed-option-type__tabs-dev,
+.brz-ed-control__popover--content
+   .brz-ed-option-wrapper.brz-ed-option.brz-ed-option-type__stateMode-dev {
   padding: 0;
 
   &,

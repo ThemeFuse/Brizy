@@ -8,8 +8,7 @@ export function setOffsetsToElementFromWrapper(
   storyWrapper: ElementModel,
   delta = 5
 ): ElementModel {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
+  // @ts-expect-error: Object is of type 'unknown'.
   const elem = storyWrapper.value.items[0].value;
   const _styles: string[] = elem._styles;
   let {
@@ -38,11 +37,9 @@ export function setOffsetsToElementFromWrapper(
 
   return produce(storyWrapper, draft => {
     // is it a good solution?
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
+    // @ts-expect-error: Object is of type 'unknown'.
     draft.value.items[0].value.offsetX = offsetX + delta;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
+    // @ts-expect-error: Object is of type 'unknown'.
     draft.value.items[0].value.offsetY = offsetY + delta;
   });
 }

@@ -7,13 +7,15 @@ import Config from "visual/global/Config";
 import { ToastNotification } from "visual/component/Notifications";
 import {
   authorizedSelector,
-  fontSelector,
+  fontsSelector,
   extraFontStylesSelector
 } from "visual/redux/selectors";
 import { FontsPayload } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
 import {
+  SavedBlockAPI,
   SavedBlockMeta,
+  SavedLayoutAPI,
   SavedLayoutMeta,
   UploadSavedBlocks,
   UploadSavedLayouts
@@ -56,17 +58,37 @@ import { IS_WP } from "visual/utils/env";
 import { getError, isLayout, isPopup, isBlock } from "../common/utils";
 import { ShowSuccessError } from "./Notification";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { isSavedBlock, isSavedLayout, isSavedPopup } from "visual/types/utils";
 
-export type ApiBlockMetaWithType = (SavedLayoutMeta | SavedBlockMeta) & {
-  type: BlockTypes;
-};
-
-export type BlockThumbs = BlockScreenshots & {
+export interface Thumbs extends BlockScreenshots {
   showRemoveIcon: boolean;
   loading: boolean;
   keywords?: string;
-};
-export type BlocksThumbs = Array<ApiBlockMetaWithType & BlockThumbs>;
+}
+
+type LayoutData = Omit<
+  SavedLayoutMeta,
+  "dataVersion" | "isCloudEntity" | "meta"
+>;
+type SavedData = Omit<
+  SavedLayoutMeta,
+  "dataVersion" | "isCloudEntity" | "meta"
+>;
+
+interface SavedLayoutWithThumbs extends LayoutData, Thumbs {
+  type: "LAYOUT";
+}
+
+interface SavedBlockWithThumbs extends SavedData, Thumbs {
+  type: "BLOCK" | "POPUP";
+}
+
+export type BlockData = SavedLayoutWithThumbs | SavedBlockWithThumbs;
+
+export interface Pagination {
+  page: number;
+  done: boolean;
+}
 
 type LibraryProps = {
   type: BlockMetaType;
@@ -86,7 +108,7 @@ type LibraryStateProps = {
 type LibraryState = {
   search: string;
   loading: boolean;
-  blocks: BlocksThumbs;
+  data: Partial<Record<BlockTypes, BlockData[]>>;
   types: BlockCategory[];
   importLoading: boolean;
   exportLoading: boolean;
@@ -110,6 +132,9 @@ const getBlocksType = (type: LibraryProps["type"]): BlockCategory[] => {
     : [{ id: POPUP, title: t("Popups"), icon: "nc-blocks" }];
 };
 
+// Limitation API for getBlocks
+const TOTAL_COUNT = 200;
+
 class Library extends Component<
   LibraryProps & LibraryStateProps,
   LibraryState
@@ -128,11 +153,21 @@ class Library extends Component<
 
   state: LibraryState = {
     search: "",
-    blocks: [],
+    data: {
+      BLOCK: undefined,
+      LAYOUT: undefined,
+      POPUP: undefined
+    },
     loading: true,
     importLoading: false,
     exportLoading: false,
     types: getBlocksType(this.props.type)
+  };
+
+  pagination: Partial<Record<BlockTypes, Pagination>> = {
+    BLOCK: undefined,
+    LAYOUT: undefined,
+    POPUP: undefined
   };
 
   unMount = false;
@@ -140,26 +175,16 @@ class Library extends Component<
 
   async componentDidMount(): Promise<void> {
     const config = Config.getAll();
-    const blocks =
-      this.props.type === "normal"
-        ? await this.getBlocks()
-        : await this.getPopups();
 
     if (isCloud(config)) {
       this.withImportExport = !config.user.isGuest;
     }
-
-    if (!this.unMount) {
-      this.setState({
-        blocks,
-        loading: false
-      });
-    }
+    this.updateBlocks(1);
   }
 
   componentDidUpdate(nextProps: LibraryProps & LibraryStateProps): void {
     if (nextProps.isAuthorized !== this.props.isAuthorized) {
-      this.updateBlocks();
+      this.updateBlocks(1);
     }
   }
 
@@ -167,40 +192,134 @@ class Library extends Component<
     this.unMount = true;
   }
 
-  updateBlocks = async (): Promise<void> => {
-    const blocks =
-      this.props.type === "normal"
-        ? await this.getBlocks()
-        : await this.getPopups();
+  updateBlocks = async (page: number): Promise<void> => {
+    if (this.props.type === "normal") {
+      const BLOCK = await this.getBlocks(page);
+      const LAYOUT = await this.getLayout(page);
 
-    if (!this.unMount) {
-      this.setState({ blocks });
+      if (!this.unMount) {
+        this.setState({ data: { BLOCK, LAYOUT }, loading: false }, () => {
+          const { BLOCK, LAYOUT } = this.pagination;
+
+          if (BLOCK && !BLOCK.done) {
+            this.handleGetMoreBlocks(BLOCK.page + 1, "BLOCK");
+          }
+          if (LAYOUT && !LAYOUT.done) {
+            this.handleGetMoreBlocks(LAYOUT.page + 1, "LAYOUT");
+          }
+        });
+      }
+    } else {
+      const POPUP = await this.getPopups(page);
+
+      if (!this.unMount) {
+        this.setState({ data: { POPUP }, loading: false }, () => {
+          const { POPUP } = this.pagination;
+
+          if (POPUP && !POPUP.done) {
+            this.handleGetMoreBlocks(POPUP.page + 1, "POPUP");
+          }
+        });
+      }
     }
   };
 
-  async getBlocks(): Promise<BlocksThumbs> {
-    const savedBlocks = await getSavedBlocks();
-    const blocksMeta = savedBlocks.filter(
-      ({ meta }) => meta?.type === "normal"
-    );
-    const layoutsMeta = await getSavedLayouts();
-    const blocks = blocksMeta.map(block => ({
-      ...this.makeThumbsData(block),
-      uid: block.uid,
-      type: BLOCK,
-      synchronized: block.synchronized || false,
-      synchronizable: block.synchronizable || false
-    }));
-    const layouts = layoutsMeta.map(layout => ({
+  async getBlocks(page: number): Promise<BlockData[]> {
+    const blocks = await getSavedBlocks({
+      page,
+      count: TOTAL_COUNT
+      // order: "DESC"
+    });
+
+    this.pagination.BLOCK = {
+      page,
+      done: blocks.length < TOTAL_COUNT
+    };
+
+    return blocks
+      .filter(({ meta }) => meta?.type === "normal")
+      .map(block => ({
+        ...this.makeThumbsData(block),
+        uid: block.uid,
+        type: BLOCK,
+        synchronized: block.synchronized || false,
+        synchronizable: block.synchronizable || false
+      }));
+  }
+
+  async getLayout(page: number): Promise<BlockData[]> {
+    const layouts = await getSavedLayouts({
+      page,
+      count: TOTAL_COUNT
+      // order: "DESC"
+    });
+
+    this.pagination.LAYOUT = {
+      page,
+      done: layouts.length < TOTAL_COUNT
+    };
+
+    return layouts.map(layout => ({
       ...this.makeThumbsData(layout),
       uid: layout.uid,
       type: LAYOUT,
       synchronized: layout.synchronized || false,
       synchronizable: layout.synchronizable || false
     }));
-
-    return [...blocks, ...layouts];
   }
+
+  async getPopups(page: number): Promise<BlockData[]> {
+    const popups = await getSavedBlocks({
+      page,
+      count: TOTAL_COUNT
+      // order: "DESC"
+    });
+
+    this.pagination.POPUP = {
+      page,
+      done: popups.length < TOTAL_COUNT
+    };
+
+    return popups
+      .filter(({ meta }) => meta?.type === "popup")
+      .map(popup => ({
+        ...this.makeThumbsData(popup),
+        uid: popup.uid,
+        type: POPUP,
+        synchronized: popup.synchronized || false,
+        synchronizable: popup.synchronizable || false
+      }));
+  }
+
+  handleGetMoreBlocks = async (
+    page: number,
+    type: BlockTypes
+  ): Promise<void> => {
+    const get = match(
+      [isBlock, this.getBlocks.bind(this, page)],
+      [isPopup, this.getPopups.bind(this, page)],
+      [isLayout, this.getLayout.bind(this, page)]
+    );
+
+    const data = await get(type);
+
+    this.setState(
+      produce((state: LibraryState) => {
+        state.data[type]?.push(...data);
+        this.pagination[type] = {
+          page,
+          done: data.length < TOTAL_COUNT
+        };
+      }),
+      (): void => {
+        const d = this.pagination[type];
+
+        if (d && !d.done) {
+          this.handleGetMoreBlocks(page + 1, type);
+        }
+      }
+    );
+  };
 
   async getAssets(
     block: Partial<SavedLayout | SavedBlock>
@@ -219,23 +338,9 @@ class Library extends Component<
 
     return {
       fonts,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
+      // @ts-expect-error: Need to convert normalizeFontStyles to TS
       extraFontStyles: normalizeFontStyles(filteredStyles)
     };
-  }
-
-  async getPopups(): Promise<BlocksThumbs> {
-    const savedBlocks = await getSavedBlocks();
-    const popupsMeta = savedBlocks.filter(({ meta }) => meta?.type === "popup");
-
-    return popupsMeta.map(popup => ({
-      ...this.makeThumbsData(popup),
-      uid: popup.uid,
-      type: POPUP,
-      synchronized: popup.synchronized || false,
-      synchronizable: popup.synchronizable || false
-    }));
   }
 
   async handleAddLayout(uid: string): Promise<void> {
@@ -271,27 +376,29 @@ class Library extends Component<
     }
   }
 
-  handleLoadingBlock(uid: string, loading: boolean): void {
+  handleLoadingBlock(uid: string, type: BlockTypes, loading: boolean): void {
     this.setState(
-      produce(state => {
-        state.blocks.forEach(
-          (block: ApiBlockMetaWithType & BlockThumbs, index: number) => {
-            if (block.uid == uid) {
-              state.blocks[index].loading = loading;
-            }
+      produce((state: LibraryState) => {
+        state.data[type] = state.data[type] ?? [];
+
+        //@ts-expect-error: Object is possibly 'undefined'.
+        state.data[type].forEach((block, index: number) => {
+          if (block.uid == uid) {
+            //@ts-expect-error: Object is possibly 'undefined'.
+            state.data[type][index].loading = loading;
           }
-        );
+        });
       })
     );
   }
 
-  handleAddItems = ({ type, uid }: ApiBlockMetaWithType): void => {
-    this.handleLoadingBlock(uid, true);
+  handleAddItems = ({ type, uid }: BlockData): void => {
+    this.handleLoadingBlock(uid, type, true);
 
     switch (type) {
       case BLOCK: {
         this.handleAddBlock(uid).catch(() => {
-          this.handleLoadingBlock(uid, false);
+          this.handleLoadingBlock(uid, type, false);
           const { getParentNode } = this.props;
           const parent = (getParentNode && getParentNode()) || document;
           const doc = parent.ownerDocument?.body;
@@ -305,7 +412,7 @@ class Library extends Component<
       }
       case POPUP: {
         this.handleAddPopup(uid).catch(() => {
-          this.handleLoadingBlock(uid, false);
+          this.handleLoadingBlock(uid, type, false);
           const { getParentNode } = this.props;
           const parent = (getParentNode && getParentNode()) || document;
           const doc = parent.ownerDocument?.body;
@@ -319,7 +426,7 @@ class Library extends Component<
       }
       case LAYOUT: {
         this.handleAddLayout(uid).catch(() => {
-          this.handleLoadingBlock(uid, false);
+          this.handleLoadingBlock(uid, type, false);
           const { getParentNode } = this.props;
           const parent = (getParentNode && getParentNode()) || document;
           const doc = parent.ownerDocument?.body;
@@ -334,7 +441,7 @@ class Library extends Component<
     }
   };
 
-  handleDeleteItem = ({ type, uid }: ApiBlockMetaWithType): void => {
+  handleDeleteItem = ({ type, uid }: BlockData): void => {
     switch (type) {
       case BLOCK:
       case POPUP: {
@@ -347,8 +454,11 @@ class Library extends Component<
       }
     }
 
-    this.setState(({ blocks }) => ({
-      blocks: blocks.filter(block => block.uid !== uid)
+    this.setState(({ data }) => ({
+      data: {
+        ...data,
+        [type]: data[type]?.filter(block => block.uid !== uid)
+      }
     }));
   };
 
@@ -364,7 +474,54 @@ class Library extends Component<
       const data = await fetch(type);
 
       if (data.success.length) {
-        await this.updateBlocks();
+        const blocks: BlockData[] = [];
+        const layouts: BlockData[] = [];
+        const popups: BlockData[] = [];
+
+        data.success.forEach((block: SavedBlockAPI | SavedLayoutAPI) => {
+          if (isSavedLayout(block)) {
+            layouts.push({
+              ...this.makeThumbsData(block),
+              uid: block.uid,
+              type: LAYOUT,
+              synchronized: block.synchronized || false,
+              synchronizable: block.synchronizable || false
+            });
+          }
+          if (isSavedBlock(block)) {
+            blocks.push({
+              ...this.makeThumbsData(block),
+              uid: block.uid,
+              type: BLOCK,
+              synchronized: block.synchronized || false,
+              synchronizable: block.synchronizable || false
+            });
+          }
+          if (isSavedPopup(block)) {
+            popups.push({
+              ...this.makeThumbsData(block),
+              uid: block.uid,
+              type: POPUP,
+              synchronized: block.synchronized || false,
+              synchronizable: block.synchronizable || false
+            });
+          }
+        });
+
+        this.setState(
+          produce((state: LibraryState) => {
+            if (blocks.length > 0) {
+              state.data.BLOCK = [...(state.data.BLOCK ?? []), ...blocks];
+            }
+            if (popups.length > 0) {
+              state.data.POPUP = [...(state.data.POPUP ?? []), ...popups];
+            }
+            if (layouts.length > 0) {
+              state.data.LAYOUT = [...(state.data.LAYOUT ?? []), ...layouts];
+            }
+          })
+        );
+
         ShowSuccessError(data, type);
       }
 
@@ -394,7 +551,11 @@ class Library extends Component<
     }
   };
 
-  makeThumbsData(block: SavedBlockMeta | SavedLayoutMeta): BlockThumbs {
+  handleSuccessSync = (): void => {
+    this.updateBlocks(1);
+  };
+
+  makeThumbsData(block: SavedBlockMeta | SavedLayoutMeta): Thumbs {
     const { url, width, height } = blockThumbnailData(block);
 
     return {
@@ -409,7 +570,7 @@ class Library extends Component<
   render(): React.ReactElement {
     const {
       loading,
-      blocks,
+      data,
       types,
       search,
       importLoading,
@@ -422,7 +583,7 @@ class Library extends Component<
       <Blocks
         type={type}
         loading={loading}
-        items={blocks}
+        items={data}
         types={types}
         showSearch={showSearch}
         sidebarSync={!hasWhiteLabel}
@@ -432,7 +593,7 @@ class Library extends Component<
         importLoading={importLoading}
         exportLoading={exportLoading}
         HeaderSlotLeft={HeaderSlotLeft}
-        onSuccessSync={this.updateBlocks}
+        onSuccessSync={this.handleSuccessSync}
         onChange={this.handleAddItems}
         onDelete={this.handleDeleteItem}
         onImport={this.withImportExport ? this.handleImport : undefined}
@@ -442,7 +603,7 @@ class Library extends Component<
 }
 
 const mapStateToProps = (state: ReduxState): LibraryStateProps => ({
-  projectFonts: fontSelector(state),
+  projectFonts: fontsSelector(state),
   projectExtraFontStyles: extraFontStylesSelector(state),
   isAuthorized: authorizedSelector(state) === "connected"
 });

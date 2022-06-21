@@ -15,14 +15,6 @@ export default class Radio extends React.Component {
     currentValue: this.props.defaultValue
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (this.state.defaultValue !== nextProps.defaultValue) {
-      this.setState({
-        currentValue: nextProps.defaultValue
-      });
-    }
-  }
-
   onItemClick = value => {
     this.setState({
       currentValue: value

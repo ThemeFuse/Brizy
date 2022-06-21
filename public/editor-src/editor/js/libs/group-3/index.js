@@ -1,7 +1,10 @@
 import jQuery from "jquery";
 import "../common/jQuery";
 import "magnific-popup";
+import { Motions } from "@brizy/motion";
+
 export * from "../animation";
+export { Motions };
 
 // In webpack.config is specific what jq is used
 // In WP jQuery is added automated with WordPress

@@ -2,6 +2,7 @@ import React from "react";
 import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import { Badge } from "visual/component/Badge";
 import { getRulesListIndexByRule } from "./utils";
 import { isLegacyRuleListItem, RuleList, RuleListItem } from "./types";
 import { Rule } from "visual/types";
@@ -47,6 +48,7 @@ class ConditionGroup extends React.Component<Props> {
       isLegacyRuleListItem(item) ? (
         <SelectItem key={item.value} value={String(item.value)}>
           {item.title}
+          {item.status && <Badge status={item.status} />}
         </SelectItem>
       ) : (
         <SelectOptgroup
@@ -55,6 +57,7 @@ class ConditionGroup extends React.Component<Props> {
           items={item.items.map(item => (
             <SelectItem key={item.value} value={String(item.value)}>
               {item.title}
+              {item.status && <Badge status={item.status} />}
             </SelectItem>
           ))}
         >

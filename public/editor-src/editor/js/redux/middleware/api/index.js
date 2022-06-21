@@ -8,17 +8,10 @@ import {
   UPDATE_BLOCKS,
   UPDATE_GLOBAL_BLOCK,
   DELETE_GLOBAL_BLOCK,
-  UPDATE_CURRENT_KIT_ID,
   UPDATE_CURRENT_STYLE_ID,
   UPDATE_CURRENT_STYLE,
-  IMPORT_TEMPLATE,
-  IMPORT_KIT,
   ADD_BLOCK,
-  ADD_GLOBAL_BLOCK,
   REMOVE_BLOCK,
-  ADD_FONTS,
-  DELETE_FONTS,
-  UPDATE_DISABLED_ELEMENTS,
   UPDATE_POPUP_RULES,
   UPDATE_GB_RULES,
   UPDATE_TRIGGERS,
@@ -27,9 +20,17 @@ import {
   HYDRATE
 } from "../../actions";
 import {
+  IMPORT_KIT,
+  IMPORT_TEMPLATE,
   PUBLISH,
   IMPORT_STORY,
   UPDATE_EXTRA_FONT_STYLES,
+  UPDATE_CURRENT_KIT_ID,
+  UPDATE_DISABLED_ELEMENTS,
+  ADD_GLOBAL_BLOCK,
+  ADD_FONTS,
+  DELETE_FONTS,
+  UPDATE_DEFAULT_FONT,
   updateStoreWasChanged
 } from "../../actions2";
 import {
@@ -46,7 +47,8 @@ import {
 } from "./utils";
 import {
   pageSelector,
-  fontSelector,
+  fontsSelector,
+  defaultFontSelector,
   projectSelector,
   projectAssembled,
   stylesSelector,
@@ -168,8 +170,8 @@ function handleProject({ action, state, oldState, apiHandler }) {
     case IMPORT_STORY:
     case IMPORT_TEMPLATE: {
       const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
-      const oldFonts = fontSelector(oldState);
-      const fonts = fontSelector(state);
+      const oldFonts = fontsSelector(oldState);
+      const fonts = fontsSelector(state);
       const oldStyles = stylesSelector(oldState);
       const styles = stylesSelector(state);
 
@@ -192,10 +194,26 @@ function handleProject({ action, state, oldState, apiHandler }) {
 
     case ADD_FONTS:
     case DELETE_FONTS: {
-      const fonts = fontSelector(state);
+      const fonts = fontsSelector(state);
       const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
       const project = produce(projectSelector(state), draft => {
         draft.data.fonts = fonts;
+      });
+      const meta = {
+        is_autosave: 0
+      };
+
+      // cancel pending request
+      debouncedApiUpdateProject.cancel();
+
+      apiHandler(apiUpdateProject(project, meta), onSuccess, onError);
+      break;
+    }
+    case UPDATE_DEFAULT_FONT: {
+      const font = defaultFontSelector(state);
+      const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
+      const project = produce(projectSelector(state), draft => {
+        draft.data.font = font;
       });
       const meta = {
         is_autosave: 0

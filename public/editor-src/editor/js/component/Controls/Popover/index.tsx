@@ -1,33 +1,21 @@
 import React, { FC, PropsWithChildren, ReactElement } from "react";
 import classNames from "classnames";
-import Tooltip from "visual/component/Controls/Tooltip";
+import {
+  Tooltip,
+  Props as TooltipProps
+} from "visual/component/Controls/Tooltip";
 import { WithClassName } from "visual/utils/options/attributes";
 
 export type Props = WithClassName &
-  PropsWithChildren<{}> & {
-    toolbar?: object;
+  PropsWithChildren<unknown> & {
+    toolbar?: TooltipProps["toolbar"];
     trigger: ReactElement;
     onOpen?: () => void;
     onClose?: () => void;
     title?: string;
     size: "small" | "medium" | "large" | "auto";
     clickOutsideExceptions?: string[];
-    placement:
-      | "auto"
-      | "auto-start"
-      | "auto-end"
-      | "top"
-      | "top-start"
-      | "top-end"
-      | "bottom"
-      | "bottom-start"
-      | "bottom-end"
-      | "right"
-      | "right-start"
-      | "right-end"
-      | "left"
-      | "left-start"
-      | "left-end";
+    placement: TooltipProps["placement"];
   };
 
 export const Popover: FC<Props> = ({

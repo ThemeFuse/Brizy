@@ -6,6 +6,7 @@ export type CmsListItem = {
   items: {
     title: string;
     value: string;
+    status?: "publish" | "draft";
   }[];
 };
 
@@ -13,6 +14,7 @@ export type LegacyRuleListItem = {
   title: string;
   value: string;
   disabled?: boolean;
+  status?: "publish" | "draft" | "pending";
   // without the line below type guard won't work, because
   // this type is "subtype" of CmsListItem
   items?: never;

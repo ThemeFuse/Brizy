@@ -1,4 +1,4 @@
-import { pass } from "./index";
+import { pass, tap } from "./index";
 
 describe("Testing 'pass' function", function() {
   const isEven = (n: number): boolean => n % 2 === 0;
@@ -18,5 +18,16 @@ describe("Testing 'pass' function", function() {
 
   test("If value is passes the predicate, return the same reference", function() {
     [[], {}, new Map()].map(v => expect(pass(isObject)(v)).toBe(v));
+  });
+});
+
+describe("Testing 'tap' function", () => {
+  describe("Always return the input, and call the provided side effect only once", () => {
+    ["a", 1, {}, null, undefined].forEach(v => {
+      const sideEffect = jest.fn();
+      const f = tap(sideEffect);
+      expect(f(v)).toBe(v);
+      expect(sideEffect).toBeCalledTimes(1);
+    });
   });
 });

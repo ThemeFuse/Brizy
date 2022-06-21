@@ -20,6 +20,7 @@
       margin: 2px;
       transition-duration: 300ms;
     }
+
     &--item {
       width: 50%;
       height: 100%;
@@ -29,6 +30,15 @@
       align-items: center;
       white-space: nowrap;
     }
+    &--button {
+      cursor: pointer;
+      background-clip: padding-box;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
     &--item--active {
       z-index: 1;
     }
@@ -78,8 +88,16 @@
     content: "";
     transform: translateX(calc(-100% - 8px));
   }
+  &--button {
+    cursor: pointer;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+  }
 
-  span{
+  .brz-switcher__nav2--button {
     margin: 0 20px;
   }
 }

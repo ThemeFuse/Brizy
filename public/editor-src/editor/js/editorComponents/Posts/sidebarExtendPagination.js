@@ -1,5 +1,4 @@
 import { t } from "visual/utils/i18n";
-import { toolbarBorderRadius } from "visual/utils/toolbar";
 
 export const title = ({ v }) => {
   switch (v.type) {
@@ -18,16 +17,43 @@ export const title = ({ v }) => {
   }
 };
 
-export function getItems({ v, device }) {
+export function getItems() {
   return [
-    toolbarBorderRadius({
-      v,
-      device,
-      state: "normal",
-      prefix: "pagination",
-      devices: "desktop",
-      onChangeGrouped: ["onChangeBorderRadiusGrouped"],
-      onChangeUngrouped: ["onChangeBorderRadiusUngrouped"]
-    })
+    {
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
+      tabs: [
+        {
+          id: "styles",
+          title: t("Styling"),
+          label: t("Styling"),
+          options: [
+            {
+              id: "settingsTabs",
+              type: "tabs-dev",
+              config: {
+                align: "start"
+              },
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  options: [
+                    {
+                      id: "paginationBorder",
+                      type: "corners-dev",
+                      label: t("Corner"),
+                      devices: "desktop",
+                      position: 65
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
   ];
 }

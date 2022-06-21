@@ -52,7 +52,6 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 			$this->send_file( $croppedPath );
 
 		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->exception( $e );
 			status_header( 404, $e->getMessage() );
 			global $wp_query;
 			$wp_query->set_404();

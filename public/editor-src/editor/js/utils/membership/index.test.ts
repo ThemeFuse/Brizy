@@ -1,4 +1,3 @@
-import { disableAlreadyUsedRules } from "visual/component/Prompts/PromptConditions/Rules/utils";
 import { M, hasMembership } from "./index";
 
 describe("Testing 'hasMembership' constant", function() {

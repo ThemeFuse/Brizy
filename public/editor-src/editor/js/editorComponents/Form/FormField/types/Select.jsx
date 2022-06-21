@@ -3,7 +3,7 @@ import { replaceAt, addLast, removeAt } from "timm";
 import _ from "underscore";
 import TextField from "./common/TextField";
 import EditorIcon from "visual/component/EditorIcon";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import ClickOutside from "visual/component/ClickOutside";
 import SelectControl from "visual/component/Controls/Select";
 import ScrollPane from "visual/component/ScrollPane";

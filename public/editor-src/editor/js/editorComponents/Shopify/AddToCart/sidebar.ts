@@ -14,7 +14,6 @@ export const getItems = (): ToolbarItemType[] => {
         {
           id: "settingsStyling",
           label: t("Styling"),
-          icon: "nc-styling",
           options: [
             {
               id: "border",
@@ -26,7 +25,6 @@ export const getItems = (): ToolbarItemType[] => {
         {
           id: "moreSettingsAdvanced",
           label: t("Advanced"),
-          icon: "nc-cog",
           options: [
             {
               id: "hoverTransition",

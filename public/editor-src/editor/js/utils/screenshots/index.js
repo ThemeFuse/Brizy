@@ -2,14 +2,22 @@ import Config from "visual/global/Config";
 import { uuid } from "visual/utils/uuid";
 import { urlContainsQueryString } from "visual/utils/url";
 import { cloneAndInlineStyles } from "./cloneAndInlineStyles.js";
+import { assetUrl } from "visual/utils/asset";
 
 export { browserSupports } from "./browserSupports";
+
+// Note: Workers are build in a separated files
+// See webpack.config.worker.js
+const getWorkerUrl = config => {
+  const url = config.urls.worker ?? assetUrl("editor/js");
+  return `${url}/screenshots.worker.js`;
+};
 
 const SCREENSHOT_MAX_WIDTH = 600;
 
 const promises = {};
 
-const worker = new Worker("./worker/index.js", { type: "module" });
+const worker = new Worker(getWorkerUrl(Config.getAll()), { type: "module" });
 
 worker.onmessage = async e => {
   const { id, url: workerUrl } = e.data;

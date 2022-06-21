@@ -22,6 +22,7 @@ $dropdown-arrow-size: 7px;
   &__ul {
     padding: 0;
     margin: 0;
+    font-family: inherit;
   }
 
   // Menu
@@ -73,7 +74,7 @@ $dropdown-arrow-size: 7px;
         left: auto;
         width: $dropdown-arrow-size;
         height: $dropdown-arrow-size;
-        border: 2px solid #fff;
+        border: 2px solid currentColor;
         border-right-style: none;
         border-bottom-style: none;
         margin: auto;
@@ -295,6 +296,19 @@ $dropdown-arrow-size: 7px;
   // Animation
   &.brz-mm-menu_opened ~ .brz-mm-wrapper__blocker {
     transition-delay: 0s;
+  }
+
+  .brz-mm-panel {
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &:before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 

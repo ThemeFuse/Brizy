@@ -15,9 +15,9 @@ export type Choice = {
 };
 
 export type Config = WithSize & {
-  search: boolean;
-  items: number;
-  scroll: number;
+  search?: boolean;
+  items?: number;
+  scroll?: number;
 };
 
 export type ChoicesSync = Choice[];

@@ -9,7 +9,7 @@ import Scrollbars from "react-custom-scrollbars";
 type RefType = (r: Ref<ReactElement>) => void;
 
 type CustomScrollbars = {
-  onScroll: () => {};
+  onScroll: () => void;
   forwardedRef: RefType;
   style: StyleSheet;
   children?: ReactElement;

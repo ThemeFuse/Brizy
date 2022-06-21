@@ -35,6 +35,13 @@ export function cssStyleSizeMaxWidthPercent(d: CSSValue): string {
   return width === undefined ? "" : `max-width:${width}%;`;
 }
 
+export function cssStyleSizeHeight(d: CSSValue): string {
+  const height = styleSizeHeight(d);
+  const unit = Str.read(defaultValueValue({ key: "heightSuffix", ...d }));
+
+  return height === undefined ? "" : `height:${height}${unit || "px"};`;
+}
+
 export function cssStyleSizeHeightPx(d: CSSValue): string {
   return mApply(v => `height:${v}px;`, styleSizeHeight(d)) ?? "";
 }

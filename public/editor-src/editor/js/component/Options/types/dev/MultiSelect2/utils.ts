@@ -4,15 +4,14 @@ import { read as readLiteral } from "visual/utils/types/Literal";
 import { t } from "visual/utils/i18n";
 import { printf } from "visual/utils/string";
 import {
-  GetElementModel,
-  GetModel,
-  SimpleValue
+  ToElementModel,
+  FromElementModel
 } from "visual/component/Options/Type";
 import { Value, ChoicesSync, ChoicesAsync, ElementModelValue } from "./types";
 
 export const DEFAULT_VALUE: ElementModelValue = { value: [] };
 
-export const getModel: GetModel<ElementModelValue> = get => {
+export const fromElementModel: FromElementModel<ElementModelValue> = get => {
   let value: Value;
   try {
     value = JSON.parse(Str.read(get("value")) ?? "[]");
@@ -37,18 +36,11 @@ export const getModel: GetModel<ElementModelValue> = get => {
   return { value: v };
 };
 
-export const getElementModel: GetElementModel<ElementModelValue> = (
-  value,
-  get
-) => {
+export const toElementModel: ToElementModel<ElementModelValue> = value => {
   return {
-    [get("value")]: value.value
+    value: JSON.stringify(value.value)
   };
 };
-
-export const toElement = (v: Value): SimpleValue<string> => ({
-  value: JSON.stringify(v)
-});
 
 export function isChoicesSync(
   choices: ChoicesSync | ChoicesAsync

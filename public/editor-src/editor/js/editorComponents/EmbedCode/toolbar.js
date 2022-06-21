@@ -31,9 +31,12 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "code",
-          type: "textarea-dev",
+          type: "codeMirror-dev",
           disabled: !isApproved,
-          placeholder: t("Paste your code here...")
+          placeholder: t("Paste your HTML code here..."),
+          config: {
+            language: "html"
+          }
         }
       ]
     },
@@ -106,11 +109,41 @@ export function getItems({ v, device }) {
           }
         },
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog",
-          devices: "desktop"
+          id: "grid",
+          type: "grid",
+          separator: true,
+          columns: [
+            {
+              id: "grid-settings",
+              width: 50,
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            },
+            {
+              id: "grid-effects",
+              width: 50,
+              options: [
+                {
+                  id: "effects",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "effects",
+                    text: t("Effects"),
+                    icon: "nc-flash"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -119,7 +152,8 @@ export function getItems({ v, device }) {
       type: "advancedSettings",
       position: 110,
       disabled: !IS_STORY,
-      icon: "nc-cog"
+      icon: "nc-cog",
+      devices: "desktop"
     }
   ];
 }

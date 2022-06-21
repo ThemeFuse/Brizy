@@ -75,6 +75,18 @@
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
 
+    "borderRadiusSuffix": 0,
+    "borderTopLeftRadiusSuffix": 0,
+    "borderTopRightRadiusSuffix": 0,
+    "borderBottomRightRadiusSuffix": 0,
+    "borderBottomLeftRadiusSuffix": 0,
+
+    "tempBorderRadiusSuffix": 0,
+    "tempBorderTopLeftRadiusSuffix": 0,
+    "tempBorderTopRightRadiusSuffix": 0,
+    "tempBorderBottomRightRadiusSuffix": 0,
+    "tempBorderBottomLeftRadiusSuffix": 0,
+
     "borderColorHex": "#66738d",
     "borderColorOpacity": 0,
     "borderColorPalette": "",

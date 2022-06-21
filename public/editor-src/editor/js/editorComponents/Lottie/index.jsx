@@ -2,7 +2,6 @@ import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Toolbar from "visual/component/Toolbar";
-import { getStore } from "visual/redux/store";
 import { blocksDataSelector } from "visual/redux/selectors";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
@@ -20,8 +19,10 @@ import { customFileUrl } from "visual/utils/customFile";
 import { pipe } from "visual/utils/fp";
 import { isNullish } from "visual/utils/value";
 import * as Num from "visual/utils/reader/number";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { getStore } from "visual/redux/store";
 
-const resizerPoints = ["centerLeft", "centerRight"];
+const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
 const isNan = pipe(Num.read, isNullish);
 
@@ -81,30 +82,7 @@ class Lottie extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  renderPopups(v) {
-    const { popups, linkType, linkPopup } = v;
-
-    if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
-      return null;
-    }
-
-    const normalizePopups = popups.reduce((acc, popup) => {
-      let itemData = popup;
-
-      if (itemData.type === "GlobalBlock") {
-        // TODO: some kind of error handling
-        itemData = blocksDataSelector(getStore().getState())[
-          itemData.value._id
-        ];
-      }
-
-      return itemData ? [...acc, itemData] : acc;
-    }, []);
-
-    if (normalizePopups.length === 0) {
-      return null;
-    }
-
+  renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
@@ -115,9 +93,8 @@ class Lottie extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const blockData = blocksDataSelector(getStore().getState())[
-            itemData.value._id
-          ];
+          const globalBlocks = blocksDataSelector(getStore().getState());
+          const blockData = globalBlocks[itemData.value._id];
 
           popupId = blockData.value.popupId;
         }
@@ -192,7 +169,8 @@ class Lottie extends EditorComponent {
             </BoxResizer>
           </Wrapper>
         </Toolbar>
-        {this.renderPopups(v)}
+        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+          this.renderPopups()}
       </>
     );
   }
@@ -270,7 +248,8 @@ class Lottie extends EditorComponent {
             animDom
           )}
         </Wrapper>
-        {this.renderPopups(v)}
+        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+          this.renderPopups()}
       </>
     );
   }

@@ -35,8 +35,19 @@ export function cssStyleElementTabsBtnSpacing({ v, device, state }) {
 
 export function cssStyleElementTabsBtnIconSize({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
+  const iconSize = dvv("iconSize");
   const iconCustomSize = dvv("iconCustomSize");
-  return `font-size: ${iconCustomSize}px;`;
+
+  switch (iconSize) {
+    case "small":
+      return "font-size: 16px;";
+    case "medium":
+      return "font-size: 24px;";
+    case "large":
+      return "font-size: 32px;";
+    case "custom":
+      return `font-size: ${iconCustomSize}px;`;
+  }
 }
 
 export function cssStyleElementTabsBtnActiveBorderBottomColor({ v }) {

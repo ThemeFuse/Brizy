@@ -1,13 +1,10 @@
+import { match } from "fp-utilities";
 import * as String from "visual/utils/string";
 import * as Math from "visual/utils/math";
-import * as Patcher from "visual/utils/patch";
-import * as Model from "./model";
 import * as Option from "visual/component/Options/Type";
-import { MValue } from "visual/utils/value";
-import { GetModel } from "visual/component/Options/Type";
-
-import { PositionPatch, ImageDataPatch, Value, Size } from "./Types";
-import { apply } from "visual/utils/model";
+import { FromElementModel } from "visual/component/Options/Type";
+import { Value, Size } from "./Types";
+import * as Patch from "./types/Patch";
 
 export const DEFAULT_VALUE: Value = {
   src: "",
@@ -19,7 +16,7 @@ export const DEFAULT_VALUE: Value = {
   sizeType: "custom"
 };
 
-export const getModel: GetModel<Value> = get => ({
+export const fromElementModel: FromElementModel<Value> = get => ({
   src: String.toString(get("imageSrc")),
   extension: String.toString(get("imageExtension")),
   width: Math.toNonNegative(get("imageWidth")),
@@ -29,59 +26,22 @@ export const getModel: GetModel<Value> = get => ({
   sizeType: String.toString(get("sizeType")) ?? DEFAULT_VALUE.sizeType
 });
 
-export const getElementModel: Option.GetElementModel<Value> = (v, get) => ({
-  [get("imageSrc")]: v.src,
-  [get("imageExtension")]: v.extension,
-  [get("imageWidth")]: v.width,
-  [get("imageHeight")]: v.height,
-  [get("positionX")]: v.x,
-  [get("positionY")]: v.y,
-  [get("sizeType")]: v.sizeType
-});
-
-export const patchImageData = (
-  newModel: Model.Image,
-  oldModel: Model.Image
-): MValue<ImageDataPatch> => {
-  const patch = Patcher.apply(
-    [
-      [Model.setSrc, newModel.src],
-      [Model.setExtension, newModel.extension],
-      [Model.setWidth, newModel.width],
-      [Model.setHeight, newModel.height]
-    ],
-    oldModel
-  );
-
-  return patch
-    ? {
-        imageSrc: patch.src,
-        imageExtension: patch.extension,
-        imageWidth: patch.width,
-        imageHeight: patch.height
-      }
-    : undefined;
-};
-
-export const patchPosition = (
-  newModel: Model.Image,
-  oldModel: Model.Image
-): MValue<PositionPatch> => {
-  const patch = apply(
-    [
-      [Model.setX, newModel.x],
-      [Model.setY, newModel.y]
-    ],
-    oldModel
-  );
-
-  return patch
-    ? {
-        positionX: patch.x,
-        positionY: patch.y
-      }
-    : undefined;
-};
+export const toElementModel: Option.ToElementModel<Patch.Patch> = match(
+  [
+    Patch.isImageDataPatch,
+    v => ({
+      imageSrc: v.imageSrc,
+      imageExtension: v.imageExtension,
+      imageWidth: v.imageWidth,
+      imageHeight: v.imageHeight
+    })
+  ],
+  [
+    Patch.isPositionPatch,
+    v => ({ positionX: v.positionX, positionY: v.positionY })
+  ],
+  [Patch.isSizePatch, v => ({ sizeType: v.sizeType })]
+);
 
 export const configSizeToSize = (size: {
   label: string;

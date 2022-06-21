@@ -108,6 +108,18 @@
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
 
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "tempBorderRadiusSuffix": "px",
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
+
     "hoverBorderRadiusType": null,
     "hoverBorderRadius": null,
     "hoverBorderTopLeftRadius": null,

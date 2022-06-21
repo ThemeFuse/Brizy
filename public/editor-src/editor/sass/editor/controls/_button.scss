@@ -1,6 +1,7 @@
 @import "../../variables";
 
 // Buttons
+
 .brz-ed-control__button {
   display: grid;
   grid-template-columns: auto auto;
@@ -9,6 +10,8 @@
   font-size: $options-item-font-size;
   transition: color 0.2s linear;
   cursor: pointer;
+  display: flex;
+  width: 100%;
 
   .brz-icon-svg {
     font-size: $toolbar-font-size;
@@ -21,6 +24,16 @@
     .brz-icon-svg {
       order: 2;
     }
+  }
+
+  &-left {
+    justify-content: flex-start;
+  }
+  &-center {
+    justify-content: center;
+  }
+  &-right {
+    justify-content: flex-end;
   }
 
   &:hover {

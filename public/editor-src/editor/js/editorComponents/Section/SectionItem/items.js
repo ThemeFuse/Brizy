@@ -64,7 +64,9 @@ class SectionItemItems extends EditorArrayComponent {
       "paste",
       "pasteStyles",
       "delete",
-      "horizontalAlign"
+      "horizontalAlign",
+      "showSidebarStyling",
+      "showSidebarAdvanced"
     ];
     return (
       <ContextMenuExtend

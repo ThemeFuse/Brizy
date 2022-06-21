@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Input as Control } from "visual/component/Controls/Input";
 import { String } from "visual/utils/string/specs";
 import * as Option from "visual/component/Options/Type";
-import { debouncedEffect } from "visual/component/hooks";
+import { useDebouncedEffect } from "visual/component/hooks";
 import { Component, Model } from "./Type";
 
 export const InputText: Component = ({
@@ -23,7 +23,7 @@ export const InputText: Component = ({
     }
   }, [value]);
 
-  debouncedEffect(
+  useDebouncedEffect(
     () => {
       if (lastUpdate.current !== _value) {
         lastUpdate.current = _value;
@@ -56,13 +56,13 @@ export const InputText: Component = ({
   );
 };
 
-const getModel: Option.GetModel<Model> = get => ({
+const getModel: Option.FromElementModel<Model> = get => ({
   value: String.read(get("value"))
 });
 
-const getElementModel: Option.GetElementModel<Model> = (values, get) => {
+const getElementModel: Option.ToElementModel<Model> = values => {
   return {
-    [get("value")]: values.value
+    value: values.value
   };
 };
 
@@ -70,6 +70,6 @@ InputText.defaultValue = {
   value: ""
 };
 
-InputText.getModel = getModel;
+InputText.fromElementModel = getModel;
 
-InputText.getElementModel = getElementModel;
+InputText.toElementModel = getElementModel;

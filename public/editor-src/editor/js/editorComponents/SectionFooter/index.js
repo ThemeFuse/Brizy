@@ -1,32 +1,38 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
 import classnames from "classnames";
-import { validateKeyByProperty } from "visual/utils/onChange";
-import SectionFooterItems from "./Items";
+import React from "react";
+import { mergeDeep } from "timm";
+import Animation from "visual/component/Animation";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
+import CustomCSS from "visual/component/CustomCSS";
 import PaddingResizer from "visual/component/PaddingResizer";
+import { ProBlocked } from "visual/component/ProBlocked";
 import { Roles } from "visual/component/Roles";
+import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import {
   wInBoxedPage,
-  wInTabletPage,
+  wInFullPage,
   wInMobilePage,
-  wInFullPage
+  wInTabletPage
 } from "visual/config/columns";
-import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import { styleSection, styleContainer, styleAnimation } from "./styles";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
-import defaultValue from "./defaultValue.json";
+import { IS_PRO } from "visual/utils/env";
+import { hasMembership } from "visual/utils/membership";
+import {
+  defaultValueValue,
+  validateKeyByProperty
+} from "visual/utils/onChange";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import {
   styleElementSectionContainerType,
   styleSizeContainerSize
 } from "visual/utils/style2";
-import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import Animation from "visual/component/Animation";
-import { hasMembership } from "visual/utils/membership";
+import defaultValue from "./defaultValue.json";
+import SectionFooterItems from "./Items";
+import * as sidebarConfig from "./sidebar";
+import { styleAnimation, styleContainer, styleSection } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class SectionFooter extends EditorComponent {
   static get componentId() {
@@ -45,12 +51,25 @@ class SectionFooter extends EditorComponent {
 
   collapsibleToolbarRef = React.createRef();
 
+  state = {
+    isDragging: false,
+    paddingPatch: null
+  };
+
+  getDBValue() {
+    if (this.state.paddingPatch) {
+      return mergeDeep(this.props.dbValue, this.state.paddingPatch);
+    } else {
+      return this.props.dbValue;
+    }
+  }
+
   componentDidMount() {
     this.mounted = true;
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.optionalSCU(nextProps);
+    return this.optionalSCU(nextProps) || this.state.paddingPatch;
   }
 
   componentWillUnmount() {
@@ -73,7 +92,28 @@ class SectionFooter extends EditorComponent {
     this.collapsibleToolbarRef.current.open();
   };
 
-  handlePaddingResizerChange = patch => this.patchValue(patch);
+  onPaddingResizerStart = () => {
+    this.setState({ isDragging: true });
+  };
+
+  handlePaddingResizerChange = (patch) => {
+    if (this.state.isDragging) {
+      this.setState({ paddingPatch: patch });
+    } else {
+      this.patchValue(patch);
+    }
+  };
+
+  onPaddingResizerEnd = () => {
+    const paddingPatch = this.state.paddingPatch;
+    this.setState({ isDragging: false, paddingPatch: null }, () =>
+      this.handlePaddingResizerChange(paddingPatch)
+    );
+  };
+
+  handleRemove = () => {
+    this.selfDestruct();
+  };
 
   getMeta(v) {
     const { meta } = this.props;
@@ -97,6 +137,28 @@ class SectionFooter extends EditorComponent {
       mobileWNoSpacing: mobileW
     };
   }
+
+  getAnimationClassName = (v, vs, vd) => {
+    if (!validateKeyByProperty(v, "animationName", "none")) {
+      return undefined;
+    }
+
+    const animationName = defaultValueValue({ v, key: "animationName" });
+    const animationDuration = defaultValueValue({
+      v,
+      key: "animationDuration"
+    });
+    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
+    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+
+    return classnames(
+      css(
+        `${this.getComponentId()}-animation-${slug}`,
+        `${this.getId()}-animation-${slug}`,
+        styleAnimation(v, vs, vd)
+      )
+    );
+  };
 
   renderToolbar(v) {
     const { globalBlockId } = this.props.meta;
@@ -134,7 +196,12 @@ class SectionFooter extends EditorComponent {
 
     return (
       <Background value={v} meta={meta}>
-        <PaddingResizer value={v} onChange={this.handlePaddingResizerChange}>
+        <PaddingResizer
+          value={v}
+          onStart={this.onPaddingResizerStart}
+          onChange={this.handlePaddingResizerChange}
+          onEnd={this.onPaddingResizerEnd}
+        >
           <SectionFooterItems {...itemsProps} />
         </PaddingResizer>
       </Background>
@@ -142,34 +209,10 @@ class SectionFooter extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const {
-      className,
-      customClassName,
-      cssClassPopulation,
-      customAttributes
-    } = v;
+    const { className, customClassName, cssClassPopulation, customAttributes } =
+      v;
 
-    const classNameSection = classnames(
-      "brz-footer",
-      className,
-      cssClassPopulation === "" ? customClassName : cssClassPopulation,
-      css(
-        `${this.constructor.componentId}-section`,
-        `${this.getId()}-section`,
-        styleSection(v, vs, vd)
-      )
-    );
-
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
-
-    return (
+    return IS_PRO ? (
       <ContainerBorder
         type="footer"
         hiddenInResponsive={true}
@@ -185,9 +228,20 @@ class SectionFooter extends EditorComponent {
                 ...containerBorderAttr,
                 "data-block-id": this.props.blockId,
                 id: this.getId(),
-                className: classNameSection
+                className: classnames(
+                  "brz-footer",
+                  className,
+                  cssClassPopulation === ""
+                    ? customClassName
+                    : cssClassPopulation,
+                  css(
+                    `${this.constructor.componentId}-section`,
+                    `${this.getId()}-section`,
+                    styleSection(v, vs, vd)
+                  )
+                )
               }}
-              animationClass={animationClassName}
+              animationClass={this.getAnimationClassName(v, vs, vd)}
             >
               <Roles
                 allow={["admin"]}
@@ -202,6 +256,10 @@ class SectionFooter extends EditorComponent {
           </CustomCSS>
         )}
       </ContainerBorder>
+    ) : (
+      <footer className="brz-footer">
+        <ProBlocked text={"Footer"} onRemove={this.handleRemove} />
+      </footer>
     );
   }
 
@@ -222,51 +280,33 @@ class SectionFooter extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const {
-      className,
-      customClassName,
-      cssIDPopulation,
-      cssClassPopulation,
-      customAttributes,
-      tagName
-    } = v;
     const { sectionPopup, sectionPopup2 } = this.props.meta;
-
-    const classNameSection = classnames(
-      "brz-footer",
-      className,
-      cssClassPopulation === "" ? customClassName : cssClassPopulation,
-      css(
-        `${this.constructor.componentId}-section`,
-        `${this.getId()}-section`,
-        styleSection(v, vs, vd)
-      )
-    );
-
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
-
-    const props = {
-      ...parseCustomAttributes(customAttributes),
-      "data-uid": this.getId(),
-      id:
-        cssIDPopulation === "" ? v.anchorName || this.getId() : cssIDPopulation,
-      className: classNameSection
-    };
-
     const content = (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <Animation
           iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
-          component={tagName}
-          componentProps={props}
-          animationClass={animationClassName}
+          component={v.tagName}
+          componentProps={{
+            ...parseCustomAttributes(v.customAttributes),
+            "data-uid": this.getId(),
+            id:
+              v.cssIDPopulation === ""
+                ? v.anchorName || this.getId()
+                : v.cssIDPopulation,
+            className: classnames(
+              "brz-footer",
+              v.className,
+              v.cssClassPopulation === ""
+                ? v.customClassName
+                : v.cssClassPopulation,
+              css(
+                `${this.getComponentId()}-section`,
+                `${this.getId()}-section`,
+                styleSection(v, vs, vd)
+              )
+            )
+          }}
+          animationClass={this.getAnimationClassName(v, vs, vd)}
         >
           {this.renderItems(v, vs, vd)}
         </Animation>

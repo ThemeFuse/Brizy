@@ -139,7 +139,7 @@ class Map extends EditorComponent<Value> {
             {...this.makeWrapperProps({
               className: wrapperClassName,
               attributes: {
-                "data-cover": isCovered,
+                "data-cover": `${isCovered}`,
                 "data-src": iframeSrc
               }
             })}

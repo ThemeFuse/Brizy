@@ -47,17 +47,6 @@ class CodeMirrorOptionType extends React.Component {
     this.lastUpdatedValue = this.state.value;
   }, 1000);
 
-  componentWillReceiveProps({ value }) {
-    if (value !== this.lastUpdatedValue) {
-      if (this.state.value !== this.lastUpdatedValue) {
-        this.onChangeDebounced.cancel();
-        this.props.onChange(this.state.value);
-        this.lastUpdatedValue = this.state.value;
-      }
-      this.setState({ value });
-    }
-  }
-
   renderLabel() {
     const { label, helper: _helper, helperContent } = this.props;
     const helper = _helper ? (

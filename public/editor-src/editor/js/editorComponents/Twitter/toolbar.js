@@ -2,8 +2,7 @@ import { t } from "visual/utils/i18n";
 import { getDynamicContentChoices } from "visual/utils/options";
 import {
   toolbarElementTwitter,
-  toolbarDisabledToolbarSettings,
-  toolbarDisabledAdvancedSettings
+  toolbarDisabledToolbarSettings
 } from "visual/utils/toolbar";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
@@ -165,22 +164,58 @@ export function getItems({ v, device, state, context }) {
               }
             },
             {
-              id: "advancedSettings",
-              type: "advancedSettings",
-              label: t("More Settings"),
-              icon: "nc-cog"
+              id: "grid",
+              type: "grid",
+              separator: true,
+              columns: [
+                {
+                  id: "grid-settings",
+                  width: 50,
+                  options: [
+                    {
+                      id: "styles",
+                      type: "sidebarTabsButton-dev",
+                      config: {
+                        tabId: "styles",
+                        text: t("Styling"),
+                        icon: "nc-cog"
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "grid-effects",
+                  width: 50,
+                  options: [
+                    {
+                      id: "effects",
+                      type: "sidebarTabsButton-dev",
+                      config: {
+                        tabId: "effects",
+                        text: t("Effects"),
+                        icon: "nc-flash"
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
       : toolbarDisabledToolbarSettings({ device }),
     v.twitterType === "embed"
-      ? toolbarDisabledAdvancedSettings({ device })
+      ? {
+          id: "advancedSettings",
+          type: "advancedSettings",
+          disabled: true
+        }
       : {
           id: "advancedSettings",
           type: "advancedSettings",
           sidebarLabel: t("More Settings"),
           roles: ["admin"],
           position: 110,
+          devices: "desktop",
           icon: "nc-cog"
         }
   ];

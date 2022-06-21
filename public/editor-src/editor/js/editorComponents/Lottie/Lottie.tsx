@@ -4,7 +4,7 @@ import Lottie from "react-lottie";
 type Props = {
   loop: boolean;
   autoplay: boolean;
-  animationData: object;
+  animationData: Record<string, unknown>;
   speed: number;
   direction: number;
   renderer: string;

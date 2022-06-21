@@ -1,0 +1,22 @@
+// Badge
+.brz-badge {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 10px;
+  background-color: #c9c9c9;
+
+  &__publish,
+  &__inherit {
+    background-color: #47cc24;
+  }
+  &__draft,
+  &__auto-draft {
+    background-color: #dfad3d;
+  }
+  &__pending,
+  &__future {
+    background-color: #3dbfe8;
+  }
+}

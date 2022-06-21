@@ -10,6 +10,7 @@ import { style } from "./styles";
 import Comments from "visual/component/Comments";
 import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
+import * as sidebarConfig from "./sidebar";
 import * as toolbarExtendParentConfig from "./toolbarExtend";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import defaultValue from "./defaultValue.json";
@@ -115,7 +116,9 @@ class FacebookComments extends EditorComponent {
     );
 
     return (
-      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
             <Comments appId={appData.appId} type={type} data={data[type]} />

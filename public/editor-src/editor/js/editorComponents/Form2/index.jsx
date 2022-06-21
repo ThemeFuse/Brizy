@@ -5,7 +5,7 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import classnames from "classnames";
 import Config from "visual/global/Config";
 import CustomCSS from "visual/component/CustomCSS";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import { css } from "visual/utils/cssStyle";
 import { styleForm } from "./styles";
 import defaultValue from "./defaultValue.json";

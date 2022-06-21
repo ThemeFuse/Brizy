@@ -1,4 +1,7 @@
-import { PopulationMethod } from "visual/component/Options/types/common/Population/types/PopulationMethod";
+import {
+  PopulationMethod,
+  PopulationOptgroupMethod
+} from "visual/component/Options/types/common/Population/types/PopulationMethod";
 
 export interface WithId<T> {
   id: T;
@@ -50,7 +53,7 @@ export interface WithConfig<T> {
 }
 
 export interface WithPopulation {
-  population?: PopulationMethod[];
+  population?: (PopulationMethod | PopulationOptgroupMethod)[];
 }
 
 export interface WithOnChange<T> {

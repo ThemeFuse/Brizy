@@ -52,8 +52,10 @@ const translationsMap = {
   Search: t("Search"),
   Login: t("Login"),
   Lottie: t("Lottie"),
+  Filters: t("Filters"),
   StarRating: t("Rating"),
   ProtectedPage: t("Protected Form"),
+  Translation: t("Translation"),
 
   // WP
   WPSidebar: t("Sidebar"),
@@ -79,6 +81,8 @@ const translationsMap = {
   WOOCategories: t("Shop Categories"),
   WOOProducts: t("Shop Products"),
   WOOPages: t("Shop Pages"),
+  EcwidMyAccount: t("Ecwid My Account"),
+  EcwidCart: t("Ecwid Cart"),
 
   // Shopify
   Quantity: t("Quantity")

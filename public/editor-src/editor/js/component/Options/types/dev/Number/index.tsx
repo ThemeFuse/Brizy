@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Number as Control } from "visual/component/Controls/Number";
+import React, { useCallback } from "react";
+import { NumberComponent as Control } from "visual/component/Controls/Number";
 import * as Option from "visual/component/Options/Type";
-import { throttleEffect } from "visual/component/hooks";
-import { SimpleValue } from "visual/component/Options/Type";
+import { useDebouncedOnChange } from "visual/component/hooks";
+import { OnChange, SimpleValue } from "visual/component/Options/Type";
 import { Component } from "./Type";
 import { NumberSpec } from "visual/utils/math/number";
-import { clamp } from "visual/utils/math";
+import { add, clamp, subtractR } from "visual/utils/math";
+import { mPipe } from "fp-utilities";
+import { wrap } from "visual/utils/object/get";
+import { pipe } from "visual/utils/fp";
 
 export const Number: Component = ({
   className,
@@ -14,63 +17,67 @@ export const Number: Component = ({
   config,
   label
 }) => {
-  const [_value, setValue] = useState(value);
-  const ref = useRef<number>();
   const updateRate = config?.updateRate ?? 16;
   const min = config?.min ?? 0;
   const max = config?.max ?? 100;
   const step = config?.step ?? 1;
   const size = config?.size ?? "short";
   const spinner = config?.spinner ?? true;
-
-  throttleEffect(
-    () => {
-      if (value !== _value) {
-        onChange({ value: clamp(_value, min, max) });
-      }
-    },
-    Math.max(0, updateRate),
-    [_value, updateRate]
+  const wrapValue: OnChange<number> = useCallback(
+    pipe(wrap("value"), onChange),
+    [onChange]
   );
+  const validateChange = useCallback((v: number) => clamp(v, min, max), [
+    min,
+    max
+  ]);
 
-  useEffect(() => {
-    if (value !== ref.current) {
-      setValue(value);
-    }
-  }, [value]);
+  const t = useCallback(mPipe(validateChange, wrapValue), [
+    validateChange,
+    wrapValue
+  ]);
+  const [_value, handleOnChange] = useDebouncedOnChange<number | undefined>(
+    value,
+    t,
+    updateRate
+  );
+  const handleOnIncrease = useCallback(
+    mPipe(() => _value, add(step), validateChange, t),
+    [_value, step]
+  );
+  const handleOnDecrease = useCallback(
+    mPipe(() => _value, subtractR(step), validateChange, t),
+    [_value, step]
+  );
 
   return (
     <>
       {label}
       <Control
         className={className}
-        onChange={setValue}
+        onChange={handleOnChange}
+        onIncrease={handleOnIncrease}
+        onDecrease={handleOnDecrease}
         value={_value}
         size={size}
-        min={min}
-        max={max}
-        step={step}
         spinner={spinner}
       />
     </>
   );
 };
 
-const getModel: Option.GetModel<SimpleValue<number>> = get => ({
+const getModel: Option.FromElementModel<SimpleValue<number>> = get => ({
   value: NumberSpec.read(get("value"))
 });
 
-const getElementModel: Option.GetElementModel<SimpleValue<number>> = (
-  values,
-  get
-) => {
+const getElementModel: Option.ToElementModel<SimpleValue<number>> = values => {
   return {
-    [get("value")]: values.value
+    value: values.value
   };
 };
 
-Number.getModel = getModel;
+Number.fromElementModel = getModel;
 
-Number.getElementModel = getElementModel;
+Number.toElementModel = getElementModel;
 
 Number.defaultValue = { value: 0 };

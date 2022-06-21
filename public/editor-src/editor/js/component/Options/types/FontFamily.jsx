@@ -8,7 +8,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import { Roles } from "visual/component/Roles";
 import { fontTransform } from "visual/utils/fonts";
 import { projectSelector } from "visual/redux/selectors";
-import { unDeletedFontSelector } from "visual/redux/selectors-new";
+import { unDeletedFontsSelector } from "visual/redux/selectors-new";
 import { t } from "visual/utils/i18n";
 
 const fontSizeMap = {
@@ -120,7 +120,7 @@ class FontFamily extends Component {
 }
 
 const mapStateToProps = state => ({
-  fonts: unDeletedFontSelector(state),
+  fonts: unDeletedFontsSelector(state),
   defaultFont: projectSelector(state).data.font
 });
 

@@ -111,8 +111,8 @@ export const getItems = ({ property }) => ({
                 // because the population id and imageUpload-dev id are different.
                 {
                   id: "image",
-                  label: t("Image"),
                   type: "population-dev",
+                  label: t("Image"),
                   disabled:
                     (isSVG(v.imageExtension) ||
                       isGIF(v.imageExtension) ||
@@ -179,6 +179,7 @@ export const getItems = ({ property }) => ({
     {
       id: "toolbarColor",
       type: "popover-dev",
+      devices: "desktop",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -196,12 +197,22 @@ export const getItems = ({ property }) => ({
           type: "tabs-dev",
           tabs: [
             {
+              id: "tabOverlay",
+              label: t("Overlay"),
+              options: [
+                {
+                  id: "",
+                  type: "backgroundColor-dev",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
               id: "tabBorder",
               label: t("Border"),
               options: [
                 {
                   id: "border",
-                  devices: "desktop",
                   type: "border-dev",
                   states: [NORMAL, HOVER]
                 }
@@ -213,7 +224,6 @@ export const getItems = ({ property }) => ({
               options: [
                 {
                   id: "boxShadow",
-                  devices: "desktop",
                   type: "boxShadow-dev",
                   states: [NORMAL, HOVER]
                 }
@@ -362,10 +372,41 @@ export const getItems = ({ property }) => ({
           }
         },
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog"
+          id: "grid",
+          type: "grid",
+          separator: true,
+          columns: [
+            {
+              id: "grid-settings",
+              width: 50,
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            },
+            {
+              id: "grid-effects",
+              width: 50,
+              options: [
+                {
+                  id: "effects",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "effects",
+                    text: t("Effects"),
+                    icon: "nc-flash"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },

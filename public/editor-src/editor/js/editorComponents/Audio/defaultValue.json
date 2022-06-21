@@ -8,11 +8,19 @@
     "showProgressBarVolume": "on",
 
     "url": "https://soundcloud.com/englicious/lord-of-the-flies-audiobook-slightly-sped-up",
-    "urlPopulation": null,
+    "urlPopulation": "",
 
     "autoPlay": "off",
     "loop": "off",
     "showArtwork": "off",
+    "likeButton": "on",
+    "buyButton": "on",
+    "downloadButton": "on",
+    "shareButton": "on",
+    "comments": "on",
+    "playCounts": "on",
+    "username": "on",
+    "artWork": "on",
 
     "coverImageSrc": "",
     "coverSizeType": "custom",
@@ -190,6 +198,18 @@
     "tempBorderBottomRightRadius": 3,
     "tempBorderBottomLeftRadius": 3,
 
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "tempBorderRadiusSuffix": "px",
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
+
     "hoverBorderRadiusType": null,
     "hoverBorderRadius": null,
     "hoverBorderTopLeftRadius": null,
@@ -244,6 +264,13 @@
     "tempHoverBoxShadowSpread": null,
     "tempHoverBoxShadowVertical": null,
     "tempHoverBoxShadowHorizontal": null,
+
+    "controlsHex": "#ff7700",
+    "controlsOpacity": 1,
+    "controlsPalette": "",
+
+    "tempControlsOpacity": 1,
+    "tempControlsPalette": "",
 
     "width": 100,
     "widthSuffix": "%",

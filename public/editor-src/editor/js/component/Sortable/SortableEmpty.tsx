@@ -18,19 +18,6 @@ type SortType =
   | "cloneable"
   | "addable";
 
-interface SortData {
-  from: {
-    sortableNode: HTMLElement;
-    elementNode: HTMLElement;
-    elementIndex: number;
-    elementType: SortType;
-  };
-  to: {
-    sortableNode: HTMLElement;
-    elementIndex: number;
-  };
-}
-
 const onSort: SortablePluginOptions["onSort"] = (data): void => {
   const { from, to } = data;
 
@@ -76,7 +63,9 @@ const onBeforeStart: SortablePluginOptions["onBeforeStart"] = (e): void => {
 };
 const onStart = (): void => {
   document.body.classList.add("brz-ed-sorting");
-  requestAnimationFrame(hideToolbar);
+  requestAnimationFrame(() => {
+    hideToolbar();
+  });
 };
 const onEnd = (): void => {
   document.body.classList.remove("brz-ed-sorting");
@@ -86,7 +75,7 @@ type Props = {
   type: SortType;
   path: Array<string>;
   disabled?: boolean;
-  children?: ((props: {}) => ReactElement) | ElementType;
+  children?: ((props: unknown) => ReactElement) | ElementType;
 } & Pick<SortablePluginOptions, "acceptElements">;
 
 class Sortable extends Component<Props> {
@@ -96,7 +85,7 @@ class Sortable extends Component<Props> {
     disabled: false
   };
 
-  plugin: unknown = undefined;
+  plugin: SortablePlugin | undefined = undefined;
 
   componentDidMount(): void {
     const { acceptElements } = this.props;
@@ -117,9 +106,7 @@ class Sortable extends Component<Props> {
   }
 
   componentWillUnmount(): void {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    this.plugin.destroy();
+    this.plugin?.destroy();
   }
 
   handleEmptyClick = (): void => {

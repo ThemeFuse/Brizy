@@ -1,11 +1,11 @@
 import React from "react";
 
-type SortableElementDataAttributes = {
+export interface SortableElementDataAttributes {
   "data-sortable-element"?: "true";
   "data-sortable-type"?: string;
   "data-sortable-subtype"?: string;
   "data-sortable-use-handle"?: "true";
-};
+}
 type FunctionAsAChild = (
   atts: SortableElementDataAttributes
 ) => React.ReactElement;

@@ -34,7 +34,7 @@ class Brizy_Import_Main {
 			'manage_options',
 			'starter-templates',
 			[ $this, 'renderTemplatesPage' ],
-			6
+			8
 		);
 	}
 

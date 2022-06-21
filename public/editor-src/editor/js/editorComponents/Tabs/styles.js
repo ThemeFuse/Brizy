@@ -9,6 +9,10 @@ export function styleTabs(v, vs, vd) {
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2LetterSpacing"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
       ]
     },
     ".brz && > .brz-tabs__nav.brz-tabs__nav--horizontal": {
@@ -58,6 +62,10 @@ export function styleTabs(v, vs, vd) {
       standart: [
         "cssStyleElementTabsBtnIconPosition",
         "cssStyleElementTabsBtnIconJustifyContent"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementTabsPropertyHoverTransition"
       ]
     },
     ".brz && > .brz-tabs__content .brz-tabs__nav--button .brz-icon-svg": {

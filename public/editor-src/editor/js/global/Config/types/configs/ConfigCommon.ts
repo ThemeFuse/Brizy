@@ -3,7 +3,7 @@ import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { ElementModel } from "visual/component/Elements/Types";
 
-interface MenuItem {
+export interface MenuItem {
   type: "MenuItem";
   value: {
     id: string;

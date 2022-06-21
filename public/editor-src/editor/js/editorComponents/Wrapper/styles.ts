@@ -42,8 +42,6 @@ export function styleWrapper(
     };
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   return renderStyles({ v, vs, vd, styles });
 }
 
@@ -62,7 +60,5 @@ export function styleAnimation(
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   return renderStyles({ v, vs, vd, styles });
 }

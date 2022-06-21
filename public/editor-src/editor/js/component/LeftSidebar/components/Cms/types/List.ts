@@ -5,6 +5,7 @@ import { ProjectId } from "visual/component/LeftSidebar/components/Cms/types/Pro
 import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
 import { ActiveItem } from "./ActiveItem";
 import { Subscription } from "visual/global/Config/types/shopify/Subscription";
+import { Shop } from "visual/component/LeftSidebar/components/Cms/types/Modules/Shop";
 
 interface Base {
   development: boolean;
@@ -42,6 +43,7 @@ export interface Cloud extends Base {
   supportLinks: SupportLinks;
   customersEditorUrl: string;
   modules: {
+    shop: Shop;
     users: {
       disabled: boolean;
     };

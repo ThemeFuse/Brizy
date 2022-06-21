@@ -7,12 +7,9 @@ import { Styling } from "./components/Styling";
 import { DeviceModes } from "./components/DeviceModes";
 import { t } from "visual/utils/i18n";
 import { IS_GLOBAL_POPUP, IS_TEMPLATE, IS_STORY } from "visual/utils/models";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { IS_PRO } from "visual/utils/env";
 
-const config = Config.getAll() as WP;
-
-const { urls } = config;
+const { urls } = Config.getAll() as WP;
 
 export default {
   top: [Base, BlocksSortable, Styling],
@@ -32,8 +29,7 @@ export default {
         },
         {
           type: "showMembership",
-          label: t("View as"),
-          disabled: isCloud(config) && isShopify(config)
+          label: t("View as")
         },
         {
           type: "wpFeatureImage",

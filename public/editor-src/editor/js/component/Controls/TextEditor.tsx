@@ -48,6 +48,14 @@ export class TextEditor extends Component<Props, State> {
     );
   }
 
+  componentDidMount(): void {
+    const element = this.contentRef.current;
+
+    if (element !== null) {
+      element.addEventListener("input", this.handleInput);
+    }
+  }
+
   componentDidUpdate(): void {
     this.lastNotifiedValue = this.props.value;
 
@@ -105,8 +113,12 @@ export class TextEditor extends Component<Props, State> {
     }
   };
 
-  handleInput = (e: React.KeyboardEvent): void => {
-    this.notifyChange(e.currentTarget.textContent || "");
+  handleInput = (e: Event): void => {
+    const node = e.currentTarget as HTMLElement | null;
+
+    if (node) {
+      this.notifyChange(node.textContent || "");
+    }
   };
 
   notifyChange = _.debounce((value: string): void => {
@@ -143,7 +155,6 @@ export class TextEditor extends Component<Props, State> {
       onClick: this.handleClick,
       onKeyDown: this.handleKeyDown,
       onPaste: this.handlePaste,
-      onInput: this.handleInput,
       onBlur: this.handleBlur
     });
   }

@@ -14,7 +14,7 @@ import {
   copiedElementNoRefsSelector
 } from "visual/redux/selectors";
 import HotKeysPlugin from "./HotKeysPlugin";
-import { symbolsToItems } from "visual/editorComponents/Menu";
+import { symbolsToItems } from "visual/editorComponents/Menu/utils";
 
 const menusConfig = Config.get("menuData");
 
@@ -52,7 +52,9 @@ const keyNamesShortKeys = {
     "cmd+down",
     "right_cmd+up",
     "right_cmd+down"
-  ]
+  ],
+  showSidebarStyling: ["ctrl+M", "cmd+M", "right_cmd+M"],
+  showSidebarAdvanced: ["ctrl+K", "cmd+K", "right_cmd+K"]
 };
 
 const getShortKeysByShortcuts = types => {

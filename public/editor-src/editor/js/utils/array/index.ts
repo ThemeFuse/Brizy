@@ -3,6 +3,7 @@ import { mApply, MValue } from "visual/utils/value";
 import { Reader } from "visual/utils/types/Type";
 import { onEmpty as _onEmpty } from "visual/utils/value";
 import { insert, removeAt } from "timm";
+import { IsEqual } from "visual/utils/types/Eq";
 
 export const flatMap = <T, U>(
   arr: T[],
@@ -166,7 +167,9 @@ export function map<A, B>(f: (a: A) => B, arr: A[]): B[];
 export function map<A, B>(
   ...args: [(a: A) => B] | [(a: A) => B, A[]]
 ): ((arr: A[]) => B[]) | B[] {
-  return args[1] ? args[1].map(args[0]) : (arr: A[]): B[] => arr.map(args[0]);
+  return args.length === 1
+    ? (arr: A[]): B[] => arr.map(args[0])
+    : args[1].map(args[0]);
 }
 
 export function filter<A, B extends A>(p: (a: A) => a is B): (arr: A[]) => B[];
@@ -229,4 +232,22 @@ export const fromString = <T>(
   } catch (e) {
     return undefined;
   }
+};
+
+export const eq = <T>(eq: IsEqual<T>, a: T[], b: T[]): boolean => {
+  if (a.length !== b.length) {
+    return false;
+  }
+
+  for (let i = 0; i < a.length; i++) {
+    if (!eq(a[i], b[i])) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+export const eliminateItems = <T>(arr: T[], toRemove: unknown[]): T[] => {
+  return arr.filter(el => !toRemove.includes(el));
 };

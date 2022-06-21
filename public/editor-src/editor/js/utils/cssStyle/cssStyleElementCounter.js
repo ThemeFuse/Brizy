@@ -1,43 +1,42 @@
-import {
-  styleElementCounterStrokeColor,
-  styleElementCounterFillColor
-} from "visual/utils/style2";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { hexToRgba } from "visual/utils/color";
+import { defaultValueValue } from "visual/utils/onChange";
+import { styleState } from "visual/utils/style";
+
+const getState = (v, state) =>
+  styleState({ v, state }) === "hover" ? "hover" : state;
 
 export function cssStyleElementCounterChartEnd({ v }) {
   return `stroke-dasharray: calc(${v.end} + 0.5) 100;`;
 }
 
 export function cssStyleElementCounterChartWidth({ v }) {
-  return `stroke-width: ${v.strokeWidth} !important;`;
-}
-
-export function cssStyleElementCounterFillColor({
-  v,
-  device,
-  state,
-  prefix = "fillColor"
-}) {
-  const fillColor = styleElementCounterFillColor({ v, device, state, prefix });
-
-  return fillColor === undefined ? "" : `fill:${fillColor};`;
-}
-
-export function cssStyleElementCounterStrokeColor({
-  v,
-  device,
-  state,
-  prefix = "strokeColor"
-}) {
-  const strokeColor = styleElementCounterStrokeColor({
-    v,
-    device,
-    state,
-    prefix
-  });
-
-  return strokeColor === undefined ? "" : `stroke:${strokeColor};`;
+  const strokeWidth = Math.min(32, v.strokeWidth);
+  return `stroke-width: ${strokeWidth} !important;`;
 }
 
 export function cssStyleElementCounterTransitionHoverProperty() {
-  return "transition-property: color, fill, stroke;";
+  return "transition-property: color, fill, stroke, box-shadow;";
+}
+
+export function cssStyleElementCounterTextShadow({ v, state }) {
+  state = getState(v, state);
+
+  const dvv = key => defaultValueValue({ v, key, state });
+
+  const textShadowColorHex = dvv("textShadowColorHex");
+  const textShadowColorOpacity = dvv("textShadowColorOpacity");
+  const textShadowColorPalette = dvv("textShadowColorPalette");
+
+  const textShadowBlur = dvv("textShadowBlur");
+  const textShadowVertical = dvv("textShadowVertical");
+  const textShadowHorizontal = dvv("textShadowHorizontal");
+
+  const { hex } = getOptionColorHexByPalette(
+    textShadowColorHex,
+    textShadowColorPalette
+  );
+  const shadowColor = hexToRgba(hex, textShadowColorOpacity);
+
+  return `text-shadow:${textShadowHorizontal}px ${textShadowVertical}px ${textShadowBlur}px ${shadowColor};`;
 }

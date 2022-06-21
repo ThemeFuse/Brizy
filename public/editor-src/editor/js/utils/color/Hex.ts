@@ -7,14 +7,14 @@ enum hex {
   hex = "hex"
 }
 
-export type Hex = NewType<string, hex.hex>;
+export type Hex = "#000000" | "#ffffff" | NewType<string, hex.hex>;
 
 export const is = (v: string): v is Hex => hexRegex.test(v);
 
 export const fromString = mPipe(pass(is));
 
-export const Black: Hex = "#000000" as Hex;
+export const Black: Hex = "#000000";
 
-export const White: Hex = "#ffffff" as Hex;
+export const White: Hex = "#ffffff";
 
 export const unsafe = (v: string): Hex => v as Hex;

@@ -1,4 +1,7 @@
-import { GetModel, GetElementModel } from "visual/component/Options/Type";
+import {
+  FromElementModel,
+  ToElementModel
+} from "visual/component/Options/Type";
 import * as Str from "visual/utils/string/specs";
 import * as Math from "visual/utils/math/";
 import * as Opacity from "visual/utils/cssProps/opacity";
@@ -37,7 +40,7 @@ export const DEFAULT_VALUE: Value = {
   radialDegree: 0
 };
 
-export const fromElementModel: GetModel<Value> = get => {
+export const fromElementModel: FromElementModel<Value> = get => {
   const v = get("gradientActivePointer");
   const pointer =
     v === "startPointer" ? "start" : v === "finishPointer" ? "end" : v;
@@ -100,27 +103,27 @@ export const fromElementModel: GetModel<Value> = get => {
   };
 };
 
-export const toElementModel: GetElementModel<Value> = (v, get) => {
+export const toElementModel: ToElementModel<Value> = v => {
   const pointer = v.active === "start" ? "startPointer" : "finishPointer";
   return {
-    [get("bgColorType")]: v.type,
-    [get("tempBgColorType")]: v.tempType,
-    [get("bgColorHex")]: v.hex,
-    [get("bgColorOpacity")]: v.opacity,
-    [get("tempBgColorOpacity")]: v.tempOpacity,
-    [get("bgColorPalette")]: v.palette,
-    [get("tempBgColorPalette")]: v.tempPalette,
-    [get("gradientColorHex")]: v.gradientHex,
-    [get("gradientColorOpacity")]: v.gradientOpacity,
-    [get("tempGradientColorOpacity")]: v.tempGradientOpacity,
-    [get("gradientColorPalette")]: v.gradientPalette,
-    [get("tempGradientColorPalette")]: v.tempGradientPalette,
-    [get("gradientType")]: v.gradientType,
-    [get("gradientStartPointer")]: v.start,
-    [get("gradientFinishPointer")]: v.end,
-    [get("gradientActivePointer")]: pointer,
-    [get("gradientLinearDegree")]: v.linearDegree,
-    [get("gradientRadialDegree")]: v.radialDegree
+    bgColorType: v.type,
+    tempBgColorType: v.tempType,
+    bgColorHex: v.hex,
+    bgColorOpacity: v.opacity,
+    tempBgColorOpacity: v.tempOpacity,
+    bgColorPalette: v.palette,
+    tempBgColorPalette: v.tempPalette,
+    gradientColorHex: v.gradientHex,
+    gradientColorOpacity: v.gradientOpacity,
+    tempGradientColorOpacity: v.tempGradientOpacity,
+    gradientColorPalette: v.gradientPalette,
+    tempGradientColorPalette: v.tempGradientPalette,
+    gradientType: v.gradientType,
+    gradientStartPointer: v.start,
+    gradientFinishPointer: v.end,
+    gradientActivePointer: pointer,
+    gradientLinearDegree: v.linearDegree,
+    gradientRadialDegree: v.radialDegree
   };
 };
 

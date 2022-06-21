@@ -6,7 +6,7 @@ import * as Str from "visual/utils/string/specs";
 import * as Arr from "visual/utils/array";
 import { MValue } from "visual/utils/value";
 
-export const getModel: Option.GetModel<Value> = parseStrict<
+export const getModel: Option.FromElementModel<Value> = parseStrict<
   (k: string) => MValue<Literal.Literal>,
   Value
 >({
@@ -15,7 +15,7 @@ export const getModel: Option.GetModel<Value> = parseStrict<
   active: optional(get => Literal.read(get("active")))
 });
 
-export const getElementModel: Option.GetElementModel<Value> = ({
+export const getElementModel: Option.ToElementModel<Value> = ({
   value,
   active
 }) => ({ value: JSON.stringify(value), active });

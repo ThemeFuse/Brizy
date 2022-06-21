@@ -30,6 +30,8 @@ import {
 } from "visual/utils/toolbar";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
+import { NORMAL, HOVER } from "visual/utils/stateMode";
+
 export function getItemsForDesktop(v, component) {
   const inPopup = Boolean(component.props.meta?.sectionPopup);
   const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
@@ -544,106 +546,6 @@ export function getItemsForDesktop(v, component) {
                       })
                     }
                   ]
-                },
-                {
-                  id: "borderWidth",
-                  label: t("Border"),
-                  type: "slider",
-                  slider: {
-                    min: 0,
-                    max: 10
-                  },
-                  input: {
-                    show: true
-                  },
-                  suffix: {
-                    show: true,
-                    choices: [
-                      {
-                        title: "px",
-                        value: "px"
-                      }
-                    ]
-                  },
-                  position: 40,
-                  value: {
-                    value: v.borderWidth
-                  },
-                  onChange: ({ value: borderWidth }, { sliderDragEnd }) => {
-                    return {
-                      borderWidth,
-                      tempBorderWidth:
-                        borderWidth > 0 && sliderDragEnd
-                          ? borderWidth
-                          : v.tempBorderWidth,
-
-                      paddingRight:
-                        borderWidth > 0 && !IS_STORY
-                          ? v.tempPaddingRight
-                          : v.paddingRight,
-
-                      paddingLeft:
-                        borderWidth > 0 && !IS_STORY
-                          ? v.tempPaddingLeft
-                          : v.paddingRight,
-
-                      borderRadiusType:
-                        borderWidth === 0 && v.bgColorOpacity === 0
-                          ? ""
-                          : borderWidth > 0
-                          ? v.tempBorderRadiusType
-                          : v.borderRadiusType,
-
-                      fillType:
-                        borderWidth === 0 && v.bgColorOpacity === 0
-                          ? "default"
-                          : borderWidth > 0
-                          ? v.tempFillType
-                          : v.fillType,
-
-                      borderRadius:
-                        borderWidth === 0 && v.bgColorOpacity === 0
-                          ? 0
-                          : borderWidth > 0 &&
-                            v.tempBorderRadiusType === "square"
-                          ? v.tempBorderRadius
-                          : borderWidth > 0 &&
-                            v.tempBorderRadiusType === "rounded"
-                          ? maxBorderRadius
-                          : v.borderRadius,
-
-                      borderColorOpacity:
-                        borderWidth === 0
-                          ? 0
-                          : borderWidth > 0
-                          ? v.tempBorderColorOpacity
-                          : v.borderColorOpacity,
-
-                      borderColorPalette:
-                        borderWidth === 0
-                          ? 0
-                          : borderWidth > 0
-                          ? v.tempBorderColorPalette
-                          : v.borderColorPalette,
-
-                      bgColorOpacity:
-                        borderWidth > 0 && v.tempFillType === "filled"
-                          ? v.tempBgColorOpacity
-                          : v.bgColorOpacity,
-
-                      bgColorPalette:
-                        borderWidth > 0 && v.tempFillType === "filled"
-                          ? v.tempBgColorPalette
-                          : v.bgColorPalette,
-
-                      hoverBgColorOpacity:
-                        borderWidth === 0 && v.bgColorOpacity === 0
-                          ? 0
-                          : borderWidth > 0 && v.tempFillType === "filled"
-                          ? v.tempHoverBgColorOpacity
-                          : v.hoverBgColorOpacity
-                    };
-                  }
                 }
               ]
             },
@@ -1019,34 +921,10 @@ export function getItemsForDesktop(v, component) {
                       id: "tabBorder",
                       label: t("Border"),
                       options: [
-                        toolbarBorder2({
-                          v,
-                          device,
-                          state: "normal",
-                          showSelect: false,
-                          onChangeHex: ["onChangeElementButtonBorderColorHex2"],
-                          onChangePalette: [
-                            "onChangeElementButtonBorderColorPalette2"
-                          ]
-                        }),
                         {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 38,
-                              options: [
-                                toolbarBorderColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  onChange: [
-                                    "onChangeElementButtonBorderColorFields2"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
+                          id: "border",
+                          type: "border-dev",
+                          states: [NORMAL, HOVER]
                         }
                       ]
                     },
@@ -1461,6 +1339,7 @@ export function getItemsForDesktop(v, component) {
       roles: ["admin"],
       position: 110,
       icon: "nc-cog",
+      devices: "desktop",
       title: t("Settings")
     }
   ];

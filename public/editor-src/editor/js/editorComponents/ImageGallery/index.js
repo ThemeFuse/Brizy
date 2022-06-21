@@ -17,6 +17,7 @@ import { applyFilter } from "visual/utils/filters";
 import { Wrapper } from "../tools/Wrapper";
 import { defaultValueValue } from "visual/utils/onChange";
 import { MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 
 class ImageGallery extends EditorComponent {
   static get componentId() {
@@ -25,12 +26,16 @@ class ImageGallery extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  handleAllTagChange = allTag => {
+    this.patchValue({ allTag });
+  };
+
   static defaultProps = {
     extendParentToolbar: noop
   };
 
   state = {
-    visibleTag: "All"
+    visibleTag: ""
   };
 
   handleFilterClick(tag) {
@@ -57,7 +62,14 @@ class ImageGallery extends EditorComponent {
   }
 
   componentDidUpdate(nextProps) {
-    if (nextProps.dbValue.items.length !== this.props.dbValue.items.length) {
+    const { items: nextItems } = nextProps.dbValue;
+    const { items: prevItems } = this.props.dbValue;
+
+    const orderWasChanged = nextItems.some(
+      ({ value: { _id } }, index) => _id !== prevItems[index]?.value._id
+    );
+
+    if (orderWasChanged || nextItems.length !== prevItems.length) {
       this.destroyIsotope();
       this.initIsotope();
     }
@@ -163,7 +175,7 @@ class ImageGallery extends EditorComponent {
 
         return acc.concat(tags);
       },
-      ["All"]
+      [v.allTag]
     );
 
     const options = tags.map((tag, index) => {
@@ -187,16 +199,20 @@ class ImageGallery extends EditorComponent {
                   : ""
               }`
             }
-            data-filter={tag === "All" ? "*" : tagClassName}
+            data-filter={tag === v.allTag ? "*" : tagClassName}
             onClick={() => {
               const iso = this.getIsotope();
               this.handleFilterClick(tag);
               iso.arrange({
-                filter: tag === "All" ? "*" : `.${tagClassName}`
+                filter: tag === v.allTag ? "*" : `.${tagClassName}`
               });
             }}
           >
-            {tag}
+            {tag === v.allTag ? (
+              <TextEditor value={v.allTag} onChange={this.handleAllTagChange} />
+            ) : (
+              tag
+            )}
           </li>
         </Toolbar>
       );

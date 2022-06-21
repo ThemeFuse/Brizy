@@ -54,7 +54,7 @@ export const printf = (s: string, ...replacements: Array<string>): string => {
   return s.replace(/%s/g, () => replacements[i++]);
 };
 
-export const encodeToString = (value: unknown): string => {
+export const encodeToString = <T>(value: T): string => {
   return encodeURIComponent(JSON.stringify(value));
 };
 

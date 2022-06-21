@@ -8,7 +8,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import { setIds, IS_STORY } from "visual/utils/models";
 import { t } from "visual/utils/i18n";
-import { updateDisabledElements } from "visual/redux/actions";
+import { updateDisabledElements } from "visual/redux/actions2";
 import { disabledElementsSelector } from "visual/redux/selectors";
 import { IS_PRO } from "visual/utils/env";
 import Tooltip from "visual/component/Controls/Tooltip";
@@ -300,9 +300,10 @@ class ControlInner extends Component<Props, State> {
         </div>
         {Object.entries(shortcodes)
           .filter(
-            // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-            ([category, categoryShortcodes]) =>
-              this.getFilteredShortcodes(categoryShortcodes).length > 0
+            (
+              // @ts-expect-error: 'category' is defined but never used.
+              [category, categoryShortcodes] // eslint-disable-line no-unused-vars, @typescript-eslint/no-unused-vars
+            ) => this.getFilteredShortcodes(categoryShortcodes).length > 0
           )
           .map(([category, categoryShortcodes], index) => {
             const shortcodes = this.getFilteredShortcodes(categoryShortcodes);

@@ -32,7 +32,9 @@ export const keyDCInfo = (v: V, key: string): ECKeyDCInfo => {
   const fallback = v[keyToDCFallback2Key(key)];
   const attr_ = Obj.read(v[keyToDCAttrKey(key)]);
   const attr = attr_
-    ? Object.fromEntries(Object.entries(attr_).map(([k, vKey]) => [k, v[vKey]]))
+    ? Object.fromEntries(
+        Object.entries(attr_).map(([k, vKey]) => [k, v[vKey as string]])
+      )
     : {};
 
   return {

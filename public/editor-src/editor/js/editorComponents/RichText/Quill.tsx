@@ -4,8 +4,10 @@ import jQuery from "jquery";
 import { RangeStatic, BoundsStatic } from "quill";
 import { connect } from "react-redux";
 import { uuid } from "visual/utils/uuid";
-import { currentStyleSelector } from "visual/redux/selectors";
-import { unDeletedFontSelector } from "visual/redux/selectors-new";
+import {
+  unDeletedFontsSelector,
+  defaultFontSelector
+} from "visual/redux/selectors";
 import { css1 } from "visual/utils/cssStyle";
 import Quill from "./utils/quill";
 import bindings from "./utils/bindings";
@@ -24,6 +26,8 @@ const instances: QuillComponent[] = [];
 
 const classToDisableDnd = ["brz-ed-content-editable-focus", "brz-ed-dd-cancel"];
 
+type DefaultFont = ReduxState["project"]["data"]["font"];
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type QuillValue = any;
 type Formats = Record<string, QuillValue>;
@@ -34,7 +38,7 @@ type Props = {
   componentId: string;
   initDelay: number;
   forceUpdate: boolean;
-  currentStyle: ReduxState["currentStyle"];
+  defaultFont: DefaultFont;
   fonts: ReduxState["fonts"];
 
   onSelectionChange: (format: Formats, coords: Coords) => void;
@@ -66,7 +70,8 @@ class QuillComponent extends React.Component<Props> {
     }
   }
 
-  componentWillReceiveProps({ value, forceUpdate, fonts }: Props): void {
+  componentDidUpdate(props: Props): void {
+    const { value, forceUpdate, fonts } = props;
     let reInitPlugin = value !== this.lastUpdatedValue || forceUpdate;
 
     if (!_.isEqual(fonts, this.props.fonts)) {
@@ -78,7 +83,13 @@ class QuillComponent extends React.Component<Props> {
     }
   }
 
-  shouldComponentUpdate(): false {
+  shouldComponentUpdate(nextProps: Props): boolean {
+    const { fonts } = nextProps;
+
+    if (fonts !== this.props.fonts) {
+      return true;
+    }
+
     return false;
   }
 
@@ -514,11 +525,11 @@ class QuillComponent extends React.Component<Props> {
 const mapStateToProps = (
   state: ReduxState
 ): {
-  currentStyle: ReduxState["currentStyle"];
+  defaultFont: DefaultFont;
   fonts: ReduxState["fonts"];
 } => ({
-  currentStyle: currentStyleSelector(state),
-  fonts: unDeletedFontSelector(state)
+  defaultFont: defaultFontSelector(state),
+  fonts: unDeletedFontsSelector(state)
 });
 
 export default connect(mapStateToProps, null, null, { forwardRef: true })(

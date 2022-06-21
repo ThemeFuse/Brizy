@@ -2,7 +2,7 @@ import React, { Component, ReactElement } from "react";
 import { noop } from "underscore";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
-import FontLists from "./FontLists";
+import { List } from "./List";
 import Integration from "./Integration";
 
 const TABS = [
@@ -16,14 +16,14 @@ const TABS = [
     id: "fonts",
     title: t("Fonts"),
     icon: "nc-font",
-    component: FontLists
+    component: List
   }
 ];
 
 type Props = {
   opened: boolean;
   onClose: () => void;
-}
+};
 
 class PromptFonts extends Component<Props> {
   static defaultProps = {

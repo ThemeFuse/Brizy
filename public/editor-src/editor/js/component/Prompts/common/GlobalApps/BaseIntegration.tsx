@@ -23,7 +23,7 @@ class BaseIntegration<
   TProps extends BaseIntegrationProps = BaseIntegrationProps,
   TState extends BaseIntegrationState = BaseIntegrationState,
   TContext extends BaseIntegrationContext = BaseIntegrationContext
-> extends Component<TProps, TState> {
+> extends Component<TProps, TState, TContext> {
   static defaultProps = {
     className: "",
     tab: {},
@@ -34,8 +34,7 @@ class BaseIntegration<
     onClose: _.noop
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
+  // @ts-expect-error: incompatible state from generic need review this class component
   state: TState = {
     loading: true,
     showProgress: true,
@@ -126,7 +125,7 @@ class BaseIntegration<
     this.setState(progress);
   };
 
-  handleChange = (id: string, appData: {}): void => {
+  handleChange = (id: string, appData: Record<string, unknown>): void => {
     this.setState(
       produce(draft => {
         draft.data[id].data = appData;
@@ -254,7 +253,9 @@ class BaseIntegration<
                 <Steppers.Step
                   key={index}
                   num={step.type}
-                  render={(props: {}): ReactElement | undefined =>
+                  render={(
+                    props: Record<string, unknown>
+                  ): ReactElement | undefined =>
                     Component && <Component {...props} apps={this.appsData} />
                   }
                 />

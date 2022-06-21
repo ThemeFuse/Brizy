@@ -11,7 +11,7 @@ import CheckboxControls, {
   CheckGroupItem as CheckboxControlsItem
 } from "visual/component/Controls/CheckGroup";
 import EditorIcon from "visual/component/EditorIcon";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import { IS_WP } from "visual/utils/env";
 
 const readLoginType = type => {

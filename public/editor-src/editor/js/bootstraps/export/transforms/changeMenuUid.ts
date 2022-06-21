@@ -1,3 +1,4 @@
+// @ts-expect-error, Don't really know why we get this error
 import * as cheerio from "cheerio";
 import { uuid } from "visual/utils/uuid";
 

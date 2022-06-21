@@ -31,16 +31,7 @@ interface Grouped extends Value {
 
 export const fromUngrouped = (m: Ungrouped): Grouped => ({
   ...m,
-  type: "grouped",
-
-  topRight: m.value,
-  topRightUnit: m.unit,
-  topLeft: m.value,
-  topLeftUnit: m.unit,
-  bottomRight: m.value,
-  bottomRightUnit: m.unit,
-  bottomLeft: m.value,
-  bottomLeftUnit: m.unit
+  type: "grouped"
 });
 // endregion
 
@@ -51,19 +42,7 @@ interface Ungrouped extends Value {
 
 export const fromGrouped = (m: Grouped): Ungrouped => ({
   ...m,
-  type: "ungrouped",
-
-  topLeft: m.tempTopLeft,
-  topLeftUnit: m.tempTopLeftUnit,
-
-  topRight: m.tempTopRight,
-  topRightUnit: m.tempTopRightUnit,
-
-  bottomRight: m.tempBottomRight,
-  bottomRightUnit: m.tempBottomRightUnit,
-
-  bottomLeft: m.tempBottomLeft,
-  bottomLeftUnit: m.tempBottomLeftUnit
+  type: "ungrouped"
 });
 // endregion
 

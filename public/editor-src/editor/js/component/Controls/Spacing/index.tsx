@@ -9,11 +9,12 @@ import { OnChange } from "visual/component/Options/Type";
 import { Slider, Props as SP } from "./Slider";
 import { Type, Edge, edges, types } from "./types";
 
-export interface Props<U> extends WithClassName {
+type Edges<E extends Edge> = "all" | E;
+
+export interface Props<U, E extends Edge> extends WithClassName {
   label: ReactNode;
   type: Type;
-  value: Record<Edge, number>;
-  unit: Record<Edge, U>;
+  value: { [k in Edges<E>]: { number: number; unit: U } };
   units: SP<U>["units"];
   onType: OnChange<Type>;
   onValue: (edge: Edge, v: number) => void;
@@ -31,12 +32,11 @@ type Callbacks<U> = {
   };
 };
 
-export function Spacing<U>({
+export function Spacing<U, E extends Edge>({
   className,
   label,
   type,
   value,
-  unit,
   onType,
   onValue,
   onUnit,
@@ -45,7 +45,7 @@ export function Spacing<U>({
   min,
   max,
   step
-}: Props<U>): ReactElement {
+}: Props<U, E>): ReactElement {
   const callbacks = useMemo(
     () =>
       edges.reduce<Callbacks<U>>((acc, e) => {
@@ -63,7 +63,7 @@ export function Spacing<U>({
     <Group className={classNames("brz-ed-control__spacing", className)}>
       <OptionWrapper display={"inline"} className={"brz-ed-option"}>
         {label}
-        <RadioGroup2<Props<U>["type"]> onChange={onType}>
+        <RadioGroup2<Props<U, E>["type"]> onChange={onType}>
           {types.map(t => (
             <Item<typeof t>
               key={t}
@@ -76,8 +76,8 @@ export function Spacing<U>({
       </OptionWrapper>
       {type === "grouped" && (
         <Slider<U>
-          value={value.all}
-          unit={unit.all}
+          value={value.all.number}
+          unit={value.all.unit}
           onValue={callbacks.all.onValue}
           onUnit={callbacks.all.onUnit}
           units={units}
@@ -87,14 +87,14 @@ export function Spacing<U>({
         />
       )}
       {type === "ungrouped" &&
-        edges
-          .filter((e): e is Exclude<Edge, "all"> => e !== "all")
+        Object.keys(value)
+          .filter((e): e is Exclude<Edges<E>, "all"> => e !== "all")
           .map(e => (
             <Slider
               key={e}
               icon={getIcon(e)}
-              value={value[e]}
-              unit={unit[e]}
+              value={value[e].number}
+              unit={value[e].unit}
               onValue={callbacks[e].onValue}
               onUnit={callbacks[e].onUnit}
               units={units}

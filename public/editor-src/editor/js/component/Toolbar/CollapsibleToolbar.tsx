@@ -1,16 +1,22 @@
 import React from "react";
+import { connect } from "react-redux";
 import classnames from "classnames";
+import { isT } from "fp-utilities";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { currentUserRole } from "visual/component/Roles";
 import EditorIcon from "visual/component/EditorIcon";
 import ClickOutside from "visual/component/ClickOutside";
 import HotKeys from "visual/component/HotKeys";
 import { ToolbarItems, ToolbarItemsProps } from "./ToolbarItems";
 import { monitor, ToolbarMonitorHandler } from "./monitor";
-import { OptionDefinition } from "visual/component/Options/Type";
+import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
 import { setPosition } from "./state";
+import { DeviceMode } from "visual/types";
+import { ReduxState } from "visual/redux/types";
+import { filterOptions } from "visual/component/Toolbar/PortalToolbar/utils";
 
-type CollapsibleToolbarProps = {
+interface CollapsibleToolbarProps extends Omit<ToolbarItemsProps, "items"> {
   getItems: () => OptionDefinition[];
   getSidebarItems?: () => OptionDefinition[];
   getSidebarTitle?: () => string;
@@ -22,14 +28,18 @@ type CollapsibleToolbarProps = {
   onBeforeClose?: () => void;
   onOpen?: () => void;
   onClose?: () => void;
-} & ToolbarItemsProps;
+}
 
-type CollapsibleToolbarState = {
+interface CollapsibleToolbarState {
   opened: boolean;
-};
+}
 
-export default class CollapsibleToolbar
-  extends React.Component<CollapsibleToolbarProps, CollapsibleToolbarState>
+interface PropsWithState extends CollapsibleToolbarProps {
+  device: DeviceMode;
+}
+
+class _CollapsibleToolbar
+  extends React.Component<PropsWithState, CollapsibleToolbarState>
   implements ToolbarMonitorHandler {
   static defaultProps = {
     animation: "leftToRight",
@@ -86,6 +96,28 @@ export default class CollapsibleToolbar
   handleMonitorDeactivationRequest(): void {
     this.close();
   }
+
+  getItems = (): OptionDefinition[] => {
+    const device = this.props.device;
+    const role = currentUserRole();
+
+    return this.props
+      .getItems()
+      .map(filterOptions(device, role))
+      .filter(isT);
+  };
+
+  getSidebarItems = (): OptionDefinition[] => {
+    const device = this.props.device;
+    const role = currentUserRole();
+
+    return this.props.getSidebarItems
+      ? this.props
+          .getSidebarItems()
+          .map(filterOptions(device, role))
+          .filter(isT)
+      : [];
+  };
 
   open(): void {
     if (this.state.opened) {
@@ -145,12 +177,12 @@ export default class CollapsibleToolbar
   }
 
   renderToolbar(): React.ReactNode {
-    const { getItems, animation } = this.props;
+    const { animation } = this.props;
     const animationClassName =
       animation === "leftToRight"
         ? "animation-left-right"
         : "animation-right-left";
-    const items = getItems();
+    const items = this.getItems();
 
     return (
       <CSSTransition
@@ -191,7 +223,7 @@ export default class CollapsibleToolbar
         </ClickOutside>
         {opened && getSidebarItems && (
           <RightSidebarItems
-            getItems={getSidebarItems}
+            getItems={this.getSidebarItems}
             getTitle={getSidebarTitle}
           />
         )}
@@ -206,3 +238,14 @@ export default class CollapsibleToolbar
     );
   }
 }
+
+export default connect<
+  { device: DeviceMode },
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  {},
+  CollapsibleToolbarProps,
+  ReduxState
+>(s => ({ device: s.ui.deviceMode }), null, null, { forwardRef: true })(
+  // @ts-expect-error, Not clear why TS doesn't like this
+  _CollapsibleToolbar
+);

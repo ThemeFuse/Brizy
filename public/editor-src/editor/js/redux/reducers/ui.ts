@@ -12,10 +12,12 @@ const defaultState: UIState = {
   rightSidebar: {
     isOpen: false,
     lock: undefined,
-    alignment: "right"
+    alignment: "right",
+    activeTab: undefined
   },
   showHiddenElements: false,
-  currentRole: "default"
+  currentRole: "default",
+  currentLanguage: "default"
 };
 
 export function ui(

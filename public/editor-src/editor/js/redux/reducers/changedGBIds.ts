@@ -1,6 +1,5 @@
 import { blocksOrderSelector, globalBlocksInPageSelector } from "../selectors";
 import {
-  ADD_GLOBAL_BLOCK,
   REMOVE_BLOCK,
   REMOVE_BLOCKS,
   UPDATE_GLOBAL_BLOCK,
@@ -11,7 +10,7 @@ import {
 } from "../actions";
 
 import { ReduxState } from "../types";
-import { FETCH_PAGE_SUCCESS, ReduxAction } from "../actions2";
+import { FETCH_PAGE_SUCCESS, ADD_GLOBAL_BLOCK, ReduxAction } from "../actions2";
 
 type ChangedGBIds = ReduxState["changedGBIds"];
 

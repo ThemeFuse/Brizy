@@ -34,7 +34,7 @@ export function roundTo(num: number, places: number): number {
  * @param {number} n
  * @returns {boolean}
  */
-export const isNumber = (n: unknown): boolean => typeof n === "number";
+export const isNumber = (n: unknown): n is number => typeof n === "number";
 
 export const isNumeric = (n: unknown): boolean => {
   switch (typeof n) {
@@ -95,3 +95,9 @@ export const toPositive = (v: unknown, orElse?: number): MValue<number> =>
  */
 export const inRange = (min: number, max: number, n: number): boolean =>
   n >= min && n <= max;
+
+export const add = (a: number) => (b: number): number => a + b;
+
+export const subtract = (a: number) => (b: number): number => a - b;
+
+export const subtractR = (a: number) => (b: number): number => b - a;

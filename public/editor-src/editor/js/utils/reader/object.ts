@@ -5,20 +5,20 @@ type ObjWithUnknowns<K extends string> = {
   [k in K]: unknown;
 };
 
-export const isObject = (v: unknown): v is object =>
+export const isObject = (v: unknown): v is Record<string, unknown> =>
   typeof v === "object" && v !== null;
 
 export const hasKey = <T extends string>(
   key: T,
-  obj: object
+  obj: Record<string, unknown>
 ): obj is ObjWithUnknowns<T> => key in obj;
 
 export const hasKeys = <T extends string>(
   keys: T[],
-  obj: object
+  obj: Record<string, unknown>
 ): obj is ObjWithUnknowns<T> => keys.every(k => hasKey(k, obj));
 
-export const read: Reader<object> = v => {
+export const read: Reader<Record<string, unknown>> = v => {
   if (isObject(v)) {
     return v;
   }
@@ -59,5 +59,6 @@ export const readWithValueReader = <T>(
   return undefined;
 };
 
-export const readKey = (key: string) => (obj: object): unknown =>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const readKey = (key: string) => (obj: Record<string, any>): unknown =>
   hasKey(key, obj) ? obj[key] : undefined;

@@ -407,7 +407,7 @@ class Brizy_Editor {
 		( isset( $_REQUEST['page_id'] ) ) {
 			$pid = (int) $_REQUEST['page_id'];
 		} elseif
-		( isset( $_POST['post_ID'] ) ) {
+		( isset( $_REQUEST['post_ID'] ) ) {
 			$pid = (int) $_POST['post_ID'];
 		} elseif
 		( isset( $_POST['id'] ) ) {

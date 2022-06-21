@@ -278,7 +278,8 @@ export function getItems({ v, device }) {
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      position: 110
+      position: 110,
+      devices: "desktop"
     }
   ];
 }

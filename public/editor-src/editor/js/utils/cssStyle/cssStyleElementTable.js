@@ -6,11 +6,10 @@ import {
   styleElementTableColumns,
   styleElementTableHorizontalAlign,
   styleElementTableIconPosition,
-  styleElementTableIconSize,
   styleElementTableIconSpacing,
   styleElementTableWidth
 } from "visual/utils/style2";
-
+import { defaultValueValue } from "visual/utils/onChange";
 import { cssStylePaddingFourFields } from "./cssStylePadding";
 
 export function cssStyleElementTableWidth({ v, device, state }) {
@@ -19,8 +18,20 @@ export function cssStyleElementTableWidth({ v, device, state }) {
 }
 
 export function cssStyleElementTableIconSize({ v, device, state }) {
-  const iconCustomSize = styleElementTableIconSize({ v, device, state });
-  return `font-size: ${iconCustomSize}px;`;
+  const dvv = key => defaultValueValue({ v, key, device, state });
+  const iconSize = dvv("iconSize");
+  const iconCustomSize = dvv("iconCustomSize");
+
+  switch (iconSize) {
+    case "small":
+      return "font-size: 16px;";
+    case "medium":
+      return "font-size: 24px;";
+    case "large":
+      return "font-size: 32px;";
+    case "custom":
+      return `font-size: ${iconCustomSize}px;`;
+  }
 }
 
 export function cssStyleElementTableSpacing({ v, device, state }) {
@@ -85,7 +96,7 @@ export function cssStyleElementTableAsideWidth({ v, device, state }) {
 
   if (aside === "on") {
     const width = styleElementTableAsideWidth({ v, device, state });
-    return `width: ${width}px;`;
+    return `min-width: ${width}px; width: ${width}px`;
   }
 
   const columns = styleElementTableColumns({ v, device, state });

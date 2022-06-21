@@ -67,8 +67,7 @@ export const GradientRange: FC<Props> = ({
             {...other}
             key={index}
             className={_className}
-            /* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
-            // @ts-ignore
+            // @ts-expect-error: missing props onMouseDown in ts
             onMouseDown={(): void => onActiveChange(_active)}
           />
         );

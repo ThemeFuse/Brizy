@@ -24,3 +24,38 @@
 .brz-table__th .brz-span {
   margin: auto 0;
 }
+
+// Responsive
+@include media-breakpoint-down(sm) {
+  .brz-table {
+    display: block;
+    overflow-x: auto;
+    border-collapse: collapse;
+    max-width: 100%;
+
+    // (1)
+    // override RightText word-break: brake-all
+    // only responsive
+    .brz-rich-text {
+      overflow-wrap: normal;
+      word-break: normal;
+      word-wrap: normal;
+    }
+  }
+
+  // (2)
+  // need to se if the point (1) doesn't work
+  // uses this styles for testing
+  //.brz-table > tbody > tr,
+  //.brz-table > thead > tr {
+  //  min-width: 50em;
+  //  display: flex;
+  //  flex-wrap: wrap;
+  //}
+  //.brz-table > .brz-table__body > .brz-table__tr > .brz-table__td {
+  //  flex: 1;
+  //}
+  //.brz-table > .brz-table__head > .brz-table__tr > .brz-table__th:not(:first-child) {
+  //  flex: 1;
+  //}
+}

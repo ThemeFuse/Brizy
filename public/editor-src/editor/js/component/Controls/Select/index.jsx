@@ -3,7 +3,7 @@ import _ from "underscore";
 import classnames from "classnames";
 import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import ClickOutside from "visual/component/ClickOutside";
 import Portal from "visual/component/Portal";
 
@@ -54,12 +54,13 @@ class Select extends React.Component {
   //   }
   // }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.state.defaultValue !== nextProps.defaultValue) {
-      this.setState({
+  static getDerivedStateFromProps(nextProps, state) {
+    if (state.defaultValue !== nextProps.defaultValue) {
+      return {
         currentValue: nextProps.defaultValue
-      });
+      };
     }
+    return null;
   }
 
   getScrollPaneStyle() {

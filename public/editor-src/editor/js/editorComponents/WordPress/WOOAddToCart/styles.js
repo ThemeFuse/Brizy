@@ -14,7 +14,7 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartInputAlign"
       ]
     },
-    ".brz &&:hover form.cart .quantity": {
+    ".brz && form.cart .quantity:hover": {
       standart: [
         "cssStyleElementWOOAddToCartInputSize",
         "cssStyleElementWOOAddToCartSpacing"
@@ -32,16 +32,6 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartInputBg",
         "cssStyleElementWOOAddToCartInputBorder",
         "cssStyleElementWOOAddToCartInputBoxShadow"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementButtonPropertyHoverTransition"
-      ]
-    },
-    ".brz &&:hover .woocommerce-grouped-product-list-item__quantity input[type=number].input-text": {
-      standart: [
-        "cssStyleElementWOOAddToCartTableBorder",
-        "cssStyleElementWOOAddToCartTableBg"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -121,13 +111,15 @@ export function style(v, vs, vd) {
     ".brz &&:hover table": {
       standart: [
         "cssStyleElementWOOAddToCartTableMargin",
-        "cssStyleElementWOOAddToCartTableBg",
         "cssStyleElementWOOAddToCartTableBoxShadow"
       ],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementButtonPropertyHoverTransition"
       ]
+    },
+    ".brz &&:hover .label, .woocommerce-grouped-product-list-item": {
+      standart: ["cssStyleElementWOOAddToCartLabelBg"]
     },
     ".brz &&:hover table td": {
       standart: ["cssStyleElementWOOAddToCartTableBorder"],
@@ -139,7 +131,6 @@ export function style(v, vs, vd) {
     ".brz &&:hover td.value select": {
       standart: [
         "cssStyleElementWOOAddToCartTableBorder",
-        "cssStyleElementWOOAddToCartTableBg",
         "cssStyleElementWOOAddToCartValueColor",
         "cssStyleElementWOOAddToCartValueFontFamily",
         "cssStyleElementWOOAddToCartValueFontSize",
@@ -151,6 +142,9 @@ export function style(v, vs, vd) {
         "cssStyleHoverTransition",
         "cssStyleElementButtonPropertyHoverTransition"
       ]
+    },
+    ".brz &&:hover .value": {
+      standart: ["cssStyleElementWOOAddToCartTableBg"]
     },
     ".brz &&:hover td.woocommerce-grouped-product-list-item__price": {
       standart: [

@@ -24,24 +24,6 @@ export const _valueTitle: ValueTitle = t => (
 };
 export const valueTitle = _valueTitle(t);
 
-export const arrangeItems = <T>(
-  items: MultiSelectItemProps<T>[],
-  value: T[]
-): MultiSelectItemProps<T>[] => {
-  const valueItems = [];
-  const nonValueItems = [];
-
-  for (const item of items) {
-    if (value.includes(item.value)) {
-      valueItems.push(item);
-    } else {
-      nonValueItems.push(item);
-    }
-  }
-
-  return valueItems.concat(nonValueItems);
-};
-
 export const toggleItemValue = <T>(
   item: MultiSelectItemProps<T>,
   value: T[]

@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Animation from "visual/component/Animation";
 import Toolbar from "visual/component/Toolbar";
 import { TextEditor } from "visual/component/Controls/TextEditor";
@@ -203,14 +203,21 @@ class AccordionItem extends EditorComponent {
   }
 
   renderForEdit(v) {
-    const { activeAccordionItem, collapsible, visibleTag, tag } = this.props;
+    const {
+      activeAccordionItem,
+      collapsible,
+      visibleTag,
+      tag,
+      allTag
+    } = this.props;
+
     const active =
       collapsible === "off" ? this.state.active : activeAccordionItem;
 
     const className = classnames("brz-accordion__item", tag, {
       "brz-accordion__item--active": active,
       "brz-accordion__hidden": !(
-        visibleTag === "All" || tag.includes(visibleTag)
+        visibleTag === allTag || tag.includes(visibleTag)
       )
     });
 

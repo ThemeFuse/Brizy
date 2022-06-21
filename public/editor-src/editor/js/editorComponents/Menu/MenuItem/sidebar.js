@@ -25,8 +25,8 @@ export const getItemsSimple = level => ({ device, state }) => {
     ...(level >= 1
       ? [
           {
-            id: "settingsTabs",
-            type: "tabs-dev",
+            id: "sidebarTabs",
+            type: "sidebarTabs-dev",
             disabled: true
           },
           toolbarDisabledPadding({ device, state, prefix: "menu" })

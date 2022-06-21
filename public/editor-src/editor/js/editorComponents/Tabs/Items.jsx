@@ -12,7 +12,8 @@ export default class TabsItems extends EditorArrayComponent {
     className: "",
     renderType: "",
     style: {},
-    meta: {}
+    meta: {},
+    verticalMode: ""
   };
 
   getItemProps(itemData, itemIndex, items) {
@@ -22,10 +23,38 @@ export default class TabsItems extends EditorArrayComponent {
       activeTab,
       onChangeNav,
       action,
+      verticalMode,
       animationClassName
     } = this.props;
     const cloneRemoveConfig = {
       getItems: () => [
+        {
+          id: "order",
+          type: "order-dev",
+          devices: "desktop",
+          position: 105,
+          roles: ["admin"],
+          disabled: items.length < 2,
+          config: {
+            align: verticalMode === "on" ? "vertical" : "horizontal",
+            disable:
+              itemIndex === 0
+                ? "prev"
+                : itemIndex === items.length - 1
+                ? "next"
+                : undefined,
+            onChange: v => {
+              switch (v) {
+                case "prev":
+                  this.reorderItem(itemIndex, itemIndex - 1);
+                  break;
+                case "next":
+                  this.reorderItem(itemIndex, itemIndex + 1);
+                  break;
+              }
+            }
+          }
+        },
         {
           id: "duplicate",
           type: "button",

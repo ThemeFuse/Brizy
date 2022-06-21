@@ -1,17 +1,17 @@
 import { getIn, insert, removeAt, setIn } from "timm";
+import * as Num from "visual/utils/math/number";
 import { MValue } from "visual/utils/value";
 import { ElementModel } from "visual/component/Elements/Types";
 
 export const addIn = (
   object: ElementModel,
-  [...path],
+  [...path]: (string | number)[],
   value: ElementModel
 ): MValue<ElementModel> => {
-  let index = path.pop();
-  index = Number(index) ? Number(index) : index;
+  const index = Num.read(path.pop());
   const obj = getIn(object, path) as MValue<ElementModel[]>;
 
-  if (obj) {
+  if (obj && index !== undefined) {
     const newObj = insert(obj, index, value);
     return setIn(object, path, newObj) as ElementModel;
   }
@@ -21,13 +21,12 @@ export const addIn = (
 
 export const removeIn = (
   object: ElementModel,
-  [...path]
+  [...path]: (string | number)[]
 ): MValue<ElementModel> => {
-  let index = path.pop();
-  index = Number(index) ? Number(index) : index;
+  const index = Num.read(path.pop());
   const obj = getIn(object, path) as MValue<ElementModel[]>;
 
-  if (obj) {
+  if (obj && index !== undefined) {
     const newObj = removeAt(obj, index) as ElementModel[];
     return setIn(object, path, newObj) as ElementModel;
   }

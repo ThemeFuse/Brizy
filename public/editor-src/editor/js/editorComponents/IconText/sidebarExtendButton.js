@@ -6,8 +6,8 @@ import {
 export function getItems({ device, state }) {
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       disabled: true
     },
     toolbarDisabledPadding({ device, state }),

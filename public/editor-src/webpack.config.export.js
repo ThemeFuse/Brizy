@@ -1,12 +1,34 @@
 const path = require("path");
 const webpack = require("webpack");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 const editorConfigFn = require("./webpack.config.editor");
 const babelrc = require("./babelrc.config.all");
 
 module.exports = options => {
   const editorConfig = editorConfigFn(options);
+  const nullLoaderArr = [
+    // stripped because of errors when run in a node environment
+    /graphql/,
+    /apollo/,
+    /@apollo\/client/,
+    /quill/,
+    /isotope-layout/,
+    /magnific-popup/,
+    /slick-carousel/,
 
-  return {
+    // stripped for performance / bundle size reduction
+    /\/editor\/js\/component\/Prompts\//,
+    // Need review this case because some element import fromElementModel | toElementModel
+    // and uses it on compile
+    // /\/editor\/js\/component\/Options\//,
+    /\/editor\/js\/utils\/toolbar\//,
+    /\/node_modules\/react-lottie\//,
+    /\/node_modules\/jquery\//,
+    /\/node_modules\/react-facebook\//
+  ];
+
+  const config = {
     mode: "none",
     target: "node",
     entry: [
@@ -29,16 +51,13 @@ module.exports = options => {
           options: babelrc.export()
         },
         {
-          test: /graphql|apollo|@apollo\/client|quill|isotope-layout|magnific-popup|slick-carousel/,
+          test(path) {
+            return nullLoaderArr.some(r => r.test(path));
+          },
           loader: "null-loader"
         },
         {
-          test: /[\\/]libs?[\\/]/,
-          include: [path.resolve(__dirname, "editor")],
-          loader: "null-loader"
-        },
-        {
-          test: /[\\/]Options[\\/]/,
+          test: /[\\/](lib|screenshot)s?[\\/]/,
           include: [path.resolve(__dirname, "editor")],
           loader: "null-loader"
         }
@@ -59,4 +78,12 @@ module.exports = options => {
     watch: editorConfig.watch,
     watchOptions: editorConfig.watchOptions
   };
+
+  const configAnalyze = {
+    mode: "production",
+    plugins: [...config.plugins, new BundleAnalyzerPlugin()],
+    watch: false
+  };
+
+  return options.ANALYZE ? { ...config, ...configAnalyze } : config;
 };

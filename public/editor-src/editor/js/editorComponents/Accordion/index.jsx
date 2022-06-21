@@ -15,7 +15,12 @@ import defaultValue from "./defaultValue.json";
 import { css } from "visual/utils/cssStyle";
 import { style, styleAnimation } from "./styles";
 import classnames from "classnames";
-import { validateKeyByProperty } from "visual/utils/onChange";
+import {
+  defaultValueValue,
+  validateKeyByProperty
+} from "visual/utils/onChange";
+import classNames from "classnames";
+import { getTagNameFromFontStyle } from "visual/editorComponents/tools/HtmlTag";
 
 class Accordion extends EditorComponent {
   static get componentId() {
@@ -28,6 +33,10 @@ class Accordion extends EditorComponent {
   };
 
   static defaultValue = defaultValue;
+
+  handleAllTagChange = allTag => {
+    this.patchValue({ allTag });
+  };
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -46,6 +55,40 @@ class Accordion extends EditorComponent {
     this.patchValue({ activeAccordionItem });
   };
 
+  patchValue(patch, meta) {
+    const { fontStyle } = patch;
+
+    super.patchValue(
+      {
+        ...patch,
+        ...(fontStyle ? getTagNameFromFontStyle(fontStyle) : {})
+      },
+      meta
+    );
+  }
+
+  getAnimationClassName = (v, vs, vd) => {
+    if (!validateKeyByProperty(v, "animationName", "none")) {
+      return undefined;
+    }
+
+    const animationName = defaultValueValue({ v, key: "animationName" });
+    const animationDuration = defaultValueValue({
+      v,
+      key: "animationDuration"
+    });
+    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
+    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+
+    return classNames(
+      css(
+        `${this.getComponentId()}-animation-${slug}`,
+        `${this.getId()}-animation-${slug}`,
+        styleAnimation(v, vs, vd)
+      )
+    );
+  };
+
   renderForEdit(v, vs, vd) {
     const {
       activeAccordionItem,
@@ -54,7 +97,8 @@ class Accordion extends EditorComponent {
       collapsible,
       animDuration,
       enableTags,
-      tagName
+      tagName,
+      allTag
     } = v;
 
     const className = classnames(
@@ -62,16 +106,10 @@ class Accordion extends EditorComponent {
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
 
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
+    const animationClassName = this.getAnimationClassName(v, vs, vd);
 
     const itemProps = this.makeSubcomponentProps({
+      allTag,
       className,
       filterStyle,
       activeAccordionItem,
@@ -82,6 +120,7 @@ class Accordion extends EditorComponent {
       enableTags,
       animationClassName,
       bindWithKey: "items",
+      handleAllTagChange: this.handleAllTagChange,
       handleNav: this.handleNav,
       meta: this.props.meta,
       toolbarExtend: this.makeToolbarPropsFromConfig2(

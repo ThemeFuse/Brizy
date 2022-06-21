@@ -13,27 +13,47 @@ const helperHTML = `
 export function getItems() {
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
-      config: {
-        align: "start"
-      },
-      devices: "desktop",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       tabs: [
         {
-          id: "moreSettingsAdvanced",
-          label: t("Advanced"),
-          icon: "nc-cog",
+          id: "styles",
+          title: t("Styling"),
+          label: t("Styling"),
           options: [
             {
-              id: "customCSS",
-              label: t("Custom CSS"),
-              type: "codeMirror-dev",
-              position: 45,
-              display: "block",
+              id: "settingsTabs",
+              type: "tabs-dev",
+              config: {
+                align: "start"
+              },
               devices: "desktop",
-              helper: { content: helperHTML },
-              placeholder: "element { CSS goes here }"
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  devices: "desktop",
+                  options: []
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  icon: "nc-cog",
+                  options: [
+                    {
+                      id: "customCSS",
+                      label: t("Custom CSS"),
+                      type: "codeMirror-dev",
+                      position: 45,
+                      display: "block",
+                      devices: "desktop",
+                      helper: { content: helperHTML },
+                      placeholder: "element { CSS goes here }"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

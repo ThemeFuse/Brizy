@@ -31,12 +31,11 @@ export const Button: React.FC<Props> & Option.OptionType<undefined> = ({
   );
 };
 
-const getModel: Option.GetModel<undefined> = () => undefined;
-const getElementModel: Option.GetElementModel<undefined> = () => ({});
+const getModel: Option.FromElementModel<undefined> = () => undefined;
+const getElementModel: Option.ToElementModel<undefined> = () => ({});
 
-Button.getModel = getModel;
-Button.getElementModel = getElementModel;
+Button.fromElementModel = getModel;
+Button.toElementModel = getElementModel;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
+// @ts-expect-error: Variable 'defaultValue' implicitly has an 'any' type
 Button.defaultValue = undefined;

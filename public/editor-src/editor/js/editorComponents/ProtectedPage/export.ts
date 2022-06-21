@@ -47,7 +47,6 @@ export default function($node: JQuery): void {
     submit?.classList.add("brz-blocked");
 
     const data = {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       protected_page_token: inputValue
     };
 

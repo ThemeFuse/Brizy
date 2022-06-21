@@ -32,8 +32,8 @@ export const getUsedModelsUpload = ({
 
       while ((hrefs = hrefRgx.exec(text))) {
         try {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const [_, href] = hrefs;
+          // @ts-expect-error: variables is declared but its value is never use
+          const [_, href] = hrefs; // eslint-disable-line @typescript-eslint/no-unused-vars
           const { type, upload } = decodeFromString<{
             type: string;
             upload: string;

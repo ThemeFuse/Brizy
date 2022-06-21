@@ -234,10 +234,10 @@ export function getItems({ v, device }) {
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
       position: 110,
       title: t("Settings"),
       roles: ["admin"],
+      devices: "desktop",
       icon: "nc-cog"
     }
   ];

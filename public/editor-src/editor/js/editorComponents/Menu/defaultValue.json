@@ -18,6 +18,23 @@
   "style": {
     "className": "",
 
+    "bg": "",
+    "bgImageSrc": "",
+    "bgImageExtension": "",
+    "bgImageWidth": 0,
+    "bgImageHeight": 0,
+    "bgPopulation": "",
+    "bgSizeType": "custom",
+    "media": "image",
+
+    "bgPositionX": 50,
+    "bgPositionY": 50,
+
+    "brightness": 100,
+    "hue": 0,
+    "saturation": 100,
+    "contrast": 100,
+
     "colorHex": "#000000",
     "colorOpacity": 1,
     "colorPalette": "",
@@ -107,6 +124,244 @@
 
     "activeMenuBorderStyle": null,
     "tempActiveMenuBorderStyle": null,
+
+    "activeSubMenuBgHex": null,
+    "activeSubMenuBgOpacity": null,
+    "activeSubMenuBgPalette": null,
+
+    "tempActiveSubMenuBgOpacity": null,
+    "tempActiveSubMenuBgPalette": null,
+
+    "activeSubMenuStyle": null,
+    "activeSubMenuWidthType": null,
+    "activeSubMenuWidth": null,
+    "activeSubMenuTopWidth": null,
+    "activeSubMenuRightWidth": null,
+    "activeSubMenuBottomWidth": null,
+    "activeSubMenuLeftWidth": null,
+
+    "tempActiveSubMenuStyle": null,
+    "tempActiveSubMenuWidth": null,
+    "tempActiveSubMenuTopWidth": null,
+    "tempActiveSubMenuRightWidth": null,
+    "tempActiveSubMenuBottomWidth": null,
+    "tempActiveSubMenuLeftWidth": null,
+
+    "tempSubMenuColorOpacity": 1,
+    "tempSubMenuColorPalette": "",
+
+    "subMenuBgHex": "#ffffff",
+    "subMenuBgOpacity": 1,
+    "subMenuBgPalette": "",
+
+    "tempSubMenuBgOpacity": 1,
+    "tempSubMenuBgPalette": "",
+
+    "subMenuStyle": "",
+
+    "tempSubMenuStyle": "",
+
+    "subMenuWidthType": null,
+    "subMenuWidth": null,
+    "subMenuTopWidth": null,
+    "subMenuRightWidth": null,
+    "subMenuBottomWidth": null,
+    "subMenuLeftWidth": null,
+
+    "tempSubMenuWidth": null,
+    "tempSubMenuTopWidth": null,
+    "tempSubMenuRightWidth": null,
+    "tempSubMenuBottomWidth": null,
+    "tempSubMenuLeftWidth": null,
+
+    "hoverSubMenuColorHex": null,
+    "hoverSubMenuColorOpacity": null,
+    "hoverSubMenuColorPalette": null,
+
+    "tempHoverSubMenuColorOpacity": null,
+    "tempHoverSubMenuColorPalette": null,
+    "tempSubMenuBgColorOpacity": null,
+    "tempSubMenuBgColorPalette": null,
+    "tempSubMenuBorderStyle": "solid",
+    "tempSubMenuBorderColorOpacity": null,
+    "tempSubMenuBorderColorPalette": null,
+
+    "subMenuBorderWidthType": "grouped",
+    "tempSubMenuBorderWidth": 2,
+    "tempSubMenuBorderTopWidth": 2,
+    "tempSubMenuBorderRightWidth": 2,
+    "tempSubMenuBorderBottomWidth": 2,
+    "tempSubMenuBorderLeftWidth": 2,
+
+    "subMenuBorderTopWidth": 2,
+    "subMenuBorderRightWidth": 2,
+    "subMenuBorderBottomWidth": 2,
+    "subMenuBorderLeftWidth": 2,
+
+    "hoverSubMenuBgColorHex": null,
+    "hoverSubMenuBgColorOpacity": null,
+    "hoverSubMenuBgColorPalette": null,
+
+    "tempHoverSubMenuBgColorOpacity": 1,
+    "tempHoverSubMenuBgColorPalette": 1,
+
+    "tempHoverSubMenuBorderStyle": null,
+
+    "hoverSubMenuBorderStyle": null,
+    "hoverSubMenuBorderColorHex": null,
+
+    "hoverSubMenuBorderColorOpacity": null,
+    "hoverSubMenuBorderColorPalette": null,
+
+    "tempHoverSubMenuBorderColorPalette": null,
+    "tempHoverSubMenuBorderColorOpacity": null,
+
+    "hoverSubMenuBorderWidthType": null,
+    "hoverSubMenuBorderWidth": null,
+    "hoverSubMenuBorderTopWidth": null,
+    "hoverSubMenuBorderRightWidth": null,
+    "hoverSubMenuBorderBottomWidth": null,
+    "hoverSubMenuBorderLeftWidth": null,
+
+    "tempHoverSubMenuBorderWidth": null,
+    "tempHoverSubMenuBorderTopWidth": null,
+    "tempHoverSubMenuBorderRightWidth": null,
+    "tempHoverSubMenuBorderBottomWidth": null,
+    "tempHoverSubMenuBorderLeftWidth": null,
+
+    "activeSubMenuBorderStyle": null,
+
+    "tempActiveSubMenuBorderStyle": null,
+
+    "activeSubMenuBorderWidthType": null,
+    "activeSubMenuBorderWidth": null,
+    "activeSubMenuBorderTopWidth": null,
+    "activeSubMenuBorderRightWidth": null,
+    "activeSubMenuBorderBottomWidth": null,
+    "activeSubMenuBorderLeftWidth": null,
+
+    "tempActiveSubMenuBorderWidth": null,
+    "tempActiveSubMenuBorderTopWidth": null,
+    "tempActiveSubMenuBorderRightWidth": null,
+    "tempActiveSubMenuBorderBottomWidth": null,
+    "tempActiveSubMenuBorderLeftWidth": null,
+
+    "tempMMenuColorOpacity": null,
+    "tempMMenuColorPalette": null,
+
+    "tempMMenuIconColorOpacity": 1,
+    "tempMMenuIconColorPalette": "",
+
+    "mMenuBgHex": "#ffffff",
+    "mMenuBgOpacity": 1,
+    "mMenuBgPalette": "",
+
+    "tempMMenuBgOpacity": null,
+    "tempMMenuBgPalette": null,
+
+    "mMenuStyle": null,
+
+    "tempMMenuStyle": null,
+
+    "mMenuWidthType": null,
+    "mMenuWidth": null,
+    "mMenuTopWidth": null,
+    "mMenuRightWidth": null,
+    "mMenuBottomWidth": null,
+    "mMenuLeftWidth": null,
+
+    "tempMMenuWidth": null,
+    "tempMMenuTopWidth": null,
+    "tempMMenuRightWidth": null,
+    "tempMMenuBottomWidth": null,
+    "tempMMenuLeftWidth": null,
+
+    "tempMMenuBgColorOpacity": null,
+    "tempMMenuBgColorPalette": null,
+
+    "mMenuBorderStyle": null,
+
+    "tempMMenuBorderStyle": null,
+    "tempMMenuBorderColorOpacity": null,
+    "tempMMenuBorderColorPalette": null,
+
+    "mMenuBorderWidthType": "grouped",
+    "mMenuBorderWidth": 2,
+    "mMenuBorderTopWidth": 2,
+    "mMenuBorderRightWidth": 2,
+    "mMenuBorderBottomWidth": 2,
+    "mMenuBorderLeftWidth": 2,
+
+    "tempMMenuBorderWidth": 2,
+    "tempMMenuBorderTopWidth": 2,
+    "tempMMenuBorderRightWidth": 2,
+    "tempMMenuBorderBottomWidth": 2,
+    "tempMMenuBorderLeftWidth": 2,
+
+    "tempHoverMMenuBorderStyle": null,
+    "tempHoverMMenuBorderColorOpacity": null,
+    "tempHoverMMenuBorderColorPalette": null,
+
+    "hoverMMenuBorderStyle": null,
+    "hoverMMenuBorderColorHex": null,
+    "hoverMMenuBorderColorOpacity": null,
+    "hoverMMenuBorderColorPalette": null,
+    "hoverMMenuBorderWidthType": null,
+    "hoverMMenuBorderWidth": null,
+    "hoverMMenuBorderTopWidth": null,
+    "hoverMMenuBorderRightWidth": null,
+    "hoverMMenuBorderBottomWidth": null,
+    "hoverMMenuBorderLeftWidth": null,
+
+    "tempHoverMMenuBorderWidth": null,
+    "tempHoverMMenuBorderTopWidth": null,
+    "tempHoverMMenuBorderRightWidth": null,
+    "tempHoverMMenuBorderBottomWidth": null,
+    "tempHoverMMenuBorderLeftWidth": null,
+
+    "hoverMMenuBgColorHex": null,
+    "hoverMMenuBgColorOpacity": null,
+    "hoverMMenuBgColorPalette": null,
+
+    "tempHoverMMenuBgColorOpacity": null,
+    "tempHoverMMenuBgColorPalette": null,
+
+    "hoverMMenuColorHex": null,
+    "hoverMMenuColorOpacity": null,
+    "hoverMMenuColorPalette": null,
+
+    "tempHoverMMenuColorOpacity": null,
+    "tempHoverMMenuColorPalette": null,
+
+    "activeMMenuBgColorHex": null,
+    "activeMMenuBgColorOpacity": null,
+    "activeMMenuBgColorPalette": null,
+
+    "activeMMenuBorderStyle": null,
+    "activeMMenuBorderColorHex": null,
+
+    "tempActiveMMenuBgColorOpacity": null,
+    "tempActiveMMenuBgColorPalette": null,
+    "tempActiveMMenuBorderStyle": null,
+
+    "activeMMenuBorderColorOpacity": null,
+    "activeMMenuBorderColorPalette": null,
+
+    "tempActiveMMenuBorderColorOpacity": null,
+    "tempActiveMMenuBorderColorPalette": null,
+
+    "activeMMenuBorderWidthType": null,
+    "activeMMenuBorderWidth": null,
+    "activeMMenuBorderTopWidth": null,
+    "activeMMenuBorderRightWidth": null,
+    "activeMMenuBorderBottomWidth": null,
+    "activeMMenuBorderLeftWidth": null,
+
+    "tempActiveMMenuBorderWidth": null,
+    "tempActiveMMenuBorderTopWidth": null,
+    "tempActiveMMenuBorderRightWidth": null,
+    "tempActiveMMenuBorderBottomWidth": null,
+    "tempActiveMMenuBorderLeftWidth": null,
 
     "menuBorderWidthType": "grouped",
     "menuBorderWidth": 0,
@@ -477,8 +732,23 @@
     "mMenuBgColorType": "solid",
 
     "mMenuBgColorHex": "#333333",
-    "mMenuBgColorOpacity": 1,
+    "mMenuBgColorOpacity": 0.8,
     "mMenuBgColorPalette": "",
+    "mMenuGradientColorHex": "",
+    "mMenuGradientColorOpacity": 0.8,
+    "mMenuGradientColorPalette": "",
+    "mMenuGradientType": "linear",
+    "mMenuGradientStartPointer": 0,
+    "mMenuGradientFinishPointer": 100,
+    "mMenuGradientActivePointer": "startPointer",
+    "mMenuGradientLinearDegree": 90,
+    "mMenuGradientRadialDegree": 90,
+
+    "tempMMenuBgColorType": "solid",
+    "tempMMenuBgColorOpacity": 0.8,
+    "tempMMenuBgColorPalette": "",
+    "tempMMenuGradientColorOpacity": 0.8,
+    "tempMMenuGradientColorPalette": "",
 
     "mMenuTempBgColorOpacity": 1,
 

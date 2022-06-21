@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { CodeMirror as Control } from "visual/component/Controls/CodeMirror";
 import { String } from "visual/utils/string/specs";
 import * as Option from "visual/component/Options/Type";
-import { debouncedEffect } from "visual/component/hooks";
+import { useDebouncedEffect } from "visual/component/hooks";
 import {
   WithClassName,
   WithConfig,
@@ -30,7 +30,7 @@ export const CodeMirror: FC<Props> & Option.OptionType<Model> = ({
   const ref = useRef<string>();
   let language: Exclude<Config["language"], "html"> | "htmlmixed";
 
-  debouncedEffect(
+  useDebouncedEffect(
     () => {
       if (value !== _value) {
         onChange({ value: _value });
@@ -66,13 +66,13 @@ export const CodeMirror: FC<Props> & Option.OptionType<Model> = ({
   );
 };
 
-const getModel: Option.GetModel<Model> = get => ({
+const getModel: Option.FromElementModel<Model> = get => ({
   value: String.read(get("value"))
 });
 
-const getElementModel: Option.GetElementModel<Model> = (values, get) => {
+const getElementModel: Option.ToElementModel<Model> = values => {
   return {
-    [get("value")]: values.value
+    value: values.value
   };
 };
 
@@ -80,6 +80,6 @@ CodeMirror.defaultValue = {
   value: ""
 };
 
-CodeMirror.getModel = getModel;
+CodeMirror.fromElementModel = getModel;
 
-CodeMirror.getElementModel = getElementModel;
+CodeMirror.toElementModel = getElementModel;

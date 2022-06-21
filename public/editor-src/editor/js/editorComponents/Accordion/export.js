@@ -106,9 +106,9 @@ export default function($node) {
       const $filterItem = $(target).closest(".brz-accordion__filter__item");
 
       // Active Tag
-      if (!$(target).hasClass("brz-accordion__filter__item--active")) {
-        $(target).addClass("brz-accordion__filter__item--active");
-        $(target)
+      if (!$filterItem.hasClass("brz-accordion__filter__item--active")) {
+        $filterItem.addClass("brz-accordion__filter__item--active");
+        $filterItem
           .siblings()
           .removeClass("brz-accordion__filter__item--active");
       }

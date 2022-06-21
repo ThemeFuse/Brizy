@@ -194,11 +194,14 @@ export function getItems({ v }) {
       position: 110,
       options: [
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          label: t("More Settings"),
-          position: 20,
-          icon: "nc-cog"
+          id: "styles",
+          type: "sidebarTabsButton-dev",
+          config: {
+            tabId: "styles",
+            text: t("Styling"),
+            icon: "nc-cog",
+            align: "left"
+          }
         }
       ]
     }

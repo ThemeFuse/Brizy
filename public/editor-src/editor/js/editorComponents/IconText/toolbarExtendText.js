@@ -1,6 +1,4 @@
-import { toolbarDisabledAdvancedSettings } from "visual/utils/toolbar";
-
-export function getItems({ device, state }) {
+export function getItems() {
   return [
     {
       id: "list",
@@ -11,7 +9,13 @@ export function getItems({ device, state }) {
     {
       id: "toolbarSettings",
       type: "popover-dev",
-      options: [toolbarDisabledAdvancedSettings({ device, state })]
+      options: [
+        {
+          id: "grid",
+          type: "grid",
+          disabled: true
+        }
+      ]
     }
   ];
 }

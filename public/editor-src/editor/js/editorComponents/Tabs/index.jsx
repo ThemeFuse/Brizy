@@ -14,8 +14,12 @@ import * as toolbarExtendParent from "./toolbarExtendParent";
 import defaultValue from "./defaultValue.json";
 import { css } from "visual/utils/cssStyle";
 import { styleTabs, styleAnimation } from "./styles";
-import { validateKeyByProperty } from "visual/utils/onChange";
+import {
+  defaultValueValue,
+  validateKeyByProperty
+} from "visual/utils/onChange";
 import { Wrapper } from "../tools/Wrapper";
+import classNames from "classnames";
 
 export default class Tabs extends EditorComponent {
   static get componentId() {
@@ -77,6 +81,28 @@ export default class Tabs extends EditorComponent {
     this.patchValue({ activeTab });
   };
 
+  getAnimationClassName = (v, vs, vd) => {
+    if (!validateKeyByProperty(v, "animationName", "none")) {
+      return undefined;
+    }
+
+    const animationName = defaultValueValue({ v, key: "animationName" });
+    const animationDuration = defaultValueValue({
+      v,
+      key: "animationDuration"
+    });
+    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
+    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+
+    return classNames(
+      css(
+        `${this.getComponentId()}-animation-${slug}`,
+        `${this.getId()}-animation-${slug}`,
+        styleAnimation(v, vs, vd)
+      )
+    );
+  };
+
   renderForEdit(v, vs, vd) {
     const {
       activeTab,
@@ -94,6 +120,7 @@ export default class Tabs extends EditorComponent {
       iconType,
       action,
       meta,
+      verticalMode,
       bindWithKey: "items",
       renderType: "nav",
       onChangeNav: this.handleNav,
@@ -106,14 +133,7 @@ export default class Tabs extends EditorComponent {
       )
     });
 
-    const animationClassName = classnames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.constructor.componentId}-wrapper-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
-    );
+    const animationClassName = this.getAnimationClassName(v, vs, vd);
 
     const itemContentProps = this.makeSubcomponentProps({
       activeTab,

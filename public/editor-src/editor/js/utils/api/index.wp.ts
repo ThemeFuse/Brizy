@@ -107,7 +107,7 @@ export const createBlockScreenshot: CreateScreenshot = ({
       post: page,
       version,
       hash,
-      block_type: blockType, // eslint-disable-line @typescript-eslint/camelcase
+      block_type: blockType,
       ibsf: attachment // ibsf - image base64
     })
   })
@@ -140,7 +140,7 @@ export const updateBlockScreenshot: UpdateScreenshot = ({
       post: page,
       version,
       hash,
-      block_type: blockType, // eslint-disable-line @typescript-eslint/camelcase
+      block_type: blockType,
       id,
       ibsf: attachment
     })
@@ -157,13 +157,15 @@ export const updateBlockScreenshot: UpdateScreenshot = ({
 
 //#region saved blocks
 
-export const getSavedBlocks: GetSavedBlocksMeta = () => {
+export const getSavedBlocks: GetSavedBlocksMeta = pagination => {
   const { getSavedBlockList } = Config.get("wp").api;
 
   return persistentRequest({
     type: "POST",
     dataType: "json",
     data: {
+      ...pagination,
+      // orderby: pagination?.orderBy,
       action: getSavedBlockList,
       fields: ["uid", "meta", "synchronized", "synchronizable"]
     }
@@ -275,13 +277,14 @@ export const uploadSavePopups: UploadSavedPopups = async files => {
 
 //#region saved layouts
 
-export const getSavedLayouts: GetSavedLayoutsMeta = () => {
+export const getSavedLayouts: GetSavedLayoutsMeta = pagination => {
   const { getLayoutList } = Config.get("wp").api;
 
   return persistentRequest({
     type: "POST",
     dataType: "json",
     data: {
+      ...pagination,
       action: getLayoutList,
       fields: ["uid", "meta", "synchronized", "synchronizable"]
     }
@@ -507,7 +510,6 @@ export const getPostTaxonomies: GetPostTaxonomies = async ({
     body: new URLSearchParams({
       hash,
       version,
-      // eslint-disable-next-line @typescript-eslint/camelcase
       post_type: taxonomy,
       action: getPostTaxonomies
     }),

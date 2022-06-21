@@ -186,6 +186,7 @@ export function getItems({ v, device }) {
       icon: "nc-cog",
       roles: ["admin"],
       position: 110,
+      devices: "desktop",
       title: t("Settings")
     }
   ];

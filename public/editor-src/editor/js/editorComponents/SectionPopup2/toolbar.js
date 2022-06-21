@@ -7,11 +7,6 @@ import { t } from "visual/utils/i18n";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarGradientType,
-  toolbarBgColorHexField2,
-  toolbarBgColor2,
-  toolbarGradientLinearDegree,
-  toolbarGradientRadialDegree,
   toolbarElementSectionSaved,
   toolbarElementSectionGlobal
 } from "visual/utils/toolbar";
@@ -175,91 +170,9 @@ export function getItems({ v, device, component, context }) {
               id: "tabOverlay",
               label: t("Overlay"),
               options: [
-                toolbarBgColor2({
-                  v,
-                  device,
-                  state: "normal",
-                  onChangeType: ["onChangeBgColorType2"],
-                  onChangeHex: [
-                    "onChangeBgColorHexAndOpacity2",
-                    "onChangeBgColorHexAndOpacityPalette2",
-                    "onChangeBgColorHexAndOpacityDependencies2"
-                  ],
-                  onChangePalette: [
-                    "onChangeBgColorPalette2",
-                    "onChangeBgColorPaletteOpacity2",
-                    "onChangeBgColorHexAndOpacityDependencies2"
-                  ],
-                  onChangeGradientHex: [
-                    "onChangeBgColorHexAndOpacity2",
-                    "onChangeBgColorHexAndOpacityPalette2",
-                    "onChangeBgColorHexAndOpacityDependencies2"
-                  ],
-                  onChangeGradientPalette: [
-                    "onChangeBgColorPalette2",
-                    "onChangeBgColorPaletteOpacity2",
-                    "onChangeBgColorHexAndOpacityDependencies2"
-                  ],
-                  onChangeGradient: ["onChangeGradientRange2"]
-                }),
                 {
-                  type: "grid",
-                  className: "brz-ed-grid__color-fileds",
-                  columns: [
-                    {
-                      width: 30,
-                      options: [
-                        toolbarBgColorHexField2({
-                          v,
-                          device,
-                          state: "normal",
-                          prefix:
-                            dvv("gradientActivePointer") === "startPointer"
-                              ? "bg"
-                              : "gradient",
-                          onChange: [
-                            "onChangeBgColorHexAndOpacity2",
-                            "onChangeBgColorHexAndOpacityPalette2",
-                            "onChangeBgColorHexAndOpacityDependencies2"
-                          ]
-                        })
-                      ]
-                    },
-                    {
-                      width: 52,
-                      options: [
-                        toolbarGradientType({
-                          v,
-                          device,
-                          state: "normal",
-                          className:
-                            "brz-ed__select--transparent brz-ed__select--align-right",
-                          disabled: dvv("bgColorType") === "solid"
-                        })
-                      ]
-                    },
-                    {
-                      width: 18,
-                      options: [
-                        toolbarGradientLinearDegree({
-                          v,
-                          device,
-                          state: "normal",
-                          disabled:
-                            dvv("bgColorType") === "solid" ||
-                            dvv("gradientType") === "radial"
-                        }),
-                        toolbarGradientRadialDegree({
-                          v,
-                          device,
-                          state: "normal",
-                          disabled:
-                            dvv("bgColorType") === "solid" ||
-                            dvv("gradientType") === "linear"
-                        })
-                      ]
-                    }
-                  ]
+                  id: "",
+                  type: "backgroundColor-dev"
                 }
               ]
             }
@@ -362,11 +275,14 @@ export function getItems({ v, device, component, context }) {
           ]
         },
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          devices: "desktop",
-          label: t("More Settings"),
-          icon: "nc-cog"
+          id: "styles",
+          type: "sidebarTabsButton-dev",
+          config: {
+            tabId: "styles",
+            text: t("Styling"),
+            icon: "nc-cog",
+            align: "left"
+          }
         }
       ]
     },

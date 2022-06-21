@@ -77,7 +77,11 @@ export function getItems({ v, device, context }) {
                       title: t("Vimeo"),
                       value: "vimeo"
                     },
-                    ...customRatio
+                    ...customRatio,
+                    {
+                      title: t("URL"),
+                      value: "url"
+                    }
                   ]
                 },
                 {
@@ -94,6 +98,7 @@ export function getItems({ v, device, context }) {
                     { title: "21:9", value: "21:9" }
                   ]
                 },
+
                 toolbarElementVideoUpload({
                   v,
                   device,
@@ -113,7 +118,7 @@ export function getItems({ v, device, context }) {
                       ? t("Youtube")
                       : v.type === "vimeo"
                       ? t("Vimeo")
-                      : ""
+                      : t("Url")
                 }
               ]
             },
@@ -125,7 +130,6 @@ export function getItems({ v, device, context }) {
                   id: "groupSettings",
                   type: "group-dev",
                   devices: "desktop",
-                  disabled: v.type === "vimeo",
                   options: [
                     {
                       id: "controls",
@@ -400,10 +404,41 @@ export function getItems({ v, device, context }) {
           }
         },
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog"
+          id: "grid",
+          type: "grid",
+          separator: true,
+          columns: [
+            {
+              id: "grid-settings",
+              width: 50,
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            },
+            {
+              id: "grid-effects",
+              width: 50,
+              options: [
+                {
+                  id: "effects",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "effects",
+                    text: t("Effects"),
+                    icon: "nc-flash"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -412,7 +447,8 @@ export function getItems({ v, device, context }) {
       type: "advancedSettings",
       position: 110,
       disabled: !IS_STORY,
-      icon: "nc-cog"
+      icon: "nc-cog",
+      devices: "desktop"
     }
   ];
 }

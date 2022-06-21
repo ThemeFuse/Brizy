@@ -1,0 +1,51 @@
+@import "../../variables";
+
+// Grid
+.brz-ed-control__grid {
+  display: grid;
+  width: 100%;
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &--align {
+      &-start {
+        justify-content: flex-start;
+      }
+      &-center {
+        justify-content: center;
+      }
+      &-end {
+        justify-content: flex-end;
+      }
+    }
+
+    & > * {
+      flex: none;
+    }
+  }
+
+  .brz-ed-control__grid__column:first-child {
+    padding-right: $options-item-padding/2;
+  }
+
+  .brz-ed-control__grid__column:not(:first-child) {
+    padding-left: $options-item-padding/2;
+  }
+
+  .brz-ed-control__grid__column:first-child:last-child {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  // Don't use border on column directly, because borders affect spacing
+  &--separator .brz-ed-control__grid__column:not(:first-child):before {
+    position: absolute;
+    content: "";
+    height: 100%;
+    border-left: 1px solid $brand-options-border;
+    left: 0;
+  }
+}

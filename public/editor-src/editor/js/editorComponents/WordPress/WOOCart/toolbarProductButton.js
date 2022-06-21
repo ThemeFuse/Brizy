@@ -2,7 +2,6 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { toolbarBorderRadius } from "visual/utils/toolbar";
 
 import { NORMAL, HOVER } from "visual/utils/stateMode";
 
@@ -27,16 +26,37 @@ export function getItems({ v, device }) {
         {
           id: "buttonDirection",
           label: t("Buttons"),
-          type: "select-dev",
+          type: "radioGroup-dev",
           devices: "desktop",
           choices: [
+            { value: "inline", icon: "nc-cart-inline" },
+            { value: "column", icon: "nc-cart-column" }
+          ]
+        },
+        {
+          id: "borderRadiusTypeGroup",
+          type: "group-dev",
+          devices: "desktop",
+          options: [
             {
-              value: "inline",
-              title: "Inline"
+              id: "buttonBorderRadiusType",
+              label: t("Corner"),
+              type: "radioGroup-dev",
+              choices: [
+                { value: "square", icon: "nc-corners-square" },
+                { value: "rounded", icon: "nc-corners-round" },
+                { value: "custom", icon: "nc-more" }
+              ]
             },
             {
-              value: "column",
-              title: "Column"
+              id: "buttonBorderRadius",
+              type: "slider-dev",
+              disabled: v.buttonBorderRadiusType !== "custom",
+              config: {
+                min: 0,
+                max: 400,
+                units: [{ title: "px", value: "px" }]
+              }
             }
           ]
         },
@@ -50,16 +70,7 @@ export function getItems({ v, device }) {
             max: 50,
             units: [{ value: "px", title: "px" }]
           }
-        },
-        toolbarBorderRadius({
-          v,
-          device,
-          prefix: "button",
-          state: "normal",
-          devices: "desktop",
-          onChangeGrouped: ["onChangeBorderRadiusGrouped"],
-          onChangeUngrouped: ["onChangeBorderRadiusUngrouped"]
-        })
+        }
       ]
     },
     {

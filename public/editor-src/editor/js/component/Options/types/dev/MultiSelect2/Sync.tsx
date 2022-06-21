@@ -1,11 +1,12 @@
-import React, { ReactElement, FC, useState } from "react";
+import React, { ReactElement, FC, useState, useCallback } from "react";
 import {
   MultiSelect as Control,
   MultiSelectItem as ControlItem
 } from "visual/component/Controls/MultiSelect2";
 import { MultiSelectItemProps as ControlItemProps } from "visual/component/Controls/MultiSelect2/types";
-import { toElement, searchChoices, mergeChoices, valueChoices } from "./utils";
-import { ValueItem, Props, ChoicesSync } from "./types";
+import { searchChoices } from "./utils";
+import { ValueItem, Value, Props, ChoicesSync } from "./types";
+import { OnChange } from "visual/component/Options/Type";
 
 function choiceToItem({
   value,
@@ -22,8 +23,10 @@ export const Sync: FC<Omit<Props, "choices"> & { choices: ChoicesSync }> = ({
   onChange
 }) => {
   const [search, setSearch] = useState("");
-  const vChoices = valueChoices(value, choices);
   const sChoices = searchChoices(search, choices);
+  const _onChange = useCallback<OnChange<Value>>(value => onChange({ value }), [
+    onChange
+  ]);
 
   return (
     <Control<ValueItem>
@@ -31,12 +34,10 @@ export const Sync: FC<Omit<Props, "choices"> & { choices: ChoicesSync }> = ({
       placeholder={placeholder}
       search={config?.search ?? false}
       searchIsEmpty={sChoices.length === 0}
-      onChange={(value): void => {
-        onChange(toElement(value));
-      }}
+      onChange={_onChange}
       onSearchChange={setSearch}
     >
-      {mergeChoices(vChoices, sChoices).map(choiceToItem)}
+      {sChoices.map(choiceToItem)}
     </Control>
   );
 };

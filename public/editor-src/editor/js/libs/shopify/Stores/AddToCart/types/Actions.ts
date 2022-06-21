@@ -1,5 +1,4 @@
 import { VariationId } from "../../../types/Variation";
-import { Product } from "../../../types/Product";
 
 // region SetQuantity
 export interface SetQuantity {

@@ -7,6 +7,7 @@ import React, {
   Ref
 } from "react";
 import EditorComponent, {
+  ComponentsMeta,
   ToolbarExtend
 } from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
@@ -40,7 +41,7 @@ import Toolbar, {
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import SortableHandle from "visual/component/Sortable/SortableHandle";
-import PortalToolbar from "visual/component/Toolbar";
+import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
 
 type Component<P> = ComponentType<P> | keyof JSX.IntrinsicElements;
 type Item = {
@@ -52,7 +53,7 @@ type Value = ElementModel & {
 };
 
 type Props = {
-  meta: {};
+  meta: ComponentsMeta;
 };
 
 export class StoryWrapper extends EditorComponent<Value, Props> {
@@ -106,6 +107,7 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
             itemProps: {
               toolbarExtend: this.makeToolbarPropsFromConfig2(
                 toolbarExtendConfig,
+                // @ts-expect-error: Need convert to ts
                 sidebarExtendConfig,
                 {
                   allowExtendFromChild: false,
@@ -150,17 +152,16 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
           return (
             <ContextMenu
               {...{
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
+                // @ts-expect-error: Need to transform to TS
                 ...this.makeContextMenuProps(contextMenuConfig),
                 componentId: v?.items[0]?.type ?? ""
               }}
             >
               {
-                // Since the EditorArrayComponent is still in JS,
-                // TS cannot read properly it's return type
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
+                /**
+                 * Since the EditorArrayComponent is still in JS
+                 * TS cannot read properly it's return type
+                 * @ts-expect-error */
                 <EditorArrayComponent {...itemsProps} />
               }
             </ContextMenu>
@@ -182,10 +183,10 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
       }
     });
 
-    // Since the EditorArrayComponent is still in JS,
-    // TS cannot read properly it's return type
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
+    /**
+     * Since the EditorArrayComponent is still in JS
+     * TS cannot read properly it's return type
+     * @ts-expect-error */
     return <EditorArrayComponent {...itemsProps} />;
   }
 
@@ -217,9 +218,10 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
 
   handleToolbarEscape = (): void => this.toolbarRef.current?.show();
 
-  renderToolbar = (Button: Component<{}>): ReactNode => {
+  renderToolbar = (Button: Component<unknown>): ReactNode => {
     return (
       <Toolbar
+        // @ts-expect-error: Need to transform to TS
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         ref={this.toolbarRef}
       >

@@ -44,7 +44,7 @@ const loadYoutubeVideo = (
 ) => {
   return new YT.Player(player, {
     events: {
-      onReady: function(event) {
+      onReady: function (event) {
         if (isIos) {
           event.target.pauseVideo();
         }
@@ -52,11 +52,12 @@ const loadYoutubeVideo = (
           event.target.unMute();
         }
         if (autoplay || (isCovered && !isIos)) {
+          event.target.mute();
           event.target.seekTo(start);
           event.target.playVideo();
         }
       },
-      onStateChange: function(event) {
+      onStateChange: function (event) {
         if (loop) {
           if (event.data == YT.PlayerState.PLAYING) {
             if (end > start) {
@@ -74,12 +75,12 @@ const loadYoutubeVideo = (
 };
 
 function hideVideos($node) {
-  $node.find(".brz-video .brz-iframe").each(function() {
+  $node.find(".brz-video .brz-iframe").each(function () {
     $(this).remove();
   });
 
   // remove node if iframe was youtube or vimeo
-  $node.find(".brz-embed-code iframe").each(function() {
+  $node.find(".brz-embed-code iframe").each(function () {
     const $this = $(this);
     const src = $this.attr("src");
     const { type } = getVideoData(src) || {};
@@ -90,7 +91,7 @@ function hideVideos($node) {
     }
   });
 
-  $node.find(".brz-custom-video").each(function() {
+  $node.find(".brz-custom-video").each(function () {
     var $this = $(this);
     var $video = $this.find("video");
     $video.trigger("pause");
@@ -98,7 +99,7 @@ function hideVideos($node) {
 }
 
 function showVideos($node) {
-  $node.find(".brz-vimeo-video, .brz-youtube-video").each(function() {
+  $node.find(".brz-vimeo-video, .brz-youtube-video").each(function () {
     var $this = $(this);
     var $coverElem = $this.find(".brz-video__cover");
 
@@ -108,7 +109,7 @@ function showVideos($node) {
   });
 }
 
-export default function($node) {
+export default function ($node) {
   const root = $node.get(0);
   // we don't use IntersectionObserver because without trackVisibility attribute
   // it doesn't tell you whether the element is covered by any other page content
@@ -120,33 +121,33 @@ export default function($node) {
     "elements.tabs.changed",
     "elements.accordion.changed",
     "elements.switcher.changed"
-  ].forEach(id => {
+  ].forEach((id) => {
     window.Brz.on(id, (node, options) => {
-      var hiddenTabs = options.tabs.filter(tab => tab !== options.active);
+      var hiddenTabs = options.tabs.filter((tab) => tab !== options.active);
 
       hideVideos($(hiddenTabs));
       showVideos($(options.active));
     });
   });
 
-  ["elements.mmenu.panel.opened", "elements.mmenu.open"].forEach(id => {
-    window.Brz.on(id, node => {
+  ["elements.mmenu.panel.opened", "elements.mmenu.open"].forEach((id) => {
+    window.Brz.on(id, (node) => {
       showVideos($(node));
     });
   });
 
-  ["elements.mmenu.panel.closed", "elements.mmenu.close"].forEach(id => {
-    window.Brz.on(id, node => {
+  ["elements.mmenu.panel.closed", "elements.mmenu.close"].forEach((id) => {
+    window.Brz.on(id, (node) => {
       hideVideos($(node));
     });
   });
 
-  $(document).on("brz.popup.show", function(e, popup) {
+  $(document).on("brz.popup.show", function (e, popup) {
     showVideos($(popup));
   });
 
   // stopping all videos inside a popup that is closed(video can be set through embed code)
-  $(document).on("brz.popup.close", function(e, popup) {
+  $(document).on("brz.popup.close", function (e, popup) {
     hideVideos($(popup));
   });
 
@@ -154,20 +155,25 @@ export default function($node) {
   const players = [];
   const isIos = isIOS();
 
-  youtubeLoadScript();
-  if (window.onYouTubeIframeAPIReady === undefined) {
-    window.onYouTubeIframeAPIReady = () => {
-      if (window.Brz) {
-        window.Brz.emit("elements.video.iframe.ready");
-      }
-    };
+  const $youtubeVideos = $node.find(".brz-youtube-video");
+  const $vimeoVideos = $node.find(".brz-vimeo-video");
+
+  if ($youtubeVideos.length > 0) {
+    youtubeLoadScript();
+
+    if (window.onYouTubeIframeAPIReady === undefined) {
+      window.onYouTubeIframeAPIReady = () => {
+        if (window.Brz) {
+          window.Brz.emit("elements.video.iframe.ready");
+        }
+      };
+    }
   }
+
   window.Brz.on("elements.video.iframe.ready", () => {
     isYoutubeReady = true;
 
-    $node.find(".brz-vimeo-video, .brz-youtube-video").each(function(index) {
-      const isYoutube = this.classList.contains("brz-youtube-video");
-
+    $youtubeVideos.each(function (index) {
       const $this = $(this);
       const player = this.querySelector("iframe");
       const $videoData = $this.find(".brz-video-data");
@@ -178,12 +184,12 @@ export default function($node) {
       const end = Number($videoData.attr("data-end"));
       const autoplay = $videoData.attr("data-autoplay") === "on";
 
-      if (isIos && isYoutube) {
+      if (isIos) {
         parentElements.push($this);
       }
 
       if ($coverElem.length) {
-        if (isIos && isYoutube) {
+        if (isIos) {
           // this className is needed to set opacity 0
           // in case if image height is smaller than iframe and iframe can be seen below
           this.classList.add("brz-video__ios");
@@ -195,25 +201,36 @@ export default function($node) {
             }
           });
         } else {
-          $coverElem.click(insertVideoIframe.bind(null, $this, false));
+          $coverElem.on("click", insertVideoIframe.bind(null, $this, false));
         }
       } else if (population) {
         insertVideoIframe($this);
-      } else {
-        if (isYoutube && player) {
-          loadYoutubeVideo(player, autoplay, loop, start, end, false);
-        }
+      } else if (player) {
+        loadYoutubeVideo(player, autoplay, loop, start, end, false);
       }
     });
 
-    parentElements.forEach(item => {
+    parentElements.forEach((item) => {
       const player = insertVideoIframe(item, isIos);
       players.push(player);
     });
   });
 
+  $vimeoVideos.each(function () {
+    const $this = $(this);
+    const $videoData = $this.find(".brz-video-data");
+    const $coverElem = $this.find(".brz-video__cover");
+    const population = $videoData.attr("data-population");
+
+    if ($coverElem.length) {
+      $coverElem.on("click", insertVideoIframe.bind(null, $this, false));
+    } else if (population) {
+      insertVideoIframe($this);
+    }
+  });
+
   // Function init click Play & Pause Button
-  $node.find(".brz-custom-video").each(function() {
+  $node.find(".brz-custom-video").each(function () {
     var $this = $(this);
     var $video = $this.find("video");
     var autoplay = $video.get(0).getAttribute("data-autoplay");
@@ -231,7 +248,7 @@ export default function($node) {
     .find(
       ".brz-custom-video .brz-video-custom-play-pause-btn, .brz-custom-video .brz-shortcode__placeholder, .brz-custom-video .brz-video__cover, .brz-custom-video video"
     )
-    .click(function() {
+    .click(function () {
       var $shortcodeVideo = $(this).closest(".brz-video");
       changePlayerState($shortcodeVideo);
     });
@@ -239,7 +256,7 @@ export default function($node) {
   // Function init click Volume Button
   $node
     .find(".brz-custom-video .brz-video-custom-volume-btn")
-    .click(function() {
+    .click(function () {
       var $shortcodeVideo = $(this).closest(".brz-video");
       var muted = $shortcodeVideo.find("video").get(0).muted;
       changePlayerMute($shortcodeVideo, !muted);
@@ -270,7 +287,7 @@ export default function($node) {
   // Function init click FullScreen Video
   $node
     .find(".brz-custom-video .brz-video-custom-fullscreen-btn")
-    .click(function(event) {
+    .click(function (event) {
       var $shortcodeVideo = $(event.target).closest(".brz-video");
       var $video = $shortcodeVideo.find(".brz-video-elem");
       var video = $video.find("video")[0];
@@ -295,7 +312,6 @@ export default function($node) {
 function getVideoSrc($elem) {
   var $videoData = $elem.find(".brz-video-data");
   var $coverElem = $elem.find(".brz-video__cover");
-
   var src = $videoData.attr("data-src");
   var population = $videoData.attr("data-population");
   var controls = $videoData.attr("data-controls");
@@ -431,7 +447,7 @@ function changePlayerState($shortcodeVideo) {
   $shortcodeVideo.find("video").removeAttr("class");
 
   if (!video.duration) {
-    video.addEventListener("loadedmetadata", function(event) {
+    video.addEventListener("loadedmetadata", function (event) {
       var duration = formatTime(event.target.duration);
       var currentTime = formatTime($timeStart);
 
@@ -440,7 +456,7 @@ function changePlayerState($shortcodeVideo) {
       $shortcodeVideo.find(".brz-video-custom-current-time").html(currentTime);
     });
 
-    video.addEventListener("timeupdate", function(event) {
+    video.addEventListener("timeupdate", function (event) {
       var currentTime = event.target.currentTime;
       var duration = event.target.duration;
       var progressPercent = (currentTime / duration) * 100;
@@ -456,19 +472,19 @@ function changePlayerState($shortcodeVideo) {
       }
     });
 
-    video.addEventListener("ended", function() {
+    video.addEventListener("ended", function () {
       changeIconVisibility($playPauseBtn, false);
     });
 
-    video.addEventListener("play", function() {
+    video.addEventListener("play", function () {
       changeIconVisibility($playPauseBtn, true);
     });
 
-    video.addEventListener("pause", function() {
+    video.addEventListener("pause", function () {
       changeIconVisibility($playPauseBtn, false);
     });
 
-    window.addEventListener("mousedown", function(event) {
+    window.addEventListener("mousedown", function (event) {
       var isSliderClick = $(event.target).closest($slider).length;
       var isSliderVolumeClick = $(event.target).closest($volumeSlider).length;
 

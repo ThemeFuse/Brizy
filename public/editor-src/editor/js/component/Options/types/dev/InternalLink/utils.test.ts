@@ -1,10 +1,7 @@
-import { times } from "underscore";
 import {
-  toElementValue,
   toPosts,
   trimTitle
 } from "visual/component/Options/types/dev/InternalLink/utils";
-import { Post } from "visual/component/Options/types/dev/InternalLink/types/Post";
 
 describe("Testing 'trimTitle' function", function() {
   test("if title length > 24, slice to 23 characters and suffix with '...'", () => {
@@ -56,15 +53,5 @@ describe("Testing 'toPosts' function", function() {
       { id: 3, title: "test 3" }
     ];
     expect(toPosts({ posts })).toEqual(r);
-  });
-});
-
-describe("Testing 'toElementValue' function", function() {
-  test("Should change the id field to value field", () => {
-    const items: Post[] = times(10, n => ({ id: n, title: `Test ${n}` }));
-
-    items.map(p =>
-      expect(toElementValue(p)).toEqual({ value: p.id, title: p.title })
-    );
   });
 });

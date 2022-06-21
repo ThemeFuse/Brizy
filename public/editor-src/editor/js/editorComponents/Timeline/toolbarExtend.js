@@ -366,11 +366,15 @@ export function getItems({ v, device }) {
           }
         },
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          label: t("More Settings"),
-          icon: "nc-cog",
-          devices: "desktop"
+          id: "styles",
+          type: "sidebarTabsButton-dev",
+          devices: "desktop",
+          config: {
+            tabId: "styles",
+            text: t("Styling"),
+            icon: "nc-cog",
+            align: "start"
+          }
         }
       ]
     }

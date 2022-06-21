@@ -8,6 +8,7 @@ export interface Props extends WithClassName {
   reverse?: boolean;
   label?: string;
   icon?: string;
+  align?: "left" | "center" | "right";
 }
 
 export const Button = ({
@@ -15,13 +16,19 @@ export const Button = ({
   onClick,
   icon,
   label,
-  reverse
+  reverse,
+  align = "center"
 }: Props): ReactElement | null => {
   return label || icon ? (
     <div
-      className={classNames("brz-ed-control__button", className, {
-        reverse: !!reverse
-      })}
+      className={classNames(
+        "brz-ed-control__button",
+        `brz-ed-control__button-${align}`,
+        className,
+        {
+          reverse: !!reverse
+        }
+      )}
       onClick={onClick}
     >
       {icon && <EditorIcon icon={icon} />}

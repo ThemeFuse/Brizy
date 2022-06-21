@@ -83,125 +83,121 @@ export function Component<T extends Literal>({
 
   return (
     <div ref={containerRef} className={_className}>
-      {mount && (
-        <Manager>
-          <Downshift
-            environment={getEnvironment(containerRef.current)}
-            onChange={_onSelect}
-            itemToString={(i?: ItemInstance<T>): string => Str.mRead(i?.key)}
-          >
-            {({
-              openMenu,
-              isOpen,
-              getMenuProps,
-              getItemProps
-            }): ReactElement => {
-              const triggerOpen = (): void => {
-                if (!isOpen) {
-                  onOpen && onOpen();
-                  openMenu();
-                }
-                inputRef.current?.focus();
-              };
+      <Manager>
+        <Downshift
+          // Use key in order to force re-render for the Downshift when component mounts
+          // This is necessary in order to refresh the `environment` prop
+          key={Number(mount)}
+          environment={getEnvironment(containerRef.current)}
+          onChange={_onSelect}
+          itemToString={(i?: ItemInstance<T>): string => Str.mRead(i?.key)}
+        >
+          {({ openMenu, isOpen, getMenuProps, getItemProps }): ReactElement => {
+            const triggerOpen = (): void => {
+              if (!isOpen) {
+                onOpen && onOpen();
+                openMenu();
+              }
+              inputRef.current?.focus();
+            };
 
-              return (
-                <div>
-                  <Reference>
-                    {({ ref }): ReactElement => (
-                      <div
-                        ref={ref}
-                        className="brz-ed-control__multiSelect--value-container"
-                        onClick={(): void => triggerOpen()}
-                      >
-                        {tags}
-                        {editable && (
-                          <input
-                            placeholder={placeholder}
-                            ref={inputRef}
-                            value={inputValue}
-                            size={inputValue?.length || 1}
-                            onChange={({ target }): void => {
-                              onType?.(target.value);
-                              triggerOpen();
-                            }}
-                            onKeyDown={onKeyDown}
-                            onFocus={(): void => {
-                              triggerOpen();
-                            }}
-                            className="brz-input brz-ed-control__multiSelect--value"
+            return (
+              <div>
+                <Reference>
+                  {({ ref }): ReactElement => (
+                    <div
+                      ref={ref}
+                      className="brz-ed-control__multiSelect--value-container"
+                      onClick={(): void => triggerOpen()}
+                    >
+                      {tags}
+                      {editable && (
+                        <input
+                          placeholder={placeholder}
+                          ref={inputRef}
+                          value={inputValue}
+                          size={inputValue?.length || 1}
+                          onChange={({ target }): void => {
+                            onType?.(target.value);
+                            triggerOpen();
+                          }}
+                          onKeyDown={onKeyDown}
+                          onFocus={(): void => {
+                            triggerOpen();
+                          }}
+                          className="brz-input brz-ed-control__multiSelect--value"
+                        />
+                      )}
+                      {!editable && (
+                        <>
+                          {tags.length === 0 && (
+                            <span className="brz-ed-control__multiSelect--placeholder">
+                              {placeholder}
+                            </span>
+                          )}
+                          <EditorIcon
+                            icon="nc-stre-down"
+                            className="brz-control__select--arrow"
                           />
-                        )}
-                        {!editable && (
-                          <>
-                            {tags.length === 0 && (
-                              <span className="brz-ed-control__multiSelect--placeholder">
-                                {placeholder}
-                              </span>
-                            )}
-                            <EditorIcon
-                              icon="nc-stre-down"
-                              className="brz-control__select--arrow"
-                            />
-                          </>
-                        )}
-                      </div>
-                    )}
-                  </Reference>
-                  <div className="brz-ed-control__multiSelect__menu-container">
-                    <Popper>
-                      {({ ref, style, placement }): ReactElement | null => {
-                        if (!isOpen) {
-                          return null;
-                        }
+                        </>
+                      )}
+                    </div>
+                  )}
+                </Reference>
+                <div className="brz-ed-control__multiSelect__menu-container">
+                  <Popper>
+                    {({ ref, style, placement }): ReactElement | null => {
+                      if (!isOpen) {
+                        return null;
+                      }
 
-                        const items = children.map((item, i) => {
-                          const props = getItemProps({
-                            item,
-                            key: i,
-                            disabled: item.props.disabled
-                          });
-                          return (
-                            <SelectItem key={i} {...props} {...item.props} />
-                          );
+                      const items = children.map((item, i) => {
+                        const props = getItemProps({
+                          item,
+                          key: i,
+                          disabled: item.props.disabled
                         });
+                        return (
+                          <SelectItem key={i} {...props} {...item.props} />
+                        );
+                      });
 
-                        return items.length ? (
-                          <div
-                            ref={ref}
-                            style={style}
-                            className="brz-ed-control__multiSelect__menu"
-                            data-placement={placement}
+                      return items.length ? (
+                        <div
+                          ref={ref}
+                          style={style}
+                          className="brz-ed-control__multiSelect__menu"
+                          data-placement={placement}
+                        >
+                          <Scrollbars
+                            onUpdate={onScrollUpdate}
+                            autoHeight={true}
+                            autoHeightMax={height}
+                            renderThumbVertical={(props): ReactElement => {
+                              return (
+                                <div
+                                  className={
+                                    "brz-ed-control__multiSelect__scroll-thumb"
+                                  }
+                                  {...props}
+                                />
+                              );
+                            }}
                           >
-                            <Scrollbars
-                              onUpdate={onScrollUpdate}
-                              autoHeight={true}
-                              autoHeightMax={height}
-                              renderThumbVertical={(props): ReactElement => {
-                                return (
-                                  <div
-                                    className={
-                                      "brz-ed-control__multiSelect__scroll-thumb"
-                                    }
-                                    {...props}
-                                  />
-                                );
-                              }}
-                            >
-                              <ul {...getMenuProps()} className="brz-ul">
-                                {items}
-                              </ul>
-                            </Scrollbars>
-                          </div>
-                        ) : null;
-                      }}
-                    </Popper>
-                  </div>
+                            <ul {...getMenuProps()} className="brz-ul">
+                              {items}
+                            </ul>
+                          </Scrollbars>
+                        </div>
+                      ) : null;
+                    }}
+                  </Popper>
                 </div>
-              );
-            }}
-          </Downshift>
-        </Manager>
-      )}
+              </div>
+            );
+          }}
+        </Downshift>
+      </Manager>
     </div>
   );
 }

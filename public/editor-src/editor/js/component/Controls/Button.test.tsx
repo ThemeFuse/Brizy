@@ -44,6 +44,32 @@ describe("Test Button", () => {
       expect(button.container.firstChild).toMatchSnapshot();
     });
 
+    test("With label and icon and align Left", () => {
+      const button = render(
+        <Button
+          onClick={onClick}
+          label={"Test"}
+          icon={"nc-cog"}
+          align={"left"}
+        />
+      );
+
+      expect(button.container.firstChild).toMatchSnapshot();
+    });
+
+    test("With label and icon and align Right", () => {
+      const button = render(
+        <Button
+          onClick={onClick}
+          label={"Test"}
+          icon={"nc-cog"}
+          align={"left"}
+        />
+      );
+
+      expect(button.container.firstChild).toMatchSnapshot();
+    });
+
     test("Reversed", () => {
       const button = render(
         <Button

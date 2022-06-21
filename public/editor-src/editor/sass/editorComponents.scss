@@ -22,6 +22,9 @@
 // Icons default classes
 @import "icons";
 
+// ProBlocked
+@import "editorComponents/pro-blocked";
+
 // Section
 @import "editorComponents/section";
 
@@ -193,11 +196,17 @@
 // ShopifyAddToCart
 @import "editorComponents/shopifyAddToCart";
 
+// Filters
+@import "editorComponents/filters";
+
 // Reset Password
 @import "editorComponents/reset-password";
 
 //ProductReview
 @import "editorComponents/productReview";
+
+// Translation
+@import "editorComponents/translation";
 
 // wp
 @import "editorComponents/wp-post-content";
@@ -213,3 +222,5 @@
 @import "editorComponents/woo-gallery";
 @import "editorComponents/woo-add-to-cart";
 @import "editorComponents/woo-excerpt";
+
+@import "editorComponents/ecwid";

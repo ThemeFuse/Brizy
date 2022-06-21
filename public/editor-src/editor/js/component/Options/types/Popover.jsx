@@ -1,13 +1,22 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import Options, { filterOptionsData } from "visual/component/Options";
+import Options from "visual/component/Options";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
+import { isT } from "visual/utils/value";
 
 class PopoverOptionType extends React.Component {
-  static shouldOptionBeFiltered({ options }) {
-    return filterOptionsData(options).length === 0;
+  static filter(f, t) {
+    return { ...t, options: t.options?.map(f).filter(isT) };
+  }
+
+  static reduce(fn, t0, item) {
+    return item.options?.reduce(fn, t0) ?? t0;
+  }
+
+  static map(fn, item) {
+    return { ...item, options: item.options?.map(fn) };
   }
 
   static defaultProps = {

@@ -4,7 +4,8 @@ import React, {
   PropsWithChildren,
   ReactElement,
   ReactNode,
-  Ref
+  Ref,
+  MouseEventHandler
 } from "react";
 import { identity } from "underscore";
 import classNames from "classnames";
@@ -28,14 +29,15 @@ import { attachRef } from "visual/utils/react";
 import { DW, DH } from "visual/editorComponents/Story/utils";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Plugin<P extends {} = any> = [
+export type Plugin<P extends Record<string, unknown> = any> = [
   ComponentType<P> | keyof JSX.IntrinsicElements,
   P
 ];
 
-export type Props<T extends {}> = WithClassName & {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Props<T extends Record<any, any>> = WithClassName & {
   component?: ComponentType<T> | keyof JSX.IntrinsicElements;
-  attributes?: T;
+  attributes?: Record<string, string | number>;
   animationClass?: string;
   ref?: Ref<Element>;
   meta: { sectionPopup?: boolean; sectionPopup2?: boolean };
@@ -46,16 +48,18 @@ export type Props<T extends {}> = WithClassName & {
   componentId: string;
   id: string;
   onChange: (patch: Partial<ElementModel>) => void;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
 const wrapperId = uuid(7);
 
-export function WrapperComponent<T extends WithClassName & {}>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function WrapperComponent<T extends WithClassName & Record<any, any>>(
   {
     children,
     className: _className,
     component,
-    attributes = {} as T,
+    attributes = {},
     animationClass,
     renderContent = identity,
     v,
@@ -64,7 +68,8 @@ export function WrapperComponent<T extends WithClassName & {}>(
     componentId,
     id,
     onChange,
-    meta: { sectionPopup, sectionPopup2 }
+    meta: { sectionPopup, sectionPopup2 },
+    onClick
   }: PropsWithChildren<Props<T>>,
   ref: Ref<Element>
 ): ReactElement {
@@ -111,6 +116,10 @@ export function WrapperComponent<T extends WithClassName & {}>(
       };
     };
 
+    const handleStart = (): void => {
+      hideToolbar();
+    };
+
     return (
       <Draggable
         hAlign={Position.getHAlign(dvv) ?? "left"}
@@ -125,18 +134,21 @@ export function WrapperComponent<T extends WithClassName & {}>(
           y: Position.getVOffset(dvv) ?? 0
         })}
         getContainerSizes={getContainerSizes}
-        onStart={hideToolbar}
+        onStart={handleStart}
         onChange={handleDraggable}
       >
         {(dRef: Ref<HTMLElement>, dClassName?: string): ReactNode => {
           return (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
+            /**
+             * Type 'ComponentClass<T, any>' is not assignable to type
+             * 'ComponentClass<WithClassName, any>'.
+             * @ts-expect-error */
             <Animation<ComponentType<T>>
               component={component ?? "div"}
               componentProps={{
                 ...attributes,
-                className: classNames(className, dClassName)
+                className: classNames(className, dClassName),
+                onClick
               }}
               animationClass={animationClass}
               ref={(r: HTMLElement | null): void => {
@@ -153,14 +165,16 @@ export function WrapperComponent<T extends WithClassName & {}>(
   }
 
   return (
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
+    /**
+     * Type 'ComponentClass<T, any>' is not assignable to type
+     * 'ComponentClass<WithClassName, any>'.
+     * @ts-expect-error */
     <Animation<ComponentType<T>>
       iterationCount={
         IS_PREVIEW ?? (sectionPopup || sectionPopup2 ? Infinity : 1)
       }
       component={component ?? "div"}
-      componentProps={{ ...attributes, className }}
+      componentProps={{ ...attributes, className, onClick }}
       animationClass={animationClass}
       ref={ref}
     >

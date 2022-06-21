@@ -1,6 +1,5 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { toolbarPaddingFourFieldsPxSuffix } from "visual/utils/toolbar";
 
 export function getItems({ v, device, state }) {
   return defaultValueValue({ v, device, state, key: "mMenu" }) === "on"
@@ -8,28 +7,42 @@ export function getItems({ v, device, state }) {
     : getItemsSimple({ v, device, state });
 }
 
-export function getItemsSimple({ v, device }) {
+export function getItemsSimple({ v }) {
   const isBorderRadiusGrouped = v.borderRadiusType === "grouped";
+
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
-      config: {
-        align: "start"
-      },
-      devices: "desktop",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       tabs: [
         {
-          id: "settingsStyling",
+          id: "styles",
+          title: t("Styling"),
           label: t("Styling"),
-          icon: "nc-styling",
-          options: []
-        },
-        {
-          id: "moreSettingsAdvanced",
-          label: t("Advanced"),
-          icon: "nc-cog",
-          options: []
+          options: [
+            {
+              id: "settingsTabs",
+              type: "tabs-dev",
+              config: {
+                align: "start"
+              },
+              devices: "desktop",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  options: []
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  icon: "nc-cog",
+                  options: []
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -334,26 +347,54 @@ export function getItemsSimple({ v, device }) {
         }
       ]
     },
-    toolbarPaddingFourFieldsPxSuffix({
-      v,
-      device,
-      prefix: "menu",
-      state: "normal",
-      onChangeGrouped: ["onChangePaddingGrouped"],
-      onChangeUngrouped: ["onChangePaddingUngrouped"]
-    })
+    {
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
+      tabs: [
+        {
+          id: "styles",
+          title: t("Styling"),
+          label: t("Styling"),
+          options: [
+            {
+              id: "menuPadding",
+              type: "padding-dev",
+              label: t("Padding"),
+              position: 50,
+              config: {
+                units: ["px"]
+              }
+            }
+          ]
+        }
+      ]
+    }
   ];
 }
 
-export function getItemsMMenu({ v, device }) {
+export function getItemsMMenu() {
   return [
-    toolbarPaddingFourFieldsPxSuffix({
-      v,
-      device,
-      prefix: "mMenu",
-      state: "normal",
-      onChangeGrouped: ["onChangePaddingGrouped"],
-      onChangeUngrouped: ["onChangePaddingUngrouped"]
-    })
+    {
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
+      tabs: [
+        {
+          id: "styles",
+          title: t("Styling"),
+          label: t("Styling"),
+          options: [
+            {
+              id: "mMenuPadding",
+              type: "padding-dev",
+              label: t("Padding"),
+              position: 50,
+              config: {
+                units: ["px"]
+              }
+            }
+          ]
+        }
+      ]
+    }
   ];
 }

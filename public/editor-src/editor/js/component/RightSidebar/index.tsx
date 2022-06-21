@@ -2,16 +2,15 @@ import React from "react";
 import { Dispatch } from "redux";
 import { connect, MapStateToProps } from "react-redux";
 import classnames from "classnames";
-import Options, { filterOptionsData } from "visual/component/Options";
+import Options from "visual/component/Options";
 import EditorIcon from "visual/component/EditorIcon";
-import { OptionDefinition } from "visual/component/Options/Type";
 import { Animation } from "./Animation";
 import { Scrollbars } from "./Scrollbars";
 import { uiSelector, deviceModeSelector } from "visual/redux/selectors";
 import { updateUI, ActionUpdateUI } from "visual/redux/actions2";
-import { DESKTOP } from "visual/utils/responsiveMode";
 import { t } from "visual/utils/i18n";
 import { ReduxState } from "visual/redux/types";
+import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 
 type DeviceModes = ReduxState["ui"]["deviceMode"];
 type RightSidebarStore = ReduxState["ui"]["rightSidebar"];
@@ -28,7 +27,8 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
     lock: undefined,
     alignment: "right",
     deviceMode: "desktop",
-    dispatch: action => action
+    dispatch: action => action,
+    activeTab: undefined
   };
 
   getItems: undefined | (() => OptionDefinition[]);
@@ -55,24 +55,11 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
     instance = undefined;
   }
 
-  onAlignmentClick = (): void => {
-    const { isOpen, lock, alignment } = this.props;
-    const newStore: RightSidebarStore = {
-      alignment: alignment === "left" ? "right" : "left",
-      lock,
-      isOpen
-    };
-
-    this.props.dispatch(updateUI("rightSidebar", newStore));
-  };
-
   onLockClick = (): void => {
-    const { isOpen, lock, alignment } = this.props;
-    const items =
-      this.getItems !== undefined
-        ? filterOptionsData(this.getItems())
-        : undefined;
+    const { isOpen, lock, alignment, activeTab } = this.props;
+    const items = this.getItems !== undefined ? this.getItems() : undefined;
     const newStore: RightSidebarStore = {
+      activeTab,
       alignment,
       lock: lock === "manual" ? undefined : "manual",
       isOpen:
@@ -96,7 +83,7 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
   }
 
   clearItems(): void {
-    const { lock, alignment, dispatch } = this.props;
+    const { lock, alignment, dispatch, activeTab } = this.props;
 
     if (lock) {
       // items are cleared after a timeout to prevent switching unnecessarily to empty state
@@ -109,10 +96,14 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
         this.forceUpdate();
       }, 150);
     } else {
+      this.getItems = undefined;
+      this.getTitle = undefined;
+
       const newStore: RightSidebarStore = {
         isOpen: false,
         lock,
-        alignment
+        alignment,
+        activeTab
       };
 
       dispatch(updateUI("rightSidebar", newStore));
@@ -163,7 +154,7 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
   }
 
   render(): React.ReactNode {
-    const { isOpen, lock, alignment, deviceMode } = this.props;
+    const { isOpen, alignment } = this.props;
     const sidebarClassName = classnames(
       "brz-ed-sidebar",
       "brz-ed-sidebar__right",
@@ -173,11 +164,7 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
       }
     );
 
-    const title = this.getTitle?.() || t("More Settings");
-    const _items =
-      this.getItems !== undefined
-        ? filterOptionsData(this.getItems())
-        : undefined;
+    const _items = this.getItems !== undefined ? this.getItems() : undefined;
     const items =
       _items && _items.length > 0
         ? this.renderItems(_items)
@@ -194,37 +181,6 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
           alignment={alignment}
           play={isOpen}
         >
-          <div className="brz-ed-sidebar__header">
-            <h1 className="brz-h1 brz-ed-sidebar__header__title">{title}</h1>
-            <div className="brz-ed-sidebar__right__header-icons">
-              <div className="brz-ed-sidebar__right__header-icon">
-                <EditorIcon
-                  icon={
-                    alignment === "left"
-                      ? "nc-hrz-align-left"
-                      : "nc-hrz-align-right"
-                  }
-                  onClick={this.onAlignmentClick}
-                />
-                <div className="brz-ed-sidebar__add-elements__tooltip brz-ed-sidebar__right__icon-tooltip">
-                  {alignment === "left"
-                    ? t("Aligned Left")
-                    : t("Aligned Right")}
-                </div>
-              </div>
-              {deviceMode === DESKTOP && (
-                <div className="brz-ed-sidebar__right__header-icon">
-                  <EditorIcon
-                    icon={lock !== undefined ? "nc-lock" : "nc-unlock"}
-                    onClick={this.onLockClick}
-                  />
-                  <div className="brz-ed-sidebar__add-elements__tooltip brz-ed-sidebar__right__icon-tooltip">
-                    {lock !== undefined ? t("Locked") : t("Unlocked")}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
           {items}
         </Animation>
       </div>
@@ -238,12 +194,13 @@ const mapStateToProps: MapStateToProps<
   RightSidebarProps,
   ReduxState
 > = state => {
-  const { isOpen, lock, alignment } = uiSelector(state).rightSidebar;
+  const { isOpen, lock, alignment, activeTab } = uiSelector(state).rightSidebar;
 
   return {
     isOpen,
     lock,
     alignment,
+    activeTab,
     deviceMode: deviceModeSelector(state)
   };
 };

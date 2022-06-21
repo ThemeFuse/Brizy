@@ -17,3 +17,14 @@ export function styleElementSwitcherWidth({ v, device, state }) {
 
   return dvv("navStyle1Width");
 }
+export function styleElementSwitcherIconSize({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv("iconSize");
+}
+
+export function styleElementSwitcherIconCustomSize({ v, device, state }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
+
+  return dvv("iconCustomSize");
+}

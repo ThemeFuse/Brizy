@@ -1,5 +1,5 @@
 import { getOr } from "visual/utils/object/get";
-import { GetModel, OptionType } from "visual/component/Options/Type";
+import { FromElementModel, OptionType } from "visual/component/Options/Type";
 import { ElementModel } from "visual/component/Elements/Types";
 
 import AdvancedSettings from "./AdvancedSettings";
@@ -45,7 +45,7 @@ import Range from "./Range";
 import Range2 from "./Range2";
 import IntegrationsApps from "./IntegrationsApps";
 import FileUpload from "./FileUpload";
-import StateMode from "./common/StateMode";
+import { StateMode } from "./common/StateMode";
 
 // Option types that are in development
 import { ColorPicker as ColorPickerDev } from "visual/component/Options/types/dev/ColorPicker";
@@ -53,14 +53,14 @@ import { BackgroundColor } from "visual/component/Options/types/dev/BackgroundCo
 import { BoxShadow } from "visual/component/Options/types/dev/BoxShadow";
 import { Border } from "visual/component/Options/types/dev/Border";
 import { Button as ButtonDev } from "visual/component/Options/types/dev/Button";
+import { Grid as GridDev } from "visual/component/Options/types/dev/Grid";
 import { Group } from "visual/component/Options/types/dev/Group";
 import { Typography } from "visual/component/Options/types/dev/Typography";
 import { ImageUpload } from "visual/component/Options/types/dev/ImageUpload";
 import { Population } from "visual/component/Options/types/common/Population/Population";
 import { InputText } from "visual/component/Options/types/dev/InputText";
 import { Margin } from "./dev/Margin";
-import { MultiSelect } from "visual/component/Options/types/dev/MultiSelect";
-import { MultiSelect as MultiSelect2 } from "visual/component/Options/types/dev/MultiSelect2";
+import { MultiSelect } from "visual/component/Options/types/dev/MultiSelect2";
 import { Select as SelectDev } from "visual/component/Options/types/dev/Select";
 import { Switch as SwitchDev } from "visual/component/Options/types/dev/Switch";
 import { Slider as SliderDev } from "./dev/Slider";
@@ -75,41 +75,58 @@ import { Number } from "./dev/Number";
 import { InternalLink } from "visual/component/Options/types/dev/InternalLink";
 import { Alert } from "./dev/Alert";
 import { Corners } from "visual/component/Options/types/dev/Corners";
-import { CloneableOrder } from "visual/component/Options/types/dev/CloneableOrder";
+import { Order } from "visual/component/Options/types/dev/Order";
 import { IconPicker } from "visual/component/Options/types/dev/IconPicker";
 import { IconsPicker } from "visual/component/Options/types/dev/IconsPicker";
+import { Motion } from "visual/component/Options/types/dev/Motion";
+import { SidebarTabs } from "visual/component/Options/types/dev/SidebarTabs";
+import { SidebarTabsButton } from "visual/component/Options/types/dev/SidebarTabsButton";
+import { Animation } from "visual/component/Options/types/dev/Animation";
+import { TextShadow } from "visual/component/Options/types/dev/TextShadow";
+import { Gallery } from "visual/component/Options/types/dev/Gallery";
+import { Filters } from "visual/component/Options/types/dev/Filters";
+import { Range as RangeDev } from "visual/component/Options/types/dev/Range";
 
 const newTypes = {
   "alert-dev": Alert,
+  "animation-dev": Animation,
   "backgroundColor-dev": BackgroundColor,
   "button-dev": ButtonDev,
-  "cloneable-order": CloneableOrder,
+  "order-dev": Order,
   "codeMirror-dev": CodeMirrorDev,
   "colorPicker-dev": ColorPickerDev,
   "corners-dev": Corners,
   "boxShadow-dev": BoxShadow,
   "border-dev": Border,
+  "filters-dev": Filters,
   "group-dev": Group,
+  "grid-dev": GridDev,
   "imageUpload-dev": ImageUpload,
   "iconPicker-dev": IconPicker,
   "iconsPicker-dev": IconsPicker,
   "inputText-dev": InputText,
   "internalLink-dev": InternalLink,
   "margin-dev": Margin,
+  "motion-dev": Motion,
   "multiSelect-dev": MultiSelect,
-  "multiSelect2-dev": MultiSelect2,
   "number-dev": Number,
   "textarea-dev": TextareaDev,
   "radioGroup-dev": RadioGroupDev,
+  "range-dev": RangeDev,
   "padding-dev": Padding,
   "popover-dev": PopoverDev,
   "population-dev": Population,
   "select-dev": SelectDev,
+  "sidebarTabs-dev": SidebarTabs,
+  "sidebarTabsButton-dev": SidebarTabsButton,
   "slider-dev": SliderDev,
   "switch-dev": SwitchDev,
   "tabs-dev": TabsDev,
   "toggle-dev": ToggleDev,
-  "typography-dev": Typography
+  "typography-dev": Typography,
+  "textShadow-dev": TextShadow,
+  "gallery-dev": Gallery,
+  "stateMode-dev": StateMode
 };
 
 const oldTypes = {
@@ -154,27 +171,23 @@ const oldTypes = {
   range: Range,
   range2: Range2,
   integrationsApps: IntegrationsApps,
-  fileUpload: FileUpload,
-  stateMode: StateMode
+  fileUpload: FileUpload
 } as const;
 
 export const types = { ...oldTypes, ...newTypes };
 
-export type OptionTypes = typeof types;
+export type OptionTypes = typeof newTypes;
 export type OptionName = keyof OptionTypes;
 
-export type NewOptionTypes = typeof newTypes;
-export type NewOptionName = keyof NewOptionTypes;
-
-export type NewOptionValue<
-  T extends NewOptionName
-> = NewOptionTypes[T] extends OptionType<infer M> ? M : unknown;
+export type OptionValue<
+  T extends OptionName
+> = OptionTypes[T] extends OptionType<infer M> ? M : unknown;
 
 export function applyDefaultValueToOption<T>(
   values: T,
-  type: keyof NewOptionTypes
+  type: keyof OptionTypes
 ): T {
-  const option = (types[type] as unknown) as OptionType<Partial<T>>;
+  const option = newTypes[type];
 
   if (!option.defaultValue) return values;
 
@@ -184,27 +197,25 @@ export function applyDefaultValueToOption<T>(
   ][];
 
   return valueEntries.reduce((acc, [key, defaultOptionValue]) => {
-    return {
-      ...acc,
-      [key]: values?.[key] ?? defaultOptionValue
-    };
-  }, {} as T);
+    acc[key] = Object.prototype.hasOwnProperty.call(values, key)
+      ? values[key]
+      : defaultOptionValue;
+    return acc;
+  }, values);
 }
 
 /**
  * Returns a function that creates the option model object from element model
  */
-export const getOptionModel = <T extends NewOptionName>(
+export const fromElementModel = <T extends OptionName>(
   type: T
-): GetModel<NewOptionValue<T>> => {
-  return (getFn): Partial<NewOptionValue<T>> => {
-    // TODO: remove this when all options will be written in typescript
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    const option = types[type] as OptionType<NewOptionValue<T>>;
-    const model = getOr(() => ({}), "getModel", option);
+): FromElementModel<OptionValue<T>> => {
+  return (getFn): Partial<OptionValue<T>> => {
+    // @ts-expect-error: remove this when all options will be written in typescript
+    const option = types[type] as OptionType<OptionValue<T>>;
+    const model = getOr(() => ({}), "fromElementModel", option);
 
-    return applyDefaultValueToOption<Partial<NewOptionValue<T>>>(
+    return applyDefaultValueToOption<Partial<OptionValue<T>>>(
       model(getFn),
       type
     );
@@ -214,18 +225,19 @@ export const getOptionModel = <T extends NewOptionName>(
 /**
  * Returns a function that creates the element model object from element model
  */
-export const getElementModel = <T extends NewOptionName>(
+export const toElementModel = <T extends OptionName>(
   type: T,
-  values: NewOptionValue<T>
-): ((get: (k: string) => string) => ElementModel) => {
-  return (getFn = (k: string): string => k): ElementModel => {
-    // TODO: remove this when all options will be written in typescript
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-expect-error
-    const option = types[type] as OptionType<NewOptionValue<T>>;
-    const model = getOr(() => ({}), "getElementModel", option);
+  get: (k: string) => string
+): ((values: OptionValue<T>) => ElementModel) => {
+  return (values): ElementModel => {
+    // @ts-expect-error: remove this when all options will be written in typescript
+    const option = types[type] as OptionType<OptionValue<T>>;
+    const model = getOr(() => ({}), "toElementModel", option);
 
-    return model(values, getFn);
+    return Object.entries(model(values)).reduce((acc, [k, v]) => {
+      acc[get(k)] = v;
+      return acc;
+    }, {} as ElementModel);
   };
 };
 

@@ -1,10 +1,10 @@
 import { t } from "visual/utils/i18n";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { ElementModel } from "visual/component/Elements/Types";
 import { tagsFilterLoad } from "./utils.wp";
 import { decodeV } from "../utils.common";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 
-export function tagsFilter(v: ElementModel): ToolbarItemType {
+export function tagsFilter(v: ElementModel): ToolbarItemType[] {
   const accepted = ["posts", "products"];
   const vd = decodeV(v);
   const source = vd.source;

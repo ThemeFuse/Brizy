@@ -19,17 +19,16 @@ import {
   getUsedStylesFonts,
   getBlocksStylesFonts
 } from "visual/utils/traverse";
-import {
-  findFonts,
-  projectFontsData,
-  getDefaultFont
-} from "visual/utils/fonts";
+import { findFonts, projectFontsData } from "visual/utils/fonts";
 import { getBlocksInPage } from "visual/utils/blocks";
 import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
 import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 
 import { createStore } from "visual/redux/store";
-import { pageDataDraftBlocksSelector } from "visual/redux/selectors";
+import {
+  getDefaultFontDetailsSelector,
+  pageDataDraftBlocksSelector
+} from "visual/redux/selectors";
 import { hydrate } from "visual/redux/actions";
 
 import EditorGlobal from "visual/global/Editor";
@@ -64,7 +63,10 @@ export default async function main({
             collectionType: page.collectionType,
             fields: page.fields
           }
-        : parsedPage;
+        : {
+            ...parsedPage,
+            __type: page.__type
+          };
     })
 
     .find(page => {
@@ -165,6 +167,7 @@ async function getPageBlocks({
   // ===========
 
   const dbValue = pageDataDraftBlocksSelector(reduxState);
+  const defaultFont = getDefaultFontDetailsSelector(reduxState);
   const { html, css: glamorCSS } = renderStatic(() =>
     ReactDOMServer.renderToStaticMarkup(
       <Provider store={store}>
@@ -231,7 +234,7 @@ async function getPageBlocks({
 
   // Added Default project font
   if (!includedDefaultProjectFont) {
-    const { group, font } = getDefaultFont();
+    const { group, font } = defaultFont;
 
     if (group === "upload") {
       fontMap.upload.push(font);

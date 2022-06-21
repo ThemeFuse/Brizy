@@ -13,7 +13,8 @@ export class Alpha extends Component {
     super(props);
 
     this.state = {
-      showTooltip: false
+      showTooltip: false,
+      isChangeing: false
     };
   }
 
@@ -44,9 +45,9 @@ export class Alpha extends Component {
 
     contentWindow.addEventListener("mousemove", this.handleChange);
     contentWindow.addEventListener("mouseup", this.handleMouseUp);
-
     this.setState({
-      showTooltip: true
+      showTooltip: true,
+      isChangeing: true
     });
   };
 
@@ -54,11 +55,30 @@ export class Alpha extends Component {
     this.handleChange(e, true);
     this.unbindEventListeners();
 
+    const shouldEnableTooltip = e
+      .composedPath()
+      .find(el => el === this.container);
+
     this.setState({
-      showTooltip: false
+      showTooltip: !!shouldEnableTooltip,
+      isChangeing: false
     });
 
     this.change = null;
+  };
+
+  handleMouseEnter = () => {
+    this.setState({
+      showTooltip: true
+    });
+  };
+
+  handleMouseLeave = () => {
+    if (!this.state.isChangeing) {
+      this.setState({
+        showTooltip: false
+      });
+    }
   };
 
   unbindEventListeners = () => {
@@ -72,9 +92,7 @@ export class Alpha extends Component {
     const { direction, rgb } = this.props;
     const gradientAlign = direction === "vertical" ? "to top" : "to right";
     const gradientStyles = {
-      background: `linear-gradient(${gradientAlign}, rgba(${rgb.r},${rgb.g},${
-        rgb.b
-      }, 0) 0%,
+      background: `linear-gradient(${gradientAlign}, rgba(${rgb.r},${rgb.g},${rgb.b}, 0) 0%,
            rgba(${rgb.r},${rgb.g},${rgb.b}, 1) 100%)`,
       boxShadow: this.props.shadow,
       borderRadius: this.props.radius
@@ -105,6 +123,8 @@ export class Alpha extends Component {
           onMouseDown={this.handleMouseDown}
           onTouchMove={this.handleChange}
           onTouchStart={this.handleChange}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
         >
           <div className="color-picker2-alpha-pointer" style={pointerStyles}>
             {this.props.pointer ? (

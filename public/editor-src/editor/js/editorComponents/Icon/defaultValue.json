@@ -153,6 +153,120 @@
     "tempHoverBorderBottomRightRadius": 4,
     "tempHoverBorderBottomLeftRadius": 4,
 
+    "filterColorHex": "#73777f",
+    "filterColorOpacity": 0.7,
+    "filterColorPalette": "",
+
+    "tempFilterColorOpacity": 0.7,
+    "tempFilterColorPalette": "color8",
+
+    "hoverFilterColorHex": null,
+    "hoverFilterColorOpacity": null,
+    "hoverFilterColorPalette": null,
+
+    "tempHoverFilterColorOpacity": null,
+    "tempHoverFilterColorPalette": null,
+
+    "tempHoverFilterBorderStyle": null,
+    "tempHoverFilterBorderWidth": null,
+    "tempHoverFilterBorderColorOpacity": null,
+    "tempHoverFilterBorderColorPalette": null,
+    "tempHoverFilterBorderTopWidth": null,
+    "tempHoverFilterBorderRightWidth": null,
+    "tempHoverFilterBorderBottomWidth": null,
+    "tempHoverFilterBorderLeftWidth": null,
+
+    "hoverFilterBorderStyle": null,
+    "hoverFilterBorderColorHex": null,
+    "hoverFilterBorderColorOpacity": null,
+    "hoverFilterBorderColorPalette": null,
+
+    "hoverFilterBorderWidthType": null,
+    "hoverFilterBorderWidth": null,
+    "hoverFilterBorderTopWidth": null,
+    "hoverFilterBorderRightWidth": null,
+    "hoverFilterBorderBottomWidth": null,
+    "hoverFilterBorderLeftWidth": null,
+
+    "hoverBorderStyle": null,
+
+    "tempHoverBorderStyle": null,
+
+    "hoverBorderWidthType": null,
+    "hoverBorderWidth": null,
+    "hoverBorderTopWidth": null,
+    "hoverBorderRightWidth": null,
+    "hoverBorderBottomWidth": null,
+    "hoverBorderLeftWidth": null,
+
+    "tempHoverBorderWidth": null,
+    "tempHoverBorderTopWidth": null,
+    "tempHoverBorderRightWidth": null,
+    "tempHoverBorderBottomWidth": null,
+    "tempHoverBorderLeftWidth": null,
+
+    "hoverFilterBoxShadow": null,
+
+    "tempHoverFilterBoxShadow": null,
+
+    "hoverFilterBoxShadowColorHex": null,
+    "hoverFilterBoxShadowColorOpacity": null,
+    "hoverFilterBoxShadowColorPalette": null,
+
+    "tempHoverFilterBoxShadowColorPalette": null,
+    "tempHoverFilterBoxShadowColorOpacity": null,
+
+    "hoverFilterBoxShadowBlur": null,
+    "hoverFilterBoxShadowSpread": null,
+    "hoverFilterBoxShadowVertical": null,
+    "hoverFilterBoxShadowHorizontal": null,
+
+    "tempHoverFilterBoxShadowBlur": null,
+    "tempHoverFilterBoxShadowSpread": null,
+    "tempHoverFilterBoxShadowVertical": null,
+    "tempHoverFilterBoxShadowHorizontal": null,
+
+    "filterBorderStyle": "solid",
+
+    "tempFilterBorderStyle": "solid",
+
+    "filterBorderColorHex": "#dcdee1",
+    "filterBorderColorOpacity": 1,
+    "filterBorderColorPalette": "",
+
+    "tempFilterBorderColorOpacity": 1,
+    "tempFilterBorderColorPalette": "",
+
+    "filterBorderWidthType": "grouped",
+    "filterBorderWidth": 2,
+    "filterBorderTopWidth": 2,
+    "filterBorderRightWidth": 2,
+    "filterBorderBottomWidth": 2,
+    "filterBorderLeftWidth": 2,
+
+    "tempFilterBorderWidth": 2,
+    "tempFilterBorderTopWidth": 2,
+    "tempFilterBorderRightWidth": 2,
+    "tempFilterBorderBottomWidth": 2,
+    "tempFilterBorderLeftWidth": 2,
+
+    "tempBorderStyle": "solid",
+
+    "borderWidthType": "grouped",
+    "borderTopWidth": 2,
+    "borderRightWidth": 2,
+    "borderBottomWidth": 2,
+    "borderLeftWidth": 2,
+
+    "tempBorderTopWidth": 2,
+    "tempBorderRightWidth": 2,
+    "tempBorderBottomWidth": 2,
+    "tempBorderLeftWidth": 2,
+
+    "tempHoverBgColorType": "solid",
+
+    "tempBgColorType": "solid",
+
     "fillType": "default",
     "tempFillType": "filled",
 

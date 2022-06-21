@@ -31,8 +31,7 @@ const normalizeAccounts: NormalizeAccounts = res => {
 };
 
 export const getAccounts = ({
-  group,
-  services // eslint-disable-line @typescript-eslint/no-unused-vars
+  group
 }: {
   group: string;
   services: string;
@@ -50,7 +49,7 @@ export const getAccounts = ({
       "Content-Type": "application/json; charset=utf-8"
     }
   })
-    .then(parseJSON)
+    .then(r => parseJSON<Array<{ type: string }> | null>(r))
     .then(normalizeAccounts);
 };
 

@@ -11,7 +11,6 @@ import * as V from "./VAlign";
 import { ElementModel } from "visual/component/Elements/Types";
 import { Reader } from "visual/utils/types/Type";
 
-type M<T extends Literal> = { [k in string]: T };
 type Getter<T> = (get: (k: string) => MValue<Literal>) => MValue<T>;
 type Setter = (
   set: (k: string, v: number) => ElementModel,

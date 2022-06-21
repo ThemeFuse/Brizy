@@ -13,72 +13,86 @@ export function getItems({ v, context }) {
 
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
-      config: {
-        align: "start"
-      },
-      devices: "desktop",
-      disabled: v.type === "submit" || v.type === "search",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       tabs: [
         {
-          id: "moreSettingsAdvanced",
-          label: t("Advanced"),
-          icon: "nc-cog",
+          id: "styles",
+          title: t("Styling"),
+          label: t("Styling"),
           options: [
             {
-              id: "cssID",
-              label: t("CSS ID"),
-              type: "population-dev",
-              position: 30,
-              devices: "desktop",
-              display: "block",
-              helper: {
-                content: "Add your custom ID without the #pound, example: my-id"
-              },
+              id: "settingsTabs",
+              type: "tabs-dev",
               config: {
-                choices: richTextDC
+                align: "start"
               },
-              options: [
+              devices: "desktop",
+              disabled: v.type === "submit" || v.type === "search",
+              tabs: [
                 {
-                  id: "customID",
-                  type: "inputText-dev"
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  icon: "nc-cog",
+                  options: [
+                    {
+                      id: "cssID",
+                      label: t("CSS ID"),
+                      type: "population-dev",
+                      position: 30,
+                      devices: "desktop",
+                      display: "block",
+                      helper: {
+                        content:
+                          "Add your custom ID without the #pound, example: my-id"
+                      },
+                      config: {
+                        choices: richTextDC
+                      },
+                      options: [
+                        {
+                          id: "customID",
+                          type: "inputText-dev"
+                        }
+                      ]
+                    },
+                    {
+                      id: "cssClass",
+                      label: t("CSS Class"),
+                      type: "population-dev",
+                      position: 40,
+                      devices: "desktop",
+                      display: "block",
+                      helper: {
+                        content:
+                          "Add your custom class without the .dot, example: my-class"
+                      },
+                      config: {
+                        choices: richTextDC
+                      },
+                      options: [
+                        {
+                          id: "customClassName",
+                          type: "inputText-dev"
+                        }
+                      ]
+                    },
+                    {
+                      id: "hoverTransition",
+                      label: t("Hover Transition"),
+                      disabled: IS_STORY,
+                      devices: "desktop",
+                      position: 100,
+                      type: "slider-dev",
+                      config: {
+                        min: 0,
+                        max: 99,
+                        units: [{ title: "ms", value: "ms" }]
+                      }
+                    }
+                  ]
                 }
               ]
-            },
-            {
-              id: "cssClass",
-              label: t("CSS Class"),
-              type: "population-dev",
-              position: 40,
-              devices: "desktop",
-              display: "block",
-              helper: {
-                content:
-                  "Add your custom class without the .dot, example: my-class"
-              },
-              config: {
-                choices: richTextDC
-              },
-              options: [
-                {
-                  id: "customClassName",
-                  type: "inputText-dev"
-                }
-              ]
-            },
-            {
-              id: "hoverTransition",
-              label: t("Hover Transition"),
-              disabled: IS_STORY,
-              devices: "desktop",
-              position: 100,
-              type: "slider-dev",
-              config: {
-                min: 0,
-                max: 99,
-                units: [{ title: "ms", value: "ms" }]
-              }
             }
           ]
         }

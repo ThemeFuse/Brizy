@@ -1,11 +1,10 @@
 import { t } from "visual/utils/i18n";
 import _ from "underscore";
 import Config from "visual/global/Config";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import * as types from "./types/index";
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device });
   const dvv = key => defaultValueValue({ v, key, device });
 
   const isCheckbox = v.type === "Checkbox";
@@ -243,13 +242,13 @@ export function getItems({ v, device }) {
                 ...(isCheckboxOrRadio
                   ? [
                       {
-                        id: dvk("size"),
+                        id: "size",
                         type: "radioGroup",
                         disabled: true
                       },
                       {
-                        id: dvk("borderRadius"),
-                        type: "slider",
+                        id: "borderRadius",
+                        type: "slider-dev",
                         disabled: true
                       }
                     ]
@@ -262,7 +261,7 @@ export function getItems({ v, device }) {
         ...(isCheckboxOrRadio
           ? [
               {
-                id: dvk("size"),
+                id: "size",
                 type: "radioGroup",
                 disabled: true
               }

@@ -1,3 +1,4 @@
+import { defaultValueValue } from "../onChange";
 import {
   styleBgImage,
   styleExportBgImage,
@@ -43,11 +44,15 @@ export function cssStyleBgImagePosition({ v, device, state }) {
     : `background-position:${positionX} ${positionY};`;
 }
 
-export function cssStyleBgImageAttachment({ v, device, props }) {
+export function cssStyleBgImageAttachment({ v, device, state, props }) {
+  const dvv = key => defaultValueValue({ v, key, device, state });
   const { isSlider } = props.meta.section;
   const bgAttachment = styleBgAttachment({ v, isSlider });
+  const bgSize = dvv("bgSize");
 
-  return device !== "desktop" || bgAttachment === undefined
+  return device !== "desktop" ||
+    bgAttachment === undefined ||
+    bgSize !== "cover"
     ? ""
     : `background-attachment:${bgAttachment};`;
 }

@@ -6,7 +6,9 @@ import {
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
 import { getAllMembershipChoices } from "visual/utils/membership";
+import { getLanguagesChoices } from "visual/utils/multilanguages";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
 
 export function getItems({ v, device, component }) {
   const config = Config.getAll();
@@ -70,10 +72,30 @@ export function getItems({ v, device, component }) {
             {
               id: "membershipRoles",
               label: t("Show to"),
-              type: "multiSelect2-dev",
+              type: "multiSelect-dev",
               placeholder: "Select",
               disabled: v.membership === "off",
               choices: getAllMembershipChoices(config)
+            }
+          ]
+        },
+        {
+          id: "translationsGroup",
+          type: "group-dev",
+          disabled: isWp(config),
+          options: [
+            {
+              id: "translations",
+              label: t("Multi-Language"),
+              type: "switch-dev"
+            },
+            {
+              id: "translationsLangs",
+              label: t("Show If Language"),
+              type: "multiSelect-dev",
+              placeholder: "Select",
+              disabled: v.translations === "off",
+              choices: getLanguagesChoices(config)
             }
           ]
         }

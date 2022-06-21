@@ -4,6 +4,7 @@ import _ from "underscore";
 import produce from "immer";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import AppList from "../common/GlobalApps/StepsView/AppsList";
+import { HelperCopy } from "./Step/common/HelperToolip";
 import Tooltip from "visual/component/Controls/Tooltip";
 import Switch from "visual/component/Controls/Switch";
 import EditorIcon from "visual/component/EditorIcon";
@@ -19,7 +20,6 @@ import {
   getSmtpIntegration,
   createSmtpIntegration
 } from "./api";
-import { copyTextToClipboard } from "../common/utils";
 import {
   AppData,
   BaseIntegrationContext,
@@ -36,10 +36,9 @@ type Props = BaseIntegrationProps & {
 type State = BaseIntegrationState & {
   emailTemplate: string;
   hasEmailTemplate: boolean;
-  textCopied?: string;
 };
 
-type Context = BaseIntegrationContext & {
+export type Context = BaseIntegrationContext & {
   formId: string;
   formFields: FormField[];
 };
@@ -57,8 +56,7 @@ class Email extends BaseIntegration<Props, State, Context> {
     error: null,
     appError: null,
     emailTemplate: "",
-    hasEmailTemplate: false,
-    textCopied: ""
+    hasEmailTemplate: false
   };
 
   appsData: AppData[] = [];
@@ -196,37 +194,10 @@ class Email extends BaseIntegration<Props, State, Context> {
     }
   };
 
-  handleCopyToClipboard(label: string): void {
-    copyTextToClipboard(`{{${label}}}`);
-
-    this.setState({ textCopied: label }, () => {
-      setTimeout(() => {
-        this.setState({ textCopied: undefined });
-      }, 800);
-    });
-  }
-
   renderFormInfo(): ReactElement {
     return (
       <div className="brz-ed-popup-integration-email__info">
-        {this.props.formFields.map((field, index) => (
-          <p
-            key={index}
-            title="Click to copy"
-            className="brz-p"
-            onClick={(): void => {
-              this.handleCopyToClipboard(field.label);
-            }}
-          >
-            <span className="brz-span brz-">{`{{${field.label}}}`}</span>
-            <EditorIcon icon="nc-duplicate" />
-            {this.state.textCopied === field.label && (
-              <span className="brz-span brz-ed-animated brz-ed-animated--fadeIn">
-                Copied
-              </span>
-            )}
-          </p>
-        ))}
+        <HelperCopy fields={this.props.formFields} />
       </div>
     );
   }

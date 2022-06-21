@@ -1,6 +1,7 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
+import { mergeDeep } from "timm";
 import CustomCSS from "visual/component/CustomCSS";
 import BoxResizer from "visual/component/BoxResizer";
 import Placeholder from "visual/component/Placeholder";
@@ -9,7 +10,7 @@ import {
   videoUrl as getVideoUrl
 } from "visual/utils/video";
 import Toolbar from "visual/component/Toolbar";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import {
@@ -33,7 +34,37 @@ class Video extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleResizerChange = patch => this.patchValue(patch);
+  state = {
+    isDragging: false,
+    sizePatch: null
+  };
+
+  getDBValue() {
+    if (this.state.sizePatch) {
+      return mergeDeep(this.props.dbValue, this.state.sizePatch);
+    } else {
+      return this.props.dbValue;
+    }
+  }
+
+  handleResizerChange = patch => {
+    if (this.state.isDragging) {
+      this.setState({ sizePatch: patch });
+    } else {
+      this.patchValue(patch);
+    }
+  };
+
+  onDragStart = () => {
+    this.setState({ isDragging: true });
+  };
+
+  onDragEnd = () => {
+    const sizePatch = this.state.sizePatch;
+    this.setState({ isDragging: false, sizePatch: null }, () =>
+      this.handleResizerChange(sizePatch)
+    );
+  };
 
   getVideoSrc(v) {
     const { video, coverImageSrc, controls, start, end, loop, autoplay } = v;
@@ -148,9 +179,19 @@ class Video extends EditorComponent {
   }
 
   renderCustomPlayer(v, vs, vd) {
-    const { coverImageSrc, custom, start, end, controls, loop, ratio } = v;
+    const {
+      coverImageSrc,
+      custom,
+      start,
+      end,
+      controls,
+      loop,
+      ratio,
+      type,
+      video
+    } = v;
 
-    const customVideoFile = customFileUrl(custom);
+    const customVideoFile = type === "custom" ? customFileUrl(custom) : video;
 
     const classNameVideo = classnames(
       "brz-video-elem",
@@ -339,7 +380,7 @@ class Video extends EditorComponent {
 
     const classNameContent = classnames(
       "brz-video",
-      { "brz-custom-video": type === "custom" },
+      { "brz-custom-video": type === "custom" || type === "url" },
       { "brz-youtube-video": type === "youtube" },
       { "brz-vimeo-video": type === "vimeo" },
       `brz-video-${controls}-controls-hidden`,
@@ -360,7 +401,7 @@ class Video extends EditorComponent {
     );
 
     let content =
-      type === "custom" ? (
+      type === "custom" || type === "url" ? (
         this.renderCustomPlayer(v, vs, vd)
       ) : (
         <div className={classNameWrapper}>{this.renderExternalPlayer(v)}</div>
@@ -377,12 +418,14 @@ class Video extends EditorComponent {
               meta={this.props.meta}
               value={v}
               onChange={this.handleResizerChange}
+              onStart={this.onDragStart}
+              onEnd={this.onDragEnd}
               restrictions={restrictions}
             >
               <div
                 className="brz-video-content"
-                loop={loop === "on"}
-                muted={muted === "on"}
+                data-loop={loop === "on"}
+                data-muted={muted === "on"}
                 data-autoplay={this.getAutoplay(v)}
               >
                 {content}

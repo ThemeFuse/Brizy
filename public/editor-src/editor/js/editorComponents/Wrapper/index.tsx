@@ -1,59 +1,69 @@
+import classNames from "classnames";
 import React, {
   ComponentType,
   createRef,
+  HTMLAttributes,
   ReactElement,
   ReactNode,
   Ref
 } from "react";
-import classNames from "classnames";
+import Animation from "visual/component/Animation";
+import ContainerBorder from "visual/component/ContainerBorder";
+import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
+import { ElementModel } from "visual/component/Elements/Types";
+import { ProBlocked } from "visual/component/ProBlocked";
+import { currentUserRole, Roles } from "visual/component/Roles";
+import { ScrollMotion } from "visual/component/ScrollMotions";
+import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
+import {
+  SortableElement,
+  SortableElementDataAttributes
+} from "visual/component/Sortable/SortableElement";
+import SortableHandle from "visual/component/Sortable/SortableHandle";
+import Toolbar, {
+  ToolbarExtend as _ToolbarExtend
+} from "visual/component/Toolbar";
+import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
   OnChangeMeta,
-  ToolbarExtend,
-  Props as EDProps
+  Props as EDProps,
+  ToolbarExtend
 } from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { Roles, currentUserRole } from "visual/component/Roles";
-import { getWrapperContainerW } from "visual/utils/meta";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import * as toolbarExtendConfig from "./toolbarExtend";
-import * as sidebarExtendConfig from "./sidebarExtend";
-import contextMenuConfig from "./contextMenu";
-import defaultValue from "./defaultValue.json";
-import { ElementModel } from "visual/component/Elements/Types";
+import { getProTitle } from "visual/editorComponents/EditorComponent/utils";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
-import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
-import * as Position from "visual/utils/position/element";
-import { MValue } from "visual/utils/value";
-import { Literal } from "visual/utils/types/Literal";
+import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
+import { getWrapperContainerW } from "visual/utils/meta";
 import {
   defaultValueKey,
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
-import * as State from "visual/utils/stateMode";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import ContextMenu from "visual/component/ContextMenu";
-import ContainerBorder from "visual/component/ContainerBorder";
-import Toolbar, {
-  ToolbarExtend as _ToolbarExtend
-} from "visual/component/Toolbar";
-import SortableHandle from "visual/component/Sortable/SortableHandle";
-import PortalToolbar from "visual/component/Toolbar";
-import { css } from "visual/utils/cssStyle";
-import * as Str from "visual/utils/string/specs";
-import { styleWrapper, styleAnimation } from "./styles";
-import * as Attr from "visual/utils/string/parseCustomAttributes";
-import Animation from "visual/component/Animation";
-import { SortableElement } from "visual/component/Sortable/SortableElement";
 import { WithClassName } from "visual/utils/options/attributes";
+import * as Position from "visual/utils/position/element";
 import { attachRef } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import * as State from "visual/utils/stateMode";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
+import * as Attr from "visual/utils/string/parseCustomAttributes";
+import * as Str from "visual/utils/string/specs";
+import { Literal } from "visual/utils/types/Literal";
+import { MValue } from "visual/utils/value";
+import contextMenuConfig from "./contextMenu";
+import contextMenuConfigPro from "./contextMenuPro";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import * as sidebarExtendConfig from "./sidebarExtend";
+import { styleAnimation, styleWrapper } from "./styles";
+import * as toolbarConfig from "./toolbar";
+import * as toolbarExtendConfig from "./toolbarExtend";
 
-type Value = ElementModel & {
+export type Value = ElementModel & {
   items: ElementModel[];
 };
 type Component<P> = ComponentType<P> | keyof JSX.IntrinsicElements;
@@ -74,7 +84,7 @@ type Static = WithClassName & {
   v: Value;
   vs: Value;
   vd: Value;
-  extraAttr?: {};
+  extraAttr?: SortableElementDataAttributes;
   ref?: Ref<unknown>;
 };
 
@@ -95,6 +105,23 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     return this.optionalSCU(nextProps);
   }
 
+  getInnerElement(): MValue<{ type: string; value: ElementModel }> {
+    const v = this.getDBValue();
+    return v.items[0] as MValue<{ type: string; value: ElementModel }>;
+  }
+
+  getTitleIfPro(): string | undefined {
+    const model = this.getInnerElement();
+
+    if (model !== undefined) {
+      return NoEmptyString.is(model.type)
+        ? getProTitle(model.type, model.value)
+        : undefined;
+    }
+
+    return undefined;
+  }
+
   handleValueChange(value: Value, meta: OnChangeMeta<Value>): void {
     if (value.items.length === 0) {
       this.selfDestruct();
@@ -102,6 +129,10 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       super.handleValueChange(value, meta);
     }
   }
+
+  handleRemove = (): void => {
+    this.selfDestruct();
+  };
 
   handleExtendParentToolbar = (childToolbarExtend: ToolbarExtend): void => {
     this.childToolbarExtend = childToolbarExtend;
@@ -145,13 +176,12 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     };
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  renderContent(v: Value, vs: Value, vd: Value): ReactNode {
+  renderContent(v: Value): ReactElement {
     const toolbarExtendFilter =
       v.showToolbar === "on" || currentUserRole() !== "admin"
         ? (toolbarExtendItems: ToolbarItemType[]): ToolbarItemType[] =>
             toolbarExtendItems.filter(
-              item => item.id !== "duplicate" && item.id !== "remove"
+              (item) => item.id !== "duplicate" && item.id !== "remove"
             )
         : null;
     const itemsProps = this.makeSubcomponentProps({
@@ -159,6 +189,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       itemProps: {
         meta: this.getMeta(v),
         toolbarExtend: this.makeToolbarPropsFromConfig2(
+          // @ts-expect-error: Need to convert all toolbars, sidebar to TS
           toolbarExtendConfig,
           sidebarExtendConfig,
           {
@@ -171,10 +202,10 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     });
 
     return (
-      // Since the EditorArrayComponent is still in JS,
-      // TS cannot read properly it's return type
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
+      /**
+       * Since the EditorArrayComponent is still in JS,
+       * TS cannot read properly it's return type
+       * @ts-expect-error */
       <EditorArrayComponent {...itemsProps} />
     );
   }
@@ -183,6 +214,81 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const { customAttributes } = v;
     const customID = Str.mRead(v.customID) || undefined;
     const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
+    const proTitleElement = this.getTitleIfPro();
+
+    if (proTitleElement) {
+      const content = (
+        <ProBlocked
+          text={proTitleElement}
+          absolute={false}
+          onRemove={this.handleRemove}
+        />
+      );
+
+      return (
+        <ContainerBorder type="wrapper" color="grey" borderStyle="dotted">
+          {({
+            ref: containerBorderRef,
+            attr: containerBorderAttr,
+            border: ContainerBorderBorder
+          }: {
+            ref: Ref<HTMLDivElement>;
+            border: ReactElement;
+            attr: HTMLAttributes<Element>;
+          }): ReactElement => (
+            <Animation<"div">
+              ref={(v: HTMLDivElement | null): void => {
+                attachRef(v, containerBorderRef);
+                attachRef(v, ref || null);
+              }}
+              component="div"
+              className={classNames(
+                this.getWrapperClassName(v, vs, vd),
+                className
+              )}
+              animationClass={this.getAnimationClassName(v, vs, vd)}
+              componentProps={{
+                ...Attr.mRead(customAttributes),
+                ...containerBorderAttr,
+                ...extraAttr,
+                id: cssIDPopulation ?? customID
+              }}
+            >
+              <ContextMenuExtend
+                // @ts-expect-error: Need to convert contextMenuConfig to TS
+                {...this.makeContextMenuProps(contextMenuConfigPro)}
+              >
+                <ContextMenu
+                  // @ts-expect-error: Need to convert contextMenuConfig to TS
+                  {...this.makeContextMenuProps(contextMenuConfig)}
+                  componentId={v?.items[0]?.type}
+                >
+                  <Roles
+                    allow={["admin"]}
+                    fallbackRender={(): ReactNode => content}
+                  >
+                    {v.showToolbar === "on" ? (
+                      <_ToolbarExtend onEscape={this.handleToolbarEscape}>
+                        {content}
+                      </_ToolbarExtend>
+                    ) : (
+                      content
+                    )}
+                    {ContainerBorderBorder}
+                  </Roles>
+                </ContextMenu>
+              </ContextMenuExtend>
+            </Animation>
+          )}
+        </ContainerBorder>
+      );
+    }
+
+    const content = (
+      <ScrollMotion options={makeOptionValueToMotion(v)}>
+        {this.renderContent(v)}
+      </ScrollMotion>
+    );
 
     return (
       <ContainerBorder
@@ -201,7 +307,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
           ref: Ref<HTMLDivElement>;
           button: ReactElement;
           border: ReactElement;
-          attr: {};
+          attr: HTMLAttributes<Element>;
         }): ReactElement => (
           <Animation<"div">
             ref={(v: HTMLDivElement | null): void => {
@@ -222,24 +328,23 @@ export default class Wrapper extends EditorComponent<Value, Props> {
             }}
           >
             <ContextMenu
-              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // @ts-ignore
+              // @ts-expect-error: Need to convert contextMenuConfig to TS
               {...this.makeContextMenuProps(contextMenuConfig)}
               componentId={v?.items[0]?.type}
             >
               <Roles
                 allow={["admin"]}
-                fallbackRender={(): ReactNode => this.renderContent(v, vs, vd)}
+                fallbackRender={(): ReactNode => content}
               >
                 {v.showToolbar === "on" ? (
                   <>
                     <_ToolbarExtend onEscape={this.handleToolbarEscape}>
-                      {this.renderContent(v, vs, vd)}
+                      {content}
                     </_ToolbarExtend>
                     {ContainerBorderButton}
                   </>
                 ) : (
-                  this.renderContent(v, vs, vd)
+                  content
                 )}
                 {ContainerBorderBorder}
               </Roles>
@@ -318,14 +423,16 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       <Animation<"div">
         iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
         component={"div"}
-        className={this.getWrapperClassName(v, vs, vd)}
+        className={classNames(this.getWrapperClassName(v, vs, vd))}
         animationClass={this.getAnimationClassName(v, vs, vd)}
         componentProps={{
           ...Attr.mRead(customAttributes),
           id: cssIDPopulation ?? customID
         }}
       >
-        {this.renderContent(v, vs, vd)}
+        <ScrollMotion options={makeOptionValueToMotion(v)}>
+          {this.renderContent(v)}
+        </ScrollMotion>
       </Animation>
     );
   }
@@ -345,14 +452,29 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     );
   };
 
-  getAnimationClassName = (v: Value, vs: Value, vd: Value): string => {
+  getAnimationClassName = (
+    v: Value,
+    vs: Value,
+    vd: Value
+  ): string | undefined => {
+    if (!validateKeyByProperty(v, "animationName", "none")) {
+      return undefined;
+    }
+
+    const animationName = defaultValueValue({ v, key: "animationName" });
+    const animationDuration = defaultValueValue({
+      v,
+      key: "animationDuration"
+    });
+    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
+    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+
     return classNames(
-      validateKeyByProperty(v, "animationName", "none") &&
-        css(
-          `${this.getComponentId()}-animation,`,
-          `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
-        )
+      css(
+        `${this.getComponentId()}-animation-${slug}`,
+        `${this.getId()}-animation-${slug}`,
+        styleAnimation(v, vs, vd)
+      )
     );
   };
 
@@ -372,9 +494,12 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
   handleToolbarEscape = (): void => this.toolbarRef.current?.show();
 
-  renderToolbar = (Button: Component<{}>): ReactNode => {
-    return toolbar ? (
+  renderToolbar = (Button: Component<Record<string, unknown>>): ReactNode => {
+    const isPro = this.getTitleIfPro();
+
+    return toolbar && isPro === undefined ? (
       <Toolbar
+        // @ts-expect-error: Need convert toolbar, sidebar to TS
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         ref={this.toolbarRef}
       >

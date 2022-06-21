@@ -136,6 +136,18 @@ export function getItems({ v, device, state }) {
               ]
             },
             {
+              id: "labelBgTab",
+              label: t("Label Bg"),
+              options: [
+                {
+                  id: "labelBgColor",
+                  type: "colorPicker-dev",
+                  devices: "desktop",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
               id: "valueColorTab",
               label: t("Value"),
               options: [
@@ -148,11 +160,11 @@ export function getItems({ v, device, state }) {
               ]
             },
             {
-              id: "clearColorTab",
-              label: t("Clear"),
+              id: "bgTab",
+              label: t("Value Bg"),
               options: [
                 {
-                  id: "clearColor",
+                  id: "tableBgColor",
                   type: "colorPicker-dev",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
@@ -160,11 +172,11 @@ export function getItems({ v, device, state }) {
               ]
             },
             {
-              id: "bgTab",
-              label: t("Bg"),
+              id: "clearColorTab",
+              label: t("Clear"),
               options: [
                 {
-                  id: "tableBgColor",
+                  id: "clearColor",
                   type: "colorPicker-dev",
                   devices: "desktop",
                   states: [NORMAL, HOVER]

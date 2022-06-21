@@ -15,12 +15,11 @@ const generateConditionBlocks = (
         globalBlocks[id]?.position?.align === type &&
         globalBlocks[id].status === "publish"
     )
-    .sort(
-      (id, nextId) =>
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        globalBlocks[id].position[type] - globalBlocks[nextId].position[type]
-    );
+    .sort((id, nextId) => {
+      const gBlock = globalBlocks[id]?.position?.[type] ?? 0;
+      const nextGBlock = globalBlocks[nextId]?.position?.[type] ?? 0;
+      return gBlock - nextGBlock;
+    });
 };
 
 export const generateBlocksList = (

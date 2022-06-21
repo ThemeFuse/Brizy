@@ -94,6 +94,9 @@ export function cssStyleElementImageHeightWrapper({ v, device, props = {} }) {
   const { width, height } = props[device];
 
   if (src || isNullish(width) || isNullish(height)) {
+    if (v.imagePopulation && sizeType === "original") {
+      return "height: 100%;";
+    }
     return "height: auto;";
   }
 
@@ -168,7 +171,7 @@ export function cssStyleElementImageSizePreview() {
 }
 
 export function cssStyleElementImageTransitionProperty() {
-  return "transition-property: border, box-shadow, filter;";
+  return "transition-property: border, box-shadow, filter, background-color;";
 }
 
 export function cssStyleElementImageFilter({

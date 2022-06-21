@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { readWithParser } from "visual/utils/reader/readWithParser";
 
 export * from "./adapter-legacy";
@@ -66,7 +65,7 @@ export type ParsedSavedLayoutApi = Omit<SavedBlockFromApi, "data" | "meta"> & {
 };
 
 export type ParsedSavedBlockApiMeta = Omit<SavedBlockMetaFromApi, "meta"> & {
-  meta: object;
+  meta: SavedBlock["meta"];
 };
 
 // saved blocks | layout
@@ -191,7 +190,7 @@ type PageSerialized<T extends PageWP | InternalPopupCloud> = Omit<T, "data"> & {
 export const parseInternalPopup = (page: unknown): InternalPopupCloud => {
   const reader = mPipe(
     Obj.read,
-    readWithParser<object, InternalPopupCloud>({
+    readWithParser<Record<string, unknown>, InternalPopupCloud>({
       id: mPipe(Obj.readKey("id"), Str.read),
       data: pipe(
         Obj.readKey("data"),
@@ -226,7 +225,7 @@ export const parseInternalPopup = (page: unknown): InternalPopupCloud => {
 export const parseExternalPopup = (popup: unknown): ExternalPopupCloud => {
   const reader = mPipe(
     Obj.read,
-    readWithParser<object, ExternalPopupCloud>({
+    readWithParser<Record<string, unknown>, ExternalPopupCloud>({
       id: mPipe(Obj.readKey("id"), Str.read),
       data: pipe(
         Obj.readKey("data"),
@@ -253,7 +252,7 @@ export const parseExternalPopup = (popup: unknown): ExternalPopupCloud => {
 export const parseExternalStory = (story: unknown): ExternalStoryCloud => {
   const reader = mPipe(
     Obj.read,
-    readWithParser<object, ExternalStoryCloud>({
+    readWithParser<Record<string, unknown>, ExternalStoryCloud>({
       id: mPipe(Obj.readKey("id"), Str.read),
       data: pipe(
         Obj.readKey("data"),
@@ -281,7 +280,7 @@ export const parseExternalStory = (story: unknown): ExternalStoryCloud => {
 export const parsePageWP = (page: unknown): PageWP => {
   const reader = mPipe(
     Obj.read,
-    readWithParser<object, PageWP>({
+    readWithParser<Record<string, unknown>, PageWP>({
       _kind: () => "wp",
       id: mPipe(Obj.readKey("id"), Str.read),
       data: pipe(
@@ -319,7 +318,7 @@ export const parsePageWP = (page: unknown): PageWP => {
 export const parsePageCommon = (page: unknown): PageCommon => {
   const reader = mPipe(
     Obj.read,
-    readWithParser<object, PageCommon>({
+    readWithParser<Record<string, unknown>, PageCommon>({
       id: mPipe(Obj.readKey("id"), Str.read),
       data: pipe(
         Obj.readKey("data"),
@@ -369,19 +368,25 @@ export function stringifyPage(
   return { ...page, data: JSON.stringify(page.data) };
 }
 
-export const parseCollectionSourceItem = parse<object, CollectionSourceItem>({
+export const parseCollectionSourceItem = parse<
+  Record<string, unknown>,
+  CollectionSourceItem
+>({
   id: mPipe(readKey("id"), Str.read),
   title: mPipe(readKey("title"), Str.read, onNullish("")),
   type: mPipe(readKey("type"), Str.read)
 });
 
-export const parsePageRules = parse<object, Rule>({
+export const parsePageRules = parse<Record<string, unknown>, Rule>({
   id: mPipe(readKey("id"), Str.read),
   title: mPipe(readKey("title"), Str.read, onNullish("")),
   type: mPipe(readKey("type"), Str.read)
 });
 
-export const parseBlogSourceItem = parse<object, BlogSourceItem>({
+export const parseBlogSourceItem = parse<
+  Record<string, unknown>,
+  BlogSourceItem
+>({
   id: mPipe(readKey("id"), Str.read),
   title: mPipe(readKey("title"), Str.read, onNullish(""))
 });

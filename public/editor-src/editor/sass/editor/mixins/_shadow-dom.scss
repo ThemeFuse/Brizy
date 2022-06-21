@@ -1,0 +1,13 @@
+@mixin slider-track($styles) {
+  input[type="range"]::-webkit-slider-runnable-track {
+    @each $property, $style in $styles {
+      #{$property}: $style;
+    }
+  }
+
+  input[type="range"]::-moz-range-track {
+    @each $property, $style in $styles {
+      #{$property}: $style;
+    }
+  }
+}

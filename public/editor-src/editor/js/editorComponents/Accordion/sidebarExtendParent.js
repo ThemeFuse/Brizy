@@ -6,30 +6,48 @@ export const title = t("Accordion");
 export function getItems() {
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
-      config: {
-        align: "start"
-      },
-      devices: "desktop",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       tabs: [
         {
-          id: "moreSettingsAdvanced",
-          label: t("Advanced"),
-          icon: "nc-cog",
+          id: "styles",
+          title: t("Styling"),
+          label: t("Styling"),
           options: [
             {
-              id: "hoverTransition",
-              label: t("Hover Transition"),
-              disabled: IS_STORY,
-              devices: "desktop",
-              position: 100,
-              type: "slider-dev",
+              id: "settingsTabs",
+              type: "tabs-dev",
               config: {
-                min: 0,
-                max: 99,
-                units: [{ title: "ms", value: "ms" }]
-              }
+                align: "start"
+              },
+              devices: "desktop",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling"
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  icon: "nc-cog",
+                  options: [
+                    {
+                      id: "hoverTransition",
+                      label: t("Hover Transition"),
+                      disabled: IS_STORY,
+                      devices: "desktop",
+                      position: 100,
+                      type: "slider-dev",
+                      config: {
+                        min: 0,
+                        max: 99,
+                        units: [{ title: "ms", value: "ms" }]
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

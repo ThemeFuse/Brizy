@@ -54,21 +54,18 @@ export const Toggle: FC<Props> & Option.OptionType<SimpleValue<Literal>> = ({
   ) : null;
 };
 
-const getModel: Option.GetModel<SimpleValue<Literal>> = get => ({
+const getModel: Option.FromElementModel<SimpleValue<Literal>> = get => ({
   value: read(get("value"))
 });
 
-const getElementModel: Option.GetElementModel<SimpleValue<Literal>> = (
-  values,
-  get
-) => {
+const getElementModel: Option.ToElementModel<SimpleValue<Literal>> = values => {
   return {
-    [get("value")]: values.value
+    value: values.value
   };
 };
 
-Toggle.getModel = getModel;
+Toggle.fromElementModel = getModel;
 
-Toggle.getElementModel = getElementModel;
+Toggle.toElementModel = getElementModel;
 
 Toggle.defaultValue = { value: "" };

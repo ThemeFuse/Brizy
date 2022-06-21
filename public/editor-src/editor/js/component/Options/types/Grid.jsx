@@ -1,16 +1,41 @@
 import React from "react";
 import classnames from "classnames";
-import Options, { filterOptionsData } from "visual/component/Options";
+import Options from "visual/component/Options";
+import { isT } from "visual/utils/value";
 
 const vAlign = ["top", "center", "bottom"];
 const toVAlign = v =>
   vAlign.includes(v) ? `brz-ed-grid-option__column--${v}` : "";
 
 class GridOptionType extends React.Component {
-  static shouldOptionBeFiltered({ columns }) {
-    return columns.every(
-      column => filterOptionsData(column.options).length === 0
+  static filter(f, t) {
+    return {
+      ...t,
+      columns:
+        t.columns
+          ?.map(column => ({
+            ...column,
+            options: column.options.map(f).filter(isT)
+          }))
+          .filter(column => column.options.length > 0) ?? []
+    };
+  }
+
+  static reduce(fn, t0, item) {
+    return (
+      item.columns?.reduce((acc, { options }) => options.reduce(fn, acc), t0) ??
+      t0
     );
+  }
+
+  static map(fn, item) {
+    return {
+      ...item,
+      columns: item.columns?.map(column => ({
+        ...column,
+        options: column.options.map(fn)
+      }))
+    };
   }
 
   static defaultProps = {
@@ -21,12 +46,6 @@ class GridOptionType extends React.Component {
     columns: [],
     separator: false
   };
-
-  filterColumns(columns) {
-    return columns.filter(
-      column => filterOptionsData(column.options).length !== 0
-    );
-  }
 
   render() {
     const {
@@ -42,7 +61,7 @@ class GridOptionType extends React.Component {
       { "brz-ed-grid--separator": !!separator },
       _className
     );
-    const renderedColumns = this.filterColumns(columns).map(
+    const renderedColumns = columns.map(
       ({ className, width, options, vAlign }, index, allColumns) => {
         const columnClassName = classnames(
           "brz-ed-grid-option__column",

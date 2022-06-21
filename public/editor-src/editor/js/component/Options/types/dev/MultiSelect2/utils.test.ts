@@ -1,11 +1,11 @@
 import { MValue } from "visual/utils/value";
 import { Literal } from "visual/utils/types/Literal";
 import {
-  getModel,
-  toElement,
+  fromElementModel,
   valueChoices,
   searchChoices,
-  mergeChoices
+  mergeChoices,
+  toElementModel
 } from "./utils";
 import { ChoicesSync } from "./types";
 
@@ -17,7 +17,7 @@ describe("Testing 'getModel' function", function() {
       const m: { [k: string]: MValue<Literal> } = { value: v };
       const get = (k: string): MValue<Literal> => m[k];
 
-      expect(getModel(get)).toEqual({ value: [] });
+      expect(fromElementModel(get)).toEqual({ value: [] });
     });
   });
 
@@ -29,18 +29,14 @@ describe("Testing 'getModel' function", function() {
   ])("%s to %s", (a, b) => {
     const m: { [k: string]: MValue<Literal> } = { value: a };
     const get = (k: string): MValue<Literal> => m[k];
-    expect(getModel(get)).toEqual(b);
+    expect(fromElementModel(get)).toEqual(b);
   });
 });
 
-describe("Testing 'toElement' function", function() {
-  [
-    [1, 2, 3],
-    ["1", "2", "3"],
-    [1, "2", 3]
-  ].map(v => {
-    test(`${v.toString()} to {value: ${JSON.stringify(v)}}`, () => {
-      expect(toElement(v)).toEqual({ value: JSON.stringify(v) });
+describe("Testing 'toElementModel' function", () => {
+  test("Should stringify the array value", () => {
+    expect(toElementModel({ value: [1, 2, 3] })).toStrictEqual({
+      value: "[1,2,3]"
     });
   });
 });

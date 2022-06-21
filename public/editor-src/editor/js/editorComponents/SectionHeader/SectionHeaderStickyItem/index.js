@@ -1,6 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import _ from "underscore";
+import { mergeDeep } from "timm";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import SectionHeaderStickyItemItems from "./Items";
@@ -37,9 +38,24 @@ export default class SectionHeaderStickyItem extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  static experimentalDynamicContent = true;
+
   mounted = false;
 
   collapsibleToolbarRef = React.createRef();
+
+  state = {
+    isDragging: false,
+    paddingPatch: null
+  };
+
+  getDBValue() {
+    if (this.state.paddingPatch) {
+      return mergeDeep(this.props.dbValue, this.state.paddingPatch);
+    } else {
+      return this.props.dbValue;
+    }
+  }
 
   componentDidMount() {
     this.mounted = true;
@@ -47,7 +63,9 @@ export default class SectionHeaderStickyItem extends EditorComponent {
 
   shouldComponentUpdate(nextProps) {
     return (
-      this.optionalSCU(nextProps) || this.shouldUpdateBecauseOfParent(nextProps)
+      this.optionalSCU(nextProps) ||
+      this.shouldUpdateBecauseOfParent(nextProps) ||
+      this.state.paddingPatch
     );
   }
 
@@ -75,7 +93,24 @@ export default class SectionHeaderStickyItem extends EditorComponent {
     this.collapsibleToolbarRef.current.open();
   };
 
-  handlePaddingResizerChange = patch => this.patchValue(patch);
+  onPaddingResizerStart = () => {
+    this.setState({ isDragging: true });
+  };
+
+  handlePaddingResizerChange = patch => {
+    if (this.state.isDragging) {
+      this.setState({ paddingPatch: patch });
+    } else {
+      this.patchValue(patch);
+    }
+  };
+
+  onPaddingResizerEnd = () => {
+    const paddingPatch = this.state.paddingPatch;
+    this.setState({ isDragging: false, paddingPatch: null }, () =>
+      this.handlePaddingResizerChange(paddingPatch)
+    );
+  };
 
   getMeta(v) {
     const { meta } = this.props;
@@ -147,7 +182,12 @@ export default class SectionHeaderStickyItem extends EditorComponent {
 
     return (
       <Background value={v} meta={meta}>
-        <PaddingResizer value={v} onChange={this.handlePaddingResizerChange}>
+        <PaddingResizer
+          value={v}
+          onStart={this.onPaddingResizerStart}
+          onChange={this.handlePaddingResizerChange}
+          onEnd={this.onPaddingResizerEnd}
+        >
           <SectionHeaderStickyItemItems {...itemsProps} />
         </PaddingResizer>
       </Background>

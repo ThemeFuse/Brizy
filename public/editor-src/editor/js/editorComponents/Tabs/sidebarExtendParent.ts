@@ -6,28 +6,41 @@ export const title = t("Tabs");
 export function getItems(): ToolbarItemType[] {
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
-      config: {
-        align: "start"
-      },
-      devices: "desktop",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       tabs: [
         {
-          id: "moreSettingsAdvanced",
-          label: t("Advanced"),
+          id: "styles",
+          title: t("Styling"),
+          label: t("Styling"),
           options: [
             {
-              id: "hoverTransition",
-              label: t("Hover Transition"),
-              devices: "desktop",
-              position: 100,
-              type: "slider-dev",
+              id: "settingsTabs",
+              type: "tabs-dev",
               config: {
-                min: 0,
-                max: 99,
-                units: [{ title: "ms", value: "ms" }]
-              }
+                align: "start"
+              },
+              devices: "desktop",
+              tabs: [
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  options: [
+                    {
+                      id: "hoverTransition",
+                      label: t("Hover Transition"),
+                      devices: "desktop",
+                      position: 100,
+                      type: "slider-dev",
+                      config: {
+                        min: 0,
+                        max: 99,
+                        units: [{ title: "ms", value: "ms" }]
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

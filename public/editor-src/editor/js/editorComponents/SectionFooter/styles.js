@@ -9,7 +9,8 @@ export function styleSection(v, vs, vd) {
         "cssStylePaddingRightLeftForEditor",
         "cssStyleSectionHeightStyle",
         "cssStyleDisplayFlex",
-        "cssStyleMargin"
+        "cssStyleMargin",
+        "cssStyleZIndex"
       ]
     },
     ".brz &&:hover > .brz-bg": {
@@ -70,7 +71,7 @@ export function styleSection(v, vs, vd) {
   };
 
   if (IS_EDITOR) {
-    styles[".brz &&:hover"].interval.push("cssStyleShowMembershipFlex");
+    styles[".brz &&:hover"].interval.push("cssStyleShowFlex");
 
     // Added offset for toolbar when uses marginTop in negative value
     styles[".brz &&:hover .brz-ed-collapsible"] = {

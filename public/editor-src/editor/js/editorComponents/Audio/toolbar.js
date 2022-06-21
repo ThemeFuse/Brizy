@@ -29,6 +29,7 @@ export function getItems({ v, device, context }) {
     {
       id: "toolbarCurrentElement",
       type: "popover-dev",
+      devices: "desktop",
       config: {
         icon: "nc-audio",
         title: t("Audio")
@@ -47,7 +48,6 @@ export function getItems({ v, device, context }) {
                   id: "url",
                   label: t("Link"),
                   type: "inputText-dev",
-                  devices: "desktop",
                   disabled: dvv("type") === "custom",
                   placeholder: t("SoundCloud Link"),
                   population: linkDC
@@ -55,7 +55,6 @@ export function getItems({ v, device, context }) {
                 toolbarElementSoundCloudStyle({
                   v,
                   device,
-                  devices: "desktop",
                   disabled: dvv("type") === "custom",
                   state: "normal"
                 }),
@@ -63,8 +62,61 @@ export function getItems({ v, device, context }) {
                   id: "autoPlay",
                   label: t("Auto Play"),
                   type: "switch-dev",
-                  devices: "desktop",
                   disabled: dvv("type") === "custom"
+                }
+              ]
+            },
+            {
+              id: "soundCloudAdvancedOptions",
+              label: t("Advanced"),
+              options: [
+                {
+                  id: "artWork",
+                  label: t("Artwork"),
+                  type: "switch-dev",
+                  disabled: v.type === "custom"
+                },
+                {
+                  id: "likeButton",
+                  label: t("Like Button"),
+                  type: "switch-dev",
+                  disabled: v.type === "custom"
+                },
+                {
+                  id: "buyButton",
+                  label: t("Buy Button"),
+                  type: "switch-dev",
+                  disabled: v.type === "custom"
+                },
+                {
+                  id: "downloadButton",
+                  label: t("Download Button"),
+                  type: "switch-dev",
+                  disabled: v.type === "custom"
+                },
+                {
+                  id: "shareButton",
+                  label: t("Share Button"),
+                  type: "switch-dev",
+                  disabled: v.type === "custom"
+                },
+                {
+                  id: "comments",
+                  label: t("Comments"),
+                  type: "switch-dev",
+                  disabled: v.type === "custom"
+                },
+                {
+                  id: "playCounts",
+                  label: t("Play Counts"),
+                  type: "switch-dev",
+                  disabled: v.type === "custom"
+                },
+                {
+                  id: "username",
+                  label: t("Username"),
+                  type: "switch-dev",
+                  disabled: v.type === "custom"
                 }
               ]
             }
@@ -152,6 +204,20 @@ export function getItems({ v, device, context }) {
                   states: [NORMAL, HOVER]
                 }
               ]
+            },
+            {
+              id: "tabControls",
+              label: t("Controls"),
+              options: [
+                {
+                  id: "controls",
+                  type: "colorPicker-dev",
+                  disabled: v.type === "custom",
+                  config: {
+                    opacity: false
+                  }
+                }
+              ]
             }
           ]
         }
@@ -188,11 +254,41 @@ export function getItems({ v, device, context }) {
           }
         },
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          devices: "desktop",
-          label: t("More Settings"),
-          icon: "nc-cog"
+          id: "grid",
+          type: "grid",
+          separator: true,
+          columns: [
+            {
+              id: "grid-settings",
+              width: 50,
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            },
+            {
+              id: "grid-effects",
+              width: 50,
+              options: [
+                {
+                  id: "effects",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "effects",
+                    text: t("Effects"),
+                    icon: "nc-flash"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }

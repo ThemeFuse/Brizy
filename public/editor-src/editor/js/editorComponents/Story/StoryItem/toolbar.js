@@ -165,6 +165,7 @@ export function getItems({ v, component, device, context }) {
     {
       id: "advancedSettings",
       type: "advancedSettings",
+      devices: "desktop",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],
       position: 110,

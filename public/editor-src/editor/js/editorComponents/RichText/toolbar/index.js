@@ -13,6 +13,7 @@ import {
 } from "visual/utils/toolbar";
 import { getDynamicContentChoices } from "visual/utils/options";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { checkTextIncludeTag } from "./utils/checkTextIncludeTag";
 
 const proEnabled = Boolean(Config.get("pro"));
 
@@ -72,6 +73,16 @@ const getItems = (v, onChange) => ({ device, component, context }) => {
 
   const dependencies = dependenciesOption(v, onChange);
 
+  const disableHeadingTags = (v, tag) => {
+    const { text, textPopulation } = v;
+
+    if (!textPopulation) {
+      return true;
+    }
+
+    return !checkTextIncludeTag(text, tag);
+  };
+
   return [
     {
       id: "toolbarFont",
@@ -86,35 +97,302 @@ const getItems = (v, onChange) => ({ device, component, context }) => {
       disabled: isPopulationBlock,
       options: [
         {
-          id: "gridTypography",
-          type: "grid",
-          columns: [
+          id: "tabsTypography",
+          type: "tabs-dev",
+          config: {
+            showSingle: v.textPopulation
+          },
+          tabs: [
             {
-              width: 95,
-              vAlign: "center",
+              id: "tabTypographyParagraph",
+              label: t("P"),
               options: [
                 {
-                  id: "typography",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: "desktop" === device
-                  },
-                  ...dependencies
+                  id: "gridTypographyParagraph",
+                  type: "grid",
+                  columns: [
+                    {
+                      width: 95,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "typography",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: "desktop" === device
+                          },
+                          ...dependencies
+                        }
+                      ]
+                    },
+                    {
+                      width: 5,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "text",
+                          type: "population-dev",
+                          config: {
+                            iconOnly: true,
+                            choices: richTextDC
+                          },
+                          devices: "desktop"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
             {
-              width: 5,
-              vAlign: "center",
+              id: "tabTypographyH1",
+              label: t("H1"),
               options: [
                 {
-                  id: "text",
-                  type: "population-dev",
-                  config: {
-                    iconOnly: true,
-                    choices: richTextDC
-                  },
-                  devices: "desktop"
+                  id: "gridTypographyH1",
+                  type: "grid",
+                  disabled: disableHeadingTags(v, "h1"),
+                  columns: [
+                    {
+                      width: 95,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "h1",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: "desktop" === device
+                          },
+                          ...dependencies
+                        }
+                      ]
+                    },
+                    {
+                      width: 5,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "text",
+                          type: "population-dev",
+                          config: {
+                            iconOnly: true,
+                            choices: richTextDC
+                          },
+                          devices: "desktop"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "tabTypographyH2",
+              label: t("H2"),
+              options: [
+                {
+                  id: "gridTypographyH2",
+                  type: "grid",
+                  disabled: disableHeadingTags(v, "h2"),
+                  columns: [
+                    {
+                      width: 95,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "h2",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: "desktop" === device
+                          },
+                          ...dependencies
+                        }
+                      ]
+                    },
+                    {
+                      width: 5,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "text",
+                          type: "population-dev",
+                          config: {
+                            iconOnly: true,
+                            choices: richTextDC
+                          },
+                          devices: "desktop"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "tabTypographyH3",
+              label: t("H3"),
+              options: [
+                {
+                  id: "gridTypographyH3",
+                  type: "grid",
+                  disabled: disableHeadingTags(v, "h3"),
+                  columns: [
+                    {
+                      width: 95,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "h3",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: "desktop" === device
+                          },
+                          ...dependencies
+                        }
+                      ]
+                    },
+                    {
+                      width: 5,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "text",
+                          type: "population-dev",
+                          config: {
+                            iconOnly: true,
+                            choices: richTextDC
+                          },
+                          devices: "desktop"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "tabTypographyH4",
+              label: t("H4"),
+              options: [
+                {
+                  id: "gridTypographyH4",
+                  type: "grid",
+                  disabled: disableHeadingTags(v, "h4"),
+                  columns: [
+                    {
+                      width: 95,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "h4",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: "desktop" === device
+                          },
+                          ...dependencies
+                        }
+                      ]
+                    },
+                    {
+                      width: 5,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "text",
+                          type: "population-dev",
+                          config: {
+                            iconOnly: true,
+                            choices: richTextDC
+                          },
+                          devices: "desktop"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "tabTypographyH5",
+              label: t("H5"),
+              options: [
+                {
+                  id: "gridTypographyH5",
+                  type: "grid",
+                  disabled: disableHeadingTags(v, "h5"),
+                  columns: [
+                    {
+                      width: 95,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "h5",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: "desktop" === device
+                          },
+                          ...dependencies
+                        }
+                      ]
+                    },
+                    {
+                      width: 5,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "text",
+                          type: "population-dev",
+                          config: {
+                            iconOnly: true,
+                            choices: richTextDC
+                          },
+                          devices: "desktop"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "tabTypographyH6",
+              label: t("H6"),
+              options: [
+                {
+                  id: "gridTypographyH6",
+                  type: "grid",
+                  disabled: disableHeadingTags(v, "h6"),
+                  columns: [
+                    {
+                      width: 95,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "h6",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: "desktop" === device
+                          },
+                          ...dependencies
+                        }
+                      ]
+                    },
+                    {
+                      width: 5,
+                      vAlign: "center",
+                      options: [
+                        {
+                          id: "text",
+                          type: "population-dev",
+                          config: {
+                            iconOnly: true,
+                            choices: richTextDC
+                          },
+                          devices: "desktop"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
@@ -500,6 +778,7 @@ const getItems = (v, onChange) => ({ device, component, context }) => {
       icon: "nc-cog",
       disabled: !v.textPopulation,
       title: t("Settings"),
+      devices: "desktop",
       position: 110
     },
     {
@@ -558,11 +837,43 @@ const getItems = (v, onChange) => ({ device, component, context }) => {
           value: v.tagName
         },
         {
-          id: "advancedSettings",
-          type: "advancedSettings",
-          devices: "desktop",
-          label: t("More Settings"),
-          icon: "nc-cog"
+          id: "grid",
+          type: "grid",
+          separator: true,
+          columns: [
+            {
+              id: "grid-settings",
+              width: 50,
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog",
+                    align: "center"
+                  }
+                }
+              ]
+            },
+            {
+              id: "grid-effects",
+              width: 50,
+              options: [
+                {
+                  id: "effects",
+                  type: "sidebarTabsButton-dev",
+                  config: {
+                    tabId: "effects",
+                    text: t("Effects"),
+                    icon: "nc-flash",
+                    align: "center"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }

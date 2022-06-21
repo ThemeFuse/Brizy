@@ -23,6 +23,7 @@ export interface Props {
   loading: boolean;
   children: ReactNode;
   addonAfter?: Item[];
+  disabled?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
@@ -70,9 +71,10 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
 };
 
 export const Controls: FC<Props> = props => {
-  const { loading, children, addonAfter, onClick } = props;
+  const { loading, children, addonAfter, disabled, onClick } = props;
   const className = classnames("brz-ed-fixed-bottom-panel__btn", {
-    "brz-ed-fixed-bottom-panel__btn-popover": addonAfter?.length
+    "brz-ed-fixed-bottom-panel__btn-popover": addonAfter?.length,
+    "brz-ed-fixed-bottom-panel__btn-disabled": disabled
   });
   const loadingClassName = classnames("brz-ed-animated--spin", {
     "brz-d-none": !loading

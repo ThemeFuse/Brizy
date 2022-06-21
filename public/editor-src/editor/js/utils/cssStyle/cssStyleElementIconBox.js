@@ -1,29 +1,18 @@
-import {
-  styleElementIconBoxIconPosition,
-  styleElementIconBoxMarginRight,
-  styleElementIconBoxMarginLeft
-} from "visual/utils/style2";
+import { defaultValueValue } from "visual/utils/onChange";
+import { styleElementIconBoxIconPosition } from "visual/utils/style2";
 
-export function cssStyleElementIconBoxFlexDirection({ v, device, state }) {
-  return `flex-direction:${styleElementIconBoxIconPosition({
-    v,
-    device,
-    state
-  })};`;
+export function cssStyleElementIconBoxFlexDirection({ v }) {
+  return `flex-direction:${styleElementIconBoxIconPosition({ v })};`;
 }
 
-export function cssStyleElementIconBoxMarginRight({ v, device, state }) {
-  return `margin-right:${styleElementIconBoxMarginRight({
-    v,
-    device,
-    state
-  })};`;
-}
+export function cssStyleElementIconBoxMargin({ v, device }) {
+  const dvv = key => defaultValueValue({ v, key, device });
+  const spacing = dvv("iconSpacing");
+  const position = dvv("iconPosition");
 
-export function cssStyleElementIconBoxMarginLeft({ v, device, state }) {
-  return `margin-left:${styleElementIconBoxMarginLeft({
-    v,
-    device,
-    state
-  })};`;
+  return position === "right"
+    ? `margin-left:${spacing}px; margin-right: auto;`
+    : position === "top"
+    ? `margin-bottom:${spacing}px; margin-right: auto; margin-left: auto;`
+    : `margin-left:auto; margin-right: ${spacing}px;`;
 }

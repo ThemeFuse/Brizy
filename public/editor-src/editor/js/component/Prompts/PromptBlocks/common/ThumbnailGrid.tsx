@@ -12,7 +12,7 @@ export interface Responsive {
 }
 
 export interface Data {
-  [k: string]: unknown;
+  type?: string;
   uid?: string;
 }
 
@@ -119,9 +119,10 @@ export default class ThumbnailGrid<T extends Data> extends Component<
 
     const columns = data
       .reduce((acc, thumbnailData, index) => {
+        const thumbnailType = thumbnailData.type ?? "block";
         const element: ReactElement = (
           <ThumbnailComponent
-            key={thumbnailData.uid || index}
+            key={`${index}-${thumbnailType}`}
             animation={true}
             showSync={showSync}
             showDownload={showDownload}

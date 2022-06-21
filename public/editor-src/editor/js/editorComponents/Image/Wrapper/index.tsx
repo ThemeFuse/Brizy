@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React from "react";
+import React, { useCallback } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import { clamp } from "visual/utils/math";
 import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
 
 import classnames from "classnames";
 import { css } from "visual/utils/cssStyle";
+import { showOriginalImage } from "../utils";
 import { styleWrapper } from "../styles";
 
 import useResizerPoints from "./useResizerPoints";
@@ -14,12 +15,24 @@ import { getSizeType, isGIF, isSVG } from "visual/editorComponents/Image/utils";
 import { DESKTOP } from "visual/utils/responsiveMode";
 
 const Image: React.FC<ImageProps> = props => {
-  const { v, vs, vd, _id, componentId, wrapperSizes, meta } = props;
+  const {
+    v,
+    vs,
+    vd,
+    _id,
+    componentId,
+    wrapperSizes,
+    meta,
+    onChange,
+    onStart,
+    onEnd
+  } = props;
 
   const { points, restrictions } = useResizerPoints(props);
 
   const classNameWrapper = classnames(
     "brz-ed-image__wrapper",
+    { "brz-img__original": showOriginalImage(v) },
     css(
       // hard to explain, but because styles are generated from props in this case
       // we can't rely on the usual way of using css(),
@@ -27,8 +40,18 @@ const Image: React.FC<ImageProps> = props => {
       // `${componentId}-wrapper`,
       `${componentId}-${_id}-wrapper`,
       `${_id}-wrapper`,
-      styleWrapper(v, vs, vd, wrapperSizes) as Styles
+      styleWrapper(v, vs, vd, {
+        ...wrapperSizes,
+        showOriginalImage: showOriginalImage(v)
+      }) as Styles
     )
+  );
+
+  const handleOnResize = useCallback(
+    (patch: Patch) => {
+      onChange(resizerTransformPatch(patch, v));
+    },
+    [onChange, v]
   );
 
   return (
@@ -38,9 +61,9 @@ const Image: React.FC<ImageProps> = props => {
       points={points}
       meta={meta}
       value={resizerTransformValue(v, meta)}
-      onChange={(patch: Patch): void =>
-        props.onChange(resizerTransformPatch(patch, v))
-      }
+      onChange={handleOnResize}
+      onStart={onStart}
+      onEnd={onEnd}
     >
       <div className={classNameWrapper}>{props.children}</div>
     </BoxResizer>

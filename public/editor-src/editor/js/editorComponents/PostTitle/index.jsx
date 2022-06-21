@@ -8,12 +8,14 @@ import Toolbar from "visual/component/Toolbar";
 import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
 import defaultValue from "./defaultValue.json";
-import { getStore } from "visual/redux/store";
 import { blocksDataSelector } from "visual/redux/selectors";
 import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { getStore } from "visual/redux/store";
 import { Wrapper } from "../tools/Wrapper";
+import { getTagNameFromFontStyle } from "visual/editorComponents/tools/HtmlTag";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 
 export default class PostTitle extends EditorComponent {
   static get componentId() {
@@ -25,30 +27,19 @@ export default class PostTitle extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  renderPopups(v) {
-    const { popups, linkType, linkPopup } = v;
+  patchValue(patch, meta) {
+    const { fontStyle } = patch;
 
-    if (popups.length > 0 && linkType !== "popup" && linkPopup !== "") {
-      return null;
-    }
+    super.patchValue(
+      {
+        ...patch,
+        ...(fontStyle ? getTagNameFromFontStyle(fontStyle) : {})
+      },
+      meta
+    );
+  }
 
-    const normalizePopups = popups.reduce((acc, popup) => {
-      let itemData = popup;
-
-      if (itemData.type === "GlobalBlock") {
-        // TODO: some kind of error handling
-        itemData = blocksDataSelector(getStore().getState())[
-          itemData.value._id
-        ];
-      }
-
-      return itemData ? [...acc, itemData] : acc;
-    }, []);
-
-    if (normalizePopups.length === 0) {
-      return null;
-    }
-
+  renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: itemData => {
@@ -59,9 +50,8 @@ export default class PostTitle extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const blockData = blocksDataSelector(getStore().getState())[
-            itemData.value._id
-          ];
+          const globalBlocks = blocksDataSelector(getStore().getState());
+          const blockData = globalBlocks[itemData.value._id];
 
           popupId = blockData.value.popupId;
         }
@@ -147,7 +137,8 @@ export default class PostTitle extends EditorComponent {
             </Wrapper>
           </CustomCSS>
         </Toolbar>
-        {this.renderPopups(v)}
+        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+          this.renderPopups()}
       </>
     );
   }

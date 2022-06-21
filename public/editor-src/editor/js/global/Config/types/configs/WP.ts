@@ -12,7 +12,6 @@ import { Role } from "visual/utils/membership";
 export interface Prop {
   [k: string]: unknown;
 
-  page?: string;
   templates: { id: string; title: string }[];
   ruleMatches: Rule[];
   postType: string;
@@ -34,6 +33,7 @@ export interface Prop {
   };
 
   availableRoles: Role[];
+  page: string;
 }
 
 export interface WP extends ConfigCommon {
@@ -48,5 +48,5 @@ export interface WP extends ConfigCommon {
   wp: Prop;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// @ts-expect-error: unused variable
 export const isWp = (config: Config): config is WP => TARGET === "WP";

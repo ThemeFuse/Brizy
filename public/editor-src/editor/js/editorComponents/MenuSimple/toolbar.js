@@ -104,6 +104,7 @@ const getItems = menuList => ({ v, device }) => {
       id: "advancedSettings",
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
+      devices: "desktop",
       icon: "nc-cog",
       position: 150
     }

@@ -1,58 +1,65 @@
+import { ReactNode } from "react";
 import { MValue } from "visual/utils/value";
-import { OptionName, OptionTypes } from "visual/component/Options/types";
-import { ComponentProps, ReactNode } from "react";
+import { OptionName } from "visual/component/Options/types";
 import { Literal } from "visual/utils/types/Literal";
 import { ElementModel } from "visual/component/Elements/Types";
 import {
-  WithClassName,
-  WithHelper,
-  WithId,
-  WithLabel
-} from "visual/utils/options/attributes";
+  GenericToolbarItemType,
+  ToolbarItemType
+} from "visual/editorComponents/ToolbarItemType";
+import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 
 export type OnChange<T> = (v: T) => void;
 
 export type SimpleValue<T> = { value: T };
 
-export type GetModel<M> = (get: (k: string) => MValue<Literal>) => Partial<M>;
+export type FromElementModelGetter = (k: string) => MValue<Literal>;
 
-export type GetElementModel<M> = (
-  value: M,
-  get: (k: string) => string
-) => ElementModel;
+export const callGetter = (s: string) => (
+  g: FromElementModelGetter
+): MValue<Literal> => g(s);
 
-export type Props<Model> = {
+export type FromElementModel<M> = (get: FromElementModelGetter) => Partial<M>;
+
+export type ToElementModel<M> = (value: M) => ElementModel;
+
+export type Props<Model, Patch = Model> = {
   value: Model;
-  onChange: OnChange<ElementModel>;
-  toolbar?: object;
+  onChange: OnChange<Patch>;
+  toolbar?: ToolbarItemsInstance;
   label?: ReactNode;
   description?: ReactNode;
 };
 
-export type OptionType<M extends Patch, Patch = M> = {
-  getModel: GetModel<M>;
+export type OptionType<M, Patch = M> = {
+  fromElementModel: FromElementModel<M>;
   defaultValue: M;
-  getElementModel: GetElementModel<Patch>;
+  toElementModel: ToElementModel<Patch>;
 };
 
-export interface GenericOptionDefinition<K extends OptionName>
-  extends WithId<string>,
-    WithLabel,
-    WithHelper,
-    WithClassName {
-  type: K;
-  value: ComponentProps<OptionTypes[K]>["value"];
-  onChange: ComponentProps<OptionTypes[K]>["onChange"];
-}
+export interface SelfFilter<Type extends OptionName> {
+  /**
+   * @internal
+   */
+  filter: (
+    f: (t: ToolbarItemType) => ToolbarItemType | undefined,
+    t: GenericToolbarItemType<Type>
+  ) => GenericToolbarItemType<Type> | undefined;
 
-type OptionsDefinitions = { [P in OptionName]: GenericOptionDefinition<P> };
+  /**
+   * @internal
+   */
+  map: (
+    f: (t: ToolbarItemType) => ToolbarItemType,
+    t: GenericToolbarItemType<Type>
+  ) => GenericToolbarItemType<Type>;
 
-export type OptionDefinition = OptionsDefinitions[keyof OptionsDefinitions];
-
-export type ShouldBeFiltered<K extends OptionName> = (
-  props: GenericOptionDefinition<K>
-) => boolean;
-
-export interface SelfFilter<P> {
-  shouldOptionBeFiltered: (props: P) => boolean;
+  /**
+   * @internal
+   */
+  reduce: <T>(
+    fn: (acc: T, item: ToolbarItemType) => T,
+    t0: T,
+    item: GenericToolbarItemType<Type>
+  ) => T;
 }

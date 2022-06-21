@@ -7,7 +7,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import Portal from "visual/component/Portal";
 import Toolbar from "visual/component/Toolbar";
-import ThemeIcon from "visual/component/ThemeIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Link from "visual/component/Link";
 import ClickOutside from "visual/component/ClickOutside";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
@@ -27,8 +27,8 @@ import defaultValue from "./defaultValue.json";
 import { calculateMeta } from "./meta";
 import { DraggableOverlay } from "visual/component/DraggableOverlay";
 import { attachRef } from "visual/utils/react";
-import { getParentMegaMenuUid } from "visual/editorComponents/Menu/utils";
-import { IS_WP } from "visual/utils/env";
+import { getParentMegaMenuUid } from "../utils.common";
+import { IS_CLOUD } from "visual/utils/env";
 import { uuid } from "visual/utils/uuid";
 
 const IS_PRO = Config.get("pro");
@@ -213,12 +213,14 @@ class MenuItem extends EditorComponent {
     let type = "";
     let href = "";
 
-    if (trimUrl.charAt(0) === "#") {
-      type = "anchor";
-      href = url.replace("#", "");
-    } else {
-      type = "external";
-      href = trimUrl;
+    if (IS_PREVIEW) {
+      if (trimUrl.charAt(0) === "#") {
+        type = "anchor";
+        href = url.replace("#", "");
+      } else {
+        type = "external";
+        href = trimUrl;
+      }
     }
 
     let props = {
@@ -437,30 +439,21 @@ class MenuItem extends EditorComponent {
     const className = styleClassName(v, this.state);
 
     if (IS_PREVIEW) {
-      if (IS_WP) {
-        const placeholderUid = uuid(8);
-        return (
-          <>
-            {IS_PRO &&
-              `{{ nav_item_${placeholderUid} menuId='${menuSelected}' itemId='${v.id}' }}`}
-            <li className={className} data-menu-item-id={v.id}>
-              {this.renderLink(v, vs, vd, content)}
-              {v.megaMenu === "off"
-                ? this.renderDropDown(v, vs, vd)
-                : this.renderMegaMenu(v, vs, vd)}
-            </li>
-            {IS_PRO && `{{ end_nav_item_${placeholderUid} }}`}
-          </>
-        );
-      }
+      const placeholderItemId = IS_CLOUD ? v.itemId : v.id;
+      const placeholderUid = uuid(8);
 
       return (
-        <li className={className}>
-          {this.renderLink(v, vs, vd, content)}
-          {v.megaMenu === "off"
-            ? this.renderDropDown(v, vs, vd)
-            : this.renderMegaMenu(v, vs, vd)}
-        </li>
+        <>
+          {IS_PRO &&
+            `{{ nav_item_${placeholderUid} menuId='${menuSelected}' itemId='${placeholderItemId}' }}`}
+          <li className={className} data-menu-item-id={v.id}>
+            {this.renderLink(v, vs, vd, content)}
+            {v.megaMenu === "off"
+              ? this.renderDropDown(v, vs, vd)
+              : this.renderMegaMenu(v, vs, vd)}
+          </li>
+          {IS_PRO && `{{ end_nav_item_${placeholderUid} }}`}
+        </>
       );
     }
 
@@ -474,6 +467,7 @@ class MenuItem extends EditorComponent {
       ".brz-ed-sidebar__right",
       ".brz-ed-tooltip__content-portal",
       ".brz-ed-fixed",
+      ".brz-portal-forms__select",
       this.insideMegaMenu,
       ".react-contexify",
       ...(TARGET === "WP"
@@ -549,31 +543,21 @@ class MenuItem extends EditorComponent {
 
     if (IS_PREVIEW) {
       const className = styleMmMenuClassName(v);
-
-      if (IS_WP) {
-        const placeholderUid = uuid(8);
-        return (
-          <>
-            {IS_PRO &&
-              `{{ nav_item_${placeholderUid} menuId='${menuSelected}' itemId='${v.id}' }}`}
-            <li className={className} data-menu-item-id={v.id}>
-              {this.renderLink(v, vs, vd, content)}
-              {isDropDown
-                ? this.renderDropDown(v, vs, vd)
-                : this.renderMegaMenu(v, vs, vd)}
-            </li>
-            {IS_PRO && `{{ end_nav_item_${placeholderUid} }}`}
-          </>
-        );
-      }
+      const placeholderItemId = IS_CLOUD ? v.itemId : v.id;
+      const placeholderUid = uuid(8);
 
       return (
-        <li className={className}>
-          {this.renderLink(v, vs, vd, content)}
-          {isDropDown
-            ? this.renderDropDown(v, vs, vd)
-            : this.renderMegaMenu(v, vs, vd)}
-        </li>
+        <>
+          {IS_PRO &&
+            `{{ nav_item_${placeholderUid} menuId='${menuSelected}' itemId='${placeholderItemId}' }}`}
+          <li className={className} data-menu-item-id={v.id}>
+            {this.renderLink(v, vs, vd, content)}
+            {isDropDown
+              ? this.renderDropDown(v, vs, vd)
+              : this.renderMegaMenu(v, vs, vd)}
+          </li>
+          {IS_PRO && `{{ end_nav_item_${placeholderUid} }}`}
+        </>
       );
     }
 

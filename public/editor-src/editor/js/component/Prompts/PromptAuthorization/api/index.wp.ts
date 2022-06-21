@@ -2,8 +2,9 @@ import Config from "visual/global/Config";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
 import { request2 } from "visual/utils/api";
 import { SignIn, SignUp } from "./types";
+import { ResponseWithBody } from "visual/component/Prompts/common/utils/Request";
 
-export const signIn = (data: SignIn): Promise<Response> => {
+export const signIn = (data: SignIn): Promise<ResponseWithBody<unknown>> => {
   const { hash, url, cloudSignIn } = Config.get("wp").api;
   const version = Config.get("editorVersion");
   const urls = makeUrl(url, {
@@ -23,7 +24,7 @@ export const signIn = (data: SignIn): Promise<Response> => {
     .then(res => res);
 };
 
-export const signUp = (data: SignUp): Promise<Response> => {
+export const signUp = (data: SignUp): Promise<ResponseWithBody<unknown>> => {
   const { hash, url, cloudSignUp } = Config.get("wp").api;
   const version = Config.get("editorVersion");
   const urls = makeUrl(url, {
@@ -43,7 +44,9 @@ export const signUp = (data: SignUp): Promise<Response> => {
     .then(res => res);
 };
 
-export const recoveryEmail = (email: string): Promise<Response> => {
+export const recoveryEmail = (
+  email: string
+): Promise<ResponseWithBody<unknown>> => {
   const { hash, url, cloudResetPassword } = Config.get("wp").api;
   const version = Config.get("editorVersion");
   const urls = makeUrl(url, {
@@ -63,7 +66,7 @@ export const recoveryEmail = (email: string): Promise<Response> => {
     .then(res => res);
 };
 
-export const logout = (): Promise<Response> => {
+export const logout = (): Promise<ResponseWithBody<unknown>> => {
   const { hash, url, cloudSignOut } = Config.get("wp").api;
   const version = Config.get("editorVersion");
   const urls = makeUrl(url, {
@@ -82,7 +85,7 @@ export const logout = (): Promise<Response> => {
     .then(res => res);
 };
 
-export const sync = (): Promise<Response> => {
+export const sync = (): Promise<ResponseWithBody<unknown>> => {
   const { hash, url, cloudSync } = Config.get("wp").api;
   const version = Config.get("editorVersion");
   const urls = makeUrl(url, {
@@ -98,7 +101,7 @@ export const sync = (): Promise<Response> => {
         "Content-Type": "application/json; charset=utf-8"
       }
     })
-      .then(parseJSON)
+      .then(r => parseJSON<{ synchronized: number }>(r))
       .then(r => {
         const { status, data } = r;
 
@@ -120,7 +123,7 @@ export const sync = (): Promise<Response> => {
   });
 };
 
-export const checkCompatibility = (): Promise<Response> => {
+export const checkCompatibility = (): Promise<ResponseWithBody<unknown>> => {
   const { hash, url, cloudSyncAllowed } = Config.get("wp").api;
   const version = Config.get("editorVersion");
   const urls = makeUrl(url, { hash, version, action: cloudSyncAllowed });

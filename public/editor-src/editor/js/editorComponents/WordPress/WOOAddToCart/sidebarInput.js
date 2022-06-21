@@ -1,32 +1,41 @@
 import { t } from "visual/utils/i18n";
-import { toolbarBorderRadius } from "visual/utils/toolbar";
 export const title = t("Add To Cart Input");
 
-export function getItems({ v, device }) {
+export function getItems() {
   return [
     {
-      id: "settingsTabs",
-      type: "tabs-dev",
-      config: {
-        align: "start"
-      },
-      devices: "desktop",
+      id: "sidebarTabs",
+      type: "sidebarTabs-dev",
       tabs: [
         {
-          id: "settingsStyling",
+          id: "styles",
+          title: t("Styling"),
           label: t("Styling"),
-          icon: "nc-styling",
           options: [
-            toolbarBorderRadius({
-              v,
-              device,
-              prefix: "input",
-              state: "normal",
+            {
+              id: "settingsTabs",
+              type: "tabs-dev",
+              config: {
+                align: "start"
+              },
               devices: "desktop",
-              position: 70,
-              onChangeGrouped: ["onChangeBorderRadiusGrouped"],
-              onChangeUngrouped: ["onChangeBorderRadiusUngrouped"]
-            })
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Styling"),
+                  icon: "nc-styling",
+                  options: [
+                    {
+                      id: "inputBorder",
+                      type: "corners-dev",
+                      label: t("Corner"),
+                      devices: "desktop",
+                      position: 70
+                    }
+                  ]
+                }
+              ]
+            }
           ]
         }
       ]

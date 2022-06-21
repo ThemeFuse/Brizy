@@ -17,16 +17,17 @@ import {
   Value
 } from "./types/Value";
 import {
-  optional,
   parseStrict,
   readWithParser
 } from "visual/utils/reader/readWithParser";
-import { mPipe } from "visual/utils/fp";
-import { MValue } from "visual/utils/value";
+import { mPipe, pipe } from "visual/utils/fp";
+import { MValue, onNullish } from "visual/utils/value";
 import { Literal } from "visual/utils/types/Literal";
-import { GetElementModel, GetModel } from "visual/component/Options/Type";
+import {
+  ToElementModel,
+  FromElementModel
+} from "visual/component/Options/Type";
 import { Value as NV } from "visual/component/Controls/NumberUnit/types";
-import { Props as SP } from "visual/component/Controls/Spacing";
 import { prop } from "visual/utils/object/get";
 import { Edge } from "visual/component/Controls/Spacing/types";
 import { Setter } from "visual/utils/model";
@@ -35,66 +36,119 @@ import * as Margin from "visual/component/Options/types/dev/Margin/utils";
 type Get = (k: string) => MValue<Literal>;
 const call = (k: string) => (get: Get): MValue<Literal> => get(k);
 
-export const fromElementModel: GetModel<Value> = parseStrict<
+export const fromElementModel: FromElementModel<Value> = parseStrict<
   Get,
-  Partial<Value>
+  Value
 >({
-  type: optional(mPipe(call("type"), Str.read, Type.fromString)),
-  value: optional(mPipe(call("value"), Num.read, Positive.fromNumber)),
-  tempValue: optional(mPipe(call("tempValue"), Num.read, Positive.fromNumber)),
-  unit: optional(mPipe(call("suffix"), Str.read, Unit.fromString)),
-  tempUnit: optional(mPipe(call("tempSuffix"), Str.read, Unit.fromString)),
-  top: optional(mPipe(call("top"), Num.read, Positive.fromNumber)),
-  tempTop: optional(mPipe(call("tempTop"), Num.read, Positive.fromNumber)),
-  topUnit: optional(mPipe(call("topSuffix"), Str.read, Unit.fromString)),
-  tempTopUnit: optional(
-    mPipe(call("tempTopSuffix"), Str.read, Unit.fromString)
+  type: pipe(
+    mPipe(call("type"), Str.read, Type.fromString),
+    onNullish("grouped" as Type.Type)
   ),
-  right: optional(mPipe(call("right"), Num.read, Positive.fromNumber)),
-  tempRight: optional(mPipe(call("tempRight"), Num.read, Positive.fromNumber)),
-  rightUnit: optional(mPipe(call("rightSuffix"), Str.read, Unit.fromString)),
-  tempRightUnit: optional(
-    mPipe(call("tempRightSuffix"), Str.read, Unit.fromString)
+  value: pipe(
+    mPipe(call("value"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
   ),
-  bottom: optional(mPipe(call("bottom"), Num.read, Positive.fromNumber)),
-  tempBottom: optional(
-    mPipe(call("tempBottom"), Num.read, Positive.fromNumber)
+  tempValue: pipe(
+    mPipe(call("tempValue"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
   ),
-  bottomUnit: optional(mPipe(call("bottomSuffix"), Str.read, Unit.fromString)),
-  tempBottomUnit: optional(
-    mPipe(call("tempBottomSuffix"), Str.read, Unit.fromString)
+  unit: pipe(
+    mPipe(call("suffix"), Str.read, Unit.fromString),
+    onNullish("px" as Unit.SpacingUnit)
   ),
-  left: optional(mPipe(call("left"), Num.read, Positive.fromNumber)),
-  tempLeft: optional(mPipe(call("tempLeft"), Num.read, Positive.fromNumber)),
-  leftUnit: optional(mPipe(call("leftSuffix"), Str.read, Unit.fromString)),
-  tempLeftUnit: optional(
-    mPipe(call("tempLeftSuffix"), Str.read, Unit.fromString)
+  tempUnit: pipe(
+    mPipe(call("tempSuffix"), Str.read, Unit.fromString),
+    onNullish("px" as Unit.SpacingUnit)
+  ),
+  top: pipe(
+    mPipe(call("top"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
+  ),
+  tempTop: pipe(
+    mPipe(call("tempTop"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
+  ),
+  topUnit: pipe(
+    mPipe(call("topSuffix"), Str.read, Unit.fromString),
+    onNullish("px" as Unit.SpacingUnit)
+  ),
+  tempTopUnit: pipe(
+    mPipe(call("tempTopSuffix"), Str.read, Unit.fromString),
+    onNullish("px" as Unit.SpacingUnit)
+  ),
+  right: pipe(
+    mPipe(call("right"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
+  ),
+  tempRight: pipe(
+    mPipe(call("tempRight"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
+  ),
+  rightUnit: pipe(
+    mPipe(call("rightSuffix"), Str.read, Unit.fromString),
+    onNullish("px" as Unit.SpacingUnit)
+  ),
+  tempRightUnit: pipe(
+    mPipe(call("tempRightSuffix"), Str.read, Unit.fromString),
+    onNullish("px" as Unit.SpacingUnit)
+  ),
+  bottom: pipe(
+    mPipe(call("bottom"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
+  ),
+  tempBottom: pipe(
+    mPipe(call("tempBottom"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
+  ),
+  bottomUnit: pipe(
+    mPipe(call("bottomSuffix"), Str.read, Unit.fromString),
+    onNullish("px" as Unit.SpacingUnit)
+  ),
+  tempBottomUnit: pipe(
+    mPipe(call("tempBottomSuffix"), Str.read, Unit.fromString),
+    onNullish("px" as Unit.SpacingUnit)
+  ),
+  left: pipe(
+    mPipe(call("left"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
+  ),
+  tempLeft: pipe(
+    mPipe(call("tempLeft"), Num.read, Positive.fromNumber),
+    onNullish(Positive.Zero)
+  ),
+  leftUnit: pipe(
+    mPipe(call("leftSuffix"), Str.read, Unit.fromString),
+    onNullish("px" as Unit.SpacingUnit)
+  ),
+  tempLeftUnit: pipe(
+    mPipe(call("tempLeftSuffix"), Str.read, Unit.fromString),
+    onNullish("px" as Unit.SpacingUnit)
   )
 });
 
-export const toElementModel: GetElementModel<Value> = (v, get) => {
+export const toElementModel: ToElementModel<Value> = v => {
   return {
-    [get("type")]: v.type,
-    [get("value")]: v.value,
-    [get("tempValue")]: v.tempValue,
-    [get("suffix")]: v.unit,
-    [get("tempSuffix")]: v.tempUnit,
-    [get("top")]: v.top,
-    [get("tempTop")]: v.tempTop,
-    [get("topSuffix")]: v.topUnit,
-    [get("tempTopSuffix")]: v.tempTopUnit,
-    [get("right")]: v.right,
-    [get("tempRight")]: v.tempRight,
-    [get("rightSuffix")]: v.rightUnit,
-    [get("tempRightSuffix")]: v.tempRightUnit,
-    [get("bottom")]: v.bottom,
-    [get("tempBottom")]: v.tempBottom,
-    [get("bottomSuffix")]: v.bottomUnit,
-    [get("tempBottomSuffix")]: v.tempBottomUnit,
-    [get("left")]: v.left,
-    [get("tempLeft")]: v.tempLeft,
-    [get("leftSuffix")]: v.leftUnit,
-    [get("tempLeftSuffix")]: v.tempLeftUnit
+    type: v.type,
+    value: v.value,
+    tempValue: v.tempValue,
+    suffix: v.unit,
+    tempSuffix: v.tempUnit,
+    top: v.top,
+    tempTop: v.tempTop,
+    topSuffix: v.topUnit,
+    tempTopSuffix: v.tempTopUnit,
+    right: v.right,
+    tempRight: v.tempRight,
+    rightSuffix: v.rightUnit,
+    tempRightSuffix: v.tempRightUnit,
+    bottom: v.bottom,
+    tempBottom: v.tempBottom,
+    bottomSuffix: v.bottomUnit,
+    tempBottomSuffix: v.tempBottomUnit,
+    left: v.left,
+    tempLeft: v.tempLeft,
+    leftSuffix: v.leftUnit,
+    tempLeftSuffix: v.tempLeftUnit
   };
 };
 
@@ -129,17 +183,6 @@ export const fromNumberSlider = readWithParser<
   number: mPipe(prop("number"), Positive.fromNumber),
   unit: v => v.unit
 });
-
-export const units: SP<Unit.SpacingUnit>["units"] = [
-  {
-    value: "px",
-    title: "px"
-  },
-  {
-    value: "%",
-    title: "%"
-  }
-];
 
 export const getIcon = Margin.getIcon;
 
