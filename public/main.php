@@ -1,4 +1,6 @@
-<?php use BrizyMerge\AssetAggregator;
+<?php
+
+use BrizyMerge\AssetAggregator;
 use BrizyMerge\Assets\Asset;
 use BrizyMerge\Assets\AssetGroup;
 

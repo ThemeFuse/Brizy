@@ -92,3 +92,39 @@ class Brizy_Config {
 		return __bt( 'support-url', apply_filters( 'brizy_support_url', self::SUPPORT_URL ) );
 	}
 }
+
+
+/*
+ * // input
+{{ filter_option
+	type="input"
+	dataSource="manual"
+}}
+
+// range
+{{ filter_option
+	type="range"
+	dataSource="manual"
+}}
+
+// radio
+{{ filter_option
+	type="radio"
+	dataSource="manual|query"
+	matchQuery="entity=taxonomy&entityName=category&valueMatch[property]=name&valueMatch[value]=string&valueMatch[operation]=in|like|<|>|<=|>=|<>|="
+}}
+
+// checkboxes posts by property match
+{{ filter_option
+	type="checkbox"
+	dataSource="manual|query"
+	matchQuery="entity=post&entityName=page&orderBy=name&order=ASC&valueMatch[property]=post_title&valueMatch[value]=Page&valueMatch[operation]=in|like|<|>|<=|>=|<>|="
+}}
+
+// checkboxes posts by meta match
+{{ filter_option
+	type="checkbox"
+	dataSource="manual|query"
+	matchQuery="entity=post&entityName=page&valueMatch[meta]=metaName&valueMatch[value]=Page&valueMatch[operation]=in|like|<|>|<=|>=|<>|="
+}}
+*/

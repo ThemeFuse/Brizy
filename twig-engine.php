@@ -70,6 +70,9 @@ class Brizy_TwigEngine {
 			$this->environment->addFunction( new \Twig\TwigFunction( 'dump', function ( $value ) {
 				var_dump( $value );
 			} ) );
+			$this->environment->addFunction( new \Twig\TwigFunction( 'print_r', function ( $value ) {
+                print_r( $value );
+			} ) );
 
 			$this->environment->addFunction( new \Twig\TwigFunction( 'get_pagenum_link', function ( $value ) {
 				return get_pagenum_link( $value, false );

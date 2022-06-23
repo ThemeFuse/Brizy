@@ -325,10 +325,13 @@ class Brizy_Editor {
 	 */
 	private function loadEditorApi( $post, $user ) {
 		try {
+			new Brizy_Editor_Filters_Api(  );
+
 			if ( Brizy_Editor_User::is_user_allowed() ) {
 				new Brizy_Editor_RestExtend();
 				new Brizy_Editor_API( $post );
 				new Brizy_Editor_BlockScreenshotApi( $post );
+
 				Brizy_Editor_Accounts_Api::_init();
 			}
 
