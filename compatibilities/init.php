@@ -26,7 +26,7 @@ class Brizy_Compatibilities_Init {
 		}
 
 		if ( apply_filters( 'wpml_setting', false, 'setup_complete' ) ) {
-			new Brizy_Compatibilities_WPML();
+			new Brizy_Compatibilities_Wpml_Wpml();
 		}
 
 		if ( function_exists( 'fvm_cachepath' ) ) {

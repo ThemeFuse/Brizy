@@ -3,33 +3,39 @@
 /**
  * Compatibility with WPML
  */
-class Brizy_Compatibilities_WPML {
+class Brizy_Compatibilities_Wpml_Wpml {
+
+	const KIND = 'Brizy';
 
 	public function __construct() {
-		add_action( 'init',                              [ $this, 'init' ] );
-		add_action( 'wp_insert_post',                    [ $this, 'insertNewPost' ], - 10000, 3 );
-		add_action( 'wp_insert_post',                    [ $this, 'duplicatePosts' ], - 10000, 3 );
-		add_action( 'pre_get_posts',                     [ $this, 'pre_get_posts' ], 11 );
-		add_action( 'wp_ajax_wpml-ls-save-settings',     [ $this, 'save_settings' ] );
-		add_action( 'wp_ajax_icl_msync_confirm',         [ $this, 'syncMenus' ] );
-		add_action( 'brizy_create_editor_config_before', [ $this, 'rmMenusDuplicate' ] );
-		add_filter( 'brizy_content',                     [ $this, 'brizyContent' ] );
-		//add_filter( 'wpml_pb_should_body_be_translated', [ $this, 'remove_body' ], PHP_INT_MAX, 2 );
-		add_action( 'wpml_pro_translation_completed',    [ $this, 'save_post' ], 10, 3 );
-		add_filter( 'wpml_document_view_item_link',      '__return_empty_string' );
-		add_filter( 'wpml_document_edit_item_link',      '__return_empty_string' );
-		add_action( 'brizy_get_posts_rules_args',        [ $this, 'changeSuppressFilter' ] );
-		add_action( 'brizy_get_posts_current_template',  [ $this, 'changeSuppressFilter' ] );
-		add_action( 'brizy_get_posts_global_popups',     [ $this, 'changeSuppressFilter' ] );
-		add_action( 'brizy_get_posts_saved_popups',      [ $this, 'changeSuppressFilter' ] );
-//		add_filter( 'wpml_decode_custom_field',          [ $this, 'decode_custom_field' ], 10, 2 );
-//		add_filter( 'wpml_encode_custom_field',          [ $this, 'encode_custom_field' ], 10, 2 );
-		add_filter( 'wpml_basket_base64_item',           '__return_false' );
-		add_filter( 'icl_job_elements',                  [ $this, 'icl_job_elements' ], 10, 2 );
+
+		add_filter( 'brizy_content',                                     [ $this, 'brizyContent' ] );
+		add_action( 'brizy_get_posts_rules_args',                        [ $this, 'changeSuppressFilter' ] );
+		add_action( 'brizy_get_posts_current_template',                  [ $this, 'changeSuppressFilter' ] );
+		add_action( 'brizy_get_posts_global_popups',                     [ $this, 'changeSuppressFilter' ] );
+		add_action( 'brizy_get_posts_saved_popups',                      [ $this, 'changeSuppressFilter' ] );
+		add_action( 'brizy_create_editor_config_before',                 [ $this, 'rmMenusDuplicate' ] );
+
+		add_action( 'init',                                              [ $this, 'init' ] );
+		add_action( 'wp_insert_post',                                    [ $this, 'insertNewPost' ], - 10000, 3 );
+		add_action( 'wp_insert_post',                                    [ $this, 'duplicatePosts' ], - 10000, 3 );
+		add_action( 'pre_get_posts',                                     [ $this, 'pre_get_posts' ], 11 );
+		add_action( 'wp_ajax_wpml-ls-save-settings',                     [ $this, 'save_settings' ] );
+		add_action( 'wp_ajax_icl_msync_confirm',                         [ $this, 'syncMenus' ] );
+
+		add_action( 'wpml_pro_translation_completed',                    [ $this, 'save_post' ], 10, 3 );
+		add_filter( 'wpml_document_view_item_link',                      '__return_empty_string' );
+		add_filter( 'wpml_document_edit_item_link',                      '__return_empty_string' );
+
+        add_filter( 'wpml_pb_should_body_be_translated',                 [ $this, 'remove_body' ], PHP_INT_MAX, 2 );
+		add_filter( 'wpml_page_builder_support_required',                [ $this, 'declareSupport' ] );
+		add_filter( 'wpml_pb_is_editing_translation_with_native_editor', [ $this, 'isBuilder' ], 10, 2 );
+		add_action( 'wpml_page_builder_register_strings',                [ 'Brizy_Compatibilities_Wpml_RegisterStrings', 'getInstance' ], 10, 2 );
+		add_action( 'wpml_page_builder_string_translated',               [ 'Brizy_Compatibilities_Wpml_ApplyStrings', 'getInstance' ], 10, 5 );
 	}
 
 	public function init() {
-		if ( isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) || isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
+		if ( Brizy_Public_Main::is_editing() ) {
 			add_filter( 'wpml_ls_html', '__return_empty_string' );
 		}
 	}
@@ -39,7 +45,6 @@ class Brizy_Compatibilities_WPML {
 	 *
 	 * @param $postId
 	 * @param $post
-	 *
 	 */
 	public function duplicatePosts( $postId, $post ) {
 		global $wpml_post_translations;
@@ -208,78 +213,6 @@ class Brizy_Compatibilities_WPML {
 	}
 
 	/**
-	 * Decodes editor_data to send for translation.
-	 *
-	 * @param array  $value The value of the custom field.
-	 * @param string $key   The key of the custom field.
-	 * @return array
-	 */
-	public function decode_custom_field( $value, $key ) {
-		// We only need to handle this for 'brizy' custom field.
-		if ( 'brizy' === $key ) {
-			// WPML calls this filter twice, so we need to check if it was already decoded.
-			if ( isset( $value['brizy-post']['editor_data'] ) && is_scalar( $value['brizy-post']['editor_data'] ) ) {
-				$value['brizy-post']['editor_data'] = json_decode( base64_decode( $value['brizy-post']['editor_data'], true ), true );
-			}
-		}
-		return $value;
-	}
-
-	/**
-	 * Encode editor_data after its translated.
-	 *
-	 * @param array  $value The value of the custom field.
-	 * @param string $key   The key of the custom field.
-	 * @return array
-	 */
-	public function encode_custom_field( $value, $key ) {
-		// We only need to handle this for 'brizy' custom field.
-		if ( 'brizy' === $key ) {
-			// WPML calls this filter twice, so we need to check if it was already encoded.
-			if ( isset( $value['brizy-post']['editor_data'] ) && ! is_scalar( $value['brizy-post']['editor_data'] ) ) {
-				$value['brizy-post']['editor_data'] = base64_encode( json_encode( $value['brizy-post']['editor_data'] ) );
-			}
-		}
-		return $value;
-	}
-
-	/**
-	 * @param array $elements Array of fields to translate.
-	 * @param object $postId The ID of the post being translated.
-	 *
-	 * @return array
-	 */
-	public function icl_job_elements( $elements, $postId ) {
-
-		if ( ! $this->isUsingEditor( $postId ) ) {
-			return $elements;
-		}
-
-		$editor = Brizy_Editor_Post::get( $postId );
-
-//		if ( ! $editor->isCompiledWithCurrentVersion() || $editor->get_needs_compile() ) {
-//			try {
-//				$editor->compile_page();
-//				$editor->saveStorage();
-//				$editor->savePost();
-//			} catch ( Exception $e ) {
-//				$test = 0;
-//			}
-//		}
-
-		$body = $editor->get_encoded_compiled_html();
-
-		foreach ( $elements as $element ) {
-			if ( $element->field_type == 'body' ) {
-				$element->field_data = $body;
-				break;
-			}
-		}
-
-		return $elements;
-	}
-
-	/**
 	 * @param $postId
 	 *
 	 * @return bool
@@ -292,5 +225,19 @@ class Brizy_Compatibilities_WPML {
 		}
 
 		return $originalPost->uses_editor();
+	}
+
+	public function declareSupport( $plugins ) {
+		$plugins[] = self::KIND;
+
+		return $plugins;
+	}
+
+	public function isBuilder( $is_translation_with_native_editor, $translated_post_id ) {
+		if ( ! $is_translation_with_native_editor ) {
+			return isset( $_POST['action'] ) && 'brizy_update_item' === $_POST['action'] && $translated_post_id === (int) $_POST['id'];
+		}
+
+		return $is_translation_with_native_editor;
 	}
 }
