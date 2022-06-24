@@ -47,16 +47,16 @@
         },
         {
             "name": "bagrinsergiu/brizy-migration-utils",
-            "version": "1.5.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-migration-utils.git",
-                "reference": "c500d6fac2f6f8d1313c9e680cc9f46948edaf8f"
+                "reference": "6af1f8e3e181d1d262bd32cb96bf08ef9ead59df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-migration-utils/zipball/c500d6fac2f6f8d1313c9e680cc9f46948edaf8f",
-                "reference": "c500d6fac2f6f8d1313c9e680cc9f46948edaf8f",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-migration-utils/zipball/6af1f8e3e181d1d262bd32cb96bf08ef9ead59df",
+                "reference": "6af1f8e3e181d1d262bd32cb96bf08ef9ead59df",
                 "shasum": ""
             },
             "require-dev": {
@@ -81,10 +81,10 @@
             ],
             "description": "Data migration utils",
             "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/1.5.1",
+                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/1.4.2",
                 "issues": "https://github.com/bagrinsergiu/brizy-migration-utils/issues"
             },
-            "time": "2022-06-23T11:13:20+00:00"
+            "time": "2020-05-12T15:14:00+00:00"
         },
         {
             "name": "bagrinsergiu/content-placeholder",

@@ -461,12 +461,18 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			$groups[] = array(
 				'title' => __( "From", 'brizy' ) . " " . $tax->labels->singular_name,
 				'value' => Brizy_Admin_Rule::POSTS,
-				'items' => array_map( $closureFromTerm, array_filter( get_terms( [
+				'items' => array_merge( [
+					[
+						'title'      => 'All ' . $tax->labels->name,
+						'value'      => "in|" . $tax->name,
+						'groupValue' => $tax->name
+					]
+				], array_map( $closureFromTerm, array_filter( get_terms( [
 					'taxonomy'   => $tax->name,
 					'hide_empty' => false,
 				] ), function ( $term ) use ( $exclude ) {
 					return in_array( $term->slug, $exclude ) ? false : true;
-				} ) )
+				} ) ) )
 			);
 
 			if ( $tax->hierarchical ) {
@@ -492,7 +498,11 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		$groups[] = array(
 			'title' => 'Specific Author',
 			'value' => Brizy_Admin_Rule::POSTS,
-			'items' => array_map( $closureAuthor, get_users() )
+			'items' => array_merge([[
+				'title'      => __('All Authors','brizy'),
+				'value'      => 'author|',
+				'groupValue' => 'author'
+			]],array_map( $closureAuthor, get_users() ))
 		);
 
 		$groups = array_values( array_filter( $groups, function ( $o ) {
@@ -532,10 +542,16 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			$groups[] = array(
 				'title' => __( "Specific", 'brizy' ) . " " . $tax->labels->singular_name,
 				'value' => Brizy_Admin_Rule::TAXONOMY,
-				'items' => array_map( $closureSingleTerm, get_terms( [
+				'items' => array_merge([
+					[
+						'title'      => 'All ' . $tax->labels->name,
+						'value'      => "in|" . $tax->name,
+						'groupValue' => $tax->name
+					]
+				],array_map( $closureSingleTerm, get_terms( [
 					'taxonomy'   => $tax->name,
 					'hide_empty' => false
-				] ) )
+				] ) ))
 			);
 
 			if ( $tax->hierarchical ) {

@@ -138,7 +138,17 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		// check post author
 		if ( isset( $entity_values[0] ) && isset( $entityValues[0] ) && ( $values = explode( '|', $entity_values[0] ) ) && count( $values ) == 2 ) {
 			if ( $values[0] === 'author' ) {
+				if($values[1]=='')
+					return true;
+
 				return get_post_field( 'post_author', $entityValues[0] ) == $values[1];
+			}
+
+			if ( $applyFor == self::POSTS && $this->getAppliedFor() == self::POSTS && $values[0] === 'in' ) {
+				$postTerms = wp_get_post_terms($entityValues[0],$values[1]);
+				$postTermIds = array_map(function($t){return $t->term_id;},$postTerms);
+				$allTerms = array_map(function($t){return $t->term_id;},get_terms(['taxonomy'=>$values[1] ]));;
+				return count(array_intersect($postTermIds,$allTerms));
 			}
 		}
 		// check if post is in a term
