@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.0
 Requires PHP: 5.6.20
-Stable tag: 2.4.1
+Stable tag: 2.4.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,13 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.2 - 2022-06-15 =
+* Fixed: Template Conditions
+* Fixed: Polylang fix home url in breadcrumbs
+* Fixed: Remove logs for cropping images 
+* Fixed: Escape the script contents for non adminstrators users. This vulnerability was discovered by Vishnupriya Ilango of Fortinets FortiGuard Labs
+* Fixed: Fix autoupdate of the pro version, added an admin notice in the plugins list page when a major update is available
 
 = 2.4.1 - 2022-06-02 =
 * Improved: Saved blocks lazy load

@@ -6,7 +6,7 @@ export function XSS($: cheerio.Root): void {
 
   // inline <script>
   // <a href="javscript:alert(a)></a>"
-  $richText.each(function(this: cheerio.Element) {
+  $richText.each(function (this: cheerio.Element) {
     const $this = $(this);
     const html = $this.parent().html();
 
@@ -15,11 +15,11 @@ export function XSS($: cheerio.Root): void {
     }
   });
 
-  $links.each(function(this: cheerio.Element) {
+  $links.each(function (this: cheerio.Element) {
     const $this = $(this);
     const href = $this.attr("href")?.toLowerCase();
 
-    if (href?.startsWith("javascript")) {
+    if (href?.trim().startsWith("javascript")) {
       $this.attr("href", "");
     }
   });
