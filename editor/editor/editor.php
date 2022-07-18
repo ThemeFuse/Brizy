@@ -167,14 +167,15 @@ class Brizy_Editor_Editor_Editor {
 						),
 				),
 			),
-			'server'          => array(
+			'server'                => array(
 				'maxUploadFileSize' => $this->fileUploadMaxSize(),
 			),
-			'branding'        => array( 'name' => __bt( 'brizy', 'Brizy' ) ),
-			'prefix'          => Brizy_Editor::prefix(),
-			'cloud'           => $this->getCloudInfo(),
-			'editorVersion'   => BRIZY_EDITOR_VERSION,
-			'imageSizes'      => $this->getImgSizes()
+			'branding'              => array( 'name' => __bt( 'brizy', 'Brizy' ) ),
+			'prefix'                => Brizy_Editor::prefix(),
+			'cloud'                 => $this->getCloudInfo(),
+			'editorVersion'         => BRIZY_EDITOR_VERSION,
+			'imageSizes'            => $this->getImgSizes(),
+			'availableTranslations' => $this->getAvailableTranslations(),
 		);
 		$manager           = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 
@@ -1161,4 +1162,43 @@ class Brizy_Editor_Editor_Editor {
 		return $sizes;
 	}
 
+	private function getAvailableTranslations() {
+
+		if ( ! function_exists( 'wp_get_available_translations' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/translation-install.php';
+		}
+
+		$languages    = get_available_languages();
+		$translations = get_site_transient( 'brizy_available_translations' );
+
+		if ( false === $translations ) {
+			$translations = wp_get_available_translations();
+
+			$translations = array_map( function( $lang ) {
+				return [
+					'code' => $lang['language'],
+					'name' => $lang['native_name']
+				];
+			}, $translations );
+
+			$translations['en_US'] = [
+				'code' => 'en_US',
+				'name' => 'English'
+			];
+
+			set_site_transient( 'brizy_available_translations', $translations, 10 * DAY_IN_SECONDS );
+		}
+
+		if ( ! is_multisite() && defined( 'WPLANG' ) && '' !== WPLANG && 'en_US' !== WPLANG && ! in_array( WPLANG, $languages, true ) ) {
+			$languages[] = WPLANG;
+		}
+
+		$defaultLanguage = str_replace( '-', '_', get_bloginfo( 'language' ) );
+
+		if ( ! in_array( $defaultLanguage, $languages, true ) ) {
+			$languages[] = $defaultLanguage;
+		}
+
+		return array_intersect_key( $translations, array_fill_keys( $languages, '' ) );
+	}
 }

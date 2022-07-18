@@ -62,6 +62,25 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
 		    return $replacer->replacePlaceholders( $contentPlaceholder->getContent(), $context );
 	    } ) );
+
+        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple( 'Internal Display Block By Language', 'display_by_translations', function ( Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder ) {
+
+		    $attrs = $contentPlaceholder->getAttributes();
+
+		    if ( ! empty( $attrs['translations'] ) ) {
+			    $blockLangs  = explode( ',', $attrs['translations'] );
+			    $currentLang = get_locale();
+
+                if ( ! in_array( $currentLang, $blockLangs ) ) {
+                    return '';
+                }
+		    }
+
+		    $replacer = new \BrizyPlaceholders\Replacer( $context->getProvider() );
+
+		    return $replacer->replacePlaceholders( $contentPlaceholder->getContent(), $context );
+	    } ) );
+
         $this->registerPlaceholder( new Brizy_Content_Placeholders_ImageTitleAttribute('Internal Title Attributes', 'brizy_dc_image_title') );
         $this->registerPlaceholder( new Brizy_Content_Placeholders_ImageAltAttribute('Internal Alt Attributes', 'brizy_dc_image_alt') );
         $this->registerPlaceholder( new Brizy_Content_Placeholders_UniquePageUrl('Uniquer page url', 'brizy_dc_current_page_unique_url') );
