@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 730,
   title: "Portfolio",
   keywords: "portfolio, agency, business, digitl, tabs, showcase, gallery",
-  cat: [100, 0, 1, 3],
-  pro: false,
+  cat: [0, 1, 3],
+  pro: true,
   resolve: {
     blocks: [
       {

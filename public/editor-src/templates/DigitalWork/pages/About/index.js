@@ -4,7 +4,7 @@ module.exports = {
   thumbnailHeight: 2522,
   title: "About",
   keywords: "about, history, quote, logos, awards",
-  cat: [0, 1, 100],
+  cat: [0, 1],
   pro: false,
   resolve: {
     blocks: [

@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 1132,
   title: "Recipes",
   keywords: "recipes, food, details, form, map, social",
-  cat: [0, 10, 100],
-  pro: false,
+  cat: [0, 10],
+  pro: true,
   resolve: {
     blocks: [
       {

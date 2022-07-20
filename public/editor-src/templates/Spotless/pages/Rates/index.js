@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 1488,
   title: "Rates",
   keywords: "rates, pricing, testimonials, details, map, features",
-  cat: [0, 15, 100],
-  pro: false,
+  cat: [0, 15],
+  pro: true,
   resolve: {
     blocks: [
       {

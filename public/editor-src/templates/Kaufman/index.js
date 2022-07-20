@@ -11,7 +11,7 @@ const KaufmanStyle = require("./styles/Kaufman");
 module.exports = {
   name: "Kaufman",
   color: "#8C4646",
-  cat: [0, 1, 100],
+  cat: [0, 1],
   pages: [Homepage, About, Location, NewsAndEvents, OurTeam, Services, Contact],
   styles: [KaufmanStyle]
 };

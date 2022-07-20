@@ -5,8 +5,8 @@ module.exports = {
   title: "Homepage",
   keywords:
     "Refix, homepage, services, repairs, refrigerators, fixers, testimonials, features, blog, news, articles, form",
-  cat: [0, 1, 15, 100],
-  pro: false,
+  cat: [0, 1, 15],
+  pro: true,
   resolve: {
     blocks: [
       {

@@ -5,8 +5,8 @@ module.exports = {
   title: "Homepage",
   keywords:
     "App side, homepage, application, features, counter, pricing, testimonial, team, video, faq, blog, contact, form, email",
-  cat: [0, 11, 100],
-  pro: false,
+  cat: [0, 11],
+  pro: true,
   resolve: {
     blocks: [
       {

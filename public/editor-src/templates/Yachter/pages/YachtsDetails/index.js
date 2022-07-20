@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 1262,
   title: "Yachts Details",
   keywords: "yachts, details, form, map",
-  cat: [0, 13, 100],
-  pro: false,
+  cat: [0, 13],
+  pro: true,
   resolve: {
     blocks: [
       {

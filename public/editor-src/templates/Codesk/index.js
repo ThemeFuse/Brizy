@@ -17,7 +17,7 @@ const CodeskStyles = require("./styles/Codesk");
 module.exports = {
   name: "Codesk",
   color: "#FF4332",
-  cat: [0, 1, 8, 100],
+  cat: [0, 1, 8],
   pages: [
     Homepage,
     About,

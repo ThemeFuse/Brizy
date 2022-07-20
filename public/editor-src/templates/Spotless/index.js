@@ -8,7 +8,7 @@ const SpotlessStyle = require("./styles/Spotless");
 module.exports = {
   name: "Spotless",
   color: "#1C84E2",
-  cat: [0, 15, 100],
+  cat: [0, 15],
   pages: [Homepage, Rates, Services, Contact],
   styles: [SpotlessStyle]
 };
