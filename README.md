@@ -1,9 +1,9 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.0<br>
+Tested up to: 6.0.1<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.4.2<br>
+Stable tag: 2.4.3<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.3 - 2022-07-20
+* New: New Templates
 
 ### 2.4.2 - 2022-06-15
 * Fixed: Template Conditions
