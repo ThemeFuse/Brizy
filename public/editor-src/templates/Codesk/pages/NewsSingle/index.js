@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 1479,
   title: "News Single",
   keywords: "news, single, post, comments",
-  cat: [0, 1, 8, 100],
-  pro: false,
+  cat: [0, 1, 8],
+  pro: true,
   resolve: {
     blocks: [
       {

@@ -5,8 +5,8 @@ module.exports = {
   title: "Homepage",
   keywords:
     "Homefeast, homepage, blog, recipes, food, team, story, about, testimonials, form, map, social",
-  cat: [0, 10, 100],
-  pro: false,
+  cat: [0, 10],
+  pro: true,
   resolve: {
     blocks: [
       {

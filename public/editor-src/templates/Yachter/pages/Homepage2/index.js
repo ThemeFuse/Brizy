@@ -5,8 +5,8 @@ module.exports = {
   title: "Homepage2",
   keywords:
     "Yachter, homepage, form, charter, yachts, posts, video, destinations, team, crew, news, articles",
-  cat: [0, 13, 100],
-  pro: false,
+  cat: [0, 13],
+  pro: true,
   resolve: {
     blocks: [
       {

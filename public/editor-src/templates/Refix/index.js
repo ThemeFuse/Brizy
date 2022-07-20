@@ -13,7 +13,7 @@ const RefixStyle = require("./styles/Refix");
 module.exports = {
   name: "Refix",
   color: "#0BA0C0",
-  cat: [0, 1, 15, 100],
+  cat: [0, 1, 15],
   pages: [
     Homepage,
     Homepage2,

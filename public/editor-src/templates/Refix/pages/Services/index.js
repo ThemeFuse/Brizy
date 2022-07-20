@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 1188,
   title: "Services",
   keywords: "services, posts, list, features, repairs",
-  cat: [0, 1, 15, 100],
-  pro: false,
+  cat: [0, 1, 15],
+  pro: true,
   resolve: {
     blocks: [
       {

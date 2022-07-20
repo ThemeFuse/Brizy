@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 3711,
   title: "Homepage",
   keywords: "Oapee, business, pricing, features, team, blog, tab, video",
-  cat: [0, 1, 3, 100],
-  pro: false,
+  cat: [0, 1, 3],
+  pro: true,
   resolve: {
     blocks: [
       {

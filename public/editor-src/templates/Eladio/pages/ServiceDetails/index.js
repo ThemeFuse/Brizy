@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 911,
   title: "Service Details",
   keywords: "service, business, agency, digital, details",
-  cat: [100, 0, 1, 3],
-  pro: false,
+  cat: [0, 1, 3],
+  pro: true,
   resolve: {
     blocks: [
       {

@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 712,
   title: "Events",
   keywords: "about, listing, dates, locations",
-  cat: [0, 1, 8, 100],
-  pro: false,
+  cat: [0, 1, 8],
+  pro: true,
   resolve: {
     blocks: [
       {

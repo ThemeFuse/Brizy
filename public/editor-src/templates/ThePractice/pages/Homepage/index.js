@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 781,
   title: "Homepage",
   keywords: "The Practice, homepage, services, details, testimonials, news",
-  cat: [0, 1, 100],
-  pro: false,
+  cat: [0, 1],
+  pro: true,
   resolve: {
     blocks: [
       {

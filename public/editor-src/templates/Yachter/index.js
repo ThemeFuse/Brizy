@@ -12,7 +12,7 @@ const YachterStyle = require("./styles/Yachter");
 module.exports = {
   name: "Yachter",
   color: "#022447",
-  cat: [0, 13, 100],
+  cat: [0, 13],
   pages: [
     Homepage,
     Homepage2,

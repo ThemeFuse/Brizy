@@ -1,3 +1,33 @@
+// const Cryptothings = require("./Cryptothings");
+// const OktaneCrypto = require("./OktaneCrypto");
+const Zoo = require("./Zoo");
+const Wedding2 = require("./Wedding2");
+const Minimal = require("./Minimal");
+const Hairdresser = require("./Hairdresser");
+const Manicure = require("./Manicure");
+const Carpenter = require("./Carpenter");
+const School = require("./School");
+const Kids = require("./Kids");
+const Interior = require("./Interior");
+const Politics = require("./Politics");
+const Medical = require("./Medical");
+const Consultant = require("./Consultant");
+const CallCenter = require("./CallCenter");
+const Architect = require("./Architect");
+const Swimming = require("./Swimming");
+const Garden = require("./Garden");
+const Laboratory = require("./Laboratory");
+const Resto = require("./Resto");
+const Catering = require("./Catering");
+const Music = require("./Music");
+const Tailor = require("./Tailor");
+const Party = require("./Party");
+const Finance = require("./Finance");
+const Spa = require("./Spa");
+const Party2 = require("./Party2");
+const Surfing = require("./Surfing");
+const Cryptobold = require("./Cryptobold");
+const FootballClub = require("./FootballClub");
 const Carwash = require("./Carwash");
 const Wedding = require("./Wedding");
 const ScooterRental = require("./ScooterRental");
@@ -130,6 +160,36 @@ const Workspace = require("./Workspace");
 
 module.exports = {
   templates: [
+    // Cryptothings,
+    // OktaneCrypto,
+    Zoo,
+    Wedding2,
+    Minimal,
+    Hairdresser,
+    Manicure,
+    Carpenter,
+    School,
+    Kids,
+    Interior,
+    Politics,
+    Medical,
+    CallCenter,
+    Consultant,
+    Architect,
+    Swimming,
+    Garden,
+    Laboratory,
+    Resto,
+    Catering,
+    Music,
+    Tailor,
+    Party,
+    Finance,
+    Spa,
+    Party2,
+    Surfing,
+    Cryptobold,
+    FootballClub,
     Carwash,
     ScooterRental,
     CarParts,
@@ -276,6 +336,8 @@ module.exports = {
     { id: 13, title: "Sport" },
     { id: 15, title: "Repair" },
     { id: 16, title: "Children" },
-    { id: 17, title: "Gaming" }
+    { id: 17, title: "Gaming" },
+    { id: 18, title: "Art" },
+    { id: 19, title: "Crypto" }
   ]
 };

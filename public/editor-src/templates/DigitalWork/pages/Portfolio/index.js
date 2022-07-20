@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 2130,
   title: "Portfolio",
   keywords: "portfolio, projects, testimonials, quote, gallery, awards, logos",
-  cat: [0, 1, 100],
-  pro: false,
+  cat: [0, 1],
+  pro: true,
   resolve: {
     blocks: [
       {

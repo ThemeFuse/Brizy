@@ -5,8 +5,8 @@ module.exports = {
   title: "Homepage",
   keywords:
     "homepage, work, space, features, cta, accordion, gallery, counter, testimonials, news, listing, logos",
-  cat: [0, 1, 8, 100],
-  pro: false,
+  cat: [0, 1, 8],
+  pro: true,
   resolve: {
     blocks: [
       {

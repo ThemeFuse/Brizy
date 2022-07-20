@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 1665,
   title: "Contact",
   keywords: "contact, form, location, address, social, map",
-  cat: [0, 1, 100],
-  pro: false,
+  cat: [0, 1],
+  pro: true,
   resolve: {
     blocks: [
       {

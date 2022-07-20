@@ -11,7 +11,7 @@ const ThePracticeStyle = require("./styles/ThePractice");
 module.exports = {
   name: "The Practice",
   color: "#4C4C4C",
-  cat: [0, 1, 100],
+  cat: [0, 1],
   pages: [Homepage, About, Contact, Careers, CaseStudies, Pricing, Services],
   styles: [ThePracticeStyle]
 };

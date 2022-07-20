@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 846,
   title: "Stories",
   keywords: "wedding, gallery, images",
-  cat: [0, 100, 3, 9],
-  pro: false,
+  cat: [0, 3, 9],
+  pro: true,
   resolve: {
     blocks: [
       {
