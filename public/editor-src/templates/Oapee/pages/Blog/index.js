@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 692,
   title: "Blog",
   keywords: "Oapee, post, blog",
-  cat: [0, 1, 3, 100],
-  pro: false,
+  cat: [0, 1, 3],
+  pro: true,
   resolve: {
     blocks: [
       {

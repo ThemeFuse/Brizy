@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 1576,
   title: "Services",
   keywords: "services, list, faq, process, steps, testimonials, details, map",
-  cat: [0, 15, 100],
-  pro: false,
+  cat: [0, 15],
+  pro: true,
   resolve: {
     blocks: [
       {

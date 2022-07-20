@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 1508,
   title: "Homepage",
   keywords: "Spotless, homepage, about, quote, testimonials, faq, steps, process",
-  cat: [0, 15, 100],
-  pro: false,
+  cat: [0, 15],
+  pro: true,
   resolve: {
     blocks: [
       {

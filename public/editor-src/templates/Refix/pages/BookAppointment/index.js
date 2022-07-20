@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 841,
   title: "Book Appointment",
   keywords: "book, appointment, form, tabs, repairs, features",
-  cat: [0, 1, 15, 100],
-  pro: false,
+  cat: [0, 1, 15],
+  pro: true,
   resolve: {
     blocks: [
       {

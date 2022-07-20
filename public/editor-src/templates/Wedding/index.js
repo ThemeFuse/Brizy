@@ -10,7 +10,7 @@ const WeddingStyle = require("./styles/Wedding");
 module.exports = {
   name: "Wedding",
   color: "#323232",
-  cat: [0, 100, 3, 9],
+  cat: [0, 3, 9],
   pages: [Homepage, About, Details, Contact, Stories, Haus, Movies],
   styles: [WeddingStyle]
 };

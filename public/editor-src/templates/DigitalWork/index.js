@@ -10,7 +10,7 @@ const DigitalWorkStyle = require("./styles/DigitalWork");
 module.exports = {
   name: "Digital Work",
   color: "#3AC9FF",
-  cat: [0, 1, 100],
+  cat: [0, 1],
   pages: [Homepage, About, Services, Portfolio, DetailsPage, Contact],
   styles: [DigitalWorkStyle]
 };

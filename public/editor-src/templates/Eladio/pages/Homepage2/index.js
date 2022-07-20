@@ -5,8 +5,8 @@ module.exports = {
   title: "Homepage 2",
   keywords:
     "Eladio, homepage, business, agency, digital, features, video, map, tabs",
-  cat: [100, 0, 1, 3],
-  pro: false,
+  cat: [0, 1, 3],
+  pro: true,
   resolve: {
     blocks: [
       {

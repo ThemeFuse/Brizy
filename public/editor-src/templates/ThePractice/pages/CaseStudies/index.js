@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 943,
   title: "Case Studies",
   keywords: "cases, studies, blog, posts, list",
-  cat: [0, 1, 100],
-  pro: false,
+  cat: [0, 1],
+  pro: true,
   resolve: {
     blocks: [
       {

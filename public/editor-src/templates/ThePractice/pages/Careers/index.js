@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 880,
   title: "Careers",
   keywords: "careers, form, resume",
-  cat: [0, 1, 100],
-  pro: false,
+  cat: [0, 1],
+  pro: true,
   resolve: {
     blocks: [
       {

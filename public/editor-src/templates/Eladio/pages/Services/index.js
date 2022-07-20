@@ -5,8 +5,8 @@ module.exports = {
   title: "Services",
   keywords:
     "services, business, agency, digital, features, showcase, counter, logos",
-  cat: [100, 0, 1, 3],
-  pro: false,
+  cat: [0, 1, 3],
+  pro: true,
   resolve: {
     blocks: [
       {

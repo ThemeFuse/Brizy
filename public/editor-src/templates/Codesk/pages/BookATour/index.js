@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 780,
   title: "Book A Tour",
   keywords: "form, booking, logos",
-  cat: [0, 1, 8, 100],
-  pro: false,
+  cat: [0, 1, 8],
+  pro: true,
   resolve: {
     blocks: [
       {

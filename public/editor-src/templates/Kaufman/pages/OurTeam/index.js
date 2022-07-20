@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 2630,
   title: "Our Team",
   keywords: "team, blog, testimonials, map",
-  cat: [0, 1, 100],
-  pro: false,
+  cat: [0, 1],
+  pro: true,
   resolve: {
     blocks: [
       {

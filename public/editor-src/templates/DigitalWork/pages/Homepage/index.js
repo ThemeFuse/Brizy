@@ -5,8 +5,8 @@ module.exports = {
   title: "Homepage",
   keywords:
     "Digital work, homepage, digital, about, history, presentation, portfolio, awards, testimonial",
-  cat: [0, 1, 100],
-  pro: false,
+  cat: [0, 1],
+  pro: true,
   resolve: {
     blocks: [
       {

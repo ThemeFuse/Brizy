@@ -4,8 +4,8 @@ module.exports = {
   thumbnailHeight: 825,
   title: "Destinations",
   keywords: "destinations, posts, list",
-  cat: [0, 13, 100],
-  pro: false,
+  cat: [0, 13],
+  pro: true,
   resolve: {
     blocks: [
       {
