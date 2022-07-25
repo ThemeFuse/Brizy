@@ -1111,9 +1111,13 @@ class Brizy_Editor_Editor_Editor {
 		);
 
 		if ( $this->project->getMetaValue( 'brizy-cloud-token' ) !== null ) {
-			$cloudClient               = Brizy_Admin_Cloud_Client::instance( Brizy_Editor_Project::get(), new WP_Http() );
-			$versions                  = $cloudClient->getCloudEditorVersions();
-			$response['isSyncAllowed'] = $versions['sync'] == BRIZY_SYNC_VERSION;
+			try {
+				$cloudClient               = Brizy_Admin_Cloud_Client::instance( Brizy_Editor_Project::get(), new WP_Http() );
+				$versions                  = $cloudClient->getCloudEditorVersions();
+				$response['isSyncAllowed'] = $versions['sync'] == BRIZY_SYNC_VERSION;
+			} catch ( Exception $e ) {
+				return [ 'isSyncAllowed' => false ];
+			}
 		}
 
 		return $response;
