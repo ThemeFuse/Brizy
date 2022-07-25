@@ -27,4 +27,42 @@ class Brizy_Editor_Storage_Project extends Brizy_Editor_Storage_Post {
 		}
 		parent::loadStorage( $value );
 	}
+
+	/**
+	 * @return array
+	 * @throws Exception
+	 */
+	public function get_storage() {
+
+		$project = parent::get_storage();
+
+		if ( ! empty( $project ) ) {
+			return $project;
+		}
+
+		$metadata = get_metadata( 'post', $this->get_id() );
+
+		if ( ! isset( $metadata[ $this->key() ] ) ) {
+			return [];
+		}
+
+		foreach ( $metadata[ $this->key() ] as $data ) {
+
+			$fixedData = preg_replace( "/O:(\d+):\"Brizy_(.+?)\"/u", "C:$1:\"Brizy_$2\"", $data );
+
+			if ( $fixedData ) {
+				$unserializedData = maybe_unserialize( $fixedData );
+
+				if ( $unserializedData ) {
+
+					$storage = self::instance( $this->get_id() );
+					$storage->loadStorage( $unserializedData );
+
+					return $unserializedData;
+				}
+			}
+		}
+
+		return [];
+	}
 }
