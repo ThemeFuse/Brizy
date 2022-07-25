@@ -2,6 +2,10 @@
 
 class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_RuleInterface {
 
+	const MODE_UNKNOWN = null;
+	const MODE_REFERENCE = 'reference';
+	const MODE_SPECIFIC = 'specific';
+
 	const TYPE_INCLUDE = 1;
 	const TYPE_EXCLUDE = 2;
 
@@ -36,6 +40,11 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @var string
 	 */
 	protected $entityType;
+
+	/**
+	 * @var string
+	 */
+	protected $mode;
 
 	/**
 	 * If null the rule will be applied on all entities
@@ -104,7 +113,6 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		);
 
 
-
 		// return if the rule is for exclude
 //		if($ruleValues[0]!=$checkValues[0]) {
 //			return false;
@@ -113,8 +121,9 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		$entity_values = $this->getEntityValues();
 
 		// check is the rule is matching all
-		if($ruleValues[0]==self::TYPE_INCLUDE && !$ruleValues[1])
-			return  true;
+		if ( $ruleValues[0] == self::TYPE_INCLUDE && ! $ruleValues[1] ) {
+			return true;
+		}
 
 		// exception for home page that has two behaviors.. as page and as a template
 		if ( $applyFor == self::TEMPLATE &&
@@ -129,7 +138,17 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		// check post author
 		if ( isset( $entity_values[0] ) && isset( $entityValues[0] ) && ( $values = explode( '|', $entity_values[0] ) ) && count( $values ) == 2 ) {
 			if ( $values[0] === 'author' ) {
+				if($values[1]=='')
+					return true;
+
 				return get_post_field( 'post_author', $entityValues[0] ) == $values[1];
+			}
+
+			if ( $applyFor == self::POSTS && $this->getAppliedFor() == self::POSTS && $values[0] === 'in' ) {
+				$postTerms = wp_get_post_terms($entityValues[0],$values[1]);
+				$postTermIds = array_map(function($t){return $t->term_id;},$postTerms);
+				$allTerms = array_map(function($t){return $t->term_id;},get_terms(['taxonomy'=>$values[1] ]));;
+				return count(array_intersect($postTermIds,$allTerms));
 			}
 		}
 		// check if post is in a term
@@ -171,24 +190,25 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		// matching archive rules
 		if ( isset( $ruleValues[1] ) && isset( $checkValues[1] ) && ( $ruleValues[1] & self::ARCHIVE ) && ( $checkValues[1] & self::ARCHIVE ) ) {
 
-			if ($checkValues[1] == $ruleValues[1] ||
-                $ruleValues[1] == self::DATE_ARCHIVE ||
-                $ruleValues[1] == self::YEAR_ARCHIVE ||
-                $ruleValues[1] == self::MONTH_ARCHIVE ||
-                $ruleValues[1] == self::DAY_ARCHIVE ||
-                $ruleValues[1] == self::ARCHIVE) {
-				if(empty($ruleValues[2]) || $ruleValues[2]==$entityType) {
-				    return true;
-                }
+			if ( $checkValues[1] == $ruleValues[1] ||
+			     $ruleValues[1] == self::DATE_ARCHIVE ||
+			     $ruleValues[1] == self::YEAR_ARCHIVE ||
+			     $ruleValues[1] == self::MONTH_ARCHIVE ||
+			     $ruleValues[1] == self::DAY_ARCHIVE ||
+			     $ruleValues[1] == self::ARCHIVE ) {
+				if ( empty( $ruleValues[2] ) || $ruleValues[2] == $entityType ) {
+					return true;
+				}
 			}
-
 
 
 		}
 
 		foreach ( $ruleValues as $i => $value ) {
 
-		    if($i===0) continue;
+			if ( $i === 0 ) {
+				continue;
+			}
 
 			if ( is_array( $value ) ) {
 				// this means that the rule accept any value
@@ -303,12 +323,13 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 * @return string[]
 	 */
 	public function getEntityValues() {
-        return array_map(function ($v) {
-			if(is_numeric($v))
-                return (int)$v;
-			else
+		return array_map( function ( $v ) {
+			if ( is_numeric( $v ) ) {
+				return (int) $v;
+			} else {
 				return $v;
-        }, $this->entityValues);
+			}
+		}, $this->entityValues );
 	}
 
 	/**
@@ -337,6 +358,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 			'appliedFor'   => $this->getAppliedFor(),
 			'entityType'   => $this->getEntityType(),
 			'entityValues' => $this->getEntityValues(),
+			'mode'         => $this->getRuleMode()
 		);
 	}
 
@@ -469,5 +491,19 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 	 */
 	private function generateId() {
 		return md5( implode( '', func_get_args() ) . rand( 1, time() ) );
+	}
+
+	private function getRuleMode() {
+		foreach ( $this->entityValues as $item ) {
+			if ( strpos( $item, "author" ) === 0 ||
+			     strpos( $item, "in" ) === 0 ||
+			     strpos( $item, "child" ) === 0 ) {
+				return self::MODE_REFERENCE;
+			} else {
+				return self::MODE_SPECIFIC;
+			}
+		}
+
+		return self::MODE_UNKNOWN;
 	}
 }
