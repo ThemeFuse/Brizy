@@ -342,7 +342,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 
 		$groups = [];
 
-		if ( $templateType == 'single' || $templateType == 'single_product' || $context == 'popup-rules' || $context == 'global-block-rules' ) {
+        if ($templateType == 'single' || $templateType == 'single_product' || $context == 'popup-rules' || $context == 'global-block-rules' ) {
 			$groups[] = array(
 				'title' => 'Main Content',
 				'value' => Brizy_Admin_Rule::POSTS,
@@ -360,7 +360,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 				) : null;
 		}
 
-		if ( $templateType == 'archive' || $templateType == 'product_archive' || $context == 'popup-rules' || $context == 'global-block-rules' ) {
+        if ($templateType == 'archive' || $templateType == 'product_archive' || $context == 'popup-rules' || $context == 'global-block-rules' ) {
 
 			$archiveItems  = array_map( $closure, $this->getArchivesList( Brizy_Admin_Rule::ARCHIVE, $templateType ) );
 			$taxonomyItems = array_map( $closure, $this->getTaxonomyList( Brizy_Admin_Rule::TAXONOMY, $templateType ) );
