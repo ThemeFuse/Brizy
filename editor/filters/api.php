@@ -28,7 +28,7 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi {
 		$brizyPost = Brizy_Editor_Post::get($postId);
 		$postContent = $this->getBrizyPostContent(Brizy_Editor_Project::get(), $brizyPost);
 
-		$placeholderProvider = new Brizy_Content_PlaceholderProvider();
+        $placeholderProvider = new Brizy_Content_PlaceholderProvider();
 		$context = new Brizy_Content_Context(Brizy_Editor_Project::get(),$brizyPost,$brizyPost->getWpPost(),'');
 		$context->setProvider( $placeholderProvider );
 		$extractor           = new \BrizyPlaceholders\Extractor( $placeholderProvider );
