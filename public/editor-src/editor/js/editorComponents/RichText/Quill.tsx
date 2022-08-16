@@ -1,26 +1,27 @@
-import React, { ReactNode } from "react";
-import _ from "underscore";
 import jQuery from "jquery";
-import { RangeStatic, BoundsStatic } from "quill";
+import { BoundsStatic, RangeStatic } from "quill";
+import React, { ReactNode } from "react";
 import { connect } from "react-redux";
-import { uuid } from "visual/utils/uuid";
+import _ from "underscore";
+import { ConfigDCItem } from "visual/global/Config/types/DynamicContent";
 import {
-  unDeletedFontsSelector,
-  defaultFontSelector
+  defaultFontSelector,
+  unDeletedFontsSelector
 } from "visual/redux/selectors";
-import { css1 } from "visual/utils/cssStyle";
-import Quill from "./utils/quill";
-import bindings from "./utils/bindings";
-import { getFormats, mapBlockElements } from "./utils";
 import { ReduxState } from "visual/redux/types";
+import { css1 } from "visual/utils/cssStyle";
+import { IS_STORY } from "visual/utils/models";
+import { uuid } from "visual/utils/uuid";
+import { styleHeading } from "./styles";
+import { getFormats, mapBlockElements } from "./utils";
+import bindings from "./utils/bindings";
+import Quill from "./utils/quill";
 import {
   classNamesToV2,
-  getDefaultValues,
   currentBlockValues,
-  formatVToQuilValue
+  formatVToQuilValue,
+  getDefaultValues
 } from "./utils/transforms";
-import { styleHeading } from "./styles";
-import { ConfigDCItem } from "visual/global/Config/types/DynamicContent";
 
 const instances: QuillComponent[] = [];
 
@@ -71,22 +72,29 @@ class QuillComponent extends React.Component<Props> {
   }
 
   componentDidUpdate(props: Props): void {
-    const { value, forceUpdate, fonts } = props;
-    let reInitPlugin = value !== this.lastUpdatedValue || forceUpdate;
+    const { fonts } = props;
+    const { value, forceUpdate } = this.props;
+    const reinitForFonts = !_.isEqual(fonts, this.props.fonts);
+    const reinitForValue = value !== this.lastUpdatedValue || forceUpdate;
 
-    if (!_.isEqual(fonts, this.props.fonts)) {
-      reInitPlugin = true;
-    }
-
-    if (reInitPlugin) {
+    if ((reinitForValue || reinitForFonts) && this.quill) {
       this.reinitPluginWithValue(value);
+
+      if (reinitForValue && !IS_STORY) {
+        this.props.onSelectionChange(
+          this.getSelectionFormat(),
+          this.getCoords(this.quill.getSelection(true))
+        );
+      }
     }
   }
-
   shouldComponentUpdate(nextProps: Props): boolean {
-    const { fonts } = nextProps;
+    const { fonts, value } = nextProps;
 
-    if (fonts !== this.props.fonts) {
+    if (
+      !_.isEqual(fonts, this.props.fonts) ||
+      value !== this.lastUpdatedValue
+    ) {
       return true;
     }
 
@@ -245,11 +253,11 @@ class QuillComponent extends React.Component<Props> {
           restoreSelectionIndex: startIndex + pastedData.length + 1
         });
       }
-    }, 0);
+    }, 1);
   };
 
   onBlurAll = (event: MouseEvent): void => {
-    instances.forEach(instance => {
+    instances.forEach((instance) => {
       const node = instance.content.current;
 
       if (node && !node.contains(event.target as Node)) {
@@ -357,7 +365,7 @@ class QuillComponent extends React.Component<Props> {
     const lines = (this.quill as Quill).getLines();
     const existingIds: string[] = [];
 
-    lines.forEach(line => {
+    lines.forEach((line) => {
       const domNode = line.domNode;
 
       let uniqId = domNode.getAttribute("data-uniq-id");
@@ -484,7 +492,7 @@ class QuillComponent extends React.Component<Props> {
   formatMultiple(values: Formats): void {
     // ! take a look later
     const blockKeys = Object.values(currentBlockValues)
-      .map(value => Object.keys(value))
+      .map((value) => Object.keys(value))
       .flat();
 
     // eslint-disable-next-line prefer-const
