@@ -45,7 +45,7 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
   const config = Conf.getAll();
 
   const vars = fontStyles
-    .map(style => {
+    .map((style) => {
       const {
         id: _id,
         fontSize,
@@ -71,10 +71,12 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
       }).family;
 
       const _fontSize = `${fontSize}${fontSizeSuffix ?? "px"}`;
-      const _mobileFontSize = `${mobileFontSize}${mobileFontSizeSuffix ??
-        "px"}`;
-      const _tabletFontSize = `${tabletFontSize}${tabletFontSizeSuffix ??
-        "px"}`;
+      const _mobileFontSize = `${mobileFontSize}${
+        mobileFontSizeSuffix ?? "px"
+      }`;
+      const _tabletFontSize = `${tabletFontSize}${
+        tabletFontSizeSuffix ?? "px"
+      }`;
       const storyFontSize = `${style.fontSize * 0.23}%`;
 
       const fontFamilyKey = makeStyleCSSVar({
@@ -171,22 +173,23 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
         device: DESKTOP
       });
 
+      // "px" on letterSpacing is hardcoded because we don't have another suffix on letterSpacing
       return `
       ${fontFamilyKey}: ${fontFamily};
       ${fontSizeKey}: ${_fontSize};
       ${fontSizeSuffixKey}: ${fontSizeSuffix};
       ${fontWeightKey}: ${fontWeight};
-      ${letterSpacingKey}: ${letterSpacing};
+      ${letterSpacingKey}: ${letterSpacing}px;
       ${lineHeightKey}: ${lineHeight};
 
       ${tabletFontSizeKey}: ${_tabletFontSize};
       ${tabletFontWeightKey}: ${tabletFontWeight};
-      ${tabletLetterSpacingKey}: ${tabletLetterSpacing};
+      ${tabletLetterSpacingKey}: ${tabletLetterSpacing}px;
       ${tabletLineHeightKey}: ${tabletLineHeight};
 
       ${mobileFontSizeKey}: ${_mobileFontSize};
       ${mobileFontWeightKey}: ${mobileFontWeight};
-      ${mobileLetterSpacingKey}: ${mobileLetterSpacing};
+      ${mobileLetterSpacingKey}: ${mobileLetterSpacing}px;
       ${mobileLineHeightKey}: ${mobileLineHeight};
 
       ${storyFontSizeKey}: ${storyFontSize};

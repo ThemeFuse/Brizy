@@ -1,35 +1,35 @@
+import classnames from "classnames";
+import deepMerge from "deepmerge";
 import React from "react";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
-import _ from "underscore";
-import classnames from "classnames";
-import deepMerge from "deepmerge";
 import { insert } from "timm";
+import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import Prompts, { PromptsProps } from "visual/component/Prompts";
 import { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types";
-import { Block } from "visual/types";
-import { ReduxState } from "visual/redux/types";
 import { hideToolbar } from "visual/component/Toolbar";
-import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
+import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
+import {
+  ActionAddFonts,
+  ActionUpdateExtraFontStyles,
+  ActionUpdateGlobalBlock,
+  addFonts,
+  FontsPayload,
+  updateExtraFontStyles,
+  updateGlobalBlock
+} from "visual/redux/actions2";
+import {
+  globalBlocksSelector,
+  pageBlocksSelector
+} from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
+import { Block } from "visual/types";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { imageWrapperSize } from "visual/utils/image";
-import { uuid } from "visual/utils/uuid";
-import {
-  pageBlocksSelector,
-  globalBlocksSelector
-} from "visual/redux/selectors";
 import { insertItem } from "visual/utils/models/insertItem";
-import {
-  updateGlobalBlock,
-  addFonts,
-  updateExtraFontStyles,
-  ActionUpdateGlobalBlock,
-  ActionAddFonts,
-  FontsPayload,
-  ActionUpdateExtraFontStyles
-} from "visual/redux/actions2";
+import { uuid } from "visual/utils/uuid";
 
 const MAX_CONTAINER_WIDTH = 140;
 
@@ -171,7 +171,7 @@ class PromptAddPopupOptionType extends React.Component<Props> {
       }
     });
 
-    if (fonts) {
+    if (fonts.length) {
       dispatch(addFonts(fonts));
     }
     if (extraFontStyles.length) {
@@ -205,7 +205,7 @@ class PromptAddPopupOptionType extends React.Component<Props> {
 
     this.props.onChange({
       value: "",
-      popups: popups.filter(item => {
+      popups: popups.filter((item) => {
         if (item.type !== "GlobalBlock") {
           return item.value.popupId !== value;
         } else {
@@ -227,7 +227,7 @@ class PromptAddPopupOptionType extends React.Component<Props> {
     let block: undefined | Block;
 
     // try to find in value.popups (non legacy)
-    block = popups.find(block => {
+    block = popups.find((block) => {
       if (block.type === "GlobalBlock") {
         block = globalBlocks[block.value._id].data;
       }
@@ -237,7 +237,7 @@ class PromptAddPopupOptionType extends React.Component<Props> {
 
     // try to find in page blocks (legacy)
     if (!block) {
-      block = pageBlocks.find(block => block.value._id === value);
+      block = pageBlocks.find((block) => block.value._id === value);
     }
 
     return block;
