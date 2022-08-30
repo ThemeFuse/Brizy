@@ -48,11 +48,12 @@ const loadYoutubeVideo = (
         if (isIos) {
           event.target.pauseVideo();
         }
-        if (!autoplay) {
+        if (autoplay) {
+          event.target.mute();
+        } else {
           event.target.unMute();
         }
         if (autoplay || (isCovered && !isIos)) {
-          event.target.mute();
           event.target.seekTo(start);
           event.target.playVideo();
         }
@@ -375,6 +376,8 @@ function insertVideoIframe($elem, isIos) {
     }
   }, 0);
 
+  const isCovered = $coverElem.length;
+
   if (isYoutube && isYoutubeReady) {
     return loadYoutubeVideo(
       $iframe.get(0),
@@ -382,7 +385,7 @@ function insertVideoIframe($elem, isIos) {
       loop,
       start,
       end,
-      true,
+      isCovered,
       isIos
     );
   }
