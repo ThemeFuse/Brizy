@@ -1,5 +1,5 @@
-import { Response } from "visual/utils/api/response";
 import { ResponseWithBody } from "visual/component/Prompts/common/utils/Request";
+import { Response } from "visual/utils/api/response";
 
 export type AccountsResolve = {
   status: Response["status"];
@@ -9,7 +9,7 @@ export type AccountsResolve = {
 export type GetAccount = (data: {
   group: string;
   service: string;
-}) => Promise<Array<{ group: string; services: string }>>;
+}) => Promise<ResponseWithBody<Array<{ group: string; services: string }>>>;
 
 export type AddAccount = (data: {
   group: string;

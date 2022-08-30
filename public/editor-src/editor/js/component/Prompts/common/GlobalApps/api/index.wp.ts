@@ -1,6 +1,6 @@
 import Config from "visual/global/Config";
-import { makeUrl, parseJSON } from "../../../common/utils";
 import { request2 } from "visual/utils/api";
+import { makeUrl, parseJSON } from "../../../common/utils";
 import { AddAccount, DeleteAccount, GetAccount } from "./type";
 
 export const getAccounts: GetAccount = data => {
@@ -18,9 +18,7 @@ export const getAccounts: GetAccount = data => {
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
-  })
-    .then(r => parseJSON<Array<{ group: string; services: string }>>(r))
-    .then(r => r.data);
+  }).then((r) => parseJSON<Array<{ group: string; services: string }>>(r));
 };
 
 export const addAccount: AddAccount = body => {
