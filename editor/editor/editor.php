@@ -175,8 +175,8 @@ class Brizy_Editor_Editor_Editor {
             'prefix' => Brizy_Editor::prefix(),
             'cloud' => $this->getCloudInfo(),
             'editorVersion' => BRIZY_EDITOR_VERSION,
-        'imageSizes'      => $this->getImgSizes()
-);
+	        'imageSizes'      => $this->getImgSizes()
+		);
 		$manager = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 
 		$config = $this->addRecaptchaAccounts( $manager, $config, $context );
