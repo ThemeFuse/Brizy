@@ -436,7 +436,7 @@ class ApiCest {
 
 	public function setTemplateTypeTest( FunctionalTester $I ) {
 		$postId = $I->havePostInDatabase( [
-			'post_type'   => 'brizy_template',
+			'post_type'   => 'editor-template',
 			'post_title'  => 'Template',
 			'post_name'   => 'Template',
 			'post_status' => 'publish',
@@ -473,7 +473,7 @@ class ApiCest {
 
 	public function setTemplateTypeFailsTest( FunctionalTester $I ) {
 		$postId = $I->havePostInDatabase( [
-			'post_type'   => 'brizy_template',
+			'post_type'   => 'editor-template',
 			'post_title'  => 'Template',
 			'post_name'   => 'Template',
 			'post_status' => 'publish',

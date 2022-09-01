@@ -14,11 +14,6 @@ class Brizy_Compatibilities_WebcrafticClearfy {
 	 * @return bool
 	 */
 	public function disable_js_optimize( $is_minify ) {
-
-		if (  isset( $_GET[Brizy_Editor::prefix('-edit')] ) || isset( $_GET[Brizy_Editor::prefix('-edit-iframe')] ) ) {
-			return false;
-		}
-
-		return $is_minify;
+		return Brizy_Public_Main::is_editing() ? false : $is_minify;
 	}
 }

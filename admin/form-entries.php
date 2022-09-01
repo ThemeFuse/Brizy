@@ -3,7 +3,7 @@
 
 class Brizy_Admin_FormEntries {
 
-	const CP_FORM_ENTRY = 'brizy-form-entry';
+	const CP_FORM_ENTRY = 'editor-form-entry';
 	const OPTION_SUBMIT_LOG = 'brizy-form-log';
 	const NONCE_KEY = 'form-log';
 
