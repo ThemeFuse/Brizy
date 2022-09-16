@@ -1,33 +1,80 @@
-import { Config } from "../index";
-import { ConfigCommon } from "./ConfigCommon";
-import { DynamicContent } from "../DynamicContent";
-import { Pro } from "../Pro";
-import { User } from "../User";
-import { Urls } from "../Urls";
-import { Project } from "../Project";
-import { TemplateType } from "../TemplateType";
-import { Rule } from "../Rule";
 import { Role } from "visual/utils/membership";
+import { DynamicContent } from "../DynamicContent";
+import { Config } from "../index";
+import { Pro } from "../Pro";
+import { Project } from "../Project";
+import { Rule } from "../Rule";
+import { TemplateType } from "../TemplateType";
+import { Urls } from "../Urls";
+import { User } from "../User";
+import { ConfigCommon } from "./ConfigCommon";
 
+type Term = {
+  count: number;
+  description: string;
+  filter: string;
+  name: string;
+  parent: number;
+  slug: string;
+  taxonomy: string;
+  term_group: number;
+  term_id: number;
+  term_taxonomy_id: number;
+};
 export interface Prop {
   [k: string]: unknown;
 
   templates: { id: string; title: string }[];
   ruleMatches: Rule[];
+  postAuthor: number;
+  postTerms: Term[];
+  postTermParents: Term[];
   postType: string;
   postTypes: { name: string; label: string }[];
+  postLoopSources: { name: string; label: string }[];
   hasSidebars: boolean;
   plugins: Record<string, unknown>;
   api: {
     [k: string]: unknown;
     url: string;
     hash: string;
+
+    getProject: string;
+    setProject: string;
+
+    getPage: string;
+    updatePage: string;
+
+    getGlobalBlockList: string;
+    createGlobalBlock: string;
+    updateGlobalBlock: string;
+    updateGlobalBlocks: string;
+
+    createSavedBlock: string;
+    deleteSavedBlock: string;
     getSavedBlockList: string;
     getSavedBlockByUid: string;
-    uploadBlocks: string;
     downloadBlocks: string;
+
+    createLayout: string;
+    getLayoutList: string;
+    getLayoutByUid: string;
+    deleteLayout: string;
+    uploadBlocks: string;
     downloadLayouts: string;
+
     getPostObjects: string;
+    getMediaUid: string;
+    setFeaturedImage: string;
+    setFeaturedImageFocalPoint: string;
+    removeFeaturedImage: string;
+    getSidebars: string;
+    shortcodeContent: string;
+    getMenus: string;
+    getFonts: string;
+    getAttachmentUid: string;
+    getRuleGroupList: string;
+    rulePostsGroupList: string;
 
     // TODO: need completed it
   };

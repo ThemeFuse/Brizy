@@ -74,9 +74,18 @@ class ColorPalette extends React.Component {
           options: [
             {
               id: "backgroundColor",
-              type: "colorPicker",
+              type: "colorPicker2",
               label: "Color HEX",
               disableOpacity: true,
+              select: {
+                show: false
+              },
+              picker: {
+                showOpacity: false
+              },
+              palette: {
+                show: false
+              },
               value: {
                 hex: color.hex,
                 opacity: 1

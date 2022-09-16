@@ -3,7 +3,7 @@ import { uuid } from "visual/utils/uuid";
 export default function extractPopups($) {
   const globalPopupsProcessed = {};
 
-  $("[data-brz-link-type='popup']").each(function() {
+  $("[data-brz-link-type='popup']").each(function () {
     const $this = $(this);
     const popupId = $this.attr("href").replace("#", "");
     let $parent = $this.parent();
@@ -40,14 +40,6 @@ export default function extractPopups($) {
 
         $this.attr("href", `#${newId}`);
         $popup.attr("data-brz-popup", newId);
-
-        // append the popup to body to avoid problems with z-index
-        // this is done in such a weird way because we had a
-        // memory problem with our last code
-        //    $("body").append($popup));
-        // and this seems to fix it
-        $("body").append($.html(`[data-brz-popup=${newId}]`));
-        $popup.remove();
 
         if (isGlobal) {
           globalPopupsProcessed[popupId] = newId;

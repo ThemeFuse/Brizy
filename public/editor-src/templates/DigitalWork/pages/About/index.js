@@ -5,7 +5,7 @@ module.exports = {
   title: "About",
   keywords: "about, history, quote, logos, awards",
   cat: [0, 1],
-  pro: false,
+  pro: true,
   resolve: {
     blocks: [
       {

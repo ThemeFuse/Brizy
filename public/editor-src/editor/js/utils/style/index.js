@@ -1,9 +1,6 @@
 // Style State
 export { styleState } from "./state";
 
-// Media BG
-export { styleMediaBg } from "./styleMediaBg";
-
 // BG Image
 export {
   styleBgImage,

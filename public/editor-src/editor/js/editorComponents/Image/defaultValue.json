@@ -201,7 +201,7 @@
     "tempHoverBgColorOpacity": null,
     "tempHoverBgColorPalette": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

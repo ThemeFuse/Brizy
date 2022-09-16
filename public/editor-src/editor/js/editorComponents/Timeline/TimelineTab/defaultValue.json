@@ -62,7 +62,7 @@
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "",
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

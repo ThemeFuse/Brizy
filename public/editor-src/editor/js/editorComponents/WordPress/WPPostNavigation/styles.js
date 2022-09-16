@@ -3,7 +3,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function style(v, vs, vd) {
   const styles = {
     ".brz &&": {
-      standart: ["cssStyleSizeWidthPercent"]
+      standart: ["cssStyleSizeWidth"]
     },
     ".brz && .brz-navigation-title": {
       standart: ["cssStyleElementPostNavigationSpacing"]
@@ -41,7 +41,7 @@ export function style(v, vs, vd) {
     ".brz &&:hover:before": {
       standart: [
         "cssStyleElementPostNavigationShowSeparation",
-        "cssStyleElementPostNavigationSeparationHeight",
+        "cssStyleSizeHeight",
         "cssStyleBgColor"
       ]
     }

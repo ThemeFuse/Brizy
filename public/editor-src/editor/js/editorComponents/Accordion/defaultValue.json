@@ -378,7 +378,7 @@
     "tempActiveFilterBgColorOpacity": null,
     "tempActiveFilterBgColorPalette": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 
@@ -969,16 +969,19 @@
     "animationName": "none",
     "animationDuration": 1000,
     "animationDelay": 1000,
+    "animationInfiniteAnimation": false,
     "tempAnimationName": "none",
 
     "tabletAnimationName": null,
     "tabletAnimationDuration": null,
     "tabletAnimationDelay": null,
+    "tabletAnimationInfiniteAnimation": null,
     "tempTabletAnimationName": null,
 
     "mobileAnimationName": null,
     "mobileAnimationDuration": null,
     "mobileAnimationDelay": null,
+    "mobileAnimationInfiniteAnimation": null,
     "tempMobileAnimationName": null
   }
 }

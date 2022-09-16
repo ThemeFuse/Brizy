@@ -1,25 +1,25 @@
 import produce from "immer";
 import _ from "underscore";
-import Config from "visual/global/Config";
-import { request2 } from "visual/utils/api";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
+import Config from "visual/global/Config";
+import { request } from "visual/utils/api";
 import {
+  AddRecaptcha,
   CreateForm,
-  GetForm,
-  FormResponse,
-  UpdateForm,
-  GetIntegration,
-  GetSmptIntegration,
-  CreateSmptIntegration,
-  UpdateSmptIntegration,
   CreateIntegration,
-  UpdateIntegration,
-  GetIntegrationAccountApiKey,
   CreateIntegrationAccount,
   CreateIntegrationList,
-  AddRecaptcha
+  CreateSmptIntegration,
+  FormData,
+  FormResponse,
+  GetForm,
+  GetIntegration,
+  GetIntegrationAccountApiKey,
+  GetSmptIntegration,
+  UpdateForm,
+  UpdateIntegration,
+  UpdateSmptIntegration
 } from "./types";
-import { FormData } from "./types";
 
 // Form
 const normalizeForm = (res: FormResponse): FormResponse => {
@@ -32,7 +32,7 @@ const normalizeForm = (res: FormResponse): FormResponse => {
       const allIntegrations = [
         ...(Array.isArray(integrations) ? integrations : []),
         ...(Array.isArray(notifications)
-          ? notifications.map(a => ({ ...a, type: "email" }))
+          ? notifications.map((a) => ({ ...a, type: "email" }))
           : [])
       ];
 
@@ -52,13 +52,13 @@ export const getForm: GetForm = ({ formId }) => {
     container: containerId
   });
 
-  return request2(url, {
+  return request(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
   })
-    .then(r => parseJSON<FormData>(r))
+    .then((r) => parseJSON<FormData>(r))
     .then(normalizeForm);
 };
 
@@ -66,7 +66,7 @@ export const createForm: CreateForm = ({ formId }) => {
   const { api } = Config.get("urls");
   const { id: containerId } = Config.get("container");
 
-  return request2(`${api}/forms`, {
+  return request(`${api}/forms`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -76,8 +76,8 @@ export const createForm: CreateForm = ({ formId }) => {
       container: containerId
     })
   })
-    .then(r => parseJSON<FormData>(r))
-    .then(res => res);
+    .then((r) => parseJSON<FormData>(r))
+    .then((res) => res);
 };
 
 export const updateForm: UpdateForm = ({
@@ -91,7 +91,7 @@ export const updateForm: UpdateForm = ({
     container: containerId
   });
 
-  return request2(url, {
+  return request(url, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -112,12 +112,12 @@ export const getIntegration: GetIntegration = ({ formId, id }) => {
     container: containerId
   });
 
-  return request2(url, {
+  return request(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       subject: string;
       emailTo: string;
@@ -129,7 +129,7 @@ export const createIntegration: CreateIntegration = ({ formId, id }) => {
   const { api } = Config.get("urls");
   const { id: containerId } = Config.get("container");
 
-  return request2(`${api}/forms/${formId}/integrations`, {
+  return request(`${api}/forms/${formId}/integrations`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -138,7 +138,7 @@ export const createIntegration: CreateIntegration = ({ formId, id }) => {
       type: id,
       container: containerId
     })
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       subject: string;
       emailTo: string;
@@ -163,7 +163,7 @@ export const updateIntegration: UpdateIntegration = ({
     "fieldsMap"
   ]);
 
-  return request2(`${api}/forms/${formId}/integrations/${id}`, {
+  return request(`${api}/forms/${formId}/integrations/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -172,7 +172,7 @@ export const updateIntegration: UpdateIntegration = ({
       ...data,
       container: containerId
     })
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       subject: string;
       emailTo: string;
@@ -185,13 +185,13 @@ export const getIntegrationAccountApiKey: GetIntegrationAccountApiKey = ({
 }) => {
   const { api } = Config.get("urls");
 
-  return request2(`${api}/services/${id}/config`, {
+  return request(`${api}/services/${id}/config`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
   })
-    .then(r =>
+    .then((r) =>
       parseJSON<{
         accountProperties: Array<{ name: string }>;
       } | null>(r)
@@ -209,7 +209,7 @@ export const createIntegrationAccount: CreateIntegrationAccount = ({
   const { api } = Config.get("urls");
   const { id: containerId } = Config.get("container");
 
-  return request2(`${api}/accounts`, {
+  return request(`${api}/accounts`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -220,14 +220,14 @@ export const createIntegrationAccount: CreateIntegrationAccount = ({
       data: JSON.stringify(data)
     })
   })
-    .then(r =>
+    .then((r) =>
       parseJSON<{
         id: number;
         type: string;
         name: string;
       } | null>(r)
     )
-    .then(res => res);
+    .then((res) => res);
 };
 
 export const createIntegrationList: CreateIntegrationList = ({
@@ -236,7 +236,7 @@ export const createIntegrationList: CreateIntegrationList = ({
 }) => {
   const { api } = Config.get("urls");
 
-  return request2(`${api}/accounts/${usedAccount}/lists`, {
+  return request(`${api}/accounts/${usedAccount}/lists`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -244,7 +244,7 @@ export const createIntegrationList: CreateIntegrationList = ({
     body: JSON.stringify({
       data: JSON.stringify(data)
     })
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       formId: string;
       id: string;
@@ -263,12 +263,12 @@ export const getSmtpIntegration: GetSmptIntegration = ({ formId, id }) => {
     container: containerId
   });
 
-  return request2(url, {
+  return request(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       subject: string;
       emailTo: string;
@@ -280,7 +280,7 @@ export const createSmtpIntegration: CreateSmptIntegration = ({ formId }) => {
   const { api } = Config.get("urls");
   const { id: containerId } = Config.get("container");
 
-  return request2(`${api}/forms/${formId}/notifications`, {
+  return request(`${api}/forms/${formId}/notifications`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -288,7 +288,7 @@ export const createSmtpIntegration: CreateSmptIntegration = ({ formId }) => {
     body: JSON.stringify({
       container: containerId
     })
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       subject: string;
       emailTo: string;
@@ -303,13 +303,13 @@ export const updateSmtpIntegration: UpdateSmptIntegration = ({
 }) => {
   const { api } = Config.get("urls");
 
-  return request2(`${api}/forms/${formId}/notifications/${id}`, {
+  return request(`${api}/forms/${formId}/notifications/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify(data)
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       subject: string;
       emailTo: string;
@@ -323,7 +323,7 @@ export const addRecaptcha: AddRecaptcha = ({ group, service, ...data }) => {
   const { api } = Config.get("urls");
   const { id: containerId } = Config.get("container");
 
-  return request2(`${api}/accounts`, {
+  return request(`${api}/accounts`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"

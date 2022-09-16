@@ -4,17 +4,19 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { Value } from "./index";
+import { State } from "visual/utils/stateMode";
+import { Value } from "./types/Value";
 
 export function getItems({
   v,
-  device
+  device,
+  state
 }: {
   v: Value;
   device: ResponsiveMode;
+  state: State;
 }): ToolbarItemType[] {
-  const dvv = (key: string) =>
-    defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const { hex: agreementColorHex } = getOptionColorHexByPalette(
     dvv("agreementColorHex"),
@@ -33,23 +35,11 @@ export function getItems({
       position: 10,
       options: [
         {
-          id: "tabsTypography",
-          type: "tabs-dev",
-          tabs: [
-            {
-              id: "tabsTypographyAgreement",
-              label: t("Agreement"),
-              options: [
-                {
-                  id: "agreement",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: "desktop" === device
-                  }
-                }
-              ]
-            }
-          ]
+          id: "agreementTypography",
+          type: "typography-dev",
+          config: {
+            fontFamily: device === "desktop"
+          }
         }
       ]
     },
@@ -63,41 +53,46 @@ export function getItems({
           style: {
             backgroundColor: hexToRgba(
               agreementColorHex,
-              v.agreementColorOpacity
+              dvv("agreementColorOpacity")
             )
           }
         }
       },
       devices: "desktop",
-      position: 30,
+      position: 20,
       options: [
         {
-          id: "tabsColor",
-          type: "tabs-dev",
-          tabs: [
-            {
-              id: "tabAgreementColor",
-              label: t("Color"),
-              options: [
-                {
-                  id: "agreementColor",
-                  type: "colorPicker-dev"
-                }
-              ]
-            }
-          ]
+          id: "agreementColor",
+          type: "colorPicker-dev"
         }
       ]
     },
     {
       id: "agreementHorizontalAlign",
       type: "toggle-dev",
-      position: 20,
+      position: 30,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
         { icon: "nc-text-align-center", title: t("Align"), value: "center" },
-        { icon: "nc-text-align-right", title: t("Align"), value: "right" },
-        { icon: "nc-text-align-justify", title: t("Align"), value: "justify" }
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
+      ]
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: { icon: "nc-cog", title: t("Settings") },
+      position: 40,
+      options: [
+        {
+          id: "agreementSpacing",
+          label: t("Spacing"),
+          type: "slider-dev",
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        }
       ]
     }
   ];

@@ -1,28 +1,30 @@
+import classNames from "classnames";
 import React from "react";
-import classnames from "classnames";
 import { noop } from "underscore";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import { css } from "visual/utils/cssStyle";
-import { style, styleAnimation } from "./styles";
 import ContextMenu from "visual/component/ContextMenu";
-import contextMenuConfig from "./contextMenu";
-import defaultValue from "./defaultValue.json";
-import Items from "./items";
-import * as toolbarExtendParentConfig from "./toolbarExtendParent";
-import * as sidebarExtendParentConfig from "./sidebarExtendParent";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import * as toolbarSecondConfig from "./toolbarSecond";
-import Toolbar from "visual/component/Toolbar";
-import { ThemeIcon } from "visual/component/ThemeIcon";
 import { TextEditor } from "visual/component/Controls/TextEditor";
-import { Wrapper } from "../tools/Wrapper";
+import CustomCSS from "visual/component/CustomCSS";
+import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
-import classNames from "classnames";
+import * as State from "visual/utils/stateMode";
+import { Wrapper } from "../tools/Wrapper";
+import contextMenuConfig from "./contextMenu";
+import defaultValue from "./defaultValue.json";
+import Items from "./items";
+import * as sidebarConfig from "./sidebar";
+import * as sidebarExtendParentConfig from "./sidebarExtendParent";
+import { style, styleAnimation } from "./styles";
+import * as toolbarConfig from "./toolbar";
+import * as toolbarExtendParentConfig from "./toolbarExtendParent";
+import * as toolbarSecondConfig from "./toolbarSecond";
 
 class Switcher extends EditorComponent {
   static get componentId() {
@@ -40,7 +42,8 @@ class Switcher extends EditorComponent {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendParentConfig,
       sidebarExtendParentConfig,
-      { allowExtend: false,
+      {
+        allowExtend: false,
         allowExtendFromThirdParty: true,
         thirdPartyExtendId: `${this.constructor.componentId}Parent`
       }
@@ -48,16 +51,20 @@ class Switcher extends EditorComponent {
     this.props.extendParentToolbar(toolbarExtend);
   }
 
-  handleChangeNav = activeTab => {
-    this.patchValue({ activeTab });
+  handleChange = (patch) => {
+    this.patchValue(patch);
   };
 
-  handleLabelChange1 = labelText1 => {
-    this.patchValue({ labelText1 });
+  handleChangeNav = (activeTab) => {
+    this.handleChange({ activeTab });
   };
 
-  handleLabelChange2 = labelText2 => {
-    this.patchValue({ labelText2 });
+  dvv = (key) => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
   };
 
   getAnimationClassName = (v, vs, vd) => {
@@ -65,13 +72,12 @@ class Switcher extends EditorComponent {
       return undefined;
     }
 
-    const animationName = defaultValueValue({ v, key: "animationName" });
-    const animationDuration = defaultValueValue({
-      v,
-      key: "animationDuration"
-    });
-    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
-    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+    const animationName = this.dvv("animationName");
+    const animationDuration = this.dvv("animationDuration");
+    const animationDelay = this.dvv("animationDelay");
+    const animationInfiniteAnimation = this.dvv("animationInfiniteAnimation");
+
+    const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
     return classNames(
       css(
@@ -92,64 +98,73 @@ class Switcher extends EditorComponent {
       secondIconName,
       secondIconType
     } = v;
-    const className = classnames(
+    const className = classNames(
       "brz-switcher__nav2--control",
       { "brz-switcher__nav2--control--active": activeTab === 0 },
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
 
-    const classNameActive1 = classnames("brz-switcher__nav2__item", {
-      "brz-switcher__nav2__item--active": activeTab === 0
-    });
-    const classNameActive2 = classnames("brz-switcher__nav2__item", {
-      "brz-switcher__nav2__item--active": activeTab === 1
-    });
-
     return (
       <div className="brz-switcher__nav2">
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig, {
-            allowExtend: false
-          })}
-        >
-          <div className="brz-switcher__nav2--button">
-            {firstIconName && firstIconType && (
-              <ThemeIcon name={firstIconName} type={firstIconType} />
-            )}
-            <TextEditor
-            className={classNameActive1}
-            value={labelText1}
-            onChange={this.handleLabelChange1}
-          />
-          </div>
-        </Toolbar>
+        {Array(2)
+          .fill()
+          .map((_, index) => {
+            const classNameNavButton = classNames(
+              "brz-switcher__nav2--button",
+              {
+                "brz-switcher__nav2__item--active": activeTab === index
+              }
+            );
 
-        <div
-          onClick={() => {
-            this.handleChangeNav(activeTab === 0 ? 1 : 0);
-          }}
-          className={className}
-        />
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(
-            toolbarSecondConfig,
-            sidebarConfig,
-            {
-              allowExtend: false
-            }
-          )}
-        >
-          <div className="brz-switcher__nav2--button">
-            {secondIconName && secondIconType && (
-              <ThemeIcon name={secondIconName} type={secondIconType} />
-            )}
-            <TextEditor
-            className={classNameActive2}
-            value={labelText2}
-            onChange={this.handleLabelChange2}
-          />
-          </div>
-        </Toolbar>
+            return (
+              <React.Fragment key={index}>
+                <Toolbar
+                  {...this.makeToolbarPropsFromConfig2(
+                    index === 0 ? toolbarConfig : toolbarSecondConfig,
+                    sidebarConfig,
+                    {
+                      allowExtend: false
+                    }
+                  )}
+                >
+                  <div className={classNameNavButton}>
+                    {index === 0 && firstIconName && firstIconType && (
+                      <ThemeIcon name={firstIconName} type={firstIconType} />
+                    )}
+                    {index === 0 && (
+                      <TextEditor
+                        className="brz-switcher__nav2__item"
+                        value={labelText1}
+                        onChange={(text) =>
+                          this.handleChange({ labelText1: text })
+                        }
+                      />
+                    )}
+                    {index === 1 && secondIconName && secondIconType && (
+                      <ThemeIcon name={secondIconName} type={secondIconType} />
+                    )}
+                    {index === 1 && (
+                      <TextEditor
+                        className="brz-switcher__nav2__item"
+                        value={labelText2}
+                        onChange={(text) =>
+                          this.handleChange({ labelText2: text })
+                        }
+                      />
+                    )}
+                  </div>
+                </Toolbar>
+                {index === 0 && (
+                  <div
+                    onClick={() => {
+                      this.handleChangeNav(activeTab === 0 ? 1 : 0);
+                    }}
+                    className={className}
+                  />
+                )}
+              </React.Fragment>
+            );
+          })}
       </div>
     );
   }
@@ -184,12 +199,12 @@ class Switcher extends EditorComponent {
       renderType: "content",
       meta: this.props.meta
     });
-    const classNameSwitcher = classnames(
+    const classNameSwitcher = classNames(
       "brz-switcher",
       { "brz-switcher--style2": switcherStyle === "style-2" },
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
-    const classNameNav = classnames("brz-switcher__nav", {
+    const classNameNav = classNames("brz-switcher__nav", {
       "brz-switcher__nav--active": activeTab === 0
     });
 

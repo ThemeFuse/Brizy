@@ -29,7 +29,7 @@
     "coverPositionX": 50,
 
     "coverZoom": 100,
-    "coverZoomSuffix": null,
+    "coverZoomSuffix": "%",
 
     "tabletCoverSizeType": null,
     "tabletCoverPositionY": null,
@@ -61,8 +61,12 @@
     "className": "",
 
     "iconSize": 80,
+
     "iconSizeWidth": 80,
+    "iconSizeWidthSuffix": "px",
+
     "iconSizeHeight": 80,
+    "iconSizeHeightSuffix": "px",
 
     "controlsIconCustomSize": 16,
     "controlsIconCustomSizeSuffix": null,
@@ -258,7 +262,7 @@
     "tempHoverBorderBottomRightRadius": null,
     "tempHoverBorderBottomLeftRadius": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

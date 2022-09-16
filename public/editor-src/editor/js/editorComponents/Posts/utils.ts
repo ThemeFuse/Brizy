@@ -2,15 +2,16 @@
 
 import { Dictionary } from "visual/types/utils";
 import * as Union from "visual/utils/reader/union";
-import { decodeV, CURRENT_CONTEXT_TYPE } from "./utils.common";
+import { getFieldIdCollectionId } from "./toolbarExtendParent/utils";
 import {
-  V,
-  VDecoded,
-  CloudQuery,
-  CloudPostsQuery,
   CloudArchiveQuery,
-  CloudTagsQuery
+  CloudPostsQuery,
+  CloudQuery,
+  CloudTagsQuery,
+  V,
+  VDecoded
 } from "./types";
+import { CURRENT_CONTEXT_TYPE, decodeV } from "./utils.common";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function getLoopTagsAttributes(_v: V): undefined | CloudTagsQuery {
@@ -94,14 +95,23 @@ const includeExcludeAttribute: (
   prefix: string,
   lvl1Id: string,
   arr: string[]
-) => Dictionary<string[]> = (symbols, prefix, lvl1Id, arr) =>
-  arr.reduce<Dictionary<string[]>>((acc, id) => {
-    const lvl2Id = `${lvl1Id}_${prefix}_${id}`;
-    const lvl2Symbol = symbols[lvl2Id];
+) => Dictionary<Array<{ collectionId: string; fieldId?: string }>> = (
+  symbols,
+  prefix,
+  lvl1Id,
+  arr
+) =>
+  arr.reduce<Dictionary<Array<{ collectionId: string; fieldId?: string }>>>(
+    (acc, id) => {
+      const lvl2Id = `${lvl1Id}_${prefix}_${id}`;
+      const lvl2Symbol = symbols[lvl2Id];
 
-    if (lvl2Symbol !== undefined) {
-      acc[id] = lvl2Symbol;
-    }
+      if (lvl2Symbol !== undefined) {
+        const { collectionId } = getFieldIdCollectionId(id);
+        acc[collectionId] = lvl2Symbol.map(getFieldIdCollectionId);
+      }
 
-    return acc;
-  }, {});
+      return acc;
+    },
+    {}
+  );

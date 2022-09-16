@@ -13,10 +13,10 @@
   },
   "style": {
     "width": 100,
-    "widthSuffix": null,
+    "widthSuffix": "%",
 
     "height": 400,
-    "heightSuffix": null,
+    "heightSuffix": "px",
 
     "customCSS": "",
 

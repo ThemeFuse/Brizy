@@ -1,14 +1,13 @@
+import { cssStyleColor } from "visual/utils/cssStyle";
 import {
+  styleElementPostNavigationShowPost,
+  styleElementPostNavigationShowSeparation,
+  styleElementPostNavigationSpacing,
   styleTypography2FontFamily,
   styleTypography2FontSize,
-  styleTypography2LineHeight,
   styleTypography2FontWeight,
   styleTypography2LetterSpacing,
-  styleColor,
-  styleElementPostNavigationSpacing,
-  styleElementPostNavigationShowPost,
-  styleSizeHeight,
-  styleElementPostNavigationShowSeparation
+  styleTypography2LineHeight
 } from "visual/utils/style2";
 
 export function cssStyleElementPostNavigation2TitleFontFamily({ v, device }) {
@@ -99,23 +98,21 @@ export function cssStyleElementPostNavigation2PostLetterSpacing({ v, device }) {
 }
 
 export function cssStyleElementPostNavigationColorTitle({ v, device, state }) {
-  const color = styleColor({
+  return cssStyleColor({
     v,
     device,
     prefix: "titleColor",
     state
   });
-  return color === undefined ? "" : `color:${color};`;
 }
 
 export function cssStyleElementPostNavigationColorPost({ v, device, state }) {
-  const color = styleColor({
+  return cssStyleColor({
     v,
     device,
     prefix: "postColor",
     state
   });
-  return color === undefined ? "" : `color:${color};`;
 }
 
 export function cssStyleElementPostNavigationSpacing({ v, device, state }) {
@@ -132,15 +129,6 @@ export function cssStyleElementPostNavigationSpacing({ v, device, state }) {
     : showPost === "off"
     ? "margin-bottom: 0;"
     : `margin-bottom:${spacing}px`;
-}
-
-export function cssStyleElementPostNavigationSeparationHeight({
-  v,
-  device,
-  state
-}) {
-  const height = styleSizeHeight({ v, device, state });
-  return height === undefined ? "" : `height:${height}%;`;
 }
 
 export function cssStyleElementPostNavigationShowSeparation({

@@ -13,7 +13,7 @@
     "mobileSpacingSuffix": null,
 
     "navStyle2Size": 50,
-    "navStyle2SizeSuffix": null,
+    "navStyle2SizeSuffix": "px",
 
     "tabletNavStyle2Size": null,
     "tabletNavStyle2SizeSuffix": null,
@@ -22,7 +22,7 @@
     "mobileNavStyle2SizeSuffix": null,
 
     "navStyle1Width": 200,
-    "navStyle1WidthSuffix": null,
+    "navStyle1WidthSuffix": "px",
 
     "switcherStyle": "style-1",
     "tabletSwitcherStyle": "style-1",
@@ -165,7 +165,7 @@
     "tempActiveBgColorOpacity": 1,
     "tempActiveBgColorPalette": "",
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 
@@ -346,16 +346,19 @@
     "animationName": "none",
     "animationDuration": 1000,
     "animationDelay": 1000,
+    "animationInfiniteAnimation": false,
     "tempAnimationName": "none",
 
     "tabletAnimationName": null,
     "tabletAnimationDuration": null,
     "tabletAnimationDelay": null,
+    "tabletAnimationInfiniteAnimation": null,
     "tempTabletAnimationName": null,
 
     "mobileAnimationName": null,
     "mobileAnimationDuration": null,
     "mobileAnimationDelay": null,
+    "mobileAnimationInfiniteAnimation": null,
     "tempMobileAnimationName": null
   }
 }

@@ -1,22 +1,21 @@
-import { defaultValueValue } from "../onChange";
+import { cssStyleColor, cssStylePadding } from "visual/utils/cssStyle";
+import { MOBILE, TABLET } from "visual/utils/responsiveMode";
 import {
-  styleElementSectionSliderHeight,
-  styleElementSectionHeight,
-  styleElementSectionContainerType,
   styleElementSectionContainerSize,
+  styleElementSectionContainerType,
+  styleElementSectionHeight,
   styleElementSectionMinHeight,
   styleElementSectionMinHeightSuffix,
-  styleColor,
-  styleMarginType,
-  styleMarginUngrouped,
+  styleElementSectionSliderHeight,
   styleMarginGrouped,
   styleMarginGroupedSuffix,
+  styleMarginType,
+  styleMarginUngrouped,
   styleMarginUngroupedSuffix
 } from "visual/utils/style2";
-import { cssStylePadding } from "visual/utils/cssStyle";
-import { MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { defaultValueValue } from "../onChange";
 
-const validation = k => k !== undefined;
+const validation = (k) => k !== undefined;
 
 export function cssStyleSectionMaxWidth({ v, device, state }) {
   const containerType = styleElementSectionContainerType({ v, device, state });
@@ -43,24 +42,12 @@ export function cssStyleSectionSliderHeight({ v }) {
   return validation(height) ? `${sliderHeight}: ${height};` : "";
 }
 
-export function cssStyleSectionColorDots({
-  v,
-  device,
-  state,
-  prefix = "sliderDotsColor"
-}) {
-  const colorDots = styleColor({ v, device, state, prefix });
-  return validation(colorDots) ? `color: ${colorDots};` : "";
+export function cssStyleSectionColorDots({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "sliderDotsColor" });
 }
 
-export function cssStyleSectionColorArrows({
-  v,
-  device,
-  state,
-  prefix = "sliderArrowsColor"
-}) {
-  const colorArrows = styleColor({ v, device, state, prefix });
-  return validation(colorArrows) ? `color: ${colorArrows};` : "";
+export function cssStyleSectionColorArrows({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "sliderArrowsColor" });
 }
 
 export function cssStyleSectionPropertyHoverTransition() {
@@ -129,12 +116,8 @@ export function cssStyleSectionHeightStyle({ v, device }) {
 
 export function cssStyleSectionPaddingsForEditorResize({ v, device, state }) {
   if (IS_EDITOR) {
-    const {
-      paddingLeft,
-      paddingLeftSuffix,
-      paddingRight,
-      paddingRightSuffix
-    } = cssStylePadding({ v, device, state });
+    const { paddingLeft, paddingLeftSuffix, paddingRight, paddingRightSuffix } =
+      cssStylePadding({ v, device, state });
     const _paddingLeft = `${paddingLeft}${paddingLeftSuffix}`;
     const _paddingRight = `${paddingRight}${paddingRightSuffix}`;
 
@@ -143,14 +126,14 @@ export function cssStyleSectionPaddingsForEditorResize({ v, device, state }) {
 }
 
 export function cssStyleSectionBgSize({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const bgSize = dvv("bgSize");
 
   return `background-size:${bgSize};`;
 }
 
 export function cssStyleSectionBgRepeat({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const bgRepeat = dvv("bgRepeat");
 
   return `background-repeat:${bgRepeat === "on" ? "repeat" : "no-repeat"};`;

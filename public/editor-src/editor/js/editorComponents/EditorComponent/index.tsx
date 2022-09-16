@@ -55,7 +55,7 @@ const capitalize = ([first, ...rest]: string, lowerRest = false): string =>
 
 type Rule = string | { rule: string; mapper: <T>(m: T) => void };
 
-type Model<M> = M & {
+export type Model<M> = M & {
   _id?: string;
   _styles?: string[];
   tabsState?: State.State;
@@ -72,15 +72,24 @@ export type OnChangeMeta<M> = Meta & {
   intent?: "replace_all" | "remove_all";
 };
 
-export type ContextMenuItem = {
+export type ContextMenuItemButton = {
   id: string;
-  type: "group" | "button";
+  type: "button";
+  title: string;
+  inactive?: boolean;
+  helperText: (d: { isInSubMenu: boolean }) => string;
+  onChange: () => void;
+};
+
+export type ContextMenuItemGroup = {
+  id: string;
+  type: "group";
   title?: string;
   icon?: string;
   items?: ContextMenuItem[];
-  helperText?: () => string;
-  onChange?: () => void;
 };
+
+export type ContextMenuItem = ContextMenuItemButton | ContextMenuItemGroup;
 
 type ContextMenuProps<M extends ElementModel> = {
   id: string;
@@ -462,6 +471,9 @@ export class EditorComponent<
           return false;
       }
 
+      // is symbols_
+      if (k.startsWith("symbol_")) return false;
+
       return true;
     });
 
@@ -571,12 +583,8 @@ export class EditorComponent<
     sidebarConfig?: SidebarConfig<M>,
     options = {} /* options */
   ): ToolbarExtend {
-    const {
-      onToolbarOpen,
-      onToolbarClose,
-      onToolbarEnter,
-      onToolbarLeave
-    } = this.props;
+    const { onToolbarOpen, onToolbarClose, onToolbarEnter, onToolbarLeave } =
+      this.props;
     const {
       allowExtendFromParent,
       parentItemsFilter,
@@ -611,9 +619,9 @@ export class EditorComponent<
         }
       }
 
-      const getItemsFn = config[getItemsFnName] as OldToolbarConfig<
-        M
-      >[typeof getItemsFnName];
+      const getItemsFn = config[
+        getItemsFnName
+      ] as OldToolbarConfig<M>[typeof getItemsFnName];
       const v = this.getValue();
       const stateMode = State.mRead(v.tabsState);
       let items = this.bindToolbarItems(
@@ -794,7 +802,7 @@ export class EditorComponent<
           });
     };
 
-    return optionMap(option => {
+    return optionMap((option) => {
       const { id, type, onChange: oldOnchange } = option;
 
       if (Responsive.empty === device) {
@@ -809,7 +817,7 @@ export class EditorComponent<
       const deps = option.dependencies || _.identity;
 
       if (isDev) {
-        option.value = fromElementModel(type)(key =>
+        option.value = fromElementModel(type)((key) =>
           defaultValueValue({
             v,
             key: createOptionId(id, key),
@@ -819,7 +827,7 @@ export class EditorComponent<
         );
       }
 
-      const elementModel = toElementModel<typeof type>(type, key =>
+      const elementModel = toElementModel<typeof type>(type, (key) =>
         getKey(id, key, isDev)
       );
 
@@ -848,12 +856,8 @@ export class EditorComponent<
     sidebarConfig?: SidebarConfig<M>,
     options = {}
   ): ToolbarExtend {
-    const {
-      onToolbarOpen,
-      onToolbarClose,
-      onToolbarEnter,
-      onToolbarLeave
-    } = this.props;
+    const { onToolbarOpen, onToolbarClose, onToolbarEnter, onToolbarLeave } =
+      this.props;
     const {
       allowExtendFromParent,
       parentItemsFilter,

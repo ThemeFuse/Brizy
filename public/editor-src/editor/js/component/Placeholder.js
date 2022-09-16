@@ -6,16 +6,17 @@ export default class Placeholder extends React.Component {
   static defaultProps = {
     className: "",
     icon: "",
-    style: {}
+    style: {},
+    type: "editor"
   };
 
   render() {
-    const { className: _className, icon, style } = this.props;
+    const { className: _className, icon, style, type } = this.props;
     const className = classnames("brz-shortcode__placeholder", _className);
 
     return (
       <div className={className} style={style}>
-        <ThemeIcon name={icon} type="editor" />
+        <ThemeIcon name={icon} type={type} />
       </div>
     );
   }

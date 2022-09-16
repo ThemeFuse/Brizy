@@ -1,16 +1,16 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { WithId } from "visual/utils/options/attributes";
-import { Role } from "visual/utils/membership";
-import { DynamicContent } from "visual/global/Config/types/DynamicContent";
-import { Pro } from "visual/global/Config/types/Pro";
-import { User } from "visual/global/Config/types/User";
-import { Urls } from "visual/global/Config/types/Urls";
-import { Project } from "visual/global/Config/types/Project";
 import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
 import { WhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
-import { EcwidProductId } from "visual/global/Ecwid";
+import { DynamicContent } from "visual/global/Config/types/DynamicContent";
+import { Pro } from "visual/global/Config/types/Pro";
+import { Project } from "visual/global/Config/types/Project";
+import { Urls } from "visual/global/Config/types/Urls";
+import { User } from "visual/global/Config/types/User";
+import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
 import { CollectionItemId, CustomerId } from "visual/types";
+import { Role } from "visual/utils/membership";
+import { WithId } from "visual/utils/options/attributes";
 
 export type ShopModules = undefined | Ecwid;
 
@@ -19,6 +19,8 @@ interface BasePage<Id extends string> {
   id: Id;
   isProtected: boolean;
   isResetPassPage: boolean;
+  slug?: string;
+  collectionTypeSlug?: string;
 }
 
 // region CollectionPage
@@ -46,10 +48,20 @@ export interface EcwidProduct extends BasePage<CollectionItemId> {
 }
 
 export const isEcwidProduct = (p: Page): p is EcwidProduct =>
-  p.provider === "ecwid-product";
+  p && p.provider === "ecwid-product";
 // endregion
 
-export type Page = CollectionPage | CustomerPage | EcwidProduct;
+// region EcwidCategory
+export interface EcwidCategory extends BasePage<CollectionItemId> {
+  provider: "ecwid-product-category";
+  categoryId: EcwidCategoryId;
+}
+
+export const isEcwidCategory = (p: Page): p is EcwidCategory =>
+  p && p.provider === "ecwid-product-category";
+// endregion
+
+export type Page = CollectionPage | CustomerPage | EcwidProduct | EcwidCategory;
 // endregion
 
 export interface Base<Platform> extends ConfigCommon, WithId<number> {

@@ -1,6 +1,6 @@
 import Config from "visual/global/Config";
 import { makeUrl, parseJSON } from "../../../common/utils";
-import { request2 } from "visual/utils/api";
+import { request } from "visual/utils/api";
 import { AccountsResolve, AddAccount, DeleteAccount } from "./type";
 
 type NormalizeAccountsResolve = {
@@ -10,13 +10,13 @@ type NormalizeAccountsResolve = {
 
 type NormalizeAccounts = (res: AccountsResolve) => NormalizeAccountsResolve;
 
-const normalizeAccounts: NormalizeAccounts = res => {
+const normalizeAccounts: NormalizeAccounts = (res) => {
   const { data } = res;
 
   if (data) {
     return {
       ...res,
-      data: data.map(account => ({
+      data: data.map((account) => ({
         ...account,
         group: account.type,
         services: account.type
@@ -43,13 +43,13 @@ export const getAccounts = ({
     container: containerId
   });
 
-  return request2(url, {
+  return request(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
   })
-    .then(r => parseJSON<Array<{ type: string }> | null>(r))
+    .then((r) => parseJSON<Array<{ type: string }> | null>(r))
     .then(normalizeAccounts);
 };
 
@@ -58,7 +58,7 @@ export const addAccount: AddAccount = ({ group, service, ...data }) => {
   const { api } = Config.get("urls");
   const { id: containerId } = Config.get("container");
 
-  return request2(`${api}/accounts`, {
+  return request(`${api}/accounts`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -70,18 +70,18 @@ export const addAccount: AddAccount = ({ group, service, ...data }) => {
     })
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };
 
-export const deleteAccount: DeleteAccount = id => {
+export const deleteAccount: DeleteAccount = (id) => {
   const { api } = Config.get("urls");
 
-  return request2(`${api}/accounts/${id}`, {
+  return request(`${api}/accounts/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };

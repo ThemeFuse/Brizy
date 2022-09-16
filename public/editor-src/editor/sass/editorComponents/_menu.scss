@@ -139,6 +139,9 @@ $dropdown-arrow-size: 7px;
       display: block;
     }
     .brz-mm-navbar {
+      position: sticky !important;
+      z-index: 1;
+
       a:not(.brz-btn),
       > * {
         color: inherit;
@@ -148,6 +151,11 @@ $dropdown-arrow-size: 7px;
         background-color: transparent;
       }
     }
+
+    .brz-mm-navbar-sticky {
+      top: 0;
+    }
+
     .brz-menu__ul {
       & > .brz-mm-navbar {
         height: 44px;

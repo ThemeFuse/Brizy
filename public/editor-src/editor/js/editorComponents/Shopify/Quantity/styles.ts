@@ -19,7 +19,7 @@ export function style(
         "cssStyleBoxShadow",
         "cssStyleBorderRadius",
         "cssStyleElementShopifyQuantityLineHeight",
-        "cssStyleElementShopifyQuantityInputWidth",
+        "cssStyleSizeWidth",
         "cssStyleColor"
       ]
     }

@@ -3,6 +3,7 @@ import { BoundsStatic, RangeStatic } from "quill";
 import React, { ReactNode } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
+import Config from "visual/global/Config";
 import { ConfigDCItem } from "visual/global/Config/types/DynamicContent";
 import {
   defaultFontSelector,
@@ -10,7 +11,7 @@ import {
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { css1 } from "visual/utils/cssStyle";
-import { IS_STORY } from "visual/utils/models";
+import { isStory } from "visual/utils/models";
 import { uuid } from "visual/utils/uuid";
 import { styleHeading } from "./styles";
 import { getFormats, mapBlockElements } from "./utils";
@@ -44,6 +45,7 @@ type Props = {
 
   onSelectionChange: (format: Formats, coords: Coords) => void;
   onTextChange: (text: string) => void;
+  isToolbarOpen: () => boolean;
 };
 
 class QuillComponent extends React.Component<Props> {
@@ -73,15 +75,16 @@ class QuillComponent extends React.Component<Props> {
 
   componentDidUpdate(props: Props): void {
     const { fonts } = props;
-    const { value, forceUpdate } = this.props;
+    const { value, forceUpdate, onSelectionChange, isToolbarOpen } = this.props;
     const reinitForFonts = !_.isEqual(fonts, this.props.fonts);
     const reinitForValue = value !== this.lastUpdatedValue || forceUpdate;
 
     if ((reinitForValue || reinitForFonts) && this.quill) {
       this.reinitPluginWithValue(value);
 
-      if (reinitForValue && !IS_STORY) {
-        this.props.onSelectionChange(
+      // If toolbar is opened need synchronize the state
+      if (reinitForValue && !isStory(Config.getAll()) && isToolbarOpen()) {
+        onSelectionChange(
           this.getSelectionFormat(),
           this.getCoords(this.quill.getSelection(true))
         );
@@ -134,6 +137,7 @@ class QuillComponent extends React.Component<Props> {
   ): void {
     this.destroyPlugin();
     if (this.contentEditable.current) {
+      this.lastUpdatedValue = value;
       this.contentEditable.current.innerHTML = this.changeRichTextFonts(value);
     }
     this.initPlugin();
@@ -229,7 +233,7 @@ class QuillComponent extends React.Component<Props> {
   save = _.debounce((text: string) => {
     this.lastUpdatedValue = text;
     this.props.onTextChange(text);
-  }, 1000);
+  }, 500);
 
   handleClick = (): void => {
     const node = this.content.current;
@@ -366,13 +370,12 @@ class QuillComponent extends React.Component<Props> {
     const existingIds: string[] = [];
 
     lines.forEach((line) => {
-      const domNode = line.domNode;
+      const domNode = line.domNode as HTMLElement;
 
-      let uniqId = domNode.getAttribute("data-uniq-id");
+      const uniqId = domNode.getAttribute("data-uniq-id") || uuid(5);
 
       // it's needed for cases when new paragraph was created and we should set to him new id
       if (existingIds.includes(uniqId)) {
-        uniqId = uuid(5);
         domNode.setAttribute("data-uniq-id", uniqId);
       }
 

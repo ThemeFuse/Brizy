@@ -23,7 +23,7 @@ const generateConditionBlocks = (
 };
 
 export const generateBlocksList = (
-  pageBlocksIds: string[],
+  pageBlocksIds: ReduxState["page"]["id"][],
   globalBlocks: ReduxState["globalBlocks"],
   page: ReduxState["page"]
 ): string[] => {

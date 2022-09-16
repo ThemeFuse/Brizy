@@ -3,7 +3,7 @@ import classnames from "classnames";
 import _ from "underscore";
 import { Alpha, ColorWrap, Hue, Saturation } from "./common";
 
-export class Brizy extends Component {
+class Brizy extends Component {
   renderPointer = () => <div className="color-picker2-pointer" />;
 
   renderPointerOpacity = ({ rgb: { a: opacity } }, showTooltip) => {
@@ -34,7 +34,7 @@ export class Brizy extends Component {
 
     const _className = classnames("brz-ed-control__colorPicker2", className);
     return (
-      <div className={_className}>
+      <div className={_className} ref={this.props.domRef}>
         <div className="color-picker2-body">
           <div className="color-picker2-saturation">
             <Saturation
@@ -75,7 +75,10 @@ export class Brizy extends Component {
 
 Brizy.defaultProps = {
   disableOpacity: false,
-  onChange: _.noop
+  onChange: _.noop,
+  domRef: null
 };
 
-export default ColorWrap(Brizy);
+const _Brizy = ColorWrap(Brizy);
+
+export default _Brizy;

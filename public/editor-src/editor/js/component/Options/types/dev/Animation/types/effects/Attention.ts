@@ -1,12 +1,12 @@
-import { t } from "visual/utils/i18n";
-import * as Parse from "visual/utils/reader/readWithParser";
 import { mPipe, pass } from "visual/utils/fp";
+import { t } from "visual/utils/i18n";
+import { prop } from "visual/utils/object/get";
+import * as Parse from "visual/utils/reader/readWithParser";
+import * as BaseEffect from "../BaseEffect";
 import * as ET from "../EffectType";
 import { EffectType, isEffect } from "../EffectType";
 import { LegacyEffectType } from "../LegacyEffectType";
-import * as BaseEffect from "../BaseEffect";
 import { LegacyModel } from "../LegacyModel";
-import { prop } from "visual/utils/object/get";
 
 export type Style =
   | LegacyEffectType.flash
@@ -71,7 +71,8 @@ export const fromLegacyModel = Parse.readWithParser<LegacyModel, Attention>({
     (): LegacyEffectType.flash => LegacyEffectType.flash
   ]),
   duration: BaseEffect.durationFromLegacyModel,
-  delay: BaseEffect.delayFromLegacyModel
+  delay: BaseEffect.delayFromLegacyModel,
+  infiniteAnimation: BaseEffect.infiniteAnimationFromLegacyModel
 });
 
 export const toLegacyEffectType = (v: Attention): LegacyEffectType => v.style;
@@ -79,7 +80,8 @@ export const toLegacyEffectType = (v: Attention): LegacyEffectType => v.style;
 export const toLegacyModel = (v: Attention): LegacyModel => ({
   name: toLegacyEffectType(v),
   duration: v.duration,
-  delay: v.delay
+  delay: v.delay,
+  infiniteAnimation: v.infiniteAnimation
 });
 
 export const styleTitle = (v: Style): string => {

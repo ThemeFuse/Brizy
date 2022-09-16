@@ -1,9 +1,9 @@
+import classNames from "classnames";
 import React, { FC, useCallback, useEffect, useRef } from "react";
-import { Props } from "./types/Props";
+import { getImageUid } from "visual/utils/api/index.wp";
 import { UploadData } from "visual/utils/image/uploadImage";
 import { WithId } from "visual/utils/options/attributes";
-import { getImageUid } from "visual/utils/api/index-legacy.wp";
-import classNames from "classnames";
+import { Props } from "./types/Props";
 
 export * from "./types/Props";
 
@@ -14,9 +14,7 @@ const uploadImage = (id: number): Promise<UploadData> =>
 export const ImageUpload: FC<Props> = ({ children, className, onChange }) => {
   // eslint-disable-next-line
   const uploaderRef = useRef<any>();
-  const open = useCallback(() => uploaderRef?.current?.open(), [
-    uploaderRef.current
-  ]);
+  const open = useCallback(() => uploaderRef?.current?.open(), []);
 
   useEffect(() => {
     let flag = true;

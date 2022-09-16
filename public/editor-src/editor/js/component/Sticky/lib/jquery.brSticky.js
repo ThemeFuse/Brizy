@@ -1,14 +1,14 @@
 import $ from "jquery";
 import { observer } from "../utils";
 
-(function($) {
+(function ($) {
   const pluginName = "brzSticky";
   const defaults = {
     type: "animated",
-    refNode: function() {
+    refNode: function () {
       throw new Error("brzSticky refNode must be specified");
     },
-    onStickyChange: function() {}
+    onStickyChange: function () {}
   };
 
   function Plugin(element, options) {
@@ -21,28 +21,29 @@ import { observer } from "../utils";
   }
 
   $.extend(Plugin.prototype, {
-    init: function() {
+    init: function () {
       this.isSticky = false;
       observer.addListener(this.checkSticky.bind(this));
     },
-    checkSticky: function() {
+    checkSticky: function () {
       const type = this.settings.type;
       const refNode = this.settings.refNode.call(this.element);
+      const scrollY = this.element.ownerDocument.defaultView.scrollY;
       const refNodeRect = refNode.getBoundingClientRect();
       const isSticky =
         type === "animated"
           ? -refNodeRect.top >= refNodeRect.height
           : refNodeRect.top <= 0;
 
-      if (isSticky !== this.isSticky) {
+      if (isSticky !== this.isSticky && scrollY > 0) {
         this.isSticky = isSticky;
         this.settings.onStickyChange.call(this.element, this.isSticky);
       }
     }
   });
 
-  $.fn[pluginName] = function(options) {
-    return this.each(function() {
+  $.fn[pluginName] = function (options) {
+    return this.each(function () {
       if (!$.data(this, "plugin_" + pluginName)) {
         $.data(this, "plugin_" + pluginName, new Plugin(this, options));
       }

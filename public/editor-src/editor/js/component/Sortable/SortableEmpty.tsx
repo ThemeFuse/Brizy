@@ -1,12 +1,12 @@
 import React, { Component, ElementType, ReactElement } from "react";
-import _ from "underscore";
 import { findDOMNode } from "react-dom";
-import SortablePlugin from "./plugin";
-import { hideToolbar } from "visual/component/Toolbar";
+import _ from "underscore";
 import { rolesHOC } from "visual/component/Roles";
+import { hideToolbar } from "visual/component/Toolbar";
+import UIEvents from "visual/global/UIEvents";
 import { updateUI } from "visual/redux/actions2";
 import { getStore } from "visual/redux/store";
-import UIEvents from "visual/global/UIEvents";
+import SortablePlugin from "./plugin";
 import { SortablePluginOptions } from "./plugin/types";
 
 type SortType =
@@ -18,14 +18,26 @@ type SortType =
   | "cloneable"
   | "addable";
 
+const fallbackRender = () => {
+  return (
+    <div className="brz-ed-sortable--empty brz-blocked">
+      <div
+        className="brz-ed-border__sortable brz-ed-border__inner brz-ed-border--no-space"
+        data-border--grey="true"
+        data-border--dotted="true"
+      />
+      <div className="brz-ed-container-trigger brz-ed-container-trigger--small" />
+    </div>
+  );
+};
+
 const onSort: SortablePluginOptions["onSort"] = (data): void => {
   const { from, to } = data;
 
   const fromContainerPath =
     from.sortableNode.getAttribute("data-sortable-path")?.split("-") || [];
-  const fromContainerType = from.sortableNode.getAttribute(
-    "data-sortable-type"
-  );
+  const fromContainerType =
+    from.sortableNode.getAttribute("data-sortable-type");
   const fromItemPath = [...fromContainerPath, String(from.elementIndex)];
 
   const toContainerPath =
@@ -149,5 +161,6 @@ class Sortable extends Component<Props> {
 export default rolesHOC({
   allow: ["admin"],
   component: Sortable,
-  fallbackRender: ({ children }: { children: ElementType }) => children
+  fallbackRender: ({ children }: { children: ElementType }) =>
+    children ?? fallbackRender()
 });

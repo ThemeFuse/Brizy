@@ -1,48 +1,47 @@
+import cheerio from "cheerio";
+import deepMerge from "deepmerge";
+import { renderStatic } from "glamor/server";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { Provider } from "react-redux";
-import { renderStatic } from "glamor/server";
-import cheerio from "cheerio";
-import deepMerge from "deepmerge";
-
-import Config from "visual/global/Config";
 import { items as googleFonts } from "visual/config/googleFonts.json";
-
-import * as Str from "visual/utils/reader/string";
+import Config from "visual/global/Config";
 import {
-  parsePageCommon,
-  parseProject,
-  parseGlobalBlock
-} from "visual/utils/api/adapter";
-import {
-  getUsedModelsFonts,
-  getUsedStylesFonts,
-  getBlocksStylesFonts
-} from "visual/utils/traverse";
-import { findFonts, projectFontsData } from "visual/utils/fonts";
-import { getBlocksInPage } from "visual/utils/blocks";
-import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
-import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
-
-import { createStore } from "visual/redux/store";
+  isCollectionPage,
+  isEcwidCategoryPage,
+  isEcwidProductPage
+} from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
+import EditorGlobal from "visual/global/Editor";
+import { hydrate } from "visual/redux/actions";
 import {
   getDefaultFontDetailsSelector,
   pageDataDraftBlocksSelector
 } from "visual/redux/selectors";
-import { hydrate } from "visual/redux/actions";
-
-import EditorGlobal from "visual/global/Editor";
+import { createStore } from "visual/redux/store";
+import {
+  parseGlobalBlock,
+  parsePageCommon,
+  parseProject
+} from "visual/utils/api/adapter";
+import { getBlocksInPage } from "visual/utils/blocks";
+import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
+import { findFonts, projectFontsData } from "visual/utils/fonts";
+import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
+import * as Str from "visual/utils/reader/string";
+import {
+  getBlocksStylesFonts,
+  getUsedModelsFonts,
+  getUsedStylesFonts
+} from "visual/utils/traverse";
 import "../registerEditorParts";
-
 import { getAssets } from "./transforms/assets";
-import changeRichText from "./transforms/changeRichText";
-import extractPopups from "./transforms/extractPopups";
-import dynamicContent from "./transforms/dynamicContent";
-import replaceIcons from "./transforms/replaceIcons";
 import { changeMenuUid } from "./transforms/changeMenuUid";
+import changeRichText from "./transforms/changeRichText";
+import dynamicContent from "./transforms/dynamicContent";
+import extractPopups from "./transforms/extractPopups";
+import replaceIcons from "./transforms/replaceIcons";
 import { XSS } from "./transforms/xss";
-import { isCollectionPage } from "visual/global/Config/types/configs/Cloud";
-import { isWp } from "visual/global/Config/types/configs/WP";
 
 export default async function main({
   pageId,
@@ -54,8 +53,24 @@ export default async function main({
   // ! pages.map(parsePageCommon)  removes collectionType property
   // ! .map((page, i) => ({ ...page, collectionType: pages[i].collectionType })) - this is a temp
   const page = pages
-    .map(page => {
+    .map((page) => {
       const parsedPage = parsePageCommon(page);
+
+      if (isEcwidProductPage(page)) {
+        return {
+          ...parsedPage,
+          __type: "ecwid-product",
+          productId: page.productId
+        };
+      }
+
+      if (isEcwidCategoryPage(page)) {
+        return {
+          ...parsedPage,
+          __type: "ecwid-product-category",
+          categoryId: page.categoryId
+        };
+      }
 
       return isCollectionPage(page)
         ? {
@@ -69,7 +84,7 @@ export default async function main({
           };
     })
 
-    .find(page => {
+    .find((page) => {
       if (pageId) {
         const pageId1 = Str.read(page.id);
         const pageId2 = Str.read(pageId);
@@ -290,7 +305,7 @@ function parseFonts(blocks, project) {
 
   // get fonts from selectedStyle
   const { selectedStyle, styles, extraFontStyles = [] } = project.data;
-  const currentStyle = styles.find(style => style.id === selectedStyle) || {};
+  const currentStyle = styles.find((style) => style.id === selectedStyle) || {};
   const fontStyles = currentStyle.fontStyles || [];
   const stylesFonts = getUsedStylesFonts([...fontStyles, ...extraFontStyles]);
 

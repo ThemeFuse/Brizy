@@ -1,36 +1,38 @@
+import classNames from "classnames";
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
-import classNames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import Placeholder from "visual/component/Placeholder";
-import Toolbar from "visual/component/Toolbar";
+import BoxResizer from "visual/component/BoxResizer";
 import ClickOutside from "visual/component/ClickOutside";
-import Link from "visual/component/Link";
 import ListBox from "visual/component/Controls/ListBox";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
+import CustomCSS from "visual/component/CustomCSS";
 import HotKeys from "visual/component/HotKeys";
+import Link from "visual/component/Link";
+import Placeholder from "visual/component/Placeholder";
+import Toolbar from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { blocksDataSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
+import { IS_CLOUD } from "visual/utils/env";
+import { pipe } from "visual/utils/fp";
+import { isPopup, isStory } from "visual/utils/models";
 import {
   getDynamicContentByPlaceholder,
   getDynamicContentChoices
 } from "visual/utils/options";
-import { getStore } from "visual/redux/store";
-import { blocksDataSelector } from "visual/redux/selectors";
-import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
-import Quill from "./Quill";
-import toolbarConfigFn from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import { Wrapper } from "../tools/Wrapper";
-import BoxResizer from "visual/component/BoxResizer";
-import { css } from "visual/utils/cssStyle";
-import { style, styleDC } from "./styles";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import * as Num from "visual/utils/reader/number";
 import { isNullish } from "visual/utils/value";
-import { pipe } from "visual/utils/fp";
-import { IS_CLOUD } from "visual/utils/env";
+import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import Quill from "./Quill";
+import * as sidebarConfig from "./sidebar";
+import { style, styleDC } from "./styles";
+import toolbarConfigFn from "./toolbar";
+import { getImagePopulation } from "./utils/requests/ImagePopulation";
 
 const isNan = pipe(Num.read, isNullish);
 
@@ -44,7 +46,7 @@ class RichText extends EditorComponent {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   state = {
     formats: {},
@@ -57,6 +59,8 @@ class RichText extends EditorComponent {
 
   toolbarRef = React.createRef();
 
+  toolbarOpen = false;
+
   componentDidMount() {
     // TODO NEED review and exclude ReactDOM.findDOMNode
     // eslint-disable-next-line react/no-find-dom-node
@@ -64,10 +68,35 @@ class RichText extends EditorComponent {
 
     node.addEventListener(
       "click",
-      event => (event.toolbarHandled = true),
+      (event) => (event.toolbarHandled = true),
       false
     );
+    const itemId = this.context.dynamicContent.itemId;
+    itemId && node.setAttribute("data-item_id", itemId);
+    const populations = node.querySelectorAll("[data-image_population]");
+
+    if (populations.length > 0) {
+      populations.forEach(async (element) => {
+        const placeholder = element.getAttribute("data-image_population");
+
+        if (placeholder) {
+          const newUrl = await getImagePopulation(placeholder, itemId);
+          if (newUrl) {
+            element.classList.add("brz-population-mask__style");
+            element.style.backgroundImage = `url(${newUrl})`;
+          }
+        }
+      });
+    }
   }
+
+  handleToolbarOpen = () => {
+    this.toolbarOpen = true;
+  };
+
+  handleToolbarClose = () => {
+    this.toolbarOpen = false;
+  };
 
   handleSelectionChange = (formats, selectionCoords) => {
     const newState = {
@@ -89,7 +118,7 @@ class RichText extends EditorComponent {
     this.setState(newState, () => this.toolbarRef.current.show());
   };
 
-  handleTextChange = text => {
+  handleTextChange = (text) => {
     let popups;
 
     // making use of the popups hack
@@ -104,7 +133,7 @@ class RichText extends EditorComponent {
     });
   };
 
-  handlePopulationSet = value => {
+  handlePopulationSet = (value) => {
     const dcOption = getDynamicContentByPlaceholder(
       this.context.dynamicContent.config,
       value
@@ -128,7 +157,7 @@ class RichText extends EditorComponent {
     });
   };
 
-  handleBlockTag = value => {
+  handleBlockTag = (value) => {
     switch (value) {
       case "paragraph":
         return { pre: false, header: null };
@@ -147,7 +176,7 @@ class RichText extends EditorComponent {
     }
   };
 
-  handleChange = values => {
+  handleChange = (values) => {
     // after Quill applies formatting it steals the focus to itself,
     // we try to fight back by remembering the previous focused element
     // and restoring it's focus after Quill steals it
@@ -206,6 +235,10 @@ class RichText extends EditorComponent {
       cssDCStyle
     );
   }
+
+  getToolbarOpen = () => {
+    return this.toolbarOpen;
+  };
 
   patchValue(patch, meta) {
     super.patchValue(patch, meta);
@@ -299,7 +332,7 @@ class RichText extends EditorComponent {
 
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
-      itemProps: itemData => {
+      itemProps: (itemData) => {
         let {
           blockId,
           value: { popupId }
@@ -396,6 +429,7 @@ class RichText extends EditorComponent {
     const inPopup = Boolean(meta.sectionPopup);
     const inPopup2 = Boolean(meta.sectionPopup2);
     const shortcutsTypes = ["copy", "paste", "delete"];
+    const config = Config.getAll();
 
     const newV = {
       ...v,
@@ -422,12 +456,15 @@ class RichText extends EditorComponent {
         value={v.text}
         onSelectionChange={this.handleSelectionChange}
         onTextChange={this.handleTextChange}
-        initDelay={inPopup || inPopup2 || IS_GLOBAL_POPUP ? 1000 : 0}
+        isToolbarOpen={this.getToolbarOpen}
+        initDelay={inPopup || inPopup2 || isPopup(config) ? 1000 : 0}
       />
     );
     let toolbarOptions = {
       manualControl: true,
-      repositionOnUpdates: true
+      repositionOnUpdates: true,
+      onOpen: this.handleToolbarOpen,
+      onClose: this.handleToolbarClose
     };
     if (v.textPopulation) {
       toolbarOptions = {};
@@ -457,7 +494,7 @@ class RichText extends EditorComponent {
                   className: this.getClassName(v, vs, vd)
                 })}
               >
-                {IS_STORY ? (
+                {isStory(config) ? (
                   <BoxResizer
                     points={resizerPoints}
                     meta={{

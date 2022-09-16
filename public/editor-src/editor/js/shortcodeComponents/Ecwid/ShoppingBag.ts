@@ -1,9 +1,9 @@
 import { t } from "visual/utils/i18n";
 
 export default {
-  id: "ShoppingBag",
+  id: "shoppingBag",
   title: t("Shopping Bag"),
-  icon: "nc-woo-cart",
+  icon: "nc-shopping-bag",
   resolve: {
     type: "Wrapper",
     value: {
@@ -11,7 +11,7 @@ export default {
       items: [
         {
           type: "EcwidShoppingBag",
-          value: {}
+          value: { _styles: ["shoppingBag"] }
         }
       ]
     }

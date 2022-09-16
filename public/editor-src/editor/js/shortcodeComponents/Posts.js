@@ -1,6 +1,6 @@
 import Config from "visual/global/Config";
-import { t } from "visual/utils/i18n";
 import { IS_CLOUD } from "visual/utils/env";
+import { t } from "visual/utils/i18n";
 
 export default {
   id: "Posts",
@@ -15,7 +15,7 @@ export default {
           type: "Posts",
           value: {
             _styles: ["posts", "posts-posts"],
-            _version: 2,
+            _version: 3,
             type: "posts",
             source:
               TARGET === "WP"

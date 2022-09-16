@@ -22,7 +22,7 @@ export function styleContent(v, vs, vd) {
         "cssStyleElementSoundCloudPropertyHoverTransition"
       ]
     },
-    ".brz &&:hover iframe": { standart: ["cssStyleSizeHeightPx"] }
+    ".brz &&:hover iframe": { standart: ["cssStyleSizeHeight"] }
   };
   return renderStyles({ v, vs, vd, styles });
 }

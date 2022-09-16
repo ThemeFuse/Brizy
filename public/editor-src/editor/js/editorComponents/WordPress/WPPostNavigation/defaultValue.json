@@ -12,12 +12,12 @@
   },
   "style": {
     "height": 80,
-    "heightSuffix": null,
+    "heightSuffix": "%",
     "left": 50,
     "leftSuffix": null,
 
     "width": 100,
-    "widthSuffix": null,
+    "widthSuffix": "%",
 
     "spacing": 20,
     "spacingSuffix": null,

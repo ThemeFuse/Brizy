@@ -1,21 +1,22 @@
-import _ from "underscore";
-import { mergeDeep } from "timm";
 import { ThunkAction } from "redux-thunk";
-import { uuid } from "visual/utils/uuid";
-import { ReduxState, StoreChanged } from "./types";
+import { mergeDeep } from "timm";
+import _ from "underscore";
+import { fontsSelector } from "visual/redux/selectors";
 import {
   Authorized,
   Block,
   DeviceMode,
+  ExtraFontStyle,
+  Font,
   GlobalBlock,
   GoogleFont,
-  UploadedFont,
+  ShopifyPage,
   Style,
-  Font
+  UploadedFont
 } from "visual/types";
 import { ArrayType } from "visual/utils/array/types";
-import { fontsSelector } from "visual/redux/selectors";
-import { ShopifyPage } from "visual/types";
+import { uuid } from "visual/utils/uuid";
+import { ReduxState, StoreChanged } from "./types";
 
 type UIState = ReduxState["ui"];
 
@@ -262,7 +263,7 @@ export type ActionImportTemplate = {
   payload: {
     blocks: Block[];
     fonts: FontsPayload;
-    extraFontStyles: Array<{ id: string }>;
+    extraFontStyles: Array<ExtraFontStyle>;
     styles?: Style[];
     currentStyleId?: string;
   };
@@ -348,7 +349,7 @@ export type ActionUpdateExtraFontStyles = {
 
 /// action creators
 
-export { undo, redo } from "./history/actions";
+export { redo, undo } from "./history/actions";
 
 export function makeNormalToGlobalBlock(
   globalBlock: GlobalBlock
@@ -450,72 +451,71 @@ type ThunkAddFonts = (
   a: FontsPayload
 ) => ThunkAction<void, ReduxState, unknown, ActionAddFonts>;
 
-export const addFonts: ThunkAddFonts = addedFonts => (
-  dispatch,
-  getState
-): ActionAddFonts => {
-  const usedFonts = fontsSelector(getState());
-  const newFonts = addedFonts.reduce((acc, curr) => {
-    const { type, fonts } = curr;
+export const addFonts: ThunkAddFonts =
+  (addedFonts) =>
+  (dispatch, getState): ActionAddFonts => {
+    const usedFonts = fontsSelector(getState());
+    const newFonts = addedFonts.reduce((acc, curr) => {
+      const { type, fonts } = curr;
 
-    // current version of tsc (3.7.3) does not allow
-    // calling map on (GoogleFont[] | UploadFont[])
-    // but does on (GoogleFont | UploadedFont)[]
-    const fontData: (GoogleFont | UploadedFont)[] = usedFonts[type]?.data || [];
+      // current version of tsc (3.7.3) does not allow
+      // calling map on (GoogleFont[] | UploadFont[])
+      // but does on (GoogleFont | UploadedFont)[]
+      const fontData: (GoogleFont | UploadedFont)[] =
+        usedFonts[type]?.data || [];
 
-    // Separated Deleted Font with Normal Font
-    const [deletedFonts, normalFont] = _.partition(fonts, font =>
-      Object.prototype.hasOwnProperty.call(font, "deleted")
-    );
-    const newFonts = normalFont.map(font => ({ ...font, brizyId: uuid() }));
+      // Separated Deleted Font with Normal Font
+      const [deletedFonts, normalFont] = _.partition(fonts, (font) =>
+        Object.prototype.hasOwnProperty.call(font, "deleted")
+      );
+      const newFonts = normalFont.map((font) => ({ ...font, brizyId: uuid() }));
 
-    // Make new Data, check deleted Font
-    return {
-      ...acc,
-      [type]: {
-        data: fontData
-          .map(
-            font =>
-              deletedFonts.find(({ brizyId }) => font.brizyId === brizyId) ||
-              font
-          )
-          .concat(newFonts)
-      }
-    };
-  }, {});
+      // Make new Data, check deleted Font
+      return {
+        ...acc,
+        [type]: {
+          data: fontData
+            .map(
+              (font) =>
+                deletedFonts.find(({ brizyId }) => font.brizyId === brizyId) ||
+                font
+            )
+            .concat(newFonts)
+        }
+      };
+    }, {});
 
-  return dispatch({
-    type: "ADD_FONTS",
-    payload: mergeDeep(usedFonts, newFonts)
-  });
-};
+    return dispatch({
+      type: "ADD_FONTS",
+      payload: mergeDeep(usedFonts, newFonts)
+    });
+  };
 
 type ThunkDeleteFonts = (
   a: FontPayload<FontKeyTypes>
 ) => ThunkAction<void, ReduxState, unknown, ActionDeleteFont>;
 
-export const deleteFont: ThunkDeleteFonts = payload => (
-  dispatch,
-  getState
-): ActionDeleteFont => {
-  const { type, fonts: removedFonts } = payload;
-  const fonts = fontsSelector(getState());
-  const fontData: Font[] = (fonts[type] && fonts[type]?.data) || [];
-  const dataFonts = {
-    [type]: {
-      data: fontData.map(font =>
-        removedFonts.some(({ brizyId }) => brizyId === font.brizyId)
-          ? { ...font, deleted: true }
-          : font
-      )
-    }
-  };
+export const deleteFont: ThunkDeleteFonts =
+  (payload) =>
+  (dispatch, getState): ActionDeleteFont => {
+    const { type, fonts: removedFonts } = payload;
+    const fonts = fontsSelector(getState());
+    const fontData: Font[] = (fonts[type] && fonts[type]?.data) || [];
+    const dataFonts = {
+      [type]: {
+        data: fontData.map((font) =>
+          removedFonts.some(({ brizyId }) => brizyId === font.brizyId)
+            ? { ...font, deleted: true }
+            : font
+        )
+      }
+    };
 
-  return dispatch({
-    type: "DELETE_FONTS",
-    payload: mergeDeep(fonts, dataFonts)
-  });
-};
+    return dispatch({
+      type: "DELETE_FONTS",
+      payload: mergeDeep(fonts, dataFonts)
+    });
+  };
 
 export const updateDefaultFont = (font: string): ActionUpdateDefaultFont => {
   return {
@@ -584,20 +584,20 @@ type ThunkPublishPage = (
   s: ReduxState["page"]["status"]
 ) => ThunkAction<Promise<void>, ReduxState, unknown, ActionUpdatePageStatus>;
 
-export const updatePageStatus: ThunkPublishPage = status => (
-  dispatch
-): Promise<void> => {
-  return new Promise((res, rej) => {
-    dispatch({
-      type: "PUBLISH",
-      payload: { status },
-      meta: {
-        onSuccess: res,
-        onError: rej
-      }
+export const updatePageStatus: ThunkPublishPage =
+  (status) =>
+  (dispatch): Promise<void> => {
+    return new Promise((res, rej) => {
+      dispatch({
+        type: "PUBLISH",
+        payload: { status },
+        meta: {
+          onSuccess: res,
+          onError: rej
+        }
+      });
     });
-  });
-};
+  };
 
 export const updatePageLayout = (layout: string): ActionUpdatePageLayout => {
   return {
@@ -714,7 +714,7 @@ export function importTemplate(
   template: {
     blocks: Block[];
     fonts: FontsPayload;
-    extraFontStyles: Array<{ id: string }>;
+    extraFontStyles: Array<ExtraFontStyle>;
   },
   meta = { insertIndex: 0 }
 ): ActionImportTemplate {

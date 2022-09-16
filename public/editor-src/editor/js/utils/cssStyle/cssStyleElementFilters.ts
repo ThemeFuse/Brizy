@@ -1,51 +1,49 @@
 import {
+  cssStyleBgColor,
+  cssStyleBorder,
+  cssStyleBorderRadius,
+  cssStyleBoxShadow,
+  cssStyleColor,
+  cssStylePaddingFourFields,
+  cssStyleSizeFontSize,
+  cssStyleSizeHeight,
+  cssStyleSizeWidth,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
-} from "visual/utils/cssStyle/cssStyleTypography2";
-import { cssStyleColor } from "visual/utils/cssStyle";
+} from "visual/utils/cssStyle";
 import {
   styleBorderColor,
   styleBorderStyle,
   styleBorderWidthUngrouped,
   styleElementFiltersActiveColumns,
-  styleElementFiltersBtnWidth,
+  styleElementFiltersActiveOrientation,
+  styleElementFiltersBtnHeight,
+  styleElementFiltersBtnSpacing,
   styleElementFiltersCheckboxColumns,
   styleElementFiltersCheckboxOrientation,
   styleElementFiltersCheckboxShowCounter,
   styleElementFiltersCheckboxType,
+  styleElementFiltersCheckColorSize,
+  styleElementFiltersDataSource,
+  styleElementFiltersDateOptionWidth,
   styleElementFiltersGap,
+  styleElementFiltersHierarchicalSpacing,
   styleElementFiltersHorizontalAlignBtn,
+  styleElementFiltersHorizontalAlignLabel,
   styleElementFiltersHorizontalAlignOption,
   styleElementFiltersLabelSpacing,
   styleElementFiltersOptionsAlign,
-  styleElementFiltersOptionWidth,
-  styleElementFiltersOptionWidthSuffix,
-  styleElementFiltersSpacing,
-  styleElementFiltersActiveOrientation,
-  styleElementFiltersTitleSpacing,
-  styleElementFiltersType,
-  styleElementFiltersBtnHeight,
-  styleElementFiltersBtnSpacing,
   styleElementFiltersOptionSpacing,
-  styleElementFiltersHierarchicalSpacing,
-  styleElementFiltersDataSource,
-  styleElementFiltersCheckSize,
-  styleElementFiltersCheckColorSize,
-  styleElementFiltersCheckImgWidth,
-  styleElementFiltersCheckImgHeight,
-  styleElementFiltersHorizontalAlignLabel,
   styleElementFiltersShowApply,
-  styleElementFiltersDateOptionWidth,
-  styleElementFiltersIconSize,
-  styleElementFiltersIconCustomSize
+  styleElementFiltersSpacing,
+  styleElementFiltersTitleSpacing,
+  styleElementFiltersType
 } from "visual/utils/style2";
-import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
-import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
-import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
-import { cssStylePaddingFourFields } from "visual/utils/cssStyle/cssStylePadding";
+import { CSSValue } from "visual/utils/style2/types";
+import { MValue } from "visual/utils/value";
 import {
   styleBgColor,
   styleBgGradient,
@@ -56,8 +54,6 @@ import {
   styleElementFiltersCheckboxOrientationCustomStyles
 } from "../style2";
 import { cssStylePadding } from "./cssStylePadding";
-import { CSSValue } from "visual/utils/style2/types";
-import { MValue } from "visual/utils/value";
 
 type MString = MValue<string>;
 
@@ -378,28 +374,12 @@ export function cssStyleElementFiltersCheckboxActiveBorder({
   v,
   device
 }: CSSValue): MString {
-  const borderWidth = styleBorderWidthUngrouped({
+  return cssStyleBorder({
     v,
     device,
     state: "active",
     prefix: "checkbox"
   });
-  const borderStyle = styleBorderStyle({
-    v,
-    device,
-    state: "active",
-    prefix: "checkbox"
-  });
-  const borderColor = styleBorderColor({
-    v,
-    device,
-    state: "active",
-    prefix: "checkbox"
-  });
-
-  return borderWidth === undefined
-    ? ""
-    : `border:${borderWidth}px ${borderStyle} ${borderColor};`;
 }
 
 export function cssStyleElementFiltersCheckboxOrientation({
@@ -630,18 +610,6 @@ export function cssStyleElementFiltersCheckboxBorder({
     state,
     prefix: "checkbox"
   });
-  const borderStyle = styleBorderStyle({
-    v,
-    device,
-    state,
-    prefix: "checkbox"
-  });
-  const borderColor = styleBorderColor({
-    v,
-    device,
-    state,
-    prefix: "checkbox"
-  });
   const type = styleElementFiltersCheckboxType({
     v,
     device,
@@ -650,7 +618,7 @@ export function cssStyleElementFiltersCheckboxBorder({
 
   return borderWidth !== undefined &&
     (type === "style-1" || type === "style-2" || type === "style-4")
-    ? `border:${borderWidth}px ${borderStyle} ${borderColor};`
+    ? cssStyleBorder({ v, device, state, prefix: "checkbox" })
     : "";
 }
 
@@ -668,28 +636,12 @@ export function cssStyleElementFiltersOptionsBorder({
   device,
   state
 }: CSSValue): MString {
-  const borderWidth = styleBorderWidthUngrouped({
+  return cssStyleBorder({
     v,
     device,
     state,
     prefix: "options"
   });
-  const borderStyle = styleBorderStyle({
-    v,
-    device,
-    state,
-    prefix: "options"
-  });
-  const borderColor = styleBorderColor({
-    v,
-    device,
-    state,
-    prefix: "options"
-  });
-
-  return borderWidth === undefined
-    ? ""
-    : `border:${borderWidth}px ${borderStyle} ${borderColor};`;
 }
 
 export function cssStyleElementFiltersOptionsBorderRadius({
@@ -1079,17 +1031,9 @@ export function cssStyleElementFiltersGapStyle1Revert({
 export function cssStyleElementFiltersOptionWidth({
   v,
   device,
-  state,
-  prefix
+  state
 }: CSSValue): MString {
-  const width = styleElementFiltersOptionWidth({ v, device, state, prefix });
-  const suffix = styleElementFiltersOptionWidthSuffix({
-    v,
-    device,
-    state,
-    prefix
-  });
-  return `width: ${width}${suffix};`;
+  return cssStyleSizeWidth({ v, device, state, prefix: "option" });
 }
 
 export function cssStyleElementFiltersLabelSpacing({
@@ -1108,11 +1052,9 @@ export function cssStyleElementFiltersLabelSpacing({
 export function cssStyleElementFiltersBtnWidth({
   v,
   device,
-  state,
-  prefix
+  state
 }: CSSValue): MString {
-  const width = styleElementFiltersBtnWidth({ v, device, state, prefix });
-  return `width: ${width}%;`;
+  return cssStyleSizeWidth({ v, device, state, prefix: "btn" });
 }
 
 export function cssStyleElementFiltersBtnHeight({
@@ -1472,8 +1414,9 @@ export function cssStyleElementFiltersRangeInputsPointsHeight({
 
   return borderWidth === undefined
     ? ""
-    : `height: ${borderWidth + border * 2}px; width: ${borderWidth +
-        border * 2}px;`;
+    : `height: ${borderWidth + border * 2}px; width: ${
+        borderWidth + border * 2
+      }px;`;
 }
 
 export function cssStyleElementFiltersRangePointsTransition({
@@ -1563,28 +1506,12 @@ export function cssStyleElementFiltersRangeBorder({
   device,
   state
 }: CSSValue): MString {
-  const borderWidth = styleBorderWidthUngrouped({
+  return cssStyleBorder({
     v,
     device,
     state,
     prefix: "range"
   });
-  const borderStyle = styleBorderStyle({
-    v,
-    device,
-    state,
-    prefix: "range"
-  });
-  const borderColor = styleBorderColor({
-    v,
-    device,
-    state,
-    prefix: "range"
-  });
-
-  return borderWidth === undefined
-    ? ""
-    : `border:${borderWidth}px ${borderStyle} ${borderColor};`;
 }
 
 export function cssStyleElementFiltersCheckRadioWidth({
@@ -1786,56 +1713,24 @@ export function cssStyleElementFiltersCheckIconBorder({
   device,
   state
 }: CSSValue): MString {
-  const borderWidth = styleBorderWidthUngrouped({
+  return cssStyleBorder({
     v,
     device,
     state,
     prefix: "checkIcon"
   });
-  const borderStyle = styleBorderStyle({
-    v,
-    device,
-    state,
-    prefix: "checkIcon"
-  });
-  const borderColor = styleBorderColor({
-    v,
-    device,
-    state,
-    prefix: "checkIcon"
-  });
-
-  return borderWidth === undefined
-    ? ""
-    : `border:${borderWidth}px ${borderStyle} ${borderColor};`;
 }
 
 export function cssStyleElementFiltersActiveCheckIconBorder({
   v,
   device
 }: CSSValue): MString {
-  const borderWidth = styleBorderWidthUngrouped({
+  return cssStyleBorder({
     v,
     device,
     state: "active",
     prefix: "checkIcon"
   });
-  const borderStyle = styleBorderStyle({
-    v,
-    device,
-    state: "active",
-    prefix: "checkIcon"
-  });
-  const borderColor = styleBorderColor({
-    v,
-    device,
-    state: "active",
-    prefix: "checkIcon"
-  });
-
-  return borderWidth === undefined
-    ? ""
-    : `border:${borderWidth}px ${borderStyle} ${borderColor};`;
 }
 
 export function cssStyleElementFiltersCheckIconBorderRadius({
@@ -1864,11 +1759,9 @@ export function cssStyleElementFiltersActiveCheckIconShadow({
 export function cssStyleElementFiltersCheckSize({
   v,
   device,
-  state,
-  prefix
+  state
 }: CSSValue): MString {
-  const size = styleElementFiltersCheckSize({ v, device, state, prefix });
-  return `font-size: ${size}px;`;
+  return cssStyleSizeFontSize({ v, device, state, prefix: "check" });
 }
 
 export function cssStyleElementFiltersCheckColor3({
@@ -1900,28 +1793,12 @@ export function cssStyleElementFiltersCheckStyle3Border({
   device,
   state
 }: CSSValue): MString {
-  const borderWidth = styleBorderWidthUngrouped({
+  return cssStyleBorder({
     v,
     device,
     state,
     prefix: "checkStyle3"
   });
-  const borderStyle = styleBorderStyle({
-    v,
-    device,
-    state,
-    prefix: "checkStyle3"
-  });
-  const borderColor = styleBorderColor({
-    v,
-    device,
-    state,
-    prefix: "checkStyle3"
-  });
-
-  return borderWidth === undefined
-    ? ""
-    : `border:${borderWidth}px ${borderStyle} ${borderColor};`;
 }
 
 export function cssStyleElementFiltersCheckStyle3Shadow({
@@ -1944,7 +1821,6 @@ export function cssStyleElementFiltersCheckImgWidth({
     state,
     prefix
   });
-  const width = styleElementFiltersCheckImgWidth({ v, device, state, prefix });
   const type = styleElementFiltersCheckboxType({
     v,
     device,
@@ -1953,7 +1829,7 @@ export function cssStyleElementFiltersCheckImgWidth({
   });
   return (filterType === "checkbox" || filterType === "radio") &&
     type === "style-4"
-    ? `width: ${width}px;`
+    ? cssStyleSizeWidth({ v, device, state, prefix: "img" })
     : "";
 }
 
@@ -1969,12 +1845,6 @@ export function cssStyleElementFiltersCheckImgHeight({
     state,
     prefix
   });
-  const height = styleElementFiltersCheckImgHeight({
-    v,
-    device,
-    state,
-    prefix
-  });
   const type = styleElementFiltersCheckboxType({
     v,
     device,
@@ -1983,7 +1853,7 @@ export function cssStyleElementFiltersCheckImgHeight({
   });
   return (filterType === "checkbox" || filterType === "radio") &&
     type === "style-4"
-    ? `height: ${height}px;`
+    ? cssStyleSizeHeight({ v, device, state, prefix: "img" })
     : "";
 }
 
@@ -2066,39 +1936,4 @@ export function cssStyleElementFiltersSelectArrow({
   const p = cssStylePadding({ v, device, state, prefix: "options" });
 
   return `right:${p.paddingTop}px !important;`;
-}
-
-export function cssStyleElementFiltersIcon({
-  v,
-  device,
-  state,
-  prefix
-}: CSSValue): MString {
-  const iconSize = styleElementFiltersIconSize({
-    v,
-    device,
-    state,
-    prefix
-  });
-  const iconCustomSize = styleElementFiltersIconCustomSize({
-    v,
-    device,
-    state,
-    prefix
-  });
-
-  switch (iconSize) {
-    case "small": {
-      return "font-size: 16px;";
-    }
-    case "medium": {
-      return "font-size: 24px;";
-    }
-    case "large": {
-      return "font-size: 32px;";
-    }
-    case "custom": {
-      return `font-size: ${iconCustomSize}px;`;
-    }
-  }
 }

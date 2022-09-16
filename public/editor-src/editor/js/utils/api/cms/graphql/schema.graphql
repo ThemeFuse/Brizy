@@ -158,6 +158,16 @@ type CmsPublicApplicationPaginationInfo {
   totalCount: Int!
 }
 
+type CodeInjection {
+  css: String
+  js: JSInjection
+}
+
+input CodeInjectionInput {
+  css: String
+  js: JSInjectionInput
+}
+
 type CollectionCategory implements Node {
   id: ID!
   _id: Int
@@ -219,7 +229,15 @@ type CollectionItem implements Node {
   social: SocialProps!
   createdAt: String!
   authorId: Int!
+
+  """default value is false"""
+  isHomepage: Boolean!
   pageData: String
+
+  """Default value is public"""
+  visibility: VisibilityStatus!
+  itemPassword: String
+  codeInjection: CodeInjection
 }
 
 """Connection for CollectionItem."""
@@ -332,6 +350,15 @@ type CollectionItemFieldGallery implements CollectionItemFieldInterface {
   id: ID!
   item: CollectionItem!
   type: CollectionTypeFieldInterface!
+  galleryValues: CollectionItemFieldGalleryValues!
+}
+
+type CollectionItemFieldGalleryValues {
+  images: [ImageValue]
+}
+
+input CollectionItemFieldGalleryValuesInput {
+  images: [ImageValueInput]
 }
 
 type CollectionItemFieldImage implements CollectionItemFieldInterface {
@@ -343,10 +370,12 @@ type CollectionItemFieldImage implements CollectionItemFieldInterface {
 
 type CollectionItemFieldImageValues {
   id: String!
+  focusPoint: Point
 }
 
 input CollectionItemFieldImageValuesInput {
   id: String!
+  focusPoint: PointInput
 }
 
 input CollectionItemFieldInput {
@@ -650,6 +679,10 @@ type CollectionType implements Node {
   """fixme: must be `[CollectionTypeFieldInterface!]!`."""
   fields: [CollectionTypeFieldInterface!]
   settings: CollectionTypeSettings!
+  hasPreview: Boolean
+  public: Boolean
+  showUI: Boolean
+  showInMenu: Boolean
   _id: Int
   createdAt: String!
   project: Data!
@@ -922,12 +955,14 @@ type CollectionTypeFieldNumberSettings {
   min: Float
   max: Float
   step: Float
+  placeholder: String
 }
 
 input CollectionTypeFieldNumberSettingsInput {
   min: Float
   max: Float
   step: Float
+  placeholder: String
 }
 
 type CollectionTypeFieldPassword implements CollectionTypeFieldInterface {
@@ -1237,7 +1272,15 @@ input createCollectionItemInput {
   slug: String
   seo: SeoPropsInput
   social: SocialPropsInput
+
+  """default value is false"""
+  isHomepage: Boolean
   pageData: String
+  codeInjection: CodeInjectionInput
+
+  """Default value is public"""
+  visibility: VisibilityStatus
+  itemPassword: String
   clientMutationId: String
 }
 
@@ -1276,6 +1319,18 @@ input createCollectionTypeInput {
   priority: Int
   fields: [CollectionTypeFieldInput!]
   settings: CollectionTypeSettingsInput
+
+  """Default value is true"""
+  hasPreview: Boolean
+
+  """Default value is true"""
+  public: Boolean
+
+  """Default value is true"""
+  showUI: Boolean
+
+  """Default value is true"""
+  showInMenu: Boolean
   clientMutationId: String
 }
 
@@ -1306,6 +1361,7 @@ input createCustomerInput {
   customerGroups: [CustomerGroupPropsInput!]
   sendEmailInvite: Boolean
   pageData: String
+  codeInjection: CodeInjectionInput
   clientMutationId: String
 }
 
@@ -1354,7 +1410,7 @@ type createWebhookPayload {
 type Customer implements Node {
   id: ID!
   email: String!
-  userName: String
+  userName: String!
   firstName: String
   lastName: String
   phone: String
@@ -1365,6 +1421,7 @@ type Customer implements Node {
   state: CustomerStateStatus
   resetPasswordTokenExpire: DateTime
   pageData: String
+  codeInjection: CodeInjection
 }
 
 """Connection for Customer."""
@@ -1382,6 +1439,32 @@ type CustomerGroup implements Node {
 
     """Returns the number of items per page."""
     itemsPerPage: Int
+    searchByText: String
+    id: ID
+    includeId: ID
+    excludeId: ID
+    id_list: [ID]
+    includeId_list: [ID]
+    excludeId_list: [ID]
+    userName: String
+    includeUserName: String
+    excludeUserName: String
+    email: String
+    includeEmail: String
+    excludeEmail: String
+    firstName: String
+    includeFirstName: String
+    excludeFirstName: String
+    lastName: String
+    includeLastName: String
+    excludeLastName: String
+    customerGroup: ID
+    includeCustomerGroup: ID
+    excludeCustomerGroup: ID
+    customerGroup_list: [ID]
+    includeCustomerGroup_list: [ID]
+    excludeCustomerGroup_list: [ID]
+    offset: Int
   ): CustomerConnection
   _id: Int
   project: Data!
@@ -1590,6 +1673,16 @@ type Image implements Node {
   name: String!
 }
 
+type ImageValue {
+  id: String
+  focusPoint: Point
+}
+
+input ImageValueInput {
+  id: String
+  focusPoint: PointInput
+}
+
 input IntSearchQueryInput {
   eq: Int
   lt: Int
@@ -1603,6 +1696,16 @@ The `Iterable` scalar type represents an array or a Traversable with any kind of
 """
 scalar Iterable
 
+type JSInjection {
+  header: String
+  footer: String
+}
+
+input JSInjectionInput {
+  header: String
+  footer: String
+}
+
 type Metafield implements Node {
   id: ID!
   name: String
@@ -1613,66 +1716,9 @@ type Metafield implements Node {
   updatedAt: String
 }
 
-enum MetaFieldType {
-  int
-  text
-  varchar
-}
-
 type Mutation {
-  """Creates a CmsPrivateApplication."""
-  createCmsPrivateApplication(input: createCmsPrivateApplicationInput!): createCmsPrivateApplicationPayload
-
-  """Updates a CmsPrivateApplication."""
-  updateCmsPrivateApplication(input: updateCmsPrivateApplicationInput!): updateCmsPrivateApplicationPayload
-
-  """Deletes a CmsPrivateApplication."""
-  deleteCmsPrivateApplication(input: deleteCmsPrivateApplicationInput!): deleteCmsPrivateApplicationPayload
-
-  """Creates a Webhook."""
-  createWebhook(input: createWebhookInput!): createWebhookPayload
-
-  """Updates a Webhook."""
-  updateWebhook(input: updateWebhookInput!): updateWebhookPayload
-
-  """Deletes a Webhook."""
-  deleteWebhook(input: deleteWebhookInput!): deleteWebhookPayload
-
-  """Creates a CustomerGroup."""
-  createCustomerGroup(input: createCustomerGroupInput!): createCustomerGroupPayload
-
-  """Updates a CustomerGroup."""
-  updateCustomerGroup(input: updateCustomerGroupInput!): updateCustomerGroupPayload
-
-  """Deletes a CustomerGroup."""
-  deleteCustomerGroup(input: deleteCustomerGroupInput!): deleteCustomerGroupPayload
-
-  """Creates a CmsPublicApplication."""
-  createCmsPublicApplication(input: createCmsPublicApplicationInput!): createCmsPublicApplicationPayload
-
-  """Updates a CmsPublicApplication."""
-  updateCmsPublicApplication(input: updateCmsPublicApplicationInput!): updateCmsPublicApplicationPayload
-
-  """Deletes a CmsPublicApplication."""
-  deleteCmsPublicApplication(input: deleteCmsPublicApplicationInput!): deleteCmsPublicApplicationPayload
-
-  """Creates a ScriptTag."""
-  createScriptTag(input: createScriptTagInput!): createScriptTagPayload
-
-  """Updates a ScriptTag."""
-  updateScriptTag(input: updateScriptTagInput!): updateScriptTagPayload
-
-  """Deletes a ScriptTag."""
-  deleteScriptTag(input: deleteScriptTagInput!): deleteScriptTagPayload
-
-  """Creates a Redirect."""
-  createRedirect(input: createRedirectInput!): createRedirectPayload
-
-  """Updates a Redirect."""
-  updateRedirect(input: updateRedirectInput!): updateRedirectPayload
-
-  """Deletes a Redirect."""
-  deleteRedirect(input: deleteRedirectInput!): deleteRedirectPayload
+  """Updates a Metafield."""
+  updateMetafield(input: updateMetafieldInput!): updateMetafieldPayload
 
   """Activates a Customer."""
   activateCustomer(input: activateCustomerInput!): activateCustomerPayload
@@ -1701,8 +1747,65 @@ type Mutation {
   """Deletes a Customer."""
   deleteCustomer(input: deleteCustomerInput!): deleteCustomerPayload
 
-  """Updates a Metafield."""
-  updateMetafield(input: updateMetafieldInput!): updateMetafieldPayload
+  """Creates a CmsPrivateApplication."""
+  createCmsPrivateApplication(input: createCmsPrivateApplicationInput!): createCmsPrivateApplicationPayload
+
+  """Updates a CmsPrivateApplication."""
+  updateCmsPrivateApplication(input: updateCmsPrivateApplicationInput!): updateCmsPrivateApplicationPayload
+
+  """Deletes a CmsPrivateApplication."""
+  deleteCmsPrivateApplication(input: deleteCmsPrivateApplicationInput!): deleteCmsPrivateApplicationPayload
+
+  """Creates a CmsPublicApplication."""
+  createCmsPublicApplication(input: createCmsPublicApplicationInput!): createCmsPublicApplicationPayload
+
+  """Updates a CmsPublicApplication."""
+  updateCmsPublicApplication(input: updateCmsPublicApplicationInput!): updateCmsPublicApplicationPayload
+
+  """Deletes a CmsPublicApplication."""
+  deleteCmsPublicApplication(input: deleteCmsPublicApplicationInput!): deleteCmsPublicApplicationPayload
+
+  """Creates a Redirect."""
+  createRedirect(input: createRedirectInput!): createRedirectPayload
+
+  """Updates a Redirect."""
+  updateRedirect(input: updateRedirectInput!): updateRedirectPayload
+
+  """Deletes a Redirect."""
+  deleteRedirect(input: deleteRedirectInput!): deleteRedirectPayload
+
+  """Creates a CustomerGroup."""
+  createCustomerGroup(input: createCustomerGroupInput!): createCustomerGroupPayload
+
+  """Updates a CustomerGroup."""
+  updateCustomerGroup(input: updateCustomerGroupInput!): updateCustomerGroupPayload
+
+  """Deletes a CustomerGroup."""
+  deleteCustomerGroup(input: deleteCustomerGroupInput!): deleteCustomerGroupPayload
+
+  """Creates a Webhook."""
+  createWebhook(input: createWebhookInput!): createWebhookPayload
+
+  """Updates a Webhook."""
+  updateWebhook(input: updateWebhookInput!): updateWebhookPayload
+
+  """Deletes a Webhook."""
+  deleteWebhook(input: deleteWebhookInput!): deleteWebhookPayload
+
+  """Creates a CmsApplicationInstall."""
+  createCmsApplicationInstall(input: createCmsApplicationInstallInput!): createCmsApplicationInstallPayload
+
+  """Deletes a CmsApplicationInstall."""
+  deleteCmsApplicationInstall(input: deleteCmsApplicationInstallInput!): deleteCmsApplicationInstallPayload
+
+  """Creates a ScriptTag."""
+  createScriptTag(input: createScriptTagInput!): createScriptTagPayload
+
+  """Updates a ScriptTag."""
+  updateScriptTag(input: updateScriptTagInput!): updateScriptTagPayload
+
+  """Deletes a ScriptTag."""
+  deleteScriptTag(input: deleteScriptTagInput!): deleteScriptTagPayload
 
   """Creates a CollectionType."""
   createCollectionType(input: createCollectionTypeInput!): createCollectionTypePayload
@@ -1743,17 +1846,11 @@ type Mutation {
   """Deletes a CollectionTypeField."""
   deleteCollectionTypeField(input: deleteCollectionTypeFieldInput!): deleteCollectionTypeFieldPayload
 
-  """Creates a CmsApplicationInstall."""
-  createCmsApplicationInstall(input: createCmsApplicationInstallInput!): createCmsApplicationInstallPayload
-
-  """Deletes a CmsApplicationInstall."""
-  deleteCmsApplicationInstall(input: deleteCmsApplicationInstallInput!): deleteCmsApplicationInstallPayload
+  """Uploads a Image."""
+  uploadImage(input: uploadImageInput!): uploadImagePayload
 
   """Uploads a File."""
   uploadFile(input: uploadFileInput!): uploadFilePayload
-
-  """Uploads a Image."""
-  uploadImage(input: uploadImageInput!): uploadImagePayload
 }
 
 """A node, according to the Relay specification."""
@@ -1765,6 +1862,16 @@ interface Node {
 enum OrderMethod {
   asc
   desc
+}
+
+type Point {
+  x: Int!
+  y: Int!
+}
+
+input PointInput {
+  x: Int!
+  y: Int!
 }
 
 type Product implements Node {
@@ -1792,13 +1899,52 @@ type ProductPaginationInfo {
 
 type Query {
   node(id: ID!): Node
-  products(
+  cmsApplicationCategories(
     """Returns the current page."""
     page: Int
 
     """Returns the number of items per page."""
     itemsPerPage: Int
-  ): ProductConnection
+  ): CmsApplicationCategoryConnection
+  cmsApplicationCategory(id: ID!): CmsApplicationCategory
+  metafields: [Metafield]
+  metafield(id: ID!): Metafield
+  metafieldByName(name: String!): Metafield
+  customers(
+    """Returns the current page."""
+    page: Int
+
+    """Returns the number of items per page."""
+    itemsPerPage: Int
+    searchByText: String
+    id: ID
+    includeId: ID
+    excludeId: ID
+    id_list: [ID]
+    includeId_list: [ID]
+    excludeId_list: [ID]
+    userName: String
+    includeUserName: String
+    excludeUserName: String
+    email: String
+    includeEmail: String
+    excludeEmail: String
+    firstName: String
+    includeFirstName: String
+    excludeFirstName: String
+    lastName: String
+    includeLastName: String
+    excludeLastName: String
+    customerGroup: ID
+    includeCustomerGroup: ID
+    excludeCustomerGroup: ID
+    customerGroup_list: [ID]
+    includeCustomerGroup_list: [ID]
+    excludeCustomerGroup_list: [ID]
+    offset: Int
+  ): CustomerConnection
+  customer(id: ID!): Customer
+  customerByUserName(userName: String!): Customer
   cmsPrivateApplications(
     """Returns the current page."""
     page: Int
@@ -1807,22 +1953,13 @@ type Query {
     itemsPerPage: Int
   ): CmsPrivateApplicationConnection
   cmsPrivateApplication(id: ID!): CmsPrivateApplication
-  webhooks(
+  products(
     """Returns the current page."""
     page: Int
 
     """Returns the number of items per page."""
     itemsPerPage: Int
-  ): WebhookConnection
-  webhook(id: ID!): Webhook
-  customerGroups(
-    """Returns the current page."""
-    page: Int
-
-    """Returns the number of items per page."""
-    itemsPerPage: Int
-  ): CustomerGroupConnection
-  customerGroup(id: ID!): CustomerGroup
+  ): ProductConnection
   cmsPublicApplications(
     """Returns the current page."""
     page: Int
@@ -1834,24 +1971,9 @@ type Query {
     title: String
     description: String
     category: ID
+    category_list: [ID]
   ): CmsPublicApplicationConnection
   cmsPublicApplication(id: ID!): CmsPublicApplication
-  scriptTags(
-    """Returns the current page."""
-    page: Int
-
-    """Returns the number of items per page."""
-    itemsPerPage: Int
-  ): ScriptTagConnection
-  scriptTag(id: ID!): ScriptTag
-  cmsApplicationCategories(
-    """Returns the current page."""
-    page: Int
-
-    """Returns the number of items per page."""
-    itemsPerPage: Int
-  ): CmsApplicationCategoryConnection
-  cmsApplicationCategory(id: ID!): CmsApplicationCategory
   redirects(
     """Returns the current page."""
     page: Int
@@ -1860,22 +1982,46 @@ type Query {
     itemsPerPage: Int
   ): RedirectConnection
   redirect(id: ID!): Redirect
-  customers(
+  customerGroups(
     """Returns the current page."""
     page: Int
 
     """Returns the number of items per page."""
     itemsPerPage: Int
-  ): CustomerConnection
-  customer(id: ID!): Customer
-  metafields: [Metafield]
-  metafield(id: ID!): Metafield
-  metafieldByName(name: String!): Metafield
+    name: String
+  ): CustomerGroupConnection
+  customerGroup(id: ID!): CustomerGroup
+  webhooks(
+    """Returns the current page."""
+    page: Int
+
+    """Returns the number of items per page."""
+    itemsPerPage: Int
+  ): WebhookConnection
+  webhook(id: ID!): Webhook
+  cmsApplicationInstalls(
+    """Returns the current page."""
+    page: Int
+
+    """Returns the number of items per page."""
+    itemsPerPage: Int
+    project: ID!
+    project_list: [ID]
+  ): CmsApplicationInstallConnection
+  scriptTags(
+    """Returns the current page."""
+    page: Int
+
+    """Returns the number of items per page."""
+    itemsPerPage: Int
+  ): ScriptTagConnection
+  scriptTag(id: ID!): ScriptTag
   collectionTypes: [CollectionType]
   collectionType(id: ID!): CollectionType
   collectionTypeBySlug(slug: String!): CollectionType
   collectionEditors: [CollectionEditor]
   collectionEditor(id: ID!): CollectionEditor
+  collectionCategories: [CollectionCategory]
   collectionItemFieldBySlug(item: ID!, slug: String!): CollectionItemField
   collectionItems(
     """Returns the current page."""
@@ -1885,22 +2031,39 @@ type Query {
     itemsPerPage: Int
     type: ID!
     order: CollectionItemsOrderInput
+    id: ID
+    includeId: ID
+    excludeId: ID
+    id_list: [ID]
+    includeId_list: [ID]
+    excludeId_list: [ID]
     title: String
+    includeTitle: String
+    excludeTitle: String
+    slug: String
+    includeSlug: String
+    excludeSlug: String
+    status: CollectionItemStatus
+    includeStatus: CollectionItemStatus
+    excludeStatus: CollectionItemStatus
+    status_list: [CollectionItemStatus]
+    includeStatus_list: [CollectionItemStatus]
+    excludeStatus_list: [CollectionItemStatus]
+    reference: ReferenceFilterInput
+    includeReference: ReferenceFilterInput
+    excludeReference: ReferenceFilterInput
+    reference_list: [ReferenceFilterInput]
+    includeReference_list: [ReferenceFilterInput]
+    excludeReference_list: [ReferenceFilterInput]
+    isHomepage: Boolean
+    includeIsHomepage: Boolean
+    excludeIsHomepage: Boolean
+    offset: Int
   ): CollectionItemConnection
   collectionItem(id: ID!): CollectionItem
   collectionItemBySlug(slug: String!): CollectionItem
   searchCollectionItems(type: ID!, search: CollectionItemSearchQueryInput, page: Int, itemsPerPage: Int): CollectionItemConnection
-  referencedCollectionItems(reference: ID!, page: Int, itemsPerPage: Int): CollectionItemConnection
   collectionTypeFieldBySlug(collectionType: ID!, slug: String!): CollectionTypeField
-  collectionCategories: [CollectionCategory]
-  cmsApplicationInstalls(
-    """Returns the current page."""
-    page: Int
-
-    """Returns the number of items per page."""
-    itemsPerPage: Int
-    project: ID!
-  ): CmsApplicationInstallConnection
 }
 
 type Redirect implements Node {
@@ -1923,6 +2086,11 @@ type RedirectPaginationInfo {
   itemsPerPage: Int!
   lastPage: Int!
   totalCount: Int!
+}
+
+input ReferenceFilterInput {
+  field: ID
+  item: ID!
 }
 
 input resetPasswordCustomerInput {
@@ -1960,11 +2128,13 @@ type ScriptTagPaginationInfo {
 type SeoProps {
   title: String
   description: String
+  enableIndexing: Boolean
 }
 
 input SeoPropsInput {
   title: String
   description: String
+  enableIndexing: Boolean
 }
 
 type SocialProps {
@@ -2053,7 +2223,11 @@ input updateCollectionItemInput {
   slug: String
   seo: SeoPropsInput
   social: SocialPropsInput
+  isHomepage: Boolean
   pageData: String
+  codeInjection: CodeInjectionInput
+  visibility: VisibilityStatus
+  itemPassword: String
   clientMutationId: String
 }
 
@@ -2091,6 +2265,16 @@ input updateCollectionTypeInput {
   priority: Int
   settings: CollectionTypeSettingsInput
   fields: [CollectionTypeFieldUpdateInput!]
+  hasPreview: Boolean
+
+  """Default value is true"""
+  public: Boolean
+
+  """Default value is true"""
+  showUI: Boolean
+
+  """Default value is true"""
+  showInMenu: Boolean
   clientMutationId: String
 }
 
@@ -2123,6 +2307,7 @@ input updateCustomerInput {
   customerGroups: [CustomerGroupPropsInput!]
   sendEmailInvite: Boolean
   pageData: String
+  codeInjection: CodeInjectionInput
   clientMutationId: String
 }
 
@@ -2133,8 +2318,6 @@ type updateCustomerPayload {
 
 input updateMetafieldInput {
   id: ID!
-  name: String
-  type: MetaFieldType
   value: String
   clientMutationId: String
 }
@@ -2238,6 +2421,11 @@ type validateResetPasswordTokenCustomerPayload {
   clientMutationId: String
 }
 
+enum VisibilityStatus {
+  public
+  passwordProtected
+}
+
 type Webhook implements Node {
   id: ID!
   _id: Int
@@ -2262,6 +2450,7 @@ enum WebhookObjectName {
   CollectionType
   CollectionItem
   Customer
+  CustomerGroup
 }
 
 """Information about the pagination."""

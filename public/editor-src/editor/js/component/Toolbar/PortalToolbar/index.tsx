@@ -1,9 +1,19 @@
-import React, { PropsWithChildren } from "react";
-import { connect } from "react-redux";
 import { isT } from "fp-utilities";
+import React, { ReactElement } from "react";
 import ReactDOM from "react-dom";
+import { connect } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import HotKeys from "visual/component/HotKeys";
+import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
+import { currentUserRole } from "visual/component/Roles";
+import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { ReduxState } from "visual/redux/types";
+import { DeviceMode } from "visual/types";
+import {
+  DeactivationOptions,
+  monitor,
+  ToolbarMonitorHandler
+} from "../monitor";
 import {
   ToolbarExtendContext,
   ToolbarExtendContextType
@@ -12,21 +22,11 @@ import {
   PortalToolbarPositioner,
   PortalToolbarPositionerProps
 } from "./PortalToolbarPositioner";
-import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
-import {
-  monitor,
-  DeactivationOptions,
-  ToolbarMonitorHandler
-} from "../monitor";
 import {
   filterOptions,
   selectorSearchCoordinates,
   selectorSearchDomTree
 } from "./utils";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
-import { currentUserRole } from "visual/component/Roles";
-import { ReduxState } from "visual/redux/types";
-import { DeviceMode } from "visual/types";
 
 const portalNodesByDocument: Map<Document, HTMLElement> = new Map();
 
@@ -42,6 +42,10 @@ export type PortalToolbarProps = {
   onOpen?: () => void;
   onClose?: () => void;
   onEscape?: () => void;
+  children?:
+    | ReactElement
+    | null
+    | ((props: { open: (e: MouseEvent) => void }) => ReactElement);
 } & Omit<PortalToolbarPositionerProps, "items">;
 
 type PortalToolbarState = {
@@ -58,11 +62,12 @@ interface PropsWithState extends PortalToolbarProps {
 
 class _PortalToolbar
   extends React.Component<
-    PropsWithChildren<PropsWithState>,
+    PropsWithState,
     PortalToolbarState,
     ToolbarExtendContextType
   >
-  implements ToolbarMonitorHandler {
+  implements ToolbarMonitorHandler
+{
   static contextType = ToolbarExtendContext;
 
   static defaultProps = {
@@ -320,10 +325,7 @@ class _PortalToolbar
     const device = this.props.device;
     const role = currentUserRole();
 
-    return this.props
-      .getItems()
-      .map(filterOptions(device, role))
-      .filter(isT);
+    return this.props.getItems().map(filterOptions(device, role)).filter(isT);
   };
 
   getSidebarItems = (): OptionDefinition[] => {
@@ -398,7 +400,9 @@ class _PortalToolbar
 
     return (
       <>
-        {children}
+        {typeof children === "function"
+          ? children({ open: this.handleNodeClick })
+          : children}
         {opened && this.renderToolbar()}
       </>
     );
@@ -413,6 +417,6 @@ export default connect<
   {},
   PortalToolbarProps,
   ReduxState
->(s => ({ device: s.ui.deviceMode }), null, null, { forwardRef: true })(
+>((s) => ({ device: s.ui.deviceMode }), null, null, { forwardRef: true })(
   _PortalToolbar
 );

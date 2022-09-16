@@ -1,8 +1,6 @@
-import {
-  stylePaddingUngrouped,
-  styleElementProgressBarPercentage
-} from "visual/utils/style2";
+import { stylePaddingUngrouped } from "visual/utils/style2";
 import { CSSValue } from "../style2/types";
+import { cssStyleSizeMaxWidthPrefixEmpty } from "./cssStyleSize";
 
 export function cssStyleElementProgressBarPadding({
   v,
@@ -31,13 +29,12 @@ export function cssStyleSizeProgressBarMaxWidthPercent({
   device,
   state
 }: CSSValue): string {
-  const percentage = styleElementProgressBarPercentage({
+  return cssStyleSizeMaxWidthPrefixEmpty({
     v,
     device,
-    state
+    state,
+    prefix: "percentage"
   });
-
-  return percentage === undefined ? "" : `max-width:${percentage}%;`;
 }
 
 export function cssStyleElementProgressBarPropertyHoverTransition(): string {

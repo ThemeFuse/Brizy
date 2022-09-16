@@ -2,7 +2,12 @@ import React from "react";
 import { removeAt, setIn } from "timm";
 import ItemWrapper from "../common/ItemWrapper";
 import ConditionGroup from "./ConditionGroup";
-import { BlockTypeRule, Rule } from "visual/types";
+import {
+  BlockTypeRule,
+  CollectionItemRule,
+  CollectionTypeRule,
+  Rule
+} from "visual/types";
 import { RuleList } from "./types";
 
 export interface Props {
@@ -32,12 +37,11 @@ class ConditionChoices extends React.Component<Props> {
         type: rules[index].type
       };
     } else {
-      const [group, type] = value.split("|");
+      const [group, type] = value.split("|||");
       newRule = {
-        ...rules[index],
+        type: rules[index].type,
         entityType: type,
-        appliedFor: group === "" || group === null ? null : Number(group),
-        entityValues: []
+        appliedFor: group === "" || group === null ? null : Number(group)
       };
     }
 
@@ -46,9 +50,34 @@ class ConditionChoices extends React.Component<Props> {
 
   handleTypeChange = (value: string | null, index: number): void => {
     const { rules, onChange } = this.props;
-    const newValue = value ? [value] : [];
+    let newRule: Rule;
 
-    onChange(setIn(rules, [index, "entityValues"], newValue) as Rule[]);
+    if (value === null) {
+      const { type, appliedFor, entityType } = rules[
+        index
+      ] as CollectionTypeRule;
+
+      newRule = {
+        type,
+        appliedFor,
+        entityType
+      };
+    } else {
+      const [mode, v] = value.split("|||");
+      const { type, appliedFor, entityType } = rules[
+        index
+      ] as CollectionItemRule;
+
+      newRule = {
+        type,
+        appliedFor,
+        entityType,
+        mode: mode === "reference" ? "reference" : "specific",
+        entityValues: v ? [v] : []
+      };
+    }
+
+    onChange(setIn(rules, [index], newRule) as Rule[]);
   };
 
   render(): JSX.Element[] {

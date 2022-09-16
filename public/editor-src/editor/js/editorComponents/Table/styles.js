@@ -3,11 +3,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function style(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: [
-        "cssStyleElementTableWidth",
-        "cssStyleBorder",
-        "cssStyleBoxShadow"
-      ]
+      standart: ["cssStyleSizeWidth", "cssStyleBorder", "cssStyleBoxShadow"]
     },
     ".brz &&:hover .brz-table__tr:nth-child(2n + 1) .brz-table__td": {
       standart: ["cssStyleBgColor"]
@@ -21,12 +17,14 @@ export function style(v, vs, vd) {
     ".brz &&:hover .brz-table__th": {
       standart: ["cssStyleBorder"]
     },
-    ".brz &&:hover .brz-table__head > .brz-table__tr > .brz-table__aside:first-child": {
-      standart: ["cssStyleElementTableAsideWidth"]
-    },
-    ".brz &&:hover .brz-table__body > .brz-table__tr > .brz-table__aside:first-child": {
-      standart: ["cssStyleElementTableAsideWidth"]
-    }
+    ".brz &&:hover .brz-table__head > .brz-table__tr > .brz-table__aside:first-child":
+      {
+        standart: ["cssStyleElementTableAsideWidth"]
+      },
+    ".brz &&:hover .brz-table__body > .brz-table__tr > .brz-table__aside:first-child":
+      {
+        standart: ["cssStyleElementTableAsideWidth"]
+      }
   };
 
   return renderStyles({ v, vs, vd, styles });

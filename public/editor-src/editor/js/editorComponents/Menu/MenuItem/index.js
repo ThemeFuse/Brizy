@@ -1,35 +1,35 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
+import { Manager, Popper, Reference } from "react-popper";
 import { noop } from "underscore";
-import { Manager, Reference, Popper } from "react-popper";
-import Config from "visual/global/Config";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
-import Portal from "visual/component/Portal";
-import Toolbar from "visual/component/Toolbar";
-import { ThemeIcon } from "visual/component/ThemeIcon";
-import Link from "visual/component/Link";
 import ClickOutside from "visual/component/ClickOutside";
-import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
-import { css } from "visual/utils/cssStyle";
-import {
-  styleElementMegaMenuWidth,
-  styleElementMegaMenuWidthSuffix,
-  styleElementMegaMenuPlacement
-} from "visual/utils/style2";
-import { getStore } from "visual/redux/store";
-import MenuItemItems from "./items";
-import toolbarConfigFn from "./toolbar";
-import sidebarConfigFn from "./sidebar";
-import toolbarExtendFn from "./toolbarExtend";
-import { styleClassName, styleMmMenuClassName, styleMegaMenu } from "./styles";
-import defaultValue from "./defaultValue.json";
-import { calculateMeta } from "./meta";
 import { DraggableOverlay } from "visual/component/DraggableOverlay";
-import { attachRef } from "visual/utils/react";
-import { getParentMegaMenuUid } from "../utils.common";
+import Link from "visual/component/Link";
+import Portal from "visual/component/Portal";
+import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
+import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import Config from "visual/global/Config";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
 import { IS_CLOUD } from "visual/utils/env";
+import { attachRef } from "visual/utils/react";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import {
+  styleElementMegaMenuPlacement,
+  styleElementMegaMenuWidth,
+  styleElementMegaMenuWidthSuffix
+} from "visual/utils/style2";
 import { uuid } from "visual/utils/uuid";
+import { getParentMegaMenuUid } from "../utils.common";
+import defaultValue from "./defaultValue.json";
+import MenuItemItems from "./items";
+import { calculateMeta } from "./meta";
+import sidebarConfigFn from "./sidebar";
+import { styleClassName, styleMegaMenu, styleMmMenuClassName } from "./styles";
+import toolbarConfigFn from "./toolbar";
+import toolbarExtendFn from "./toolbarExtend";
 
 const IS_PRO = Config.get("pro");
 let openedMegaMenu = null;
@@ -164,7 +164,7 @@ class MenuItem extends EditorComponent {
     }
   };
 
-  insideMegaMenu = target => {
+  insideMegaMenu = (target) => {
     const node = this.megaMenuRef.current;
 
     if (this.state.isOpen && node) {
@@ -234,7 +234,7 @@ class MenuItem extends EditorComponent {
     };
 
     if (IS_EDITOR) {
-      props.onDragStart = e => {
+      props.onDragStart = (e) => {
         e.preventDefault();
         return false;
       };
@@ -307,6 +307,7 @@ class MenuItem extends EditorComponent {
     const portalClassName = classnames(
       "brz-mega-menu__portal",
       "brz-mega-menu__portal--opened",
+      `brz-mega-menu__portal--${device}`,
       className
     );
     const width = styleElementMegaMenuWidth({ v, device });
@@ -330,7 +331,7 @@ class MenuItem extends EditorComponent {
             <SortableZIndex zIndex={2}>
               <div
                 className={portalClassName}
-                ref={el => {
+                ref={(el) => {
                   attachRef(el, this.megaMenuRef);
                   attachRef(el, ref);
                 }}
@@ -412,14 +413,8 @@ class MenuItem extends EditorComponent {
       return null;
     }
 
-    const {
-      level,
-      toolbarExtend,
-      mMenu,
-      meta,
-      menuSelected,
-      mods
-    } = this.props;
+    const { level, toolbarExtend, mMenu, meta, menuSelected, mods } =
+      this.props;
     const itemProps = this.makeSubcomponentProps({
       toolbarExtend,
       level,
@@ -468,6 +463,7 @@ class MenuItem extends EditorComponent {
       ".brz-ed-tooltip__content-portal",
       ".brz-ed-fixed",
       ".brz-portal-forms__select",
+      ".brz-mm-menu_opened",
       this.insideMegaMenu,
       ".react-contexify",
       ...(TARGET === "WP"

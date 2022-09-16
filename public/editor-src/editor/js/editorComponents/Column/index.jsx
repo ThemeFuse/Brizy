@@ -34,6 +34,8 @@ import { styleSizeWidth } from "visual/utils/style2";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { getStore } from "visual/redux/store";
+import * as State from "visual/utils/stateMode";
+import { deviceModeSelector } from "visual/redux/selectors";
 
 class Column extends EditorComponent {
   static get componentId() {
@@ -143,18 +145,25 @@ class Column extends EditorComponent {
     return meta.row && meta.row.isInner;
   }
 
+  dvv = key => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
+  };
+
   getAnimationClassName = (v, vs, vd) => {
     if (!validateKeyByProperty(v, "animationName", "none")) {
       return undefined;
     }
 
-    const animationName = defaultValueValue({ v, key: "animationName" });
-    const animationDuration = defaultValueValue({
-      v,
-      key: "animationDuration"
-    });
-    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
-    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+    const animationName = this.dvv("animationName");
+    const animationDuration = this.dvv("animationDuration");
+    const animationDelay = this.dvv("animationDelay");
+    const animationInfiniteAnimation = this.dvv("animationInfiniteAnimation");
+
+    const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
     return classnames(
       css(

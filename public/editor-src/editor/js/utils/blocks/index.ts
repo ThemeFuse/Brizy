@@ -1,26 +1,23 @@
+export { getBlockDataUrl } from "./blockDataUrl";
+export {
+  changeRule,
+  getBlockAlignment,
+  getCurrentRule,
+  getSurroundedConditions
+} from "./blocksConditions";
 export { blockTemplateThumbnailUrl } from "./blockTemplateThumbnailUrl";
 export { blockThumbnailData } from "./blockThumbnailData";
-export { placeholderBlockThumbnailUrl } from "./placeholderBlockThumbnailUrl";
 export { generateBlocksList, getBlocksInPage } from "./generateBlocksList";
 export {
-  getAllowedGBIds,
+  canUseCondition,
   canUseConditionInPage,
   canUseConditionInTemplates,
-  canUseCondition
+  getAllowedGBIds
 } from "./getAllowedGBIds";
-export { isPopup } from "./isPopup";
-
 export {
-  getBlockAlignment,
-  getSurroundedConditions,
-  getCurrentRule,
-  changeRule
-} from "./blocksConditions";
-
-export {
+  isAllRule,
   isCollectionItemRule,
-  isCollectionTypeRule,
-  isAllRule
+  isCollectionTypeRule
 } from "./guards";
-
-export { getBlockDataUrl } from "./blockDataUrl";
+export { isPopup } from "./isPopup";
+export { placeholderBlockThumbnailUrl } from "./placeholderBlockThumbnailUrl";

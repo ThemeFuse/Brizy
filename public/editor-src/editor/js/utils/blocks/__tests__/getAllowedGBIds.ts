@@ -1,8 +1,12 @@
-import { canUseConditionInPage, pageSplitRules } from "../getAllowedGBIds";
 import Config from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { Prop as WPPropConfig } from "visual/global/Config/types/configs/WP";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
+  AllRule,
   BlockTypeRule,
+  CollectionItemRule,
+  CollectionTypeRule,
   DataCommon as PageCommon,
   GlobalBlock,
   Page,
@@ -10,8 +14,9 @@ import {
   PageCustomer,
   Rule
 } from "visual/types";
+import { NoEmptyString } from "visual/utils/string/NoEmptyString";
 import { CUSTOMER_TYPE, PAGES_GROUP_ID } from "../blocksConditions";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { canUseConditionInPage, pageSplitRules } from "../getAllowedGBIds";
 
 export const urlsCommon = {
   about: "",
@@ -58,25 +63,61 @@ interface Resolve {
   level3: undefined | Rule;
 }
 
-const configWp = {
+export const configWp: WPPropConfig = {
+  page: "",
   templates: [],
   postType: "",
   postTypes: [],
+  postLoopSources: [],
   hasSidebars: false,
   plugins: {},
   api: {
     url: "",
     hash: "",
+
+    getProject: "",
+    setProject: "",
+
+    getPage: "",
+    updatePage: "",
+
+    getGlobalBlockList: "",
+    createGlobalBlock: "",
+    updateGlobalBlock: "",
+    updateGlobalBlocks: "",
+
+    createSavedBlock: "",
+    deleteSavedBlock: "",
     getSavedBlockList: "",
     getSavedBlockByUid: "",
-    uploadBlocks: "",
     downloadBlocks: "",
+
+    createLayout: "",
+    getLayoutList: "",
+    getLayoutByUid: "",
+    deleteLayout: "",
+    uploadBlocks: "",
     downloadLayouts: "",
-    getPostObjects: ""
+
+    getPostObjects: "",
+    rulePostsGroupList: "",
+    getMediaUid: "",
+    setFeaturedImage: "",
+    setFeaturedImageFocalPoint: "",
+    removeFeaturedImage: "",
+    getSidebars: "",
+    shortcodeContent: "",
+    getMenus: "",
+    getFonts: "",
+    getAttachmentUid: "",
+    getRuleGroupList: ""
   },
   ruleMatches: [],
   availableRoles: [],
-  availableTranslations: []
+  availableTranslations: [],
+  postAuthor: 0,
+  postTerms: [],
+  postTermParents: []
 };
 
 const pageCommon: PageCommon = {
@@ -114,21 +155,22 @@ const pageCustomer: PageCustomer = {
   title: ""
 };
 
+// @ts-expect-error: the TARGET is added from webpack, here we are hardcoded
+const currentTarget = global.TARGET;
+
 describe("testing WP getAllowedGBIds", () => {
-  const allRule = {
-    type: BlockTypeRule.include,
-    appliedFor: null,
-    entityType: ""
+  const allRule: AllRule = {
+    type: BlockTypeRule.include
   };
 
-  const typeRule = {
+  const typeRule: CollectionTypeRule = {
     type: BlockTypeRule.include,
     appliedFor: PAGES_GROUP_ID,
-    entityType: "page",
-    entityValues: []
+    entityType: "page" as NoEmptyString
   };
 
-  const itemRule = {
+  const itemRule: CollectionItemRule = {
+    mode: "specific",
     type: BlockTypeRule.include,
     appliedFor: PAGES_GROUP_ID,
     entityType: "page",
@@ -138,6 +180,16 @@ describe("testing WP getAllowedGBIds", () => {
   beforeAll(() => {
     // @ts-expect-error: the TARGET is added from webpack, here we are hardcoded
     global.TARGET = "WP";
+    const baseTerm = {
+      count: 0,
+      filter: "",
+      name: "",
+      parent: 0,
+      slug: "",
+      term_group: 0,
+      term_taxonomy_id: 0,
+      description: ""
+    };
     Config.init({
       ...configCommon,
       user: {
@@ -169,8 +221,44 @@ describe("testing WP getAllowedGBIds", () => {
       wp: {
         ...configWp,
         page: "1",
+        postAuthor: 1,
+        postTermParents: [
+          {
+            ...baseTerm,
+            taxonomy: "category",
+            term_id: 1
+          },
+          {
+            ...baseTerm,
+            taxonomy: "post_tag",
+            term_id: 2
+          }
+        ],
+        postTerms: [
+          {
+            ...baseTerm,
+            taxonomy: "category",
+            term_id: 1
+          },
+          {
+            ...baseTerm,
+            taxonomy: "post_tag",
+            term_id: 2
+          },
+          {
+            ...baseTerm,
+            taxonomy: "post_tag",
+            term_id: 3
+          },
+          {
+            ...baseTerm,
+            taxonomy: "post_tag",
+            term_id: 4
+          }
+        ],
         ruleMatches: [
           {
+            type: 1,
             group: PAGES_GROUP_ID,
             entityType: "page",
             values: []
@@ -178,6 +266,11 @@ describe("testing WP getAllowedGBIds", () => {
         ]
       }
     });
+  });
+
+  afterAll(() => {
+    // @ts-expect-error: the TARGET is added from webpack, here we are hardcoded
+    global.TARGET = currentTarget;
   });
 
   test.each<[Rule[], Page, Resolve]>([
@@ -408,27 +501,360 @@ describe("testing WP getAllowedGBIds", () => {
       },
       page,
       true
+    ],
+
+    //#region Author
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["author|"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      true
+    ],
+
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["author|1"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      true
+    ],
+
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["author|2"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      false
+    ],
+
+    //#endregion
+
+    //#region In
+
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["in|category"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      true
+    ],
+
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["in|category|1"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      true
+    ],
+
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["in|category|10"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      false
+    ],
+
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["in|fake_category"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      false
+    ],
+
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["in|fake_category|1"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      false
+    ],
+
+    //#endregion
+
+    //#region Child
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["child|post_tag"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      true
+    ],
+
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["child|post_tag|2"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      true
+    ],
+
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["child|post_tag|10"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      false
+    ],
+
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["child|post_fake"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      false
+    ],
+
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityValues: ["child|post_fake|2"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      page,
+      false
     ]
+
+    //#endregion
   ])("canUseConditionInPage nr %#", (globalBlock, page, resolve) => {
     expect(canUseConditionInPage(globalBlock, page)).toBe(resolve);
   });
 });
 
 describe("testing Cloud getAllowedGBIds", () => {
-  const allRule = {
-    type: BlockTypeRule.include,
-    appliedFor: null,
-    entityType: ""
+  const allRule: AllRule = {
+    type: BlockTypeRule.include
   };
 
-  const typeRule = {
+  const typeRule: CollectionTypeRule = {
     type: BlockTypeRule.include,
     appliedFor: PAGES_GROUP_ID,
-    entityType: "collectionItem/1",
-    entityValues: []
+    entityType: "collectionItem/1" as NoEmptyString
   };
 
-  const itemRule = {
+  const itemRule: CollectionItemRule = {
+    mode: "specific",
     type: BlockTypeRule.include,
     appliedFor: PAGES_GROUP_ID,
     entityType: "collectionItem/1",
@@ -493,6 +919,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     });
   });
 
+  //#region pageSplitRules
+
   test.each<[Rule[], Page, Resolve]>([
     [
       [],
@@ -544,6 +972,10 @@ describe("testing Cloud getAllowedGBIds", () => {
   ])("pageSplitRules nr %#", (rules, page, resolve) => {
     expect(pageSplitRules(rules, page)).toStrictEqual(resolve);
   });
+
+  //#endregion
+
+  //#region canUseConditionInPage
 
   test.each<[GlobalBlock, Page, boolean]>([
     [
@@ -739,8 +1171,9 @@ describe("testing Cloud getAllowedGBIds", () => {
         rules: [
           {
             ...itemRule,
+            mode: "reference",
             entityType: "my-id-1",
-            entityValues: ["my-ref-id-1"]
+            entityValues: ["field_type_id1:collection_item-id1"]
           }
         ],
         position: null,
@@ -757,7 +1190,7 @@ describe("testing Cloud getAllowedGBIds", () => {
             id: "1",
             type: {
               __typename: "CollectionTypeFieldText",
-              id: "1",
+              id: "field_type_id1",
               slug: "",
               collectionType: {
                 __typename: "CollectionType",
@@ -769,7 +1202,7 @@ describe("testing Cloud getAllowedGBIds", () => {
               __typename: "CollectionItemFieldReferenceValues",
               collectionItem: {
                 __typename: "CollectionItemReference",
-                id: "my-ref-id-1"
+                id: "collection_item-id1"
               }
             }
           }
@@ -788,8 +1221,9 @@ describe("testing Cloud getAllowedGBIds", () => {
         rules: [
           {
             ...itemRule,
+            mode: "reference",
             entityType: "my-id-1",
-            entityValues: ["my-ref-id-1"]
+            entityValues: ["filedMultiRefId1:my-ref-id-1"]
           }
         ],
         position: null,
@@ -806,7 +1240,7 @@ describe("testing Cloud getAllowedGBIds", () => {
             id: "1",
             type: {
               __typename: "CollectionTypeFieldText",
-              id: "1",
+              id: "filedMultiRefId1",
               slug: "",
               collectionType: {
                 __typename: "CollectionType",
@@ -827,6 +1261,214 @@ describe("testing Cloud getAllowedGBIds", () => {
         ]
       },
       true
+    ],
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityType: "my-id-1",
+            entityValues: ["filedMultiRefId1"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      {
+        ...pageCollection,
+        fields: [
+          {
+            __typename: "CollectionItemFieldMultiReference",
+            id: "1",
+            type: {
+              __typename: "CollectionTypeFieldText",
+              id: "filedMultiRefId1",
+              slug: "",
+              collectionType: {
+                __typename: "CollectionType",
+                id: "my-id-1",
+                title: ""
+              }
+            },
+            multiReferenceValues: {
+              __typename: "CollectionItemFieldMultiReferenceValues",
+              collectionItems: [
+                {
+                  __typename: "CollectionItemReference",
+                  id: "my-ref-id-1"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      true
+    ],
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityType: "my-id-1",
+            entityValues: ["filedMultiRefId1:my-ref-id-2"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      {
+        ...pageCollection,
+        fields: [
+          {
+            __typename: "CollectionItemFieldMultiReference",
+            id: "1",
+            type: {
+              __typename: "CollectionTypeFieldText",
+              id: "filedMultiRefId1",
+              slug: "",
+              collectionType: {
+                __typename: "CollectionType",
+                id: "my-id-1",
+                title: ""
+              }
+            },
+            multiReferenceValues: {
+              __typename: "CollectionItemFieldMultiReferenceValues",
+              collectionItems: [
+                {
+                  __typename: "CollectionItemReference",
+                  id: "my-ref-id-1"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      false
+    ],
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityType: "my-id-1",
+            entityValues: ["filedMultiRefId1"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      {
+        ...pageCollection,
+        fields: [
+          {
+            __typename: "CollectionItemFieldMultiReference",
+            id: "1",
+            type: {
+              __typename: "CollectionTypeFieldText",
+              id: "filedMultiRefId2",
+              slug: "",
+              collectionType: {
+                __typename: "CollectionType",
+                id: "my-id-1",
+                title: ""
+              }
+            },
+            multiReferenceValues: {
+              __typename: "CollectionItemFieldMultiReferenceValues",
+              collectionItems: [
+                {
+                  __typename: "CollectionItemReference",
+                  id: "my-ref-id-1"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      false
+    ],
+    [
+      {
+        data: {
+          blockId: "b1",
+          type: "Section",
+          value: {}
+        },
+        status: "publish",
+        rules: [
+          {
+            ...itemRule,
+            mode: "reference",
+            entityType: "my-id-2",
+            entityValues: ["filedMultiRefId2"]
+          }
+        ],
+        position: null,
+        meta: {
+          type: "normal",
+          extraFontStyles: []
+        }
+      },
+      {
+        ...pageCollection,
+        fields: [
+          {
+            __typename: "CollectionItemFieldMultiReference",
+            id: "1",
+            type: {
+              __typename: "CollectionTypeFieldText",
+              id: "filedMultiRefId2",
+              slug: "",
+              collectionType: {
+                __typename: "CollectionType",
+                id: "my-id-1",
+                title: ""
+              }
+            },
+            multiReferenceValues: {
+              __typename: "CollectionItemFieldMultiReferenceValues",
+              collectionItems: [
+                {
+                  __typename: "CollectionItemReference",
+                  id: "my-ref-id-1"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      false
     ],
 
     // Specific case in CustomerPage: rules with group
@@ -883,4 +1525,6 @@ describe("testing Cloud getAllowedGBIds", () => {
   ])("canUseConditionInPage nr %#", (globalBlock, page, resolve) => {
     expect(canUseConditionInPage(globalBlock, page)).toBe(resolve);
   });
+
+  //#endregion
 });

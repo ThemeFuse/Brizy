@@ -1,4 +1,4 @@
-import React, { ComponentProps, FC, useCallback } from "react";
+import React, { ComponentProps, FC } from "react";
 import { getColorPaletteColors as paletteColors } from "visual/utils/color";
 import * as O from "visual/component/Options/Type";
 import { BackgroundColor as Bg } from "visual/component/Controls/BackgroundColor";
@@ -40,7 +40,7 @@ export const BackgroundColor: FC<Props> & O.OptionType<Value> = ({
   onChange,
   config
 }) => {
-  const _onChange = useCallback<ComponentProps<typeof Bg>["onChange"]>(
+  const _onChange: ComponentProps<typeof Bg>["onChange"] = (
     (v, m) => {
       const isStart = !(value.type === "gradient" && value.active === "end");
       switch (m.isChanged) {
@@ -89,8 +89,7 @@ export const BackgroundColor: FC<Props> & O.OptionType<Value> = ({
           break;
         }
       }
-    },
-    [value]
+    }
   );
   const palette = paletteColors();
   const _value: Value = {

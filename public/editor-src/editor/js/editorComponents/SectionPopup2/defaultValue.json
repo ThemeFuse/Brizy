@@ -119,13 +119,10 @@
 
     "tempCloseBorderRadius": 2,
 
-    "closeBorderRadiusSuffix": "px",
-
     "closeBgSize": 0,
     "closeBgSizeSuffix": "px",
 
     "tempCloseBgSize": 5,
-    "closeBgSizeSuffix": "px",
 
     "closeColorHex": "#ffffff",
     "closeColorOpacity": 1,
@@ -166,7 +163,7 @@
 
     "hoverShowCloseButton": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

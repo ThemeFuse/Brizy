@@ -99,7 +99,7 @@
     "tempBorderTopLeftRadiusSuffix": "px",
     "tempBorderBottomLeftRadiusSuffix": "px",
 
-    "boxShadow": "",
+    "boxShadow": "none",
     "tempBoxShadow": "on",
 
     "boxShadowColorHex": "#000000",

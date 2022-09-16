@@ -1,78 +1,77 @@
-import _ from "underscore";
 import produce from "immer";
+import _ from "underscore";
 import Config from "visual/global/Config";
-import {
-  MAKE_NORMAL_TO_GLOBAL_BLOCK,
-  MAKE_GLOBAL_TO_NORMAL_BLOCK,
-  REORDER_BLOCKS,
-  UPDATE_BLOCKS,
-  UPDATE_GLOBAL_BLOCK,
-  DELETE_GLOBAL_BLOCK,
-  UPDATE_CURRENT_STYLE_ID,
-  UPDATE_CURRENT_STYLE,
-  ADD_BLOCK,
-  REMOVE_BLOCK,
-  UPDATE_POPUP_RULES,
-  UPDATE_GB_RULES,
-  UPDATE_TRIGGERS,
-  updateError,
-  UPDATE_ERROR,
-  HYDRATE
-} from "../../actions";
-import {
-  IMPORT_KIT,
-  IMPORT_TEMPLATE,
-  PUBLISH,
-  IMPORT_STORY,
-  UPDATE_EXTRA_FONT_STYLES,
-  UPDATE_CURRENT_KIT_ID,
-  UPDATE_DISABLED_ELEMENTS,
-  ADD_GLOBAL_BLOCK,
-  ADD_FONTS,
-  DELETE_FONTS,
-  UPDATE_DEFAULT_FONT,
-  updateStoreWasChanged
-} from "../../actions2";
-import {
-  apiUpdateProject,
-  debouncedApiUpdateProject,
-  apiUpdatePage,
-  debouncedApiUpdatePage,
-  apiUpdateGlobalBlock,
-  debouncedApiUpdateGlobalBlock,
-  apiUpdateGlobalBlocks,
-  debouncedApiUpdateGlobalBlocksPositions,
-  apiUpdatePopupRules,
-  pollingSendHeartBeat
-} from "./utils";
-import {
-  pageSelector,
-  fontsSelector,
-  defaultFontSelector,
-  projectSelector,
-  projectAssembled,
-  stylesSelector,
-  pageBlocksRawSelector,
-  globalBlocksSelector,
-  globalBlocksAssembledSelector,
-  changedGBIdsSelector,
-  errorSelector
-} from "../../selectors";
+import { StoreChanged } from "visual/redux/types";
 import {
   HEART_BEAT_ERROR,
   PROJECT_DATA_VERSION_ERROR,
   PROJECT_LOCKED_ERROR
 } from "visual/utils/errors";
-import { IS_STORY } from "visual/utils/models";
-import { UNDO, REDO } from "../../history/types";
-import { historySelector } from "../../history/selectors";
 import { t } from "visual/utils/i18n";
-import { StoreChanged } from "visual/redux/types";
+import { IS_STORY } from "visual/utils/models";
+import {
+  ADD_BLOCK,
+  DELETE_GLOBAL_BLOCK,
+  HYDRATE,
+  MAKE_GLOBAL_TO_NORMAL_BLOCK,
+  MAKE_NORMAL_TO_GLOBAL_BLOCK,
+  REMOVE_BLOCK,
+  REORDER_BLOCKS,
+  updateError,
+  UPDATE_BLOCKS,
+  UPDATE_CURRENT_STYLE,
+  UPDATE_CURRENT_STYLE_ID,
+  UPDATE_ERROR,
+  UPDATE_GB_RULES,
+  UPDATE_GLOBAL_BLOCK,
+  UPDATE_POPUP_RULES,
+  UPDATE_TRIGGERS
+} from "../../actions";
+import {
+  ADD_FONTS,
+  ADD_GLOBAL_BLOCK,
+  DELETE_FONTS,
+  IMPORT_KIT,
+  IMPORT_STORY,
+  IMPORT_TEMPLATE,
+  PUBLISH,
+  updateStoreWasChanged,
+  UPDATE_CURRENT_KIT_ID,
+  UPDATE_DEFAULT_FONT,
+  UPDATE_DISABLED_ELEMENTS,
+  UPDATE_EXTRA_FONT_STYLES
+} from "../../actions2";
+import { historySelector } from "../../history/selectors";
+import { REDO, UNDO } from "../../history/types";
+import {
+  changedGBIdsSelector,
+  defaultFontSelector,
+  errorSelector,
+  fontsSelector,
+  globalBlocksAssembledSelector,
+  globalBlocksSelector,
+  pageBlocksRawSelector,
+  pageSelector,
+  projectAssembled,
+  projectSelector,
+  stylesSelector
+} from "../../selectors";
+import {
+  apiUpdateGlobalBlock,
+  apiUpdateGlobalBlocks,
+  apiUpdatePage,
+  apiUpdatePopupRules,
+  apiUpdateProject,
+  debouncedApiUpdateGlobalBlock,
+  debouncedApiUpdatePage,
+  debouncedApiUpdateProject,
+  pollingSendHeartBeat
+} from "./utils";
 
-export default store => next => {
+export default (store) => (next) => {
   const apiHandler = apiCatch.bind(null, store.dispatch);
 
-  return action => {
+  return (action) => {
     const oldState = store.getState();
 
     next(action);
@@ -109,7 +108,6 @@ function handlePublish({ action, state, oldState, apiHandler }) {
       // cancel possible pending requests
       debouncedApiUpdatePage.cancel();
       debouncedApiUpdateProject.cancel();
-      debouncedApiUpdateGlobalBlocksPositions.cancel();
 
       const newGlobalBlocks = Object.entries(globalBlocks).reduce(
         (acc, [id, globalBlock]) => {
@@ -176,7 +174,7 @@ function handleProject({ action, state, oldState, apiHandler }) {
       const styles = stylesSelector(state);
 
       if (oldFonts !== fonts || oldStyles !== styles) {
-        const project = produce(projectSelector(state), draft => {
+        const project = produce(projectSelector(state), (draft) => {
           draft.data.fonts = fonts;
           draft.data.styles = styles;
         });
@@ -196,7 +194,7 @@ function handleProject({ action, state, oldState, apiHandler }) {
     case DELETE_FONTS: {
       const fonts = fontsSelector(state);
       const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
-      const project = produce(projectSelector(state), draft => {
+      const project = produce(projectSelector(state), (draft) => {
         draft.data.fonts = fonts;
       });
       const meta = {
@@ -212,7 +210,7 @@ function handleProject({ action, state, oldState, apiHandler }) {
     case UPDATE_DEFAULT_FONT: {
       const font = defaultFontSelector(state);
       const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
-      const project = produce(projectSelector(state), draft => {
+      const project = produce(projectSelector(state), (draft) => {
         draft.data.font = font;
       });
       const meta = {
@@ -229,12 +227,12 @@ function handleProject({ action, state, oldState, apiHandler }) {
     case UNDO:
     case REDO: {
       const { currSnapshot, prevSnapshot } = historySelector(state);
-      const currStyleId = currSnapshot.currentStyleId;
-      const prevStyleId = prevSnapshot.currentStyleId;
-      const currStyle = currSnapshot.currentStyle;
-      const prevStyle = prevSnapshot.currentStyle;
-      const currExtraFontStyle = currSnapshot.extraFontStyles;
-      const prevExtraFontStyle = prevSnapshot.extraFontStyles;
+      const currStyleId = currSnapshot?.currentStyleId;
+      const prevStyleId = prevSnapshot?.currentStyleId;
+      const currStyle = currSnapshot?.currentStyle;
+      const prevStyle = prevSnapshot?.currentStyle;
+      const currExtraFontStyle = currSnapshot?.extraFontStyles;
+      const prevExtraFontStyle = prevSnapshot?.extraFontStyles;
 
       if (
         currStyleId !== prevStyleId ||
@@ -258,7 +256,7 @@ function handlePage({ action, state }) {
     case ADD_BLOCK:
     case ADD_GLOBAL_BLOCK:
     case REMOVE_BLOCK: {
-      const page = produce(pageSelector(state), draft => {
+      const page = produce(pageSelector(state), (draft) => {
         draft.data.items = pageBlocksRawSelector(state);
       });
 
@@ -268,9 +266,7 @@ function handlePage({ action, state }) {
     case UPDATE_POPUP_RULES: {
       const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
       const page = { ...state.page, rules: action.payload.rules };
-      apiUpdatePopupRules(page, action.meta)
-        .then(syncSuccess)
-        .catch(syncFail);
+      apiUpdatePopupRules(page, action.meta).then(syncSuccess).catch(syncFail);
       break;
     }
     case UPDATE_TRIGGERS: {
@@ -280,9 +276,7 @@ function handlePage({ action, state }) {
         is_autosave: 0
       };
 
-      apiUpdatePage(page, meta)
-        .then(syncSuccess)
-        .catch(syncFail);
+      apiUpdatePage(page, meta).then(syncSuccess).catch(syncFail);
       break;
     }
     case UNDO:
@@ -375,7 +369,7 @@ function handleGlobalBlocks({ action, state }) {
   }
 }
 
-const startHeartBeat = apiHandler => {
+const startHeartBeat = (apiHandler) => {
   const { heartBeatInterval } = Config.get("project");
   apiHandler(pollingSendHeartBeat(heartBeatInterval));
 };
@@ -395,11 +389,11 @@ function handleHeartBeat({ action, state, apiHandler }) {
 
 function apiCatch(next, p, onSuccess = _.noop, onError = _.noop) {
   return p
-    .then(r => {
+    .then((r) => {
       next(updateStoreWasChanged(StoreChanged.unchanged));
       onSuccess(r);
     })
-    .catch(r => {
+    .catch((r) => {
       if (r && r.heartBeat) {
         next(
           updateError({

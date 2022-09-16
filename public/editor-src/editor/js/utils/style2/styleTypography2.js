@@ -1,23 +1,23 @@
 import Config from "visual/global/Config";
-import { DESKTOP } from "visual/utils/responsiveMode";
-import { capByPrefix } from "visual/utils/string";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import {
   getFontById,
   getFontCssStyle,
   makeStyleCSSVar
 } from "visual/utils/fonts";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
+import { DESKTOP } from "visual/utils/responsiveMode";
+import { capByPrefix } from "visual/utils/string";
 import { isNullish } from "visual/utils/value";
 
 export function styleTypography2FontFamily({ v, device, state, prefix = "" }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const fontFamilyKey = capByPrefix(prefix, "fontFamily");
   const fontFamilyTypeKey = capByPrefix(prefix, "fontFamilyType");
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontStyle = dvv(fontStyleKey);
 
-  if (fontStyle) {
+  if (fontStyle && fontStyle !== "custom") {
     return `var(${makeStyleCSSVar({
       id: fontStyle,
       device: DESKTOP,
@@ -45,8 +45,8 @@ export function styleTypography2FontFamily({ v, device, state, prefix = "" }) {
 }
 
 export function styleTypography2FontSize({ v, device, state, prefix = "" }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontSizeKey = capByPrefix(prefix, "fontSize");
   const fontStyle = dvv(fontStyleKey);
@@ -65,13 +65,13 @@ export function styleTypography2FontSizeSuffix({
   state,
   prefix = ""
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const fontSizeSuffixKey = capByPrefix(prefix, "fontSizeSuffix");
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontStyle = dvv(fontStyleKey);
 
-  if (fontStyle) {
+  if (fontStyle && fontStyle !== "custom") {
     return "";
   } else {
     return (
@@ -85,8 +85,8 @@ export function styleTypography2FontSizeSuffix({
 }
 
 export function styleTypography2LineHeight({ v, device, state, prefix = "" }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const lineHeightKey = capByPrefix(prefix, "lineHeight");
   const fontStyle = dvv(fontStyleKey);
@@ -104,8 +104,8 @@ export function styleTypography2LineHeight({ v, device, state, prefix = "" }) {
 }
 
 export function styleTypography2FontWeight({ v, device, state, prefix = "" }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontWeightKey = capByPrefix(prefix, "fontWeight");
   const fontStyle = dvv(fontStyleKey);
@@ -128,8 +128,8 @@ export function styleTypography2LetterSpacing({
   state,
   prefix = ""
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontStyle = dvv(fontStyleKey);
   const letterSpacingKey = capByPrefix(prefix, "letterSpacing");

@@ -106,7 +106,7 @@
     "tempHoverBorderColorOpacity": null,
     "tempHoverBorderColorPalette": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 
@@ -149,8 +149,10 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "width": 100,
+    "widthSuffix": "%",
 
     "height": 175,
+    "heightSuffix": "px",
 
     "customCSS": "",
 

@@ -1,27 +1,27 @@
 import {
+  cssStyleBgColor,
+  cssStyleBorder,
+  cssStyleBorderRadius,
+  cssStyleBoxShadow,
+  cssStyleColor,
+  cssStylePaddingFourFields,
+  cssStyleTypography2FontFamily,
+  cssStyleTypography2FontSize,
+  cssStyleTypography2FontWeight,
+  cssStyleTypography2LetterSpacing,
+  cssStyleTypography2LineHeight
+} from "visual/utils/cssStyle";
+import {
   styleAlignHorizontal,
   styleBorderWidthUngrouped,
   styleTypography2FontSize
 } from "visual/utils/style2";
 import {
-  cssStyleBorder,
-  cssStyleColor,
-  cssStyleBgColor,
-  cssStyleBoxShadow,
-  cssStyleTypography2FontFamily,
-  cssStyleTypography2FontSize,
-  cssStyleTypography2FontWeight,
-  cssStyleTypography2LetterSpacing,
-  cssStyleTypography2LineHeight,
-  cssStylePaddingFourFields,
-  cssStyleBorderRadius
-} from "visual/utils/cssStyle";
-import {
   styleElementAccordionFilterAfterSpacing,
   styleElementAccordionFilterSpacing,
-  styleElementAccordionNavAlign,
   styleElementAccordionSpacing
 } from "visual/utils/style2/styleElementAccordion";
+import { cssStyleFlexHorizontalAlign } from "./cssStyleAlign";
 
 export function cssStyleElementAccordionFilterColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "filterColor" });
@@ -97,7 +97,7 @@ export function cssStyleElementAccordionFilterAfterSpacing({
 }
 
 export function cssStyleElementAccordionNavAlign({ v, device, state }) {
-  const horizontalAlign = styleElementAccordionNavAlign({ v, device, state });
+  const horizontalAlign = styleAlignHorizontal({ v, device, state });
 
   return horizontalAlign === "right"
     ? "flex-direction: row-reverse;"
@@ -106,14 +106,9 @@ export function cssStyleElementAccordionNavAlign({ v, device, state }) {
     : "";
 }
 
-export function cssStyleElementAccordionNavAlignText({ v, device, state }) {
-  const horizontalAlign = styleElementAccordionNavAlign({ v, device, state });
-
-  return `text-align: ${horizontalAlign};`;
-}
 
 export function cssStyleElementAccordionNavIconSpacing({ v, device, state }) {
-  const horizontalAlign = styleElementAccordionNavAlign({ v, device, state });
+  const horizontalAlign = styleAlignHorizontal({ v, device, state });
 
   return horizontalAlign === "right"
     ? "margin: 0 10px 0 0;"
@@ -130,21 +125,7 @@ export function cssStyleElementAccordionFilterHorizontalAlign({
   device,
   state
 }) {
-  const horizontalAlign = styleAlignHorizontal({
-    v,
-    device,
-    state,
-    prefix: "filter"
-  });
-  const aligns = {
-    left: "flex-start",
-    center: "center",
-    right: "flex-end"
-  };
-  const alignItems =
-    horizontalAlign === undefined ? horizontalAlign : aligns[horizontalAlign];
-
-  return `justify-content:${alignItems};`;
+  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "filter" });
 }
 
 export function cssStyleElementAccordionFilterPaddingFourFields({ v, device }) {

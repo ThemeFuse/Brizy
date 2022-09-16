@@ -1,11 +1,14 @@
+import { EntityTypeRule } from "visual/types";
+
 export type CmsListItem = {
   title: string;
   value: string;
   mode: "specific" | "reference";
   disabled?: boolean;
+  status?: "publish" | "draft" | "pending";
   items: {
     title: string;
-    value: string;
+    value: EntityTypeRule;
     status?: "publish" | "draft";
   }[];
 };

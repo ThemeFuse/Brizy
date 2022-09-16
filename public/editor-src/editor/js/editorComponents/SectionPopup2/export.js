@@ -1,7 +1,8 @@
 import $ from "jquery";
+import { uuid } from "visual/utils/uuid";
 import "./popupsPlugin";
 
-$.fn.popup = function() {
+$.fn.popup = function () {
   const $this = $(this);
 
   return {
@@ -46,8 +47,55 @@ $.fn.popup = function() {
   };
 };
 
-export default function($node) {
-  $node.find("[data-brz-link-type='popup']").on("click", function(e) {
+export default function ($node) {
+  const root = $node.get(0);
+
+  // append the popup to body to avoid problems with z-index
+  const rootBody = root.ownerDocument.body;
+  const globalPopupsProcessed = {};
+
+  root.querySelectorAll("[data-brz-link-type='popup']").forEach((node) => {
+    const popupId = node.getAttribute("href").slice(1); // without the `#`
+    let parent = node.parentElement;
+    let popup;
+
+    // Link with reference to a global popup
+    // Global Block Popup exist only 1 in all page
+    if (globalPopupsProcessed[popupId]) {
+      node.setAttribute("href", `#${globalPopupsProcessed[popupId]}`);
+      return;
+    }
+
+    while (parent) {
+      popup = [...parent.children].find(
+        (node) => node.dataset.brzPopup === popupId
+      );
+
+      if (popup) {
+        break;
+      }
+
+      parent = parent.parentElement;
+    }
+
+    // append the popup to body to avoid problems with z-index
+    // need to regenerate ids for popups for Dynamic Content
+    if (popup && popup.parentElement !== rootBody) {
+      const newId = uuid();
+      const isGlobal = popup.getAttribute("id").includes("global_");
+
+      node.setAttribute("href", `#${newId}`);
+      popup.setAttribute("data-brz-popup", newId);
+
+      if (isGlobal) {
+        globalPopupsProcessed[popupId] = newId;
+      }
+
+      rootBody.append(popup);
+    }
+  });
+
+  $node.find("[data-brz-link-type='popup']").on("click", function (e) {
     e.preventDefault();
 
     const popupId = this.getAttribute("href").slice(1); // without the `#`
@@ -65,15 +113,16 @@ export default function($node) {
     .find(
       ".brz-simple-popup, .brz-conditions-internal-popup, .brz-conditions-external-popup"
     )
-    .each(function() {
+    .each(function () {
       const $this = $(this);
 
-      $this.on("click", function(e) {
+      $this.on("click", function (e) {
         const clickedOutSideToClose = $this.attr("data-click_outside_to_close");
         const clickedOutSideContent =
           $(e.target).closest(".brz-container").length === 0;
-        const clickedTheCross = $(e.target).closest(".brz-popup2__close")
-          .length;
+        const clickedTheCross = $(e.target).closest(
+          ".brz-popup2__close"
+        ).length;
         const clickedTheCrossAction = $(e.target).closest(
           ".brz-popup2__action-close"
         ).length;
@@ -100,10 +149,10 @@ export default function($node) {
 
         window.brzPopup(
           Object.assign({}, data, {
-            show: function() {
+            show: function () {
               this.show();
             }.bind(popup),
-            hide: function() {
+            hide: function () {
               this.close();
             }.bind(popup)
           })
@@ -112,7 +161,7 @@ export default function($node) {
     });
 
   // closes a popup when an anchor link is clicked inside it
-  window.Brz.on("elements.anchor.startScrolled", anchor => {
+  window.Brz.on("elements.anchor.startScrolled", (anchor) => {
     const $closestPopup = $(anchor).closest(".brz-popup2");
 
     if ($closestPopup.length > 0) {

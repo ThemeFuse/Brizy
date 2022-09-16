@@ -51,7 +51,7 @@ export default {
               {
                 type: "Button",
                 value: {
-                  _styles: ["story-button", "submit"]
+                  _styles: ["story-button", "story-form-button", "submit"]
                 }
               }
             ]

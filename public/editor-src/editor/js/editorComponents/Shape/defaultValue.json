@@ -94,7 +94,7 @@
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "",
 
-    "boxShadow": "",
+    "boxShadow": "none",
     "tempBoxShadow": "on",
 
     "boxShadowColorHex": "#000000",

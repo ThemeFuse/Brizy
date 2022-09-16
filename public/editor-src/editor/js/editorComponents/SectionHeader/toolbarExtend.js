@@ -1,14 +1,14 @@
 import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
 import { t } from "visual/utils/i18n";
+import { getAllMembershipChoices } from "visual/utils/membership";
+import { getLanguagesChoices } from "visual/utils/multilanguages";
 import {
   toolbarElementSectionGlobal,
   toolbarElementSectionSaved,
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
-import { getAllMembershipChoices } from "visual/utils/membership";
-import { getLanguagesChoices } from "visual/utils/multilanguages";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
-import { isWp } from "visual/global/Config/types/configs/WP";
 
 export function getItems({ v, device, component }) {
   const config = Config.getAll();
@@ -55,7 +55,8 @@ export function getItems({ v, device, component }) {
               id: "gbConditions",
               disabled: !component.props.meta.globalBlockId,
               value: component.props.meta.globalBlockId,
-              type: "gbConditions"
+              type: "gbConditions",
+              context: "block"
             }
           ]
         },

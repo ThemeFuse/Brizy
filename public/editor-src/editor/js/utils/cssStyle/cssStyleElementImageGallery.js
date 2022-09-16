@@ -1,10 +1,3 @@
-import { defaultValueValue } from "visual/utils/onChange";
-import {
-  styleAlignHorizontal,
-  styleElementImageGalleryFilterStyle,
-  styleElementImageGalleryGridColumn,
-  styleElementImageGallerySpacing
-} from "visual/utils/style2";
 import {
   cssStyleBgColor,
   cssStyleBorder,
@@ -18,6 +11,14 @@ import {
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
 import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
+import { defaultValueValue } from "visual/utils/onChange";
+import {
+  styleAlignHorizontal,
+  styleElementImageGalleryFilterStyle,
+  styleElementImageGalleryGridColumn,
+  styleElementImageGallerySpacing
+} from "visual/utils/style2";
+import { cssStyleFlexHorizontalAlign } from "./cssStyleAlign";
 
 export function cssStyleElementImageGalleryWidth({ v, device, state }) {
   const spacing = styleElementImageGallerySpacing({
@@ -74,15 +75,11 @@ export function cssStyleElementImageGalleryFilterAfterSpacing({
 export function cssStyleElementImageGalleryFilterHorizontalAlign({
   v,
   device,
-  state
+  state,
+  prefix = "filter"
 }) {
   const filterStyle = styleElementImageGalleryFilterStyle({ v, device, state });
-  const horizontalAlign = styleAlignHorizontal({
-    v,
-    device,
-    state,
-    prefix: "filter"
-  });
+  const horizontalAlign = styleAlignHorizontal({ v, device, state, prefix });
 
   switch (filterStyle) {
     case "style-2": {
@@ -97,17 +94,7 @@ export function cssStyleElementImageGalleryFilterHorizontalAlign({
       return "margin-left: auto;";
     }
     default: {
-      const aligns = {
-        left: "flex-start",
-        center: "center",
-        right: "flex-end"
-      };
-      const alignItems =
-        horizontalAlign === undefined
-          ? horizontalAlign
-          : aligns[horizontalAlign];
-
-      return `justify-content:${alignItems};`;
+      return cssStyleFlexHorizontalAlign({ v, device, state, prefix });
     }
   }
 }

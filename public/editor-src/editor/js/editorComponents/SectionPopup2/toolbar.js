@@ -1,19 +1,23 @@
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
-import {
-  getOptionColorHexByPalette,
-  getDynamicContentChoices
-} from "visual/utils/options";
 import { t } from "visual/utils/i18n";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import {
+  IS_EXTERNAL_POPUP,
+  IS_GLOBAL_POPUP,
+  IS_INTERNAL_POPUP
+} from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarElementSectionSaved,
-  toolbarElementSectionGlobal
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
+import {
+  toolbarElementSectionGlobal,
+  toolbarElementSectionSaved
 } from "visual/utils/toolbar";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export function getItems({ v, device, component, context }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
   const widthSuffix = dvv("widthSuffix");
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -24,6 +28,8 @@ export function getItems({ v, device, component, context }) {
     context.dynamicContent.config,
     DCTypes.image
   );
+  const blockType =
+    IS_INTERNAL_POPUP || IS_EXTERNAL_POPUP ? "externalPopup" : "popup";
 
   const columnsHeightStylePicker =
     v.columnsHeightStyle === "custom"
@@ -61,7 +67,7 @@ export function getItems({ v, device, component, context }) {
                 toolbarElementSectionGlobal({
                   device,
                   component,
-                  blockType: "popup",
+                  blockType,
                   devices: "desktop",
                   state: "normal"
                 }),

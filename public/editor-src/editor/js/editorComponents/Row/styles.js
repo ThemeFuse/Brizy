@@ -1,13 +1,13 @@
-import { renderStyles } from "visual/utils/cssStyle";
 import { fromElementModel } from "visual/component/Options/types/dev/Motion/types/Value";
-import { defaultValueValue } from "visual/utils/onChange";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
+import { renderStyles } from "visual/utils/cssStyle";
+import { defaultValueValue } from "visual/utils/onChange";
 import { types as Devices } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
 
 export function styleRow(v, vs, vd) {
-  const get = k => {
-    return Devices.some(device => {
+  const get = (k) => {
+    return Devices.some((device) => {
       return defaultValueValue({
         v,
         device,
@@ -106,11 +106,7 @@ export function styleContainer(v, vs, vd) {
 export function styleAnimation(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: [
-        "cssStyleAnimation",
-        "cssStyleAnimationDuration",
-        "cssStyleAnimationDelay"
-      ]
+      standart: ["cssStyleAnimationAll"]
     }
   };
 

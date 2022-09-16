@@ -26,7 +26,7 @@ export function style(v, vs, vd) {
         "cssStyleElementTimelineIconSize",
         "cssStyleBorder",
         "cssStyleElementTimelinePaddingForIcon",
-        "cssStyleElementTimelineIconBorderRadius",
+        "cssStyleBorderRadius",
         "cssStyleElementTimelineIconWidth",
         "cssStyleElementTimelineIconHeight",
         "cssStyleElementTimelineTabsVerticalNavIcon"
@@ -37,7 +37,8 @@ export function style(v, vs, vd) {
         "cssStylePaddingFourFields",
         "cssStyleMargin",
         "cssStyleBorder",
-        "cssStyleElementTimelineWidth",
+        "cssStyleSizeMinWidth",
+        "cssStyleSizeWidth",
         "cssStyleElementTimelineTabsVerticalContent"
       ]
     },
@@ -97,7 +98,8 @@ export function style(v, vs, vd) {
     ".brz && .brz-timeline__tab .brz-timeline__content": {
       standart: [
         "cssStyleElementTimelineContentSpacing",
-        "cssStyleElementTimelineWidth"
+        "cssStyleSizeMinWidth",
+        "cssStyleSizeWidth"
       ]
     },
     ".brz && .brz-timeline__tab:nth-child(even) .brz-timeline__content": {
@@ -109,18 +111,20 @@ export function style(v, vs, vd) {
         "cssStyleElementTimelineTabContentArrowColor"
       ]
     },
-    ".brz && .brz-timeline__tab:nth-child(even) > .brz-timeline__content:before": {
-      interval: [
-        "cssStyleElementTimelineVerticalStyle3ArrowPosition",
-        "cssStyleElementTimelineTabContentArrowCustomColor"
-      ]
-    },
-    ".brz && .brz-timeline__tab:nth-child(odd) > .brz-timeline__content:before": {
-      interval: [
-        "cssStyleElementTimelineContentBeforeStyle3",
-        "cssStyleElementTimelineTabContentArrowCustomColor1"
-      ]
-    },
+    ".brz && .brz-timeline__tab:nth-child(even) > .brz-timeline__content:before":
+      {
+        interval: [
+          "cssStyleElementTimelineVerticalStyle3ArrowPosition",
+          "cssStyleElementTimelineTabContentArrowCustomColor"
+        ]
+      },
+    ".brz && .brz-timeline__tab:nth-child(odd) > .brz-timeline__content:before":
+      {
+        interval: [
+          "cssStyleElementTimelineContentBeforeStyle3",
+          "cssStyleElementTimelineTabContentArrowCustomColor1"
+        ]
+      },
     ".brz && .brz-timeline__tabs--horizontal.brz-timeline__tabs--style-2": {
       standart: ["cssStyleDisplayFlex"]
     },

@@ -7,7 +7,7 @@ export type EcwidStoreId = string & { [storeId]: "EcwidStoreId" };
 // region EcwidProductId
 declare const productId: unique symbol;
 
-export type EcwidProductId = string & { [productId]: "EcwidProductId" };
+export type EcwidProductId = number & { [productId]: "EcwidProductId" };
 // endregion
 
 // region EcwidCategoryId

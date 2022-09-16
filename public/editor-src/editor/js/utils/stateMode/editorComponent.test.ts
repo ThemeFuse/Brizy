@@ -23,7 +23,6 @@ jest.mock(
   "visual/component/Options/types/ColorPaletteEditor.jsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/ColorPicker.jsx", () => undefined);
 jest.mock("visual/component/Options/types/ColorPicker2.jsx", () => undefined);
 jest.mock("visual/component/Options/types/FileUpload.jsx", () => undefined);
 jest.mock("visual/component/Options/types/FileUpload.wp.jsx", () => undefined);

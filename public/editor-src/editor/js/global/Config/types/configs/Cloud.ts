@@ -1,23 +1,25 @@
+import { XAuthUserToken } from "visual/component/LeftSidebar/components/Cms/types/XAuth";
 import Config from "visual/global/Config";
 import { Config as Config_ } from "visual/global/Config/types";
+import { Subscription } from "visual/global/Config/types/shopify/Subscription";
 import {
+  EcwidCategoryPage,
   EcwidProductPage,
   Page,
   PageCollection,
   PageCustomer,
   ShopifyPage
 } from "visual/types";
-import { TemplateType } from "../TemplateType";
-import { Subscription } from "visual/global/Config/types/shopify/Subscription";
-import { ShopifyTemplate } from "../shopify/ShopifyTemplate";
 import { Language } from "visual/utils/multilanguages";
+import { ShopifyTemplate } from "../shopify/ShopifyTemplate";
+import { TemplateType } from "../TemplateType";
 import { Base, CollectionPage } from "./Base";
 
 //#region CMS
 export interface CMS extends Base<"cms"> {
   templateType?: TemplateType;
   availableTranslations: Language[];
-  x_auth_user_token?: string;
+  x_auth_user_token?: XAuthUserToken;
 }
 
 export const isCMS = (c: Cloud): c is CMS => c.platform === "cms";
@@ -53,6 +55,10 @@ export const isCloud = (config: Config_): config is Cloud =>
 //#region Page
 export const isEcwidProductPage = (p: Page): p is EcwidProductPage => {
   return "__type" in p && p.__type === "ecwid-product";
+};
+
+export const isEcwidCategoryPage = (p: Page): p is EcwidCategoryPage => {
+  return "__type" in p && p.__type === "ecwid-product-category";
 };
 
 export const isCollectionPage = (p: Page): p is PageCollection => {

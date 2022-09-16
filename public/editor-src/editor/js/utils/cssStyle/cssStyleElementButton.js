@@ -1,9 +1,9 @@
 import {
   styleElementButtonBorderRadius,
-  styleElementButtonIconPosition,
-  styleElementButtonIconPositionCss,
   styleElementButtonIconCustomSize,
   styleElementButtonIconMargin,
+  styleElementButtonIconPosition,
+  styleElementButtonIconPositionCss,
   styleElementIconStrokeWidth
 } from "visual/utils/style2";
 

@@ -29,7 +29,7 @@ export function cssStyleShapeTopType({ v, device, state }) {
         shapeTopColorPalette,
         config
       )}), ${shapeTopColorOpacity}); -webkit-mask-image: url("${shapeTopSvg}");-webkit-mask-size:100% 100%;`
-    : `background-image: url(${shapeTopSvg});`;
+    : `background-image: url(${shapeTopSvg});background-repeat: no-repeat;`;
 
   return shapeTopType === undefined
     ? ""
@@ -72,7 +72,7 @@ export function cssStyleShapeBottomType({ v, device, state }) {
         shapeBottomColorPalette,
         config
       )}), ${shapeBottomColorOpacity}); -webkit-mask-image: url("${shapeBottomSvg}");-webkit-mask-size:100% 100%;`
-    : `background-image: url(${shapeBottomSvg});`;
+    : `background-image: url(${shapeBottomSvg});background-repeat: no-repeat;`;
 
   return shapeBottomType === undefined
     ? ""

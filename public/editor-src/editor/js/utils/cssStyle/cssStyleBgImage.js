@@ -1,12 +1,15 @@
-import { defaultValueValue } from "../onChange";
 import {
+  cssStyleDisplayBlock,
+  cssStyleDisplayNone
+} from "visual/utils/cssStyle";
+import {
+  styleBgAttachment,
   styleBgImage,
-  styleExportBgImage,
   styleBgPositionX,
   styleBgPositionY,
-  styleBgAttachment,
-  styleMediaBg
+  styleExportBgImage
 } from "visual/utils/style2";
+import { defaultValueValue } from "../onChange";
 
 export function cssStyleBgImage({ v, device, state }) {
   const bgImage = IS_EDITOR
@@ -25,13 +28,14 @@ export function cssStyleBgImageHover({ v, device }) {
 }
 
 export function cssStyleBgMediaImage({ v, device }) {
-  const media = styleMediaBg({ v, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
+  const media = dvv("media");
 
   if (media === "image") {
-    return "display: block;";
+    return cssStyleDisplayBlock();
   }
 
-  return "display: none;";
+  return cssStyleDisplayNone();
 }
 
 export function cssStyleBgImagePosition({ v, device, state }) {
@@ -45,7 +49,7 @@ export function cssStyleBgImagePosition({ v, device, state }) {
 }
 
 export function cssStyleBgImageAttachment({ v, device, state, props }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const { isSlider } = props.meta.section;
   const bgAttachment = styleBgAttachment({ v, isSlider });
   const bgSize = dvv("bgSize");

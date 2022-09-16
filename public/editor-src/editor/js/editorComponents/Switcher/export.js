@@ -26,7 +26,7 @@ export default function($node) {
       "> .brz-switcher__nav2 .brz-switcher__nav2--control"
     );
     const $switcherActiveContent = $this.find(
-      "> .brz-switcher__nav2 .brz-switcher__nav2__item"
+      "> .brz-switcher__nav2 .brz-switcher__nav2--button"
     );
     $switcherNavControl.on("click", function() {
       $switcherNavControl.toggleClass("brz-switcher__nav2--control--active");

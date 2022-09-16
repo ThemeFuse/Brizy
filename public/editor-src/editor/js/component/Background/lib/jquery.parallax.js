@@ -1,7 +1,9 @@
 import $ from "jquery";
+import { attachResize, detachResize } from "./attachResize";
+import { attachWheel, detachWheel } from "./attachWheel";
 
 // Parallax
-(function($, window, document) {
+(function ($, window, document) {
   var pluginName = "parallax";
   var dataKey = "plugin_" + pluginName;
 
@@ -35,7 +37,7 @@ import $ from "jquery";
   }
 
   $.extend(Plugin.prototype, {
-    _init: function() {
+    _init: function () {
       this.options.windowHeight = Math.max(
         document.documentElement.clientHeight,
         window.innerHeight || 0
@@ -45,32 +47,32 @@ import $ from "jquery";
       this._attachEvents();
       this.d();
     },
-    _attachEvents: function() {
+    _attachEvents: function () {
+      const element = this.$elem.get(0);
       this.options.baseElement.addEventListener(
         "scroll",
         this._handleScrollBound,
         false
       );
-      window.addEventListener("wheel", this._handleWheelBound, {
-        passive: false
-      });
-      window.addEventListener("resize", this._handleResizeBound, {
-        passive: false
-      });
+
+      attachWheel(element, this._handleWheelBound);
+      attachResize(element, this._handleResizeBound);
     },
-    _detachEvents: function() {
+    _detachEvents: function () {
+      const element = this.$elem.get(0);
       this.options.baseElement.removeEventListener(
         "scroll",
         this._handleScrollBound,
         false
       );
-      window.removeEventListener("wheel", this._handleWheelBound, false);
-      window.removeEventListener("resize", this._handleResizeBound, false);
+
+      detachWheel(element);
+      detachResize(element);
     },
-    _handleScroll: function() {
+    _handleScroll: function () {
       this.options.F = true;
     },
-    _handleWheel: function(event) {
+    _handleWheel: function (event) {
       var y = 2,
         z = 4;
 
@@ -96,7 +98,7 @@ import $ from "jquery";
         (this.options.s = true),
         (this.options.u = z);
     },
-    _handleResize: function() {
+    _handleResize: function () {
       this.options.windowHeight = Math.max(
         document.documentElement.clientHeight,
         window.innerHeight || 0
@@ -105,14 +107,14 @@ import $ from "jquery";
       this.profileParallaxElements();
     },
 
-    profileParallaxElements: function() {
+    profileParallaxElements: function () {
       var $elem = this.$elem,
         _this = this;
 
       this.options.items = [];
       this.options.r = this.b();
 
-      $elem.find("." + this.options.bgClass).each(function() {
+      $elem.find("." + this.options.bgClass).each(function () {
         var parentElem = $elem,
           top = parentElem.offset().top,
           differenceHeight = _this.getHeight(parentElem),
@@ -138,28 +140,28 @@ import $ from "jquery";
         );
       });
     },
-    setHeight: function(elem, differenceHeight) {
+    setHeight: function (elem, differenceHeight) {
       $(elem)
         .find("." + this.options.bgClass)
         .css({ height: 100 * differenceHeight + "vh" });
     },
-    getHeight: function(elem) {
+    getHeight: function (elem) {
       var $elem = $(elem),
         windowHeight = $(this.options.baseElement).height(),
         elemHeight = $elem.height(),
         differenceHeight = elemHeight / windowHeight;
       return elemHeight > windowHeight ? differenceHeight : null;
     },
-    getTransformStyle: function(transformArray) {
+    getTransformStyle: function (transformArray) {
       for (var i = 0; i < transformArray.length; i++)
         if ("undefined" != typeof document.body.style[transformArray[i]])
           return transformArray[i];
       return null;
     },
-    getScrollingState: function() {
+    getScrollingState: function () {
       return this.options.u > 0 ? !0 : !1;
     },
-    getCurrentElement: function(elem) {
+    getCurrentElement: function (elem) {
       for (
         var idx = 0, l = this.options.items.length;
         this.options.items[idx] && this.options.items[idx].section !== elem;
@@ -167,11 +169,11 @@ import $ from "jquery";
       );
       return idx === l ? -1 : idx;
     },
-    isFunction: function(type) {
+    isFunction: function (type) {
       var object = {};
       return type && "[object Function]" === object.toString.call(type);
     },
-    requestAnimationFrame: function(animation) {
+    requestAnimationFrame: function (animation) {
       var animationFrame =
         this.options.baseElement.requestAnimationFrame ||
         this.options.baseElement.mozRequestAnimationFrame ||
@@ -179,7 +181,7 @@ import $ from "jquery";
         this.options.baseElement.msRequestAnimationFrame;
       return animationFrame(animation);
     },
-    mr_setTranslate3DTransform: function(a, Y) {
+    mr_setTranslate3DTransform: function (a, Y) {
       var browserTransformStyle = this.getTransformStyle([
         "transform",
         "msTransform",
@@ -191,10 +193,10 @@ import $ from "jquery";
     },
 
     // api
-    refresh: function() {
+    refresh: function () {
       this.profileParallaxElements();
     },
-    destroy: function() {
+    destroy: function () {
       this._detachEvents();
 
       this.$elem.removeData(dataKey);
@@ -203,14 +205,14 @@ import $ from "jquery";
         transform: ""
       });
     },
-    paused: function(paused) {
+    paused: function (paused) {
       if (paused) {
         this._detachEvents();
       } else {
         this._attachEvents();
       }
     },
-    e: function(a, b) {
+    e: function (a, b) {
       var e = this.isVariant();
       e
         ? b + this.options.windowHeight - this.options.r > a.elemTop &&
@@ -230,7 +232,7 @@ import $ from "jquery";
                 (b + this.options.windowHeight - a.elemTop) / 2
               ));
     },
-    c: function(a, b, c, d) {
+    c: function (a, b, c, d) {
       var e = a - 1;
       return (
         (e /= d),
@@ -240,7 +242,7 @@ import $ from "jquery";
         c * (a * a * a * a * a + 1) + b - (c * (e * e * e * e * e + 1) + b)
       );
     },
-    d: function() {
+    d: function () {
       var A = 300,
         B = 1,
         C = 30,
@@ -261,13 +263,13 @@ import $ from "jquery";
           (D = 0)));
       this.requestAnimationFrame.call(this, this.d.bind(this));
     },
-    isVariant: function() {
+    isVariant: function () {
       return false;
     },
-    b: function() {
+    b: function () {
       return $(this.options.baseElement).outerHeight(true);
     },
-    f: function() {
+    f: function () {
       return this.options.baseElement != window
         ? this.options.baseElement.scrollTop
         : 0 === document.documentElement.scrollTop
@@ -276,9 +278,9 @@ import $ from "jquery";
     }
   });
 
-  $.fn[pluginName] = function(options) {
+  $.fn[pluginName] = function (options) {
     if (options === undefined || typeof options === "object") {
-      return this.each(function() {
+      return this.each(function () {
         if (!$.data(this, dataKey)) {
           $.data(this, dataKey, new Plugin(this, options));
         }
@@ -290,7 +292,7 @@ import $ from "jquery";
     ) {
       var args = Array.prototype.slice.call(arguments, 1);
 
-      return this.each(function() {
+      return this.each(function () {
         var instance = $.data(this, dataKey);
 
         if (

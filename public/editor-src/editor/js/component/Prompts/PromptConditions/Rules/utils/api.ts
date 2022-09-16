@@ -1,7 +1,7 @@
 import { isT } from "fp-utilities";
 import { Dictionary } from "visual/types/utils";
-import { GetCustomerAndCollection_customers_collection as CustomerAPI } from "visual/utils/api/cms/graphql/types/GetCustomerAndCollection";
 import { getCustomersAndCollectionTypes } from "visual/utils/api/cms";
+import { GetCustomerAndCollection_customers_collection as CustomerAPI } from "visual/utils/api/cms/graphql/types/GetCustomerAndCollection";
 
 export interface Base {
   value: string;
@@ -12,7 +12,12 @@ interface Collection extends Base {
 }
 
 export type Refs = Dictionary<
-  { type: "single" | "multi"; value: string; title: string }[]
+  {
+    type: "single" | "multi";
+    value: string;
+    title: string;
+    fieldId: string;
+  }[]
 >;
 
 export interface GetCustomersAndCollectionTypes {
@@ -36,27 +41,32 @@ const formatCustomer = (c: CustomerAPI): Base => {
   };
 };
 
-export async function getCustomerAndCollectionTypes(): Promise<
-  GetCustomersAndCollectionTypes
-> {
+export async function getCustomerAndCollectionTypes(): Promise<GetCustomersAndCollectionTypes> {
   const r = await getCustomersAndCollectionTypes();
   const { collectionTypes, customers, customerGroups } = r;
-  const types = collectionTypes.map(({ id, title }) => ({ value: id, title }));
-  const refsById = collectionTypes.reduce((acc, { id, fields }) => {
+
+  const _collectionTypes = collectionTypes.filter(
+    (item) => item.slug !== "product" && item.slug !== "category"
+  );
+
+  const types = _collectionTypes.map(({ id, title }) => ({ value: id, title }));
+  const refsById = _collectionTypes.reduce((acc, { id, fields }) => {
     if (fields) {
       const refs = fields
-        .map(field => {
+        .map((field) => {
           if (field.__typename === "CollectionTypeFieldReference") {
             return {
               type: "single" as const,
               value: field.referenceSettings.collectionType.id,
-              title: field.referenceSettings.collectionType.title
+              title: field.label,
+              fieldId: field.id
             };
           } else if (field.__typename === "CollectionTypeFieldMultiReference") {
             return {
               type: "multi" as const,
               value: field.multiReferenceSettings.collectionType.id,
-              title: field.multiReferenceSettings.collectionType.title
+              title: field.label,
+              fieldId: field.id
             };
           } else {
             return undefined;
@@ -79,7 +89,7 @@ export async function getCustomerAndCollectionTypes(): Promise<
     },
     customers: {
       types: customers.map(formatCustomer),
-      groups: customerGroups.map(g => ({
+      groups: customerGroups.map((g) => ({
         value: g.id,
         title: g.name ?? g.id
       }))

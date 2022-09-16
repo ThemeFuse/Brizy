@@ -1,14 +1,14 @@
+import * as Parse from "visual/utils/reader/readWithParser";
 import * as Attention from "./effects/Attention";
-import * as None from "./effects/None";
 import * as Bounce from "./effects/Bounce";
 import * as Fade from "./effects/Fade";
+import * as None from "./effects/None";
 import * as Rotate from "./effects/Rotate";
 import * as Slide from "./effects/Slide";
 import * as Zoom from "./effects/Zoom";
 import { EffectType } from "./EffectType";
-import { LegacyModel } from "./LegacyModel";
-import * as Parse from "visual/utils/reader/readWithParser";
 import { LegacyEffectType } from "./LegacyEffectType";
+import { LegacyModel } from "./LegacyModel";
 
 export type Value =
   | Attention.Attention
@@ -69,14 +69,16 @@ export function setType(type: EffectType, v: Value): Value {
         type: EffectType.Attention,
         style: LegacyEffectType.flash,
         duration: v.duration,
-        delay: v.delay
+        delay: v.delay,
+        infiniteAnimation: v.infiniteAnimation
       };
     case EffectType.Bounce:
       return {
         type: EffectType.Bounce,
         direction: Bounce.Direction.none,
         duration: v.duration,
-        delay: v.delay
+        delay: v.delay,
+        infiniteAnimation: v.infiniteAnimation
       };
     case EffectType.Fade:
     case EffectType.Fade2:
@@ -85,27 +87,31 @@ export function setType(type: EffectType, v: Value): Value {
         direction: Fade.Direction.none,
         big: false,
         duration: v.duration,
-        delay: v.delay
+        delay: v.delay,
+        infiniteAnimation: v.infiniteAnimation
       };
     case EffectType.None:
       return {
         type: EffectType.None,
         duration: v.duration,
-        delay: v.delay
+        delay: v.delay,
+        infiniteAnimation: v.infiniteAnimation
       };
     case EffectType.Rotate:
       return {
         type: EffectType.Rotate,
         direction: Rotate.Direction.none,
         duration: v.duration,
-        delay: v.delay
+        delay: v.delay,
+        infiniteAnimation: v.infiniteAnimation
       };
     case EffectType.Slide:
       return {
         type: EffectType.Slide,
         direction: Slide.Direction.up,
         duration: v.duration,
-        delay: v.delay
+        delay: v.delay,
+        infiniteAnimation: v.infiniteAnimation
       };
     case EffectType.Zoom:
     case EffectType.Zoom2:
@@ -113,7 +119,8 @@ export function setType(type: EffectType, v: Value): Value {
         type: EffectType.Zoom,
         direction: Zoom.Direction.none,
         duration: v.duration,
-        delay: v.delay
+        delay: v.delay,
+        infiniteAnimation: v.infiniteAnimation
       };
   }
 }

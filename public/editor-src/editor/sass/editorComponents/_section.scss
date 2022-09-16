@@ -78,6 +78,7 @@
     }
     &-closed {
       transition: transform 0.2s linear, opacity 0.2s linear;
+      pointer-events: none;
     }
   }
   &--fixed {

@@ -21,7 +21,6 @@ jest.mock("visual/component/Options/types/ColorFields.jsx", () => {});
 jest.mock("visual/component/Options/types/ColorPalette.jsx", () => {});
 jest.mock("visual/component/Options/types/ColorPalette2.jsx", () => {});
 jest.mock("visual/component/Options/types/ColorPaletteEditor.jsx", () => {});
-jest.mock("visual/component/Options/types/ColorPicker.jsx", () => {});
 jest.mock("visual/component/Options/types/ColorPicker2.jsx", () => {});
 jest.mock("visual/component/Options/types/FileUpload.jsx", () => {});
 jest.mock("visual/component/Options/types/FileUpload.wp.jsx", () => {});

@@ -21,14 +21,14 @@ export interface Props {
 class ConditionGroup extends React.Component<Props> {
   renderGroupOptions(options: RuleList[]): JSX.Element[] {
     const allOption = (
-      <SelectItem key="all" value="|">
+      <SelectItem key="all" value={null}>
         All
       </SelectItem>
     );
     const newOptions = options.map(({ title, value, groupValue, disabled }) => (
       <SelectItem
         key={`key-${value}`}
-        value={`${groupValue}|${value}`}
+        value={`${groupValue}|||${value}`}
         disabled={disabled}
       >
         {title}
@@ -40,13 +40,14 @@ class ConditionGroup extends React.Component<Props> {
 
   renderTypeOptions(items: RuleListItem[]): JSX.Element[] {
     const allOption = (
-      <SelectItem key="all" value="">
+      <SelectItem key="all" value={null}>
         All
       </SelectItem>
     );
+
     const newItems = items.map(item =>
       isLegacyRuleListItem(item) ? (
-        <SelectItem key={item.value} value={String(item.value)}>
+        <SelectItem key={item.value} value={`specific|||${item.value}`}>
           {item.title}
           {item.status && <Badge status={item.status} />}
         </SelectItem>
@@ -54,9 +55,9 @@ class ConditionGroup extends React.Component<Props> {
         <SelectOptgroup
           key={item.value}
           title={item.title}
-          items={item.items.map(item => (
-            <SelectItem key={item.value} value={String(item.value)}>
-              {item.title}
+          items={item.items.map(({ value, title }) => (
+            <SelectItem key={item.value} value={`${item.mode}|||${value}`}>
+              {title}
               {item.status && <Badge status={item.status} />}
             </SelectItem>
           ))}
@@ -78,7 +79,7 @@ class ConditionGroup extends React.Component<Props> {
     if (isCollectionItemRule(rule) || isCollectionTypeRule(rule)) {
       const currentRuleListIndex = getRulesListIndexByRule(rulesList, rule);
       currentRuleList = rulesList[currentRuleListIndex];
-      groupDV = `${rule.appliedFor}|${rule.entityType}`;
+      groupDV = `${rule.appliedFor}|||${rule.entityType}`;
     }
 
     return (
@@ -96,7 +97,9 @@ class ConditionGroup extends React.Component<Props> {
         {currentRuleList && currentRuleList.items && (
           <Select
             defaultValue={
-              isCollectionItemRule(rule) ? `${rule.entityValues[0]}` : null
+              isCollectionItemRule(rule)
+                ? `${rule.mode}|||${rule.entityValues[0]}`
+                : null
             }
             className="brz-control__select--white"
             maxItems={6}

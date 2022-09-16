@@ -33,79 +33,34 @@ export function getItems({
       position: 10,
       options: [
         {
-          id: "tabsCurrentElementIcon",
-          type: "tabs-dev",
-          tabs: [
-            {
-              id: "iconType",
-              label: t("Icon"),
-              options: [
-                {
-                  id: "iconPositionLeft",
-                  label: t("Lateral"),
-                  type: "slider-dev",
-                  config: {
-                    min: -50,
-                    max: 50,
-                    units: [{ title: "px", value: "px" }]
-                  }
-                },
-                {
-                  id: "iconPositionTop",
-                  label: t("Vertical"),
-                  type: "slider-dev",
-                  config: {
-                    min: -50,
-                    max: 50,
-                    units: [{ title: "px", value: "px" }]
-                  }
-                }
-              ]
-            },
-            {
-              id: "iconBackground",
-              label: t("Background"),
-              options: [
-                {
-                  id: "iconPadding",
-                  label: t("Size"),
-                  type: "slider-dev",
-                  config: {
-                    min: 0,
-                    max: 50,
-                    units: [{ title: "px", value: "px" }]
-                  }
-                },
-                {
-                  id: "groupIconBorderRadius",
-                  type: "group-dev",
-                  devices: "desktop",
-                  options: [
-                    {
-                      id: "iconBorderRadiusType",
-                      label: t("Corner"),
-                      type: "radioGroup-dev",
-                      choices: [
-                        { value: "square", icon: "nc-corners-square" },
-                        { value: "rounded", icon: "nc-corners-round" },
-                        { value: "custom", icon: "nc-more" }
-                      ]
-                    },
-                    {
-                      id: "iconBorderRadius",
-                      type: "slider-dev",
-                      disabled: dvv("iconBorderRadiusType") !== "custom",
-                      config: {
-                        min: 0,
-                        max: 100,
-                        units: [{ title: "px", value: "px" }]
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          id: "iconPositionLeft",
+          label: t("Lateral"),
+          type: "slider-dev",
+          config: {
+            min: -50,
+            max: 50,
+            units: [{ title: "px", value: "px" }]
+          }
+        },
+        {
+          id: "iconPositionTop",
+          label: t("Vertical"),
+          type: "slider-dev",
+          config: {
+            min: -50,
+            max: 50,
+            units: [{ title: "px", value: "px" }]
+          }
+        },
+        {
+          id: "iconSpacing",
+          label: t("Size"),
+          type: "slider-dev",
+          config: {
+            min: 8,
+            max: 50,
+            units: [{ title: "px", value: "px" }]
+          }
         }
       ]
     },
@@ -117,26 +72,14 @@ export function getItems({
         size: device === "desktop" ? "large" : "auto",
         title: t("Typography")
       },
-      position: 10,
+      position: 20,
       options: [
         {
-          id: "tabsTypography",
-          type: "tabs-dev",
-          tabs: [
-            {
-              id: "tabsTypography",
-              label: t("Text"),
-              options: [
-                {
-                  id: "",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: "desktop" === device
-                  }
-                }
-              ]
-            }
-          ]
+          id: "typography",
+          type: "typography-dev",
+          config: {
+            fontFamily: device === "desktop"
+          }
         }
       ]
     },
@@ -148,7 +91,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(iconColorHex, v.iconColorOpacity)
+            backgroundColor: hexToRgba(iconColorHex, dvv("iconColorOpacity"))
           }
         }
       },
@@ -224,6 +167,15 @@ export function getItems({
       // @ts-expect-error: old type
       type: "button",
       disabled: true
+    },
+    {
+      id: "advancedSettings",
+      // @ts-expect-error old option
+      type: "advancedSettings",
+      position: 40,
+      icon: "nc-cog",
+      devices: "desktop",
+      title: t("Settings")
     }
   ];
 }

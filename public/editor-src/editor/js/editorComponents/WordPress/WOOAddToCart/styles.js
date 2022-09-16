@@ -16,7 +16,8 @@ export function style(v, vs, vd) {
     },
     ".brz && form.cart .quantity:hover": {
       standart: [
-        "cssStyleElementWOOAddToCartInputSize",
+        "cssStyleElementWOOAddToCartInputWidth",
+        "cssStyleElementWOOAddToCartInputHeight",
         "cssStyleElementWOOAddToCartSpacing"
       ]
     },
@@ -59,26 +60,27 @@ export function style(v, vs, vd) {
         "cssStyleElementButtonPropertyHoverTransition"
       ]
     },
-    ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button": {
-      standart: [
-        "cssStyleElementWOOAddToCartBorderRadius",
-        "cssStyleElementWOOAddToCartButtonColor",
-        "cssStyleBgColor",
-        "cssStyleBgGradient",
-        "cssStyleElementWOOAddToCartBorder",
-        "cssStyleBoxShadow",
-        "cssStyleElementWOOAddToCartSize",
-        "cssStyleTypography3FontFamily",
-        "cssStyleTypography3FontSize",
-        "cssStyleTypography3LineHeight",
-        "cssStyleTypography3FontWeight",
-        "cssStyleTypography3LetterSpacing"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementButtonPropertyHoverTransition"
-      ]
-    },
+    ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
+      {
+        standart: [
+          "cssStyleElementWOOAddToCartBorderRadius",
+          "cssStyleElementWOOAddToCartButtonColor",
+          "cssStyleBgColor",
+          "cssStyleBgGradient",
+          "cssStyleElementWOOAddToCartBorder",
+          "cssStyleBoxShadow",
+          "cssStyleElementWOOAddToCartSize",
+          "cssStyleTypography3FontFamily",
+          "cssStyleTypography3FontSize",
+          "cssStyleTypography3LineHeight",
+          "cssStyleTypography3FontWeight",
+          "cssStyleTypography3LetterSpacing"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStyleElementButtonPropertyHoverTransition"
+        ]
+      },
     ".brz &&:hover td label": {
       standart: [
         "cssStyleElementWOOAddToCartLabelColor",

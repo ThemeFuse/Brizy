@@ -1,52 +1,26 @@
-import { styleColor } from "visual/utils/style2";
+import { cssStyleColor } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 
-export function cssStyleElementStarRatingRatingColor({
-  v,
-  device,
-  state,
-  prefix = "ratingColor"
-}) {
-  return `color: ${styleColor({
+export function cssStyleElementStarRatingRatingColor({ v, device, state }) {
+  return cssStyleColor({
     v,
     device,
     state,
-    prefix
-  })};`;
+    prefix: "ratingColor"
+  });
 }
 
 export function cssStyleElementStarRatingRatingBackgroundColor({
   v,
   device,
-  state,
-  prefix = "ratingBackgroundColor"
+  state
 }) {
-  return `color: ${styleColor({
+  return cssStyleColor({
     v,
     device,
     state,
-    prefix
-  })};`;
-}
-
-export function cssStyleElementStarRatingStyle2Background({
-  v,
-  device,
-  state,
-  prefix = "bgColor"
-}) {
-  return `background-color: ${styleColor({
-    v,
-    device,
-    state,
-    prefix
-  })};`;
-}
-
-export function cssStyleElementStarRatingStyle2BorderRadius({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
-
-  return `border-radius: ${dvv("borderRadius")}px;`;
+    prefix: "ratingBackgroundColor"
+  });
 }
 
 export function cssStyleElementStarRatingPropertyHoverTransition() {
@@ -54,7 +28,7 @@ export function cssStyleElementStarRatingPropertyHoverTransition() {
 }
 
 export function cssStyleElementStarRatingDirection({ v, device }) {
-  const dvv = key => defaultValueValue({ key, v, device });
+  const dvv = (key) => defaultValueValue({ key, v, device });
   const label = dvv("label");
 
   return label === "on"
@@ -63,7 +37,7 @@ export function cssStyleElementStarRatingDirection({ v, device }) {
 }
 
 export function cssStyleElementStarRatingTextSpacing({ v, device }) {
-  const dvv = key => defaultValueValue({ key, v, device });
+  const dvv = (key) => defaultValueValue({ key, v, device });
   const spacing = dvv("spacing");
   const label = dvv("label");
   const ratingStyle = dvv("ratingStyle");

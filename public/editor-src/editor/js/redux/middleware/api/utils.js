@@ -1,17 +1,16 @@
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import _ from "underscore";
 import {
-  updateProject as apiUpdateProject,
-  updatePage as apiUpdatePage,
-  updateCustomerPage as apiUpdateCustomPage,
   createGlobalBlock as apiCreateGlobalBlock,
-  updateGlobalBlock as apiUpdateGlobalBlock,
-  updateGlobalBlocks as apiUpdateGlobalBlocks,
-  updateGlobalBlocksPositions as apiUpdateGlobalBlocksPositions,
   createSavedBlock as apiCreateSavedBlock,
   deleteSavedBlock as apiDeleteSavedBlock,
+  sendHeartBeat as apiSendHeartBeat,
+  updateCustomerPage as apiUpdateCustomPage,
+  updateGlobalBlock as apiUpdateGlobalBlock,
+  updateGlobalBlocks as apiUpdateGlobalBlocks,
+  updatePage as apiUpdatePage,
   updatePopupRules as apiUpdatePopupRules,
-  sendHeartBeat as apiSendHeartBeat
+  updateProject as apiUpdateProject
 } from "visual/utils/api";
 import { IS_CUSTOMER_PAGE } from "visual/utils/env";
 
@@ -25,7 +24,6 @@ export {
   apiCreateGlobalBlock,
   apiUpdateGlobalBlock,
   apiUpdateGlobalBlocks,
-  apiUpdateGlobalBlocksPositions,
   apiCreateSavedBlock,
   apiDeleteSavedBlock,
   apiUpdatePopupRules,
@@ -51,12 +49,12 @@ class debounceById {
       },
       this.wait,
       {
-        key: id => id
+        key: (id) => id
       }
     );
   }
 
-  cancel = id => {
+  cancel = (id) => {
     this.cancelId = id;
   };
 
@@ -73,11 +71,6 @@ export const debouncedApiUpdateProject = _.debounce(
 );
 
 export const debouncedApiUpdatePage = _.debounce(updateFn, DEBOUNCE_WAIT);
-
-export const debouncedApiUpdateGlobalBlocksPositions = _.debounce(
-  apiUpdateGlobalBlocksPositions,
-  DEBOUNCE_WAIT
-);
 
 export const debouncedApiUpdateGlobalBlock = new debounceById(
   apiUpdateGlobalBlock,
@@ -117,7 +110,7 @@ export function pollingSendHeartBeat(heartBeat) {
       const polling = () => {
         setTimeout(() => {
           apiSendHeartBeat()
-            .then(r => {
+            .then((r) => {
               if (r?.locked === true) {
                 rej({ heartBeat: true, data: r });
               } else {

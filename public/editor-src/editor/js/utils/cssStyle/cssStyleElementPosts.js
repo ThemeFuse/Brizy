@@ -1,19 +1,21 @@
 import {
+  cssStyleBgColor,
+  cssStyleBorder,
+  cssStyleBorderRadius,
+  cssStyleBoxShadow,
+  cssStyleColor,
+  cssStyleDisplayFlex,
+  cssStyleDisplayNone,
+  cssStyleFlexHorizontalAlign,
+  cssStylePaddingFourFields,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
-} from "visual/utils/cssStyle/cssStyleTypography2";
+} from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
-import { cssStyleColor } from "visual/utils/cssStyle/cssStyleColor";
-import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
-import { cssStyleBorder } from "visual/utils/cssStyle/cssStyleBorder";
-import { styleAlignHorizontal } from "visual/utils/style2";
-import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
-import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
-import { cssStylePaddingFourFields } from "visual/utils/cssStyle/cssStylePadding";
-import { ACTIVE } from "../stateMode";
+import { ACTIVE } from "visual/utils/stateMode";
 
 // Grid
 
@@ -23,7 +25,7 @@ export function cssStyleElementPostsItemWidth({ v, device, state }) {
 }
 
 export function cssStyleElementPostsItemSpacing({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   return `padding: ${dvv("padding")}px;`;
 }
@@ -135,7 +137,8 @@ export function cssStyleElementPostsPaginationBorderRadius({
 
 export function cssStyleElementPostsFilterDisplay({ v, device, state }) {
   const filter = defaultValueValue({ v, key: "filter", device, state });
-  return filter === "off" ? "display:none;" : "display: flex;";
+
+  return filter === "off" ? cssStyleDisplayNone() : cssStyleDisplayFlex();
 }
 
 export function cssStyleElementPostsFilterHorizontalAlign({
@@ -143,21 +146,7 @@ export function cssStyleElementPostsFilterHorizontalAlign({
   device,
   state
 }) {
-  const horizontalAlign = styleAlignHorizontal({
-    v,
-    device,
-    state,
-    prefix: "filter"
-  });
-  const aligns = {
-    left: "flex-start",
-    center: "center",
-    right: "flex-end"
-  };
-  const alignItems =
-    horizontalAlign === undefined ? horizontalAlign : aligns[horizontalAlign];
-
-  return `justify-content:${alignItems};`;
+  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "filter" });
 }
 
 export function cssStyleElementPostsFilterSpacing({ v, device, state }) {

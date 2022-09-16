@@ -1,40 +1,30 @@
+import { cssStyleColor } from "visual/utils/cssStyle";
 import {
-  styleTypography2FontSize,
-  styleColor,
+  styleElementWPPostInfoLarge,
   styleSizeTextSpacing,
-  styleElementWPPostInfoLarge
+  styleTypography2FontSize
 } from "visual/utils/style2";
 
 export function cssStyleElementPostInfoIconSize({ v, device, state }) {
   return `font-size: ${styleTypography2FontSize({ v, device, state })}px;`;
 }
 
-export function cssStyleElementPostInfoColorIcons({
-  v,
-  device,
-  state,
-  prefix = "iconsColor"
-}) {
-  return `color: ${styleColor({
+export function cssStyleElementPostInfoColorIcons({ v, device, state }) {
+  return cssStyleColor({
     v,
     device,
     state,
-    prefix
-  })};`;
+    prefix: "iconsColor"
+  });
 }
 
-export function cssStyleElementPostInfoColorText({
-  v,
-  device,
-  state,
-  prefix = "textColor"
-}) {
-  return `color: ${styleColor({
+export function cssStyleElementPostInfoColorText({ v, device, state }) {
+  return cssStyleColor({
     v,
     device,
     state,
-    prefix
-  })};`;
+    prefix: "textColor"
+  });
 }
 
 export function cssStyleElementPostInfoSpacing({ v, device, state }) {

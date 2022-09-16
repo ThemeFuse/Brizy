@@ -1,11 +1,11 @@
 import Config from "visual/global/Config";
-import { request2 } from "visual/utils/api";
+import { request } from "visual/utils/api";
 import { SignIn, SignUp } from "./types";
 
 export const signIn = (data: SignIn): Promise<Response> => {
   const apiUrl = Config.get("urls").api;
 
-  return request2(`${apiUrl}/sign_ins`, {
+  return request(`${apiUrl}/sign_ins`, {
     method: "POST",
     body: new URLSearchParams(data)
   });
@@ -15,7 +15,7 @@ export const signUp = (data: SignUp): Promise<Response> => {
   const apiUrl = Config.get("urls").api;
   const { email, password, confirmPassword } = data;
 
-  return request2(`${apiUrl}/sign_ups`, {
+  return request(`${apiUrl}/sign_ups`, {
     method: "POST",
     body: new URLSearchParams({
       email,
@@ -28,7 +28,7 @@ export const signUp = (data: SignUp): Promise<Response> => {
 export const recoveryEmail = (email: string): Promise<Response> => {
   const apiUrl = Config.get("urls").api;
 
-  return request2(`${apiUrl}/recover_passwords`, {
+  return request(`${apiUrl}/recover_passwords`, {
     method: "POST",
     body: new URLSearchParams(email)
   });
@@ -37,7 +37,7 @@ export const recoveryEmail = (email: string): Promise<Response> => {
 export const logout = (): Promise<Response> => {
   const apiUrl = Config.get("urls").api;
 
-  return request2(`${apiUrl}/logout`, {
+  return request(`${apiUrl}/logout`, {
     method: "POST"
   });
 };
@@ -45,7 +45,7 @@ export const logout = (): Promise<Response> => {
 export const sync = (): Promise<Response> => {
   const apiUrl = Config.get("urls").api;
 
-  return request2(`${apiUrl}/sync`, {
+  return request(`${apiUrl}/sync`, {
     method: "POST"
   });
 };

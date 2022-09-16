@@ -1,18 +1,16 @@
 import {
+  cssStyleBgColor,
+  cssStyleBorder,
+  cssStyleColor,
+  cssStyleSizeWidthPrefix,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
-} from "visual/utils/cssStyle/cssStyleTypography2";
-import { cssStyleBorder } from "visual/utils/cssStyle/cssStyleBorder";
-import {
-  styleSidebarSizeWidthPixed,
-  styleElementVideoImageSize
-} from "visual/utils/style2";
+} from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
-import { cssStyleColor } from "visual/utils/cssStyle/cssStyleColor";
-import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
+import { styleElementVideoImageSize } from "visual/utils/style2";
 import { CSSValue } from "../style2/types";
 
 // Style Typography Title Video
@@ -59,9 +57,7 @@ export function cssStyleElementVideoPlaylistSubTitleVideoTypography2LetterSpacin
 }
 
 export function cssStyleSizeWidthPixel({ v, device, state }: CSSValue): string {
-  const widthSidebar = styleSidebarSizeWidthPixed({ v, device, state });
-
-  return widthSidebar === undefined ? "" : `width:${widthSidebar}px;`;
+  return cssStyleSizeWidthPrefix({ v, device, state, prefix: "widthSidebar" });
 }
 
 export function cssStyleElementVideoPlaylistImageSize({
@@ -84,12 +80,9 @@ export function cssStyleElementVideoPlaylistBorderItem({
   return cssStyleBorder({ v, device, state, prefix: "item" });
 }
 
-export function cssStyleSizeWidthVideoBlock({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  const widthSidebar = styleSidebarSizeWidthPixed({ v, device, state });
+export function cssStyleSizeWidthVideoBlock({ v, device }: CSSValue): string {
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const widthSidebar = dvv("widthSidebar");
 
   return widthSidebar === undefined
     ? ""

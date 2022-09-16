@@ -28,11 +28,11 @@ export function style(v, vs, vd) {
       standart: [
         "cssStyleElementTableBtnIconPosition",
         "cssStyleElementTableCustomFlexHorizontalAlign",
-        "cssStyleElementTableCustomTextHorizontalAlign"
+        "cssStyleTextAlign"
       ]
     },
     ".brz && .brz-table__th .brz-icon-svg": {
-      standart: ["cssStyleElementTableSpacing", "cssStyleElementTableIconSize"]
+      standart: ["cssStyleElementTableSpacing", "cssStyleSizeFontSizeIcon"]
     }
   };
 

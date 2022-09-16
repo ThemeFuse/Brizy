@@ -1,5 +1,6 @@
 import { IS_WP } from "visual/utils/env";
 import { ProjectError, GlobalBlocksError } from "visual/utils/errors";
+import { apiRuleToEditorRule, editorRuleToApiRule } from "./adapter";
 
 // project
 
@@ -24,7 +25,8 @@ export const stringifyProject = project => {
 
   return { ...project, data };
 };
-// global blocks
+
+//#region Global Blocks
 
 export const parseGlobalBlock = globalBlock => {
   let data;
@@ -84,13 +86,22 @@ export const parseGlobalBlock = globalBlock => {
     status = globalBlock.status;
   }
 
-  return { ...globalBlock, data, meta, position, status, rules };
+  return {
+    ...globalBlock,
+    data,
+    meta,
+    position,
+    status,
+    rules: rules.map(apiRuleToEditorRule)
+  };
 };
 
 export const stringifyGlobalBlock = globalBlock => {
   const data = JSON.stringify(globalBlock.data);
   const meta = JSON.stringify(globalBlock.meta);
-  const rules = JSON.stringify(globalBlock.rules);
+  const rules = JSON.stringify(globalBlock.rules.map(editorRuleToApiRule));
 
   return { ...globalBlock, data, meta, rules };
 };
+
+//#endregion

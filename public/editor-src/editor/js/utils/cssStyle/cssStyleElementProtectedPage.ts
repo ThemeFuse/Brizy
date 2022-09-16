@@ -1,7 +1,8 @@
-import { styleColor } from "visual/utils/style2";
+import { cssStyleSizeWidth } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "../style2/types";
+import { styleColor } from "visual/utils/style2";
 import { MValue } from "visual/utils/value";
+import { CSSValue } from "../style2/types";
 
 type Get = (k: string) => MValue<unknown>;
 
@@ -24,19 +25,17 @@ export function cssStyleElementProtectedPagePropertyHoverTransition(): string {
 
 export function cssStyleElementProtectedPageInputWidth({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  const dvv: Get = key => defaultValueValue({ v, key, device });
-  const inputWidth = dvv("inputWidth");
-
-  return `width: ${inputWidth}%;`;
+  return cssStyleSizeWidth({ v, device, state, prefix: "input" });
 }
 
 export function cssStyleElementProtectedPageInputSpacing({
   v,
   device
 }: CSSValue): string {
-  const dvv: Get = key => defaultValueValue({ v, key, device });
+  const dvv: Get = (key) => defaultValueValue({ v, key, device });
   const inputSpacing = dvv("inputSpacing");
 
   return `grid-gap: ${inputSpacing}px;`;
@@ -46,7 +45,7 @@ export function cssStyleElementProtectedPageInputHeight({
   v,
   device
 }: CSSValue): string {
-  const dvv: Get = key => defaultValueValue({ v, key, device });
+  const dvv: Get = (key) => defaultValueValue({ v, key, device });
   const inputHeight = dvv("inputHeight");
 
   return `padding: ${inputHeight}px;`;

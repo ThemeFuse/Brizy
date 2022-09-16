@@ -8,6 +8,12 @@ interface Pagination {
   orderBy?: string;
 }
 
+export interface ResponseWithBody<T> {
+  status: number;
+  ok: boolean;
+  data: T;
+}
+
 //#region dynamic content
 
 export type GetDynamicContent = (args: {
@@ -68,9 +74,7 @@ export type UploadSavedBlocks = (
 
 //#region Saved popups
 
-export type UploadSavedPopups = (
-  file: FileList
-) => Promise<{
+export type UploadSavedPopups = (file: FileList) => Promise<{
   errors: { uid: string; message: string }[];
   success: SavedBlockAPI[];
 }>;
@@ -104,13 +108,13 @@ export type UploadSavedLayouts = (
 
 //#endregion
 
-export type GetTerms = (
-  taxonomy: string
-) => Promise<{
-  name: string;
-  term_id: number;
-  slug: string;
-}>;
+export type GetTerms = (taxonomy: string) => Promise<
+  {
+    name: string;
+    term_id: number;
+    slug: string;
+  }[]
+>;
 
 export type GetAuthors = (data?: {
   search?: string;
@@ -189,6 +193,7 @@ export type GetWPCollectionSourceItems = (
 ) => Promise<{ posts: WPCollectionSourceItem[] }>;
 
 //#region rules
+
 export interface Rule {
   id: string;
   title: string;
@@ -198,5 +203,29 @@ export interface Rule {
 export interface SelectedItem extends Rule {
   selected: true;
 }
+
+//#endregion
+
+export type GetRulePostsGroupList = (p: string) => Promise<
+  {
+    title: string;
+    value: number;
+    status?: "publish" | "draft" | "pending";
+    items?: {
+      title: string;
+      value: number;
+      groupValue: string;
+    }[];
+  }[]
+>;
+
+//#region Posts
+export type GetPostsSourceRefId = Dictionary<
+  Array<{ id: string; type: "single" | "multi"; title: string }>
+>;
+export type GetPostsSourceRefs = (t: string) => Promise<{
+  collectionTypes: Array<{ id: string; slug?: string | null; title: string }>;
+  refsById: GetPostsSourceRefId;
+}>;
 
 //#endregion

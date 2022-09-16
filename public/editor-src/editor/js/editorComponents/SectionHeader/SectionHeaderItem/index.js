@@ -26,6 +26,7 @@ import {
   styleSizeContainerSize
 } from "visual/utils/style2";
 import { hasMembership } from "visual/utils/membership";
+import { hasMultiLanguage } from "visual/utils/multilanguages";
 
 export default class SectionHeaderItem extends EditorComponent {
   static get componentId() {
@@ -149,7 +150,12 @@ export default class SectionHeaderItem extends EditorComponent {
 
   renderToolbar() {
     const { globalBlockId } = this.props.meta;
-    const { membership, membershipRoles } = this.props.rerender;
+    const {
+      membership,
+      membershipRoles,
+      translations,
+      translationsLangs
+    } = this.props.rerender;
 
     return (
       <CollapsibleToolbar
@@ -159,6 +165,7 @@ export default class SectionHeaderItem extends EditorComponent {
         animation="rightToLeft"
         global={!!globalBlockId}
         membership={hasMembership(membership, membershipRoles)}
+        language={hasMultiLanguage(translations, translationsLangs)}
         onClose={this.handleToolbarClose}
       />
     );

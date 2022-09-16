@@ -17,6 +17,9 @@
 
   "style": {
     "className": "",
+    "stickyTitle": "on",
+    "tabletStickyTitle": null,
+    "mobileStickyTitle": null,
 
     "bg": "",
     "bgImageSrc": "",
@@ -79,7 +82,7 @@
     "verticalMode": "horizontal",
 
     "menuSize": 33,
-    "menuSizeSuffix": null,
+    "menuSizeSuffix": "%",
 
     "menuBgColorHex": "#ffffff",
     "menuBgColorOpacity": 0,
@@ -275,9 +278,6 @@
     "tempMMenuRightWidth": null,
     "tempMMenuBottomWidth": null,
     "tempMMenuLeftWidth": null,
-
-    "tempMMenuBgColorOpacity": null,
-    "tempMMenuBgColorPalette": null,
 
     "mMenuBorderStyle": null,
 
@@ -523,9 +523,9 @@
 
     "iconPosition": "left",
     "iconSize": 12,
-    "iconSizeSuffix": null,
+    "iconSizeSuffix": "px",
     "iconSpacing": 15,
-    "iconSpacingSuffix": null,
+    "iconSpacingSuffix": "px",
     "itemPadding": 10,
     "itemPaddingTop": 0,
     "itemPaddingRight": 10,
@@ -606,9 +606,9 @@
 
     "subMenuIconSize": 12,
     "subMenuIconPosition": "left",
-    "subMenuIconSizeSuffix": null,
+    "subMenuIconSizeSuffix": "px",
     "subMenuIconSpacing": 15,
-    "subMenuIconSpacingSuffix": null,
+    "subMenuIconSpacingSuffix": "px",
 
     "subMenuFontStyle": "button",
 
@@ -631,7 +631,7 @@
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 
@@ -705,7 +705,7 @@
     "mobileSubMenuLetterSpacing": 1,
 
     "mMenuSize": 18,
-    "mMenuSizeSuffix": null,
+    "mMenuSizeSuffix": "px",
     "mMenuFontStyle": "button",
     "mMenuFontSize": 12,
     "mMenuFontSizeSuffix": "px",
@@ -759,9 +759,9 @@
 
     "mMenuIconSize": 12,
     "mMenuIconPosition": "left",
-    "mMenuIconSizeSuffix": null,
+    "mMenuIconSizeSuffix": "px",
     "mMenuIconSpacing": 15,
-    "mMenuIconSpacingSuffix": null,
+    "mMenuIconSpacingSuffix": "px",
 
     "mMenuIconColorHex": "#333333",
     "mMenuIconColorOpacity": 1,

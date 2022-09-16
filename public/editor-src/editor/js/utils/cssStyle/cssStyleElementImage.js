@@ -1,10 +1,14 @@
+import { getSizeType, isGIF, isSVG } from "visual/editorComponents/Image/utils";
 import { roundTo } from "visual/utils/math";
-import { cssStyleFilter } from "./cssStyleFilter";
 import { defaultValueValue } from "visual/utils/onChange";
 import { isNullish } from "visual/utils/value";
-import { getSizeType, isGIF, isSVG } from "visual/editorComponents/Image/utils";
+import { cssStyleFilter } from "./cssStyleFilter";
+import {
+  cssStylePositionAbsolute,
+  cssStylePositionStatic
+} from "./cssStylePosition";
 
-const isAbsoluteOrFixed = v =>
+const isAbsoluteOrFixed = (v) =>
   v.elementPosition === "absolute" || v.elementPosition === "fixed";
 
 const isSvgOrGif = (v, device) => {
@@ -109,10 +113,10 @@ export function cssStyleElementImagePosition({ v, device }) {
   const sizeType = getSizeType(v, device);
 
   if (sizeType === "custom" || isSvgOrGif(v, device)) {
-    return "position: absolute;";
+    return cssStylePositionAbsolute();
   }
 
-  return "position: static;";
+  return cssStylePositionStatic();
 }
 
 export function cssStyleElementImageMarginLeft({ v, device, props = {} }) {

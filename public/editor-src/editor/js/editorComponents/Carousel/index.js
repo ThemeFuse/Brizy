@@ -1,18 +1,20 @@
+import classNames from "classnames";
 import React from "react";
 import { noop } from "underscore";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
 import ContextMenu from "visual/component/ContextMenu";
-import contextMenuConfig from "./contextMenu";
-import Items from "./items";
+import CustomCSS from "visual/component/CustomCSS";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
 import { percentageToPixels } from "visual/utils/meta";
 import { defaultValueValue } from "visual/utils/onChange";
-import { styleClassName, styleCSSVars } from "./styles";
-import * as toolbarExtendParent from "./toolbarExtendParent";
-import * as toolbarExtend from "./toolbarExtend";
-import * as sidebarExtendParent from "./sidebarExtendParent";
-import defaultValue from "./defaultValue.json";
 import { MOBILE, TABLET } from "visual/utils/responsiveMode";
+import contextMenuConfig from "./contextMenu";
+import defaultValue from "./defaultValue.json";
+import Items from "./items";
+import * as sidebarExtendParent from "./sidebarExtendParent";
+import { style } from "./styles";
+import * as toolbarExtend from "./toolbarExtend";
+import * as toolbarExtendParent from "./toolbarExtendParent";
 
 class Carousel extends EditorComponent {
   static get componentId() {
@@ -163,7 +165,7 @@ class Carousel extends EditorComponent {
     };
   }
 
-  renderForEdit(v) {
+  renderForEdit(v, vs, vd) {
     const {
       slidesToShow,
       slidesToScroll,
@@ -178,16 +180,21 @@ class Carousel extends EditorComponent {
       taxonomyId,
       orderBy,
       order,
-      tabletSlidesToShow
+      tabletSlidesToShow,
+      customCSS
     } = v;
+    const carouselClassName = classNames(
+      "brz-carousel",
+      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+    );
+
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend, null, {
         allowExtend: false,
         allowExtendFromThirdParty: true
       }),
-      className: styleClassName(v),
-      style: styleCSSVars(v),
+      className: carouselClassName,
       meta: this.getMeta(v),
       slidesToShow,
       slidesToScroll,
@@ -206,7 +213,7 @@ class Carousel extends EditorComponent {
     });
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
           <Items {...itemsProps} />
         </ContextMenu>

@@ -34,7 +34,7 @@
   "style": {
     "className": "",
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

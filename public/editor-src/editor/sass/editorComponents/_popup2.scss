@@ -44,6 +44,22 @@
   }
 }
 
+.brz-popup2__custom2 {
+  .brz-popup2__inner
+    .brz-container__wrap
+    > .brz-container
+    > .brz-row__container {
+    height: 100%;
+    max-height: 100%;
+
+    > .brz-row {
+      max-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+}
+
 // Popup for preview
 .brz-popup2__preview {
   z-index: -1;

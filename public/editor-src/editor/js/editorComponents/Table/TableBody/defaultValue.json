@@ -11,7 +11,7 @@
 
     "iconSize": "small",
     "iconCustomSize": 16,
-    "iconCustomSizeSuffix": null,
+    "iconCustomSizeSuffix": "px",
     "iconPosition": "left",
     "iconSpacing": 10,
     "iconSpacingSuffix": null,

@@ -1,0 +1,9 @@
+{
+  "content": {
+    "buttonType": "subscribe",
+    "buttonName": "Get Notified",
+    "subMessage": "You are subscribed",
+    "preDisplay": "inline-block",
+    "postDisplay": "inline-block"
+  }
+}

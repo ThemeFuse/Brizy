@@ -1,135 +1,42 @@
-import { defaultValueValue } from "../onChange";
-import { CSSValue } from "../style2/types";
 import {
-  styleTypography2FontFamily,
-  styleTypography2FontSize,
-  styleTypography2FontSizeSuffix,
-  styleTypography2FontWeight,
-  styleTypography2LetterSpacing,
-  styleTypography2LineHeight
-} from "../style2/styleTypography2";
-import { styleColor } from "../style/styleColor";
-import { cssStyleColor } from "visual/utils/cssStyle";
-import { styleAlignHorizontal } from "../style2/styleAlign";
-import { styleBgColor } from "../style2";
-import {
-  styleBorderStyle,
-  styleBorderColor,
-  styleBorderWidthUngrouped,
-  styleBoxShadowType,
-  styleBoxShadowColor,
-  styleBoxShadowHorizontal,
-  styleBoxShadowVertical,
-  styleBoxShadowBlur,
-  styleBoxShadowSpread
-} from "visual/utils/style2";
+  cssStyleBgColor,
+  cssStyleBgGradient,
+  cssStyleBorder,
+  cssStyleBorderRadius,
+  cssStyleBoxShadow,
+  cssStyleColor,
+  cssStyleDisplayFlex,
+  cssStyleDisplayNone,
+  cssStyleFlexHorizontalAlign,
+  cssStyleSizeHeight,
+  cssStyleSizePadding,
+  cssStyleSizeWidth,
+  cssStyleSizeWidthHeight,
+  cssStyleSpacing,
+  cssStyleTextAlign,
+  cssStyleTypography3FontFamily,
+  cssStyleTypography3FontSize,
+  cssStyleTypography3FontWeight,
+  cssStyleTypography3LetterSpacing,
+  cssStyleTypography3LineHeight
+} from "visual/utils/cssStyle";
+import { defaultValueValue } from "visual/utils/onChange";
+import { CSSValue } from "visual/utils/style2/types";
 
-// Style Footer
-export function cssStyleElementEcwidMyAccountFooterDisplay({
-  v,
-  device
-}: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-
-  const footerDisplay = dvv("footerDisplay");
-
-  if (footerDisplay === "off") {
-    return "display: none;";
-  } else return "display: flex;";
-}
-
-export function cssStyleElementEcwidMyAccountSignInLinkDisplay({
-  v,
-  device
-}: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-
-  const signInDisplay = dvv("signInDisplay");
-
-  if (signInDisplay === "off") {
-    return "display: none!important;";
-  } else return "display: inline-block!important;";
-}
-
-export function cssStyleElementEcwidMyAccountFooterTypography2FontFamily({
+export function cssStyleElementEcwidMyAccountParentBgColor({
   v,
   device,
   state
 }: CSSValue): string {
-  return `font-family:${styleTypography2FontFamily({
-    v,
-    device,
-    state,
-    prefix: "footer"
-  })}!important;`;
+  return cssStyleBgColor({ v, device, state, prefix: "parentBg" });
 }
 
-export function cssStyleElementEcwidMyAccountFooterTypography2FontSize({
+export function cssStyleElementEcwidMyAccountParentBgGradient({
   v,
   device,
   state
 }: CSSValue): string {
-  const fontSize = styleTypography2FontSize({
-    v,
-    device,
-    state,
-    prefix: "footer"
-  });
-  const fontSizeSuffix = styleTypography2FontSizeSuffix({ v, device, state });
-
-  return `font-size:${fontSize}${fontSizeSuffix || "px"}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountFooterTypography2LineHeight({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return `line-height:${styleTypography2LineHeight({
-    v,
-    device,
-    state,
-    prefix: "footer"
-  })}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountFooterTypography2FontWeight({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return `font-weight:${styleTypography2FontWeight({
-    v,
-    device,
-    state,
-    prefix: "footer"
-  })}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountFooterTypography2LetterSpacing({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return `letter-spacing:${styleTypography2LetterSpacing({
-    v,
-    device,
-    state,
-    prefix: "footer"
-  })}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountFooterColor({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return `color: ${styleColor({
-    v,
-    device,
-    state,
-    prefix: "footerColor"
-  })}!important;`;
+  return cssStyleBgGradient({ v, device, state, prefix: "parent" });
 }
 
 // Style Title
@@ -141,71 +48,69 @@ export function cssStyleElementEcwidMyAccountTitleColor({
   return cssStyleColor({ v, device, state, prefix: "titleColor" });
 }
 
-export function cssStyleElementEcwidMyAccountTitleTypography2FontFamily({
+export function cssStyleElementEcwidMyAccountTitleTypographyFontFamily({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return `font-family:${styleTypography2FontFamily({
+  return cssStyleTypography3FontFamily({
     v,
     device,
-    state,
-    prefix: "title"
-  })}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountTitleTypography2FontSize({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  const fontSize = styleTypography2FontSize({
-    v,
-    device,
-    state,
-    prefix: "title"
+    prefix: "titleTypography"
   });
-  const fontSizeSuffix = styleTypography2FontSizeSuffix({ v, device, state });
-
-  return `font-size:${fontSize}${fontSizeSuffix || "px"}!important;`;
 }
 
-export function cssStyleElementEcwidMyAccountTitleTypography2LineHeight({
+export function cssStyleElementEcwidMyAccountTitleTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({ v, device, prefix: "titleTypography" });
+}
+
+export function cssStyleElementEcwidMyAccountTitleTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "titleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountTitleTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "titleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountTitleTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "titleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountTitleSpacing({
   v,
   device,
   state
 }: CSSValue): string {
-  return `line-height:${styleTypography2LineHeight({
+  return cssStyleSpacing({
     v,
     device,
     state,
-    prefix: "title"
-  })}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountTitleTypography2FontWeight({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return `font-weight:${styleTypography2FontWeight({
-    v,
-    device,
-    state,
-    prefix: "title"
-  })}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountTitleTypography2LetterSpacing({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return `letter-spacing:${styleTypography2LetterSpacing({
-    v,
-    device,
-    state
-  })}`;
+    prefix: "title",
+    direction: "bottom"
+  });
 }
 
 export function cssStyleElementEcwidMyAccountTitleAlign({
@@ -213,9 +118,7 @@ export function cssStyleElementEcwidMyAccountTitleAlign({
   device,
   state
 }: CSSValue): string {
-  const align = styleAlignHorizontal({ v, device, state, prefix: "title" });
-
-  return align === undefined ? "" : `text-align:${align};`;
+  return cssStyleTextAlign({ v, device, state, prefix: "title" });
 }
 
 // Style Description
@@ -227,71 +130,59 @@ export function cssStyleElementEcwidMyAccountDescriptionColor({
   return cssStyleColor({ v, device, state, prefix: "descriptionColor" });
 }
 
-export function cssStyleElementEcwidMyAccountDescriptionTypography2FontFamily({
+export function cssStyleElementEcwidMyAccountDescriptionTypographyFontFamily({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return `font-family:${styleTypography2FontFamily({
+  return cssStyleTypography3FontFamily({
     v,
     device,
-    state,
-    prefix: "description"
-  })}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountDescriptionTypography2FontSize({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  const fontSize = styleTypography2FontSize({
-    v,
-    device,
-    state,
-    prefix: "description"
+    prefix: "descriptionTypography"
   });
-  const fontSizeSuffix = styleTypography2FontSizeSuffix({ v, device, state });
-
-  return `font-size:${fontSize}${fontSizeSuffix || "px"}!important;`;
 }
 
-export function cssStyleElementEcwidMyAccountDescriptionTypography2LineHeight({
+export function cssStyleElementEcwidMyAccountDescriptionTypographyFontSize({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return `line-height:${styleTypography2LineHeight({
+  return cssStyleTypography3FontSize({
     v,
     device,
-    state,
-    prefix: "description"
-  })}!important;`;
+    prefix: "descriptionTypography"
+  });
 }
 
-export function cssStyleElementEcwidMyAccountDescriptionTypography2FontWeight({
+export function cssStyleElementEcwidMyAccountDescriptionTypographyLineHeight({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return `font-weight:${styleTypography2FontWeight({
+  return cssStyleTypography3LineHeight({
     v,
     device,
-    state,
-    prefix: "description"
-  })}!important;`;
+    prefix: "descriptionTypography"
+  });
 }
 
-export function cssStyleElementEcwidMyAccountDescriptionTypography2LetterSpacing({
+export function cssStyleElementEcwidMyAccountDescriptionTypographyFontWeight({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return `letter-spacing:${styleTypography2LetterSpacing({
+  return cssStyleTypography3FontWeight({
     v,
     device,
-    state
-  })}`;
+    prefix: "descriptionTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountDescriptionTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "descriptionTypography"
+  });
 }
 
 export function cssStyleElementEcwidMyAccountDescriptionAlign({
@@ -299,14 +190,40 @@ export function cssStyleElementEcwidMyAccountDescriptionAlign({
   device,
   state
 }: CSSValue): string {
-  const align = styleAlignHorizontal({
+  return cssStyleTextAlign({
     v,
     device,
     state,
     prefix: "description"
   });
+}
 
-  return align === undefined ? "" : `text-align:${align};`;
+export function cssStyleElementEcwidMyAccountDescriptionSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "description",
+    direction: "bottom"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountDescriptionSpacingTop({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "description",
+    direction: "top"
+  });
 }
 
 // Style Input
@@ -315,107 +232,82 @@ export function cssStyleElementEcwidMyAccountInputColor({
   device,
   state
 }: CSSValue): string {
-  return `color: ${styleColor({
-    v,
-    device,
-    state,
-    prefix: "inputColor"
-  })}!important;`;
+  return cssStyleColor({ v, device, state, prefix: "inputColor" });
 }
 
-export function cssStyleElementEcwidMyAccountInputTypography2FontFamily({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return `font-family:${styleTypography2FontFamily({
-    v,
-    device,
-    state,
-    prefix: "input"
-  })}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountInputTypography2FontSize({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  const fontSize = styleTypography2FontSize({
-    v,
-    device,
-    state,
-    prefix: "input"
-  });
-  const fontSizeSuffix = styleTypography2FontSizeSuffix({ v, device, state });
-
-  return `font-size:${fontSize}${fontSizeSuffix || "px"}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountInputTypography2LineHeight({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return `line-height:${styleTypography2LineHeight({
-    v,
-    device,
-    state,
-    prefix: "input"
-  })}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountInputTypography2FontWeight({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return `font-weight:${styleTypography2FontWeight({
-    v,
-    device,
-    state,
-    prefix: "input"
-  })}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountInputTypography2LetterSpacing({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return `letter-spacing:${styleTypography2LetterSpacing({
-    v,
-    device,
-    state,
-    prefix: "input"
-  })}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountInputSize({
+export function cssStyleElementEcwidMyAccountInputTypographyFontFamily({
   v,
   device
 }: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "inputTypography"
+  });
+}
 
-  const inputSize = dvv("inputSize");
+export function cssStyleElementEcwidMyAccountInputTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({ v, device, prefix: "inputTypography" });
+}
 
-  if (inputSize === "small") {
-    return "padding: 20px!important;";
-  } else if (inputSize === "medium") {
-    return "padding: 30px!important;";
-  } else if (inputSize === "large") {
-    return "padding: 40px!important;";
-  } else return "";
+export function cssStyleElementEcwidMyAccountInputTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "inputTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountInputTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "inputTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountInputTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "inputTypography"
+  });
 }
 
 export function cssStyleElementEcwidMyAccountInputBorderRadius({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-  const inputBorderRadius = dvv("inputBorderRadius");
+  return cssStyleBorderRadius({ v, device, state, prefix: "input" });
+}
 
-  return `border-radius:${inputBorderRadius}px!important;`;
+export function cssStyleElementEcwidMyAccountInputHeight({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeHeight({ v, device, state, prefix: "input" });
+}
+
+export function cssStyleElementEcwidMyAccountInputWidth({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeWidth({ v, device, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidMyAccountInputBgColor({
@@ -423,74 +315,45 @@ export function cssStyleElementEcwidMyAccountInputBgColor({
   device,
   state
 }: CSSValue): string {
-  return `background: ${styleBgColor({
-    v,
-    device,
-    state,
-    prefix: "inputBg"
-  })}!important;`;
+  return cssStyleBgColor({ v, device, state, prefix: "inputBg" });
+}
+
+export function cssStyleElementEcwidMyAccountInputBgGradient({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgGradient({ v, device, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidMyAccountInputBorderColor({
   v,
   device,
-  state,
-  prefix = "input"
+  state
 }: CSSValue): string {
-  const borderWidth = styleBorderWidthUngrouped({
-    v,
-    device,
-    state,
-    prefix
-  });
-  const borderStyle = styleBorderStyle({
-    v,
-    device,
-    state,
-    prefix
-  });
-  const borderColor = styleBorderColor({
-    v,
-    device,
-    state,
-    prefix
-  });
-
-  return borderWidth === undefined
-    ? ""
-    : `border:${borderWidth}px ${borderStyle} ${borderColor}!important;`;
+  return cssStyleBorder({ v, device, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidMyAccountInputBoxShadow({
   v,
   device,
-  state,
-  prefix = "input"
+  state
 }: CSSValue): string {
-  const type = styleBoxShadowType({ v, device, state, prefix });
-  const color = styleBoxShadowColor({ v, device, state, prefix });
-  const blur = styleBoxShadowBlur({ v, device, state, prefix });
-  const spread = styleBoxShadowSpread({ v, device, state, prefix });
-  const horizontal =
-    type === "inset"
-      ? styleBoxShadowHorizontal({ v, device, state, prefix }) * -1
-      : styleBoxShadowHorizontal({ v, device, state, prefix });
-  const vertical =
-    type === "inset"
-      ? styleBoxShadowVertical({ v, device, state, prefix }) * -1
-      : styleBoxShadowVertical({ v, device, state, prefix });
+  return cssStyleBoxShadow({ v, device, state, prefix: "input" });
+}
 
-  if (
-    type === "" ||
-    type === "off" ||
-    (horizontal === 0 && vertical === 0 && blur === 0 && spread === 0)
-  ) {
-    return "";
-  } else {
-    const inset = type === "inset" ? "inset " : "";
-
-    return `box-shadow: ${inset}${horizontal}px ${vertical}px ${blur}px ${spread}px ${color}!important;`;
-  }
+export function cssStyleElementEcwidMyAccountInputSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "input",
+    direction: "bottom"
+  });
 }
 
 // Style Agreement
@@ -502,73 +365,59 @@ export function cssStyleElementEcwidMyAccountAgreementColor({
   return cssStyleColor({ v, device, state, prefix: "agreementColor" });
 }
 
-export function cssStyleElementEcwidMyAccountAgreementTypography2FontFamily({
+export function cssStyleElementEcwidMyAccountAgreementTypographyFontFamily({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return `font-family:${styleTypography2FontFamily({
+  return cssStyleTypography3FontFamily({
     v,
     device,
-    state,
-    prefix: "agreement"
-  })}!important;`;
-}
-
-export function cssStyleElementEcwidMyAccountAgreementTypography2FontSize({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  const fontSize = styleTypography2FontSize({
-    v,
-    device,
-    state,
-    prefix: "agreement"
+    prefix: "agreementTypography"
   });
-  const fontSizeSuffix = styleTypography2FontSizeSuffix({ v, device, state });
-
-  return `font-size:${fontSize}${fontSizeSuffix || "px"}!important;`;
 }
 
-export function cssStyleElementEcwidMyAccountAgreementTypography2LineHeight({
+export function cssStyleElementEcwidMyAccountAgreementTypographyFontSize({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return `line-height:${styleTypography2LineHeight({
+  return cssStyleTypography3FontSize({
     v,
     device,
-    state,
-    prefix: "agreement"
-  })}!important;`;
+    prefix: "agreementTypography"
+  });
 }
 
-export function cssStyleElementEcwidMyAccountAgreementTypography2FontWeight({
+export function cssStyleElementEcwidMyAccountAgreementTypographyLineHeight({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return `font-weight:${styleTypography2FontWeight({
+  return cssStyleTypography3LineHeight({
     v,
     device,
-    state,
-    prefix: "agreement"
-  })}!important;`;
+    prefix: "agreementTypography"
+  });
 }
 
-export function cssStyleElementEcwidMyAccountAgreementTypography2LetterSpacing({
+export function cssStyleElementEcwidMyAccountAgreementTypographyFontWeight({
   v,
-  device,
-  state,
-  prefix = "agreement"
+  device
 }: CSSValue): string {
-  return `letter-spacing:${styleTypography2LetterSpacing({
+  return cssStyleTypography3FontWeight({
     v,
     device,
-    state,
-    prefix
-  })}`;
+    prefix: "agreementTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountAgreementTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "agreementTypography"
+  });
 }
 
 export function cssStyleElementEcwidMyAccountAgreementAlign({
@@ -576,12 +425,955 @@ export function cssStyleElementEcwidMyAccountAgreementAlign({
   device,
   state
 }: CSSValue): string {
-  const align = styleAlignHorizontal({
+  return cssStyleTextAlign({
     v,
     device,
     state,
     prefix: "agreement"
   });
+}
 
-  return align === undefined ? "" : `text-align:${align};`;
+export function cssStyleElementEcwidMyAccountAgreementSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "agreement",
+    direction: "bottom"
+  });
+}
+
+// Account Title
+export function cssStyleElementEcwidMyAccountAccountTitleColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "accountTitleColor" });
+}
+
+export function cssStyleElementEcwidMyAccountAccountTitleAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "accountTitle"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountAccountTitleTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "accountTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountAccountTitleTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({
+    v,
+    device,
+    prefix: "accountTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountAccountTitleTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "accountTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountAccountTitleTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "accountTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountAccountTitleTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "accountTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountAccountTitleSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "accountTitle",
+    direction: "bottom"
+  });
+}
+
+// Products
+export function cssStyleElementEcwidMyAccountProductsColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "productsColor" });
+}
+
+export function cssStyleElementEcwidMyAccountProductsTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "productsTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountProductsTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({
+    v,
+    device,
+    prefix: "productsTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountProductsTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "productsTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountProductsTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "productsTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountProductsTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "productsTypography"
+  });
+}
+
+// Shop Title
+export function cssStyleElementEcwidMyAccountShopTitleColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "shopTitleColor" });
+}
+
+export function cssStyleElementEcwidMyAccountShopTitleAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({ v, device, state, prefix: "shopTitle" });
+}
+
+export function cssStyleElementEcwidMyAccountShopTitleTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "shopTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountShopTitleTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({
+    v,
+    device,
+    prefix: "shopTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountShopTitleTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "shopTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountShopTitleTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "shopTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountShopTitleTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "shopTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountShopTitleSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "shopTitle",
+    direction: "bottom"
+  });
+}
+
+// Style Empty Cart
+export function cssStyleElementEcwidMyAccountEmptyColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "emptyColor" });
+}
+
+export function cssStyleElementEcwidMyAccountEmptyTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "emptyTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountEmptyTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({
+    v,
+    device,
+    prefix: "emptyTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountEmptyTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "emptyTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountEmptyTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "emptyTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountEmptyTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "emptyTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountEmptyAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "empty"
+  });
+}
+
+// Summary link
+export function cssStyleElementEcwidMyAccountSummaryLinkColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "summaryLinkColor"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountSummaryLinkAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "summaryLink"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountSummaryLinkTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "summaryLinkTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountSummaryLinkTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({
+    v,
+    device,
+    prefix: "summaryLinkTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountSummaryLinkTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "summaryLinkTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountSummaryLinkTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "summaryLinkTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountSummaryLinkTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "summaryLinkTypography"
+  });
+}
+
+// Connect link
+export function cssStyleElementEcwidMyAccountConnectColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "connectColor" });
+}
+
+export function cssStyleElementEcwidMyAccountConnectLinkAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "connectLink"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountConnectTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "connectTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountConnectTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({
+    v,
+    device,
+    prefix: "connectTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountConnectTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "connectTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountConnectTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "connectTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountConnectTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "connectTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountConnectLinkColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "connectLinkColor"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountConnectLinkTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "connectLinkTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountConnectLinkTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({
+    v,
+    device,
+    prefix: "connectLinkTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountConnectLinkTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "connectLinkTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountConnectLinkTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "connectLinkTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountConnectLinkTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "connectLinkTypography"
+  });
+}
+
+// Style User Icon
+export function cssStyleElementEcwidMyAccountUserSize({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeWidthHeight({ v, device, state, prefix: "user" });
+}
+
+export function cssStyleElementEcwidMyAccountUserColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "userColor" });
+}
+
+export function cssStyleElementEcwidMyAccountUserBgColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "userBg" });
+}
+
+export function cssStyleElementEcwidMyAccountUserBgGradient({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgGradient({ v, device, state, prefix: "user" });
+}
+
+export function cssStyleElementEcwidMyAccountUserBorder({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorder({ v, device, state, prefix: "user" });
+}
+
+export function cssStyleElementEcwidMyAccountUserBoxShadow({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBoxShadow({ v, device, state, prefix: "user" });
+}
+
+export function cssStyleElementEcwidMyAccountUserBorderRadius({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorderRadius({ v, device, state, prefix: "user" });
+}
+
+export function cssStyleElementEcwidMyAccountUserSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "user",
+    direction: "right"
+  });
+}
+
+// Style Title
+export function cssStyleElementEcwidMyAccountTitle2Color({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "title2Color" });
+}
+
+export function cssStyleElementEcwidMyAccountTitle2TypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "title2Typography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountTitle2TypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({
+    v,
+    device,
+    prefix: "title2Typography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountTitle2TypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "title2Typography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountTitle2TypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "title2Typography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountTitle2TypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "title2Typography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountTitle2Align({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({ v, device, state, prefix: "title2" });
+}
+
+export function cssStyleElementEcwidMyAccountTitle2Spacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "title2",
+    direction: "bottom"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountInputPlaceholderDisplay({
+  v,
+  device
+}: CSSValue): string {
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const placeholder = dvv("placeholder");
+
+  return placeholder === "off" ? cssStyleDisplayNone() : cssStyleDisplayFlex();
+}
+
+// Style Button
+export function cssStyleElementEcwidMyAccountButtonTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "buttonTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountButtonTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({ v, device, prefix: "buttonTypography" });
+}
+
+export function cssStyleElementEcwidMyAccountButtonTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "buttonTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountButtonTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "buttonTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountButtonTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "buttonTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountButtonSize({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizePadding({ v, device, state, prefix: "button" });
+}
+
+export function cssStyleElementEcwidMyAccountButtonWidth({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeWidth({ v, device, state, prefix: "button" });
+}
+
+export function cssStyleElementEcwidMyAccountButtonColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "buttonColor" });
+}
+
+export function cssStyleElementEcwidMyAccountButtonBgColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "buttonBg" });
+}
+
+export function cssStyleElementEcwidMyAccountButtonBgGradient({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgGradient({ v, device, state, prefix: "button" });
+}
+
+export function cssStyleElementEcwidMyAccountButtonBorder({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorder({ v, device, state, prefix: "button" });
+}
+
+export function cssStyleElementEcwidMyAccountButtonBorderRadius({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorderRadius({ v, device, state, prefix: "button" });
+}
+
+export function cssStyleElementEcwidMyAccountButtonBoxShadow({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBoxShadow({ v, device, state, prefix: "button" });
+}
+
+export function cssStyleElementEcwidMyAccountButtonAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "button" });
+}
+
+// Style Footer
+export function cssStyleElementEcwidMyAccountFooterIconSize({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeWidthHeight({ v, device, state, prefix: "footerIcon" });
+}
+
+export function cssStyleElementEcwidMyAccountFooterIconSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "footer",
+    direction: "bottom"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountFooterIconColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "footerIconColor"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountFooterColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "footerColor" });
+}
+
+export function cssStyleElementEcwidMyAccountFooterTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "footerTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountFooterTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({ v, device, prefix: "footerTypography" });
+}
+
+export function cssStyleElementEcwidMyAccountFooterTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "footerTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountFooterTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "footerTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountFooterTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "footerTypography"
+  });
 }

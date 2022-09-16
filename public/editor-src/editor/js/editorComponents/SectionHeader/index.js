@@ -12,6 +12,8 @@ import { hideToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { getOpenedMegaMenu } from "visual/editorComponents/Menu/MenuItem";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { css } from "visual/utils/cssStyle";
 import { IS_PRO } from "visual/utils/env";
 import {
@@ -24,6 +26,9 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleSection } from "./styles";
 import * as toolbarExtendConfig from "./toolbarExtend";
+import * as State from "visual/utils/stateMode";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 
 const STICKY_ITEM_INDEX = 1;
 
@@ -99,7 +104,7 @@ export default class SectionHeader extends EditorComponent {
     this.selfDestruct();
   };
 
-  handleStickyChange = (isSticky) => {
+  handleStickyChange = isSticky => {
     hideToolbar();
 
     const tooltip = getCurrentTooltip();
@@ -170,12 +175,15 @@ export default class SectionHeader extends EditorComponent {
       animationName,
       animationDuration,
       animationDelay,
+      animationInfiniteAnimation,
       tabletAnimationName,
       tabletAnimationDuration,
       tabletAnimationDelay,
+      tabletAnimationInfiniteAnimation,
       mobileAnimationName,
       mobileAnimationDuration,
       mobileAnimationDelay,
+      mobileAnimationInfiniteAnimation,
       translations,
       translationsLangs
     } = v;
@@ -196,26 +204,36 @@ export default class SectionHeader extends EditorComponent {
       tabletAnimationName,
       tabletAnimationDuration,
       tabletAnimationDelay,
+      tabletAnimationInfiniteAnimation,
+      animationInfiniteAnimation,
       mobileAnimationName,
       mobileAnimationDuration,
       mobileAnimationDelay,
+      mobileAnimationInfiniteAnimation,
       translations,
       translationsLangs
     };
   }
+
+  dvv = key => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
+  };
 
   getAnimationClassName = (v, vs, vd) => {
     if (!validateKeyByProperty(v, "animationName", "none")) {
       return undefined;
     }
 
-    const animationName = defaultValueValue({ v, key: "animationName" });
-    const animationDuration = defaultValueValue({
-      v,
-      key: "animationDuration"
-    });
-    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
-    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+    const animationName = this.dvv("animationName");
+    const animationDuration = this.dvv("animationDuration");
+    const animationDelay = this.dvv("animationDelay");
+    const animationInfiniteAnimation = this.dvv("animationInfiniteAnimation");
+
+    const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
     return classnames(
       css(
@@ -231,9 +249,7 @@ export default class SectionHeader extends EditorComponent {
       <Sticky
         refSelector={`#${this.getId()}`}
         type="animated"
-        render={(isSticky) =>
-          this.renderAnimatedSticky({ v, vs, vd, isSticky })
-        }
+        render={isSticky => this.renderAnimatedSticky({ v, vs, vd, isSticky })}
         onChange={this.handleStickyChange}
       />
     );
@@ -298,7 +314,7 @@ export default class SectionHeader extends EditorComponent {
       <Sticky
         refSelector={`#${this.getId()}`}
         type="fixed"
-        render={(isSticky) => this.renderFixedSticky({ v, isSticky })}
+        render={isSticky => this.renderFixedSticky({ v, isSticky })}
         onChange={this.handleStickyChange}
       />
     );
@@ -383,14 +399,37 @@ export default class SectionHeader extends EditorComponent {
     );
   }
 
-  renderMemberShipWrapper(content, v) {
-    if (v.membership === "on") {
-      const roles = JSON.parse(v.membershipRoles).join(",");
+  renderLangOrMemberOrAll(content, v) {
+    const { membership, membershipRoles, translationsLangs, translations } = v;
 
+    const config = Config.getAll();
+    const roles = JSON.parse(membershipRoles).join(",");
+    const languages = JSON.parse(translationsLangs).join(",");
+    const onlyCloud = !(isCloud(config) && isShopify(config));
+
+    if (membership === "on" && translations === "off" && onlyCloud) {
       return (
         <>
           {`{{display_by_roles roles="${roles}"}}`}
           {content}
+          {"{{end_display_by_roles}}"}
+        </>
+      );
+    } else if (membership === "off" && translations === "on" && onlyCloud) {
+      return (
+        <>
+          {`{{display_by_translations translations="${languages}"}}`}
+          {content}
+          {"{{end_display_by_translations}}"}
+        </>
+      );
+    } else if (membership === "on" && translations === "on" && onlyCloud) {
+      return (
+        <>
+          {`{{display_by_roles roles="${roles}"}}`}
+          {`{{display_by_translation translations="${languages}"}}`}
+          {content}
+          {"{{end_display_by_translations}}"}
           {"{{end_display_by_roles}}"}
         </>
       );
@@ -431,6 +470,6 @@ export default class SectionHeader extends EditorComponent {
       </Animation>
     );
 
-    return this.renderMemberShipWrapper(content, v);
+    return this.renderLangOrMemberOrAll(content, v);
   }
 }
