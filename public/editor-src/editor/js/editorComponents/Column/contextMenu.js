@@ -4,14 +4,13 @@ export default {
   getItems
 };
 
-function getItems(v, component) {
+function getItems() {
   return [
     {
       id: "main",
       type: "group",
       title: t("Column"),
       icon: "nc-column",
-      disabled: component.props.meta.posts,
       items: []
     }
   ];

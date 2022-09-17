@@ -7,8 +7,8 @@ import {
   isCustomer,
   isShopify
 } from "visual/global/Config/types/configs/Cloud";
-import { TemplateType } from "visual/global/Config/types/TemplateType";
 import { isWp } from "visual/global/Config/types/configs/WP";
+import { TemplateType } from "visual/global/Config/types/TemplateType";
 
 const config = Config.getAll();
 
@@ -62,18 +62,28 @@ export const IS_PRODUCT_ARCHIVE_TEMPLATE = isTemplate(
   "product_archive"
 );
 
-const isProtected = (c: Cloud): boolean => {
-  if ("isProtected" in c.page) {
-    return c.page.isProtected;
+export const isProtectedPage = (config: Conf): boolean => {
+  if (isCloud(config) && isCMS(config) && "isProtected" in config.page) {
+    return config.page.isProtected;
   }
 
   return false;
 };
 
-export const IS_PROTECTED =
-  isCloud(config) && isCMS(config) && isProtected(config);
-
-export const IS_USER_PAGE =
+export const isUserPage = (config: Conf): boolean =>
   isCloud(config) && config.page.provider === "customers";
 
-export const IS_RESET_PASS = isCloud(config) && config.page.isResetPassPage;
+export const isResetPassPage = (config: Conf): boolean =>
+  isCloud(config) && config.page.isResetPassPage;
+
+export const isCartPage = (config: Cloud): boolean =>
+  isCloud(config) && config.page.slug === "cart";
+
+export const isCheckoutPage = (config: Cloud): boolean =>
+  isCloud(config) && config.page.slug === "checkout";
+
+export const isMyAccountPage = (config: Cloud): boolean =>
+  isCloud(config) && config.page.slug === "my-account";
+
+export const isBlogPage = (config: Cloud): boolean =>
+  isCloud(config) && config.page.collectionTypeSlug === "blog";

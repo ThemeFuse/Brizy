@@ -1,35 +1,30 @@
-import { defaultValueValue } from "visual/utils/onChange";
-import { IS_STORY } from "visual/utils/models";
 import {
-  styleSizeWidth,
-  styleSizeHeight,
-  styleAlignHorizontal,
-  styleBorderWidthUngrouped,
-  styleBorderColor,
-  styleBorderStyle,
-  styleBgColorHex,
-  styleBorderWidthGrouped,
-  styleElementForm2FieldColumns,
-  styleTypography2LineHeight,
-  styleTypography2FontSize,
-  styleBorderWidthType
-} from "visual/utils/style2";
-import {
-  cssStyleColor,
   cssStyleBgColor,
+  cssStyleBorder,
   cssStyleBorderRadius,
   cssStyleBoxShadow,
+  cssStyleColor,
+  cssStylePadding,
   cssStylePaddingFourFields,
-  cssStylePadding
-} from "visual/utils/cssStyle";
-import { hexToRgba } from "visual/utils/color";
-import {
+  cssStyleTextAlign,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
-} from "visual/utils/cssStyle/cssStyleTypography2";
+} from "visual/utils/cssStyle";
+import { IS_STORY } from "visual/utils/models";
+import { defaultValueValue } from "visual/utils/onChange";
+import {
+  styleBorderWidthGrouped,
+  styleBorderWidthType,
+  styleBorderWidthUngrouped,
+  styleElementForm2FieldColumns,
+  styleSizeHeight,
+  styleSizeWidth,
+  styleTypography2FontSize,
+  styleTypography2LineHeight
+} from "visual/utils/style2";
 
 export function cssStyleElementForm2FlexBasisPercent({ v, device, state }) {
   const width = styleSizeWidth({ v, device, state });
@@ -46,7 +41,7 @@ export function cssStyleElementForm2SubmitWidth({ v, device, state }) {
 }
 
 export function cssStyleElementForm2InputHeight({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const type = dvv("type");
   const height = styleSizeHeight({ v, device, state });
 
@@ -60,18 +55,12 @@ export function cssStyleElementForm2InputHeight({ v, device, state }) {
 }
 
 export function cssStyleElementForm2FieldsLabelAlign({ v, device, state }) {
-  const align = styleAlignHorizontal({ v, device, state, prefix: "label" });
-
-  return align === undefined ? "" : `text-align:${align};`;
+  return cssStyleTextAlign({ v, device, state, prefix: "label" });
 }
 
 export function cssStyleElementForm2Margin({ v, device, state }) {
-  const {
-    paddingTop,
-    paddingRight,
-    paddingBottom,
-    paddingLeft
-  } = cssStylePadding({ v, device, state });
+  const { paddingTop, paddingRight, paddingBottom, paddingLeft } =
+    cssStylePadding({ v, device, state });
 
   return paddingTop === undefined ||
     paddingRight === undefined ||
@@ -119,10 +108,9 @@ export function cssStyleElementForm2FieldsLineHeight({ v, device, state }) {
   const borderWidth = getBorderTopBottomWidth({ v, device, state });
   const lineHeight = Math.round(fontSize * modelLineHeight * 10) / 10;
 
-  return `min-height:${lineHeight +
-    paddingTop +
-    paddingBottom +
-    borderWidth}px;`;
+  return `min-height:${
+    lineHeight + paddingTop + paddingBottom + borderWidth
+  }px;`;
 }
 
 // label Font
@@ -195,27 +183,11 @@ export function cssStyleElementForm2FieldsSelectChoiceBgColor({
   device,
   state
 }) {
-  const bgColorHex = styleBgColorHex({ v, device, state, prefix: "selectBg" });
-
-  return bgColorHex === undefined
-    ? ""
-    : `background-color:${hexToRgba(bgColorHex, 0.2)};`;
+  return cssStyleBgColor({ v, device, state, prefix: "selectBg" });
 }
 
 export function cssStyleElementForm2FieldsSelectBorder({ v, device, state }) {
-  const borderWidth = styleBorderWidthUngrouped({
-    v,
-    device,
-    state,
-    prefix: "select",
-    current: "top"
-  });
-  const borderStyle = styleBorderStyle({ v, device, state, prefix: "select" });
-  const borderColor = styleBorderColor({ v, device, state, prefix: "select" });
-
-  return borderWidth === undefined
-    ? ""
-    : `border :${borderWidth}px ${borderStyle} ${borderColor};`;
+  return cssStyleBorder({ v, device, state, prefix: "select" });
 }
 
 export function cssStyleElementForm2FieldsSelectBorderRadius({

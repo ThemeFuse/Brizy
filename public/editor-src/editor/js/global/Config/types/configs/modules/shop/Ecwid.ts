@@ -8,4 +8,7 @@ export interface Ecwid {
   daysLeft: number;
   userSessionUrl: string;
   apiUrl: string;
+  productCollectionTypeSlug: string;
+  categoryCollectionTypeSlug: string;
+  ecwidCategoryTypeId?: string;
 }

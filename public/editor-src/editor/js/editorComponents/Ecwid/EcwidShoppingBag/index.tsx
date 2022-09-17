@@ -1,25 +1,24 @@
+import classNames from "classnames";
 import React, { ReactNode } from "react";
+import { uniqueId } from "underscore";
+import CustomCSS from "visual/component/CustomCSS";
+import { ElementModel } from "visual/component/Elements/Types";
+import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { EcwidService } from "visual/libs/Ecwid";
-import { uniqueId } from "underscore";
-import classNames from "classnames";
-
-import { ElementModel } from "visual/component/Elements/Types";
-import * as sidebarExtendParent from "./sidebar";
-import * as toolbarExtendParent from "./toolbar";
-import * as toolbarExtendIcon from "./toolbarIcon";
 import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
-import CustomCSS from "visual/component/CustomCSS";
 import defaultValue from "./defaultValue.json";
-import Toolbar from "visual/component/Toolbar";
+import * as sidebarParent from "./sidebar";
+import * as sidebarIcon from "./sidebarIcon";
+import { style } from "./styles";
+import * as toolbarParent from "./toolbar";
+import * as toolbarIcon from "./toolbarIcon";
 
 export interface Value extends ElementModel {
   productId: string;
-
   customCSS: string;
 }
 
@@ -40,7 +39,7 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
     const config = Config.getAll();
 
     if (isCloud(config) && config.modules?.shop?.type === "ecwid") {
-      EcwidService.init(config.modules.shop.storeId).shoppingCart();
+      EcwidService.init(config.modules.shop.storeId, {}).shoppingCart();
     }
   }
 
@@ -55,27 +54,52 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
 
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig2(
-          toolbarExtendParent,
-          sidebarExtendParent
-        )}
+        {...this.makeToolbarPropsFromConfig2(toolbarParent, sidebarParent)}
       >
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarExtendIcon)}
-          selector=".ec-minicart__counter"
-        >
-          <CustomCSS selectorName={this.getId()} css={customCSS}>
-            <Wrapper {...this.makeWrapperProps({ className })}>
-              <div
-                className={classNames(
-                  "ec-cart-widget",
-                  "brz-ecwid-shopping-bag"
-                )}
-                id={this.uniqueId}
-              />
-            </Wrapper>
-          </CustomCSS>
-        </Toolbar>
+        {({ open: openBag }) => {
+          return (
+            <Toolbar
+              {...this.makeToolbarPropsFromConfig2(toolbarIcon, sidebarIcon)}
+              selector=".brz-ecwid-shopping-bag-wrapper .ec-minicart__counter"
+            >
+              {({ open: openCounter }) => {
+                return (
+                  <CustomCSS selectorName={this.getId()} css={customCSS}>
+                    <Wrapper {...this.makeWrapperProps({ className })}>
+                      <div
+                        onClickCapture={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+
+                          if (
+                            (e.target as HTMLElement | null)?.closest(
+                              ".brz-ecwid-shopping-bag-wrapper .ec-minicart__icon"
+                            )
+                          ) {
+                            openBag(e.nativeEvent);
+                          } else if (
+                            (e.target as HTMLElement | null)?.closest(
+                              ".brz-ecwid-shopping-bag-wrapper .ec-minicart__counter"
+                            )
+                          ) {
+                            openCounter(e.nativeEvent);
+                          }
+
+                          return false;
+                        }}
+                        className={classNames(
+                          "ec-cart-widget",
+                          "brz-ecwid-shopping-bag"
+                        )}
+                        id={this.uniqueId}
+                      />
+                    </Wrapper>
+                  </CustomCSS>
+                );
+              }}
+            </Toolbar>
+          );
+        }}
       </Toolbar>
     );
   }

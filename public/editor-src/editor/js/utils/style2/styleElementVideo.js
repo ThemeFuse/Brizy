@@ -1,8 +1,8 @@
+import { imageSpecificSize, imageUrl, svgUrl } from "visual/utils/image";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
-import { imageSpecificSize, imageUrl, svgUrl } from "visual/utils/image";
 
-const isSVG = extension => extension === "svg";
+const isSVG = (extension) => extension === "svg";
 
 export function styleElementVideoPaddingRatio({ v, device, state }) {
   const ratio = defaultValueValue({ v, key: "ratio", device, state });
@@ -36,7 +36,7 @@ export function styleElementVideoBgColorRatio({ v, device, state }) {
 }
 
 export function styleElementVideoCoverSrc({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const src = dvv("coverImageSrc");
   const extension = dvv("coverImageExtension");
   const sizeType = dvv("coverSizeType") ?? "custom";
@@ -88,45 +88,8 @@ export function styleElementVideoCoverZoom({ v, device, state }) {
   return coverZoom;
 }
 
-export function styleElementVideoIconSizeWidth({ v, device, state }) {
-  const iconSizeWidth = defaultValueValue({
-    v,
-    key: "iconSizeWidth",
-    device,
-    state
-  });
-
-  return iconSizeWidth;
-}
-
-export function styleElementVideoIconSizeHeight({ v, device, state }) {
-  const iconSizeHeight = defaultValueValue({
-    v,
-    key: "iconSizeHeight",
-    device,
-    state
-  });
-
-  return iconSizeHeight;
-}
-
-export function styleElementVideoIconCustomSize({ v, device, state }) {
-  return defaultValueValue({
-    v,
-    key: "controlsIconCustomSize",
-    device,
-    state
-  });
-}
-
-export function styleSidebarSizeWidthPixed({ v, device, state, prefix = "" }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return dvv(capByPrefix(prefix, "widthSidebar"));
-}
-
 export function styleElementVideoImageSize({ v, device, state, prefix = "" }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   return dvv(capByPrefix(prefix, "widthImage"));
 }

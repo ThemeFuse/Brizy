@@ -1,5 +1,5 @@
 import { EcwidStoreId } from "visual/global/Ecwid";
-import * as Authorize from "../Authorize";
+import { XAuth } from "../XAuth";
 
 // region Disabled
 export interface Disabled {
@@ -16,8 +16,10 @@ export interface Ecwid {
   daysLeft: number;
   type: "ecwid";
   storeId: EcwidStoreId;
-  authorize: Authorize.Authorize;
+  authorize: XAuth;
   adminPanelUrl: string;
+  productCollectionTypeSlug: string;
+  categoryCollectionTypeSlug: string;
 }
 
 export const isEcwid = (v: Shop): v is Ecwid =>

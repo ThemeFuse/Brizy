@@ -50,3 +50,11 @@
     position: fixed;
   }
 }
+
+.brz-mega-menu__portal {
+  &--tablet,
+  &--mobile {
+    padding-left: $mobile-paddings !important;
+    padding-right: $mobile-paddings !important;
+  }
+}

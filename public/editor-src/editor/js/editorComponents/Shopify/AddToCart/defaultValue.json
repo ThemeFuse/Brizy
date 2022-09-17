@@ -144,7 +144,7 @@
     "tempBorderBottomWidth": 2,
     "tempBorderLeftWidth": 2,
 
-    "boxShadow": "",
+    "boxShadow": "none",
     "tempBoxShadow": "on",
 
     "boxShadowColorHex": "#000000",

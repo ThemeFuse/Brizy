@@ -50,6 +50,15 @@ export type VDecoded = {
   symbols: Dictionary<string[]>;
 };
 
+export interface Context {
+  collectionTypesInfo: {
+    collectionTypes: { id: string; slug?: string | null; title: string }[];
+    refsById: Dictionary<
+      { type: "single" | "multi"; id: string; fieldId: string; title: string }[]
+    >;
+  };
+}
+
 //#endregion
 
 //#region cloud
@@ -60,8 +69,8 @@ export type CloudPostsQuery = {
   type: "posts";
   collection_type: string;
   collection_type_query: string | undefined;
-  include: Dictionary<string[]>;
-  exclude: Dictionary<string[]>;
+  include: Dictionary<Array<{ collectionId: string; fieldId?: string }>>;
+  exclude: Dictionary<Array<{ collectionId: string; fieldId?: string }>>;
   count: number;
   order_by: "id" | "title" | "random";
   order: "ASC" | "DESC";

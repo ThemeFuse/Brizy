@@ -1,6 +1,14 @@
 import {
+  cssStyleDisplayBlock,
+  cssStyleDisplayNone,
+  cssStylePositionAbsolute,
+  cssStylePositionRelative,
+  cssStylePositionStatic,
+  cssStyleSizeFontSize
+} from "visual/utils/cssStyle";
+import { defaultValueValue } from "visual/utils/onChange";
+import {
   styleBorderColor,
-  styleBorderRadiusGrouped,
   styleBorderWidthGrouped,
   styleElementTimelineEnableText,
   styleElementTimelineIconCustomSize,
@@ -9,12 +17,9 @@ import {
   styleElementTimelineSpacing,
   styleElementTimelineStyle,
   styleElementTimelineTabsCount,
-  styleElementTimelineWidth,
-  styleElementTimelineWidthSuffix,
   styleTypography2FontSize,
   styleTypography2LineHeight
 } from "visual/utils/style2";
-import { defaultValueValue } from "visual/utils/onChange";
 
 function cssStyleElementTimelineIconHeightWidth({ v, device, prefix }) {
   const borderWidth = styleBorderWidthGrouped({ v, device, prefix });
@@ -63,9 +68,8 @@ function cssStyleElementTimelineTextWidth({ v, device, prefix }) {
   return enableText ? 116 : 0;
 }
 
-export function cssStyleElementTimelineIconSize({ v, device, prefix }) {
-  const customSize = styleElementTimelineIconCustomSize({ v, device, prefix });
-  return `font-size: ${customSize}px;`;
+export function cssStyleElementTimelineIconSize({ v, device }) {
+  return cssStyleSizeFontSize({ v, device, prefix: "custom" });
 }
 
 export function cssStyleElementTimelinePaddingForIcon({ v, device, prefix }) {
@@ -100,14 +104,15 @@ export function cssStyleElementTimelineNavTitleWidth({ v, prefix }) {
 
 export function cssStyleElementTimelineNavTitleVisible({ v }) {
   const enableText = cssStyleElementTimelineEnableText({ v });
-  return enableText ? "display: block;" : "display: none;";
+
+  return enableText ? cssStyleDisplayBlock() : cssStyleDisplayNone();
 }
 
 export function cssStyleElementTimelineLineBgColor({ v, device, state }) {
   const borderColor = styleBorderColor({ v, device, prefix: "line" });
   const orientation = styleElementTimelineOrientation({ v, device, state });
 
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
   const borderStyle = dvv("lineBorderStyle");
   const borderWidth = dvv("lineBorderWidth");
 
@@ -197,16 +202,6 @@ export function cssStyleElementTimelineArrowBorder({ v, device, prefix }) {
   return `border: ${borderWidth}px solid ${borderColor};`;
 }
 
-export function cssStyleElementTimelineIconBorderRadius({
-  v,
-  device,
-  state,
-  prefix
-}) {
-  const borderRadius = styleBorderRadiusGrouped({ v, device, state, prefix });
-  return `border-radius: ${borderRadius}px;`;
-}
-
 export function cssStyleElementTimelineVerticalPosition({
   v,
   device,
@@ -266,7 +261,7 @@ export function cssStyleElementTimelineLineWidthHeightAfter({
   state,
   prefix
 }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
   const halfIconWidth = cssStyleElementTimelineIconHalfHeightWidth({
     v,
     device,
@@ -326,11 +321,12 @@ export function cssStyleElementTimelineVerticalLinePosition({
 
 export function cssStyleElementTimelineBeforeDisplay({ v, device, state }) {
   const orientation = styleElementTimelineOrientation({ v, device, state });
-  if (orientation === "on") {
-    return "display: block;";
-  } else if (orientation === "off") {
-    return "display: none;";
-  }
+
+  return orientation === "on"
+    ? cssStyleDisplayBlock()
+    : orientation === "off"
+    ? cssStyleDisplayNone()
+    : "";
 }
 
 export function cssStyleElementTimelineVerticalLineTopPosition({
@@ -450,7 +446,7 @@ export function cssStyleElementTimelineCustomLineTop({ v, device }) {
     device
   });
   const textWidth = cssStyleElementTimelineTextWidth({ v, device });
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
   const textSpacing = dvv("textSpacing");
   const verticalPosition = textWidth + iconWidth - borderWidthLine / 2;
 
@@ -505,7 +501,7 @@ export function cssStyleElementTimelineCustomLineOdd({ v, device }) {
   const customSize = styleElementTimelineIconCustomSize({ v, device });
   const iconPadding = styleElementTimelineIconPadding({ v, device });
   const textWidth = cssStyleElementTimelineTextWidth({ v });
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
   const textSpacing = dvv("textSpacing");
 
   const verticalPosition = textWidth + iconHeight - borderWidthLine / 2;
@@ -774,18 +770,6 @@ export function cssStyleElementTimelineVerticalCustomContentSpacing({
     return `margin: 0 ${spacing}px 0 0;`;
 }
 
-export function cssStyleElementTimelineWidth({ v, device, state }) {
-  const width = styleElementTimelineWidth({ v, device, state });
-  const widthSuffix = styleElementTimelineWidthSuffix({
-    v,
-    device,
-    state
-  });
-  return width === undefined
-    ? ""
-    : `min-width:${width}${widthSuffix}; width:${width}${widthSuffix};`;
-}
-
 export function cssStyleElementTimelineTabContentArrowColor({ v, device }) {
   const orientation = styleElementTimelineOrientation({ v, device });
   const style = styleElementTimelineStyle({ v, device });
@@ -928,30 +912,28 @@ export function cssStyleElementTimelineContentBeforeStyle3({ v, device }) {
 export function cssStyleElementTimelineNavTitleSpacing({ v, device }) {
   const orientation = styleElementTimelineOrientation({ v, device });
   const style = styleElementTimelineStyle({ v, device });
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
   const textSpacing = dvv("textSpacing");
   if (orientation === "off") {
     switch (style) {
       case "style-1": {
-        return `position: relative; margin-bottom: ${textSpacing}px; left: -10px; top: auto; transform: none;`;
+        return `${cssStylePositionRelative()} margin-bottom: ${textSpacing}px; left: -10px; top: auto; transform: none;`;
       }
       case "style-2": {
-        return `position: relative; margin-top: ${textSpacing}px; left: -10px; top: auto; transform: none;`;
+        return `${cssStylePositionRelative()} margin-top: ${textSpacing}px; left: -10px; top: auto; transform: none;`;
       }
       case "style-3": {
-        return `position: absolute; margin-top: auto; margin-bottom: auto; top: ${-textSpacing}px; left: -10px; transform: translateY(-100%);`;
+        return `${cssStylePositionAbsolute()} margin-top: auto; margin-bottom: auto; top: ${-textSpacing}px; left: -10px; transform: translateY(-100%);`;
       }
     }
   } else if (orientation === "on") {
     switch (style) {
-      case "style-1": {
-        return `position: relative; margin: 0; left: ${-textSpacing}px; top: auto; transform: none;`;
+      case "style-1":
+      case "style-3": {
+        return `${cssStylePositionRelative()} margin: 0; left: ${-textSpacing}px; top: auto; transform: none;`;
       }
       case "style-2": {
-        return `position: relative; margin: 0; top: auto; left: ${textSpacing}px; transform: none;`;
-      }
-      case "style-3": {
-        return `position: relative; margin: 0; left: ${-textSpacing}px; top: auto; transform: none;`;
+        return `${cssStylePositionRelative()} margin: 0; top: auto; left: ${textSpacing}px; transform: none;`;
       }
     }
   }
@@ -960,31 +942,29 @@ export function cssStyleElementTimelineNavTitleSpacing({ v, device }) {
 export function cssStyleElementTimelineNavTitleStyle3({ v, device }) {
   const orientation = styleElementTimelineOrientation({ v, device });
   const style = styleElementTimelineStyle({ v, device });
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
   const textSpacing = dvv("textSpacing");
 
   if (orientation === "off") {
     switch (style) {
-      case "style-1": {
-        return "position: relative;  left: -10px; bottom: auto; transform: none;";
-      }
+      case "style-1":
       case "style-2": {
-        return "position: relative;  left: -10px; bottom: auto; transform: none;";
+        return `${cssStylePositionRelative()} left: -10px; bottom: auto; transform: none;`;
       }
       case "style-3": {
-        return `position: absolute; bottom: ${-textSpacing}px; top: auto; left: -10px; transform: translateY(100%);`;
+        return `${cssStylePositionAbsolute()} bottom: ${-textSpacing}px; top: auto; left: -10px; transform: translateY(100%);`;
       }
     }
   } else if (orientation === "on") {
     switch (style) {
       case "style-1": {
-        return `position: relative; left: ${-textSpacing}px; bottom: auto; transform: none;`;
+        return `${cssStylePositionRelative()} left: ${-textSpacing}px; bottom: auto; transform: none;`;
       }
       case "style-2": {
-        return `position: relative; bottom: auto; left: ${textSpacing}px; transform: none;`;
+        return `${cssStylePositionRelative()} bottom: auto; left: ${textSpacing}px; transform: none;`;
       }
       case "style-3": {
-        return `position: relative; left: ${textSpacing}px; bottom: auto; transform: none;`;
+        return `${cssStylePositionRelative()} left: ${textSpacing}px; bottom: auto; transform: none;`;
       }
     }
   }
@@ -1063,9 +1043,9 @@ export function cssStyleElementTimelineTabsVerticalNavIcon({ v, device }) {
 export function cssStyleElementTimelineTabsVerticalContent({ v, device }) {
   const orientation = styleElementTimelineOrientation({ v, device });
   if (orientation === "on") {
-    return "position: static;";
+    return cssStylePositionStatic();
   } else if (orientation === "off") {
-    return "position: relative;";
+    return cssStylePositionRelative();
   }
 }
 
@@ -1088,7 +1068,7 @@ export function cssStyleElementTimelineVerticalLastTab({ v, device }) {
 export function cssStyleElementTimelineVerticalTabBeforeNone({ v, device }) {
   const orientation = styleElementTimelineOrientation({ v, device });
   if (orientation === "on") {
-    return "display: none;";
+    return cssStyleDisplayNone();
   }
 }
 
@@ -1096,6 +1076,6 @@ export function cssStyleElementTimelineVerticalTabBeforeStyle3({ v, device }) {
   const orientation = styleElementTimelineOrientation({ v, device });
   const style = styleElementTimelineStyle({ v, device });
   if (orientation === "on" && style === "style-3") {
-    return "display: none;";
+    return cssStyleDisplayNone();
   }
 }

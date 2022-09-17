@@ -1,53 +1,56 @@
-import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
-import { ACTIVE } from "visual/utils/stateMode";
 import {
+  cssStyleBgColor,
+  cssStyleBgGradient,
+  cssStyleBgImage,
+  cssStyleBorder,
+  cssStyleBoxShadow,
+  cssStyleColor,
+  cssStyleDisplayFlex,
+  cssStyleDisplayInlineBlock,
+  cssStyleDisplayNone,
+  cssStyleFilter,
+  cssStyleFlexHorizontalAlign,
+  cssStylePadding,
+  cssStylePaddingFourFields,
+  cssStylePositionAbsolute,
+  cssStylePositionRelative,
+  cssStyleSizeFontSize,
+  cssStyleSizeMaxWidthSize,
+  cssStyleTextAlign,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
-  cssStyleTypography2LineHeight,
-  cssStyleColor,
-  cssStyleBgColor,
-  cssStyleBorder,
-  cssStyleFlexHorizontalAlign,
-  cssStylePaddingFourFields,
-  cssStyleBoxShadow,
-  cssStylePadding
+  cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { ACTIVE } from "visual/utils/stateMode";
 import {
   styleAlignHorizontal,
-  styleBgColor,
   styleBorderColor,
   styleBorderStyle,
   styleBorderWidthGrouped,
   styleColor,
   styleElementMenuIconPosition,
   styleElementMenuIconSpacing,
-  styleElementMenuIconSize,
   styleElementMenuMode,
-  styleElementMMenu,
-  styleElementMMenuIconSpacing,
-  styleElementMMenuIconSize,
-  styleElementMMenuIconPosition,
   styleElementMenuSubMenuIconPosition,
-  styleElementMenuSubMenuIconSize,
   styleElementMenuSubMenuIconSpacing,
-  styleTypography2LineHeight,
-  styleTypography2FontSize,
-  styleItemMarginTop,
-  styleItemMarginRight,
+  styleElementMMenu,
+  styleElementMMenuIconPosition,
+  styleElementMMenuIconSpacing,
   styleItemMarginBottom,
   styleItemMarginLeft,
-  styleItemPaddingTop,
-  styleItemPaddingRight,
+  styleItemMarginRight,
+  styleItemMarginTop,
   styleItemPaddingBottom,
   styleItemPaddingLeft,
-  styleElementMMenuSize,
-  styleElementMenuSize
+  styleItemPaddingRight,
+  styleItemPaddingTop,
+  styleTypography2FontSize,
+  styleTypography2LineHeight
 } from "visual/utils/style2";
 import { defaultValueValue } from "../onChange";
-import { cssStyleFilter } from "./cssStyleFilter";
-import { cssStyleBgGradient } from "./cssStyleBgGradient";
 
 export function cssStyleElementMenuAlign({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
@@ -57,9 +60,7 @@ export function cssStyleElementMenuAlign({ v, device, state }) {
     return cssStyleFlexHorizontalAlign({ v, device, state });
   }
 
-  const align = styleAlignHorizontal({ v, device, state });
-
-  return `text-align: ${align};`;
+  return cssStyleTextAlign({ v, device, state });
 }
 export function cssStyleElementMenuIconPosition({ v, device, state }) {
   const iconPosition = styleElementMenuIconPosition({ v, device, state });
@@ -82,23 +83,19 @@ export function cssStyleElementMenuIconSpacing({ v, device, state }) {
 }
 
 export function cssStyleElementMenuIconSize({ v, device, state }) {
-  const iconSize = styleElementMenuIconSize({ v, device, state });
-
-  return `font-size: ${iconSize}px;`;
+  return cssStyleSizeFontSize({ v, device, state, prefix: "icon" });
 }
 
 export function cssStyleElementMenuShowIcon({ v, device, state }) {
   const mMenu = styleElementMMenu({ v, device, state });
-  const display = mMenu === "on" ? "flex" : "none";
 
-  return `display: ${display};`;
+  return mMenu === "on" ? cssStyleDisplayFlex() : cssStyleDisplayNone();
 }
 
 export function cssStyleElementMenuShow({ v, device, state }) {
   const mMenu = styleElementMMenu({ v, device, state });
-  const display = mMenu === "on" ? "none" : "flex";
 
-  return `display: ${display};`;
+  return mMenu === "on" ? cssStyleDisplayNone() : cssStyleDisplayFlex();
 }
 
 export function cssStyleElementMenuMode({ v, device, state }) {
@@ -108,19 +105,20 @@ export function cssStyleElementMenuMode({ v, device, state }) {
     return "display: flex; flex-wrap: wrap; justify-content: inherit; align-items: center;";
   }
 
-  return "display: inline-block;";
+  return cssStyleDisplayInlineBlock();
 }
 
 export function cssStyleElementMenuSize({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
 
-  if (mode === "vertical") {
-    const size = styleElementMenuSize({ v, device, state });
-
-    return `max-width: ${size}%; width: 100%;`;
-  }
-
-  return "max-width: none;";
+  return mode === "vertical"
+    ? `${cssStyleSizeMaxWidthSize({
+        v,
+        device,
+        state,
+        prefix: "menu"
+      })} width:100%;`
+    : "max-width: none;";
 }
 
 export function cssStyleElementMenuBgColor({ v, device, state }) {
@@ -203,9 +201,12 @@ export function cssStyleElementMenuCurrentBorder({ v, device }) {
 
 // MMenu
 export function cssStyleElementMMenuSize({ v, device, state }) {
-  const mMenuSize = styleElementMMenuSize({ v, device, state });
-
-  return `font-size: ${mMenuSize}px;`;
+  return cssStyleSizeFontSize({
+    v,
+    device,
+    state,
+    prefix: "mMenu"
+  });
 }
 
 export function cssStyleElementMMenuFontFamily({ v, device }) {
@@ -269,31 +270,45 @@ export function cssStyleElementMMenuDynamicImage({ v, device, state }) {
 
 export function cssStyleElementMMenuImageFilter({ v, device, state }) {
   const imageSrc = defaultValueValue({ v, device, state, key: "bgImageSrc" });
+  const population = defaultValueValue({
+    v,
+    device,
+    state,
+    key: "bgPopulation"
+  });
 
-  return imageSrc !== "" ? cssStyleFilter({ v, device, state }) : "";
+  return imageSrc !== "" || population !== ""
+    ? cssStyleFilter({ v, device, state })
+    : "";
 }
 
 export function cssStyleElementMMenuGradientBgColor({ v, state, device }) {
   return cssStyleBgGradient({ v, state, device, prefix: "mMenu" });
 }
 
-export function cssStyleElementMMenuItemHorizontalAlign({ v, device, state }) {
-  const align = styleAlignHorizontal({ v, device, state, prefix: "mMenuItem" });
+export function cssStyleElementMMenuItemHorizontalAlign({
+  v,
+  device,
+  state,
+  prefix = "mMenuItem"
+}) {
+  const align = styleAlignHorizontal({ v, device, state, prefix });
   const iconPosition = styleElementMMenuIconPosition({ v, device, state });
-  const aligns =
-    iconPosition === "left"
-      ? {
-          left: "flex-start",
-          center: "center",
-          right: "flex-end"
-        }
-      : {
-          left: "flex-end",
-          center: "center",
-          right: "flex-start"
-        };
 
-  return `justify-content: ${aligns[align]};`;
+  if (iconPosition === "left") {
+    return cssStyleFlexHorizontalAlign({ v, device, state, prefix });
+  }
+
+  switch (align) {
+    case "center":
+      return cssStyleFlexHorizontalAlign({ v, device, state, prefix });
+    case "left":
+      return "justify-content: flex-end;";
+    case "right":
+      return "justify-content: flex-start;";
+  }
+
+  return "";
 }
 
 export function cssStyleElementMMenuIconColor({ v, device, state }) {
@@ -312,9 +327,12 @@ export function cssStyleElementMMenuIconSpacing({ v, device, state }) {
   }
 }
 export function cssStyleElementMMenuIconSize({ v, device, state }) {
-  const iconSize = styleElementMMenuIconSize({ v, device, state });
-
-  return `font-size: ${iconSize}px;`;
+  return cssStyleSizeFontSize({
+    v,
+    device,
+    state,
+    prefix: "mMenuIcon"
+  });
 }
 
 export function cssStyleElementMMenuIconPosition({ v, device, state }) {
@@ -344,11 +362,10 @@ export function cssStyleElementMMenuBtnNext({ v, device }) {
     paddingRight,
     paddingRightSuffix
   } = cssStylePadding({ v, device, prefix: "mMenu" });
-  const typographyHeight =
-    Math.round(mMenuLineHeight * mMenuFontSize * 10) / 10;
+  const typographyHeight = `${mMenuLineHeight} * ${mMenuFontSize}px`;
   const _paddingTop = `${paddingTop}${paddingTopSuffix}`;
   const _paddingBottom = `${paddingBottom}${paddingBottomSuffix}`;
-  const height = `height: calc(${typographyHeight}px + ${_paddingTop} + ${_paddingBottom})`;
+  const height = `height: calc(${typographyHeight} + ${_paddingTop} + ${_paddingBottom})`;
 
   return `${height}; padding-right: ${paddingRight}${paddingRightSuffix};`;
 }
@@ -464,15 +481,11 @@ export function cssStyleElementMenuSubMenuIconSpacing({ v, device, state }) {
 }
 
 export function cssStyleElementMenuSubMenuIconSize({ v, device, state }) {
-  const iconSize = styleElementMenuSubMenuIconSize({ v, device, state });
-
-  return `font-size: ${iconSize}px;`;
+  return cssStyleSizeFontSize({ v, device, state, prefix: "subMenuIcon" });
 }
 
 export function cssStyleElementMenuSubMenuBgColor({ v, device, state }) {
-  const bgColor = styleBgColor({ v, device, state, prefix: "subMenuBg" });
-
-  return `background-color: ${bgColor};`;
+  return cssStyleBgColor({ v, device, state, prefix: "subMenuBg" });
 }
 
 export function cssStyleElementMenuSubMenuBorderColor({ v, device, state }) {
@@ -481,15 +494,15 @@ export function cssStyleElementMenuSubMenuBorderColor({ v, device, state }) {
   return `border-color: ${color};`;
 }
 
-export function cssStyleElementMenuSubMenuBorderBottom({ v, device, state }) {
-  const color = styleBorderColor({ v, device, state, prefix: "subMenu" });
-  const style = styleBorderStyle({ v, device, state, prefix: "subMenu" });
-  const width = styleBorderWidthGrouped({
-    v,
-    device,
-    state,
-    prefix: "subMenu"
-  });
+export function cssStyleElementMenuSubMenuBorderBottom({
+  v,
+  device,
+  state,
+  prefix = "subMenu"
+}) {
+  const color = styleBorderColor({ v, device, state, prefix });
+  const style = styleBorderStyle({ v, device, state, prefix });
+  const width = styleBorderWidthGrouped({ v, device, state, prefix });
 
   return `border-bottom: ${width}px ${style} ${color};`;
 }
@@ -505,14 +518,12 @@ export function cssStyleElementMenuSubMenuCurrentColor({ v, device }) {
 }
 
 export function cssStyleElementMenuSubMenuCurrentBgColor({ v, device }) {
-  const bgColor = styleBgColor({
+  return cssStyleBgColor({
     v,
     device,
     state: ACTIVE,
     prefix: "subMenuBg"
   });
-
-  return `background-color: ${bgColor};`;
 }
 
 export function cssStyleElementMenuSubMenuCurrentBoxShadow({ v, device }) {
@@ -524,7 +535,7 @@ export function cssStyleElementMenuDropdown({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
 
   if (mode === "vertical" && (device === TABLET || device === MOBILE)) {
-    return "position: relative;top: auto; left: auto; transform: translate(0, 0); height: 0; overflow: hidden;";
+    return `${cssStylePositionRelative()} top: auto; left: auto; transform: translate(0, 0); height: 0; overflow: hidden;`;
   }
 }
 
@@ -532,7 +543,7 @@ export function cssStyleElementMenuInnerDropdown({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
 
   if (mode === "horizontal" && (device === TABLET || device === MOBILE)) {
-    return "position: relative;top: auto; left: auto; transform: translate(0, 0); height: 0; overflow: hidden;";
+    return `${cssStylePositionRelative()} top: auto; left: auto; transform: translate(0, 0); height: 0; overflow: hidden;`;
   }
 }
 
@@ -560,7 +571,7 @@ export function cssStyleElementMenuDropdownArrow({ device }) {
 
 // Dropdown Position
 export function cssStyleMenuDropdownPosition() {
-  return "position: absolute; top: 0; width: 305px;";
+  return `${cssStylePositionAbsolute()} top: 0; width: 305px;`;
 }
 
 export function cssStyleMenuDropdownPositionLeft({ device }) {
@@ -608,4 +619,15 @@ export function cssStyleMenuFirstDropdownPositionRight({ v, device, state }) {
   } else {
     return "left: calc(100% + 5px);";
   }
+}
+
+export function cssStyleElementMenuHamburgerBgImage({ v, device, state }) {
+  const dvv = (key) => defaultValueValue({ key, v, device, state });
+  const bgPopulation = dvv("bgPopulation");
+
+  if (bgPopulation && IS_EDITOR) {
+    return cssStyleElementMMenuDynamicImage({ v, device, state });
+  }
+
+  return cssStyleBgImage({ v, device, state });
 }

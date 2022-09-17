@@ -26,7 +26,8 @@
 
     "iconSize": "small",
     "iconCustomSize": 16,
-    "iconCustomSizeSuffix": null,
+    "iconCustomSizeSuffix": "px",
+
     "iconPosition": "left",
     "iconSpacing": 10,
     "iconSpacingSuffix": null,
@@ -228,7 +229,7 @@
     "tempActiveBgColorOpacity": null,
     "tempActiveBgColorPalette": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
     "tempBoxShadow": "on",
 
     "boxShadowColorHex": "#000000",
@@ -508,16 +509,19 @@
     "animationName": "none",
     "animationDuration": 1000,
     "animationDelay": 1000,
+    "animationInfiniteAnimation": false,
     "tempAnimationName": "none",
 
     "tabletAnimationName": null,
     "tabletAnimationDuration": null,
     "tabletAnimationDelay": null,
+    "tabletAnimationInfiniteAnimation": null,
     "tempTabletAnimationName": null,
 
     "mobileAnimationName": null,
     "mobileAnimationDuration": null,
     "mobileAnimationDelay": null,
+    "mobileAnimationInfiniteAnimation": null,
     "tempMobileAnimationName": null
   }
 }

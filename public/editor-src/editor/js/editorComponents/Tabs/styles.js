@@ -71,7 +71,7 @@ export function styleTabs(v, vs, vd) {
     ".brz && > .brz-tabs__content .brz-tabs__nav--button .brz-icon-svg": {
       standart: [
         "cssStyleElementTabsBtnSpacing",
-        "cssStyleElementTabsBtnIconSize"
+        "cssStyleSizeFontSizeIcon"
       ]
     },
     ".brz && > .brz-tabs__content .brz-tabs__nav--button": {
@@ -112,7 +112,7 @@ export function styleTabs(v, vs, vd) {
     ".brz && > .brz-tabs__nav .brz-tabs__nav--button .brz-icon-svg": {
       standart: [
         "cssStyleElementTabsBtnSpacing",
-        "cssStyleElementTabsBtnIconSize"
+        "cssStyleSizeFontSizeIcon"
       ]
     },
     ".brz && > .brz-tabs__nav--horizontal.brz-tabs__nav--style-1 .brz-tabs__nav--active .brz-tabs__nav--button:hover": {
@@ -224,11 +224,7 @@ export function styleTabs(v, vs, vd) {
 export function styleAnimation(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: [
-        "cssStyleAnimation",
-        "cssStyleAnimationDuration",
-        "cssStyleAnimationDelay"
-      ]
+      standart: ["cssStyleAnimationAll"]
     }
   };
 

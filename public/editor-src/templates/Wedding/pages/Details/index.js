@@ -5,7 +5,7 @@ module.exports = {
   title: "Details",
   keywords: "wedding, gallery, photos",
   cat: [0, 3, 9],
-  pro: true,
+  pro:  true,
   resolve: {
     blocks: [
       {

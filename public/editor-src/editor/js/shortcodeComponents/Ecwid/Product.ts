@@ -11,7 +11,7 @@ export default {
       items: [
         {
           type: "EcwidProduct",
-          value: {}
+          value: { _styles: ["product"] }
         }
       ]
     }

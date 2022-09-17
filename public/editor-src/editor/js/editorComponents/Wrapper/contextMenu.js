@@ -27,7 +27,7 @@ const translationsMap = {
   Carousel: t("Carousel"),
   Row: t("Row"),
   Column: t("Column"),
-  Posts: v =>
+  Posts: (v) =>
     v.type === "posts"
       ? t("Posts")
       : v.type === "upsell"
@@ -40,11 +40,11 @@ const translationsMap = {
   Archives: t("Archives"),
   Menu: t("Menu"),
   FacebookButton: t("Facebook Button"),
-  FacebookComments: v => (v.review === "true" ? t("Review") : t("Comments")),
+  FacebookComments: (v) => (v.review === "true" ? t("Review") : t("Comments")),
   FacebookEmbed: t("Facebook Embed"),
   FacebookPage: t("Facebook Page"),
   FacebookGroup: t("Facebook Group"),
-  WPBreadcrumbs: v =>
+  WPBreadcrumbs: (v) =>
     v.type === "woo" ? t("Product Breadcrumbs") : t("Breadcrumbs"),
   Audio: t("Audio"),
   Twitter: t("Twitter"),
@@ -61,8 +61,9 @@ const translationsMap = {
   WPSidebar: t("Sidebar"),
   WPCustomShortcode: t("Shortcode"),
   WPPostNavigation: t("Post Navigation"),
-  WPPostsTitle: v => (v?.type === "woo" ? t("Product Title") : t("Post Title")),
-  WPPostContent: v =>
+  WPPostsTitle: (v) =>
+    v?.type === "woo" ? t("Product Title") : t("Post Title"),
+  WPPostContent: (v) =>
     v?.type === "woo" ? t("Product Content") : t("Post Content"),
   WPPostExcerpt: t("Post Excerpt"),
   WPNavigation: t("Menu"),
@@ -81,11 +82,77 @@ const translationsMap = {
   WOOCategories: t("Shop Categories"),
   WOOProducts: t("Shop Products"),
   WOOPages: t("Shop Pages"),
-  EcwidMyAccount: t("Ecwid My Account"),
-  EcwidCart: t("Ecwid Cart"),
+  EcwidMyAccount: t("My Account"),
+  EcwidCart: t("Cart & Checkout"),
+  EcwidProduct: t("Product"),
+  EcwidProducts: t("Products"),
+  EcwidShoppingBag: t("Shopping Bag"),
 
   // Shopify
-  Quantity: t("Quantity")
+  Quantity: t("Quantity"),
+  KlavyioMarketing: t("Email Marketing by Klaviyo"),
+  PreProduct: t("PreProduct"),
+  TrustProductReview: t("Trust Product Review"),
+  TrustProductRating: t("Trust Product Rating"),
+  TrustSeals: t("Trust Product Seals"),
+  ReviewVitals: t("Reviews by Vitals"),
+  AliExpressReview: t("Widgets by AliExpress"),
+  SealSubscription: t("Subscription by Seal"),
+  OmegaTracking: t("Tracking by Omega"),
+  AppstleSubscription: t("Subscription by Appstle"),
+  BoldSubscription: t("Subscription by Bold"),
+  ReviewOpinew: t("Review by Opinew"),
+  UploadKit: t("Upload Fields by UploadKit"),
+  BISStock: t("Back in Stock"),
+  ZeptoPersonalizer: t("Personalizer by Zepto"),
+  StampedReviews: t("Reviews by Stamped"),
+  PaywhirlSubscription: t("Subscription by Paywhirl"),
+  FastSimonUpsell: t("Upsell by FastSimon"),
+  TipoBooking: t("Appointment Booking by Tipo"),
+  ReviewJudgeMe: t("Review by Judge"),
+  ReviewGrowave: t("Review by Growave"),
+  YotPoReview: t("YotPo Product Review"),
+  LimeSpot: t("Upsell by LimeSpot"),
+  GrowaveWishlist: t("Wishlist by Growave"),
+  BoldProduct: t("Product Options by Bold"),
+  SnowBall: t("Marketing by Social SnowBall"),
+  HeroWishList: t("WishList by Hero"),
+  SpecialOffers: t("Special Offers"),
+  TrustedBadge: t("Badges by Trusted"),
+  OnVoard: t("Notifications by OnVoard"),
+  WideBundle: t("Wide Bundle"),
+  HextomBadges: t("Badges by Hextom"),
+  ZoorixUpsell: t("Upsell by Zoorix"),
+  VideoShopping: t("Video Shopping"),
+  PushOwlNotifications: t("Notifications by PushOwl"),
+  InfiniteOptions: t("Infinite Options by ShopPad"),
+  HulkOptions: t("Product Options by Hulk"),
+  KiwiChart: t("Kiwi Size Chart & Recommender"),
+  OmnisendMarketing: t("Marketing by Omnisend"),
+  MarselloMarketing: t("Marketing by Marsello"),
+  PowrContactForm: t("Advanced Contact Form by POWR"),
+  EmailMarketing: t("Email Marketing"),
+  ParcelPanel: t("Parcel Panel Order Tracking"),
+  ReferralCandy: t("Notifications by ReferralCandy"),
+  LaiReviews: t("Reviews by Lai"),
+  ProductOptions: t("Product Options"),
+  RechargeSubscriptions: t("Subscriptions by Recharge"),
+  FeraReviews: t("Reviews by Fera"),
+  FrequentlyBought: t("Frequently Bought"),
+  LooxReview: t("Review by Loox"),
+  AreviewReviews: t("Reviews by Areview"),
+  SwymWishList: t("WishList by Swym"),
+  AutomizelyOrderTracking: t("Order Tracking by Automizely"),
+  StampedBadge: t("Badges by Stamped"),
+  OkendoReview: t("Review by Okendo"),
+  AliReviews: t("Reviews by Ali"),
+  SMSMarketing: t("SMS Marketing by Yotpo"),
+  PickyStory: t("Widgets by PickyStory"),
+  ReviewRivyo: t("Review by Rivyo"),
+  UnlimitedBundles: t("Unlimited Bundles"),
+  WiserUpsell: t("Upsell by Wiser"),
+  BoldBundles: t("Bundles by Bold"),
+  CrossSell: t("CrossSell")
 };
 
 export default {
@@ -99,7 +166,7 @@ function getItems(v) {
     Object.values(shortcodes)
       .flat()
       .find(
-        item => item.component.resolve.value.items?.type === items[0]?.type
+        (item) => item.component.resolve.value.items?.type === items[0]?.type
       ) || {};
 
   let title = translationsMap[items[0]?.type]; // TODO: See if we'll need icons & prop

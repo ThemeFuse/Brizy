@@ -1,9 +1,9 @@
 import Config from "visual/global/Config";
-import { request2 } from "visual/utils/api";
+import { request } from "visual/utils/api/index.wp";
 import { makeUrl, parseJSON } from "../../../common/utils";
 import { AddAccount, DeleteAccount, GetAccount } from "./type";
 
-export const getAccounts: GetAccount = data => {
+export const getAccounts: GetAccount = (data) => {
   const { api } = Config.get("wp");
   const version = Config.get("editorVersion");
   const url = makeUrl(api.url, {
@@ -13,7 +13,7 @@ export const getAccounts: GetAccount = data => {
     ...(data ? data : {})
   });
 
-  return request2(url, {
+  return request(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -21,7 +21,7 @@ export const getAccounts: GetAccount = data => {
   }).then((r) => parseJSON<Array<{ group: string; services: string }>>(r));
 };
 
-export const addAccount: AddAccount = body => {
+export const addAccount: AddAccount = (body) => {
   const { api } = Config.get("wp");
   const version = Config.get("editorVersion");
   const url = makeUrl(api.url, {
@@ -30,7 +30,7 @@ export const addAccount: AddAccount = body => {
     version
   });
 
-  return request2(url, {
+  return request(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -38,10 +38,10 @@ export const addAccount: AddAccount = body => {
     body: JSON.stringify(body)
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };
 
-export const deleteAccount: DeleteAccount = id => {
+export const deleteAccount: DeleteAccount = (id) => {
   const { api } = Config.get("wp");
   const version = Config.get("editorVersion");
   const url = makeUrl(api.url, {
@@ -51,12 +51,12 @@ export const deleteAccount: DeleteAccount = id => {
     id
   });
 
-  return request2(url, {
+  return request(url, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };

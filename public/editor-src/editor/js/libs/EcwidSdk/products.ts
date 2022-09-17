@@ -1,6 +1,6 @@
-import { Product } from "./types/Product";
-import { request2 } from "../../utils/api";
 import { EcwidProductId } from "visual/global/Ecwid";
+import { request } from "../../utils/api";
+import { Product } from "./types/Product";
 
 /**
  * https://api-docs.ecwid.com/reference/search-products#searchresult
@@ -41,13 +41,13 @@ export class Products {
    * https://api-docs.ecwid.com/reference/search-products
    */
   search(): Promise<ProductsList> {
-    return request2(`${this.baseUrl}/products`).then(r => r.json());
+    return request(`${this.baseUrl}/products`).then((r) => r.json());
   }
 
   /**
    * Get all details of a specific product in an Ecwid store by its ID.
    */
   getById(id: EcwidProductId): Promise<Product> {
-    return request2(`${this.baseUrl}/products/${id}`).then(r => r.json());
+    return request(`${this.baseUrl}/products/${id}`).then((r) => r.json());
   }
 }

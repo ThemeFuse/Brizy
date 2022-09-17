@@ -1,7 +1,13 @@
-import { styleMediaBg } from "visual/utils/style2";
+import {
+  cssStyleDisplayBlock,
+  cssStyleDisplayNone
+} from "visual/utils/cssStyle";
 import { CSSValue } from "visual/utils/style2/types";
+import { defaultValueValue } from "../onChange";
 
 export function cssStyleBgMediaVideo({ v, device }: CSSValue): string {
-  const display = styleMediaBg({ v, device }) === "video" ? "block" : "none";
-  return `display: ${display};`;
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const display = dvv("media");
+
+  return display === "video" ? cssStyleDisplayBlock() : cssStyleDisplayNone();
 }

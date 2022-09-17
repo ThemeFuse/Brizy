@@ -310,7 +310,7 @@
     "tempHoverPaddingBottomSuffix": null,
     "tempHoverPaddingLeftSuffix": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "inset",
 

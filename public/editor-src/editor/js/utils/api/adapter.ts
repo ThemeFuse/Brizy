@@ -1,52 +1,71 @@
+import { match, parse } from "fp-utilities";
+import Config, { isWp } from "visual/global/Config";
+import {
+  AllRule,
+  CollectionItemRule,
+  CollectionTypeRule,
+  ExternalPopupCloud,
+  ExternalStoryCloud,
+  GlobalBlock,
+  InternalPopupCloud,
+  Page,
+  PageCommon,
+  PageWP,
+  Rule as GlobalBlockRule,
+  SavedBlock,
+  SavedLayout
+} from "visual/types";
+import {
+  BlogSourceItem,
+  CollectionSourceItem,
+  Rule,
+  SavedBlockMeta
+} from "visual/utils/api/types";
+import {
+  isAllRule,
+  isCollectionItemRule,
+  isCollectionTypeRule
+} from "visual/utils/blocks";
+import {
+  PageError,
+  SavedBlocksError,
+  SavedLayoutError
+} from "visual/utils/errors";
+import { mPipe } from "visual/utils/fp/mPipe";
+import { pipe } from "visual/utils/fp/pipe";
+import * as Json from "visual/utils/reader/json";
+import * as Num from "visual/utils/reader/number";
+import * as Obj from "visual/utils/reader/object";
+import { readKey } from "visual/utils/reader/object";
 import { readWithParser } from "visual/utils/reader/readWithParser";
-
-export * from "./adapter-legacy";
-
+import * as Str from "visual/utils/reader/string";
+import * as Union from "visual/utils/reader/union";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import {
   getUsedModelsFonts,
   getUsedModelsUpload,
   getUsedStylesFonts
 } from "visual/utils/traverse";
 import { getUsedModelsImages } from "visual/utils/traverse/images";
-import { SavedBlocksError, SavedLayoutError } from "visual/utils/errors";
-import {
-  PageCommon,
-  InternalPopupCloud,
-  ExternalPopupCloud,
-  ExternalStoryCloud,
-  PageWP,
-  Page,
-  GlobalBlock,
-  SavedBlock,
-  SavedLayout
-} from "visual/types";
-import { PageError } from "visual/utils/errors";
-import { pipe } from "visual/utils/fp/pipe";
-import { mPipe } from "visual/utils/fp/mPipe";
-import * as Str from "visual/utils/reader/string";
-import * as Num from "visual/utils/reader/number";
-import * as Obj from "visual/utils/reader/object";
-import * as Union from "visual/utils/reader/union";
-import * as Json from "visual/utils/reader/json";
 import { onNullish } from "visual/utils/value";
-import {
-  BlogSourceItem,
-  CollectionSourceItem,
-  Rule
-} from "visual/utils/api/types";
-import { parse } from "fp-utilities";
-import { readKey } from "visual/utils/reader/object";
 
-type SavedBlockFromApi = {
+export * from "./adapter-legacy";
+
+export interface SavedBlockFromApi {
   id: string;
   data?: string;
   dataVersion: number;
   meta?: string;
-};
-type SavedBlockMetaFromApi = {
+}
+export interface SavedBlockMetaFromApi {
   id: string;
+  uid: string;
   meta?: string;
-};
+  dataVersion: number;
+  synchronizable: boolean;
+  synchronized: boolean;
+  isCloudEntity: boolean;
+}
 
 type SavedBlockToApi = Omit<SavedBlock, "data" | "meta"> & {
   uid: string;
@@ -142,7 +161,7 @@ export const stringifySavedBlock = (
 
 export const parseMetaSavedBlock = (
   savedBlock: SavedBlockMetaFromApi
-): ParsedSavedBlockApiMeta => {
+): SavedBlockMeta => {
   let meta;
 
   if (!savedBlock.meta) {
@@ -329,7 +348,7 @@ export const parsePageCommon = (page: unknown): PageCommon => {
       dataVersion: pipe(Obj.readKey("dataVersion"), Num.read, onNullish(0)),
       title: pipe(Obj.readKey("title"), Str.read, onNullish("")),
       slug: pipe(Obj.readKey("slug"), Str.read, onNullish("")),
-      status: page => {
+      status: (page) => {
         const status = mPipe(Obj.readKey("status"), Str.read)(page);
 
         switch (status) {
@@ -390,5 +409,135 @@ export const parseBlogSourceItem = parse<
   id: mPipe(readKey("id"), Str.read),
   title: mPipe(readKey("title"), Str.read, onNullish(""))
 });
+
+//#endregion
+
+//#region Global Blocks Rules
+
+interface ApiCollectionItemRule {
+  mode?: "reference" | "specific";
+  type: 1 | 2;
+  appliedFor: number | null;
+  entityType: string;
+  entityValues: Array<string | number>;
+}
+
+interface ApiCollectionTypeRule {
+  type: 1 | 2;
+  appliedFor: number | null;
+  entityType: NoEmptyString.NoEmptyString;
+  entityValues: [];
+}
+
+interface ApiAllRule {
+  type: 1 | 2;
+  appliedFor: null;
+  entityType: "";
+  entityValues: string[];
+}
+
+export type ApiRule =
+  | ApiCollectionItemRule
+  | ApiCollectionTypeRule
+  | ApiAllRule;
+
+const isApiItemRule = (rule: ApiRule): rule is ApiCollectionItemRule => {
+  return "entityValues" in rule && rule.entityValues.length > 0;
+};
+
+const isApiTypeRule = (rule: ApiRule): rule is ApiCollectionTypeRule => {
+  return (
+    "entityValues" in rule &&
+    rule.entityValues.length === 0 &&
+    rule.entityType !== undefined &&
+    NoEmptyString.is(rule.entityType)
+  );
+};
+
+const isApiAllRule = (rule: ApiRule): rule is ApiAllRule => {
+  return (
+    "appliedFor" in rule &&
+    rule.appliedFor === null &&
+    (rule.entityType === "" || rule.entityType === undefined)
+  );
+};
+
+export const apiRuleToEditorRule: (v: ApiRule) => GlobalBlockRule = match(
+  [
+    isApiItemRule,
+    (rule: ApiCollectionItemRule): CollectionItemRule => {
+      return {
+        mode: rule.mode ?? "specific",
+        type: rule.type,
+        appliedFor: rule.appliedFor,
+        entityType: rule.entityType,
+        entityValues: rule.entityValues
+      };
+    }
+  ],
+  [
+    isApiTypeRule,
+    (rule: ApiCollectionTypeRule): CollectionTypeRule => {
+      return {
+        type: rule.type,
+        appliedFor: rule.appliedFor,
+        entityType: rule.entityType
+      };
+    }
+  ],
+  [
+    isApiAllRule,
+    (rule: ApiAllRule): AllRule => {
+      return {
+        type: rule.type
+      };
+    }
+  ]
+);
+
+export const editorRuleToApiRule: (v: GlobalBlockRule) => ApiRule = match(
+  [
+    isCollectionItemRule,
+    (rule: CollectionItemRule): ApiCollectionItemRule => {
+      const isWP = isWp(Config.getAll());
+      return isWP
+        ? {
+            type: rule.type,
+            appliedFor: rule.appliedFor,
+            entityType: rule.entityType,
+            entityValues: rule.entityValues
+          }
+        : {
+            type: rule.type,
+            mode: rule.mode,
+            appliedFor: rule.appliedFor,
+            entityType: rule.entityType,
+            entityValues: rule.entityValues
+          };
+    }
+  ],
+  [
+    isCollectionTypeRule,
+    (rule: CollectionTypeRule): ApiCollectionTypeRule => {
+      return {
+        type: rule.type,
+        appliedFor: rule.appliedFor,
+        entityType: rule.entityType,
+        entityValues: []
+      };
+    }
+  ],
+  [
+    isAllRule,
+    (rule: AllRule): ApiAllRule => {
+      return {
+        type: rule.type,
+        appliedFor: null,
+        entityType: "",
+        entityValues: []
+      };
+    }
+  ]
+);
 
 //#endregion

@@ -1,25 +1,17 @@
-import {
-  styleElementWOORatingSize,
-  styleColor,
-  styleSizeSpacing
-} from "visual/utils/style2";
+import { cssStyleColor, cssStyleSizeFontSize } from "visual/utils/cssStyle";
+import { styleSizeSpacing } from "visual/utils/style2";
 
 export function cssStyleElementWOORatingSize({ v, device, state }) {
-  return `font-size: ${styleElementWOORatingSize({ v, device, state })}px;`;
+  return cssStyleSizeFontSize({ v, device, state, prefix: "rating" });
 }
 
-export function cssStyleElementWOORatingTextColor({
-  v,
-  device,
-  state,
-  prefix = "textColor"
-}) {
-  return `color: ${styleColor({
+export function cssStyleElementWOORatingTextColor({ v, device, state }) {
+  return cssStyleColor({
     v,
     device,
     state,
-    prefix
-  })};`;
+    prefix: "textColor"
+  });
 }
 
 export function cssStyleElementWOORatingSpacing({ v, device, state }) {
@@ -30,16 +22,11 @@ export function cssStyleElementWOORatingSpacing({ v, device, state }) {
   })}px;`;
 }
 
-export function cssStyleElementWOORatingBgStarColor({
-  v,
-  device,
-  state,
-  prefix = "bgStarColor"
-}) {
-  return `color: ${styleColor({
+export function cssStyleElementWOORatingBgStarColor({ v, device, state }) {
+  return cssStyleColor({
     v,
     device,
     state,
-    prefix
-  })};`;
+    prefix: "bgStarColor"
+  });
 }

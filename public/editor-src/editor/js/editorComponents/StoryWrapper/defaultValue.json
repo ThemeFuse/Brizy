@@ -28,6 +28,7 @@
     "animationName": "none",
     "animationDuration": 1000,
     "animationDelay": 1000,
+    "animationInfiniteAnimation": false,
 
     "tempAnimationName": "none"
   }

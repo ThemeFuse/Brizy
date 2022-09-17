@@ -16,6 +16,11 @@
 .brz-navigation {
   display: flex;
   justify-content: space-between;
+
+  .brz-a,
+  .brz-span {
+    max-width: 49%;
+  }
 }
 
 .brz-navigation__prev:nth-child(2n) {

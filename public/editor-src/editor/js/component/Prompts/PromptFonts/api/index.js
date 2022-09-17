@@ -1,11 +1,11 @@
 import produce from "immer";
-import Config from "visual/global/Config";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
-import { request2 } from "visual/utils/api";
+import Config from "visual/global/Config";
+import { request } from "visual/utils/api";
 
 // uid for cloud is id in editor
-const normalizeFonts = res => {
-  return produce(res, draft => {
+const normalizeFonts = (res) => {
+  return produce(res, (draft) => {
     // renamed uid to id
     draft.data.id = draft.data.uid;
     delete draft.data.uid;
@@ -29,7 +29,7 @@ export const createFont = ({ id, name, files }) => {
     });
   });
 
-  return request2(`${api}/fonts`, {
+  return request(`${api}/fonts`, {
     method: "POST",
     body: formData
   })
@@ -37,12 +37,12 @@ export const createFont = ({ id, name, files }) => {
     .then(normalizeFonts);
 };
 
-export const deleteFont = fontId => {
+export const deleteFont = (fontId) => {
   const { api } = Config.get("urls");
   const { id: containerId } = Config.get("container");
   const url = makeUrl(`${api}/fonts/${fontId}`, { container: containerId });
 
-  return request2(url, {
+  return request(url, {
     method: "DELETE"
   });
 };

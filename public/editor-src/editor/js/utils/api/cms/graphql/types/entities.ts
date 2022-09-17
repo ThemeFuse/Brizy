@@ -34,6 +34,16 @@ export enum CollectionItemStatus {
   published = "published",
 }
 
+export enum VisibilityStatus {
+  passwordProtected = "passwordProtected",
+  public = "public",
+}
+
+export interface CodeInjectionInput {
+  css?: string | null;
+  js?: JSInjectionInput | null;
+}
+
 export interface CollectionItemFieldInput {
   type: string;
   values: any;
@@ -43,9 +53,15 @@ export interface CustomerGroupPropsInput {
   id: string;
 }
 
+export interface JSInjectionInput {
+  header?: string | null;
+  footer?: string | null;
+}
+
 export interface SeoPropsInput {
   title?: string | null;
   description?: string | null;
+  enableIndexing?: boolean | null;
 }
 
 export interface SocialPropsInput {
@@ -62,7 +78,11 @@ export interface createCollectionItemInput {
   slug?: string | null;
   seo?: SeoPropsInput | null;
   social?: SocialPropsInput | null;
+  isHomepage?: boolean | null;
   pageData?: string | null;
+  codeInjection?: CodeInjectionInput | null;
+  visibility?: VisibilityStatus | null;
+  itemPassword?: string | null;
   clientMutationId?: string | null;
 }
 
@@ -79,7 +99,11 @@ export interface updateCollectionItemInput {
   slug?: string | null;
   seo?: SeoPropsInput | null;
   social?: SocialPropsInput | null;
+  isHomepage?: boolean | null;
   pageData?: string | null;
+  codeInjection?: CodeInjectionInput | null;
+  visibility?: VisibilityStatus | null;
+  itemPassword?: string | null;
   clientMutationId?: string | null;
 }
 
@@ -96,6 +120,7 @@ export interface updateCustomerInput {
   customerGroups?: CustomerGroupPropsInput[] | null;
   sendEmailInvite?: boolean | null;
   pageData?: string | null;
+  codeInjection?: CodeInjectionInput | null;
   clientMutationId?: string | null;
 }
 

@@ -1,0 +1,71 @@
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { ResponsiveMode } from "visual/utils/responsiveMode";
+import { State } from "visual/utils/stateMode";
+import { Value } from "./types/Value";
+
+export function getItems({
+  v,
+  device,
+  state
+}: {
+  v: Value;
+  device: ResponsiveMode;
+  state: State;
+}): ToolbarItemType[] {
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+
+  const { hex: summaryTitleColorHex } = getOptionColorHexByPalette(
+    dvv("summaryTitleColorHex"),
+    dvv("summaryTitleColorPalette")
+  );
+
+  return [
+    {
+      id: "toolbarTypographysummaryTitle",
+      type: "popover-dev",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Typography")
+      },
+      position: 10,
+      options: [
+        {
+          id: "summaryTitleTypography",
+          type: "typography-dev",
+          config: {
+            fontFamily: device === "desktop"
+          }
+        }
+      ]
+    },
+    {
+      id: "toolbarColorsummaryTitle",
+      type: "popover-dev",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(
+              summaryTitleColorHex,
+              dvv("summaryTitleColorOpacity")
+            )
+          }
+        }
+      },
+      devices: "desktop",
+      position: 20,
+      options: [
+        {
+          id: "summaryTitleColor",
+          type: "colorPicker-dev"
+        }
+      ]
+    }
+  ];
+}

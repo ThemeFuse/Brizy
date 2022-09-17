@@ -1,0 +1,12 @@
+{
+  "content": {
+    "reviewType": "custom",
+    "productID": "",
+    "withImage": "off"
+  },
+
+  "style": {
+    "reviewLimit": 20,
+    "reviewLimitSuffix": ""
+  }
+}

@@ -1,26 +1,26 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Toolbar from "visual/component/Toolbar";
-import { blocksDataSelector } from "visual/redux/selectors";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
 import classnames from "classnames";
-import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
-import LottieControl from "./Lottie";
-import { ToastNotification } from "visual/component/Notifications";
-import { t } from "visual/utils/i18n";
-import { Wrapper } from "../tools/Wrapper";
+import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import Link from "visual/component/Link";
+import { ToastNotification } from "visual/component/Notifications";
+import Toolbar from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { blocksDataSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
 import { customFileUrl } from "visual/utils/customFile";
 import { pipe } from "visual/utils/fp";
-import { isNullish } from "visual/utils/value";
+import { t } from "visual/utils/i18n";
 import * as Num from "visual/utils/reader/number";
-import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
-import { getStore } from "visual/redux/store";
+import { isNullish } from "visual/utils/value";
+import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import LottieControl from "./Lottie";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
@@ -39,9 +39,9 @@ class Lottie extends EditorComponent {
     link = "https://assets6.lottiefiles.com/private_files/lf30_1KyL2Q.json"
   ) => {
     fetch(link)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(
-        result => {
+        (result) => {
           this.setState({
             animation: result
           });
@@ -78,14 +78,14 @@ class Lottie extends EditorComponent {
     }
   }
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   static defaultValue = defaultValue;
 
   renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
-      itemProps: itemData => {
+      itemProps: (itemData) => {
         let {
           blockId,
           value: { popupId }
@@ -227,7 +227,7 @@ class Lottie extends EditorComponent {
       />
     );
     const slideAnchor =
-      linkType !== "story" || !isNan(linkToSlide)
+      linkType !== "story" || isNan(linkToSlide)
         ? {}
         : { "data-brz-link-story": linkToSlide };
 

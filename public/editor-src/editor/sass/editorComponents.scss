@@ -196,6 +196,9 @@
 // ShopifyAddToCart
 @import "editorComponents/shopifyAddToCart";
 
+// ShopifyStampedReviews
+@import "editorComponents/stampedReviews";
+
 // Filters
 @import "editorComponents/filters";
 
@@ -204,6 +207,21 @@
 
 //ProductReview
 @import "editorComponents/productReview";
+
+//TrustSeals
+@import "editorComponents/trustSeals";
+
+//TrustProductRating
+@import "editorComponents/trustProductRating";
+
+//TrustProductReview
+@import "editorComponents/trustProductReview";
+
+//TrustMeBadges
+@import "editorComponents/trust-me-badges";
+
+//stampedBadges
+@import "editorComponents/stampedBadge";
 
 // Translation
 @import "editorComponents/translation";
@@ -223,4 +241,10 @@
 @import "editorComponents/woo-add-to-cart";
 @import "editorComponents/woo-excerpt";
 
+// Ecwid
 @import "editorComponents/ecwid";
+@import "editorComponents/ecwid-cart";
+@import "editorComponents/ecwid-my-account";
+@import "editorComponents/ecwid-shopping-bag";
+@import "editorComponents/ecwid-product";
+@import "editorComponents/ecwid-products";

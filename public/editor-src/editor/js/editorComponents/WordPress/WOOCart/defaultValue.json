@@ -13,7 +13,7 @@
     "spacingSuffix": null,
 
     "iconCustomSize": 16,
-    "iconCustomSizeSuffix": null,
+    "iconCustomSizeSuffix": "px",
 
     "purchases": "off",
     "purchasesType": "bubble",

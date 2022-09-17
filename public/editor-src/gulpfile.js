@@ -908,7 +908,7 @@ function watch() {
     cssPath,
     gulp.series.apply(undefined, [
       editorCSS,
-      proExportCSS,
+      proEditorCSS,
       ...(IS_EXPORT ? [exportCSS, proExportCSS] : [])
     ])
   );

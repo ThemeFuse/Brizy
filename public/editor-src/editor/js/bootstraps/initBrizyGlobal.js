@@ -1,62 +1,62 @@
 import Config from "visual/global/Config";
-import { addFilter, applyFilter } from "visual/utils/filters";
-import { t } from "visual/utils/i18n";
-import { setIds, isGlobalPopup, IS_STORY } from "visual/utils/models";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
-  getOptionColorHexByPalette,
-  getAnimations,
-  getDynamicContentChoices,
-  getDynamicContentByPlaceholder,
-  getShapes
-} from "visual/utils/options";
-import {
-  hexToRgba,
-  getColorPaletteColors,
   getColorPaletteColor,
+  getColorPaletteColors,
+  hexToRgba,
   makeRichTextColorPaletteCSS
 } from "visual/utils/color";
 import {
+  IS_ARCHIVE_TEMPLATE,
+  IS_CMS,
+  IS_POST,
+  IS_PRODUCT_ARCHIVE_TEMPLATE,
+  IS_PRODUCT_PAGE,
+  IS_PRODUCT_TEMPLATE,
+  IS_SINGLE_TEMPLATE
+} from "visual/utils/env";
+import { addFilter, applyFilter } from "visual/utils/filters";
+import {
   getFontById,
+  getFontStyle,
+  getFontStyles,
   getUsedFonts,
   getUsedFontsDetails,
-  getFontStyles,
-  getFontStyle,
-  weightTypes,
   getWeight,
   getWeightChoices,
-  makeSubsetGoogleFontsUrl
+  makeSubsetGoogleFontsUrl,
+  weightTypes
 } from "visual/utils/fonts";
+import { t } from "visual/utils/i18n";
+import { isPopup, isStory, IS_STORY, setIds } from "visual/utils/models";
 import {
-  defaultValueValue,
   defaultValueKey,
-  tabletSyncOnChange,
+  defaultValueValue,
   mobileSyncOnChange,
   onChangeTypography,
-  onChangeTypographyMobile
+  onChangeTypographyMobile,
+  tabletSyncOnChange
 } from "visual/utils/onChange";
+import {
+  getAnimations,
+  getDynamicContentByPlaceholder,
+  getDynamicContentChoices,
+  getOptionColorHexByPalette,
+  getShapes
+} from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarColor2,
   toolbarColorHexField2,
-  toolbarFilterHue,
-  toolbarFilterSaturation,
+  toolbarElementAudioIconSize,
+  toolbarElementAudioUpload,
   toolbarFilterBrightness,
   toolbarFilterContrast,
+  toolbarFilterHue,
+  toolbarFilterSaturation,
   toolbarLinkPopup,
-  toolbarLinkUpload,
-  toolbarElementAudioUpload,
-  toolbarElementAudioIconSize
+  toolbarLinkUpload
 } from "visual/utils/toolbar";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import {
-  IS_CMS,
-  IS_POST,
-  IS_SINGLE_TEMPLATE,
-  IS_ARCHIVE_TEMPLATE,
-  IS_PRODUCT_TEMPLATE,
-  IS_PRODUCT_ARCHIVE_TEMPLATE,
-  IS_PRODUCT_PAGE
-} from "visual/utils/env";
 
 global.Brizy = {
   config: Config,
@@ -70,7 +70,8 @@ global.Brizy = {
     },
 
     setIds,
-    isGlobalPopup,
+    isPopup,
+    isStory,
     IS_STORY,
     IS_CMS,
 

@@ -1,43 +1,51 @@
-import React from "react";
 import classnames from "classnames";
-import { noop } from "underscore";
-import { Subject, from } from "rxjs";
+import React from "react";
+import { from, Subject } from "rxjs";
 import {
   debounceTime,
   distinctUntilChanged,
   switchMap,
   tap
 } from "rxjs/operators";
+import { noop } from "underscore";
 import { getCurrentPageId } from "visual/bootstraps/editor/getCurrentPageId";
+import ContextMenu from "visual/component/ContextMenu";
+import CustomCSS from "visual/component/CustomCSS";
+import EditorIcon from "visual/component/EditorIcon";
+import Placeholder from "visual/component/Placeholder";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
-import CustomCSS from "visual/component/CustomCSS";
-import ContextMenu from "visual/component/ContextMenu";
-import Placeholder from "visual/component/Placeholder";
-import EditorIcon from "visual/component/EditorIcon";
+import { withMigrations } from "visual/editorComponents/tools/withMigrations";
+import Config from "visual/global/Config";
+import {
+  isCloud,
+  isCollectionPage,
+  isCustomerPage
+} from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
+import { pageSelector } from "visual/redux/selectors";
+import { getPostsSourceRefs } from "visual/utils/api";
+import { css } from "visual/utils/cssStyle";
+import { tabletSyncOnChange } from "visual/utils/onChange";
 import * as json from "visual/utils/reader/json";
 import contextMenuConfig from "./contextMenu";
-import Items from "./Items";
 import defaultValue from "./defaultValue.json";
-import toolbarExtendParentFn from "./toolbarExtendParent";
-import * as sidebarExtendParent from "./sidebarExtendParent";
-import * as toolbarExtendPagination from "./toolbarExtendPagination";
-import * as sidebarExtendPagination from "./sidebarExtendPagination";
-import * as toolbarExtendFilter from "./toolbarExtendFilter";
+import Items from "./Items";
+import { migrations } from "./migrations";
 import * as sidebarExtendFilter from "./sidebarExtendFilter";
-import { IS_CLOUD, IS_WP } from "visual/utils/env";
-import { css } from "visual/utils/cssStyle";
+import * as sidebarExtendPagination from "./sidebarExtendPagination";
+import * as sidebarExtendParent from "./sidebarExtendParent";
 import { style } from "./styles";
-import { tabletSyncOnChange } from "visual/utils/onChange";
+import * as toolbarExtendFilter from "./toolbarExtendFilter";
+import * as toolbarExtendPagination from "./toolbarExtendPagination";
+import toolbarExtendParentFn from "./toolbarExtendParent";
+import { getCollectionTypesInfo } from "./toolbarExtendParent/utils";
+import { getLoopAttributes, getLoopTagsAttributes } from "./utils";
 import {
   decodeSymbols,
   encodeSymbols,
   stringifyAttributes
 } from "./utils.common";
-import { getLoopAttributes, getLoopTagsAttributes } from "./utils";
-import { getCollectionTypesInfo } from "./toolbarExtendParent/utils";
-import { withMigrations } from "visual/editorComponents/tools/withMigrations";
-import { migrations } from "./migrations";
 
 export class Posts extends EditorComponent {
   static get componentId() {
@@ -46,7 +54,7 @@ export class Posts extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleAllTagChange = allTag => {
+  handleAllTagChange = (allTag) => {
     this.patchValue({ allTag });
   };
 
@@ -71,7 +79,7 @@ export class Posts extends EditorComponent {
         debounceTime(1000),
         distinctUntilChanged(),
         tap(() => this.setState({ dataLoading: true })),
-        switchMap(data => {
+        switchMap((data) => {
           const { loop, loopTags } = JSON.parse(data);
           const loops = [];
 
@@ -89,7 +97,7 @@ export class Posts extends EditorComponent {
             DCApiProxyInstance.getDC(loops, {
               postId: getCurrentPageId(),
               cache: false
-            }).then(r => {
+            }).then((r) => {
               const [loop, pagination, tags] = r || [];
               return {
                 loop: json.read(loop),
@@ -104,7 +112,7 @@ export class Posts extends EditorComponent {
       this.subject$.subscribe(({ loop, pagination, tags }) => {
         if (!this.unmounted) {
           const { collection = [], config = {} } = loop || {};
-          const context = collection.map(item => ({
+          const context = collection.map((item) => ({
             dynamicContent: {
               itemId: item,
               config: (config[item] || config["*"])?.dynamicContent || {
@@ -133,9 +141,29 @@ export class Posts extends EditorComponent {
 
     const toolbarContext = await (async () => {
       try {
-        return IS_CLOUD
-          ? { collectionTypesInfo: await getCollectionTypesInfo() }
-          : undefined;
+        const state = this.getReduxState();
+        const page = pageSelector(state);
+
+        if (isCollectionPage(page)) {
+          return {
+            collectionTypesInfo: await getPostsSourceRefs(
+              page.collectionType.id
+            )
+          };
+        }
+
+        if (isCustomerPage(page)) {
+          return {
+            collectionTypesInfo: await getPostsSourceRefs(page.id)
+          };
+        }
+
+        return {
+          collectionTypesInfo: {
+            collectionTypes: [],
+            refsById: {}
+          }
+        };
       } catch (e) {
         console.error(e);
         return undefined;
@@ -168,7 +196,7 @@ export class Posts extends EditorComponent {
   componentWillUnmount() {
     this.unmounted = true;
 
-    this.subject$.complete();
+    this.subject$?.complete();
     this.subject$ = undefined;
   }
 
@@ -180,7 +208,7 @@ export class Posts extends EditorComponent {
       )
     };
 
-    if (IS_WP) {
+    if (isWp(Config.getAll())) {
       const loopAttr = getLoopTagsAttributes(v);
 
       if (loopAttr) {
@@ -190,7 +218,7 @@ export class Posts extends EditorComponent {
       }
     }
 
-    this.subject$.next(JSON.stringify(data));
+    this.subject$?.next(JSON.stringify(data));
   }
 
   handleValueChange(newValue, meta) {
@@ -314,4 +342,10 @@ export class Posts extends EditorComponent {
   }
 }
 
-export default withMigrations(Posts, migrations);
+export default withMigrations(Posts, migrations, {
+  getValue: async () => {
+    return IS_EDITOR && isCloud(Config.getAll())
+      ? await getCollectionTypesInfo()
+      : Promise.resolve(undefined);
+  }
+});

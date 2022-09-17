@@ -1,40 +1,40 @@
+import classNames from "classnames";
 import React, { Fragment } from "react";
-import classnames from "classnames";
+import Animation from "visual/component/Animation";
+import Background from "visual/component/Background";
+import ContainerBorder from "visual/component/ContainerBorder";
+import ContextMenu from "visual/component/ContextMenu";
+import CustomCSS from "visual/component/CustomCSS";
+import Link from "visual/component/Link";
+import { Roles } from "visual/component/Roles";
+import { ScrollMotion } from "visual/component/ScrollMotions";
+import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
+import { SortableElement } from "visual/component/Sortable/SortableElement";
+import SortableHandle from "visual/component/Sortable/SortableHandle";
+import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
+import { getContainerW } from "visual/utils/meta";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import { SortableElement } from "visual/component/Sortable/SortableElement";
-import SortableHandle from "visual/component/Sortable/SortableHandle";
-import ContainerBorder from "visual/component/ContainerBorder";
-import Background from "visual/component/Background";
-import Animation from "visual/component/Animation";
-import { ScrollMotion } from "visual/component/ScrollMotions";
-import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
-import { Roles } from "visual/component/Roles";
-import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
-import { blocksDataSelector } from "visual/redux/selectors";
-import * as Str from "visual/utils/string/specs";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import * as toolbarExtendConfig from "./toolbarExtend";
-import ContextMenu from "visual/component/ContextMenu";
-import contextMenuConfig from "./contextMenu";
-import Link from "visual/component/Link";
-import { getContainerW } from "visual/utils/meta";
-import Items from "./Items";
-import { css } from "visual/utils/cssStyle";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
-import { styleRow, styleContainer, styleAnimation } from "./styles";
-import defaultValue from "./defaultValue.json";
-import { styleSizeSize } from "visual/utils/style2";
+import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import classNames from "classnames";
-import { getStore } from "visual/redux/store";
-import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import * as Str from "visual/utils/string/specs";
+import { styleSizeSize } from "visual/utils/style2";
+import contextMenuConfig from "./contextMenu";
+import defaultValue from "./defaultValue.json";
+import Items from "./Items";
+import * as sidebarConfig from "./sidebar";
+import { styleAnimation, styleContainer, styleRow } from "./styles";
+import * as toolbarConfig from "./toolbar";
+import * as toolbarExtendConfig from "./toolbarExtend";
 
 class Row extends EditorComponent {
   static get componentId() {
@@ -131,18 +131,25 @@ class Row extends EditorComponent {
     return meta.row !== undefined;
   }
 
+  dvv = (key) => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
+  };
+
   getAnimationClassName = (v, vs, vd) => {
     if (!validateKeyByProperty(v, "animationName", "none")) {
       return undefined;
     }
 
-    const animationName = defaultValueValue({ v, key: "animationName" });
-    const animationDuration = defaultValueValue({
-      v,
-      key: "animationDuration"
-    });
-    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
-    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+    const animationName = this.dvv("animationName");
+    const animationDuration = this.dvv("animationDuration");
+    const animationDelay = this.dvv("animationDelay");
+    const animationInfiniteAnimation = this.dvv("animationInfiniteAnimation");
+
+    const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
     return classNames(
       css(
@@ -153,7 +160,7 @@ class Row extends EditorComponent {
     );
   };
 
-  renderToolbar = ContainerBorderButton => {
+  renderToolbar = (ContainerBorderButton) => {
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
@@ -168,7 +175,7 @@ class Row extends EditorComponent {
 
   renderContent(v, vs, vd) {
     const { className, mobileReverseColumns, tabletReverseColumns } = v;
-    const classNameContainer = classnames(
+    const classNameContainer = classNames(
       "brz-row",
       { "brz-row--inner": this.isInnerRow() },
       className,
@@ -202,7 +209,7 @@ class Row extends EditorComponent {
   renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
-      itemProps: itemData => {
+      itemProps: (itemData) => {
         let {
           blockId,
           value: { popupId }
@@ -240,7 +247,7 @@ class Row extends EditorComponent {
     } = v;
     const customID = Str.mRead(v.customID) || undefined;
     const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
-    const classNameRowContainer = classnames(
+    const classNameRowContainer = classNames(
       "brz-row__container",
       className,
       css(
@@ -256,7 +263,7 @@ class Row extends EditorComponent {
     if (showToolbar === "off") {
       return (
         <SortableElement type="row" useHandle={true}>
-          {sortableElementAttr => (
+          {(sortableElementAttr) => (
             <Animation
               component={"div"}
               componentProps={sortableElementAttr}
@@ -279,7 +286,7 @@ class Row extends EditorComponent {
     return (
       <Fragment>
         <SortableElement type="row" useHandle={true}>
-          {sortableElementAttr => (
+          {(sortableElementAttr) => (
             <ContainerBorder
               type="row"
               color="grey"
@@ -356,7 +363,7 @@ class Row extends EditorComponent {
     };
     const customID = Str.mRead(v.customID) || undefined;
     const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
-    const classNameRowContainer = classnames(
+    const classNameRowContainer = classNames(
       "brz-row__container",
       className,
       css(

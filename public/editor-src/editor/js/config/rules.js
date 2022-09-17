@@ -66,12 +66,17 @@ export default {
   "wrapper-ecwid-cart": {
     showToolbar: "on"
   },
+  "wrapper-ecwid-product": {
+    showToolbar: "on"
+  },
+  "wrapper-ecwid-products": {
+    showToolbar: "on"
+  },
   "column--carousel": {
     width: 100
   },
   "richText--carousel": {
-    text:
-      "<p class='brz-tp-paragraph brz-text-lg-center'><span class='brz-cp-color7'>The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span></p>"
+    text: "<p class='brz-tp-paragraph brz-text-lg-center'><span class='brz-cp-color7'>The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span></p>"
   },
   "hide-row-borders": {
     showToolbar: "off"
@@ -116,12 +121,10 @@ export default {
     mobileSize: "small"
   },
   "richText-title--dynamic": {
-    text:
-      "<p class='brz-text-lg-center brz-tp-heading4'><span class='brz-cp-color2'><span class='text-population' data-population='brizy_dc_post_title'>#Post Title</span>&nbsp;</span></p>"
+    text: "<p class='brz-text-lg-center brz-tp-heading4'><span class='brz-cp-color2'><span class='text-population' data-population='brizy_dc_post_title'>#Post Title</span>&nbsp;</span></p>"
   },
   "richText-desc--dynamic": {
-    text:
-      "<p class='brz-text-lg-center brz-tp-paragraph'><span class='brz-cp-color7'><span class='text-population' data-population='brizy_dc_post_excerpt'>#Post Excerpt</span></span></p>"
+    text: "<p class='brz-text-lg-center brz-tp-paragraph'><span class='brz-cp-color7'><span class='text-population' data-population='brizy_dc_post_excerpt'>#Post Excerpt</span></span></p>"
   },
   "wrapper--facebookComments": {
     showToolbar: "on"
@@ -331,6 +334,9 @@ export default {
 
     height: 30,
     heightSuffix: "%"
+  },
+  "story-form-button": {
+    offsetX: 0
   },
   "wrapper--story-form2": {
     showToolbar: "on"

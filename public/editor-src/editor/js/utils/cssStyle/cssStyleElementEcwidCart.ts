@@ -1,115 +1,26 @@
-import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "../style2/types";
-import { cssStyleColor } from "visual/utils/cssStyle";
-import { styleAlignHorizontal } from "../style2/styleAlign";
-import { checkValue } from "../checkValue";
 import {
-  cssStyleTypography2FontFamilyImportant,
-  cssStyleTypography2FontSizeImportant,
-  cssStyleTypography2FontWeightImportant,
-  cssStyleTypography2LetterSpacingImportant,
-  cssStyleTypography2LineHeightImportant
-} from "./cssStyleTypography2";
-import { cssStyleColorImportant } from "./cssStyleColor";
-import { cssStyleBorderImportant } from "./cssStyleBorder";
-import { cssStyleBoxShadowImportant } from "./cssStyleBoxShadow";
-import { cssStyleBgColorImportant } from "./cssStyleBgColor";
-import { cssStyleBgGradientImportant } from "./cssStyleBgGradient";
-
-type BorderRadius = "square" | "rounded" | "custom";
-const getBorderRadius = checkValue<BorderRadius>([
-  "square",
-  "rounded",
-  "custom"
-]);
-
-// Style Footer
-export function cssStyleElementEcwidCartFooterDisplay({
-  v,
-  device
-}: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-
-  const footerDisplay = dvv("footerDisplay");
-
-  if (footerDisplay === "off") {
-    return "display: none;";
-  } else return "display: flex;";
-}
-
-export function cssStyleElementEcwidCartSignInLinkDisplay({
-  v,
-  device
-}: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-
-  const signInDisplay = dvv("signInDisplay");
-
-  if (signInDisplay === "off") {
-    return "display: none!important;";
-  } else return "display: inline-block!important;";
-}
-
-export function cssStyleElementEcwidCartFooterTypography2FontFamily({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({
-    v,
-    device,
-    prefix: "footer"
-  });
-}
-
-export function cssStyleElementEcwidCartFooterTypography2FontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({ v, device, prefix: "footer" });
-}
-
-export function cssStyleElementEcwidCartFooterTypography2LineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({
-    v,
-    device,
-    prefix: "footer"
-  });
-}
-
-export function cssStyleElementEcwidCartFooterTypography2FontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({
-    v,
-    device,
-    prefix: "footer"
-  });
-}
-
-export function cssStyleElementEcwidCartFooterTypography2LetterSpacing({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
-    v,
-    device,
-    state,
-    prefix: "footer"
-  });
-}
-
-export function cssStyleElementEcwidCartFooterColor({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleColorImportant({ v, device, state, prefix: "footerColor" });
-}
+  cssStyleBgColor,
+  cssStyleBgGradient,
+  cssStyleBorder,
+  cssStyleBorderRadius,
+  cssStyleBoxShadow,
+  cssStyleColor,
+  cssStyleFlexHorizontalAlign,
+  cssStyleSizeHeight,
+  cssStyleSizePadding,
+  cssStyleSizeWidth,
+  cssStyleSizeWidthHeight,
+  cssStyleSpacing,
+  cssStyleTextAlign,
+  cssStyleTypography3FontFamily,
+  cssStyleTypography3FontSize,
+  cssStyleTypography3FontWeight,
+  cssStyleTypography3LetterSpacing,
+  cssStyleTypography3LineHeight
+} from "visual/utils/cssStyle";
+import { defaultValueValue } from "visual/utils/onChange";
+import { CSSValue } from "visual/utils/style2/types";
+import { styleColor } from "../style2/styleColor";
 
 // Style Title
 export function cssStyleElementEcwidCartTitleColor({
@@ -120,44 +31,54 @@ export function cssStyleElementEcwidCartTitleColor({
   return cssStyleColor({ v, device, state, prefix: "titleColor" });
 }
 
-export function cssStyleElementEcwidCartTitleTypography2FontFamily({
+export function cssStyleElementEcwidCartTitleTypographyFontFamily({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({ v, device, prefix: "title" });
-}
-
-export function cssStyleElementEcwidCartTitleTypography2FontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({ v, device, prefix: "title" });
-}
-
-export function cssStyleElementEcwidCartTitleTypography2LineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({ v, device, prefix: "title" });
-}
-
-export function cssStyleElementEcwidCartTitleTypography2FontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({ v, device, prefix: "title" });
-}
-
-export function cssStyleElementEcwidCartTitleTypography2LetterSpacing({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
+  return cssStyleTypography3FontFamily({
     v,
     device,
-    state,
-    prefix: "title"
+    prefix: "titleTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartTitleTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({ v, device, prefix: "titleTypography" });
+}
+
+export function cssStyleElementEcwidCartTitleTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "titleTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartTitleTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "titleTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartTitleTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "titleTypography"
   });
 }
 
@@ -166,9 +87,21 @@ export function cssStyleElementEcwidCartTitleAlign({
   device,
   state
 }: CSSValue): string {
-  const align = styleAlignHorizontal({ v, device, state, prefix: "title" });
+  return cssStyleTextAlign({ v, device, state, prefix: "title" });
+}
 
-  return align === undefined ? "" : `text-align:${align};`;
+export function cssStyleElementEcwidCartTitleSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "title",
+    direction: "bottom"
+  });
 }
 
 // Style Title2
@@ -180,56 +113,54 @@ export function cssStyleElementEcwidCartTitle2Color({
   return cssStyleColor({ v, device, state, prefix: "title2Color" });
 }
 
-export function cssStyleElementEcwidCartTitle2Typography2FontFamily({
+export function cssStyleElementEcwidCartTitle2TypographyFontFamily({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({
+  return cssStyleTypography3FontFamily({
     v,
     device,
-    prefix: "title2"
+    prefix: "title2Typography"
   });
 }
 
-export function cssStyleElementEcwidCartTitle2Typography2FontSize({
+export function cssStyleElementEcwidCartTitle2TypographyFontSize({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({ v, device, prefix: "title2" });
+  return cssStyleTypography3FontSize({ v, device, prefix: "title2Typography" });
 }
 
-export function cssStyleElementEcwidCartTitle2Typography2LineHeight({
+export function cssStyleElementEcwidCartTitle2TypographyLineHeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({
+  return cssStyleTypography3LineHeight({
     v,
     device,
-    prefix: "title2"
+    prefix: "title2Typography"
   });
 }
 
-export function cssStyleElementEcwidCartTitle2Typography2FontWeight({
+export function cssStyleElementEcwidCartTitle2TypographyFontWeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({
+  return cssStyleTypography3FontWeight({
     v,
     device,
-    prefix: "title2"
+    prefix: "title2Typography"
   });
 }
 
-export function cssStyleElementEcwidCartTitle2Typography2LetterSpacing({
+export function cssStyleElementEcwidCartTitle2TypographyLetterSpacing({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
+  return cssStyleTypography3LetterSpacing({
     v,
     device,
-    state,
-    prefix: "title2"
+    prefix: "title2Typography"
   });
 }
 
@@ -238,9 +169,7 @@ export function cssStyleElementEcwidCartTitle2Align({
   device,
   state
 }: CSSValue): string {
-  const align = styleAlignHorizontal({ v, device, state, prefix: "title2" });
-
-  return align === undefined ? "" : `text-align:${align};`;
+  return cssStyleTextAlign({ v, device, state, prefix: "title2" });
 }
 
 // Style Subtitle
@@ -249,63 +178,61 @@ export function cssStyleElementEcwidCartSubtitleColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleColorImportant({ v, device, state, prefix: "subtitleColor" });
+  return cssStyleColor({ v, device, state, prefix: "subtitleColor" });
 }
 
-export function cssStyleElementEcwidCartSubtitleTypography2FontFamily({
+export function cssStyleElementEcwidCartSubtitleTypographyFontFamily({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({
+  return cssStyleTypography3FontFamily({
     v,
     device,
-    prefix: "subtitle"
+    prefix: "subtitleTypography"
   });
 }
 
-export function cssStyleElementEcwidCartSubtitleTypography2FontSize({
+export function cssStyleElementEcwidCartSubtitleTypographyFontSize({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({
+  return cssStyleTypography3FontSize({
     v,
     device,
-    prefix: "subtitle"
+    prefix: "subtitleTypography"
   });
 }
 
-export function cssStyleElementEcwidCartSubtitleTypography2LineHeight({
+export function cssStyleElementEcwidCartSubtitleTypographyLineHeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({
+  return cssStyleTypography3LineHeight({
     v,
     device,
-    prefix: "subtitle"
+    prefix: "subtitleTypography"
   });
 }
 
-export function cssStyleElementEcwidCartSubtitleTypography2FontWeight({
+export function cssStyleElementEcwidCartSubtitleTypographyFontWeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({
+  return cssStyleTypography3FontWeight({
     v,
     device,
-    prefix: "subtitle"
+    prefix: "subtitleTypography"
   });
 }
 
-export function cssStyleElementEcwidCartSubtitleTypography2LetterSpacing({
+export function cssStyleElementEcwidCartSubtitleTypographyLetterSpacing({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
+  return cssStyleTypography3LetterSpacing({
     v,
     device,
-    state,
-    prefix: "subtitle"
+    prefix: "subtitleTypography"
   });
 }
 
@@ -314,123 +241,89 @@ export function cssStyleElementEcwidCartSubtitleAlign({
   device,
   state
 }: CSSValue): string {
-  const align = styleAlignHorizontal({ v, device, state, prefix: "subtitle" });
-
-  return align === undefined ? "" : `text-align:${align};`;
+  return cssStyleTextAlign({ v, device, state, prefix: "subtitle" });
 }
 
-// Style Link
-export function cssStyleElementEcwidCartLinkColor({
+export function cssStyleElementEcwidCartSubtitleSpacing({
   v,
   device,
   state
 }: CSSValue): string {
-  return cssStyleColorImportant({ v, device, state, prefix: "linkColor" });
-}
-
-export function cssStyleElementEcwidCartLinkTypography2FontFamily({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({ v, device, prefix: "link" });
-}
-
-export function cssStyleElementEcwidCartLinkTypography2FontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({ v, device, prefix: "link" });
-}
-
-export function cssStyleElementEcwidCartLinkTypography2LineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({ v, device, prefix: "link" });
-}
-
-export function cssStyleElementEcwidCartLinkTypography2FontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({ v, device, prefix: "link" });
-}
-
-export function cssStyleElementEcwidCartLinkTypography2LetterSpacing({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
+  return cssStyleSpacing({
     v,
     device,
     state,
-    prefix: "link"
+    direction: "bottom",
+    prefix: "subtitle"
   });
 }
 
-export function cssStyleElementEcwidCartLinkAlign({
+// Style Button
+export function cssStyleElementEcwidCartButtonTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "buttonTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartButtonTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({ v, device, prefix: "buttonTypography" });
+}
+
+export function cssStyleElementEcwidCartButtonTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "buttonTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartButtonTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "buttonTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartButtonTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "buttonTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartButtonSize({
   v,
   device,
   state
 }: CSSValue): string {
-  const align = styleAlignHorizontal({ v, device, state, prefix: "link" });
-
-  return align === undefined ? "" : `text-align:${align}!important;`;
+  return cssStyleSizePadding({ v, device, state, prefix: "button" });
 }
 
-// Style button
-export function cssStyleElementEcwidCartButtonTypography2FontFamily({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({
-    v,
-    device,
-    prefix: "button"
-  });
-}
-
-export function cssStyleElementEcwidCartButtonTypography2FontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({ v, device, prefix: "button" });
-}
-
-export function cssStyleElementEcwidCartButtonTypography2LineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({
-    v,
-    device,
-    prefix: "button"
-  });
-}
-
-export function cssStyleElementEcwidCartButtonTypography2FontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({
-    v,
-    device,
-    prefix: "button"
-  });
-}
-
-export function cssStyleElementEcwidCartButtonTypography2LetterSpacing({
+export function cssStyleElementEcwidCartButtonWidth({
   v,
   device,
   state
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
-    v,
-    device,
-    state,
-    prefix: "button"
-  });
+  return cssStyleSizeWidth({ v, device, state, prefix: "button" });
 }
 
 export function cssStyleElementEcwidCartButtonColor({
@@ -438,7 +331,15 @@ export function cssStyleElementEcwidCartButtonColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleColorImportant({ v, device, state, prefix: "buttonColor" });
+  return cssStyleColor({ v, device, state, prefix: "buttonColor" });
+}
+
+export function cssStyleElementEcwidCartButtonBgColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "buttonBg" });
 }
 
 export function cssStyleElementEcwidCartButtonBgGradient({
@@ -446,50 +347,53 @@ export function cssStyleElementEcwidCartButtonBgGradient({
   device,
   state
 }: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-  const buttonFillType = dvv("buttonFillType");
-
-  if (buttonFillType === "outline" || buttonFillType === "default") {
-    return "background: transparent!important;";
-  }
-
-  return cssStyleBgGradientImportant({ v, device, state });
+  return cssStyleBgGradient({ v, device, state, prefix: "button" });
 }
 
-export function cssStyleElementEcwidCartButtonSize({
+export function cssStyleElementEcwidCartButtonBorder({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-
-  const buttonHeight = dvv("buttonHeight");
-  const buttonFillType = dvv("buttonFillType");
-
-  if (buttonFillType === "default") {
-    return "padding: 0!important";
-  } else {
-    return `padding: ${buttonHeight}px 0!important;`;
-  }
+  return cssStyleBorder({ v, device, state, prefix: "button" });
 }
 
 export function cssStyleElementEcwidCartButtonBorderRadius({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-  const borderRadiusType = getBorderRadius(dvv("borderRadiusType"));
-  const borderRadius = dvv("borderRadius");
+  return cssStyleBorderRadius({ v, device, state, prefix: "button" });
+}
 
-  switch (borderRadiusType) {
-    case "square":
-      return "border-radius: 0!important;";
-    case "rounded":
-      return "border-radius: 500px!important;";
-    case "custom":
-      return `border-radius:${borderRadius}px!important;`;
-    case undefined:
-      return "";
-  }
+export function cssStyleElementEcwidCartButtonBoxShadow({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBoxShadow({ v, device, state, prefix: "button" });
+}
+
+export function cssStyleElementEcwidCartButtonAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "button" });
+}
+
+export function cssStyleElementEcwidCartButtonSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "button",
+    direction: "bottom"
+  });
 }
 
 // Style Email
@@ -498,47 +402,57 @@ export function cssStyleElementEcwidCartEmailColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleColorImportant({ v, device, state, prefix: "emailColor" });
+  return cssStyleColor({ v, device, state, prefix: "emailColor" });
 }
 
-export function cssStyleElementEcwidCartEmailTypography2FontFamily({
+export function cssStyleElementEcwidCartEmailTypographyFontFamily({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({ v, device, prefix: "email" });
-}
-
-export function cssStyleElementEcwidCartEmailTypography2FontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({ v, device, prefix: "email" });
-}
-
-export function cssStyleElementEcwidCartEmailTypography2LineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({ v, device, prefix: "email" });
-}
-
-export function cssStyleElementEcwidCartEmailTypography2FontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({ v, device, prefix: "email" });
-}
-
-export function cssStyleElementEcwidCartEmailTypography2LetterSpacing({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
+  return cssStyleTypography3FontFamily({
     v,
     device,
-    state,
-    prefix: "email"
+    prefix: "emailTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartEmailTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({ v, device, prefix: "emailTypography" });
+}
+
+export function cssStyleElementEcwidCartEmailTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "emailTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartEmailTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "emailTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartEmailTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "emailTypography"
   });
 }
 
@@ -547,9 +461,21 @@ export function cssStyleElementEcwidCartEmailAlign({
   device,
   state
 }: CSSValue): string {
-  const align = styleAlignHorizontal({ v, device, state, prefix: "email" });
+  return cssStyleTextAlign({ v, device, state, prefix: "email" });
+}
 
-  return align === undefined ? "" : `text-align:${align}!important;`;
+export function cssStyleElementEcwidCartEmailSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "email",
+    direction: "bottom"
+  });
 }
 
 // Style Checkbox
@@ -558,63 +484,75 @@ export function cssStyleElementEcwidCartCheckboxColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleColorImportant({ v, device, state, prefix: "checkboxColor" });
+  return cssStyleColor({ v, device, state, prefix: "checkboxColor" });
 }
 
-export function cssStyleElementEcwidCartCheckboxTypography2FontFamily({
+export function cssStyleElementEcwidCartCheckboxTypographyFontFamily({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({
+  return cssStyleTypography3FontFamily({
     v,
     device,
-    prefix: "checkbox"
+    prefix: "checkboxTypography"
   });
 }
 
-export function cssStyleElementEcwidCartCheckboxTypography2FontSize({
+export function cssStyleElementEcwidCartCheckboxTypographyFontSize({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({
+  return cssStyleTypography3FontSize({
     v,
     device,
-    prefix: "checkbox"
+    prefix: "checkboxTypography"
   });
 }
 
-export function cssStyleElementEcwidCartCheckboxTypography2LineHeight({
+export function cssStyleElementEcwidCartCheckboxTypographyLineHeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({
+  return cssStyleTypography3LineHeight({
     v,
     device,
-    prefix: "checkbox"
+    prefix: "checkboxTypography"
   });
 }
 
-export function cssStyleElementEcwidCartCheckboxTypography2FontWeight({
+export function cssStyleElementEcwidCartCheckboxTypographyFontWeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({
+  return cssStyleTypography3FontWeight({
     v,
     device,
-    prefix: "checkbox"
+    prefix: "checkboxTypography"
   });
 }
 
-export function cssStyleElementEcwidCartCheckboxTypography2LetterSpacing({
+export function cssStyleElementEcwidCartCheckboxTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "checkboxTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartCheckboxSpacing({
   v,
   device,
   state
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
+  return cssStyleSpacing({
     v,
     device,
     state,
-    prefix: "checkbox"
+    prefix: "checkbox",
+    direction: "bottom"
   });
 }
 
@@ -624,47 +562,45 @@ export function cssStyleElementEcwidCartNextColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleColorImportant({ v, device, state, prefix: "nextColor" });
+  return cssStyleColor({ v, device, state, prefix: "nextColor" });
 }
 
-export function cssStyleElementEcwidCartNextTypography2FontFamily({
+export function cssStyleElementEcwidCartNextTypographyFontFamily({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({ v, device, prefix: "next" });
+  return cssStyleTypography3FontFamily({ v, device, prefix: "nextTypography" });
 }
 
-export function cssStyleElementEcwidCartNextTypography2FontSize({
+export function cssStyleElementEcwidCartNextTypographyFontSize({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({ v, device, prefix: "next" });
+  return cssStyleTypography3FontSize({ v, device, prefix: "nextTypography" });
 }
 
-export function cssStyleElementEcwidCartNextTypography2LineHeight({
+export function cssStyleElementEcwidCartNextTypographyLineHeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({ v, device, prefix: "next" });
+  return cssStyleTypography3LineHeight({ v, device, prefix: "nextTypography" });
 }
 
-export function cssStyleElementEcwidCartNextTypography2FontWeight({
+export function cssStyleElementEcwidCartNextTypographyFontWeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({ v, device, prefix: "next" });
+  return cssStyleTypography3FontWeight({ v, device, prefix: "nextTypography" });
 }
 
-export function cssStyleElementEcwidCartNextTypography2LetterSpacing({
+export function cssStyleElementEcwidCartNextTypographyLetterSpacing({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
+  return cssStyleTypography3LetterSpacing({
     v,
     device,
-    state,
-    prefix: "next"
+    prefix: "nextTypography"
   });
 }
 
@@ -673,9 +609,7 @@ export function cssStyleElementEcwidCartNextAlign({
   device,
   state
 }: CSSValue): string {
-  const align = styleAlignHorizontal({ v, device, state, prefix: "next" });
-
-  return align === undefined ? "" : `text-align:${align}!important;`;
+  return cssStyleTextAlign({ v, device, state, prefix: "next" });
 }
 
 // Style Payment
@@ -684,59 +618,61 @@ export function cssStyleElementEcwidCartPaymentColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleColorImportant({ v, device, state, prefix: "paymentColor" });
+  return cssStyleColor({ v, device, state, prefix: "paymentColor" });
 }
 
-export function cssStyleElementEcwidCartPaymentTypography2FontFamily({
+export function cssStyleElementEcwidCartPaymentTypographyFontFamily({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({
+  return cssStyleTypography3FontFamily({
     v,
     device,
-    prefix: "payment"
+    prefix: "paymentTypography"
   });
 }
 
-export function cssStyleElementEcwidCartPaymentTypography2FontSize({
+export function cssStyleElementEcwidCartPaymentTypographyFontSize({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({ v, device, prefix: "payment" });
-}
-
-export function cssStyleElementEcwidCartPaymentTypography2LineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({
+  return cssStyleTypography3FontSize({
     v,
     device,
-    prefix: "payment"
+    prefix: "paymentTypography"
   });
 }
 
-export function cssStyleElementEcwidCartPaymentTypography2FontWeight({
+export function cssStyleElementEcwidCartPaymentTypographyLineHeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({
+  return cssStyleTypography3LineHeight({
     v,
     device,
-    prefix: "payment"
+    prefix: "paymentTypography"
   });
 }
 
-export function cssStyleElementEcwidCartPaymentTypography2LetterSpacing({
+export function cssStyleElementEcwidCartPaymentTypographyFontWeight({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
+  return cssStyleTypography3FontWeight({
     v,
     device,
-    state,
-    prefix: "payment"
+    prefix: "paymentTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartPaymentTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "paymentTypography"
   });
 }
 
@@ -745,9 +681,7 @@ export function cssStyleElementEcwidCartPaymentAlign({
   device,
   state
 }: CSSValue): string {
-  const align = styleAlignHorizontal({ v, device, state, prefix: "payment" });
-
-  return align === undefined ? "" : `text-align:${align}!important;`;
+  return cssStyleTextAlign({ v, device, state, prefix: "payment" });
 }
 
 // Style Input
@@ -756,90 +690,92 @@ export function cssStyleElementEcwidCartInputColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleColorImportant({ v, device, state, prefix: "inputColor" });
+  return cssStyleColor({ v, device, state, prefix: "inputColor" });
 }
 
-export function cssStyleElementEcwidCartInputTypography2FontFamily({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({ v, device, prefix: "input" });
-}
-
-export function cssStyleElementEcwidCartInputTypography2FontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({ v, device, prefix: "input" });
-}
-
-export function cssStyleElementEcwidCartInputTypography2LineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({ v, device, prefix: "input" });
-}
-
-export function cssStyleElementEcwidCartInputTypography2FontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({ v, device, prefix: "input" });
-}
-
-export function cssStyleElementEcwidCartInputTypography2LetterSpacing({
+export function cssStyleElementEcwidCartInputColorAutofill({
   v,
   device,
   state
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
-    v,
-    device,
-    state,
-    prefix: "input"
-  });
+  const color = styleColor({ v, device, state, prefix: "inputColor" });
+
+  return `-webkit-text-fill-color:${color}!important`;
 }
 
-export function cssStyleElementEcwidCartInputSize({
+export function cssStyleElementEcwidCartInputTypographyFontFamily({
   v,
   device
 }: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "inputTypography"
+  });
+}
 
-  const inputHeight = dvv("inputHeight");
-  const inputHeightSuffix = dvv("inputHeightSuffix");
+export function cssStyleElementEcwidCartInputTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({ v, device, prefix: "inputTypography" });
+}
 
-  return `height: ${inputHeight}${inputHeightSuffix}!important;`;
+export function cssStyleElementEcwidCartInputTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "inputTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartInputTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "inputTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartInputTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "inputTypography"
+  });
 }
 
 export function cssStyleElementEcwidCartInputBorderRadius({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-  const inputBorderRadiusType = dvv("inputBorderRadiusType");
-  const inputBorderRadius = dvv("inputBorderRadius");
-  const inputBorderRadiusSuffix = dvv("inputBorderRadiusSuffix");
-  const inputBorderTopLeftRadius = dvv("inputBorderTopLeftRadius");
-  const inputBorderTopLeftRadiusSuffix = dvv("inputBorderTopLeftRadiusSuffix");
-  const inputBorderTopRightRadius = dvv("inputBorderTopRightRadius");
-  const inputBorderTopRightRadiusSuffix = dvv(
-    "inputBorderTopRightRadiusSuffix"
-  );
-  const inputBorderBottomRightRadius = dvv("inputBorderBottomRightRadius");
-  const inputBorderBottomRightRadiusSuffix = dvv(
-    "inputBorderBottomRightRadiusSuffix"
-  );
-  const inputBorderBottomLeftRadius = dvv("inputBorderBottomLeftRadius");
-  const inputBorderBottomLeftRadiusSuffix = dvv(
-    "inputBorderBottomLeftRadiusSuffix"
-  );
+  return cssStyleBorderRadius({ v, device, state, prefix: "input" });
+}
 
-  if (inputBorderRadiusType !== "ungrouped") {
-    return `border-radius: ${inputBorderRadius}${inputBorderRadiusSuffix}!important;`;
-  }
+export function cssStyleElementEcwidCartInputHeight({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeHeight({ v, device, state, prefix: "input" });
+}
 
-  return `border-radius:${inputBorderTopLeftRadius}${inputBorderTopLeftRadiusSuffix} ${inputBorderTopRightRadius}${inputBorderTopRightRadiusSuffix} ${inputBorderBottomRightRadius}${inputBorderBottomRightRadiusSuffix} ${inputBorderBottomLeftRadius}${inputBorderBottomLeftRadiusSuffix}!important;`;
+export function cssStyleElementEcwidCartInputWidth({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeWidth({ v, device, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidCartInputBgColor({
@@ -847,7 +783,15 @@ export function cssStyleElementEcwidCartInputBgColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleBgColorImportant({ v, device, state, prefix: "inputBg" });
+  return cssStyleBgColor({ v, device, state, prefix: "inputBg" });
+}
+
+export function cssStyleElementEcwidCartInputBgGradient({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgGradient({ v, device, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidCartInputBorderColor({
@@ -855,7 +799,7 @@ export function cssStyleElementEcwidCartInputBorderColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleBorderImportant({ v, device, state, prefix: "input" });
+  return cssStyleBorder({ v, device, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidCartInputBoxShadow({
@@ -863,7 +807,29 @@ export function cssStyleElementEcwidCartInputBoxShadow({
   device,
   state
 }: CSSValue): string {
-  return cssStyleBoxShadowImportant({ v, device, state, prefix: "input" });
+  return cssStyleBoxShadow({ v, device, state, prefix: "input" });
+}
+
+export function cssStyleElementEcwidCartInputSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "input",
+    direction: "bottom"
+  });
+}
+
+export function cssStyleElementEcwidCartInputAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "input" });
 }
 
 // Style Product Name
@@ -872,7 +838,7 @@ export function cssStyleElementEcwidCartProductNameColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleColorImportant({
+  return cssStyleColor({
     v,
     device,
     state,
@@ -880,60 +846,58 @@ export function cssStyleElementEcwidCartProductNameColor({
   });
 }
 
-export function cssStyleElementEcwidCartProductNameTypography2FontFamily({
+export function cssStyleElementEcwidCartProductNameTypographyFontFamily({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({
+  return cssStyleTypography3FontFamily({
     v,
     device,
-    prefix: "productName"
+    prefix: "productNameTypography"
   });
 }
 
-export function cssStyleElementEcwidCartProductNameTypography2FontSize({
+export function cssStyleElementEcwidCartProductNameTypographyFontSize({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({
+  return cssStyleTypography3FontSize({
     v,
     device,
-    prefix: "productName"
+    prefix: "productNameTypography"
   });
 }
 
-export function cssStyleElementEcwidCartProductNameTypography2LineHeight({
+export function cssStyleElementEcwidCartProductNameTypographyLineHeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({
+  return cssStyleTypography3LineHeight({
     v,
     device,
-    prefix: "productName"
+    prefix: "productNameTypography"
   });
 }
 
-export function cssStyleElementEcwidCartProductNameTypography2FontWeight({
+export function cssStyleElementEcwidCartProductNameTypographyFontWeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({
+  return cssStyleTypography3FontWeight({
     v,
     device,
-    prefix: "productName"
+    prefix: "productNameTypography"
   });
 }
 
-export function cssStyleElementEcwidCartProductNameTypography2LetterSpacing({
+export function cssStyleElementEcwidCartProductNameTypographyLetterSpacing({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
+  return cssStyleTypography3LetterSpacing({
     v,
     device,
-    state,
-    prefix: "productName"
+    prefix: "productNameTypography"
   });
 }
 
@@ -942,14 +906,12 @@ export function cssStyleElementEcwidCartProductNameAlign({
   device,
   state
 }: CSSValue): string {
-  const align = styleAlignHorizontal({
+  return cssStyleTextAlign({
     v,
     device,
     state,
     prefix: "productName"
   });
-
-  return align === undefined ? "" : `text-align:${align};`;
 }
 
 // Style Product Size
@@ -958,7 +920,7 @@ export function cssStyleElementEcwidCartProductSizeColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleColorImportant({
+  return cssStyleColor({
     v,
     device,
     state,
@@ -966,60 +928,58 @@ export function cssStyleElementEcwidCartProductSizeColor({
   });
 }
 
-export function cssStyleElementEcwidCartProductSizeTypography2FontFamily({
+export function cssStyleElementEcwidCartProductSizeTypographyFontFamily({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontFamilyImportant({
+  return cssStyleTypography3FontFamily({
     v,
     device,
-    prefix: "productSize"
+    prefix: "productSizeTypography"
   });
 }
 
-export function cssStyleElementEcwidCartProductSizeTypography2FontSize({
+export function cssStyleElementEcwidCartProductSizeTypographyFontSize({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontSizeImportant({
+  return cssStyleTypography3FontSize({
     v,
     device,
-    prefix: "productSize"
+    prefix: "productSizeTypography"
   });
 }
 
-export function cssStyleElementEcwidCartProductSizeTypography2LineHeight({
+export function cssStyleElementEcwidCartProductSizeTypographyLineHeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2LineHeightImportant({
+  return cssStyleTypography3LineHeight({
     v,
     device,
-    prefix: "productSize"
+    prefix: "productSizeTypography"
   });
 }
 
-export function cssStyleElementEcwidCartProductSizeTypography2FontWeight({
+export function cssStyleElementEcwidCartProductSizeTypographyFontWeight({
   v,
   device
 }: CSSValue): string {
-  return cssStyleTypography2FontWeightImportant({
+  return cssStyleTypography3FontWeight({
     v,
     device,
-    prefix: "productSize"
+    prefix: "productSizeTypography"
   });
 }
 
-export function cssStyleElementEcwidCartProductSizeTypography2LetterSpacing({
+export function cssStyleElementEcwidCartProductSizeTypographyLetterSpacing({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacingImportant({
+  return cssStyleTypography3LetterSpacing({
     v,
     device,
-    state,
-    prefix: "productSize"
+    prefix: "productSizeTypography"
   });
 }
 
@@ -1028,12 +988,499 @@ export function cssStyleElementEcwidCartProductSizeAlign({
   device,
   state
 }: CSSValue): string {
-  const align = styleAlignHorizontal({
+  return cssStyleTextAlign({
     v,
     device,
     state,
     prefix: "productSize"
   });
+}
 
-  return align === undefined ? "" : `text-align:${align};`;
+// Style Empty Cart
+export function cssStyleElementEcwidCartEmptyColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "emptyColor"
+  });
+}
+
+export function cssStyleElementEcwidCartEmptyTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "emptyTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartEmptyTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({
+    v,
+    device,
+    prefix: "emptyTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartEmptyTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "emptyTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartEmptyTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "emptyTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartEmptyTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "emptyTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartEmptyAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "empty"
+  });
+}
+
+export function cssStyleElementEcwidCartEmptySpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "empty",
+    direction: "bottom"
+  });
+}
+
+// Style Footer
+export function cssStyleElementEcwidCartFooterIconSize({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeWidthHeight({ v, device, state, prefix: "footerIcon" });
+}
+
+export function cssStyleElementEcwidCartFooterIconSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "footer",
+    direction: "bottom"
+  });
+}
+
+export function cssStyleElementEcwidCartFooterIconColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "footerIconColor"
+  });
+}
+
+export function cssStyleElementEcwidCartFooterColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "footerColor" });
+}
+
+export function cssStyleElementEcwidCartFooterTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "footerTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartFooterTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({ v, device, prefix: "footerTypography" });
+}
+
+export function cssStyleElementEcwidCartFooterTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "footerTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartFooterTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "footerTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartFooterTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "footerTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartWidth({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeWidth({ v, device, state, prefix: "cart" });
+}
+
+export function cssStyleElementEcwidCartImageWidth({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeWidth({ v, device, state, prefix: "image" });
+}
+
+export function cssStyleElementEcwidCartImageBorder({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorder({ v, device, state, prefix: "image" });
+}
+
+export function cssStyleElementEcwidCartImageBorderRadius({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorderRadius({ v, device, state, prefix: "image" });
+}
+
+export function cssStyleElementEcwidCartImageBoxShadow({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBoxShadow({ v, device, state, prefix: "image" });
+}
+
+export function cssStyleElementEcwidCartImageSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "image",
+    direction: "right"
+  });
+}
+
+export function cssStyleElementEcwidCartSummaryTitleColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "summaryTitleColor" });
+}
+
+export function cssStyleElementEcwidCartSummaryTitleTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "summaryTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartSummaryTitleTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({
+    v,
+    device,
+    prefix: "summaryTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartSummaryTitleTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "summaryTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartSummaryTitleTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "summaryTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartSummaryTitleTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "summaryTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartSummaryPriceColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "summaryPriceColor" });
+}
+
+export function cssStyleElementEcwidCartSummaryPriceTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "summaryPriceTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartSummaryPriceTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({
+    v,
+    device,
+    prefix: "summaryPriceTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartSummaryPriceTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "summaryPriceTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartSummaryPriceTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "summaryPriceTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartSummaryPriceTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "summaryPriceTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartQtyTypographyFontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontFamily({
+    v,
+    device,
+    prefix: "qtyTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartQtyTypographyFontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontSize({
+    v,
+    device,
+    prefix: "qtyTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartQtyTypographyLineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LineHeight({
+    v,
+    device,
+    prefix: "qtyTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartQtyTypographyFontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3FontWeight({
+    v,
+    device,
+    prefix: "qtyTypography"
+  });
+}
+
+export function cssStyleElementEcwidCartQtyTypographyLetterSpacing({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    prefix: "qtyTypography"
+  });
+}
+
+export function cssStylePropertyHoverTransitionElementEcwid(): string {
+  return "transition-property: color, filter, box-shadow, background, border-radius, border-color;";
+}
+
+export function cssStyleElementEcwidCartCloseIconColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "closeColor" });
+}
+
+export function cssStyleElementEcwidCartCloseBgColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "closeBg" });
+}
+
+export function cssStyleElementEcwidCartCloseBorderColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorder({ v, device, state, prefix: "close" });
+}
+
+export function cssStyleElementEcwidCartCloseBorderRadiusColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorderRadius({ v, device, state, prefix: "close" });
+}
+
+export function cssStyleElementEcwidCartCloseBoxShadow({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBoxShadow({ v, device, state, prefix: "close" });
+}
+
+export function cssStyleElementEcwidCartClosePadding({
+  v,
+  device
+}: CSSValue): string {
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const padding = dvv("closePadding");
+  const suffix = dvv("closePaddingSuffix");
+
+  return `padding:${padding}${suffix};`;
+}
+
+export function cssStyleElementEcwidCartCloseSize({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeWidthHeight({ v, device, state, prefix: "close" });
 }

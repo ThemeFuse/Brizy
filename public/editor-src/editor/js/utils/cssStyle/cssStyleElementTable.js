@@ -1,24 +1,21 @@
 import {
-  styleBgColor,
-  styleColor,
+  cssStyleBgColor,
+  cssStyleColor,
+  cssStyleFlexHorizontalAlign,
+  cssStylePaddingFourFields
+} from "visual/utils/cssStyle";
+import { defaultValueValue } from "visual/utils/onChange";
+import {
+  styleAlignHorizontal,
   styleElementTableAside,
-  styleElementTableAsideWidth,
   styleElementTableColumns,
-  styleElementTableHorizontalAlign,
   styleElementTableIconPosition,
   styleElementTableIconSpacing,
-  styleElementTableWidth
+  styleSizeWidth
 } from "visual/utils/style2";
-import { defaultValueValue } from "visual/utils/onChange";
-import { cssStylePaddingFourFields } from "./cssStylePadding";
-
-export function cssStyleElementTableWidth({ v, device, state }) {
-  const width = styleElementTableWidth({ v, device, state });
-  return `width:  ${width}%;`;
-}
 
 export function cssStyleElementTableIconSize({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const iconSize = dvv("iconSize");
   const iconCustomSize = dvv("iconCustomSize");
 
@@ -55,47 +52,31 @@ export function cssStyleElementTableCustomFlexHorizontalAlign({
   device,
   state
 }) {
-  const horizontalAlign = styleElementTableHorizontalAlign({
-    v,
-    device,
-    state
-  });
+  const horizontalAlign = styleAlignHorizontal({ v, device, state });
+
   const iconPosition = styleElementTableIconPosition({ v, device, state });
 
-  const aligns = {
-    left: "flex-start",
-    center: "center",
-    right: "flex-end"
-  };
-
-  if (iconPosition === "left" || horizontalAlign === "center") {
-    return `justify-content: ${aligns[horizontalAlign]};`;
-  } else if (horizontalAlign === "left") {
-    return "justify-content: flex-end;";
-  } else if (horizontalAlign === "right") {
-    return "justify-content: flex-start;";
+  if (iconPosition === "left") {
+    return cssStyleFlexHorizontalAlign({ v, device, state });
   }
-}
 
-export function cssStyleElementTableCustomTextHorizontalAlign({
-  v,
-  device,
-  state
-}) {
-  const horizontalAlign = styleElementTableHorizontalAlign({
-    v,
-    device,
-    state
-  });
+  switch (horizontalAlign) {
+    case "center":
+      return cssStyleFlexHorizontalAlign({ v, device, state });
+    case "left":
+      return "justify-content: flex-end;";
+    case "right":
+      return "justify-content: flex-start;";
+  }
 
-  return `text-align: ${horizontalAlign};`;
+  return "";
 }
 
 export function cssStyleElementTableAsideWidth({ v, device, state }) {
   const aside = styleElementTableAside({ v, device, state });
 
   if (aside === "on") {
-    const width = styleElementTableAsideWidth({ v, device, state });
+    const width = styleSizeWidth({ v, device, state, prefix: "aside" });
     return `min-width: ${width}px; width: ${width}px`;
   }
 
@@ -104,13 +85,11 @@ export function cssStyleElementTableAsideWidth({ v, device, state }) {
 }
 
 export function cssStyleElementTableEvenBgColor({ v, device }) {
-  const bgColor = styleBgColor({ v, device, state: "active", prefix: "bg" });
-  return `background-color:  ${bgColor};`;
+  return cssStyleBgColor({ v, device, state: "active", prefix: "bg" });
 }
 
 export function cssStyleElementTableEvenColor({ v, device }) {
-  const color = styleColor({ v, device, state: "active", prefix: "color" });
-  return `color:  ${color};`;
+  return cssStyleColor({ v, device, state: "active" });
 }
 
 export function cssStyleTablePadding({ v, device, state, prefix = "table" }) {

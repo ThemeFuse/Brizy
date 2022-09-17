@@ -31,7 +31,7 @@ export function style(v, vs, vd) {
     },
     ".brz && .brz-switcher__nav--button .brz-icon-svg": {
       standart: [
-        "cssStyleElementSwitcherIcon",
+        "cssStyleSizeFontSizeIcon",
         "cssStyleElementSwitcherBtnSpacing"
       ]
     },
@@ -69,15 +69,20 @@ export function style(v, vs, vd) {
     ".brz &&:hover .brz-switcher__nav2--button .brz-icon-svg": {
       standart: [
         "cssStyleElementSwitcherBtnSpacing",
-        "cssStyleElementSwitcherIcon"
+        "cssStyleSizeFontSizeIcon"
       ]
     },
     ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2--control:before": {
       standart: ["cssStyleBorderRadius", "cssStyleElementSwitcherNavBeforeBg"]
     },
-    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2__item--active": {
-      standart: ["cssStyleElementSwitcherActiveTextColor"]
-    }
+    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2__item--active .brz-switcher__nav2__item":
+      {
+        standart: ["cssStyleElementSwitcherActiveTextColor"]
+      },
+    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2__item--active .brz-icon-svg":
+      {
+        standart: ["cssStyleElementSwitcherActiveTextColor"]
+      }
   };
 
   return renderStyles({ v, vs, vd, styles });
@@ -86,11 +91,7 @@ export function style(v, vs, vd) {
 export function styleAnimation(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: [
-        "cssStyleAnimation",
-        "cssStyleAnimationDuration",
-        "cssStyleAnimationDelay"
-      ]
+      standart: ["cssStyleAnimationAll"]
     }
   };
 

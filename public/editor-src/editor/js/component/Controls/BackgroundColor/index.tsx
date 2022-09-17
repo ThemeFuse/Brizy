@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import React, { FC } from "react";
 import classNames from "classnames";
 import { t } from "visual/utils/i18n";
 import { WithClassName, WithValue } from "visual/utils/options/attributes";
@@ -33,7 +33,7 @@ export const BackgroundColor: FC<Props> = ({
   opacity,
   gradientColors: [g1, g2]
 }) => {
-  const onColorChange: CSProps<Type>["onChange"] = useCallback(
+  const onColorChange: CSProps<Type>["onChange"] = (
     (v, m) => {
       onChange(
         {
@@ -49,13 +49,11 @@ export const BackgroundColor: FC<Props> = ({
         },
         fromColorMeta(m)
       );
-    },
-    [onChange]
+    }
   );
-  const onSelectChange = useCallback(
+  const onSelectChange = (
     (gradientType: GradientType): void =>
-      onChange({ ...value, gradientType }, { isChanged: "gradientType" }),
-    [onChange, value]
+      onChange({ ...value, gradientType }, { isChanged: "gradientType" })
   );
   const _className = classNames("brz-ed-control__backgroundColor", className);
   return (

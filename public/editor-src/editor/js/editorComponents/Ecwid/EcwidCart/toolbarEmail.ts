@@ -5,7 +5,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { State } from "visual/utils/stateMode";
-import { Value } from "./index";
+import { Value } from "./types/Value";
 
 export function getItems({
   v,
@@ -35,10 +35,10 @@ export function getItems({
       position: 10,
       options: [
         {
-          id: "email",
+          id: "emailTypography",
           type: "typography-dev",
           config: {
-            fontFamily: "desktop" === device
+            fontFamily: device === "desktop"
           }
         }
       ]
@@ -51,7 +51,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(emailColorHex, v.emailColorOpacity)
+            backgroundColor: hexToRgba(emailColorHex, dvv("emailColorOpacity"))
           }
         }
       },
@@ -72,6 +72,25 @@ export function getItems({
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
         { icon: "nc-text-align-center", title: t("Align"), value: "center" },
         { icon: "nc-text-align-right", title: t("Align"), value: "right" }
+      ]
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: { icon: "nc-cog", title: t("Settings") },
+      devices: "desktop",
+      position: 40,
+      options: [
+        {
+          id: "emailSpacing",
+          label: t("Spacing"),
+          type: "slider-dev",
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        }
       ]
     }
   ];

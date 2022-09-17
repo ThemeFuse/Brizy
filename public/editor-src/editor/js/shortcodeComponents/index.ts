@@ -1,29 +1,42 @@
-import Config from "visual/global/Config";
-import { baseCommon, baseStory, social, grid } from "./index.common";
-import Ecwid from "./Ecwid";
-import { IS_PROTECTED, IS_RESET_PASS, IS_USER_PAGE } from "visual/utils/env";
-import { IS_STORY, IS_EXTERNAL_POPUP } from "visual/utils/models";
+import { match } from "fp-utilities";
+import Config, { Cloud } from "visual/global/Config";
+import {
+  isEcwidCategory,
+  isEcwidProduct
+} from "visual/global/Config/types/configs/Base";
+import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
 import { Shortcode, Shortcodes } from "visual/types";
-
-import ProtectedPage from "./ProtectedPage";
-import Translation from "./Translation";
-
-import ResetPassword from "./pro/ResetPassword";
-
-import PostTitle from "./PostTitle";
+import {
+  isBlogPage,
+  isCartPage,
+  isCheckoutPage,
+  isMyAccountPage,
+  isProtectedPage,
+  isResetPassPage,
+  isUserPage
+} from "visual/utils/env";
+import { isExternalPopup, isStory } from "visual/utils/models";
+import AssetsPosts from "./AssetsPosts";
+import Ecwid from "./Ecwid";
+import { baseCommon, baseStory, grid, social } from "./index.common";
 import Posts from "./Posts";
-
+// uncomment later when logic with context select is done
+// import PostTitle from "./PostTitle";
+import Login from "./pro/Login";
+import ResetPassword from "./pro/ResetPassword";
+import ProtectedPage from "./ProtectedPage";
+import ShopCategories from "./ShopCategories";
+import ShopPosts from "./ShopPosts";
+import Translation from "./Translation";
+import UserEmail from "./UserEmail";
 import UserFirstName from "./UserFirstName";
 import UserLastName from "./UserLastName";
-import UserEmail from "./UserEmail";
 import UserPhoneNumber from "./UserPhoneNumber";
 import UserRoles from "./UserRoles";
 import UserUsername from "./UserUsername";
 
-import Login from "./pro/Login";
-import { match } from "fp-utilities";
-import { isWp } from "visual/global/Config/types/configs/WP";
-import { isCloud } from "visual/global/Config/types/configs/Cloud";
+const _config = Config.getAll() as Cloud;
 
 const baseCloud = [...baseCommon, { component: Translation, pro: false }];
 
@@ -40,9 +53,12 @@ const protectedPage = [{ component: ProtectedPage, pro: false }];
 const resetPassword = [{ component: ResetPassword, pro: false }];
 
 const cmsSingle = [
-  { component: PostTitle, pro: false },
+  // uncomment later when logic with context select is done
+  // { component: PostTitle, pro: false },
   { component: Posts, pro: false }
 ];
+
+const cmsAssets = [{ component: AssetsPosts, pro: false }];
 
 const user = [
   { component: UserFirstName, pro: false },
@@ -68,24 +84,39 @@ const shop: Shortcode[] = match(
   ]
 )(Config.getAll());
 
+const EcwidProduct = Ecwid.find((c) => c.component.id === "Product");
+const productPageSpecificItems = [
+  // uncomment later when logic with context select is done
+  // { component: PostTitle, pro: false },
+  ...(EcwidProduct ? [EcwidProduct] : [])
+];
+
+const productPageShopItems = [
+  ...(shop ? shop.filter((c) => c.component.id !== "Product") : []),
+  { component: ShopPosts, pro: false },
+  { component: ShopCategories, pro: false }
+];
+
 const config = ((): Shortcodes => {
-  if (IS_STORY) {
+  if (isStory(_config)) {
     return {
       base: baseStory
     };
   }
 
-  if (IS_USER_PAGE) {
+  if (isUserPage(_config)) {
     return {
       user: user,
-      base: baseWithPosts,
       grid,
+      base: baseCloud,
       social,
-      shop
+      blog: cmsSingle,
+      shop,
+      cms: cmsAssets
     };
   }
 
-  if (IS_PROTECTED) {
+  if (isProtectedPage(_config)) {
     return {
       systemPages: protectedPage,
       base: baseWithPosts,
@@ -95,7 +126,7 @@ const config = ((): Shortcodes => {
     };
   }
 
-  if (IS_RESET_PASS) {
+  if (isResetPassPage(_config)) {
     return {
       systemPages: resetPassword,
       base: baseWithPosts,
@@ -105,7 +136,7 @@ const config = ((): Shortcodes => {
     };
   }
 
-  if (IS_EXTERNAL_POPUP) {
+  if (isExternalPopup(_config)) {
     return {
       base: baseExternalPopup,
       grid,
@@ -113,12 +144,44 @@ const config = ((): Shortcodes => {
     };
   }
 
+  if (isBlogPage(_config)) {
+    return {
+      blog: cmsSingle,
+      grid,
+      base: baseCloud,
+      social,
+      product: productPageSpecificItems,
+      shop: productPageShopItems,
+      cms: cmsAssets
+    };
+  }
+
+  if (
+    isEcwidProduct(_config.page) ||
+    isEcwidCategory(_config.page) ||
+    isCartPage(_config) ||
+    isCheckoutPage(_config) ||
+    isMyAccountPage(_config)
+  ) {
+    return {
+      productPageSpecificItems,
+      shop: productPageShopItems,
+      grid,
+      base: baseCloud,
+      social,
+      blog: cmsSingle,
+      cms: cmsAssets
+    };
+  }
+
   return {
     grid,
-    dynamic: cmsSingle,
     base: baseCloud,
     social,
-    shop
+    blog: cmsSingle,
+    product: productPageSpecificItems,
+    shop: productPageShopItems,
+    cms: cmsAssets
   };
 })();
 

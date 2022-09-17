@@ -1,5 +1,10 @@
 import { CloudPopup, Rule } from "visual/types";
 import { t } from "visual/utils/i18n";
+import {
+  ApiRule,
+  apiRuleToEditorRule,
+  editorRuleToApiRule
+} from "visual/utils/api/adapter";
 import { getConnection } from "./graphql/apollo";
 import * as Gql from "./graphql/gql";
 import { errOnEmpty, onCatch } from "./utils";
@@ -12,7 +17,9 @@ export function getRulesList(collectionItemId: string): Promise<Rule[]> {
     .then(r => {
       const value = r?.data?.collectionItemFieldBySlug?.values?.value ?? null;
       if (value) {
-        return JSON.parse(value) as Rule[];
+        const rules = JSON.parse(value) as ApiRule[];
+
+        return rules.map(apiRuleToEditorRule);
       }
 
       return value;
@@ -36,7 +43,9 @@ export function updatePopupRules(popup: CloudPopup): Promise<Rule[]> {
           fields: [
             {
               type: collectionTypeFieldId,
-              values: { value: JSON.stringify(popup.rules) }
+              values: {
+                value: JSON.stringify(popup.rules.map(editorRuleToApiRule))
+              }
             }
           ]
         }

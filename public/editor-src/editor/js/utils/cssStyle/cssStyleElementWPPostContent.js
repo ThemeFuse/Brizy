@@ -1,66 +1,62 @@
 import {
-  styleColor,
+  cssStyleColor,
+  cssStyleTextAlign,
+  cssStyleTypography2FontSize
+} from "visual/utils/cssStyle";
+import {
   styleTypography2FontFamily,
-  styleTypography2FontSize,
-  styleTypography2LineHeight,
   styleTypography2FontWeight,
-  styleTypography2LetterSpacing
+  styleTypography2LetterSpacing,
+  styleTypography2LineHeight
 } from "visual/utils/style2";
-
-import { cssStyleColor } from "visual/utils/cssStyle";
 
 export function cssStyleElementWPPostContentH1Color({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "h1Color" });
 }
 
 export function cssStyleElementWPPostContentH2Color({ v, device, state }) {
-  const color = styleColor({
+  return cssStyleColor({
     v,
     device,
     prefix: "h2Color",
     state
   });
-  return color === undefined ? "" : `color:${color};`;
 }
 
 export function cssStyleElementWPPostContentH3Color({ v, device, state }) {
-  const color = styleColor({
+  return cssStyleColor({
     v,
     device,
     prefix: "h3Color",
     state
   });
-  return color === undefined ? "" : `color:${color};`;
 }
 
 export function cssStyleElementWPPostContentH4Color({ v, device, state }) {
-  const color = styleColor({
+  return cssStyleColor({
     v,
     device,
     prefix: "h4Color",
     state
   });
-  return color === undefined ? "" : `color:${color};`;
 }
 
 export function cssStyleElementWPPostContentH5Color({ v, device, state }) {
-  const color = styleColor({
+  return cssStyleColor({
     v,
     device,
     prefix: "h5Color",
     state
   });
-  return color === undefined ? "" : `color:${color};`;
 }
 
 export function cssStyleElementWPPostContentH6Color({ v, device, state }) {
-  const color = styleColor({
+  return cssStyleColor({
     v,
     device,
     prefix: "h6Color",
     state
   });
-  return color === undefined ? "" : `color:${color};`;
 }
 
 export function cssStyleElementWPPostContentParagraphColor({
@@ -68,13 +64,12 @@ export function cssStyleElementWPPostContentParagraphColor({
   device,
   state
 }) {
-  const color = styleColor({
+  return cssStyleColor({
     v,
     device,
     prefix: "paragraphColor",
     state
   });
-  return color === undefined ? "" : `color:${color};`;
 }
 
 // Typography
@@ -96,11 +91,7 @@ export function cssStyleElementWPPostContentTypography2ParagraphFontSize({
   v,
   device
 }) {
-  return `font-size:${styleTypography2FontSize({
-    v,
-    device,
-    prefix: "paragraph"
-  })}px;`;
+  return cssStyleTypography2FontSize({ v, device, prefix: "paragraph" });
 }
 
 export function cssStyleElementWPPostContentTypography2ParagraphLineHeight({
@@ -133,7 +124,7 @@ export function cssStyleElementWPPostContentTypography2ParagraphLetterSpacing({
     v,
     device,
     prefix: "paragraph"
-  })}px;`;
+  })};`;
 }
 
 export function cssStyleElementWPPostContentTypography2H1FontFamily({
@@ -153,11 +144,7 @@ export function cssStyleElementWPPostContentTypography2H1FontSize({
   v,
   device
 }) {
-  return `font-size:${styleTypography2FontSize({
-    v,
-    device,
-    prefix: "h1"
-  })}px;`;
+  return cssStyleTypography2FontSize({ v, device, prefix: "h1" });
 }
 
 export function cssStyleElementWPPostContentTypography2H1LineHeight({
@@ -190,7 +177,7 @@ export function cssStyleElementWPPostContentTypography2H1LetterSpacing({
     v,
     device,
     prefix: "h1"
-  })}px;`;
+  })};`;
 }
 
 export function cssStyleElementWPPostContentTypography2H2FontFamily({
@@ -210,11 +197,7 @@ export function cssStyleElementWPPostContentTypography2H2FontSize({
   v,
   device
 }) {
-  return `font-size:${styleTypography2FontSize({
-    v,
-    device,
-    prefix: "h2"
-  })}px;`;
+  return cssStyleTypography2FontSize({ v, device, prefix: "h2" });
 }
 
 export function cssStyleElementWPPostContentTypography2H2LineHeight({
@@ -247,7 +230,7 @@ export function cssStyleElementWPPostContentTypography2H2LetterSpacing({
     v,
     device,
     prefix: "h2"
-  })}px;`;
+  })};`;
 }
 
 export function cssStyleElementWPPostContentTypography2H3FontFamily({
@@ -267,11 +250,7 @@ export function cssStyleElementWPPostContentTypography2H3FontSize({
   v,
   device
 }) {
-  return `font-size:${styleTypography2FontSize({
-    v,
-    device,
-    prefix: "h3"
-  })}px;`;
+  return cssStyleTypography2FontSize({ v, device, prefix: "h3" });
 }
 
 export function cssStyleElementWPPostContentTypography2H3LineHeight({
@@ -304,7 +283,7 @@ export function cssStyleElementWPPostContentTypography2H3LetterSpacing({
     v,
     device,
     prefix: "h3"
-  })}px;`;
+  })};`;
 }
 
 export function cssStyleElementWPPostContentTypography2H4FontFamily({
@@ -324,11 +303,7 @@ export function cssStyleElementWPPostContentTypography2H4FontSize({
   v,
   device
 }) {
-  return `font-size:${styleTypography2FontSize({
-    v,
-    device,
-    prefix: "h4"
-  })}px;`;
+  return cssStyleTypography2FontSize({ v, device, prefix: "h4" });
 }
 
 export function cssStyleElementWPPostContentTypography2H4LineHeight({
@@ -361,7 +336,7 @@ export function cssStyleElementWPPostContentTypography2H4LetterSpacing({
     v,
     device,
     prefix: "h4"
-  })}px;`;
+  })};`;
 }
 
 export function cssStyleElementWPPostContentTypography2H5FontFamily({
@@ -381,11 +356,7 @@ export function cssStyleElementWPPostContentTypography2H5FontSize({
   v,
   device
 }) {
-  return `font-size:${styleTypography2FontSize({
-    v,
-    device,
-    prefix: "h5"
-  })}px;`;
+  return cssStyleTypography2FontSize({ v, device, prefix: "h5" });
 }
 
 export function cssStyleElementWPPostContentTypography2H5LineHeight({
@@ -418,7 +389,7 @@ export function cssStyleElementWPPostContentTypography2H5LetterSpacing({
     v,
     device,
     prefix: "h5"
-  })}px;`;
+  })};`;
 }
 
 export function cssStyleElementWPPostContentTypography2H6FontFamily({
@@ -438,11 +409,7 @@ export function cssStyleElementWPPostContentTypography2H6FontSize({
   v,
   device
 }) {
-  return `font-size:${styleTypography2FontSize({
-    v,
-    device,
-    prefix: "h6"
-  })}px;`;
+  return cssStyleTypography2FontSize({ v, device, prefix: "h6" });
 }
 
 export function cssStyleElementWPPostContentTypography2H6LineHeight({
@@ -475,9 +442,18 @@ export function cssStyleElementWPPostContentTypography2H6LetterSpacing({
     v,
     device,
     prefix: "h6"
-  })}px;`;
+  })};`;
 }
 
 export function cssStyleElementWPPostContentFontWeightInherit() {
   return "font-weight: inherit;";
+}
+
+export function cssStyleElementWPPostContentExcerptAlign({
+  v,
+  device,
+  state,
+  prefix = "excerpt"
+}) {
+  return cssStyleTextAlign({ v, device, state, prefix });
 }

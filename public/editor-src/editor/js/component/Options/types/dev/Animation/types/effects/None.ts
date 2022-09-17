@@ -1,10 +1,9 @@
-import { readWithParser } from "visual/utils/reader/readWithParser";
 import { mPipe, pass } from "visual/utils/fp";
-import * as ET from "../EffectType";
-import { EffectType } from "../EffectType";
-import { LegacyEffectType } from "../LegacyEffectType";
+import { readWithParser } from "visual/utils/reader/readWithParser";
 import { BaseEffect } from "../BaseEffect";
-import { isEffect } from "../EffectType";
+import * as ET from "../EffectType";
+import { EffectType, isEffect } from "../EffectType";
+import { LegacyEffectType } from "../LegacyEffectType";
 import { LegacyModel } from "../LegacyModel";
 
 export type None = BaseEffect<EffectType.None>;
@@ -16,11 +15,13 @@ export const fromLegacyModel = readWithParser<LegacyModel, None>({
     pass(isEffect(EffectType.None))
   ),
   duration: v => v.duration,
-  delay: v => v.delay
+  delay: v => v.delay,
+  infiniteAnimation: v => v.infiniteAnimation
 });
 
 export const toLegacyModel = (v: None): LegacyModel => ({
   name: LegacyEffectType.none,
   duration: v.duration,
-  delay: v.delay
+  delay: v.delay,
+  infiniteAnimation: v.infiniteAnimation
 });

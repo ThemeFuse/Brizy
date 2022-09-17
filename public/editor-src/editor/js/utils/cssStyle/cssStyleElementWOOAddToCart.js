@@ -1,26 +1,19 @@
 import {
-  styleSizeWidth,
-  styleSizeHeight,
-  styleBorderWidthGrouped,
-  styleBorderColor,
-  styleBorderStyle,
-  styleColor
-} from "visual/utils/style2";
-
-import {
+  cssStyleBgColor,
+  cssStyleBorder,
+  cssStyleBorderRadius,
+  cssStyleBoxShadow,
+  cssStyleColor,
+  cssStyleSizeHeight,
+  cssStyleSizeWidth,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
-  cssStyleTypography2LineHeight,
   cssStyleTypography2FontWeight,
-  cssStyleTypography2LetterSpacing
-} from "./cssStyleTypography2";
-
-import { cssStyleBorderRadius } from "./cssStyleBorderRadius";
-
+  cssStyleTypography2LetterSpacing,
+  cssStyleTypography2LineHeight
+} from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
-import { cssStyleColor } from "./cssStyleColor";
-import { cssStyleBorder } from "visual/utils/cssStyle/cssStyleBorder";
-import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
+import { styleSizeHeight, styleSizeWidth } from "visual/utils/style2";
 
 export function cssStyleElementWOOAddToCartSize({ v, device }) {
   const width = styleSizeWidth({ v, device });
@@ -28,7 +21,7 @@ export function cssStyleElementWOOAddToCartSize({ v, device }) {
 
   return width === undefined || height === undefined
     ? ""
-    : `padding: ${height}px ${width}px;`;
+    : `padding:${height}px ${width}px!important;`;
 }
 
 export function cssStyleElementWOOAddToCartInputRadius({ v, device }) {
@@ -36,7 +29,7 @@ export function cssStyleElementWOOAddToCartInputRadius({ v, device }) {
 }
 
 export function cssStyleElementWOOAddToCartSpacing({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const position = dvv("inputPosition");
   const spacing = dvv("spacing");
@@ -53,24 +46,16 @@ export function cssStyleElementWOOAddToCartSpacing({ v, device }) {
     : marginType[position];
 }
 
-export function cssStyleElementWOOAddToCartInputSize({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+export function cssStyleElementWOOAddToCartInputWidth({ v, device, state }) {
+  return cssStyleSizeWidth({ v, device, state, prefix: "input" });
+}
 
-  const position = dvv("inputPosition");
-  const width = dvv("inputWidth");
-  const widthSuffix =
-    position === "left" || position === "right"
-      ? "px"
-      : dvv("inputWidthSuffix");
-  const height = dvv("inputHeight");
-
-  return width === undefined || height === undefined
-    ? ""
-    : `width: ${width}${widthSuffix}; height: ${height}px;`;
+export function cssStyleElementWOOAddToCartInputHeight({ v, device, state }) {
+  return cssStyleSizeHeight({ v, device, state, prefix: "input" });
 }
 
 export function cssStyleElementWOOAddToCartInputPosition({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const positionValue = dvv("inputPosition");
   const position = {
@@ -84,7 +69,7 @@ export function cssStyleElementWOOAddToCartInputPosition({ v, device }) {
 }
 
 export function cssStyleElementWOOAddToCartInputAlign({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const position = dvv("inputPosition");
   const vertical = dvv("inputVerticalAlign");
@@ -208,44 +193,35 @@ export function cssStyleElementWOOAddToCartTableMargin({ v }) {
   return `margin-bottom: ${v.tableSpacing}px;`;
 }
 
-export function cssStyleElementWOOAddToCartTableBorder({ v }) {
-  const borderWidth = styleBorderWidthGrouped({
-    v,
-    prefix: "table"
-  });
-  const borderStyle = styleBorderStyle({ v, prefix: "table" });
-  const borderColor = styleBorderColor({ v, prefix: "table" });
-
-  return borderWidth === undefined
-    ? ""
-    : `border:${borderWidth}px ${borderStyle} ${borderColor};`;
+export function cssStyleElementWOOAddToCartTableBorder({ v, device, state }) {
+  return cssStyleBorder({ v, device, state, prefix: "table" });
 }
 
 export function cssStyleElementWOOAddToCartInputBg({ v, device, state }) {
-  return `background-color: ${styleColor({
+  return cssStyleBgColor({
     v,
     device,
     state,
-    prefix: "inputBgColor"
-  })};`;
+    prefix: "inputBg"
+  });
 }
 
 export function cssStyleElementWOOAddToCartTableBg({ v, device, state }) {
-  return `background-color: ${styleColor({
+  return cssStyleBgColor({
     v,
     device,
     state,
-    prefix: "tableBgColor"
-  })};`;
+    prefix: "tableBg"
+  });
 }
 
 export function cssStyleElementWOOAddToCartLabelBg({ v, device, state }) {
-  return `background-color: ${styleColor({
+  return cssStyleBgColor({
     v,
     device,
     state,
-    prefix: "labelBgColor"
-  })};`;
+    prefix: "labelBg"
+  });
 }
 
 export function cssStyleElementWOOAddToCartInputBorder({ v, device, state }) {

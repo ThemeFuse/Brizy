@@ -119,7 +119,7 @@
     "tempHoverBorderBottomWidth": null,
     "tempHoverBorderLeftWidth": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
     "tempBoxShadow": "on",
 
     "boxShadowColorHex": "#000000",

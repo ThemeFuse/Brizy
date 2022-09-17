@@ -22,7 +22,8 @@
 
   "style": {
     "width": 100,
-    "widthSuffix": null,
+    "widthSuffix": "%",
+    
     "height": 165,
     "heightSuffix": null,
     "min": "",

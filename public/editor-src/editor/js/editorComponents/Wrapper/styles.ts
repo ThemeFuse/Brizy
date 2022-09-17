@@ -1,5 +1,5 @@
-import { renderStyles } from "visual/utils/cssStyle";
 import { ElementModel } from "visual/component/Elements/Types";
+import { renderStyles } from "visual/utils/cssStyle";
 
 export function styleWrapper(
   v: ElementModel,
@@ -27,7 +27,7 @@ export function styleWrapper(
         "cssStylePaddingFourFields",
         "cssStyleMargin",
         "cssStyleFlexHorizontalAlign",
-        "cssStylePositionMode",
+        "cssStylePositionRelative",
         "cssStyleWrapperContainerFlex",
         "cssStyleWrapperBorderFlex"
       ]
@@ -55,7 +55,8 @@ export function styleAnimation(
       standart: [
         "cssStyleAnimation",
         "cssStyleAnimationDuration",
-        "cssStyleAnimationDelay"
+        "cssStyleAnimationDelay",
+        "cssStyleAnimationIterationCount"
       ]
     }
   };

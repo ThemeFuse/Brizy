@@ -11,7 +11,7 @@ export const getFontCssStyle = ({
   key: string;
   device: ResponsiveMode;
 }): string | undefined => {
-  if (fontStyle) {
+  if (fontStyle && fontStyle !== "custom") {
     return `var(${makeStyleCSSVar({
       id: fontStyle,
       device,

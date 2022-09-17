@@ -5,13 +5,13 @@ export function styleContents(v, vs, vd) {
     ".brz &&:hover": {
       standart: IS_PREVIEW
         ? [
-            "cssStyleSizeWidthPercent",
+            "cssStyleSizeWidth",
             "cssStyleBorder",
             "cssStyleBorderRadius",
             "cssStyleBgColor",
             "cssStyleBoxShadow"
           ]
-        : ["cssStyleSizeWidthPercent"],
+        : ["cssStyleSizeWidth"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementVideoPlaylistPropertyHoverTransition"

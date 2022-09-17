@@ -1,6 +1,6 @@
-import Config from "visual/global/Config";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
-import { request2 } from "visual/utils/api";
+import Config from "visual/global/Config";
+import { request } from "visual/utils/api/index.wp";
 
 export const createFont = ({ id, name, files }) => {
   const { api } = Config.get("wp");
@@ -23,15 +23,15 @@ export const createFont = ({ id, name, files }) => {
     });
   });
 
-  return request2(url, {
+  return request(url, {
     method: "POST",
     body: formData
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };
 
-export const deleteFont = fontId => {
+export const deleteFont = (fontId) => {
   const { api } = Config.get("wp");
   const version = Config.get("editorVersion");
   const url = makeUrl(api.url, {
@@ -41,9 +41,9 @@ export const deleteFont = fontId => {
     id: fontId
   });
 
-  return request2(url, {
+  return request(url, {
     method: "POST"
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };

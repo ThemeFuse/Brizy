@@ -10,9 +10,7 @@ class Brizy_Compatibilities_LiveComposerPageBuilder {
 
 	public function wp() {
 		if (
-			! isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] )
-			&&
-			isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] )
+			! Brizy_Public_Main::is_editing()
 			&&
 			! Brizy_Editor_Entity::isBrizyEnabled( get_the_ID() )
 			&&

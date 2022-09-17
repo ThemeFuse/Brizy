@@ -115,9 +115,10 @@ class Brizy_Admin_Post_RevisionManager {
 		$meta_key_count   = count( $monitor->getPostMetaKeys() );
 		$meta_keys_params = rtrim( str_repeat( '%s,', $meta_key_count ), ',' );
 		$params           = array( (int) $revision, (int) $post );
-
+		// Delete all meta keys for revision
 		$this->cleanMetaData( $post, $revision, $monitor );
 
+		// Get all metas of parent post and add them to the revision of this parent
 		$query = "INSERT INTO {$tablePostMeta} (post_Id, meta_key, meta_value) 
 									SELECT %d, meta_key, meta_value 
 									FROM {$tablePostMeta} 
@@ -132,16 +133,24 @@ class Brizy_Admin_Post_RevisionManager {
 
 		$wpdb->query( $wpdb->prepare( $query, $params ) );
 
-		if ( $meta_key_count > 0 && false !== array_search( 'brizy', $monitor->getPostMetaKeys() ) ) {
+		if ( $meta_key_count > 0 && in_array( 'brizy', $monitor->getPostMetaKeys() ) ) {
 
-			$storage = Brizy_Editor_Storage_Post::instance( $revision );
-			$data    = $storage->get( Brizy_Editor_Post::BRIZY_POST );
+			wp_cache_delete( $revision, 'post_meta');
 
-			$data['compiled_html']      = '';
-			$data['compiled_html_body'] = '';
-			$data['compiled_html_head'] = '';
+			try {
 
-			$storage->set( Brizy_Editor_Post::BRIZY_POST, $data );
+				$storage = Brizy_Editor_Storage_Post::instance( $revision );
+				$data    = $storage->get( Brizy_Editor_Post::BRIZY_POST );
+
+				$data['compiled_html']      = '';
+				$data['compiled_html_body'] = '';
+				$data['compiled_html_head'] = '';
+
+				$storage->set( Brizy_Editor_Post::BRIZY_POST, $data );
+
+			} catch ( Exception $e ) {
+				return;
+			}
 
 			$wpdb->update(
 				$wpdb->posts,

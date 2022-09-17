@@ -1,21 +1,21 @@
-import { t } from "visual/utils/i18n";
-import {
-  toolbarShowOnResponsive,
-  toolbarElementSectionSaved,
-  toolbarElementSectionGlobal
-} from "visual/utils/toolbar";
-import { defaultValueValue } from "visual/utils/onChange";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { getAllMembershipChoices } from "visual/utils/membership";
-import { getLanguagesChoices } from "visual/utils/multilanguages";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
+import { t } from "visual/utils/i18n";
+import { getAllMembershipChoices } from "visual/utils/membership";
+import { getLanguagesChoices } from "visual/utils/multilanguages";
+import { defaultValueValue } from "visual/utils/onChange";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import {
+  toolbarElementSectionGlobal,
+  toolbarElementSectionSaved,
+  toolbarShowOnResponsive
+} from "visual/utils/toolbar";
 
 export function getItems({ v, device, component }) {
   const config = Config.getAll();
 
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
   const slider = dvv("slider");
 
   const sliderDotsChoices = [
@@ -73,7 +73,8 @@ export function getItems({ v, device, component }) {
                       id: "gbConditions",
                       disabled: !component.props.meta.globalBlockId,
                       value: component.props.meta.globalBlockId,
-                      type: "gbConditions"
+                      type: "gbConditions",
+                      context: "block"
                     }
                   ]
                 },

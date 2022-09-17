@@ -339,7 +339,7 @@
     "tempHoverSelectBorderBottomRightRadius": null,
     "tempHoverSelectBorderBottomLeftRadius": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

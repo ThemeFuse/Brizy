@@ -1,3 +1,5 @@
+import classNames from "classnames";
+import { match, mPipe, pass } from "fp-utilities";
 import React, {
   ReactElement,
   ReactNode,
@@ -6,24 +8,22 @@ import React, {
   useRef,
   useState
 } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import classNames from "classnames";
-import Config, { Cloud } from "visual/global/Config";
-import Portal from "visual/component/Portal";
+import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
-import { t } from "visual/utils/i18n";
-import { IS_PRO } from "visual/utils/env";
-import { match, mPipe, pass } from "fp-utilities";
-import * as Obj from "visual/utils/reader/object";
-import { uiSelector } from "visual/redux/selectors";
+import { getContext } from "visual/component/LeftSidebar/components/Cms/utils";
+import Portal from "visual/component/Portal";
+import Config, { Cloud } from "visual/global/Config";
+import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
 import { updateUI } from "visual/redux/actions2";
+import { uiSelector } from "visual/redux/selectors";
+import { IS_PRO } from "visual/utils/env";
+import { t } from "visual/utils/i18n";
+import * as Obj from "visual/utils/reader/object";
 import Link from "../Options/types/Link";
 import * as Base from "./types/Base";
-import * as Messages from "./types/Messages";
 import * as List from "./types/List";
-import { isCloud } from "visual/global/Config/types/configs/Cloud";
-import { getContext } from "visual/component/LeftSidebar/components/Cms/utils";
-import { isWp } from "visual/global/Config/types/configs/WP";
+import * as Messages from "./types/Messages";
 
 export interface Props {
   config: Cloud;
@@ -38,8 +38,7 @@ const Component = ({ config }: Props): ReactElement => {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const dispatch = useDispatch();
   const update = useCallback(
-    isOpen => {
-      setIframeLoaded(false);
+    (isOpen) => {
       dispatch(
         updateUI("leftSidebar", {
           drawerContentType: isOpen ? "cmsUi" : null,
@@ -49,11 +48,10 @@ const Component = ({ config }: Props): ReactElement => {
     },
     [dispatch]
   );
-  const onLinkClick = useCallback((): void => update(!opened), [
-    opened,
-    update
-  ]);
-  const onIframeLoad = useCallback((): void => setIframeLoaded(true), []);
+  const onLinkClick = useCallback(
+    (): void => update(!opened),
+    [opened, update]
+  );
   const onIframeMessage = useCallback(
     mPipe(
       pass((e: MessageEvent) => iframeSrc.startsWith(e.origin)),
@@ -61,7 +59,7 @@ const Component = ({ config }: Props): ReactElement => {
       Obj.read,
       Base.fromObject,
       Messages.readInputMessage,
-      m => {
+      (m) => {
         switch (m.type) {
           case "close":
             return update(false);
@@ -115,28 +113,29 @@ const Component = ({ config }: Props): ReactElement => {
         title={t("CMS")}
         onClick={onLinkClick}
       />
-      {opened && (
-        <Portal node={window.parent.document.body}>
-          <div className="brz-cms__wrapper">
-            <iframe
-              ref={ref}
-              src={iframeSrc}
-              className={classNames("brz-iframe", "brz-cms", {
-                "brz-loading": !iframeLoaded
-              })}
-              onLoad={onIframeLoad}
-            />
-            {!iframeLoaded && (
-              <div className="brz-cms--loading">
-                <EditorIcon
-                  icon="nc-circle-02"
-                  className="brz-ed-animated--spin"
-                />
-              </div>
-            )}
-          </div>
-        </Portal>
-      )}
+      <Portal node={window.parent.document.body}>
+        <div
+          className="brz-cms__wrapper"
+          style={{ display: opened ? "block" : "none" }}
+        >
+          <iframe
+            ref={ref}
+            src={iframeSrc}
+            className={classNames("brz-iframe", "brz-cms", {
+              "brz-loading": !iframeLoaded
+            })}
+            onLoad={(): void => setIframeLoaded(true)}
+          />
+          {!iframeLoaded && (
+            <div className="brz-cms--loading">
+              <EditorIcon
+                icon="nc-circle-02"
+                className="brz-ed-animated--spin"
+              />
+            </div>
+          )}
+        </div>
+      </Portal>
     </>
   );
 };
@@ -156,5 +155,5 @@ export const Cms = {
 
 const getConfigComponent = match(
   [isWp, () => null],
-  [isCloud, config => <Component config={config} />]
+  [isCloud, (config) => <Component config={config} />]
 );

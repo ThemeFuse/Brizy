@@ -78,12 +78,6 @@ export function style(v, vs, vd) {
     ".brz && .brz-posts__pagination ul.page-numbers": {
       standart: ["cssStyleElementPostsPaginationSpacing"]
     },
-    ".brz && .brz-posts__pagination ul.page-numbers a.page-numbers:hover": {
-      standart: ["cssStyleElementPostsPaginationColor"]
-    },
-    ".brz && .brz-posts__pagination ul.page-numbers span.page-numbers:hover": {
-      standart: ["cssStyleElementPostsPaginationColor"]
-    },
     ".brz && .brz-posts__pagination ul.page-numbers .page-numbers:hover": {
       standart: [
         "cssStyleElementPostsPaginationFontFamily",
@@ -91,9 +85,14 @@ export function style(v, vs, vd) {
         "cssStyleElementPostsPaginationLineHeight",
         "cssStyleElementPostsPaginationFontWeight",
         "cssStyleElementPostsPaginationLetterSpacing",
-        "cssStyleElementPostsPaginationBorderRadius",
+        "cssStyleElementPostsPaginationBorderRadius"
+      ]
+    },
+    ".brz && .brz-posts__pagination ul.page-numbers li:hover .page-numbers:not(.current)": {
+      standart: [
         "cssStyleElementPostsPaginationBgColor",
-        "cssStyleElementPostsPaginationBorder"
+        "cssStyleElementPostsPaginationBorder",
+        "cssStyleElementPostsPaginationColor"
       ]
     },
     ".brz && .brz-posts__pagination ul.page-numbers .page-numbers.current:hover": {

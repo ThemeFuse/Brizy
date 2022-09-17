@@ -1,24 +1,6 @@
-<?php if ( ! defined( 'ABSPATH' ) ) {
-	die( 'Direct access forbidden.' );
-}
-
+<?php defined( 'ABSPATH' ) or die();
 
 class Brizy_Admin_NetworkSettings {
-
-	private $selected_post_types;
-
-	private $role_list;
-
-	private $capability_options;
-
-	/**
-	 * @var string
-	 */
-	private $screenName;
-
-	public static function menu_slug() {
-		return Brizy_Editor::prefix( '-network-settings' );
-	}
 
 	/**
 	 * @return Brizy_Admin_NetworkSettings
@@ -34,10 +16,13 @@ class Brizy_Admin_NetworkSettings {
 	 * Brizy_Admin_NetworkSettings constructor.
 	 */
 	private function __construct() {
-
 		add_action( 'network_admin_menu', array( $this, 'actionRegisterSettingsPage' ) );
 		add_action( 'brizy_network_settings_render_tabs', array( $this, 'render_tabs' ) );
 		add_action( 'brizy_network_settings_render_content', array( $this, 'render_tab_content' ) );
+	}
+
+	public static function menu_slug() {
+		return Brizy_Editor::prefix( '-network-settings' );
 	}
 
 	/**
@@ -45,7 +30,7 @@ class Brizy_Admin_NetworkSettings {
 	 */
 	function actionRegisterSettingsPage() {
 
-		$this->screenName = add_menu_page( Brizy_Editor::get()->get_name(),
+		add_menu_page( Brizy_Editor::get()->get_name(),
 			Brizy_Editor::get()->get_name(),
 			'read',
 			self::menu_slug(),
@@ -56,8 +41,6 @@ class Brizy_Admin_NetworkSettings {
 		);
 	}
 
-
-
 	private function get_selected_tab() {
 		return ( ! empty( $_REQUEST['tab'] ) ) ? esc_attr( $_REQUEST['tab'] ) : 'license';
 	}
@@ -67,21 +50,6 @@ class Brizy_Admin_NetworkSettings {
 		$tabs         = [];
 
 		return apply_filters( 'brizy_network_settings_tabs', $tabs, $selected_tab );
-	}
-
-	/**
-	 * Return the list of capabilities including the label
-	 *
-	 * @return mixed|void
-	 */
-	public function get_capability_options() {
-		return apply_filters( 'brizy_settings_capability_options', array(
-			array( 'capability' => '', 'label' => __( 'No Access' ) ),
-			array(
-				'capability' => Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE,
-				'label'      => __( 'Full Access', 'brizy' )
-			)
-		) );
 	}
 
 	/**

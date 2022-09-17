@@ -1,13 +1,14 @@
 import _ from "underscore";
-import Config from "visual/global/Config";
-import { request2 } from "visual/utils/api";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
+import Config from "visual/global/Config";
+import { request } from "visual/utils/api/index.wp";
 import {
   AddRecaptcha,
   CreateForm,
   CreateIntegration,
   CreateIntegrationAccount,
   CreateIntegrationList,
+  FormData,
   GetForm,
   GetIntegration,
   GetIntegrationAccountApiKey,
@@ -15,7 +16,6 @@ import {
   UpdateIntegration,
   UpdateSmptIntegration
 } from "./types";
-import { FormData } from "./types";
 
 // Form
 export const getForm: GetForm = ({ formId }) => {
@@ -28,14 +28,14 @@ export const getForm: GetForm = ({ formId }) => {
     version
   });
 
-  return request2(url, {
+  return request(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
   })
-    .then(r => parseJSON<FormData>(r))
-    .then(res => res);
+    .then((r) => parseJSON<FormData>(r))
+    .then((res) => res);
 };
 
 export const createForm: CreateForm = ({ formId }) => {
@@ -47,13 +47,13 @@ export const createForm: CreateForm = ({ formId }) => {
     version
   });
 
-  return request2(url, {
+  return request(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify({ id: formId })
-  }).then(r => parseJSON<FormData>(r));
+  }).then((r) => parseJSON<FormData>(r));
 };
 
 export const updateForm: UpdateForm = ({
@@ -70,7 +70,7 @@ export const updateForm: UpdateForm = ({
     version
   });
 
-  return request2(url, {
+  return request(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -78,7 +78,7 @@ export const updateForm: UpdateForm = ({
     body: JSON.stringify({ hasEmailTemplate, emailTemplate })
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };
 
 // Service mailchimp, zepier etc.
@@ -93,12 +93,12 @@ export const getIntegration: GetIntegration = ({ formId, id }) => {
     integration: id
   });
 
-  return request2(url, {
+  return request(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       subject: string;
       emailTo: string;
@@ -116,13 +116,13 @@ export const createIntegration: CreateIntegration = ({ formId, id }) => {
     formId
   });
 
-  return request2(url, {
+  return request(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify({ id })
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       subject: string;
       emailTo: string;
@@ -152,13 +152,13 @@ export const updateIntegration: UpdateIntegration = ({
     "completed"
   ]);
 
-  return request2(url, {
+  return request(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify(data)
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       subject: string;
       emailTo: string;
@@ -180,12 +180,12 @@ export const getIntegrationAccountApiKey: GetIntegrationAccountApiKey = ({
     integration: id
   });
 
-  return request2(url, {
+  return request(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
-  }).then(r => parseJSON<Array<{ name: string }>>(r));
+  }).then((r) => parseJSON<Array<{ name: string }>>(r));
 };
 
 export const createIntegrationAccount: CreateIntegrationAccount = ({
@@ -203,13 +203,13 @@ export const createIntegrationAccount: CreateIntegrationAccount = ({
     integration: id
   });
 
-  return request2(url, {
+  return request(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify(data)
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       id: number;
       type: string;
@@ -233,13 +233,13 @@ export const createIntegrationList: CreateIntegrationList = ({
     integration: id
   });
 
-  return request2(url, {
+  return request(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify(data)
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       formId: string;
       id: string;
@@ -269,13 +269,13 @@ export const updateSmtpIntegration: UpdateSmptIntegration = ({
     formId
   });
 
-  return request2(url, {
+  return request(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     },
     body: JSON.stringify(appData)
-  }).then(r =>
+  }).then((r) =>
     parseJSON<{
       subject: string;
       emailTo: string;
@@ -302,7 +302,7 @@ export const addRecaptcha: AddRecaptcha = ({
     response
   });
 
-  return request2(url, {
+  return request(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -315,5 +315,5 @@ export const addRecaptcha: AddRecaptcha = ({
     })
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "underscore";
 import classnames from "classnames";
-import ColorPickerFields from "visual/component/Controls/ColorPicker/BrizyFields";
+import ColorPickerFields from "visual/component/Controls/ColorPicker2/BrizyFields";
 
 class ColorPickerOptionType extends React.Component {
   static defaultProps = {

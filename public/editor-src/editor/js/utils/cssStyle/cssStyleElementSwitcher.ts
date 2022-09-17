@@ -1,22 +1,25 @@
+import {
+  cssStyleBgColor,
+  cssStyleColor,
+  cssStyleSizeSizeHeight,
+  cssStyleSizeWidth
+} from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  styleElementSwitcherSpacing,
   styleElementSwitcherSize,
-  styleElementSwitcherWidth
+  styleElementSwitcherSpacing
 } from "visual/utils/style2";
-import { CSSValue } from "../style2/types";
-
-import { cssStyleColor, cssStyleBgColor } from "visual/utils/cssStyle";
 import { Reader } from "visual/utils/types/Type";
+import { CSSValue } from "../style2/types";
 
 type IconPositionType = "left" | "top" | "bottom" | "right";
 type IconSizeType = "small" | "medium" | "large" | "custom";
 
-export const readIconPosition: Reader<IconPositionType> = v =>
+export const readIconPosition: Reader<IconPositionType> = (v) =>
   v === "top" || v === "left" || v === "bottom" || v === "right"
     ? v
     : undefined;
-export const readIconSize: Reader<IconSizeType> = v =>
+export const readIconSize: Reader<IconSizeType> = (v) =>
   v === "small" || v === "medium" || v === "large" || v === "custom"
     ? v
     : undefined;
@@ -88,8 +91,7 @@ export function cssStyleElementSwitcherNav2Height({
   device,
   state
 }: CSSValue): string {
-  const size = styleElementSwitcherSize({ v, device, state });
-  return `height: ${size}px;`;
+  return cssStyleSizeSizeHeight({ v, device, state, prefix: "navStyle2" });
 }
 
 export function cssStyleElementSwitcherNavBeforeBg({
@@ -120,32 +122,5 @@ export function cssStyleElementSwitcherWidth({
   device,
   state
 }: CSSValue): string {
-  return `width: ${styleElementSwitcherWidth({ v, device, state })}px`;
-}
-export function cssStyleElementSwitcherIcon({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  const dvv = (key: string): unknown =>
-    defaultValueValue({ v, key, device, state });
-  const iconSize = dvv("iconSize");
-  const iconCustomSize = dvv("iconCustomSize");
-
-  switch (readIconSize(iconSize)) {
-    case "small": {
-      return "font-size: 16px;";
-    }
-    case "medium": {
-      return "font-size: 24px;";
-    }
-    case "large": {
-      return "font-size: 32px;";
-    }
-    case "custom": {
-      return `font-size: ${iconCustomSize}px;`;
-    }
-    case undefined:
-      return "";
-  }
+  return cssStyleSizeWidth({ v, device, state, prefix: "navStyle1" });
 }

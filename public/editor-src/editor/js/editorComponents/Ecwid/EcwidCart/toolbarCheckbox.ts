@@ -5,7 +5,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { State } from "visual/utils/stateMode";
-import { Value } from "./index";
+import { Value } from "./types/Value";
 
 export function getItems({
   v,
@@ -35,11 +35,9 @@ export function getItems({
       position: 10,
       options: [
         {
-          id: "checkbox",
+          id: "checkboxTypography",
           type: "typography-dev",
-          config: {
-            fontFamily: "desktop" === device
-          }
+          config: { fontFamily: device === "desktop" }
         }
       ]
     },
@@ -51,7 +49,10 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(checkboxColorHex, v.checkboxColorOpacity)
+            backgroundColor: hexToRgba(
+              checkboxColorHex,
+              dvv("checkboxColorOpacity")
+            )
           }
         }
       },
@@ -61,6 +62,25 @@ export function getItems({
         {
           id: "checkboxColor",
           type: "colorPicker-dev"
+        }
+      ]
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: { icon: "nc-cog", title: t("Settings") },
+      devices: "desktop",
+      position: 30,
+      options: [
+        {
+          id: "checkboxSpacing",
+          label: t("Spacing"),
+          type: "slider-dev",
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
         }
       ]
     }

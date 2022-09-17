@@ -11,7 +11,7 @@ export function style(v, vs, vd) {
         "cssStyleCustomWidth",
         "cssStyleOffset"
       ],
-      standart: ["cssStyleZIndex", "cssStylePositionMode", "cssStyleMargin"]
+      standart: ["cssStyleZIndex", "cssStylePositionRelative", "cssStyleMargin"]
     }
   };
   return renderStyles({ v, vs, vd, styles });
@@ -47,11 +47,7 @@ export function styleItem(v, vs, vd) {
 export function styleAnimation(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: [
-        "cssStyleAnimation",
-        "cssStyleAnimationDuration",
-        "cssStyleAnimationDelay"
-      ]
+      standart: ["cssStyleAnimationAll"]
     }
   };
 

@@ -1,6 +1,6 @@
 import { Reader } from "./types";
 
-export const read: Reader<string> = v => {
+export const read: Reader<string> = (v) => {
   switch (typeof v) {
     case "string":
       return v;
@@ -9,4 +9,8 @@ export const read: Reader<string> = v => {
     default:
       return undefined;
   }
+};
+
+export const is = (s: unknown): s is string => {
+  return typeof s === "string";
 };

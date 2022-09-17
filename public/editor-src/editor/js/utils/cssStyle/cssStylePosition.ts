@@ -1,20 +1,29 @@
-import { styleZIndex } from "visual/utils/style2";
-import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "visual/utils/style2/types";
+import { cssStyleSizeWidth } from "visual/utils/cssStyle";
 import * as Num from "visual/utils/math/number";
-import * as Str from "visual/utils/string/specs";
+import { defaultValueValue } from "visual/utils/onChange";
+import * as HAlign from "visual/utils/position/HAlign";
 import * as Position from "visual/utils/position/Position";
 import * as VAlign from "visual/utils/position/VAlign";
-import * as HAlign from "visual/utils/position/HAlign";
+import { capByPrefix } from "visual/utils/string";
+import * as Str from "visual/utils/string/specs";
+import { styleZIndex } from "visual/utils/style2";
+import { CSSValue } from "visual/utils/style2/types";
 
 export function cssStylePosition(d: CSSValue): string {
   const zIndex = styleZIndex(d);
 
-  return zIndex ? "position:relative;" : "position:static;";
+  return zIndex ? cssStylePositionRelative() : cssStylePositionStatic();
 }
 
-export function cssStylePositionMode(): string {
+export function cssStylePositionRelative(): string {
   return "position:relative;";
+}
+export function cssStylePositionAbsolute(): string {
+  return "position:absolute;";
+}
+
+export function cssStylePositionStatic(): string {
+  return "position:static;";
 }
 
 export function cssStyleCustomPosition(d: CSSValue): string {
@@ -25,20 +34,19 @@ export function cssStyleCustomPosition(d: CSSValue): string {
   return elementPosition === undefined ? "" : `position:${elementPosition};`;
 }
 
-export function cssStyleCustomWidth(d: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ key, ...d });
-
+export function cssStyleCustomWidth({ v, device, state }: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
   const elementPosition = dvv("elementPosition");
-  const width = Num.read(dvv("width"));
-  const widthSuffix = Str.read(dvv("widthSuffix"));
 
-  return width === undefined || !widthSuffix || elementPosition === "relative"
+  return elementPosition === "relative"
     ? ""
-    : `width:${width}${widthSuffix};`;
+    : cssStyleSizeWidth({ v, device, state });
 }
 
 export function cssStyleOffset(d: CSSValue): string {
   const dvv = (key: string): unknown => defaultValueValue({ key, ...d });
+
   const elementPosition = Position.read(dvv("elementPosition"));
 
   if (!elementPosition || elementPosition === "relative") {
@@ -72,4 +80,54 @@ export function cssStyleOffset(d: CSSValue): string {
   return Object.entries({ ...vertical, ...horizontal })
     .map(([k, v]) => (v ? `${k}: ${v};` : ""))
     .join("");
+}
+
+export function cssStylePositionTop({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const positionTop = Num.read(dvv(capByPrefix(prefix, "positionTop")));
+  const positionTopSuffix = Str.read(
+    dvv(capByPrefix(prefix, "positionTopSuffix"))
+  );
+
+  return `top:${positionTop}${positionTopSuffix};`;
+}
+
+export function cssStylePositionLeft({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const positionLeft = Num.read(dvv(capByPrefix(prefix, "positionLeft")));
+  const positionLeftSuffix = Str.read(
+    dvv(capByPrefix(prefix, "positionLeftSuffix"))
+  );
+
+  return `left:${positionLeft}${positionLeftSuffix};`;
+}
+
+export function cssStyleIconPosition({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const iconPosition = dvv(capByPrefix(prefix, "position"));
+
+  const position =
+    iconPosition === "left" ? "row nowrap" : "row-reverse nowrap";
+
+  return position === undefined ? "" : `flex-flow:${position};`;
 }

@@ -635,6 +635,10 @@
 
       .brz-btn {
         width: 100%;
+
+        &::after {
+          padding-top: 0;
+        }
       }
     }
   }

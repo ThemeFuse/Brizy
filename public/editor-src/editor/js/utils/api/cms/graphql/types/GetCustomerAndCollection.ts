@@ -42,6 +42,7 @@ export interface GetCustomerAndCollection_collectionTypes_fields_CollectionTypeF
   __typename: "CollectionTypeFieldCheck" | "CollectionTypeFieldColor" | "CollectionTypeFieldDateTime" | "CollectionTypeFieldEmail" | "CollectionTypeFieldFile" | "CollectionTypeFieldGallery" | "CollectionTypeFieldImage" | "CollectionTypeFieldLink" | "CollectionTypeFieldMap" | "CollectionTypeFieldNumber" | "CollectionTypeFieldPassword" | "CollectionTypeFieldPhone" | "CollectionTypeFieldRichText" | "CollectionTypeFieldSelect" | "CollectionTypeFieldSwitch" | "CollectionTypeFieldText" | "CollectionTypeFieldVideoLink";
   id: string;
   type: CollectionFieldTypeName;
+  label: string;
 }
 
 export interface GetCustomerAndCollection_collectionTypes_fields_CollectionTypeFieldReference_referenceSettings_collectionType {
@@ -59,6 +60,7 @@ export interface GetCustomerAndCollection_collectionTypes_fields_CollectionTypeF
   __typename: "CollectionTypeFieldReference";
   id: string;
   type: CollectionFieldTypeName;
+  label: string;
   referenceSettings: GetCustomerAndCollection_collectionTypes_fields_CollectionTypeFieldReference_referenceSettings;
 }
 
@@ -77,6 +79,7 @@ export interface GetCustomerAndCollection_collectionTypes_fields_CollectionTypeF
   __typename: "CollectionTypeFieldMultiReference";
   id: string;
   type: CollectionFieldTypeName;
+  label: string;
   multiReferenceSettings: GetCustomerAndCollection_collectionTypes_fields_CollectionTypeFieldMultiReference_multiReferenceSettings;
 }
 

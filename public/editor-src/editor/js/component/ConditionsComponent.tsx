@@ -1,16 +1,15 @@
 import React from "react";
 import Prompts from "visual/component/Prompts";
-import { t } from "visual/utils/i18n";
-import { getStore } from "visual/redux/store";
+import Config from "visual/global/Config";
 import { updatePopupRules } from "visual/redux/actions";
 import { updateGBRules } from "visual/redux/actions2";
-import Config from "visual/global/Config";
+import { globalBlocksSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import { GlobalBlock, Rule } from "visual/types";
 import { getRulesList } from "visual/utils/api";
 import { IS_CLOUD } from "visual/utils/env";
+import { t } from "visual/utils/i18n";
 import { IS_EXTERNAL_POPUP } from "visual/utils/models";
-
-import { globalBlocksSelector } from "visual/redux/selectors";
 
 type ChangeCallbackData = {
   data: {
@@ -28,6 +27,7 @@ type Options = {
   icon: string;
   label: string;
   title: string;
+  context: "block" | "popup";
   asyncGetValue?: () => Promise<Rule[]>;
   value?: Rule[];
   onChange?: (data: ChangeCallbackData) => void;
@@ -53,6 +53,7 @@ export function getOptions(
           label: t("Conditions"),
           title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
           value: rules,
+          context: "block",
           onChange: ({ data: { rules }, meta }: ChangeCallbackData): void => {
             getStore().dispatch(
               updateGBRules({
@@ -75,6 +76,7 @@ export function getOptions(
           type: "triggers",
           icon: "nc-triggers",
           label: t("Triggers"),
+          context: "popup",
           title: t("WHAT WILL TRIGGER THE POPUP TO OPEN")
         }
       ];
@@ -84,8 +86,7 @@ export function getOptions(
         // CollectionItemId, wp is expecting nothing
         const asyncGetValue = IS_CLOUD
           ? (): Promise<Rule[]> => getRulesList(Config.get("page")?.id)
-          :
-            (): Promise<Rule[]> => getRulesList("");
+          : (): Promise<Rule[]> => getRulesList("");
 
         options.push({
           id: "rules",
@@ -93,8 +94,9 @@ export function getOptions(
           icon: "nc-eye-17",
           label: t("Conditions"),
           title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
+          context: "popup",
           asyncGetValue,
-          onChange: data => {
+          onChange: (data) => {
             // @ts-expect-error: Type 'string' is not assignable to type '"UPDATE_BLOCKS"'.
             getStore().dispatch(updatePopupRules(data));
           }
@@ -111,15 +113,15 @@ export function getOptions(
 
 export const ConditionsComponent: React.FC<{
   value: string;
-  type?: "block" | "popup";
+  context: "block" | "popup";
   children: React.ReactElement;
-}> = ({ children, value, type = "block" }) => {
+}> = ({ children, value, context }) => {
   const handleMouseDown = (): void => {
     Prompts.open({
       prompt: "conditions",
       mode: "single",
       props: {
-        options: getOptions(type, value)
+        options: getOptions(context, value)
       }
     });
   };

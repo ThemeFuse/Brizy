@@ -1,7 +1,7 @@
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import { createBlockScreenshot } from "visual/utils/api";
-
-import { Screenshot } from "visual/types";
+import { GlobalBlock, Screenshot } from "visual/types";
+import { GlobalBlockProps } from "./types";
 
 export const createScreenshot = async (
   node: HTMLElement
@@ -21,5 +21,17 @@ export const createScreenshot = async (
       _thumbnailHeight: height,
       _thumbnailTime: Date.now()
     };
+  }
+};
+
+export const getBlocType = (
+  type: GlobalBlockProps["blockType"]
+): GlobalBlock["meta"]["type"] => {
+  switch (type) {
+    case "externalPopup":
+    case "popup":
+      return "popup";
+    case "normal":
+      return "normal";
   }
 };

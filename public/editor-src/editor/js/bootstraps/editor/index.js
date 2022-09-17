@@ -1,39 +1,33 @@
+import deepMerge from "deepmerge";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import deepMerge from "deepmerge";
-
-import Config from "visual/global/Config";
-import { t } from "visual/utils/i18n";
-
-import { getCurrentPage } from "./getCurrentPage";
-import {
-  getProject,
-  getGlobalBlocks,
-  removeProjectLockedSendBeacon,
-  addProjectLockedBeacon
-} from "visual/utils/api";
-import { assetUrl } from "visual/utils/asset";
-import { getBlocksInPage } from "visual/utils/blocks";
-
-import {
-  getUsedModelsFonts,
-  getUsedStylesFonts,
-  getBlocksStylesFonts
-} from "visual/utils/traverse";
-import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
-import { flatMap } from "visual/utils/array";
-import { CustomError, PageError } from "visual/utils/errors";
-
-import { createStore } from "visual/redux/store";
-import getMiddleware from "./middleware";
-import { hydrate, editorRendered } from "visual/redux/actions";
-import { getAuthorized } from "visual/utils/user/getAuthorized";
-
 import Editor from "visual/component/Editor";
 import { ToastNotification } from "visual/component/Notifications";
-
+import Config from "visual/global/Config";
+import { editorRendered, hydrate } from "visual/redux/actions";
+import { createStore } from "visual/redux/store";
+import {
+  addProjectLockedBeacon,
+  getGlobalBlocks,
+  getProject,
+  removeProjectLockedSendBeacon
+} from "visual/utils/api";
+import { flatMap } from "visual/utils/array";
+import { assetUrl } from "visual/utils/asset";
+import { getBlocksInPage } from "visual/utils/blocks";
+import { CustomError, PageError } from "visual/utils/errors";
+import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
+import { t } from "visual/utils/i18n";
+import {
+  getBlocksStylesFonts,
+  getUsedModelsFonts,
+  getUsedStylesFonts
+} from "visual/utils/traverse";
+import { getAuthorized } from "visual/utils/user/getAuthorized";
 import "../registerEditorParts";
+import { getCurrentPage } from "./getCurrentPage";
+import getMiddleware from "./middleware";
 
 const appDiv = document.querySelector("#brz-ed-root");
 const pageCurtain = window.parent.document.querySelector(
@@ -53,17 +47,15 @@ const pageCurtain = window.parent.document.querySelector(
       await addProjectLockedBeacon();
     }
 
-    const [
-      project,
-      currentPage,
-      globalBlocks,
-      blocksThumbnailSizes
-    ] = await Promise.all([
-      getProject(),
-      getCurrentPage(Config.getAll()),
-      getGlobalBlocks(),
-      fetch(assetUrl("thumbs/blocksThumbnailSizes.json")).then(r => r.json())
-    ]);
+    const [project, currentPage, globalBlocks, blocksThumbnailSizes] =
+      await Promise.all([
+        getProject(),
+        getCurrentPage(Config.getAll()),
+        getGlobalBlocks(),
+        fetch(assetUrl("thumbs/blocksThumbnailSizes.json")).then((r) =>
+          r.json()
+        )
+      ]);
 
     /* eslint-disable no-console */
     if (process.env.NODE_ENV === "development") {

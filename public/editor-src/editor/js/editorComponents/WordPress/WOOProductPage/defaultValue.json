@@ -7,6 +7,8 @@
     "className": "",
 
     "width": 100,
+    "widthSuffix": "%",
+
     "tabletWidth": null,
     "mobileWidth": null,
 

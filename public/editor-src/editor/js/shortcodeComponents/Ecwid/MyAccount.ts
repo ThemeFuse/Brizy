@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 
 export default {
   id: "MyAccount",
-  title: t("MyAccount"),
+  title: t("My Account"),
   icon: "nc-user",
   resolve: {
     type: "Wrapper",
@@ -11,7 +11,7 @@ export default {
       items: [
         {
           type: "EcwidMyAccount",
-          value: {}
+          value: { _styles: ["myAccount"] }
         }
       ]
     }

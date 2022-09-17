@@ -117,18 +117,25 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
 		update_post_meta($post, Brizy_Editor_Constants::BRIZY_ENABLED, (int)$value);
 	}
 
-
 	/**
 	 * @return string
 	 */
-	static public function getEditUrl($post) {
+	static public function getEditUrl( $post ) {
 
-		if($post instanceof WP_Post)
+		if ( $post instanceof WP_Post ) {
 			$post = $post->ID;
+		}
+
+		if ( $parent_post_id = wp_is_post_revision( $post ) ) {
+			$post = $parent_post_id;
+		}
 
 		return add_query_arg(
-			array( Brizy_Editor::prefix( '-edit' ) => '' ),
-			get_permalink( $post )
+			[
+				'action' => 'in-front-editor',
+				'post'   => $post
+			],
+			admin_url( 'post.php' )
 		);
 	}
 

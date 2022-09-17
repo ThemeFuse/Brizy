@@ -1,17 +1,15 @@
+import { cssStyleBgColor, cssStyleColor } from "visual/utils/cssStyle";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
+  styleBgColor,
+  styleElementCommentsLogoSize,
+  styleElementCommentsSkin,
   styleTypography2FontFamily,
   styleTypography2FontSize,
-  styleTypography2LineHeight,
   styleTypography2FontWeight,
   styleTypography2LetterSpacing,
-  styleElementCommentsLogoSize,
-  styleColor,
-  styleBgColor,
-  styleElementCommentsSkin
+  styleTypography2LineHeight
 } from "visual/utils/style2";
-import { defaultValueValue } from "visual/utils/onChange";
-
-import { cssStyleBgColor } from "./cssStyleBgColor";
 
 export function cssStyleElementCommentsNameFontFamily({
   v,
@@ -349,15 +347,8 @@ export function cssStyleElementCommentsWidthContainer({
   return `width: calc(100% - ${size + margin}px);`;
 }
 
-export function cssStyleElementCommentsPostButtonColor({
-  v,
-  device,
-  state,
-  prefix = "postButtonColor"
-}) {
-  const color = styleColor({ v, device, state, prefix });
-
-  return color === undefined ? "" : `color:${color};`;
+export function cssStyleElementCommentsPostButtonColor({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "postButtonColor" });
 }
 
 export function cssStyleElementCommentsPostButtonBg({
@@ -369,37 +360,23 @@ export function cssStyleElementCommentsPostButtonBg({
   return cssStyleBgColor({ v, device, state, prefix });
 }
 
-export function cssStyleElementCommentsColorLink({
-  v,
-  device,
-  state = "normal",
-  prefix = "postButtonBg"
-}) {
-  const bgColor = styleBgColor({ v, device, state, prefix });
+export function cssStyleElementCommentsColorLink({ v, device }) {
+  const bgColor = styleBgColor({
+    v,
+    device,
+    state: "normal",
+    prefix: "postButtonBg"
+  });
 
   return bgColor === undefined ? "" : `color:${bgColor} !important;`;
 }
 
-export function cssStyleElementCommentsNameColor({
-  v,
-  device,
-  state,
-  prefix = "nameColor"
-}) {
-  const color = styleColor({ v, device, state, prefix });
-
-  return color === undefined ? "" : `color:${color};`;
+export function cssStyleElementCommentsNameColor({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "nameColor" });
 }
 
-export function cssStyleElementCommentsCommentsColor({
-  v,
-  device,
-  state,
-  prefix = "commentsColor"
-}) {
-  const color = styleColor({ v, device, state, prefix });
-
-  return color === undefined ? "" : `color:${color};`;
+export function cssStyleElementCommentsCommentsColor({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "commentsColor" });
 }
 
 export function cssStyleElementCommentsChildMargin({
@@ -419,29 +396,15 @@ export function cssStyleElementCommentsChildMargin({
   return `margin-left:${size + margin}px;`;
 }
 
-export function cssStyleElementCommentsStarsColor({
-  v,
-  device,
-  state,
-  prefix = "starsColor"
-}) {
-  const color = styleColor({ v, device, state, prefix });
-
-  return color === undefined ? "" : `color:${color};`;
+export function cssStyleElementCommentsStarsColor({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "starsColor" });
 }
 
-export function cssStyleElementCommentsStarsBgColor({
-  v,
-  device,
-  state,
-  prefix = "starsBgColor"
-}) {
-  const color = styleColor({ v, device, state, prefix });
-
-  return color === undefined ? "" : `color:${color};`;
+export function cssStyleElementCommentsStarsBgColor({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "starsBgColor" });
 }
 
 export function cssStyleElementCommentsStarsSize({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   return `font-size:${dvv("starsSize")}${dvv("starsSizeSuffix")};`;
 }

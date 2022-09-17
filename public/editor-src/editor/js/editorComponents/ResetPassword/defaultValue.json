@@ -274,7 +274,7 @@
     "tempFieldPaddingBottomSuffix": "px",
     "tempFieldPaddingLeftSuffix": "px",
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

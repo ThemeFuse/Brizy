@@ -1,15 +1,16 @@
-import $ from "jquery";
-import { debounce } from "underscore";
 import {
-  Options as PopperOptions,
   Instance as PopperInstance,
+  Options as PopperOptions,
   Placement as PopperPlacement
 } from "@popperjs/core";
-import { uuid } from "visual/utils/uuid";
+import $ from "jquery";
+import { debounce } from "underscore";
 import { getProLibs } from "visual/libs";
 import { DeviceMode } from "visual/types";
 import { BrizyProLibs } from "visual/types/global";
+import * as Str from "visual/utils/reader/string";
 import { decodeFromString } from "visual/utils/string";
+import { uuid } from "visual/utils/uuid";
 import { getParentMegaMenuUid } from "./utils.common";
 
 interface Settings {
@@ -162,62 +163,64 @@ const closeOpenedMegaMenu = (exceptions?: string[]): void => {
   });
 };
 
-const setOpen = (
-  popper: PopperInstance,
-  target: HTMLElement,
-  megaMenuUid: string
-): VoidFunction => (): void => {
-  const tooltip = megaMenus.get(megaMenuUid);
+const setOpen =
+  (
+    popper: PopperInstance,
+    target: HTMLElement,
+    megaMenuUid: string
+  ): VoidFunction =>
+  (): void => {
+    const tooltip = megaMenus.get(megaMenuUid);
 
-  if (tooltip) {
-    const exceptionUids = [megaMenuUid];
-    const parentMegaMenuUid = getParentMegaMenuUid(target);
+    if (tooltip) {
+      const exceptionUids = [megaMenuUid];
+      const parentMegaMenuUid = getParentMegaMenuUid(target);
 
-    if (parentMegaMenuUid) {
-      exceptionUids.push(parentMegaMenuUid);
-    }
+      if (parentMegaMenuUid) {
+        exceptionUids.push(parentMegaMenuUid);
+      }
 
-    closeOpenedMegaMenu(exceptionUids);
+      closeOpenedMegaMenu(exceptionUids);
 
-    tooltip.dataset.opened = "true";
-    tooltip.style.display = "block";
-    target.classList.add("brz-menu__item--opened");
+      tooltip.dataset.opened = "true";
+      tooltip.style.display = "block";
+      target.classList.add("brz-menu__item--opened");
 
-    requestAnimationFrame(() => {
-      const tooltipSettings = tooltip.dataset.settings ?? "";
-      const settings = JSON.parse(decodeURIComponent(tooltipSettings));
-      const maxWidth = getMegaMenuWidth(target, settings, lastCurrentDevice);
-      tooltip.style.width = "100%";
-      tooltip.style.maxWidth = maxWidth;
+      requestAnimationFrame(() => {
+        const tooltipSettings = tooltip.dataset.settings ?? "";
+        const settings = JSON.parse(decodeURIComponent(tooltipSettings));
+        const maxWidth = getMegaMenuWidth(target, settings, lastCurrentDevice);
+        tooltip.style.width = "100%";
+        tooltip.style.maxWidth = maxWidth;
 
-      // update popper instance
-      // have problems with display none | block
-      popper.update().then(() => {
-        const offsetSpace = 20;
-        const tooltipRect = tooltip.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
+        // update popper instance
+        // have problems with display none | block
+        popper.update().then(() => {
+          const offsetSpace = 20;
+          const tooltipRect = tooltip.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
 
-        if (windowHeight < tooltipRect.top) {
-          const diffHeight = tooltipRect.top - windowHeight;
-          const maxHeight = tooltipRect.height - diffHeight - offsetSpace;
-          tooltip.style.maxHeight = `${maxHeight}px`;
-          tooltip.style.overflow = "auto";
-        }
-        if (windowHeight < tooltipRect.bottom) {
-          const diffHeight = tooltipRect.bottom - windowHeight;
-          const maxHeight = tooltipRect.height - diffHeight - offsetSpace;
-          tooltip.style.maxHeight = `${maxHeight}px`;
-          tooltip.style.overflow = "auto";
-        }
+          if (windowHeight < tooltipRect.top) {
+            const diffHeight = tooltipRect.top - windowHeight;
+            const maxHeight = tooltipRect.height - diffHeight - offsetSpace;
+            tooltip.style.maxHeight = `${maxHeight}px`;
+            tooltip.style.overflow = "auto";
+          }
+          if (windowHeight < tooltipRect.bottom) {
+            const diffHeight = tooltipRect.bottom - windowHeight;
+            const maxHeight = tooltipRect.height - diffHeight - offsetSpace;
+            tooltip.style.maxHeight = `${maxHeight}px`;
+            tooltip.style.overflow = "auto";
+          }
 
-        // show tooltip
-        requestAnimationFrame(() => {
-          tooltip.classList.add("brz-mega-menu__portal--opened");
+          // show tooltip
+          requestAnimationFrame(() => {
+            tooltip.classList.add("brz-mega-menu__portal--opened");
+          });
         });
       });
-    });
-  }
-};
+    }
+  };
 
 const mouseMove = ({ target }: Event): void => {
   if (target instanceof Element) {
@@ -370,32 +373,34 @@ const init = (item: HTMLElement, root: HTMLElement): void => {
   }
 };
 
-const resize = (root: HTMLElement): VoidFunction => (): void => {
-  const itemMegaMenus = root.querySelectorAll<HTMLElement>(
-    ".brz-menu__item-mega-menu"
-  );
-  const device = getCurrentDevice();
+const resize =
+  (root: HTMLElement): VoidFunction =>
+  (): void => {
+    const itemMegaMenus = root.querySelectorAll<HTMLElement>(
+      ".brz-menu__item-mega-menu"
+    );
+    const device = getCurrentDevice();
 
-  // Change the device Mode
-  if (device !== lastCurrentDevice) {
-    lastCurrentDevice = device;
+    // Change the device Mode
+    if (device !== lastCurrentDevice) {
+      lastCurrentDevice = device;
 
-    itemMegaMenus.forEach(item => {
-      init(item, root);
-    });
-
-    for (const [dropdown, settings] of dropdowns) {
-      dropdown.update({
-        disabled: {
-          position: device !== "desktop"
-        },
-        placement: getPopperPlacement(settings, lastCurrentDevice)
+      itemMegaMenus.forEach((item) => {
+        init(item, root);
       });
-    }
-  }
-};
 
-export default function($node: JQuery): void {
+      for (const [dropdown, settings] of dropdowns) {
+        dropdown.update({
+          disabled: {
+            position: device !== "desktop"
+          },
+          placement: getPopperPlacement(settings, lastCurrentDevice)
+        });
+      }
+    }
+  };
+
+export default function ($node: JQuery): void {
   const { MMenu, Dropdown } = getProLibs();
 
   if (!MMenu) {
@@ -407,7 +412,7 @@ export default function($node: JQuery): void {
   // normalize current menu item
   root
     .querySelectorAll<HTMLElement>("[data-menu-items-active]")
-    .forEach(menu => {
+    .forEach((menu) => {
       const isMMenu = menu.closest(".brz-menu__mmenu");
       const menuItemsActive = menu.dataset.menuItemsActive || "";
       const currentClassName = isMMenu
@@ -415,16 +420,16 @@ export default function($node: JQuery): void {
         : "brz-menu__item--current";
       const activeItemsSelector = menuItemsActive
         .split(",")
-        .map(id => `[data-menu-item-id='${id}']`)
+        .map((id) => `[data-menu-item-id='${id}']`)
         .join(",");
       const oldCurrentMenus = menu.querySelectorAll(`.${currentClassName}`);
       const newCurrentMenus = menu.querySelectorAll(activeItemsSelector);
 
-      oldCurrentMenus.forEach(menu => {
+      oldCurrentMenus.forEach((menu) => {
         menu.classList.remove(currentClassName);
       });
 
-      newCurrentMenus.forEach(menu => {
+      newCurrentMenus.forEach((menu) => {
         menu?.classList.add(currentClassName);
       });
     });
@@ -432,11 +437,13 @@ export default function($node: JQuery): void {
   let currentMenuOpened: string | undefined = undefined;
   let needToOpen: string | undefined = undefined;
 
-  root.querySelectorAll<HTMLElement>("[data-mmenu-id]").forEach(node => {
+  root.querySelectorAll<HTMLElement>("[data-mmenu-id]").forEach((node) => {
     const { mmenuId, mmenuPosition, mmenuTitle } = node.dataset;
-    const icon = [...node.children].find(node =>
+    const icon = [...node.children].find((node) =>
       node.classList.contains("brz-mm-menu__icon")
     );
+    const isSticky =
+      Str.read(node.getAttribute("data-mmenu-stickyTitle")) === "on";
 
     if (!mmenuId || !icon) {
       return;
@@ -453,7 +460,8 @@ export default function($node: JQuery): void {
       slidingSubmenus: false,
       navbar: {
         title: mmenuTitle,
-        titleLink: "custom"
+        titleLink: "custom",
+        sticky: isSticky
       },
       hooks: {
         "openPanel:after": (panel: HTMLElement): void => {
@@ -464,18 +472,18 @@ export default function($node: JQuery): void {
           // Emit Menu panel opened
           window.Brz.emit("elements.mmenu.panel.closed", panel);
         },
-        "open:start": function(): void {
+        "open:start": function (): void {
           // Emit Menu panel opened
           // @ts-expect-error: mmenu function context
           window.Brz.emit("elements.mmenu.open", this.node.pnls);
         },
-        "close:start": function(): void {
+        "close:start": function (): void {
           // Emit Menu panel opened
           // @ts-expect-error: mmenu function context
           window.Brz.emit("elements.mmenu.close", this.node.pnls);
           currentMenuOpened = undefined;
         },
-        "close:finish": function(): void {
+        "close:finish": function (): void {
           if (needToOpen) {
             const mMenuNode = root.querySelector(`${needToOpen}.brz-mm-menu`);
 
@@ -547,7 +555,7 @@ export default function($node: JQuery): void {
       "elements.headerSticky.show",
       ({ type }: { node: HTMLElement; type: string }) => {
         if (type === "animated") {
-          root.querySelectorAll(".brz-menu__item--opened").forEach(menu => {
+          root.querySelectorAll(".brz-menu__item--opened").forEach((menu) => {
             const megaMenuUid =
               menu.getAttribute("data-mega-menu-open-uid") ?? "";
             setClose(megaMenuUid);
@@ -560,7 +568,7 @@ export default function($node: JQuery): void {
       "elements.headerSticky.hide",
       ({ node, type }: { node: HTMLElement; type: string }) => {
         if (type === "animated") {
-          node.querySelectorAll(".brz-menu__item--opened").forEach(item => {
+          node.querySelectorAll(".brz-menu__item--opened").forEach((item) => {
             const megaMenuUid =
               item.getAttribute("data-mega-menu-open-uid") ?? "";
             setClose(megaMenuUid);
@@ -572,7 +580,7 @@ export default function($node: JQuery): void {
 
   root
     .querySelectorAll<HTMLElement>(".brz-menu__item-mega-menu")
-    .forEach(node => {
+    .forEach((node) => {
       const megaMenu = node.querySelector<HTMLElement>(
         ".brz-mega-menu__portal"
       );
@@ -592,9 +600,9 @@ export default function($node: JQuery): void {
   if (Dropdown) {
     root
       .querySelectorAll<HTMLElement>(".brz-menu__item-dropdown")
-      .forEach(node => {
+      .forEach((node) => {
         const device = lastCurrentDevice;
-        const content = [...node.children].find(node =>
+        const content = [...node.children].find((node) =>
           node.classList.contains("brz-menu__dropdown")
         );
 

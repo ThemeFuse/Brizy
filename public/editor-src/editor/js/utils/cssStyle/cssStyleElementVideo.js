@@ -1,25 +1,28 @@
+import { hexToRgba } from "visual/utils/color";
 import {
-  styleElementVideoPaddingRatio,
-  styleElementVideoIconFontSize,
+  cssStyleBgColor,
+  cssStyleColor,
+  cssStyleSizeFontSize,
+  cssStyleSizeHeight,
+  cssStyleSizeWidth
+} from "visual/utils/cssStyle";
+import {
   styleElementVideoBgColorRatio,
-  styleElementVideoCoverSrc,
+  styleElementVideoBorderColorHex,
+  styleElementVideoBorderOpacity,
+  styleElementVideoBoxShadowColorHex,
+  styleElementVideoBoxShadowOpacity,
   styleElementVideoCoverPositionX,
   styleElementVideoCoverPositionY,
+  styleElementVideoCoverSrc,
   styleElementVideoCoverZoom,
-  styleElementVideoIconSizeWidth,
-  styleElementVideoIconSizeHeight,
-  styleElementVideoIconCustomSize,
-  styleElementVideoBoxShadowOpacity,
-  styleElementVideoBoxShadowColorHex,
-  styleElementVideoBorderOpacity,
-  styleElementVideoBorderColorHex,
+  styleElementVideoIconFontSize,
+  styleElementVideoPaddingRatio,
   styleFilterBrightness,
+  styleFilterContrast,
   styleFilterHue,
-  styleFilterSaturation,
-  styleFilterContrast
+  styleFilterSaturation
 } from "visual/utils/style2";
-import { cssStyleColor, cssStyleBgColor } from "visual/utils/cssStyle";
-import { hexToRgba } from "visual/utils/color";
 
 export function cssStyleElementVideoPaddingRatio({ v, device, state }) {
   const paddingRatio = styleElementVideoPaddingRatio({ v, device, state });
@@ -83,15 +86,11 @@ export function cssStyleElementVideoIconFontSize({ v, device, state }) {
 }
 
 export function cssStyleElementVideoIconWidth({ v, device, state }) {
-  const iconSizeWidth = styleElementVideoIconSizeWidth({ v, device, state });
-
-  return iconSizeWidth === undefined ? "" : `width:${iconSizeWidth}px;`;
+  return cssStyleSizeWidth({ v, device, state, prefix: "iconSize" });
 }
 
 export function cssStyleElementVideoIconHeight({ v, device, state }) {
-  const iconSizeHeight = styleElementVideoIconSizeHeight({ v, device, state });
-
-  return iconSizeHeight === undefined ? "" : `height:${iconSizeHeight}px;`;
+  return cssStyleSizeHeight({ v, device, state, prefix: "iconSize" });
 }
 
 export function cssStyleElementVideoBgColorRatio({ v, device, state }) {
@@ -138,15 +137,12 @@ export function cssStyleVideoIconControls({ v, device, state }) {
 }
 
 export function cssStyleElementVideoControlsIconFontSize({ v, device, state }) {
-  const controlsIconCustomSize = styleElementVideoIconCustomSize({
+  return cssStyleSizeFontSize({
     v,
     device,
-    state
+    state,
+    prefix: "controlsIconCustom"
   });
-
-  return controlsIconCustomSize === undefined
-    ? ""
-    : `font-size:${controlsIconCustomSize}px;`;
 }
 
 export function cssStyleElementVideoMask() {

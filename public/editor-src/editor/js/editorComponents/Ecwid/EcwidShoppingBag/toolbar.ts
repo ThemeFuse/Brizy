@@ -18,115 +18,58 @@ export function getItems({
 }): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: colorHex } = getOptionColorHexByPalette(
-    dvv("colorHex"),
-    dvv("colorPalette")
+  const { hex: strokeColorHex } = getOptionColorHexByPalette(
+    dvv("strokeColorHex"),
+    dvv("strokeColorPalette")
   );
   return [
     {
       id: "toolbarCurrentElement",
       type: "popover-dev",
-      config: {
-        title: t("Shopping Bag"),
-        icon: "nc-woo-cart"
-      },
+      config: { title: t("Shopping Bag"), icon: "nc-woo-cart" },
       position: 10,
       options: [
         {
-          id: "tabsCurrentElement",
-          type: "tabs-dev",
-          tabs: [
+          id: "iconDisplay",
+          label: t("Cart Quantity"),
+          type: "switch-dev"
+        },
+        {
+          id: "groupSize",
+          type: "group-dev",
+          options: [
             {
-              id: "iconGeneral",
-              label: t("Icon"),
-              options: [
-                {
-                  id: "groupSize",
-                  type: "group-dev",
-                  devices: "desktop",
-                  options: [
-                    {
-                      id: "size",
-                      label: t("Size"),
-                      type: "radioGroup-dev",
-                      choices: [
-                        { value: "small", icon: "nc-16" },
-                        { value: "medium", icon: "nc-24" },
-                        { value: "large", icon: "nc-32" },
-                        { value: "custom", icon: "nc-more" }
-                      ]
-                    },
-                    {
-                      id: "customSize",
-                      type: "slider-dev",
-                      disabled: dvv("size") !== "custom",
-                      config: {
-                        min: 8,
-                        max: 50,
-                        units: [{ title: "px", value: "px" }]
-                      }
-                    }
-                  ]
-                }
+              id: "size",
+              label: t("Size"),
+              type: "radioGroup-dev",
+              choices: [
+                { value: "small", icon: "nc-16" },
+                { value: "medium", icon: "nc-24" },
+                { value: "large", icon: "nc-32" },
+                { value: "custom", icon: "nc-more" }
               ]
             },
             {
-              id: "backgroundGeneral",
-              label: t("Background"),
-              options: [
-                {
-                  id: "fillType",
-                  label: t("Fill"),
-                  disabled: dvv("borderStyle") === "none",
-                  type: "radioGroup-dev",
-                  choices: [
-                    { value: "filled", icon: "nc-circle" },
-                    { value: "outline", icon: "nc-outline" },
-                    { value: "default", icon: "nc-close" }
-                  ]
-                },
-                {
-                  id: "groupBorderRadius",
-                  type: "group-dev",
-                  devices: "desktop",
-                  disabled: dvv("fillType") === "default",
-                  options: [
-                    {
-                      id: "borderRadiusType",
-                      label: t("Corner"),
-                      type: "radioGroup-dev",
-                      choices: [
-                        { value: "square", icon: "nc-corners-square" },
-                        { value: "rounded", icon: "nc-corners-round" },
-                        { value: "custom", icon: "nc-more" }
-                      ]
-                    },
-                    {
-                      id: "borderRadius",
-                      type: "slider-dev",
-                      disabled: dvv("borderRadiusType") !== "custom",
-                      config: {
-                        min: 0,
-                        max: 100,
-                        units: [{ title: "px", value: "px" }]
-                      }
-                    }
-                  ]
-                },
-                {
-                  id: "padding",
-                  type: "slider-dev",
-                  label: t("Size"),
-                  disabled: dvv("fillType") === "default",
-                  config: {
-                    min: 0,
-                    max: 180,
-                    units: [{ title: "px", value: "px" }]
-                  }
-                }
-              ]
+              id: "customSize",
+              type: "slider-dev",
+              disabled: dvv("size") !== "custom",
+              config: {
+                min: 8,
+                max: 50,
+                units: [{ title: "px", value: "px" }]
+              }
             }
           ]
+        },
+        {
+          id: "padding",
+          type: "slider-dev",
+          label: t("Size"),
+          config: {
+            min: 0,
+            max: 180,
+            units: [{ title: "px", value: "px" }]
+          }
         }
       ]
     },
@@ -138,12 +81,15 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+            backgroundColor: hexToRgba(
+              strokeColorHex,
+              dvv("strokeColorOpacity")
+            )
           }
         }
       },
       devices: "desktop",
-      position: 30,
+      position: 20,
       options: [
         {
           id: "tabsColor",
@@ -154,7 +100,7 @@ export function getItems({
               label: t("Icon"),
               options: [
                 {
-                  id: "color",
+                  id: "strokeColor",
                   type: "colorPicker-dev",
                   states: [NORMAL, HOVER]
                 }
@@ -198,16 +144,10 @@ export function getItems({
       ]
     },
     {
-      id: "horizontalAlign",
-      type: "toggle-dev",
-      disabled: true,
-      choices: []
-    },
-    {
       id: "advancedSettings",
       // @ts-expect-error old option
       type: "advancedSettings",
-      position: 110,
+      position: 30,
       icon: "nc-cog",
       devices: "desktop",
       title: t("Settings")

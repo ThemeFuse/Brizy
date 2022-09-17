@@ -2,9 +2,9 @@ import {
   styleTypography2FontFamily,
   styleTypography2FontSize,
   styleTypography2FontSizeSuffix,
-  styleTypography2LineHeight,
   styleTypography2FontWeight,
-  styleTypography2LetterSpacing
+  styleTypography2LetterSpacing,
+  styleTypography2LineHeight
 } from "visual/utils/style2";
 
 export function cssStyleTypography2FontFamily({ v, device, prefix = "" }) {
@@ -43,86 +43,77 @@ export function cssStyleTypography2LetterSpacing({
   })};`;
 }
 
-export function cssStyleTypography2FontFamilyImportant({
+export function cssStyleTypography3FontFamily({
   v,
   device,
-  prefix = ""
+  prefix = "typography"
 }) {
-  const fontFamily = styleTypography2FontFamily({ v, device, prefix });
-  return fontFamily
-    ? `font-family:${styleTypography2FontFamily({
-        v,
-        device,
-        prefix
-      })}!important;`
-    : "";
+  return cssStyleTypography2FontFamily({ v, device, prefix });
 }
 
-export function cssStyleTypography2FontSizeImportant({
+export function cssStyleTypography3FontSize({
   v,
   device,
-  prefix = ""
+  prefix = "typography"
 }) {
-  const fontSize = styleTypography2FontSize({ v, device, prefix });
-  const fontSizeSuffix = styleTypography2FontSizeSuffix({ v, device, prefix });
-
-  return `font-size:${fontSize}${fontSizeSuffix}!important;`;
+  return cssStyleTypography2FontSize({ v, device, prefix });
 }
 
-export function cssStyleTypography2LineHeightImportant({
+export function cssStyleTypography3LineHeight({
   v,
   device,
-  prefix = ""
+  prefix = "typography"
 }) {
-  return `line-height:${styleTypography2LineHeight({
-    v,
-    device,
-    prefix
-  })}!important;`;
+  return cssStyleTypography2LineHeight({ v, device, prefix });
 }
 
-export function cssStyleTypography2FontWeightImportant({
+export function cssStyleTypography3FontWeight({
   v,
   device,
-  prefix = ""
+  prefix = "typography"
 }) {
-  return `font-weight:${styleTypography2FontWeight({
-    v,
-    device,
-    prefix
-  })}!important;`;
+  return cssStyleTypography2FontWeight({ v, device, prefix });
 }
 
-export function cssStyleTypography2LetterSpacingImportant({
+export function cssStyleTypography3LetterSpacing({
   v,
   device,
-  state,
-  prefix = ""
+  prefix = "typography"
 }) {
-  return `letter-spacing:${styleTypography2LetterSpacing({
+  return cssStyleTypography2LetterSpacing({ v, device, prefix });
+}
+
+export function getAllCssStyleTypography({ v, device, state, prefix = "" }) {
+  const fontFamily = cssStyleTypography3FontFamily({
     v,
     device,
     state,
     prefix
-  })}!important;`;
-}
+  });
+  const fontSize = cssStyleTypography3FontSize({
+    v,
+    device,
+    state,
+    prefix
+  });
+  const lineHeight = cssStyleTypography3LineHeight({
+    v,
+    device,
+    state,
+    prefix
+  });
+  const fontWeight = cssStyleTypography3FontWeight({
+    v,
+    device,
+    state,
+    prefix
+  });
+  const letterSpacing = cssStyleTypography3LetterSpacing({
+    v,
+    device,
+    state,
+    prefix
+  });
 
-export function cssStyleTypography3FontFamily({ v, device }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "typography" });
-}
-
-export function cssStyleTypography3FontSize({ v, device }) {
-  return cssStyleTypography2FontSize({ v, device, prefix: "typography" });
-}
-
-export function cssStyleTypography3LineHeight({ v, device }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "typography" });
-}
-
-export function cssStyleTypography3FontWeight({ v, device }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "typography" });
-}
-
-export function cssStyleTypography3LetterSpacing({ v, device }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix: "typography" });
+  return `${fontFamily} ${fontSize} ${lineHeight} ${fontWeight} ${letterSpacing}`;
 }

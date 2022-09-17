@@ -9,7 +9,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleBgColor", "cssStyleBoxShadow", "cssStyleBorder"]
     },
     ".brz && .brz-timeline__content:before": {
-      standart: ["cssStyleBgColor", "cssStyleElementTimelineArrowBorder"]
+      standart: ["cssStyleBgColor", "cssStyleBorder"]
     }
   };
 

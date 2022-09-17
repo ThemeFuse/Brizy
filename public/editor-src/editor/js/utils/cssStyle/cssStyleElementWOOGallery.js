@@ -1,37 +1,23 @@
-import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
-import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
 import {
-  styleBorderWidthGrouped,
-  styleBorderColor,
-  styleBorderStyle,
-  styleElementWOOGallerySpacing,
-  styleElementWOOGalleryBetweenThumbnail
-} from "visual/utils/style2";
+  cssStyleBorder,
+  cssStyleBorderRadius,
+  cssStyleBoxShadow,
+  cssStyleSizeMinWidth,
+  cssStyleSizeWidth
+} from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
+import {
+  styleElementWOOGalleryBetweenThumbnail,
+  styleElementWOOGallerySpacing
+} from "visual/utils/style2";
 
 export function cssStyleElementWOOGalleryBorderThumbnail({ v, device, state }) {
-  const borderWidth = styleBorderWidthGrouped({
+  return cssStyleBorder({
     v,
     device,
     state,
     prefix: "thumbnail"
   });
-  const borderStyle = styleBorderStyle({
-    v,
-    device,
-    state,
-    prefix: "thumbnail"
-  });
-  const borderColor = styleBorderColor({
-    v,
-    device,
-    state,
-    prefix: "thumbnail"
-  });
-
-  return borderWidth === undefined
-    ? ""
-    : `border:${borderWidth}px ${borderStyle} ${borderColor};`;
 }
 
 export function cssStyleElementWOOGalleryBorderRadiusThumbnail({
@@ -97,18 +83,20 @@ export function cssStyleElementWOOGalleryThumbnailSize({ v, device, state }) {
 
   return (
     (between !== undefined || between !== null) &&
-    `width: calc(${100 / thumbPerRow}% - ${(between * (thumbPerRow - 1)) /
-      thumbPerRow}px);`
+    `width: calc(${100 / thumbPerRow}% - ${
+      (between * (thumbPerRow - 1)) / thumbPerRow
+    }px);`
   );
 }
 
 export function cssStyleElementWOOGalleryChildStyle({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const thumbStyle = dvv("thumbStyle");
+  const minWidth = cssStyleSizeMinWidth({ v, device, state, prefix: "thumb" });
+  const width = cssStyleSizeWidth({ v, device, state, prefix: "thumb" });
 
-  return v.thumbStyle === "left" || v.thumbStyle === "right"
-    ? `min-width: ${dvv("thumbWidth")}${dvv("thumbWidthSuffix")}; width: ${dvv(
-        "thumbWidth"
-      )}${dvv("thumbWidthSuffix")};`
+  return thumbStyle === "left" || thumbStyle === "right"
+    ? `${minWidth} ${width}`
     : "";
 }
 

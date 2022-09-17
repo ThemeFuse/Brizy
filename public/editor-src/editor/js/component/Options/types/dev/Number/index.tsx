@@ -1,14 +1,14 @@
+import { mPipe } from "fp-utilities";
 import React, { useCallback } from "react";
 import { NumberComponent as Control } from "visual/component/Controls/Number";
-import * as Option from "visual/component/Options/Type";
 import { useDebouncedOnChange } from "visual/component/hooks";
+import * as Option from "visual/component/Options/Type";
 import { OnChange, SimpleValue } from "visual/component/Options/Type";
-import { Component } from "./Type";
-import { NumberSpec } from "visual/utils/math/number";
-import { add, clamp, subtractR } from "visual/utils/math";
-import { mPipe } from "fp-utilities";
-import { wrap } from "visual/utils/object/get";
 import { pipe } from "visual/utils/fp";
+import { add, clamp, subtractR } from "visual/utils/math";
+import { NumberSpec } from "visual/utils/math/number";
+import { wrap } from "visual/utils/object/get";
+import { Component } from "./Type";
 
 export const Number: Component = ({
   className,
@@ -27,10 +27,10 @@ export const Number: Component = ({
     pipe(wrap("value"), onChange),
     [onChange]
   );
-  const validateChange = useCallback((v: number) => clamp(v, min, max), [
-    min,
-    max
-  ]);
+  const validateChange = useCallback(
+    (v: number) => clamp(v, min, max),
+    [min, max]
+  );
 
   const t = useCallback(mPipe(validateChange, wrapValue), [
     validateChange,
@@ -42,11 +42,11 @@ export const Number: Component = ({
     updateRate
   );
   const handleOnIncrease = useCallback(
-    mPipe(() => _value, add(step), validateChange, t),
+    mPipe(() => _value, add(step), validateChange, handleOnChange),
     [_value, step]
   );
   const handleOnDecrease = useCallback(
-    mPipe(() => _value, subtractR(step), validateChange, t),
+    mPipe(() => _value, subtractR(step), validateChange, handleOnChange),
     [_value, step]
   );
 
@@ -66,11 +66,13 @@ export const Number: Component = ({
   );
 };
 
-const getModel: Option.FromElementModel<SimpleValue<number>> = get => ({
+const getModel: Option.FromElementModel<SimpleValue<number>> = (get) => ({
   value: NumberSpec.read(get("value"))
 });
 
-const getElementModel: Option.ToElementModel<SimpleValue<number>> = values => {
+const getElementModel: Option.ToElementModel<SimpleValue<number>> = (
+  values
+) => {
   return {
     value: values.value
   };

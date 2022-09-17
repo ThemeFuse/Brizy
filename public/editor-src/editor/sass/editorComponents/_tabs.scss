@@ -142,15 +142,21 @@
     &__nav {
       margin: 0 !important;
     }
+
+    &__content {
+      width: 100%;
+    }
+
     // Mobile
     &__nav--mobile {
-      display: block;
+      display: flex;
 
       & > .brz-tabs__nav--button {
         border-width: 0 !important;
         box-shadow: none !important;
         width: max-content;
         align-items: center;
+        word-break: break-all;
       }
     }
     &__nav--desktop {

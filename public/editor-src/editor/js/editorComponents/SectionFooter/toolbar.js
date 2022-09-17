@@ -1,26 +1,26 @@
 import Config from "visual/global/Config";
-import { t } from "visual/utils/i18n";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
-import {
-  getOptionColorHexByPalette,
-  getDynamicContentChoices
-} from "visual/utils/options";
+import { t } from "visual/utils/i18n";
+import { getAllMembershipChoices } from "visual/utils/membership";
+import { getLanguagesChoices } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
+import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarElementSectionGlobal,
   toolbarElementSectionSaved,
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
-import { getAllMembershipChoices } from "visual/utils/membership";
-import { getLanguagesChoices } from "visual/utils/multilanguages";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
-import { isWp } from "visual/global/Config/types/configs/WP";
 
 export function getItems({ v, device, component, context }) {
   const config = Config.getAll();
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const sectionHeightSuffix = dvv("sectionHeightSuffix");
 
@@ -64,7 +64,8 @@ export function getItems({ v, device, component, context }) {
               id: "gbConditions",
               disabled: !component.props.meta.globalBlockId,
               value: component.props.meta.globalBlockId,
-              type: "gbConditions"
+              type: "gbConditions",
+              context: "block"
             }
           ]
         },

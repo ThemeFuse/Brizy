@@ -1,6 +1,12 @@
-export type Migration = {
+import { ElementModel } from "visual/component/Elements/Types";
+
+export interface Deps<T> {
+  [k: string]: T;
+}
+
+export type Migration<D extends Deps<unknown>> = {
   version: number;
-  cb: (value: unknown) => unknown;
+  cb: (value: ElementModel, deps?: D) => ElementModel;
 };
 
 function compareVersions(m1: number, m2: number): -1 | 0 | 1 {
@@ -13,13 +19,13 @@ function compareVersions(m1: number, m2: number): -1 | 0 | 1 {
   }
 }
 
-export function findMigrations(
-  migrations: Migration[],
+export function findMigrations<D extends Deps<unknown>>(
+  migrations: Migration<D>[],
   version: number
-): Migration[] {
+): Migration<D>[] {
   // try to find a migration whose version is larger than our current version
   const needToMigrate = migrations.find(
-    m => compareVersions(version, m.version) === -1
+    (m) => compareVersions(version, m.version) === -1
   );
 
   if (!needToMigrate) {
@@ -30,12 +36,16 @@ export function findMigrations(
     compareVersions(m1.version, m2.version)
   );
   const index = sorted.findIndex(
-    m => compareVersions(version, m.version) === -1
+    (m) => compareVersions(version, m.version) === -1
   );
 
   return sorted.slice(index);
 }
 
-export function migrate(migrations: Migration[], value: unknown): unknown {
-  return migrations.reduce((acc, m) => m.cb(acc), value);
+export function migrate<D extends Deps<unknown>>(
+  migrations: Migration<D>[],
+  value: ElementModel,
+  deps?: D
+): ElementModel {
+  return migrations.reduce((acc, m) => m.cb(acc, deps), value);
 }

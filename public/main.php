@@ -13,7 +13,6 @@ class Brizy_Public_Main
      * @var Brizy_Public_Main[]
      */
     static $instance = null;
-    static $the_content_fitler_addded = false;
 
     /**
      * @var Brizy_Editor_Post
@@ -22,11 +21,11 @@ class Brizy_Public_Main
 
     static $is_excerpt = false;
 
-    /**
-     * Brizy_Public_Main constructor.
-     *
-     * @param $post
-     */
+	/**
+	 * Brizy_Public_Main constructor.
+	 *
+	 * @param Brizy_Editor_Entity $post
+	 */
     private function __construct(Brizy_Editor_Entity $post)
     {
         $this->post = $post;
@@ -53,83 +52,39 @@ class Brizy_Public_Main
         return self::$instance[ $wpPostId ] = new self( $post );
     }
 
-    static public function isInitialized()
-    {
-        return is_object(self::$instance);
+    public function editMode() {
+	    if ( self::is_editing_page_with_editor( $this->post ) ) {
+		    add_action( 'admin_action_in-front-editor', [ $this, 'loadEditPage' ] );
+	    } elseif ( self::is_editing_page_with_editor_on_iframe( $this->post ) ) {
+		    add_filter( 'template_include', array( $this, 'templateIncludeForEditor' ), 10000 );
+		    add_filter( 'show_admin_bar', '__return_false' );
+		    add_filter( 'body_class', array( $this, 'body_class_editor' ) );
+		    add_action( 'wp_enqueue_scripts', array( $this, '_action_enqueue_editor_assets' ), 9999 );
+		    add_filter( 'the_content', array( $this, '_filter_the_content' ), - 12000 );
+		    add_action( 'brizy_template_content', array( $this, '_action_the_content' ) );
+		    add_action( 'post_password_required', '__return_false' );
+
+	    }
     }
 
-    public function initialize_wordpress_editor()
-    {
-        if (self::is_editing_page_without_editor($this->post)) {
-            add_action('admin_bar_menu', array($this, '_action_add_admin_bar_update_button'), 9999);
-        }
-    }
+	public function previewMode() {
 
-    public function initialize_front_end()
-    {
+		if ( ! self::is_view_page( $this->post ) ) {
+			return;
+		}
 
-        if (self::is_editing_page_with_editor($this->post) && Brizy_Editor_User::is_user_allowed()) {
-            // When some plugins want to redirect to their templates.
-            remove_all_filters('template_redirect');
-            add_filter('template_include', array($this, 'templateInclude'), 10000);
+		$this->preparePost();
 
-        } elseif (self::is_editing_page_with_editor_on_iframe($this->post) && Brizy_Editor_User::is_user_allowed()) {
-            add_filter('template_include', array($this, 'templateIncludeForEditor'), 10000);
-            add_filter('show_admin_bar', '__return_false');
-            add_filter('body_class', array($this, 'body_class_editor'));
-            add_action('wp_enqueue_scripts', array($this, '_action_enqueue_editor_assets'), 9999);
-            add_filter('the_content', array($this, '_filter_the_content'), -12000);
-            add_action('brizy_template_content', array($this, '_action_the_content'));
-            add_action('post_password_required', '__return_false');
-
-        } elseif (self::is_view_page($this->post)) {
-
-            $this->preparePost();
-
-            add_action('template_include', array($this, 'templateIncludeForEditor'), 10000);
-            remove_filter('the_content', 'wpautop');
-            // insert the compiled head and content
-            add_filter('body_class', array($this, 'body_class_frontend'));
-            add_action('wp_head', array($this, 'insert_page_head'));
-            add_action('admin_bar_menu', array($this, 'toolbar_link'), 999);
-            add_action('wp_enqueue_scripts', array($this, '_action_enqueue_preview_assets'), 9999);
-            add_filter('the_content', array($this, 'insert_page_content'), -12000);
-            add_action('brizy_template_content', array($this, 'brizy_the_content'));
-        }
-    }
-
-    /**
-     * @internal
-     */
-    function _action_add_admin_bar_update_button()
-    {
-        global $wp_admin_bar;
-
-        $wp_admin_bar->add_menu(
-            array(
-                'id' => Brizy_Editor::get_slug() . '-post-preview-url',
-                'title' => __('Preview'),
-                'href' => get_preview_post_link(),
-                'meta' => array(
-                    'target' => '_blank',
-                ),
-            )
-        );
-
-        $status = get_post_status($this->post->getWpPostId());
-        if (in_array($status, array('publish', 'future', 'private'))) {
-            $wp_admin_bar->add_menu(
-                array(
-                    'id' => Brizy_Editor::get_slug() . '-post-view-url',
-                    'title' => __('View'),
-                    'href' => get_permalink(),
-                    'meta' => array(
-                        'target' => '_blank',
-                    ),
-                )
-            );
-        }
-    }
+		add_action('template_include', array($this, 'templateIncludeForEditor'), 10000);
+		remove_filter('the_content', 'wpautop');
+		// insert the compiled head and content
+		add_filter('body_class', array($this, 'body_class_frontend'));
+		add_action('wp_head', array($this, 'insert_page_head'));
+		add_action('admin_bar_menu', array($this, 'toolbar_link'), 999);
+		add_action('wp_enqueue_scripts', array($this, '_action_enqueue_preview_assets'), 9999);
+		add_filter('the_content', array($this, 'insert_page_content'), -12000);
+		add_action('brizy_template_content', array($this, 'brizy_the_content'));
+	}
 
     /**
      * @internal
@@ -251,53 +206,6 @@ class Brizy_Public_Main
         return $template;
     }
 
-    public function templateInclude($atemplate)
-    {
-        $config_object = $this->getConfigObject();
-
-        $iframe_url = add_query_arg(
-            array(Brizy_Editor::prefix('-edit-iframe') => ''),
-            get_permalink($this->post->getWpPostId())
-        );
-
-        $favicon = '';
-        if (has_site_icon()) {
-            ob_start();
-            ob_clean();
-            wp_site_icon();
-            $favicon = ob_get_clean();
-        }
-
-        $context = array(
-            'editorData' => $config_object,
-            'editorVersion' => BRIZY_EDITOR_VERSION,
-            'iframe_url' => $iframe_url,
-            'page_title' => apply_filters(
-                'the_title',
-                $this->post->getWpPost()->post_title,
-                $this->post->getWpPostId()
-            ),
-            'favicon' => $favicon,
-            'styles' => [$config_object->urls->assets . "/editor/css/editor.css"],
-            'scripts' => [$config_object->urls->assets . "/editor/js/polyfill.js"],
-        );
-
-        if (defined('BRIZY_DEVELOPMENT')) {
-            $context['DEBUG'] = true;
-        }
-
-        $context = apply_filters('brizy_editor_page_context', $context);
-
-        if (!$context) {
-            throw new Exception('Invalid template context. Probably a bad filter implementation');
-        }
-
-        echo Brizy_TwigEngine::instance(self::path('views'))
-            ->render('page.html.twig', $context);
-
-        return self::path('views/empty.php');
-    }
-
     public function body_class_frontend($classes)
     {
         $classes[] = 'brz';
@@ -324,53 +232,38 @@ class Brizy_Public_Main
     /**
      * @return bool
      */
-    public static function is_editing_page_with_editor(Brizy_Editor_Post $post = null)
-    {
-        return !is_admin() && isset($_REQUEST[Brizy_Editor::prefix('-edit')]) && ($post ? $post->uses_editor() : true);
-    }
+	public static function is_editing_page_with_editor( Brizy_Editor_Post $post = null ) {
+		return is_admin() && isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'in-front-editor' && ( $post ? $post->uses_editor() : true );
+	}
 
     /**
      * @return bool
      */
-    public static function is_editing_page_with_editor_on_iframe(Brizy_Editor_Post $post = null)
-    {
-        return !is_admin() && isset($_REQUEST[Brizy_Editor::prefix('-edit-iframe')]) && ($post ? $post->uses_editor() : true);
-    }
+	public static function is_editing_page_with_editor_on_iframe( Brizy_Editor_Post $post = null ) {
+		return ! is_admin() && ! empty( $_REQUEST['is-editor-iframe'] ) && ( $post ? $post->uses_editor() : true );
+	}
 
-    /**
-     * @return bool
-     */
-    public static function is_editing_page_without_editor(Brizy_Editor_Post $post = null)
-    {
-        return isset($_REQUEST['post']) && $_REQUEST['post'] == $post->getWpPostId();
-    }
+	public static function is_editing( Brizy_Editor_Post $post = null ) {
+		return self::is_editing_page_with_editor( $post ) || self::is_editing_page_with_editor_on_iframe( $post );
+	}
 
-    /**
-     * @return bool
-     */
-    public static function is_view_page(Brizy_Editor_Post $post = null)
-    {
+	/**
+	 * @return bool
+	 */
+	public static function is_view_page( Brizy_Editor_Post $post = null ) {
+		$isView = false;
 
-        /* old code
-           return ! is_admin() && $post && $post->uses_editor() && ! isset(
-                $_GET[Brizy_Editor::prefix(
-                    '-edit-iframe'
-                )]
-            ) && ! isset($_GET[Brizy_Editor::prefix('-edit')]);
-         */
+		if ( ! is_admin() && $post && $post->uses_editor() && ! isset( $_GET['is-editor-iframe'] ) ) {
+			$isView = true;
 
-        $isView = false;
+			if ( in_array( get_post_status( $post->getWpPost() ),
+					[ 'future', 'draft', 'pending', 'private' ] ) && ! Brizy_Editor_User::is_user_allowed() ) {
+				$isView = false;
+			}
+		}
 
-        if (!is_admin() && $post && $post->uses_editor() && !isset($_GET[Brizy_Editor::prefix('-edit-iframe')]) && !isset($_GET[Brizy_Editor::prefix('-edit')])) {
-            $isView = true;
-
-            if (in_array(get_post_status($post->getWpPost()), ['future', 'draft', 'pending', 'private']) && !Brizy_Editor_User::is_user_allowed()) {
-                $isView = false;
-            }
-        }
-
-        return $isView;
-    }
+		return $isView;
+	}
 
     /**
      * @param $content
@@ -540,55 +433,57 @@ class Brizy_Public_Main
         }
     }
 
-    public function addTheContentFilters()
-    {
+	public function loadEditPage() {
 
-        if (self::$the_content_fitler_addded) {
-            return;
-        }
+		query_posts( [
+			'p'         => $this->post->getWpPostId(),
+			'post_type' => get_post_type( $this->post->getWpPostId() ),
+		] );
 
-        if ($this->is_editing_page_with_editor_on_iframe() && Brizy_Editor_User::is_user_allowed()) {
-            add_filter('the_content', array($this, '_filter_the_content'));
-            add_action('brizy_template_content', array($this, '_action_the_content'));
-        } elseif ($this->is_view_page($this->post)) {
-            if (!post_password_required($this->post->getWpPost())) {
-                add_filter('the_content', array($this, 'insert_page_content'));
-            }
-        }
+		// Send MIME Type header like WP admin-header.
+		@header( 'Content-Type: ' . get_option( 'html_type' ) . '; charset=' . get_option( 'blog_charset' ) );
 
-        self::$the_content_fitler_addded = true;
-    }
+		$config_object = $this->getConfigObject();
 
-    public function removeTheContentFilters()
-    {
+		$favicon = '';
+		if ( has_site_icon() ) {
+			ob_start(); ob_clean();
+			wp_site_icon();
+			$favicon = ob_get_clean();
+		}
 
-        if (!self::$the_content_fitler_addded) {
-            return;
-        }
+		$context = array(
+			'editorData'    => $config_object,
+			'editorVersion' => BRIZY_EDITOR_VERSION,
+			'iframe_url'    => add_query_arg(
+				[
+					'is-editor-iframe' => time(),
+					'post'             => $this->post->getWpPostId()
+				],
+				get_permalink( $this->post->getWpPostId() )
+			),
+			'page_title'    => apply_filters(
+				'the_title',
+				$this->post->getWpPost()->post_title,
+				$this->post->getWpPostId()
+			),
+			'favicon'       => $favicon,
+			'styles'        => [ $config_object->urls->assets . "/editor/css/editor.css" ],
+			'scripts'       => [ $config_object->urls->assets . "/editor/js/polyfill.js" ],
+		);
 
-        if ($this->is_editing_page_with_editor_on_iframe() && Brizy_Editor_User::is_user_allowed()) {
-            remove_filter('the_content', array($this, '_filter_the_content'));
-            remove_action('brizy_template_content', array($this, '_action_the_content'));
-        } elseif ($this->is_view_page($this->post)) {
-            if (!post_password_required($this->post->getWpPost())) {
-                remove_filter('the_content', array($this, 'insert_page_content'));
-            }
-        }
+		if ( defined( 'BRIZY_DEVELOPMENT' ) ) {
+			$context['DEBUG'] = true;
+		}
 
-        self::$the_content_fitler_addded = false;
-    }
+		$context = apply_filters( 'brizy_editor_page_context', $context );
 
-    public function start_excerpt($content)
-    {
-        self::$is_excerpt = true;
+		if ( ! $context ) {
+			throw new Exception( 'Invalid template context. Probably a bad filter implementation' );
+		}
 
-        return $content;
-    }
+		echo Brizy_TwigEngine::instance( self::path( 'views' ) )->render( 'page.html.twig', $context );
 
-    public function end_excerpt($content)
-    {
-        self::$is_excerpt = false;
-
-        return $content;
-    }
+		die();
+	}
 }

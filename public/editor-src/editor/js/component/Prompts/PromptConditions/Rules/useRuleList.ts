@@ -1,35 +1,48 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { from, of } from "rxjs";
+import { catchError, map, tap } from "rxjs/operators";
 import { setIn } from "timm";
-import { t } from "visual/utils/i18n";
-import {
-  disableAlreadyUsedRules,
-  getUniqRules,
-  getRulesListIndexByRule
-} from "./utils";
-import { getCustomerAndCollectionTypes, Refs as RefsById } from "./utils/api";
-import { getCollectionItems } from "visual/utils/api/cms";
-import {
-  CUSTOMER_TYPE,
-  ECWID_PRODUCT_TYPE
-} from "visual/utils/blocks/blocksConditions";
+import Config from "visual/global/Config";
+import { isCloud, isCMS } from "visual/global/Config/types/configs/Cloud";
+import { Categories } from "visual/libs/EcwidSdk/categories";
+import { Products } from "visual/libs/EcwidSdk/products";
 import { CollectionItemRule, CollectionTypeRule, Rule } from "visual/types";
-import { CmsListItem, RuleList, RuleListItem } from "./types";
+import { getCollectionItems } from "visual/utils/api/cms";
 import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks";
-import { isCloud, isCMS } from "visual/global/Config/types/configs/Cloud";
-import Config from "visual/global/Config";
+import {
+  createEntityValue,
+  createEntityValueAll,
+  CUSTOMER_TYPE,
+  ECWID_PRODUCT_CATEGORY_TYPE,
+  ECWID_PRODUCT_TYPE
+} from "visual/utils/blocks/blocksConditions";
 import { isOneOf } from "visual/utils/fp/isOneOf";
-import { from, of } from "rxjs";
-import { Products } from "visual/libs/EcwidSdk/products";
-import { catchError, map, tap } from "rxjs/operators";
+import { t } from "visual/utils/i18n";
+import { CmsListItem, RuleList, RuleListItem } from "./types";
+import {
+  disableAlreadyUsedRules,
+  getRulesListIndexByRule,
+  getUniqRules
+} from "./utils";
+import { getCustomerAndCollectionTypes, Refs as RefsById } from "./utils/api";
 
-export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
+export default function useRuleList(
+  rules: Rule[],
+  // @ts-expect-error: This type used right now only in WP
+  type: "popup" | "block" //eslint-disable-line @typescript-eslint/no-unused-vars
+): [boolean, RuleList[]] {
   const [collectionRuleList, setCollectionRuleList] = useState<RuleList[]>([]);
   const [customerRuleList, setCustomerRuleList] = useState<RuleList[]>([]);
   const [ecwidProductsList, setEcwidProductsList] = useState<
+    | { type: "ready"; items: CmsListItem[] }
+    | { type: "init" }
+    | { type: "loading" }
+  >({ type: "init" });
+  const [ecwidCategoriesList, setEcwidCategoriesList] = useState<
     | { type: "ready"; items: CmsListItem[] }
     | { type: "init" }
     | { type: "loading" }
@@ -39,7 +52,7 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
   // it's needed only for cms!
   const [refsById, setRefsById] = useState<RefsById>({});
 
-  const ecwidClient = useMemo((): Products | undefined => {
+  const ecwidProductsClient = useMemo((): Products | undefined => {
     const config = Config.getAll();
 
     if (isCloud(config) && isCMS(config) && config.modules?.shop) {
@@ -48,8 +61,17 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
 
     return undefined;
   }, []);
-  const ecwidRules = useMemo((): RuleList[] => {
-    if (!ecwidClient) {
+  const ecwidCategoriesClient = useMemo((): Categories | undefined => {
+    const config = Config.getAll();
+
+    if (isCloud(config) && isCMS(config) && config.modules?.shop) {
+      return new Categories(config.modules.shop.apiUrl);
+    }
+
+    return undefined;
+  }, []);
+  const ecwidProductsRules = useMemo((): RuleList[] => {
+    if (!ecwidProductsClient) {
       return [];
     }
 
@@ -58,7 +80,7 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
       case "loading":
         return [
           {
-            title: "Ecwid",
+            title: "Products",
             groupValue: 1,
             value: ECWID_PRODUCT_TYPE,
             items: []
@@ -67,7 +89,7 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
       case "ready":
         return [
           {
-            title: "Ecwid",
+            title: "Products",
             groupValue: 1,
             value: ECWID_PRODUCT_TYPE,
             items: ecwidProductsList.items
@@ -75,6 +97,33 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
         ];
     }
   }, [ecwidProductsList]);
+  const ecwidCategoriesRules = useMemo((): RuleList[] => {
+    if (!ecwidCategoriesClient) {
+      return [];
+    }
+
+    switch (ecwidCategoriesList.type) {
+      case "init":
+      case "loading":
+        return [
+          {
+            title: "Product Categories",
+            groupValue: 1,
+            value: ECWID_PRODUCT_CATEGORY_TYPE,
+            items: []
+          }
+        ];
+      case "ready":
+        return [
+          {
+            title: "Product Categories",
+            groupValue: 1,
+            value: ECWID_PRODUCT_CATEGORY_TYPE,
+            items: ecwidCategoriesList.items
+          }
+        ];
+    }
+  }, [ecwidCategoriesList]);
 
   useEffect(() => {
     async function fetchData(): Promise<void> {
@@ -133,7 +182,7 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
       let newRulesList = collectionRuleList;
 
       await Promise.all(
-        uniqRules.map(async rule => {
+        uniqRules.map(async (rule) => {
           if (isCollectionItemRule(rule) || isCollectionTypeRule(rule)) {
             const ruleIndex = getRulesListIndexByRule(collectionRuleList, rule);
             const hasItems = collectionRuleList[ruleIndex]?.items;
@@ -178,15 +227,15 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
 
   useEffect(() => {
     if (
-      ecwidClient &&
+      ecwidProductsClient &&
       ecwidProductsList.type === "init" &&
       rules
         .filter(isOneOf([isCollectionTypeRule, isCollectionItemRule]))
-        .some(r => r.entityType === ECWID_PRODUCT_TYPE)
+        .some((r) => r.entityType === ECWID_PRODUCT_TYPE)
     ) {
       setEcwidProductsList({ type: "loading" });
       setListLoading(true);
-      const fetch$ = from(ecwidClient.search())
+      const fetch$ = from(ecwidProductsClient.search())
         .pipe(
           map((r): CmsListItem[] => {
             return [
@@ -194,7 +243,7 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
                 title: t("Specific Product"),
                 value: ECWID_PRODUCT_TYPE,
                 mode: "specific",
-                items: r.items.map(i => ({
+                items: r.items.map((i) => ({
                   title: i.name,
                   value: i.id
                 }))
@@ -202,7 +251,7 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
             ];
           }),
           catchError(() => of([])),
-          map(items => ({ type: "ready", items } as const)),
+          map((items) => ({ type: "ready", items } as const)),
           tap(() => setListLoading(false))
         )
         .subscribe(setEcwidProductsList);
@@ -211,9 +260,49 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
     }
   }, [rules]);
 
+  useEffect(() => {
+    if (
+      ecwidCategoriesClient &&
+      ecwidCategoriesList.type === "init" &&
+      rules
+        .filter(isOneOf([isCollectionTypeRule, isCollectionItemRule]))
+        .some((r) => r.entityType === ECWID_PRODUCT_CATEGORY_TYPE)
+    ) {
+      setEcwidCategoriesList({ type: "loading" });
+      setListLoading(true);
+      const fetch$ = from(ecwidCategoriesClient.search())
+        .pipe(
+          map((r): CmsListItem[] => {
+            return [
+              {
+                title: t("Specific Category"),
+                value: ECWID_PRODUCT_CATEGORY_TYPE,
+                mode: "specific",
+                items: r.items.map((i) => ({
+                  title: i.name,
+                  value: i.id
+                }))
+              }
+            ];
+          }),
+          catchError(() => of([])),
+          map((items) => ({ type: "ready", items } as const)),
+          tap(() => setListLoading(false))
+        )
+        .subscribe(setEcwidCategoriesList);
+
+      return () => fetch$.unsubscribe();
+    }
+  }, [rules]);
+
   return [
     listLoading,
-    [...collectionRuleList, ...customerRuleList, ...ecwidRules]
+    [
+      ...collectionRuleList,
+      ...customerRuleList,
+      ...ecwidProductsRules,
+      ...ecwidCategoriesRules
+    ]
   ];
 
   async function fetchRuleListItems(
@@ -236,14 +325,27 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
 
     if (entityType) {
       await Promise.all(
-        entityType.map(async ref => {
+        entityType.map(async (ref) => {
+          const allReference = [
+            {
+              title: `All ${ref.title}`,
+              value: createEntityValueAll({ fieldId: ref.fieldId })
+            }
+          ];
           const items = await getItems(ref.value);
+          const itemWithRefId = items.map((i) => ({
+            title: i.title,
+            value: createEntityValue({
+              fieldId: ref.fieldId,
+              collectionId: i.value
+            })
+          }));
 
           ruleList.push({
             title: ref.title,
             value: ref.value,
             mode: "reference",
-            items
+            items: [...allReference, ...itemWithRefId]
           });
 
           return Promise.resolve();
@@ -255,9 +357,7 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
   }
 }
 
-async function getItems(
-  entityType: CollectionTypeRule["entityType"]
-): Promise<RuleList[]> {
+async function getItems(entityType: string): Promise<RuleList[]> {
   const items = await getCollectionItems(entityType, { status: "all" });
 
   return items.map(({ id, title }) => ({

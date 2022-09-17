@@ -28,7 +28,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleElementMenuSimpleItemPadding"]
     },
     ".brz &&:hover .brz-menu-simple__icon--bars": {
-      standart: ["cssStyleElementMenuSimpleColorBars"]
+      standart: ["cssStyleElementMenuSimpleColorBars", "cssStyleColor"]
     }
   };
   return renderStyles({ v, vs, vd, styles });

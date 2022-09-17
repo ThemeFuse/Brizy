@@ -1,26 +1,28 @@
+import classNames from "classnames";
 import React from "react";
 import { noop } from "underscore";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
 import ContextMenu from "visual/component/ContextMenu";
-import contextMenuConfig from "./contextMenu";
-import Items from "./Items";
-import * as toolbarExtendParentConfig from "./toolbarExtendParent";
-import * as sidebarExtendParentConfig from "./sidebarExtendParent";
-import * as toolbarExtendConfig from "./toolbarExtend";
-import * as sidebarExtendConfig from "./sidebarExtend";
-import * as toolbarFilterConfig from "./toolbarFilter";
-import * as sidebarFilterConfig from "./sidebarFilter";
-import defaultValue from "./defaultValue.json";
+import CustomCSS from "visual/component/CustomCSS";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { getTagNameFromFontStyle } from "visual/editorComponents/tools/HtmlTag";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
-import { style, styleAnimation } from "./styles";
-import classnames from "classnames";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
-import classNames from "classnames";
-import { getTagNameFromFontStyle } from "visual/editorComponents/tools/HtmlTag";
+import * as State from "visual/utils/stateMode";
+import contextMenuConfig from "./contextMenu";
+import defaultValue from "./defaultValue.json";
+import Items from "./Items";
+import * as sidebarExtendConfig from "./sidebarExtend";
+import * as sidebarExtendParentConfig from "./sidebarExtendParent";
+import * as sidebarFilterConfig from "./sidebarFilter";
+import { style, styleAnimation } from "./styles";
+import * as toolbarExtendConfig from "./toolbarExtend";
+import * as toolbarExtendParentConfig from "./toolbarExtendParent";
+import * as toolbarFilterConfig from "./toolbarFilter";
 
 class Accordion extends EditorComponent {
   static get componentId() {
@@ -34,7 +36,7 @@ class Accordion extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleAllTagChange = allTag => {
+  handleAllTagChange = (allTag) => {
     this.patchValue({ allTag });
   };
 
@@ -51,7 +53,7 @@ class Accordion extends EditorComponent {
     this.props.extendParentToolbar(toolbarExtend);
   }
 
-  handleNav = activeAccordionItem => {
+  handleNav = (activeAccordionItem) => {
     this.patchValue({ activeAccordionItem });
   };
 
@@ -67,18 +69,25 @@ class Accordion extends EditorComponent {
     );
   }
 
+  dvv = (key) => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
+  };
+
   getAnimationClassName = (v, vs, vd) => {
     if (!validateKeyByProperty(v, "animationName", "none")) {
       return undefined;
     }
 
-    const animationName = defaultValueValue({ v, key: "animationName" });
-    const animationDuration = defaultValueValue({
-      v,
-      key: "animationDuration"
-    });
-    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
-    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+    const animationName = this.dvv("animationName");
+    const animationDuration = this.dvv("animationDuration");
+    const animationDelay = this.dvv("animationDelay");
+    const animationInfiniteAnimation = this.dvv("animationInfiniteAnimation");
+
+    const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
     return classNames(
       css(
@@ -101,7 +110,7 @@ class Accordion extends EditorComponent {
       allTag
     } = v;
 
-    const className = classnames(
+    const className = classNames(
       "brz-accordion",
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );

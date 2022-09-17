@@ -67,7 +67,8 @@
 
     "iconSize": "small",
     "iconCustomSize": 16,
-    "iconCustomSizeSuffix": null,
+    "iconCustomSizeSuffix": "px",
+
     "iconPosition": "right",
     "iconSpacing": 10,
     "iconStrokeWidth": 1,
@@ -223,7 +224,7 @@
     "tempHoverBorderBottomRightRadius": null,
     "tempHoverBorderBottomLeftRadius": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 
