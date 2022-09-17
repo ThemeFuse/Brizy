@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 6.0.1
+Tested up to: 6.0.2
 Requires PHP: 5.6.20
-Stable tag: 2.4.5
+Stable tag: 2.4.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,35 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.6 - 2022-09-17 =
+* New: Infinite animation option 
+* New: Added select All option for custom post types in Global blocks conditions 
+* Fixed: Lag when you select colors in Global styles
+* Fixed: Added from category display condition for global blocks 
+* Fixed: Made mouse pointer when you hover the color option on block dividers 
+* Fixed: Undo and Redo in Text element 
+* Fixed: Empty column crash on Editor role  
+* Fixed: Mute video when you set the cover option in Video element
+* Fixed: Divider on Section 
+* Fixed: Parallax in responsive views 
+* Fixed: Enable update button on undo or redo
+* Fixed: Diacritics are converted to unicode characters 
+* Fixed: Image crashing when clicking the resize pointers
+* Fixed: Counter style 2-3-4 in Story 
+* Fixed: Countdown height in Story 
+* Fixed: Form submit button in Story
+* Fixed: Button border in Story 
+* Fixed: Accordion - border-radius on tags
+* Fixed: Tabs - Title in responsive views 
+* Fixed: Carousel - Working with text breaks the carousel 
+* Fixed: Fast scroll on Blocks that have Parallax option on 
+* Improved: UI improvement to accommodate long text translation 
+* Improved: Minify global typography CSS variables 
+* Improved: Root window referrer request
+* Improved: Color picker gradient issues
+* Improved: LeftSidebar icon position in dropdown menu
+* Improved: Added First Name and Last Name in Authorization form with Cloud when you save blocks layouts
 
 = 2.4.5 - 2022-08-30 =
 * Fixed: Mute on video with cover
