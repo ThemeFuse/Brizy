@@ -668,6 +668,10 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                     return array_pop($terms);
 
                 case  Brizy_Admin_Rule::ARCHIVE :
+					if ( $rule->getEntityType() == 'product' ) {
+						$wp_query = new WP_Query(['post_type' => 'product']);
+					}
+
                     return null;
 
                 case  Brizy_Admin_Rule::TEMPLATE :
