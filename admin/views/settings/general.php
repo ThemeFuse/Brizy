@@ -9,7 +9,7 @@
     <table class="form-table">
         <tbody>
         <tr>
-            <th scope="row"><?php echo __( 'Activate' ) . ' ' . __bt( 'brizy', 'Brizy' ) . ' ' . __( 'For' ); ?></th>
+            <th scope="row"><?php echo __( 'Activate', 'brizy' ) . ' ' . __bt( 'brizy', 'Brizy' ) . ' ' . __( 'For' ); ?></th>
             <td>
                 <fieldset>
 					<?php foreach ( $types as $type ) {
@@ -21,7 +21,7 @@
             </td>
         </tr>
         <tr>
-            <th scope="row"><?php echo __( 'Enable SVG uploads' ); ?></th>
+            <th scope="row"><?php _e( 'Enable SVG uploads', 'brizy' ); ?></th>
             <td>
                 <label>
                     <input type="checkbox"
@@ -35,7 +35,7 @@
             </td>
         </tr>
         <tr>
-            <th scope="row"><?php echo __( 'Enable JSON uploads' ); ?></th>
+            <th scope="row"><?php _e( 'Enable JSON uploads', 'brizy' ); ?></th>
             <td>
                 <label>
                     <input type="checkbox"
@@ -48,6 +48,20 @@
                 </label>
             </td>
         </tr>
+        <tr>
+            <th scope="row"><?php _e( 'Enable image lazy loading', 'brizy' ); ?></th>
+            <td>
+                <label>
+                    <input
+                        type="checkbox"
+                        id="img-lazy-load"
+                        name="img-lazy-load"
+                        value="1"
+                        <?php echo $imgLazyLoad ? 'checked' : ''; ?>
+                    >
+                </label>
+            </td>
+        </tr>
         </tbody>
     </table>
 
@@ -57,6 +71,6 @@
                 name="brizy-general-submit"
                 id="submit"
                 class="button button-primary"
-        ><?php echo __( 'Save Changes', 'brizy' ); ?></button>
+        ><?php _e( 'Save Changes', 'brizy' ); ?></button>
     </p>
 </form>

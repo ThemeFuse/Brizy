@@ -209,14 +209,16 @@ class Brizy_Admin_Settings {
 		$list_post_types = $this->list_post_types();
 		$prepared_types  = array_map( array( $this, 'is_selected' ), $list_post_types );
 		$svgEnabled      = Brizy_Editor_Storage_Common::instance()->get( 'svg-upload', false );
-		$jsonEnabled      = Brizy_Editor_Storage_Common::instance()->get( 'json-upload', false );
+		$jsonEnabled     = Brizy_Editor_Storage_Common::instance()->get( 'json-upload', false );
+		$lazyLoad        = Brizy_Editor_Storage_Common::instance()->get( 'lazy-load', false );
 
 		return Brizy_Admin_View::render(
 			'settings/general',
 			[
-				'types'                    => $prepared_types,
-				'svgUploadEnabled'         => $svgEnabled,
-				'jsonUploadEnabled'         => $jsonEnabled
+				'types'             => $prepared_types,
+				'svgUploadEnabled'  => $svgEnabled,
+				'jsonUploadEnabled' => $jsonEnabled,
+				'imgLazyLoad'       => is_null( $lazyLoad ) ? true : $lazyLoad
             ]
 		);
 	}
@@ -275,6 +277,7 @@ class Brizy_Admin_Settings {
 
 		Brizy_Editor_Storage_Common::instance()->set( 'svg-upload', $svgEnabled );
 		Brizy_Editor_Storage_Common::instance()->set( 'json-upload', $jsonEnabled );
+		Brizy_Editor_Storage_Common::instance()->set( 'lazy-load', isset( $_POST['img-lazy-load'] ) );
 
 		if ( $error_count == 0 ) {
 			$this->selected_post_types = $post_types;

@@ -97,6 +97,8 @@ class Brizy_Editor_Editor_Editor {
 		$mode                = $this->getMode( $parent_post_type );
 
 		$heartBeatInterval = (int) apply_filters( 'wp_check_post_lock_window', 150 );
+		$lazy              = Brizy_Editor_Storage_Common::instance()->get( 'lazy-load', false );
+
 		$config            = array(
 			'user'            => array(
 				'role'         => 'admin',
@@ -174,7 +176,8 @@ class Brizy_Editor_Editor_Editor {
             'prefix' => Brizy_Editor::prefix(),
             'cloud' => $this->getCloudInfo(),
             'editorVersion' => BRIZY_EDITOR_VERSION,
-	        'imageSizes'      => $this->getImgSizes()
+	        'imageSizes'    => $this->getImgSizes(),
+	        'lazyLoad'      => is_null( $lazy ) ? true : $lazy
 		);
 		$manager = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 
