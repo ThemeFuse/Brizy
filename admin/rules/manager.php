@@ -19,6 +19,8 @@ class Brizy_Admin_Rules_Manager
         $entityType   = null;
         $entityValues = array();
 
+        $is_shop = is_page(wc_get_page_id('shop'));
+        $is_shop = is_shop();
         if (is_404()) {
             $applyFor   = Brizy_Admin_Rule::TEMPLATE;
             $entityType = '404';
@@ -30,7 +32,7 @@ class Brizy_Admin_Rules_Manager
         } elseif (is_search()) {
             $applyFor   = Brizy_Admin_Rule::TEMPLATE;
             $entityType = 'search';
-        } elseif (function_exists('is_shop') && is_page(wc_get_page_id('shop'))) {
+        } elseif (function_exists('is_shop') && is_shop()) {
             $applyFor   = Brizy_Admin_Rule::WOO_SHOP_PAGE;
             $entityType = 'shop_page';
         } elseif (is_front_page() && ! is_home()) {
