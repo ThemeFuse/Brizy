@@ -667,13 +667,21 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
                     return array_pop($terms);
 
+                case  Brizy_Admin_Rule::WOO_SHOP_PAGE :
+                    $wp_query = new WP_Query(['post_type' => 'product', 'fields' => 'ids']);
+                    $posts    = $wp_query->get_posts();
+
+                    return get_post(array_pop($posts));
                 case  Brizy_Admin_Rule::ARCHIVE :
-					if ( $rule->getEntityType() == 'product' ) {
-						$wp_query = new WP_Query(['post_type' => 'product']);
-					}
+                    if ($rule->getEntityType() == 'product') {
+                        $wp_query = new WP_Query(['post_type' => 'product', 'fields' => 'ids']);
+                        $posts    = $wp_query->get_posts();
 
-                    return null;
+                        return get_post(array_pop($posts));
+                    }
+                    $posts = $wp_query->get_posts();
 
+                    return get_post(array_pop($posts));;
                 case  Brizy_Admin_Rule::TEMPLATE :
 
                     switch ($rule->getEntityType()) {
