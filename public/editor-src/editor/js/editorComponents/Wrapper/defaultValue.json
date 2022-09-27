@@ -476,18 +476,21 @@
     "animationName": "none",
     "animationDuration": 1000,
     "animationDelay": 1000,
+    "animationInfiniteAnimation": false,
 
     "tempAnimationName": "none",
 
     "tabletAnimationName": "none",
     "tabletAnimationDuration": 1000,
     "tabletAnimationDelay": 1000,
+    "tabletAnimationInfiniteAnimation": null,
 
     "tempTabletAnimationName": "none",
 
     "mobileAnimationName": "none",
     "mobileAnimationDuration": 1000,
     "mobileAnimationDelay": 1000,
+    "mobileAnimationInfiniteAnimation": null,
 
     "tempMobileAnimationName": "none"
   }

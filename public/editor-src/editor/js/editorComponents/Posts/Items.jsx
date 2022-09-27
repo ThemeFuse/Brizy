@@ -1,12 +1,15 @@
-import React from "react";
 import classnames from "classnames";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { EditorComponentContext } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import React from "react";
+import { ContextMenuExtend } from "visual/component/ContextMenu";
+import { TextEditor } from "visual/component/Controls/TextEditor";
+import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import Toolbar from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { EditorComponentContext } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { IS_WP } from "visual/utils/env";
+import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { stringifyAttributes } from "./utils.common";
-import { TextEditor } from "visual/component/Controls/TextEditor";
 
 export default class Items extends EditorArrayComponent {
   static get componentId() {
@@ -48,7 +51,7 @@ export default class Items extends EditorArrayComponent {
     return undefined;
   }
 
-  handleSortableAcceptElements = from => {
+  handleSortableAcceptElements = (from) => {
     const meta = this.props.meta;
 
     if (meta.row && meta.row.isInner) {
@@ -76,15 +79,30 @@ export default class Items extends EditorArrayComponent {
     return true;
   };
 
-  renderItemWrapper(item, itemKey) {
+  renderItemWrapper(item, itemKey, itemIndex) {
+    const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
+    const keyNames = ["alt+C", "alt+shift+V", "shift+alt+V"];
+    const shortcutsTypes = ["copy", "pasteStyles"];
+
     return (
-      <div
+      <ContextMenuExtend
         key={itemKey}
-        className="brz-posts__item"
-        data-filter={this.getLoopItemFilter()}
+        {...this.makeContextMenuProps(contextMenuExtendConfig)}
       >
-        {item}
-      </div>
+        <HotKeys
+          keyNames={keyNames}
+          shortcutsTypes={shortcutsTypes}
+          id={itemKey}
+          onKeyDown={this.handleKeyDown}
+        >
+          <div
+            className="brz-posts__item"
+            data-filter={this.getLoopItemFilter()}
+          >
+            {item}
+          </div>
+        </HotKeys>
+      </ContextMenuExtend>
     );
   }
 
@@ -117,12 +135,15 @@ export default class Items extends EditorArrayComponent {
               return (
                 <Toolbar key={index} {...toolbarExtendFilter}>
                   <li className={itemClassName}>
-                  {tag.name === allTag ? (
-                    <TextEditor value={allTag} onChange={handleAllTagChange} />
-                  ) : (
-                    tag.name
-                  )}
-                </li>
+                    {tag.name === allTag ? (
+                      <TextEditor
+                        value={allTag}
+                        onChange={handleAllTagChange}
+                      />
+                    ) : (
+                      tag.name
+                    )}
+                  </li>
                 </Toolbar>
               );
             })}
@@ -174,7 +195,7 @@ export default class Items extends EditorArrayComponent {
   renderForEdit(v) {
     const { className, showFilter, showPagination, data } = this.props;
     const item = super.renderForEdit(v);
-    const items = data?.context.map(context => (
+    const items = data?.context.map((context) => (
       <EditorComponentContext.Provider
         key={context.dynamicContent.itemId}
         value={context}

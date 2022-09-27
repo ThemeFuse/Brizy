@@ -1,31 +1,33 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
+import Animation from "visual/component/Animation";
+import { fromElementModel } from "visual/component/Options/types/dev/Margin/utils";
+import {
+  wInBoxedPage,
+  wInFullPage,
+  wInMobilePage,
+  wInTabletPage
+} from "visual/config/columns";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { css } from "visual/utils/cssStyle";
+import { cloneItem } from "visual/utils/models";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import Animation from "visual/component/Animation";
-import {
-  wInBoxedPage,
-  wInTabletPage,
-  wInMobilePage,
-  wInFullPage
-} from "visual/config/columns";
-import { css } from "visual/utils/cssStyle";
-import { cloneItem } from "visual/utils/models";
-import * as toolbarExtendConfig from "./toolbarExtend";
-import * as sidebarExtendConfig from "./sidebarExtend";
-import { styleSection, styleAnimation } from "./styles";
-import SectionItems from "./Items";
-import defaultValue from "./defaultValue.json";
-import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { fromElementModel } from "visual/component/Options/types/dev/Margin/utils";
-import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import { NORMAL } from "visual/utils/stateMode";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import defaultValue from "./defaultValue.json";
+import SectionItems from "./Items";
+import * as sidebarExtendConfig from "./sidebarExtend";
+import { styleAnimation, styleSection } from "./styles";
+import * as toolbarExtendConfig from "./toolbarExtend";
+import * as State from "visual/utils/stateMode";
+import { getStore } from "visual/redux/store";
 
 const config = Config.getAll();
 
@@ -93,18 +95,25 @@ export default class Section extends EditorComponent {
     }
   }
 
+  dvv = key => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
+  };
+
   getAnimationClassName = (v, vs, vd) => {
     if (!validateKeyByProperty(v, "animationName", "none")) {
       return undefined;
     }
 
-    const animationName = defaultValueValue({ v, key: "animationName" });
-    const animationDuration = defaultValueValue({
-      v,
-      key: "animationDuration"
-    });
-    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
-    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+    const animationName = this.dvv("animationName");
+    const animationDuration = this.dvv("animationDuration");
+    const animationDelay = this.dvv("animationDelay");
+    const animationInfiniteAnimation = this.dvv("animationInfiniteAnimation");
+
+    const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
     return classnames(
       css(
@@ -146,12 +155,15 @@ export default class Section extends EditorComponent {
       animationName,
       animationDuration,
       animationDelay,
+      animationInfiniteAnimation,
       tabletAnimationName,
       tabletAnimationDuration,
       tabletAnimationDelay,
+      tabletAnimationInfiniteAnimation,
       mobileAnimationName,
       mobileAnimationDuration,
       mobileAnimationDelay,
+      mobileAnimationInfiniteAnimation,
       translations,
       translationsLangs
     } = v;
@@ -191,12 +203,15 @@ export default class Section extends EditorComponent {
           animationName,
           animationDuration,
           animationDelay,
+          animationInfiniteAnimation,
           tabletAnimationName,
           tabletAnimationDuration,
           tabletAnimationDelay,
+          tabletAnimationInfiniteAnimation,
           mobileAnimationName,
           mobileAnimationDuration,
           mobileAnimationDelay,
+          mobileAnimationInfiniteAnimation,
           translations,
           translationsLangs,
           ...margin
@@ -247,14 +262,36 @@ export default class Section extends EditorComponent {
     );
   }
 
-  renderMemberShipWrapper(content, v) {
-    if (v.membership === "on" && !(isCloud(config) && isShopify(config))) {
-      const roles = JSON.parse(v.membershipRoles).join(",");
+  renderLangOrMemberOrAll(content, v) {
+    const { membershipRoles, translationsLangs, membership, translations } = v;
 
+    const onlyCloud = !(isCloud(config) && isShopify(config));
+    const roles = JSON.parse(membershipRoles).join(",");
+    const languages = JSON.parse(translationsLangs).join(",");
+
+    if (membership === "on" && translations === "off" && onlyCloud) {
       return (
         <>
           {`{{display_by_roles roles="${roles}"}}`}
           {content}
+          {"{{end_display_by_roles}}"}
+        </>
+      );
+    } else if (membership === "off" && translations === "on" && onlyCloud) {
+      return (
+        <>
+          {`{{display_by_translations translations="${languages}"}}`}
+          {content}
+          {"{{end_display_by_translations}}"}
+        </>
+      );
+    } else if (membership === "on" && translations === "on" && onlyCloud) {
+      return (
+        <>
+          {`{{display_by_roles roles="${roles}"}}`}
+          {`{{display_by_translations translations="${languages}"}}`}
+          {content}
+          {"{{end_display_by_translations}}"}
           {"{{end_display_by_roles}}"}
         </>
       );
@@ -306,6 +343,6 @@ export default class Section extends EditorComponent {
       </Animation>
     );
 
-    return this.renderMemberShipWrapper(content, v);
+    return this.renderLangOrMemberOrAll(content, v);
   }
 }

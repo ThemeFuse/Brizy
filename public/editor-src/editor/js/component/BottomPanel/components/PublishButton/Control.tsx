@@ -1,14 +1,14 @@
+import classnames from "classnames";
 import React, {
-  Fragment,
   FC,
+  Fragment,
+  MouseEventHandler,
   ReactElement,
   ReactNode,
-  MouseEventHandler,
   useMemo
 } from "react";
-import classnames from "classnames";
-import { EditorIcon } from "visual/component/EditorIcon";
 import Tooltip, { TooltipItem } from "visual/component/Controls/Tooltip";
+import { EditorIcon } from "visual/component/EditorIcon";
 import { Roles } from "visual/component/Roles";
 
 interface Item {
@@ -41,7 +41,9 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
           ) : icon !== undefined ? (
             <EditorIcon icon={icon} />
           ) : null}
-          <span className="brz-span">{title}</span>
+          <span className="brz-span" title={title}>
+            {title}
+          </span>
         </TooltipItem>
       );
 
@@ -70,7 +72,7 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
   );
 };
 
-export const Controls: FC<Props> = props => {
+export const Controls: FC<Props> = (props) => {
   const { loading, children, addonAfter, disabled, onClick } = props;
   const className = classnames("brz-ed-fixed-bottom-panel__btn", {
     "brz-ed-fixed-bottom-panel__btn-popover": addonAfter?.length,

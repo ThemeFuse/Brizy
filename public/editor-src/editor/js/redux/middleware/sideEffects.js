@@ -1,52 +1,51 @@
 import jQuery from "jquery";
 import _ from "underscore";
+import { wInMobilePage, wInTabletPage } from "visual/config/columns";
+import { StoreChanged } from "visual/redux/types";
 import {
-  makeDefaultFontCSS,
-  makeUploadFontsUrl,
-  projectFontsData,
-  makeGlobalStylesTypography
-} from "visual/utils/fonts";
-import {
-  makeRichTextColorPaletteCSS,
-  makeGlobalStylesColorPalette
+  makeGlobalStylesColorPalette,
+  makeRichTextColorPaletteCSS
 } from "visual/utils/color";
 import { addClass, removeClass } from "visual/utils/dom/classNames";
 import {
-  currentStyleSelector,
-  currentRoleSelector,
-  fontsSelector,
-  unDeletedFontsSelector,
-  getDefaultFontDetailsSelector,
-  storeWasChangedSelector,
-  currentLanguageSelector
-} from "../selectors";
+  makeDefaultFontCSS,
+  makeGlobalStylesTypography,
+  makeSubsetGoogleFontsUrl,
+  makeUploadFontsUrl,
+  projectFontsData
+} from "visual/utils/fonts";
 import {
-  HYDRATE,
   ADD_BLOCK,
-  UPDATE_UI,
   COPY_ELEMENT,
+  HYDRATE,
   updateCopiedElement,
+  UPDATE_CURRENT_STYLE,
   UPDATE_CURRENT_STYLE_ID,
-  UPDATE_CURRENT_STYLE
+  UPDATE_UI
 } from "../actions";
 import {
-  IMPORT_STORY,
-  IMPORT_KIT,
-  IMPORT_TEMPLATE,
-  UPDATE_EXTRA_FONT_STYLES,
   ADD_FONTS,
   DELETE_FONTS,
-  UPDATE_DEFAULT_FONT
+  IMPORT_KIT,
+  IMPORT_STORY,
+  IMPORT_TEMPLATE,
+  UPDATE_DEFAULT_FONT,
+  UPDATE_EXTRA_FONT_STYLES
 } from "../actions2";
-import { wInMobilePage, wInTabletPage } from "visual/config/columns";
-import { makeSubsetGoogleFontsUrl } from "visual/utils/fonts";
-import { UNDO, REDO } from "../history/types";
 import { historySelector } from "../history/selectors";
-import { defaultFontSelector } from "../selectors-new";
-import { StoreChanged } from "visual/redux/types";
-import { extraFontStylesSelector } from "../selectors-new";
+import { REDO, UNDO } from "../history/types";
+import {
+  currentLanguageSelector,
+  currentRoleSelector,
+  currentStyleSelector,
+  fontsSelector,
+  getDefaultFontDetailsSelector,
+  storeWasChangedSelector,
+  unDeletedFontsSelector
+} from "../selectors";
+import { defaultFontSelector, extraFontStylesSelector } from "../selectors-new";
 
-export default config => store => next => action => {
+export default (config) => (store) => (next) => (action) => {
   const callbacks = {
     onBeforeNext: [],
     onAfterNext: []
@@ -115,7 +114,7 @@ export default config => store => next => action => {
   next(action);
 
   const state = store.getState();
-  callbacks.onAfterNext.forEach(task =>
+  callbacks.onAfterNext.forEach((task) =>
     task({ config, state, oldState, store, action })
   );
 };
@@ -146,9 +145,8 @@ function handleHydrate(callbacks) {
   callbacks.onAfterNext.push(({ state, store, config }) => {
     const { document, parentDocument } = config;
     const currentFonts = projectFontsData(unDeletedFontsSelector(state));
-    const { colorPalette, fontStyles: _fontStyles } = currentStyleSelector(
-      state
-    );
+    const { colorPalette, fontStyles: _fontStyles } =
+      currentStyleSelector(state);
     const extraFontStyles = extraFontStylesSelector(state);
     const fontStyles = [..._fontStyles, ...extraFontStyles];
 
@@ -205,7 +203,7 @@ function handleHydrate(callbacks) {
     document.body.style.setProperty("--elements-visibility", "none");
 
     // clipboard sync between tabs
-    jQuery(window).on("storage", e => {
+    jQuery(window).on("storage", (e) => {
       const { key, newValue, oldValue } = e.originalEvent;
       if (key === "copiedStyles" && newValue && newValue !== oldValue) {
         store.dispatch(updateCopiedElement(JSON.parse(newValue)));
@@ -249,9 +247,8 @@ function handleFontsChange(callbacks) {
 
 function handleStylesChange(callbacks) {
   callbacks.onAfterNext.push(({ state }) => {
-    const { colorPalette, fontStyles: _fontStyles } = currentStyleSelector(
-      state
-    );
+    const { colorPalette, fontStyles: _fontStyles } =
+      currentStyleSelector(state);
     const extraFontStyles = extraFontStylesSelector(state);
     const fontStyles = [..._fontStyles, ...extraFontStyles];
 
@@ -360,15 +357,14 @@ function handleCopiedElementChange(callbacks) {
 function handleHistoryChange(callbacks) {
   callbacks.onAfterNext.push(({ state }) => {
     const { currSnapshot, prevSnapshot } = historySelector(state);
-    const currStyleId = currSnapshot.currentStyleId;
-    const prevStyleId = prevSnapshot.currentStyleId;
-    const currStyle = currSnapshot.currentStyle;
-    const prevStyle = prevSnapshot.currentStyle;
+    const currStyleId = currSnapshot?.currentStyleId;
+    const prevStyleId = prevSnapshot?.currentStyleId;
+    const currStyle = currSnapshot?.currentStyle;
+    const prevStyle = prevSnapshot?.currentStyle;
 
     if (currStyleId !== prevStyleId || currStyle !== prevStyle) {
-      const { colorPalette, fontStyles: _fontStyles } = currentStyleSelector(
-        state
-      );
+      const { colorPalette, fontStyles: _fontStyles } =
+        currentStyleSelector(state);
       const extraFontStyles = extraFontStylesSelector(state);
       const fontStyles = [..._fontStyles, ...extraFontStyles];
 

@@ -5,7 +5,7 @@
 
   "style": {
     "width": 100,
-    "widthSuffix": null,
+    "widthSuffix": "%",
 
     "customCSS": "",
 

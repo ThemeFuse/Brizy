@@ -1,44 +1,41 @@
-import React from "react";
 import deepMerge from "deepmerge";
-import { insert, removeAt, replaceAt, setIn, getIn } from "timm";
 import { produce } from "immer";
-import Editor from "visual/global/Editor";
-import Config from "visual/global/Config";
-import { getStore } from "visual/redux/store";
-import {
-  pageDataDraftBlocksSelector,
-  pageDataNoRefsSelector,
-  copiedElementNoRefsSelector
-} from "visual/redux/selectors";
-import {
-  setOffsetsToElementFromWrapper,
-  createFullModelPath
-} from "visual/utils/models";
-import { updateCopiedElement } from "visual/redux/actions";
-import EditorComponent from "./EditorComponent";
+import React from "react";
+import { getIn, insert, removeAt, replaceAt, setIn } from "timm";
 import ErrorBoundary from "visual/component/ErrorBoundary";
-import {
-  stripSystemKeys,
-  setIds,
-  setStyles,
-  getElementOfArrayLoop,
-  getClosestParent,
-  getParentWhichContainsStyleProperty,
-  mapModels
-} from "visual/utils/models";
 import { symbolsToItems } from "visual/editorComponents/Menu/utils";
-import { move } from "visual/utils/array";
+import Config from "visual/global/Config";
+import Editor from "visual/global/Editor";
+import { updateCopiedElement } from "visual/redux/actions";
 import { updateUI } from "visual/redux/actions2";
-import { uiSelector } from "visual/redux/selectors";
+import {
+  copiedElementNoRefsSelector,
+  pageDataNoRefsSelector,
+  uiSelector
+} from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { move } from "visual/utils/array";
+import {
+  createFullModelPath,
+  getClosestParent,
+  getElementOfArrayLoop,
+  getParentWhichContainsStyleProperty,
+  mapModels,
+  setIds,
+  setOffsetsToElementFromWrapper,
+  setStyles,
+  stripSystemKeys
+} from "visual/utils/models";
+import EditorComponent from "./EditorComponent";
 
 const menusConfig = Config.get("menuData");
 
-const emptyTarget = value => (Array.isArray(value) ? [] : {});
+const emptyTarget = (value) => (Array.isArray(value) ? [] : {});
 const clone = (value, options) => deepMerge(emptyTarget(value), value, options);
 
 function combineMerge(target, source, options) {
   const destination = target.slice();
-  source.forEach(function(e, i) {
+  source.forEach(function (e, i) {
     if (typeof destination[i] === "undefined") {
       const cloneRequested = options.clone !== false;
       const shouldClone = cloneRequested && options.isMergeableObject(e);
@@ -200,10 +197,9 @@ export default class EditorArrayComponent extends EditorComponent {
       case "cmd+V":
       case "right_cmd+V":
         if (v[itemIndex].type === "StoryWrapper") {
-          this.paste(itemIndex, sourceV => {
-            const { offsetX = 0, offsetY = 0 } = v[
-              itemIndex
-            ].value.items[0].value;
+          this.paste(itemIndex, (sourceV) => {
+            const { offsetX = 0, offsetY = 0 } =
+              v[itemIndex].value.items[0].value;
             let newV = setIn(
               sourceV,
               ["value", "items", 0, "value", "offsetX"],
@@ -535,7 +531,7 @@ export default class EditorArrayComponent extends EditorComponent {
 
   copy(index) {
     const dispatch = this.getReduxDispatch();
-    const data = pageDataDraftBlocksSelector(this.getReduxState());
+    const data = pageDataNoRefsSelector(this.getReduxState());
     const { id, bindKey } = this.getIdBindKey();
     const pathUid = bindKey ? [id, bindKey, `${index}`] : [id, `${index}`];
     const shortcodePath = createFullModelPath(data, pathUid);
@@ -550,7 +546,7 @@ export default class EditorArrayComponent extends EditorComponent {
   }
 
   // cb = v => v -> it's needed for cases when we want to change somehow final value
-  paste(index, cb = v => v) {
+  paste(index, cb = (v) => v) {
     const v = this.getValue()[index];
     const { path, value: copiedValue } = copiedElementNoRefsSelector(
       getStore().getState()
@@ -620,16 +616,16 @@ export default class EditorArrayComponent extends EditorComponent {
 }
 
 function attachMenu(value) {
-  return mapModels(block => {
+  return mapModels((block) => {
     const { type, value } = block;
 
     if (type === "Menu") {
       const { menuSelected: dbMenuSelected, symbols = {} } = value;
       const menuSelected = dbMenuSelected || menusConfig[0].id;
       const menuConfig =
-        menusConfig.find(menu => menu.id === menuSelected) || {};
+        menusConfig.find((menu) => menu.id === menuSelected) || {};
 
-      return produce(block, draft => {
+      return produce(block, (draft) => {
         draft.value.items = symbolsToItems(menuConfig.items || [], symbols);
       });
     }

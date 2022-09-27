@@ -1,17 +1,16 @@
-import * as Parse from "visual/utils/reader/readWithParser";
 import { mPipe, pass } from "visual/utils/fp";
-import { isEffect } from "../EffectType";
+import { t } from "visual/utils/i18n";
+import { prop } from "visual/utils/object/get";
+import * as Parse from "visual/utils/reader/readWithParser";
+import * as BaseEffect from "../BaseEffect";
 import * as ET from "../EffectType";
-import { EffectType } from "../EffectType";
+import { EffectType, isEffect } from "../EffectType";
 import {
   fadeFromEffect,
   LegacyEffectType,
   LegacyFadeType
 } from "../LegacyEffectType";
-import * as BaseEffect from "../BaseEffect";
 import { LegacyModel } from "../LegacyModel";
-import { prop } from "visual/utils/object/get";
-import { t } from "visual/utils/i18n";
 
 export enum Direction {
   none = "none",
@@ -76,7 +75,8 @@ export const fromLegacyModel = Parse.readWithParser<LegacyModel, Fade>({
   ]),
   big: mPipe(prop("name"), fadeFromEffect, bigFromLegacyEffectType),
   duration: BaseEffect.durationFromLegacyModel,
-  delay: BaseEffect.delayFromLegacyModel
+  delay: BaseEffect.delayFromLegacyModel,
+  infiniteAnimation: BaseEffect.infiniteAnimationFromLegacyModel
 });
 
 export const toLegacyEffectType = (v: Fade): LegacyEffectType => {
@@ -124,7 +124,8 @@ export const toLegacyEffectType = (v: Fade): LegacyEffectType => {
 export const toLegacyModel = (v: Fade): LegacyModel => ({
   name: toLegacyEffectType(v),
   duration: v.duration,
-  delay: v.delay
+  delay: v.delay,
+  infiniteAnimation: v.infiniteAnimation
 });
 
 export const getDirectionTitle = (v: Direction): string => {

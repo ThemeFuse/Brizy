@@ -125,6 +125,7 @@ export default class WOOGallery extends EditorComponent {
                   placeholderHeight={250}
                   tagName="div"
                   onSuccess={this.handleDynamicContentSuccess}
+                  blocked={false}
                 />
               </BoxResizer>
             </Wrapper>

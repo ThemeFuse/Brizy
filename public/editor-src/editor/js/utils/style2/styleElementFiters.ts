@@ -82,28 +82,6 @@ export function styleElementFiltersShowApply({
   return dvv("showApply");
 }
 
-export function styleElementFiltersOptionWidth({
-  v,
-  device,
-  state
-}: CSSValue): MString {
-  const dvv: Get = (key: string) =>
-    defaultValueValue({ v, key, device, state });
-
-  return dvv("optionWidth");
-}
-
-export function styleElementFiltersOptionWidthSuffix({
-  v,
-  device,
-  state
-}: CSSValue): MString {
-  const dvv: Get = (key: string) =>
-    defaultValueValue({ v, key, device, state });
-
-  return dvv("optionWidthSuffix");
-}
-
 export function styleElementFiltersLabelSpacing({
   v,
   device,
@@ -247,17 +225,6 @@ export function styleElementFiltersActiveColumns({
   return dvv("activeColumns");
 }
 
-export function styleElementFiltersBtnWidth({
-  v,
-  device,
-  state
-}: CSSValue): MString {
-  const dvv: Get = (key: string) =>
-    defaultValueValue({ v, key, device, state });
-
-  return dvv("btnWidth");
-}
-
 export function styleElementFiltersBtnHeight({
   v,
   device,
@@ -349,17 +316,6 @@ export function styleElementFiltersDateOptionWidth({
   return dvv("widthDateOption");
 }
 
-export function styleElementFiltersCheckSize({
-  v,
-  device,
-  state
-}: CSSValue): MString {
-  const dvv: Get = (key: string) =>
-    defaultValueValue({ v, key, device, state });
-
-  return dvv("checkSize");
-}
-
 export function styleElementFiltersCheckColorSize({
   v,
   device,
@@ -369,28 +325,6 @@ export function styleElementFiltersCheckColorSize({
     defaultValueValue({ v, key, device, state });
 
   return dvv("checkColorSize");
-}
-
-export function styleElementFiltersCheckImgWidth({
-  v,
-  device,
-  state
-}: CSSValue): MString {
-  const dvv: Get = (key: string) =>
-    defaultValueValue({ v, key, device, state });
-
-  return dvv("imgWidth");
-}
-
-export function styleElementFiltersCheckImgHeight({
-  v,
-  device,
-  state
-}: CSSValue): MString {
-  const dvv: Get = (key: string) =>
-    defaultValueValue({ v, key, device, state });
-
-  return dvv("imgHeight");
 }
 
 export function styleElementFiltersIconSize({

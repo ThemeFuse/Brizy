@@ -37,7 +37,7 @@ export function style(v, vs, vd) {
     },
     ".brz && > .brz-accordion__item > .brz-accordion__nav .brz-accordion__nav-title": {
       standart: [
-        "cssStyleElementAccordionNavAlignText",
+        "cssStyleTextAlign",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
@@ -92,12 +92,13 @@ export function style(v, vs, vd) {
       standart: [
         "cssStyleElementAccordionFilterBgColor",
         "cssStyleElementAccordionFilterBorder",
-        "cssStyleElementAccordionFilterBorderRadius",
         "cssStyleElementAccordionFilterShadow"
       ]
     },
     ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item--style-1:hover": {
-      standart: ["cssStyleElementAccordionFilterPaddingFourFields"]
+      standart: [
+        "cssStyleElementAccordionFilterPaddingFourFields",
+        "cssStyleElementAccordionFilterBorderRadius"]
     },
     ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item--style-1.brz-accordion__filter__item--active": {
       standart: [
@@ -132,9 +133,7 @@ export function styleAnimation(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
       standart: [
-        "cssStyleAnimation",
-        "cssStyleAnimationDuration",
-        "cssStyleAnimationDelay"
+        "cssStyleAnimationAll"
       ]
     }
   };

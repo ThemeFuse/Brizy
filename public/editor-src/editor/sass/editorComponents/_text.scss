@@ -221,6 +221,12 @@
     content: "\00a0\00a0";
   }
 }
+.brz-population-mask {
+  &.brz-population-mask__style {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
 
 // Only preview
 &:not(.brz-ed) {

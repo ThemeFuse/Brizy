@@ -1,8 +1,8 @@
-import { t } from "visual/utils/i18n";
 import { ElementModel } from "visual/component/Elements/Types";
-import { tagsFilterLoad } from "./utils.wp";
-import { decodeV } from "../utils.common";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { t } from "visual/utils/i18n";
+import { decodeV } from "../utils.common";
+import { tagsFilterLoad } from "./utils.wp";
 
 export function tagsFilter(v: ElementModel): ToolbarItemType[] {
   const accepted = ["posts", "products"];
@@ -24,15 +24,13 @@ export function tagsFilter(v: ElementModel): ToolbarItemType[] {
         {
           id: "tagsSource",
           type: "select-dev",
-          label: t("Tags"),
+          label: t("Source"),
           devices: "desktop",
           disabled: v.filter === "off",
           placeholder: t("Select tags"),
           choices: {
             load: tagsFilterLoad(source),
-            emptyLoad: {
-              title: t("Don't have tags")
-            }
+            emptyLoad: { title: t("Don't have tags") }
           }
         }
       ]

@@ -27,11 +27,16 @@
     "mobileTextSpacingSuffix": null,
 
     "size": "medium",
+
     "customSize": 32,
+    "customSizeSuffix": "px",
+
     "smallSize": 32,
     "mediumSize": 48,
     "largeSize": 64,
+
     "iconPadding": 10,
+
     "iconBorderWidth": 2,
     "iconBgColorOpacity": 1,
 
@@ -67,7 +72,10 @@
     "tempBorderLeftWidth": 2,
 
     "borderRadiusType": "grouped",
+
     "borderRadius": 30,
+    "borderRadiusSuffix": "px",
+
     "borderTopLeftRadius": 0,
     "borderTopRightRadius": 0,
     "borderBottomRightRadius": 0,

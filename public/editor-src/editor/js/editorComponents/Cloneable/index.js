@@ -1,33 +1,32 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import ContainerBorder from "visual/component/ContainerBorder";
 import Animation from "visual/component/Animation";
+import ContainerBorder from "visual/component/ContainerBorder";
+import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
 import { getWrapperContainerW } from "visual/utils/meta";
-import * as Str from "visual/utils/string/specs";
-import Items from "./items";
-import * as toolbarExtendConfig from "./toolbarExtend";
-import * as sidebarExtendConfig from "./sidebarExtend";
 import {
   defaultValueKey,
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
-import * as State from "visual/utils/stateMode";
 import * as Position from "visual/utils/position/element";
-import { styleContainer, styleItem, style, styleAnimation } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import defaultValue from "./defaultValue.json";
-import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import { attachRef } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
-import classNames from "classnames";
-import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
+import * as State from "visual/utils/stateMode";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import * as Str from "visual/utils/string/specs";
+import defaultValue from "./defaultValue.json";
+import Items from "./items";
+import * as sidebarExtendConfig from "./sidebarExtend";
+import { style, styleAnimation, styleContainer, styleItem } from "./styles";
+import * as toolbarExtendConfig from "./toolbarExtend";
 
 export default class Cloneable extends EditorComponent {
   static get componentId() {
@@ -85,6 +84,14 @@ export default class Cloneable extends EditorComponent {
     }
   };
 
+  dvv = (key) => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
+  };
+
   getMeta(v) {
     const { horizontalAlign, tabletHorizontalAlign, mobileHorizontalAlign } = v;
     const { meta } = this.props;
@@ -128,15 +135,14 @@ export default class Cloneable extends EditorComponent {
       return undefined;
     }
 
-    const animationName = defaultValueValue({ v, key: "animationName" });
-    const animationDuration = defaultValueValue({
-      v,
-      key: "animationDuration"
-    });
-    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
-    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+    const animationName = this.dvv("animationName");
+    const animationDuration = this.dvv("animationDuration");
+    const animationDelay = this.dvv("animationDelay");
+    const animationInfiniteAnimation = this.dvv("animationInfiniteAnimation");
 
-    return classNames(
+    const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
+
+    return classnames(
       css(
         `${this.getComponentId()}-animation-${slug}`,
         `${this.getId()}-animation-${slug}`,
@@ -199,14 +205,6 @@ export default class Cloneable extends EditorComponent {
     return getContainerSizes(v, device, meta, innerWidth, innerHeight);
   };
 
-  dvv = key => {
-    const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
-    const state = State.mRead(v.tabsState);
-
-    return defaultValueValue({ v, key, device, state });
-  };
-
   renderForEdit(v, vs, vd) {
     const { showBorder, propsClassName } = this.props;
     const { customClassName, cssClassPopulation, customAttributes } = v;
@@ -257,7 +255,7 @@ export default class Cloneable extends EditorComponent {
                   border: ContainerBorderBorder
                 }) => (
                   <Animation
-                    ref={v => {
+                    ref={(v) => {
                       attachRef(v, containerBorderRef);
                       attachRef(v, ref || null);
                     }}

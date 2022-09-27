@@ -1,13 +1,14 @@
-import {
-  DependencyList,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import { DependencyList, useEffect, useMemo, useRef, useState } from "react";
 import { MonoTypeOperatorFunction, Subject } from "rxjs";
-import { debounceTime, throttleTime } from "rxjs/operators";
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  tap,
+  throttleTime,
+  withLatestFrom
+} from "rxjs/operators";
 
 const eq = <T>(a: T, b: T): boolean => a === b;
 
@@ -44,73 +45,66 @@ export function useThrottleEffect(
   }, [deps, current, fn, ms]);
 }
 
-const createTimedCallback = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  timer: (t: number) => MonoTypeOperatorFunction<any>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-) => <T extends any[]>(
-  callback: (...args: T) => void,
-  timeout: number,
-  deps: DependencyList
-): ((...args: T) => void) => {
-  const subject = useMemo(() => {
-    const subject = new Subject<T>();
-    subject.pipe(timer(timeout)).subscribe(v => callback(...v));
-
-    return subject;
-  }, [callback, timeout]);
-  useEffect(
-    () => () => {
-      subject.complete();
-    },
-    [subject]
-  );
-
-  // eslint-disable-next-line
-  return useCallback((...args: T) => subject.next(args), [subject, ...deps]);
-};
-
-export const createTimedOnchange = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  timer: (t: number) => MonoTypeOperatorFunction<any>
-): (<T>(
-  value: T,
-  onChange: (v: T) => void,
-  timeout: number,
-  compare?: (a: T, b: T) => boolean
-) => [T, (v: T) => void]) => {
-  const fn = createTimedCallback(timer);
-  return <T>(
+export const createTimedOnchange =
+  (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    timer: (t: number) => MonoTypeOperatorFunction<any>
+  ) =>
+  <T>(
     value: T,
     onChange: (v: T) => void,
     timeout: number,
     compare: (a: T, b: T) => boolean = eq
   ): [T, (v: T) => void] => {
-    const ref = useRef<T>(value);
+    const compareRef = useRef({ fn: compare });
+    compareRef.current.fn = compare;
+
+    const timeoutRef = useRef(timeout);
+    timeoutRef.current = timeout;
+
+    const changeRef = useRef({ fn: onChange });
+    changeRef.current.fn = onChange;
+
     const [v, setV] = useState<T>(value);
 
-    const _onChange = fn(onChange, timeout, [onChange]);
-    useEffect(() => {
-      if (!compare(v, ref.current)) {
-        _onChange(v);
-        ref.current = v;
-      }
-    }, [v, ref, _onChange, compare]);
+    const value$ = useMemo(() => new Subject<T>(), []);
+    const lastValue$ = useMemo(() => new Subject<T>(), []);
+    const newValue$ = useMemo(() => new Subject<T>(), []);
 
     useEffect(() => {
-      if (!compare(value, ref.current)) {
-        setV(value);
-        ref.current = value;
-      }
-    }, [value, ref, compare]);
-    const setValue = useCallback(setV, [setV]);
+      value$.next(value);
+    }, [value]);
 
-    return [v, setValue];
+    useEffect(() => {
+      const a$ = value$
+        .pipe(
+          withLatestFrom(lastValue$),
+          filter(([a, b]) => !compareRef.current.fn(a, b)),
+          map(([a]) => a)
+        )
+        .subscribe(newValue$);
+      const b$ = newValue$
+        .pipe(
+          distinctUntilChanged((a, b) => compareRef.current.fn(a,b)),
+          tap<T>(setV),
+          timer(timeoutRef.current)
+        )
+        .subscribe(lastValue$);
+      const c$ = lastValue$
+        .pipe(distinctUntilChanged((a, b) => compareRef.current.fn(a,b)))
+        .subscribe((v) => changeRef.current.fn(v));
+
+      return (): void => {
+        a$.unsubscribe();
+        b$.unsubscribe();
+        c$.unsubscribe();
+      };
+    }, []);
+
+    return [v, newValue$.next.bind(newValue$)];
   };
-};
 
-export const useDebouncedCallback = createTimedCallback(debounceTime);
 export const useDebouncedOnChange = createTimedOnchange(debounceTime);
-
-export const useThrottleCallback = createTimedCallback(throttleTime);
-export const useThrottleOnChange = createTimedOnchange(throttleTime);
+export const useThrottleOnChange = createTimedOnchange((t: number) =>
+  throttleTime(t, undefined, { leading: false, trailing: true })
+);

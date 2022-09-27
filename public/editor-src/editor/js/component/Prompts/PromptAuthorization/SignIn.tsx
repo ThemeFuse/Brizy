@@ -1,36 +1,38 @@
-import React, { Component } from "react";
-import produce from "immer";
-import { noop } from "underscore";
 import classnames from "classnames";
+import produce from "immer";
+import React, { Component } from "react";
 import Scrollbars from "react-custom-scrollbars";
 import { connect, ConnectedProps } from "react-redux";
-import Config from "visual/global/Config";
-import { pendingRequest } from "visual/utils/api";
-import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
+import { noop } from "underscore";
 import { Alert } from "visual/component/Alert";
+import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
+import { Spacer } from "visual/component/Controls/Spacer";
 import { Button } from "visual/component/Prompts/common/Button";
 import { Loading } from "visual/component/Prompts/common/Loading";
+import { validateEmail } from "visual/component/Prompts/common/utils";
+import Config, { isWp } from "visual/global/Config";
 import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
+import { pendingRequest } from "visual/utils/api";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
-import { validateEmail } from "visual/component/Prompts/common/utils";
-import { recoveryEmail, signIn, checkCompatibility } from "./api";
-import { SignAuthorizationProps, AuthorizationField } from "./types";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
-import { _getWhiteLabel } from "visual/utils/whiteLabel";
-import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { checkCompatibility, recoveryEmail, signIn } from "./api";
+import { AuthorizationField, SignAuthorizationProps } from "./types";
 
-type SignInState = {
+interface SignInState {
   loading: boolean;
   nextLoading: boolean;
   prevLoading: boolean;
   recoverLoading: boolean;
   formData: {
-    [k: string]: string | undefined;
+    [k: string]: unknown;
+    username: string;
+    password: string;
+    recoverEmail: string;
   };
   data: null | { img: string; signInDescription: string };
   notice: null | { message: string; type: "error" | "success" };
-};
+}
 
 const mapDispatch = { updateAuthorization, updateSyncAllowed };
 const signInConnector = connect(null, mapDispatch);
@@ -38,7 +40,6 @@ const signInConnector = connect(null, mapDispatch);
 type SingInProps = ConnectedProps<typeof signInConnector> &
   SignAuthorizationProps;
 
-const isWP = Boolean(Config.get("wp"));
 const fields: AuthorizationField[] = [
   {
     title: "username",
@@ -90,44 +91,41 @@ class SignIn extends Component<SingInProps, SignInState> {
     onLoading && onLoading(false);
   }
 
-  handleChange = (k: string, v: string): void => {
-    if (this.state.formData[k] !== undefined) {
-      this.setState(
-        produce(draft => {
-          draft.formData[k] = v;
-        })
-      );
-    }
+  handleChange = <T extends SignInState["formData"], K extends keyof T>(
+    k: K,
+    v: T[K]
+  ): void => {
+    this.setState(
+      produce((draft) => {
+        draft.formData[k] = v;
+      })
+    );
   };
 
   handleConnect = (): void => {
     const { username, password } = this.state.formData;
-    const {
-      onSuccess,
-      onClose,
-      updateAuthorization,
-      updateSyncAllowed
-    } = this.props;
+    const { onSuccess, onClose, updateAuthorization, updateSyncAllowed } =
+      this.props;
 
     this.setState({
       notice: null,
       nextLoading: true
     });
 
-    if (username && username.trim() && password && password.trim()) {
+    if (username.trim() && password.trim()) {
       signIn({
         password,
         email: username
       })
-        .then(r => {
+        .then((r) => {
           if (!r.status || r.status >= 400) {
             throw r;
           } else {
             updateAuthorization("connected");
             setAuthorized("connected");
 
-            if (isWP) {
-              checkCompatibility().then(r => {
+            if (isWp(Config.getAll())) {
+              checkCompatibility().then((r) => {
                 const { status, data } = r || {};
 
                 if (!status || status >= 400) {
@@ -140,11 +138,11 @@ class SignIn extends Component<SingInProps, SignInState> {
               });
             }
 
-            onSuccess && onSuccess();
-            onClose && onClose();
+            onSuccess?.();
+            onClose?.();
           }
         })
-        .catch(e => {
+        .catch((e) => {
           this.setState({
             nextLoading: false,
             notice: {
@@ -202,9 +200,9 @@ class SignIn extends Component<SingInProps, SignInState> {
       return;
     }
 
-    if (recoverEmail && recoverEmail.trim()) {
+    if (recoverEmail.trim()) {
       recoveryEmail(recoverEmail)
-        .then(r => {
+        .then((r) => {
           if (!r.status || r.status >= 400) {
             throw r;
           } else {
@@ -217,7 +215,7 @@ class SignIn extends Component<SingInProps, SignInState> {
             });
           }
         })
-        .catch(e => {
+        .catch((e) => {
           this.setState({
             recoverLoading: false,
             notice: {
@@ -259,7 +257,7 @@ class SignIn extends Component<SingInProps, SignInState> {
   renderContent(): React.ReactElement | undefined {
     if (this.state.data) {
       const {
-        data: { img, signInDescription },
+        data: { signInDescription },
         formData: { recoverEmail },
         notice,
         nextLoading,
@@ -267,16 +265,10 @@ class SignIn extends Component<SingInProps, SignInState> {
         recoverLoading
       } = this.state;
 
-      const config = Config.getAll();
-      const _img =
-        (_getWhiteLabel(config) && isCloud(config) && config.urls.favicon) ||
-        img;
-      const _alt = _getWhiteLabel(config)?.brandingName || "Brizy";
-
       return (
         <Scrollbars className="brz-text-lg-center">
           <div className="brz-ed-popup-integrations__connect-head">
-            <img className="brz-img" src={_img} alt={_alt} />
+            <Spacer space="73px" />
             <p className="brz-p">{signInDescription}</p>
           </div>
           <div className="brz-ed-popup-integrations__connect-body">
@@ -288,7 +280,7 @@ class SignIn extends Component<SingInProps, SignInState> {
                   key={index}
                   title={title}
                   type={type}
-                  value={this.state.formData[name] || ""}
+                  value={`${this.state.formData[name] ?? ""}`}
                   required={required}
                   onChange={({ target }): void => {
                     this.handleChange(name, target.value);
@@ -317,7 +309,7 @@ class SignIn extends Component<SingInProps, SignInState> {
               title="Email to recover password"
               icon="nc-right-arrow-tail"
               loading={recoverLoading}
-              value={recoverEmail || ""}
+              value={recoverEmail}
               onChange={({ target }): void => {
                 this.handleChange("recoverEmail", target.value);
               }}

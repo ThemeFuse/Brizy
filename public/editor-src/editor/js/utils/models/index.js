@@ -1,36 +1,41 @@
 import { hasProps } from "visual/utils/object";
-import setIds from "./setIds";
-import stripIds from "./stripIds";
-import {
-  setStyles,
-  getStyles,
-  getElementOfArrayLoop,
-  getClosestParent,
-  getParentWhichContainsStyleProperty
-} from "./styles";
-import { stripSystemKeys } from "./stripSystemKeys";
-import { insertItem } from "./insertItem";
+import { mapWithStructuralSharing } from "../object/mapWithStructuralSharing";
 import { cloneItem } from "./cloneItem";
+import { getBlockData } from "./getBlockData";
+import { insertItem } from "./insertItem";
 import { insertItemsBatch } from "./insertItemsBatch";
 import {
-  IS_TEMPLATE,
-  IS_INTERNAL_POPUP,
+  isExternalPopup,
+  isExternalStory,
+  isInternalPopup,
+  isInternalStory,
+  isPopup,
+  isStory,
   IS_EXTERNAL_POPUP,
-  IS_GLOBAL_POPUP,
-  IS_STORY,
-  IS_INTERNAL_STORY,
   IS_EXTERNAL_STORY,
-  isGlobalPopup
+  IS_GLOBAL_POPUP,
+  IS_INTERNAL_POPUP,
+  IS_INTERNAL_STORY,
+  IS_STORY,
+  IS_TEMPLATE
 } from "./modes";
-import { setOffsetsToElementFromWrapper } from "./setDataInElement";
-import { getBlockData } from "./getBlockData";
-import { mapWithStructuralSharing } from "../object/mapWithStructuralSharing";
 import { createFullModelPath } from "./path";
+import { setOffsetsToElementFromWrapper } from "./setDataInElement";
+import setIds from "./setIds";
+import stripIds from "./stripIds";
+import { stripSystemKeys } from "./stripSystemKeys";
+import {
+  getClosestParent,
+  getElementOfArrayLoop,
+  getParentWhichContainsStyleProperty,
+  getStyles,
+  setStyles
+} from "./styles";
 
-const isModel = obj => hasProps(["type", "value"], obj);
+const isModel = (obj) => hasProps(["type", "value"], obj);
 
 const mapModels = (fn, model) =>
-  mapWithStructuralSharing(model, obj => (isModel(obj) ? fn(obj) : obj));
+  mapWithStructuralSharing(model, (obj) => (isModel(obj) ? fn(obj) : obj));
 
 export {
   setIds,
@@ -54,7 +59,12 @@ export {
   IS_STORY,
   IS_INTERNAL_STORY,
   IS_EXTERNAL_STORY,
-  isGlobalPopup,
+  isInternalPopup,
+  isInternalStory,
+  isExternalPopup,
+  isExternalStory,
+  isPopup,
+  isStory,
   getBlockData,
   createFullModelPath
 };

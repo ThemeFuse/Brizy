@@ -5,7 +5,7 @@ export function style(v, vs, vd) {
     ".brz &&:hover": {
       standart: [
         "cssStyleColor",
-        "cssStyleSizeWidthPercent",
+        "cssStyleSizeWidth",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",

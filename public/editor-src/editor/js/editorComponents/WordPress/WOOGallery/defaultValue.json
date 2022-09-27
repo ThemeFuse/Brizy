@@ -321,7 +321,7 @@
     "tempHoverThumbnailBorderColorOpacity": null,
     "tempHoverThumbnailBorderColorPalette": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

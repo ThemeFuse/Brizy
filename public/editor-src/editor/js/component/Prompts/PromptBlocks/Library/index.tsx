@@ -1,17 +1,37 @@
-import React, { Component, ComponentType } from "react";
-import produce from "immer";
-import { connect } from "react-redux";
 import { match } from "fp-utilities";
+import produce from "immer";
+import React, { Component, ComponentType } from "react";
+import { connect } from "react-redux";
 import _ from "underscore";
-import Config from "visual/global/Config";
 import { ToastNotification } from "visual/component/Notifications";
+import { currentUserRole } from "visual/component/Roles";
+import Config from "visual/global/Config";
+import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { FontsPayload } from "visual/redux/actions2";
 import {
   authorizedSelector,
-  fontsSelector,
-  extraFontStylesSelector
+  extraFontStylesSelector,
+  fontsSelector
 } from "visual/redux/selectors";
-import { FontsPayload } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
+import {
+  BlockMetaType,
+  ExtraFontStyle,
+  SavedBlock,
+  SavedLayout
+} from "visual/types";
+import { isSavedBlock, isSavedLayout, isSavedPopup } from "visual/types/utils";
+import {
+  deleteSavedBlock,
+  deleteSavedLayout,
+  getSavedBlockById,
+  getSavedBlocks,
+  getSavedLayoutById,
+  getSavedLayouts,
+  uploadSaveBlocks,
+  uploadSaveLayouts,
+  uploadSavePopups
+} from "visual/utils/api";
 import {
   SavedBlockAPI,
   SavedBlockMeta,
@@ -20,45 +40,26 @@ import {
   UploadSavedBlocks,
   UploadSavedLayouts
 } from "visual/utils/api/types";
+import { blockThumbnailData } from "visual/utils/blocks";
+import { IS_WP } from "visual/utils/env";
+import { normalizeFonts, normalizeFontStyles } from "visual/utils/fonts";
+import { t } from "visual/utils/i18n";
 import { BlockScreenshots } from "visual/utils/screenshots/types";
 import {
-  BlockMetaType,
-  ExtraFontStyle,
-  SavedBlock,
-  SavedLayout
-} from "visual/types";
-import {
-  getUsedModelsFonts,
   getBlocksStylesFonts,
+  getUsedModelsFonts,
   getUsedStylesFonts
 } from "visual/utils/traverse";
-import { normalizeFonts, normalizeFontStyles } from "visual/utils/fonts";
-import {
-  getSavedBlocks,
-  getSavedBlockById,
-  deleteSavedBlock,
-  getSavedLayouts,
-  getSavedLayoutById,
-  deleteSavedLayout,
-  uploadSaveBlocks,
-  uploadSavePopups,
-  uploadSaveLayouts
-} from "visual/utils/api";
-import { blockThumbnailData } from "visual/utils/blocks";
-import { t } from "visual/utils/i18n";
+import { getWhiteLabel } from "visual/utils/whiteLabel";
+import { getError, isBlock, isLayout, isPopup } from "../common/utils";
 import {
   BlockCategory,
+  BlockTypes,
   PromptBlock,
-  PromptBlockTemplate,
-  BlockTypes
+  PromptBlockTemplate
 } from "../types";
 import Blocks from "./Blocks";
-import { getWhiteLabel } from "visual/utils/whiteLabel";
-import { IS_WP } from "visual/utils/env";
-import { getError, isLayout, isPopup, isBlock } from "../common/utils";
 import { ShowSuccessError } from "./Notification";
-import { isCloud } from "visual/global/Config/types/configs/Cloud";
-import { isSavedBlock, isSavedLayout, isSavedPopup } from "visual/types/utils";
 
 export interface Thumbs extends BlockScreenshots {
   showRemoveIcon: boolean;
@@ -238,7 +239,7 @@ class Library extends Component<
 
     return blocks
       .filter(({ meta }) => meta?.type === "normal")
-      .map(block => ({
+      .map((block) => ({
         ...this.makeThumbsData(block),
         uid: block.uid,
         type: BLOCK,
@@ -259,7 +260,7 @@ class Library extends Component<
       done: layouts.length < TOTAL_COUNT
     };
 
-    return layouts.map(layout => ({
+    return layouts.map((layout) => ({
       ...this.makeThumbsData(layout),
       uid: layout.uid,
       type: LAYOUT,
@@ -282,7 +283,7 @@ class Library extends Component<
 
     return popups
       .filter(({ meta }) => meta?.type === "popup")
-      .map(popup => ({
+      .map((popup) => ({
         ...this.makeThumbsData(popup),
         uid: popup.uid,
         type: POPUP,
@@ -333,7 +334,8 @@ class Library extends Component<
     );
 
     const filteredStyles = extraFontStyles.filter(
-      ({ id }: { id: string }) => !projectExtraFontStyles.some(p => p.id === id)
+      ({ id }: { id: string }) =>
+        !projectExtraFontStyles.some((p) => p.id === id)
     );
 
     return {
@@ -457,7 +459,7 @@ class Library extends Component<
     this.setState(({ data }) => ({
       data: {
         ...data,
-        [type]: data[type]?.filter(block => block.uid !== uid)
+        [type]: data[type]?.filter((block) => block.uid !== uid)
       }
     }));
   };
@@ -557,25 +559,20 @@ class Library extends Component<
 
   makeThumbsData(block: SavedBlockMeta | SavedLayoutMeta): Thumbs {
     const { url, width, height } = blockThumbnailData(block);
+    const isAdminRole = currentUserRole() === "admin";
 
     return {
       thumbnailSrc: url,
       thumbnailWidth: width,
       thumbnailHeight: height,
-      showRemoveIcon: block.isCloudEntity !== true,
+      showRemoveIcon: block.isCloudEntity !== true && isAdminRole,
       loading: false
     };
   }
 
   render(): React.ReactElement {
-    const {
-      loading,
-      data,
-      types,
-      search,
-      importLoading,
-      exportLoading
-    } = this.state;
+    const { loading, data, types, search, importLoading, exportLoading } =
+      this.state;
     const { type, HeaderSlotLeft, showSearch } = this.props;
     const hasWhiteLabel = getWhiteLabel();
 

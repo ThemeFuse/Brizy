@@ -13,6 +13,7 @@ export interface GetCollectionTypesWithFields_collectionTypes_fields_CollectionT
   __typename: "CollectionTypeFieldCheck" | "CollectionTypeFieldColor" | "CollectionTypeFieldDateTime" | "CollectionTypeFieldEmail" | "CollectionTypeFieldFile" | "CollectionTypeFieldGallery" | "CollectionTypeFieldImage" | "CollectionTypeFieldLink" | "CollectionTypeFieldMap" | "CollectionTypeFieldNumber" | "CollectionTypeFieldPassword" | "CollectionTypeFieldPhone" | "CollectionTypeFieldRichText" | "CollectionTypeFieldSelect" | "CollectionTypeFieldSwitch" | "CollectionTypeFieldText" | "CollectionTypeFieldVideoLink";
   id: string;
   type: CollectionFieldTypeName;
+  label: string;
 }
 
 export interface GetCollectionTypesWithFields_collectionTypes_fields_CollectionTypeFieldReference_referenceSettings_collectionType {
@@ -30,6 +31,7 @@ export interface GetCollectionTypesWithFields_collectionTypes_fields_CollectionT
   __typename: "CollectionTypeFieldReference";
   id: string;
   type: CollectionFieldTypeName;
+  label: string;
   referenceSettings: GetCollectionTypesWithFields_collectionTypes_fields_CollectionTypeFieldReference_referenceSettings;
 }
 
@@ -48,6 +50,7 @@ export interface GetCollectionTypesWithFields_collectionTypes_fields_CollectionT
   __typename: "CollectionTypeFieldMultiReference";
   id: string;
   type: CollectionFieldTypeName;
+  label: string;
   multiReferenceSettings: GetCollectionTypesWithFields_collectionTypes_fields_CollectionTypeFieldMultiReference_multiReferenceSettings;
 }
 

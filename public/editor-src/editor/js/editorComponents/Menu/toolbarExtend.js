@@ -1,19 +1,19 @@
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
-import {
-  toolbarFilterHue,
-  toolbarFilterSaturation,
-  toolbarFilterBrightness,
-  toolbarFilterContrast
-} from "visual/utils/toolbar";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { DESKTOP } from "visual/utils/responsiveMode";
-import { NORMAL, HOVER, ACTIVE } from "visual/utils/stateMode";
-import { t } from "visual/utils/i18n";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
+import {
+  toolbarFilterBrightness,
+  toolbarFilterContrast,
+  toolbarFilterHue,
+  toolbarFilterSaturation
+} from "visual/utils/toolbar";
 
 export function getItems({ v, device, state, context }) {
   return defaultValueValue({ v, device, state, key: "mMenu" }) === "on"
@@ -21,7 +21,7 @@ export function getItems({ v, device, state, context }) {
     : getItemsSimple({ v, device, state });
 }
 export function getItemsSimple({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const { hex: colorHex } = getOptionColorHexByPalette(
     dvv("colorHex"),
     dvv("colorPalette")
@@ -50,12 +50,7 @@ export function getItemsSimple({ v, device, state }) {
           config: {
             min: 10,
             max: 100,
-            units: [
-              {
-                title: "%",
-                value: "%"
-              }
-            ]
+            units: [{ title: "%", value: "%" }]
           }
         }
       ]
@@ -349,7 +344,7 @@ export function getItemsSimple({ v, device, state }) {
 }
 
 export function getItemsMMenu({ v, device, state, context }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const { hex: mMenuColorHex } = getOptionColorHexByPalette(
     dvv("mMenuColorHex"),
     dvv("mMenuColorPalette")
@@ -526,8 +521,8 @@ export function getItemsMMenu({ v, device, state, context }) {
               label: t("Background"),
               options: [
                 {
-                  id: "mMenuBgColor",
-                  type: "colorPicker-dev"
+                  id: "mMenu",
+                  type: "backgroundColor-dev"
                 }
               ]
             },

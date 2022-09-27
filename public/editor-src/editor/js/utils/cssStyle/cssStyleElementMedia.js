@@ -1,12 +1,8 @@
-import {
-  styleElementMediaIconCustomSize,
-  stylePaddingUngrouped
-} from "visual/utils/style2";
+import { cssStyleSizeFontSize } from "visual/utils/cssStyle";
+import { stylePaddingUngrouped } from "visual/utils/style2";
 
 export function cssStyleElementMediaIconFontSize({ v, device, state }) {
-  const iconCustomSize = styleElementMediaIconCustomSize({ v, device, state });
-
-  return iconCustomSize === undefined ? "" : `font-size:${iconCustomSize}px;`;
+  return cssStyleSizeFontSize({ v, device, state, prefix: "iconCustom" });
 }
 
 export function cssStyleElementMediaPadding({ v, device, state }) {

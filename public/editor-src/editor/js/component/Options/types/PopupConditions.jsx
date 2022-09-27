@@ -1,12 +1,11 @@
+import classNames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classNames from "classnames";
 import { ConditionsComponent } from "visual/component/ConditionsComponent";
-import { t } from "visual/utils/i18n";
-import { getStore } from "visual/redux/store";
-import { IS_EXTERNAL_POPUP } from "visual/utils/models";
-
 import { rulesAmountSelector, triggersSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { t } from "visual/utils/i18n";
+import { IS_EXTERNAL_POPUP } from "visual/utils/models";
 
 class PopupConditionsOptionType extends React.Component {
   static defaultProps = {
@@ -43,7 +42,7 @@ class PopupConditionsOptionType extends React.Component {
     const attr = _.omit(_attr, "className");
 
     return (
-      <ConditionsComponent type="popup">
+      <ConditionsComponent context="popup">
         <div className={className} {...attr}>
           <span className="brz-ed-option__popup_conditions-count">
             {this.calConditionsAmount()}

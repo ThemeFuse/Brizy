@@ -37,7 +37,7 @@
 
     "iconSize": "small",
     "iconCustomSize": 16,
-    "iconCustomSizeSuffix": null,
+    "iconCustomSizeSuffix": "px",
 
     "iconSmallSize": 16,
     "iconMediumSize": 24,
@@ -46,8 +46,10 @@
     "iconSpacing": 3,
     "iconSpacingSuffix": null,
 
+    "borderRadiusType": "grouped",
+
     "borderRadius": 12,
-    "borderRadiusSuffix": null,
+    "borderRadiusSuffix": "px",
 
     "families": {
       "fontFamily": "lato",

@@ -1,25 +1,27 @@
+import {
+  GetCustomerAndCollection_collectionTypes as CustomerAndCollectionCollection,
+  GetCustomerAndCollection_customerGroups_collection as CustomerAndCollectionCustomerGroups,
+  GetCustomerAndCollection_customers_collection as CustomerAndCollectionCustomer
+} from "visual/utils/api/cms/graphql/types/GetCustomerAndCollection";
+import { paginationData } from "visual/utils/api/const";
 import { CustomError } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
-import { MNullish, isNullish, isT } from "visual/utils/value";
-import { paginationData } from "visual/utils/api/const";
-import * as Gql from "./graphql/gql";
-import { getConnection } from "./graphql/apollo";
-import { GetCollectionTypesWithFields_collectionTypes as CollectionTypesWithFields } from "./graphql/types/GetCollectionTypesWithFields";
-import { GetCollectionItem_collectionItem as CollectionItem } from "./graphql/types/GetCollectionItem";
+import { isNullish, isT, MNullish } from "visual/utils/value";
 import * as TMP from "./correctors";
-import {
-  GetCustomerAndCollection_customers_collection as CustomerAndCollectionCustomer,
-  GetCustomerAndCollection_customerGroups_collection as CustomerAndCollectionCustomerGroups,
-  GetCustomerAndCollection_collectionTypes as CustomerAndCollectionCollection
-} from "visual/utils/api/cms/graphql/types/GetCustomerAndCollection";
+import { getConnection } from "./graphql/apollo";
+import * as Gql from "./graphql/gql";
+import { GetCollectionItem_collectionItem as CollectionItem } from "./graphql/types/GetCollectionItem";
+import { GetCollectionTypesWithFields_collectionTypes as CollectionTypesWithFields } from "./graphql/types/GetCollectionTypesWithFields";
 
-const errOnEmpty = (m: string) => <T>(t: MNullish<T>): T => {
-  if (isNullish(t)) {
-    throw new CustomError(m);
-  }
+const errOnEmpty =
+  (m: string) =>
+  <T>(t: MNullish<T>): T => {
+    if (isNullish(t)) {
+      throw new CustomError(m);
+    }
 
-  return t;
-};
+    return t;
+  };
 
 const onCatch = (m: string) => (): never => {
   throw new CustomError(m);
@@ -30,9 +32,9 @@ export function getCollectionTypesWithFields(): Promise<
 > {
   return (
     Gql.getCollectionTypesWithFields(getConnection())
-      .then(r => r.data?.collectionTypes)
+      .then((r) => r.data?.collectionTypes)
       .then(errOnEmpty(t("Invalid api data")))
-      .then(collections => collections.filter(isT))
+      .then((collections) => collections.filter(isT))
       // TODO: remove this when api will be finished
       .then(TMP.correctCollectionTypesWithFields)
       .catch(onCatch(t("Failed to fetch api data")))
@@ -56,9 +58,9 @@ export function getCollectionItems(
       page,
       itemsPerPage
     })
-      .then(r => r?.data?.collectionItems?.collection)
+      .then((r) => r?.data?.collectionItems?.collection)
       .then(errOnEmpty(t("Invalid api data")))
-      .then(items => items.filter(isT))
+      .then((items) => items.filter(isT))
       // TODO: remove this when api will be finished
       .then(TMP.correctCollectionItems(filters ?? {}))
       .catch(onCatch(t("Failed to fetch api data")))
@@ -67,35 +69,9 @@ export function getCollectionItems(
 
 export function getCollectionItem(itemId: string): Promise<CollectionItem> {
   return Gql.getCollectionItem(getConnection(), { id: itemId })
-    .then(r => r?.data?.collectionItem)
+    .then((r) => r?.data?.collectionItem)
     .then(errOnEmpty(t("Invalid api data")))
     .catch(onCatch(t("Failed to fetch api data")));
-}
-
-export function getReferencedCollectionItems(
-  collectionId: string,
-  filters?: {
-    include?: string[];
-    search?: string;
-    status?: "draft" | "published" | "all";
-  }
-): Promise<CollectionItem[]> {
-  const page = paginationData.page;
-  const itemsPerPage = paginationData.count;
-
-  return (
-    Gql.getReferencedCollectionItems(getConnection(), {
-      type: collectionId,
-      page,
-      itemsPerPage
-    })
-      .then(r => r?.data?.referencedCollectionItems?.collection)
-      .then(errOnEmpty(t("Invalid api data")))
-      .then(items => items.filter(isT))
-      // TODO: remove this when api will be finished
-      .then(TMP.correctCollectionItems(filters ?? {}))
-      .catch(onCatch(t("Failed to fetch api data")))
-  );
 }
 
 //#region Customer & Collections
@@ -105,9 +81,7 @@ interface CustomerAndCollectionTypes {
   collectionTypes: CustomerAndCollectionCollection[];
 }
 
-export function getCustomersAndCollectionTypes(): Promise<
-  CustomerAndCollectionTypes
-> {
+export function getCustomersAndCollectionTypes(): Promise<CustomerAndCollectionTypes> {
   const page = paginationData.page;
   const itemsPerPage = paginationData.count;
 
@@ -115,7 +89,7 @@ export function getCustomersAndCollectionTypes(): Promise<
     page,
     itemsPerPage
   })
-    .then(r => ({
+    .then((r) => ({
       customers: r.data?.customers?.collection,
       customerGroups: r.data?.customerGroups?.collection,
       collectionTypes: r.data?.collectionTypes
@@ -123,9 +97,7 @@ export function getCustomersAndCollectionTypes(): Promise<
     .then(({ customers, customerGroups, collectionTypes }) => ({
       customers: customers ? customers.filter(isT) : [],
       customerGroups: customerGroups ? customerGroups.filter(isT) : [],
-      collectionTypes: collectionTypes
-        ? collectionTypes.filter(isT).filter(c => c.settings.hidden !== true)
-        : []
+      collectionTypes: collectionTypes ? collectionTypes.filter(isT) : []
     }))
     .catch(onCatch(t("Failed to fetch api data")));
 }

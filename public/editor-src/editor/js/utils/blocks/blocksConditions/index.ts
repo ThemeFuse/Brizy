@@ -1,22 +1,42 @@
+import produce from "immer";
 import Config from "visual/global/Config";
-import { getStore } from "visual/redux/store";
-import { pageSelector } from "visual/redux/selectors";
-import { pageSplitRules, isIncludeCondition } from "../getAllowedGBIds";
-
-import { IS_TEMPLATE } from "visual/utils/models";
 import {
   isCloud,
   isCMS,
   isCollectionPage,
   isCustomer,
+  isEcwidCategoryPage,
   isEcwidProductPage
 } from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
+import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
+import { pageSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import {
+  BlockTypeRule,
+  CloudReferenceAllEntity,
+  CloudReferenceEntity,
   CollectionTypeRule,
   GlobalBlock,
   GlobalBlockPosition,
   Page
 } from "visual/types";
+import { IS_TEMPLATE } from "visual/utils/models";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
+import { canUseCondition } from "../getAllowedGBIds";
+import { isCollectionItemRule } from "../guards";
+import {
+  AlignsList,
+  GB,
+  GBIds,
+  GBP,
+  GBPWithoutNull,
+  InsertScheme,
+  PB,
+  PositionAlign,
+  SortedGBPositions,
+  SurroundedConditionsIds
+} from "./types";
 
 export const PAGES_GROUP_ID = 1;
 export const CATEGORIES_GROUP_ID = 2;
@@ -24,26 +44,13 @@ export const TEMPLATES_GROUP_ID = 16;
 
 // take a look where we can move this constants
 
-export const TEMPLATE_TYPE = "brizy_template";
+export const TEMPLATE_TYPE = "editor-template";
 export const CUSTOMER_TYPE = "customer";
 export const ECWID_PRODUCT_TYPE = "ecwid-product";
-
-import {
-  PB,
-  GBIds,
-  GBP,
-  GB,
-  GBPWithoutNull,
-  PositionAlign,
-  AlignsList,
-  SortedGBPositions,
-  SurroundedConditionsIds,
-  InsertScheme
-} from "./types";
-import { isWp } from "visual/global/Config/types/configs/WP";
+export const ECWID_PRODUCT_CATEGORY_TYPE = "ecwid-product-category";
 
 function getGBIdsInPage(blocksOrder: PB, globalBlocks: GB): PB {
-  return blocksOrder.filter(id => globalBlocks[id]);
+  return blocksOrder.filter((id) => globalBlocks[id]);
 }
 
 function getGBChunks(
@@ -157,7 +164,7 @@ export function getPositions(blocksOrder: PB, globalBlocks: GB): GBP {
   const { top: GBTopIds } = getSurroundedGBIds(blocksOrder, globalBlocks);
 
   const GBIdsInPage = getGBIdsInPage(blocksOrder, globalBlocks);
-  const sourceGBIds = GBIdsInPage.filter(id => sourcePositionObj[id]);
+  const sourceGBIds = GBIdsInPage.filter((id) => sourcePositionObj[id]);
 
   const insertScheme = getGBChunks(GBIdsInPage, sourceGBIds, GBTopIds);
 
@@ -189,12 +196,12 @@ export const getSurroundedGBIds = (
   };
 
   if (pageBlocksIds.length > 0) {
-    const pageBlocksIsAllGlobalBlocks = pageBlocksIds.every(pageBlockId =>
+    const pageBlocksIsAllGlobalBlocks = pageBlocksIds.every((pageBlockId) =>
       globalBlocksIds.includes(pageBlockId)
     );
 
     if (pageBlocksIsAllGlobalBlocks) {
-      pageBlocksIds.forEach(pageBlockId => {
+      pageBlocksIds.forEach((pageBlockId) => {
         const globalBlock = globalBlocks[pageBlockId];
 
         if (globalBlock?.position && globalBlock.position.align) {
@@ -230,9 +237,7 @@ export const getSurroundedGBIds = (
   return surroundedConditionsIds;
 };
 
-function turnPositionsIntoSortedArray(
-  positions: GBPWithoutNull
-): {
+function turnPositionsIntoSortedArray(positions: GBPWithoutNull): {
   top: SortedGBPositions;
   bottom: SortedGBPositions;
 } {
@@ -318,12 +323,12 @@ export const getCurrentRule = (
 ): {
   group: CollectionTypeRule["appliedFor"];
   type: CollectionTypeRule["entityType"];
-  id: Page["id"];
+  id: Page["id"] | EcwidCategoryId | EcwidProductId;
 } => {
   const config = Config.getAll();
   let group = PAGES_GROUP_ID;
   let type = "page";
-  let id = page.id;
+  let id: string | EcwidProductId | EcwidCategoryId = page.id;
 
   if (isCollectionPage(page)) {
     type = page.collectionType.id;
@@ -336,6 +341,11 @@ export const getCurrentRule = (
   if (isEcwidProductPage(page)) {
     type = ECWID_PRODUCT_TYPE;
     id = page.productId;
+  }
+
+  if (isEcwidCategoryPage(page)) {
+    type = ECWID_PRODUCT_CATEGORY_TYPE;
+    id = page.categoryId;
   }
 
   if (isWp(config)) {
@@ -355,7 +365,9 @@ export const getCurrentRule = (
 
   return {
     group,
-    type,
+    type: NoEmptyString.is(type)
+      ? type
+      : ("page" as NoEmptyString.NoEmptyString),
     id
   };
 };
@@ -431,48 +443,58 @@ export const changeRule = (
   page: Page
 ): GlobalBlock => {
   const currentRule = getCurrentRule(page);
-  const { level2, level3 } = pageSplitRules(globalBlock.rules, page);
 
-  let newGlobalBlock = {
+  const newGlobalBlock = {
     ...globalBlock,
     rules: globalBlock.rules.filter(
-      // @ts-expect-error: this code is reverted when merged with beta-gb-change
-      ({ entityValues }) =>
-        // @ts-expect-error: this code is reverted when merged with beta-gb-change
-        !entityValues.some(v => String(v) === String(currentRule.id))
+      (rule) =>
+        !isCollectionItemRule(rule) ||
+        !rule.entityValues.some((v) => String(v) === String(currentRule.id))
     )
   };
 
-  let shouldAddRule = true;
-
-  if (!IS_TEMPLATE) {
-    const level2IsIncludeCondition = level2 && isIncludeCondition(level2);
-    const level3IsIncludeCondition = level3 && isIncludeCondition(level3);
-
-    const isIncludeBlock = level2IsIncludeCondition || level3IsIncludeCondition;
-
-    const includeAlreadyExist = shouldAddIncludeCondition && isIncludeBlock;
-    const excludeAlreadyExist = !shouldAddIncludeCondition && !isIncludeBlock;
-
-    if (includeAlreadyExist || excludeAlreadyExist) {
-      shouldAddRule = false;
-    }
-  }
-
-  if (shouldAddRule) {
-    newGlobalBlock = {
-      ...newGlobalBlock,
-      rules: [
-        ...newGlobalBlock.rules,
-        {
-          type: shouldAddIncludeCondition ? 1 : 2,
-          appliedFor: currentRule.group,
-          entityType: currentRule.type,
-          entityValues: [currentRule.id]
-        }
-      ]
-    };
+  const blockIsVisible = canUseCondition(newGlobalBlock, page);
+  if (
+    (!shouldAddIncludeCondition && blockIsVisible) ||
+    (shouldAddIncludeCondition && !blockIsVisible)
+  ) {
+    return produce(newGlobalBlock, (draft) => {
+      draft.rules.push({
+        type: shouldAddIncludeCondition
+          ? BlockTypeRule.include
+          : BlockTypeRule.exclude,
+        mode: "specific",
+        appliedFor: currentRule.group,
+        entityType: currentRule.type,
+        entityValues: [currentRule.id]
+      });
+    });
   }
 
   return newGlobalBlock;
+};
+
+export const createEntityValueAll = (c: {
+  fieldId: string;
+}): CloudReferenceAllEntity => {
+  return c.fieldId as CloudReferenceAllEntity;
+};
+
+export const createEntityValue = (c: {
+  fieldId: string;
+  collectionId: string;
+}): CloudReferenceEntity => {
+  return `${c.fieldId}:${c.collectionId}` as CloudReferenceEntity;
+};
+
+export const getEntityValue = (
+  s: string
+): { fieldId: string; collectionId?: string } | undefined => {
+  const [fieldId, collectionId] = s.split(":");
+
+  if (fieldId) {
+    return collectionId ? { fieldId, collectionId } : { fieldId };
+  }
+
+  return undefined;
 };

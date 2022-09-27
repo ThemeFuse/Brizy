@@ -18,12 +18,6 @@ export function styleElementTableIconSpacing({ v, device, state }) {
   return dvv("iconSpacing");
 }
 
-export function styleElementTableHorizontalAlign({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return dvv("horizontalAlign");
-}
-
 export function styleElementTableColumns({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
 

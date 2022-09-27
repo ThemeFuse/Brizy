@@ -7,9 +7,12 @@ class Brizy_Compatibilities_WpUltimo {
 	}
 
 	public function init() {
-		if ( isset( $_GET[ Brizy_Editor::prefix( '-edit' ) ] ) || isset( $_GET[ Brizy_Editor::prefix( '-edit-iframe' ) ] ) ) {
-			add_filter( 'brizy_editor_config', [ $this, 'remappingAssetsUrl' ] );
+
+		if ( ! Brizy_Public_Main::is_editing() ) {
+			return;
 		}
+
+		add_filter( 'brizy_editor_config', [ $this, 'remappingAssetsUrl' ] );
 	}
 
 	public function remappingAssetsUrl( $config ) {

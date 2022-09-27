@@ -1,11 +1,12 @@
-import { WhiteLabel } from "./WhiteLabel";
-import { Authorize } from "./Authorize";
-import { WithPayload } from "./Base";
+import { Shop } from "visual/component/LeftSidebar/components/Cms/types/Modules/Shop";
 import { ProjectId } from "visual/component/LeftSidebar/components/Cms/types/ProjectId";
 import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
-import { ActiveItem } from "./ActiveItem";
 import { Subscription } from "visual/global/Config/types/shopify/Subscription";
-import { Shop } from "visual/component/LeftSidebar/components/Cms/types/Modules/Shop";
+import { ActiveItem } from "./ActiveItem";
+import { Authorize } from "./Authorize";
+import { WithPayload } from "./Base";
+import { Locale } from "./Locale";
+import { WhiteLabel } from "./WhiteLabel";
 
 interface Base {
   development: boolean;
@@ -15,6 +16,7 @@ interface Base {
   activeItem: ActiveItem;
   projectId: ProjectId;
   userApi: Authorize;
+  locale: Locale;
 }
 
 export interface Cloud extends Base {

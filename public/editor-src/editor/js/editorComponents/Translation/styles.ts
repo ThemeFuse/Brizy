@@ -1,5 +1,5 @@
-import { Value } from ".";
 import { renderStyles } from "visual/utils/cssStyle";
+import { Value } from ".";
 
 export function style(
   v: Value,
@@ -20,9 +20,8 @@ export function style(
         "cssStyleBorder",
         // "cssStyleBorderRadius",
         "cssStyleBoxShadow",
-
-        "cssStyleElementTranslationWidth",
-        "cssStyleElementTranslationHeight"
+        "cssStyleSizeWidth",
+        "cssStyleSizeHeight"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -65,41 +64,43 @@ export function style(
       ]
     },
     ".brz &&": {
-      standart: [
-        "cssStyleElementTranslationHeight",
-        "cssStyleElementTranslationWidth"
-      ]
+      standart: ["cssStyleSizeHeight", "cssStyleSizeWidth"]
     },
-    ".brz && .select2-selection .select2-selection__rendered .brz-translation__select-item .brz-span": {
-      standart: ["cssStyleElementTranslationTextSpacing"]
-    },
+    ".brz && .select2-selection .select2-selection__rendered .brz-translation__select-item .brz-span":
+      {
+        standart: ["cssStyleElementTranslationTextSpacing"]
+      },
     ".brz && .select2-selection .brz-translation__select-item": {
-      standart: ["cssStyleElementTranslationHeight"]
+      standart: ["cssStyleSizeHeight"]
     },
-    ".brz && .select2-selection .select2-selection__rendered .brz-translation__select-item .brz-translation__flag": {
-      standart: [
-        "cssStyleElementTranslationFlagSpacing",
-        "cssStyleElementTranslationFlagSize"
-      ]
-    },
+    ".brz && .select2-selection .select2-selection__rendered .brz-translation__select-item .brz-translation__flag":
+      {
+        standart: [
+          "cssStyleElementTranslationFlagSpacing",
+          "cssStyleElementTranslationFlagSize"
+        ]
+      },
     ".brz &&:hover .select2-selection .select2-selection__arrow b": {
       standart: ["cssStyleElementTranslationPreviewArrowColorClosed"]
     },
-    ".brz &&:hover .select2-container--open .select2-selection .select2-selection__arrow b": {
-      standart: ["cssStyleElementTranslationPreviewArrowColorOpen"]
-    },
+    ".brz &&:hover .select2-container--open .select2-selection .select2-selection__arrow b":
+      {
+        standart: ["cssStyleElementTranslationPreviewArrowColorOpen"]
+      },
     // #endregion
 
     // #region dropdown css
-    ".brz && .select2-dropdown .select2-results__option .brz-translation__select-item .brz-span": {
-      standart: ["cssStyleElementTranslationTextSpacing"]
-    },
-    ".brz && .select2-dropdown .select2-results__option .brz-translation__select-item .brz-translation__flag": {
-      standart: [
-        "cssStyleElementTranslationFlagSpacing",
-        "cssStyleElementTranslationFlagSize"
-      ]
-    },
+    ".brz && .select2-dropdown .select2-results__option .brz-translation__select-item .brz-span":
+      {
+        standart: ["cssStyleElementTranslationTextSpacing"]
+      },
+    ".brz && .select2-dropdown .select2-results__option .brz-translation__select-item .brz-translation__flag":
+      {
+        standart: [
+          "cssStyleElementTranslationFlagSpacing",
+          "cssStyleElementTranslationFlagSize"
+        ]
+      },
     ".brz && .select2-dropdown:hover": {
       standart: ["cssStyleElementTranslationBoxShadow"],
       interval: [
@@ -112,7 +113,7 @@ export function style(
         "cssStyleElementTranslationColor",
         "cssStyleElementTranslationBgColor",
         "cssStyleElementTranslationBorder",
-        "cssStyleElementTranslationHeight"
+        "cssStyleSizeHeight"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -143,34 +144,35 @@ export function styleDropdown(
         "cssStyleElementTranslationPropertyHoverTransition"
       ]
     },
-    ".brz && .brz-translation__select-list .brz-translation__select-item:hover": {
-      standart: [
-        "cssStyleTypography2FontFamily",
-        "cssStyleTypography2FontWeight",
-        "cssStyleTypography2FontSize",
-        "cssStyleTypography2LineHeight",
-        "cssStyleTypography2LetterSpacing",
-
-        "cssStyleElementTranslationColor",
-        "cssStyleElementTranslationBgColor",
-        "cssStyleElementTranslationBorder",
-
-        "cssStyleElementTranslationHeight"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementTranslationPropertyHoverTransition"
-      ]
-    },
-    ".brz && .brz-translation__select-list .brz-translation__select-item .brz-span": {
-      standart: ["cssStyleElementTranslationTextSpacing"]
-    },
-    ".brz && .brz-translation__select-list .brz-translation__select-item .brz-translation__flag": {
-      standart: [
-        "cssStyleElementTranslationFlagSize",
-        "cssStyleElementTranslationFlagSpacing"
-      ]
-    }
+    ".brz && .brz-translation__select-list .brz-translation__select-item:hover":
+      {
+        standart: [
+          "cssStyleTypography2FontFamily",
+          "cssStyleTypography2FontWeight",
+          "cssStyleTypography2FontSize",
+          "cssStyleTypography2LineHeight",
+          "cssStyleTypography2LetterSpacing",
+          "cssStyleElementTranslationColor",
+          "cssStyleElementTranslationBgColor",
+          "cssStyleElementTranslationBorder",
+          "cssStyleSizeHeight"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStyleElementTranslationPropertyHoverTransition"
+        ]
+      },
+    ".brz && .brz-translation__select-list .brz-translation__select-item .brz-span":
+      {
+        standart: ["cssStyleElementTranslationTextSpacing"]
+      },
+    ".brz && .brz-translation__select-list .brz-translation__select-item .brz-translation__flag":
+      {
+        standart: [
+          "cssStyleElementTranslationFlagSize",
+          "cssStyleElementTranslationFlagSpacing"
+        ]
+      }
   };
 
   return renderStyles({

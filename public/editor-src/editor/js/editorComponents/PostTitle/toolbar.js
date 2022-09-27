@@ -1,25 +1,26 @@
-import { t } from "visual/utils/i18n";
 import Config from "visual/global/Config";
 import { isShopify } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { IS_CLOUD } from "visual/utils/env";
+import { t } from "visual/utils/i18n";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarLinkAnchor,
   toolbarLinkExternal,
   toolbarLinkPopup
 } from "visual/utils/toolbar";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
 import {
-  getSourceTypeChoices,
-  getSourceIdChoices,
   getShopifySourceIdChoices,
-  getShopifySourceTypeChoices
+  getShopifySourceTypeChoices,
+  getSourceIdChoices,
+  getSourceTypeChoices
 } from "./utils";
 
 export function getItems({ v, device, component }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
@@ -29,7 +30,6 @@ export function getItems({ v, device, component }) {
     dvv("colorPalette")
   );
   const config = Config.getAll();
-
   const IS_SHOPIFY = isShopify(config);
 
   return [
@@ -48,7 +48,7 @@ export function getItems({ v, device, component }) {
           id: "sourceType",
           type: "select-dev",
           label: t("Source Type"),
-          disabled: IS_SHOPIFY,
+          disabled: IS_SHOPIFY || IS_CLOUD,
           device: "desktop",
           placeholder: "Options",
           choices: {

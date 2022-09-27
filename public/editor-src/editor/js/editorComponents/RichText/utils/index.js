@@ -17,7 +17,7 @@ export function mapBlockElements(html, fn) {
   function getWrapper(html) {
     return IS_EDITOR
       ? $doc(`<div class="brz-temp-div">${html}</div>`)
-      : $doc.load(html);
+      : $doc.load(html, { decodeEntities: false });
   }
 
   function getParagraphsArray($) {
@@ -46,20 +46,21 @@ const rgbaTohex = (rgba = "rgba(0, 0, 0, 1)") => {
   }
 };
 
-const flatFormats = format => {
+const flatFormats = (format) => {
   return Object.entries(format).reduce((acc, [key, value]) => {
     acc[key] = Array.isArray(value) ? value[0] : value;
     return acc;
   }, {});
 };
 
-const getCSSVarValue = cssVar => {
+const getCSSVarValue = (cssVar) => {
   return getComputedStyle(document.documentElement).getPropertyValue(cssVar);
 };
 
 const parseShadow = (str = "") => {
   if (str.includes("var")) {
-    const regExp = /rgba\(var\((.*?)\),(\d+(?:\.\d+)?)\)+\s+(\d+px)\s?(\d+px)\s?(\d+px)/;
+    const regExp =
+      /rgba\(var\((.*?)\),(\d+(?:\.\d+)?)\)+\s+(\d+px)\s?(\d+px)\s?(\d+px)/;
     const [, cssVar, opacity, horizontal, vertical, blur] =
       regExp.exec(str) ?? [];
 

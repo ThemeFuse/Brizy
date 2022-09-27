@@ -1,20 +1,24 @@
+import {
+  cssStyleBgColor,
+  cssStyleBorder,
+  cssStyleBoxShadow,
+  cssStyleColor,
+  cssStylePaddingFourFields,
+  cssStyleSizeWidth
+} from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  styleBorderWidthGrouped,
+  styleAlignHorizontal,
+  styleBgColor,
   styleBorderColor,
-  styleBgColor
+  styleBorderWidthGrouped
 } from "visual/utils/style2";
-import {
-  cssStylePaddingFourFields,
-  cssStyleColor,
-  cssStyleBorder,
-  cssStyleBgColor,
-  cssStyleBoxShadow
-} from "visual/utils/cssStyle";
 import { ACTIVE } from "../stateMode";
+import { cssStyleFlexHorizontalAlign } from "./cssStyleAlign";
+import { cssStylePositionAbsolute } from "./cssStylePosition";
 
 export function cssStyleElementTabsBtnSpacing({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const iconPosition = dvv("iconPosition");
   const iconSpacing = dvv("iconSpacing");
   switch (iconPosition) {
@@ -30,23 +34,6 @@ export function cssStyleElementTabsBtnSpacing({ v, device, state }) {
     case "bottom": {
       return `margin: ${iconSpacing}px 0 0 0;`;
     }
-  }
-}
-
-export function cssStyleElementTabsBtnIconSize({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
-  const iconSize = dvv("iconSize");
-  const iconCustomSize = dvv("iconCustomSize");
-
-  switch (iconSize) {
-    case "small":
-      return "font-size: 16px;";
-    case "medium":
-      return "font-size: 24px;";
-    case "large":
-      return "font-size: 32px;";
-    case "custom":
-      return `font-size: ${iconCustomSize}px;`;
   }
 }
 
@@ -82,7 +69,7 @@ export function cssStyleElementTabsActiveBeforeHeight({ v, device, state }) {
 }
 
 export function cssStyleElementTabsActiveBeforeWidth({ v, device, state }) {
-  return `width: ${styleBorderWidthGrouped({ v, device, state })}px;`;
+  return cssStyleSizeWidth({ v, device, state, prefix: "border" });
 }
 
 export function cssStyleElementTabsBeforeAfterRightWidth({ v, device, state }) {
@@ -113,7 +100,7 @@ export function cssStyleElementTabsEmptyContent({ v }) {
 }
 
 export function cssStyleElementTabsBtnIconPosition({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const iconPosition = dvv("iconPosition");
   switch (iconPosition) {
     case "left": {
@@ -132,28 +119,28 @@ export function cssStyleElementTabsBtnIconPosition({ v, device, state }) {
 }
 
 export function cssStyleElementTabsBtnIconJustifyContent({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const justifyContent =
     dvv("iconPosition") === "left" ? "flex-start" : "flex-end";
   return `justify-content: ${justifyContent};`;
 }
 export function cssStyleElementTabsBeforeAfterTop({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const borderWidth = dvv("borderWidth");
   return `top: calc(100% - ${borderWidth}px);`;
 }
 export function cssStyleElementTabsBeforeAfterBottom({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const borderWidth = dvv("borderWidth");
   return `bottom: calc(100% - ${borderWidth}px);`;
 }
 export function cssStyleElementTabsAfterSpacing({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const spacingAfter = dvv("spacingAfter");
   return `margin-bottom: ${spacingAfter}px;`;
 }
 export function cssStyleElementTabsAfterSpacingVertical({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const spacingAfter = dvv("spacingAfter");
   const verticalAlign = dvv("verticalAlign");
   return verticalAlign === "left"
@@ -161,7 +148,7 @@ export function cssStyleElementTabsAfterSpacingVertical({ v, device, state }) {
     : `margin: 0 0 0 ${spacingAfter}px;`;
 }
 export function cssStyleElementTabsSpacing({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const spacing = dvv("spacing");
   const verticalMode = dvv("verticalMode");
   return verticalMode === "off"
@@ -169,21 +156,14 @@ export function cssStyleElementTabsSpacing({ v, device, state }) {
     : `margin: 0 0 ${spacing}px 0;`;
 }
 export function cssStyleElementTabsNavAlign({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
-  const horizontalAlign = dvv("horizontalAlign");
-
-  const aligns = {
-    left: "flex-start",
-    center: "center",
-    right: "flex-end"
-  };
+  const horizontalAlign = styleAlignHorizontal({ v, device, state });
 
   return horizontalAlign === "justify"
     ? "flex-grow: 1;"
-    : `justify-content:${aligns[horizontalAlign]};`;
+    : cssStyleFlexHorizontalAlign({ v, device, state });
 }
 export function cssStyleElementTabsPadding({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const navStyle = dvv("navStyle");
   if (navStyle !== "style-3") {
     return cssStylePaddingFourFields({ v, device, state });
@@ -191,7 +171,7 @@ export function cssStyleElementTabsPadding({ v, device, state }) {
   return "";
 }
 export function cssStyleElementTabsNavBorderBottom({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const verticalMode = dvv("verticalMode");
   const verticalAlign = dvv("verticalAlign");
   const color = styleBorderColor({ v, device, state });
@@ -201,7 +181,7 @@ export function cssStyleElementTabsNavBorderBottom({ v, device, state }) {
     if (width === 0) {
       width = 1;
     }
-    return `content: ""; width: 105vw; height: ${width}px;  background-color: ${color}; position: absolute; top: auto; bottom: 0; z-index: 1;`;
+    return `content: ""; width: 105vw; height: ${width}px;  background-color: ${color}; ${cssStylePositionAbsolute()} top: auto; bottom: 0; z-index: 1;`;
   } else if (verticalMode === "on") {
     if (verticalAlign === "left") {
       return `content: ""; width: ${width}px; height: 100vh;  background-color: ${color}; top: auto; left: auto; right: 0; `;
@@ -211,19 +191,19 @@ export function cssStyleElementTabsNavBorderBottom({ v, device, state }) {
   }
 }
 export function cssStyleElementTabsNavStyle3Before({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const verticalMode = dvv("verticalMode");
   const verticalAlign = dvv("verticalAlign");
   const color = styleBorderColor({ v, device, state: ACTIVE });
   const width = styleBorderWidthGrouped({ v, device, state: ACTIVE });
 
   if (verticalMode === "off") {
-    return `content: ""; width: 100%; height: ${width}px;  background-color: ${color}; position: absolute; bottom: 0; left: 0; z-index: 2;`;
+    return `content: ""; width: 100%; height: ${width}px;  background-color: ${color}; ${cssStylePositionAbsolute()} bottom: 0; left: 0; z-index: 2;`;
   } else if (verticalMode === "on") {
     if (verticalAlign === "left") {
-      return `content: ""; width: ${width}px; height: 100%; background-color: ${color}; position: absolute; right: 0; left: auto; z-index: 2;`;
+      return `content: ""; width: ${width}px; height: 100%; background-color: ${color}; ${cssStylePositionAbsolute()} right: 0; left: auto; z-index: 2;`;
     } else if (verticalAlign === "right") {
-      return `content: ""; width: ${width}px; height: 100%; background-color: ${color}; position: absolute; right: auto; left: 0; z-index: 2;`;
+      return `content: ""; width: ${width}px; height: 100%; background-color: ${color}; ${cssStylePositionAbsolute()} right: auto; left: 0; z-index: 2;`;
     }
   }
 }
@@ -245,7 +225,7 @@ export function cssStyleElementTabsActiveBorder({ v, device }) {
 }
 
 export function cssStyleElementTabsContentBgColor({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const contentBgColorOpacity = dvv("contentBgColorOpacity");
   return contentBgColorOpacity === 0
     ? ""
@@ -253,7 +233,7 @@ export function cssStyleElementTabsContentBgColor({ v, device, state }) {
 }
 
 export function cssStyleElementTabsContentBorder({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const contentBorderColorOpacity = dvv("contentBorderColorOpacity");
   return contentBorderColorOpacity === 0
     ? ""

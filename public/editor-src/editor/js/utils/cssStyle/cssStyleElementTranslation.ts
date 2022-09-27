@@ -1,57 +1,19 @@
 import { defaultValueValue } from "visual/utils/onChange";
-import * as Num from "visual/utils/reader/number";
 import { styleColor } from "../style2";
 import { CSSValue } from "../style2/types";
 import { cssStyleBgColor } from "./cssStyleBgColor";
 import { cssStyleBorder } from "./cssStyleBorder";
 import { cssStyleBoxShadow } from "./cssStyleBoxShadow";
 import { cssStyleColor } from "./cssStyleColor";
-
-// #region WIDTH HEIGHT
-export function cssStyleElementTranslationHeight({
-  v,
-  device
-}: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-
-  const height = Num.read(dvv("height")) ?? 10;
-  const heightSuffix = dvv("heightSuffix");
-
-  return `height: ${height}${heightSuffix};`;
-}
-export function cssStyleElementTranslationWidth({
-  v,
-  device
-}: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-
-  const width = Num.read(dvv("width")) ?? 30;
-  const widthSuffix = dvv("widthSuffix");
-
-  return `width: ${width}${widthSuffix};`;
-}
-// #endregion
+import { cssStyleSizeWidthHeight } from "./cssStyleSize";
 
 //#region FLAG
 export function cssStyleElementTranslationFlagSize({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-
-  const flagSize = dvv("flagSize");
-  const flagCustomSize = Num.read(dvv("flagCustomSize"));
-
-  switch (flagSize) {
-    case "small":
-      return "width: 16px;";
-    case "medium":
-      return "width: 24px;";
-    case "large":
-      return "width: 32px;";
-    default:
-      return `width: ${flagCustomSize}px;`;
-  }
+  return cssStyleSizeWidthHeight({ v, device, state, prefix: "flag" });
 }
 
 export function cssStyleElementTranslationFlagSpacing({

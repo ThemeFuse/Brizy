@@ -1,59 +1,51 @@
-import React, { Component, ReactElement } from "react";
 import classnames from "classnames";
-import { noop } from "underscore";
-import { Dispatch } from "redux";
+import React, { Component, ReactElement } from "react";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { noop } from "underscore";
+import { getOptions } from "visual/component/ConditionsComponent";
 import SwitchControl from "visual/component/Controls/Switch";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
-import { pendingRequest, createGlobalBlock } from "visual/utils/api";
-import { getCurrentRule } from "visual/utils/blocks";
+import Prompts from "visual/component/Prompts";
+import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
+import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import {
-  blocksDataSelector,
-  pageBlocksNoRefsSelector,
-  globalBlocksAssembled2Selector,
-  extraFontStylesSelector
-} from "visual/redux/selectors";
-import {
-  makeNormalToGlobalBlock,
+  ActionMakeGlobalBlockToPopup,
+  ActionMakeGlobalToNormalBlock,
+  ActionMakeNormalToGlobalBlock,
+  ActionMakePopupToGlobalBlock,
+  makeGlobalBlockToPopup,
   makeGlobalToNormalBlock,
-  makePopupToGlobalBlock,
-  makeGlobalBlockToPopup
+  makeNormalToGlobalBlock,
+  makePopupToGlobalBlock
 } from "visual/redux/actions2";
 import {
-  getBlockData,
-  IS_EXTERNAL_POPUP,
-  IS_INTERNAL_POPUP,
-  setIds
-} from "visual/utils/models";
-import { isPopup } from "visual/utils/blocks";
+  blocksDataSelector,
+  extraFontStylesSelector,
+  globalBlocksAssembled2Selector,
+  pageBlocksNoRefsSelector,
+  pageSelector
+} from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
+import { Block, GlobalBlock, Screenshot } from "visual/types";
+import { createGlobalBlock, pendingRequest } from "visual/utils/api";
+import { changeRule, isPopup } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
-import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
-import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
-import { createScreenshot } from "./utils";
+import { getBlockData, setIds } from "visual/utils/models";
 import { PortalLoading } from "./PortalLoading";
 import {
-  APIGlobalBlockData,
   GlobalBlockMapDispatch,
   GlobalBlockMapProps,
   GlobalBlockProps
 } from "./types";
-import { ReduxState } from "visual/redux/types";
-import {
-  ActionMakeGlobalToNormalBlock,
-  ActionMakeNormalToGlobalBlock,
-  ActionMakePopupToGlobalBlock,
-  ActionMakeGlobalBlockToPopup
-} from "visual/redux/actions2";
-import { Screenshot, GlobalBlock, Block } from "visual/types";
-import Prompts from "visual/component/Prompts";
-import { getOptions } from "visual/component/ConditionsComponent";
+import { createScreenshot, getBlocType } from "./utils";
 
 const getOpenedPopupId = (): string => {
   let id = "";
 
   new Map([...SectionPopupInstances, ...SectionPopup2Instances]).forEach(
-    popup => {
+    (popup) => {
       if (popup.state.isOpened) {
         id = popup.instanceKey;
       }
@@ -85,6 +77,7 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
     pageBlocks: [],
     blocksData: {},
     globalBlocks: {},
+    page: undefined,
     value: {
       _id: "",
       parentId: undefined
@@ -116,11 +109,22 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
     return globalBlocksIds.includes(_id);
   };
 
+  openPromptCondition(type: "block" | "popup"): void {
+    Prompts.open({
+      prompt: "conditions",
+      mode: "single",
+      props: {
+        options: getOptions(type, this.props.value._id)
+      }
+    });
+  }
+
   handleChange = async (checked: boolean): Promise<void> => {
     const {
       blockType,
       extraFontStyles,
       pageBlocks,
+      page,
       makeNormalToGlobalBlock,
       makeGlobalToNormalBlock,
       makePopupToGlobalBlock,
@@ -141,7 +145,7 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
         const screenshot: Screenshot | undefined = await createScreenshot(node);
         const meta: GlobalBlock["meta"] = {
           extraFontStyles,
-          type: blockType
+          type: getBlocType(blockType)
         };
 
         if (screenshot) {
@@ -151,52 +155,45 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
           meta._thumbnailTime = screenshot._thumbnailTime;
         }
 
-        const currentRule = getCurrentRule();
-
         if (Object.prototype.hasOwnProperty.call(blockData, "deleted")) {
           blockData.deleted = false;
         }
 
-        const globalBlock: GlobalBlock = {
+        let globalBlock: GlobalBlock = {
           meta,
           status: "draft",
           data: blockData,
-          rules: !isPopup(blockData)
-            ? [
-                {
-                  type: 1,
-                  appliedFor: currentRule.group,
-                  entityType: currentRule.type,
-                  entityValues: [currentRule.id]
-                }
-              ]
-            : [],
-          position: null
+          rules: [],
+          position: { align: "bottom", top: 0, bottom: 0 }
         };
 
+        if (!isPopup(blockData) && page) {
+          globalBlock = changeRule(globalBlock, true, page);
+        }
+
         await createGlobalBlock(globalBlock)
-          .then((r: void | APIGlobalBlockData): void => {
+          .then((r): void => {
             if (r && r.data) {
               PortalLoading.close(loading);
-              const popupId = blockType === "popup" && getOpenedPopupId();
 
-              blockType === "popup"
-                ? makePopupToGlobalBlock(globalBlock)
-                : makeNormalToGlobalBlock(globalBlock);
+              switch (blockType) {
+                case "popup":
+                case "externalPopup": {
+                  const popupId = blockType === "popup" && getOpenedPopupId();
 
-              popupId && openPopupById(popupId);
+                  makePopupToGlobalBlock(globalBlock);
+                  popupId && openPopupById(popupId);
 
-              if (IS_INTERNAL_POPUP || IS_EXTERNAL_POPUP) {
-                Prompts.open({
-                  prompt: "conditions",
-                  mode: "single",
-                  props: {
-                    options: getOptions(
-                      this.props.blockType === "normal" ? "block" : "popup",
-                      this.props.value._id
-                    )
+                  if (blockType === "externalPopup") {
+                    this.openPromptCondition("popup");
                   }
-                });
+                  break;
+                }
+                case "normal": {
+                  makeNormalToGlobalBlock(globalBlock);
+                  this.openPromptCondition("block");
+                  break;
+                }
               }
             } else {
               throw r;
@@ -208,11 +205,18 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
             this.switchKey = Math.random();
             this.mounted && this.forceUpdate();
 
-            if (blockType === "popup") {
-              ToastNotification.error(t("Could not Create Global Popup"));
-            } else {
-              ToastNotification.error(t("Could not Create Global Block"));
+            switch (blockType) {
+              case "popup":
+              case "externalPopup": {
+                ToastNotification.error(t("Could not Create Global Popup"));
+                break;
+              }
+              case "normal": {
+                ToastNotification.error(t("Could not Create Global Block"));
+                break;
+              }
             }
+
             console.error(e);
           });
       }
@@ -222,8 +226,6 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
       if (this.isGlobalBlock()) {
         const block: Block = setIds(this.props.blocksData[_id]);
 
-        const popupId = blockType === "popup" && getOpenedPopupId();
-
         PortalLoading.close(loading);
 
         const data = {
@@ -231,11 +233,19 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
           fromBlockId: _id
         };
 
-        if (blockType === "popup" && parentId) {
-          makeGlobalBlockToPopup({ ...data, parentId });
-          popupId && openPopupById(popupId);
-        } else {
-          makeGlobalToNormalBlock(data);
+        switch (blockType) {
+          case "popup": {
+            const popupId = getOpenedPopupId();
+
+            parentId && makeGlobalBlockToPopup({ ...data, parentId });
+            popupId && openPopupById(popupId);
+            break;
+          }
+          case "normal":
+          case "externalPopup": {
+            makeGlobalToNormalBlock(data);
+            break;
+          }
         }
       }
     }
@@ -292,7 +302,8 @@ const mapStateToProps = (state: ReduxState): GlobalBlockMapProps => ({
   extraFontStyles: extraFontStylesSelector(state),
   pageBlocks: pageBlocksNoRefsSelector(state),
   globalBlocks: globalBlocksAssembled2Selector(state),
-  blocksData: blocksDataSelector(state)
+  blocksData: blocksDataSelector(state),
+  page: pageSelector(state)
 });
 
 const mapDispatchToProps = (

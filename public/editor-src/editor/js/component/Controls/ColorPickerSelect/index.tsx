@@ -1,4 +1,4 @@
-import React, { ComponentProps, ReactElement, useCallback } from "react";
+import React, { ComponentProps, ReactElement } from "react";
 import classNames from "classnames";
 import { ColorPicker3 } from "visual/component/Controls/ColorPicker3";
 import { Select2 } from "visual/component/Controls/Select2";
@@ -31,11 +31,10 @@ export function ColorPickerSelect<T extends Literal>(
   const onColorChange: C3Props["onChange"] = (v, m): void => {
     props.onChange({ ...v, select: props.value.select }, m);
   };
-  const onSelectChange = useCallback(
+  const onSelectChange = (
     (select: T): void => {
       props.onChange({ ...props.value, select }, { isChanged: "select" });
-    },
-    [props.onChange, props.value]
+    }
   );
 
   return (

@@ -129,27 +129,26 @@ class Brizy_Editor_Editor_Editor {
 				'upgradeToPro'       =>
 					apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL ),
 
-                'support' =>
-                     Brizy_Config::getSupportUrl(
-                    ),
-                'pluginSettings' => admin_url('admin.php?page=' . Brizy_Admin_Settings::menu_slug()),
-                'dashboardNavMenu' => admin_url('nav-menus.php'),
-                'customFile' => home_url('?' . Brizy_Editor::prefix('_attachment') . '='),
-            ),
-            'form' => array(
-                'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
-                        Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
-                    ),
-            ),
-            'serverTimestamp' => time(),
-            'menuData' => $this->get_menu_data(),
-            'wp' => array(
-                'pluginPrefix' => Brizy_Editor::prefix(),
-                'permalink' => get_permalink($wp_post_id),
-                'page' => $wp_post_id,
-                'postType' => get_post_type($wp_post_id),
-                'featuredImage' => $this->getThumbnailData($wp_post_id),
-                'templates' => $this->post->get_templates(),
+				'support'          =>
+					Brizy_Config::getSupportUrl(),
+				'pluginSettings'   => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
+				'dashboardNavMenu' => admin_url( 'nav-menus.php' ),
+				'customFile'       => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
+			),
+			'form'            => array(
+				'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
+						Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
+					),
+			),
+			'serverTimestamp' => time(),
+			'menuData'        => $this->get_menu_data(),
+			'wp'              => array(
+				'pluginPrefix'    => Brizy_Editor::prefix(),
+				'permalink'       => get_permalink( $wp_post_id ),
+				'page'            => $wp_post_id,
+				'postType'        => get_post_type( $wp_post_id ),
+				'featuredImage'   => $this->getThumbnailData( $wp_post_id ),
+				'templates'       => $this->post->get_templates(),
 
                 'plugins' => array(
                     'dummy' => true,
@@ -176,8 +175,8 @@ class Brizy_Editor_Editor_Editor {
             'prefix' => Brizy_Editor::prefix(),
             'cloud' => $this->getCloudInfo(),
             'editorVersion' => BRIZY_EDITOR_VERSION,
-        'imageSizes'      => $this->getImgSizes()
-);
+	        'imageSizes'      => $this->getImgSizes()
+		);
 		$manager = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 
         $config = $this->addRecaptchaAccounts($manager, $config, $context);
@@ -186,7 +185,7 @@ class Brizy_Editor_Editor_Editor {
 		$config = $this->addTemplateFields( $config, $mode === 'template', $wp_post_id, $context );
 		$config = $this->getApiActions( $config, $context );
 		$config = $this->addGlobalBlocksData( $config );
-        $config = $this->addGlobalBlocksData($config);
+		$config = $this->getPostLoopSources( $config,$mode === 'template', $wp_post_id, $context );
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
 
@@ -195,33 +194,73 @@ class Brizy_Editor_Editor_Editor {
         return self::$config[$cachePostId] ;
     }
 
-    /**
-     * @param $config
-     *
-     * @return string[]|WP_Post_Type[]
-     */
-    private function addWpPostTypes($config, $context)
-    {
-        $excludePostTypes = [ 'attachment' ];
+	/**
+	 * @param $config
+	 *
+	 * @return string[]|WP_Post_Type[]
+	 */
+	private function addWpPostTypes( $config, $context ) {
+		$excludePostTypes = [ 'attachment' ];
 
-		$types = get_post_types(['public' => true]);
-        $result = [];
-        foreach ($types as $type) {if (in_array($type,$excludePostTypes)) {
+		$types  = get_post_types( [ 'public' => true ] );
+		$result = [];
+		foreach ( $types as $type ) {
+			if ( in_array( $type, $excludePostTypes ) ) {
 				continue;
 			}
-            $typeObj = get_post_type_object($type);
-            $typeDto = [
-                'name' => $typeObj->name,
-                'label' => $typeObj->label,
-            ];
-            $result[] = $typeDto;
+			$typeObj  = get_post_type_object( $type );
+			$typeDto  = [
+				'name'  => $typeObj->name,
+				'label' => $typeObj->label,
+			];
+			$result[] = $typeDto;
 
 		}
 
-        $config['wp']['postTypes'] = $result;
+		$config['wp']['postTypes'] = $result;
 
-        return $config;
-    }
+		return $config;
+	}
+
+
+	private function getPostLoopSources($config, $isTemplate, $wp_post_id, $context ) {
+		$excludePostTypes = [ 'attachment' ];
+
+		$types  = get_post_types( [ 'public' => true ] );
+		$result = [];
+
+		$templateTypeArchive = false;
+		if( $isTemplate ) {
+			$template_type = Brizy_Admin_Templates::getTemplateType( $wp_post_id );
+			if($template_type==Brizy_Admin_Templates::TYPE_ARCHIVE || $template_type==Brizy_Admin_Templates::TYPE_PRODUCT_ARCHIVE ) {
+				$templateTypeArchive = true;
+			}
+		}
+
+		if ( $templateTypeArchive) {
+			$result[] = [
+				"name"  => "brz_current_context",
+				"label" => "Current Query"
+			];
+		}
+
+		foreach ( $types as $type ) {
+			if ( in_array( $type, $excludePostTypes ) ) {
+				continue;
+			}
+			$typeObj  = get_post_type_object( $type );
+			$typeDto  = [
+				'name'  => $typeObj->name,
+				'label' => $typeObj->label,
+			];
+			$result[] = $typeDto;
+
+		}
+
+		$config['wp']['postLoopSources'] = $result;
+
+		return $config;
+	}
 
 	private function addGlobalBlocksData( $config ) {
 
@@ -236,37 +275,37 @@ class Brizy_Editor_Editor_Editor {
 			$postTermsByKeys[ $term->term_id ] = $term;
 		}
 
-		$config['wp']['post_terms'] = $postTerms;
-        $config['wp']['post_term_parents'] = array_diff_key($this->getAllParents($postTermsByKeys),$postTermsByKeys);
-        $config['wp']['post_author'] = (int)$this->post->getWpPost()->post_author;
-        return $config;
-    }
+		$config['wp']['postTerms']        = $postTerms;
+		$config['wp']['postTermParents'] = array_diff_key( $this->getAllParents( $postTermsByKeys ), $postTermsByKeys );
+		$config['wp']['postAuthor']       = (int) $this->post->getWpPost()->post_author;
 
-    /**
-     * @return object
-     */
-    private function get_page_attachments()
-    {
-        global $wpdb;
-        $query = $wpdb->prepare(
-            "SELECT 
+		return $config;
+	}
+
+	/**
+	 * @return object
+	 */
+	private function get_page_attachments() {
+		global $wpdb;
+		$query = $wpdb->prepare(
+			"SELECT 
 					pm.*
 				FROM 
 					{$wpdb->prefix}postmeta pm 
 				    JOIN {$wpdb->prefix}postmeta pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key='brizy_post_uid' AND pm2.meta_value=%s
 				WHERE pm.meta_key='brizy_attachment_uid'
 				GROUP BY pm.post_id",
-            $this->post->getUid()
-        );
+			$this->post->getUid()
+		);
 
-        $results = $wpdb->get_results($query);
-        $attachment_data = array();
-        foreach ($results as $row) {
-            $attachment_data[$row->meta_value] = true;
-        }
+		$results         = $wpdb->get_results( $query );
+		$attachment_data = array();
+		foreach ( $results as $row ) {
+			$attachment_data[ $row->meta_value ] = true;
+		}
 
-        return (object)$attachment_data;
-    }
+		return (object) $attachment_data;
+	}
 
 	/**
 	 * @return array|null
@@ -574,27 +613,27 @@ class Brizy_Editor_Editor_Editor {
 
 			$menu_data = get_post_meta( $item->ID, 'brizy_data', true );
 
-            $item_value = array(
-                'id' => $menu_uid,
-                'title' => $item->title,
-                'url' => $item->url,
-                'megaMenuItems' => $megaMenuItems,
-                'description' => $item->post_content,
-                'position' => $item->menu_order,
-                'attrTitle' => $item->post_excerpt,
-                'current' => count(
-                        array_intersect(
-                            [
-                                'current-menu-parent',
-                                'current-menu-item',
-                            ],
-                            $item->classes
-                        )
-                    ) > 0,
-                'target' => get_post_meta($item->ID, '_menu_item_target', true),
-                'classes' => array_values(array_filter($item->classes)),
-                'xfn' => get_post_meta($item->ID, '_menu_item_xfn', true),
-            );
+			$item_value = array(
+				'id'            => $menu_uid,
+				'title'         => $item->title,
+				'url'           => $item->url,
+				'megaMenuItems' => $megaMenuItems,
+				'description'   => $item->post_content,
+				'position'      => $item->menu_order,
+				'attrTitle'     => $item->post_excerpt,
+				'current'       => count(
+					                   array_intersect(
+						                   [
+							                   'current-menu-parent',
+							                   'current-menu-item',
+						                   ],
+						                   $item->classes
+					                   )
+				                   ) > 0,
+				'target'        => get_post_meta( $item->ID, '_menu_item_target', true ),
+				'classes'       => array_values( array_filter( $item->classes ) ),
+				'xfn'           => get_post_meta( $item->ID, '_menu_item_xfn', true ),
+			);
 
 			$an_item = (object) array(
 				'type' => 'MenuItem',
@@ -1068,14 +1107,18 @@ class Brizy_Editor_Editor_Editor {
 			);
 		}
 
-        $response = array(
-            'isSyncAllowed' => true,
-        );
+		$response = array(
+			'isSyncAllowed' => true,
+		);
 
 		if ( $this->project->getMetaValue( 'brizy-cloud-token' ) !== null ) {
-			$cloudClient               = Brizy_Admin_Cloud_Client::instance( Brizy_Editor_Project::get(), new WP_Http() );
-			$versions                  = $cloudClient->getCloudEditorVersions();
-			$response['isSyncAllowed'] = $versions['sync'] == BRIZY_SYNC_VERSION;
+			try {
+				$cloudClient               = Brizy_Admin_Cloud_Client::instance( Brizy_Editor_Project::get(), new WP_Http() );
+				$versions                  = $cloudClient->getCloudEditorVersions();
+				$response['isSyncAllowed'] = $versions['sync'] == BRIZY_SYNC_VERSION;
+			} catch ( Exception $e ) {
+				return [ 'isSyncAllowed' => false ];
+			}
 		}
 
 		return $response;
@@ -1122,4 +1165,5 @@ class Brizy_Editor_Editor_Editor {
 
 		return $sizes;
 	}
+
 }

@@ -174,26 +174,7 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
       });
 
       // "px" on letterSpacing is hardcoded because we don't have another suffix on letterSpacing
-      return `
-      ${fontFamilyKey}: ${fontFamily};
-      ${fontSizeKey}: ${_fontSize};
-      ${fontSizeSuffixKey}: ${fontSizeSuffix};
-      ${fontWeightKey}: ${fontWeight};
-      ${letterSpacingKey}: ${letterSpacing}px;
-      ${lineHeightKey}: ${lineHeight};
-
-      ${tabletFontSizeKey}: ${_tabletFontSize};
-      ${tabletFontWeightKey}: ${tabletFontWeight};
-      ${tabletLetterSpacingKey}: ${tabletLetterSpacing}px;
-      ${tabletLineHeightKey}: ${tabletLineHeight};
-
-      ${mobileFontSizeKey}: ${_mobileFontSize};
-      ${mobileFontWeightKey}: ${mobileFontWeight};
-      ${mobileLetterSpacingKey}: ${mobileLetterSpacing}px;
-      ${mobileLineHeightKey}: ${mobileLineHeight};
-
-      ${storyFontSizeKey}: ${storyFontSize};
-      `;
+      return `${fontFamilyKey}:${fontFamily};${fontSizeKey}:${_fontSize};${fontSizeSuffixKey}:${fontSizeSuffix};${fontWeightKey}:${fontWeight};${letterSpacingKey}:${letterSpacing}px;${lineHeightKey}:${lineHeight};${tabletFontSizeKey}:${_tabletFontSize};${tabletFontWeightKey}:${tabletFontWeight};${tabletLetterSpacingKey}:${tabletLetterSpacing}px;${tabletLineHeightKey}:${tabletLineHeight};${mobileFontSizeKey}:${_mobileFontSize};${mobileFontWeightKey}:${mobileFontWeight};${mobileLetterSpacingKey}:${mobileLetterSpacing}px;${mobileLineHeightKey}:${mobileLineHeight};${storyFontSizeKey}:${storyFontSize};`;
     })
     .join("");
 

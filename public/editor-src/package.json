@@ -99,6 +99,7 @@
     "@types/react-transition-group": "^4.2.3",
     "@types/react-window": "^1.8.1",
     "@types/sanitize-html": "^2.6.2",
+    "@types/tinycolor2": "^1.4.3",
     "@types/underscore": "^1.10.24",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",

@@ -1,12 +1,14 @@
-import { Dictionary } from "./utils";
 import { ElementModel } from "editor/js/component/Elements/Types";
-import { Palette as ColorPalette } from "visual/utils/color/Palette";
-import { Hex } from "visual/utils/color/Hex";
 import Config from "visual/global/Config";
 import { isWp } from "visual/global/Config/types/configs/WP";
+import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
+import { NewType } from "visual/types/NewType";
 import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
+import { Hex } from "visual/utils/color/Hex";
+import { Palette as ColorPalette } from "visual/utils/color/Palette";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
-import { EcwidProductId } from "visual/global/Ecwid";
+import { NoEmptyString } from "visual/utils/string/NoEmptyString";
+import { Dictionary } from "./utils";
 
 export type V = Dictionary<unknown>;
 
@@ -32,16 +34,53 @@ export interface AllRule {
 
 export interface CollectionTypeRule extends AllRule {
   appliedFor: number | null;
-  entityType: string;
-  // temporary only in fixes
-  entityValues: (number | string)[];
+  entityType: NoEmptyString;
 }
+
+export type CloudReferenceEntity = NewType<string, "reference">;
+
+export type CloudReferenceAllEntity = NewType<string, "allReference">;
+
+export type CloudReference =
+  | CloudReferenceEntity
+  | CloudReferenceAllEntity
+  | string;
+
+export type WPReferenceAllAuthor = NewType<string, "author|">;
+
+export type WPReferenceSpecificAuthor = NewType<string, "author|id">;
+
+export type WPReferenceAuthorEntity =
+  | WPReferenceAllAuthor
+  | WPReferenceSpecificAuthor;
+
+export type WPReferenceAllInEntity = NewType<string, "in|taxonomy|">;
+
+export type WPReferenceSpecificInEntity = NewType<string, "in|taxonomy|id">;
+
+export type WPReferenceInEntity =
+  | WPReferenceAllInEntity
+  | WPReferenceSpecificInEntity;
+
+export type WPReferenceChildEntity = NewType<string, "child|postId">;
+
+export type WPReference =
+  | WPReferenceAuthorEntity
+  | WPReferenceInEntity
+  | WPReferenceChildEntity
+  | number;
+
+export type EntityTypeRule =
+  | CloudReference
+  | WPReference
+  | EcwidProductId
+  | EcwidCategoryId;
 
 export interface CollectionItemRule extends AllRule {
   appliedFor: number | null;
   entityType: string;
   mode: "reference" | "specific";
-  entityValues: (number | string)[];
+  entityValues: Array<EntityTypeRule>;
 }
 
 export type Rule = AllRule | CollectionTypeRule | CollectionItemRule;
@@ -162,6 +201,11 @@ export interface EcwidProductPage extends DataWithTitle {
   productId: EcwidProductId;
 }
 
+export interface EcwidCategoryPage extends DataWithTitle {
+  __type: "ecwid-product-category";
+  categoryId: EcwidCategoryId;
+}
+
 // @ts-expect-error: is declared but its value is never read.
 export const isWPPage = (page: Page): page is PageWP => {
   return isWp(Config.getAll());
@@ -172,6 +216,7 @@ export type Page =
   | PageCollection
   | ShopifyPage
   | EcwidProductPage
+  | EcwidCategoryPage
   | PageCustomer
   | InternalPopupCloud
   | ExternalPopupCloud
@@ -262,8 +307,8 @@ export interface Style {
   colorPalette: Palette[];
 }
 
-export interface ExtraFontStyle {
-  id: string;
+export interface ExtraFontStyle extends FontStyle {
+  deletable: "on";
 }
 
 // Shortcodes

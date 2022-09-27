@@ -1,4 +1,8 @@
-import { cssStylePadding } from "visual/utils/cssStyle";
+import {
+  cssStyleColor,
+  cssStyleFlexHorizontalAlign,
+  cssStylePadding
+} from "visual/utils/cssStyle";
 import {
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
@@ -6,17 +10,11 @@ import {
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle/cssStyleTypography2";
-import { cssStyleColor } from "visual/utils/cssStyle";
-import { styleAlignHorizontal } from "visual/utils/style2";
-import { defaultValueValue } from "visual/utils/onChange";
+import { cssStyleTextAlign } from "./cssStyleAlign";
 
 export function cssStyleElementLoginFormMargin({ v, device, state }) {
-  const {
-    paddingTop,
-    paddingRight,
-    paddingBottom,
-    paddingLeft
-  } = cssStylePadding({ v, device, state, prefix: "field" });
+  const { paddingTop, paddingRight, paddingBottom, paddingLeft } =
+    cssStylePadding({ v, device, state, prefix: "field" });
 
   return paddingTop === undefined ||
     paddingRight === undefined ||
@@ -93,32 +91,22 @@ export function cssStyleElementLoginLostPasswordColor({ v, device, state }) {
 
 // Align Lost Password
 export function cssStyleElementLoginLostPasswordAlign({ v, device, state }) {
-  const align = styleAlignHorizontal({ v, device, state, prefix: "lost" });
-
-  return align === undefined ? "" : `text-align:${align};`;
+  return cssStyleTextAlign({ v, device, state, prefix: "lost" });
 }
 
 // Align Remember me
 export function cssStyleElementLoginRememberMeAlign({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
-  const horizontalAlign = dvv("rememberMeHorizontalAlign");
-  const aligns = {
-    left: "flex-start",
-    center: "center",
-    right: "flex-end"
-  };
-
-  const alignItems =
-    horizontalAlign === undefined ? horizontalAlign : aligns[horizontalAlign];
-
-  return `justify-content: ${alignItems};`;
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    prefix: "rememberMe"
+  });
 }
 
 // Align Autorized
 export function cssStyleElementLoginAutorizedAlign({ v, device, state }) {
-  const align = styleAlignHorizontal({ v, device, state, prefix: "autorized" });
-
-  return align === undefined ? "" : `text-align:${align};`;
+  return cssStyleTextAlign({ v, device, state, prefix: "autorized" });
 }
 
 export function cssStyleElementLoginTextTypography2FontFamily({ v, device }) {
@@ -197,14 +185,7 @@ export function cssStyleElementRegisterInfoColor({ v, device, state }) {
 }
 
 export function cssStyleElementRegisterInfoAlign({ v, device, state }) {
-  const align = styleAlignHorizontal({
-    v,
-    device,
-    state,
-    prefix: "registerInfo"
-  });
-
-  return align === undefined ? "" : `text-align:${align};`;
+  return cssStyleTextAlign({ v, device, state, prefix: "registerInfo" });
 }
 
 export function cssStyleElementLoginRegisterLinkTypography2FontFamily({
@@ -251,14 +232,7 @@ export function cssStyleElementLoginRegisterLinkColor({ v, device, state }) {
 }
 
 export function cssStyleElementLoginRegisterLinkAlign({ v, device, state }) {
-  const align = styleAlignHorizontal({
-    v,
-    device,
-    state,
-    prefix: "registerLink"
-  });
-
-  return align === undefined ? "" : `text-align:${align};`;
+  return cssStyleTextAlign({ v, device, state, prefix: "registerLink" });
 }
 
 export function cssStyleElementLoginLoginLinkTypography2FontFamily({
@@ -305,12 +279,5 @@ export function cssStyleElementLoginLoginLinkColor({ v, device, state }) {
 }
 
 export function cssStyleElementLoginLoginLinkAlign({ v, device, state }) {
-  const align = styleAlignHorizontal({
-    v,
-    device,
-    state,
-    prefix: "loginLink"
-  });
-
-  return align === undefined ? "" : `text-align:${align};`;
+  return cssStyleTextAlign({ v, device, state, prefix: "loginLink" });
 }

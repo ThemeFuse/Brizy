@@ -1,27 +1,21 @@
+import { cssStyleColor } from "visual/utils/cssStyle";
 import {
-  styleColor,
+  styleElementWOOPriceColumn,
+  styleElementWOOPriceSpacing,
   styleTypography2FontFamily,
   styleTypography2FontSize,
-  styleTypography2LineHeight,
   styleTypography2FontWeight,
   styleTypography2LetterSpacing,
-  styleElementWOOPriceColumn,
-  styleElementWOOPriceSpacing
+  styleTypography2LineHeight
 } from "visual/utils/style2";
 
-export function cssStyleElementWOOPriceColorSale({
-  v,
-  device,
-  state,
-  prefix = "saleColor"
-}) {
-  const color = styleColor({
+export function cssStyleElementWOOPriceColorSale({ v, device, state }) {
+  return cssStyleColor({
     v,
     device,
     state,
-    prefix
+    prefix: "saleColor"
   });
-  return color === undefined ? "" : `color:${color};`;
 }
 
 export function cssStyleElementWOOPriceSaleFontFamily({

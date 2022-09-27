@@ -19,6 +19,12 @@ export default class BrizyFields extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.value.hex !== this.props.value.hex) {
+      this.setState({ hex: this.props.value.hex ?? DEFAULT_HEX });
+    }
+  }
+
   onHexChange = ({ target: { value: hex } }) => {
     const {
       value: { opacity },

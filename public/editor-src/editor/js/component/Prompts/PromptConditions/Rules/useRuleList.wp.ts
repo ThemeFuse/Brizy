@@ -1,28 +1,31 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setIn } from "timm";
-
-import {
-  PAGES_GROUP_ID,
-  CATEGORIES_GROUP_ID,
-  TEMPLATES_GROUP_ID
-} from "visual/utils/blocks/blocksConditions";
-
-import {
-  getUniqRules,
-  getRulesListIndexByRule,
-  disableAlreadyUsedRules
-} from "./utils";
-
-import { getGroupList, getPostObjects } from "visual/utils/api/index-legacy.wp";
-import { getTerms } from "visual/utils/api/index.wp";
 import { Rule } from "visual/types";
-import { RuleList } from "./types";
+import {
+  getGroupList,
+  getRulePostsGroupList,
+  getTerms
+} from "visual/utils/api/index.wp";
 import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks";
+import {
+  CATEGORIES_GROUP_ID,
+  PAGES_GROUP_ID,
+  TEMPLATES_GROUP_ID
+} from "visual/utils/blocks/blocksConditions";
+import { RuleList } from "./types";
+import {
+  disableAlreadyUsedRules,
+  getRulesListIndexByRule,
+  getUniqRules
+} from "./utils";
 
-export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
+export default function useRuleList(
+  rules: Rule[],
+  type: "popup" | "block"
+): [boolean, RuleList[]] {
   const [rulesList, setRulesList] = useState<RuleList[]>([]);
   const [listLoading, setListLoading] = useState(true);
 
@@ -30,7 +33,7 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
     async function fetchData(): Promise<void> {
       setListLoading(true);
 
-      const groupList = (await getGroupList()) || [];
+      const groupList = (await getGroupList(type)) || [];
       // @ts-expect-error need transformer to ts getGroupList
       const rulesList = groupList.map(({ items }) => items).flat();
 
@@ -61,27 +64,41 @@ export default function useRuleList(rules: Rule[]): [boolean, RuleList[]] {
               group
             )
           ) {
-            let newItems = [];
+            let newItems: RuleList[] = [];
 
             switch (group) {
               case PAGES_GROUP_ID:
               case TEMPLATES_GROUP_ID: {
-                // @ts-expect-error need transformer to ts getPostObjects
-                const { posts } = await getPostObjects(rule.entityType);
-                // @ts-expect-error need transformer to ts getPostObjects
-                newItems = posts.map(({ ID, title, post_status }) => ({
-                  title: title,
-                  value: ID,
-                  status: post_status
-                }));
+                const posts = await getRulePostsGroupList(rule.entityType);
+
+                newItems = posts.map(({ value, title, items, status }) => {
+                  if (Array.isArray(items)) {
+                    return {
+                      title,
+                      items: items.map(({ title, value }) => ({
+                        title,
+                        value: `${value}`
+                      })),
+                      value: `${value}`,
+                      status: status,
+                      mode: items.find(
+                        (subItem) => rule.entityType === subItem.groupValue
+                      )
+                        ? "specific"
+                        : "reference"
+                    };
+                  }
+
+                  return { title, value: `${value}` };
+                });
                 break;
               }
               case CATEGORIES_GROUP_ID: {
                 const terms = await getTerms(rule.entityType);
-                // @ts-expect-error need transformer to ts getPostObjects
                 newItems = terms.map(({ name, term_id }) => ({
                   title: name,
-                  value: term_id
+                  value: `${term_id}`,
+                  mode: "specific"
                 }));
                 break;
               }

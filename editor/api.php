@@ -570,8 +570,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     private function getPostSample($templateId)
     {
         global $wp_query;
-
-        global $wp_query;
         $wp_post = get_post($templateId);
         if ($wp_post->post_type !== Brizy_Admin_Templates::CP_TEMPLATE) {
             return $wp_post;
@@ -593,63 +591,57 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         }
 
         if ($rule) {
-
             switch ($rule->getAppliedFor()) {
                 case  Brizy_Admin_Rule::POSTS :
                     $args = [
+                        'fields'         => 'ids',
                         'post_type'      => $rule->getEntityType(),
-                        'posts_per_page' => 1,
+                        'posts_per_page' => -1,
+                        'meta_query'     => [
+                            [
+                                'key'     => Brizy_Editor_Constants::BRIZY_ENABLED,
+                                'compare' => 'NOT EXISTS',
+                            ],
+                        ],
                     ];
 
                     $values = $rule->getEntityValues();
-
+                    $posts  = [];
                     if (empty($values[0])) {
                         // For All condition
                         $posts = get_posts($args);
-                        $post  = isset($posts[0]) ? $posts[0] : null;
 
-                        if ($post && ! Brizy_Editor_Entity::isBrizyEnabled($post->ID)) {
-                            return $post;
                         } else {
 
-                            return null;
-                        }
-                    }
 
-                    $filter = $values[0];
+                        $filter = $values[0];
 
-                    if (is_numeric($filter)) {
-                        $args['post__in'] = [$filter];
-                    } else {
-                        // $filter = in|category|12 OR in|genre|48 OR in|category|45 OR author|2
-                        $explode = explode('|', $filter);
-
-                        if ($explode[0] === 'in') {
-                            $args['tax_query'] = [
-                                [
-                                    'taxonomy' => $explode[1],
-                                    'terms'    => $explode[2],
-                                ],
-                            ];
+                        if (is_numeric($filter)) {
+                            $args['post__in'] = [$filter];
                         } else {
-                            $args['author'] = $explode[1];
+                            // $filter = in|category|12 OR in|genre|48 OR in|category|45 OR author|2
+                            $explode = explode('|', $filter);
+
+                            if ($explode[0] === 'in') {
+                                $args['tax_query'] = [
+                                    [
+                                        'taxonomy' => $explode[1],
+                                        'terms'    => $explode[2],
+                                    ],
+                                ];
+                            } else {
+                                $args['author'] = $explode[1];
+                            }
                         }
+
+                        $posts = get_posts($args);
                     }
 
-                    $posts = get_posts($args);
-
-                    $post = isset($posts[0]) ? $posts[0] : null;
-
-                    try {
-                        if ($post && ! Brizy_Editor_Entity::isBrizyEnabled($post->ID)) {
-                            return $post;
+                    if ($post = array_pop($posts)) {
+                            return get_post($post);
                         } else {
-                            return null;
-                        }
-                    } catch (Exception $e) {
-                        return $post;
+                            return $wp_post;
                     }
-
 
                 case Brizy_Admin_Rule::TAXONOMY :
                     $args = array(
@@ -743,7 +735,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
                     return null;
             }
-
         }
     }
 

@@ -1,26 +1,33 @@
 import React, { useCallback, useMemo } from "react";
 import { unique } from "underscore";
+import { Group } from "visual/component/Controls/Group";
+import { ReloadButton } from "visual/component/Controls/ReloadButton";
+import { FatIconsGrid } from "visual/component/FatIconsGrid";
 import * as Option from "visual/component/Options/Type";
 import { OnChange } from "visual/component/Options/Type";
-import { FatIconsGrid } from "visual/component/FatIconsGrid";
+import { OptionWrapper } from "visual/component/OptionWrapper";
+import { always, mPipe } from "visual/utils/fp";
+import { t } from "visual/utils/i18n";
+import { fromNumber, Zero } from "visual/utils/math/Positive";
+import { WithClassName } from "visual/utils/options/attributes";
+import { AttentionStyle } from "./components/AttentionStyle";
+import { Delay } from "./components/Delay";
+import { Direction } from "./components/Direction";
+import { Duration } from "./components/Duration";
+import { Icon } from "./components/Icon";
+import { Switcher } from "./components/Switcher";
+import { fromElementModel, toElementModel } from "./converters";
+import * as Attention from "./types/effects/Attention";
+import * as Fade from "./types/effects/Fade";
 import {
   EffectType,
   effectTypeIcon,
   effectTypeTitle
 } from "./types/EffectType";
 import * as Value from "./types/Value";
-import { fromElementModel, toElementModel } from "./converters";
-import { Duration } from "./components/Duration";
-import { Delay } from "./components/Delay";
-import { always, mPipe } from "visual/utils/fp";
-import { setDuration } from "./types/WithDuration";
-import { fromNumber, Zero } from "visual/utils/math/Positive";
 import { setDelay } from "./types/WithDelay";
-import { Icon } from "./components/Icon";
-import { OptionWrapper } from "visual/component/OptionWrapper";
-import { Group } from "visual/component/Controls/Group";
-import { WithClassName } from "visual/utils/options/attributes";
-import { ReloadButton } from "visual/component/Controls/ReloadButton";
+import { setDuration } from "./types/WithDuration";
+import { setInfiniteAnimation } from "./types/WithInfiniteAnimation";
 import {
   defaultEffects,
   getAttentionStyles,
@@ -28,11 +35,6 @@ import {
   onChangeDirection,
   valueToType
 } from "./utils";
-import { AttentionStyle } from "./components/AttentionStyle";
-import { Direction } from "./components/Direction";
-import * as Fade from "./types/effects/Fade";
-import * as Attention from "./types/effects/Attention";
-import { Big } from "./components/Big";
 
 export interface Props extends Option.Props<Value.Value>, WithClassName {
   config?: {
@@ -54,29 +56,35 @@ export const Animation: React.FC<Props> & Option.OptionType<Value.Value> = ({
   );
   const type = valueToType(types, value);
   const _changeType = useCallback<OnChange<EffectType>>(
-    v => onChange(Value.setType(v, value)),
+    (v) => onChange(Value.setType(v, value)),
     [value]
   );
   const _changeDuration = useCallback<OnChange<number>>(
     mPipe(
       fromNumber,
-      v => Value.isEffect(value) && onChange(setDuration(v, value))
+      (v) => Value.isEffect(value) && onChange(setDuration(v, value))
     ),
     [value]
   );
   const _changeDelay = useCallback<OnChange<number>>(
     mPipe(
       fromNumber,
-      v => Value.isEffect(value) && onChange(setDelay(v, value))
+      (v) => Value.isEffect(value) && onChange(setDelay(v, value))
     ),
     [value]
   );
+
+  const _changeInfiniteAnimation = useCallback<OnChange<boolean>>(
+    () => Value.isEffect(value) && onChange(setInfiniteAnimation(value)),
+    [value]
+  );
+
   const _onReplay = useCallback<VoidFunction>(
     mPipe(
       always(value.duration),
-      v => v + 0.00001,
+      (v) => v + 0.00001,
       fromNumber,
-      v => Value.isEffect(value) && onChange(setDuration(v, value))
+      (v) => Value.isEffect(value) && onChange(setDuration(v, value))
     ),
     [value]
   );
@@ -88,7 +96,7 @@ export const Animation: React.FC<Props> & Option.OptionType<Value.Value> = ({
       }
 
       case EffectType.Attention: {
-        const onChangeStyle: OnChange<Attention.Style> = v =>
+        const onChangeStyle: OnChange<Attention.Style> = (v) =>
           onChange(Attention.setStyle(v, value));
         return (
           <AttentionStyle
@@ -137,9 +145,10 @@ export const Animation: React.FC<Props> & Option.OptionType<Value.Value> = ({
                   onChange={onChangeDirection(value, onChange)}
                 />
                 {type === EffectType.Fade ? (
-                  <Big
+                  <Switcher
                     value={value.big}
                     onChange={() => onChange({ ...value, big: !value.big })}
+                    label={t("Big")}
                   />
                 ) : null}
               </>
@@ -155,7 +164,7 @@ export const Animation: React.FC<Props> & Option.OptionType<Value.Value> = ({
       <OptionWrapper display={"block"} className={"brz-ed-option"}>
         {label}
         <FatIconsGrid>
-          {types.map(v => (
+          {types.map((v) => (
             <Icon<EffectType>
               key={v}
               id={v}
@@ -174,12 +183,17 @@ export const Animation: React.FC<Props> & Option.OptionType<Value.Value> = ({
               {valueOptions}
               <Duration value={value.duration} onChange={_changeDuration} />
               <Delay value={value.delay} onChange={_changeDelay} />
+              <Switcher
+                value={value.infiniteAnimation}
+                onChange={_changeInfiniteAnimation}
+                label={t("Infinite Animation")}
+              />
             </Group>
           </OptionWrapper>
           <OptionWrapper
             className={"brz-ed-option brz-justify-content-xs-center"}
           >
-            <ReloadButton onClick={_onReplay} />
+            {!value.infiniteAnimation && <ReloadButton onClick={_onReplay} />}
           </OptionWrapper>
         </>
       )}
@@ -187,6 +201,11 @@ export const Animation: React.FC<Props> & Option.OptionType<Value.Value> = ({
   );
 };
 
-Animation.defaultValue = { type: EffectType.None, duration: Zero, delay: Zero };
+Animation.defaultValue = {
+  type: EffectType.None,
+  duration: Zero,
+  delay: Zero,
+  infiniteAnimation: false
+};
 Animation.toElementModel = toElementModel;
 Animation.fromElementModel = fromElementModel;

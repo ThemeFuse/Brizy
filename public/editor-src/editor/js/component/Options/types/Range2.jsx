@@ -1,7 +1,7 @@
-import React from "react";
-import _ from "underscore";
 import classnames from "classnames";
 import RCSlider from "rc-slider";
+import React from "react";
+import _ from "underscore";
 import Range from "visual/component/Controls/Range";
 
 const RCHandle = RCSlider.Handle;
@@ -33,7 +33,13 @@ class RangeOptionType extends React.Component {
     this.state = { ...value };
   }
 
-  handleOnMouseDown = index => {
+  componentDidUpdate(prevProps) {
+    if (!_.isEqual(prevProps.value, this.props.value)) {
+      this.setState({ ...this.props.value });
+    }
+  }
+
+  handleOnMouseDown = (index) => {
     this.handleChange({
       activePointer: index === 0 ? "startPointer" : "finishPointer",
       isChanged: "activePointer"
@@ -51,7 +57,7 @@ class RangeOptionType extends React.Component {
     });
   };
 
-  handleChange = value => {
+  handleChange = (value) => {
     const oldValue = this.state;
     const newValue = { ...oldValue, ...value };
 
@@ -59,7 +65,7 @@ class RangeOptionType extends React.Component {
     this.props.onChange(newValue);
   };
 
-  handle = props => {
+  handle = (props) => {
     /* eslint-disable no-unused-vars */
     const {
       className: _className,

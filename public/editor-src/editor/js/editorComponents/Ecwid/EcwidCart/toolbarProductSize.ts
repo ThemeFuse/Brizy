@@ -5,7 +5,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { State } from "visual/utils/stateMode";
-import { Value } from "./index";
+import { Value } from "./types/Value";
 
 export function getItems({
   v,
@@ -35,10 +35,10 @@ export function getItems({
       position: 10,
       options: [
         {
-          id: "productSize",
+          id: "productSizeTypography",
           type: "typography-dev",
           config: {
-            fontFamily: "desktop" === device
+            fontFamily: device === "desktop"
           }
         }
       ]
@@ -53,7 +53,7 @@ export function getItems({
           style: {
             backgroundColor: hexToRgba(
               productSizeColorHex,
-              v.productSizeColorOpacity
+              dvv("productSizeColorOpacity")
             )
           }
         }

@@ -1,13 +1,11 @@
-import { t } from "visual/utils/i18n";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { NORMAL, HOVER, State } from "visual/utils/stateMode";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { ToolbarItemType } from "../../ToolbarItemType";
-import { EditorComponentContextValue } from "../../EditorComponent/EditorComponentContext";
-
-import { Value } from "./index";
+import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { Value } from "./types/Value";
 
 export function getItems({
   v,
@@ -17,18 +15,12 @@ export function getItems({
   v: Value;
   device: ResponsiveMode;
   state: State;
-  context: EditorComponentContextValue;
 }): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  // Colors
   const { hex: buttonBgColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "buttonBgColorHex", device }),
-    defaultValueValue({ v, key: "buttonBgColorPalette", device })
-  );
-  const { hex: buttonColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "buttonColorHex", device }),
-    defaultValueValue({ v, key: "buttonColorPalette", device })
+    dvv("buttonBgColorHex"),
+    dvv("buttonBgColorPalette")
   );
 
   return [
@@ -42,56 +34,44 @@ export function getItems({
       },
       options: [
         {
-          id: "currentShortcodeTabs",
-          type: "tabs-dev",
-          tabs: [
+          id: "groupSize",
+          type: "group-dev",
+          options: [
             {
-              id: "currentShortcodeTab",
-              label: t("Button"),
-              options: [
-                {
-                  id: "borderRadiusTypeGroup",
-                  type: "group-dev",
-                  devices: "desktop",
-                  disabled: v.buttonFillType === "default",
-                  position: 30,
-                  options: [
-                    {
-                      id: "borderRadiusType",
-                      label: t("Corner"),
-                      devices: "desktop",
-                      type: "radioGroup-dev",
-                      choices: [
-                        { value: "square", icon: "nc-corners-square" },
-                        { value: "rounded", icon: "nc-corners-round" },
-                        { value: "custom", icon: "nc-more" }
-                      ]
-                    },
-                    {
-                      id: "borderRadius",
-                      type: "slider-dev",
-                      devices: "desktop",
-                      disabled: v.borderRadiusType !== "custom",
-                      config: {
-                        min: 0,
-                        max: 500,
-                        units: [{ value: "px", title: "px" }]
-                      }
-                    }
-                  ]
-                },
-                {
-                  id: "buttonHeight",
-                  label: t("Height"),
-                  type: "slider-dev",
-                  disabled: dvv("buttonFillType") === "default",
-                  config: {
-                    min: 0,
-                    max: 100,
-                    units: [{ value: "px", title: "px" }]
-                  }
-                }
+              id: "buttonSize",
+              label: t("Size"),
+              type: "radioGroup-dev",
+              choices: [
+                { value: "small", icon: "nc-small" },
+                { value: "medium", icon: "nc-medium" },
+                { value: "large", icon: "nc-large" },
+                { value: "custom", icon: "nc-more" }
               ]
+            },
+            {
+              id: "buttonHeight",
+              label: t("Height"),
+              disabled: dvv("buttonSize") !== "custom",
+              type: "slider-dev",
+              config: {
+                min: 0,
+                max: 100,
+                units: [{ value: "px", title: "px" }]
+              }
+            },
+            {
+              id: "buttonWidth",
+              label: t("Width"),
+              disabled: dvv("buttonSize") !== "custom",
+              type: "slider-dev",
+              config: {
+                min: 0,
+                max: 100,
+                units: [
+                  { value: "%", title: "%" },
+                  { value: "px", title: "px" }
+                ]
+              }
             }
           ]
         }
@@ -108,23 +88,9 @@ export function getItems({
       },
       options: [
         {
-          id: "tabsTypography",
-          type: "tabs-dev",
-          tabs: [
-            {
-              id: "tabsTypographyButton",
-              label: t("Button"),
-              options: [
-                {
-                  id: "button",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: "desktop" === device
-                  }
-                }
-              ]
-            }
-          ]
+          id: "buttonTypography",
+          type: "typography-dev",
+          config: { fontFamily: device === "desktop" }
         }
       ]
     },
@@ -137,10 +103,10 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor:
-              dvv("bgColorOpacity") > 0
-                ? hexToRgba(buttonBgColorHex, v.buttonBgColorOpacity)
-                : hexToRgba(buttonColorHex, v.buttonColorOpacity)
+            backgroundColor: hexToRgba(
+              buttonBgColorHex,
+              dvv("buttonBgColorOpacity")
+            )
           }
         }
       },
@@ -166,7 +132,7 @@ export function getItems({
               label: t("Bg"),
               options: [
                 {
-                  id: "",
+                  id: "button",
                   type: "backgroundColor-dev",
                   states: [NORMAL, HOVER]
                 }
@@ -177,7 +143,7 @@ export function getItems({
               label: t("Border"),
               options: [
                 {
-                  id: "border",
+                  id: "buttonBorder",
                   type: "border-dev",
                   states: [NORMAL, HOVER]
                 }
@@ -188,13 +154,52 @@ export function getItems({
               label: t("Shadow"),
               options: [
                 {
-                  id: "boxShadow",
+                  id: "buttonBoxShadow",
                   type: "boxShadow-dev",
                   states: [NORMAL, HOVER]
                 }
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      id: "buttonHorizontalAlign",
+      type: "toggle-dev",
+      position: 40,
+      choices: [
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
+      ]
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: { icon: "nc-cog", title: t("Settings") },
+      position: 50,
+      options: [
+        {
+          id: "buttonSpacing",
+          label: t("Spacing"),
+          type: "slider-dev",
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        },
+        {
+          id: "styles",
+          type: "sidebarTabsButton-dev",
+          devices: "desktop",
+          config: {
+            tabId: "styles",
+            text: t("Styling"),
+            icon: "nc-cog",
+            align: "left"
+          }
         }
       ]
     }

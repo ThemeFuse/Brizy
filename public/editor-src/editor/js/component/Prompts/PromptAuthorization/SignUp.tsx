@@ -1,26 +1,38 @@
-import React, { Component } from "react";
-import produce from "immer";
 import classnames from "classnames";
+import produce from "immer";
+import React, { Component } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import { noop } from "underscore";
 import { connect, ConnectedProps } from "react-redux";
-import Config from "visual/global/Config";
-import { assetUrl } from "visual/utils/asset";
-import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
-import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
-import { Button } from "visual/component/Prompts/common/Button";
+import { noop } from "underscore";
 import { Alert } from "visual/component/Alert";
+import CheckGroup, {
+  CheckGroupItem
+} from "visual/component/Controls/CheckGroup";
+import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
+import { Spacer } from "visual/component/Controls/Spacer";
+import EditorIcon from "visual/component/EditorIcon";
+import { Button } from "visual/component/Prompts/common/Button";
 import { Loading } from "visual/component/Prompts/common/Loading";
-import { validateEmail } from "../common/utils";
+import Config, { isWp } from "visual/global/Config";
+import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
+import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
-import { checkCompatibility, signUp } from "./api";
-import { SignAuthorizationProps, AuthorizationField } from "./types";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
-import { isCloud } from "visual/global/Config/types/configs/Cloud";
-import { _getWhiteLabel } from "visual/utils/whiteLabel";
+import { validateEmail } from "../common/utils";
+import { checkCompatibility, signUp } from "./api";
+import { AuthorizationField, SignAuthorizationProps } from "./types";
 
-const isWP = Boolean(Config.get("wp"));
 const fields: AuthorizationField[] = [
+  {
+    title: "first name",
+    name: "firstName",
+    required: true
+  },
+  {
+    title: "last name",
+    name: "lastName",
+    required: true
+  },
   {
     title: "email",
     name: "email",
@@ -40,15 +52,21 @@ const fields: AuthorizationField[] = [
   }
 ];
 
-type SignUpState = {
+interface SignUpState {
   nextLoading: boolean;
   loading: boolean;
   data: null | { img: string; signUpDescription: string };
   notice: null | { message: string; type: "error" | "success" };
   formData: {
-    [k: string]: string | undefined;
+    [k: string]: unknown;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    termsCondition: boolean;
   };
-};
+}
 
 const mapDispatch = { updateAuthorization, updateSyncAllowed };
 const signUpConnector = connect(null, mapDispatch);
@@ -71,9 +89,12 @@ class SignUp extends Component<SingUpProps, SignUpState> {
     nextLoading: false,
     loading: true,
     formData: {
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      termsCondition: false
     }
   };
 
@@ -90,24 +111,39 @@ class SignUp extends Component<SingUpProps, SignUpState> {
     onLoading && onLoading(false);
   }
 
-  handleChange = (k: string, v: string): void => {
-    if (this.state.formData[k] !== undefined) {
-      this.setState(
-        produce(draft => {
-          draft.formData[k] = v;
-        })
-      );
-    }
+  handleChange = <T extends SignUpState["formData"], K extends keyof T>(
+    k: K,
+    v: T[K]
+  ): void => {
+    this.setState(
+      produce((draft) => {
+        draft.formData[k] = v;
+      })
+    );
   };
 
   handleConnect = async (): Promise<void> => {
+    const { onSuccess, onClose, updateAuthorization, updateSyncAllowed } =
+      this.props;
     const {
-      onSuccess,
-      onClose,
-      updateAuthorization,
-      updateSyncAllowed
-    } = this.props;
-    const { email, password, confirmPassword } = this.state.formData;
+      email,
+      password,
+      confirmPassword,
+      firstName,
+      lastName,
+      termsCondition
+    } = this.state.formData;
+
+    if (!termsCondition) {
+      this.setState({
+        nextLoading: false,
+        notice: {
+          message: t("Agree Terms & Conditions"),
+          type: "error"
+        }
+      });
+      return;
+    }
 
     if (!validateEmail(email)) {
       this.setState({
@@ -138,8 +174,16 @@ class SignUp extends Component<SingUpProps, SignUpState> {
       nextLoading: true
     });
 
-    if (email?.trim() && password?.trim() && confirmPassword?.trim()) {
+    if (
+      email.trim() &&
+      password.trim() &&
+      confirmPassword.trim() &&
+      firstName.trim() &&
+      lastName.trim()
+    ) {
       signUp({
+        firstName,
+        lastName,
         email,
         password,
         confirmPassword
@@ -151,8 +195,8 @@ class SignUp extends Component<SingUpProps, SignUpState> {
             updateAuthorization("connected");
             setAuthorized("connected");
 
-            if (isWP) {
-              checkCompatibility().then(r => {
+            if (isWp(Config.getAll())) {
+              checkCompatibility().then((r) => {
                 const { status, data } = r || {};
 
                 if (!status || status >= 400) {
@@ -165,15 +209,15 @@ class SignUp extends Component<SingUpProps, SignUpState> {
               });
             }
 
-            onSuccess && onSuccess();
-            onClose && onClose();
+            onSuccess?.();
+            onClose?.();
           }
         })
         .catch((e: unknown) => {
           this.setState({
             nextLoading: false,
             notice: {
-              message: t("Incorrect username or password"),
+              message: t("Something went wrong"),
               type: "error"
             }
           });
@@ -209,22 +253,14 @@ class SignUp extends Component<SingUpProps, SignUpState> {
   renderContent(): React.ReactElement | undefined {
     if (this.state.data) {
       const {
-        data: { img, signUpDescription },
+        data: { signUpDescription },
         nextLoading
       } = this.state;
-
-      const config = Config.getAll();
-
-      const _img =
-        (_getWhiteLabel(config) && isCloud(config) && config.urls.favicon) ||
-        img;
-
-      const _alt = _getWhiteLabel(config)?.brandingName || "Brizy";
 
       return (
         <Scrollbars className="brz-text-lg-center">
           <div className="brz-ed-popup-integrations__connect-head">
-            <img className="brz-img" src={_img} alt={_alt} />
+            <Spacer space="17px" />
             <p className="brz-p">{signUpDescription}</p>
           </div>
           <div className="brz-ed-popup-integrations__connect-body">
@@ -236,7 +272,7 @@ class SignUp extends Component<SingUpProps, SignUpState> {
                   key={index}
                   title={title}
                   type={type}
-                  value={this.state.formData[name] || ""}
+                  value={`${this.state.formData[name] ?? ""}`}
                   required={required}
                   onChange={({ target }): void => {
                     this.handleChange(name, target.value);
@@ -244,6 +280,36 @@ class SignUp extends Component<SingUpProps, SignUpState> {
                 />
               );
             })}
+
+            <CheckGroup
+              className="brz-ed-popup-authorization__terms"
+              defaultValue={{
+                termsCondition: this.state.formData.termsCondition
+              }}
+              onChange={({ termsCondition }: { termsCondition: boolean }) => {
+                this.handleChange("termsCondition", termsCondition);
+              }}
+            >
+              <CheckGroupItem
+                value="termsCondition"
+                renderIcons={({ active }: { active: boolean }) =>
+                  active ? (
+                    <EditorIcon icon="nc-check-alt" />
+                  ) : (
+                    <EditorIcon icon="nc-uncheck-alt" />
+                  )
+                }
+              >
+                <a
+                  className="brz-a"
+                  href="https://www.brizy.io/terms-and-conditions"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t("I agree with Terms & Conditions")}
+                </a>
+              </CheckGroupItem>
+            </CheckGroup>
 
             <div className="brz-ed-popup-authorization__buttons">
               <Button

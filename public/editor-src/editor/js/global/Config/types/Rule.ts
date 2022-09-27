@@ -1,5 +1,7 @@
+import { BlockTypeRule } from "visual/types";
+
 export interface Rule {
-  type?: 1 | 2;
+  type: BlockTypeRule;
   entityType: string;
   group: number;
   values: string[];

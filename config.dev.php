@@ -49,7 +49,7 @@ class Brizy_Config {
 	const WP_HTTP_TIMEOUT = 600;
 
 	static public function getCompilerUrls() {
-		$host = $_ENV['COMPILER_HOST'] ?? $_SERVER['COMPILER_HOST'];
+		$host = self::getEnvValue('COMPILER_HOST');
 		return new Brizy_Admin_UrlIterator(
 			array(
 				"http://{$host}/compile/v3"
@@ -58,8 +58,7 @@ class Brizy_Config {
 	}
 
 	static public function getStaticUrls() {
-		$host = $_ENV['STATIC_HOST'] ?? $_SERVER['STATIC_HOST'];
-
+		$host = self::getEnvValue('STATIC_HOST');
 		return new Brizy_Admin_UrlIterator(
 			array(
 				"http://{$host}/static"
@@ -76,16 +75,24 @@ class Brizy_Config {
 	}
 
 	static public function getFontsUrl() {
-		$host = $_ENV['EDITOR_HOST'] ?? $_SERVER['EDITOR_HOST'];
+		$host = self::getEnvValue('EDITOR_HOST');
 		return  "http://{$host}/static";
 	}
 
 	static public function getCompilerDownloadUrl() {
-		$host = $_ENV['COMPILER_DOWNLOAD_HOST'] ?? $_SERVER['COMPILER_DOWNLOAD_HOST'];
+
+		$host = self::getEnvValue('COMPILER_DOWNLOAD_HOST');
+
 		return  'http://'.$host.'/wp-content/plugins/brizy/public/editor-build/dev';
 	}
 
 	static public function getSupportUrl() {
 		return __bt( 'support-url', apply_filters( 'brizy_support_url', self::SUPPORT_URL ) );
+	}
+
+	static private function getEnvValue($name) {
+		$value = isset($_ENV[$name]) ? $_ENV[$name] : null;
+		$value = isset($_SERVER[$name])  ? $_SERVER[$name] : $value;
+		return $value;
 	}
 }

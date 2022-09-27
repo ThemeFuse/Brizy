@@ -1,0 +1,110 @@
+.brz-ecwid-wrapper
+  .ecwid
+  .ec-loader-wrapper
+  div
+  .ecwid-productBrowser
+  div
+  div
+  div
+  .ec-wrapper
+  .ec-store {
+  &__content-wrapper {
+    .ec-grid {
+      padding-bottom: 0 !important;
+
+      .grid__sort.ec-text-muted {
+        .form-control {
+          margin: 5px !important;
+
+          &__select {
+            padding: 0 !important;
+
+            option {
+              pointer-events: none;
+            }
+          }
+        }
+      }
+
+      .grid__wrap {
+        &-inner {
+          justify-content: center !important;
+
+          .grid__products {
+            margin-right: 0 !important;
+            margin-left: 0 !important;
+
+            .grid-product {
+              justify-content: center !important;
+
+              &__wrap {
+                &-inner .grid-product__image {
+                  align-self: center;
+
+                  .grid-product__hover-wrap
+                    .grid-product__button-hover.grid-product__buy-now {
+                    padding-bottom: 0 !important;
+
+                    .form-control {
+                      min-width: 1px !important;
+                      margin-top: 0 !important;
+
+                      &__button {
+                        min-height: 1px !important;
+                      }
+                    }
+                  }
+                }
+              }
+
+              &__title:focus {
+                outline: none !important;
+                outline-offset: unset !important;
+              }
+
+              &__button.grid-product__buy-now .form-control {
+                min-width: 1px !important;
+                margin-top: 0 !important;
+
+                .form-control__button {
+                  min-height: 1px !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .ec-pager {
+      .pager__head {
+        padding-bottom: 0 !important;
+
+        .pager__count-pages {
+          padding: 0 !important;
+        }
+      }
+
+      .pager__body.pager__body--has-next {
+        .pager__pages {
+          .ec-link {
+            margin-right: 10px !important;
+          }
+
+          .ec-link:last-child {
+            margin-right: 0 !important;
+          }
+        }
+
+        .ec-link {
+          .svg-icon {
+            top: auto !important;
+            width: auto !important;
+            margin-top: 0 !important;
+            padding: 0 !important;
+          }
+        }
+      }
+    }
+  }
+}

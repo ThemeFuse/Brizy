@@ -1,21 +1,23 @@
 import { match } from "fp-utilities";
+import { ActiveItemTypes } from "visual/component/LeftSidebar/components/Cms/types/ActiveItem";
+import { Locale } from "visual/component/LeftSidebar/components/Cms/types/Locale";
+import * as ShopModule from "visual/component/LeftSidebar/components/Cms/types/Modules/Shop";
+import { fromNumber } from "visual/component/LeftSidebar/components/Cms/types/ProjectId";
+import { getWhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
+import { ShopModules } from "visual/global/Config/types/configs/Base";
 import {
+  Cloud as CloudConfig,
   CMS,
   isCMS,
   isShopify,
-  Shopify as ShopifyConf,
-  Cloud as CloudConfig
+  Shopify as ShopifyConf
 } from "visual/global/Config/types/configs/Cloud";
-import { Cloud, Context, Shopify } from "./types/List";
-import { getWhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
-import { fromNumber } from "visual/component/LeftSidebar/components/Cms/types/ProjectId";
-import { ActiveItemTypes } from "visual/component/LeftSidebar/components/Cms/types/ActiveItem";
-import * as ShopModule from "visual/component/LeftSidebar/components/Cms/types/Modules/Shop";
 import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
-import { ShopModules } from "visual/global/Config/types/configs/Base";
+import { Cloud, Context, Shopify } from "./types/List";
 
 const cloud = (config: CMS): Cloud => {
   const token = config.tokenV2?.access_token;
+  const xAuthUserToken = config.x_auth_user_token;
   return {
     __type: "cloud",
     projectApi: token
@@ -78,8 +80,10 @@ const cloud = (config: CMS): Cloud => {
             storeId: v.storeId,
             subscriptionType: v.subscriptionType,
             daysLeft: v.daysLeft,
-            authorize: token
-              ? { __type: "withToken", uri: v.apiUrl, token: token }
+            categoryCollectionTypeSlug: v.categoryCollectionTypeSlug,
+            productCollectionTypeSlug: v.productCollectionTypeSlug,
+            authorize: xAuthUserToken
+              ? { __type: "withToken", uri: v.apiUrl, token: xAuthUserToken }
               : { __type: "withOutToken", uri: v.apiUrl },
             adminPanelUrl: `${v.userSessionUrl}${
               config.x_auth_user_token
@@ -92,7 +96,8 @@ const cloud = (config: CMS): Cloud => {
       users: {
         disabled: config.cms.modules?.users?.disabled ?? false
       }
-    }
+    },
+    locale: "default" as Locale
   };
 };
 
@@ -133,7 +138,8 @@ const shopify = (config: ShopifyConf): Shopify => {
     userApi: token
       ? { __type: "withToken", token, uri: config.cms.apiUrl }
       : { __type: "withOutToken", uri: config.cms.apiUrl },
-    builderVersion: config.editorVersion
+    builderVersion: config.editorVersion,
+    locale: "default" as Locale
   };
 };
 

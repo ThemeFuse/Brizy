@@ -331,7 +331,7 @@
     "tempHoverBorderBottomRightRadius": null,
     "tempHoverBorderBottomLeftRadius": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 
@@ -374,11 +374,14 @@
     "tempHoverBoxShadowHorizontal": null,
 
     "width": 100,
-    "widthSuffix": null,
+    "widthSuffix": "%",
+
     "widthSidebar": 300,
-    "widthSidebarSuffix": null,
+    "widthSidebarSuffix": "px",
+
     "widthImage": 110,
-    "widthImageSuffix": null,
+    "widthImageSuffix": "px",
+
     "verticalAlign": "top",
 
     "customCSS": "",

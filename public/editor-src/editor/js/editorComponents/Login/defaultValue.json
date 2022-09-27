@@ -533,7 +533,7 @@
     "lostLineHeight": 1,
     "lostLetterSpacing": 0,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

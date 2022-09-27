@@ -278,7 +278,7 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

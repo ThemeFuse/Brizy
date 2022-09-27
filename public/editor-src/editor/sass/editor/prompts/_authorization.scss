@@ -12,4 +12,14 @@
     margin-top: 37px;
     margin-bottom: 37px;
   }
+  &__terms {
+    .brz-control__check-group-option {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .brz-icon-svg {
+      margin-right: 4px;
+    }
+  }
 }

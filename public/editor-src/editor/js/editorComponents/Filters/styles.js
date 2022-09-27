@@ -317,7 +317,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleIconSpacing"]
     },
     ".brz && .brz-filters__rating--color, .brz && .brz-filters__rating--color-empty": {
-      standart: ["cssStyleElementFiltersIcon"]
+      standart: ["cssStyleSizeFontSizeIcon"]
     },
     ".brz && .brz-filters__btn-wrapper": {
       standart: ["cssStyleFlexHorizontalAlignBtn"]

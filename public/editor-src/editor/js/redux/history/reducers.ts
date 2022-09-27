@@ -1,13 +1,14 @@
-import {
-  Reducer,
-  UnknownDict,
-  HistoryEnhancerState,
-  HistoryEnhancerConfig,
-  UNDO,
-  REDO,
-  History
-} from "./types";
+import { StoreChanged } from "visual/redux/types";
 import { hasProps } from "visual/utils/object";
+import {
+  History,
+  HistoryEnhancerConfig,
+  HistoryEnhancerState,
+  REDO,
+  Reducer,
+  UNDO,
+  UnknownDict
+} from "./types";
 
 export function createHistorySnapshot<
   T extends UnknownDict,
@@ -62,7 +63,7 @@ export function historyReducerEnhancer<
 ): Reducer<HistoryEnhancerState<State, TrackedKeys>, Action> {
   const history = new History<{ [k in TrackedKeys]: State[k] }>();
 
-  return function(
+  return function (
     state: State | HistoryEnhancerState<State, TrackedKeys>,
     action: Action
   ): HistoryEnhancerState<State, TrackedKeys> {
@@ -79,7 +80,8 @@ export function historyReducerEnhancer<
           return addHistoryDataToState(
             {
               ...state,
-              ...history.getCurrentSnapshot()
+              ...history.getCurrentSnapshot(),
+              storeWasChanged: StoreChanged.changed
             },
             history
           );
@@ -90,7 +92,8 @@ export function historyReducerEnhancer<
             return addHistoryDataToState(
               {
                 ...state,
-                ...history.getCurrentSnapshot()
+                ...history.getCurrentSnapshot(),
+                storeWasChanged: StoreChanged.changed
               },
               history
             );

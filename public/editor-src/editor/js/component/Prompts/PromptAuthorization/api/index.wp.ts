@@ -1,8 +1,8 @@
-import Config from "visual/global/Config";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
-import { request2 } from "visual/utils/api";
-import { SignIn, SignUp } from "./types";
 import { ResponseWithBody } from "visual/component/Prompts/common/utils/Request";
+import Config from "visual/global/Config";
+import { request } from "visual/utils/api/index.wp";
+import { SignIn, SignUp } from "./types";
 
 export const signIn = (data: SignIn): Promise<ResponseWithBody<unknown>> => {
   const { hash, url, cloudSignIn } = Config.get("wp").api;
@@ -13,7 +13,7 @@ export const signIn = (data: SignIn): Promise<ResponseWithBody<unknown>> => {
     action: cloudSignIn
   });
 
-  return request2(urls, {
+  return request(urls, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -21,7 +21,7 @@ export const signIn = (data: SignIn): Promise<ResponseWithBody<unknown>> => {
     body: JSON.stringify(data)
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };
 
 export const signUp = (data: SignUp): Promise<ResponseWithBody<unknown>> => {
@@ -33,7 +33,7 @@ export const signUp = (data: SignUp): Promise<ResponseWithBody<unknown>> => {
     action: cloudSignUp
   });
 
-  return request2(urls, {
+  return request(urls, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -41,7 +41,7 @@ export const signUp = (data: SignUp): Promise<ResponseWithBody<unknown>> => {
     body: JSON.stringify(data)
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };
 
 export const recoveryEmail = (
@@ -55,7 +55,7 @@ export const recoveryEmail = (
     action: cloudResetPassword
   });
 
-  return request2(urls, {
+  return request(urls, {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
@@ -63,7 +63,7 @@ export const recoveryEmail = (
     body: JSON.stringify({ email })
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };
 
 export const logout = (): Promise<ResponseWithBody<unknown>> => {
@@ -75,14 +75,14 @@ export const logout = (): Promise<ResponseWithBody<unknown>> => {
     action: cloudSignOut
   });
 
-  return request2(urls, {
+  return request(urls, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };
 
 export const sync = (): Promise<ResponseWithBody<unknown>> => {
@@ -95,14 +95,14 @@ export const sync = (): Promise<ResponseWithBody<unknown>> => {
   });
 
   return new Promise((res, rej) => {
-    request2(urls, {
+    request(urls, {
       method: "GET",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       }
     })
-      .then(r => parseJSON<{ synchronized: number }>(r))
-      .then(r => {
+      .then((r) => parseJSON<{ synchronized: number }>(r))
+      .then((r) => {
         const { status, data } = r;
 
         if (!status || status >= 400) {
@@ -113,9 +113,7 @@ export const sync = (): Promise<ResponseWithBody<unknown>> => {
           if (synchronized === 0) {
             res(r);
           } else {
-            sync()
-              .then(res)
-              .catch(rej);
+            sync().then(res).catch(rej);
           }
         }
       })
@@ -128,12 +126,12 @@ export const checkCompatibility = (): Promise<ResponseWithBody<unknown>> => {
   const version = Config.get("editorVersion");
   const urls = makeUrl(url, { hash, version, action: cloudSyncAllowed });
 
-  return request2(urls, {
+  return request(urls, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8"
     }
   })
     .then(parseJSON)
-    .then(res => res);
+    .then((res) => res);
 };

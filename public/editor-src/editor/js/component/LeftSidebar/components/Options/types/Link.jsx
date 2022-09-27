@@ -1,6 +1,6 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 
 export default class DrawerPopoverItem extends React.Component {
@@ -14,7 +14,7 @@ export default class DrawerPopoverItem extends React.Component {
     onClick: _.noop
   };
 
-  handleClick = e => {
+  handleClick = (e) => {
     const { link, meta = {}, onClick } = this.props;
 
     if ((link === "" || link === "#") && meta.popover) {

@@ -1,17 +1,18 @@
-import * as Positive from "visual/utils/math/Positive";
-import { mPipe } from "visual/utils/fp";
-import * as Str from "visual/utils/string/specs";
-import * as Num from "visual/utils/math/number";
-import { or, parseStrict } from "visual/utils/reader/readWithParser";
-import { call, Get } from "../utils";
-import { LegacyEffectType, fromString } from "./LegacyEffectType";
 import { ToElementModel } from "visual/component/Options/Type";
+import { mPipe } from "visual/utils/fp";
+import * as Num from "visual/utils/math/number";
+import * as Positive from "visual/utils/math/Positive";
+import { or, parseStrict } from "visual/utils/reader/readWithParser";
+import * as Str from "visual/utils/string/specs";
 import { IsEqual } from "visual/utils/types/Eq";
+import { call, Get } from "../utils";
+import { fromString, LegacyEffectType } from "./LegacyEffectType";
 
 export type LegacyModel = {
   name: LegacyEffectType;
   duration: Positive.Positive;
   delay: Positive.Positive;
+  infiniteAnimation: boolean;
 };
 
 export const fromElementModel = parseStrict<Get, LegacyModel>({
@@ -26,16 +27,24 @@ export const fromElementModel = parseStrict<Get, LegacyModel>({
   delay: or<Get, Positive.Positive>([
     mPipe(call("delay"), Num.read, Positive.fromNumber),
     (): Positive.Positive => Positive.Zero
+  ]),
+  infiniteAnimation: or<Get, boolean>([
+    mPipe(call("infiniteAnimation"), (v) => Boolean(v)),
+    (): boolean => false
   ])
 });
 
-export const toElementModel: ToElementModel<LegacyModel> = v => {
+export const toElementModel: ToElementModel<LegacyModel> = (v) => {
   return {
     name: v.name,
     duration: v.duration,
-    delay: v.delay
+    delay: v.delay,
+    infiniteAnimation: v.infiniteAnimation
   };
 };
 
 export const eq: IsEqual<LegacyModel> = (a, b) =>
-  a.name === b.name && a.delay === b.delay && a.duration === b.duration;
+  a.name === b.name &&
+  a.delay === b.delay &&
+  a.duration === b.duration &&
+  a.infiniteAnimation === b.infiniteAnimation;

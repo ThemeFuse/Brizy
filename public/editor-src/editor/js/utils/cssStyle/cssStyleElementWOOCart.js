@@ -1,28 +1,29 @@
 import {
-  styleElementWOOCartSubtotalDisabled,
-  styleElementWOOCartPurchasesDisabled,
-  styleElementWOOCartButtonDirection,
-  styleElementWOOCartButtonSpacing,
-  styleElementWOOCartSidebarHorizontalAlign,
-  styleElementWOOCartSidebarVerticalAlign,
-  styleElementWOOCartSidebarWidth,
-  styleElementWOOCartSidebarWidthSuffix,
-  styleElementWOOCartSidebarHeightStyle,
-  styleElementWOOCartSidebarHeight,
-  styleElementWOOCartSidebarHeightSuffix,
-  styleElementWOOCartPurchasesType
-} from "visual/utils/style2";
-import {
+  cssStyleBgColor,
+  cssStyleBgColorHex,
+  cssStyleBorderRadiusType,
   cssStyleColor,
+  cssStyleDisplayNone,
+  cssStyleSizeFontSize,
+  cssStyleSizeWidth,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
-  cssStyleTypography2LineHeight,
-  cssStyleBgColor,
-  cssStyleBgColorHex
+  cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
-import { defaultValueValue } from "visual/utils/onChange";
+import {
+  styleElementWOOCartButtonDirection,
+  styleElementWOOCartButtonSpacing,
+  styleElementWOOCartPurchasesDisabled,
+  styleElementWOOCartPurchasesType,
+  styleElementWOOCartSidebarHeight,
+  styleElementWOOCartSidebarHeightStyle,
+  styleElementWOOCartSidebarHeightSuffix,
+  styleElementWOOCartSidebarHorizontalAlign,
+  styleElementWOOCartSidebarVerticalAlign,
+  styleElementWOOCartSubtotalDisabled
+} from "visual/utils/style2";
 
 export function cssStyleElementWOOCartIconColor({
   v,
@@ -36,7 +37,9 @@ export function cssStyleElementWOOCartIconColor({
 export function cssStyleElementWOOCartSubtotalDisabled({ v, device, state }) {
   const disabled = styleElementWOOCartSubtotalDisabled({ v, device, state });
 
-  return disabled === undefined || disabled === "on" ? "" : "display: none;";
+  return disabled === undefined || disabled === "on"
+    ? ""
+    : cssStyleDisplayNone();
 }
 
 export function cssStyleElementWOOCartPurchasesDisabled({ v, device, state }) {
@@ -334,12 +337,8 @@ export function cssStyleElementWOOCartButtonSpacing({ v, device, state }) {
     : `width: 100%; margin-bottom: ${spacing}px;`;
 }
 
-export function cssStyleElementWOOCartButtonBorderRadius({ v }) {
-  return v.buttonBorderRadiusType === "square"
-    ? "border-radius:0;"
-    : v.buttonBorderRadiusType === "rounded"
-    ? "border-radius:400px;"
-    : `border-radius:${v.buttonBorderRadius}${v.buttonBorderRadiusSuffix};`;
+export function cssStyleElementWOOCartButtonBorderRadius({ v, device, state }) {
+  return cssStyleBorderRadiusType({ v, device, state, prefix: "button" });
 }
 
 export function cssStyleElementWOOCartSidebarHorizontalAlign({
@@ -395,17 +394,7 @@ export function cssStyleElementWOOCartSidebarVerticalAlign({
 }
 
 export function cssStyleElementWOOCartSidebarWidth({ v, device, state }) {
-  const width = styleElementWOOCartSidebarWidth({ v, device, state });
-  const widthSuffix = styleElementWOOCartSidebarWidthSuffix({
-    v,
-    device,
-    state
-  });
-
-  return (width === undefined || width === null) &&
-    (widthSuffix === undefined || widthSuffix === null)
-    ? ""
-    : `width: ${width}${widthSuffix};`;
+  return cssStyleSizeWidth({ v, device, state, prefix: "sidebar" });
 }
 
 export function cssStyleElementWOOCartSidebarHeight({ v, device, state }) {
@@ -453,9 +442,6 @@ export function cssStyleElementWOOCartBubbleBg({
     : cssStyleBgColorHex({ v, device, state, prefix });
 }
 
-export function cssStyleElementWOOCartIconSize({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
-  const iconCustomSize = dvv("iconCustomSize");
-
-  return `font-size: ${iconCustomSize}px;`;
+export function cssStyleElementWOOCartIconSize({ v, device, state }) {
+  return cssStyleSizeFontSize({ v, device, state, prefix: "iconCustom" });
 }

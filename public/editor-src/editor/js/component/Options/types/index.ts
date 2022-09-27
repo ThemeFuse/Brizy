@@ -12,7 +12,6 @@ import ColorFields from "./ColorFields";
 import ColorPalette from "./ColorPalette";
 import ColorPalette2 from "./ColorPalette2";
 import ColorPaletteEditor from "./ColorPaletteEditor";
-import ColorPicker from "./ColorPicker";
 import ColorPicker2 from "./ColorPicker2";
 import FontFamily from "./FontFamily";
 import FontStyle from "./FontStyle";
@@ -140,7 +139,6 @@ const oldTypes = {
   colorPaletteEditor: ColorPaletteEditor,
   colorPalette: ColorPalette,
   colorPalette2: ColorPalette2,
-  colorPicker: ColorPicker,
   colorPicker2: ColorPicker2,
   fontFamily: FontFamily,
   fontStyle: FontStyle,

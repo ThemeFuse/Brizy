@@ -1,4 +1,13 @@
-import { SavedBlock, SavedLayout } from "visual/types";
+import {
+  EntityTypeRule,
+  SavedBlock,
+  SavedLayout,
+  WPReferenceAllAuthor,
+  WPReferenceAllInEntity,
+  WPReferenceChildEntity,
+  WPReferenceSpecificAuthor,
+  WPReferenceSpecificInEntity
+} from "visual/types";
 
 export type Dictionary<T> = {
   [k: string]: T | undefined;
@@ -19,3 +28,104 @@ export const isSavedPopup = (block: SavedBlockTypes): boolean => {
   const hasValue = "value" in block.data;
   return hasValue && block.meta.type === "popup";
 };
+
+//#region Rules
+export const isReferenceAllAuthor = (
+  t: EntityTypeRule
+): t is WPReferenceAllAuthor => {
+  if (typeof t !== "string" || !t.startsWith("author|")) {
+    return false;
+  }
+
+  // @ts-expect-error: skip "author"
+  const [_, authorId] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+
+  return authorId === "";
+};
+
+export const isReferenceSpecificAuthor = (
+  t: EntityTypeRule
+): t is WPReferenceSpecificAuthor => {
+  if (typeof t !== "string") {
+    return false;
+  }
+
+  if (!t.startsWith("author|")) {
+    return false;
+  }
+
+  // @ts-expect-error: skip "author"
+  const [_, authorId] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+
+  return authorId !== "";
+};
+
+export const isReferenceAllIn = (
+  t: EntityTypeRule
+): t is WPReferenceAllInEntity => {
+  if (typeof t !== "string") {
+    return false;
+  }
+
+  if (!t.startsWith("in|")) {
+    return false;
+  }
+
+  // @ts-expect-error: skip "in"
+  const [_, taxonomy, id] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+
+  return taxonomy !== "" && id === undefined;
+};
+
+export const isReferenceSpecificIn = (
+  t: EntityTypeRule
+): t is WPReferenceSpecificInEntity => {
+  if (typeof t !== "string") {
+    return false;
+  }
+
+  if (!t.startsWith("in|")) {
+    return false;
+  }
+
+  // @ts-expect-error: skip "in"
+  const [_, taxonomy, id] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+
+  return taxonomy !== "" && id !== undefined;
+};
+
+export const isReferenceAllChild = (
+  t: EntityTypeRule
+): t is WPReferenceChildEntity => {
+  if (typeof t !== "string") {
+    return false;
+  }
+
+  if (!t.startsWith("child|")) {
+    return false;
+  }
+
+  // @ts-expect-error: skip "child"
+  const [_, category, id] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+
+  return category !== "" && id === undefined;
+};
+
+export const isReferenceSpecificChild = (
+  t: EntityTypeRule
+): t is WPReferenceChildEntity => {
+  if (typeof t !== "string") {
+    return false;
+  }
+
+  if (!t.startsWith("child|")) {
+    return false;
+  }
+
+  // @ts-expect-error: skip "child"
+  const [_, category, id] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+
+  return category !== "" && id !== undefined;
+};
+
+//#endregion

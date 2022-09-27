@@ -86,6 +86,17 @@
   &__item:last-child {
     border-bottom: transparent;
   }
+
+  &__item.brz-ed-fixed-bottom-panel-popover__item {
+    .brz-icon-svg {
+      min-width: 1em;
+    }
+
+    .brz-span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
 
 // Pro Uses for PromptBlocks | Fonts

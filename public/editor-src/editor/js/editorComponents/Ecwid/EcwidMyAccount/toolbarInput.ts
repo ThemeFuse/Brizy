@@ -4,52 +4,86 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { Value } from "./index";
+import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { Value } from "./types/Value";
 
 export function getItems({
   v,
-  device
+  device,
+  state
 }: {
   v: Value;
   device: ResponsiveMode;
+  state: State;
 }): ToolbarItemType[] {
-  const dvv = (key: string) =>
-    defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const { hex: inputColorHex } = getOptionColorHexByPalette(
     dvv("inputColorHex"),
     dvv("inputColorPalette")
   );
+
   return [
     {
       id: "toolbarCurrentShortcode",
       type: "popover-dev",
       config: {
-        icon: "nc-woo-add-to-cart",
-        title: t("Input")
+        icon: "nc-form-left",
+        title: t("Advanced")
       },
       position: 10,
       options: [
         {
-          id: "inputSize",
-          label: t("Size"),
-          type: "radioGroup-dev",
-          choices: [
-            { value: "small", icon: "nc-16" },
-            { value: "medium", icon: "nc-24" },
-            { value: "large", icon: "nc-32" }
+          id: "tabsCurrentElement",
+          type: "tabs-dev",
+          tabs: [
+            {
+              id: "tabCurrentElementAdvanced",
+              label: t("Advanced"),
+              options: [
+                {
+                  id: "placeholder",
+                  label: t("Placeholder"),
+                  type: "switch-dev"
+                }
+              ]
+            },
+            {
+              id: "tabCurrentElementBackground",
+              label: t("Background"),
+              options: [
+                {
+                  id: "groupSize",
+                  type: "group-dev",
+                  options: [
+                    {
+                      id: "inputHeight",
+                      type: "slider-dev",
+                      label: t("Height"),
+                      config: {
+                        min: 0,
+                        max: 100,
+                        units: [{ value: "px", title: "px" }]
+                      }
+                    },
+                    {
+                      id: "inputWidth",
+                      type: "slider-dev",
+                      label: t("Width"),
+                      config: {
+                        min: 0,
+                        max: 100,
+                        units: [
+                          { value: "%", title: "%" },
+                          { value: "px", title: "px" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
           ]
-        },
-        {
-          id: "inputBorderRadius",
-          type: "slider-dev",
-          label: t("Corner"),
-          devices: "desktop",
-          config: {
-            min: 0,
-            max: 100,
-            units: [{ value: "px", title: "px" }]
-          }
         }
       ]
     },
@@ -64,23 +98,9 @@ export function getItems({
       position: 20,
       options: [
         {
-          id: "tabsTypography",
-          type: "tabs-dev",
-          tabs: [
-            {
-              id: "tabsTypographyInput",
-              label: t("Input"),
-              options: [
-                {
-                  id: "input",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: "desktop" === device
-                  }
-                }
-              ]
-            }
-          ]
+          id: "inputTypography",
+          type: "typography-dev",
+          config: { fontFamily: device === "desktop" }
         }
       ]
     },
@@ -92,7 +112,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(inputColorHex, v.inputColorOpacity)
+            backgroundColor: hexToRgba(inputColorHex, dvv("inputColorOpacity"))
           }
         }
       },
@@ -109,7 +129,8 @@ export function getItems({
               options: [
                 {
                   id: "inputColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -118,8 +139,9 @@ export function getItems({
               label: t("Bg"),
               options: [
                 {
-                  id: "inputBgColor",
-                  type: "colorPicker-dev"
+                  id: "input",
+                  type: "backgroundColor-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -129,7 +151,8 @@ export function getItems({
               options: [
                 {
                   id: "inputBorder",
-                  type: "border-dev"
+                  type: "border-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -139,11 +162,41 @@ export function getItems({
               options: [
                 {
                   id: "inputBoxShadow",
-                  type: "boxShadow-dev"
+                  type: "boxShadow-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: { icon: "nc-cog", title: t("Settings") },
+      position: 40,
+      options: [
+        {
+          id: "inputSpacing",
+          label: t("Spacing"),
+          type: "slider-dev",
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        },
+        {
+          id: "styles",
+          type: "sidebarTabsButton-dev",
+          devices: "desktop",
+          config: {
+            tabId: "styles",
+            text: t("Styling"),
+            icon: "nc-cog",
+            align: "left"
+          }
         }
       ]
     }

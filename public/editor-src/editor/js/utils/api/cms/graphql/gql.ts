@@ -1,49 +1,45 @@
 import { ApolloQueryResult, FetchResult, gql } from "@apollo/client";
-import { ApolloClient } from "./apollo";
-import { graphQLIdPrefixes } from "./convertors";
-import { GetCollectionTypesWithFields } from "./types/GetCollectionTypesWithFields";
-import {
-  GetCollectionItems,
-  GetCollectionItemsVariables
-} from "./types/GetCollectionItems";
-import {
-  GetCollectionItem,
-  GetCollectionItemVariables
-} from "./types/GetCollectionItem";
-import { GetCollectionItemFieldBySlug } from "./types/GetCollectionItemFieldBySlug";
-import { GetCollectionTypeFieldBySlug } from "./types/GetCollectionTypeFieldBySlug";
-import {
-  CreateCollectionItem,
-  CreateCollectionItemVariables
-} from "./types/CreateCollectionItem";
-import {
-  UpdateCollectionItem,
-  UpdateCollectionItemVariables
-} from "./types/UpdateCollectionItem";
-import {
-  DeleteCollectionItem,
-  DeleteCollectionItemVariables
-} from "./types/DeleteCollectionItem";
-import {
-  ReferencedCollectionItems,
-  ReferencedCollectionItemsVariables
-} from "./types/ReferencedCollectionItems";
 import {
   GetCustomer,
   GetCustomerVariables
 } from "visual/utils/api/cms/graphql/types/GetCustomer";
 import {
-  UpdateCustomer,
-  UpdateCustomerVariables
-} from "visual/utils/api/cms/graphql/types/UpdateCustomer";
+  GetCustomerAndCollection,
+  GetCustomerAndCollectionVariables
+} from "visual/utils/api/cms/graphql/types/GetCustomerAndCollection";
 import {
   GetCustomers,
   GetCustomersVariables
 } from "visual/utils/api/cms/graphql/types/GetCustomers";
 import {
-  GetCustomerAndCollection,
-  GetCustomerAndCollectionVariables
-} from "visual/utils/api/cms/graphql/types/GetCustomerAndCollection";
+  UpdateCustomer,
+  UpdateCustomerVariables
+} from "visual/utils/api/cms/graphql/types/UpdateCustomer";
+import { ApolloClient } from "./apollo";
+import { graphQLIdPrefixes } from "./convertors";
+import {
+  CreateCollectionItem,
+  CreateCollectionItemVariables
+} from "./types/CreateCollectionItem";
+import {
+  DeleteCollectionItem,
+  DeleteCollectionItemVariables
+} from "./types/DeleteCollectionItem";
+import {
+  GetCollectionItem,
+  GetCollectionItemVariables
+} from "./types/GetCollectionItem";
+import { GetCollectionItemFieldBySlug } from "./types/GetCollectionItemFieldBySlug";
+import {
+  GetCollectionItems,
+  GetCollectionItemsVariables
+} from "./types/GetCollectionItems";
+import { GetCollectionTypeFieldBySlug } from "./types/GetCollectionTypeFieldBySlug";
+import { GetCollectionTypesWithFields } from "./types/GetCollectionTypesWithFields";
+import {
+  UpdateCollectionItem,
+  UpdateCollectionItemVariables
+} from "./types/UpdateCollectionItem";
 
 //#region CollectionItem fragment
 const collectionItemFragment = gql`
@@ -112,6 +108,7 @@ export const getCollectionTypesWithFields = (
           fields {
             id
             type
+            label
             ... on CollectionTypeFieldReference {
               referenceSettings {
                 collectionType {
@@ -306,38 +303,6 @@ export const deleteCollectionItem = (
   });
 //#endregion
 
-//#region ReferencedCollectionItems
-export const getReferencedCollectionItems = (
-  apolloClient: ApolloClient,
-  variables: ReferencedCollectionItemsVariables
-): Promise<ApolloQueryResult<ReferencedCollectionItems>> =>
-  apolloClient.query<
-    ReferencedCollectionItems,
-    ReferencedCollectionItemsVariables
-  >({
-    query: gql`
-      query ReferencedCollectionItems(
-        $type: ID!
-        $page: Int
-        $itemsPerPage: Int
-        $withFields: Boolean = false
-      ) {
-        referencedCollectionItems(
-          itemsPerPage: $itemsPerPage
-          page: $page
-          reference: $type
-        ) {
-          collection {
-            ...CollectionItemFragment
-          }
-        }
-      }
-      ${collectionItemFragment}
-    `,
-    variables
-  });
-//#endregion
-
 //#region Customers
 export const getCustomer = (
   apolloClient: ApolloClient,
@@ -434,6 +399,7 @@ export const getCustomersAndCollectionTypes = (
           fields {
             id
             type
+            label
             ... on CollectionTypeFieldReference {
               referenceSettings {
                 collectionType {

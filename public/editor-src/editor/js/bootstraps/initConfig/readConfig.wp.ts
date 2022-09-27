@@ -1,4 +1,4 @@
-import { parseStrict, optional } from "visual/utils/reader/readWithParser";
+import { parseStrict } from "visual/utils/reader/readWithParser";
 import { mPipe } from "visual/utils/fp/mPipe";
 import * as Str from "visual/utils/reader/string";
 import * as Num from "visual/utils/reader/number";
@@ -12,12 +12,13 @@ import { WP } from "visual/global/Config/types/configs/WP";
 import { throwOnNullish } from "visual/utils/value";
 
 const tParser = parseStrict<unknown, Rule>({
-  type: optional(
+  type: pipe(
     mPipe(
       pass(Obj.isObject),
       Obj.readKey("type"),
       pass((v): v is Rule["type"] => [1, 2].includes(v as number))
-    )
+    ),
+    throwOnNullish("Invalid rule type")
   ),
   entityType: pipe(
     mPipe(

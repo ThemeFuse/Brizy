@@ -1,17 +1,17 @@
-import { hexToRgba } from "visual/utils/color";
 import _ from "underscore";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { IS_STORY } from "visual/utils/models";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
-import { t } from "visual/utils/i18n";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { IS_STORY } from "visual/utils/models";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state, context }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const { hex: numberColor } = getOptionColorHexByPalette(
     dvv("numberColorHex"),
@@ -73,7 +73,7 @@ export function getItems({ v, device, state, context }) {
                   label: t("Hour"),
                   type: "select-dev",
                   devices: "desktop",
-                  choices: _.times(24, index => {
+                  choices: _.times(24, (index) => {
                     const hour = (index + 12) % 12 || 12;
                     const suffix = index >= 12 ? "pm" : "am";
                     return {
@@ -88,7 +88,7 @@ export function getItems({ v, device, state, context }) {
                   label: t("Minutes"),
                   type: "select-dev",
                   devices: "desktop",
-                  choices: _.times(6, index => {
+                  choices: _.times(6, (index) => {
                     const current = index * 10;
 
                     return {
@@ -407,12 +407,10 @@ export function getItems({ v, device, state, context }) {
           config: {
             min: dvv("heightSuffix") === "%" ? 5 : 50,
             max: 300,
-            units: IS_STORY
-              ? [{ value: "%", title: "%" }]
-              : [
-                  { value: "px", title: "px" },
-                  { value: "%", title: "%" }
-                ]
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
           }
         },
         {

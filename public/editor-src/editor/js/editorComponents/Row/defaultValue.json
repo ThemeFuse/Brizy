@@ -321,7 +321,7 @@
     "mobileMotionMouseTiltViewportBottom": null,
 
     "size": 100,
-    "sizeSuffix": null,
+    "sizeSuffix": "%",
 
     "items": [],
 
@@ -364,18 +364,21 @@
     "animationName": "none",
     "animationDuration": 1000,
     "animationDelay": 1000,
+    "animationInfiniteAnimation": false,
 
     "tempAnimationName": "none",
 
     "tabletAnimationName": null,
     "tabletAnimationDuration": null,
     "tabletAnimationDelay": null,
+    "tabletAnimationInfiniteAnimation": null,
 
     "tempTabletAnimationName": null,
 
     "mobileAnimationName": null,
     "mobileAnimationDuration": null,
     "mobileAnimationDelay": null,
+    "mobileAnimationInfiniteAnimation": null,
 
     "tempMobileAnimationName": null
   },
@@ -527,7 +530,7 @@
     "tempHoverBorderColorOpacity": null,
     "tempHoverBorderColorPalette": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

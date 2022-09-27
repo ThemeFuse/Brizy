@@ -29,6 +29,7 @@ type PromptConditionsOption = {
 };
 
 export type PromptConditionsProps = {
+  context: "block" | "popup";
   options: PromptConditionsOption[];
   onClose?: () => void;
 };

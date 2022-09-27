@@ -74,10 +74,10 @@
 
     "iconSize": "small",
     "iconCustomSize": 32,
-    "iconCustomSizeSuffix": null,
+    "iconCustomSizeSuffix": "px",
 
     "iconSpacing": 3,
-    "iconSpacingSuffix": null,
+    "iconSpacingSuffix": "px",
 
     "horizontalAlign": "left",
 
@@ -1418,7 +1418,7 @@
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

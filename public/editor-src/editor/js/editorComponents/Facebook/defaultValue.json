@@ -102,7 +102,7 @@
     "tempHoverBorderColorOpacity": null,
     "tempHoverBorderColorPalette": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

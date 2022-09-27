@@ -1,49 +1,41 @@
+import classnames from "classnames";
 import React from "react";
 import ReactDOM from "react-dom";
-import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
-import { ThemeIcon } from "visual/component/ThemeIcon";
+import CustomCSS from "visual/component/CustomCSS";
 import EditorIcon from "visual/component/EditorIcon";
+import HotKeys from "visual/component/HotKeys";
+import { Roles } from "visual/component/Roles";
+import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar, {
   CollapsibleToolbar,
   ToolbarExtend
 } from "visual/component/Toolbar";
-import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
-import { Roles } from "visual/component/Roles";
-import HotKeys from "visual/component/HotKeys";
 import {
-  IS_INTERNAL_POPUP,
-  IS_EXTERNAL_POPUP,
-  IS_GLOBAL_POPUP
-} from "visual/utils/models";
-import {
-  wInTabletPage,
+  wInFullPage,
   wInMobilePage,
-  wInFullPage
+  wInTabletPage
 } from "visual/config/columns";
-import { getStore } from "visual/redux/store";
-import { triggersSelector } from "visual/redux/selectors";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import * as toolbarExtendConfig from "./toolbarExtend";
-import * as sidebarExtendConfig from "./sidebarExtend";
-import * as toolbarCloseConfig from "./toolbarClose";
-import * as sidebarCloseConfig from "./sidebarClose";
-import { css } from "visual/utils/cssStyle";
-import { style, styleInner } from "./styles";
-import { t } from "visual/utils/i18n";
-import defaultValue from "./defaultValue.json";
-import {
-  styleContainerPopup2ContainerWidth,
-  styleContainerPopup2ContainerWidthSuffix
-} from "visual/utils/style2";
-import { getContainerW } from "visual/utils/meta";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { SectionPopup2Instances as Instances } from "visual/editorComponents/SectionPopup2/instances";
+import Config from "visual/global/Config";
+import { triggersSelector } from "visual/redux/selectors";
+import { css } from "visual/utils/cssStyle";
+import { t } from "visual/utils/i18n";
+import { getContainerW } from "visual/utils/meta";
+import { isExternalPopup, isInternalPopup, isPopup } from "visual/utils/models";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import * as sidebarCloseConfig from "./sidebarClose";
+import * as sidebarExtendConfig from "./sidebarExtend";
+import { style, styleInner } from "./styles";
+import * as toolbarConfig from "./toolbar";
+import * as toolbarCloseConfig from "./toolbarClose";
+import * as toolbarExtendConfig from "./toolbarExtend";
 
 /**
  * @deprecated use import {SectionPopup2Instances} from "visual/editorComponents/SectionPopup2/instances"
@@ -133,27 +125,16 @@ class SectionPopup2 extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const width = styleContainerPopup2ContainerWidth({ v, device: "desktop" });
-    const widthSuffix = styleContainerPopup2ContainerWidthSuffix({
-      v,
-      device: "desktop"
-    });
-    const tabletWidth = styleContainerPopup2ContainerWidth({
-      v,
-      device: "tablet"
-    });
-    const tabletWidthSuffix = styleContainerPopup2ContainerWidthSuffix({
-      v,
-      device: "tablet"
-    });
-    const mobileWidth = styleContainerPopup2ContainerWidth({
-      v,
-      device: "mobile"
-    });
-    const mobileWidthSuffix = styleContainerPopup2ContainerWidthSuffix({
-      v,
-      device: "mobile"
-    });
+
+    const {
+      width,
+      widthSuffix,
+      tabletWidth,
+      tabletWidthSuffix,
+      mobileWidth,
+      mobileWidthSuffix
+    } = v;
+
     const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,
       w: widthSuffix === "px" ? width : wInFullPage,
@@ -268,12 +249,20 @@ class SectionPopup2 extends EditorComponent {
       return null;
     }
 
-    const { className, customClassName, customAttributes } = v;
+    const {
+      className,
+      customClassName,
+      customAttributes,
+      columnsHeightStyle,
+      customCSS
+    } = v;
     const id = this.getId();
+    const isGlobal = isPopup(Config.getAll());
 
     const classNamePopup = classnames(
       "brz-popup2",
       "brz-popup2__editor",
+      `brz-popup2__${columnsHeightStyle}`,
       { "brz-popup2--opened": this.state.isOpened },
       className,
       customClassName,
@@ -291,7 +280,7 @@ class SectionPopup2 extends EditorComponent {
         activateOnContentClick={false}
       >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
-          <CustomCSS selectorName={id} css={v.customCSS}>
+          <CustomCSS selectorName={id} css={customCSS}>
             <div
               id={id}
               className={classNamePopup}
@@ -300,7 +289,7 @@ class SectionPopup2 extends EditorComponent {
               {...parseCustomAttributes(customAttributes)}
               {...containerBorderAttr}
             >
-              {!IS_GLOBAL_POPUP && (
+              {!isGlobal && (
                 <button
                   className="brz-button brz-popup2__button-go-to-editor"
                   onClick={this.handleDropClick}
@@ -327,7 +316,7 @@ class SectionPopup2 extends EditorComponent {
       </ContainerBorder>
     );
 
-    if (!IS_GLOBAL_POPUP) {
+    if (!isGlobal) {
       content = (
         <HotKeys
           keyNames={["esc"]}
@@ -343,12 +332,24 @@ class SectionPopup2 extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className, customClassName, customAttributes } = v;
-
-    const triggers = triggersSelector(getStore().getState());
+    const {
+      className,
+      customClassName,
+      customAttributes,
+      columnsHeightStyle,
+      scrollPage,
+      clickOutsideToClose,
+      showCloseButtonAfter,
+      customCSS
+    } = v;
+    const config = Config.getAll();
+    const triggers = triggersSelector(this.getReduxState());
+    const isGlobal = isPopup(config);
+    const isInternal = isInternalPopup(config);
+    const isExternal = isExternalPopup(config);
 
     let attr = {};
-    if (IS_GLOBAL_POPUP) {
+    if (isGlobal) {
       const encodeIdsList = [
         "scrolling",
         "showing",
@@ -364,10 +365,10 @@ class SectionPopup2 extends EditorComponent {
         "otherPopups",
         "specificPopup"
       ];
-      const encodeData = data => encodeURIComponent(JSON.stringify(data));
-      const decodeData = data => JSON.parse(decodeURIComponent(data));
-      const convertString = name =>
-        name.replace(/([A-Z])/g, letter => `_${letter.toLowerCase()}`);
+      const encodeData = (data) => encodeURIComponent(JSON.stringify(data));
+      const decodeData = (data) => JSON.parse(decodeURIComponent(data));
+      const convertString = (name) =>
+        name.replace(/([A-Z])/g, (letter) => `_${letter.toLowerCase()}`);
 
       attr = triggers.reduce((acc, item) => {
         if (item.active) {
@@ -385,24 +386,25 @@ class SectionPopup2 extends EditorComponent {
       }, {});
     }
 
-    if (v.scrollPage === "on") {
+    if (scrollPage === "on") {
       attr["data-scroll_page"] = "true";
     }
-    if (v.clickOutsideToClose === "on") {
+    if (clickOutsideToClose === "on") {
       attr["data-click_outside_to_close"] = "true";
     }
-    if (v.showCloseButtonAfter) {
-      attr["data-show-close-button-after"] = v.showCloseButtonAfter;
+    if (showCloseButtonAfter) {
+      attr["data-show-close-button-after"] = showCloseButtonAfter;
     }
 
     const classNamePopup = classnames(
       "brz-popup2",
       "brz-popup2__preview",
+      `brz-popup2__${columnsHeightStyle}`,
       {
-        "brz-simple-popup": !IS_GLOBAL_POPUP,
-        "brz-conditions-popup": IS_GLOBAL_POPUP,
-        "brz-conditions-internal-popup": IS_INTERNAL_POPUP,
-        "brz-conditions-external-popup": IS_EXTERNAL_POPUP
+        "brz-simple-popup": !isGlobal,
+        "brz-conditions-popup": isGlobal,
+        "brz-conditions-internal-popup": isInternal,
+        "brz-conditions-external-popup": isExternal
       },
       className,
       customClassName,
@@ -414,7 +416,7 @@ class SectionPopup2 extends EditorComponent {
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div
           className={classNamePopup}
           id={this.instanceKey}

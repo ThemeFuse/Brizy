@@ -1,12 +1,12 @@
 import { mPipe } from "fp-utilities";
-import { readWithParser } from "visual/utils/reader/readWithParser";
 import { ElementModel } from "visual/component/Elements/Types";
-import * as Num from "visual/utils/math/number";
-import * as Str from "visual/utils/string/specs";
-import { prop } from "visual/utils/object/get";
-import { Unit } from "../types";
 import { DeviceMode } from "visual/types";
+import * as Num from "visual/utils/math/number";
+import { prop } from "visual/utils/object/get";
 import { defaultValueKey } from "visual/utils/onChange";
+import { readWithParser } from "visual/utils/reader/readWithParser";
+import * as Str from "visual/utils/string/specs";
+import { Unit } from "../types";
 
 export interface ImagePatch {
   imageExtension: string;
@@ -56,11 +56,15 @@ export const patchImageUnit = (
   patch: ElementModel,
   device: DeviceMode
 ): UnitPatch | undefined => {
-  const dvk = (key: string): string =>
-    defaultValueKey({ key, device, state: "normal" });
-  const [patchKey] = Object.keys(patch).filter(
-    key => key === dvk("widthSuffix") || key === dvk("heightSuffix")
-  );
+  if (patch) {
+    const dvk = (key: string): string =>
+      defaultValueKey({ key, device, state: "normal" });
+    const [patchKey] = Object.keys(patch).filter(
+      (key) => key === dvk("widthSuffix") || key === dvk("heightSuffix")
+    );
 
-  return patchKey ? patch : undefined;
+    return patchKey ? patch : undefined;
+  }
+
+  return undefined;
 };

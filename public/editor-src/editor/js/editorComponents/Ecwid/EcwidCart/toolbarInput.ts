@@ -4,8 +4,8 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
-import { Value } from "./index";
+import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { Value } from "./types/Value";
 
 export function getItems({
   v,
@@ -22,32 +22,52 @@ export function getItems({
     dvv("inputColorHex"),
     dvv("inputColorPalette")
   );
+
   return [
     {
       id: "toolbarCurrentShortcode",
       type: "popover-dev",
       config: {
         icon: "nc-form-left",
-        title: t("Input")
+        title: t("Advanced")
       },
       position: 10,
       options: [
         {
-          id: "inputHeight",
-          type: "slider-dev",
-          label: t("Height"),
-          devices: "desktop",
-          config: {
-            min: 0,
-            max: 100,
-            units: [{ value: "px", title: "px" }]
-          }
+          id: "groupSize",
+          type: "group-dev",
+          options: [
+            {
+              id: "inputHeight",
+              type: "slider-dev",
+              label: t("Height"),
+              config: {
+                min: 0,
+                max: 100,
+                units: [{ value: "px", title: "px" }]
+              }
+            },
+            {
+              id: "inputWidth",
+              type: "slider-dev",
+              label: t("Width"),
+              config: {
+                min: 0,
+                max: 100,
+                units: [
+                  { value: "%", title: "%" },
+                  { value: "px", title: "px" }
+                ]
+              }
+            }
+          ]
         }
       ]
     },
     {
       id: "toolbarTypography",
       type: "popover-dev",
+      disabled: dvv("placeholder") === "off",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -56,10 +76,10 @@ export function getItems({
       position: 20,
       options: [
         {
-          id: "input",
+          id: "inputTypography",
           type: "typography-dev",
           config: {
-            fontFamily: "desktop" === device
+            fontFamily: device === "desktop"
           }
         }
       ]
@@ -72,7 +92,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(inputColorHex, v.inputColorOpacity)
+            backgroundColor: hexToRgba(inputColorHex, dvv("inputColorOpacity"))
           }
         }
       },
@@ -89,7 +109,9 @@ export function getItems({
               options: [
                 {
                   id: "inputColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker-dev",
+                  disabled: dvv("placeholder") === "off",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -98,8 +120,9 @@ export function getItems({
               label: t("Bg"),
               options: [
                 {
-                  id: "inputBgColor",
-                  type: "colorPicker-dev"
+                  id: "input",
+                  type: "backgroundColor-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -109,7 +132,8 @@ export function getItems({
               options: [
                 {
                   id: "inputBorder",
-                  type: "border-dev"
+                  type: "border-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -119,7 +143,8 @@ export function getItems({
               options: [
                 {
                   id: "inputBoxShadow",
-                  type: "boxShadow-dev"
+                  type: "boxShadow-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             }
@@ -128,12 +153,43 @@ export function getItems({
       ]
     },
     {
-      id: "advancedSettings",
-      // @ts-expect-error old option
-      type: "advancedSettings",
-      position: 110,
-      icon: "nc-cog",
-      title: t("Settings")
+      id: "inputHorizontalAlign",
+      type: "toggle-dev",
+      position: 40,
+      choices: [
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
+      ]
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: { icon: "nc-cog", title: t("Settings") },
+      position: 50,
+      options: [
+        {
+          id: "inputSpacing",
+          label: t("Spacing"),
+          type: "slider-dev",
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        },
+        {
+          id: "styles",
+          type: "sidebarTabsButton-dev",
+          devices: "desktop",
+          config: {
+            tabId: "styles",
+            text: t("Styling"),
+            icon: "nc-cog",
+            align: "left"
+          }
+        }
+      ]
     }
   ];
 }

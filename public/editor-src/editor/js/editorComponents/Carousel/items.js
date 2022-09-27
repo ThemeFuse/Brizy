@@ -1,16 +1,16 @@
+import classnames from "classnames";
 import React from "react";
 import ReactDOM from "react-dom";
 import SlickSlider from "react-slick";
-import classnames from "classnames";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { ContextMenuExtend } from "visual/component/ContextMenu";
+import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
-import HotKeys from "visual/component/HotKeys";
-import { ContextMenuExtend } from "visual/component/ContextMenu";
-import contextMenuExtendConfigFn from "./contextMenuExtend";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
-import { setDataSortable, normalizeCarouselColumns } from "./utils";
+import contextMenuExtendConfigFn from "./contextMenuExtend";
+import { normalizeCarouselColumns, setDataSortable } from "./utils";
 
 // className is added by react-slick
 const SliderArrow = ({ className, extraClassName, onClick, icon }) => (
@@ -55,7 +55,7 @@ class Items extends EditorArrayComponent {
     }
   }
 
-  handleRefSlider = node => {
+  handleRefSlider = (node) => {
     /* eslint-disable react/no-find-dom-node */
     this.slider = ReactDOM.findDOMNode(node);
     /* eslint-enabled react/no-find-dom-node */
@@ -97,7 +97,7 @@ class Items extends EditorArrayComponent {
     return sameNode || acceptsElement;
   };
 
-  addColumn = itemIndex => {
+  addColumn = (itemIndex) => {
     const v = this.getValue();
 
     const emptyItemData = {
@@ -147,7 +147,7 @@ class Items extends EditorArrayComponent {
                   : itemIndex === items.length - 1
                   ? "next"
                   : undefined,
-              onChange: v => {
+              onChange: (v) => {
                 switch (v) {
                   case "prev":
                     this.reorderItem(itemIndex, itemIndex - 1);
@@ -349,7 +349,7 @@ class Items extends EditorArrayComponent {
   }
 
   renderForEdit(v) {
-    const { className, style, dynamic, columns } = this.props;
+    const { className, dynamic, columns } = this.props;
     let content =
       dynamic === "on"
         ? Array(columns).fill(super.renderForEdit(v.slice(0, 1)))
@@ -361,9 +361,7 @@ class Items extends EditorArrayComponent {
         type="carousel"
         acceptElements={this.handleSortableAcceptElements}
       >
-        <div className={className} style={style}>
-          {this.renderSlider(content)}
-        </div>
+        <div className={className}>{this.renderSlider(content)}</div>
       </Sortable>
     );
   }

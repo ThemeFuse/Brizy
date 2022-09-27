@@ -3,7 +3,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function style(v, vs, vd) {
   const styles = {
     ".brz &&:hover .woocommerce-product-details__short-description *": {
-      standart: ["cssStyleExcerptAlign"]
+      standart: ["cssStyleElementWPPostContentExcerptAlign"]
     },
     ".brz && h1:hover": {
       standart: [

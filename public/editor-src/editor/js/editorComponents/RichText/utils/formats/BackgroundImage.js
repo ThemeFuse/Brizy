@@ -1,8 +1,8 @@
 import Quill from "quill";
 import { imageUrl, svgUrl } from "visual/utils/image";
+import { getImagePopulation } from "../requests/ImagePopulation";
 let Inline = Quill.import("blots/inline");
-
-const isSVG = extension => extension === "svg";
+const isSVG = (extension) => extension === "svg";
 
 class BackgroundImage extends Inline {
   // static className = "text-mask";
@@ -14,22 +14,30 @@ class BackgroundImage extends Inline {
 
   static formats(node) {
     let src = node.getAttribute("data-image_src");
-    if (!src) {
-      return null;
-    }
-
     let population = node.getAttribute("data-image_population");
-    const x = parseInt(node.style.backgroundPositionX) || null;
-    const y = parseInt(node.style.backgroundPositionY) || null;
-    const width = parseInt(node.getAttribute("data-image_width")) || null;
-    const height = parseInt(node.getAttribute("data-image_height")) || null;
-    const extension = node.getAttribute("data-image_extension");
 
-    if (!node.classList.contains("brz-population-mask")) {
-      population = null;
+    if (src || population) {
+      const x = parseInt(node.style.backgroundPositionX) || null;
+      const y = parseInt(node.style.backgroundPositionY) || null;
+      const width = parseInt(node.getAttribute("data-image_width")) || null;
+      const height = parseInt(node.getAttribute("data-image_height")) || null;
+      const extension = node.getAttribute("data-image_extension");
+
+      if (!node.classList.contains("brz-population-mask")) {
+        population = null;
+      }
+
+      return {
+        src,
+        population,
+        x,
+        y,
+        extension,
+        width,
+        height
+      };
     }
-
-    return { src, population, x, y, extension, width, height };
+    return null;
   }
 
   static setValue(value, node) {
@@ -40,13 +48,27 @@ class BackgroundImage extends Inline {
       // ! should be 50% 50% or should we set image position?
       node.style.backgroundPosition = "50% 50%";
       node.classList.add("brz-population-mask");
+      node.classList.remove("brz-population-mask__style");
       node.classList.remove("brz-text-mask");
       node.setAttribute("data-image_population", population);
+
+      requestAnimationFrame(() => {
+        const itemId = node
+          .closest("[data-item_id]")
+          .getAttribute("data-item_id");
+        getImagePopulation(population, itemId).then((url) => {
+          if (url) {
+            node.style.backgroundImage = `url(${url})`;
+            node.classList.add("brz-population-mask__style");
+          }
+        });
+      });
     } else if (src) {
       const imgUrl = isSVG(extension) ? svgUrl(src) : imageUrl(src);
       node.classList.add("brz-text-mask");
       node.classList.remove("brz-population-mask");
-      node.style.backgroundImage = `url('${imgUrl}')`;
+      node.classList.remove("brz-population-mask__style");
+      node.style.backgroundImage = `url(${imgUrl})`;
       node.style.backgroundPosition = `${x}% ${y}%`;
       node.removeAttribute("data-image_population");
       node.setAttribute("data-image_src", src);
@@ -63,6 +85,7 @@ class BackgroundImage extends Inline {
     node.style.backgroundPosition = null;
     node.classList.remove("brz-text-mask");
     node.classList.remove("brz-population-mask");
+    node.classList.remove("brz-population-mask__style");
     node.removeAttribute("data-image_population");
     node.removeAttribute("data-image_src");
     node.removeAttribute("data-image_width");

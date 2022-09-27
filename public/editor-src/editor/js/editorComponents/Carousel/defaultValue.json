@@ -12,7 +12,7 @@
     "slidesToScroll": 1,
     "sliderAutoPlay": "off",
     "sliderAutoPlaySpeed": 3,
-    "sliderAutoPlaySpeedSuffix": null,
+    "sliderAutoPlaySpeedSuffix": "s",
 
     "items": []
   },
@@ -21,11 +21,11 @@
     "className": "",
 
     "spacing": 0,
-    "spacingSuffix": null,
+    "spacingSuffix": "px",
 
     "sliderArrows": "thin",
     "sliderArrowsSpacing": 30,
-    "sliderArrowsSpacingSuffix": null,
+    "sliderArrowsSpacingSuffix": "px",
 
     "sliderArrowsColorHex": "#000000",
     "sliderArrowsColorOpacity": 1,
@@ -42,6 +42,8 @@
 
     "tempSliderDotsColorOpacity": 1,
     "tempSliderDotsColorPalette": "",
+
+    "sliderMargin": 0,
 
     "sliderPaddingType": "ungrouped",
     "sliderPadding": 0,

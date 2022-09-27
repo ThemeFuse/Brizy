@@ -11,12 +11,13 @@
     z-index: 10;
     top: 4px;
     left: 4px;
-    width: calc(100% - 8px);
-    max-width: calc(100% - 8px);
+    width: auto;
+    max-width: 120px;
+    min-width: auto;
 
     .brz-ed-control__multiSelect {
       &__menu {
-        max-width: 100%;
+        max-width: 145px;
         min-width: unset;
       }
 

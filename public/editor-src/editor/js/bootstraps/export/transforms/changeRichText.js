@@ -1,7 +1,7 @@
-import { getStore } from "visual/redux/store";
 import Config from "visual/global/Config";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
-import { imageUrl, svgUrl } from "visual/utils/image";
+import { getStore } from "visual/redux/store";
+import { imagePopulationUrl, imageUrl, svgUrl } from "visual/utils/image";
 
 const isWP = Config.get("wp");
 
@@ -12,17 +12,17 @@ const linkClassNames = [
   "is-empty"
 ];
 
-const isSVG = extension => extension === "svg";
+const isSVG = (extension) => extension === "svg";
 
 export default function changeRichText($) {
   // Change Links
   $(".brz-rich-text")
     .find("a[data-href]")
-    .filter(function() {
+    .filter(function () {
       const attr = $(this).attr("data-href");
       return attr.trim().length > 0;
     })
-    .each(function() {
+    .each(function () {
       const $this = $(this);
       const html = $this.html();
       const className = $this.attr("class") || "";
@@ -77,7 +77,7 @@ export default function changeRichText($) {
       } else {
         const newClassNames = className
           .split(" ")
-          .filter(name => !linkClassNames.includes(name))
+          .filter((name) => !linkClassNames.includes(name))
           .join(" ");
 
         $this.replaceWith(
@@ -89,7 +89,7 @@ export default function changeRichText($) {
   // replace DynamicContent
   $(".brz-rich-text")
     .find("[data-population]")
-    .each(function() {
+    .each(function () {
       const $this = $(this);
       const population = $this.attr("data-population");
       const $blockDynamicContentElem = $this.closest(".brz-tp__dc-block");
@@ -100,7 +100,7 @@ export default function changeRichText($) {
           .attr("class")
           .split(" ")
           .filter(
-            className =>
+            (className) =>
               className.startsWith("brz-tp__dc-block") ||
               className.startsWith("brz-mt") ||
               className.startsWith("dc-color") ||
@@ -118,9 +118,10 @@ export default function changeRichText($) {
   // replace Image
   $(".brz-rich-text")
     .find(".brz-text-mask, .brz-population-mask")
-    .each(function() {
+    .each(function () {
       const $this = $(this);
       const src = $this.attr("data-image_src");
+      const population = $this.attr("data-image_population");
       const extension = $this.attr("data-image_extension");
 
       const imgUrl = isSVG(extension) ? svgUrl(src) : imageUrl(src);
@@ -138,10 +139,16 @@ export default function changeRichText($) {
 
       $this.removeAttr("style");
 
-      $this.css({
-        ...newCSS,
-        "background-image": `url(${imgUrl})`
-      });
+      if (population) {
+        $this.css({
+          ...newCSS,
+          "background-image": `url(${imagePopulationUrl(population)})`
+        });
+      } else if (imgUrl)
+        $this.css({
+          ...newCSS,
+          "background-image": `url(${imgUrl})`
+        });
 
       $this.removeAttr("data-image_src");
       $this.removeAttr("data-image_population");
@@ -154,7 +161,7 @@ function getLinkContentByType(type, href) {
       href = href.replace("#", "");
       const pageDataNoRefs = pageDataNoRefsSelector(getStore().getState());
       const pageBlocks = pageDataNoRefs.items || [];
-      const blockByHref = pageBlocks.find(block => block.value._id === href);
+      const blockByHref = pageBlocks.find((block) => block.value._id === href);
       const anchorName = (blockByHref && blockByHref.value.anchorName) || href;
 
       return `#${anchorName}`;

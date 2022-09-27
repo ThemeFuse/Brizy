@@ -222,7 +222,7 @@
     "tempHoverBorderBottomRightRadius": null,
     "tempHoverBorderBottomLeftRadius": null,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

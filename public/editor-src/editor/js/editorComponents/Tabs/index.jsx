@@ -1,25 +1,27 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import { noop } from "underscore";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
 import ContextMenu from "visual/component/ContextMenu";
-import { getContainerW } from "visual/utils/meta";
-import contextMenuConfig from "./contextMenu";
-import Items from "./Items";
-import * as toolbarExtend from "./toolbarExtend";
-import * as sidebarExtend from "./sidebarExtend";
-import * as sidebarExtendParent from "./sidebarExtendParent";
-import * as toolbarExtendParent from "./toolbarExtendParent";
-import defaultValue from "./defaultValue.json";
+import CustomCSS from "visual/component/CustomCSS";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
-import { styleTabs, styleAnimation } from "./styles";
+import { getContainerW } from "visual/utils/meta";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import * as State from "visual/utils/stateMode";
 import { Wrapper } from "../tools/Wrapper";
-import classNames from "classnames";
+import contextMenuConfig from "./contextMenu";
+import defaultValue from "./defaultValue.json";
+import Items from "./Items";
+import * as sidebarExtend from "./sidebarExtend";
+import * as sidebarExtendParent from "./sidebarExtendParent";
+import { styleAnimation, styleTabs } from "./styles";
+import * as toolbarExtend from "./toolbarExtend";
+import * as toolbarExtendParent from "./toolbarExtendParent";
 
 export default class Tabs extends EditorComponent {
   static get componentId() {
@@ -77,8 +79,16 @@ export default class Tabs extends EditorComponent {
     this.props.extendParentToolbar(toolbarExtend);
   }
 
-  handleNav = activeTab => {
+  handleNav = (activeTab) => {
     this.patchValue({ activeTab });
+  };
+
+  dvv = (key) => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
   };
 
   getAnimationClassName = (v, vs, vd) => {
@@ -86,15 +96,14 @@ export default class Tabs extends EditorComponent {
       return undefined;
     }
 
-    const animationName = defaultValueValue({ v, key: "animationName" });
-    const animationDuration = defaultValueValue({
-      v,
-      key: "animationDuration"
-    });
-    const animationDelay = defaultValueValue({ v, key: "animationDelay" });
-    const slug = `${animationName}-${animationDuration}-${animationDelay}`;
+    const animationName = this.dvv("animationName");
+    const animationDuration = this.dvv("animationDuration");
+    const animationDelay = this.dvv("animationDelay");
+    const animationInfiniteAnimation = this.dvv("animationInfiniteAnimation");
 
-    return classNames(
+    const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
+
+    return classnames(
       css(
         `${this.getComponentId()}-animation-${slug}`,
         `${this.getId()}-animation-${slug}`,

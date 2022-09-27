@@ -75,9 +75,9 @@ export function getItemsForDesktop(v, component) {
                       label: t("Size"),
                       type: "radioGroup",
                       choices: [
-                        { value: "small", icon: "nc-32" },
-                        { value: "medium", icon: "nc-48" },
-                        { value: "large", icon: "nc-64" },
+                        { value: "small", icon: "nc-16" },
+                        { value: "medium", icon: "nc-24" },
+                        { value: "large", icon: "nc-32" },
                         { value: "custom", icon: "nc-more" }
                       ],
                       value: v.size,
@@ -616,9 +616,9 @@ export function getItemsForTablet(v, component) {
               label: t("Size"),
               type: "radioGroup",
               choices: [
-                { value: "small", icon: "nc-32" },
-                { value: "medium", icon: "nc-48" },
-                { value: "large", icon: "nc-64" },
+                { value: "small", icon: "nc-16" },
+                { value: "medium", icon: "nc-24" },
+                { value: "large", icon: "nc-32" },
                 { value: "custom", icon: "nc-more" }
               ],
               value: tabletSyncOnChange(v, "size"),
@@ -736,9 +736,9 @@ export function getItemsForMobile(v, component) {
               label: t("Size"),
               type: "radioGroup",
               choices: [
-                { value: "small", icon: "nc-32" },
-                { value: "medium", icon: "nc-48" },
-                { value: "large", icon: "nc-64" },
+                { value: "small", icon: "nc-16" },
+                { value: "medium", icon: "nc-24" },
+                { value: "large", icon: "nc-32" },
                 { value: "custom", icon: "nc-more" }
               ],
               value: mobileSyncOnChange(v, "size"),

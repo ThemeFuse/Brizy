@@ -14,8 +14,3 @@ export function styleElementAccordionFilterAfterSpacing({ v, device, state }) {
   const dvv = key => defaultValueValue({ v, key, device, state });
   return dvv("afterFilterSpacing");
 }
-
-export function styleElementAccordionNavAlign({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
-  return dvv("horizontalAlign");
-}

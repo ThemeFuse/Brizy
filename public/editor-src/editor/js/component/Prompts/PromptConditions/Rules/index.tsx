@@ -1,36 +1,39 @@
-import React, { useState, useEffect, ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { noop } from "underscore";
-import { pageSelector } from "visual/redux/selectors";
-import Config from "visual/global/Config";
 import EditorIcon from "visual/component/EditorIcon";
 import ScrollPane from "visual/component/ScrollPane";
-import { IS_CLOUD, IS_PRO } from "visual/utils/env";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
-import Buttons from "../Buttons";
-import ConditionChoices from "./ConditionChoices";
-import { getUniqRules } from "./utils";
-import { Rule, CollectionTypeRule } from "visual/types";
-import {
-  CUSTOMER_TYPE,
-  ECWID_PRODUCT_TYPE,
-  PAGES_GROUP_ID
-} from "visual/utils/blocks/blocksConditions";
-
-import useRuleList from "./useRuleList";
-import { t } from "visual/utils/i18n";
+import Config from "visual/global/Config";
 import {
   isCloud,
   isCMS,
   isCollectionPage,
   isCustomer,
+  isEcwidCategoryPage,
   isEcwidProductPage
 } from "visual/global/Config/types/configs/Cloud";
+import { pageSelector } from "visual/redux/selectors";
+import { AllRule, BlockTypeRule, CollectionTypeRule, Rule } from "visual/types";
+import {
+  CUSTOMER_TYPE,
+  ECWID_PRODUCT_CATEGORY_TYPE,
+  ECWID_PRODUCT_TYPE,
+  PAGES_GROUP_ID
+} from "visual/utils/blocks/blocksConditions";
+import { IS_CLOUD, IS_PRO } from "visual/utils/env";
+import { t } from "visual/utils/i18n";
+import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
+import Buttons from "../Buttons";
+import ConditionChoices from "./ConditionChoices";
+import useRuleList from "./useRuleList";
+import { getUniqRules } from "./utils";
 
 type AsyncGetValue = () => Rule[];
 
 interface Props {
   value: Rule[];
+  context: "popup" | "block";
   asyncGetValue?: AsyncGetValue;
   onClose: VoidFunction;
   onChange: (data: {
@@ -52,11 +55,17 @@ interface Props {
 }
 
 const Rules = (props: Props): ReactElement => {
-  const { value = [], asyncGetValue, onClose = noop, onChange = noop } = props;
+  const {
+    context,
+    value = [],
+    asyncGetValue,
+    onClose = noop,
+    onChange = noop
+  } = props;
   const [rules, setRules] = useState(value);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [listLoading, rulesList] = useRuleList(rules);
+  const [listLoading, rulesList] = useRuleList(rules, context);
   const page = useSelector(pageSelector);
 
   useEffect(() => {
@@ -66,10 +75,7 @@ const Rules = (props: Props): ReactElement => {
       if (IS_CLOUD && !rules) {
         rules = [
           {
-            type: 1,
-            appliedFor: null,
-            entityType: "",
-            entityValues: []
+            type: 1
           }
         ];
       } else if (!rules) {
@@ -85,31 +91,40 @@ const Rules = (props: Props): ReactElement => {
   function handleAdd(): void {
     if (IS_PRO) {
       const config = Config.getAll();
-      const newRule: CollectionTypeRule = {
-        type: 1,
-        appliedFor: PAGES_GROUP_ID,
-        entityType: "page",
-        entityValues: []
-      };
-
-      if (isCollectionPage(page)) {
-        newRule.entityType = page.collectionType.id;
-      }
-
-      if (isEcwidProductPage(page)) {
-        newRule.entityType = ECWID_PRODUCT_TYPE;
-      }
-
-      if (isCloud(config) && isCMS(config) && isCustomer(config)) {
-        newRule.entityType = CUSTOMER_TYPE;
-      }
 
       if (IS_GLOBAL_POPUP) {
-        newRule.appliedFor = null;
-        newRule.entityType = "";
-      }
+        const rule: AllRule = {
+          type: BlockTypeRule.include
+        };
+        setRules([...rules, rule]);
+      } else {
+        const newRule: CollectionTypeRule = {
+          type: BlockTypeRule.include,
+          appliedFor: PAGES_GROUP_ID,
+          entityType: "page" as NoEmptyString.NoEmptyString
+        };
 
-      setRules([...rules, newRule]);
+        if (
+          isCollectionPage(page) &&
+          NoEmptyString.is(page.collectionType.id)
+        ) {
+          newRule.entityType = page.collectionType.id;
+        }
+
+        if (isEcwidProductPage(page)) {
+          newRule.entityType =
+            ECWID_PRODUCT_TYPE as NoEmptyString.NoEmptyString;
+        }
+        if (isEcwidCategoryPage(page)) {
+          newRule.entityType =
+            ECWID_PRODUCT_CATEGORY_TYPE as NoEmptyString.NoEmptyString;
+        }
+        if (isCloud(config) && isCMS(config) && isCustomer(config)) {
+          newRule.entityType = CUSTOMER_TYPE as NoEmptyString.NoEmptyString;
+        }
+
+        setRules([...rules, newRule]);
+      }
     }
   }
 

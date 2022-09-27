@@ -1,15 +1,20 @@
 import {
-  styleBorderWidthUngrouped,
+  cssStyleDisplayNone,
+  cssStyleSizeFontSize
+} from "visual/utils/cssStyle";
+import {
+  styleAlignHorizontal,
+  styleBorderColor,
   styleBorderStyle,
-  styleBorderColor
+  styleBorderWidthUngrouped
 } from "visual/utils/style2";
 import { defaultValueValue } from "../onChange";
-import { CSSValue } from "../style2/types";
 import { Reader } from "../reader/types";
+import { CSSValue } from "../style2/types";
 
 type lineHorizontalAlign = "right" | "left" | "center";
 
-const readLineAlign: Reader<lineHorizontalAlign> = v => {
+const readLineAlign: Reader<lineHorizontalAlign> = (v) => {
   switch (v) {
     case "right":
       return v;
@@ -51,7 +56,9 @@ export function cssStyleElementLineSpacing({
 
   const spacing = dvv("spacing");
   const spacingSuffix = dvv("spacingSuffix");
-  const horizontalAlign = readLineAlign(dvv("horizontalAlign"));
+  const horizontalAlign = readLineAlign(
+    styleAlignHorizontal({ v, device, state })
+  );
 
   switch (horizontalAlign) {
     case "left":
@@ -69,13 +76,7 @@ export function cssStyleElementLineIconSize({
   device,
   state
 }: CSSValue): string {
-  const dvv = (key: string): unknown =>
-    defaultValueValue({ v, key, device, state });
-
-  const iconSize = dvv("iconSize");
-  const iconSizeSuffix = dvv("iconSizeSuffix");
-
-  return `font-size: ${iconSize}${iconSizeSuffix};`;
+  return cssStyleSizeFontSize({ v, device, state, prefix: "icon" });
 }
 
 export function cssStyleElementLineContentAlignBefore({
@@ -83,14 +84,13 @@ export function cssStyleElementLineContentAlignBefore({
   device,
   state
 }: CSSValue): string {
-  const dvv = (key: string): unknown =>
-    defaultValueValue({ v, key, device, state });
-
-  const horizontalAlign = readLineAlign(dvv("horizontalAlign"));
+  const horizontalAlign = readLineAlign(
+    styleAlignHorizontal({ v, device, state })
+  );
 
   switch (horizontalAlign) {
     case "left":
-      return "display: none;";
+      return cssStyleDisplayNone();
     case "center":
     case "right":
     case undefined:
@@ -102,14 +102,13 @@ export function cssStyleElementLineContentAlignAfter({
   device,
   state
 }: CSSValue): string {
-  const dvv = (key: string): unknown =>
-    defaultValueValue({ v, key, device, state });
-
-  const horizontalAlign = readLineAlign(dvv("horizontalAlign"));
+  const horizontalAlign = readLineAlign(
+    styleAlignHorizontal({ v, device, state })
+  );
 
   switch (horizontalAlign) {
     case "right":
-      return "display: none;";
+      return cssStyleDisplayNone();
     case "left":
     case "center":
     case undefined:

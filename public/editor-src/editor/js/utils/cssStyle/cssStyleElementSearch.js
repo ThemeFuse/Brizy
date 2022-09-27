@@ -1,7 +1,9 @@
 import {
+  cssStyleSizeMinHeightPx,
+  cssStyleSizeMinWidth
+} from "visual/utils/cssStyle";
+import {
   styleColor,
-  styleElementSearchMinWidth,
-  styleElementSearchMinHeight,
   styleTypography2FontSize,
   styleTypography2LineHeight
 } from "visual/utils/style2";
@@ -18,15 +20,11 @@ export function cssStyleElementSearchAutocompleteColor({
 }
 
 export function cssStyleElementSearchMinWidth({ v, device, state }) {
-  const width = styleElementSearchMinWidth({ v, device, state });
-
-  return width === undefined ? "" : `min-width: ${width}px;`;
+  return cssStyleSizeMinWidth({ v, device, state, prefix: "openButton" });
 }
 
 export function cssStyleElementSearchMinHeight({ v, device, state }) {
-  const height = styleElementSearchMinHeight({ v, device, state });
-
-  return height === undefined ? "" : `min-height: ${height}px;`;
+  return cssStyleSizeMinHeightPx({ v, device, state, prefix: "openButton" });
 }
 
 export function cssStyleElementSearchPropertyHoverTransition() {

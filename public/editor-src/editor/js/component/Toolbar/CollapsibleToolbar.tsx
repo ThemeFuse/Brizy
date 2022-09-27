@@ -24,6 +24,7 @@ interface CollapsibleToolbarProps extends Omit<ToolbarItemsProps, "items"> {
   animation?: "leftToRight" | "rightToLeft";
   global: boolean;
   membership: boolean;
+  language: boolean;
   onBeforeOpen?: () => void;
   onBeforeClose?: () => void;
   onOpen?: () => void;
@@ -44,7 +45,8 @@ class _CollapsibleToolbar
   static defaultProps = {
     animation: "leftToRight",
     global: false,
-    membership: false
+    membership: false,
+    language: false
   };
 
   state = {
@@ -150,9 +152,9 @@ class _CollapsibleToolbar
   }
 
   renderBadge(): React.ReactNode {
-    const { membership, global } = this.props;
+    const { membership, language, global } = this.props;
 
-    if (!membership && !global) {
+    if (!membership && !global && !language) {
       return null;
     }
 
@@ -161,6 +163,7 @@ class _CollapsibleToolbar
         <div className="brz-ed-collapsible__badge">
           {global && <EditorIcon icon="nc-global" />}
           {membership && <EditorIcon icon="nc-user" />}
+          {language && <EditorIcon icon="nc-multi-languages" />}
         </div>
       </CSSTransition>
     );

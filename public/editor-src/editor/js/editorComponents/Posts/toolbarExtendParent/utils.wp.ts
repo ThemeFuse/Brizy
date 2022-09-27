@@ -1,4 +1,7 @@
-import { Choice } from "visual/component/Options/types/dev/MultiSelect2/types";
+import {
+  Choice,
+  Value
+} from "visual/component/Options/types/dev/MultiSelect2/types";
 import {
   getAuthors,
   getPosts,
@@ -7,15 +10,16 @@ import {
 } from "visual/utils/api/index.wp";
 
 function split(s: string, sep: string): string[] {
-  return s.split(sep).map(s => s.trim());
+  return s.split(sep).map((s) => s.trim());
 }
 
 export async function authorsLoad(
-  value: string[],
+  value: Value,
   abortSignal?: AbortSignal
 ): Promise<Choice[]> {
   try {
-    const authors = await getAuthors({ include: value, abortSignal });
+    const include = value.map((v) => `${v}`);
+    const authors = await getAuthors({ include, abortSignal });
 
     return authors.map(({ ID, display_name }) => ({
       title: display_name,
@@ -51,11 +55,11 @@ export async function authorsSearch(
 }
 
 export async function termsLoad(
-  value: string[],
+  value: Value,
   abortSignal?: AbortSignal
 ): Promise<Choice[]> {
   const valueParsed = value.map(
-    t => split(t, ":") as [string, string] /* {taxonomy}:{term_id} */
+    (t) => split(`${t}`, ":") as [string, string] /* {taxonomy}:{term_id} */
   );
 
   try {
@@ -94,55 +98,54 @@ export async function termsSearch(
   }
 }
 
-export const manualLoad = (
-  postType: string[],
-  excludePostType: string[]
-) => async (value: string[], abortSignal?: AbortSignal): Promise<Choice[]> => {
-  try {
-    const posts = await getPosts({
-      include: value,
-      abortSignal,
-      postType,
-      excludePostType
-    });
+export const manualLoad =
+  (postType: string[], excludePostType: string[]) =>
+  async (value: Value, abortSignal?: AbortSignal): Promise<Choice[]> => {
+    try {
+      const include = value.map((v) => `${v}`);
+      const posts = await getPosts({
+        include,
+        abortSignal,
+        postType,
+        excludePostType
+      });
 
-    return posts.map(({ ID, title }) => ({
-      title,
-      value: String(ID)
-    }));
-  } catch (e) {
-    if (process.env.NODE_ENV === "development") {
-      console.log(e);
+      return posts.map(({ ID, title }) => ({
+        title,
+        value: String(ID)
+      }));
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.log(e);
+      }
+
+      return [];
     }
+  };
 
-    return [];
-  }
-};
+export const manualSearch =
+  (postType: string[], excludePostType: string[]) =>
+  async (search: string, abortSignal?: AbortSignal): Promise<Choice[]> => {
+    try {
+      const posts = await getPosts({
+        search,
+        abortSignal,
+        postType,
+        excludePostType
+      });
 
-export const manualSearch = (
-  postType: string[],
-  excludePostType: string[]
-) => async (search: string, abortSignal?: AbortSignal): Promise<Choice[]> => {
-  try {
-    const posts = await getPosts({
-      search,
-      abortSignal,
-      postType,
-      excludePostType
-    });
+      return posts.map(({ ID, title }) => ({
+        title,
+        value: String(ID)
+      }));
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.log(e);
+      }
 
-    return posts.map(({ ID, title }) => ({
-      title,
-      value: String(ID)
-    }));
-  } catch (e) {
-    if (process.env.NODE_ENV === "development") {
-      console.log(e);
+      return [];
     }
-
-    return [];
-  }
-};
+  };
 
 export const postsManualLoad = manualLoad([], ["product"]);
 
@@ -152,28 +155,28 @@ export const productsManualLoad = manualLoad(["product"], []);
 
 export const productsManualSearch = manualSearch(["product"], []);
 
-export const tagsFilterLoad = (value: string) => async (
-  abortSignal?: AbortSignal
-): Promise<Choice[]> => {
-  try {
-    const taxonomies = await getPostTaxonomies({
-      taxonomy: value,
-      abortSignal
-    });
-    // select only tags
-    const tags = taxonomies.filter(
-      taxonomy => taxonomy.public && taxonomy.name !== "post_format"
-    );
+export const tagsFilterLoad =
+  (value: string) =>
+  async (abortSignal?: AbortSignal): Promise<Choice[]> => {
+    try {
+      const taxonomies = await getPostTaxonomies({
+        taxonomy: value,
+        abortSignal
+      });
+      // select only tags
+      const tags = taxonomies.filter(
+        (taxonomy) => taxonomy.public && taxonomy.name !== "post_format"
+      );
 
-    return tags.map(({ name, labels }) => ({
-      title: `${labels.name}`,
-      value: name
-    }));
-  } catch (e) {
-    if (process.env.NODE_ENV === "development") {
-      console.log(e);
+      return tags.map(({ name, labels }) => ({
+        title: `${labels.name}`,
+        value: name
+      }));
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.log(e);
+      }
+
+      return [];
     }
-
-    return [];
-  }
-};
+  };

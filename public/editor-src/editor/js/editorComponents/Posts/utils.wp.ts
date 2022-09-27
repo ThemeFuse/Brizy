@@ -1,7 +1,7 @@
 import { difference as diff } from "underscore";
-import { isT } from "visual/utils/value";
 import * as Union from "visual/utils/reader/union";
 import * as Str from "visual/utils/string";
+import { isT } from "visual/utils/value";
 import {
   V,
   WPArchiveQuery,
@@ -11,11 +11,11 @@ import {
   WPTagsQuery,
   WPTaxQuery
 } from "./types";
-import { decodeV, CURRENT_CONTEXT_TYPE } from "./utils.common";
+import { CURRENT_CONTEXT_TYPE, decodeV } from "./utils.common";
 
 function parseTerms(terms: string[]): [string, string][] {
   return terms
-    .map(termTaxonomy => {
+    .map((termTaxonomy) => {
       const [taxonomy, term] = termTaxonomy.split(":");
 
       return taxonomy !== undefined &&
@@ -33,16 +33,8 @@ function normalizeOrderBy(orderBy: string): string {
 }
 
 function postsQuery(v: V): WPPostsQuery {
-  const {
-    gridRow,
-    gridColumn,
-    type,
-    source,
-    offset,
-    orderBy,
-    order,
-    symbols
-  } = decodeV(v);
+  const { gridRow, gridColumn, type, source, offset, orderBy, order, symbols } =
+    decodeV(v);
 
   const query: WPQueryArgs = {
     post_status: "publish",
@@ -205,8 +197,4 @@ export function getLoopTagsAttributes(v: V): WPTagsQuery | undefined {
     liClassName: `brz-posts__filter__item--${filterStyle}`,
     ...postLoopAttribute
   };
-}
-
-export function getCollectionTypesInfo(): Promise<void> {
-  return Promise.reject();
 }

@@ -31,11 +31,7 @@ export function styleSection(v, vs, vd) {
 export function styleAnimation(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: [
-        "cssStyleAnimation",
-        "cssStyleAnimationDuration",
-        "cssStyleAnimationDelay"
-      ]
+      standart: ["cssStyleAnimationAll"]
     }
   };
 

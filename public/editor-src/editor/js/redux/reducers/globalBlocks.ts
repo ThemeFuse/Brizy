@@ -1,23 +1,22 @@
-import _ from "underscore";
 import produce, { setAutoFreeze } from "immer";
 import { insert, removeAt } from "timm";
-
+import _ from "underscore";
 import {
-  getBlockAlignment,
+  blocksOrderRawSelector,
+  blocksOrderSelector,
+  changedGBIdsSelector,
+  globalBlocksAssembledSelector,
+  globalBlocksInPageSelector,
+  globalBlocksPositionsSelector
+} from "visual/redux/selectors";
+import {
   changeRule,
   getAllowedGBIds,
+  getBlockAlignment,
   isPopup
 } from "visual/utils/blocks";
-import {
-  globalBlocksAssembledSelector,
-  globalBlocksPositionsSelector,
-  globalBlocksInPageSelector,
-  blocksOrderSelector,
-  blocksOrderRawSelector
-} from "visual/redux/selectors";
-
-import { ReduxState } from "../types";
 import { ReduxAction } from "../actions2";
+import { ReduxState } from "../types";
 
 type GlobalBlocks = ReduxState["globalBlocks"];
 type RGlobalBlocks = (
@@ -41,12 +40,12 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       // it needs only for legacy models, when _id & globalBlock differed
       // only legacyBlocks have globalBlockId
       const legacyGlobalBlockIds = items
-        .filter(block => block?.value?.globalBlockId)
-        .map(block => block?.value?.globalBlockId);
+        .filter((block) => block?.value?.globalBlockId)
+        .map((block) => block?.value?.globalBlockId);
 
       return Object.entries(globalBlocks).reduce((acc, [id, block]) => {
         if (legacyGlobalBlockIds.includes(id) && !isPopup(block.data)) {
-          acc[id] = produce(block, draft => {
+          acc[id] = produce(block, (draft) => {
             draft.rules = changeRule(block, true, action.payload.page).rules;
             draft.data.value._id = id;
           });
@@ -75,7 +74,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     case "MAKE_NORMAL_TO_GLOBAL_BLOCK": {
       const { data, status, meta, rules, position } = action.payload;
 
-      return produce(state, draft => {
+      return produce(state, (draft) => {
         draft[data.value._id] = {
           meta,
           data,
@@ -190,8 +189,8 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       const pageBlocksIdsRaw: string[] = blocksOrderRawSelector(allState);
       const gbIds = _.difference(pageBlocksIds, pageBlocksIdsRaw);
 
-      return produce(state, draft => {
-        gbIds.forEach(id => {
+      return produce(state, (draft) => {
+        gbIds.forEach((id) => {
           if (!isPopup(draft[id].data)) {
             draft[id] = changeRule(draft[id], false, allState?.page);
           }
@@ -201,11 +200,11 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     case "UPDATE_BLOCKS": {
       const { blocks } = action.payload;
       const prevIds = blocksOrderSelector(allState);
-      const nextIds = blocks.map(block => block.value._id);
+      const nextIds = blocks.map((block) => block.value._id);
 
       const gbIds = _.difference(prevIds, nextIds);
-      return produce(state, draft => {
-        gbIds.forEach(id => {
+      return produce(state, (draft) => {
+        gbIds.forEach((id) => {
           if (draft[id] && !isPopup(draft[id].data)) {
             draft[id] = changeRule(draft[id], false, allState?.page);
           }
@@ -216,14 +215,14 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     case "UPDATE_GB_RULES": {
       const { id, rules } = action.payload;
 
-      return produce(state, draft => {
+      return produce(state, (draft) => {
         draft[id].rules = rules;
       });
     }
     case "DELETE_GLOBAL_BLOCK": {
       const { id } = action.payload;
 
-      return produce(state, draft => {
+      return produce(state, (draft) => {
         draft[id].data.deleted = true;
       });
     }
@@ -235,16 +234,25 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
 
       const globalBlocksInPage = globalBlocksInPageSelector(allState);
 
+      const changedGlobalBlocksIds = changedGBIdsSelector(allState);
+      const changedGBData = changedGlobalBlocksIds.reduce(
+        (acc: GlobalBlocks, gbId: string) => {
+          return { ...acc, [gbId]: allGlobalBlocks[gbId] };
+        },
+        {}
+      );
+
       const positions = globalBlocksPositionsSelector(allState);
 
       return Object.entries(allGlobalBlocks).reduce((acc, [key, block]) => {
-        acc[key] = produce(block, draft => {
+        acc[key] = produce(block, (draft) => {
           draft.position = positions[key] || null;
 
           const isPopup =
             block.data.type === "SectionPopup" ||
             block.data.type === "SectionPopup2";
-          if (globalBlocksInPage[key] || isPopup) {
+
+          if (globalBlocksInPage[key] || changedGBData[key] || isPopup) {
             draft.status = "publish";
           }
         });

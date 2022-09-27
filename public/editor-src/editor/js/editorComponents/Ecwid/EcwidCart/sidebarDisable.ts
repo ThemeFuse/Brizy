@@ -1,12 +1,7 @@
-import { ToolbarItemType } from "../../ToolbarItemType";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 
 export function getItems(): ToolbarItemType[] {
   return [
-    {
-      id: "sidebarTabs",
-      type: "sidebarTabs-dev",
-      disabled: true,
-      tabs: []
-    }
+    { id: "sidebarTabs", type: "sidebarTabs-dev", disabled: true, tabs: [] }
   ];
 }

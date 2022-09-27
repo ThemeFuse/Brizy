@@ -1,12 +1,13 @@
+import classNames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classNames from "classnames";
 import { ConditionsComponent } from "visual/component/ConditionsComponent";
-import { t } from "visual/utils/i18n";
-import { getStore } from "visual/redux/store";
 import { globalBlocksSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { t } from "visual/utils/i18n";
 
 interface Props {
+  context: "block" | "popup";
   value: string;
   className?: string;
   attr?: React.HTMLAttributes<HTMLDivElement>;
@@ -15,6 +16,7 @@ interface Props {
 const GbConditionsOptionType: React.FC<Props> = ({
   className: _className = "",
   value,
+  context,
   attr: _attr = {}
 }) => {
   const className = classNames(
@@ -29,7 +31,7 @@ const GbConditionsOptionType: React.FC<Props> = ({
   const { rules } = globalBlocks[value];
 
   return (
-    <ConditionsComponent value={value}>
+    <ConditionsComponent context={context} value={value}>
       <div className={className} {...attr}>
         <span className="brz-ed-option__popup_conditions-count">
           {rules.length}

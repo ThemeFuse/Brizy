@@ -10,9 +10,10 @@
     "tableAside": "on",
 
     "width": 100,
-    "widthSuffix": null,
+    "widthSuffix": "%",
+
     "asideWidth": 288,
-    "asideWidthSuffix": null,
+    "asideWidthSuffix": "px",
 
     "className": "",
     "customCSS": "",
@@ -71,7 +72,7 @@
     "tempBorderBottomWidth": 1,
     "tempBorderLeftWidth": 1,
 
-    "boxShadow": "",
+    "boxShadow": "none",
 
     "tempBoxShadow": "on",
 

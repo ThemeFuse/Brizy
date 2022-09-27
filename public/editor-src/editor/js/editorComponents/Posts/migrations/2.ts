@@ -1,12 +1,12 @@
 import _ from "underscore";
-import { objectFromEntries } from "visual/utils/object";
-import { Dictionary } from "visual/types/utils";
-import { Migration } from "visual/utils/migration";
-import * as Str from "visual/utils/reader/string";
-import * as Obj from "visual/utils/reader/object";
-import * as Arr from "visual/utils/reader/array";
-import * as Union from "visual/utils/reader/union";
 import { ElementModel } from "visual/component/Elements/Types";
+import { Dictionary } from "visual/types/utils";
+import { Deps, Migration } from "visual/utils/migration";
+import { objectFromEntries } from "visual/utils/object";
+import * as Arr from "visual/utils/reader/array";
+import * as Obj from "visual/utils/reader/object";
+import * as Str from "visual/utils/reader/string";
+import * as Union from "visual/utils/reader/union";
 
 type V2 = {
   type: "posts" | "archives" | "products" | "archives-product" | "upsell";
@@ -104,7 +104,7 @@ function removeUndefinedKeys(v: ElementModel): Record<string, unknown> {
   return objectFromEntries(filtered);
 }
 
-export const m2: Migration = {
+export const m2: Migration<Deps<unknown>> = {
   version: 2,
   cb(v) {
     if (!Obj.isObject(v)) {

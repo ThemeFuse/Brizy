@@ -1,13 +1,14 @@
+import { cssStyleColor } from "visual/utils/cssStyle";
 import {
+  styleColor,
+  styleElementWOOProductMetaRightSpacing,
+  styleElementWOOProductMetaTopSpacing,
   styleElementWOOProductMetaType,
   styleTypography2FontFamily,
   styleTypography2FontSize,
-  styleTypography2LineHeight,
   styleTypography2FontWeight,
   styleTypography2LetterSpacing,
-  styleElementWOOProductMetaTopSpacing,
-  styleElementWOOProductMetaRightSpacing,
-  styleColor
+  styleTypography2LineHeight
 } from "visual/utils/style2";
 
 export function cssStyleElementWOOProductMetaType({ v, device, state }) {
@@ -203,31 +204,23 @@ export function cssStyleElementWOOProductMetaRightSpacingInline({
 export function cssStyleElementWOOProductMetaCategoryColor({
   v,
   device,
-  prefix = "categoryColor",
   state
 }) {
-  const color = styleColor({
+  return cssStyleColor({
     v,
     device,
-    prefix,
-    state
+    state,
+    prefix: "categoryColor"
   });
-  return color === undefined ? "" : `color:${color};`;
 }
 
-export function cssStyleElementWOOProductMetaValueColor({
-  v,
-  device,
-  prefix = "valueColor",
-  state
-}) {
-  const color = styleColor({
+export function cssStyleElementWOOProductMetaValueColor({ v, device, state }) {
+  return cssStyleColor({
     v,
     device,
-    prefix,
+    prefix: "valueColor",
     state
   });
-  return color === undefined ? "" : `color:${color};`;
 }
 
 export function cssStyleElementWOOProductMetaDividers({ v, device, state }) {
