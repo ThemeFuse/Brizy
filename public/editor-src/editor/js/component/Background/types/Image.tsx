@@ -1,11 +1,10 @@
-import React, { ReactElement, RefObject, useRef } from "react";
 import classnames from "classnames";
 import jQuery from "jquery";
+import React, { ReactElement, RefObject, useRef } from "react";
 import { getStore } from "visual/redux/store";
 import { IS_WP } from "visual/utils/env";
-import { useLayoutEffect } from "../utils";
-
 import "../lib/jquery.parallax.js";
+import { useLayoutEffect } from "../utils";
 
 const destroyParallax = (node: HTMLElement): void => {
   if (node.parentElement) {
@@ -42,7 +41,8 @@ const Image: React.FC<Props> = ({ showParallax, children }) => {
   showParallax = showParallax && currentDeviceMode === "desktop";
 
   const className = classnames("brz-bg-image", {
-    "brz-bg-image-parallax": showParallax
+    "brz-bg-image-parallax": showParallax,
+    "brz-bg-image-parallax--init": showParallax && IS_EDITOR
   });
 
   const imageRef = useRef<HTMLElement>(null);

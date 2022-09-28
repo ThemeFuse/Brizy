@@ -2,6 +2,13 @@ import { Dictionary } from "visual/types/utils";
 
 //#region common
 
+export type PostsTypes =
+  | "posts"
+  | "archives"
+  | "products"
+  | "archives-product"
+  | "upsell";
+
 export type Attributes = { [k: string]: AttributeValue };
 
 export type AttributeValue =

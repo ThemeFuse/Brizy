@@ -2,6 +2,9 @@ import $ from "jquery";
 import { uuid } from "visual/utils/uuid";
 import "./popupsPlugin";
 
+// do not close popup is element with some of this className was clicked
+const clickInsideExceptions = ["brz-map__cover"];
+
 $.fn.popup = function () {
   const $this = $(this);
 
@@ -117,26 +120,36 @@ export default function ($node) {
       const $this = $(this);
 
       $this.on("click", function (e) {
-        const clickedOutSideToClose = $this.attr("data-click_outside_to_close");
-        const clickedOutSideContent =
-          $(e.target).closest(".brz-container").length === 0;
-        const clickedTheCross = $(e.target).closest(
-          ".brz-popup2__close"
-        ).length;
-        const clickedTheCrossAction = $(e.target).closest(
-          ".brz-popup2__action-close"
-        ).length;
+        const canClosePopup = !clickInsideExceptions.some((className) =>
+          e.target.classList.contains(className)
+        );
 
-        const clickedFormEvent =
-          $(e.target).closest(".select2-selection__choice").length > 0;
+        if (canClosePopup) {
+          const clickedOutSideToClose = $this.attr(
+            "data-click_outside_to_close"
+          );
+          const clickedOutSideContent =
+            $(e.target).closest(".brz-container").length === 0;
+          const clickedTheCross = $(e.target).closest(
+            ".brz-popup2__close"
+          ).length;
+          const clickedTheCrossAction = $(e.target).closest(
+            ".brz-popup2__action-close"
+          ).length;
 
-        if (
-          clickedTheCrossAction ||
-          clickedTheCross ||
-          (!clickedFormEvent && clickedOutSideContent && clickedOutSideToClose)
-        ) {
-          e.preventDefault();
-          $this.popup().close();
+          const clickedFormEvent =
+            $(e.target).closest(".select2-selection__choice").length > 0;
+
+          if (
+            clickedTheCrossAction ||
+            clickedTheCross ||
+            (!clickedFormEvent &&
+              clickedOutSideContent &&
+              clickedOutSideToClose)
+          ) {
+            e.preventDefault();
+            $this.popup().close();
+          }
         }
       });
 

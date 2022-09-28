@@ -1,3 +1,4 @@
+@use "sass:math";
 // Range UI Slider
 // UI Slider
 $slider-horizontal-width: 100%;
@@ -47,28 +48,28 @@ $slider-handle-icon: 7px; // 7
     max-width: 100%;
     padding: 0;
     top: 0;
-    left: $slider-handle-size / 2;
+    left: math.div($slider-handle-size, 2);
 
     &:before,
     &:after {
       content: "";
       position: absolute;
       top: 0;
-      width: $slider-handle-size / 2 + $slider-horizontal-height;
+      width: math.div($slider-handle-size, 2) + $slider-horizontal-height;
       height: $slider-horizontal-height;
       border-radius: $slider-horizontal-height;
       background-color: $brand-primary;
     }
     &:before {
-      left: -$slider-handle-size / 2;
+      left: math.div(-$slider-handle-size, 2);
     }
     &:after {
-      right: -$slider-handle-size / 2;
+      right: math.div(-$slider-handle-size, 2);
     }
     .ui-slider-handle {
       top: 50%;
       transform: translateY(-50%);
-      margin-left: -($slider-handle-size / 2);
+      margin-left: -(math.div($slider-handle-size, 2));
 
       &:after,
       &:before {
@@ -76,7 +77,7 @@ $slider-handle-icon: 7px; // 7
         transform: translateX(-50%);
       }
       &:after {
-        top: (($slider-handle-size - $slider-handle-icon + 1) / 2);
+        top: math.div(($slider-handle-size - $slider-handle-icon + 1), 2);
       }
     }
   }
@@ -90,7 +91,7 @@ $slider-handle-icon: 7px; // 7
     height: $slider-handle-size;
     left: 50%;
     transform: translateX(-50%);
-    margin-bottom: -($slider-handle-size / 2);
+    margin-bottom: -(math.div($slider-handle-size, 2));
     cursor: pointer;
     background: #fff;
     border-radius: 50% !important;
@@ -170,7 +171,7 @@ $slider-handle-icon: 7px; // 7
   height: 14px;
   padding: 5px 0;
   width: calc(100% - 18px);
-  margin-left: $slider-handle-size / 2;
+  margin-left: math.div($slider-handle-size, 2);
   border-radius: $slider-horizontal-height;
   touch-action: none;
   box-sizing: border-box;
@@ -200,8 +201,8 @@ $slider-handle-icon: 7px; // 7
   height: $slider-handle-size;
   top: 50%;
   left: 50%;
-  margin-top: -($slider-handle-size / 2);
-  margin-left: -($slider-handle-size / 2);
+  margin-top: -(math.div($slider-handle-size, 2));
+  margin-left: -(math.div($slider-handle-size, 2));
   cursor: pointer;
   background: #fff;
   border-radius: 50%;
@@ -218,12 +219,12 @@ $slider-handle-icon: 7px; // 7
     transform: translateX(-50%);
   }
   &:before {
-    top: (($slider-handle-size - $slider-handle-icon + 1) / 2);
+    top: math.div(($slider-handle-size - $slider-handle-icon + 1), 2);
   }
   &:after {
     height: 4px;
     border-bottom: 1px solid $brand-primary;
-    top: $slider-handle-size / 2;
+    top: math.div($slider-handle-size, 2);
   }
 }
 .rc-slider-handle:hover {

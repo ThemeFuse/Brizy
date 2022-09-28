@@ -1,6 +1,6 @@
 import Config from "visual/global/Config";
-import { objectToQueryString } from "visual/utils/url";
 import { GoogleFont, UploadedFont } from "visual/types";
+import { objectToQueryString } from "visual/utils/url";
 
 export const makeSubsetGoogleFontsUrl = (fonts: GoogleFont[]): string => {
   const family = fonts.reduce((acc, curr) => {
@@ -10,7 +10,8 @@ export const makeSubsetGoogleFontsUrl = (fonts: GoogleFont[]): string => {
     return acc === "" ? `${family}:${weights}` : `${acc}|${family}:${weights}`;
   }, "");
 
-  return `https://fonts.googleapis.com/css?family=${family}&subset=arabic,bengali,cyrillic,cyrillic-ext,devanagari,greek,greek-ext,gujarati,hebrew,khmer,korean,latin-ext,tamil,telugu,thai,vietnamese&display=swap`;
+  // was https://fonts.googleapis.com/css
+  return `https://fonts.bunny.net/css?family=${family}&subset=arabic,bengali,cyrillic,cyrillic-ext,devanagari,greek,greek-ext,gujarati,hebrew,khmer,korean,latin-ext,tamil,telugu,thai,vietnamese&display=swap`;
 };
 
 // {site}/fonts/css?uid=fontId:400|fontId:400,700

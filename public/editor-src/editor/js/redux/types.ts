@@ -1,32 +1,17 @@
 import {
-  Page,
-  GlobalBlock,
-  GoogleFont,
-  UploadedFont,
   Authorized,
-  DeviceMode,
   Block,
-  SyncAllowed,
-  Style,
+  DeviceMode,
   ExtraFontStyle,
+  Fonts,
+  GlobalBlock,
+  Page,
+  Project,
+  Style,
+  SyncAllowed,
   UserRole
 } from "visual/types";
 import { HistoryEnhancerState } from "./history/types";
-
-export interface Fonts {
-  config?: {
-    data: GoogleFont[];
-  };
-  blocks?: {
-    data: GoogleFont[];
-  };
-  google?: {
-    data: GoogleFont[];
-  };
-  upload?: {
-    data: UploadedFont[];
-  };
-}
 
 export enum StoreChanged {
   pending = "pending",
@@ -37,19 +22,7 @@ export enum StoreChanged {
 // WARNING: this is a work in progress.
 // Types should be added as we go on
 export type ReduxState = {
-  project: {
-    id: string;
-    dataVersion: number;
-    data: {
-      selectedKit: string;
-      selectedStyle: string;
-      styles: ReduxState["styles"];
-      extraFontStyles: ReduxState["extraFontStyles"];
-      font: string;
-      fonts: ReduxState["fonts"];
-      disabledElements: string[];
-    };
-  };
+  project: Project;
   page: Page;
   globalBlocks: {
     [key: string]: GlobalBlock;

@@ -1,3 +1,5 @@
+@use "sass:math";
+
 // Spacing
 $space-between-controls: 15px;
 
@@ -170,7 +172,7 @@ $scroll-text-color: #fff;
 // Scroll pane in popup
 $scroll-popup-bg-color: #d4d5d7;
 $scroll-popup-width: 5px;
-$scroll-popup-border-radius: $scroll-popup-width / 2;
+$scroll-popup-border-radius: math.div($scroll-popup-width, 2);
 
 // Spinner Loading Content
 //
@@ -218,7 +220,7 @@ $resize-blue: $by-block-border-blue;
 $resize-red: $by-block-border-red;
 $resize-shortcode-width: 11px;
 $resize-shortcode-height: $resize-shortcode-width;
-$resize-point-position: ceil(-$resize-shortcode-width / 2);
+$resize-point-position: ceil(math.div(-$resize-shortcode-width, 2));
 
 // Blocks
 //

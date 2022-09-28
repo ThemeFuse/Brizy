@@ -1,6 +1,6 @@
-import { makeStyles } from "./makeStyles";
-import { makeScripts } from "./makeScripts";
 import { GoogleFont, UploadedFont } from "../../../../types";
+import { makeScripts } from "./makeScripts";
+import { makeStyles } from "./makeStyles";
 
 export interface Fonts {
   google: GoogleFont[];
@@ -94,7 +94,7 @@ export interface ScriptsPro {
 }
 
 type GetAssets = (
-  $: cheerio.CheerioAPI,
+  $: cheerio.Root,
   f: Fonts
 ) => {
   freeStyles: StylesFree;

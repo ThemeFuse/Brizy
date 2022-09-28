@@ -44,6 +44,7 @@ import { getLoopAttributes, getLoopTagsAttributes } from "./utils";
 import {
   decodeSymbols,
   encodeSymbols,
+  getLoopName,
   stringifyAttributes
 } from "./utils.common";
 
@@ -82,10 +83,12 @@ export class Posts extends EditorComponent {
         switchMap((data) => {
           const { loop, loopTags } = JSON.parse(data);
           const loops = [];
+          const v = this.getValue();
+          const loopName = getLoopName(v.type);
 
           if (loop) {
             loops.push(
-              `{{brizy_dc_post_loop ${loop}}}`,
+              `{{${loopName} ${loop}}}`,
               `{{brizy_dc_post_loop_pagination ${loop}}}`
             );
           }

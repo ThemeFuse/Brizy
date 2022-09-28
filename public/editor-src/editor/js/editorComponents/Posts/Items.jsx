@@ -9,7 +9,7 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { EditorComponentContext } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { IS_WP } from "visual/utils/env";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
-import { stringifyAttributes } from "./utils.common";
+import { getLoopName, stringifyAttributes } from "./utils.common";
 
 export default class Items extends EditorArrayComponent {
   static get componentId() {
@@ -227,8 +227,7 @@ export default class Items extends EditorArrayComponent {
     const { type, className, style, showPagination, showFilter } = this.props;
     const item = v.map(this.renderItem);
 
-    const postLoopName =
-      type === "upsell" ? "editor_product_upsells" : "brizy_dc_post_loop";
+    const postLoopName = getLoopName(type);
     const loopAttributes = this.getLoopAttributesString();
 
     return (

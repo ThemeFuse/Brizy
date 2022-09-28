@@ -15,10 +15,7 @@ export type FooterRoutes =
   | "/my-account/favorites"
   | "/shop/cart";
 
-export type ContentRoutes =
-  | "/shop/cart"
-  | "/shop/checkout"
-  | "/my-account/thank-you";
+export type ContentRoutes = "/shop/cart" | "/my-account/thank-you";
 
 export interface EcwidConfig {
   // Products
@@ -80,6 +77,8 @@ export interface EcwidConfig {
       [k in ContentRoutes]: string;
     };
   };
+
+  restoreUrl?: boolean;
 
   // Cart & Checkout
   shopping_cart_show_qty_inputs?: boolean;

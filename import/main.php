@@ -15,6 +15,8 @@ class Brizy_Import_Main {
 			add_action( 'wp_ajax_brizy-import-demo',  [ $this, 'ajaxImportDemo' ] );
 			add_action( 'admin_enqueue_scripts',      [ $this, 'adminEnqueueScripts' ] );
 		}
+
+		add_filter( 'http_request_args', [ $this, 'doNotRejectUnsafeUrl' ], 999 );
 	}
 
 	public function addSubmenuPageTemplates() {
@@ -119,5 +121,10 @@ class Brizy_Import_Main {
 			$urlBuilder->plugin_url( 'vendor/select2/select2/dist/js/select2.full.min.js' ),
 			[ 'jquery' ]
 		);
+	}
+
+	public function doNotRejectUnsafeUrl( $args ) {
+		$args['reject_unsafe_urls'] = false;
+		return $args;
 	}
 }

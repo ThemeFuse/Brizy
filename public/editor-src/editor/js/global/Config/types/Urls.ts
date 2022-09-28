@@ -12,6 +12,7 @@ interface UrlsCommon {
   templateFonts: string;
   upgradeToPro: string;
   editorIcons: string;
+  worker: string;
 }
 
 interface WPUrls extends UrlsCommon {

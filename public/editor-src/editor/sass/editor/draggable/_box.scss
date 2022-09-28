@@ -1,3 +1,4 @@
+@use "sass:math";
 .brz-ed-box__resizer {
   position: relative;
   width: 100%;
@@ -7,7 +8,7 @@
     position: absolute;
     width: $resize-shortcode-width;
     height: $resize-shortcode-height;
-    border-radius: round($resize-shortcode-width / 2);
+    border-radius: round(math.div($resize-shortcode-width, 2));
     border: 2px solid #fff;
     opacity: 1;
     visibility: visible;

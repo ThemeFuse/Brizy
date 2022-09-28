@@ -5,6 +5,7 @@ module.exports = {
   transform: {
     "\\.(tsx|ts|js|jsx)?$": "ts-jest"
   },
+  transformIgnorePatterns: ["/node_modules/(?!(nanoid)/)"],
   globals: {
     TARGET: "Jest",
     IS_EDITOR: true,

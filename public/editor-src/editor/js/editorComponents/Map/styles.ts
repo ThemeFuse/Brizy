@@ -39,14 +39,6 @@ export function style(v: Value, vs: Value, vd: Value): string[] {
         "cssStyleHoverTransition",
         "cssStyleElementMapPropertyHoverTransition"
       ]
-    },
-    ".brz && .brz-map__cover": {
-      standart: [
-        "cssStyleFilter",
-        "cssStyleElementMapCoverSrc",
-        "cssStyleElementMapCoverPosition",
-        "cssStyleElementMapBgSize"
-      ]
     }
   };
 

@@ -1,6 +1,22 @@
-import Config from "visual/global/Config";
 import LibsConfig from "visual/bootstraps/libs.json";
+import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
+import { IS_WP } from "visual/utils/env";
+import { makePrefetchFonts } from "visual/utils/fonts";
+import { toHashCode } from "visual/utils/string";
+import { getCustomCSS } from "./getCustomCSS";
+import { getDCColor } from "./getDCColor";
+import { getFontLinks } from "./getProjectFonts";
+import { getProjectStyles, getTypographyStyles } from "./getProjectStyles";
+import {
+  Asset,
+  AssetGoogle,
+  AssetLibsMap,
+  AssetUpload,
+  Fonts,
+  StylesFree,
+  StylesPro
+} from "./index";
 import {
   CUSTOM_CODE,
   DEPENDENCY_SCORE,
@@ -8,22 +24,6 @@ import {
   MAIN_SCORE,
   OTHERS_SCORE
 } from "./scores";
-import { makePrefetchFonts } from "visual/utils/fonts";
-import { getFontLinks } from "./getProjectFonts";
-import { getProjectStyles, getTypographyStyles } from "./getProjectStyles";
-import { getCustomCSS } from "./getCustomCSS";
-import { getDCColor } from "./getDCColor";
-import {
-  Asset,
-  AssetUpload,
-  AssetGoogle,
-  AssetLibsMap,
-  Fonts,
-  StylesFree,
-  StylesPro
-} from "./index";
-import { toHashCode } from "visual/utils/string";
-import { IS_WP } from "visual/utils/env";
 
 type MakeStyles = {
   free: StylesFree;
@@ -101,7 +101,7 @@ const normalizeCustomCSS = (styles: string): string =>
     return "";
   });
 
-const makePageStyles = ($doc: cheerio.CheerioAPI): Asset[] => {
+const makePageStyles = ($doc: cheerio.Root): Asset[] => {
   const prefetchLinks: Asset = {
     name: "projectPrefetchFonts",
     score: DEPENDENCY_SCORE,
@@ -111,7 +111,6 @@ const makePageStyles = ($doc: cheerio.CheerioAPI): Asset[] => {
     },
     pro: false
   };
-
   const paletteStyles: Asset = {
     name: "projectPalette",
     score: OTHERS_SCORE,
@@ -124,24 +123,30 @@ const makePageStyles = ($doc: cheerio.CheerioAPI): Asset[] => {
     },
     pro: false
   };
-  const typography = getTypographyStyles($doc);
-  const typographyStyles: Asset = {
-    name: toHashCode(typography),
-    score: OTHERS_SCORE,
-    content: {
-      type: "inline",
-      content: typography,
-      attr: {
-        class: "brz-style brz-project__style-fonts"
-      }
-    },
-    pro: false
-  };
 
-  return [prefetchLinks, paletteStyles, typographyStyles];
+  const typography = getTypographyStyles($doc);
+
+  if (typography) {
+    const typographyStyles: Asset = {
+      name: toHashCode(typography),
+      score: OTHERS_SCORE,
+      content: {
+        type: "inline",
+        content: typography,
+        attr: {
+          class: "brz-style brz-project__style-fonts"
+        }
+      },
+      pro: false
+    };
+
+    return [prefetchLinks, paletteStyles, typographyStyles];
+  }
+
+  return [prefetchLinks, paletteStyles];
 };
 
-const makeCustomCSS = ($doc: cheerio.CheerioAPI): Asset[] => {
+const makeCustomCSS = ($doc: cheerio.Root): Asset[] => {
   return getCustomCSS($doc).map((style, index) => ({
     name: toHashCode(style),
     score: CUSTOM_CODE,
@@ -157,7 +162,7 @@ const makeCustomCSS = ($doc: cheerio.CheerioAPI): Asset[] => {
   }));
 };
 
-const makeDCColor = ($doc: cheerio.CheerioAPI): Asset[] => {
+const makeDCColor = ($doc: cheerio.Root): Asset[] => {
   return getDCColor($doc).map((style, index) => ({
     name: toHashCode(style),
     score: OTHERS_SCORE,
@@ -173,7 +178,7 @@ const makeDCColor = ($doc: cheerio.CheerioAPI): Asset[] => {
   }));
 };
 
-const makeDynamicStyle = ($doc: cheerio.CheerioAPI): Asset => {
+const makeDynamicStyle = ($doc: cheerio.Root): Asset => {
   const $styles = $doc("style.brz-style");
   const __html = $doc.html($styles);
   const otherStyles: Asset = {
@@ -196,10 +201,7 @@ const makeDynamicStyle = ($doc: cheerio.CheerioAPI): Asset => {
 // libsSelectors = contain all libs selector found in page
 // pageFonts => link for google and upload fonts
 // pageStyles => styles generated for richText
-export const makeStyles = (
-  $doc: cheerio.CheerioAPI,
-  fonts: Fonts
-): MakeStyles => {
+export const makeStyles = ($doc: cheerio.Root, fonts: Fonts): MakeStyles => {
   const { free = [], pro = [] } = LibsConfig;
   const main: Asset = {
     name: "main",
@@ -241,7 +243,7 @@ export const makeStyles = (
   const libsSelectors = new Set<string>();
 
   // libs
-  free.forEach(lib => {
+  free.forEach((lib) => {
     const { name, selectors } = lib;
 
     // generate lib map
@@ -262,7 +264,7 @@ export const makeStyles = (
 
     // selectors
     // find lib selector in the page
-    selectors.forEach(selector => {
+    selectors.forEach((selector) => {
       if ($doc(selector).length) {
         libsSelectors.add(selector);
       }
@@ -302,7 +304,7 @@ export const makeStyles = (
     };
 
     // libs
-    pro.forEach(lib => {
+    pro.forEach((lib) => {
       const { name, selectors } = lib;
 
       // generate lib map
@@ -323,7 +325,7 @@ export const makeStyles = (
 
       // selectors
       // find lib selector in the page
-      selectors.forEach(selector => {
+      selectors.forEach((selector) => {
         if ($doc(selector).length) {
           libsProSelectors.add(selector);
         }

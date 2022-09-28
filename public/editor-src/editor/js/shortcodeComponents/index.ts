@@ -179,8 +179,6 @@ const config = ((): Shortcodes => {
     base: baseCloud,
     social,
     blog: cmsSingle,
-    product: productPageSpecificItems,
-    shop: productPageShopItems,
     cms: cmsAssets
   };
 })();

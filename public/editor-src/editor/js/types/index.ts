@@ -132,6 +132,24 @@ export type GlobalBlockPosition = {
   bottom: number;
 };
 
+//#region Project
+
+export interface Project {
+  id: string;
+  dataVersion: number;
+  data: {
+    selectedKit: string;
+    selectedStyle: string;
+    styles: Style[];
+    extraFontStyles: ExtraFontStyle[];
+    font: string;
+    fonts: Fonts;
+    disabledElements: string[];
+  };
+}
+
+//#endregion
+
 //#region Page
 
 export interface DataCommon {
@@ -224,7 +242,7 @@ export type Page =
 
 //#endregion
 
-// fonts
+//#region Fonts
 
 export type GoogleFont = {
   kind: "webfonts#webfont";
@@ -251,6 +269,23 @@ export type UploadedFont = {
 };
 
 export type Font = GoogleFont | UploadedFont;
+
+export interface Fonts {
+  config?: {
+    data: GoogleFont[];
+  };
+  blocks?: {
+    data: GoogleFont[];
+  };
+  google?: {
+    data: GoogleFont[];
+  };
+  upload?: {
+    data: UploadedFont[];
+  };
+}
+
+//#endregion
 
 // authorized
 

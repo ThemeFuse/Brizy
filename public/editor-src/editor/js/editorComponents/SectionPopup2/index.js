@@ -27,6 +27,8 @@ import { css } from "visual/utils/cssStyle";
 import { t } from "visual/utils/i18n";
 import { getContainerW } from "visual/utils/meta";
 import { isExternalPopup, isInternalPopup, isPopup } from "visual/utils/models";
+import { defaultValueValue } from "visual/utils/onChange";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -125,15 +127,13 @@ class SectionPopup2 extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-
-    const {
-      width,
-      widthSuffix,
-      tabletWidth,
-      tabletWidthSuffix,
-      mobileWidth,
-      mobileWidthSuffix
-    } = v;
+    const dvv = (key, device) => defaultValueValue({ v, device, key });
+    const widthSuffix = dvv("widthSuffix", DESKTOP);
+    const tabletWidthSuffix = dvv("widthSuffix", TABLET);
+    const mobileWidthSuffix = dvv("widthSuffix", MOBILE);
+    const width = dvv("width", DESKTOP);
+    const tabletWidth = dvv("width", TABLET);
+    const mobileWidth = dvv("width", MOBILE);
 
     const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,

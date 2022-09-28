@@ -118,8 +118,8 @@ import { attachWheel, detachWheel } from "./attachWheel";
         var parentElem = $elem,
           top = parentElem.offset().top,
           differenceHeight = _this.getHeight(parentElem),
-          // before it was - parentElem.is(":nth-of-type(1)")
-          isFirstSection = false;
+          isFirstSection = false,
+          $node = $(this);
 
         if (differenceHeight) {
           _this.setHeight(parentElem, differenceHeight);
@@ -134,8 +134,9 @@ import { attachWheel, detachWheel } from "./attachWheel";
           imageHolder: this
         });
 
+        $node.addClass(_this.options.bgClass + "--init");
         _this.mr_setTranslate3DTransform(
-          $(this).get(0),
+          $node.get(0),
           (_this.f() + _this.options.windowHeight - top) / 2
         );
       });
@@ -200,10 +201,10 @@ import { attachWheel, detachWheel } from "./attachWheel";
       this._detachEvents();
 
       this.$elem.removeData(dataKey);
-      this.$elem.find("." + this.options.bgClass).css({
-        height: "",
-        transform: ""
-      });
+      this.$elem
+        .find("." + this.options.bgClass)
+        .css({ height: "", transform: "" })
+        .removeClass(this.options.bgClass + "--init");
     },
     paused: function (paused) {
       if (paused) {
