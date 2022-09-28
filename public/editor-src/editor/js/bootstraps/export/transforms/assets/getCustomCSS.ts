@@ -1,7 +1,7 @@
-export const getCustomCSS = ($: cheerio.CheerioAPI): string[] => {
+export const getCustomCSS = ($: cheerio.Root): string[] => {
   let styles = "";
 
-  $("[data-custom-css]").each(function(this: cheerio.Element) {
+  $("[data-custom-css]").each(function (this: cheerio.Element) {
     const $this = $(this);
     const id = $this.attr("data-custom-id") || "";
 

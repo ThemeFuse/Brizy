@@ -494,7 +494,7 @@ export const deleteSavedBlock: DeleteSavedBlockById = (uid) => {
     uid
   });
 
-  return persistentRequest(url, {
+  return request(url, {
     method: "DELETE"
   });
 };
@@ -663,7 +663,7 @@ export const deleteSavedLayout: DeleteSavedLayoutById = (uid) => {
     version: editorVersion
   });
 
-  return persistentRequest(url, {
+  return request(url, {
     method: "DELETE"
   });
 };

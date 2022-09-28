@@ -1,21 +1,20 @@
-import React, { ReactNode } from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
+import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
+import CustomCSS from "visual/component/CustomCSS";
+import { ElementModel } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
+import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import defaultValue from "./defaultValue.json";
-import { Wrapper } from "../tools/Wrapper";
-import { ElementModel } from "visual/component/Elements/Types";
+import * as toolbarConfig from "./toolbar";
 
 export interface Value extends ElementModel {
   address: string;
   zoom: number;
-  coverImageSrc: string;
 }
 
 interface Patch {
@@ -89,7 +88,7 @@ class Map extends EditorComponent<Value> {
     this.patchValue(resizerTransformPatch(patch));
 
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
-    const { address, zoom, coverImageSrc } = v;
+    const { address, zoom } = v;
     const wrapperClassName = classnames(
       "brz-map",
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
@@ -128,8 +127,6 @@ class Map extends EditorComponent<Value> {
       }
     };
 
-    const isCovered = Boolean(coverImageSrc);
-
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
@@ -137,11 +134,7 @@ class Map extends EditorComponent<Value> {
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Wrapper
             {...this.makeWrapperProps({
-              className: wrapperClassName,
-              attributes: {
-                "data-cover": `${isCovered}`,
-                "data-src": iframeSrc
-              }
+              className: wrapperClassName
             })}
           >
             <BoxResizer
@@ -152,11 +145,7 @@ class Map extends EditorComponent<Value> {
               onChange={this.handleResizerChange}
             >
               <div className="brz-map-content">
-                {isCovered ? (
-                  <div className="brz-map__cover" />
-                ) : (
-                  <iframe className={iframeClassName} src={iframeSrc} />
-                )}
+                <iframe className={iframeClassName} src={iframeSrc} />
               </div>
             </BoxResizer>
           </Wrapper>

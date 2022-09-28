@@ -4,7 +4,7 @@ class Brizy_Compatibilities_Init {
 
 	public function __construct() {
 		$this->load_compatibilites();
-		add_action( 'plugins_loaded',    [ $this, 'action_plugins_loaded' ], 9 );
+		add_action( 'plugins_loaded',    [ $this, 'action_plugins_loaded' ], 0 );
 		add_action( 'after_setup_theme', [ $this, 'after_setup_theme' ] );
 	}
 
@@ -130,7 +130,11 @@ class Brizy_Compatibilities_Init {
 		if ( class_exists( 'WP_Import' ) ) {
 			new Brizy_Compatibilities_WordpressImporter();
 		}
-  }
+
+		if ( class_exists( 'WP_Optimize' ) ) {
+			new Brizy_Compatibilities_WpOptimize();
+		}
+    }
 
 	public function after_setup_theme() {
 		if ( function_exists( 'tf_autoload' ) ) {

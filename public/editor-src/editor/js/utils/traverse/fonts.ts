@@ -4,8 +4,13 @@ import {
 } from "visual/component/Elements/Types";
 import { mapBlockElements } from "visual/editorComponents/RichText/utils";
 import { classNamesToV } from "visual/editorComponents/RichText/utils/transforms";
-import { Fonts } from "visual/redux/types";
-import { FontStyle, GlobalBlock, GoogleFont, UploadedFont } from "visual/types";
+import {
+  Fonts,
+  FontStyle,
+  GlobalBlock,
+  GoogleFont,
+  UploadedFont
+} from "visual/types";
 import { findFonts, projectFontsData } from "visual/utils/fonts";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
 import * as Str from "visual/utils/reader/string";
@@ -124,8 +129,8 @@ export const getUsedStylesFonts: GetUsedStylesFonts = (styles) => {
 };
 
 interface FontModel {
-  type: FontFamilyType;
-  fontFamily: string;
+  type: FontFamilyType | "unknowns";
+  family: string;
 }
 
 type GetBlocksStylesFonts = (

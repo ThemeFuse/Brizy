@@ -623,7 +623,7 @@ export const deleteSavedBlock: DeleteSavedBlockById = (id) => {
   const {
     urls: { api }
   } = Config.getAll() as Cloud;
-  return persistentRequest(`${api}/saved_blocks/${id}`, {
+  return request(`${api}/saved_blocks/${id}`, {
     method: "DELETE"
   });
 };
@@ -761,7 +761,7 @@ export const deleteSavedLayout: DeleteSavedLayoutById = (id) => {
   const {
     urls: { api }
   } = Config.getAll() as Cloud;
-  return persistentRequest(`${api}/layouts/${id}`, {
+  return request(`${api}/layouts/${id}`, {
     method: "DELETE"
   });
 };

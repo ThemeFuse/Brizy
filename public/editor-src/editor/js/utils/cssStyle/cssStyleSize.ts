@@ -27,7 +27,7 @@ export function cssStyleSizeWidth({
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
   const width = styleSizeWidth({ v, device, state, prefix });
-  const unit = Str.read(dvv(capByPrefix(prefix, "widthSuffix")));
+  const unit = Str.read(dvv(capByPrefix(prefix, "widthSuffix"))) || "px";
 
   return width === undefined ? "" : `width:${width}${unit};`;
 }
@@ -301,7 +301,7 @@ export function cssStyleSizeFontSize({
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
   const size = styleSizeSize({ v, device, state, prefix });
-  const unit = Str.read(dvv(capByPrefix(prefix, "sizeSuffix")));
+  const unit = Str.read(dvv(capByPrefix(prefix, "sizeSuffix"))) || "px";
 
   return size === undefined ? "" : `font-size:${size}${unit};`;
 }

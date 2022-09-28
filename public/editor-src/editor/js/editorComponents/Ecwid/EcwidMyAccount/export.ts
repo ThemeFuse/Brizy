@@ -6,7 +6,9 @@ export const fn: ExportFunction = ($node) => {
   $node.find(".brz-ecwid-my-account").each((_, node) => {
     const storeId = node.getAttribute("data-store-id") as EcwidStoreId | null;
     if (storeId) {
-      EcwidService.init(storeId, {}).myAccount(node);
+      EcwidService.init(storeId, {
+        restoreUrl: true
+      }).myAccount(node);
     }
   });
 };

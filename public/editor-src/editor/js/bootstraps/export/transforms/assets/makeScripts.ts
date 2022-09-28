@@ -1,8 +1,8 @@
-import Config from "visual/global/Config";
 import LibsConfig from "visual/bootstraps/libs.json";
+import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
-import { LIBS_SCORE, MAIN_SCORE, MAIN_INIT_SCORE } from "./scores";
 import { Asset, AssetLibsMap, ScriptsFree, ScriptsPro } from "./index";
+import { LIBS_SCORE, MAIN_INIT_SCORE, MAIN_SCORE } from "./scores";
 
 type MakeScripts = {
   free: ScriptsFree;
@@ -13,7 +13,7 @@ type MakeScripts = {
 // generic => contain [initMain]
 // libsMap => contain all groups[libs] js
 // libsSelectors = contain all libs selector found in page
-export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
+export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
   const { free = [], pro = [] } = LibsConfig;
   const generic: Asset[] = [];
   const libsSelectors = new Set<string>();
@@ -48,7 +48,7 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
   });
 
   // libs
-  free.forEach(lib => {
+  free.forEach((lib) => {
     const { name, selectors } = lib;
 
     // generate lib map
@@ -68,7 +68,7 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
     });
 
     // find lib selector in the page
-    selectors.forEach(selector => {
+    selectors.forEach((selector) => {
       if ($doc(selector).length) {
         libsSelectors.add(selector);
       }
@@ -112,7 +112,7 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
     };
 
     // libs
-    pro.forEach(lib => {
+    pro.forEach((lib) => {
       const { name, selectors } = lib;
 
       libsProMap.push({
@@ -131,7 +131,7 @@ export const makeScripts = ($doc: cheerio.CheerioAPI): MakeScripts => {
       });
 
       // find lib selector in the page
-      selectors.forEach(selector => {
+      selectors.forEach((selector) => {
         if ($doc(selector).length) {
           libsProSelectors.add(selector);
         }

@@ -1,9 +1,9 @@
-import { uuid } from "visual/utils/uuid";
 import { makeRichTextDCColorCSS } from "visual/utils/color";
-import { decodeFromString } from "visual/utils/string";
 import { Hex } from "visual/utils/color/Hex";
-import { Opacity } from "visual/utils/cssProps/opacity";
 import { Palette } from "visual/utils/color/Palette";
+import { Opacity } from "visual/utils/cssProps/opacity";
+import { decodeFromString } from "visual/utils/string";
+import { uuid } from "visual/utils/uuid";
 
 interface DecodedColor {
   [k: string]: {
@@ -13,13 +13,13 @@ interface DecodedColor {
   };
 }
 
-export const getDCColor = ($: cheerio.CheerioAPI): string[] => {
+export const getDCColor = ($: cheerio.Root): string[] => {
   const rules: string[] = [];
   const $richText = $(".brz-rich-text");
 
   $richText
     .find(".brz-tp__dc-block[data-color]")
-    .each(function(this: cheerio.Element) {
+    .each(function (this: cheerio.Element) {
       const $this = $(this);
       const color = $this.attr("data-color") || "";
       const decodedColor = decodeFromString<DecodedColor>(color);
@@ -40,7 +40,7 @@ export const getDCColor = ($: cheerio.CheerioAPI): string[] => {
     });
 
   // HACK.Sometimes usual paragraph has data-color attribute
-  $richText.find("[data-color]").each(function(this: cheerio.Cheerio) {
+  $richText.find("[data-color]").each(function (this: cheerio.Cheerio) {
     $(this).removeAttr("data-color");
   });
 

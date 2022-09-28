@@ -31,7 +31,8 @@ export const urlsCommon = {
   support: "",
   templateFonts: "",
   upgradeToPro: "",
-  editorIcons: ""
+  editorIcons: "",
+  worker: ""
 };
 
 export const projectCommon = {

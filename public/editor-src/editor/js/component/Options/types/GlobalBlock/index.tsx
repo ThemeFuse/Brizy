@@ -33,6 +33,7 @@ import { createGlobalBlock, pendingRequest } from "visual/utils/api";
 import { changeRule, isPopup } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 import { getBlockData, setIds } from "visual/utils/models";
+import { uuid } from "visual/utils/uuid";
 import { PortalLoading } from "./PortalLoading";
 import {
   GlobalBlockMapDispatch,
@@ -89,7 +90,7 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
   };
 
   mounted = false;
-  switchKey = Math.random();
+  switchKey = uuid(4);
 
   componentDidMount(): void {
     this.mounted = true;
@@ -202,7 +203,7 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
           .catch((e: unknown): void => {
             PortalLoading.close(loading);
 
-            this.switchKey = Math.random();
+            this.switchKey = uuid(4);
             this.mounted && this.forceUpdate();
 
             switch (blockType) {

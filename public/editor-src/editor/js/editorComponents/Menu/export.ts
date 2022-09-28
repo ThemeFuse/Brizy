@@ -190,7 +190,12 @@ const setOpen =
         const tooltipSettings = tooltip.dataset.settings ?? "";
         const settings = JSON.parse(decodeURIComponent(tooltipSettings));
         const maxWidth = getMegaMenuWidth(target, settings, lastCurrentDevice);
-        tooltip.style.width = "100%";
+
+        if (lastCurrentDevice === "mobile" && maxWidth === "100vw") {
+          tooltip.style.width = "100vw";
+        } else {
+          tooltip.style.width = "100%";
+        }
         tooltip.style.maxWidth = maxWidth;
 
         // update popper instance
