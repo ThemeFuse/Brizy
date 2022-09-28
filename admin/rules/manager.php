@@ -19,8 +19,6 @@ class Brizy_Admin_Rules_Manager
         $entityType   = null;
         $entityValues = array();
 
-        $is_shop = is_page(wc_get_page_id('shop'));
-        $is_shop = is_shop();
         if (is_404()) {
             $applyFor   = Brizy_Admin_Rule::TEMPLATE;
             $entityType = '404';
