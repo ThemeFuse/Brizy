@@ -1,7 +1,7 @@
-import { Taxonomy } from "visual/global/Config/types/Taxonomy";
-import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
-import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { ElementModel } from "visual/component/Elements/Types";
+import { ImageDataSize } from "visual/global/Config/types/ImageSize";
+import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
+import { Taxonomy } from "visual/global/Config/types/Taxonomy";
 
 export interface MenuItem {
   type: "MenuItem";

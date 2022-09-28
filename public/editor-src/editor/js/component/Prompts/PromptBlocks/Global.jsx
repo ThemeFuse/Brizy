@@ -1,26 +1,27 @@
-import React, { Component, Fragment } from "react";
 import T from "prop-types";
+import React, { Component, Fragment } from "react";
+import Scrollbars from "react-custom-scrollbars";
 import { connect } from "react-redux";
 import _ from "underscore";
-import Scrollbars from "react-custom-scrollbars";
-import SearchInput from "./common/SearchInput";
-import ThumbnailGrid from "./common/ThumbnailGrid";
 import Tooltip from "visual/component/Controls/Tooltip";
+import { deleteGlobalBlock } from "visual/redux/actions2";
+import {
+  fontsSelector,
+  globalBlocksAssembledSelector,
+  globalBlocksInPageSelector
+} from "visual/redux/selectors";
 import { assetUrl } from "visual/utils/asset";
 import { blockThumbnailData } from "visual/utils/blocks";
+import { normalizeFonts } from "visual/utils/fonts";
+import { t } from "visual/utils/i18n";
 import { IS_GLOBAL_POPUP } from "visual/utils/models";
-import {
-  globalBlocksAssembledSelector,
-  globalBlocksInPageSelector,
-  fontsSelector
-} from "visual/redux/selectors";
-import { deleteGlobalBlock } from "visual/redux/actions2";
 import {
   getBlocksStylesFonts,
   getUsedModelsFonts
 } from "visual/utils/traverse";
-import { t } from "visual/utils/i18n";
-import { normalizeFonts } from "visual/utils/fonts";
+import { uuid } from "visual/utils/uuid";
+import SearchInput from "./common/SearchInput";
+import ThumbnailGrid from "./common/ThumbnailGrid";
 
 class Global extends Component {
   static defaultProps = {
@@ -52,7 +53,7 @@ class Global extends Component {
     );
   }
 
-  handleThumbnailAdd = async thumbnailData => {
+  handleThumbnailAdd = async (thumbnailData) => {
     const { globalBlocks, projectFonts, onAddBlocks, onClose } = this.props;
     const { resolve } = thumbnailData;
     const fontsDiff = getBlocksStylesFonts(
@@ -68,7 +69,7 @@ class Global extends Component {
     onClose();
   };
 
-  handleThumbnailRemove = thumbnailData => {
+  handleThumbnailRemove = (thumbnailData) => {
     const { dispatch } = this.props;
     const { id } = thumbnailData;
 
@@ -85,7 +86,7 @@ class Global extends Component {
             <SearchInput
               className="brz-ed-popup-two-header__search"
               value={this.state.search}
-              onChange={search => this.setState({ search })}
+              onChange={(search) => this.setState({ search })}
             />
           </HeaderSlotLeft>
         )}
@@ -128,7 +129,7 @@ class Global extends Component {
             <SearchInput
               className="brz-ed-popup-two-header__search"
               value={this.state.search}
-              onChange={value => this.setState({ search: value })}
+              onChange={(value) => this.setState({ search: value })}
             />
           </HeaderSlotLeft>
         )}
@@ -144,7 +145,7 @@ class Global extends Component {
                   {message}
                 </p>
                 <img
-                  src={`${assetUrl(gifUrl)}?${Math.random()}`}
+                  src={`${assetUrl(gifUrl)}?${uuid(4)}`}
                   className="brz-ed-popup-two-blocks__grid-clear-image-global"
                   alt="Global"
                 />
@@ -189,7 +190,7 @@ class Global extends Component {
       return this.renderEmpty();
     }
 
-    const thumbnails = blocks.map(block => {
+    const thumbnails = blocks.map((block) => {
       const { url, width, height } = blockThumbnailData(block.data);
       const {
         type,
@@ -207,7 +208,7 @@ class Global extends Component {
         thumbnailWidth: width,
         thumbnailHeight: height,
         showRemoveIcon: true,
-        renderWrapper: content =>
+        renderWrapper: (content) =>
           inactive ? this.renderThumbnailTooltip(content) : content,
         inactive,
         resolve: {
@@ -221,12 +222,12 @@ class Global extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   globalBlocks: globalBlocksAssembledSelector(state),
   globalBlocksInPage: globalBlocksInPageSelector(state),
   projectFonts: fontsSelector(state)
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   dispatch
 });
 

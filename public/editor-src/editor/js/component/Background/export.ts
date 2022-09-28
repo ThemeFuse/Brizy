@@ -1,10 +1,12 @@
 import $ from "jquery";
+import { ExportFunction } from "visual/types";
+import { ResponsiveMode } from "visual/utils/responsiveMode";
 import "./lib/jquery.background-video";
 import "./lib/jquery.parallax";
 
-const getCurrentDevice = () => {
+const getCurrentDevice = (): ResponsiveMode => {
   const { innerWidth } = window;
-  let device = "desktop";
+  let device: ResponsiveMode = "desktop";
 
   if (innerWidth < 992) {
     device = "tablet";
@@ -16,7 +18,7 @@ const getCurrentDevice = () => {
   return device;
 };
 
-export default function ($node) {
+const fn: ExportFunction = ($node) => {
   const $parallax = $node.find(".brz-bg-image-parallax");
 
   if ($parallax.length > 0) {
@@ -45,7 +47,7 @@ export default function ($node) {
     // wee need stop parallax
     const openedElements = ["elements.mmenu.open", "elements.popup.open"];
     openedElements.forEach((id) => {
-      window.Brz.on(id, (element) => {
+      window.Brz.on(id, (element: HTMLElement) => {
         if (id === "elements.popup.open") {
           // need to check scroll behance
           const { scroll_page = "false" } = element.dataset;
@@ -65,7 +67,7 @@ export default function ($node) {
     // start parallaxes
     const closedElements = ["elements.mmenu.close", "elements.popup.close"];
     closedElements.forEach((id) => {
-      window.Brz.on(id, (element) => {
+      window.Brz.on(id, (element: HTMLElement) => {
         if (id === "elements.popup.close") {
           // need to check scroll behance
           const { scroll_page = "false" } = element.dataset;
@@ -89,10 +91,12 @@ export default function ($node) {
 
     $this.backgroundVideo({ type, loop, start });
 
-    window.Brz.on("elements.story.init", (element) => {
+    window.Brz.on("elements.story.init", (element: HTMLElement) => {
       if (element.contains($this.get(0))) {
         $this.backgroundVideo("typeChange", { type, loop, start });
       }
     });
   });
-}
+};
+
+export default fn;

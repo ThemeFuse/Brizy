@@ -1,15 +1,17 @@
-import { t } from "visual/utils/i18n";
-import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
-import { getDynamicContentChoices } from "visual/utils/options";
-import { IS_STORY } from "visual/utils/models";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { Value } from "./index";
 import { DeviceMode } from "visual/types";
+import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { IS_STORY } from "visual/utils/models";
+import { defaultValueValue } from "visual/utils/onChange";
+import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
 import { ToolbarItemType } from "../ToolbarItemType";
+import { Value } from "./index";
 
 export function getItems({
   v,
@@ -32,8 +34,6 @@ export function getItems({
     context.dynamicContent.config,
     DCTypes.richText
   );
-
-  const noCover = !v.coverImageSrc;
 
   return [
     {
@@ -68,30 +68,6 @@ export function getItems({
                   config: {
                     min: 1,
                     max: 21
-                  }
-                }
-              ]
-            },
-            {
-              id: "tabCurrentElementCover",
-              label: t("Cover"),
-              options: [
-                {
-                  label: t("Cover"),
-                  id: "cover",
-                  type: "imageUpload-dev",
-                  devices: "desktop"
-                },
-                {
-                  id: "coverZoom",
-                  label: t("Zoom"),
-                  type: "slider-dev",
-                  devices: "desktop",
-                  disabled: noCover,
-                  config: {
-                    min: 100,
-                    max: 300,
-                    units: [{ value: "%", title: "%" }]
                   }
                 }
               ]

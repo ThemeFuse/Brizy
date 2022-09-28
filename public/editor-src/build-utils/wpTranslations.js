@@ -40,10 +40,15 @@ exports.wpTranslations = async function wpTranslations({
 async function extractFromEditor(paths) {
   const editorJSFolderPath = path.resolve(paths.editor, "./js");
   const allowedExtensions = [".js", ".jsx", ".ts", ".tsx"];
+  const excludeDirectories = ["/libs/", "/workers/", "/export/"];
   const files = await readRecursive(editorJSFolderPath, [
     (file, stats) => {
       if (stats.isDirectory()) {
         return false;
+      }
+
+      if (excludeDirectories.some((f) => file.includes(f))) {
+        return true;
       }
 
       const ext = path.extname(file);
@@ -117,14 +122,10 @@ function extractTranslationsFromT(code) {
 
 function generateWPFileContent({ translations, IS_PRODUCTION, VERSION }) {
   const className = `Brizy_Public_EditorBuild_${
-    IS_PRODUCTION
-      ? VERSION.split("-")
-          .map(capitalize)
-          .join("")
-      : "Dev"
+    IS_PRODUCTION ? VERSION.split("-").map(capitalize).join("") : "Dev"
   }_Texts`;
   const arrBody = translations
-    .map(t => `\t\t\t"${t}" => __("${t}", "brizy")`)
+    .map((t) => `\t\t\t"${t}" => __("${t}", "brizy")`)
     .join(",\n");
   const arr = [
     "<?php",

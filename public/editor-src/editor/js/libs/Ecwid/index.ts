@@ -105,6 +105,7 @@ declare global {
         };
       };
     };
+    pathBeforeEcwidChange?: string;
   }
 }
 
@@ -145,7 +146,6 @@ const defaultConfig: RedirectConfig = {
     },
     fromContent: {
       "/shop/cart": ".details-product-purchase__checkout",
-      "/shop/checkout": ".ec-cart__button--checkout",
       "/my-account/thank-you": ".ec-form .form-control--done"
     }
   }
@@ -164,7 +164,6 @@ const contentRoutes: {
   [k in ContentRoutes]: string;
 } = {
   "/shop/cart": "/shop/cart",
-  "/shop/checkout": "/shop/checkout",
   "/my-account/thank-you": "/my-account/thank-you"
 };
 
@@ -225,6 +224,15 @@ export class EcwidService {
           if (Ecwid && Ecwid.resizeProductBrowser) {
             Ecwid.resizeProductBrowser();
           }
+
+          if (
+            window &&
+            window.pathBeforeEcwidChange &&
+            window.location.pathname !== window.pathBeforeEcwidChange &&
+            this.config.restoreUrl
+          ) {
+            window.history.pushState({}, "", window.pathBeforeEcwidChange);
+          }
         });
       };
       document.body.append(script);
@@ -282,6 +290,8 @@ export class EcwidService {
   }
 
   public cart(node: HTMLElement) {
+    window.pathBeforeEcwidChange = window.location.pathname;
+
     const el = this.setId(node);
 
     this.openPage(EcwidWidget.cart(el.id), node);
@@ -302,6 +312,8 @@ export class EcwidService {
   }
 
   public myAccount(node: HTMLElement) {
+    window.pathBeforeEcwidChange = window.location.pathname;
+
     const el = this.setId(node);
     this.openPage(EcwidWidget.myAccount(el.id), node);
 

@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "../../variables";
 
 // Gallery
@@ -58,8 +59,8 @@
       margin: 0;
       padding: 0;
       position: absolute;
-      top: -$toolbar-static-font-size/2;
-      right: -$toolbar-static-font-size/2;
+      top: -(math.div($toolbar-static-font-size,2));
+      right: -(math.div($toolbar-static-font-size,2));
       cursor: pointer;
       outline: none;
       background: #000;

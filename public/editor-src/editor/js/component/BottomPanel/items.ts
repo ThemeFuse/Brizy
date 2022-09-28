@@ -1,8 +1,8 @@
 import HiddenElementsToggle from "./components/HiddenElementsToggle";
-import { UndoButton } from "./components/UndoButton";
-import { RedoButton } from "./components/RedoButton";
 import { PreviewButton } from "./components/PreviewButton";
 import PublishButton from "./components/PublishButton";
+import { RedoButton } from "./components/RedoButton";
+import { UndoButton } from "./components/UndoButton";
 
 export default [
   HiddenElementsToggle,

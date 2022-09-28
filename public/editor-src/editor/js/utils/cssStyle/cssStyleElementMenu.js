@@ -362,7 +362,9 @@ export function cssStyleElementMMenuBtnNext({ v, device }) {
     paddingRight,
     paddingRightSuffix
   } = cssStylePadding({ v, device, prefix: "mMenu" });
-  const typographyHeight = `${mMenuLineHeight} * ${mMenuFontSize}px`;
+
+  const typographyHeightSuffix = isNaN(mMenuLineHeight) ? "" : "px";
+  const typographyHeight = `${mMenuLineHeight} * ${mMenuFontSize}${typographyHeightSuffix}`;
   const _paddingTop = `${paddingTop}${paddingTopSuffix}`;
   const _paddingBottom = `${paddingBottom}${paddingBottomSuffix}`;
   const height = `height: calc(${typographyHeight} + ${_paddingTop} + ${_paddingBottom})`;

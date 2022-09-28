@@ -1,4 +1,4 @@
-process.on("unhandledRejection", error => {
+process.on("unhandledRejection", (error) => {
   console.log("unhandledRejection", error.message, error);
 });
 
@@ -92,7 +92,7 @@ function verifications(done) {
 
   if (aborted) {
     console.log("");
-    console.error(messages.map(m => chalk.red.bold("* " + m)).join("\n\n"));
+    console.error(messages.map((m) => chalk.red.bold("* " + m)).join("\n\n"));
     console.log("");
 
     throw new Error("aborting...");
@@ -121,7 +121,10 @@ function editorJS(done) {
     BUILD_DIR_PRO: paths.buildPro,
     NO_WATCH
   };
-  const config = [webpackConfigEditor(options), webpackConfigWorker(options)];
+  const config = [
+    webpackConfigEditor(options),
+    webpackConfigWorker.screenshots(options)
+  ];
 
   let doneCalled = false;
   webpack(config, (err, stats) => {
@@ -172,7 +175,7 @@ function editorCSS() {
         .postcss(postsCssProcessors, {
           syntax: postcssSCSS
         })
-        .on("error", err => {
+        .on("error", (err) => {
           console.log("Sass Syntax Error", err);
         })
     )
@@ -207,12 +210,12 @@ function editorKitIcons() {
   const { encrypt } = require(paths.editor +
     "/js/component/ThemeIcon/utils-node.js");
 
-  const svgEncrypt = content => {
+  const svgEncrypt = (content) => {
     const base64 = Buffer.from(content).toString("base64");
 
     return encrypt(base64);
   };
-  const svgRename = path => {
+  const svgRename = (path) => {
     if (path.extname) {
       path.extname = ".txt";
     }
@@ -268,10 +271,14 @@ function exportJS(done) {
       webpackConfigExport(options),
       webpackConfigPreview.preview(options),
       webpackConfigPreview.libs(options)
+      // webpackConfigWorker.ssr(options)
     );
   } else {
     if (ANALYZE_EXPORT) {
-      config.push(webpackConfigExport(options));
+      config.push(
+        webpackConfigExport(options)
+        // webpackConfigWorker.ssr(options)
+      );
     }
     if (ANALYZE_PREVIEW) {
       config.push(webpackConfigPreview.preview(options));
@@ -326,7 +333,7 @@ function exportCSS() {
           syntax: postcssSCSS,
           failOnError: false
         })
-        .on("error", err => {
+        .on("error", (err) => {
           console.log("Sass Syntax Error", err);
         })
     )
@@ -339,7 +346,7 @@ function exportLibsCSS() {
     return [...acc, `${path}/*.scss`];
   }, []);
 
-  const rename = path => {
+  const rename = (path) => {
     if (path.extname) {
       path.extname = ".css";
       path.basename = path.dirname;
@@ -360,7 +367,7 @@ function exportLibsCSS() {
           syntax: postcssSCSS,
           failOnError: false
         })
-        .on("error", err => {
+        .on("error", (err) => {
           console.log("Sass Syntax Error", err);
         })
     )
@@ -445,7 +452,7 @@ function proEditorCSS() {
           syntax: postcssSCSS,
           failOnError: false
         })
-        .on("error", err => {
+        .on("error", (err) => {
           console.log("Sass Syntax Error", err);
         })
     )
@@ -470,7 +477,7 @@ function proExportCSS() {
           syntax: postcssSCSS,
           failOnError: false
         })
-        .on("error", err => {
+        .on("error", (err) => {
           console.log("Sass Syntax Error", err);
         })
     )
@@ -483,7 +490,7 @@ function proExportLibsCSS() {
     return [...acc, `${path}/*.scss`];
   }, []);
 
-  const rename = path => {
+  const rename = (path) => {
     if (path.extname) {
       path.extname = ".css";
       path.basename = path.dirname;
@@ -504,7 +511,7 @@ function proExportLibsCSS() {
           syntax: postcssSCSS,
           failOnError: false
         })
-        .on("error", err => {
+        .on("error", (err) => {
           console.log("Sass Syntax Error", err);
         })
     )
@@ -524,7 +531,7 @@ function thumbsPreview() {
   return gulp
     .src(src)
     .pipe(
-      gulpPlugins.rename(path_ => {
+      gulpPlugins.rename((path_) => {
         const r = new RegExp(
           `.+\\${path.sep}blocks\\${path.sep}|\\${path.sep}pages\\${path.sep}`
         );
@@ -617,7 +624,7 @@ function kitsMedia() {
   return gulp
     .src(src)
     .pipe(
-      gulpPlugins.rename(path_ => {
+      gulpPlugins.rename((path_) => {
         // {KIT_NAME}/img/{IMG} -> {IMG}
         path_.dirname = "";
       })
@@ -752,7 +759,7 @@ function popupsMedia() {
   return gulp
     .src(src)
     .pipe(
-      gulpPlugins.rename(path_ => {
+      gulpPlugins.rename((path_) => {
         // {POPUP}/img/{IMG} -> {IMG}
         path_.dirname = "";
       })
@@ -806,7 +813,7 @@ function wpOpenSource() {
   return gulp
     .src(src, { dot: true })
     .pipe(
-      gulpPlugins.rename(path => {
+      gulpPlugins.rename((path) => {
         if (path.basename === "README.GITHUB") {
           path.basename = "README";
         }
@@ -994,19 +1001,13 @@ function externalPopupsPopup() {
   const src = paths.editor + "/js/bootstraps/popups/popup.js";
   const dest = paths.build + "/editor/js/";
 
-  return gulp
-    .src(src)
-    .pipe(gulpPlugins.terser())
-    .pipe(gulp.dest(dest));
+  return gulp.src(src).pipe(gulpPlugins.terser()).pipe(gulp.dest(dest));
 }
 function externalPopupsCodeInjection() {
   const src = paths.editor + "/js/bootstraps/popups/popup_injection.js";
   const dest = paths.build + "/editor/js";
 
-  return gulp
-    .src(src)
-    .pipe(gulpPlugins.terser())
-    .pipe(gulp.dest(dest));
+  return gulp.src(src).pipe(gulpPlugins.terser()).pipe(gulp.dest(dest));
 }
 
 exports.external_popups = gulp.series(
@@ -1048,7 +1049,7 @@ const k_combinations = (set, k) => {
   return combs;
 };
 
-const getGroupName = pathToGroup => {
+const getGroupName = (pathToGroup) => {
   const [name] = pathToGroup.match(/group-*.+/) || [];
 
   if (name) {
@@ -1065,13 +1066,13 @@ const createGroupName = (name1, name2) => {
   }
 };
 
-const relativePath = filePath => path.resolve(__dirname, filePath);
+const relativePath = (filePath) => path.resolve(__dirname, filePath);
 
 const sortFile = (a, b) => a - b;
 
-const isFree = file => /group-\d+.?\d?$/.test(file);
+const isFree = (file) => /group-\d+.?\d?$/.test(file);
 
-const isPro = file => /group-\d+(.+)?-pro/.test(file);
+const isPro = (file) => /group-\d+(.+)?-pro/.test(file);
 
 // export * from "../name-1";
 // export * from "../name-2";
@@ -1113,10 +1114,10 @@ const createGroupFileSelectors = (rs, { base, name1, name2 }) => {
   );
 };
 
-const createGroupAllData = groups => {
+const createGroupAllData = (groups) => {
   const groupAll = new Map();
 
-  groups.forEach(groupPath => {
+  groups.forEach((groupPath) => {
     const selectors = require(`${relativePath(groupPath)}/selectors.json`);
     const oldSelectors = groupAll.get("selectors") || [];
     const oldCSS = groupAll.get("css") || "";
@@ -1256,7 +1257,7 @@ function generateLibsConfig(done) {
   const dest = `${paths.editor}/js/bootstraps`;
 
   const files = uniq(glob.readdirSync(src, {}).map(relativePath));
-  const groupAll = files.filter(file => file.includes("group-all"));
+  const groupAll = files.filter((file) => file.includes("group-all"));
   const freeFiles = files.filter(isFree).sort(sortFile);
   const proFiles = files.filter(isPro).sort(sortFile);
 
@@ -1279,7 +1280,7 @@ function generateLibsConfig(done) {
     };
     const dirname = path.resolve(__dirname);
 
-    files.forEach(file => {
+    files.forEach((file) => {
       const isPro = file.includes("-pro");
       const selectors = require(`${file}/selectors.json`);
       const name = getGroupName(file);

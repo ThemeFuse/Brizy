@@ -473,9 +473,6 @@ export {
 } from "./cssStyleElementLogin";
 //Element Map
 export {
-  cssStyleElementMapBgSize,
-  cssStyleElementMapCoverPosition,
-  cssStyleElementMapCoverSrc,
   cssStyleElementMapPropertyHoverTransition,
   cssStyleElementMapPropertyPositionFixed
 } from "./cssStyleElementMap";

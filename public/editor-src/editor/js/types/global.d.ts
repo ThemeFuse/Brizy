@@ -1,13 +1,13 @@
-import ImagesLoaded from "imagesloaded";
 import Motion from "@brizy/motion";
-import Isotope from "isotope-layout";
-import Scrollbars from "perfect-scrollbar";
-import Lottie from "lottie-web";
 import {
-  Options as PopperOptions,
-  Instance as PopperInstance
+  Instance as PopperInstance,
+  Options as PopperOptions
 } from "@popperjs/core/lib/types";
 import { FlatpickrFn } from "flatpickr/dist/types/instance";
+import ImagesLoaded from "imagesloaded";
+import Isotope from "isotope-layout";
+import Lottie from "lottie-web";
+import Scrollbars from "perfect-scrollbar";
 import { Dropdown } from "../libs/dropdown";
 
 // Our own jquery plugins
@@ -86,7 +86,7 @@ declare global {
   }
 
   interface JQuery {
-    parallax(p: unknown): void;
+    parallax(p: unknown, x?: boolean): void;
     backgroundVideo(b: unknown, c?: unknown): void;
     select2(s: {
       width: string;

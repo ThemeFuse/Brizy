@@ -1,10 +1,10 @@
 import React, { Component } from "react";
+import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
-import { updateIntegration, createIntegrationList } from "../../api";
 import { Context } from "../../../common/GlobalApps/Context";
 import { RadioFields } from "../../../common/GlobalApps/StepsView";
+import { createIntegrationList, updateIntegration } from "../../api";
 import CreateList from "./CreateList";
-import { pendingRequest } from "visual/utils/api";
 
 const getError = (type, app) => {
   if (type === "server") {
@@ -67,14 +67,14 @@ class List extends Component {
       : [];
   }
 
-  handleActive = active => {
+  handleActive = (active) => {
     this.setState({
       active
     });
   };
 
   handleKeysChange = (type, value) => {
-    this.setState(state => ({
+    this.setState((state) => ({
       apiKeyValue: {
         ...state.apiKeyValue,
         [`${type}`]: value
@@ -82,7 +82,7 @@ class List extends Component {
     }));
   };
 
-  handleConfirm = async confirmed => {
+  handleConfirm = async (confirmed) => {
     const {
       app: { id, data: appData },
       formId,
@@ -148,7 +148,7 @@ class List extends Component {
       error: null
     });
 
-    if (!keysValue.some(key => !key)) {
+    if (!keysValue.some((key) => !key)) {
       const { status, data } = await createIntegrationList({
         formId,
         id: appData.id,
@@ -157,10 +157,17 @@ class List extends Component {
       });
 
       if (status !== 200) {
-        this.setState({
-          nextLoading: false,
-          error: getError("server")
-        });
+        if (data.message) {
+          this.setState({
+            nextLoading: false,
+            error: data.message
+          });
+        } else {
+          this.setState({
+            nextLoading: false,
+            error: getError("server")
+          });
+        }
       } else {
         onChange(id, { ...appData, lists: [...appData.lists, data] });
 
