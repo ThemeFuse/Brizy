@@ -123,8 +123,11 @@ export default function changeRichText($) {
       const src = $this.attr("data-image_src");
       const population = $this.attr("data-image_population");
       const extension = $this.attr("data-image_extension");
+      const fileName = $this.attr("data-image_file_name") ?? "image";
 
-      const imgUrl = isSVG(extension) ? svgUrl(src) : imageUrl(src);
+      const imgUrl = isSVG(extension)
+        ? svgUrl(src, { fileName })
+        : imageUrl(src, { fileName });
 
       const css = $this.css();
       const newCSS = Object.entries(css).reduce((acc, [property, value]) => {
@@ -151,6 +154,10 @@ export default function changeRichText($) {
         });
 
       $this.removeAttr("data-image_src");
+      $this.removeAttr("data-image_width");
+      $this.removeAttr("data-image_height");
+      $this.removeAttr("data-image_extension");
+      $this.removeAttr("data-image_file_name");
       $this.removeAttr("data-image_population");
     });
 }

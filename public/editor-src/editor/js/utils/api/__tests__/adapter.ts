@@ -71,6 +71,20 @@ describe("testing adapter", () => {
     [
       {
         type: 1,
+        appliedFor: 134,
+        entityType: "",
+        entityValues: []
+      },
+      {
+        type: 1,
+        appliedFor: 134,
+        entityType: ""
+      }
+    ],
+
+    [
+      {
+        type: 1,
         appliedFor: null,
         entityType: "",
         entityValues: []
@@ -161,6 +175,20 @@ describe("testing adapter", () => {
         type: 1,
         appliedFor: 1,
         entityType: "page",
+        entityValues: []
+      }
+    ],
+
+    [
+      {
+        type: 1,
+        appliedFor: 134,
+        entityType: ""
+      },
+      {
+        type: 1,
+        appliedFor: 134,
+        entityType: "",
         entityValues: []
       }
     ],
@@ -263,6 +291,20 @@ describe("testing adapter WP", () => {
     [
       {
         type: 1,
+        appliedFor: 134,
+        entityType: "",
+        entityValues: []
+      },
+      {
+        type: 1,
+        appliedFor: 134,
+        entityType: ""
+      }
+    ],
+
+    [
+      {
+        type: 1,
         appliedFor: null,
         entityType: "",
         entityValues: []
@@ -362,6 +404,20 @@ describe("testing adapter WP", () => {
         type: 1,
         appliedFor: 1,
         entityType: "page",
+        entityValues: []
+      }
+    ],
+
+    [
+      {
+        type: 1,
+        appliedFor: 134,
+        entityType: ""
+      },
+      {
+        type: 1,
+        appliedFor: 134,
+        entityType: "",
         entityValues: []
       }
     ],

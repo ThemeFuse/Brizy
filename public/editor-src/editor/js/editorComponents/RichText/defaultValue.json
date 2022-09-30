@@ -6,7 +6,14 @@
     "popups": [],
 
     "offsetX": 0,
-    "offsetY": 0
+    "offsetY": 0,
+
+    "bgImageExtension": "",
+    "bgImageFileName": null,
+
+    "images": {
+      "bgImageSrc": ""
+    }
   },
 
   "style": {
@@ -25,9 +32,6 @@
 
     "bgImageWidth": 0,
     "bgImageHeight": 0,
-
-    "bgImageExtension": "",
-    "bgImageSrc": "",
 
     "bgPositionX": 50,
     "bgPositionY": 50,

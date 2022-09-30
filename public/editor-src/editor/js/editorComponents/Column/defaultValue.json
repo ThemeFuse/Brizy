@@ -9,6 +9,11 @@
     "bgSizeType": "custom",
     "hoverBgSizeType": null,
 
+    "bgImageFileName": null,
+    "hoverBgImageFileName": null,
+    "tabletBgImageFileName": null,
+    "mobileBgImageFileName": null,
+
     "images": {
       "bgImageSrc": "",
       "hoverBgImageSrc": null,

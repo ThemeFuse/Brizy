@@ -290,7 +290,7 @@ function getPopulationTabs({ populationColor }, onChange) {
             opacity: headerValue.opacity,
             palette: headerValue.colorPalette
           },
-          onChange: value =>
+          onChange: (value) =>
             onChange({
               populationColor: getPopulationColor(populationColor, key, value)
             })
@@ -310,7 +310,7 @@ function getPopulationTabs({ populationColor }, onChange) {
                     hex: hexPalette || headerValue.hex,
                     opacity: headerValue.opacity
                   },
-                  onChange: value =>
+                  onChange: (value) =>
                     onChange(getPopulationColor(populationColor, key, value))
                 }
               ]
@@ -338,6 +338,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
   const {
     src = null,
     population = null,
+    fileName = null,
     x = null,
     y = null,
     extension = null,
@@ -433,7 +434,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                 device,
                 state: "normal"
               }),
-              onChange: value =>
+              onChange: (value) =>
                 onChange(changeColor(v.backgroundGradient, value))
             },
             {
@@ -450,7 +451,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                         state: "normal",
                         prefix: ""
                       }),
-                      onChange: value =>
+                      onChange: (value) =>
                         onChange(changeColorFields(v.backgroundGradient, value))
                     }
                   ]
@@ -467,7 +468,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                           "brz-ed__select--transparent brz-ed__select--align-right",
                         disabled: !startHex
                       }),
-                      onChange: value =>
+                      onChange: (value) =>
                         onChange(
                           changeGradientType(v.backgroundGradient, value)
                         )
@@ -484,7 +485,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                         state: "normal",
                         disabled: !startHex || type === "radial-gradient"
                       }),
-                      onChange: value =>
+                      onChange: (value) =>
                         onChange(
                           changeLinearDegree(v.backgroundGradient, value)
                         )
@@ -496,7 +497,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                         state: "normal",
                         disabled: !startHex || type === "linear-gradient"
                       }),
-                      onChange: value =>
+                      onChange: (value) =>
                         onChange(
                           changeRadialDegree(v.backgroundGradient, value)
                         )
@@ -566,6 +567,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                 height,
                 x,
                 y,
+                fileName,
                 extension
               },
               onChange: ({
@@ -575,6 +577,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                 x,
                 y,
                 population,
+                fileName,
                 extension
               }) => {
                 x = x || 50;
@@ -584,6 +587,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                   backgroundImage: {
                     src,
                     population,
+                    fileName,
                     x,
                     y,
                     extension,

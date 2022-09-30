@@ -851,7 +851,7 @@ describe("testing Cloud getAllowedGBIds", () => {
   const typeRule: CollectionTypeRule = {
     type: BlockTypeRule.include,
     appliedFor: PAGES_GROUP_ID,
-    entityType: "collectionItem/1" as NoEmptyString
+    entityType: "collectionItem/1"
   };
 
   const itemRule: CollectionItemRule = {

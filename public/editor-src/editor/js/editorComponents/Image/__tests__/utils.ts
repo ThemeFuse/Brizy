@@ -1,12 +1,12 @@
-import {
-  calcWrapperPredefinedSizes,
-  PredefinedCustomSize,
-  ImageValue,
-  calcWrapperOriginalSizes,
-  getImageSize,
-  getSizeType
-} from "../utils";
 import { V } from "../types";
+import {
+  calcWrapperOriginalSizes,
+  calcWrapperPredefinedSizes,
+  getImageSize,
+  getSizeType,
+  ImageValue,
+  PredefinedCustomSize
+} from "../utils";
 
 // init config before start the tests
 beforeEach(() => {
@@ -114,6 +114,7 @@ describe("Testing 'Getters Image' functions", () => {
       widthSuffix: "px",
       heightSuffix: "px",
       imageSrc: "",
+      imageFileName: "",
       imageExtension: "",
       imagePopulation: "",
       sizeType: "custom",

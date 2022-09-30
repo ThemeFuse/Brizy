@@ -6,7 +6,13 @@
   &__slider:not(.slick-initialized) {
     display: flex;
     flex-wrap: wrap;
+    visibility: hidden;
   }
+
+  &__slider.slick-initialized {
+    visibility: visible;
+  }
+
   > .slick-slider {
     overflow: hidden;
 

@@ -372,19 +372,34 @@ export function updateGlobalBlocks(
 
 export async function uploadImage(data: {
   base64: string;
-}): Promise<{ name: string }> {
+  filename: string;
+}): Promise<{ name: string; uid: string; fileName: string }> {
   const {
     urls: { api }
   } = Config.getAll() as Cloud;
 
   const body = new URLSearchParams({
-    attachment: data.base64
+    attachment: data.base64,
+    filename: data.filename
   });
 
   return request(`${api}/media`, {
     method: "POST",
     body
-  }).then((r) => r.json());
+  })
+    .then((r) => r.json())
+    .then((r) => {
+      // normalize FileName
+      // doesn't contain the .ext
+      // the normal .ext is contained in name
+      const [fileName] = r.filename.split(".");
+
+      return {
+        name: r.name,
+        uid: r.uid,
+        fileName
+      };
+    });
 }
 
 //#endregion

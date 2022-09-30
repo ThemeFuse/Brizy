@@ -1,9 +1,11 @@
-import React, { ReactElement, ReactText } from "react";
 import classnames from "classnames";
-import { ImageSetter as CloudImageSetter, Value } from "./index.cloud";
+import ToastNotification from "cogo-toast";
+import React, { ReactElement, ReactText } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { getImageUid } from "visual/utils/api/index.wp";
+import { t } from "visual/utils/i18n";
 import { getImageFormat, preloadImage } from "visual/utils/image";
+import { ImageSetter as CloudImageSetter, Value } from "./index.cloud";
 
 export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
   wpMediaFrame: WPMediaFrame | null = null;
@@ -43,26 +45,37 @@ export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
         })
       });
       wpMediaFrame.on("select", () => {
-        const attachment = wpMediaFrame
-          .state()
-          .get("selection")
-          .first();
+        const attachment = wpMediaFrame.state().get("selection").first();
 
         getImageUid(attachment.get("id"))
-          .then(r => {
+          .then((r) => {
             const { x, y } = this.props;
-            const { url } = attachment.toJSON();
+            const { url, filename } = attachment.toJSON();
+            // removed file .ext used from uid
+            const [_fileName] = filename.split(".");
 
             // we use preloadImage function not attachment.get("width"), because
             // for some svg it returns wrong sizes(width/height = 0)
             preloadImage(url).then(({ width, height }) => {
+              const extension = getImageFormat(url);
+
+              if (!extension) {
+                ToastNotification.error(
+                  t(
+                    "Failed to upload file. Please upload a valid JPG, PNG, SVG or GIF image."
+                  )
+                );
+                return;
+              }
+
               const newValue: Value = {
                 x,
                 y,
                 src: r.uid,
                 width,
                 height,
-                extension: getImageFormat(url)
+                fileName: _fileName,
+                extension
               };
 
               if (this.mounted) {
@@ -73,7 +86,7 @@ export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
               this.props.onChange(newValue, { isChanged: "image" });
             });
           })
-          .catch(e => {
+          .catch((e) => {
             console.error("failed to get attachment uid", e);
           });
       });

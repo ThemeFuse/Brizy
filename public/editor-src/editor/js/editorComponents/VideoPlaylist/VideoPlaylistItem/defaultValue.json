@@ -13,7 +13,12 @@
     "title": "Test title Video",
     "subTitle": "Sub title video",
 
-    "coverImageSrc": "",
+    "coverImageFileName": null,
+
+    "images": {
+      "coverImageSrc": ""
+    },
+
     "coverSizeType": "custom",
 
     "coverImageWidth": 0,

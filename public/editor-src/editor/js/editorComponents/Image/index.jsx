@@ -1,49 +1,36 @@
-import React, { Fragment } from "react";
-import _ from "underscore";
 import classnames from "classnames";
+import React, { Fragment } from "react";
 import ResizeAware from "react-resize-aware";
-import Config from "visual/global/Config";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import _ from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import {
+  placeholderObjFromStr,
+  placeholderObjToStr
+} from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import Config from "visual/global/Config";
+import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
 import {
   imagePopulationUrl,
   imageSpecificSize,
   imageUrl
 } from "visual/utils/image";
-import { getStore } from "visual/redux/store";
-import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
+import { isNumber } from "visual/utils/math";
+import { isStory } from "visual/utils/models";
 import {
   defaultValueValue,
   mobileSyncOnChange,
   tabletSyncOnChange
 } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
-import defaultValue from "./defaultValue.json";
-import * as sidebarConfig from "./sidebar";
-import toolbarConfigFn from "./toolbar";
-import { css } from "visual/utils/cssStyle";
-import { style, styleContent } from "./styles";
 import { Wrapper } from "../tools/Wrapper";
-import {
-  showOriginalImage,
-  calcWrapperOriginalSizes,
-  calcWrapperPredefinedSizes,
-  calcWrapperSizes,
-  getImageSize,
-  getSizeType,
-  isGIF,
-  isSVG,
-  isOriginalSize,
-  isPredefinedSize
-} from "./utils";
-import { isNumber } from "visual/utils/math";
-
-import ImageWrapper from "./Wrapper";
+import defaultValue from "./defaultValue.json";
 import ImageContent from "./Image";
-import { IS_STORY } from "visual/utils/models";
-import * as ImagePatch from "./types/ImagePatch";
 import {
   elementModelToValue,
   patchOnDCChange,
@@ -51,11 +38,23 @@ import {
   patchOnSizeTypeChange,
   pathOnUnitChange
 } from "./imageChange";
+import * as sidebarConfig from "./sidebar";
+import { style, styleContent } from "./styles";
+import toolbarConfigFn from "./toolbar";
+import * as ImagePatch from "./types/ImagePatch";
 import {
-  placeholderObjFromStr,
-  placeholderObjToStr
-} from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+  calcWrapperOriginalSizes,
+  calcWrapperPredefinedSizes,
+  calcWrapperSizes,
+  getImageSize,
+  getSizeType,
+  isGIF,
+  isOriginalSize,
+  isPredefinedSize,
+  isSVG,
+  showOriginalImage
+} from "./utils";
+import ImageWrapper from "./Wrapper";
 
 class Image extends EditorComponent {
   static get componentId() {
@@ -109,7 +108,7 @@ class Image extends EditorComponent {
   handleImageChange(patch) {
     const device = deviceModeSelector(getStore().getState());
     const { v } = this.getValue2();
-    const dvv = key => defaultValueValue({ v, device, key });
+    const dvv = (key) => defaultValueValue({ v, device, key });
     const value = elementModelToValue(v);
     const image = ImagePatch.fromImageElementModel(patch);
 
@@ -154,17 +153,17 @@ class Image extends EditorComponent {
   }
 
   handleResize = () => {
-    if (!IS_STORY) {
+    if (!isStory(Config.getAll())) {
       this.updateContainerWidth();
     }
     this.props.onResize();
   };
 
-  handleChange = patch => {
+  handleChange = (patch) => {
     this.patchValue(patch);
   };
 
-  handleBoxResizerChange = patch => {
+  handleBoxResizerChange = (patch) => {
     if (this.state.isDragging) {
       this.setState({ sizePatch: patch });
     } else {
@@ -258,7 +257,10 @@ class Image extends EditorComponent {
     const size = getImageSize(sizeType);
 
     if (isPredefinedSize(size) || isOriginalSize(size)) {
-      const url = imageSpecificSize(v.imageSrc, sizeType);
+      const url = imageSpecificSize(v.imageSrc, {
+        size: sizeType,
+        fileName: v.imageFileName
+      });
 
       return {
         source: url,
@@ -266,9 +268,12 @@ class Image extends EditorComponent {
       };
     }
 
-    let { width: iW, height: iH, marginLeft: oX, marginTop: oY } = imageSizes[
-      device
-    ];
+    let {
+      width: iW,
+      height: iH,
+      marginLeft: oX,
+      marginTop: oY
+    } = imageSizes[device];
 
     oX = Math.abs(oX);
     oY = Math.abs(oY);
@@ -279,7 +284,8 @@ class Image extends EditorComponent {
       oX: Math.round(oX),
       oY: Math.round(oY),
       cW: Math.round(cW),
-      cH: Math.round(cH)
+      cH: Math.round(cH),
+      fileName: v.imageFileName
     };
     const url = imageUrl(src, options);
 
@@ -308,11 +314,8 @@ class Image extends EditorComponent {
   }
 
   getWrapperSizes(v) {
-    const {
-      containerWidth,
-      tabletContainerWidth,
-      mobileContainerWidth
-    } = this.state;
+    const { containerWidth, tabletContainerWidth, mobileContainerWidth } =
+      this.state;
     const {
       imageExtension,
       imagePopulation,
@@ -415,12 +418,8 @@ class Image extends EditorComponent {
   }
 
   getDBValue() {
-    const {
-      resize,
-      tabletResize,
-      mobileResize,
-      ...dbValue
-    } = super.getDBValue();
+    const { resize, tabletResize, mobileResize, ...dbValue } =
+      super.getDBValue();
 
     let value = {};
     if (resize) {
@@ -512,7 +511,7 @@ class Image extends EditorComponent {
     const wrapperSizes = this.getWrapperSizes(v);
     const { deviceMode } = getStore().getState().ui;
 
-    return dcKeys.map(dcKey => {
+    return dcKeys.map((dcKey) => {
       if (dcKey.key === "image") {
         let { width, height } = wrapperSizes[deviceMode];
         let { cW, cH } = this.prevWrapperSizes;
@@ -546,7 +545,7 @@ class Image extends EditorComponent {
   renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
-      itemProps: itemData => {
+      itemProps: (itemData) => {
         let {
           blockId,
           value: { popupId }
@@ -577,11 +576,8 @@ class Image extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { className } = v;
     const { gallery = {} } = this.props.meta;
-    const {
-      containerWidth,
-      tabletContainerWidth,
-      mobileContainerWidth
-    } = this.state;
+    const { containerWidth, tabletContainerWidth, mobileContainerWidth } =
+      this.state;
 
     const wrapperSizes = this.getWrapperSizes(v);
 
@@ -596,11 +592,11 @@ class Image extends EditorComponent {
     });
 
     const linked = v.linkExternal !== "" || v.linkPopulation !== "";
-
+    const is_story = isStory(Config.getAll());
     const parentClassName = classnames(
       "brz-image",
-      IS_STORY && "brz-image--story",
-      { "brz-story-linked": IS_STORY && linked },
+      is_story && "brz-image--story",
+      { "brz-story-linked": is_story && linked },
       this.getLightboxClassName(),
       className
     );
@@ -692,12 +688,12 @@ class Image extends EditorComponent {
 
     const parentClassName = classnames(
       "brz-image",
-      { "brz-story-linked": IS_STORY && linked },
+      { "brz-story-linked": isStory(Config.getAll()) && linked },
       isAbsoluteOrFixed && "brz-image--story",
       this.getLightboxClassName(),
       className,
       css(
-        `${this.constructor.componentId}-${this.getId()}-parent`,
+        `${this.getComponentId()}-${this.getId()}-parent`,
         `${this.getId()}-parent`,
         style(v, vs, vd, styleProps)
       )
@@ -721,7 +717,7 @@ class Image extends EditorComponent {
               wrapperSizes={wrapperSizes}
               meta={this.props.meta}
               extraAttributes={extraAttributes}
-              getResponsiveUrls={imageSizes =>
+              getResponsiveUrls={(imageSizes) =>
                 this.getResponsiveUrls(wrapperSizes, imageSizes)
               }
               onChange={this.handleChange}

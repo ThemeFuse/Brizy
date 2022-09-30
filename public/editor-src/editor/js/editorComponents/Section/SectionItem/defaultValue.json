@@ -6,6 +6,10 @@
     "hoverMedia": "image",
 
     "bgSizeType": "custom",
+    "bgImageFileName": null,
+    "hoverBgImageFileName": null,
+    "tabletBgImageFileName": null,
+    "mobileBgImageFileName": null,
     "hoverBgSizeType": null,
 
     "images": {

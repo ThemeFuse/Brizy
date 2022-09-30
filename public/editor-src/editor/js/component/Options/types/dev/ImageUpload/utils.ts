@@ -1,13 +1,14 @@
 import { match } from "fp-utilities";
-import * as String from "visual/utils/string";
-import * as Math from "visual/utils/math";
 import * as Option from "visual/component/Options/Type";
 import { FromElementModel } from "visual/component/Options/Type";
-import { Value, Size } from "./Types";
+import * as Math from "visual/utils/math";
+import * as String from "visual/utils/string";
+import { Size, Value } from "./Types";
 import * as Patch from "./types/Patch";
 
 export const DEFAULT_VALUE: Value = {
   src: "",
+  fileName: "",
   extension: "",
   width: 0,
   height: 0,
@@ -16,8 +17,9 @@ export const DEFAULT_VALUE: Value = {
   sizeType: "custom"
 };
 
-export const fromElementModel: FromElementModel<Value> = get => ({
+export const fromElementModel: FromElementModel<Value> = (get) => ({
   src: String.toString(get("imageSrc")),
+  fileName: String.toString(get("imageFileName")),
   extension: String.toString(get("imageExtension")),
   width: Math.toNonNegative(get("imageWidth")),
   height: Math.toNonNegative(get("imageHeight")),
@@ -29,8 +31,9 @@ export const fromElementModel: FromElementModel<Value> = get => ({
 export const toElementModel: Option.ToElementModel<Patch.Patch> = match(
   [
     Patch.isImageDataPatch,
-    v => ({
+    (v) => ({
       imageSrc: v.imageSrc,
+      imageFileName: v.imageFileName,
       imageExtension: v.imageExtension,
       imageWidth: v.imageWidth,
       imageHeight: v.imageHeight
@@ -38,9 +41,9 @@ export const toElementModel: Option.ToElementModel<Patch.Patch> = match(
   ],
   [
     Patch.isPositionPatch,
-    v => ({ positionX: v.positionX, positionY: v.positionY })
+    (v) => ({ positionX: v.positionX, positionY: v.positionY })
   ],
-  [Patch.isSizePatch, v => ({ sizeType: v.sizeType })]
+  [Patch.isSizePatch, (v) => ({ sizeType: v.sizeType })]
 );
 
 export const configSizeToSize = (size: {

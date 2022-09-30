@@ -934,7 +934,8 @@ body.brz::after,body.brz::before{display:none}
 .brz .brz-popup2__preview{z-index:-1;visibility:hidden;-webkit-transform:translate(0,-110%);transform:translate(0,-110%);opacity:0;-webkit-transition:.3s cubic-bezier(.25,.46,.45,.94) opacity;transition:.3s cubic-bezier(.25,.46,.45,.94) opacity}
 .brz .brz-popup2__preview.brz-popup2--opened{z-index:1070;visibility:visible;-webkit-transform:translate(0,0);transform:translate(0,0);opacity:1;-webkit-transition:.3s cubic-bezier(.25,.46,.45,.94) opacity;transition:.3s cubic-bezier(.25,.46,.45,.94) opacity}
 .brz .brz-carousel{display:block;width:100%}
-.brz .brz-carousel__slider:not(.slick-initialized){display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}
+.brz .brz-carousel__slider:not(.slick-initialized){display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;visibility:hidden}
+.brz .brz-carousel__slider.slick-initialized{visibility:visible}
 .brz .brz-carousel>.slick-slider{overflow:hidden}
 .brz .brz-carousel>.slick-slider .slick-slide{height:auto}
 .brz .brz-carousel>.slick-slider>.slick-list>.slick-track>.slick-slide>div{height:100%}
