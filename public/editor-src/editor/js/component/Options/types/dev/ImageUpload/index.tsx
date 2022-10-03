@@ -1,15 +1,15 @@
-import React, { useCallback, useMemo } from "react";
 import classNames from "classnames";
+import React, { useCallback, useMemo } from "react";
 import { ImageSetter } from "visual/component/Controls/ImageSetter";
-import { t } from "visual/utils/i18n";
 import Config from "visual/global/Config";
+import { t } from "visual/utils/i18n";
 import { Image } from "./model";
 import { Component } from "./Types";
 import {
+  configSizeToSize,
   DEFAULT_VALUE,
   fromElementModel,
-  toElementModel,
-  configSizeToSize
+  toElementModel
 } from "./utils";
 
 export const ImageUpload: Component = ({ onChange, value, config, label }) => {
@@ -37,6 +37,7 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
           {
             onChange({
               imageSrc: v.src,
+              imageFileName: v.fileName,
               imageExtension: v.extension,
               imageWidth: v.width,
               imageHeight: v.height
@@ -78,6 +79,7 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
         width={value.width}
         height={value.height}
         src={value.src}
+        fileName={value.fileName}
         onChange={onImageChange}
         size={value.sizeType}
         sizes={!disableSizes && value.extension !== "svg" ? sizes : undefined}

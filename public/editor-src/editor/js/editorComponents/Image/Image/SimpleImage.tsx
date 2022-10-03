@@ -1,52 +1,54 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React, { useState, useRef, useEffect } from "react";
-import { MIN_COL_WIDTH } from "visual/config/columns";
-import { imageUrl } from "visual/utils/image";
-import { calcImageSizes } from "../utils";
-import {
-  tabletSyncOnChange,
-  mobileSyncOnChange,
-  defaultValueValue
-} from "visual/utils/onChange";
-
 import classnames from "classnames";
+import React, { useEffect, useRef, useState } from "react";
+import { MIN_COL_WIDTH } from "visual/config/columns";
 import { css } from "visual/utils/cssStyle";
-import { styleImage } from "../styles";
-
-import { ImageSizes, ImageProps, Device, Styles } from "../types";
-import { imageSpecificSize } from "visual/utils/image";
+import { imageSpecificSize, imageUrl } from "visual/utils/image";
+import {
+  defaultValueValue,
+  mobileSyncOnChange,
+  tabletSyncOnChange
+} from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { styleImage } from "../styles";
+import { Device, ImageProps, ImageSizes, Styles } from "../types";
+import { calcImageSizes } from "../utils";
 
-const formatRetinaSrc = (
-  src: string,
-  sizeType: string,
-  maxCw: number
-): string => {
+interface RetinaData {
+  src: string;
+  fileName: string;
+  sizeType: string;
+  maxCw: number;
+}
+
+const formatRetinaSrc = (data: RetinaData): string => {
+  const { sizeType, src, maxCw, fileName } = data;
   switch (sizeType) {
     case "custom": {
-      const url_1X = imageUrl(src, { iW: maxCw, iH: "any" });
-      const url_2X = imageUrl(src, { iW: maxCw * 2, iH: "any" });
+      const url_1X = imageUrl(src, { iW: maxCw, iH: "any", fileName });
+      const url_2X = imageUrl(src, { iW: maxCw * 2, iH: "any", fileName });
       return `${url_1X} 1x, ${url_2X} 2x`;
     }
     default: {
-      const url = imageSpecificSize(src, sizeType);
+      const url = imageSpecificSize(src, { size: sizeType, fileName });
       return `${url} 1x, ${url} 2x`;
     }
   }
 };
 
-const formatSrc = (src: string, sizeType: string, maxCw: number): string => {
+const formatSrc = (data: RetinaData): string => {
+  const { sizeType, src, maxCw, fileName } = data;
   switch (sizeType) {
     case "custom": {
-      return imageUrl(src, { iW: maxCw, iH: "any" }) ?? "";
+      return imageUrl(src, { iW: maxCw, iH: "any", fileName }) ?? "";
     }
     default: {
-      return imageSpecificSize(src, sizeType);
+      return imageSpecificSize(src, { size: sizeType, fileName }) ?? "";
     }
   }
 };
 
-const SimpleImage: React.FC<ImageProps> = props => {
+const SimpleImage: React.FC<ImageProps> = (props) => {
   const {
     v,
     vs,
@@ -60,6 +62,7 @@ const SimpleImage: React.FC<ImageProps> = props => {
   const { desktopW, tabletW, mobileW } = meta;
   const {
     imageSrc,
+    imageFileName,
     imageWidth,
     imageHeight,
     positionX,
@@ -99,10 +102,30 @@ const SimpleImage: React.FC<ImageProps> = props => {
   const responsiveUrls = getResponsiveUrls && getResponsiveUrls(imageSizes);
 
   const { desktopSrc, tabletSrc, mobileSrc, sourceSrc } = responsiveUrls || {
-    desktopSrc: formatRetinaSrc(imageSrc, sizeType, maxDesktopCW),
-    tabletSrc: formatRetinaSrc(imageSrc, tabletSizeType, maxTabletCW),
-    mobileSrc: formatRetinaSrc(imageSrc, mobileSizeType, maxMobileCW),
-    sourceSrc: formatSrc(imageSrc, sizeType, maxMobileCW)
+    desktopSrc: formatRetinaSrc({
+      src: imageSrc,
+      fileName: imageFileName,
+      sizeType: sizeType,
+      maxCw: maxDesktopCW
+    }),
+    tabletSrc: formatRetinaSrc({
+      src: imageSrc,
+      fileName: imageFileName,
+      sizeType: tabletSizeType,
+      maxCw: maxTabletCW
+    }),
+    mobileSrc: formatRetinaSrc({
+      src: imageSrc,
+      fileName: imageFileName,
+      sizeType: mobileSizeType,
+      maxCw: maxMobileCW
+    }),
+    sourceSrc: formatSrc({
+      src: imageSrc,
+      fileName: imageFileName,
+      sizeType: sizeType,
+      maxCw: maxMobileCW
+    })
   };
   // ! find less hacky way
 

@@ -22,6 +22,7 @@ class BackgroundImage extends Inline {
       const width = parseInt(node.getAttribute("data-image_width")) || null;
       const height = parseInt(node.getAttribute("data-image_height")) || null;
       const extension = node.getAttribute("data-image_extension");
+      const fileName = node.getAttribute("data-image_file_name") || "image";
 
       if (!node.classList.contains("brz-population-mask")) {
         population = null;
@@ -33,6 +34,7 @@ class BackgroundImage extends Inline {
         x,
         y,
         extension,
+        fileName,
         width,
         height
       };
@@ -41,7 +43,7 @@ class BackgroundImage extends Inline {
   }
 
   static setValue(value, node) {
-    const { src, population, x, y, extension, width, height } = value;
+    const { src, fileName, population, x, y, extension, width, height } = value;
 
     if (population) {
       node.style.backgroundImage = null;
@@ -64,7 +66,9 @@ class BackgroundImage extends Inline {
         });
       });
     } else if (src) {
-      const imgUrl = isSVG(extension) ? svgUrl(src) : imageUrl(src);
+      const imgUrl = isSVG(extension)
+        ? svgUrl(src, { fileName })
+        : imageUrl(src, { fileName });
       node.classList.add("brz-text-mask");
       node.classList.remove("brz-population-mask");
       node.classList.remove("brz-population-mask__style");
@@ -72,6 +76,7 @@ class BackgroundImage extends Inline {
       node.style.backgroundPosition = `${x}% ${y}%`;
       node.removeAttribute("data-image_population");
       node.setAttribute("data-image_src", src);
+      node.setAttribute("data-image_file_name", fileName);
       node.setAttribute("data-image_width", width);
       node.setAttribute("data-image_height", height);
       node.setAttribute("data-image_extension", extension);
@@ -88,6 +93,7 @@ class BackgroundImage extends Inline {
     node.classList.remove("brz-population-mask__style");
     node.removeAttribute("data-image_population");
     node.removeAttribute("data-image_src");
+    node.removeAttribute("data-image_file_name");
     node.removeAttribute("data-image_width");
     node.removeAttribute("data-image_height");
     node.removeAttribute("data-image_extension");

@@ -127,8 +127,11 @@ export const changeRichText = ($: cheerio.Root): void => {
       const src = $this.attr("data-image_src") ?? "";
       const population = $this.attr("data-image_population");
       const extension = $this.attr("data-image_extension") ?? "";
+      const fileName = $this.attr("data-image_file_name") ?? "image";
 
-      const imgUrl = isSVG(extension) ? svgUrl(src) : imageUrl(src);
+      const imgUrl = isSVG(extension)
+        ? svgUrl(src, { fileName })
+        : imageUrl(src, { fileName });
 
       // @ts-expect-error: incorrect types for cheerio
       // required some property
@@ -157,6 +160,10 @@ export const changeRichText = ($: cheerio.Root): void => {
         });
 
       $this.removeAttr("data-image_src");
+      $this.removeAttr("data-image_width");
+      $this.removeAttr("data-image_height");
+      $this.removeAttr("data-image_extension");
+      $this.removeAttr("data-image_file_name");
       $this.removeAttr("data-image_population");
     });
 };

@@ -19,6 +19,11 @@
 
     "elementPosition": "relative",
 
+    "bgImageFileName": null,
+    "hoverBgImageFileName": null,
+    "tabletBgImageFileName": null,
+    "mobileBgImageFileName": null,
+
     "images": {
       "bgImageSrc": "",
       "hoverBgImageSrc": null,

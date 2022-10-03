@@ -1,3 +1,5 @@
+import classnames from "classnames";
+import ToastNotification from "cogo-toast";
 import React, {
   ChangeEvent,
   ChangeEventHandler,
@@ -5,27 +7,24 @@ import React, {
   ReactNode,
   ReactText
 } from "react";
-import classnames from "classnames";
-import ToastNotification from "cogo-toast";
+import { noop } from "rxjs";
+import { Item } from "visual/component/Controls/MultiSelect/Item";
+import { Select2 } from "visual/component/Controls/Select2";
 import EditorIcon from "visual/component/EditorIcon";
+import { t } from "visual/utils/i18n";
 import {
-  preloadImage,
+  getImageFormat,
   imageUrl,
-  svgUrl,
-  getImageFormat
+  isSVG,
+  preloadImage,
+  svgUrl
 } from "visual/utils/image";
 import { uploadImage } from "visual/utils/image/uploadImage";
-import { t } from "visual/utils/i18n";
-
 import Image from "./Image";
-import { Select2 } from "visual/component/Controls/Select2";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
-import { noop } from "rxjs";
-
-const isSVG = (extension: string): extension is "svg" => extension === "svg";
 
 export interface Value {
   src: string;
+  fileName: string;
   x: number;
   y: number;
   width: number;
@@ -40,6 +39,7 @@ export type Meta = {
 export interface Props<T extends ReactText> {
   className?: string;
   src: string;
+  fileName: string;
   x: number;
   y: number;
   width: number;
@@ -69,6 +69,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
 > {
   state = {
     src: this.props.src,
+    fileName: this.props.fileName,
     width: this.props.width,
     height: this.props.height,
     extension: this.props.extension,
@@ -98,10 +99,10 @@ export class ImageSetter<T extends ReactText> extends React.Component<
 
   handleChange = (value: Partial<Value>, meta: Meta): void => {
     const { x, y, extension } = this.props;
-    const { src, width, height } = this.state;
+    const { src, fileName, width, height } = this.state;
 
     this.props.onChange(
-      { src, width, height, x, y, extension, ...value },
+      { src, fileName, width, height, x, y, extension, ...value },
       meta
     );
   };
@@ -109,6 +110,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
   handleRemove = (): void => {
     const newValue: Value = {
       src: "",
+      fileName: "",
       width: 0,
       height: 0,
       x: 0,
@@ -120,7 +122,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
     this.props.onChange(newValue, { isChanged: "image" });
   };
 
-  handleImageChange: ChangeEventHandler<HTMLInputElement> = e => {
+  handleImageChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { files } = e.target;
     const file = files?.[0];
 
@@ -132,24 +134,48 @@ export class ImageSetter<T extends ReactText> extends React.Component<
 
     uploadImage(file, {
       acceptedExtensions: ["jpeg", "jpg", "png", "gif", "svg"],
-      onUpload: ({ name: src }) => {
+      onUpload: ({ name: src, fileName }) => {
         const extension = getImageFormat(src);
-        const imgUrl = isSVG(extension) ? svgUrl(src) : imageUrl(src);
 
-        preloadImage(imgUrl).then(({ width, height }) => {
-          const { x, y } = this.props;
-          const newValue = { x, y, src, width, height, extension };
-          if (this.mounted) {
-            this.setState({
-              ...newValue,
-              loading: false
-            });
-          }
+        if (!extension) {
+          ToastNotification.error(
+            t(
+              "Failed to upload file. Please upload a valid JPG, PNG, SVG or GIF image."
+            )
+          );
+          return;
+        }
 
-          this.handleChange(newValue, { isChanged: "image" });
-        });
+        const imgUrl = isSVG(src)
+          ? svgUrl(src, { fileName })
+          : imageUrl(src, { fileName });
+
+        preloadImage(imgUrl)
+          .then(({ width, height }) => {
+            const { x, y } = this.props;
+            const newValue = {
+              x,
+              y,
+              src,
+              width,
+              height,
+              extension,
+              fileName
+            };
+            if (this.mounted) {
+              this.setState({
+                ...newValue,
+                loading: false
+              });
+            }
+
+            this.handleChange(newValue, { isChanged: "image" });
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       },
-      onError: e => {
+      onError: (e) => {
         let errorMsg;
 
         if ((e as { status: number }).status === 413) {
@@ -163,6 +189,10 @@ export class ImageSetter<T extends ReactText> extends React.Component<
         }
 
         ToastNotification.error(errorMsg);
+
+        if (this.mounted) {
+          this.setState({ loading: false });
+        }
 
         if (process.env.NODE_ENV === "development") {
           console.error("Image upload error", e);
@@ -248,7 +278,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
         onChange={this.props.onSizeChange ?? noop}
         size="short"
       >
-        {this.props.sizes?.map(s => (
+        {this.props.sizes?.map((s) => (
           <Item key={s.value} value={s.value}>
             <span title={s.label}>{s.label}</span>
           </Item>

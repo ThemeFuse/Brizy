@@ -3,6 +3,8 @@ import { uploadImage as apiUploadImage } from "visual/utils/api";
 
 export interface UploadData {
   name: string;
+  fileName: string;
+  uid: string;
 }
 
 export interface Options {
@@ -19,25 +21,25 @@ const defaultOptions: Options = {
   onBase64: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onUpload: () => {},
-  onError: e => console.log("uploadImage default onError", e)
+  onError: (e) => console.log("uploadImage default onError", e)
 };
 /* eslint-enabled no-console, no-unused-vars */
 
 function getBase64(file: File): Promise<string> {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     const reader = new FileReader();
 
-    reader.onload = function(e): void {
+    reader.onload = function (e): void {
       if (typeof e.target?.result === "string") {
         resolve(e.target?.result);
       } else {
         reject("Error read file.");
       }
     };
-    reader.onerror = function(): void {
+    reader.onerror = function (): void {
       reject("Error read file.");
     };
-    reader.onabort = function(): void {
+    reader.onabort = function (): void {
       reject("Abort read file.");
     };
     reader.readAsDataURL(file);
@@ -68,13 +70,13 @@ export function uploadImage(imageFile: File, options?: Partial<Options>): void {
   );
 
   Promise.resolve(imageFile)
-    .then(file => {
+    .then((file) => {
       const extension = file.name.split(".").pop();
       const isAcceptedExtension =
         extension &&
         _.some(
           acceptedExtensions,
-          accepted => accepted === extension.toLowerCase()
+          (accepted) => accepted === extension.toLowerCase()
         );
 
       if (!isAcceptedExtension) {
@@ -87,12 +89,13 @@ export function uploadImage(imageFile: File, options?: Partial<Options>): void {
       return file;
     })
     .then(getBase64)
-    .then(base64 => {
+    .then((base64) => {
       onBase64(base64);
 
       const strippedBase64 = base64.replace(/data:image\/.+;base64,/, "");
       return apiUploadImage({
-        base64: strippedBase64
+        base64: strippedBase64,
+        filename: imageFile.name
       });
     })
     .then(onUpload)

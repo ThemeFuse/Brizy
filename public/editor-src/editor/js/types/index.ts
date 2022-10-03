@@ -7,7 +7,6 @@ import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils
 import { Hex } from "visual/utils/color/Hex";
 import { Palette as ColorPalette } from "visual/utils/color/Palette";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
-import { NoEmptyString } from "visual/utils/string/NoEmptyString";
 import { Dictionary } from "./utils";
 
 export type V = Dictionary<unknown>;
@@ -33,8 +32,8 @@ export interface AllRule {
 }
 
 export interface CollectionTypeRule extends AllRule {
-  appliedFor: number | null;
-  entityType: NoEmptyString;
+  appliedFor: number;
+  entityType: string;
 }
 
 export type CloudReferenceEntity = NewType<string, "reference">;

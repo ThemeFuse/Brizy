@@ -1,6 +1,6 @@
-import * as String from "visual/utils/string/index";
 import * as Math from "visual/utils/math";
 import { Getter, setter, Setter } from "visual/utils/model";
+import * as String from "visual/utils/string/index";
 
 export interface Coordinates {
   x: number;
@@ -9,6 +9,7 @@ export interface Coordinates {
 
 export interface Image {
   src: string;
+  fileName: string;
   extension: string;
   width: number;
   height: number;

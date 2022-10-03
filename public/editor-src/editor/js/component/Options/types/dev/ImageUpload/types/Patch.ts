@@ -1,6 +1,7 @@
 // region ImagePatch
 export type ImageDataPatch = {
   imageSrc: string;
+  imageFileName: string;
   imageExtension: string;
   imageWidth: number;
   imageHeight: number;

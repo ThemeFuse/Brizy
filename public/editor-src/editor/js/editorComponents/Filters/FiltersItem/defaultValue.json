@@ -15,6 +15,11 @@
     "checkColorSizeSuffix": "px",
     "media": "image",
 
+    "bgImageFileName": null,
+    "hoverBgImageFileName": null,
+    "tabletBgImageFileName": null,
+    "mobileBgImageFileName": null,
+
     "images": {
       "bgImageSrc": "",
       "hoverBgImageSrc": null,

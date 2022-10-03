@@ -1,20 +1,20 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
-import CustomCSS from "visual/component/CustomCSS";
-import Toolbar from "visual/component/Toolbar";
+import React from "react";
 import { TextEditor } from "visual/component/Controls/TextEditor";
+import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
+import { imageSpecificSize, imageUrl } from "visual/utils/image";
+import { getUrlQueryParam } from "visual/utils/url";
 import {
   videoData as getVideoData,
   videoUrl as getVideoUrl
 } from "visual/utils/video";
-import * as toolbarConfig from "./toolbar";
-import { styleContent } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import { imageSpecificSize, imageUrl } from "visual/utils/image";
 import defaultValue from "./defaultValue.json";
-import { getUrlQueryParam } from "visual/utils/url";
+import { styleContent } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class VideoPlaylistItem extends EditorComponent {
   static get componentId() {
@@ -23,11 +23,11 @@ class VideoPlaylistItem extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleTextChange = title => {
+  handleTextChange = (title) => {
     this.patchValue({ title });
   };
 
-  handleText2Change = subTitle => {
+  handleText2Change = (subTitle) => {
     this.patchValue({ subTitle });
   };
 
@@ -68,6 +68,7 @@ class VideoPlaylistItem extends EditorComponent {
       title,
       subTitle,
       coverImageSrc,
+      coverImageFileName,
       coverSizeType,
       customCSS
     } = v;
@@ -75,8 +76,11 @@ class VideoPlaylistItem extends EditorComponent {
     const videoSrc = this.getVideoSrc(v);
     const coverUrl =
       coverSizeType === "custom"
-        ? imageUrl(coverImageSrc)
-        : imageSpecificSize(coverImageSrc, coverSizeType);
+        ? imageUrl(coverImageSrc, { fileName: coverImageFileName })
+        : imageSpecificSize(coverImageSrc, {
+            size: coverSizeType,
+            fileName: coverImageFileName
+          });
     const classNameContent = classnames(
       "brz-video-playlist-video-item",
       { "brz-video-playlist-video-item__cover": v.coverImageSrc },

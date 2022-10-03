@@ -5424,6 +5424,10 @@ body.brz::before, body.brz::after {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  visibility: hidden;
+}
+.brz .brz-carousel__slider.slick-initialized {
+  visibility: visible;
 }
 .brz .brz-carousel > .slick-slider {
   overflow: hidden;

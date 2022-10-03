@@ -1,23 +1,23 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import Link from "visual/component/Link";
-import { imageUrl, imagePopulationUrl } from "visual/utils/image";
-import * as Str from "visual/utils/string/specs";
-import * as Num from "visual/utils/reader/number";
-import { isSVG, isGIF } from "../utils";
-
-import { ImageProps } from "../types";
-import { isNullish } from "visual/utils/value";
 import { pipe } from "visual/utils/fp";
+import { imagePopulationUrl, imageUrl } from "visual/utils/image";
+import * as Num from "visual/utils/reader/number";
+import * as Str from "visual/utils/string/specs";
+import { isNullish } from "visual/utils/value";
+import { ImageProps } from "../types";
+import { isGIF, isSVG } from "../utils";
 
 const isNan = pipe(Num.read, isNullish);
 
 function withLink(
   WrappedComponent: React.ComponentType<ImageProps>
 ): React.FC<ImageProps> {
-  const linkComponent: React.FC<ImageProps> = props => {
+  const linkComponent: React.FC<ImageProps> = (props) => {
     const {
       imageSrc,
+      imageFileName,
       imageExtension,
       imagePopulation,
       linkType: linkType_,
@@ -43,7 +43,7 @@ function withLink(
         ? imagePopulationUrl(imagePopulation)
         : isSVG(imageExtension) || isGIF(imageExtension)
         ? ""
-        : Str.read(imageUrl(imageSrc)),
+        : Str.read(imageUrl(imageSrc, { fileName: imageFileName })),
       action: ""
     };
     if (linkHrefs[linkType] !== "") {

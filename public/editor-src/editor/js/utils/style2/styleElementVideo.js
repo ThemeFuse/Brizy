@@ -38,6 +38,7 @@ export function styleElementVideoBgColorRatio({ v, device, state }) {
 export function styleElementVideoCoverSrc({ v, device, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const src = dvv("coverImageSrc");
+  const fileName = dvv("coverImageFileName");
   const extension = dvv("coverImageExtension");
   const sizeType = dvv("coverSizeType") ?? "custom";
 
@@ -50,14 +51,14 @@ export function styleElementVideoCoverSrc({ v, device, state }) {
   }
 
   if (isSVG(extension)) {
-    return `url(${svgUrl(src)})`;
+    return `url(${svgUrl(src, { fileName })})`;
   }
 
   if (sizeType === "custom") {
-    return `url(${imageUrl(src)})`;
+    return `url(${imageUrl(src, { fileName })})`;
   }
 
-  return `url(${imageSpecificSize(src, sizeType)})`;
+  return `url(${imageSpecificSize(src, { size: sizeType, fileName })})`;
 }
 
 export function styleElementVideoCoverPositionX({ v, device, state }) {
