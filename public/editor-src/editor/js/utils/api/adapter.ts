@@ -40,7 +40,6 @@ import { readKey } from "visual/utils/reader/object";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/reader/string";
 import * as Union from "visual/utils/reader/union";
-import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import {
   getUsedModelsFonts,
   getUsedModelsUpload,
@@ -424,8 +423,8 @@ interface ApiCollectionItemRule {
 
 interface ApiCollectionTypeRule {
   type: 1 | 2;
-  appliedFor: number | null;
-  entityType: NoEmptyString.NoEmptyString;
+  appliedFor: number;
+  entityType: string;
   entityValues: [];
 }
 
@@ -447,10 +446,11 @@ const isApiItemRule = (rule: ApiRule): rule is ApiCollectionItemRule => {
 
 const isApiTypeRule = (rule: ApiRule): rule is ApiCollectionTypeRule => {
   return (
+    "appliedFor" in rule &&
+    rule.appliedFor !== null &&
     "entityValues" in rule &&
     rule.entityValues.length === 0 &&
-    rule.entityType !== undefined &&
-    NoEmptyString.is(rule.entityType)
+    rule.entityType !== undefined
   );
 };
 

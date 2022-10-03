@@ -6,6 +6,8 @@
 
     "bgSizeType": "custom",
 
+    "bgImageFileName": null,
+
     "images": {
       "bgImageSrc": ""
     },

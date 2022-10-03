@@ -199,7 +199,6 @@ export function templateSplitRules(rules: Rule[]): TemplateSplitRules {
       } else if (isCollectionTypeRule(rule)) {
         acc.level2.push(rule);
       } else if (isAllRule(rule)) {
-        console.log("rule", rule);
         acc.level3.push(rule);
       }
 

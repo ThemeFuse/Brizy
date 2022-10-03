@@ -50,6 +50,7 @@ export type V = {
   widthSuffix: Unit;
   heightSuffix: Unit;
   imageSrc: string;
+  imageFileName: string;
   imageExtension: string;
   imagePopulation: string;
   sizeType: string;
@@ -83,9 +84,7 @@ export type V = {
 
 export type Patch = { [key: string]: number };
 
-type GetResponsiveUrls = (
-  imageSizes: ImageSizes
-) => {
+type GetResponsiveUrls = (imageSizes: ImageSizes) => {
   desktopSrc: string;
   tabletSrc: string;
   mobileSrc: string;

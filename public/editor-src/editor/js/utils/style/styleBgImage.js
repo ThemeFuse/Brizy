@@ -1,13 +1,19 @@
-import { styleState } from "visual/utils/style";
+import { imagePopulationUrl, imageUrl, svgUrl } from "visual/utils/image";
 import { defaultValueValue } from "visual/utils/onChange";
-import { imageUrl, imagePopulationUrl, svgUrl } from "visual/utils/image";
+import { styleState } from "visual/utils/style";
 
-const isSVG = extension => extension === "svg";
+const isSVG = (extension) => extension === "svg";
 
 export function styleBgImage({ v, device, state }) {
   const isHover = styleState({ v, state });
   const media = defaultValueValue({ v, key: "media", device, state });
   const bgImageSrc = defaultValueValue({ v, key: "bgImageSrc", device, state });
+  const bgImageFileName = defaultValueValue({
+    v,
+    key: "bgImageFileName",
+    device,
+    state
+  });
   const bgImageExtension = defaultValueValue({
     v,
     key: "bgImageExtension",
@@ -33,6 +39,12 @@ export function styleBgImage({ v, device, state }) {
     device,
     state: "hover"
   });
+  const hoverBgImageFileName = defaultValueValue({
+    v,
+    key: "bgImageFileName",
+    device,
+    state: "hover"
+  });
 
   const hoverBgImageExtension = defaultValueValue({
     v,
@@ -54,12 +66,14 @@ export function styleBgImage({ v, device, state }) {
     hoverBgPopulation === ""
     ? `url(${
         isSVG(hoverBgImageExtension)
-          ? svgUrl(hoverBgImageSrc)
-          : imageUrl(hoverBgImageSrc)
+          ? svgUrl(hoverBgImageSrc, { fileName: hoverBgImageFileName })
+          : imageUrl(hoverBgImageSrc, { fileName: hoverBgImageFileName })
       })`
     : media === "image" && bgImageSrc !== "" && bgPopulation === ""
     ? `url(${
-        isSVG(bgImageExtension) ? svgUrl(bgImageSrc) : imageUrl(bgImageSrc)
+        isSVG(bgImageExtension)
+          ? svgUrl(bgImageSrc, { fileName: bgImageFileName })
+          : imageUrl(bgImageSrc, { fileName: bgImageFileName })
       })`
     : "none";
 }
@@ -69,6 +83,12 @@ export function styleExportBgImage({ v, device, state }) {
   const bgImageSrc = defaultValueValue({
     v,
     key: "bgImageSrc",
+    device,
+    state
+  });
+  const bgImageFileName = defaultValueValue({
+    v,
+    key: "bgImageFileName",
     device,
     state
   });
@@ -89,8 +109,8 @@ export function styleExportBgImage({ v, device, state }) {
   const bgImage = bgPopulation
     ? imagePopulationUrl(bgPopulation)
     : isSVG(bgImageExtension)
-    ? svgUrl(bgImageSrc)
-    : imageUrl(bgImageSrc);
+    ? svgUrl(bgImageSrc, { fileName: bgImageFileName })
+    : imageUrl(bgImageSrc, { fileName: bgImageFileName });
 
   return media === "image" && (bgImageSrc !== "" || bgPopulation !== "")
     ? `url(${bgImage})`

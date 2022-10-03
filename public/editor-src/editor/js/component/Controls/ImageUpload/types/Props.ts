@@ -2,6 +2,8 @@ import { WithClassName, WithOnChange } from "visual/utils/options/attributes";
 
 export interface UploadData {
   name: string;
+  fileName: string;
+  uid: string;
 }
 
 export interface Props

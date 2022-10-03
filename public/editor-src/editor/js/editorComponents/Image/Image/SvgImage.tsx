@@ -1,10 +1,9 @@
-import React from "react";
-import { svgUrl } from "visual/utils/image";
-import { ImageProps, Styles, V } from "../types";
-import { styleSvg } from "../styles";
-
 import classnames from "classnames";
+import React from "react";
 import { css } from "visual/utils/cssStyle";
+import { svgUrl } from "visual/utils/image";
+import { styleSvg } from "../styles";
+import { ImageProps, Styles, V } from "../types";
 import { showOriginalImage } from "../utils";
 
 type Props = {
@@ -26,7 +25,7 @@ const SvgImage: React.FC<Props> = ({
   imageSrc,
   extraAttributes = {}
 }) => {
-  const url = svgUrl(imageSrc);
+  const url = svgUrl(imageSrc, { fileName: v.imageFileName });
 
   let svgClassName = "";
   if (IS_EDITOR) {

@@ -1,9 +1,9 @@
 import _ from "underscore";
 import { objectToQueryString } from "visual/utils/url";
-import { Options } from "./types";
+import { FilterOption } from "./types";
 
-export const getFilter = (options: Options): string => {
-  const roundedOptions = _.mapObject(options, val =>
+export const getFilter = (options: FilterOption): string => {
+  const roundedOptions = _.mapObject(options, (val) =>
     typeof val === "number" ? Math.round(val) : val
   );
 

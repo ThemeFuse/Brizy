@@ -1,9 +1,8 @@
-import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import {
-  Rule,
   AllRule,
   CollectionItemRule,
-  CollectionTypeRule
+  CollectionTypeRule,
+  Rule
 } from "visual/types";
 
 export function isCollectionItemRule(rule: Rule): rule is CollectionItemRule {
@@ -16,7 +15,7 @@ export function isCollectionItemRule(rule: Rule): rule is CollectionItemRule {
 
 export function isCollectionTypeRule(rule: Rule): rule is CollectionTypeRule {
   const appliedFor = "appliedFor" in rule && rule.appliedFor !== null;
-  const entityType = "entityType" in rule && NoEmptyString.is(rule.entityType);
+  const entityType = "entityType" in rule;
   const entityValues = !("entityValues" in rule);
 
   return appliedFor && entityType && entityValues;

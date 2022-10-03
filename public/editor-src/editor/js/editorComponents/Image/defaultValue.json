@@ -3,6 +3,7 @@
     "images": {
       "imageSrc": ""
     },
+    "imageFileName": "",
     "imagePopulation": "",
     "imageWidth": 600,
     "imageHeight": 450,

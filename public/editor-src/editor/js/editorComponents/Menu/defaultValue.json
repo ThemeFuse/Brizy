@@ -8,7 +8,13 @@
 
     "tabletMMenu": "on",
 
-    "mobileMMenu": "on"
+    "mobileMMenu": "on",
+
+    "bgImageFileName": null,
+
+    "images": {
+      "bgImageSrc": ""
+    }
   },
 
   "toolbar": {
@@ -22,7 +28,6 @@
     "mobileStickyTitle": null,
 
     "bg": "",
-    "bgImageSrc": "",
     "bgImageExtension": "",
     "bgImageWidth": 0,
     "bgImageHeight": 0,
