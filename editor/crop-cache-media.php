@@ -21,29 +21,39 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	}
 
 	/**
-	 * @param string $madia_name
+	 * @param array|string $media
 	 *
-	 * @return int
+	 * @return false|int|string|WP_Error|null
 	 * @throws Exception
 	 */
-	public function download_original_image( $madia_name ) {
-
-		if ( ! $madia_name ) {
-			throw new InvalidArgumentException( 'Invalid media file' );
+	public function download_original_image( $media ) {
+		if ( is_object( $media ) ) {
+			$uid          = isset( $media->uid ) ? $media->uid : null;
+			$fileName     = isset( $media->name ) ? $media->name . '.' . pathinfo( $uid, PATHINFO_EXTENSION ) : null;
+			$externalPath = $media['uid'] . '/';
+		} else {
+			$fileName     = $media;
+			$uid          = $media;
+			$externalPath = '';
 		}
 
-		$external_asset_url = $this->url_builder->external_media_url( "iW=5000&iH=any/" . $madia_name );
+		if ( ! $uid ) {
+			throw new InvalidArgumentException( 'Invalid media file uid' );
+		}
 
-		if ( ! ( $attachmentId = $this->getAttachmentByMediaName( $madia_name ) ) ) {
+		$external_asset_url = $this->url_builder->external_media_url( "iW=5000&iH=any/{$externalPath}{$fileName}" );
 
-			$original_asset_path          = $this->url_builder->wp_upload_path( $madia_name );
-			$original_asset_path_relative = $this->url_builder->wp_upload_relative_path( $madia_name );
+		if ( ! ( $attachmentId = $this->getAttachmentByMediaName( $uid ) ) ) {
+
+			$fileName                     = wp_unique_filename( $this->url_builder->wp_upload_path(), $fileName );
+			$original_asset_path          = $this->url_builder->wp_upload_path( $fileName );
+			$original_asset_path_relative = $this->url_builder->wp_upload_relative_path( $fileName );
 
 			if ( ! file_exists( $original_asset_path ) && ! $this->store_file( $external_asset_url, $original_asset_path ) ) {
 				throw new Exception( sprintf( 'Unable to cache media from source %s to %s', $external_asset_url, $original_asset_path ) );
 			}
 
-			$attachmentId = $this->create_attachment( $madia_name, $original_asset_path, $original_asset_path_relative, null, $madia_name );
+			$attachmentId = $this->create_attachment( $original_asset_path, $original_asset_path_relative, null, $uid );
 		}
 
 		if ( $attachmentId === 0 || is_wp_error( $attachmentId ) ) {

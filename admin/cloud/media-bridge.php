@@ -16,34 +16,35 @@ class Brizy_Admin_Cloud_MediaBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	private $blockId;
 
 	/**
-	 * @param $mediaUid
+	 * @param string|array $media
 	 *
-	 * @return mixed|void
+	 * @return bool|void
 	 * @throws Exception
 	 */
-	public function export( $mediaUid ) {
+	public function export( $media ) {
 
-		$mediaId = (int) $this->getAttachmentByMediaName( $mediaUid );
+		$uid     = isset( $media->uid ) ? $media->uid : $media;
+		$mediaId = (int) $this->getAttachmentByMediaName( $uid );
 
 		if ( ! $mediaId ) {
-			throw new Exception( "Unable to find media {$mediaUid}" );
+			throw new Exception( "Unable to find media {$uid}" );
 		}
 
-		if ( $this->client->isMediaUploaded( $mediaUid ) ) {
+		if ( $this->client->isMediaUploaded( $uid ) ) {
 			return true;
 		}
 
 		$filePath = get_attached_file( $mediaId );
-		$this->client->uploadMedia( $mediaUid, $filePath );
+		$this->client->uploadMedia( $uid, $filePath );
 	}
 
 	/**
-	 * @param $mediaUid
+	 * @param array|string $media
 	 *
 	 * @return mixed|void
 	 * @throws Exception
 	 */
-	public function import( $mediaUid ) {
+	public function import( $media ) {
 
 		if ( ! $this->blockId ) {
 			throw new Exception( 'The block id is not set.' );
@@ -63,7 +64,7 @@ class Brizy_Admin_Cloud_MediaBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		}
 
 		$media_cacher = new Brizy_Editor_CropCacheMedia( $this->client->getBrizyProject() );
-		$media_cacher->download_original_image( $mediaUid );
+		$media_cacher->download_original_image( $media );
 
 		// disabled it if was disabled before
 		if ( ! $svnUploadEnabled ) {

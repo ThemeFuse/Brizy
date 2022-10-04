@@ -16,7 +16,6 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge
      */
     public function export($block)
     {
-
         $media = json_decode($block->getMedia());
 
         if (!$media || !isset($media->fonts)) {
@@ -28,11 +27,10 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge
         }
 
         $bridge = new Brizy_Admin_Cloud_MediaBridge($this->client);
-        foreach ($media->images as $uid) {
+        foreach ($media->images as $media) {
             try {
-                $bridge->export($uid);
-            } catch (Exception $e)
-            {
+                $bridge->export($media);
+            } catch (Exception $e) {
                 Brizy_Logger::instance()->critical('Failed to export block media: ' . $e->getMessage(), [$e]);
             }
         }
@@ -131,9 +129,9 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge
                     $mediaBridge = new Brizy_Admin_Cloud_MediaBridge($this->client);
                     $mediaBridge->setBlockId($post);
                     if (isset($blockMedia->images)) {
-                        foreach ($blockMedia->images as $mediaUid) {
+                        foreach ($blockMedia->images as $media) {
                             try {
-                                $mediaBridge->import($mediaUid);
+                                $mediaBridge->import($media);
                             } catch (Exception $e) {
                                 Brizy_Logger::instance()->critical('Failed to import block media: ' . $e->getMessage(), [$e]);
                             }

@@ -221,16 +221,13 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 				continue;
 			}
 
-			$basename                     = basename( $path );
-			$original_asset_path          = $urlBuilder->page_upload_path( "/assets/images/" . $basename );
-			$original_asset_path_relative = $urlBuilder->page_upload_relative_path( "/assets/images/" . $basename );
-			wp_mkdir_p( dirname( $original_asset_path ) );
+			$basename                     = wp_unique_filename( $urlBuilder->wp_upload_path(), basename( $path ) );
+			$original_asset_path          = $urlBuilder->wp_upload_path( $basename );
+			$original_asset_path_relative = $urlBuilder->wp_upload_relative_path( $basename );
+
 			file_put_contents( $original_asset_path, $z->getFromName( $path ) );
 
-			Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment( $original_asset_path,
-				$original_asset_path_relative,
-				$block->getWpPostId(),
-				$uid );
+			Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment( $original_asset_path, $original_asset_path_relative, null, $uid );
 		}
 	}
 
@@ -275,21 +272,22 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 	protected function storeUploads( $data, ZipArchive $z, Brizy_Editor_Post $block ) {
 
 		$urlBuilder = new Brizy_Editor_UrlBuilder( $this->project, $block->getWpPostId() );
+
 		foreach ( $data->files->uploads as $uidKey => $path ) {
+
 			list( $uid, $uploadName ) = explode( '|||', $uidKey );
+
 			if ( $this->getAttachmentByMediaName( $uid ) ) {
 				continue;
 			}
 
-			$original_asset_path          = $urlBuilder->brizy_upload_path( "/custom_files/" . $uploadName );
-			$original_asset_path_relative = $urlBuilder->brizy_upload_relative_path( "/custom_files/" . $uploadName );
-			wp_mkdir_p( dirname( $original_asset_path ) );
+			$uploadName                   = wp_unique_filename( $urlBuilder->wp_upload_path(), $uploadName );
+			$original_asset_path          = $urlBuilder->wp_upload_path( $uploadName );
+			$original_asset_path_relative = $urlBuilder->wp_upload_relative_path( $uploadName );
+
 			file_put_contents( $original_asset_path, $z->getFromName( $path ) );
 
-			Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment( $original_asset_path,
-				$original_asset_path_relative,
-				$block->getWpPostId(),
-				$uid );
+			Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment( $original_asset_path, $original_asset_path_relative, null, $uid );
 		}
 	}
 
@@ -338,8 +336,17 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 	protected function addImages( ZipArchive $z, $media, array $data, $dir ) {
 		$z->addEmptyDir( $filesImagesPath = $dir . '/files/images' );
 
-		foreach ( $media->images as $mediaUid ) {
-			$mediaId = (int) $this->getAttachmentByMediaName( $mediaUid );
+		foreach ( $media->images as $media ) {
+			if ( is_object( $media ) ) {
+				if ( empty( $media->uid ) ) {
+					continue;
+				}
+				$uid = $media->uid;
+			} else {
+				$uid = $media;
+			}
+
+			$mediaId = (int) $this->getAttachmentByMediaName( $uid );
 			if ( ! $mediaId ) {
 				continue;
 			}
@@ -348,7 +355,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 			if ( file_exists( $imagePath ) ) {
 				$path = $filesImagesPath . "/" . $imageName;
 				$z->addFile( $imagePath, $path );
-				$data['files']['images'][ $mediaUid ] = $path;
+				$data['files']['images'][ $uid ] = $path;
 			} else {
 				Brizy_Logger::instance()->error( 'Archive object failed. The file ' . $imagePath . ' does not exist', [] );
 				//throw new Exception( __( 'Archive object failed. The file ' . $imagePath . ' does not exist' ) );

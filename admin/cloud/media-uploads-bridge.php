@@ -48,16 +48,13 @@ class Brizy_Admin_Cloud_MediaUploadsBridge extends Brizy_Admin_Cloud_AbstractBri
      * @return mixed|void
      * @throws Exception
      */
-    public function import($mediaUpload)
-    {
-
+    public function import($mediaUpload) {
         if (!$this->blockId) {
             throw new Exception('The block id is not set.');
         }
 
         list($fileUid, $customFileName) = explode('|||', $mediaUpload);
 
-        // enable svg upload
         // enable svg upload
         $svnUpload        = new Brizy_Admin_Svg_Main();
         $jsonUpload        = new Brizy_Admin_Json_Main();
@@ -72,27 +69,21 @@ class Brizy_Admin_Cloud_MediaUploadsBridge extends Brizy_Admin_Cloud_AbstractBri
         }
 
         // download file and store it in wp
-        $urlBuilder = new Brizy_Editor_UrlBuilder();
-        $external_asset_url = $urlBuilder->external_custom_file($fileUid, $customFileName);
+	    $urlBuilder                   = new Brizy_Editor_UrlBuilder();
+	    $external_asset_url           = $urlBuilder->external_custom_file( $fileUid, $customFileName );
+	    $customFileName               = wp_unique_filename( $urlBuilder->wp_upload_path(), $customFileName );
+	    $original_asset_path          = $urlBuilder->wp_upload_path( $customFileName );
+	    $original_asset_path_relative = $urlBuilder->wp_upload_relative_path( $customFileName );
 
+	    if ( ! $this->store_file( $external_asset_url, $original_asset_path ) ) {
+		    Brizy_Logger::instance()->error( 'Unable to store original media file', [
+			    'source'      => $external_asset_url,
+			    'destination' => $original_asset_path,
+		    ] );
+		    throw new Exception( 'Unable to cache custom file upload' );
+	    }
 
-        $original_asset_path = $urlBuilder->brizy_upload_path("/custom_files/" . $customFileName);
-        $original_asset_path_relative = $urlBuilder->brizy_upload_relative_path("/custom_files/" . $customFileName);
-
-        if (!file_exists($original_asset_path)) {
-            // I assume that the media was already attached.
-
-            if (!$this->store_file($external_asset_url, $original_asset_path)) {
-                // unable to save the attachment
-                Brizy_Logger::instance()->error('Unable to store original media file', array(
-                    'source' => (string)$external_asset_url,
-                    'destination' => $original_asset_path
-                ));
-                throw new Exception('Unable to cache custom file upload');
-            }
-        }
-
-        $attachmentId = $this->create_attachment($customFileName, $original_asset_path, $original_asset_path_relative, null, $fileUid);
+        $attachmentId = $this->create_attachment($original_asset_path, $original_asset_path_relative, null, $fileUid);
 
         if ($attachmentId === 0 || is_wp_error($attachmentId)) {
             Brizy_Logger::instance()->error('Unable to create custom file attachment', array(

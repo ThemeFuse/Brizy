@@ -78,7 +78,7 @@ trait Brizy_Editor_Asset_StaticFileTrait
         return true;
     }
 
-    protected function create_attachment($madia_name, $absolute_asset_path, $relative_asset_path, $post_id = null, $uid = null)
+    protected function create_attachment($absolute_asset_path, $relative_asset_path, $post_id = null, $uid = null)
     {
         return self::createMediaAttachment($absolute_asset_path, $relative_asset_path, $post_id, $uid);
     }
