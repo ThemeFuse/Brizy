@@ -12,7 +12,7 @@
     "@types/react-lottie": "^1.2.3",
     "animate.css": "^3.7.0",
     "awesome-debounce-promise": "^2.1.0",
-    "cheerio": "^0.19.0",
+    "cheerio": "^1.0.0-rc.12",
     "classnames": "^2.2.5",
     "cogo-toast": "github:bagrinsergiu/cogo-toast#v4.1.1-rc",
     "core-js": "^3.7.0",
