@@ -29,7 +29,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	public function download_original_image( $media ) {
 		if ( is_object( $media ) ) {
 			$uid          = isset( $media->uid ) ? $media->uid : null;
-			$fileName     = isset( $media->name ) ? $media->name . '.' . pathinfo( $uid, PATHINFO_EXTENSION ) : null;
+			$fileName     = isset( $media->name ) ? $media->name : null;
 			$externalPath = $media['uid'] . '/';
 		} else {
 			$fileName     = $media;

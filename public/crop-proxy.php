@@ -34,18 +34,8 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
 		try {
 
-			$uid        = $vars[ $uidKey ];
-			$mediaCache = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get() );
-
-			try {
-				if ( substr( $uid, 0, 3 ) !== 'wp-' ) {
-					$mediaCache->getAttachmentId( $uid );
-				}
-			} catch ( Exception $e ) {
-				$mediaCache->download_original_image( $uid );
-			}
-
-			$croppedPath = $mediaCache->crop_media( $uid, html_entity_decode( $vars[ $sizeKey ] ) );
+			$mediaCache  = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get() );
+			$croppedPath = $mediaCache->crop_media( $vars[ $uidKey ], html_entity_decode( $vars[ $sizeKey ] ) );
 
 			do_action( 'brizy_before_send_asset' );
 
