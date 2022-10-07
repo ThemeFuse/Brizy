@@ -51,6 +51,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	public function __construct( $ruleManager ) {
 		$this->ruleManager = $ruleManager;
 
+		add_filter( 'brizy_editor_config', [ $this, 'addPageGlobalBlocks' ], 10, 2 );
+
 		parent::__construct();
 	}
 
@@ -74,6 +76,50 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		add_action( $pref . self::CREATE_SAVED_BLOCK_ACTION, array( $this, 'actionCreateSavedBlock' ) );
 		add_action( $pref . self::DELETE_SAVED_BLOCK_ACTION, array( $this, 'actionDeleteSavedBlock' ) );
 		add_action( $pref . self::UPDATE_POSITIONS_ACTION, array( $this, 'actionUpdateBlockPositions' ) );
+	}
+
+	public function addPageGlobalBlocks( $config, $context ) {
+
+		$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
+		$blocks       = $blockManager->getEntities(  [ 'post_status' => 'publish' ] );
+
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		$ruleSets    = [];
+		foreach ( $blocks as $block ) {
+			$ruleSets[ $block->getWpPostId() ] = $ruleManager->getRuleSet( $block->getWpPostId() );
+		}
+
+		$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
+
+		$resultBlocks = array();
+		foreach ( (array)$ruleMatches as $ruleMatch ) {
+			$applyFor     = $ruleMatch['applyFor'];
+			$entityType   = $ruleMatch['entityType'];
+			$entityValues = $ruleMatch['entityValues'];
+
+			$blocks = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight(
+				$blocks,
+				[
+					'type'         => $applyFor,
+					'entityType'   => $entityType,
+					'entityValues' => $entityValues,
+				]
+			);
+
+			foreach ( $blocks as $block ) {
+				try {
+					if ( $ruleSets[ $block->getWpPostId() ]->isMatching( $applyFor, $entityType, $entityValues ) ) {
+						$resultBlocks[] = Brizy_Editor_Post::get( $block->getWpPostId() );
+					}
+				} catch ( \Exception $e ) {
+					continue; // we catch here  the  exclusions
+				}
+			}
+		}
+
+		$config['globalBlocks'] = $blockManager->createResponseForEntities( $resultBlocks );
+
+		return $config;
 	}
 
 	public function actionDownloadBlocks() {
@@ -429,15 +475,15 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		$this->verifyNonce( self::nonce );
 
 		try {
-			$fields       = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
-			$bockManager  = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_SAVED );
-			$blocks       = $bockManager->getEntities( [
+			$fields      = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
+			$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_SAVED );
+			$blocks      = $bockManager->getEntities( [
 				'paged'          => (int) ( $this->param( 'page' ) ?: 1 ),
 				'posts_per_page' => (int) ( $this->param( 'count' ) ?: - 1 ),
 				'order'          => $this->param( 'order' ) ?: 'ASC',
 				'orderby'        => $this->param( 'orderby' ) ?: 'ID'
 			] );
-			$blocks       = apply_filters( 'brizy_get_saved_blocks',
+			$blocks      = apply_filters( 'brizy_get_saved_blocks',
 				$bockManager->createResponseForEntities( $blocks, $fields ),
 				$fields,
 				$bockManager );

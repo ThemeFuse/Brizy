@@ -150,7 +150,7 @@ class Brizy_Admin_Blocks_Manager extends Brizy_Admin_Entity_AbstractManager {
 	 * @param array $arags
 	 * @param array $fields
 	 *
-	 * @return array
+	 * @return Brizy_Editor_Block[]
 	 * @throws Brizy_Editor_Exceptions_NotFound
 	 */
 	public function getLocalBlocks( $type, $arags = array(), $fields = array() ) {

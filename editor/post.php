@@ -118,7 +118,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			$wp_post_id = $apost->ID;
 		}
 
-		if ( isset( self::$instance[ $wp_post_id ] ) ) {
+		if ( !empty( self::$instance[ $wp_post_id ] ) ) {
 			return self::$instance[ $wp_post_id ];
 		}
 
