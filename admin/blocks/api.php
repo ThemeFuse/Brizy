@@ -98,7 +98,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$entityValues = $ruleMatch['entityValues'];
 
 			$blocks = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight(
-				$blocks,
+				array_map(function ($b){return $b->getWpPost();},$blocks),
 				[
 					'type'         => $applyFor,
 					'entityType'   => $entityType,
@@ -108,8 +108,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			foreach ( $blocks as $block ) {
 				try {
-					if ( $ruleSets[ $block->getWpPostId() ]->isMatching( $applyFor, $entityType, $entityValues ) ) {
-						$resultBlocks[] = Brizy_Editor_Post::get( $block->getWpPostId() );
+					if ( $ruleSets[ $block->ID ]->isMatching( $applyFor, $entityType, $entityValues ) ) {
+						$resultBlocks[] = Brizy_Editor_Post::get( $block->ID );
 					}
 				} catch ( \Exception $e ) {
 					continue; // we catch here  the  exclusions
