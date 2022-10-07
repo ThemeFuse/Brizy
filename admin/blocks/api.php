@@ -109,7 +109,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			foreach ( $blocks as $block ) {
 				try {
 					if ( $ruleSets[ $block->ID ]->isMatching( $applyFor, $entityType, $entityValues ) ) {
-						$resultBlocks[] = Brizy_Editor_Post::get( $block->ID );
+						$resultBlocks[] = Brizy_Editor_Block::get( $block->ID );
 					}
 				} catch ( \Exception $e ) {
 					continue; // we catch here  the  exclusions
