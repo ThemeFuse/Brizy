@@ -45,6 +45,18 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 		if ( ! ( $attachmentId = $this->getAttachmentByMediaName( $uid ) ) ) {
 
+			$svnUpload        = new Brizy_Admin_Svg_Main();
+			$jsonUpload        = new Brizy_Admin_Json_Main();
+			$svnUploadEnabled = Brizy_Editor_Storage_Common::instance()->get( 'svg-upload', false );
+			$jsonUploadEnabled = Brizy_Editor_Storage_Common::instance()->get( 'json-upload', false );
+
+			if ( ! $svnUploadEnabled ) {
+				$svnUpload->enableSvgUpload();
+			}
+			if ( ! $jsonUploadEnabled ) {
+				$jsonUpload->enableJsonUpload();
+			}
+
 			$fileName                     = wp_unique_filename( $this->url_builder->wp_upload_path(), $fileName );
 			$original_asset_path          = $this->url_builder->wp_upload_path( $fileName );
 			$original_asset_path_relative = $this->url_builder->wp_upload_relative_path( $fileName );
@@ -54,6 +66,14 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			}
 
 			$attachmentId = $this->create_attachment( $original_asset_path, $original_asset_path_relative, null, $uid );
+
+			// disabled it if was disabled before
+			if ( ! $svnUploadEnabled ) {
+				$svnUpload->disableSvgUpload();
+			}
+			if ( ! $jsonUploadEnabled ) {
+				$jsonUpload->disableJsonUpload();
+			}
 		}
 
 		if ( $attachmentId === 0 || is_wp_error( $attachmentId ) ) {

@@ -1088,6 +1088,7 @@ class Brizy_Editor_Editor_Editor {
 			'rulePostsGroupList'         => $pref . Brizy_Admin_Rules_Api::RULE_POSTS_GROUP_LIST,
 			'ruleArchiveGroupList'       => $pref . Brizy_Admin_Rules_Api::RULE_ARCHIVE_GROUP_LIST,
 			'ruleTemplateGroupList'      => $pref . Brizy_Admin_Rules_Api::RULE_TEMPLATE_GROUP_LIST,
+			'getPredefinedEntity'        => $pref . Brizy_Admin_Blocks_Api::GET_PREDEFINED_ENTITY,
 		);
 
 		return $config;

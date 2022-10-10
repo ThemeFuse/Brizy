@@ -24,6 +24,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	const UPDATE_POSITIONS_ACTION = '-update-block-positions';
 	const DOWNLOAD_BLOCKS = '-download-blocks';
 	const UPLOAD_BLOCKS = '-upload-blocks';
+	const GET_PREDEFINED_ENTITY = '-get-predefined-entity';
 
 	/**
 	 * @var Brizy_Admin_Rules_Manager
@@ -74,6 +75,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		add_action( $pref . self::CREATE_SAVED_BLOCK_ACTION, array( $this, 'actionCreateSavedBlock' ) );
 		add_action( $pref . self::DELETE_SAVED_BLOCK_ACTION, array( $this, 'actionDeleteSavedBlock' ) );
 		add_action( $pref . self::UPDATE_POSITIONS_ACTION, array( $this, 'actionUpdateBlockPositions' ) );
+		add_action( $pref . self::GET_PREDEFINED_ENTITY, [ $this, 'actionGetPredefinedEntity' ] );
 	}
 
 	public function actionDownloadBlocks() {
@@ -749,5 +751,53 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		}
 
 		return wp_delete_post( $block->getWpPostId() );
+	}
+
+	/*
+	 * $pro  = true|false
+	 * $name = the json file name of the entity
+	 * $type = stories|popup|block
+	 */
+	public function actionGetPredefinedEntity() {
+		$this->verifyNonce( self::nonce );
+
+		if ( is_null( $this->param( 'pro' ) ) || ! $this->param( 'name' ) || ! $this->param( 'type' ) ) {
+			$this->error( 400, 'Invalid fields' );
+		}
+		// https://static.brizy.io/builds/free/245-wp/kits/resolves/block2kit1466.json
+		// https://static.brizy.io/builds/free/245-wp/popups/resolves/popup2000.json
+		// https://static.brizy.io/builds/free/245-wp/stories/resolves/HandymenSlide2.json
+		$url = Brizy_Config::getPredefinedEntityUrl( $this->param( 'pro' ), $this->param( 'type' ), $this->param( 'name' ) );
+
+		$request = wp_remote_get( $url, [ 'timeout' => 10 ] );
+
+		if ( is_wp_error( $request ) ) {
+			$this->error( 400, $request->get_error_message() );
+		} elseif ( 200 !== wp_remote_retrieve_response_code( $request ) ) {
+			$this->error( 400, wp_remote_retrieve_response_message( $request ) );
+		} elseif ( empty( $request['body'] ) ) {
+			$this->error( 400, esc_html__( 'There is no body in the remote server response.', 'brizy' ) );
+		}
+
+		$json        = wp_remote_retrieve_body( $request );
+		$decodedBody = json_decode( $json );
+
+		if ( json_last_error() ) {
+			$this->error( 400, sprintf( __( 'Json decode error: %s(%s)', 'brizy' ), json_last_error_msg(), json_last_error() ) );
+		}
+
+		if ( isset( $decodedBody->media->images ) ) {
+			$mediaCache = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get() );
+
+			foreach ( $decodedBody->media->images as $media ) {
+				try {
+					$mediaCache->download_original_image( $media );
+				} catch ( Exception $e ) {
+					Brizy_Logger::instance()->critical( 'Failed to import block media: ' . $e->getMessage(), [ $e ] );
+				}
+			}
+		}
+
+		$this->success( $json );
 	}
 }

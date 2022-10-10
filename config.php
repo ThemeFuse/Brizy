@@ -91,4 +91,11 @@ class Brizy_Config {
 	static public function getSupportUrl() {
 		return __bt( 'support-url', apply_filters( 'brizy_support_url', self::SUPPORT_URL ) );
 	}
+
+	static public function getPredefinedEntityUrl( $isPro, $type, $name ) {
+		$pro     = $isPro ? 'pro' : 'free';
+		$version = BRIZY_EDITOR_VERSION;
+
+		return "https://static.brizy.io/builds/$pro/$version/$type/resolves/$name.json";
+	}
 }

@@ -95,4 +95,11 @@ class Brizy_Config {
 		$value = isset($_SERVER[$name])  ? $_SERVER[$name] : $value;
 		return $value;
 	}
+
+	static public function getPredefinedEntityUrl( $isPro, $type, $name ) {
+		$pro     = $isPro ? 'pro' : 'free';
+		$version = BRIZY_EDITOR_VERSION;
+
+		return "https://static.brizy.io/builds/$pro/$version/$type/resolves/$name.json";
+	}
 }
