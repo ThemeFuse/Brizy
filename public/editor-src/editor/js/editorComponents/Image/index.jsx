@@ -284,14 +284,20 @@ class Image extends EditorComponent {
       oX: Math.round(oX),
       oY: Math.round(oY),
       cW: Math.round(cW),
-      cH: Math.round(cH),
-      fileName: v.imageFileName
+      cH: Math.round(cH)
     };
-    const url = imageUrl(src, options);
+    const url = imageUrl(src, {
+      ...options,
+      fileName: v.imageFileName
+    });
+    const retinaUrl = imageUrl(src, {
+      ...multiplier(options, 2),
+      fileName: v.imageFileName
+    });
 
     return {
       source: url,
-      url: `${url} 1x, ${imageUrl(src, multiplier(options, 2))} 2x`
+      url: `${url} 1x, ${retinaUrl} 2x`
     };
 
     function multiplier(data, num) {
