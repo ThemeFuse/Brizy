@@ -81,7 +81,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	public function addPageGlobalBlocks( $config, $context ) {
 
 		$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
-		$blocks       = $blockManager->getEntities(  [ 'post_status' => 'publish' ] );
+		$blocks       = $blockManager->getEntities(  [ ] );
 
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		$ruleSets    = [];
