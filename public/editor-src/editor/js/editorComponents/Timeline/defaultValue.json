@@ -1,14 +1,18 @@
 {
   "content": {
     "items": [],
+
     "activeTab": 0,
+
     "enableText": "on",
+
     "verticalMode": "off",
+
     "timelineStyle": "style-1",
+
     "tabsCount": 2,
-    "tabsCountSuffix": null,
-    "spacing": 20,
-    "spacingSuffix": null,
+    "tabsCountSuffix": "",
+
     "type": "glyph",
     "name": "favourite-31"
   },
@@ -19,14 +23,13 @@
     "width": 350,
     "widthSuffix": "px",
 
+    "spacing": 20,
+    "spacingSuffix": "px",
+
     "textSpacing": 0,
     "textSpacingSuffix": "px",
-    "tabletTextSpacing": null,
-    "tabletTextSpacingSuffix": null,
-    "mobileTextSpacing": null,
-    "mobileTextSpacingSuffix": null,
 
-    "size": "medium",
+    "size": "custom",
 
     "customSize": 32,
     "customSizeSuffix": "px",
@@ -36,14 +39,13 @@
     "largeSize": 64,
 
     "iconPadding": 10,
+    "iconPaddingSuffix": "px",
 
     "iconBorderWidth": 2,
     "iconBgColorOpacity": 1,
 
     "families": {
-      "typographyFontFamily": "lato",
-      "tabletTypographyFontFamily": null,
-      "mobileTypographyFontFamily": null
+      "typographyFontFamily": "lato"
     },
 
     "typographyFontStyle": "",
@@ -71,7 +73,7 @@
     "tempBorderBottomWidth": 2,
     "tempBorderLeftWidth": 2,
 
-    "borderRadiusType": "grouped",
+    "borderRadiusType": "rounded",
 
     "borderRadius": 30,
     "borderRadiusSuffix": "px",
@@ -135,29 +137,15 @@
     "borderColorOpacity": 1,
     "borderColorPalette": "",
 
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "",
-
-    "tempHoverBorderColorOpacity": null,
-    "tempHoverBorderColorPalette": null,
 
     "lineBorderColorHex": "#dcdee1",
     "lineBorderColorOpacity": 1,
     "lineBorderColorPalette": "",
 
-    "hoverLineBorderColorHex": null,
-    "hoverLineBorderColorOpacity": null,
-    "hoverLineBorderColorPalette": null,
-
     "tempLineBorderColorOpacity": 1,
     "tempLineBorderColorPalette": "",
-
-    "tempHoverLineBorderColorOpacity": null,
-    "tempHoverLineBorderColorPalette": null,
 
     "tempBorderRadiusType": "rounded",
 
@@ -201,15 +189,11 @@
 
     "customCSS": "",
 
-    "tabletTabsCount": null,
-    "tabletTabsCountSuffix": null,
     "tabletTimelineStyle": "style-1",
     "tabletVerticalMode": "off",
     "tabletSpacing": 15,
-    "tabletSpacingSuffix": null,
 
     "tabletWidth": 270,
-    "tabletWidthSuffix": null,
 
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontFamilyType": "google",
@@ -259,15 +243,11 @@
     "tabletMarginBottomSuffix": "px",
     "tabletMarginLeftSuffix": "px",
 
-    "mobileTabsCount": null,
-    "mobileTabsCountSuffix": null,
     "mobileTimelineStyle": "style-1",
     "mobileVerticalMode": "off",
     "mobileSpacing": 10,
-    "mobileSpacingSuffix": null,
 
     "mobileWidth": 150,
-    "mobileWidthSuffix": null,
 
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontFamilyType": "google",

@@ -51,6 +51,7 @@ export {
 export {
   cssStyleBoxShadow,
   cssStyleBoxShadowSection,
+  cssStyleBoxShadowSectionOutset,
   cssStyleBoxShadowSuffixForGlamour
 } from "./cssStyleBoxShadow";
 // Color
@@ -838,7 +839,8 @@ export {
   cssStyleElementTranslationPreviewArrowColorClosed,
   cssStyleElementTranslationPreviewArrowColorOpen,
   cssStyleElementTranslationPropertyHoverTransition,
-  cssStyleElementTranslationTextSpacing
+  cssStyleElementTranslationTextSpacing,
+  cssStyleElementTranslationWidth
 } from "./cssStyleElementTranslation";
 // Element Video
 export {
@@ -1191,7 +1193,9 @@ export {
   cssStyleSizeWidth,
   cssStyleSizeWidthHeight,
   cssStyleSizeWidthPrefix,
-  cssStyleSizeWidthStoryOnly
+  cssStyleSizeWidthStoryOnly,
+  cssStyleSizeWidthPercentOnly,
+  cssStyleSizeMaxWidthPercentOnly,
 } from "./cssStyleSize";
 // Spacing
 export { cssStyleSpacing } from "./cssStyleSpacing";

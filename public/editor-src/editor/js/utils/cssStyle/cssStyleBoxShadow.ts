@@ -73,9 +73,7 @@ export function cssStyleBoxShadowSection({
   const diff = vertical < 0 ? -blur : blur;
   const inBoth = vertical === 0;
 
-  if (type === "" || type === "off" || (vertical === 0 && blur === 0)) {
-    return "";
-  } else {
+  if (type === "inset" || type !== "off" || (vertical !== 0 && blur !== 0)) {
     if (inBoth) {
       return `box-shadow:inset 0 ${
         vertical + diff
@@ -88,4 +86,19 @@ export function cssStyleBoxShadowSection({
       }px ${blur}px -${blur}px ${color}, inset 0 0 0 0 ${color};display: block;`;
     }
   }
+
+  return "";
+}
+
+export function cssStyleBoxShadowSectionOutset({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const type = styleBoxShadowType({ v, device, state, prefix });
+
+  return type && type !== "inset" && type !== "none"
+    ? cssStyleBoxShadow({ v, device, state })
+    : "";
 }

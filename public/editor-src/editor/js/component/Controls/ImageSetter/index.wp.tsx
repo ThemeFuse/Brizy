@@ -51,8 +51,6 @@ export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
           .then((r) => {
             const { x, y } = this.props;
             const { url, filename } = attachment.toJSON();
-            // removed file .ext used from uid
-            const [_fileName] = filename.split(".");
 
             // we use preloadImage function not attachment.get("width"), because
             // for some svg it returns wrong sizes(width/height = 0)
@@ -74,7 +72,7 @@ export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
                 src: r.uid,
                 width,
                 height,
-                fileName: _fileName,
+                fileName: filename,
                 extension
               };
 

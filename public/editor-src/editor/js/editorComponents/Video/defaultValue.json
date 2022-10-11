@@ -15,6 +15,7 @@
     "images": {
       "coverImageSrc": ""
     },
+    "coverImageFileName": null,
     "coverSizeType": "custom",
 
     "offsetX": 0,

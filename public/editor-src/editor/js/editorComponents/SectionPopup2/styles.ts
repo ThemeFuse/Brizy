@@ -1,10 +1,10 @@
-import { ElementModel } from "visual/component/Elements/Types";
 import { renderStyles } from "visual/utils/cssStyle";
+import { Value } from "./toolbarClose";
 
 export function style(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
+  v: Value,
+  vs: Value,
+  vd: Value
 ): [string, string, string] {
   const styles: {
     [k: string]: {
@@ -26,9 +26,9 @@ export function style(
 }
 
 export function styleInner(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
+  v: Value,
+  vs: Value,
+  vd: Value
 ): [string, string, string] {
   const styles: {
     [k: string]: {

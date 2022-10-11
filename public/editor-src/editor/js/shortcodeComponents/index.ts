@@ -19,7 +19,12 @@ import {
 import { isExternalPopup, isStory } from "visual/utils/models";
 import AssetsPosts from "./AssetsPosts";
 import Ecwid from "./Ecwid";
-import { baseCommon, baseStory, grid, social } from "./index.common";
+import {
+  essentialsCommon,
+  essentialsStory,
+  grid,
+  social
+} from "./index.common";
 import Posts from "./Posts";
 // uncomment later when logic with context select is done
 // import PostTitle from "./PostTitle";
@@ -38,12 +43,18 @@ import UserUsername from "./UserUsername";
 
 const _config = Config.getAll() as Cloud;
 
-const baseCloud = [...baseCommon, { component: Translation, pro: false }];
+const essentialsCloud = [
+  ...essentialsCommon,
+  { component: Translation, pro: false }
+];
 
-const baseWithPosts = [...baseCloud, { component: Posts, pro: false }];
+const essentialsWithPosts = [
+  ...essentialsCloud,
+  { component: Posts, pro: false }
+];
 
 // Without Login
-const baseExternalPopup = baseCommon.reduce(
+const essentialsExternalPopup = essentialsCommon.reduce(
   (acc: Shortcode[], curr: Shortcode) =>
     curr.component !== Login ? [...acc, curr] : acc,
   []
@@ -100,15 +111,15 @@ const productPageShopItems = [
 const config = ((): Shortcodes => {
   if (isStory(_config)) {
     return {
-      base: baseStory
+      essentials: essentialsStory
     };
   }
 
   if (isUserPage(_config)) {
     return {
-      user: user,
       grid,
-      base: baseCloud,
+      user: user,
+      essentials: essentialsCloud,
       social,
       blog: cmsSingle,
       shop,
@@ -118,9 +129,9 @@ const config = ((): Shortcodes => {
 
   if (isProtectedPage(_config)) {
     return {
-      systemPages: protectedPage,
-      base: baseWithPosts,
       grid,
+      systemPages: protectedPage,
+      essentials: essentialsWithPosts,
       social,
       shop
     };
@@ -128,9 +139,9 @@ const config = ((): Shortcodes => {
 
   if (isResetPassPage(_config)) {
     return {
-      systemPages: resetPassword,
-      base: baseWithPosts,
       grid,
+      systemPages: resetPassword,
+      essentials: essentialsWithPosts,
       social,
       shop
     };
@@ -138,17 +149,17 @@ const config = ((): Shortcodes => {
 
   if (isExternalPopup(_config)) {
     return {
-      base: baseExternalPopup,
       grid,
+      essentials: essentialsExternalPopup,
       social
     };
   }
 
   if (isBlogPage(_config)) {
     return {
-      blog: cmsSingle,
       grid,
-      base: baseCloud,
+      blog: cmsSingle,
+      essentials: essentialsCloud,
       social,
       product: productPageSpecificItems,
       shop: productPageShopItems,
@@ -164,10 +175,10 @@ const config = ((): Shortcodes => {
     isMyAccountPage(_config)
   ) {
     return {
+      grid,
       productPageSpecificItems,
       shop: productPageShopItems,
-      grid,
-      base: baseCloud,
+      essentials: essentialsCloud,
       social,
       blog: cmsSingle,
       cms: cmsAssets
@@ -176,7 +187,7 @@ const config = ((): Shortcodes => {
 
   return {
     grid,
-    base: baseCloud,
+    essentials: essentialsCloud,
     social,
     blog: cmsSingle,
     cms: cmsAssets

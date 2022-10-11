@@ -3,13 +3,24 @@ import {
   cssStyleDisplayNone
 } from "visual/utils/cssStyle";
 import {
-  styleBgAttachment,
   styleBgImage,
   styleBgPositionX,
   styleBgPositionY,
   styleExportBgImage
 } from "visual/utils/style2";
 import { defaultValueValue } from "../onChange";
+
+function styleBgAttachment({ v, isSlider }) {
+  const { bgAttachment } = v;
+
+  const backgroundAttachment = {
+    none: "scroll",
+    fixed: "fixed",
+    animated: "scroll"
+  };
+
+  return backgroundAttachment[isSlider ? "none" : bgAttachment];
+}
 
 export function cssStyleBgImage({ v, device, state }) {
   const bgImage = IS_EDITOR

@@ -1,17 +1,6 @@
 // Style State
 export { styleState } from "./state";
 
-// BG Image
-export {
-  styleBgImage,
-  styleExportBgImage,
-  styleBgPositionX,
-  styleBgPositionY
-} from "./styleBgImage";
-
-// Background Attachment
-export { styleBgAttachment } from "./styleBgAttachment";
-
 // Border Style
 export { styleBorderStyle } from "./styleBorderStyle";
 

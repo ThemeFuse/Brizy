@@ -13,9 +13,6 @@ export interface SizeOption extends BaseOptions {
 
 export type ImageUrl = (src: string, options?: FilterOption) => string | null;
 
-export type ImageSpecificSize = (
-  src: string,
-  options: SizeOption
-) => string | null;
+export type ImageSpecificSize = (src: string, options: SizeOption) => string;
 
 export type SvgUrl = (string: unknown, options?: BaseOptions) => string | null;

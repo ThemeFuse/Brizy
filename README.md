@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.0.2<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.4.9<br>
+Stable tag: 2.4.10<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,14 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.10 - 2022-10-11
+* Fixed: Using SVGs in Image element 
+* Fixed: Image URLs when using Sync
+* Fixed: Fonts when missing fontFamilyType 
+* Improved: Prefetch for Bunny Fonts 
+* Improved: Rename Base category to Essentials in element panel
+* Improved: Grid elements moved to the top in the element panel
 
 ### 2.4.9 - 2022-10-03
 * Fixed: Global Blocks rules for the Archive template 

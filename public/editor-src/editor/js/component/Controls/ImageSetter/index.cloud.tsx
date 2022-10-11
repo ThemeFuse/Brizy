@@ -57,6 +57,7 @@ export interface Props<T extends ReactText> {
 
 interface State {
   src: string;
+  fileName: string;
   width: number;
   height: number;
   extension: string;
@@ -86,6 +87,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
     if (this.props.src !== nextProps.src) {
       this.setState({
         src: this.props.src,
+        fileName: this.props.fileName,
         width: this.props.width,
         height: this.props.height,
         extension: this.props.extension
