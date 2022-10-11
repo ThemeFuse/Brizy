@@ -3,7 +3,11 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function style(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleSizeWidth", "cssStyleBorder", "cssStyleBoxShadow"]
+      standart: [
+        "cssStyleSizeWidthPercentOnly",
+        "cssStyleBorder",
+        "cssStyleBoxShadow"
+      ]
     },
     ".brz &&:hover .brz-table__tr:nth-child(2n + 1) .brz-table__td": {
       standart: ["cssStyleBgColor"]

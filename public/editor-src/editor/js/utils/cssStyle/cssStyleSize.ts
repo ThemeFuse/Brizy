@@ -32,6 +32,28 @@ export function cssStyleSizeWidth({
   return width === undefined ? "" : `width:${width}${unit};`;
 }
 
+export function cssStyleSizeWidthPercentOnly({
+  v,
+  device,
+  state,
+  prefix
+}: CSSValue): string {
+  const width = styleSizeWidth({ v, device, state, prefix });
+
+  return width === undefined ? "" : `width:${width}%;`;
+}
+
+export function cssStyleSizeMaxWidthPercentOnly({
+  v,
+  device,
+  state,
+  prefix
+}: CSSValue): string {
+  const width = styleSizeSize({ v, device, state, prefix });
+
+  return width === undefined ? "" : `max-width:${width}%;`;
+}
+
 export function cssStyleSizeWidthPrefix({
   v,
   device,

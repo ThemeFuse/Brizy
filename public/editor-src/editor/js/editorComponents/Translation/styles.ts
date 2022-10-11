@@ -14,7 +14,6 @@ export function style(
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2LetterSpacing",
-
         "cssStyleColor",
         "cssStyleBgColor",
         "cssStyleBorder",
@@ -49,7 +48,6 @@ export function style(
         "cssStyleTypography2LetterSpacing"
       ]
     },
-
     // #region select css
     ".brz &&:hover": {
       standart: [
@@ -84,16 +82,12 @@ export function style(
       standart: ["cssStyleElementTranslationPreviewArrowColorClosed"]
     },
     ".brz &&:hover .select2-container--open .select2-selection .select2-selection__arrow b":
-      {
-        standart: ["cssStyleElementTranslationPreviewArrowColorOpen"]
-      },
+      { standart: ["cssStyleElementTranslationPreviewArrowColorOpen"] },
     // #endregion
 
     // #region dropdown css
     ".brz && .select2-dropdown .select2-results__option .brz-translation__select-item .brz-span":
-      {
-        standart: ["cssStyleElementTranslationTextSpacing"]
-      },
+      { standart: ["cssStyleElementTranslationTextSpacing"] },
     ".brz && .select2-dropdown .select2-results__option .brz-translation__select-item .brz-translation__flag":
       {
         standart: [
@@ -102,7 +96,10 @@ export function style(
         ]
       },
     ".brz && .select2-dropdown:hover": {
-      standart: ["cssStyleElementTranslationBoxShadow"],
+      standart: [
+        "cssStyleElementTranslationBoxShadow",
+        "cssStyleElementTranslationWidth"
+      ],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementTranslationPropertyHoverTransition"
@@ -163,9 +160,7 @@ export function styleDropdown(
         ]
       },
     ".brz && .brz-translation__select-list .brz-translation__select-item .brz-span":
-      {
-        standart: ["cssStyleElementTranslationTextSpacing"]
-      },
+      { standart: ["cssStyleElementTranslationTextSpacing"] },
     ".brz && .brz-translation__select-list .brz-translation__select-item .brz-translation__flag":
       {
         standart: [
@@ -175,10 +170,5 @@ export function styleDropdown(
       }
   };
 
-  return renderStyles({
-    v,
-    vs,
-    vd,
-    styles
-  }) as [string, string, string];
+  return renderStyles({ v, vs, vd, styles }) as [string, string, string];
 }

@@ -9,9 +9,6 @@ export {
   styleBgPositionY
 } from "./styleBgImage";
 
-// Background Attachment
-export { styleBgAttachment } from "./styleBgAttachment";
-
 // Border Radius
 export {
   styleBorderRadiusType,
@@ -244,20 +241,6 @@ export {
   styleElementWOOAttributesBetween,
   styleElementWOOAttributesStyleBorder
 } from "./styleElementWOOAttributes";
-
-// Element Timeline
-export {
-  styleElementTimelineWidth,
-  styleElementTimelineWidthSuffix,
-  styleElementTimelineTabsCount,
-  styleElementTimelineVerticalMode,
-  styleElementTimelineIconCustomSize,
-  styleElementTimelineIconPadding,
-  styleElementTimelineEnableText,
-  styleElementTimelineSpacing,
-  styleElementTimelineStyle,
-  styleElementTimelineOrientation
-} from "./styleElementTimeline";
 
 // Element Comments
 export {

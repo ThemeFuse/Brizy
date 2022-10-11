@@ -33,9 +33,8 @@ export const makePrefetchFonts = (): string[] => {
   const prefetchFonts = Config.get("urls").prefetchFonts;
   return [
     /* eslint-disable quotes */
-    '<link class="brz-link brz-link-google-prefetch" rel="dns-prefetch" href="//ajax.googleapis.com">',
-    '<link class="brz-link brz-link-google-prefetch" rel="dns-prefetch" href="//fonts.googleapis.com">',
-    '<link class="brz-link brz-link-google-preconnect" rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>',
+    '<link class="brz-link brz-link-bunny-fonts-prefetch" rel="dns-prefetch" href="//fonts.bunny.net">',
+    '<link class="brz-link brz-link-bunny-fonts-preconnect" rel="preconnect" href="https://fonts.bunny.net/" crossorigin>',
     `<link class="brz-link brz-link-cdn-preconnect" rel="preconnect" href="${prefetchFonts}" crossorigin>`
     /* eslint-enabled quotes */
   ];

@@ -21,57 +21,60 @@ const divInnerHTML = (
   getNameElement(showData.showName, Str.read(item.text) ?? "English") +
   getFlagElement(showData.showFlags, flag);
 
-const handleTemplateResult = (showData: ShowData) => (
-  // select2 doesn't have .ts
-  item: Record<string, unknown>
-) => {
-  // @ts-expect-error: select2 doesn't have .ts
-  const flag = item.element?.dataset?.flag ?? "";
+const handleTemplateResult =
+  (showData: ShowData) =>
+  (
+    // select2 doesn't have .ts
+    item: Record<string, unknown>
+  ) => {
+    // @ts-expect-error: select2 doesn't have .ts
+    const flag = item.element?.dataset?.flag ?? "";
 
-  const div = document.createElement("div");
-  div.className = "brz-translation__select-item";
-  div.innerHTML = divInnerHTML(item, flag, showData);
+    const div = document.createElement("div");
+    div.className = "brz-translation__select-item";
+    div.innerHTML = divInnerHTML(item, flag, showData);
 
-  return div;
-};
+    return div;
+  };
 
-const handleTemplateSelection = (showData: ShowData) => (
-  // select2 doesn't have .ts
-  item: Record<string, unknown>
-) => {
-  // @ts-expect-error: select2 doesn't have .ts
-  const flag = item.element?.dataset?.flag ?? "";
+const handleTemplateSelection =
+  (showData: ShowData) =>
+  (
+    // select2 doesn't have .ts
+    item: Record<string, unknown>
+  ) => {
+    // @ts-expect-error: select2 doesn't have .ts
+    const flag = item.element?.dataset?.flag ?? "";
 
-  const div = document.createElement("div");
-  div.className = "brz-translation__select-item";
-  div.innerHTML = divInnerHTML(item, flag, showData);
+    const div = document.createElement("div");
+    div.className = "brz-translation__select-item";
+    div.innerHTML = divInnerHTML(item, flag, showData);
 
-  return div;
-};
+    return div;
+  };
 
-export default function($node: JQuery): void {
+export default function ($node: JQuery): void {
   const root = $node.get(0);
 
-  root.querySelectorAll<HTMLElement>(".brz-translation").forEach(element => {
+  root.querySelectorAll<HTMLElement>(".brz-translation").forEach((element) => {
     const $this = $(element);
 
     const showFlags = element.getAttribute("data-showflags") === "on";
     const showName = element.getAttribute("data-showname") === "on";
-    const selectDom = element.querySelector<HTMLSelectElement>(
-      "select.brz-select"
-    );
+    const selectDom =
+      element.querySelector<HTMLSelectElement>("select.brz-select");
 
     if (selectDom) {
       $(selectDom).select2({
-        width: "100%",
         minimumResultsForSearch: Infinity,
         dropdownParent: $this,
         // @ts-expect-error: select2 doesn't have .ts
         templateResult: handleTemplateResult({ showFlags, showName }),
-        templateSelection: handleTemplateSelection({ showFlags, showName })
+        templateSelection: handleTemplateSelection({ showFlags, showName }),
+        dropdownAutoWidth: true
       });
 
-      $(selectDom).on("select2:select", e => {
+      $(selectDom).on("select2:select", (e) => {
         const href = e.target?.selectedOptions?.[0]?.dataset?.href ?? "#";
 
         window.location.href = href;
@@ -82,10 +85,9 @@ export default function($node: JQuery): void {
       let scrollbars: any;
       $(selectDom).on("select2:opening", () => {
         // waiting appear the dropdown in the dom
-        setTimeout(function() {
-          const dropdown = element.querySelector<HTMLElement>(
-            ".select2-dropdown"
-          );
+        setTimeout(function () {
+          const dropdown =
+            element.querySelector<HTMLElement>(".select2-dropdown");
 
           if (dropdown) {
             const item = dropdown.querySelector(

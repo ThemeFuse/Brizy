@@ -6,7 +6,6 @@ import {
   objectToQueryString,
   urlContainsQueryString
 } from "visual/utils/url";
-import { getImageFormat } from "./imageFormat";
 import { FilterOption, ImageSpecificSize, ImageUrl, SvgUrl } from "./types";
 import { getFilter } from "./utils";
 
@@ -21,25 +20,21 @@ const imageUrl: ImageUrl = (src, options = defaultOptions) => {
   }
 
   if (src) {
-    const extension = getImageFormat(src);
+    const config = Config.getAll() as WP;
+    const prefix = config.prefix ?? "brizy";
+    const siteUrl = config.urls.site;
+    const imageUrlPrefix = urlContainsQueryString(siteUrl)
+      ? `${siteUrl}&`
+      : `${siteUrl}/?`;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { fileName, ..._filterOptions } = options;
+    const filter = getFilter({ ...defaultOptions, ..._filterOptions });
+    const queryString = objectToQueryString({
+      [`${prefix}_media`]: src,
+      [`${prefix}_crop`]: filter
+    });
 
-    if (extension) {
-      const config = Config.getAll() as WP;
-      const prefix = config.prefix ?? "brizy";
-      const siteUrl = config.urls.site;
-      const imageUrlPrefix = urlContainsQueryString(siteUrl)
-        ? `${siteUrl}&`
-        : `${siteUrl}/?`;
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { fileName, ..._filterOptions } = options;
-      const filter = getFilter({ ...defaultOptions, ..._filterOptions });
-      const queryString = objectToQueryString({
-        [`${prefix}_media`]: src,
-        [`${prefix}_crop`]: filter
-      });
-
-      return `${imageUrlPrefix}${queryString}`;
-    }
+    return `${imageUrlPrefix}${queryString}`;
   }
 
   return null;
@@ -51,14 +46,8 @@ export const svgUrl: SvgUrl = (_src) => {
   const src = Str.read(_src);
 
   if (src) {
-    const extension = getImageFormat(src);
-
-    if (extension) {
-      const config = Config.getAll();
-      return [config.urls.customFile, src].join("/");
-    }
-
-    return null;
+    const config = Config.getAll();
+    return `${config.urls.customFile}${src}`;
   }
 
   return null;
@@ -68,20 +57,15 @@ export const imageSpecificSize: ImageSpecificSize = (src, options) => {
   const config = Config.getAll() as WP;
   const siteUrl = config.urls.site;
   const { size } = options;
-  const extension = getImageFormat(src);
 
-  if (extension) {
-    const imageUrlPrefix = urlContainsQueryString(siteUrl)
-      ? `${siteUrl}&`
-      : `${siteUrl}/?`;
-    const prefix = config.prefix ?? "brizy";
-    const queryString = objectToQueryString({
-      [`${prefix}_media`]: src,
-      [`${prefix}_crop`]: size
-    });
+  const imageUrlPrefix = urlContainsQueryString(siteUrl)
+    ? `${siteUrl}&`
+    : `${siteUrl}/?`;
+  const prefix = config.prefix ?? "brizy";
+  const queryString = objectToQueryString({
+    [`${prefix}_media`]: src,
+    [`${prefix}_crop`]: size
+  });
 
-    return `${imageUrlPrefix}${queryString}`;
-  }
-
-  return null;
+  return `${imageUrlPrefix}${queryString}`;
 };

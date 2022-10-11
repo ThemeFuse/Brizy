@@ -2,14 +2,19 @@ import classNames from "classnames";
 import React, { FC, useCallback, useEffect, useRef } from "react";
 import { getImageUid } from "visual/utils/api/index.wp";
 import { UploadData } from "visual/utils/image/uploadImage";
-import { WithId } from "visual/utils/options/attributes";
-import { Props } from "./types/Props";
+import { Props, SelectionData } from "./types/Props";
 
 export * from "./types/Props";
 
-const uploadImage = (id: number): Promise<UploadData> =>
+const uploadImage = ({
+  id,
+  fileName
+}: {
+  id: number;
+  fileName: string;
+}): Promise<UploadData> =>
   // @ts-expect-error TS2739
-  getImageUid(id).then(({ uid }: Attachment) => ({ name: uid }));
+  getImageUid(id).then(({ uid }: Attachment) => ({ name: uid, fileName }));
 
 export const ImageUpload: FC<Props> = ({ children, className, onChange }) => {
   // eslint-disable-next-line
@@ -36,10 +41,13 @@ export const ImageUpload: FC<Props> = ({ children, className, onChange }) => {
     const html = document.querySelector("html");
 
     uploaderRef.current?.on("select", () => {
-      const ids: number[] = uploaderRef.current
+      const ids: Array<{ id: number; fileName: string }> = uploaderRef.current
         .state()
         .get("selection")
-        .models.map((i: WithId<number>): number => i.id);
+        .models.map((i: SelectionData<number>) => ({
+          id: i.id,
+          fileName: i.attributes.filename
+        }));
 
       flag && onChange(ids.map(uploadImage));
     });

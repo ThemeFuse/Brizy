@@ -57,7 +57,7 @@ interface ContainerW {
   v: ElementModel;
   w: number;
   wNoSpacing: number;
-  width: number;
+  width?: number;
   device: ResponsiveMode;
   state?: StateMode;
 }

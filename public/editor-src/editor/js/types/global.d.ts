@@ -83,6 +83,18 @@ declare global {
     jquery: JQuery;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Brz: Record<string, any>;
+
+    // Check this types on documentations of twitter
+    // https://developer.twitter.com/en/docs/twitter-for-websites/javascript-api/guides/set-up-twitter-for-websites
+    twttr?: {
+      init: boolean;
+      ready: VoidFunction;
+      events: {
+        bind: VoidFunction;
+        unbind: VoidFunction;
+        trigger: VoidFunction;
+      };
+    };
   }
 
   interface JQuery {

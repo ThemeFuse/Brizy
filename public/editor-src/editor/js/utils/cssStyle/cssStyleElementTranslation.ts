@@ -98,3 +98,14 @@ export function cssStyleElementTranslationBoxShadow({
 export function cssStyleElementTranslationPropertyHoverTransition(): string {
   return "transition-property: color, background, border, box-shadow;";
 }
+
+export function cssStyleElementTranslationWidth({
+  v,
+  device
+}: CSSValue): string {
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const width = dvv("width");
+  const suffix = dvv("widthSuffix");
+
+  return `width: ${width}${suffix}!important;`;
+}

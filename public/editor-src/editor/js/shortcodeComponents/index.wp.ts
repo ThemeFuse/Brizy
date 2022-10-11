@@ -1,58 +1,58 @@
-import WPSidebar from "./WPSidebar";
-import WPCustomShortcode from "./WPCustomShortcode";
-import WPFeaturedImage from "./WPFeaturedImage";
-import WOOCategories from "./WOOCategories";
-import WOOPages from "./WOOPages";
-
-import Posts from "./Posts";
+import { Shortcodes } from "visual/types/index.js";
+import {
+  IS_ARCHIVE_TEMPLATE,
+  IS_PAGE,
+  IS_POST,
+  IS_PRODUCT_ARCHIVE_TEMPLATE,
+  IS_PRODUCT_PAGE,
+  IS_PRODUCT_TEMPLATE,
+  IS_SINGLE_TEMPLATE
+} from "visual/utils/env";
+import { IS_STORY } from "visual/utils/models";
+import { hasSidebars, pluginActivated } from "visual/utils/wp";
 import Archive from "./Archive";
-import WPBreadcrumbs from "./pro/WPBreadcrumbs";
-import PostTitle from "./PostTitle";
+import {
+  essentialsCommon,
+  essentialsStory,
+  grid,
+  social
+} from "./index.common";
 import PostExcerpt from "./PostExcerpt";
+import Posts from "./Posts";
+import PostTitle from "./PostTitle";
+import Products from "./pro/Products";
+import Review from "./pro/Review.js";
+import Search from "./pro/Search";
+import WOOAddToCart from "./pro/WOOAddToCart";
+import WOOArchives from "./pro/WOOArchives";
+import WOOAttributes from "./pro/WOOAttributes";
+import WOOBreadcrumbs from "./pro/WOOBreadcrumbs.js";
+import WOOCart from "./pro/WOOCart";
+import WOOExcerpt from "./pro/WOOExcerpt";
+import WOOGallery from "./pro/WOOGallery";
+import WOOPrice from "./pro/WOOPrice";
+import WOOProductContent from "./pro/WOOProductContent.js";
+import WOOProductMeta from "./pro/WOOProductMeta";
+import WOOProductTitle from "./pro/WOOProductTitle";
+import WOORating from "./pro/WOORating";
+import WOOSku from "./pro/WOOSku";
+import WOOStock from "./pro/WOOStock";
+import WOOUpsell from "./pro/WOOUpsell.js";
+import WPBreadcrumbs from "./pro/WPBreadcrumbs";
 import WPPostContent from "./pro/WPPostContent";
 import WPPostInfo from "./pro/WPPostInfo";
 import WPPostNavigation from "./pro/WPPostNavigation";
-import Search from "./pro/Search";
-
-import Products from "./pro/Products";
-import WOOProductTitle from "./pro/WOOProductTitle";
-import WOOExcerpt from "./pro/WOOExcerpt";
-import WOOSku from "./pro/WOOSku";
-import WOOStock from "./pro/WOOStock";
-import WOOPrice from "./pro/WOOPrice";
-import WOOAttributes from "./pro/WOOAttributes";
-import WOOProductMeta from "./pro/WOOProductMeta";
-import WOORating from "./pro/WOORating";
-import WOOCart from "./pro/WOOCart";
-import WOOGallery from "./pro/WOOGallery";
-import WOOAddToCart from "./pro/WOOAddToCart";
-import WOOProductContent from "./pro/WOOProductContent.js";
-import WOOUpsell from "./pro/WOOUpsell.js";
-import WOOBreadcrumbs from "./pro/WOOBreadcrumbs.js";
-import WOOArchives from "./pro/WOOArchives";
-import Review from "./pro/Review.js";
-
-import { baseCommon, baseStory, grid, social } from "./index.common";
-
-import { hasSidebars, pluginActivated } from "visual/utils/wp";
-import { IS_STORY } from "visual/utils/models";
-
-import {
-  IS_POST,
-  IS_PAGE,
-  IS_SINGLE_TEMPLATE,
-  IS_PRODUCT_TEMPLATE,
-  IS_PRODUCT_PAGE,
-  IS_PRODUCT_ARCHIVE_TEMPLATE,
-  IS_ARCHIVE_TEMPLATE
-} from "visual/utils/env";
-import { Shortcodes } from "visual/types/index.js";
+import WOOCategories from "./WOOCategories";
+import WOOPages from "./WOOPages";
+import WPCustomShortcode from "./WPCustomShortcode";
+import WPFeaturedImage from "./WPFeaturedImage";
+import WPSidebar from "./WPSidebar";
 
 const hasWoocommerce = pluginActivated("woocommerce");
 
 const featuredImage = { component: WPFeaturedImage, pro: true };
 
-const baseWP = [...baseCommon, { component: Search, pro: true }];
+const essentialsWP = [...essentialsCommon, { component: Search, pro: true }];
 
 const wordpressShortcodes = [
   ...(hasSidebars() ? [{ component: WPSidebar, pro: false }] : []),
@@ -121,15 +121,15 @@ const postArchiveShortcodes = [
 
 const config = ((): Shortcodes => {
   if (IS_STORY) {
-    return { base: baseStory };
+    return { essentials: essentialsStory };
   }
 
   if (IS_PRODUCT_TEMPLATE || IS_PRODUCT_PAGE) {
     return {
+      grid,
       product: productShortcodes,
       woocommerce: woocommerceShortcodes,
-      base: baseWP,
-      grid: grid,
+      essentials: essentialsWP,
       social: social,
       wordpress: wordpressShortcodes
     };
@@ -137,10 +137,10 @@ const config = ((): Shortcodes => {
 
   if (IS_PRODUCT_ARCHIVE_TEMPLATE) {
     return {
+      grid,
       archive: productArchiveShortcodes,
       woocommerce: woocommerceShortcodes,
-      base: baseWP,
-      grid: grid,
+      essentials: essentialsWP,
       social: social,
       wordpress: wordpressShortcodes
     };
@@ -148,9 +148,9 @@ const config = ((): Shortcodes => {
 
   if (IS_ARCHIVE_TEMPLATE) {
     return {
+      grid,
       archive: postArchiveShortcodes,
-      base: baseWP,
-      grid: grid,
+      essentials: essentialsWP,
       social: social,
       wordpress: wordpressShortcodes,
       woocommerce: woocommerceShortcodes
@@ -159,18 +159,18 @@ const config = ((): Shortcodes => {
 
   if (IS_SINGLE_TEMPLATE || IS_POST) {
     return {
+      grid,
       single: singleShortcodes,
       wordpress: wordpressShortcodes,
-      base: baseWP,
-      grid: grid,
+      essentials: essentialsWP,
       social: social,
       woocommerce: woocommerceShortcodes
     };
   }
 
   return {
-    base: baseWP,
-    grid: grid,
+    grid,
+    essentials: essentialsWP,
     social: social,
     single: singleShortcodes,
     wordpress: wordpressShortcodes,
