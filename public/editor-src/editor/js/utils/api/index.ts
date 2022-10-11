@@ -389,15 +389,10 @@ export async function uploadImage(data: {
   })
     .then((r) => r.json())
     .then((r) => {
-      // normalize FileName
-      // doesn't contain the .ext
-      // the normal .ext is contained in name
-      const [fileName] = r.filename.split(".");
-
       return {
         name: r.name,
         uid: r.uid,
-        fileName
+        fileName: r.filename
       };
     });
 }

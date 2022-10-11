@@ -7,14 +7,14 @@ import React, {
   useState
 } from "react";
 import { replaceAt } from "timm";
+import { Gallery as Control } from "visual/component/Controls/Gallery";
+import * as Option from "visual/component/Options/Type";
+import { OptionType } from "visual/component/Options/Type";
 import * as Arr from "visual/utils/array";
 import { t } from "visual/utils/i18n";
 import { UploadData } from "visual/utils/image/uploadImage";
 import { prop } from "visual/utils/object/get";
-import * as Option from "visual/component/Options/Type";
-import { OptionType } from "visual/component/Options/Type";
-import { Gallery as Control } from "visual/component/Controls/Gallery";
-import { fromElementModel, toElementModel, defaultValue } from "./converters";
+import { defaultValue, fromElementModel, toElementModel } from "./converters";
 import { eq, Image } from "./types/Image";
 import * as Item from "./types/Item";
 import { allowedExtensions, maxId } from "./utils";
@@ -39,15 +39,19 @@ export const Gallery: OptionType<Value> & FC<Props> = ({
     [items, setItems]
   );
   const onRemove = useCallback(
-    (id: number) => setItems(items.filter(i => i.id !== id)),
+    (id: number) => setItems(items.filter((i) => i.id !== id)),
     [items, setItems]
   );
   const onSuccess = useCallback(
     (data: UploadData, id: number): void => {
-      const index = Arr.findIndex(i => i.id === id, items);
+      const index = Arr.findIndex((i) => i.id === id, items);
       if (index !== undefined) {
         setItems(
-          replaceAt(items, index, Item.thumbnail(id, { name: data.name }))
+          replaceAt(
+            items,
+            index,
+            Item.thumbnail(id, { name: data.name, fileName: data.fileName })
+          )
         );
       }
     },
@@ -56,7 +60,7 @@ export const Gallery: OptionType<Value> & FC<Props> = ({
   const onError = useCallback(
     (e: unknown, id: number): void => {
       const error = typeof e === "string" ? e : t("Unable to upload");
-      const index = Arr.findIndex(i => i.id === id, items);
+      const index = Arr.findIndex((i) => i.id === id, items);
       if (index !== undefined) {
         setItems(replaceAt(items, index, Item.error(id, error)));
       }
@@ -75,7 +79,7 @@ export const Gallery: OptionType<Value> & FC<Props> = ({
       setItems([
         ...value.map(
           (v, i) => Item.thumbnail(i + max + 1, v),
-          ...items.filter(i => !Item.isThumbnail(i))
+          ...items.filter((i) => !Item.isThumbnail(i))
         )
       ]);
     }
@@ -90,13 +94,13 @@ export const Gallery: OptionType<Value> & FC<Props> = ({
 
   useEffect(() => {
     let flag = true;
-    items.filter(Item.isLoading).map(p =>
+    items.filter(Item.isLoading).map((p) =>
       p.payload
-        .then(r => {
+        .then((r) => {
           flag && onSuccess(r, p.id);
           return r;
         })
-        .catch(e => {
+        .catch((e) => {
           flag && onError(e, p.id);
           throw e;
         })

@@ -117,7 +117,7 @@ export const getUsedStylesFonts: GetUsedStylesFonts = (styles) => {
       fontFamily(value: string) {
         fontFamilies.add(
           splitFont({
-            type: fontStyle["fontFamilyType"],
+            type: fontStyle["fontFamilyType"] ?? "google",
             family: value
           })
         );

@@ -14,7 +14,11 @@ export function styleSection(v, vs, vd) {
       ]
     },
     ".brz &&:hover > .brz-bg": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius"]
+      standart: [
+        "cssStyleBorder",
+        "cssStyleBorderRadius",
+        "cssStyleBoxShadowSectionOutset"
+      ]
     },
     ".brz &&:hover > .brz-bg:after": {
       standart: ["cssStyleBoxShadowSection"]

@@ -1,27 +1,25 @@
-import React, { ReactElement, ReactNode } from "react";
 import classnames from "classnames";
+import React, { ReactElement, ReactNode } from "react";
 import Scrollbars from "react-custom-scrollbars";
-
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { Popper } from "react-popper";
+import ClickOutside from "visual/component/ClickOutside";
 import CustomCSS from "visual/component/CustomCSS";
+import { ElementModel } from "visual/component/Elements/Types";
 import Portal from "visual/component/Portal";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import ClickOutside from "visual/component/ClickOutside";
 import Toolbar from "visual/component/Toolbar";
-import { css } from "visual/utils/cssStyle";
-import { ElementModel } from "visual/component/Elements/Types";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
-
-import { style, styleDropdown } from "./styles";
-import defaultValue from "./defaultValue.json";
-import * as toolbarExtendSelect from "./toolbarSelect";
-import * as toolbar from "./toolbar";
-import * as sidebar from "./sidebar";
-import { getFlagUrl } from "./utils";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import Config from "visual/global/Config";
-import { isCloud } from "visual/global/Config/types/configs/Cloud";
-import { Popper } from "react-popper";
+import { CMS, isCloud, isCMS } from "visual/global/Config/types/configs/Cloud";
+import { css } from "visual/utils/cssStyle";
+import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
+import defaultValue from "./defaultValue.json";
+import * as sidebar from "./sidebar";
+import { style, styleDropdown } from "./styles";
+import * as toolbar from "./toolbar";
+import * as toolbarExtendSelect from "./toolbarSelect";
+import { getFlagUrl } from "./utils";
 
 export interface Value extends ElementModel {
   nameDisplay: "full" | "code";
@@ -35,11 +33,6 @@ interface State {
   isOpen: boolean;
 }
 
-const fakeLangs = [
-  { name: "French", code: "fr" },
-  { name: "Italian", code: "it" }
-];
-
 const renderOption = (
   showName: "on" | "off",
   showFlags: "on" | "off",
@@ -50,7 +43,7 @@ const renderOption = (
   return (
     <>
       {showName === "on" && (
-        <span className="brz-span">
+        <span className="brz-span" title={item.name}>
           {nameDisplay === "full" ? item.name : item.code}
         </span>
       )}
@@ -90,8 +83,18 @@ export default class Translation extends EditorComponent<Value, Props, State> {
 
     const { nameDisplay, showName, showFlags } = v;
 
-    const config = Config.getAll();
-    const flagsUrl = isCloud(config) ? config.urls.flags : "";
+    const config = Config.getAll() as CMS;
+    const flagsUrl = isCloud(config) && isCMS(config) ? config.urls.flags : "";
+
+    const fakeLangs = [
+      { name: "French", code: "fr" },
+      { name: "Italian", code: "it" }
+    ];
+
+    const langOptions =
+      config.availableTranslations.length !== 0
+        ? config.availableTranslations
+        : fakeLangs;
 
     if (content) {
       const className = classnames(
@@ -129,7 +132,7 @@ export default class Translation extends EditorComponent<Value, Props, State> {
                   style={style}
                 >
                   <Scrollbars autoHeight={true}>
-                    {fakeLangs.map((item, index) => (
+                    {langOptions.map((item, index) => (
                       <div key={index} className="brz-translation__select-item">
                         {renderOption(
                           showName,
@@ -174,7 +177,7 @@ export default class Translation extends EditorComponent<Value, Props, State> {
     );
 
     const config = Config.getAll();
-    const flagsUrl = isCloud(config) ? config.urls.flags : "";
+    const flagsUrl = isCloud(config) && isCMS(config) ? config.urls.flags : "";
 
     return (
       <>
@@ -214,7 +217,7 @@ export default class Translation extends EditorComponent<Value, Props, State> {
   }
 
   renderForView(v: Value, vs: Value, vd: Value): ReactNode {
-    const { showFlags, showName, nameDisplay } = v;
+    const { showFlags, showName, nameDisplay, customCSS } = v;
 
     const className = classnames(
       "brz-translation",
@@ -223,7 +226,7 @@ export default class Translation extends EditorComponent<Value, Props, State> {
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Wrapper
           {...this.makeWrapperProps({
             className,

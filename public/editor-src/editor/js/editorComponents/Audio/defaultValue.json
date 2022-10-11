@@ -22,7 +22,11 @@
     "username": "on",
     "artWork": "on",
 
-    "coverImageSrc": "",
+    "images": {
+      "coverImageSrc": ""
+    },
+
+    "coverImageFileName": null,
     "coverSizeType": "custom",
 
     "coverImageWidth": 0,

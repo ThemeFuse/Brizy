@@ -84,7 +84,7 @@ export function getItems({ v, device, component, context }) {
               label: t("Show to"),
               type: "multiSelect-dev",
               placeholder: "Select",
-              disabled: v.membership === "off",
+              disabled: dvv("membership") === "off",
               choices: getAllMembershipChoices(config)
             }
           ]
@@ -104,7 +104,7 @@ export function getItems({ v, device, component, context }) {
               label: t("Show If Language"),
               type: "multiSelect-dev",
               placeholder: "Select",
-              disabled: v.translations === "off",
+              disabled: dvv("translations") === "off",
               choices: getLanguagesChoices(config)
             }
           ]
@@ -188,10 +188,7 @@ export function getItems({ v, device, component, context }) {
                 {
                   id: "boxShadow",
                   type: "boxShadow-dev",
-                  states: [NORMAL, HOVER],
-                  config: {
-                    type: "inset"
-                  }
+                  states: [NORMAL, HOVER]
                 }
               ]
             }
@@ -232,7 +229,7 @@ export function getItems({ v, device, component, context }) {
             {
               id: "containerSize",
               type: "slider-dev",
-              disabled: v.containerType !== "boxed",
+              disabled: dvv("containerType") !== "boxed",
               config: {
                 min: 35,
                 max: 100,

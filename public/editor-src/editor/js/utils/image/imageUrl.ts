@@ -16,20 +16,33 @@ const imageUrl: ImageUrl = (src, options = defaultOptions) => {
     return src;
   }
 
-  const extension = getImageFormat(src);
-
-  if (src && extension) {
+  if (src) {
     const config = Config.getAll();
     const { fileName, ..._filterOptions } = options;
 
     const filter = getFilter({ ...defaultOptions, ..._filterOptions });
-    const _fileName = Str.read(fileName) ? fileName : "image";
 
-    // remove extension
-    const uid = src.replace(`.${extension}`, "");
-    // add extension to fileName
-    const name = `${_fileName}.${extension}`;
-    return [config.urls.image, filter, uid, name].join("/");
+    const extension = getImageFormat(src);
+
+    if (extension) {
+      // remove extension
+      const uid = src.replace(`.${extension}`, "");
+
+      if (fileName) {
+        // remove extension for fileName
+        // add extension from UID to fileName
+        // the API is doesn't work with original .ext of file
+        const fileNameExt = getImageFormat(fileName) ?? "";
+        const _fileName = fileName.replace(`.${fileNameExt}`, "");
+        const name = `${_fileName}.${extension}`;
+        return [config.urls.image, filter, uid, name].join("/");
+      }
+
+      const name = `image.${extension}`;
+      return [config.urls.image, filter, uid, name].join("/");
+    }
+
+    return [config.urls.image, filter, src].join("/");
   }
 
   return null;
@@ -44,13 +57,22 @@ export const svgUrl: SvgUrl = (_src, options = {}) => {
     const { fileName } = options;
     const config = Config.getAll() as Cloud;
     const extension = getImageFormat(src);
-    const _fileName = Str.read(fileName) ? fileName : "image";
 
     if (extension) {
       // remove extension
       const uid = src.replace(`.${extension}`, "");
-      // add extension to fileName
-      const name = `${_fileName}.${extension}`;
+
+      if (fileName) {
+        // remove extension for fileName
+        // add extension from UID to fileName
+        // the API is doesn't work with original .ext of file
+        const fileNameExt = getImageFormat(fileName) ?? "";
+        const _fileName = fileName.replace(`.${fileNameExt}`, "");
+        const name = `${_fileName}.${extension}`;
+        return [config.urls.image, "original", uid, name].join("/");
+      }
+
+      const name = `image.${extension}`;
       return [config.urls.image, "original", uid, name].join("/");
     }
 
@@ -64,15 +86,24 @@ export const imageSpecificSize: ImageSpecificSize = (src, options) => {
   const config = Config.getAll() as Cloud;
   const { size, fileName } = options;
   const extension = getImageFormat(src);
-  const _fileName = Str.read(fileName) ? fileName : "image";
 
   if (extension) {
     // remove extension
     const uid = src.replace(`.${extension}`, "");
-    // add extension to fileName
-    const name = `${_fileName}.${extension}`;
+
+    if (fileName) {
+      // remove extension for fileName
+      // add extension from UID to fileName
+      // the API is doesn't work with original .ext of file
+      const fileNameExt = getImageFormat(fileName) ?? "";
+      const _fileName = fileName.replace(`.${fileNameExt}`, "");
+      const name = `${_fileName}.${extension}`;
+      return [config.urls.image, size, uid, name].join("/");
+    }
+
+    const name = `image.${extension}`;
     return [config.urls.image, size, uid, name].join("/");
   }
 
-  return null;
+  return [config.urls.image, size, src].join("/");
 };

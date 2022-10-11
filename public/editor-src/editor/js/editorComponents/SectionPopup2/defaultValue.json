@@ -116,8 +116,7 @@
     "closeFillType": "default",
     "tempCloseFillType": "filled",
 
-    "closeBorderRadiusShape": "",
-    "tempCloseBorderRadiusShape": "square",
+    "closeBorderRadiusType": "custom",
 
     "closeBorderRadius": 0,
     "closeBorderRadiusSuffix": "px",
@@ -313,13 +312,6 @@
     "tabletCloseFillType": null,
     "tempTabletCloseFillType": null,
 
-    "tabletCloseBorderRadiusShape": null,
-    "tempTabletCloseBorderRadiusShape": null,
-
-    "tabletCloseBorderRadius": null,
-    "tabletCloseBorderRadiusSuffix": null,
-    "tempTabletCloseBorderRadius": null,
-
     "tabletCloseBgSize": null,
     "tabletCloseBgSizeSuffix": null,
     "tempTabletCloseBgSize": null,
@@ -407,13 +399,6 @@
 
     "mobileCloseFillType": null,
     "tempMobileCloseFillType": null,
-
-    "mobileCloseBorderRadiusShape": null,
-    "tempMobileCloseBorderRadiusShape": null,
-
-    "mobileCloseBorderRadius": null,
-    "mobileCloseBorderRadiusSuffix": null,
-    "tempMobileCloseBorderRadius": null,
 
     "mobileCloseBgSize": null,
     "mobileCloseBgSizeSuffix": null,

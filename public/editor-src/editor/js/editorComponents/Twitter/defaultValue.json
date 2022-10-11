@@ -21,13 +21,9 @@
     "customCSS": "",
 
     "tabletWidth": null,
-    "tabletWidthSuffix": null,
     "tabletHeight": null,
-    "tabletHeightSuffix": null,
 
     "mobileWidth": null,
-    "mobileWidthSuffix": null,
-    "mobileHeight": null,
-    "mobileHeightSuffix": null
+    "mobileHeight": null
   }
 }
