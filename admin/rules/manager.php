@@ -6,7 +6,7 @@ class Brizy_Admin_Rules_Manager {
 	/**
 	 * @return array|null
 	 */
-	static function getCurrentPageGroupAndType() {
+	static function getCurrentPageRuleMatches() {
 		global $wp_query;
 
 		if ( ! isset( $wp_query ) || is_admin() ) {
@@ -158,7 +158,7 @@ class Brizy_Admin_Rules_Manager {
      */
     static function getCurrentPageGroupAndTypeForPopoup()
     {
-		return self::getCurrentPageGroupAndType();
+		return self::getCurrentPageRuleMatches();
 
         global $wp_query;
 

@@ -13,6 +13,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 	const GET_SAVED_BLOCK_ACTION = '-get-saved-block';
 	const GET_GLOBAL_BLOCKS_ACTION = '-get-global-blocks';
+	const GET_GLOBAL_BLOCKS_MATCHING_RULES_ACTION = '-get-global-blocks-matching-rules';
 	const GET_SAVED_BLOCKS_ACTION = '-get-saved-blocks';
 	const CREATE_GLOBAL_BLOCK_ACTION = '-create-global-block';
 	const CREATE_SAVED_BLOCK_ACTION = '-create-saved-block';
@@ -65,6 +66,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 		add_action( $pref . self::DOWNLOAD_BLOCKS, array( $this, 'actionDownloadBlocks' ) );
 		add_action( $pref . self::UPLOAD_BLOCKS, array( $this, 'actionUploadBlocks' ) );
 		add_action( $pref . self::GET_GLOBAL_BLOCKS_ACTION, array( $this, 'actionGetGlobalBlocks' ) );
+		add_action( $pref . self::GET_GLOBAL_BLOCKS_MATCHING_RULES_ACTION, array(
+			$this,
+			'actionGetGlobalBlocksMatchingRules'
+		) );
 		add_action( $pref . self::CREATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionCreateGlobalBlock' ) );
 		add_action( $pref . self::UPDATE_GLOBAL_BLOCK_ACTION, array( $this, 'actionUpdateGlobalBlock' ) );
 		add_action( $pref . self::UPDATE_GLOBAL_BLOCKS_ACTION, array( $this, 'actionUpdateGlobalBlocks' ) );
@@ -79,9 +84,31 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function addPageGlobalBlocks( $config, $context ) {
+		$ruleMatches            = Brizy_Admin_Rules_Manager::getCurrentPageRuleMatches();
+		$config['globalBlocks'] = $this->getMatchingGlobalBlocks( $ruleMatches );
+
+		return $config;
+	}
+
+	public function actionGetGlobalBlocksMatchingRules() {
+		$this->verifyNonce( self::nonce );
+		if ( ! $this->param( 'rules' ) ) {
+			$this->error( 400, 'Please provide the "rules" param containing current page rules' );
+		}
+
+		$ruleMatches = json_decode( stripslashes( $this->param( 'rules' ) ) );
+		$ruleMatches = array_map( function ( $o ) {
+			return (array) $o;
+		}, $ruleMatches );
+
+
+		$this->success($this->getMatchingGlobalBlocks( $ruleMatches ));
+	}
+
+	private function getMatchingGlobalBlocks( $ruleMatches ) {
 
 		$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
-		$blocks       = $blockManager->getEntities(  ['status'=>'any'] );
+		$blocks       = $blockManager->getEntities( [ 'status' => 'any' ] );
 
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		$ruleSets    = [];
@@ -89,16 +116,16 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$ruleSets[ $block->getWpPostId() ] = $ruleManager->getRuleSet( $block->getWpPostId() );
 		}
 
-		$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
-
 		$resultBlocks = array();
-		foreach ( (array)$ruleMatches as $ruleMatch ) {
+		foreach ( (array) $ruleMatches as $ruleMatch ) {
 			$applyFor     = $ruleMatch['applyFor'];
 			$entityType   = $ruleMatch['entityType'];
 			$entityValues = $ruleMatch['entityValues'];
 
-			$blocks = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight(
-				array_map(function ($b){return $b->getWpPost();},$blocks),
+			$ablocks = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight(
+				array_map( function ( $b ) {
+					return $b->getWpPost();
+				}, $blocks ),
 				[
 					'type'         => $applyFor,
 					'entityType'   => $entityType,
@@ -106,7 +133,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				]
 			);
 
-			foreach ( $blocks as $block ) {
+			foreach ( $ablocks as $block ) {
 				try {
 					if ( $ruleSets[ $block->ID ]->isMatching( $applyFor, $entityType, $entityValues ) ) {
 						$resultBlocks[] = Brizy_Editor_Block::get( $block->ID );
@@ -117,9 +144,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			}
 		}
 
-		$config['globalBlocks'] = $blockManager->createResponseForEntities( $resultBlocks );
-
-		return $config;
+		return $blockManager->createResponseForEntities( $resultBlocks );
 	}
 
 	public function actionDownloadBlocks() {

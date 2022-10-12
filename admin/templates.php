@@ -345,7 +345,7 @@ class Brizy_Admin_Templates {
 	 * @throws Exception
 	 */
 	public function getTemplateForCurrentPage() {
-		$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
+		$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageRuleMatches();
 
 		$is_preview = is_preview();
 
