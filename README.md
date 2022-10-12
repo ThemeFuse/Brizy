@@ -3,7 +3,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.0.2<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.4.10<br>
+Stable tag: 2.4.11<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.11 - 2022-10-12
+* Fixed: Images URL
 
 ### 2.4.10 - 2022-10-11
 * Fixed: Using SVGs in Image element 
