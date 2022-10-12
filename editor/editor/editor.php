@@ -866,7 +866,7 @@ class Brizy_Editor_Editor_Editor {
 		}
 
 		$config['wp']['ruleMatches'] = $this->getTemplateRuleMatches( $is_template, $wp_post_id, $template_rules );
-		$config['wp']['currentPageRules'] = $this->getTemplateRuleMatches( $is_template, $wp_post_id, $template_rules );
+		$config['currentPageRules'] = $this->getTemplateRuleMatches( $is_template, $wp_post_id, $template_rules );
 
 		return $config;
 	}
