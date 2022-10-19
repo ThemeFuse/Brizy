@@ -11,8 +11,9 @@ def zipFilePath = "/tmp/"+zipFileName
 
 def today = new Date();
 def releaseDate = today.format( 'yyyy-MM-dd' );
+def changelog = params.changelog.replaceAll('"','\"');
+def discordFooter = "Version ${params.buildVersion}\n Editor Version: ${params.editorVersion}\n Release Branch: ${params.releaseBranch}"
 
-env.BUILD_ZIP_PATH = zipFilePath
 env.BUILD_FOLDER_PATH = "/tmp/brizy"
 
 pipeline {
@@ -20,6 +21,8 @@ pipeline {
     environment {
             GITHUB_TOKEN     = credentials('git-token')
             SUBVERSION_TOKEN     = credentials('svn-secret')
+            DISCORD_WEBHOOK_URL     = credentials('discord-webhook')
+            S3_BUCKET_NAME     = credentials('s3-bucket-name')
     }
     stages {
         stage('Verifying requested version') {
@@ -34,7 +37,7 @@ pipeline {
 
         stage('Initialize SCM') {
             steps {
-                sshagent (credentials: ['Git']) {
+                sshagent (credentials: ['ssh_with_passphrase_provided']) {
                      sh "./jenkins/git-initialize.sh ${params.releaseBranch}"
                 }
             }
@@ -42,7 +45,7 @@ pipeline {
 
         stage('Prepare Composer') {
             steps {
-                sh "./jenkins/composer.sh $GITHUB_TOKEN"
+                    sh('./jenkins/composer.sh $GITHUB_TOKEN')
             }
         }
 
@@ -106,7 +109,7 @@ pipeline {
                 expression { return params.gitMerge }
             }
             steps {
-                sshagent (credentials: ['Git']) {
+                sshagent (credentials: ['ssh_with_passphrase_provided']) {
                     sh "./jenkins/git-publish.sh ${params.buildVersion} ${params.editorVersion} ${params.releaseBranch}"
                 }
             }
@@ -114,105 +117,28 @@ pipeline {
     }
 
      post {
-         always {
-             notifySlack(currentBuild.currentResult)
-             cleanWs()
-             dir("${env.WORKSPACE}@tmp") {
-               deleteDir()
-             }
-             dir("${env.WORKSPACE}@script") {
-               deleteDir()
-             }
-             dir("${env.WORKSPACE}@script@tmp") {
-               deleteDir()
-             }
+         success{
+
+            sh "cp '${zipFilePath}' ./"
+            archiveArtifacts zipFileName
+            discordSend title: JOB_NAME, footer: discordFooter, link: env.BUILD_URL, result: currentBuild.currentResult, description: "Changelog: \n ${changelog}\n\n [Download]("+artifactUrl(env.S3_BUCKET_NAME,zipFileName)+")", webhookURL: env.DISCORD_WEBHOOK_URL
+            sh "rm '${zipFilePath}'"
+         }
+         failure{
+            discordSend title: JOB_NAME, footer: discordFooter, link: env.BUILD_URL, result: currentBuild.currentResult, description: "Changelog: \n ${changelog}", webhookURL: env.DISCORD_WEBHOOK_URL
+         }
+
+         aborted{
+            discordSend title: JOB_NAME, footer: discordFooter, link: env.BUILD_URL, result: currentBuild.currentResult, description: "Changelog: \n ${changelog}", webhookURL: env.DISCORD_WEBHOOK_URL
          }
      }
-}
-
-
-def notifySlack(String buildResult = 'STARTED', String zipPath = '') {
-
-    def slackMessage= '';
-    def color = '';
-
-     if ( buildResult == "SUCCESS" ) {
-       slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was successful.";
-       color = '#00ff00';
-     }
-     else if( buildResult == "FAILURE" ) {
-       slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was failed.";
-       color = '#ff0000';
-     }
-     else if( buildResult == "UNSTABLE" ) {
-        slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was unstable.";
-        color = '#ff8800';
-     }
-     else {
-        slackMessage = "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} its result was unclear.";
-        color = '#ff8800';
-     }
-
-    def changelog = params.changelog.replaceAll('"','\"');
-
-    def slackMessageJson = """
-    {
-        "attachments": [
-            {
-                "color": "${color}",
-                "title": "${slackMessage}",
-                "fields": [
-                    {
-                        "title": "Plugin version",
-                        "value": "${params.buildVersion}",
-                        "short": true
-                    },
-                    {
-                        "title": "Editor version",
-                        "value": "${params.editorVersion}",
-                        "short": true
-                    },
-                    {
-                        "title": "Branch",
-                        "value": "${params.releaseBranch}",
-                        "short": true
-                    },
-                    {
-                        "title": "Changelog",
-                        "value": "${changelog}",
-                        "short": false
-                    }
-                ],
-                "footer": "Brizy",
-                "footer_icon": "https://brizy.io/wp-content/uploads/2018/02/logo-symbol.png"
-            }
-        ]
-    }
-    """;
-    sendSlackMessage(slackMessageJson);
-
-     if ( buildResult == "SUCCESS" ) {
-       withCredentials([string(credentialsId: 'slack', variable: 'SECRET')]) {
-            sh '''
-                set +x
-                curl -F file=@$BUILD_ZIP_PATH -F channels=#jenkins -F token="$SECRET" https://slack.com/api/files.upload
-            '''
-       }
-     }
-
-
-
 }
 
 def folderExist(path){
     return sh(script: "test -d ${path} && echo 1 || echo 0", returnStdout: true).trim()=="1"
 }
 
-def sendSlackMessage(String message) {
-    message = message.replaceAll("'","\'").replaceAll("\n",'\n');
-    withCredentials([string(credentialsId: 'slack-hook-url', variable: 'hook_urk')]) {
-      sh """
-        curl -X POST -H 'Content-type: application/json' --data '${message}' ${hook_urk}
-      """
-    }
+def artifactUrl(bucket,fileName) {
+    def jobNameUrlified = JOB_NAME.replaceAll(' ','+');
+    return "https://${bucket}.s3.amazonaws.com/${jobNameUrlified}/${BUILD_NUMBER}/artifacts/${fileName}"
 }
