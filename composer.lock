@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e0d2948c4361f464d25c68cb09d9b9c",
+    "content-hash": "4a3907fb93a9fdd1aa5a2e66b6c1320f",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
@@ -659,8 +659,5 @@
         "php": ">=5.6"
     },
     "platform-dev": [],
-    "platform-overrides": {
-        "php": "5.6"
-    },
     "plugin-api-version": "2.3.0"
 }
