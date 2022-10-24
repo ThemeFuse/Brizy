@@ -16,7 +16,28 @@ def discordFooter = "Version ${params.buildVersion}\n Editor Version: ${params.e
 
 env.BUILD_FOLDER_PATH = "/tmp/brizy"
 
+def scm = [
+        $class                           : 'GitSCM',
+        branches                         : [[name: '*/${releaseBranch}']],
+        doGenerateSubmoduleConfigurations: false,
+        extensions                       : [
+                [$class: 'CloneOption', depth: 1, honorRefspec: true, noTags: true, reference: '', shallow: true, timeout: 10],
+
+        ],
+        submoduleCfg                     : [],
+        userRemoteConfigs                : [
+                [
+                        credentialsId: 'ssh_with_passphrase_provided',
+                        refspec      : '+refs/heads/${releaseBranch}:refs/remotes/origin/${releaseBranch}',
+                        url          : 'git@github.com:ThemeFuse/Brizy.git'
+                ]
+        ]
+]
+
 pipeline {
+    options {
+     skipDefaultCheckout()
+    }
     agent any
     environment {
             GITHUB_TOKEN     = credentials('git-token')
@@ -35,11 +56,10 @@ pipeline {
             }
         }
 
-        stage('Initialize SCM') {
+        stage('CheckOut') {
             steps {
-                sshagent (credentials: ['ssh_with_passphrase_provided']) {
-                     sh "./jenkins/git-initialize.sh ${params.releaseBranch}"
-                }
+                sh('git init')
+                checkout(scm)
             }
         }
 
