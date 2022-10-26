@@ -138,11 +138,11 @@ pipeline {
 
      post {
          success{
-
             sh "cp '${zipFilePath}' ./"
             archiveArtifacts zipFileName
             discordSend title: JOB_NAME, footer: discordFooter, link: env.BUILD_URL, result: currentBuild.currentResult, description: "Changelog: \n ${changelog}\n\n [Download]("+artifactUrl(env.S3_BUCKET_NAME,zipFileName)+")", webhookURL: env.DISCORD_WEBHOOK_URL
             sh "rm '${zipFilePath}'"
+            sh "rm *.zip"
          }
          failure{
             discordSend title: JOB_NAME, footer: discordFooter, link: env.BUILD_URL, result: currentBuild.currentResult, description: "Changelog: \n ${changelog}", webhookURL: env.DISCORD_WEBHOOK_URL
