@@ -60,7 +60,8 @@ rm -rf ./public/editor-src \
        ./composer.* \
        ./.travis.yml \
        ./*.dev.php \
-       ./jenkins
+       ./jenkins \
+       ./*.zip
 
 
 (
