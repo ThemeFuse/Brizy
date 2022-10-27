@@ -1,19 +1,21 @@
-import React, { Component } from "react";
 import classNames from "classnames";
+import React, { Component } from "react";
+import { SimpleValue } from "visual/component/Options/Type";
 import {
   WithClassName,
   WithOnChange,
   WithPlaceholder,
+  WithSize,
   WithValue
 } from "visual/utils/options/attributes";
-import { SimpleValue } from "visual/component/Options/Type";
 
 const Code = IS_EDITOR ? require("react-codemirror") : undefined;
 
 export type Props = WithClassName &
   WithValue<string> &
   WithOnChange<string> &
-  WithPlaceholder & {
+  WithPlaceholder &
+  WithSize & {
     language: "htmlmixed" | "css" | "javascript" | "markdown" | "xml";
     theme?: "default" | "idea";
   };
@@ -44,13 +46,19 @@ export class CodeMirror extends Component<Props, SimpleValue<string>> {
       value,
       placeholder,
       language,
-      theme = "default"
+      theme = "default",
+      size
     } = this.props;
+
+    const _className = classNames(
+      `brz-ed-control__codeMirror--${size}`,
+      className
+    );
 
     return (
       Code && (
         <Code
-          className={classNames("brz-ed-control__codeMirror", className)}
+          className={_className}
           value={value}
           onChange={this.onChange}
           options={{

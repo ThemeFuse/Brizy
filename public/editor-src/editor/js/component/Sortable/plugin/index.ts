@@ -1,21 +1,23 @@
 import {
-  closest,
-  elementDepth,
-  events,
-  elementIndex,
-  pointDistance,
-  addClass,
-  removeClass,
-  isInsideRect,
-  clamp,
-  rectCenter,
-  pointRelative
-} from "./utils";
-import {
   findClosestSortable as findClosestSortableT,
   SortableBox as SortableBoxT
 } from "./findClosestSortable";
-import { SortablePluginOptions, GlobalState } from "./types";
+import * as Observer from "./Observer";
+import { GlobalState, SortablePluginOptions } from "./types";
+import {
+  addClass,
+  clamp,
+  closest,
+  disableSelection,
+  elementDepth,
+  elementIndex,
+  events,
+  isInsideRect,
+  pointDistance,
+  pointRelative,
+  rectCenter,
+  removeClass
+} from "./utils";
 
 interface SortableBox extends SortableBoxT {
   el: Element;
@@ -58,6 +60,7 @@ const defaults: SortablePluginOptions = {
 };
 const globalState: GlobalState = {
   allSortables: [],
+  sortableInViewPort: new WeakSet(),
   sortableInfo: new WeakMap(),
   dragInfo: {
     dragInProgress: false
@@ -93,7 +96,7 @@ export default class SortablePlugin {
 
     // sortableInfo
     let zIndex = 0;
-    closest(this.el, el => {
+    closest(this.el, (el) => {
       if (el.hasAttribute("data-sortable-zindex")) {
         // this is done in unlikely case that an element
         // with sortableZIndex is located inside another such element
@@ -114,17 +117,19 @@ export default class SortablePlugin {
     this.helper.style.zIndex = "1000000";
     this.helper.style.top = "0";
     this.helper.style.left = "0";
-    this.helper.style.willChange = "transform";
+    this.helper.style.willChange = "transform,pointer-events";
     this.helperRect = this.helper.getBoundingClientRect();
 
     this.registerSortable();
     this.attachContainerEvents();
+    this.attachObserver(el);
   }
 
   destroy(): void {
     this.detachContainerEvents();
     this.detachPendingEvents();
     this.detachSortEvents();
+    this.detachObserver();
     this.unregisterSortable();
   }
 
@@ -163,14 +168,14 @@ export default class SortablePlugin {
 
     const { cancelClass, distance, onBeforeStart } = this.options;
 
-    const targetCancels = closest(e.target, el =>
+    const targetCancels = closest(e.target, (el) =>
       el.classList.contains(cancelClass)
     );
     if (targetCancels) {
       return; // dnd cancelled
     }
 
-    const sortableElement = closest(e.target, el =>
+    const sortableElement = closest(e.target, (el) =>
       el.hasAttribute("data-sortable-element")
     );
     if (!sortableElement) {
@@ -179,7 +184,7 @@ export default class SortablePlugin {
 
     const usesHandle = sortableElement.hasAttribute("data-sortable-use-handle");
     if (usesHandle) {
-      const targetInsideHandle = closest(e.target, el =>
+      const targetInsideHandle = closest(e.target, (el) =>
         el.hasAttribute("data-sortable-handle")
       );
 
@@ -236,7 +241,10 @@ export default class SortablePlugin {
     );
 
     if (delta > distance) {
+      window.getSelection()?.removeAllRanges();
+
       this.detachPendingEvents();
+      this.attachUserSelectEvents();
       this.handleSortStart(e);
     }
   };
@@ -251,20 +259,32 @@ export default class SortablePlugin {
       return;
     }
 
-    const { chosenClass, receiverClass, showLines, onStart } = this.options;
+    const { chosenClass, onStart } = this.options;
 
     this.addHelper(e);
 
     // dragInfo
-    globalState.dragInfo.receiverSortables = this.findReceiverSortables();
-    showLines &&
-      globalState.dragInfo.receiverSortables.forEach(node =>
-        addClass(node, receiverClass)
-      );
+    this.renderLines();
     addClass(globalState.dragInfo.source.sourceElement, chosenClass);
 
     onStart?.();
     this.attachSortEvents();
+  };
+
+  renderLines = (): void => {
+    const { receiverClass, showLines } = this.options;
+
+    globalState.dragInfo.receiverSortables = this.findReceiverSortables();
+
+    if (!showLines) {
+      return;
+    }
+
+    globalState.dragInfo.receiverSortables
+      .filter((node) => !node.classList.contains(receiverClass))
+      .forEach((node) => {
+        addClass(node, receiverClass);
+      });
   };
 
   handleSortMove = (e: MouseEvent): void => {
@@ -280,6 +300,7 @@ export default class SortablePlugin {
     this.resetDragInfoClasses();
     this.removeHelper();
     this.resetDragInfo();
+    this.detachUserSelectEvents();
 
     if (onSort && source && target) {
       const { sourceSortable, sourceElement, sourceElementIndex } = source;
@@ -398,11 +419,8 @@ export default class SortablePlugin {
       let targetElementIndex = 0;
 
       if (targetElement) {
-        const {
-          sourceSortable,
-          sourceElement,
-          sourceElementIndex
-        } = globalState.dragInfo.source;
+        const { sourceSortable, sourceElement, sourceElementIndex } =
+          globalState.dragInfo.source;
         const { x: centerX, y: centerY } = rectCenter(
           targetElement.getBoundingClientRect()
         );
@@ -479,10 +497,11 @@ export default class SortablePlugin {
       hoveredClassLeft,
       hoveredClassRight
     } = this.options;
-    const { source, target, receiverSortables } = globalState.dragInfo;
+    const { source, target } = globalState.dragInfo;
+    const { allSortables } = globalState;
 
-    if (receiverSortables) {
-      receiverSortables.forEach(node => removeClass(node, receiverClass));
+    if (allSortables) {
+      allSortables.forEach((node) => removeClass(node, receiverClass));
     }
 
     if (source) {
@@ -518,16 +537,21 @@ export default class SortablePlugin {
     const sourceElementType =
       sourceElement.getAttribute("data-sortable-type") ?? "";
 
-    return globalState.allSortables.filter(node => {
-      if (
-        node.getAttribute("data-sortable-disabled") === "true" ||
-        node.closest("[data-sortable-disabled='true']")
-      ) {
+    return globalState.allSortables.filter((node) => {
+      const isInViewPort = globalState.sortableInViewPort.has(node);
+      if (!isInViewPort) {
         return false;
       }
 
       const sortableInfo = globalState.sortableInfo.get(node);
       if (sortableInfo === undefined) {
+        return false;
+      }
+
+      if (
+        node.getAttribute("data-sortable-disabled") === "true" ||
+        node.closest("[data-sortable-disabled='true']")
+      ) {
         return false;
       }
 
@@ -555,7 +579,7 @@ export default class SortablePlugin {
 
   findClosestSortable(x: number, y: number): Element | undefined {
     const sortableBoxes: SortableBox[] =
-      globalState.dragInfo.receiverSortables?.flatMap(node => {
+      globalState.dragInfo.receiverSortables?.flatMap((node) => {
         const sortableInfo = globalState.sortableInfo.get(node);
 
         return sortableInfo
@@ -609,32 +633,56 @@ export default class SortablePlugin {
     }
   }
 
+  // Observer
+  handleIntersection = ({
+    isIntersecting,
+    target
+  }: IntersectionObserverEntry): void => {
+    if (isIntersecting) {
+      globalState.sortableInViewPort.add(target);
+
+      if (globalState.dragInfo.source) {
+        this.renderLines();
+      }
+    } else {
+      globalState.sortableInViewPort.delete(target);
+    }
+  };
+
+  attachObserver(node: HTMLElement): void {
+    Observer.connect(node, this.handleIntersection);
+  }
+
+  detachObserver(): void {
+    Observer.disconnect(this.el);
+  }
+
   // DOM events
 
   attachContainerEvents(): void {
-    events.start.forEach(eventName =>
+    events.start.forEach((eventName) =>
       this.el.addEventListener(eventName, this.handleContainerStart, false)
     );
   }
 
   detachContainerEvents(): void {
-    events.start.forEach(eventName =>
+    events.start.forEach((eventName) =>
       this.el.removeEventListener(eventName, this.handleContainerStart, false)
     );
   }
 
   attachPendingEvents(): void {
-    events.move.forEach(eventName =>
+    events.move.forEach((eventName) =>
       this.document.addEventListener(eventName, this.handlePendingMove, false)
     );
 
-    events.end.forEach(eventName =>
+    events.end.forEach((eventName) =>
       this.document.addEventListener(eventName, this.handlePendingEnd, false)
     );
   }
 
   detachPendingEvents(): void {
-    events.move.forEach(eventName =>
+    events.move.forEach((eventName) =>
       this.document.removeEventListener(
         eventName,
         this.handlePendingMove,
@@ -642,28 +690,36 @@ export default class SortablePlugin {
       )
     );
 
-    events.end.forEach(eventName =>
+    events.end.forEach((eventName) =>
       this.document.removeEventListener(eventName, this.handlePendingEnd, false)
     );
   }
 
   attachSortEvents(): void {
-    events.move.forEach(eventName =>
+    events.move.forEach((eventName) =>
       this.document.addEventListener(eventName, this.handleSortMove, false)
     );
 
-    events.end.forEach(eventName =>
+    events.end.forEach((eventName) =>
       this.document.addEventListener(eventName, this.handleSortEnd, false)
     );
   }
 
   detachSortEvents(): void {
-    events.move.forEach(eventName =>
+    events.move.forEach((eventName) =>
       this.document.removeEventListener(eventName, this.handleSortMove, false)
     );
 
-    events.end.forEach(eventName =>
+    events.end.forEach((eventName) =>
       this.document.removeEventListener(eventName, this.handleSortEnd, false)
     );
+  }
+
+  attachUserSelectEvents(): void {
+    this.document.addEventListener("selectstart", disableSelection, false);
+  }
+
+  detachUserSelectEvents(): void {
+    this.document.removeEventListener("selectstart", disableSelection, false);
   }
 }

@@ -102,22 +102,24 @@ export function style(v, vs, vd) {
           ]
         : []
     },
-    ".brz && .brz-filters__radio-option.brz-filters__radio-option--active:hover .brz-label": {
-      standart: [
-        "cssStyleElementFiltersCheckboxActiveTextColor",
-        "cssStyleElementFiltersCheckboxActiveBgColor",
-        "cssStyleElementFiltersCheckboxActiveBorder",
-        "cssStyleElementFiltersCheckboxActiveShadow"
-      ]
-    },
-    ".brz && .brz-filters__checkbox-option.brz-filters__checkbox-option--active:hover .brz-label": {
-      standart: [
-        "cssStyleElementFiltersCheckboxActiveTextColor",
-        "cssStyleElementFiltersCheckboxActiveBgColor",
-        "cssStyleElementFiltersCheckboxActiveBorder",
-        "cssStyleElementFiltersCheckboxActiveShadow"
-      ]
-    },
+    ".brz && .brz-filters__radio-option.brz-filters__radio-option--active:hover .brz-label":
+      {
+        standart: [
+          "cssStyleElementFiltersCheckboxActiveTextColor",
+          "cssStyleElementFiltersCheckboxActiveBgColor",
+          "cssStyleElementFiltersCheckboxActiveBorder",
+          "cssStyleElementFiltersCheckboxActiveShadow"
+        ]
+      },
+    ".brz && .brz-filters__checkbox-option.brz-filters__checkbox-option--active:hover .brz-label":
+      {
+        standart: [
+          "cssStyleElementFiltersCheckboxActiveTextColor",
+          "cssStyleElementFiltersCheckboxActiveBgColor",
+          "cssStyleElementFiltersCheckboxActiveBorder",
+          "cssStyleElementFiltersCheckboxActiveShadow"
+        ]
+      },
     ".brz &&.brz-filters__select .brz-filters__option": {
       standart: ["cssStyleElementFiltersOptionSpacing"]
     },
@@ -200,36 +202,39 @@ export function style(v, vs, vd) {
     ".brz && .brz-filters__option.brz-filters__date-option": {
       standart: ["cssStyleElementFiltersDateOptionWidthFix"]
     },
-    ".brz && .brz-filters__checkbox-option, .brz && .brz-filters__radio-option": {
-      standart: [
-        "cssStyleElementFiltersCheckRadioWidth",
-        "cssStyleFlexHorizontalAlignOption",
+    ".brz && .brz-filters__checkbox-option, .brz && .brz-filters__radio-option":
+      {
+        standart: [
+          "cssStyleElementFiltersCheckRadioWidth",
+          "cssStyleFlexHorizontalAlignOption",
 
-        "cssStyleElementFiltersCheckboxBorderRadiusCustomStyles",
-        "cssStyleElementFiltersPaddingCheckboxCustomStyles",
-        "cssStyleElementFiltersCheckColor3",
+          "cssStyleElementFiltersCheckboxBorderRadiusCustomStyles",
+          "cssStyleElementFiltersPaddingCheckboxCustomStyles",
+          "cssStyleElementFiltersCheckColor3",
 
-        "cssStyleElementFiltersCheckImgHeight",
-        "cssStyleElementFiltersCheckImgWidth"
-      ]
-    },
-    ".brz && .brz-filters__checkbox-option:hover .brz-control__check-group-icon .brz-icon-svg": {
-      standart: [
-        "cssStyleElementFiltersCheckboxTextColor",
-        "cssStyleElementFiltersCheckIconColor",
-        "cssStyleElementFiltersCheckSize",
-        "cssStyleElementFiltersCheckIconBorder",
-        "cssStyleElementFiltersCheckIconBorderRadius",
-        "cssStyleElementFiltersCheckIconShadow"
-      ]
-    },
-    ".brz && .brz-filters__checkbox-option--active .brz-control__check-group-icon .brz-icon-svg": {
-      standart: [
-        "cssStyleElementFiltersActiveCheckIconColor",
-        "cssStyleElementFiltersActiveCheckIconBorder",
-        "cssStyleElementFiltersActiveCheckIconShadow"
-      ]
-    },
+          "cssStyleElementFiltersCheckImgHeight",
+          "cssStyleElementFiltersCheckImgWidth"
+        ]
+      },
+    ".brz && .brz-filters__checkbox-option:hover .brz-control__check-group-icon .brz-icon-svg":
+      {
+        standart: [
+          "cssStyleElementFiltersCheckboxTextColor",
+          "cssStyleElementFiltersCheckIconColor",
+          "cssStyleElementFiltersCheckSize",
+          "cssStyleElementFiltersCheckIconBorder",
+          "cssStyleElementFiltersCheckIconBorderRadius",
+          "cssStyleElementFiltersCheckIconShadow"
+        ]
+      },
+    ".brz && .brz-filters__checkbox-option--active .brz-control__check-group-icon .brz-icon-svg":
+      {
+        standart: [
+          "cssStyleElementFiltersActiveCheckIconColor",
+          "cssStyleElementFiltersActiveCheckIconBorder",
+          "cssStyleElementFiltersActiveCheckIconShadow"
+        ]
+      },
     ".brz && .brz-filters__radio-option:hover .brz-control__radio-check": {
       standart: [
         "cssStyleElementFiltersCheckboxTextColor",
@@ -260,15 +265,12 @@ export function style(v, vs, vd) {
     ".brz && .brz-filters__container": {
       standart: ["cssStyleFlexHorizontalAlignOption"]
     },
-    ".brz && .brz-filters__checkbox--style-1 .brz-filters__option, .brz && .brz-filters__radio--style-1 .brz-filters__option": {
-      standart: ["cssStyleElementFiltersGapStyle1"]
-    },
-    ".brz && .brz-filters__checkbox--style-4 .brz-filters__option, .brz && .brz-filters__radio--style-4 .brz-filters__option, .brz && .brz-filters__checkbox--style-3 .brz-filters__option, .brz && .brz-filters__radio--style-3 .brz-filters__option": {
-      standart: ["cssStyleElementFiltersGapStyle1"]
-    },
-    ".brz && .brz-filters__checkbox--style-2 .brz-filters__option, .brz && .brz-filters__radio--style-2 .brz-filters__option": {
-      standart: ["cssStyleElementFiltersGapStyle1"]
-    },
+    ".brz && .brz-filters__checkbox--style-1 .brz-filters__option, .brz && .brz-filters__radio--style-1 .brz-filters__option":
+      { standart: ["cssStyleElementFiltersGapStyle1"] },
+    ".brz && .brz-filters__checkbox--style-4 .brz-filters__option, .brz && .brz-filters__radio--style-4 .brz-filters__option, .brz && .brz-filters__checkbox--style-3 .brz-filters__option, .brz && .brz-filters__radio--style-3 .brz-filters__option":
+      { standart: ["cssStyleElementFiltersGapStyle1"] },
+    ".brz && .brz-filters__checkbox--style-2 .brz-filters__option, .brz && .brz-filters__radio--style-2 .brz-filters__option":
+      { standart: ["cssStyleElementFiltersGapStyle1"] },
     ".brz && .brz-filters__checkbox, .brz && .brz-filters__radio": {
       standart: [
         "cssStyleElementFiltersCheckboxOrientation",
@@ -277,9 +279,8 @@ export function style(v, vs, vd) {
         "cssStyleElementFiltersGapStyle1Revert"
       ]
     },
-    ".brz && .brz-filters__checkbox-option-name, .brz && .brz-filters__radio-option-name": {
-      standart: ["cssStyleElementFiltersSpacing"]
-    },
+    ".brz && .brz-filters__checkbox-option-name, .brz && .brz-filters__radio-option-name":
+      { standart: ["cssStyleElementFiltersSpacing"] },
     ".brz && .brz-filters__checkrange--text": {
       standart: ["cssStyleElementFiltersSpacing"]
     },
@@ -292,21 +293,18 @@ export function style(v, vs, vd) {
         "cssStyleElementFiltersCheckSize"
       ]
     },
-    ".brz && .brz-filters__checkbox .brz-filters__option, .brz && .brz-filters__radio .brz-filters__option": {
-      standart: ["cssStyleFlexHorizontalAlignOption"]
-    },
-    ".brz && .brz-filters__checkbox--style-3, .brz && .brz-filters__radio--style-3": {
-      standart: ["cssStyleFlexHorizontalAlignOption"]
-    },
+    ".brz && .brz-filters__checkbox .brz-filters__option, .brz && .brz-filters__radio .brz-filters__option":
+      { standart: ["cssStyleFlexHorizontalAlignOption"] },
+    ".brz && .brz-filters__checkbox--style-3, .brz && .brz-filters__radio--style-3":
+      { standart: ["cssStyleFlexHorizontalAlignOption"] },
     ".brz && .brz-filters__rating:hover": {
       standart: [
         "cssStyleFlexHorizontalAlignOption",
         "cssStyleElementFiltersRatingActiveColor"
       ]
     },
-    ".brz && .brz-filters__option.brz-starrating-icon-wrap.brz-filters__rating-hover": {
-      standart: ["cssStyleElementFiltersRatingHoverColor"]
-    },
+    ".brz && .brz-filters__option.brz-starrating-icon-wrap.brz-filters__rating-hover":
+      { standart: ["cssStyleElementFiltersRatingHoverColor"] },
     ".brz && .brz-filters__rating--color-empty:hover": {
       standart: ["cssStyleElementFiltersRatingColor"]
     },
@@ -314,11 +312,10 @@ export function style(v, vs, vd) {
       standart: ["cssStyleFlexHorizontalAlignOption"]
     },
     ".brz && .brz-filters__rating .brz-filters__option:not(:last-child)": {
-      standart: ["cssStyleIconSpacing"]
+      standart: ["cssStyleElementFiltersIconSpacing"]
     },
-    ".brz && .brz-filters__rating--color, .brz && .brz-filters__rating--color-empty": {
-      standart: ["cssStyleSizeFontSizeIcon"]
-    },
+    ".brz && .brz-filters__rating--color, .brz && .brz-filters__rating--color-empty":
+      { standart: ["cssStyleSizeFontSizeIcon"] },
     ".brz && .brz-filters__btn-wrapper": {
       standart: ["cssStyleFlexHorizontalAlignBtn"]
     },
@@ -442,9 +439,8 @@ export function style(v, vs, vd) {
         "cssStyleElementFiltersRangeInputsHeight"
       ]
     },
-    ".brz && input[type=range].brz-filters__range--inputs::-webkit-slider-thumb": {
-      standart: ["cssStyleElementFiltersRangeInputsPointsHeight"]
-    },
+    ".brz && input[type=range].brz-filters__range--inputs::-webkit-slider-thumb":
+      { standart: ["cssStyleElementFiltersRangeInputsPointsHeight"] },
     ".brz && .brz-filters__range__slider-handle": {
       standart: [
         "cssStyleElementFiltersRangePointsBorder",
@@ -459,18 +455,14 @@ export function style(v, vs, vd) {
         "cssStyleElementFiltersRangeBorder"
       ]
     },
-    ".brz && .brz-filters__range--slider .brz-filters__range--thumb.brz-filters__range--thumb--left": {
-      standart: ["cssStyleElementFiltersRangePointsTransition"]
-    },
-    ".brz && .brz-filters__range--slider .brz-filters__range--thumb.brz-filters__range--thumb--right": {
-      standart: ["cssStyleElementFiltersRangePointsTransitionRight"]
-    },
-    ".brz &&.brz-filters.brz-filters__hierarchical .brz-filters__option:nth-last-of-type(2)": {
-      standart: ["cssStyleElementFiltersHierarchicalSpacing"]
-    },
-    ".brz &&.brz-filters.brz-filters__hierarchical .brz-filters__option:last-of-type": {
-      standart: ["cssStyleElementFiltersHierarchicalSpacing2X"]
-    },
+    ".brz && .brz-filters__range--slider .brz-filters__range--thumb.brz-filters__range--thumb--left":
+      { standart: ["cssStyleElementFiltersRangePointsTransition"] },
+    ".brz && .brz-filters__range--slider .brz-filters__range--thumb.brz-filters__range--thumb--right":
+      { standart: ["cssStyleElementFiltersRangePointsTransitionRight"] },
+    ".brz &&.brz-filters.brz-filters__hierarchical .brz-filters__option:nth-last-of-type(2)":
+      { standart: ["cssStyleElementFiltersHierarchicalSpacing"] },
+    ".brz &&.brz-filters.brz-filters__hierarchical .brz-filters__option:last-of-type":
+      { standart: ["cssStyleElementFiltersHierarchicalSpacing2X"] },
     ".brz && .brz-filters__select .select2-selection:hover": {
       standart: IS_PREVIEW
         ? [
@@ -490,18 +482,19 @@ export function style(v, vs, vd) {
         "cssStyleElementFiltersPaddingOptions"
       ]
     },
-    ".brz && .brz-filters__select .select2-results__options .select2-results__option:hover": {
-      standart: [
-        "cssStyleElementFiltersPaddingSelectItems",
-        "cssStyleElementFiltersSelectOptionColor",
-        "cssStyleElementFiltersSelectOptionBgColor",
-        "cssStyleElementFiltersSelectOptionTypography2FontFamily",
-        "cssStyleElementFiltersSelectOptionTypography2FontSize",
-        "cssStyleElementFiltersSelectOptionTypography2FontWeight",
-        "cssStyleElementFiltersSelectOptionTypography2LetterSpacing",
-        "cssStyleElementFiltersSelectOptionTypography2LineHeight"
-      ]
-    },
+    ".brz && .brz-filters__select .select2-results__options .select2-results__option:hover":
+      {
+        standart: [
+          "cssStyleElementFiltersPaddingSelectItems",
+          "cssStyleElementFiltersSelectOptionColor",
+          "cssStyleElementFiltersSelectOptionBgColor",
+          "cssStyleElementFiltersSelectOptionTypography2FontFamily",
+          "cssStyleElementFiltersSelectOptionTypography2FontSize",
+          "cssStyleElementFiltersSelectOptionTypography2FontWeight",
+          "cssStyleElementFiltersSelectOptionTypography2LetterSpacing",
+          "cssStyleElementFiltersSelectOptionTypography2LineHeight"
+        ]
+      },
     ".brz && .brz-filters__select .select2-selection__rendered": {
       standart: [
         "cssStyleElementFiltersOptionTypography2FontFamily",
@@ -520,15 +513,13 @@ export function style(v, vs, vd) {
         "cssStyleElementFiltersOptionTypography2LineHeight"
       ]
     },
-    ".brz && .brz-filters__select .select2-results__options .select2-results__option:not(:last-child):hover": {
-      standart: ["cssStyleElementFiltersSelectOptionBorder"]
-    },
+    ".brz && .brz-filters__select .select2-results__options .select2-results__option:not(:last-child):hover":
+      { standart: ["cssStyleElementFiltersSelectOptionBorder"] },
     ".brz && .brz-filters__select .select2-results__option--highlighted": {
       standart: ["cssStyleElementFiltersSelectOptionsColors"]
     },
-    ".brz && .brz-filters__select .select2-selection .select2-selection__arrow": {
-      standart: ["cssStyleElementFiltersSelectArrow"]
-    },
+    ".brz && .brz-filters__select .select2-selection .select2-selection__arrow":
+      { standart: ["cssStyleElementFiltersSelectArrow"] },
     ".brz && .brz-filters__select:not(:last-child)": {
       standart: IS_PREVIEW ? ["cssStyleElementFiltersOptionSpacing"] : []
     }

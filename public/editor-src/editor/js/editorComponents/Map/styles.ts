@@ -9,10 +9,7 @@ export function style(v: Value, vs: Value, vd: Value): string[] {
 
     ".brz &&:hover:before": {
       standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementMapPropertyHoverTransition"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
 
     ".brz &&:hover:after": {
@@ -28,17 +25,11 @@ export function style(v: Value, vs: Value, vd: Value): string[] {
         "cssStyleBorderRadius",
         ...(IS_PREVIEW ? ["cssStyleElementMapPropertyPositionFixed"] : [])
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementMapPropertyHoverTransition"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover .brz-iframe": {
       standart: ["cssStyleFilter"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementMapPropertyHoverTransition"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     }
   };
 

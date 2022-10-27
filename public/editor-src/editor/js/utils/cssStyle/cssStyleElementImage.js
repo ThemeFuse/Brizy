@@ -12,14 +12,14 @@ const isAbsoluteOrFixed = (v) =>
   v.elementPosition === "absolute" || v.elementPosition === "fixed";
 
 const isSvgOrGif = (v, device) => {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
   const extension = dvv("imageExtension");
   const population = dvv("imagePopulation");
   return (isSVG(extension) || isGIF(extension)) && !population;
 };
 
 export function cssStyleElementImageMaxWidthPreview({ v, device, props = {} }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
   const sizeType = getSizeType(v, device);
   const size = dvv("size");
   const { width } = props.wrapperSizes[device];
@@ -47,7 +47,7 @@ export function cssStyleElementImageHeightPreview({ device, props = {} }) {
 }
 
 export function cssStyleElementImageMaxWidthEditor({ v, device, props = {} }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
   const sizeType = getSizeType(v, device);
   const size = dvv("size");
   const { width } = props[device];
@@ -93,7 +93,7 @@ export function cssStyleElementImageHeightWrapper({ v, device, props = {} }) {
     return isNullish(height) ? "" : `height: ${height}px;`;
   }
 
-  const dvv = key => defaultValueValue({ v, device, key });
+  const dvv = (key) => defaultValueValue({ v, device, key });
   const src = dvv("imageSrc");
   const { width, height } = props[device];
 
@@ -153,7 +153,7 @@ export function cssStyleElementImageMarginTop({ v, device, props = {} }) {
 
 export function cssStyleElementImagePictureSizePreview({ v, device, props }) {
   const sizeType = getSizeType(v, device);
-  const dvv = key => defaultValueValue({ v, device, key });
+  const dvv = (key) => defaultValueValue({ v, device, key });
   const src = dvv("imageSrc");
 
   if (sizeType === "custom" || !src || isSvgOrGif(v, device)) {
@@ -172,10 +172,6 @@ export function cssStyleElementImagePictureSizePreview({ v, device, props }) {
 
 export function cssStyleElementImageSizePreview() {
   return "width: 100%;";
-}
-
-export function cssStyleElementImageTransitionProperty() {
-  return "transition-property: border, box-shadow, filter, background-color;";
 }
 
 export function cssStyleElementImageFilter({

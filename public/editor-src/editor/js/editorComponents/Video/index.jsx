@@ -1,29 +1,29 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
+import React from "react";
 import { mergeDeep } from "timm";
-import CustomCSS from "visual/component/CustomCSS";
 import BoxResizer from "visual/component/BoxResizer";
+import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
+import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
+import { customFileUrl } from "visual/utils/customFile";
 import {
   videoData as getVideoData,
   videoUrl as getVideoUrl
 } from "visual/utils/video";
-import Toolbar from "visual/component/Toolbar";
-import { ThemeIcon } from "visual/component/ThemeIcon";
-import * as toolbarConfig from "./toolbar";
+import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import {
   styleContent,
-  styleWrapper,
-  styleCustomVideo,
   styleControls,
-  styleIcon
+  styleCustomVideo,
+  styleIcon,
+  styleWrapper
 } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import { customFileUrl } from "visual/utils/customFile";
-import defaultValue from "./defaultValue.json";
-import { Wrapper } from "../tools/Wrapper";
+import * as toolbarConfig from "./toolbar";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
@@ -47,7 +47,7 @@ class Video extends EditorComponent {
     }
   }
 
-  handleResizerChange = patch => {
+  handleResizerChange = (patch) => {
     if (this.state.isDragging) {
       this.setState({ sizePatch: patch });
     } else {

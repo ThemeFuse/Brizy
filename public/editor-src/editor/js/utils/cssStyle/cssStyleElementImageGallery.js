@@ -57,7 +57,7 @@ export function cssStyleElementImageGalleryItemPadding({ v, device, state }) {
 }
 
 export function cssStyleElementImageGalleryFilterSpacing({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const filterSpacing = dvv("filterSpacing");
   return `margin: 1px ${filterSpacing}px 0 ${filterSpacing}px;`;
 }
@@ -67,7 +67,7 @@ export function cssStyleElementImageGalleryFilterAfterSpacing({
   device,
   state
 }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const afterFilterSpacing = dvv("afterFilterSpacing");
   return `margin-bottom:${afterFilterSpacing}px;`;
 }
@@ -165,8 +165,4 @@ export function cssStyleElementImageGalleryFilterActiveBorder({ v, device }) {
 
 export function cssStyleElementImageGalleryFilterActiveShadow({ v, device }) {
   return cssStyleBoxShadow({ v, device, state: "active", prefix: "filter" });
-}
-
-export function cssStyleElementImageGalleryPropertyHoverTransition() {
-  return "transition-property: color, background, border-color, box-shadow;";
 }

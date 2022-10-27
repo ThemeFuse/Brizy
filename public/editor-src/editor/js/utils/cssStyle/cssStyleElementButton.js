@@ -46,10 +46,6 @@ export function cssStyleElementIconStrokeWidth({ v, device, state }) {
   return strokeWidth === undefined ? "" : `stroke-width:${strokeWidth};`;
 }
 
-export function cssStyleElementButtonPropertyHoverTransition() {
-  return "transition-property: color, box-shadow, background, border-color;";
-}
-
 export function cssStyleElementButtonPropertyContentAlign() {
   return "align-items: center; justify-content: center;";
 }

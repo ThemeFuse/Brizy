@@ -6,14 +6,14 @@ export function style(v, vs, vd) {
       standart: ["cssStyleBoxShadow", "cssStyleBorder"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookEmbedPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover.brz-fb-styles-button": {
       standart: ["cssStyleBoxShadow"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookButtonPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionBoxShadow"
       ]
     }
   };

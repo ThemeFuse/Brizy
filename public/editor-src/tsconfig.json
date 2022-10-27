@@ -17,10 +17,16 @@
     "baseUrl": ".",
     "jsx": "react",
     "paths": {
-      "visual/*": ["editor/js/*"]
+      "visual/*": ["editor/js/*"],
+      "ui/*":["packages/ui/*"]
     }
   },
-  "include": ["editor/**/*.ts", "editor/**/*.tsx"],
+  "include": [
+    "editor/**/*.ts",
+    "editor/**/*.tsx",
+    "packages/**/*.ts",
+    "packages/**/*.tsx"
+  ],
   "exclude": [
     "node_modules",
     "build",

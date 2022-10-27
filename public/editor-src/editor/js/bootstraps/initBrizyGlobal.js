@@ -48,7 +48,6 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarColor2,
   toolbarColorHexField2,
-  toolbarElementAudioIconSize,
   toolbarElementAudioUpload,
   toolbarFilterBrightness,
   toolbarFilterContrast,
@@ -122,7 +121,6 @@ global.Brizy = {
     toolbarFilterContrast,
     toolbarLinkPopup,
     toolbarLinkUpload,
-    toolbarElementAudioUpload,
-    toolbarElementAudioIconSize
+    toolbarElementAudioUpload
   }
 };

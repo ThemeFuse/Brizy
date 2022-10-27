@@ -10,10 +10,7 @@ export function style(v, vs, vd, props) {
         "cssStyleBorder|||preview",
         "cssStyleBorderRadius|||preview"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementImageTransitionProperty"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover:after": {
       standart: [
@@ -21,17 +18,11 @@ export function style(v, vs, vd, props) {
         "cssStyleBgColor|||preview",
         "cssStyleBgGradient|||preview"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementImageTransitionProperty"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover .brz-picture": {
       standart: ["cssStyleElementImageFilter|||preview"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementImageTransitionProperty"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     }
   };
 
@@ -48,10 +39,7 @@ export function styleContent(v, vs, vd, props) {
     },
     ".brz &&:hover .dynamic-image": {
       standart: ["cssStyleElementImageFilter|||editor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementImageTransitionProperty"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     }
   };
 
@@ -69,10 +57,7 @@ export function styleWrapper(v, vs, vd, props) {
         "cssStyleBorderRadius|||editor",
         "cssStyleBoxShadow|||editor"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementImageTransitionProperty"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover:after": {
       standart: [
@@ -80,10 +65,7 @@ export function styleWrapper(v, vs, vd, props) {
         "cssStyleBgColor|||editor",
         "cssStyleBgGradient|||editor"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementImageTransitionProperty"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     }
   };
 
@@ -100,10 +82,7 @@ export function styleImage(v, vs, vd, props) {
         "cssStyleElementImageMarginLeft",
         "cssStyleElementImageMarginTop"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementImageTransitionProperty"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     }
   };
 

@@ -11,10 +11,7 @@ export function styleSection(v, vs, vd) {
     },
     ".brz &&:hover > .brz-bg": {
       standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleSectionPropertyHoverTransition"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
       standart: [
@@ -22,20 +19,14 @@ export function styleSection(v, vs, vd) {
         "cssStyleFilter",
         "cssStyleBgImagePosition"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleSectionPropertyHoverTransition"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
       standart: ["cssStyleBgImageHover"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
       standart: ["cssStyleBgColor", "cssStyleBgGradient"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleSectionPropertyHoverTransition"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover > .brz-bg-content": {
       standart: [

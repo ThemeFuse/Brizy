@@ -1,90 +1,88 @@
-import { getOr } from "visual/utils/object/get";
-import { FromElementModel, OptionType } from "visual/component/Options/Type";
 import { ElementModel } from "visual/component/Elements/Types";
-
+import { FromElementModel, OptionType } from "visual/component/Options/Type";
+import { Population } from "visual/component/Options/types/common/Population/Population";
+import { Animation } from "visual/component/Options/types/dev/Animation";
+import { BackgroundColor } from "visual/component/Options/types/dev/BackgroundColor";
+import { Border } from "visual/component/Options/types/dev/Border";
+import { BoxShadow } from "visual/component/Options/types/dev/BoxShadow";
+import { Button as ButtonDev } from "visual/component/Options/types/dev/Button";
+// Option types that are in development
+import { ColorPicker as ColorPickerDev } from "visual/component/Options/types/dev/ColorPicker";
+import { Corners } from "visual/component/Options/types/dev/Corners";
+import { Filters } from "visual/component/Options/types/dev/Filters";
+import { Gallery } from "visual/component/Options/types/dev/Gallery";
+import { Grid as GridDev } from "visual/component/Options/types/dev/Grid";
+import { Group } from "visual/component/Options/types/dev/Group";
+import { IconPicker } from "visual/component/Options/types/dev/IconPicker";
+import { IconSetter as IconSetterDev } from "visual/component/Options/types/dev/IconSetter";
+import { IconsPicker } from "visual/component/Options/types/dev/IconsPicker";
+import { ImageUpload } from "visual/component/Options/types/dev/ImageUpload";
+import { InputText } from "visual/component/Options/types/dev/InputText";
+import { InternalLink } from "visual/component/Options/types/dev/InternalLink";
+import { Motion } from "visual/component/Options/types/dev/Motion";
+import { MultiSelect } from "visual/component/Options/types/dev/MultiSelect2";
+import { Order } from "visual/component/Options/types/dev/Order";
+import { Range as RangeDev } from "visual/component/Options/types/dev/Range";
+import { Select as SelectDev } from "visual/component/Options/types/dev/Select";
+import { SidebarTabs } from "visual/component/Options/types/dev/SidebarTabs";
+import { SidebarTabsButton } from "visual/component/Options/types/dev/SidebarTabsButton";
+import { Switch as SwitchDev } from "visual/component/Options/types/dev/Switch";
+import { TextShadow } from "visual/component/Options/types/dev/TextShadow";
+import { Typography } from "visual/component/Options/types/dev/Typography";
+import { getOr } from "visual/utils/object/get";
 import AdvancedSettings from "./AdvancedSettings";
 import BlockThumbnail from "./BlockThumbnail";
 import Button from "./Button";
-import SavedBlock from "./SavedBlock";
-import GlobalBlock from "./GlobalBlock";
+import CheckGroup from "./CheckGroup";
 import CodeMirror from "./CodeMirror";
 import ColorFields from "./ColorFields";
 import ColorPalette from "./ColorPalette";
 import ColorPalette2 from "./ColorPalette2";
 import ColorPaletteEditor from "./ColorPaletteEditor";
 import ColorPicker2 from "./ColorPicker2";
+import { StateMode } from "./common/StateMode";
+import { Alert } from "./dev/Alert";
+import { CodeMirror as CodeMirrorDev } from "./dev/CodeMirror";
+import { Margin } from "./dev/Margin";
+import { Number } from "./dev/Number";
+import { Padding } from "./dev/Padding";
+import { Popover as PopoverDev } from "./dev/Popover";
+import { RadioGroup as RadioGroupDev } from "./dev/RadioGroup";
+import { Slider as SliderDev } from "./dev/Slider";
+import { Tabs as TabsDev } from "./dev/Tabs";
+import { Textarea as TextareaDev } from "./dev/Textarea";
+import { Toggle as ToggleDev } from "./dev/Toggle";
+import FileUpload from "./FileUpload";
 import FontFamily from "./FontFamily";
 import FontStyle from "./FontStyle";
 import FontStyleEditor from "./FontStyleEditor";
 import FormApps from "./FormApps";
+import GBConditions from "./GBConditions";
+import GlobalBlock from "./GlobalBlock";
 import Grid from "./Grid";
-import ImageSetter from "./ImageSetter";
 import IconSetter from "./IconSetter";
-import MultiInput from "./MultiInput";
-import MultiPicker from "./MultiPicker";
-import MultiInputPickerOptionType from "./MultiInputPickerOptionType";
-
+import ImageSetter from "./ImageSetter";
 import Input from "./Input";
-import Textarea from "./Textarea";
+import InputNumber from "./InputNumber";
+import IntegrationsApps from "./IntegrationsApps";
+import MultiInput from "./MultiInput";
+import MultiInputPickerOptionType from "./MultiInputPickerOptionType";
+import MultiPicker from "./MultiPicker";
 import Popover from "./Popover";
 import PopupConditions from "./PopupConditions";
-import GBConditions from "./GBConditions";
 import PromptAddPopup from "./PromptAddPopup";
 import PromptIcon from "./PromptIcon";
 import RadioGroup from "./RadioGroup";
-import CheckGroup from "./CheckGroup";
+import Range from "./Range";
+import Range2 from "./Range2";
+import SavedBlock from "./SavedBlock";
 import Select from "./Select";
 import Slider from "./Slider";
 import Stepper from "./Stepper";
 import Switch from "./Switch";
 import Tabs from "./Tabs";
+import Textarea from "./Textarea";
 import Toggle from "./Toggle";
-import InputNumber from "./InputNumber";
-import Range from "./Range";
-import Range2 from "./Range2";
-import IntegrationsApps from "./IntegrationsApps";
-import FileUpload from "./FileUpload";
-import { StateMode } from "./common/StateMode";
-
-// Option types that are in development
-import { ColorPicker as ColorPickerDev } from "visual/component/Options/types/dev/ColorPicker";
-import { BackgroundColor } from "visual/component/Options/types/dev/BackgroundColor";
-import { BoxShadow } from "visual/component/Options/types/dev/BoxShadow";
-import { Border } from "visual/component/Options/types/dev/Border";
-import { Button as ButtonDev } from "visual/component/Options/types/dev/Button";
-import { Grid as GridDev } from "visual/component/Options/types/dev/Grid";
-import { Group } from "visual/component/Options/types/dev/Group";
-import { Typography } from "visual/component/Options/types/dev/Typography";
-import { ImageUpload } from "visual/component/Options/types/dev/ImageUpload";
-import { Population } from "visual/component/Options/types/common/Population/Population";
-import { InputText } from "visual/component/Options/types/dev/InputText";
-import { Margin } from "./dev/Margin";
-import { MultiSelect } from "visual/component/Options/types/dev/MultiSelect2";
-import { Select as SelectDev } from "visual/component/Options/types/dev/Select";
-import { Switch as SwitchDev } from "visual/component/Options/types/dev/Switch";
-import { Slider as SliderDev } from "./dev/Slider";
-import { Toggle as ToggleDev } from "./dev/Toggle";
-import { Padding } from "./dev/Padding";
-import { Popover as PopoverDev } from "./dev/Popover";
-import { Tabs as TabsDev } from "./dev/Tabs";
-import { Textarea as TextareaDev } from "./dev/Textarea";
-import { CodeMirror as CodeMirrorDev } from "./dev/CodeMirror";
-import { RadioGroup as RadioGroupDev } from "./dev/RadioGroup";
-import { Number } from "./dev/Number";
-import { InternalLink } from "visual/component/Options/types/dev/InternalLink";
-import { Alert } from "./dev/Alert";
-import { Corners } from "visual/component/Options/types/dev/Corners";
-import { Order } from "visual/component/Options/types/dev/Order";
-import { IconPicker } from "visual/component/Options/types/dev/IconPicker";
-import { IconsPicker } from "visual/component/Options/types/dev/IconsPicker";
-import { Motion } from "visual/component/Options/types/dev/Motion";
-import { SidebarTabs } from "visual/component/Options/types/dev/SidebarTabs";
-import { SidebarTabsButton } from "visual/component/Options/types/dev/SidebarTabsButton";
-import { Animation } from "visual/component/Options/types/dev/Animation";
-import { TextShadow } from "visual/component/Options/types/dev/TextShadow";
-import { Gallery } from "visual/component/Options/types/dev/Gallery";
-import { Filters } from "visual/component/Options/types/dev/Filters";
-import { Range as RangeDev } from "visual/component/Options/types/dev/Range";
 
 const newTypes = {
   "alert-dev": Alert,
@@ -103,6 +101,7 @@ const newTypes = {
   "imageUpload-dev": ImageUpload,
   "iconPicker-dev": IconPicker,
   "iconsPicker-dev": IconsPicker,
+  "iconSetter-dev": IconSetterDev,
   "inputText-dev": InputText,
   "internalLink-dev": InternalLink,
   "margin-dev": Margin,
@@ -177,9 +176,8 @@ export const types = { ...oldTypes, ...newTypes };
 export type OptionTypes = typeof newTypes;
 export type OptionName = keyof OptionTypes;
 
-export type OptionValue<
-  T extends OptionName
-> = OptionTypes[T] extends OptionType<infer M> ? M : unknown;
+export type OptionValue<T extends OptionName> =
+  OptionTypes[T] extends OptionType<infer M> ? M : unknown;
 
 export function applyDefaultValueToOption<T>(
   values: T,

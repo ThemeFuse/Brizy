@@ -1,4 +1,4 @@
-import { cssStyleColor } from "visual/utils/cssStyle";
+import { cssStyleColor, cssStyleSpacing } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 
 export function cssStyleElementStarRatingRatingColor({ v, device, state }) {
@@ -21,10 +21,6 @@ export function cssStyleElementStarRatingRatingBackgroundColor({
     state,
     prefix: "ratingBackgroundColor"
   });
-}
-
-export function cssStyleElementStarRatingPropertyHoverTransition() {
-  return "transition-property: color;";
 }
 
 export function cssStyleElementStarRatingDirection({ v, device }) {
@@ -55,4 +51,14 @@ export function cssStyleElementStarRatingTextSpacing({ v, device }) {
       return "margin: 0;";
     }
   }
+}
+
+export function cssStyleElementStarRatingSpacing({ v, device, state }) {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "icon",
+    direction: "right"
+  });
 }

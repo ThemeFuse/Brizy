@@ -24,7 +24,7 @@ export function style(
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementTranslationPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-span": {
@@ -58,7 +58,7 @@ export function style(
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementTranslationPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&": {
@@ -102,7 +102,7 @@ export function style(
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementTranslationPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .select2-results__options .select2-results__option:hover": {
@@ -114,7 +114,7 @@ export function style(
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementTranslationPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
     // #endregion
@@ -138,7 +138,7 @@ export function styleDropdown(
       standart: ["cssStyleElementTranslationBoxShadow"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementTranslationPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-translation__select-list .brz-translation__select-item:hover":
@@ -156,7 +156,7 @@ export function styleDropdown(
         ],
         interval: [
           "cssStyleHoverTransition",
-          "cssStyleElementTranslationPropertyHoverTransition"
+          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz && .brz-translation__select-list .brz-translation__select-item .brz-span":

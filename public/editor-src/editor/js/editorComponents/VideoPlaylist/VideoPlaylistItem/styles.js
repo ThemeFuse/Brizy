@@ -6,7 +6,7 @@ export function styleContent(v, vs, vd) {
       standart: ["cssStyleBorderRadius", "cssStyleElementVideoBgColorRatio"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPlaylistPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz &&:before": {

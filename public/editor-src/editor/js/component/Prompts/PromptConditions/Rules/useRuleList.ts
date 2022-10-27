@@ -360,8 +360,9 @@ export default function useRuleList(
 async function getItems(entityType: string): Promise<RuleList[]> {
   const items = await getCollectionItems(entityType, { status: "all" });
 
-  return items.map(({ id, title }) => ({
+  return items.map(({ id, title, status }) => ({
     title: title,
-    value: id
+    value: id,
+    status
   }));
 }

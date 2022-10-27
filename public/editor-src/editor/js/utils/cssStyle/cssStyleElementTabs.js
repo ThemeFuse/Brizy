@@ -252,7 +252,3 @@ export function cssStyleElementTabsContentShadow({
 export function cssStyleElementTabsBgColor({ v, device }) {
   return cssStyleBgColor({ v, device });
 }
-
-export function cssStyleElementTabsPropertyHoverTransition() {
-  return "transition-property: color, box-shadow, background, border-color;";
-}

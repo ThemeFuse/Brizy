@@ -6,14 +6,14 @@ export function style(v, vs, vd) {
       standart: ["cssStyleElementWOORatingSize", "cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementStarRatingPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .star-rating:hover:before": {
       standart: ["cssStyleElementWOORatingBgStarColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementStarRatingPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .woocommerce-review-link:hover": {
@@ -28,7 +28,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementStarRatingPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };

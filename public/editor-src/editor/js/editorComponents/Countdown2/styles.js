@@ -17,7 +17,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementCountDown2HoverTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover:after": {
@@ -37,7 +37,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementCountDown2HoverTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-countdown2-separator": {
@@ -51,7 +51,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementCountDown2HoverTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-countdown2__label": {
@@ -65,7 +65,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementCountDown2HoverTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };
@@ -86,7 +86,7 @@ export function styleMessage(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementCountDown2HoverTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };

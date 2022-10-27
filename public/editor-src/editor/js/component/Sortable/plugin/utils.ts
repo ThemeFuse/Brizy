@@ -41,11 +41,11 @@ export function elementIndex(el: Element): number {
 }
 
 export function addClass(el: Element, ...classNames: string[]): void {
-  classNames.filter(String).forEach(className => el.classList.add(className));
+  classNames.filter(String).forEach((className) => el.classList.add(className));
 }
 
 export function removeClass(el: Element, ...classNames: string[]): void {
-  classNames.forEach(className => el.classList.remove(className));
+  classNames.forEach((className) => el.classList.remove(className));
 }
 
 // Math
@@ -114,3 +114,9 @@ export function clamp(value: number, min: number, max: number): number {
 
   return value;
 }
+
+export const disableSelection = (e: Event): boolean => {
+  e.preventDefault();
+
+  return false;
+};

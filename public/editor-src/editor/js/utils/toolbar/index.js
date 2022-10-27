@@ -157,8 +157,7 @@ export {
 
 // Element Audio
 export {
-  toolbarElementAudioUpload,
-  toolbarElementAudioIconSize
+  toolbarElementAudioUpload
 } from "./toolbarElementAudio";
 
 // Element WP Posts

@@ -50,10 +50,6 @@ export function cssStyleSectionColorArrows({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "sliderArrowsColor" });
 }
 
-export function cssStyleSectionPropertyHoverTransition() {
-  return "transition-property: filter, background, border, border-radius;";
-}
-
 export function cssStyleSectionToolbarOffset({ v, device, state }) {
   const toolbarSpacing = 42;
   const marginType = styleMarginType({ v, device, state });

@@ -257,6 +257,3 @@ export function cssStyleElementPostsFilterActiveBorder({ v, device }) {
 export function cssStyleElementPostsFilterActiveShadow({ v, device }) {
   return cssStyleBoxShadow({ v, device, state: ACTIVE, prefix: "filter" });
 }
-export function cssStyleElementPostsHoverTransition() {
-  return "transition-property: color, box-shadow, background, border;";
-}

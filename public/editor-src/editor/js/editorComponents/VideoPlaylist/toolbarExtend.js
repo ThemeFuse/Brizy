@@ -1,18 +1,12 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import {
-  toolbarFilterHue,
-  toolbarFilterSaturation,
-  toolbarFilterBrightness,
-  toolbarFilterContrast,
-  toolbarElementVideoPlaySize
-} from "visual/utils/toolbar";
-import { NORMAL, HOVER, ACTIVE } from "visual/utils/stateMode";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
+import { toolbarElementVideoPlaySize } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
     dvv("colorHex"),
@@ -60,30 +54,10 @@ export function getItems({ v, device }) {
               id: "tabCurrentElementFilter",
               label: t("Filters"),
               options: [
-                toolbarFilterHue({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarFilterSaturation({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarFilterBrightness({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
-                toolbarFilterContrast({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                })
+                {
+                  id: "",
+                  type: "filters-dev"
+                }
               ]
             }
           ]

@@ -95,10 +95,6 @@ export function cssStyleElementTranslationBoxShadow({
 }
 // #endregion
 
-export function cssStyleElementTranslationPropertyHoverTransition(): string {
-  return "transition-property: color, background, border, box-shadow;";
-}
-
 export function cssStyleElementTranslationWidth({
   v,
   device

@@ -72,7 +72,6 @@ export default class Timeline extends EditorComponent<Value, Props> {
         thirdPartyExtendId: `${this.getComponentId()}Parent`
       }
     );
-    // @ts-expect-error: Need transform to ts
     this.props.extendParentToolbar(toolbarExtend);
   }
 

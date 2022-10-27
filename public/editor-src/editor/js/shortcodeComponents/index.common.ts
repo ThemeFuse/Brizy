@@ -1,5 +1,6 @@
 import { IS_PRO } from "visual/utils/env";
 import Accordion from "./Accordion";
+import Alert from "./Alert";
 import Audio from "./Audio";
 import Button from "./Button";
 import Columns from "./Columns";
@@ -13,6 +14,7 @@ import Image from "./Image";
 import Line from "./Line";
 import Map from "./Map";
 import MenuSimple from "./MenuSimple";
+import Calendly from "./pro/Calendly";
 import Carousel from "./pro/Carousel";
 import Facebook from "./pro/Facebook";
 import FacebookComments from "./pro/FacebookComments";
@@ -55,9 +57,6 @@ export const essentialsCommon = [
   { component: Text, pro: false },
   { component: Button, pro: false },
   { component: Icon, pro: false },
-  { component: Image, pro: false },
-  { component: Audio, pro: false },
-  { component: Video, pro: false },
   { component: Spacer, pro: false },
   { component: Line, pro: false },
   { component: Map, pro: false },
@@ -69,6 +68,7 @@ export const essentialsCommon = [
   { component: Tabs, pro: false },
   { component: ProgressBar, pro: false },
   { component: Accordion, pro: false },
+  { component: Alert, pro: false },
 
   ...(IS_PRO
     ? [{ component: Menu, pro: true }]
@@ -77,25 +77,30 @@ export const essentialsCommon = [
         { component: Menu, pro: true }
       ]),
 
-  { component: ImageGallery, pro: true },
-  { component: Carousel, pro: true },
   { component: StarRating, pro: true },
-  { component: VideoPlaylist, pro: true },
   { component: Table, pro: true },
   { component: Timeline, pro: true },
   { component: Switcher, pro: true },
   { component: Lottie, pro: true },
-  { component: Login, pro: true }
+  { component: Login, pro: true },
+  { component: Calendly, pro: true }
+];
+
+export const media = [
+  { component: Image, pro: false },
+  { component: ImageGallery, pro: true },
+  { component: Audio, pro: false },
+  { component: Carousel, pro: true },
+  { component: Video, pro: false },
+  { component: VideoPlaylist, pro: true }
 ];
 
 export const essentialsStory = [
   { component: StoryButton, pro: false },
-  { component: StoryImage, pro: false },
   { component: StoryIcon, pro: false },
   { component: StoryEmbed, pro: false },
   { component: StoryText, pro: false },
   { component: StoryMap, pro: false },
-  { component: StoryVideo, pro: false },
   { component: StoryProgressBar, pro: false },
   { component: StoryLine, pro: false },
   { component: StoryCountdown2, pro: false },
@@ -104,6 +109,11 @@ export const essentialsStory = [
   { component: StoryForm2, pro: false },
   { component: StoryStarRating, pro: true },
   { component: StoryLottie, pro: true }
+];
+
+export const mediaStory = [
+  { component: StoryImage, pro: false },
+  { component: StoryVideo, pro: false }
 ];
 
 export const social = [

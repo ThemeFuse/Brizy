@@ -1,6 +1,6 @@
 import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
-import { states } from "./index";
 import { ToolbarItemType } from "../../editorComponents/ToolbarItemType";
+import { states } from "./index";
 
 // region Mocks
 jest.mock(
@@ -68,6 +68,9 @@ jest.mock("visual/component/Options/types/Textarea.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
   Typography: {}
+}));
+jest.mock("visual/component/Options/types/dev/IconSetter/index.tsx", () => ({
+  IconSetter: {}
 }));
 // endregion
 

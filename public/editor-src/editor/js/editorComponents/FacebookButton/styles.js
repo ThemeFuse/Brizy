@@ -6,7 +6,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleBoxShadow"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookButtonPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionBoxShadow"
       ]
     }
   };

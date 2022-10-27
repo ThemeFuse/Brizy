@@ -19,10 +19,6 @@ export function cssStyleElementProtectedPageAutocompleteColor({
     : `-webkit-text-fill-color:${color} !important;`;
 }
 
-export function cssStyleElementProtectedPagePropertyHoverTransition(): string {
-  return "transition-property:background-color,color,border,box-shadow;";
-}
-
 export function cssStyleElementProtectedPageInputWidth({
   v,
   device,

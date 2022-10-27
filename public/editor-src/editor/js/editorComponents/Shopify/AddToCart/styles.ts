@@ -27,10 +27,10 @@ export function style(
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementShopifyAddToCartPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover .brz-shopify-icon-cart": {
+    ".brz && .brz-shopify-icon-cart": {
       standart: [
         "cssStyleElementButtonIconFontSize",
         "cssStyleElementButtonIconMargin",

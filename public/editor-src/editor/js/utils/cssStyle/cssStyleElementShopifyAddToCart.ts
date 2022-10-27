@@ -1,6 +1,6 @@
+import { cssStyleBorder, cssStyleBorderRadius, cssStyleColor } from ".";
 import { styleSizeHeight, styleSizeWidth } from "../style2/styleSize";
 import { CSSValue } from "../style2/types";
-import { cssStyleBorder, cssStyleBorderRadius, cssStyleColor } from ".";
 
 export function cssStyleElementShopifyAddToCartSize({
   v,
@@ -15,9 +15,6 @@ export function cssStyleElementShopifyAddToCartSize({
     : `padding: ${height}px ${width}px;`;
 }
 
-export function cssStyleElementShopifyAddToCartPropertyHoverTransition(): string {
-  return "transition-property: color, box-shadow, background, border;";
-}
 export function cssStyleElementShopifyAddToCartBorderRadius({
   v,
   device,

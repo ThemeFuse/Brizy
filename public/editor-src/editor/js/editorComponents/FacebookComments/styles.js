@@ -11,7 +11,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-comments__name:hover": {
@@ -25,7 +25,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-comments__date": {
@@ -39,7 +39,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-comments__reply": {
@@ -62,7 +62,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-comments__text:hover": {
@@ -76,7 +76,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .comment-reply-link": {
@@ -100,7 +100,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-comments__logo .brz-img": {
@@ -109,13 +109,14 @@ export function style(v, vs, vd) {
     ".brz &&:hover .brz-comments__right-date": {
       standart: ["cssStyleElementCommentsWidthContainer"]
     },
-    ".brz && .brz-logged-in-as a, && .nav-links a, && .comment-reply-link, && #cancel-comment-reply-link": {
-      standart: ["cssStyleElementCommentsColorLink"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
-      ]
-    },
+    ".brz && .brz-logged-in-as a, && .nav-links a, && .comment-reply-link, && #cancel-comment-reply-link":
+      {
+        standart: ["cssStyleElementCommentsColorLink"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
     ".brz &&:hover .brz-comments.brz-parent .brz-comments": {
       standart: ["cssStyleElementCommentsChildMargin"]
     },
@@ -129,14 +130,14 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .review .brz-comments__rating .star-rating:before": {
       standart: ["cssStyleElementCommentsStarsBgColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .stars a": {
@@ -146,42 +147,42 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .stars:hover a::before": {
       standart: ["cssStyleElementCommentsStarsColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .stars a:hover": {
       standart: ["cssStyleElementCommentsStarsColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .stars a:hover ~ a::before": {
       standart: ["cssStyleElementCommentsStarsBgColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .stars a.active ~ a::before": {
       standart: ["cssStyleElementCommentsStarsBgColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .selected a::before": {
       standart: ["cssStyleElementCommentsStarsColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementFacebookCommentsPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };
