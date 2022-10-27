@@ -36,7 +36,3 @@ export function cssStyleSizeProgressBarMaxWidthPercent({
     prefix: "percentage"
   });
 }
-
-export function cssStyleElementProgressBarPropertyHoverTransition(): string {
-  return "transition-property: color, background, box-shadow;";
-}

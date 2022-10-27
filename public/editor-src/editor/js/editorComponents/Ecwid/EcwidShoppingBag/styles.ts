@@ -18,7 +18,7 @@ export function style(
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementEcwidShoppingBagPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionFill"
       ]
     },
     "#ecwid_html #ecwid_body &&:hover .ec-minicart .ec-minicart__body .ec-minicart__icon":
@@ -28,7 +28,7 @@ export function style(
         standart: ["cssStyleStroke"],
         interval: [
           "cssStyleHoverTransition",
-          "cssStyleElementEcwidShoppingBagPropertyHoverTransition"
+          "cssStylePropertyHoverTransitionFill"
         ]
       },
     "#ecwid_html #ecwid_body &&:hover .ec-minicart .ec-minicart__body .ec-minicart__wrap .ec-minicart__counter":
@@ -48,7 +48,7 @@ export function style(
         ],
         interval: [
           "cssStyleHoverTransition",
-          "cssStyleElementEcwidShoppingBagPropertyHoverTransition"
+          "cssStylePropertyHoverTransitionFill"
         ]
       },
     "#ecwid_html #ecwid_body &&:hover .ec-minicart .ec-minicart__body .ec-minicart__wrap .ec-minicart__counter:after":
@@ -62,7 +62,7 @@ export function style(
         ],
         interval: [
           "cssStyleHoverTransition",
-          "cssStyleElementEcwidShoppingBagPropertyHoverTransition"
+          "cssStylePropertyHoverTransitionFill"
         ]
       },
     "#ecwid_html #ecwid_body &&:hover .ec-minicart:hover.ec-minicart--no-shape.ec-minicart--empty .ec-minicart__counter::after":
@@ -76,7 +76,7 @@ export function style(
         ],
         interval: [
           "cssStyleHoverTransition",
-          "cssStyleElementEcwidShoppingBagPropertyHoverTransition"
+          "cssStylePropertyHoverTransitionFill"
         ]
       }
   };

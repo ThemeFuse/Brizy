@@ -11,11 +11,11 @@ export default {
 };
 
 function getItems(v) {
-  const { base } = Editor.getShortcodes();
+  const { essentials } = Editor.getShortcodes();
 
   const { icon = "" } =
-    base.find(item => item.component.resolve.value.items?.type === v[0].type) ||
-    {};
+    essentials.find((item) => item.component.resolve.value.items?.type === v[0].type) || {};
+
 
   return [
     {

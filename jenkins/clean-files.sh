@@ -47,7 +47,7 @@ rm -rf ./public/editor-src \
        ./.phpunit* \
        ./.env* \
        .idea \
-       ./.github \
+       .github \
        ./bin ./tests *.dist *.xml *.lock *.json *.yml *.sh ./vendor/twig/twig/test \
        ./vendor/twig/twig/ext/twig ./vendor/twig/twig/doc \
        ./vendor/imagine/imagine/lib/Imagine/resources/Adobe/*.pdf \

@@ -50,10 +50,6 @@ export function cssStyleElementWOOCartPurchasesDisabled({ v, device, state }) {
     : "content: attr(data-counter);";
 }
 
-export function cssStyleElementWOOCartTransitionProperty() {
-  return "transition-property: background-color,color,border;";
-}
-
 export function cssStyleElementWOOCartPurchasesColor({
   v,
   device,

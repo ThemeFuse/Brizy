@@ -6,7 +6,8 @@ export function style(v, vs, vd, props) {
       standart: ["cssStylePaddingPreview", "cssStylePaddingRightLeftForEditor"]
     },
     ".brz &&:hover > .brz-bg": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBlendMode"]
+      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBlendMode"],
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
       standart: [
@@ -17,19 +18,26 @@ export function style(v, vs, vd, props) {
         "cssStyleSectionBgSize",
         "cssStyleSectionBgRepeat"
       ],
-      interval: ["cssStyleBgImageAttachment"]
+      interval: [
+        "cssStyleBgImageAttachment",
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransition"
+      ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
       standart: ["cssStyleBgImageHover"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
+      standart: ["cssStyleBgColor", "cssStyleBgGradient"],
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-map": {
-      standart: ["cssStyleFilter", "cssStyleBgMediaMap"]
+      standart: ["cssStyleFilter", "cssStyleBgMediaMap"],
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-video": {
-      standart: ["cssStyleFilter", "cssStyleBgMediaVideo"]
+      standart: ["cssStyleFilter", "cssStyleBgMediaVideo"],
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-shape__top": {
       standart: [

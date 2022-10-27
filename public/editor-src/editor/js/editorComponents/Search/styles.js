@@ -13,7 +13,7 @@ export function styles(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementSearchPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&.brz-search-container--minimal": {
@@ -36,21 +36,21 @@ export function styles(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementSearchPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-search-form .brz-search-icon__style1": {
       standart: ["cssStyleColor", "cssStyleTypography3FontSize"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementSearchPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-search:-webkit-autofill": {
       standart: ["cssStyleElementSearchAutocompleteColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementSearchPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };

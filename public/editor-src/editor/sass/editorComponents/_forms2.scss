@@ -299,6 +299,7 @@
         line-height: inherit;
         padding: 0;
         flex: 1;
+        opacity: 0.7;
       }
     }
     &-selection--multiple {
@@ -355,6 +356,10 @@
     &-container--default {
       .select2-results > .select2-results__options {
         max-height: initial;
+
+        .select2-results__option {
+          opacity: 0.7;
+        }
       }
       .select2-results__option--highlighted[aria-selected] {
         background-color: inherit;

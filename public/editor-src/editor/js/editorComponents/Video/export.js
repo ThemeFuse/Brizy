@@ -6,6 +6,51 @@ import {
 
 let isYoutubeReady = false;
 
+const getPlayer = (node) => {
+  if (node.classList.contains("brz-youtube-video")) {
+    const player = node.querySelector("iframe");
+    return player ? { type: "youtube", player } : undefined;
+  }
+
+  if (node.classList.contains("brz-vimeo-video")) {
+    const player = node.querySelector("iframe");
+    return player ? { type: "vimeo", player } : undefined;
+  }
+
+  if (node.classList.contains("brz-custom-video")) {
+    const player = node.querySelector("video");
+    return player ? { type: "custom", player } : undefined;
+  }
+};
+
+const changeVideoPlayerState = (playerObj) => {
+  switch (playerObj.type) {
+    case "youtube":
+      playerObj?.player?.contentWindow?.postMessage(
+        JSON.stringify({
+          event: "command",
+          func: "pauseVideo"
+        }),
+        "*"
+      );
+      break;
+    case "vimeo":
+      playerObj?.player?.contentWindow?.postMessage(
+        JSON.stringify({
+          method: "pause",
+          value: "true"
+        }),
+        "*"
+      );
+      break;
+    case "custom":
+      if (typeof playerObj?.player?.pause === "function") {
+        playerObj?.player?.pause();
+      }
+      break;
+  }
+};
+
 const youtubeLoadScript = () => {
   const candidate = document.querySelector(
     "script[src='https://www.youtube.com/iframe_api']"
@@ -308,6 +353,21 @@ export default function ($node) {
         openFullscreen($video.get(0));
       }
     });
+
+  window.Brz.on("elements.story.slide.changed", (node) => {
+    if (node) {
+      const allVideosInSlide = node.querySelectorAll(".brz-video");
+      if (allVideosInSlide.length > 0) {
+        allVideosInSlide.forEach((item) => {
+          const player = getPlayer(item);
+
+          if (player) {
+            changeVideoPlayerState(player);
+          }
+        });
+      }
+    }
+  });
 }
 
 function getVideoSrc($elem) {

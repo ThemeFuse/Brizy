@@ -68,6 +68,9 @@ jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
   Typography: {}
 }));
+jest.mock("visual/component/Options/types/dev/IconSetter/index.tsx", () => ({
+  IconSetter: {}
+}));
 // endregion
 
 describe("Testing 'reduce' function", () => {

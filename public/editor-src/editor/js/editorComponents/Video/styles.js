@@ -11,7 +11,7 @@ export function styleContent(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoHoverBoxShadowTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz &&:hover .brz-video-content": {
@@ -22,7 +22,7 @@ export function styleContent(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz &&:hover .brz-iframe, && .brz-video__cover:before": {
@@ -59,14 +59,14 @@ export function styleWrapper(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz &&:hover .brz-video__cover .brz-video__cover-icon .brz-span": {
       standart: ["cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     }
   };
@@ -80,35 +80,35 @@ export function styleCustomVideo(v, vs, vd) {
       standart: ["cssStyleVideoIconControls"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz && > .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-total-time:hover": {
       standart: ["cssStyleVideoIconControls"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz && .brz-video-custom-slider:hover:before": {
       standart: ["cssStyleBg2Color", "cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz && .brz-video-custom-slider:hover .brz-video-custom-progress": {
       standart: ["cssStyleBg2Color"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz && .brz-video-custom-video-controls:hover": {
       standart: ["cssStyleVideoControlsBgColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     }
   };
@@ -141,7 +141,7 @@ export function styleIcon(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     }
   };

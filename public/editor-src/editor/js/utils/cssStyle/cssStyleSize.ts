@@ -134,7 +134,6 @@ export function cssStyleSizeSizeHeight({
 /**
  * Return height CSS style only if the unit is in px
  *  - If the unit is in 'px', return the CSS height in px
- *  - If the unit is in 'px', return the CSS height in px
  *  - If value is in %, return 'height: unset'
  *  - otherwise, return empty string
  */
@@ -348,6 +347,33 @@ export function cssStyleSizeFontSizeIcon({
       return `font-size:24px;`;
     case "large":
       return `font-size:32px;`;
+    case "custom":
+      return `font-size:${customSize}${customSizeSuffix};`;
+    case undefined:
+      return "";
+  }
+}
+
+export function cssStyleFontSizeIconOldOption({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
+  const size = getSize(dvv(capByPrefix(prefix, "size")));
+  const customSize = dvv(capByPrefix(prefix, "customSize"));
+  const customSizeSuffix = Str.read(
+    dvv(capByPrefix(prefix, "customSizeSuffix"))
+  );
+
+  switch (size) {
+    case "small":
+      return `font-size:32px;`;
+    case "medium":
+      return `font-size:48px;`;
+    case "large":
+      return `font-size:64px;`;
     case "custom":
       return `font-size:${customSize}${customSizeSuffix};`;
     case undefined:

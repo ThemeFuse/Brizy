@@ -56,6 +56,9 @@ const translationsMap = {
   StarRating: t("Rating"),
   ProtectedPage: t("Protected Form"),
   Translation: t("Translation"),
+  Calendly: t("Calendly"),
+
+  Alert: t("Alert"),
 
   // WP
   WPSidebar: t("Sidebar"),

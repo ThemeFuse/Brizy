@@ -1,15 +1,17 @@
-import React from "react";
 import classNames from "classnames";
+import React from "react";
 
 export type Props = {
   className?: string;
   display?: "inline" | "block";
+  title?: string;
 };
 
 export const OptionWrapper: React.FC<Props> = ({
   children,
   className,
-  display = "inline"
+  display = "inline",
+  title
 }) => {
   const _className = classNames(
     "brz-ed-option-wrapper",
@@ -17,5 +19,9 @@ export const OptionWrapper: React.FC<Props> = ({
     className
   );
 
-  return <div className={_className}>{children}</div>;
+  return (
+    <div className={_className} title={title}>
+      {children}
+    </div>
+  );
 };

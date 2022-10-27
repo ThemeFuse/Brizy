@@ -3,12 +3,26 @@ $helperSize: 30px;
 
 // --
 .brz-ed-sorting {
-  user-select: none;
   cursor: move;
 
-  * {
+  .brz-root__container .brz-ed-draggable-overlay {
+    pointer-events: all !important;
+  }
+
+  .brz-ed-container-plus {
+    visibility: hidden;
     pointer-events: none;
   }
+
+  .sortable-helper {
+    pointer-events: none;
+  }
+
+  .sortable-chosen,
+  .brz-ed-collapsible__icon {
+    visibility: hidden !important;
+  }
+
   .sortable-hovered:not(.brz-ed-border__sortable):not(.brz-ed-container-trigger) {
     position: relative;
   }
@@ -18,85 +32,6 @@ $helperSize: 30px;
     &:after {
       opacity: 1 !important;
       background-color: #fff !important;
-    }
-  }
-  .sortable-chosen {
-    &:before,
-    &:after {
-      display: none;
-    }
-    *:not(.brz-ed-border) {
-      visibility: hidden !important;
-    }
-    &[data-border--grey] > .brz-ed-border__inner {
-      border-color: $by-block-border-grey;
-    }
-    &[data-border--blue] > .brz-ed-border__inner {
-      border-color: $by-block-border-blue;
-    }
-    &[data-border--red] > .brz-ed-border__inner {
-      border-color: $by-block-border-red;
-    }
-    > .brz-ed-border__inner {
-      top: -1px;
-      bottom: -1px;
-      visibility: visible !important;
-    }
-    &[data-border="column__posts"] > .brz-ed-border__inner {
-      top: -2px;
-      bottom: -2px;
-    }
-  }
-
-  // receivers
-  .sortable-receiver:not(.brz-ed-sortable--empty) {
-    > .brz-row__container,
-    > .brz-wrapper,
-    > .brz-wrapper-clone {
-      position: relative;
-
-      &:first-child:before,
-      &.sortable-chosen + div:before,
-      &:after {
-        content: "";
-        height: 2px;
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -10px;
-        background-color: $floating-button-grey;
-        opacity: 0.3;
-      }
-      &:first-child:before,
-      &.sortable-chosen + div:before {
-        top: -10px;
-        bottom: auto;
-      }
-    }
-    > [data-border="column"] {
-      &[data-border--grey] > .brz-ed-border__inner {
-        border-left-color: $by-block-border-grey;
-        border-right-color: $by-block-border-grey;
-      }
-      &[data-border--blue] > .brz-ed-border__inner {
-        border-left-color: $by-block-border-blue;
-        border-right-color: $by-block-border-blue;
-      }
-      &[data-border--red] > .brz-ed-border__inner {
-        border-left-color: $by-block-border-red;
-        border-right-color: $by-block-border-red;
-      }
-      > .brz-ed-border__inner {
-        top: -1px;
-        bottom: -1px;
-        transition: none;
-      }
-    }
-
-    // Hack create space between row an column
-    &.brz-row {
-      margin-top: 5px;
-      margin-bottom: 5px;
     }
   }
 
@@ -162,6 +97,7 @@ $helperSize: 30px;
     }
   }
 }
+
 .sortable-helper {
   width: $helperSize;
   height: $helperSize;
@@ -193,5 +129,78 @@ $helperSize: 30px;
     left: 50%;
     transform: translate(-50%, -50%);
     margin: 0;
+  }
+}
+
+.sortable-chosen {
+  &[data-border--grey] > .brz-ed-border__inner {
+    border-color: $by-block-border-grey;
+  }
+  &[data-border--blue] > .brz-ed-border__inner {
+    border-color: $by-block-border-blue;
+  }
+  &[data-border--red] > .brz-ed-border__inner {
+    border-color: $by-block-border-red;
+  }
+  > .brz-ed-border__inner {
+    top: -1px;
+    bottom: -1px;
+    visibility: visible !important;
+  }
+  &[data-border="column__posts"] > .brz-ed-border__inner {
+    top: -2px;
+    bottom: -2px;
+  }
+}
+
+// receivers
+.sortable-receiver:not(.brz-ed-sortable--empty) {
+  > .brz-row__container,
+  > .brz-wrapper,
+  > .brz-wrapper-clone {
+    position: relative;
+
+    &:first-child:before,
+    &.sortable-chosen + div:before,
+    &:after {
+      content: "";
+      height: 2px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      background-color: $floating-button-grey;
+      opacity: 0.3;
+    }
+    &:first-child:before,
+    &.sortable-chosen + div:before {
+      top: -10px;
+      bottom: auto;
+    }
+  }
+  > [data-border="column"] {
+    &[data-border--grey] > .brz-ed-border__inner {
+      border-left-color: $by-block-border-grey;
+      border-right-color: $by-block-border-grey;
+    }
+    &[data-border--blue] > .brz-ed-border__inner {
+      border-left-color: $by-block-border-blue;
+      border-right-color: $by-block-border-blue;
+    }
+    &[data-border--red] > .brz-ed-border__inner {
+      border-left-color: $by-block-border-red;
+      border-right-color: $by-block-border-red;
+    }
+    > .brz-ed-border__inner {
+      top: -1px;
+      bottom: -1px;
+      transition: none;
+    }
+  }
+
+  // Hack create space between row an column
+  &.brz-row {
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 }

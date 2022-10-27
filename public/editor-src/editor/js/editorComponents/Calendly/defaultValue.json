@@ -1,0 +1,74 @@
+{
+  "link": "https://calendly.com/calendly-demo-test/30min",
+
+  "style": {
+    "width": 100,
+    "widthSuffix": "%",
+    "height": 500,
+    "heightSuffix": "px",
+
+    "tabletHeight": null,
+    "tabletHeightSuffix": null,
+    "tabletWidth": null,
+    "tabletWidthSuffix": null,
+
+    "mobileWidth": null,
+    "mobileWidthSuffix": null,
+    "mobileHeight": null,
+    "mobileHeightSuffix": null,
+
+    "bgColorType": "solid",
+    "bgColorHex": "#05CAB6",
+    "bgColorOpacity": 0,
+    "bgColorPalette": "color3",
+
+    "gradientColorHex": "#0527CA",
+    "gradientColorOpacity": 1,
+    "gradientColorPalette": "",
+    "gradientType": "linear",
+    "gradientStartPointer": 0,
+    "gradientFinishPointer": 100,
+    "gradientActivePointer": "startPointer",
+    "gradientLinearDegree": 90,
+    "gradientRadialDegree": 90,
+
+    "borderStyle": "solid",
+    "borderColorHex": "",
+    "borderColorOpacity": 0,
+    "borderColorPalette": "color3",
+    "borderWidthType": "grouped",
+    "borderWidth": 2,
+    "borderTopWidth": 2,
+    "borderRightWidth": 2,
+    "borderBottomWidth": 2,
+    "borderLeftWidth": 2,
+
+    "boxShadow": "none",
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 1,
+    "boxShadowColorPalette": "",
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "calendlyPaddingType": "grouped",
+    "calendlyPadding": 0,
+    "calendlyPaddingSuffix": "px",
+
+    "calendlyPaddingTop": 0,
+    "calendlyPaddingTopSuffix": "px",
+
+    "calendlyPaddingRight": 0,
+    "calendlyPaddingRightSuffix": "px",
+
+    "calendlyPaddingBottom": 0,
+    "calendlyPaddingBottomSuffix": "px",
+
+    "calendlyPaddingLeft": 0,
+    "calendlyPaddingLeftSuffix": "px",
+
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": "ms"
+  }
+}

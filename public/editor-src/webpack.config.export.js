@@ -1,11 +1,11 @@
 const path = require("path");
 const webpack = require("webpack");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const editorConfigFn = require("./webpack.config.editor");
 const babelrc = require("./babelrc.config.all");
 
-module.exports = options => {
+module.exports = (options) => {
   const editorConfig = editorConfigFn(options);
   const nullLoaderArr = [
     // stripped because of errors when run in a node environment
@@ -16,6 +16,7 @@ module.exports = options => {
     /isotope-layout/,
     /magnific-popup/,
     /slick-carousel/,
+    /react-calendly/,
 
     // stripped for performance / bundle size reduction
     /\/editor\/js\/component\/Prompts\//,
@@ -46,13 +47,16 @@ module.exports = options => {
       rules: [
         {
           test: /\.(ts|js)x?$/,
-          include: [path.resolve(__dirname, "editor")],
+          include: [
+            path.resolve(__dirname, "editor"),
+            path.resolve(__dirname, "packages")
+          ],
           loader: "babel-loader",
           options: babelrc.export()
         },
         {
           test(path) {
-            return nullLoaderArr.some(r => r.test(path));
+            return nullLoaderArr.some((r) => r.test(path));
           },
           loader: "null-loader"
         },

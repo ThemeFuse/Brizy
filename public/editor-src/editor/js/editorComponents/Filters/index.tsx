@@ -1,43 +1,43 @@
-import React, { ReactNode } from "react";
 import classnames from "classnames";
+import React, { ReactNode } from "react";
+import ContextMenu from "visual/component/ContextMenu";
+import CheckboxControls from "visual/component/Controls/CheckGroup";
+import RadioControls from "visual/component/Controls/Radio";
+import { TextEditor } from "visual/component/Controls/TextEditor";
+import CustomCSS from "visual/component/CustomCSS";
+import { ElementModel } from "visual/component/Elements/Types";
+import Toolbar from "visual/component/Toolbar";
 import EditorComponent, {
   ComponentsMeta
 } from "visual/editorComponents/EditorComponent";
-import Toolbar from "visual/component/Toolbar";
-import CustomCSS from "visual/component/CustomCSS";
-import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
-import ContextMenu from "visual/component/ContextMenu";
-import contextMenuConfig from "./contextMenu";
-import { TextEditor } from "visual/component/Controls/TextEditor";
-import RadioControls from "visual/component/Controls/Radio";
-import CheckboxControls from "visual/component/Controls/CheckGroup";
-import { Wrapper } from "../tools/Wrapper";
-import Items from "./items";
-import defaultValue from "./defaultValue.json";
-import * as toolbarExtendParent from "./toolbarExtendParent";
-import * as sidebarExtendParent from "./sidebarExtendParent";
-import * as toolbarTitleConfig from "./toolbarTitle";
-import * as toolbarLabelConfig from "./toolbarLabel";
-import * as sidebarButtonConfig from "./sidebarButton";
-import * as toolbarButtonConfig from "./toolbarButton";
-import * as toolbarSelectOptionConfig from "./toolbarSelectOption";
-import * as sidebarSelectOptionConfig from "./sidebarSelectItem";
-import * as toolbarIconConfig from "./toolbarIcon";
-import * as sidebarIconConfig from "./sidebarIcon";
-import * as toolbarExtend from "./toolbarExtend";
-import * as sidebarExtend from "./sidebarExtend";
 import {
-  CheckboxFilters,
-  RadioFilters,
-  RatingFilters,
-  RangeFilters,
-  SearchFilters,
   ButtonFilters,
-  DateFilters
+  CheckboxFilters,
+  DateFilters,
+  RadioFilters,
+  RangeFilters,
+  RatingFilters,
+  SearchFilters
 } from "visual/editorComponents/Filters/FiltersItem/types";
-import { ElementModel } from "visual/component/Elements/Types";
+import { css } from "visual/utils/cssStyle";
 import { WithClassName } from "visual/utils/options/attributes";
+import { Wrapper } from "../tools/Wrapper";
+import contextMenuConfig from "./contextMenu";
+import defaultValue from "./defaultValue.json";
+import Items from "./items";
+import * as sidebarButtonConfig from "./sidebarButton";
+import * as sidebarExtend from "./sidebarExtend";
+import * as sidebarExtendParent from "./sidebarExtendParent";
+import * as sidebarIconConfig from "./sidebarIcon";
+import * as sidebarSelectOptionConfig from "./sidebarSelectItem";
+import { style } from "./styles";
+import * as toolbarButtonConfig from "./toolbarButton";
+import * as toolbarExtend from "./toolbarExtend";
+import * as toolbarExtendParent from "./toolbarExtendParent";
+import * as toolbarIconConfig from "./toolbarIcon";
+import * as toolbarLabelConfig from "./toolbarLabel";
+import * as toolbarSelectOptionConfig from "./toolbarSelectOption";
+import * as toolbarTitleConfig from "./toolbarTitle";
 
 type Value = ElementModel & {
   title: string;
@@ -91,7 +91,6 @@ class Filters extends EditorComponent<Value, Props> {
       }
     );
 
-    // @ts-expect-error: Need extends EditorComponents
     this.props.extendParentToolbar(toolbarExtend);
   }
 

@@ -1,0 +1,28 @@
+.brz-alert {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  word-break: break-all;
+  transition-property: color, background-color, text-shadow, box-shadow, border;
+
+  .brz-ed-box__resizer {
+    transition-property: inherit;
+  }
+
+  &-title,
+  &-description {
+    transition-property: inherit;
+  }
+
+  // close button
+  &-close {
+    position: absolute;
+    line-height: 0;
+    cursor: pointer;
+    transition-property: inherit;
+
+    &-icon {
+      box-sizing: content-box;
+    }
+  }
+}

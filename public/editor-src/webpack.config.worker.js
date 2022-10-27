@@ -67,7 +67,10 @@ exports.ssr = (options) => {
       rules: [
         {
           test: /\.(ts|js)x?$/,
-          include: [path.resolve(__dirname, "editor")],
+          include: [
+            path.resolve(__dirname, "editor"),
+            path.resolve(__dirname, "packages")
+          ],
           loader: "babel-loader",
           options: babelrc.editor()
         },

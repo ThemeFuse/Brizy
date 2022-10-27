@@ -1,15 +1,15 @@
 import React from "react";
-import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
+import { Badge } from "visual/component/Badge";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import { Badge } from "visual/component/Badge";
-import { getRulesListIndexByRule } from "./utils";
-import { isLegacyRuleListItem, RuleList, RuleListItem } from "./types";
+import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
 import { Rule } from "visual/types";
 import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks";
+import { isLegacyRuleListItem, RuleList, RuleListItem } from "./types";
+import { getRulesListIndexByRule } from "./utils";
 
 export interface Props {
   rule: Rule;
@@ -45,20 +45,30 @@ class ConditionGroup extends React.Component<Props> {
       </SelectItem>
     );
 
-    const newItems = items.map(item =>
+    const newItems = items.map((item) =>
       isLegacyRuleListItem(item) ? (
         <SelectItem key={item.value} value={`specific|||${item.value}`}>
-          {item.title}
-          {item.status && <Badge status={item.status} />}
+          <div className="brz-d-xs-flex brz-align-items-xs-center">
+            <span title={item.title} className="brz-ellipsis">
+              {item.title}
+            </span>
+            {item.status && <Badge status={item.status} />}
+          </div>
         </SelectItem>
       ) : (
         <SelectOptgroup
           key={item.value}
           title={item.title}
-          items={item.items.map(({ value, title }) => (
+          items={item.items.map(({ value, title, status }) => (
             <SelectItem key={item.value} value={`${item.mode}|||${value}`}>
-              {title}
-              {item.status && <Badge status={item.status} />}
+              <div className="brz-d-xs-flex brz-align-items-xs-center">
+                <span title={title} className="brz-ellipsis">
+                  {title}
+                </span>
+                {status && (
+                  <Badge status={status === "published" ? "publish" : status} />
+                )}
+              </div>
             </SelectItem>
           ))}
         >

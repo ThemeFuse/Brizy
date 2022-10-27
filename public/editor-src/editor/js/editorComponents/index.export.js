@@ -1,4 +1,5 @@
 export { default as Accordion } from "./Accordion/export.js";
+export { default as Alert } from "./Alert/export.ts";
 export { default as Audio } from "./Audio/export.ts";
 export { default as Countdown } from "./Countdown/export.js";
 export { default as Countdown2 } from "./Countdown2/export.js";

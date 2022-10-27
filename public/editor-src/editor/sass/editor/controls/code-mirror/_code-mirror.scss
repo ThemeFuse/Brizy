@@ -24,6 +24,30 @@
   width: 100%;
 }
 
+.brz-ed-control__codeMirror {
+  // Line size
+  &--short {
+    &:focus-within {
+      height: 200px;
+    }
+  }
+  &--medium {
+    &:focus-within {
+      height: 300px;
+    }
+  }
+  &--large {
+    &:focus-within {
+      height: 400px;
+    }
+  }
+  &--auto {
+    &:focus-within {
+      height: auto;
+    }
+  }
+}
+
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: monospace;
@@ -60,8 +84,8 @@
   }
 
   &:focus-within {
-    height: 300px;
     line-height: 1.5;
+    height: 100%;
 
     pre {
       line-height: inherit;

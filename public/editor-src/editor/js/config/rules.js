@@ -52,6 +52,9 @@ export default {
   "wrapper--carousel": {
     showToolbar: "on"
   },
+  "wrapper--alert": {
+    showToolbar: "on"
+  },
   "wrapper--posts": {
     showToolbar: "on",
     paddingType: "ungrouped",

@@ -212,6 +212,7 @@
     "tempPaginationBorderBottomLeftRadiusSuffix": "px",
 
     "filter": "off",
+    "masonryFilter": "on",
 
     "filterStyle": "style-1",
 

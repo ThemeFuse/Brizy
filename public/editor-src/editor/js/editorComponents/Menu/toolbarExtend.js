@@ -8,12 +8,6 @@ import {
 } from "visual/utils/options";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
-import {
-  toolbarFilterBrightness,
-  toolbarFilterContrast,
-  toolbarFilterHue,
-  toolbarFilterSaturation
-} from "visual/utils/toolbar";
 
 export function getItems({ v, device, state, context }) {
   return defaultValueValue({ v, device, state, key: "mMenu" }) === "on"
@@ -385,26 +379,10 @@ export function getItemsMMenu({ v, device, state, context }) {
               id: "filters",
               label: t("Filters"),
               options: [
-                toolbarFilterHue({
-                  v,
-                  device,
-                  state
-                }),
-                toolbarFilterSaturation({
-                  v,
-                  device,
-                  state
-                }),
-                toolbarFilterBrightness({
-                  v,
-                  device,
-                  state
-                }),
-                toolbarFilterContrast({
-                  v,
-                  device,
-                  state
-                })
+                {
+                  id: "",
+                  type: "filters-dev"
+                }
               ]
             }
           ]

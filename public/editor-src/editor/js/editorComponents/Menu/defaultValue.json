@@ -500,6 +500,8 @@
     "tempMMenuPaddingBottom": 0,
     "tempMMenuPaddingLeft": 0,
 
+    "hoverTransition": 50,
+
     "tabletVerticalMode": null,
 
     "tabletFontStyle": "button",

@@ -101,13 +101,13 @@ const normalizeCustomCSS = (styles: string): string =>
     return "";
   });
 
-const makePageStyles = ($doc: cheerio.Root): Asset[] => {
+const makePageStyles = ($doc: cheerio.Root, fonts: Fonts): Asset[] => {
   const prefetchLinks: Asset = {
     name: "projectPrefetchFonts",
     score: DEPENDENCY_SCORE,
     content: {
       type: "code",
-      content: makePrefetchFonts().join(" ")
+      content: getFontLinks(fonts)?.google ? makePrefetchFonts().join(" ") : ""
     },
     pro: false
   };
@@ -221,7 +221,7 @@ export const makeStyles = ($doc: cheerio.Root, fonts: Fonts): MakeStyles => {
   const pageFonts = makePageFonts(fonts);
 
   // project styles
-  const pageStyles = makePageStyles($doc);
+  const pageStyles = makePageStyles($doc, fonts);
 
   // page meta viewport
   const metaViewport = makePageMetaViewport();

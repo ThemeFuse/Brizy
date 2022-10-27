@@ -36,9 +36,6 @@ export { styleBgColor, styleBgColorHex } from "./styleBgColor";
 // BG Gradient
 export { styleBgGradient } from "./styleBgGradient";
 
-// Hover Transition
-export { styleHoverTransition } from "./styleHoverTransition";
-
 // Align
 export {
   styleAlignFlexVerticalAlign,
@@ -170,9 +167,6 @@ export {
   styleFilterSaturation,
   styleFilterContrast
 } from "./styleFilter";
-
-// Icon
-export { styleIconSpacing } from "./styleIcon";
 
 // Element Row
 export {

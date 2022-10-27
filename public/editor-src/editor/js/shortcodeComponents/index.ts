@@ -23,11 +23,12 @@ import {
   essentialsCommon,
   essentialsStory,
   grid,
+  media,
+  mediaStory,
   social
 } from "./index.common";
 import Posts from "./Posts";
-// uncomment later when logic with context select is done
-// import PostTitle from "./PostTitle";
+import PostTitle from "./PostTitle";
 import Login from "./pro/Login";
 import ResetPassword from "./pro/ResetPassword";
 import ProtectedPage from "./ProtectedPage";
@@ -64,8 +65,7 @@ const protectedPage = [{ component: ProtectedPage, pro: false }];
 const resetPassword = [{ component: ResetPassword, pro: false }];
 
 const cmsSingle = [
-  // uncomment later when logic with context select is done
-  // { component: PostTitle, pro: false },
+  { component: PostTitle, pro: false },
   { component: Posts, pro: false }
 ];
 
@@ -97,8 +97,7 @@ const shop: Shortcode[] = match(
 
 const EcwidProduct = Ecwid.find((c) => c.component.id === "Product");
 const productPageSpecificItems = [
-  // uncomment later when logic with context select is done
-  // { component: PostTitle, pro: false },
+  { component: PostTitle, pro: false },
   ...(EcwidProduct ? [EcwidProduct] : [])
 ];
 
@@ -111,7 +110,8 @@ const productPageShopItems = [
 const config = ((): Shortcodes => {
   if (isStory(_config)) {
     return {
-      essentials: essentialsStory
+      essentials: essentialsStory,
+      media: mediaStory
     };
   }
 
@@ -120,6 +120,7 @@ const config = ((): Shortcodes => {
       grid,
       user: user,
       essentials: essentialsCloud,
+      media,
       social,
       blog: cmsSingle,
       shop,
@@ -132,6 +133,7 @@ const config = ((): Shortcodes => {
       grid,
       systemPages: protectedPage,
       essentials: essentialsWithPosts,
+      media,
       social,
       shop
     };
@@ -142,6 +144,7 @@ const config = ((): Shortcodes => {
       grid,
       systemPages: resetPassword,
       essentials: essentialsWithPosts,
+      media,
       social,
       shop
     };
@@ -151,6 +154,7 @@ const config = ((): Shortcodes => {
     return {
       grid,
       essentials: essentialsExternalPopup,
+      media,
       social
     };
   }
@@ -160,6 +164,7 @@ const config = ((): Shortcodes => {
       grid,
       blog: cmsSingle,
       essentials: essentialsCloud,
+      media,
       social,
       product: productPageSpecificItems,
       shop: productPageShopItems,
@@ -179,6 +184,7 @@ const config = ((): Shortcodes => {
       productPageSpecificItems,
       shop: productPageShopItems,
       essentials: essentialsCloud,
+      media,
       social,
       blog: cmsSingle,
       cms: cmsAssets
@@ -188,6 +194,7 @@ const config = ((): Shortcodes => {
   return {
     grid,
     essentials: essentialsCloud,
+    media,
     social,
     blog: cmsSingle,
     cms: cmsAssets

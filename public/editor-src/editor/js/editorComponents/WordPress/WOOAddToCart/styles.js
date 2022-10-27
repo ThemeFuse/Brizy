@@ -36,14 +36,14 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementButtonPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover input[type=number].input-text::placeholder": {
       standart: ["cssStyleElementWOOAddToCartInputColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementButtonPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .single_variation": {
@@ -57,30 +57,29 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementButtonPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
-      {
-        standart: [
-          "cssStyleElementWOOAddToCartBorderRadius",
-          "cssStyleElementWOOAddToCartButtonColor",
-          "cssStyleBgColor",
-          "cssStyleBgGradient",
-          "cssStyleElementWOOAddToCartBorder",
-          "cssStyleBoxShadow",
-          "cssStyleElementWOOAddToCartSize",
-          "cssStyleTypography3FontFamily",
-          "cssStyleTypography3FontSize",
-          "cssStyleTypography3LineHeight",
-          "cssStyleTypography3FontWeight",
-          "cssStyleTypography3LetterSpacing"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStyleElementButtonPropertyHoverTransition"
-        ]
-      },
+    ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button": {
+      standart: [
+        "cssStyleElementWOOAddToCartBorderRadius",
+        "cssStyleElementWOOAddToCartButtonColor",
+        "cssStyleBgColor",
+        "cssStyleBgGradient",
+        "cssStyleElementWOOAddToCartBorder",
+        "cssStyleBoxShadow",
+        "cssStyleElementWOOAddToCartSize",
+        "cssStyleTypography3FontFamily",
+        "cssStyleTypography3FontSize",
+        "cssStyleTypography3LineHeight",
+        "cssStyleTypography3FontWeight",
+        "cssStyleTypography3LetterSpacing"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
     ".brz &&:hover td label": {
       standart: [
         "cssStyleElementWOOAddToCartLabelColor",
@@ -92,7 +91,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementButtonPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover td.value .reset_variations": {
@@ -106,7 +105,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementButtonPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
 
@@ -117,7 +116,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementButtonPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .label, .woocommerce-grouped-product-list-item": {
@@ -127,7 +126,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleElementWOOAddToCartTableBorder"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementButtonPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover td.value select": {
@@ -142,7 +141,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementButtonPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .value": {
@@ -159,7 +158,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementButtonPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };

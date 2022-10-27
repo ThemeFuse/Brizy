@@ -8,6 +8,7 @@ import {
   cssStyleSizeFontSize,
   cssStyleSizeHeight,
   cssStyleSizeWidth,
+  cssStyleSpacing,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontWeight,
@@ -1936,4 +1937,18 @@ export function cssStyleElementFiltersSelectArrow({
   const p = cssStylePadding({ v, device, state, prefix: "options" });
 
   return `right:${p.paddingTop}px !important;`;
+}
+
+export function cssStyleElementFiltersIconSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "icon",
+    direction: "right"
+  });
 }

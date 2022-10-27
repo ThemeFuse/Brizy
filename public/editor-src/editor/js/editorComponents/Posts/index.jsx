@@ -270,10 +270,10 @@ export class Posts extends EditorComponent {
       return <Placeholder icon="posts" style={{ height: "300px" }} />;
     }
 
-    const { type, pagination, filter, filterStyle, allTag } = v;
+    const { type, pagination, filter, filterStyle, allTag, masonryFilter } = v;
     const className = classnames(
       "brz-posts",
-      { "brz-posts--masonry": filter === "on" },
+      { "brz-posts--masonry": filter === "on" && masonryFilter === "on" },
       css(this.getComponentId(), this.getId(), style(v, vs, vd))
     );
     const itemsProps = this.makeSubcomponentProps({
@@ -316,10 +316,10 @@ export class Posts extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { type, pagination, filter } = v;
+    const { type, pagination, filter, masonryFilter } = v;
     const className = classnames(
       "brz-posts",
-      { "brz-posts--masonry": filter === "on" },
+      { "brz-posts--masonry": filter === "on" && masonryFilter === "on" },
       css(this.getComponentId(), this.getId(), style(v, vs, vd))
     );
     const tagsAttribute = getLoopTagsAttributes(v);

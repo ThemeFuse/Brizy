@@ -19,7 +19,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleColor", "cssStyleElementCounterTextShadow"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementCounterTransitionHoverProperty"
+        "cssStylePropertyHoverTransitionFill"
       ]
     },
     ".brz &&:hover .brz-counter-chart-radial > svg > .brz-counter-pie-chart": {
@@ -32,21 +32,21 @@ export function style(v, vs, vd) {
       standart: ["cssStyleStroke"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementCounterTransitionHoverProperty"
+        "cssStylePropertyHoverTransitionFill"
       ]
     },
     ".brz &&:hover .brz-counter-radial-chart": {
       standart: ["cssStyleFill"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementCounterTransitionHoverProperty"
+        "cssStylePropertyHoverTransitionFill"
       ]
     },
     ".brz &&:hover .brz-counter-chart-pie": {
       standart: ["cssStyleFill"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementCounterTransitionHoverProperty"
+        "cssStylePropertyHoverTransitionFill"
       ]
     }
   };
@@ -56,7 +56,7 @@ export function style(v, vs, vd) {
 
 export function styleNumber(v, vs, vd) {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",

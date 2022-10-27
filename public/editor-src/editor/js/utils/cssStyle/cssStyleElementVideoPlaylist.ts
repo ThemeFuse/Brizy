@@ -151,7 +151,3 @@ export function cssStyleElementVideoPlaylistItemSubtitleActiveColor({
     prefix: "subTitleColor"
   });
 }
-
-export function cssStyleElementVideoPlaylistPropertyHoverTransition(): string {
-  return "transition-property: color,  background-color, border-color, box-shadow, transform;";
-}

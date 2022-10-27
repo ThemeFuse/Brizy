@@ -22,12 +22,6 @@ export { styleBgGradient } from "./styleBgGradient";
 // Border Color
 export { styleBorderColor } from "./styleBorderColor";
 
-// Hover Transition
-export {
-  styleHoverTransition,
-  styleHoverTransitionProperty
-} from "./styleHoverTransition";
-
 // Align
 export {
   styleAlignVerticalAlign,

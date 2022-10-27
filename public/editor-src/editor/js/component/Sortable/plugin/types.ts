@@ -70,6 +70,7 @@ export interface SortableInfo {
 export interface GlobalState {
   allSortables: Element[];
   sortableInfo: WeakMap<Element, SortableInfo>;
+  sortableInViewPort: WeakSet<Element>;
   dragInfo: {
     dragInProgress: boolean;
     source?: {

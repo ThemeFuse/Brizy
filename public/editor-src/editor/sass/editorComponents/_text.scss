@@ -109,7 +109,6 @@
     font-weight: bold;
   }
   .link--anchor,
-  .link--external,
   .link--story,
   .link--popup {
     text-decoration: $link-decoration;
@@ -117,6 +116,10 @@
     @include hover {
       text-decoration: $link-hover-decoration;
     }
+  }
+
+  .link--external {
+    text-decoration: $link-is-not-empty;
   }
 
   .brz-tp__dc-block {

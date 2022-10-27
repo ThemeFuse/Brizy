@@ -55,8 +55,7 @@ export function cssStyleBorderRadiusType({
   state,
   prefix = ""
 }: CSSValue): string {
-  const dvv = (key: string): unknown =>
-    defaultValueValue({ v, key, device, state });
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
   const radiusType = getBorderRadiusType(
     styleBorderRadiusType({ v, device, state, prefix })

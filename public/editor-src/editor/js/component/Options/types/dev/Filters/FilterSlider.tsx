@@ -7,6 +7,7 @@ export interface Props {
   value: number;
   onChange: (n: number) => void;
   className?: string;
+  title?: string;
 }
 
 const units = [{ value: "%", title: "%" }];
@@ -15,7 +16,8 @@ export const FilterSlider = ({
   icon,
   value,
   onChange,
-  className
+  className,
+  title
 }: Props): ReactElement => {
   return (
     <Slider
@@ -29,6 +31,7 @@ export const FilterSlider = ({
       step={1}
       min={0}
       max={200}
+      title={title}
     />
   );
 };

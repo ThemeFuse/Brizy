@@ -14,7 +14,7 @@ export function styleContents(v, vs, vd) {
         : ["cssStyleSizeWidth"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPlaylistPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz &&:hover .brz-video-playlist__container": {
@@ -23,7 +23,7 @@ export function styleContents(v, vs, vd) {
         : ["cssStyleBgColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPlaylistPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz &&:hover .brz-video-playlist-sidebar": {
@@ -33,7 +33,7 @@ export function styleContents(v, vs, vd) {
       standart: ["cssStyleBoxShadow", "cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPlaylistPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
 
@@ -57,7 +57,7 @@ export function styleContents(v, vs, vd) {
       standart: ["cssStyleBgColor", "cssStyleElementVideoPlaylistBorderItem"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPlaylistPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz && .brz-video-playlist-video-item.brz-video-playlist-video-item--active": {
@@ -86,7 +86,7 @@ export function styleContents(v, vs, vd) {
       standart: ["cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPlaylistPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz && .brz-video-playlist-video-item.brz-video-playlist-video-item--active .brz-video-playlist-title-video span:first-child": {
@@ -105,7 +105,7 @@ export function styleContents(v, vs, vd) {
       standart: ["cssStyleCoverSubTitleColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPlaylistPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz && .brz-video-playlist-video-item.brz-video-playlist-video-item--active .brz-video-playlist-title-video span:last-child": {
@@ -127,14 +127,14 @@ export function styleContents(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPlaylistPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz &&:hover .brz-video-playlist__cover .brz-play-button": {
       standart: ["cssStyleCoverIconColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPlaylistPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     },
     ".brz &&:hover .brz-video-playlist__cover::before": {
@@ -150,7 +150,7 @@ export function styleSideBar(v, vs, vd) {
       standart: ["cssStyleBgColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementVideoPlaylistPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionTransform"
       ]
     }
   };

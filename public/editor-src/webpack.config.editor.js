@@ -1,10 +1,10 @@
 const path = require("path");
 const webpack = require("webpack");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const babelrc = require("./babelrc.config.all");
 
-const getExtensions = target => {
+const getExtensions = (target) => {
   const defaultExtensions = [".ts", ".tsx", ".js", ".jsx", ".json"];
 
   switch (target) {
@@ -15,7 +15,7 @@ const getExtensions = target => {
   }
 };
 
-const getExternal = target => {
+const getExternal = (target) => {
   if (target === "WP") {
     return { jquery: "jQuery" };
   }
@@ -44,7 +44,10 @@ module.exports = (options = {}) => {
     },
     resolve: {
       alias: {
-        visual: path.resolve(__dirname, "editor/js")
+        visual: path.resolve(__dirname, "editor/js"),
+        ui: path.resolve(__dirname, "packages/ui"),
+        core: path.resolve(__dirname, "packages/core"),
+        elements: path.resolve(__dirname, "packages/elements")
       },
       extensions: getExtensions(options.TARGET)
     },
@@ -52,7 +55,10 @@ module.exports = (options = {}) => {
       rules: [
         {
           test: /\.(ts|js)x?$/,
-          include: [path.resolve(__dirname, "editor")],
+          include: [
+            path.resolve(__dirname, "editor"),
+            path.resolve(__dirname, "packages")
+          ],
           loader: "babel-loader",
           options: babelrc.editor()
         }

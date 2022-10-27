@@ -1,5 +1,5 @@
-import { renderStyles } from "visual/utils/cssStyle";
 import { ElementModel } from "visual/component/Elements/Types";
+import { renderStyles } from "visual/utils/cssStyle";
 
 export function styles(
   v: ElementModel,
@@ -25,7 +25,7 @@ export function styles(
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProtectedPagePropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-input": {
@@ -39,21 +39,21 @@ export function styles(
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProtectedPagePropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-input::placeholder": {
       standart: ["cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProtectedPagePropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-input:-webkit-autofill": {
       standart: ["cssStyleElementProtectedPageAutocompleteColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProtectedPagePropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };

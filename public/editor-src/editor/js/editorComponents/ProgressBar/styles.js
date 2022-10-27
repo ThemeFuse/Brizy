@@ -6,49 +6,49 @@ export function styleBg(v, vs, vd) {
       standart: ["cssStyleSizeWidth"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProgressBarPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover.brz-progress-bar-style1": {
       standart: ["cssStyleBg2Color", "cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProgressBarPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover.brz-progress-bar-style1::after": {
       standart: ["cssStyleBoxShadow", "cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProgressBarPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover.brz-progress-bar-style2 .brz-progress-bar-overlay": {
       standart: ["cssStyleBg2Color", "cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProgressBarPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover.brz-progress-bar-style2 .brz-progress-bar-overlay::after": {
       standart: ["cssStyleBoxShadow", "cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProgressBarPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-progress-bar__wrapper": {
       standart: ["cssStyleBgColor", "cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProgressBarPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover.brz-progress-bar-style2 .brz-progress-bar__percent": {
       standart: ["cssStyleBgColor", "cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProgressBarPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-progress-bar__text": {
@@ -62,7 +62,7 @@ export function styleBg(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProgressBarPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-progress-bar__percent": {
@@ -76,7 +76,7 @@ export function styleBg(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementProgressBarPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };

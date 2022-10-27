@@ -71,16 +71,16 @@ export default function useRuleList(
               case TEMPLATES_GROUP_ID: {
                 const posts = await getRulePostsGroupList(rule.entityType);
 
-                newItems = posts.map(({ value, title, items, status }) => {
+                newItems = posts.map(({ value, title, items }) => {
                   if (Array.isArray(items)) {
                     return {
                       title,
-                      items: items.map(({ title, value }) => ({
+                      items: items.map(({ title, value, status }) => ({
                         title,
+                        status,
                         value: `${value}`
                       })),
                       value: `${value}`,
-                      status: status,
                       mode: items.find(
                         (subItem) => rule.entityType === subItem.groupValue
                       )
