@@ -28,7 +28,7 @@ def scm = [
         userRemoteConfigs                : [
                 [
                         credentialsId: 'ssh_with_passphrase_provided',
-                        refspec      : '+refs/heads/${releaseBranch}:refs/remotes/origin/${releaseBranch}',
+                        refspec      : '+refs/heads/${releaseBranch}:refs/remotes/origin/${releaseBranch} +refs/heads/master:refs/remotes/origin/master  +refs/heads/develop:refs/remotes/origin/develop',
                         url          : 'git@github.com:ThemeFuse/Brizy.git'
                 ]
         ]
@@ -130,6 +130,7 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['ssh_with_passphrase_provided']) {
+                    sh "git branch -u origin/${params.releaseBranch} ${params.releaseBranch}"
                     sh "./jenkins/git-publish.sh ${params.buildVersion} ${params.editorVersion} ${params.releaseBranch}"
                 }
             }
