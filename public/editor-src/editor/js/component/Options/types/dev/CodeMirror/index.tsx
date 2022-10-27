@@ -1,17 +1,19 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { CodeMirror as Control } from "visual/component/Controls/CodeMirror";
-import { String } from "visual/utils/string/specs";
-import * as Option from "visual/component/Options/Type";
 import { useDebouncedEffect } from "visual/component/hooks";
+import * as Option from "visual/component/Options/Type";
 import {
   WithClassName,
   WithConfig,
-  WithPlaceholder
+  WithPlaceholder,
+  WithSize
 } from "visual/utils/options/attributes";
+import { String } from "visual/utils/string/specs";
 
-export type Config = {
+export type Config = WithSize & {
   language: "html" | "css" | "javascript" | "markdown" | "xml";
 };
+
 export type Model = Option.SimpleValue<string>;
 export type Props = Option.Props<Model> &
   WithConfig<Config> &
@@ -61,16 +63,17 @@ export const CodeMirror: FC<Props> & Option.OptionType<Model> = ({
         value={_value}
         language={language}
         placeholder={placeholder}
+        size={config?.size ?? "medium"}
       />
     </>
   );
 };
 
-const getModel: Option.FromElementModel<Model> = get => ({
+const getModel: Option.FromElementModel<Model> = (get) => ({
   value: String.read(get("value"))
 });
 
-const getElementModel: Option.ToElementModel<Model> = values => {
+const getElementModel: Option.ToElementModel<Model> = (values) => {
   return {
     value: values.value
   };

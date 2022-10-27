@@ -9,7 +9,7 @@ export type CmsListItem = {
   items: {
     title: string;
     value: EntityTypeRule;
-    status?: "publish" | "draft";
+    status?: "published" | "draft";
   }[];
 };
 

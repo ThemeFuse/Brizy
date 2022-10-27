@@ -427,7 +427,7 @@ export default class SectionHeader extends EditorComponent {
       return (
         <>
           {`{{display_by_roles roles="${roles}"}}`}
-          {`{{display_by_translation translations="${languages}"}}`}
+          {`{{display_by_translations translations="${languages}"}}`}
           {content}
           {"{{end_display_by_translations}}"}
           {"{{end_display_by_roles}}"}

@@ -449,7 +449,8 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 			return array(
 				'title'      => $v->post_title,
 				'value'      => $v->ID,
-				'groupValue' => $v->post_type
+				'groupValue' => $v->post_type,
+				'status' => $v->post_status
 			);
 		};
 

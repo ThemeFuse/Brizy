@@ -26,11 +26,15 @@ export function style(v, vs, vd, hasSizing) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementButtonPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&.brz-btn.brz-btn-submit:hover": {
-      standart: ["cssStyleColor", "cssStyleBgColor"]
+      standart: ["cssStyleColor", "cssStyleBgColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
     },
     ".brz &&:hover:after": {
       standart:
@@ -52,6 +56,10 @@ export function style(v, vs, vd, hasSizing) {
         "cssStyleBorder",
         "cssStyleElementButtonIconPosition",
         "cssStyleElementButtonBorderRadius"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-btn--story-container:after": {

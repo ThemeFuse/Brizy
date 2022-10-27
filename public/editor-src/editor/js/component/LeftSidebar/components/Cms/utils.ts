@@ -110,6 +110,7 @@ const shopify = (config: ShopifyConf): Shopify => {
     mediaUrl: config.urls.image,
     customerPreviewUrl: config.cms.customerPreviewUrl,
     subscription: config.subscription,
+    user: { isPro: !!config.pro },
     api: token
       ? { __type: "withToken", token, uri: config.cms.apiUrl }
       : { __type: "withOutToken", uri: config.cms.apiUrl },
@@ -135,6 +136,8 @@ const shopify = (config: ShopifyConf): Shopify => {
       id: config.page.id,
       __type: ActiveItemTypes.CollectionItem
     },
+    siteUrl: config.urls.site,
+    supportLinks: config.cms.supportLinks,
     userApi: token
       ? { __type: "withToken", token, uri: config.cms.apiUrl }
       : { __type: "withOutToken", uri: config.cms.apiUrl },

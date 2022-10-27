@@ -210,11 +210,11 @@ export type GetRulePostsGroupList = (p: string) => Promise<
   {
     title: string;
     value: number;
-    status?: "publish" | "draft" | "pending";
     items?: {
       title: string;
       value: number;
       groupValue: string;
+      status?: "publish" | "draft" | "pending";
     }[];
   }[]
 >;

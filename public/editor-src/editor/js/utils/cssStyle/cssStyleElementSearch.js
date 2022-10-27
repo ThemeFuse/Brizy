@@ -27,10 +27,6 @@ export function cssStyleElementSearchMinHeight({ v, device, state }) {
   return cssStyleSizeMinHeightPx({ v, device, state, prefix: "openButton" });
 }
 
-export function cssStyleElementSearchPropertyHoverTransition() {
-  return "transition-property:background-color,color,border,box-shadow;";
-}
-
 export function cssStyleElementSearchLineHeight({ v, device }) {
   const fontSize = styleTypography2FontSize({
     v,

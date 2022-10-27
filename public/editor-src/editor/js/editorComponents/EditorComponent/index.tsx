@@ -169,6 +169,7 @@ export type Props<
   onToolbarLeave: () => void;
   toolbarExtend?: ToolbarExtend;
   wrapperExtend?: WrapperProps<P>;
+  extendParentToolbar: (childToolbarExtend: ToolbarExtend) => void;
 } & P;
 
 export class EditorComponent<

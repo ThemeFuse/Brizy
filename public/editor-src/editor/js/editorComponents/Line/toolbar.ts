@@ -1,16 +1,17 @@
+import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { isStory } from "visual/utils/models";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
-import { t } from "visual/utils/i18n";
-import { IS_STORY } from "visual/utils/models";
-import { ToolbarItemType } from "../ToolbarItemType";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { Value } from "./index";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
+import { ToolbarItemType } from "../ToolbarItemType";
+import { Value } from "./index";
 
 const getColorLaber = (style: string) => {
   switch (style) {
@@ -32,6 +33,8 @@ export function getItems({
   device: ResponsiveMode;
   context: EditorComponentContextValue;
 }): ToolbarItemType[] {
+  const IS_STORY = isStory(Config.getAll());
+
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
   const { style } = v;

@@ -14,25 +14,20 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementStarRatingPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
-
     ".brz &&:hover .brz-starrating-icon-wrap": {
       standart: ["cssStyleSizeFontSizeIcon"]
     },
-
     ".brz &&:hover .brz-starrating-container .brz-starrating-icon-wrap:not(:last-child)":
-      {
-        standart: ["cssStyleIconSpacing"]
-      },
-
+      { standart: ["cssStyleElementStarRatingSpacing"] },
     ".brz &&:hover .brz-starrating-container .brz-starrating-icon-wrap .brz-starrating-color-empty":
       {
         standart: ["cssStyleElementStarRatingRatingBackgroundColor"],
         interval: [
           "cssStyleHoverTransition",
-          "cssStyleElementStarRatingPropertyHoverTransition"
+          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz &&:hover .brz-starrating-container .brz-starrating-icon-wrap .brz-starrating-color":
@@ -40,7 +35,7 @@ export function style(v, vs, vd) {
         standart: ["cssStyleElementStarRatingRatingColor"],
         interval: [
           "cssStyleHoverTransition",
-          "cssStyleElementStarRatingPropertyHoverTransition"
+          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz &&:hover .brz-starrating-style2-container": {

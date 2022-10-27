@@ -120,14 +120,6 @@ export function cssStyleElementVideoCoverPosition({ v, device, state }) {
     : `background-position:${positionX}% ${positionY}%;`;
 }
 
-export function cssStyleElementVideoPropertyHoverTransition() {
-  return "transition-property: border, border-radius, background-color, color, transform;";
-}
-
-export function cssStyleElementVideoHoverBoxShadowTransition() {
-  return "transition-property: box-shadow;";
-}
-
 export function cssStyleVideoControlsBgColor({ v, device, state }) {
   return cssStyleBgColor({ v, device, state, prefix: "controlsBg" });
 }

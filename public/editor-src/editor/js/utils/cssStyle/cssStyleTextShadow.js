@@ -1,10 +1,18 @@
+import { hexToRgba } from "visual/utils/color";
+import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { capByPrefix } from "visual/utils/string";
+import { styleState } from "visual/utils/style";
 import {
-  styleTextShadowType,
+  styleTextShadowBlur,
   styleTextShadowColor,
   styleTextShadowHorizontal,
-  styleTextShadowVertical,
-  styleTextShadowBlur
+  styleTextShadowType,
+  styleTextShadowVertical
 } from "visual/utils/style2";
+
+const getState = (v, state) =>
+  styleState({ v, state }) === "hover" ? "hover" : state;
 
 // Functia asta nu e nevoie de ea. Codul din ea trebuei sa fie in cssStyleTextShadow
 // Ea a fost facuta doar ca sa rezolvam problema cu safari in elementul image care folosea glamour
@@ -49,4 +57,22 @@ export function cssStyleTextShadow({ v, device, state, prefix = "" }) {
 
   if (shadow === "") return "";
   else return `text-shadow:${shadow};`;
+}
+
+export function cssStyleTextShadow2({ v, state, device, prefix = "" }) {
+  state = getState(v, state);
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  const textShadowHex = dvv(capByPrefix(prefix, "textShadowColorHex"));
+  const textShadowOpacity = dvv(capByPrefix(prefix, "textShadowColorOpacity"));
+  const textShadowPalette = dvv(capByPrefix(prefix, "textShadowColorPalette"));
+
+  const textShadowBlur = dvv(capByPrefix(prefix, "textShadowBlur"));
+  const textShadowVertical = dvv(capByPrefix(prefix, "textShadowVertical"));
+  const textShadowHorizontal = dvv(capByPrefix(prefix, "textShadowHorizontal"));
+
+  const { hex } = getOptionColorHexByPalette(textShadowHex, textShadowPalette);
+  const shadowColor = hexToRgba(hex, textShadowOpacity);
+
+  return `text-shadow:${textShadowHorizontal}px ${textShadowVertical}px ${textShadowBlur}px ${shadowColor};`;
 }

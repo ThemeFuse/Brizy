@@ -1,3 +1,4 @@
+import Config, { WP } from "visual/global/Config";
 import { Shortcodes } from "visual/types/index.js";
 import {
   IS_ARCHIVE_TEMPLATE,
@@ -8,13 +9,15 @@ import {
   IS_PRODUCT_TEMPLATE,
   IS_SINGLE_TEMPLATE
 } from "visual/utils/env";
-import { IS_STORY } from "visual/utils/models";
+import { isStory } from "visual/utils/models";
 import { hasSidebars, pluginActivated } from "visual/utils/wp";
 import Archive from "./Archive";
 import {
   essentialsCommon,
   essentialsStory,
   grid,
+  media,
+  mediaStory,
   social
 } from "./index.common";
 import PostExcerpt from "./PostExcerpt";
@@ -47,6 +50,8 @@ import WOOPages from "./WOOPages";
 import WPCustomShortcode from "./WPCustomShortcode";
 import WPFeaturedImage from "./WPFeaturedImage";
 import WPSidebar from "./WPSidebar";
+
+const _config = Config.getAll() as WP;
 
 const hasWoocommerce = pluginActivated("woocommerce");
 
@@ -120,8 +125,8 @@ const postArchiveShortcodes = [
 ];
 
 const config = ((): Shortcodes => {
-  if (IS_STORY) {
-    return { essentials: essentialsStory };
+  if (isStory(_config)) {
+    return { essentials: essentialsStory, media: mediaStory };
   }
 
   if (IS_PRODUCT_TEMPLATE || IS_PRODUCT_PAGE) {
@@ -130,6 +135,7 @@ const config = ((): Shortcodes => {
       product: productShortcodes,
       woocommerce: woocommerceShortcodes,
       essentials: essentialsWP,
+      media,
       social: social,
       wordpress: wordpressShortcodes
     };
@@ -141,6 +147,7 @@ const config = ((): Shortcodes => {
       archive: productArchiveShortcodes,
       woocommerce: woocommerceShortcodes,
       essentials: essentialsWP,
+      media,
       social: social,
       wordpress: wordpressShortcodes
     };
@@ -151,6 +158,7 @@ const config = ((): Shortcodes => {
       grid,
       archive: postArchiveShortcodes,
       essentials: essentialsWP,
+      media,
       social: social,
       wordpress: wordpressShortcodes,
       woocommerce: woocommerceShortcodes
@@ -163,6 +171,7 @@ const config = ((): Shortcodes => {
       single: singleShortcodes,
       wordpress: wordpressShortcodes,
       essentials: essentialsWP,
+      media,
       social: social,
       woocommerce: woocommerceShortcodes
     };
@@ -171,6 +180,7 @@ const config = ((): Shortcodes => {
   return {
     grid,
     essentials: essentialsWP,
+    media,
     social: social,
     single: singleShortcodes,
     wordpress: wordpressShortcodes,

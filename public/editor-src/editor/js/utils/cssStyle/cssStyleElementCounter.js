@@ -1,6 +1,6 @@
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { hexToRgba } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { styleState } from "visual/utils/style";
 
 const getState = (v, state) =>
@@ -15,14 +15,10 @@ export function cssStyleElementCounterChartWidth({ v }) {
   return `stroke-width: ${strokeWidth} !important;`;
 }
 
-export function cssStyleElementCounterTransitionHoverProperty() {
-  return "transition-property: color, fill, stroke, box-shadow;";
-}
-
 export function cssStyleElementCounterTextShadow({ v, state }) {
   state = getState(v, state);
 
-  const dvv = key => defaultValueValue({ v, key, state });
+  const dvv = (key) => defaultValueValue({ v, key, state });
 
   const textShadowColorHex = dvv("textShadowColorHex");
   const textShadowColorOpacity = dvv("textShadowColorOpacity");

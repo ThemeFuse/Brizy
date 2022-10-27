@@ -5,7 +5,7 @@ import { isNullish } from "visual/utils/value";
 
 let isSubmitEnabled = true;
 
-export default function($node) {
+export default function ($node) {
   const root = $node.get(0);
 
   // RECAPTCHA
@@ -16,7 +16,7 @@ export default function($node) {
     loadReCAPTCHA();
 
     // callback recaptcha
-    global.brzFormV2Captcha = token => {
+    global.brzFormV2Captcha = (token) => {
       const formActive = root.querySelector(
         "[data-form-version='2'].brz-forms2--pending"
       );
@@ -41,8 +41,8 @@ export default function($node) {
     };
 
     // render Recaptcha
-    global.brzOnloadRecaptchaCallback = function() {
-      recaptcha.forEach(node => {
+    global.brzOnloadRecaptchaCallback = function () {
+      recaptcha.forEach((node) => {
         const { sitekey, size, callback } = node.dataset;
         const recaptchaId = global.grecaptcha.render(node, {
           sitekey,
@@ -58,7 +58,7 @@ export default function($node) {
   root.querySelectorAll("[data-form-version='2']").forEach(initForm);
 
   // For Date
-  root.querySelectorAll(".brz-forms2__field-date").forEach(node => {
+  root.querySelectorAll(".brz-forms2__field-date").forEach((node) => {
     const data = node.dataset;
     const minDate = data.min;
     const maxDate = data.max;
@@ -78,7 +78,7 @@ export default function($node) {
   });
 
   // For Time
-  root.querySelectorAll(".brz-forms2__field-time").forEach(node => {
+  root.querySelectorAll(".brz-forms2__field-time").forEach((node) => {
     const data = node.dataset;
     const minDate = data.min;
     const maxDate = data.max;
@@ -100,7 +100,7 @@ export default function($node) {
   });
 
   // Select
-  root.querySelectorAll(".brz-forms2__field-select").forEach(node => {
+  root.querySelectorAll(".brz-forms2__field-select").forEach((node) => {
     const $this = $(node);
     const $select = $this.find(".brz-select");
     const placeholder = $select.data("placeholder");
@@ -111,16 +111,16 @@ export default function($node) {
       width: "100%",
       minimumResultsForSearch: Infinity,
       dropdownParent: $this,
-      templateSelection: data => {
+      templateSelection: (data) => {
         return !placeholder && !initialized ? "" : data.text;
       }
     });
 
     // Custom Scrollbars
     let scrollbars;
-    $select.on("select2:opening", function() {
+    $select.on("select2:opening", function () {
       // waiting appear the dropdown in the dom
-      setTimeout(function() {
+      setTimeout(function () {
         const $dropdown = $this.find(".select2-dropdown");
         const itemHeight = parseInt(
           $dropdown
@@ -139,7 +139,7 @@ export default function($node) {
     });
 
     // destroy custom scrollbar when dropdown closed
-    $select.on("select2:close", function() {
+    $select.on("select2:close", function () {
       if (scrollbars) {
         scrollbars.destroy();
         scrollbars = null;
@@ -150,10 +150,10 @@ export default function($node) {
   });
 }
 
-const updatePattern = form => {
+const updatePattern = (form) => {
   const elements = form.querySelectorAll("input[pattern], textarea[pattern]");
 
-  elements.forEach(item => {
+  elements.forEach((item) => {
     const pattern = item.getAttribute("pattern");
 
     if (pattern) {
@@ -203,8 +203,10 @@ function validateFormItem(node) {
     if (Boolean(value) && toNum < min && min !== "") {
       const messages = getFormMessage(
         "error",
-        `${_error?.minNumError ||
-          "Selected quantity is less than stock status, min:"} ${min}`
+        `${
+          _error?.minNumError ||
+          "Selected quantity is less than stock status, min:"
+        } ${min}`
       );
 
       showFormMessage(form, messages);
@@ -217,8 +219,10 @@ function validateFormItem(node) {
     if (Boolean(value) && toNum > max && max !== "") {
       const messages = getFormMessage(
         "error",
-        `${_error?.maxNumError ||
-          "Selected quantity is more than stock status, max:"} ${max}`
+        `${
+          _error?.maxNumError ||
+          "Selected quantity is more than stock status, max:"
+        } ${max}`
       );
 
       showFormMessage(form, messages);
@@ -234,10 +238,7 @@ function validateFormItem(node) {
     const files = node.files;
     const maxSize = parseInt(node.dataset.fileMaxSize) || 1;
     const accepts = node.getAttribute("accept")
-      ? node
-          .getAttribute("accept")
-          .replace(/\s+/g, "")
-          .split(",")
+      ? node.getAttribute("accept").replace(/\s+/g, "").toLowerCase().split(",")
       : [];
     const MB = 1048576;
     let isBig = false;
@@ -250,7 +251,10 @@ function validateFormItem(node) {
       /* eslint-enabled no-useless-escape */
 
       isBig = size / MB >= maxSize;
-      isAccept = accepts.length && !accepts.includes(ext);
+
+      if (ext) {
+        isAccept = accepts.length && !accepts.includes(ext.toLowerCase());
+      }
     }
 
     if (isBig) {
@@ -261,8 +265,10 @@ function validateFormItem(node) {
       );
       const messages = getFormMessage(
         "error",
-        `${_error?.fileMaxSizeError ||
-          "This file exceeds the maximum allowed size."} ${fileMaxSize}`
+        `${
+          _error?.fileMaxSizeError ||
+          "This file exceeds the maximum allowed size."
+        } ${fileMaxSize}`
       );
 
       showFormMessage(form, messages);
@@ -273,11 +279,13 @@ function validateFormItem(node) {
         "brz-forms2__item--error",
         "brz-forms2__item--error-pattern"
       );
-      const ext = accepts.map(ext => ext.replace(".", "")).join(", ");
+      const ext = accepts.map((ext) => ext.replace(".", "")).join(", ");
       const messages = getFormMessage(
         "error",
-        `${_error?.fileTypeError ||
-          "Only files with the following extensions are allowed:"} ${ext}`
+        `${
+          _error?.fileTypeError ||
+          "Only files with the following extensions are allowed:"
+        } ${ext}`
       );
 
       showFormMessage(form, messages);
@@ -293,7 +301,7 @@ function validateFormItem(node) {
 
     if (multiple) {
       const selected = nodeSelect.querySelectorAll("option:checked");
-      const values = Array.from(selected).map(el => el.value);
+      const values = Array.from(selected).map((el) => el.value);
 
       if (values.length === 0) {
         parentElem.classList.add(
@@ -332,7 +340,7 @@ function validateForm(form) {
   );
   let submitForm = true;
 
-  elements.forEach(element => {
+  elements.forEach((element) => {
     if (!validateFormItem(element)) {
       submitForm = false;
     }
@@ -353,7 +361,7 @@ function initForm(form) {
 
   updatePattern(form);
 
-  $form.on("blur", "form input, form textarea, form select", function() {
+  $form.on("blur", "form input, form textarea, form select", function () {
     validateFormItem(this);
   });
 
@@ -365,7 +373,7 @@ function initForm(form) {
   // (2) need added the pending form selector .brz-forms--pending
   // (2.1) this class is used in brzFormV1Captcha for find and generate formData
   if (recaptcha) {
-    $form.on("submit", "form", function(event) {
+    $form.on("submit", "form", function (event) {
       event.preventDefault();
 
       // validate form
@@ -382,7 +390,7 @@ function initForm(form) {
       global.grecaptcha.execute(recaptchaId);
     });
   } else {
-    $form.on("submit", "form", function(event) {
+    $form.on("submit", "form", function (event) {
       event.preventDefault();
 
       if (isSubmitEnabled) {
@@ -406,14 +414,14 @@ function setSpinner(submit, isLoading) {
   if (!submit.children.length) return;
 
   const _children = Array.from(submit.children);
-  const spinner = _children.find(node =>
+  const spinner = _children.find((node) =>
     node.classList.contains("brz-form-spinner")
   );
 
   if (isLoading) {
     submit.classList.add("brz-blocked");
 
-    _children.forEach(node => {
+    _children.forEach((node) => {
       node.classList.add("brz-invisible");
     });
 
@@ -423,7 +431,7 @@ function setSpinner(submit, isLoading) {
   } else {
     submit.classList.remove("brz-blocked");
 
-    _children.forEach(node => {
+    _children.forEach((node) => {
       node.classList.remove("brz-invisible");
     });
 
@@ -461,7 +469,7 @@ function handleSubmit(form, allData) {
   formData.append("project_id", projectId);
   formData.append("form_id", formId);
 
-  const handleDone = data => {
+  const handleDone = (data) => {
     // check status in the data
     const { success = undefined } = data || {};
 
@@ -503,7 +511,7 @@ function getFormData(form) {
 
   form
     .querySelectorAll(".brz-forms2__item:not(.brz-forms2__item-button)")
-    .forEach(node => {
+    .forEach((node) => {
       const elements = node.querySelectorAll("input, textarea, select");
 
       if (elements.length === 0) {
@@ -519,7 +527,7 @@ function getFormData(form) {
       if (isOptions && elements.length > 1) {
         let elementValues = [];
 
-        elements.forEach(element => {
+        elements.forEach((element) => {
           const { name, required, type, checked, value, dataset } = element;
 
           if (checked) {
@@ -560,7 +568,7 @@ function getFormData(form) {
 
           if (multiple) {
             const selected = node.querySelectorAll("option:checked");
-            const values = Array.from(selected).map(el => el.value);
+            const values = Array.from(selected).map((el) => el.value);
 
             dataValue.value = values.join(",");
           }
@@ -613,7 +621,7 @@ function showFormMessage(form, message) {
 }
 
 function resetFormValues(form) {
-  form.querySelectorAll(".brz-forms2__item").forEach(item => {
+  form.querySelectorAll(".brz-forms2__item").forEach((item) => {
     item.querySelectorAll("input, textarea, select").forEach((el, index) => {
       switch (el.type) {
         case "radio": {

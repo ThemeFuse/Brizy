@@ -26,8 +26,8 @@ export function styleBgImage({ v, device, state }: CSSValue): string {
   const bgSizeType = dvv("bgSizeType");
   const bgSize = getImageSize(bgSizeType);
   const bgImageExtension = dvv("bgImageExtension");
-  const bgPopulation = dvv("bgPopulation");
 
+  const bgPopulation = dvv("bgPopulation");
   const hoverMedia = dvvHover("media");
   const hoverBgImageSrc = dvvHover("bgImageSrc");
   const hoverBgImageExtension = dvvHover("bgImageExtension");
@@ -37,7 +37,10 @@ export function styleBgImage({ v, device, state }: CSSValue): string {
   const hoverBgImageFileName = dvvHover("bgImageFileName");
 
   if (isPredefinedSize(bgSize) || isOriginalSize(bgSize)) {
-    return `url(${imageSpecificSize(bgImageSrc, bgSizeType)})`;
+    return `url(${imageSpecificSize(bgImageSrc, {
+      size: bgSizeType,
+      fileName: bgImageFileName
+    })})`;
   }
 
   const hover =
@@ -57,10 +60,8 @@ export function styleBgImage({ v, device, state }: CSSValue): string {
             : imageUrl(bgImageSrc, { fileName: bgImageFileName })
         })`
       : "none";
-
   return isHover === "hover" ? hover : normal;
 }
-
 export function styleExportBgImage({ v, device, state }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
@@ -76,7 +77,6 @@ export function styleExportBgImage({ v, device, state }: CSSValue): string {
     : isSVG(bgImageExtension)
     ? svgUrl(bgImageSrc, { fileName: bgImageFileName })
     : imageUrl(bgImageSrc, { fileName: bgImageFileName });
-
   return media === "image" && (bgImageSrc !== "" || bgPopulation !== "")
     ? `url(${bgImage})`
     : "none";
@@ -91,9 +91,9 @@ export function styleBgPositionX({ v, device, state }: CSSValue): string {
 
   const bgPopulation = dvv("bgPopulation");
   const bgPositionX = dvv("bgPositionX");
+
   const hoverBgPopulation = dvvHover("bgPopulation");
   const hoverBgPositionX = dvvHover("bgPositionX");
-
   return isHover === "hover" && !hoverBgPopulation
     ? `${hoverBgPositionX}%`
     : bgPopulation === ""
@@ -110,9 +110,9 @@ export function styleBgPositionY({ v, device, state }: CSSValue): string {
 
   const bgPopulation = dvv("bgPopulation");
   const bgPositionY = dvv("bgPositionY");
+
   const hoverBgPopulation = dvvHover("bgPopulation");
   const hoverBgPositionY = dvvHover("bgPositionY");
-
   return isHover === "hover" && !hoverBgPopulation
     ? `${hoverBgPositionY}%`
     : bgPopulation === ""

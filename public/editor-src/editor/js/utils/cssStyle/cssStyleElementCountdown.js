@@ -1,3 +1,4 @@
+import { cssStyleColor } from "visual/utils/cssStyle";
 import {
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
@@ -5,11 +6,9 @@ import {
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle/cssStyleTypography2";
-
-import { cssStyleColor } from "visual/utils/cssStyle";
 import {
-  styleTypographyElementCountdownLabelFontSize,
-  styleElementCountdown2Spacing
+  styleElementCountdown2Spacing,
+  styleTypographyElementCountdownLabelFontSize
 } from "visual/utils/style2";
 
 export function cssStyleTypographyElementCountdownLabelFontSize({ v, device }) {
@@ -107,8 +106,4 @@ export function cssStyleElementCountDown2TitleColor({ v, device, state }) {
 
 export function cssStyleElementCountDown2MessageColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "messageColor" });
-}
-
-export function cssStyleElementCountDown2HoverTransitionProperty() {
-  return "transition-property: color, background-color, border, box-shadow;";
 }

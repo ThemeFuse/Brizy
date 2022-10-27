@@ -38,42 +38,45 @@ export function styleForFilter(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementImageGalleryPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-image__gallery-filter__item:not(.brz-image__gallery-filter__item--active):hover": {
-      standart: ["cssStyleElementImageGalleryFilterColor"]
-    },
+    ".brz && .brz-image__gallery-filter__item:not(.brz-image__gallery-filter__item--active):hover":
+      {
+        standart: ["cssStyleElementImageGalleryFilterColor"]
+      },
     ".brz && .brz-image__gallery-filter__item--style-1": {
       standart: [
         "cssStyleElementAccordionFilterPaddingFourFields",
         "cssStyleElementImageGalleryBorderRadius"
       ]
     },
-    ".brz && .brz-image__gallery-filter__item--style-1:not(.brz-image__gallery-filter__item--active):hover": {
-      standart: [
-        "cssStyleElementImageGalleryFilterBgColor",
-        "cssStyleElementImageGalleryFilterBorder",
-        "cssStyleElementImageGalleryFilterBoxShadow",
-        "cssStyleElementImageGalleryBorderRadius"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementImageGalleryPropertyHoverTransition"
-      ]
-    },
-    ".brz && .brz-image__gallery-filter__item--style-1.brz-image__gallery-filter__item--active": {
-      standart: [
-        "cssStyleElementImageGalleryFilterActiveColor",
-        "cssStyleElementImageGalleryFilterActiveBgColor",
-        "cssStyleElementImageGalleryFilterActiveBorder",
-        "cssStyleElementImageGalleryFilterActiveShadow"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementImageGalleryPropertyHoverTransition"
-      ]
-    },
+    ".brz && .brz-image__gallery-filter__item--style-1:not(.brz-image__gallery-filter__item--active):hover":
+      {
+        standart: [
+          "cssStyleElementImageGalleryFilterBgColor",
+          "cssStyleElementImageGalleryFilterBorder",
+          "cssStyleElementImageGalleryFilterBoxShadow",
+          "cssStyleElementImageGalleryBorderRadius"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
+    ".brz && .brz-image__gallery-filter__item--style-1.brz-image__gallery-filter__item--active":
+      {
+        standart: [
+          "cssStyleElementImageGalleryFilterActiveColor",
+          "cssStyleElementImageGalleryFilterActiveBgColor",
+          "cssStyleElementImageGalleryFilterActiveBorder",
+          "cssStyleElementImageGalleryFilterActiveShadow"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
     ".brz &&.brz-image__gallery-filter--style-2:hover": {
       standart: [
         "cssStyleElementAccordionFilterPaddingFourFields",
@@ -85,16 +88,17 @@ export function styleForFilter(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementImageGalleryPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-image__gallery-filter__item--style-2.brz-image__gallery-filter__item--active": {
-      standart: ["cssStyleElementImageGalleryFilterActiveColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementImageGalleryPropertyHoverTransition"
-      ]
-    }
+    ".brz && .brz-image__gallery-filter__item--style-2.brz-image__gallery-filter__item--active":
+      {
+        standart: ["cssStyleElementImageGalleryFilterActiveColor"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ v, vs, vd, styles });

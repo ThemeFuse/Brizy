@@ -29,11 +29,11 @@
     "textPopulation": "",
 
     "rating": 2.5,
-    "ratingSuffix": null,
+    "ratingSuffix": "px",
     "ratingPopulation": "",
 
     "spacing": 15,
-    "spacingSuffix": null,
+    "spacingSuffix": "px",
 
     "iconSize": "small",
     "iconCustomSize": 16,
@@ -44,7 +44,7 @@
     "iconLargeSize": 32,
 
     "iconSpacing": 3,
-    "iconSpacingSuffix": null,
+    "iconSpacingSuffix": "px",
 
     "borderRadiusType": "grouped",
 

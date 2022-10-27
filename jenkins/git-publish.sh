@@ -7,10 +7,9 @@ FIXES_BRANCH="fixes-$BUILD_VERSION"
 
 echo -e "\nPublishing the release in GIT"
 echo -e "-----------------------------------------------------------------------------"
-
+git checkout -t origin/$RELEASE_BRANCH
 git add ./public/editor-build/$EDITOR_VERSION
 git commit -a -m "Build $BUILD_VERSION"
-
 echo -e "\nPublishing the release branch: $RELEASE_BRANCH"
 echo -e "-----------------------------------------------------------------------------"
 git push origin $RELEASE_BRANCH

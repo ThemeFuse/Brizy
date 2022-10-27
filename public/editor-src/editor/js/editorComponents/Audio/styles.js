@@ -6,20 +6,24 @@ export function styleContent(v, vs, vd) {
       standart: ["cssStyleSizeWidth", "cssStyleSizeMinHeightPx"]
     },
     ".brz &&:hover .brz-audio-progress": {
-      standart: ["cssStyleBg2Color"]
+      standart: ["cssStyleBg2Color"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
     },
     ".brz &&:hover:before": {
       standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementSoundCloudPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-soundCloud-content": {
       standart: ["cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementSoundCloudPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover iframe": { standart: ["cssStyleSizeHeight"] }
@@ -36,6 +40,10 @@ export function styleWrapperAudio(v, vs, vd) {
         "cssStyleBorder",
         "cssStyleBgColor",
         "cssStyleDisplayFlex"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-audio__cover::before": {
@@ -50,10 +58,18 @@ export function styleWrapperAudio(v, vs, vd) {
       standart: ["cssStyleColor"]
     },
     ".brz &&:hover > .brz-audio-controls > .brz-audio-total-time": {
-      standart: ["cssStyleColor"]
+      standart: ["cssStyleColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
     },
     ".brz &&:hover .brz-audio-slider:before": {
-      standart: ["cssStyleBg2Color", "cssStyleBorderRadius"]
+      standart: ["cssStyleBg2Color", "cssStyleBorderRadius"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
     }
   };
   return renderStyles({ v, vs, vd, styles });
@@ -80,7 +96,11 @@ export function styleControls(v, vs, vd) {
 export function styleIcon(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleElementMediaIconFontSize", "cssStyleColor"]
+      standart: ["cssStyleSizeFontSizeIcon", "cssStyleColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
     }
   };
 

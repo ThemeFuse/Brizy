@@ -31,7 +31,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleElementPostsFilterPaddingFourFields"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementPostsHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-posts__filter__item--style-1.brz-posts-filter__item--active": {
@@ -55,7 +55,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleElementPostsFilterPaddingFourFields"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementPostsHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-posts__filter__item--style-2.brz-posts-filter__item--active": {

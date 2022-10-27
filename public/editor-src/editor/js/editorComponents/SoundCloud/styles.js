@@ -9,14 +9,14 @@ export function style(v, vs, vd) {
       standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementSoundCloudPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-soundCloud-content": {
       standart: ["cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementSoundCloudPropertyHoverTransition"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover iframe": { standart: ["cssStyleSizeHeight"] }

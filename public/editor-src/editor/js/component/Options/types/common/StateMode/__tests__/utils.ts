@@ -4,8 +4,8 @@ import {
   stateIcon,
   stateTitle
 } from "visual/component/Options/types/common/StateMode/utils";
-import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 
 // region Mocks
 jest.mock(
@@ -73,6 +73,9 @@ jest.mock("visual/component/Options/types/Textarea.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
   Typography: {}
+}));
+jest.mock("visual/component/Options/types/dev/IconSetter/index.tsx", () => ({
+  IconSetter: {}
 }));
 // endregion
 
@@ -178,7 +181,7 @@ describe("Testing 'itemStates' function", () => {
   });
 });
 
-describe("Testing 'stateIcon' function", function() {
+describe("Testing 'stateIcon' function", function () {
   test.each([
     [NORMAL, "nc-circle"],
     [HOVER, "nc-hover"],
@@ -188,7 +191,7 @@ describe("Testing 'stateIcon' function", function() {
   });
 });
 
-describe("Testing 'stateTitle' function", function() {
+describe("Testing 'stateTitle' function", function () {
   test.each([
     [NORMAL, "Normal"],
     [HOVER, "Hover"],

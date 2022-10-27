@@ -22,10 +22,7 @@
     "tburry/pquery": "dev-master"
   },
   "config": {
-    "platform-check": false,
-    "platform": {
-      "php": "5.6"
-    }
+    "platform-check": false
   },
   "repositories": [
     {

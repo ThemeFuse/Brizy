@@ -17,6 +17,10 @@ interface Base {
   projectId: ProjectId;
   userApi: Authorize;
   locale: Locale;
+  supportLinks: SupportLinks;
+  user: {
+    isPro: boolean;
+  };
 }
 
 export interface Cloud extends Base {
@@ -28,9 +32,6 @@ export interface Cloud extends Base {
   categoriesSlug: string;
   productsSlug: string;
   taxesInfoUrl: string;
-  user: {
-    isPro: boolean;
-  };
   whiteLabel: WhiteLabel;
   projectApi: Authorize;
   appointmentsApi: Authorize;
@@ -42,7 +43,6 @@ export interface Cloud extends Base {
   shopChannel: string;
   taxesMainCategoryId: string;
   notificationApi: Authorize;
-  supportLinks: SupportLinks;
   customersEditorUrl: string;
   modules: {
     shop: Shop;
@@ -61,6 +61,7 @@ export interface Shopify extends Base {
   customersEditorUrl: string;
   updateEditorApi: Authorize;
   builderVersion: string;
+  siteUrl: string;
 }
 
 export type Context = Cloud | Shopify;

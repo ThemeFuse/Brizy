@@ -1,12 +1,12 @@
-import React, { ReactElement, useCallback, useMemo } from "react";
 import classNames from "classnames";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import {
   NumberSlider,
   Props as NP
 } from "visual/component/Controls/NumberSlider";
-import { OptionWrapper } from "visual/component/OptionWrapper";
-import { OnChange } from "visual/component/Options/Type";
 import { OptionLabel } from "visual/component/OptionLabel";
+import { OnChange } from "visual/component/Options/Type";
+import { OptionWrapper } from "visual/component/OptionWrapper";
 
 export type Props<U> = {
   className?: string;
@@ -20,6 +20,7 @@ export type Props<U> = {
   min: number;
   max: number;
   step: number;
+  title?: string;
 };
 
 export function Slider<U>({
@@ -33,12 +34,13 @@ export function Slider<U>({
   min,
   max,
   step,
-  className
+  className,
+  title
 }: Props<U>): ReactElement {
   const _value = useMemo(() => ({ number: value, unit }), [value, unit]);
 
   const onChange = useCallback<NP<U>["onChange"]>(
-    v => {
+    (v) => {
       if (v.number !== value) {
         onValue(v.number);
       }
@@ -54,6 +56,7 @@ export function Slider<U>({
     <OptionWrapper
       className={classNames("brz-ed-option", className)}
       display={"inline"}
+      title={title}
     >
       <OptionLabel label={label} icon={icon} />
       <NumberSlider<U>

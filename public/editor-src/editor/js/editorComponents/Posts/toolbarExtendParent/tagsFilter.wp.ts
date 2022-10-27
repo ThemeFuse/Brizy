@@ -9,6 +9,8 @@ export function tagsFilter(v: ElementModel): ToolbarItemType[] {
   const vd = decodeV(v);
   const source = vd.source;
 
+  const filtersIsOff = v.filter === "off";
+
   return [
     {
       id: "filter-group",
@@ -26,12 +28,19 @@ export function tagsFilter(v: ElementModel): ToolbarItemType[] {
           type: "select-dev",
           label: t("Source"),
           devices: "desktop",
-          disabled: v.filter === "off",
+          disabled: filtersIsOff,
           placeholder: t("Select tags"),
           choices: {
             load: tagsFilterLoad(source),
             emptyLoad: { title: t("Don't have tags") }
           }
+        },
+        {
+          id: "masonryFilter",
+          type: "switch-dev",
+          label: t("Masonry Arrangement"),
+          devices: "desktop",
+          disabled: filtersIsOff
         }
       ]
     }

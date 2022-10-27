@@ -6,7 +6,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleBgColor", "cssStyleBorder", "cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementWOOCartTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-woocart__parent": {
@@ -26,7 +26,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementWOOCartTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-woocart__icon:before": {
@@ -48,7 +48,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementWOOCartTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-woocart__icon .brz-icon-svg": {
@@ -59,7 +59,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementWOOCartTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-woocart__sidebar": {
@@ -82,7 +82,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementWOOCartTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar__product-price-parent:hover": {
@@ -96,7 +96,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementWOOCartTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar-subtotal:hover": {
@@ -110,7 +110,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementWOOCartTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar-button:hover": {
@@ -127,7 +127,7 @@ export function style(v, vs, vd) {
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementWOOCartTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .brz-woocart__sidebar .brz-woocart__sidebar-buttons": {
@@ -137,7 +137,7 @@ export function style(v, vs, vd) {
       standart: ["cssStyleElementWOOCartCostColor"],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementWOOCartTransitionProperty"
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };

@@ -770,7 +770,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 				LEFT JOIN $wpdb->postmeta pm ON pm.post_id=p.ID and pm.meta_key='brizy_post_uid'
 			WHERE 
 				p.post_type='%s' and p.post_status IN ($postStatus) $searchQuery
-			ORDER BY p.post_title ASC
+			GROUP BY p.ID
+			ORDER BY p.post_title ASC			
 			LIMIT %d,%d
 SQL;
 		$posts = $wpdb->get_results( $wpdb->prepare( $query, $postType, $postLabel, $postType, $offset, $limit ) );

@@ -12,7 +12,7 @@ echo -e "\nInstall composer dependencies"
 echo -e "-----------------------------------------------------------------------------"
 
 rm -rf vendor
-/usr/local/bin/composer install --no-dev || { exit 1; }
+/usr/bin/composer install --no-dev || { exit 1; }
 
 # delete all files that are not needed in the final build
 echo -e "\nDelete all dev files"
@@ -47,7 +47,7 @@ rm -rf ./public/editor-src \
        ./.phpunit* \
        ./.env* \
        .idea \
-       ./.github \
+       .github \
        ./bin ./tests *.dist *.xml *.lock *.json *.yml *.sh ./vendor/twig/twig/test \
        ./vendor/twig/twig/ext/twig ./vendor/twig/twig/doc \
        ./vendor/imagine/imagine/lib/Imagine/resources/Adobe/*.pdf \
@@ -60,7 +60,8 @@ rm -rf ./public/editor-src \
        ./composer.* \
        ./.travis.yml \
        ./*.dev.php \
-       ./jenkins
+       ./jenkins \
+       ./*.zip
 
 
 (

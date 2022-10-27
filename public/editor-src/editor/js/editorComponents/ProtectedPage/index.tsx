@@ -1,22 +1,23 @@
-import React, { ReactElement, ReactNode } from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import React, { ReactElement, ReactNode } from "react";
+import BoxResizer from "visual/component/BoxResizer";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
-import Toolbar from "visual/component/Toolbar";
 import { ElementModel } from "visual/component/Elements/Types";
+import Toolbar from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent, {
+  Props as EProps
+} from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
+import { encodeToString } from "visual/utils/string";
+import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebar from "./sidebar";
+import * as sidebarExtendParent from "./sidebarExtendParent";
 import { styles } from "./styles";
 import * as toolbar from "./toolbar";
-import * as sidebar from "./sidebar";
 import * as toolbarExtendParent from "./toolbarExtendParent";
-import * as sidebarExtendParent from "./sidebarExtendParent";
-import defaultValue from "./defaultValue.json";
-import BoxResizer from "visual/component/BoxResizer";
-import { Wrapper } from "../tools/Wrapper";
-import { Props as EProps } from "visual/editorComponents/EditorComponent";
-import { encodeToString } from "visual/utils/string";
-import { TextEditor } from "visual/component/Controls/TextEditor";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -57,7 +58,6 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
         thirdPartyExtendId: `${this.getComponentId()}Parent`
       }
     );
-    // @ts-expect-error: Should move wrapper to .ts
     this.props.extendParentToolbar(toolbarExtend);
   }
 

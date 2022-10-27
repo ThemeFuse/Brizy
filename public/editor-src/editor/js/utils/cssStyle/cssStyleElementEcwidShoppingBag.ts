@@ -125,7 +125,3 @@ export function cssStyleElementEcwidShoppingBagIconPositionLeft({
 }: CSSValue): string {
   return cssStylePositionLeft({ v, device, state, prefix: "icon" });
 }
-
-export function cssStyleElementEcwidShoppingBagPropertyHoverTransition(): string {
-  return "transition-property: color, background, border, box-shadow, fill, stroke;";
-}
