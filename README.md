@@ -1,9 +1,9 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.0.3<br>
+Tested up to: 6.1<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.4.12<br>
+Stable tag: 9.9.9<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
