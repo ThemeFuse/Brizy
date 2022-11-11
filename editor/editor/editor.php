@@ -890,14 +890,14 @@ class Brizy_Editor_Editor_Editor {
 				 */
 				$ruleMatches[] = array(
 					'type'       => $rule->getType(),
-					'applyFor'      => $rule->getAppliedFor(),
+					'appliedFor'      => $rule->getAppliedFor(),
 					'entityType' => $rule->getEntityType(),
 					'entityValues'     => $rule->getEntityValues(),
 				);
 			}
 			$ruleMatches[] = array(
 				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
-				'applyFor'      => Brizy_Admin_Rule::BRIZY_TEMPLATE,
+				'appliedFor'      => Brizy_Admin_Rule::BRIZY_TEMPLATE,
 				'entityType' => $this->post->getWpPost()->post_type,
 				'entityValues'     => array( $wpPostId ),
 			);
@@ -915,7 +915,6 @@ class Brizy_Editor_Editor_Editor {
 			{
 				$ruleMatches = array_map( function ( $r ) {
 					$r['type'] = Brizy_Admin_Rule::TYPE_INCLUDE;
-                    $r['appliedFor'] = $r["applyFor"];
 					return $r;
 				}, $ruleMatches );
 			}

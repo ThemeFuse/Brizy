@@ -365,7 +365,7 @@ class Brizy_Admin_Templates {
 
 		foreach ( (array)$ruleMatches as $rule_match ) {
 
-            $applyFor     = $rule_match['applyFor'];
+            $applyFor     = $rule_match['appliedFor'];
 			$entityType   = $rule_match['entityType'];
 			$entityValues = $rule_match['entityValues'];
 

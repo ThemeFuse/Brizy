@@ -118,7 +118,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 		$resultBlocks = array();
 		foreach ( (array) $ruleMatches as $ruleMatch ) {
-			$applyFor     = $ruleMatch['applyFor'];
+			$applyFor     = $ruleMatch['appliedFor'];
 			$entityType   = $ruleMatch['entityType'];
 			$entityValues = $ruleMatch['entityValues'];
 

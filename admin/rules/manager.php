@@ -15,18 +15,18 @@ class Brizy_Admin_Rules_Manager {
 
 		$ruleMatches = [];
 
-		$defaultRule = [ 'applyFor' => Brizy_Admin_Rule::TEMPLATE, 'entityType' => null, 'entityValues' => [] ];
+		$defaultRule = [ 'appliedFor' => Brizy_Admin_Rule::TEMPLATE, 'entityType' => null, 'entityValues' => [] ];
 
 		if ( is_404() ) {
 			$rule               = $defaultRule;
-			$rule['applyFor']   = Brizy_Admin_Rule::TEMPLATE;
+			$rule['appliedFor']   = Brizy_Admin_Rule::TEMPLATE;
 			$rule['entityType'] = 404;
 			$ruleMatches[]      = $rule;
 		}
 
 		if ( is_author() ) {
 			$rule                   = $defaultRule;
-			$rule['applyFor']       = Brizy_Admin_Rule::TEMPLATE;
+			$rule['appliedFor']       = Brizy_Admin_Rule::TEMPLATE;
 			$rule['entityType']     = 'author';
 			$author_obj             = $wp_query->get_queried_object();
 			$rule['entityValues'][] = $author_obj->ID;
@@ -35,7 +35,7 @@ class Brizy_Admin_Rules_Manager {
 
 		if ( is_search() ) {
 			$rule               = $defaultRule;
-			$rule['applyFor']   = Brizy_Admin_Rule::TEMPLATE;
+			$rule['appliedFor']   = Brizy_Admin_Rule::TEMPLATE;
 			$rule['entityType'] = 'search';
 			$ruleMatches[]      = $rule;
 
@@ -44,12 +44,12 @@ class Brizy_Admin_Rules_Manager {
 		if ( function_exists( 'is_shop' ) && is_shop() ) {
 
 			$rule               = $defaultRule;
-			$rule['applyFor']   = Brizy_Admin_Rule::WOO_SHOP_PAGE;
+			$rule['appliedFor']   = Brizy_Admin_Rule::WOO_SHOP_PAGE;
 			$rule['entityType'] = 'shop_page';
 			$ruleMatches[]      = $rule;
 
 			$rule               = $defaultRule;
-			$rule['applyFor']   = Brizy_Admin_Rule::POSTS;
+			$rule['appliedFor']   = Brizy_Admin_Rule::POSTS;
 			$rule['entityType'] = 'page';
 			$rule['entityValues'][] = wc_get_page_id( 'shop' );
 			$ruleMatches[]      = $rule;
@@ -58,21 +58,21 @@ class Brizy_Admin_Rules_Manager {
 
 		if ( is_front_page() && ! is_home() ) {
 			$rule               = $defaultRule;
-			$rule['applyFor']   = Brizy_Admin_Rule::TEMPLATE;
+			$rule['appliedFor']   = Brizy_Admin_Rule::TEMPLATE;
 			$rule['entityType'] = 'front_page';
 			$ruleMatches[]      = $rule;
 		}
 
 		if ( is_home() ) {
 			$rule               = $defaultRule;
-			$rule['applyFor']   = Brizy_Admin_Rule::TEMPLATE;
+			$rule['appliedFor']   = Brizy_Admin_Rule::TEMPLATE;
 			$rule['entityType'] = 'home_page';
 			$ruleMatches[]      = $rule;
 		}
 
 		if ( is_category() || is_tag() || is_tax() ) {
 			$rule               = $defaultRule;
-			$rule['applyFor']   = Brizy_Admin_Rule::TAXONOMY;
+			$rule['appliedFor']   = Brizy_Admin_Rule::TAXONOMY;
 			$rule['entityType'] = $wp_query->queried_object->taxonomy;;
 			$rule['entityValues'][] = $wp_query->queried_object_id;
 			$ruleMatches[]          = $rule;
@@ -80,7 +80,7 @@ class Brizy_Admin_Rules_Manager {
 		}
 		if ( is_day() ) {
 			$rule             = $defaultRule;
-			$rule['applyFor'] = Brizy_Admin_Rule::DAY_ARCHIVE;
+			$rule['appliedFor'] = Brizy_Admin_Rule::DAY_ARCHIVE;
 			if ( $wp_query->queried_object ) {
 				$rule['entityType'] = $wp_query->queried_object->name;
 			} else {
@@ -91,7 +91,7 @@ class Brizy_Admin_Rules_Manager {
 
 		if ( is_month() ) {
 			$rule             = $defaultRule;
-			$rule['applyFor'] = Brizy_Admin_Rule::MONTH_ARCHIVE;
+			$rule['appliedFor'] = Brizy_Admin_Rule::MONTH_ARCHIVE;
 			if ( $wp_query->queried_object ) {
 				$rule['entityType'] = $wp_query->queried_object->name;
 			} else {
@@ -101,7 +101,7 @@ class Brizy_Admin_Rules_Manager {
 		}
 		if ( is_year() ) {
 			$rule             = $defaultRule;
-			$rule['applyFor'] = Brizy_Admin_Rule::YEAR_ARCHIVE;
+			$rule['appliedFor'] = Brizy_Admin_Rule::YEAR_ARCHIVE;
 			if ( $wp_query->queried_object ) {
 				$rule['entityType'] = $wp_query->queried_object->name;
 			} else {
@@ -112,7 +112,7 @@ class Brizy_Admin_Rules_Manager {
 
 		if ( is_date() ) {
 			$rule             = $defaultRule;
-			$rule['applyFor'] = Brizy_Admin_Rule::DATE_ARCHIVE;
+			$rule['appliedFor'] = Brizy_Admin_Rule::DATE_ARCHIVE;
 			if ( $wp_query->queried_object ) {
 				$rule['entityType'] = $wp_query->queried_object->name;
 			} else {
@@ -124,7 +124,7 @@ class Brizy_Admin_Rules_Manager {
 
 		if ( is_archive() || isset( $_REQUEST['post_type'] ) ) {
 			$rule             = $defaultRule;
-			$rule['applyFor'] = Brizy_Admin_Rule::ARCHIVE;
+			$rule['appliedFor'] = Brizy_Admin_Rule::ARCHIVE;
 			if ( $wp_query->queried_object ) {
 				$rule['entityType'] = $wp_query->queried_object->name;
 			} else {
@@ -136,7 +136,7 @@ class Brizy_Admin_Rules_Manager {
 		$object = get_queried_object();
 		if ( ( $object instanceof WP_Post  ) && $object ) {
 			$rule                   = $defaultRule;
-			$rule['applyFor']       = Brizy_Admin_Rule::POSTS;
+			$rule['appliedFor']       = Brizy_Admin_Rule::POSTS;
 			$rule['entityType']     = $object->post_type;
 			$rule['entityValues'][] = get_queried_object_id();
 			$ruleMatches[]          = $rule;
@@ -144,7 +144,7 @@ class Brizy_Admin_Rules_Manager {
 
 //		if ( $wp_query->post instanceof WP_Post ) {
 //			$rule                   = $defaultRule;
-//			$rule['applyFor']       = Brizy_Admin_Rule::POSTS;
+//			$rule['appliedFor']       = Brizy_Admin_Rule::POSTS;
 //			$rule['entityType']     = $wp_query->post->post_type;
 //			$rule['entityValues'][] = $wp_query->post->ID;
 //			$ruleMatches[]          = $rule;

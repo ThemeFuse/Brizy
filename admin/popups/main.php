@@ -235,7 +235,7 @@ class Brizy_Admin_Popups_Main {
 		$ruleMatches = [];
 		if ( $wpPost ) {
 			$ruleMatches[] = [
-				'applyFor'     => Brizy_Admin_Rule::POSTS,
+				'appliedFor'     => Brizy_Admin_Rule::POSTS,
 				'entityType'   => $wpPost->post_type,
 				'entityValues' => [ $wpPost->ID ],
 			];
@@ -271,7 +271,7 @@ class Brizy_Admin_Popups_Main {
 		}
 
 		foreach ($ruleMatches as $ruleMatch) {
-			$applyFor     = $ruleMatch['applyFor'];
+			$applyFor     = $ruleMatch['appliedFor'];
 			$entityType   = $ruleMatch['entityType'];
 			$entityValues = $ruleMatch['entityValues'];
 
