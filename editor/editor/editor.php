@@ -915,6 +915,7 @@ class Brizy_Editor_Editor_Editor {
 			{
 				$ruleMatches = array_map( function ( $r ) {
 					$r['type'] = Brizy_Admin_Rule::TYPE_INCLUDE;
+                    $r['appliedFor'] = $r["applyFor"];
 					return $r;
 				}, $ruleMatches );
 			}
