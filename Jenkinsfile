@@ -44,6 +44,8 @@ pipeline {
                     sh("""
                         if git rev-parse --git-dir > /dev/null 2>&1; then
                           echo "The repo is already cloned"
+                          git fetch origin
+                          ./jenkins/git-initialize.sh ${params.releaseBranch}
                         else
                           git config --global user.email "jenkins@brizy.io
                           git config --global user.name "Jenkins jenkinovici
