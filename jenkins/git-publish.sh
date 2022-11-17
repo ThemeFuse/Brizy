@@ -22,7 +22,6 @@ echo -e "-----------------------------------------------------------------------
 
 git checkout master
 git reset --hard origin/master
-
 # shellcheck disable=SC2086
 git merge --no-ff -m "Merge [$RELEASE_BRANCH] in master" $RELEASE_BRANCH
 
