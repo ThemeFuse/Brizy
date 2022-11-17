@@ -1,9 +1,9 @@
 # Brizy - Page Builder
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.0.3<br>
+Tested up to: 6.1.1<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.4.12<br>
+Stable tag: 2.4.13<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,20 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.13 - 2022-11-17
+* New: Added styles and more options for the Line element
+* New: Added paddings for Counter, Embed, Video, Map, Audio & Countdown elements
+* New: Added Mask option for the Image element 
+* New: Video element new options: Lazy Load, Privacy Mode, Suggested Videos, Muted 
+* Improved: Borders moved from toolbar to sidebar 
+* Improved: Color works under CSS variables in Text CSS classes 
+* Fixed: Column width changed when you click the column resize handle 
+* Fixed: Hover styles for Update toolbar icons 
+* Fixed: Border global color on Tabs
+* Fixed: Hover styles on icons from Effects 
+* Fixed: Right Click on Row element
+* Fixed: Added new rule matches for current page
 
 ### 2.4.11 - 2022-10-12
 * Fixed: Images URL
