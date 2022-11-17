@@ -16,13 +16,17 @@ git push origin $RELEASE_BRANCH
 echo -e "\nMerge the $RELEASE_BRANCH in master"
 echo -e "-----------------------------------------------------------------------------"
 
-git checkout master
+
+git branch -d master
+git checkout -t origin/master
 git reset --hard origin/master
 # shellcheck disable=SC2086
 git merge --no-ff -m "Merge [$RELEASE_BRANCH] in master" $RELEASE_BRANCH
 
 echo -e "\Creating the release tag: $BUILD_VERSION"
 echo -e "-----------------------------------------------------------------------------"
+git tag -d $BUILD_VERSION
+git push --delete origin $BUILD_VERSION
 git tag $BUILD_VERSION
 
 echo -e "\Creating the fixes branch: fixes-$BUILD_VERSION"
@@ -38,7 +42,8 @@ git push origin $FIXES_BRANCH
 echo -e "\nMerge the $RELEASE_BRANCH in develop"
 echo -e "-----------------------------------------------------------------------------"
 
-git checkout develop
+git branch -d develop
+git checkout -t origin/develop
 git reset --hard origin/develop
 git merge --no-ff -m "Merge [$RELEASE_BRANCH] in develop" $RELEASE_BRANCH
 git push origin develop

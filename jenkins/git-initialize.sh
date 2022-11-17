@@ -10,5 +10,7 @@ git fetch origin
 echo -e "\nCheckout: $1"
 echo -e "-----------------------------------------------------------------------------"
 
-git checkout $1
+git checkout master
+git branch -d $1
+git checkout -t origin/$1
 git reset --hard origin/$1
