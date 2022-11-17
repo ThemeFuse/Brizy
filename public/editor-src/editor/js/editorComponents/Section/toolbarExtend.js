@@ -93,7 +93,7 @@ export function getItems({ v, device, component }) {
                       label: t("Show to"),
                       type: "multiSelect-dev",
                       placeholder: "Select",
-                      disabled: v.membership === "off",
+                      disabled: dvv("membership") === "off",
                       choices: getAllMembershipChoices(config)
                     }
                   ]
@@ -113,7 +113,7 @@ export function getItems({ v, device, component }) {
                       label: t("Show If Language"),
                       type: "multiSelect-dev",
                       placeholder: "Select",
-                      disabled: v.translations === "off",
+                      disabled: dvv("translations") === "off",
                       choices: getLanguagesChoices(config)
                     }
                   ]
@@ -123,24 +123,6 @@ export function getItems({ v, device, component }) {
                   label: t("Make it a Slider"),
                   type: "switch-dev"
                 }
-                // {
-                //   id: "sliderAnimation",
-                //   label: t("Entrance Animation"),
-                //   type: "radioGroup",
-                //   disabled: slider === "off",
-                //   choices: [
-                //     { icon: "nc-slider-horizontal", value: "none" },
-                //     { icon: "nc-slider-vertical", value: "vertical" },
-                //     { icon: "nc-fade", value: "fade" }
-                //   ],
-                //   value: v.sliderAnimation,
-                //   onChange: sliderAnimation => {
-                //     hideToolbar();
-                //     return {
-                //       sliderAnimation
-                //     };
-                //   }
-                // }
               ]
             },
             slider === "on"

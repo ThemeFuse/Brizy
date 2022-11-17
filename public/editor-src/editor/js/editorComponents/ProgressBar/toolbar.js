@@ -1,26 +1,37 @@
+import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { isStory } from "visual/utils/models";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { hexToRgba } from "visual/utils/color";
-import { defaultValueValue } from "visual/utils/onChange";
-import { IS_STORY } from "visual/utils/models";
-
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, context }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
+
+  const progressBarStyle = dvv("progressBarStyle");
+  const showText = dvv("showText");
+  const showPercentage = dvv("showPercentage");
+
+  const style2 = progressBarStyle === "style2";
+  const percentageOff = showPercentage === "off";
+  const textOff = showText === "off";
+
   const richTextDC = getDynamicContentChoices(
     context.dynamicContent.config,
     DCTypes.richText
   );
+
+  const IS_STORY = isStory(Config.getAll());
 
   return [
     {
@@ -60,7 +71,7 @@ export function getItems({ v, device, context }) {
           type: "switch-dev",
           label: t("Title"),
           devices: "desktop",
-          disabled: v.progressBarStyle === "style2"
+          disabled: style2
         },
         {
           id: "showPercentage",
@@ -105,9 +116,7 @@ export function getItems({ v, device, context }) {
                           config: {
                             fontFamily: "desktop" === device
                           },
-                          disabled:
-                            v.showText === "off" ||
-                            v.progressBarStyle === "style2"
+                          disabled: textOff || style2
                         }
                       ]
                     },
@@ -123,9 +132,7 @@ export function getItems({ v, device, context }) {
                             choices: richTextDC
                           },
                           devices: "desktop",
-                          disabled:
-                            v.showText === "off" ||
-                            v.progressBarStyle === "style2"
+                          disabled: textOff || style2
                         }
                       ]
                     }
@@ -149,7 +156,7 @@ export function getItems({ v, device, context }) {
                           config: {
                             fontFamily: "desktop" === device
                           },
-                          disabled: v.showPercentage === "off"
+                          disabled: percentageOff
                         }
                       ]
                     },
@@ -165,7 +172,7 @@ export function getItems({ v, device, context }) {
                             choices: richTextDC
                           },
                           devices: "desktop",
-                          disabled: v.showPercentage === "off"
+                          disabled: percentageOff
                         }
                       ]
                     }
@@ -185,7 +192,7 @@ export function getItems({ v, device, context }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, v.bgColorOpacity)
+            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
           }
         }
       },
@@ -204,8 +211,7 @@ export function getItems({ v, device, context }) {
                   id: "labelColor",
                   type: "colorPicker-dev",
                   states: [NORMAL, HOVER],
-                  disabled:
-                    v.showText === "off" || v.progressBarStyle === "style2"
+                  disabled: textOff || style2
                 }
               ]
             },
@@ -217,7 +223,7 @@ export function getItems({ v, device, context }) {
                   id: "color",
                   type: "colorPicker-dev",
                   states: [NORMAL, HOVER],
-                  disabled: v.showPercentage === "off"
+                  disabled: percentageOff
                 }
               ]
             },

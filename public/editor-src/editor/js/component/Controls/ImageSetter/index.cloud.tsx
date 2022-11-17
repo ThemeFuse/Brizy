@@ -11,6 +11,7 @@ import { noop } from "rxjs";
 import { Item } from "visual/component/Controls/MultiSelect/Item";
 import { Select2 } from "visual/component/Controls/Select2";
 import EditorIcon from "visual/component/EditorIcon";
+import { Extensions } from "visual/component/Options/types/dev/ImageUpload/Types";
 import { t } from "visual/utils/i18n";
 import {
   getImageFormat,
@@ -21,6 +22,7 @@ import {
 } from "visual/utils/image";
 import { uploadImage } from "visual/utils/image/uploadImage";
 import Image from "./Image";
+import { getExtensionsMessage } from "./utils";
 
 export interface Value {
   src: string;
@@ -53,6 +55,7 @@ export interface Props<T extends ReactText> {
   onChange: (v: Value, meta: Meta) => void;
   sizes?: Array<{ value: T; label: string }>;
   onSizeChange?: (v: T) => void;
+  acceptedExtensions?: Extensions[];
 }
 
 interface State {
@@ -78,6 +81,11 @@ export class ImageSetter<T extends ReactText> extends React.Component<
   };
 
   mounted = false;
+  defaultExtensions: Extensions[] = ["jpeg", "jpg", "png", "gif", "svg"];
+  _extensions =
+    this.props.acceptedExtensions && this.props.acceptedExtensions.length > 0
+      ? this.props.acceptedExtensions
+      : this.defaultExtensions;
 
   componentDidMount(): void {
     this.mounted = true;
@@ -135,7 +143,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
     this.setState({ loading: true });
 
     uploadImage(file, {
-      acceptedExtensions: ["jpeg", "jpg", "png", "gif", "svg"],
+      acceptedExtensions: this._extensions,
       onUpload: ({ name: src, fileName }) => {
         const extension = getImageFormat(src);
 
@@ -185,9 +193,10 @@ export class ImageSetter<T extends ReactText> extends React.Component<
             (e as { message?: string }).message ||
             t("Image file is too large.");
         } else {
-          errorMsg = t(
-            "Failed to upload file. Please upload a valid JPG, PNG, SVG or GIF image."
-          );
+          const extension = getExtensionsMessage(this._extensions);
+          errorMsg = `${t(
+            "Failed to upload file. Please upload a valid "
+          )}${extension} ${t("image")}`;
         }
 
         ToastNotification.error(errorMsg);

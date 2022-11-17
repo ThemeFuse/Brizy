@@ -1,8 +1,11 @@
+import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
+import { isStory } from "visual/utils/models";
 import { toolbarElementForm2Apps } from "visual/utils/toolbar";
-import { IS_STORY } from "visual/utils/models";
 
 export function getItems({ v, device }) {
+  const IS_STORY = isStory(Config.getAll());
+
   return [
     {
       id: "popoverLink",
@@ -92,21 +95,9 @@ export function getItems({ v, device }) {
       type: "toggle-dev",
       position: 100,
       choices: [
-        {
-          icon: "nc-text-align-left",
-          title: t("Align"),
-          value: "left"
-        },
-        {
-          icon: "nc-text-align-center",
-          title: t("Align"),
-          value: "center"
-        },
-        {
-          icon: "nc-text-align-right",
-          title: t("Align"),
-          value: "right"
-        }
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
       ]
     },
     toolbarElementForm2Apps({ v, device, devices: "desktop", state: "normal" })

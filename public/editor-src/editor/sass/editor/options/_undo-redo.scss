@@ -18,7 +18,7 @@
     justify-content: space-between;
   }
   &__item {
-    color: $sidebar-font-color;
+    color: $options-label-color;
     font-size: 12px;
     letter-spacing: $control-letter-spacing;
     font-family: $font-family-1;
@@ -38,10 +38,6 @@
     }
     .brz-icon-svg {
       font-size: 14px;
-    }
-
-    &:hover {
-      color: $brand-primary;
     }
   }
   &__item--small {

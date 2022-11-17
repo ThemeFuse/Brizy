@@ -1,13 +1,13 @@
 import Config from "visual/global/Config";
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import {
   defaultValueKey,
   defaultValueValue,
-  tabletSyncOnChange,
-  mobileSyncOnChange
+  mobileSyncOnChange,
+  tabletSyncOnChange
 } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 
 const configMenuValue = Config.get("menuData");
 const getMenuChoices = () => {
@@ -20,11 +20,13 @@ const getMenuChoices = () => {
 };
 
 export function getItems({ v, device }) {
-  const dvk = key => defaultValueKey({ key, device });
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvk = (key) => defaultValueKey({ key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const menuChoices = getMenuChoices();
-  const hasMenu = menuChoices.some(({ value }) => value === v.menuSelected);
+  const hasMenu = menuChoices.some(
+    ({ value }) => value === dvv("menuSelected")
+  );
 
   const { hex: mMenuIconColorHex } = getOptionColorHexByPalette(
     dvv("mMenuIconColorHex"),
@@ -33,7 +35,7 @@ export function getItems({ v, device }) {
   const mMenuIconBgColor = hexToRgba(
     mMenuIconColorHex,
     device === "desktop"
-      ? v.mMenuIconColorOpacity
+      ? dvv("mMenuIconColorOpacity")
       : device === "tablet"
       ? tabletSyncOnChange(v, "mMenuIconColorOpacity")
       : mobileSyncOnChange(v, "mMenuIconColorOpacity")
@@ -59,8 +61,8 @@ export function getItems({ v, device }) {
           choices: hasMenu
             ? menuChoices
             : [{ title: t("Select a Menu"), value: "-" }, ...menuChoices],
-          value: hasMenu ? v.menuSelected : "-",
-          onChange: menuSelected => {
+          value: hasMenu ? dvv("menuSelected") : "-",
+          onChange: (menuSelected) => {
             if (menuSelected === "-") {
               return;
             }
@@ -96,7 +98,7 @@ export function getItems({ v, device }) {
           label: t("Orientation"),
           type: "radioGroup-dev",
           position: 30,
-          disabled: v.mMenu === "on",
+          disabled: dvv("mMenu") === "on",
           choices: [
             { value: "vertical", icon: "nc-vertical-items" },
             { value: "horizontal", icon: "nc-horizontal-items" }
@@ -128,12 +130,7 @@ export function getItems({ v, device }) {
           },
           suffix: {
             show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
+            choices: [{ title: "px", value: "px" }]
           },
           disabled: v.items.length === 1 || dvv("mMenu") === "on",
           value: {

@@ -1,16 +1,18 @@
-import React from "react";
-//import Config from "visual/global/Config";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import classnames from "classnames";
+import { default as React } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import FacebookPlugin from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import classnames from "classnames";
-import { style } from "./styles";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
+import { defaultValueValue } from "visual/utils/onChange";
 import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class Facebook extends EditorComponent {
   static get componentId() {
@@ -21,6 +23,13 @@ class Facebook extends EditorComponent {
 
   static experimentalDynamicContent = true;
 
+  dvv = (key) => {
+    const v = this.getValue();
+    const device = deviceModeSelector(getStore().getState());
+
+    return defaultValueValue({ v, key, device });
+  };
+
   getAppData() {
     return {
       appId: 113869198637480,
@@ -29,7 +38,7 @@ class Facebook extends EditorComponent {
     };
   }
 
-  tabs = v => {
+  tabs = (v) => {
     const { pageTabs } = v;
 
     try {
@@ -67,8 +76,11 @@ class Facebook extends EditorComponent {
       skin,
       showSocialContext,
       showMetaData,
-      width
+      customCSS
     } = v;
+
+    const width = this.dvv("width");
+    const pageWidth = this.dvv("pageWidth");
 
     const className = classnames(
       "brz-fb",
@@ -131,7 +143,7 @@ class Facebook extends EditorComponent {
               lang: appData.lang
             },
       page: {
-        width: "500",
+        width: pageWidth,
         href:
           facebookPageHref === ""
             ? "https://www.facebook.com/techcrunch/"
@@ -161,7 +173,7 @@ class Facebook extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <CustomCSS selectorName={this.getId()} css={customCSS}>
           <Wrapper {...this.makeWrapperProps({ className })}>
             <FacebookPlugin
               appId={appData.appId}
@@ -198,12 +210,15 @@ class Facebook extends EditorComponent {
       smallHeader,
       hideCover,
       showFacepile,
-      width,
       facebookGroupHref,
       showSocialContext,
       showMetaData,
-      skin
+      skin,
+      customCSS
     } = v;
+
+    const width = this.dvv("width");
+    const pageWidth = this.dvv("pageWidth");
 
     const className = classnames(
       "brz-fb",
@@ -246,6 +261,7 @@ class Facebook extends EditorComponent {
       embed:
         facebookEmbedType === "post"
           ? {
+              "data-width": "auto",
               "data-show-text": postAndVideoShowText === "on",
               "data-href": facebookEmbedPostHref,
               "data-lang": appData.lang
@@ -261,7 +277,7 @@ class Facebook extends EditorComponent {
               "data-lang": appData.lang
             },
       page: {
-        "data-width": "500",
+        "data-width": pageWidth,
         "data-tabs": this.tabs(v),
         "data-height": height,
         "data-small-header": smallHeader === "on",
@@ -295,7 +311,7 @@ class Facebook extends EditorComponent {
     };
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div className={className}>
           <FacebookPlugin
             appId={appData.appId}

@@ -1,6 +1,6 @@
+import classNames from "classnames";
 import React, { MouseEventHandler, ReactElement } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import classNames from "classnames";
 import { WithClassName } from "visual/utils/options/attributes";
 
 export interface Props extends WithClassName {
@@ -22,3 +22,4 @@ export const CheckMark = ({
     </span>
   );
 };
+

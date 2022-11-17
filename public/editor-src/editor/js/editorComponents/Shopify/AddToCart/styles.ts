@@ -34,7 +34,7 @@ export function style(
       standart: [
         "cssStyleElementButtonIconFontSize",
         "cssStyleElementButtonIconMargin",
-        "cssStyleElementIconStrokeWidth"
+        "cssStyleElementButtonIconStrokeWidth"
       ]
     }
   };

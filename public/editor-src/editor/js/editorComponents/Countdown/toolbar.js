@@ -1,12 +1,11 @@
-import { hexToRgba } from "visual/utils/color";
 import _ from "underscore";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
-
+import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function getItems({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
     dvv("colorHex"),
@@ -75,7 +74,7 @@ export function getItems({ v, device, state }) {
           type: "select-dev",
           label: t("Hour"),
           devices: "desktop",
-          choices: _.times(24, index => {
+          choices: _.times(24, (index) => {
             const hour = (index + 12) % 12 || 12;
             const suffix = index >= 12 ? "pm" : "am";
 
@@ -90,7 +89,7 @@ export function getItems({ v, device, state }) {
           type: "select-dev",
           devices: "desktop",
           label: t("Minutes"),
-          choices: _.times(6, index => {
+          choices: _.times(6, (index) => {
             const current = index * 10;
             return {
               title: `${index}0 m`,
@@ -142,7 +141,7 @@ export function getItems({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
           }
         }
       },

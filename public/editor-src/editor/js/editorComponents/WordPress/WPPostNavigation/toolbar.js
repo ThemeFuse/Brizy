@@ -1,23 +1,24 @@
 import Config from "visual/global/Config";
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   getTaxonomiesMultiOptions,
   getTaxonomiesMultiOptionsSub
 } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
-
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 const disabledTaxonomy = (arr, taxonomy = "") =>
-  !arr.some(elem => taxonomy === elem);
+  !arr.some((elem) => taxonomy === elem);
 
 export function getItems({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const wordpress = Boolean(Config.get("wp"));
 
-  const categories = JSON.parse(v.categories);
+  const categories = JSON.parse(dvv("categories"));
+  const showPost = dvv("showPost");
+  const showTitle = dvv("showTitle");
 
   return [
     {
@@ -52,7 +53,7 @@ export function getItems({ v, device, state }) {
                   id: "spacing",
                   label: t("Spacing"),
                   type: "slider-dev",
-                  disabled: v.showPost === "off" || v.showTitle === "off",
+                  disabled: showPost === "off" || showTitle === "off",
                   config: {
                     min: 0,
                     max: 100,
@@ -69,14 +70,14 @@ export function getItems({ v, device, state }) {
                   id: "showTitle",
                   label: t("Label"),
                   type: "switch-dev",
-                  disabled: v.showPost === "off",
+                  disabled: showPost === "off",
                   devices: "desktop"
                 },
                 {
                   id: "showPost",
                   label: t("Post"),
                   type: "switch-dev",
-                  disabled: v.showTitle === "off",
+                  disabled: showTitle === "off",
                   devices: "desktop"
                 },
                 {
@@ -181,7 +182,7 @@ export function getItems({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(v.bgColorHex, v.bgColorOpacity)
+            backgroundColor: hexToRgba(dvv("bgColorHex"), dvv("bgColorOpacity"))
           }
         }
       },

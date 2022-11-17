@@ -1,15 +1,22 @@
-import { t } from "visual/utils/i18n";
-import { IS_STORY } from "visual/utils/models";
-import { getDynamicContentChoices } from "visual/utils/options";
+import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { t } from "visual/utils/i18n";
+import { isStory } from "visual/utils/models";
+import { defaultValueValue } from "visual/utils/onChange";
+import { getDynamicContentChoices } from "visual/utils/options";
 
 export const title = t("Button");
 
-export function getItems({ v, context }) {
+export function getItems({ v, context, device }) {
   const richTextDC = getDynamicContentChoices(
     context.dynamicContent.config,
     DCTypes.richText
   );
+
+  const dvv = (key) => defaultValueValue({ v, key, device });
+  const type = dvv("type");
+
+  const IS_STORY = isStory(Config.getAll());
 
   return [
     {
@@ -28,7 +35,7 @@ export function getItems({ v, context }) {
                 align: "start"
               },
               devices: "desktop",
-              disabled: v.type === "submit" || v.type === "search",
+              disabled: type === "submit" || type === "search",
               tabs: [
                 {
                   id: "moreSettingsAdvanced",

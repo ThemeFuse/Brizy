@@ -1,11 +1,11 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
-import { toolbarElementForm2SpacingPx } from "visual/utils/toolbar";
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { toolbarElementForm2SpacingPx } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
   // Color
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -61,9 +61,9 @@ export function getItems({ v, device }) {
         icon: {
           style: {
             backgroundColor:
-              v.bgColorOpacity > 0
-                ? hexToRgba(bgColorHex, v.bgColorOpacity)
-                : hexToRgba(colorHex, v.colorOpacity)
+              dvv("bgColorOpacity") > 0
+                ? hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+                : hexToRgba(colorHex, dvv("colorOpacity"))
           }
         }
       },

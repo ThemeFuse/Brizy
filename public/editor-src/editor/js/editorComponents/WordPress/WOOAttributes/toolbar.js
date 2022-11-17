@@ -1,10 +1,12 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
+
+  const titleEnabled = dvv("titleDisabled") === "on";
 
   const { hex: colorHex } = getOptionColorHexByPalette(
     dvv("titleColorHex"),
@@ -87,7 +89,7 @@ export function getItems({ v, device }) {
                 {
                   id: "title",
                   type: "typography-dev",
-                  disabled: v.titleDisabled === "on",
+                  disabled: titleEnabled,
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -119,7 +121,7 @@ export function getItems({ v, device }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, v.titleColorOpacity)
+            backgroundColor: hexToRgba(colorHex, dvv("titleColorOpacity"))
           }
         }
       },
@@ -137,7 +139,7 @@ export function getItems({ v, device }) {
                 {
                   id: "titleColor",
                   type: "colorPicker-dev",
-                  disabled: v.titleDisabled === "on",
+                  disabled: titleEnabled,
                   devices: "desktop"
                 }
               ]

@@ -1,15 +1,18 @@
 import _ from "underscore";
-import * as types from "./types/index";
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
+import * as types from "./types/index";
 
-const getTypeChoices = _.map(types, item => {
+const getTypeChoices = _.map(types, (item) => {
   return {
     title: item.componentTitle,
     value: item.componentType
   };
 });
 
-export function getItems({ v }) {
+export function getItems({ v, device }) {
+  const dvv = (key) => defaultValueValue({ v, key, device });
+
   return [
     {
       id: "toolbarCurrentShortcode",
@@ -49,7 +52,7 @@ export function getItems({ v }) {
           id: "height",
           label: t("Height"),
           type: "slider-dev",
-          disabled: v.type !== "Paragraph",
+          disabled: dvv("type") !== "Paragraph",
           config: {
             min: 1,
             max: 300,

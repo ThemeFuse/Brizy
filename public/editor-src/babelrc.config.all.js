@@ -15,7 +15,7 @@ exports.editor = () => {
             "last 2 edge versions"
           ]
         },
-        corejs: "3.7.0",
+        corejs: "3.26.0",
         useBuiltIns: "usage",
         modules: false
       }
@@ -61,12 +61,7 @@ exports.preview = () => {
   const { presets, plugins } = exports.editor();
   const clonedPresets = JSON.parse(JSON.stringify(presets));
 
-  clonedPresets[0][1].targets.browsers = [
-    "chrome 85",
-    "edge 85",
-    "firefox 81",
-    "safari 14"
-  ];
+  clonedPresets[0][1].targets.browsers = ["> 0.5%", "last 2 versions"];
 
   return {
     ...basicOptions,

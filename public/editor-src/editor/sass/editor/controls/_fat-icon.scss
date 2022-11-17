@@ -37,7 +37,7 @@ $transition: 0.2s linear;
     white-space: nowrap;
   }
 
-  &:hover .brz-ed--fat-icon__wrapper {
+  &:not(.brz-ed--fat-icon__active):hover .brz-ed--fat-icon__wrapper {
     border-color: $options-border-hover-color;
   }
 

@@ -1,6 +1,9 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 
-export function getItems({ v }) {
+export function getItems({ v, device }) {
+  const dvv = (key) => defaultValueValue({ v, key, device });
+
   return [
     {
       id: "sidebarTabs",
@@ -27,7 +30,7 @@ export function getItems({ v }) {
                       type: "padding-dev",
                       label: t("Padding"),
                       position: 50,
-                      disabled: v.switcherStyle === "style-2"
+                      disabled: dvv("switcherStyle") === "style-2"
                     },
 
                     {

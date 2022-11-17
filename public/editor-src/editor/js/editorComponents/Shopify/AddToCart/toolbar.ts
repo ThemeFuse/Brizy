@@ -1,11 +1,11 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { Value } from ".";
 import { DeviceMode } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { Value } from ".";
 
 export const getItems = ({
   v,
@@ -18,6 +18,8 @@ export const getItems = ({
 }): ToolbarItemType[] => {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
+
+  const iconName = dvv("iconName");
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -48,8 +50,8 @@ export const getItems = ({
                   type: "iconSetter",
                   canDelete: true,
                   value: {
-                    name: v.iconName,
-                    type: v.iconType
+                    name: iconName,
+                    type: dvv("iconType")
                   },
                   onChange: ({
                     name,
@@ -63,7 +65,7 @@ export const getItems = ({
                   id: "iconPosition",
                   label: t("Position"),
                   type: "radioGroup-dev",
-                  disabled: v.iconName === "",
+                  disabled: iconName === "",
                   choices: [
                     { value: "left", icon: "nc-align-left" },
                     { value: "right", icon: "nc-align-right" }
@@ -73,7 +75,7 @@ export const getItems = ({
                   id: "iconCustomSize",
                   label: t("Size"),
                   type: "slider-dev",
-                  disabled: v.iconName === "",
+                  disabled: iconName === "",
                   config: {
                     min: 1,
                     max: 100,
@@ -84,7 +86,7 @@ export const getItems = ({
                   id: "iconSpacing",
                   label: t("Spacing"),
                   type: "slider-dev",
-                  disabled: v.iconName === "",
+                  disabled: iconName === "",
                   config: {
                     min: 0,
                     max: 100,

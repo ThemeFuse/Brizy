@@ -105,15 +105,6 @@
     "strokeColorOpacity": 1,
     "strokeColorPalette": "color3",
 
-    "hoverStrokeColorType": null,
-
-    "hoverStrokeColorHex": null,
-    "hoverStrokeColorOpacity": null,
-    "hoverStrokeColorPalette": null,
-
-    "tempHoverStrokeColorOpacity": null,
-    "tempHoverStrokeColorPalette": null,
-
     "tempStrokeColorOpacity": 1,
     "tempStrokeColorPalette": "color3",
 
@@ -132,21 +123,6 @@
     "tempTextShadowVertical": 2,
     "tempTextShadowHorizontal": 1,
 
-    "hoverTextShadowColorHex": null,
-    "hoverTextShadowColorOpacity": null,
-    "hoverTextShadowColorPalette": null,
-
-    "tempHoverTextShadowColorOpacity": null,
-    "tempHoverTextShadowColorPalette": null,
-
-    "hoverTextShadowBlur": null,
-    "hoverTextShadowVertical": null,
-    "hoverTextShadowHorizontal": null,
-
-    "tempHoverTextShadowBlur": null,
-    "tempHoverTextShadowVertical": null,
-    "tempHoverTextShadowHorizontal": null,
-
     "fillColorType": "solid",
 
     "fillColorHex": "#cccccc",
@@ -156,22 +132,28 @@
     "tempFillColorOpacity": 1,
     "tempFillColorPalette": "",
 
-    "hoverFillColorType": null,
-
-    "hoverFillColorHex": null,
-    "hoverFillColorOpacity": null,
-    "hoverFillColorPalette": null,
-
-    "tempHoverFillColorOpacity": null,
-    "tempHoverFillColorPalette": null,
-
     "width": 35,
     "widthSuffix": "%",
 
     "customCSS": "",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
+    "hoverTransitionSuffix": "",
+
+    "bgPaddingType": "grouped",
+
+    "bgPadding": 0,
+    "bgPaddingSuffix": "px",
+
+    "bgPaddingTop": 0,
+    "bgPaddingRight": 0,
+    "bgPaddingBottom": 0,
+    "bgPaddingLeft": 0,
+
+    "bgPaddingTopSuffix": "px",
+    "bgPaddingRightSuffix": "px",
+    "bgPaddingBottomSuffix": "px",
+    "bgPaddingLeftSuffix": "px",
 
     "tabletWidth": null,
     "tabletWidthSuffix": null,

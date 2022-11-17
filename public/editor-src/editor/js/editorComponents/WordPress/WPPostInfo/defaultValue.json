@@ -18,15 +18,13 @@
     "large": "inline",
 
     "textSpacing": 30,
-    "textSpacingSuffix": null,
+    "textSpacingSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
+    "hoverTransitionSuffix": "",
 
     "families": {
-      "fontFamily": "lato",
-      "tabletFontFamily": null,
-      "mobileFontFamily": null
+      "fontFamily": "lato"
     },
 
     "fontStyle": "",
@@ -51,22 +49,14 @@
     "tempIconsColorOpacity": 1,
     "tempIconsColorPalette": "",
 
-    "tabletTextSpacing": null,
-    "tabletTextSpacingSuffix": null,
-
     "tabletFontStyle": "",
-    "tabletFontFamilyType": null,
     "tabletFontSize": 15,
     "tabletFontSizeSuffix": "px",
     "tabletFontWeight": 400,
     "tabletLineHeight": 1.3,
     "tabletLetterSpacing": 0,
 
-    "mobileTextSpacing": null,
-    "mobileTextSpacingSuffix": null,
-
     "mobileFontStyle": "",
-    "mobileFontFamilyType": null,
     "mobileFontSize": 15,
     "mobileFontSizeSuffix": "px",
     "mobileFontWeight": 400,

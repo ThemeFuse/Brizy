@@ -4,7 +4,7 @@ import { renderStatic } from "glamor/server";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { Provider } from "react-redux";
-import { items as googleFonts } from "visual/config/googleFonts.json";
+import googleFonts from "visual/config/googleFonts.json";
 import Config from "visual/global/Config";
 import {
   isCollectionPage,
@@ -112,7 +112,7 @@ export default async function main({
       page,
       project,
       globalBlocks,
-      googleFonts,
+      googleFonts: googleFonts.items,
       buildPath
     })
   };

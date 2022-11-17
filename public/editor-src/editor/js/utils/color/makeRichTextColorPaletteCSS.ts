@@ -1,9 +1,14 @@
+import Config from "visual/global/Config";
+import { makeStylePaletteCSSVar } from "./makeGlobalStylesColorPallete";
+
 export const makeRichTextColorPaletteCSS = (
   palettes: { id: string; hex: string }[],
   prefix?: (s: string) => string
 ): string => {
+  const config = Config.getAll();
+
   return palettes
-    .map(({ id, hex }) => {
+    .map(({ id }) => {
       let inlineClassName = `.brz-cp-${id.toLowerCase()}`;
       let blockClassName = `.brz-bcp-${id.toLowerCase()}`;
 
@@ -12,7 +17,9 @@ export const makeRichTextColorPaletteCSS = (
         blockClassName = prefix(blockClassName);
       }
 
-      return `.brz ${inlineClassName}, .brz ${blockClassName}{color: ${hex};}`;
+      const color = `rgb(var(${makeStylePaletteCSSVar(id, config)}))`;
+
+      return `.brz ${inlineClassName}, .brz ${blockClassName}{color: ${color};}`;
     })
     .join("");
 };

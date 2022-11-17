@@ -273,12 +273,7 @@ export function getItems({
         }
       ]
     },
-    {
-      id: "horizontalAlign",
-      type: "toggle-dev",
-      disabled: true,
-      choices: []
-    },
+    { id: "horizontalAlign", type: "toggle-dev", disabled: true, choices: [] },
     {
       id: "advancedSettings",
       // @ts-expect-error: Need transform to ts

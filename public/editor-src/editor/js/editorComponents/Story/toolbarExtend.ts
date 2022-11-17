@@ -33,7 +33,6 @@ export function getItems({
               label: t("Auto Play"),
               type: "switch-dev"
             },
-
             {
               id: "sliderAutoPlaySpeed",
               label: t("Speed"),

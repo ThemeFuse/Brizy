@@ -1,6 +1,9 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 
-export function getItems({ v }) {
+export function getItems({ v, device }) {
+  const dvv = (key) => defaultValueValue({ v, key, device });
+
   return [
     {
       id: "toolbarCurrentShortcode",
@@ -27,8 +30,8 @@ export function getItems({ v }) {
                   devices: "desktop",
                   canDelete: true,
                   value: {
-                    name: v.iconName,
-                    type: v.iconType
+                    name: dvv("iconName"),
+                    type: dvv("iconType")
                   },
                   onChange: ({ name, type }) => {
                     return {
@@ -37,7 +40,7 @@ export function getItems({ v }) {
                     };
                   }
                 },
-                ...(v.iconName === ""
+                ...(dvv("iconName") === ""
                   ? [
                       {
                         id: "iconPosition",

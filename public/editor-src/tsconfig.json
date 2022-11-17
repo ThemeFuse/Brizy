@@ -18,7 +18,9 @@
     "jsx": "react",
     "paths": {
       "visual/*": ["editor/js/*"],
-      "ui/*":["packages/ui/*"]
+      "ui/*": ["packages/ui/*"],
+      "core/*": ["packages/core/*"],
+      "elements/*": ["packages/elements/*"]
     }
   },
   "include": [

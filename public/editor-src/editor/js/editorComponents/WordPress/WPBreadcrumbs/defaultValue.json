@@ -18,12 +18,10 @@
     "customCSS": "",
 
     "textSpacing": 5,
-    "textSpacingSuffix": null,
+    "textSpacingSuffix": "px",
 
     "families": {
-      "fontFamily": "lato",
-      "tabletFontFamily": null,
-      "mobileFontFamily": null
+      "fontFamily": "lato"
     },
 
     "fontStyle": "",
@@ -56,45 +54,21 @@
     "tempArrowsColorPalette": "color2",
 
     "hoverColorHex": "#009900",
-    "hoverColorOpacity": null,
     "hoverColorPalette": "color1",
 
-    "tempHoverColorOpacity": null,
     "tempHoverColorPalette": "color1",
 
-    "hoverActiveColorHex": null,
-    "hoverActiveColorOpacity": null,
-    "hoverActiveColorPalette": null,
-
-    "tempHoverActiveColorOpacity": null,
-    "tempHoverActiveColorPalette": null,
-
-    "hoverArrowsColorHex": null,
-    "hoverArrowsColorOpacity": null,
-    "hoverArrowsColorPalette": null,
-
-    "tempHoverArrowsColorOpacity": null,
-    "tempHoverArrowsColorPalette": null,
-
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
-
-    "tabletTextSpacing": null,
-    "tabletTextSpacingSuffix": null,
+    "hoverTransitionSuffix": "",
 
     "tabletFontStyle": "",
-    "tabletFontFamilyType": null,
     "tabletFontSize": 15,
     "tabletFontSizeSuffix": "px",
     "tabletFontWeight": 400,
     "tabletLineHeight": 1.3,
     "tabletLetterSpacing": 0,
 
-    "mobileTextSpacing": null,
-    "mobileTextSpacingSuffix": null,
-
     "mobileFontStyle": "",
-    "mobileFontFamilyType": null,
     "mobileFontSize": 15,
     "mobileFontSizeSuffix": "px",
     "mobileFontWeight": 400,

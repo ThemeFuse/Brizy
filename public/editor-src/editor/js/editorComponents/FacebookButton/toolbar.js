@@ -1,12 +1,13 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  const boxedLayout = dvv("layout") === "boxed";
 
   const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
     dvv("boxShadowColorHex"),
@@ -53,7 +54,7 @@ export function getItems({ v, device, state }) {
                   label: t("Link"),
                   type: "inputText-dev",
                   devices: "desktop",
-                  disabled: v.targetUrl === "current",
+                  disabled: dvv("targetUrl") === "current",
                   placeholder: "http://"
                 },
                 {
@@ -114,14 +115,14 @@ export function getItems({ v, device, state }) {
                   id: "showCounter",
                   label: t("Show Button Counter"),
                   type: "switch-dev",
-                  disabled: v.layout === "boxed" ? true : false,
+                  disabled: boxedLayout,
                   devices: "desktop"
                 },
                 {
                   id: "showFriends",
                   label: t("Show Friends' Faces"),
                   type: "switch-dev",
-                  disabled: v.layout === "boxed" ? true : false,
+                  disabled: boxedLayout,
                   devices: "desktop"
                 }
                 // {
@@ -146,7 +147,7 @@ export function getItems({ v, device, state }) {
           style: {
             backgroundColor: hexToRgba(
               boxShadowColorHex,
-              v.boxShadowColorOpacity
+              dvv("boxShadowColorOpacity")
             )
           }
         }

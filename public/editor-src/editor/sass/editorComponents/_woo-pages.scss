@@ -1,0 +1,9 @@
+.brz-woo-page {
+  overflow: hidden;
+}
+
+&:not(.brz-ed) {
+  .brz-woo-pages {
+    overflow: hidden;
+  }
+}

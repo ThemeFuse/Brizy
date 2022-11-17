@@ -23,7 +23,7 @@ export function style(
         "cssStyleElementIconBgColor",
         "cssStyleElementIconBgGradient",
         "cssStyleElementIconPadding",
-        "cssStyleElementIconStrokeWidth",
+        "cssStyleStrokeWidth",
         "cssStyleBorderRadiusType"
       ],
       interval: [

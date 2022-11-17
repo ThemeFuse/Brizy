@@ -1,13 +1,12 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { toolbarElementForm2Size } from "visual/utils/toolbar";
 
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -34,18 +33,7 @@ export function getItems({ v, device }) {
                   v,
                   device,
                   devices: "desktop"
-                }),
-                {
-                  id: "borderRadius",
-                  type: "slider-dev",
-                  label: t("Corner"),
-                  devices: "desktop",
-                  config: {
-                    min: 0,
-                    max: 100,
-                    units: [{ value: "px", title: "px" }]
-                  }
-                }
+                })
               ]
             }
           ]
@@ -57,7 +45,6 @@ export function getItems({ v, device }) {
         })
       ]
     },
-
     {
       id: "toolbarTypography",
       type: "popover-dev",
@@ -181,7 +168,6 @@ export function getItems({ v, device }) {
       },
       position: 80,
       devices: "desktop",
-
       options: [
         {
           id: "checkboxColor",

@@ -1,9 +1,9 @@
-import { getIn, setIn, addLast } from "timm";
-import { t } from "visual/utils/i18n";
+import { addLast, getIn, setIn } from "timm";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
+import { t } from "visual/utils/i18n";
 import { setIds } from "visual/utils/models";
+import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ACTIVE, NORMAL } from "visual/utils/stateMode";
 
 const TableRow = {
@@ -37,7 +37,7 @@ const TableAside = {
 };
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ key, v, device });
+  const dvv = (key) => defaultValueValue({ key, v, device });
 
   // Color
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -200,9 +200,9 @@ export function getItems({ v, device }) {
         icon: {
           style: {
             backgroundColor:
-              v.bgColorOpacity > 0
-                ? hexToRgba(bgColorHex, v.bgColorOpacity)
-                : hexToRgba(colorHex, v.colorOpacity)
+              dvv("bgColorOpacity") > 0
+                ? hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+                : hexToRgba(colorHex, dvv("colorOpacity"))
           }
         }
       },

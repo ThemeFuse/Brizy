@@ -1,11 +1,12 @@
 import Config from "visual/global/Config";
+import { IS_CLOUD, IS_WP } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
-import { IS_WP, IS_CLOUD } from "visual/utils/env";
 import { getMembershipChoices } from "visual/utils/membership";
+import { defaultValueValue } from "visual/utils/onChange";
 
-export default canRegister => ({ getItems: getItems(canRegister) });
+export default (canRegister) => ({ getItems: getItems(canRegister) });
 
-const getShowLinkLabel = type => {
+const getShowLinkLabel = (type) => {
   switch (type) {
     case "forgot":
     case "register":
@@ -16,144 +17,143 @@ const getShowLinkLabel = type => {
   }
 };
 
-export const getItems = canRegister => ({ v }) => {
-  const config = Config.getAll();
+export const getItems =
+  (canRegister) =>
+  ({ v, device }) => {
+    const config = Config.getAll();
+    const dvv = (key) => defaultValueValue({ v, key, device });
 
-  const typeChoices = [
-    { value: "login", title: "Login" },
-    { value: "authorized", title: "Authorized" },
-    ...(canRegister ? [{ value: "register", title: "Register" }] : []),
-    { value: "forgot", title: "Forgot Password" }
-  ];
+    const typeChoices = [
+      { value: "login", title: "Login" },
+      { value: "authorized", title: "Authorized" },
+      ...(canRegister ? [{ value: "register", title: "Register" }] : []),
+      { value: "forgot", title: "Forgot Password" }
+    ];
 
-  const { type } = v;
+    const type = dvv("type");
 
-  const isRegister = type === "register";
-  const isLogin = type === "login";
-  const isForgot = type === "forgot";
-  const isAuthorized = type === "authorized";
+    const isRegister = type === "register";
+    const isLogin = type === "login";
+    const isForgot = type === "forgot";
+    const isAuthorized = type === "authorized";
 
-  return [
-    {
-      id: "toolbarCurrentElement",
-      type: "popover-dev",
-      config: {
-        icon: "nc-form-left",
-        title: t("Forms")
+    return [
+      {
+        id: "toolbarCurrentElement",
+        type: "popover-dev",
+        config: {
+          icon: "nc-form-left",
+          title: t("Forms")
+        },
+        position: 60,
+        options: [
+          {
+            id: "tabsCurrentElementFields",
+            type: "tabs-dev",
+            config: { showSingle: true },
+            tabs: [
+              {
+                id: "tabsCurrentElementField",
+                label: t("Type"),
+                options: [
+                  {
+                    id: "type",
+                    type: "select-dev",
+                    label: t("Type"),
+                    devices: "desktop",
+                    choices: typeChoices
+                  },
+                  {
+                    id: "defaultRoles",
+                    type: "multiSelect-dev",
+                    label: t("Default Roles"),
+                    devices: "desktop",
+                    placeholder: "none",
+                    disabled: !isRegister || IS_WP,
+                    choices: getMembershipChoices(config)
+                  }
+                ]
+              },
+              {
+                id: "tabsCurrentElementAdvanced",
+                label: t("Advanced"),
+                options: [
+                  {
+                    id: "remember",
+                    label: t("Remember me"),
+                    devices: "desktop",
+                    disabled: !isLogin,
+                    type: "switch-dev"
+                  },
+                  {
+                    id: "showName",
+                    type: "switch-dev",
+                    label: t("Full name"),
+                    devices: "desktop",
+                    disabled: !isAuthorized
+                  },
+                  {
+                    id: "showFirstName",
+                    label: t("First Name"),
+                    devices: "desktop",
+                    disabled: !isRegister || IS_WP,
+                    type: "switch-dev"
+                  },
+                  {
+                    id: "showLastName",
+                    label: t("Last Name"),
+                    devices: "desktop",
+                    disabled: !isRegister || IS_WP,
+                    type: "switch-dev"
+                  },
+                  {
+                    id: "showUsername",
+                    label: t("Username"),
+                    devices: "desktop",
+                    disabled: !isRegister || IS_WP,
+                    type: "switch-dev"
+                  },
+                  {
+                    id: "showPhoneNumber",
+                    label: t("Phone Number"),
+                    devices: "desktop",
+                    disabled: !isRegister || IS_WP,
+                    type: "switch-dev"
+                  },
+                  {
+                    id: "showRegisterInfo",
+                    label: t("Register Info"),
+                    devices: "desktop",
+                    disabled: !isRegister || IS_CLOUD,
+                    type: "switch-dev"
+                  },
+                  {
+                    id: "showLoginLink",
+                    label: getShowLinkLabel(type),
+                    devices: "desktop",
+                    disabled: !isRegister && !isForgot,
+                    type: "switch-dev"
+                  },
+                  {
+                    id: "showLostPassword",
+                    label: t("Lost Password"),
+                    devices: "desktop",
+                    disabled: !isRegister && !isLogin,
+                    type: "switch-dev"
+                  },
+                  {
+                    id: "showRegisterLink",
+                    label: t("Register"),
+                    devices: "desktop",
+                    disabled: (!isForgot && !isLogin) || !canRegister,
+                    type: "switch-dev"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
-      position: 60,
-      options: [
-        {
-          id: "tabsCurrentElementFields",
-          type: "tabs-dev",
-          config: { showSingle: true },
-          tabs: [
-            {
-              id: "tabsCurrentElementField",
-              label: t("Type"),
-              options: [
-                {
-                  id: "type",
-                  type: "select-dev",
-                  label: t("Type"),
-                  devices: "desktop",
-                  choices: typeChoices
-                },
-                {
-                  id: "defaultRoles",
-                  type: "multiSelect-dev",
-                  label: t("Default Roles"),
-                  devices: "desktop",
-                  placeholder: "none",
-                  disabled: !isRegister || IS_WP,
-                  choices: getMembershipChoices(config)
-                }
-              ]
-            },
-            {
-              id: "tabsCurrentElementAdvanced",
-              label: t("Advanced"),
-              options: [
-                {
-                  id: "remember",
-                  label: t("Remember me"),
-                  devices: "desktop",
-                  disabled: !isLogin,
-                  type: "switch-dev"
-                },
-                {
-                  id: "showName",
-                  type: "switch-dev",
-                  label: t("Full name"),
-                  devices: "desktop",
-                  disabled: !isAuthorized
-                },
-                {
-                  id: "showFirstName",
-                  label: t("First Name"),
-                  devices: "desktop",
-                  disabled: !isRegister || IS_WP,
-                  type: "switch-dev"
-                },
-                {
-                  id: "showLastName",
-                  label: t("Last Name"),
-                  devices: "desktop",
-                  disabled: !isRegister || IS_WP,
-                  type: "switch-dev"
-                },
-                {
-                  id: "showUsername",
-                  label: t("Username"),
-                  devices: "desktop",
-                  disabled: !isRegister || IS_WP,
-                  type: "switch-dev"
-                },
-                {
-                  id: "showPhoneNumber",
-                  label: t("Phone Number"),
-                  devices: "desktop",
-                  disabled: !isRegister || IS_WP,
-                  type: "switch-dev"
-                },
-                {
-                  id: "showRegisterInfo",
-                  label: t("Register Info"),
-                  devices: "desktop",
-                  disabled: !isRegister || IS_CLOUD,
-                  type: "switch-dev"
-                },
-                {
-                  id: "showLoginLink",
-                  label: getShowLinkLabel(type),
-                  devices: "desktop",
-                  disabled: !isRegister && !isForgot,
-                  type: "switch-dev"
-                },
-                {
-                  id: "showLostPassword",
-                  label: t("Lost Password"),
-                  devices: "desktop",
-                  disabled: !isRegister && !isLogin,
-                  type: "switch-dev"
-                },
-                {
-                  id: "showRegisterLink",
-                  label: t("Register"),
-                  devices: "desktop",
-                  disabled: (!isForgot && !isLogin) || !canRegister,
-                  type: "switch-dev"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: "horizontalAlign",
-      type: "toggle-dev",
-      disabled: true
-    }
-  ];
-};
+      { id: "horizontalAlign", type: "toggle-dev", disabled: true }
+    ];
+  };

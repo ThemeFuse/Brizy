@@ -1,10 +1,10 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
   const { hex: labelColorHex } = getOptionColorHexByPalette(
     dvv("labelColorHex"),
     dvv("labelColorPalette")
@@ -68,20 +68,8 @@ export function getItems({ v, device }) {
       devices: "desktop",
       options: [
         {
-          id: "color",
-          type: "tabs-dev",
-          tabs: [
-            {
-              id: "labelColor",
-              label: t("Label"),
-              options: [
-                {
-                  id: "labelColor",
-                  type: "colorPicker-dev"
-                }
-              ]
-            }
-          ]
+          id: "labelColor",
+          type: "colorPicker-dev"
         }
       ]
     },
@@ -90,21 +78,9 @@ export function getItems({ v, device }) {
       type: "toggle-dev",
       position: 100,
       choices: [
-        {
-          icon: "nc-text-align-left",
-          title: t("Align"),
-          value: "left"
-        },
-        {
-          icon: "nc-text-align-center",
-          title: t("Align"),
-          value: "center"
-        },
-        {
-          icon: "nc-text-align-right",
-          title: t("Align"),
-          value: "right"
-        }
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
       ]
     }
   ];

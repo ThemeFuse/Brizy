@@ -1,7 +1,13 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 
-export function getItems({ v }) {
-  const disabledZoomPlaySize = v.coverImageSrc
+export function getItems({ v, device }) {
+  const dvv = (key) => defaultValueValue({ v, key, device });
+
+  const coverImageSrc = dvv("coverImageSrc");
+  const type = dvv("type");
+
+  const disabledZoomPlaySize = coverImageSrc
     ? []
     : [
         {
@@ -15,7 +21,7 @@ export function getItems({ v }) {
           disabled: true
         }
       ];
-  const disabledPlayIconColor = v.coverImageSrc
+  const disabledPlayIconColor = coverImageSrc
     ? {}
     : {
         id: "toolbarColor",
@@ -96,9 +102,9 @@ export function getItems({ v }) {
                   type: "inputText-dev",
                   devices: "desktop",
                   placeholder:
-                    v.type === "youtube"
+                    type === "youtube"
                       ? t("Youtube")
-                      : v.type === "vimeo"
+                      : type === "vimeo"
                       ? t("Vimeo")
                       : ""
                 }
@@ -113,21 +119,21 @@ export function getItems({ v }) {
                   label: t("Controls"),
                   type: "switch-dev",
                   devices: "desktop",
-                  disabled: v.type === "vimeo"
+                  disabled: type === "vimeo"
                 },
                 {
                   id: "branding",
                   label: t("Branding"),
                   type: "switch-dev",
                   devices: "desktop",
-                  disabled: v.controls !== "on" || v.type !== "youtube"
+                  disabled: dvv("controls") !== "on" || type !== "youtube"
                 },
                 {
                   id: "intro",
                   label: t("Intro"),
                   type: "switch-dev",
                   devices: "desktop",
-                  disabled: v.type !== "vimeo"
+                  disabled: type !== "vimeo"
                 },
                 {
                   id: "loop",
@@ -154,7 +160,7 @@ export function getItems({ v }) {
                   type: "number-dev",
                   label: t("End"),
                   devices: "desktop",
-                  disabled: v.type === "vimeo",
+                  disabled: type === "vimeo",
                   config: {
                     size: "short",
                     max: 99999,
