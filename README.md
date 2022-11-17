@@ -1,4 +1,5 @@
 # Brizy - Page Builder
+
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.1.1<br>
@@ -7,46 +8,64 @@ Stable tag: 2.4.14<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-A page builder that is fast & easy, Brizy is a next-gen website builder that anyone can use. No designer or developer skills required. Once you go Brizy, nothing else feels easy!
+A page builder that is fast & easy, Brizy is a next-gen website builder that anyone can use. No designer or developer
+skills required. Once you go Brizy, nothing else feels easy!
 
-More details on: https://brizy.io 
+More details on: https://brizy.io
 
 ## Description
 
 https://vimeo.com/263343966
 
-A page builder that is fast & easy, [Brizy](https://brizy.io/) is a next-gen website builder that anyone can use. No designer or developer skills required. Once you go Brizy, nothing else feels easy!
+A page builder that is fast & easy, [Brizy](https://brizy.io/) is a next-gen website builder that anyone can use. No
+designer or developer skills required. Once you go Brizy, nothing else feels easy!
 
 ## Highlights
 
 ### Smart & clutter free
-Most page builder crowd all the options for a specific element in remote sidebars, making it hard to focus on the task at hand. Our website builder shows only what's needed, front & centre, close to the element you are editing. 
+
+Most page builder crowd all the options for a specific element in remote sidebars, making it hard to focus on the task
+at hand. Our website builder shows only what's needed, front & centre, close to the element you are editing.
 
 ### Intuitive Drag & Drop
-Moving content elements, columns or rows is a breeze with our intuitive Drag & Drop feature. Just grab and drag them to the desired position and everything will instantly fall into place.
+
+Moving content elements, columns or rows is a breeze with our intuitive Drag & Drop feature. Just grab and drag them to
+the desired position and everything will instantly fall into place.
 
 ### Page Builder Design Elements
+
 Text, buttons, images, icons, video, maps and many more are ready to help you create your page design in a snap.
 
 ### Over 500 pre-made blocks
-Expertly crafted with conversions in mind, the Brizy website builder design kit is a collection of 500+ blocks that will enable you to create websites in minutes.
+
+Expertly crafted with conversions in mind, the Brizy website builder design kit is a collection of 500+ blocks that will
+enable you to create websites in minutes.
 
 ### Over 4000 icons included
-Available in both Outline and Glyph versions, even the most demanding icon needs are covered. Quickly find the icons you're after by filtering through categories or searching by keywords.
+
+Available in both Outline and Glyph versions, even the most demanding icon needs are covered. Quickly find the icons
+you're after by filtering through categories or searching by keywords.
 
 ### Undo / Redo
+
 Don't worry if you make a mistake or delete something that you shouldn't have. With Undo you can get everything back.
 
 ### Global styling
-Ever wanted to change all the similar colors in your web page with a single click? With Brizy page builder, you can! Not only that, but you can change all texts that share the same properties in one go, as well.
+
+Ever wanted to change all the similar colors in your web page with a single click? With Brizy page builder, you can! Not
+only that, but you can change all texts that share the same properties in one go, as well.
 
 ### Mobile Friendly
-Switch instantly to Mobile View mode, where you can make changes that will only apply to these type of devices. This gives you the power to differentiate your page design and optimise for smaller screens.
+
+Switch instantly to Mobile View mode, where you can make changes that will only apply to these type of devices. This
+gives you the power to differentiate your page design and optimise for smaller screens.
 
 ### Cloud auto-save
+
 The progress you're making while building your page is always backed up in the cloud, so you'll never lose your work.
 
 ### Liked Brizy?
+
 - Join our [Facebook Group](https://www.facebook.com/groups/brizy).
 
 ## Bug reports
@@ -54,7 +73,8 @@ The progress you're making while building your page is always backed up in the c
 We strive to make Brizy to be awesome and user friendly, though sometimes it's impossible to avoid bugs.
 A bug means "something is broken" or is not working as it should.
 
-In order to offer you an effective support and fix for an issue, please follow the below guidelines before submitting a bug report:
+In order to offer you an effective support and fix for an issue, please follow the below guidelines before submitting a
+bug report:
 
 #### Explore Known Issues
 
@@ -65,8 +85,8 @@ If your issue has already been reported, great! It will be reviewed in an upcomi
 #### Submitting a Bug Report
 
 You can report the issue via [Issues page](https://github.com/ThemeFuse/Brizy/issues).
-A good bug report includes full details to easily understand the issue you are having and the exact steps to reproduce if it is a bug.
-
+A good bug report includes full details to easily understand the issue you are having and the exact steps to reproduce
+if it is a bug.
 
 ## Installation
 
@@ -84,12 +104,14 @@ A good bug report includes full details to easily understand the issue you are h
 
 ### Installation
 
-1. Install using the WordPress built-in Plugin installer, or Extract the zip file and drop the contents in the `wp-content/plugins/` directory of your WordPress installation.
+1. Install using the WordPress built-in Plugin installer, or Extract the zip file and drop the contents in
+   the `wp-content/plugins/` directory of your WordPress installation.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Go to Pages > Add New
 4. Press the 'Edit with Brizy' button.
 
 ### How to integration in your plugin
+
 Do not use the html from post_content.
 That content is updated only to support some seo plugins.
 
@@ -107,10 +129,6 @@ $headHtml = apply_filters( 'brizy_content', $html->get_head(), Brizy_Editor_Proj
 $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Project::get(), $post->getWpPost() );
 ```
 
-
-
-
-
 ### Terms of Service
 
 [Terms of use](https://brizy.io/terms/)
@@ -119,111 +137,126 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 ## Changelog
 
 ### 2.4.13 - 2022-11-17
+
 * New: Added styles and more options for the Line element
 * New: Added paddings for Counter, Embed, Video, Map, Audio & Countdown elements
-* New: Added Mask option for the Image element 
-* New: Video element new options: Lazy Load, Privacy Mode, Suggested Videos, Muted 
-* Improved: Borders moved from toolbar to sidebar 
-* Improved: Color works under CSS variables in Text CSS classes 
-* Fixed: Column width changed when you click the column resize handle 
-* Fixed: Hover styles for Update toolbar icons 
+* New: Added Mask option for the Image element
+* New: Video element new options: Lazy Load, Privacy Mode, Suggested Videos, Muted
+* Improved: Borders moved from toolbar to sidebar
+* Improved: Color works under CSS variables in Text CSS classes
+* Fixed: Column width changed when you click the column resize handle
+* Fixed: Hover styles for Update toolbar icons
 * Fixed: Border global color on Tabs
-* Fixed: Hover styles on icons from Effects 
+* Fixed: Hover styles on icons from Effects
 * Fixed: Right Click on Row element
 * Fixed: Added new rule matches for current page
 
 ### 2.4.11 - 2022-10-12
+
 * Fixed: Images URL
 
 ### 2.4.10 - 2022-10-11
-* Fixed: Using SVGs in Image element 
+
+* Fixed: Using SVGs in Image element
 * Fixed: Image URLs when using Sync
-* Fixed: Fonts when missing fontFamilyType 
-* Improved: Prefetch for Bunny Fonts 
+* Fixed: Fonts when missing fontFamilyType
+* Improved: Prefetch for Bunny Fonts
 * Improved: Rename Base category to Essentials in element panel
 * Improved: Grid elements moved to the top in the element panel
 
 ### 2.4.9 - 2022-10-03
-* Fixed: Global Blocks rules for the Archive template 
+
+* Fixed: Global Blocks rules for the Archive template
 
 ### 2.4.8 - 2022-09-28
+
 * Fixed: The crash when the WooComerce plugin is disabled.
 
 ### 2.4.7 - 2022-09-28
-* Improved: Get fonts from https://fonts.bunny.net instead of https://fonts.googleapis.com to address GDPR font issues  
-* Improved: Saved blocks pagination 50 blocks 
-* Improved: Deleting request when you delete saved block or saved layout 
-* Improved: Removed Math.random for security 
+
+* Improved: Get fonts from https://fonts.bunny.net instead of https://fonts.googleapis.com to address GDPR font issues
+* Improved: Saved blocks pagination 50 blocks
+* Improved: Deleting request when you delete saved block or saved layout
+* Improved: Removed Math.random for security
 * Fixed: Map - popup is not closed when the cover on map is clicked
-* Fixed: Parallax in responsive mode 
+* Fixed: Parallax in responsive mode
 * Fixed: Menu element - Icon size option
 * Fixed: Product Archive template shows posts instead of products
 * Fixed: Wp Optimize plugin compatibility
 
 ### 2.4.6 - 2022-09-17
-* New: Infinite animation option 
-* New: Added select All option for custom post types in Global blocks conditions 
+
+* New: Infinite animation option
+* New: Added select All option for custom post types in Global blocks conditions
 * Fixed: Lag when you select colors in Global styles
-* Fixed: Added from category display condition for global blocks 
-* Fixed: Made mouse pointer when you hover the color option on block dividers 
-* Fixed: Undo and Redo in Text element 
-* Fixed: Empty column crash on Editor role  
+* Fixed: Added from category display condition for global blocks
+* Fixed: Made mouse pointer when you hover the color option on block dividers
+* Fixed: Undo and Redo in Text element
+* Fixed: Empty column crash on Editor role
 * Fixed: Mute video when you set the cover option in Video element
-* Fixed: Divider on Section 
-* Fixed: Parallax in responsive views 
+* Fixed: Divider on Section
+* Fixed: Parallax in responsive views
 * Fixed: Enable update button on undo or redo
-* Fixed: Diacritics are converted to unicode characters 
+* Fixed: Diacritics are converted to unicode characters
 * Fixed: Image crashing when clicking the resize pointers
-* Fixed: Counter style 2-3-4 in Story 
-* Fixed: Countdown height in Story 
+* Fixed: Counter style 2-3-4 in Story
+* Fixed: Countdown height in Story
 * Fixed: Form submit button in Story
-* Fixed: Button border in Story 
+* Fixed: Button border in Story
 * Fixed: Accordion - border-radius on tags
-* Fixed: Tabs - Title in responsive views 
-* Fixed: Carousel - Working with text breaks the carousel 
-* Fixed: Fast scroll on Blocks that have Parallax option on 
-* Improved: UI improvement to accommodate long text translation 
-* Improved: Minify global typography CSS variables 
+* Fixed: Tabs - Title in responsive views
+* Fixed: Carousel - Working with text breaks the carousel
+* Fixed: Fast scroll on Blocks that have Parallax option on
+* Improved: UI improvement to accommodate long text translation
+* Improved: Minify global typography CSS variables
 * Improved: Root window referrer request
 * Improved: Color picker gradient issues
 * Improved: LeftSidebar icon position in dropdown menu
 * Improved: Added First Name and Last Name in Authorization form with Cloud when you save blocks layouts
 
 ### 2.4.5 - 2022-08-30
+
 * Fixed: Mute on video with cover
 * Fixed: Recaptcha keys not saving in the contact form
 
 ### 2.4.4 - 2022-08-16
+
 * Fixed: Copy/Paste RichText
 * Fixed: Global Style LetterSpacing
 
 ### 2.4.3 - 2022-07-20
+
 * New: New Templates
 
 ### 2.4.2 - 2022-06-15
+
 * Fixed: Template Conditions
 * Fixed: Polylang fix home url in breadcrumbs
-* Fixed: Remove logs for cropping images 
-* Fixed: Escape the script contents for non adminstrators users. This vulnerability was discovered by Vishnupriya Ilango of Fortinets FortiGuard Labs
-* Fixed: Fix autoupdate of the pro version, added an admin notice in the plugins list page when a major update is available
+* Fixed: Remove logs for cropping images
+* Fixed: Escape the script contents for non adminstrators users. This vulnerability was discovered by Vishnupriya Ilango
+  of Fortinets FortiGuard Labs
+* Fixed: Fix autoupdate of the pro version, added an admin notice in the plugins list page when a major update is
+  available
 
 ### 2.4.1 - 2022-06-02
+
 * Improved: Saved blocks lazy load
 * Improved: Performance on columns drag and drop
 * Improved: Performance on videos and images resize
 * Improved: Performance on column resize
-* Improved: Section padding resize 
-* Fixed: Column issue when is inside a Tab element 
-* Fixed: Featured image on columns hover did not inherit image from normal state 
-* Fixed: The right sidebar on Tab element was messed up 
-* Fixed: Endless spinning on the Video element 
-* Fixed: Block margin in px and % 
+* Improved: Section padding resize
+* Fixed: Column issue when is inside a Tab element
+* Fixed: Featured image on columns hover did not inherit image from normal state
+* Fixed: The right sidebar on Tab element was messed up
+* Fixed: Endless spinning on the Video element
+* Fixed: Block margin in px and %
 * Fixed: Block border radius on color hover
-* Fixed: YouTube header script 
-* Fixed: Do not render PRO elements in preview 
+* Fixed: YouTube header script
+* Fixed: Do not render PRO elements in preview
 * Fixed: Added controls option for Vimeo videos
 
 ### 2.4.0 - 2022-05-18
+
 * New: Counter width changing the location in color section of toolbar
 * New: Possibility to add URL for video like .mp4 URLs
 * New: Added block bg. options: auto, contain, cover and bg. repeat
@@ -245,9 +278,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * New: Added reorder option to accordion
 * New: Moved entrance animation effects functionality in right sidebar
 * New: Added vh and em suffixes to Spacer
-* New: Add new style blending mode for certain elements 
+* New: Add new style blending mode for certain elements
 * New: Added Column width option
-* New: Added status badge in the block display conditions popup 
+* New: Added status badge in the block display conditions popup
 * New: Added support for placeholders in email templates
 * Improved: Added new shortcut Ctrl+M opens Styling right panel
 * Improved: Added new shortcut Ctrl + K opens Effects right panel
@@ -291,85 +324,94 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Change the Pages group name to Main Content in template rule form
 
 ### 2.3.37 - 2022-05-05
+
 * Fixed: Section dividers on Firefox
 * Fixed: Tab background color on mobile responsive view
 * Fixed: Unexpected token h in JSON at position 0 error when saving a layout
 
 ### 2.3.36 - 2022-05-03
-* Improved: Improved performance when you have a lot of columns on the page 
+
+* Improved: Improved performance when you have a lot of columns on the page
 * Improved: Improved performance when you change global styling
 * Improved: Improved performance when you copy paste styles
-* Fixed: Mouse cursor when hovering the UI on the left sidebar 
-* Fixed: Moved layout Ekstra to PRO 
-* Fixed: Import Blocks button in Safari  
-* Fixed: Buttons conflicts with GTM 
+* Fixed: Mouse cursor when hovering the UI on the left sidebar
+* Fixed: Moved layout Ekstra to PRO
+* Fixed: Import Blocks button in Safari
+* Fixed: Buttons conflicts with GTM
 
 ### 2.3.35 - 2022-04-21
+
 * Fixed: Text blink
 * Fixed: Section Dividers
 
 ### 2.3.34 - 2022-04-20
-* New: Added hover Transition for elements: Accordion, ProgressBar and Tabs 
-* New: Added cover image option for the Map element 
+
+* New: Added hover Transition for elements: Accordion, ProgressBar and Tabs
+* New: Added cover image option for the Map element
 * Fixed: Cover images not displaying in Playlist element
 * Fixed: YouTube loop when you set start-end options
 * Fixed: Changed size for Image option upload field
 * Fixed: Text element blinks when changing align options
-* Fixed: Layout Carwash was changed to PRO 
-* Fixed: Layout Scooter Rental was changed to PRO 
-* Fixed: Active border size for element Tabs 
-* Fixed: Style 3 for Tabs element 
+* Fixed: Layout Carwash was changed to PRO
+* Fixed: Layout Scooter Rental was changed to PRO
+* Fixed: Active border size for element Tabs
+* Fixed: Style 3 for Tabs element
 * Fixed: Center align option for arrows in the Accordion element
 * Fixed: Cover image repeat issue
-* New: Auto install for Brizy Starter Templates 
+* New: Auto install for Brizy Starter Templates
 * Fixed: Fixed attachment post type exclusion
 * Fixed: Remove attachment post type from post type list from editor config
-* Fixed: Lost global colour styling 
+* Fixed: Lost global colour styling
 * Fixed: Include inline JS scripts depending on their priority
-* Fixed: Preventing directory traversal on get icon 
+* Fixed: Preventing directory traversal on get icon
 
 ### 2.3.33 - 2022-03-10
-* New: Import and Export Saved Blocks, Popups, Layouts 
+
+* New: Import and Export Saved Blocks, Popups, Layouts
 * New: Show progress on story when autoplay is on
-* Improved: Increased the number of history snapshots from 10 to 20. Happy Ctrl-Z-ing 
-* Improved: SEO for Video element 
+* Improved: Increased the number of history snapshots from 10 to 20. Happy Ctrl-Z-ing
+* Improved: SEO for Video element
 * Improved: Plugin Cross-Site Scripting
 * Fixed: Link to slide in Web Stories
 * Fixed: Undo and redo in Text element
 * Fixed: Text styles after pasting text from outside the builder
 * Fixed: Random global blocks are not saved in Global block list
-* Fixed: Posts include and exclude select 
+* Fixed: Posts include and exclude select
 * Fixed: Style for Counter element in Firefox
 * Fixed: Vimeo video background loop
 * Fixed: Countdown restart after finished
 
 ### 2.3.32 - 2022-03-04
+
 * Fixed: Security fix
 
 ### 2.3.31 - 2022-03-02
-* New: Collaboration tool option in left sidebar 
-* Improved: Changed max value for counter element 
-* Improved: Selecting dropdown options in Post filter option 
+
+* New: Collaboration tool option in left sidebar
+* Improved: Changed max value for counter element
+* Improved: Selecting dropdown options in Post filter option
 * Improved: Cache for dynamic content images
-* Improved: Performance on extracting images, avoid creating duplicate of images when the sizes are bigger than image, removed functions and all data sent to editor regards to download_images from s3
+* Improved: Performance on extracting images, avoid creating duplicate of images when the sizes are bigger than image,
+  removed functions and all data sent to editor regards to download_images from s3
 * Improved: SQL query for attachment id
 * Improved: Optimize save global blocks
 * Fixed: Avoid load duplicates images in the editor
 * Fixed: Original image width and height
-* Fixed: Width for sidebar custom attributes 
-* Fixed: Links on buttons when global blocks are missing 
+* Fixed: Width for sidebar custom attributes
+* Fixed: Links on buttons when global blocks are missing
 * Fixed: Gradient color for buttons
-* Fixed: External Popups font assets 
-* Fixed: Form hidden field send only label 
-* Fixed: Premade popup designs available only in PRO 
-* Fixed: View as for membership roles in builder 
-* Fixed: Separators in responsive and hamburger dropdowns in the left sidebar 
-* Fixed: Accordion active tags 
+* Fixed: External Popups font assets
+* Fixed: Form hidden field send only label
+* Fixed: Premade popup designs available only in PRO
+* Fixed: View as for membership roles in builder
+* Fixed: Separators in responsive and hamburger dropdowns in the left sidebar
+* Fixed: Accordion active tags
 * Fixed: Hide go to dashboard for reseller partners
 * Fixed: Removed dependency asset storage of asset proxy processor
 * Fixed: Custom fonts endpoint
 
 ### 2.3.30 - 2022-02-09
+
 * Improved: Form element - added Loading animation to button after submit
 * Fixed: Form element - Hidden field not working correctly
 * Fixed: Video element - gets muted after cover image is added
@@ -378,12 +420,13 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Tabs element - duplicate options in right sidebar on responsive views
 * Fixed: Blocks get reordered when only global blocks exist in page
 * Fixed: Menu element - jumping on hover when border opacity is 0 in normal mode
-* Fixed: Columns and Rows - image background hover not working 
-* Fixed: Global blocks conditions in custom post types 
+* Fixed: Columns and Rows - image background hover not working
+* Fixed: Global blocks conditions in custom post types
 * Fixed: Section Background Video error when loop is enabled
 * Fixed: Slider and Carousel element - dots not positioned correctly
 
 ### 2.3.29 - 2022-02-03
+
 * Fixed: Font url validation
 * Fixed: Do shortcode on render brizy content of the shop page
 * Fixed: Brizy and Complianz – GDPR/CCPA Cookie Consent plugin incompatibility
@@ -393,9 +436,11 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Allow br tags on render lead list in admin dashboard
 
 ### 2.3.28 - 2022-01-17
+
 * Fixed: Color and align for text element
 
 ### 2.3.27 - 2022-01-14
+
 * New: Added border, background-color and shadow for content
 * New: Added Image width px unit for svg and gif type
 * Improved: XSS in RichText and all Links
@@ -405,18 +450,22 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Fatal error on duplicate page with wpml, restore asset url by wp option siteurl
 
 ### 2.3.26 - 2022-01-10
+
 * Improved: Removed icon ids
 * Fixed: Video with cover was not playing on click
 * Fixed: Upload form field could not be edited if placeholder is off
 * Fixed: Form error messages
 * Fixed: Added compatibility with the plugin Perfmatters
 * Fixed: On export templates check if the license key is valid
-* Fixed: Tell the editor if the current user is admin 
-* Fixed: Do not load scripts in header and footer when they are build it with Astra Pro and template is brizy blank template
+* Fixed: Tell the editor if the current user is admin
+* Fixed: Do not load scripts in header and footer when they are build it with Astra Pro and template is brizy blank
+  template
 * Fixed: WPML Menu switcher is missing from Brizy pages
-* Fixed: Escape the script contents for non adminstrators users (This vulnerability was discovered by Vishnupriya Ilango of Fortinets FortiGuard Labs)
+* Fixed: Escape the script contents for non adminstrators users (This vulnerability was discovered by Vishnupriya Ilango
+  of Fortinets FortiGuard Labs)
 
 ### 2.3.25 - 2021-12-20
+
 * Fixed: Image size select
 * Fixed: Search by layout name
 * Fixed: Custom css characters transformed to unicode in preview
@@ -424,11 +473,13 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Increased the returned post count on brizy_get_pots
 
 ### 2.3.24 - 2021-12-13
+
 * Fixed: Included all composer files
 
 ### 2.3.23 - 2021-12-13
+
 * Fixed: Switching weights on custom uploaded fonts
-* Fixed: Select dropdown width on Countdown 
+* Fixed: Select dropdown width on Countdown
 * Fixed: Responsive corrections in Seo Agency layout
 * Fixed: Added brizy_attachment_uid to attachments
 * Fixed: Show WooCommerce notices on templates for products
@@ -436,111 +487,121 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Improved: Need help URLs in Form app integrations
 
 ### 2.3.22 - 2021-12-02
+
 * Fixed: Global blocks conditions
 * Fixed:  Black stripes after image crop
 
 ### 2.3.21 - 2021-11-30
+
 * New: Size options when you upload .svg and .gifs files in Image element
 * Fixed: Remove rel attributes for style to solve some plugin conflicts
-* Fixed: Button align and width on Login element 
-* Fixed: Labels correspond with input id in the Form element 
+* Fixed: Button align and width on Login element
+* Fixed: Labels correspond with input id in the Form element
 * Fixed: 505 error when you use extra large retina images
-* Fixed: Text alignment when it is in a list for certain fonts 
+* Fixed: Text alignment when it is in a list for certain fonts
 * Fixed: Color for bullet points
 * Fixed: Removed the form placeholder name from dropdowns on the front end
 * Fixed: Form pattern attribute
 * Fixed: Individual IDs and CSS classes for Icons and Buttons
 * Fixed: Decode html entity on export leads
 * Fixed: Blurred images with TranslatePress plugin installed
-* Fixed: Added display block by logged-in users 
-* Fixed: Show in preview blocks by role even the user has the role of administrator
+* Fixed: Added display block by logged-in users* Fixed: Show in preview blocks by role even the user has the role of
+  administrator
 * Fixed: Syntax error in CSS when you have custom CSS
 * Improved: Drag and Drop performance
 
 ### 2.3.20 - 2021-11-10
+
 * Improved: Added system check at the plugin startup
 * Fixed: Black line on resized images
 * Fixed:  Avoid using the WP image functions for getting image sizes
 
 ### 2.3.19 - 2021-11-09
+
 * New: Select original image in the Image Element
-* New: Select original image for the dynamic image element 
+* New: Select original image for the dynamic image element
 * Improved: Updated the Google fonts library
 * Fixed: Google fonts search option was not working correctly
 * Fixed: Image is cut in full height option
-* Fixed: The fonts no longer intersect for element tabs 
+* Fixed: The fonts no longer intersect for element tabs
 * Fixed: End option on Vimeo videos
 * Fixed: Border Shadow options display
 * Fixed: Border top on tabs in responsive
-* Fixed: Media file upload position 
+* Fixed: Media file upload position
 * Fixed: Counter goes only to 100 in preview
 * Fixed: Text sometime data-href is empty (Internal 500 error on the front-end)
 * Fixed: Select drop-down options in the contact form are not showing the selected font
-* Fixed: Allowing redirects on loading our iframe, so you can use theme default templates 
+* Fixed: Allowing redirects on loading our iframe, so you can use theme default templates
 
 ### 2.3.18 - 2021-10-18
+
 * New: 3 design layout packs
 * Improved: Added autoplay and loop options for the Video element
-* Improved: Drag and Drop between columns 
+* Improved: Drag and Drop between columns
 * Improved: Compatibility WP Ultimo plugin. Edit brizy pages with remapping domain
 * Improved: Compatibility with Page Optimize plugin
 * Improved: Moved HTML Tag option back on the main toolbar on Text element
-* Fixed: PostTitle added title hover transition 
-* Fixed: Contact form text arrangement in dropdown 
+* Fixed: PostTitle added title hover transition
+* Fixed: Contact form text arrangement in dropdown
 * Fixed: Contact form dropdown border
-* Fixed: Nested accordions collapse issue 
+* Fixed: Nested accordions collapse issue
 * Fixed: Alignment in Login element
-* Fixed: Fonts for Tabs 
+* Fixed: Fonts for Tabs
 * Fixed: Styles issues for nested tabs
 * Fixed: Styles issues for nested accordions
-* Fixed: Vimeo bg video starting with a delay 
-* Fixed: Nested accordions animation 
-* Fixed: Displays negative values for the Counter element 
+* Fixed: Vimeo bg video starting with a delay
+* Fixed: Nested accordions animation
+* Fixed: Displays negative values for the Counter element
 * Fixed: Hexa color code in gradient background for Blocks
-* Fixed: Countdown styles size and color 
+* Fixed: Countdown styles size and color
 * Fixed: Empty links in Text element in preview
-* Fixed: Negative spread values for shadows 
+* Fixed: Negative spread values for shadows
 * Fixed: Double options in right sidebar for certain elements in responsive views
 * Fixed: Images are not rendered on a non default language URL
 * Fixed: Use Brizy_Public_AssetProxy::get_mime instead of native function
 
-
 ### 2.3.17 - 2021-09-21
+
 * Fixed: Revert optimization for assets, conflicts with plugins
 * Fixed: Recompile popups on update
 
 ### 2.3.16 - 2021-09-16
-* New: Added vertical align for icon in IconBox 
-* New: Import and Export for Saved blocks 
+
+* New: Added vertical align for icon in IconBox
+* New: Import and Export for Saved blocks
 * Improved: Page loading speed on preview when you have custom fonts on your page
-* Fixed: CSS with theme Zita for wooPrice 
+* Fixed: CSS with theme Zita for wooPrice
 * Fixed: Popups on Text links
 * Fixed: Block screenshots not looking properly in Chrome
-* Fixed: Text element with Google translate extensions 
-* Fixed: Image light-box 
+* Fixed: Text element with Google translate extensions
+* Fixed: Image light-box
 * Fixed: False positives malware File Found notifications
 * Fixed: Some bugs with meta brizy_post_uid on attachments
 * Fixed: Cache related issue when the page appeared broken in preview
 
 ### 2.3.15 - 2021-09-09
-* Fixed: Broken home page url 
+
+* Fixed: Broken home page url
 * Fixed: Asset manager for pages that contains popups
 
 ### 2.3.14 - 2021-09-06
+
 * Fixed: Icons in the Tabs element
 * Fixed: Cover images for the Video element
-* Fixed: CSS in Countdown element 
-* Improved: Brizy works better with caching plugins 
-* Fixed: Some default options values in the builder 
+* Fixed: CSS in Countdown element
+* Improved: Brizy works better with caching plugins
+* Fixed: Some default options values in the builder
 
 ### 2.3.13 - 2021-08-26
+
 * Fixed:  Editor for Internal Popup
 
 ### 2.3.12 - 2021-08-24
+
 * New: Hide Section icon when not in focus on tablet and mobile
 * Fixed: Anchor scroll when block not found
 * Fixed: Form multi-select close
-* Fixed: Richtext styles 
+* Fixed: Richtext styles
 * Fixed: Global blocks in page compiler error
 * Fixed: Deprecate function is_user_allowed from Brizy_Editor class
 * Fixed: Load popup on non Brizy pages
@@ -552,9 +613,11 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Load all script using wp enqueue functions
 
 ### 2.3.11 - 2021-08-18
+
 * Fixed: Recompile pages when the Pro plugin is upgraded or disabled
 
 ### 2.3.10 - 2021-08-17
+
 * Fixed: Dash separated value name for custom attributes
 * Fixed: Cache assets on Brizy websites
 * Fixed: Added the version of the plugin at the end of the included scripts
@@ -563,19 +626,23 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Enqueue scripts through WordPress
 
 ### 2.3.9 - 2021-08-06
+
 * Fixed: Replace global style when import some template
 * Fixed: Global sticky header
 * Fixed: Assets on preview
 
 ### 2.3.8 - 2021-08-05
+
 * Fixed: Composer versions
 
 ### 2.3.7 - 2021-08-05
+
 * Fixed: Story contact form element in preview
 * Fixed: Typography changes on mobile for the Text element
 * Fixed: Broken WooCommerce Products template in preview
 
 ### 2.3.6 - 2021-08-04
+
 * New: Added Free blocks category in sidebar when you add blocks
 * Improved: Updated Google fonts list
 * Improved: Always show Replace global styles checkbox, when you add layouts
@@ -585,6 +652,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Archive and Posts element for category pages
 
 ### 2.3.5 - 2021-07-26
+
 * New: Added option to allow json file upload for the Lottie element
 * Improved: Changed Protected Page element to Protected
 * Improved: Back to Login instead of Login on the Login element
@@ -595,21 +663,26 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: HTML Tag changes style of the title for Accordion element
 
 ### 2.3.4 - 2021-07-23
+
 * Fixed: Brizy and Job Manager WP plugin incompatibility render single job template
 * Fixed: Logger initialization
 
 ### 2.3.3 - 2021-07-21
+
 * Fixed: Compatibility with old Brizy versions
 
 ### 2.3.2 - 2021-07-20
+
 * Fixed: Compile popup if it was not compiled by the current plugin
 * Fixed: Check the assets content before sending to asset grouping library
 
 ### 2.3.1 - 2021-07-20
-* Fixed: Global styles reset for text 
+
+* Fixed: Global styles reset for text
 * Fixed: Fatal Error cased by loading incompatible PRO plugin versions
 
 ### 2.3.0 - 2021-07-19
+
 * New: All PRO elements are now visible but locked
 * New: Added an API action to obtain the post taxonomies
 * New: Stories
@@ -625,7 +698,8 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Improved: Global Block Conditions
 * Improved: Styles for when you Copy/Past text in the Text element
 * Improved: HTML tag option for Text was moved in the right sidebar
-* Improved: Added links to registration and login, fixed spacing, and added a form registration message for the Login element
+* Improved: Added links to registration and login, fixed spacing, and added a form registration message for the Login
+  element
 * Improved: Google fonts performance optimizations (prefetch Google fonts for faster loading)
 * Fixed: Compile page in the back-end when Rank Math plugin is installed
 * Fixed: Save user roles when adding new user
@@ -653,14 +727,16 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Loading incompatible PRO plugin versions
 
 ### 2.2.20 - 2021-07-13
+
 * New: error messages in Form element for Number and File input
-* Fixed: change Row background for Section slider 
+* Fixed: change Row background for Section slider
 * Fixed: styles for Table element
 * Fixed: button Drag and Drop when position is set to fixed or absolute
 * Fixed: display rules popup for global blocks
 * Fixed: Miscellaneous Editor fixes
 
 ### 2.2.19 - 2021-07-07
+
 * Improved: Project update project if was changed
 * Improved: Added new name for layouts tab
 * Fixed: Dynamic content UI
@@ -672,21 +748,25 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Membership View as Roles Order
 * Fixed: Changed design buttons admin
 
-
 ### 2.2.18 - 2021-06-28
+
 * Fixed:  Update the post content on compile page
 
 ### 2.2.17 - 2021-05-24
+
 * New: Added 42 new layout packs and marketing landing pages
 
 ### 2.2.16 - 2021-05-18
+
 * Fixed: Anchor scroll in menu
 * Fixed: Run migrations after the project data is created
 
 ### 2.2.15 - 2021-05-14
+
 * Fixed: html encode for the post content
 
 ### 2.2.14 - 2021-05-13
+
 * New: Added file upload to Post Title & excerpt
 * New: Added spacing option for the Icon Box element on responsive
 * Improved: Translate global blocks conditions
@@ -706,11 +786,12 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Hide draft pages for non logged users
 * Fixed: Update translations
 
-
 ### 2.2.13 - 2021-04-14
+
 * Fixed: Text spacing
 
 ### 2.2.12 - 2021-04-12
+
 * Improved: Removed postContent when edit post
 * Fixed: About Brizy from left sidebar white label issue
 * Fixed: Woocomerce minors bugs
@@ -721,10 +802,11 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Facebook minors bugs
 
 ### 2.2.11 - 2021-04-08
+
 * New: Added ability to change tags for post content and post excerpt
 * New: Added Brizy_Editor_CompiledHtml::getPageContent
 * Improved: Added swipe to Carousel element and for block sliders
-* Improved: Icon for Post element 
+* Improved: Icon for Post element
 * Fixed: Do not translate Company Name when there is white label
 * Fixed: Suppress language when wpml media translation is active on extracting our fonts
 * Fixed: Brizy template is not applying for Password-Protected pages
@@ -738,16 +820,18 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Anchor scroll
 * Fixed: Global Blocks Screenshots
 * Fixed: Minimum size for Spacer element
-* Fixed: Membership placement 
+* Fixed: Membership placement
 * Fixed: Post Content Rich-text element
 
 ### 2.2.10 - 2021-03-23
+
 * Fixed: Remove product_visibility taxonomy from template conditions
 * Fixed: Compile page in the admin panel if the page is created with Brizy
 * Fixed: Save focal point on post save
 * Fixed: Sorry, Brizy could not load the content on blog page
 
 ### 2.2.9.1 - 2021-03-09
+
 * New: Form input file label is now editable
 * Improved: Sections with Membership enabled now have an indicator icon
 * Fixed: Some images could experience blurriness
@@ -789,6 +873,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: WooCommerce Add to Cart CSS
 
 ### 2.2.8 - 2021-02-16
+
 * New: Membership functionality
 * New: Accordion content animation
 * New: IconText icon link
@@ -799,23 +884,26 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Embed CSS
 
 ### 2.2.7 - 2021-02-02
+
 * New: Added animation option for Accordion content
-* Improved: Code refactoring and optimization 
+* Improved: Code refactoring and optimization
 * Fixed: Custom Video CSS option
 * Fixed: Images with absolute position no longer blurry
-* Fixed: Get taxonomies bug 
+* Fixed: Get taxonomies bug
 * Fixed: Removed duplicate dynamic content call
 * Fixed: Restore template from trash
 * Fixed: Avoid cloud call crash
 
-
 ### 2.2.6 - 2021-01-14
+
 * Fixed: Global Popups
 
 ### 2.2.5 - 2021-01-13
+
 * Fixed: Insert Brizy buttons in the editor
 
 ### 2.2.4 - 2021-01-12
+
 * Fixed: WOOCart toolbar activating from beneath the backdrop
 * Fixed: Sections width on tablet and mobile
 * Fixed: Global blocks
@@ -840,36 +928,45 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * New: Added WooCommerce default Products Page to Pages element
 
 ### 2.2.3 - 2020-12-10
+
 * Fixed: Compatibility with WP 5.6
 
 ### 2.2.2 - 2020-12-09
+
 * Fixed: Compatibility with WP 5.6
 
 ### 2.2.1 - 2020-12-07
+
 * Improved: Templates images
 * Updated: Google Fonts
 * Fixed: Ping request
 
 ### 2.2.0 - 2020-12-03
+
 * New: 7 Pre-made Layouts and Landing pages
 * Fixed: Image with included SVG source
 * Improved: Reduced plugin size
 
 ### 2.1.5 - 2020-11-13
+
 * Fixed: Product single page
 
 ### 2.1.4 - 2020-11-12
+
 * Fixed: Popup scroll inner content
 * Fixed: GlobalBlocks revision
 
 ### 2.1.3 - 2020-11-11
+
 * Fixed: EasyWp images
 * Fixed: Error in abstract shortcode
 
 ### 2.1.2 - 2020-11-10
+
 * Fixed: Form failing to submit when having multiple Text field
 
 ### 2.1.0 - 2020-11-05
+
 * Improved: Reduced the number of divs at preview
 * Improved: Reduced the size of JavaScript at preview
 * Improved: reCAPTCHA is now displayed after the user submits the form instead of at load
@@ -877,9 +974,11 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: the_content/placeholder replace recursion
 
 ### 2.0.16 - 2020-10-29
+
 * Fixed: Page content extractor
 
 ### 2.0.15 - 2020-10-28
+
 * Improved: PlainText editor (used in Button, Accordion, Tabs, etc) now accepts copy / paste
 * Improved: The Sync with Brizy Cloud Popup is now less annoying
 * Improved: Login element icon
@@ -891,6 +990,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Color toolbar option css issues
 
 ### 2.0.14 - 2020-10-13
+
 * New: Audio element loop option
 * Improved: Video element will be lazy loaded in browsers that support it
 * Improved: Menu element icon
@@ -902,28 +1002,34 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Form element sometimes working improperly on failed submits
 * Fixed: Icons CSS issues caused by the Twenty Twenty theme
 * Fixed: Scroll on WP Media Gallery not working properly
-* Fixed: Removed regex matching for head and body. There are cases when we hit the backtrack limit configured in php.ini.
+* Fixed: Removed regex matching for head and body. There are cases when we hit the backtrack limit configured in
+  php.ini.
 
 ### 2.0.13 - 2020-09-23 ###
+
 * Fixed: Ignore old blocks on sync
 * Fixed: Main editor page html syntax
 
 ### 2.0.12 - 2020-09-16 ###
+
 * Fixed: Form submission action bug
 
 ### 2.0.10 - 2020-09-14 ###
+
 * Fixed: Cloud sync
 
 ### 2.0.9 - 2020-09-11 ###
+
 * Fixed: Blured images
 
 ### 2.0.8 - 2020-09-11 ###
+
 * Fixed: Video on Cover in Pop-up
 * Fixed: Make global to normal
 * Fixed: Embed element in Popup
 * Fixed: Icons in preivew
 * Fixed: Form radio and checkbox
-* Fixed: Responsive for prompt form integrations 
+* Fixed: Responsive for prompt form integrations
 * Fixed: Published Global Popup
 * Fixed: Button margin
 * Fixed: GlobalBlocks in preview
@@ -933,12 +1039,14 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed:  Fixed template rule form
 
 ### 2.0.7 - 2020-08-25 ###
+
 * Fixed: The white label support url
 * Fixed: Edit With Brizy is not displayed when using Gutenberg
 * Fixed: The creation of the uid when a revision is provided
 * Fixed: Mail template has only one value in all placeholders
 
 ### 2.0.6 - 2020-08-18 ###
+
 * Fixed: Screenshots not working with Embed with scripts in it
 * Fixed: Memory issue that was causing a few projects to not work at preview
 * Fixed: Duplicate button not being shown for slider inside a global block
@@ -959,15 +1067,18 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Post Info and #author render the display_name of the user
 
 ### 2.0.5 - 2020-08-07 ###
+
 * Fixed: Preview, clean empty id
 * Fixed: Conflict between Menu and Lottie
 * Fixed: Templates rules for white label enabled sites Fixed support URL-s filters
 * Fixed: Image optimization PHP version fix
 
 ### 2.0.4 - 2020-08-06 ###
+
 * Fixed: Support URL filters
 
 ### 2.0.3 - 2020-08-06 ###
+
 * Fixed: Sync process bugs
 * Fixed: Allow to continue the sync process if there are block with deleted assets
 * Fixed: Recaptcha integration and leads saving
@@ -983,13 +1094,15 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Icons many requests, CORS CDN
 
 ### 2.0.2 - 2020-07-31 ###
+
 * Fixed: Plugin version
 
 ### 2.0.1 - 2020-07-31 ###
-* Fixed: Declared  property
+
+* Fixed: Declared property
 * Fixed: Removed code that does not work in older PHP version
-* Fixed: Deleted unnecessary files from all dependencies we use extended the Image element (added fixed px size) 
-* Improved: Plugin loading 
+* Fixed: Deleted unnecessary files from all dependencies we use extended the Image element (added fixed px size)
+* Improved: Plugin loading
 * Improved: Sent post directly in the get_the_content post content element
 * Improved: Increased the size limit of Image population to 5000px
 * Improved: Enabled shape option on responsive for all Sections
@@ -1009,15 +1122,19 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Missing translation ready strings
 
 ### 1.0.126 - 2020-06-03 ###
+
 * Fixed: Security fixes
 
 ### 1.0.125 - 2020-06-02 ###
+
 * Fixed: Security fixes
 
 ### 1.0.124 - 2020-04-25 ###
+
 * New: Switched Nucleo icons for Font Awesome
 
 ### 1.0.123 - 2020-04-14 ###
+
 * Improved: The message when the page was edited from another tab or window is now clearer
 * Fixed: Search Element not appearing in the elements list
 * Fixed: Popup conditions bug
@@ -1028,22 +1145,26 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Hide Gutenberg of WordPress 5.4
 
 ### 1.0.122 - 2020-03-27 ###
+
 * Fixed: Progress element text editor
 * Fixed: Hidden population options
 * Improved: RichText toolbar doesn't overlap the text
 
 ### 1.0.121 - 2020-03-27 ###
+
 * Fixed: Added backward compatibility with old PRO plugins
 
 ### 1.0.120 - 2020-03-26 ###
+
 * Fixed: Failed to enqueue script Select2
 
 ### 1.0.119 - 2020-03-25 ###
+
 * Fixed: Tooltip position
 * Fixed: Brizy content for subpages
 
-
 ### 1.0.118 - 2020-03-25 ###
+
 * New: Notification system for errors and if two users work on the same page.
 * New: Maintenance Mode
 * New: Add a Get Help link
@@ -1065,7 +1186,8 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Improved: Added styles, redirect, message for the Countdown element
 * Improved: Added 3 styles for the Counter element
 * Improved: Element toolbar doesn’t cover the content you are editing anymore
-* Improved: Optimised and re-written options in the builder for Border, Box Shadow, Code Mirror, Color Picker, Image upload, Input Text, Multi Select, Element Toolbar, Select, Slider, Switch, Tabs, Toggle, Textarea, Typography
+* Improved: Optimised and re-written options in the builder for Border, Box Shadow, Code Mirror, Color Picker, Image
+  upload, Input Text, Multi Select, Element Toolbar, Select, Slider, Switch, Tabs, Toggle, Textarea, Typography
 * Fixed: Enable/Disable editing with Brizy
 * Fixed: Brizy post revisions
 * Fixed: Brizy templates that are using the default theme template
@@ -1077,20 +1199,23 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Removed header To from email headers
 
 ### 1.0.117 - 2020-03-12 ###
+
 * Fixed: Export errors for certain users
 * Fixed: Removed header 'To' from PHPMailer
 
 ### 1.0.116 - 2020-03-10 ###
+
 * Fixed: Removed local Lato font
 * Fixed: Removed Europa Font
 * Fixed: Removed IowanOldStyleBT-Bold Font
-* Fixed: Use jQuery from WordPress 
+* Fixed: Use jQuery from WordPress
 * Fixed: Removed all possible screenshot extensions al leaved only jpeg
 * Fixed: Force jQuery enqueue.
 * Fixed: Removed some unused code added Select2 as a dependency
 * Fixed: Removed Site Settings feature as this was never used
 
 ### 1.0.115 - 2020-03-10 ###
+
 * Fixed: Removed Nucleo
 * Fixed: Added Font Awesome4
 * Fixed: Removed all possible screenshot extensions al leaved only jpeg
@@ -1099,24 +1224,30 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Removed Site Settings feature as this was never used
 
 ### 1.0.114 - 2020-02-12 ###
+
 * Fixed: Builder settings page access
 
 ### 1.0.113 - 2020-01-30 ###
+
 * Fixed: Column settings with column draggable
 
 ### 1.0.112 - 2020-01-24 ###
+
 * Fixed: WpMediaUpload buttons
 * New: Added new Layouts to free
 
 ### 1.0.111 - 2020-01-22 ###
+
 * Fixed: PHP warning in RuleSet class
 * Fixed: Changed the code to return the exception thrown by wp_mail
 * Fixed: Menu align option
 
 ### 1.0.110 - 2020-01-20 ###
+
 * Fixed: Send mail for Wordpress form integration
 
 ### 1.0.109 - 2020-01-16 ###
+
 * New: Forms added new Fields
 * New: SVG Upload Feature
 * New: Lazy load for image ( Chrome Only )
@@ -1133,13 +1264,16 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixes: Remove unnecessary SEO, Social entries
 
 ### 1.0.108 - 2019-12-18 ###
+
 * Fixed: Editor config cache
 * Fixed: Compilation and save post
 
 ### 1.0.107 - 2019-12-11 ###
+
 * Fixed: Compile if there is no autosave post on vew page
 
 ### 1.0.106 - 2019-12-11 ###
+
 * Improved: Page save
 * New: Extended REST api response for brizy posts
 * Fixed: Sections shape color in responsive
@@ -1152,10 +1286,12 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Menu align option
 
 ### 1.0.105 - 2019-11-21 ###
+
 * Fixed: mkdir warning for folders that already exists
 * Fixed: Usage of PHP_INT_MIN constant
 
 ### 1.0.104 - 2019-11-18 ###
+
 * Fixed: Row negative margin
 * Fixed: Sidebar scroll and reorder blocks
 * Fixed: Animation with zIndex
@@ -1170,54 +1306,67 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Improved: Leftsidebar disabled options for specific roles
 
 ### 1.0.103 - 2019-11-13 ###
+
 * Fixed: Create project method
 * Fixed: Temporary screenshot file path
 * Fixed: Translation function call
 
 ### 1.0.102 - 2019-11-08 ###
+
 * Fixed: Header/Footer box shadow
 
 ### 1.0.101 - 2019-11-07 ###
+
 * Fixed: CSS issue that was causing performance problems in Safari
 
 ### 1.0.100 - 2019-10-23 ###
+
 * New: Function for dynamic data for RenderPreview in facebook comments
 * Fixed: Google fonts error for old users
 * Fixed: Fixed temporary screenshot file path
 
 ### 1.0.99 - 2019-10-21 ###
+
 * Fixed: Register Brizy supported custom posts on plugin initialization to be able to run migrations
 * Fixed: Button not changing colors when switching styles
 * Fixed: Load default project font on preview
 
 ### 1.0.98 - 2019-10-17 ###
+
 * Fixed: Register custom templates if upgrading from a version < 1.0.70
 * Fixed: Dynamic content context generation
 * Fixed: Template preview URL for Blogs/Posts page
 * Fixed: Template preview URL for 404 page
 
 ### 1.0.97 - 2019-10-10 ###
+
 * Fixed: Dynamic content form templates
 * Fixed: Data migration script
 
 ### 1.0.96 - 2019-10-09 ###
+
 * Fixed: Brizy content filter
 * Fixed: Data migration bug
 
 ### 1.0.95 - 2019-10-09 ###
+
 * Fixed: Brizy content filter
 
 ### 1.0.94 - 2019-10-08 ###
+
 * New: Added Design Kit 2.0
 
 ### 1.0.92 - 2019-10-04 ###
+
 * Fixed: Show on tablet & mobile
 * Fixed: Facebook Elements Fix
 
 ### 1.0.92 - 2019-10-03 ###
+
 * Fixed: Header, translation
 
 ### 1.0.91 - 2019-10-01 ###
+
 * New: Added indicator to show or hide all hidden blocks
 * Improved: Slider dots and arrows color can now be set per device
 * Fixed: The preview Url for archive Brizy templates
@@ -1227,35 +1376,44 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Globals data migration
 
 ### 1.0.89 - 2019-09-24 ###
+
 * Fixed: Disabled Block Background Attachment Fixed for Responsive
 
 ### 1.0.88 - 2019-09-24 ###
- * Fixed: Image Shadow Border Radius Fix in Preview
+
+* Fixed: Image Shadow Border Radius Fix in Preview
 
 ### 1.0.87 - 2019-09-23 ###
+
 * Fixed: Editor version number
 
 ### 1.0.86 - 2019-09-20 ###
+
 * Fixed: RichText horizontal align justify
 * Fixed: Show on Devices for Section
 
 ### 1.0.85 - 2019-09-20 ###
+
 * Fixed: Globals to data migration
 * Fixed: WOOProducts shortcode
 
 ### 1.0.84 - 2019-09-19 ###
+
 * Fixed: Editor version
 * Fixed: Read me files
 
 ### 1.0.83 - 2019-09-18 ###
+
 * Fixed: Fonts with Mega Menu section
 
 ### 1.0.82 - 2019-09-18 ###
+
 * New: Text image mask
 * New: Text shadow
 * New: Text gradient color
 * New: Block shape dividers were moved from PRO to Free
-* Improved: Migrated Soundcloud, Counter, Facebook Group, Page and Comments to a new CSS system meant to clean up the DOM
+* Improved: Migrated Soundcloud, Counter, Facebook Group, Page and Comments to a new CSS system meant to clean up the
+  DOM
 * Improved: Reduced JavaScript file size
 * Improved: Improved error handling in api
 * Fixed: Unable to “unglobal” Header and Footer blocks
@@ -1272,22 +1430,27 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Fixed ajax urls
 
 ### 1.0.81 - 2019-05-29 ###
+
 * Fixed: Popup option not working for certain users
 * Fixed: Url for Go to pro button
 
 ### 1.0.80 - 2019-05-28 ###
+
 * Fixed: Section Make it a Slider option
 * Fixed: Hotkeys not working in Global blocks
 * Fixed: Slider dots options not working with certain WordPress themes
 * Fixed: Undo / Redo
 
 ### 1.0.79 - 2019-05-27 ###
+
 * Fixed: Brizy template for front page
 
 ### 1.0.78 - 2019-05-23 ###
+
 * Fixed: Blank template and template loading
 
 ### 1.0.77 - 2019-05-23 ###
+
 * New: Added hover transition option for Icon and Button
 * Improved: Set a minimum height to Embed and WordPress elements
 * Improved: Migrated Line and Progress to a new CSS system meant to clean up the DOM
@@ -1298,11 +1461,12 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Image optimize submit settings
 * Fixed: Autosave for globals and saved block
 
-
 ### 1.0.76 - 2019-05-14 ###
+
 * Fixed: Guafrette warning in Path class
 
 ### 1.0.75 - 2019-05-10 ###
+
 * New: Integrated Shortpixel image optimizer
 * Improved: Lowered the max brizy revision count
 * Improved: Delete old autosave posts
@@ -1313,8 +1477,8 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed Create attachment post for block images
 * Fixed: Autoptimeze plugin breaks our css
 
-
 ### 1.0.74 - 2019-04-23 ###
+
 * New: Box Shadow option for Button, Icon, Soundcloud, Embed, Header, Footer
 * Improved: Disabled Overlay Color option for Video when it has an image cover
 * Improved: Return draft posts in Add rule form for template
@@ -1325,17 +1489,21 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Screenshots for Global and Saved blocks not being displayed
 
 ### 1.0.73 - 2019-04-19 ###
+
 * Fixed: Publish button not working for certain users
 * Fixed: Fixed clear cache method
 * Fixed: Undo / Redo
 
 ### 1.0.72 - 2019-04-18 ###
+
 * Fixed: Project meta value setter
 
 ### 1.0.71 - 2019-04-18 ###
+
 * Fixed: Activate license form
 
 ### 1.0.70 - 2019-04-18 ###
+
 * New: Box Shadow option for Icon, Image, Video, Map, Column, Row
 * New: Hover transition option for Image
 * New: Removed autosave feature when you edit pages
@@ -1346,14 +1514,17 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Shift+Z shortcut in RichText
 
 ### 1.0.69 - 2019-04-09 ###
+
 * New: White label support
 * Fixed: Removed the migration per post
 * Fixed: Form deserialization
 
 ### 1.0.68 - 2019-04-03 ###
+
 * Fixed: RichText losing focus after typing pauses
 
 ### 1.0.67 - 2019-04-01 ###
+
 * New: Added shortcuts for various actions
 * New: Row and Column link options
 * New: Video and Embed border options
@@ -1363,11 +1534,13 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Archives sort order in preview
 
 ### 1.0.66 - 2019-03-28 ###
+
 * Fixed: Form integrations
 * Fixed: Back to WordPress button in classic editor
 * Fixed: Project dependencies
 
 ### 1.0.65 - 2019-03-21 ###
+
 * New: Block Adder UI
 * New: Map and Soundcloud border options
 * New: Added spacing for cloneable elements (Button, Icon, etc.) on mobile and tablet
@@ -1385,12 +1558,15 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Compile post flag refactoring
 
 ### 1.0.64 - 2019-03-07 ###
+
 * Fixed: Autoloader compatibility
 
 ### 1.0.63 - 2019-03-06 ###
+
 * Fixed: Fixed the image cropper
 
 ### 1.0.62 - 2019-03-06 ###
+
 * New: Border Styles on mobile and tablet for all containers (Sections, Row, Column)
 * New: Added wp language placeholder
 * New: Added facebook placeholders
@@ -1403,6 +1579,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Removed redirect_to_mapped_domain function handled on the hook template_redirect
 
 ### 1.0.61 - 2019-02-21 ###
+
 * New: Added column revert option for tablet and mobile device modes
 * New: Added filters for support and upgrade to pro urls
 * Fixed: Crash when making a block global
@@ -1412,6 +1589,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Hide Gutenberg blocks and show the Brizy button
 
 ### 1.0.60 - 2019-02-18 ###
+
 * New: Added gradient to backgrounds
 * New: Added hover to backgrounds
 * Fixed: Background parallax at preview
@@ -1422,19 +1600,23 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Fixed group options for template rules
 
 ### 1.0.59 - 2019-01-29 ###
+
 * Fixed: Wordpress integration for forms
 
 ### 1.0.58 - 2019-01-29 ###
+
 * Fixed: Unable to add background images
 * Fixed: Migration instance class check
 
 ### 1.0.57 - 2019-01-25 ###
+
 * New: Forms and Form Integration support
 * Fixed: Block screenshots being made on mobile device mode
 * Fixed: Block screenshots not aligning properly in the anchor link option
 * Fixed: Backgrounds with parallax not working in editor when in mobile device
 
 ### 1.0.56 - 2019-01-18 ###
+
 * New: Added block screenshots in browsers that support it (Chrome, Firefox, Safari to a lesser extent)
 * New: Possibility to add custom names to anchor links
 * New: Compatibility Litespeed plugin
@@ -1452,9 +1634,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Check every request for multiple urls by Brizy_Editor_Http_Response
 * Fixed: Changed signature of do_action of register API methods brizy_register_api_methods
 * Fixed: Added config texts filter
-* Fixed: Version check for Gutenberg compatibility 
+* Fixed: Version check for Gutenberg compatibility
 
 ### 1.0.54 - 2019-01-11 ###
+
 * New: Added block screenshots in browsers that support it
 * New: Possibility to add custom names to anchor links
 * New: Compatibility litespeed plugin
@@ -1467,13 +1650,16 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Fixed the regexp for head extraction
 
 ### 1.0.53 - 2018-12-14 ###
+
 * Fixed: Unable to delete Global blocks
 * Fixed: Brizy buttons for Wordpress 5
 
 ### 1.0.52 - 2018-12-07 ###
+
 * FIxed: Brizy buttons for Gutemberg
 
 ### 1.0.51 - 2018-12-06 ###
+
 * New: Columns can now be resizes in mobile device mode
 * Fixed: Tempate fixes
 * Fixed: Dynamic content fixes
@@ -1481,6 +1667,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Added favicon
 
 ### 1.0.50 - 2018-11-30 ###
+
 * Fixed: RichText error in certain blocks
 * Fixed: Animation delay
 * Fixed: Link animation on click
@@ -1488,14 +1675,17 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Exclude jQuery
 
 ### 1.0.49 - 2018-11-27 ###
+
 * Fixed: Image height conflicts with certain plugins
 * Fixed: Slider video background height
 * Fixed: Animation class name
 
 ### 1.0.48 - 2018-11-26 ###
+
 * Fixed: Fixed autoload for some users
 
 ### 1.0.47 - 2018-11-23 ###
+
 * New: Added Column resize in tablet mode
 * Fixed: NaN showing in RichText toolbar line-height option in tablet and mobile modes
 * Fixed: Animations z-index issues on preview
@@ -1507,6 +1697,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Fixed compatibility with WP 5.0
 
 ### 1.0.46 - 2018-11-13 ###
+
 * Updated: Removed browser restriction overlay
 * Improved: Typography inputs can now be edited using the keyboard
 * Improved: Added revision limits for brizy posts. By default we store 100 revisions.
@@ -1519,26 +1710,32 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Added versioning for plugin assets
 
 ### 1.0.45 - 2018-11-09 ###
+
 * Fixed: Fixed editor and plugin version in project
 * Fixed: Missing Saved and Global blocks that were started from BLANK BLOCK
 
 ### 1.0.44 - 2018-11-06 ###
+
 * Fixed: Section slider icons at export
 
 ### 1.0.43 - 2018-11-05 ###
+
 * Improved: Refactored the content module
 
 ### 1.0.42 - 2018-11-01 ###
+
 * New: Added tablet mode
 * Improved: Added warning when the theme does not use the_content filter
 * Fixed: Typography toolbar styles
 
 ### 1.0.41 - 2018-10-29 ###
+
 * New: Added mobile body class
 * Fixed: Preview url for all pages template
 * Fixed: Carousel at export
 
 ### 1.0.40 - 2018-10-26 ###
+
 * New: Added context (right click) menu for most elements
 * Improved: Button and Icon groups are now vertically centered
 * Improved: Toolbar options styling
@@ -1559,23 +1756,28 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Fixed template rules for deleted templates
 
 ### 1.0.39 - 2018-10-11 ###
+
 * Fixed: Section background image for mobil
 * Fixed: Gutemberg compatilbility
 * Fixed: User role and capability checker
 * Fixed: Fixed feed pages
 
 ### 1.0.38 - 2018-10-03 ###
+
 * New: Added migration module
 * New: Migrate project to custom post
 
 ### 1.0.37 - 2018-10-03 ###
+
 * New: Added migration module
 * New: Migrate project to custom post
 
 ### 1.0.36 - 2018-10-01 ###
+
 * Fixed: Add Elements from left sidebar broken order
 
 ### 1.0.35 - 2018-09-28 ###
+
 * New: Added justify to alignment options for RichText
 * Updated: RichText font size limit was increased up to 300
 * Fixed: Section with slider enabled Full Height option
@@ -1584,41 +1786,48 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Fixed the_Excerpt recursion
 * Fixed: Fixed icons urls
 
-
 ### 1.0.34 - 2018-09-24 ###
+
 * Improved: Added redundant config urls
 
 ### 1.0.33 - 2018-09-22 ###
+
 * Fixed: Editor crash bug
 
 ### 1.0.32 - 2018-09-21 ###
+
 * Improved: Removed taxonomies from config
 * Fixed: Carousel incorrect large width on mobile
 
 ### 1.0.31 - 2018-09-19 ###
+
 * Improved: Reduced the number of divs generated by the editor
 * Fixed: Form submit toolbar not showing for certain users
 * Fixed: Preview for draft posts
 
 ### 1.0.30 - 2018-09-17 ###
+
 * Updated: Carousel library that is used in the editor (react-slick)
 * Fixed: Display keys instead of blank texts in the editor when missing translations
 
 ### 1.0.29 - 2018-09-14 ###
+
 * Improved: Laid some groundwork for future pro features
 * Improved: Use native query to get the attachment by uid
 * Fixed: Mobile Tabs content Scroll
 * Fixed: The conflict with Live composer builder
 * Fixed: The conflict with Wp copyright plugin
 * Fixed: The insert content filter
-* Fixed: Changed the UrlBuilder and CromMedia classe to depend on post id 
+* Fixed: Changed the UrlBuilder and CromMedia classe to depend on post id
 * Fixed: Filter the texonomies that does not have any terms
 * Fixed: Image crop on dynamic content placeholders
 
 ### 1.0.28 - 2018-09-10 ###
+
 * Fixed: Brizy templates preview when the user was not logged in
 
 ### 1.0.27 - 2018-09-06 ###
+
 * Improved: CSS transition for Section padding resizer
 * Improved: Show a special overlay for unsupported browsers instead of loading the editor
 * Fixed: External links that were broken by previous update
@@ -1627,6 +1836,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: ColorPicker option in advanced options (right sidebar) being cut by overflow
 
 ### 1.0.26 - 2018-08-30 ###
+
 * New: Added get_taxonomies api method
 * Improved: Links will not open a new tab by default
 * Improved: Toolbar labels color contrast for better readability
@@ -1644,6 +1854,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Fixed the compile check for templates
 
 ### 1.0.25 - 2018-08-22 ###
+
 * New: Added Featured Image option in LeftSidebar
 * New: Added Upgrade to Pro option in LeftSidebar
 * New: Added Submit an Issue option in LeftSidebar
@@ -1651,9 +1862,11 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * New: Added Image LightBox
 
 ### 1.0.24 - 2018-08-07 ###
+
 * Fixed: Upload path for windows installs
 
 ### 1.0.23 - 2018-08-06 ###
+
 * Fixed: RichText word-break in Firefox
 * Fixed: Added twig file system cache to avoid using eval function.
 * Fixed: Disabled Expect header for compiler requests
@@ -1661,11 +1874,13 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Filter content only on main request regardles of what page type we show the content
 
 ### 1.0.22 - 2018-08-02 ###
+
 * Improved: Removed duplicate code that updates the needs_compile flag when the globals is updated
 * Improved: Added validation of global JSON object
 * Fixed: Editor loading animation wouldn’t end when certain plugins were installed
 
 ### 1.0.21 - 2018-07-30 ###
+
 * Improved: Smooth scroll for internal WordPress menu links
 * Improved: Text for link nofollow option
 * Fixed: The editor should now work with performance optimization plugins
@@ -1677,11 +1892,12 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Admin url fix for wpengine hosting
 
 ### 1.0.20 - 2018-07-24 ###
-* New: Added  option to external links
+
+* New: Added option to external links
 * New: Check the PHP version and stop the plugin if the required php version is not meet
 * Improved: Added font subsets (e.g., arabic, bengali, cyrillic)
 * Improved: Video element will be loaded after click on it’s preview image
-* Improved: Reduced  tooltip animation delay for better UX
+* Improved: Reduced tooltip animation delay for better UX
 * Improved: Clicking on a Tabs element handle on mobile will scroll the document to the top of it’s content
 * Fixed: PHP compatibility fix
 * Fixed: jQuery conflicts at preview
@@ -1691,6 +1907,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: RichText tags (i.e., p, span, a, em) & figure tag style conflicts with the host theme (edited)
 
 ### 1.0.19 - 2018-07-16 ###
+
 * New: Added box shadow option for various elements
 * New: Added hamburger option for Menu
 * New: Revisions support
@@ -1702,38 +1919,44 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Corrected Countdown preview bug
 * Fixed: Corrected Form integration url
 * Fixed: Fixed the upload urls
-* Fixed: Fixed https value in 
+* Fixed: Fixed https value in
 * Fixed: Other minor bugs
 
 ### 1.0.18 - 2018-06-28 ###
+
 * Fixed: Fixed asset proxy url
 
 ### 1.0.17 - 2018-06-27 ###
+
 * Fixed: Form email field validation
 * Fixed: Section auto generated ids anchor problems
-* Fixed: Video not being able to go full screen 
+* Fixed: Video not being able to go full screen
 * Fixed: Other minor bugs
 
 ### 1.0.16 - 2018-06-25 ###
+
 * Fixed: Changed the way we store the data in db
 * Fixed: Submit form for guests
 * Fixed: Form serialization
 * Fixed: Clean the logs table when the plugin is deactivated
 
-
 ### 1.0.15 - 2018-06-18 ###
+
 * New: Added new icons
 * Fixed: Fixed the scripts that hide the editor
 * Fixed: Update page script
 * Fixed: A bunch of small bugs
 
 ### 1.0.14 - 2018-06-14 ###
+
 * Fixed: update global values request
 
 ### 1.0.13 - 2018-06-13 ###
+
 * Fixed: Removed signature and token check
 
 ### 1.0.12 - 2018-06-13 ###
+
 * New: Added WordPress form integration
 * New: Added FontWeight and LetterSpacing for RichText element on Mobile
 * Improved: Section toolbar shows a special icon if the block is global
@@ -1745,16 +1968,18 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Removed from email and name from form class
 
 ### 1.0.11 - 2018-06-11 ###
+
 * Improved: Trigger post change when project global data is updated
 * Fixed: Brizy editor now works properly on SiteGround
 * Fixed: Fixed page title for editor page
 
-
 ### 1.0.10 - 2018-06-11 ###
+
 * Fixed: Changelogs in readme files
 * Fixed: Back compatibility issues
 
 ### 1.0.9 - 2018-06-08 ###
+
 * New: Added saved and global blocks
 * New: Paddings and margins now accept values in percent
 * Fixed: Form number input type not accepting negative and decimal values
@@ -1765,6 +1990,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Store the platform credentials in plugin config to avoid one platform request
 
 ### 1.0.8 - 2018-06-06 ###
+
 * New: Added saved and global blocks
 * New: Added Form element integrations
 * New: Paddings and margins now accept values in percent
@@ -1773,6 +1999,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Other minor bugs
 
 ### 1.0.7 - 2018-05-30 ###
+
 * New: Made the editor translatable
 * New: Added 3 new svg icons for wp shortcodes
 * Improved: Image element drag resizer now works better
@@ -1784,25 +2011,29 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Removed autoformat for wordpress content
 * Fixed: Other minor bugs
 
-
 ### 1.0.6 - 2018-05-24 ###
+
 * New: Disabled all platform api calls
 * New: Added resizing via drag for Section paddings
 * New: Added resizing via drag for various elements (Image, Map, Spacer, etc.)
 * Fixed: Other minor bugs
 
 ### 1.0.5 - 2018-05-22 ###
+
 * New: Added WooCommerce elements
 
 ### 1.0.4 - 2018-05-21 ###
+
 * Fixed: Fixed array declaration syntax to support older php versions
 
 ### 1.0.3 - 2018-05-21 ###
+
 * New: Added basic animations
 * New: Added spacing option to Menu element
 * Fixed: Other minor bugs
 
 ### 1.0.2 - 2018-05-15 ###
+
 * New: Added cover option to Video element
 * Improved: Updated readme files
 * Improved: Clicking on a anchor will trigger a smooth transition to the target
@@ -1817,9 +2048,11 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Media asset proxy
 
 ### 1.0.1 - 2018-05-11 ###
+
 * Fixed: Reconfigured the page compiler
 
 ### 1.0.0 - 2018-05-08 ###
+
 * New: Added keyword shortcuts for undo / redo
 * Improved: Navigation will return empty if the menu name is null
 * Improved: Added support for custom type posts
@@ -1832,10 +2065,13 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Other minor bugs
 
 ### 0.2.5 - 2018-04-27  ### 
+
 * Fixed: Publish/Update button
 
 ### 0.2.0 - 2018-04-13 ### 
+
 * Fixed: Bug Fixes
 
 ### 0.1.0 - 2018-04-12 ###
+
 * New: Initial Beta Release
