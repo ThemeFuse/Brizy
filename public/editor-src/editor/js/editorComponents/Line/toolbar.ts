@@ -9,11 +9,13 @@ import {
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
 import { ToolbarItemType } from "../ToolbarItemType";
 import { Value } from "./index";
+import { isDefaultLineType, isTypeWithoutWeight } from "./utils";
 
-const getColorLaber = (style: string) => {
+const getColorLabel = (style: string) => {
   switch (style) {
     case "text":
       return t("Text");
@@ -37,7 +39,13 @@ export function getItems({
 
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
-  const { style } = v;
+
+  const lineStyle = dvv("lineStyle");
+  const style = dvv("style");
+
+  const iconStyle = style === "icon";
+  const textStyle = style === "text";
+  const defaultStyle = style === "default";
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
     dvv("borderColorHex"),
@@ -60,63 +68,198 @@ export function getItems({
       position: 60,
       options: [
         {
-          id: "style",
-          label: t("Style"),
-          type: "radioGroup-dev",
-          devices: "desktop",
-          choices: [
-            { value: "default", icon: "nc-line-solid" },
-            { value: "text", icon: "nc-line-text" },
-            { value: "icon", icon: "nc-line-icon" }
+          id: "lineTabs",
+          type: "tabs-dev",
+          position: 10,
+          tabs: [
+            {
+              id: "lineTab",
+              label: t("Line"),
+              options: [
+                {
+                  id: "style",
+                  label: t("Style"),
+                  type: "radioGroup-dev",
+                  devices: "desktop",
+                  position: 20,
+                  choices: [
+                    { value: "default", icon: "nc-line-solid" },
+                    { value: "text", icon: "nc-line-text" },
+                    { value: "icon", icon: "nc-line-icon" }
+                  ]
+                },
+                {
+                  id: "lineStyle",
+                  label: t("Type"),
+                  type: "select-dev",
+                  position: 30,
+                  devices: "desktop",
+                  choices: [
+                    { value: "solid", icon: "nc-solid", title: "" },
+                    { value: "dashed", icon: "nc-dashed", title: "" },
+                    { value: "dotted", icon: "nc-dotted", title: "" },
+                    { value: "double", icon: "nc-double", title: "" },
+                    { value: "groove", icon: "nc-groove", title: "" },
+                    { value: "ridge", icon: "nc-ridge", title: "" },
+                    { value: "inset", icon: "nc-inset", title: "" },
+                    { value: "outset", icon: "nc-outset", title: "" },
+                    {
+                      title: "",
+                      value: "diagonal-dash",
+                      icon: "nc-diagonal-dash"
+                    },
+                    { title: "", value: "fence", icon: "nc-fence" },
+                    { title: "", value: "fence2", icon: "nc-fence2" },
+                    { title: "", value: "hand-dashes", icon: "nc-hand-dashes" },
+                    { title: "", value: "hand-dots", icon: "nc-hand-dots" },
+                    { title: "", value: "hand-flows", icon: "nc-hand-flows" },
+                    { title: "", value: "hand-leaves", icon: "nc-hand-leaves" },
+                    { title: "", value: "line-dot", icon: "nc-line-dot" },
+                    { title: "", value: "stars", icon: "nc-stars" },
+                    { title: "", value: "waves", icon: "nc-waves" }
+                  ]
+                },
+                {
+                  id: "weight",
+                  type: "slider-dev",
+                  label: t("Weight"),
+                  position: 60,
+                  disabled:
+                    isDefaultLineType(lineStyle) ||
+                    isTypeWithoutWeight(lineStyle),
+                  config: {
+                    min: 1,
+                    max: 5,
+                    units: [{ value: "px", title: "px" }],
+                    step: 0.1
+                  }
+                },
+                {
+                  id: "borderWidth",
+                  label: t("Height"),
+                  type: "slider-dev",
+                  position: 70,
+                  disabled: !isDefaultLineType(lineStyle),
+                  config: {
+                    min: 1,
+                    max: 50,
+                    units: [{ value: "px", title: "px" }]
+                  }
+                },
+                {
+                  id: "amount",
+                  label: t("Amount"),
+                  type: "slider-dev",
+                  disabled: isDefaultLineType(lineStyle),
+                  config: {
+                    min: 1,
+                    max: 100,
+                    units: [
+                      { value: "px", title: "px" },
+                      { value: "%", title: "%" }
+                    ]
+                  }
+                },
+                {
+                  id: "lineSize",
+                  label: t("Height"),
+                  type: "slider-dev",
+                  disabled: isDefaultLineType(lineStyle),
+                  config: {
+                    min: 1,
+                    max: 100,
+                    units: [{ value: "px", title: "px" }]
+                  }
+                }
+              ]
+            },
+            {
+              id: "secondTab",
+              label: getColorLabel(style),
+              options: [
+                {
+                  id: "icon",
+                  label: t("Icon"),
+                  type: "iconSetter-dev",
+                  devices: "desktop",
+                  disabled: !iconStyle
+                },
+                {
+                  id: "horizontalAlign",
+                  label: t("Align"),
+                  type: "radioGroup-dev",
+                  devices: "desktop",
+                  disabled: defaultStyle,
+                  choices: [
+                    { value: "left", icon: "nc-line-align-left" },
+                    { value: "center", icon: "nc-line-align-center" },
+                    { value: "right", icon: "nc-line-align-right" }
+                  ]
+                },
+                {
+                  id: "groupIconSize",
+                  type: "group-dev",
+                  options: [
+                    {
+                      id: "iconSizeBtns",
+                      label: t("Size"),
+                      type: "radioGroup-dev",
+                      disabled: !iconStyle,
+                      choices: [
+                        { value: "small", icon: "nc-16" },
+                        { value: "medium", icon: "nc-24" },
+                        { value: "large", icon: "nc-32" },
+                        { value: "custom", icon: "nc-more" }
+                      ]
+                    },
+                    {
+                      id: "iconSize",
+                      type: "slider-dev",
+                      disabled: !iconStyle || dvv("iconSizeBtns") !== "custom",
+                      config: {
+                        min: 8,
+                        max: 50,
+                        units: [{ title: "px", value: "px" }]
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "spacing",
+                  type: "slider-dev",
+                  label: t("Spacing"),
+                  disabled: defaultStyle,
+                  config: {
+                    units: [{ value: "px", title: "px" }]
+                  }
+                },
+                {
+                  id: "iconPadding",
+                  type: "slider-dev",
+                  label: t("Padding"),
+                  devices: "desktop",
+                  disabled: !iconStyle,
+                  config: {
+                    min: 0,
+                    max: 100,
+                    units: [{ title: "px", value: "px" }]
+                  }
+                },
+                {
+                  id: "iconRotate",
+                  type: "slider-dev",
+                  label: t("Rotate"),
+                  devices: "desktop",
+                  disabled: !iconStyle,
+                  config: {
+                    min: 0,
+                    max: 360,
+                    units: [{ title: "deg", value: "deg" }]
+                  }
+                }
+              ]
+            }
           ]
-        },
-        {
-          id: "iconImage",
-          label: t("Icon"),
-          //@ts-expect-error New option doesn't work
-          type: "iconSetter",
-          devices: "desktop",
-          disabled: style !== "icon",
-          value: {
-            name: v.iconName,
-            type: v.iconType
-          },
-          onChange: ({ name, type }: { name: string; type: string }) => ({
-            iconName: name,
-            iconType: type
-          })
-        },
-        {
-          id: "horizontalAlign",
-          label: t("Align"),
-          type: "radioGroup-dev",
-          devices: "desktop",
-          disabled: style === "default",
-          choices: [
-            { value: "left", icon: "nc-line-align-left" },
-            { value: "center", icon: "nc-line-align-center" },
-            { value: "right", icon: "nc-line-align-right" }
-          ]
-        },
-        {
-          id: "iconSize",
-          type: "slider-dev",
-          label: t("Size"),
-          disabled: style !== "icon",
-          config: {
-            min: 8,
-            max: 50,
-            units: [{ title: "px", value: "px" }]
-          }
-        },
-        {
-          id: "spacing",
-          type: "slider-dev",
-          label: t("Spacing"),
-          disabled: style === "default",
-          config: {
-            units: [{ value: "px", title: "px" }]
-          }
         }
       ]
     },
@@ -128,15 +271,17 @@ export function getItems({
         size: device === "desktop" ? "large" : "auto",
         title: t("Typography")
       },
-      disabled: style !== "text",
+      disabled: !textStyle,
       position: 70,
       options: [
         {
           id: "gridTypography",
           type: "grid-dev",
+          config: { separator: true },
           columns: [
             {
               id: "col-1",
+              size: 1,
               align: "center",
               options: [
                 {
@@ -150,6 +295,7 @@ export function getItems({
             },
             {
               id: "col-2",
+              size: "auto",
               align: "center",
               options: [
                 {
@@ -175,7 +321,10 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(borderColorHex, v.borderColorOpacity)
+            backgroundColor: hexToRgba(
+              borderColorHex,
+              dvv("borderColorOpacity")
+            )
           }
         }
       },
@@ -188,12 +337,13 @@ export function getItems({
           tabs: [
             {
               id: "tabText",
-              label: getColorLaber(style),
+              label: getColorLabel(style),
               options: [
                 {
                   id: "color",
                   type: "colorPicker-dev",
-                  disabled: style === "default"
+                  disabled: defaultStyle,
+                  states: [NORMAL, HOVER]
                 }
               ]
             },
@@ -202,21 +352,51 @@ export function getItems({
               label: t("Line"),
               options: [
                 {
-                  id: "border",
+                  id: "borderColor",
+                  type: "colorPicker-dev",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabBg",
+              label: t("Bg"),
+              options: [
+                {
+                  id: "iconBgColor",
+                  type: "colorPicker-dev",
+                  disabled: !iconStyle,
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabIconBorder",
+              label: t("Border"),
+              options: [
+                {
+                  id: "iconBorder",
                   type: "border-dev",
-                  config: {
-                    width: ["grouped"],
-                    styles: [
-                      "solid",
-                      "dashed",
-                      "dotted",
-                      "double",
-                      "groove",
-                      "ridge",
-                      "inset",
-                      "outset"
-                    ]
-                  }
+                  states: [NORMAL, HOVER],
+                  disabled: !iconStyle
+                }
+              ]
+            },
+            {
+              id: "tabShadow",
+              label: t("Shadow"),
+              options: [
+                {
+                  id: "boxShadow",
+                  type: "boxShadow-dev",
+                  states: [NORMAL, HOVER],
+                  disabled: !iconStyle
+                },
+                {
+                  id: "textShadow",
+                  type: "textShadow-dev",
+                  states: [NORMAL, HOVER],
+                  disabled: !textStyle
                 }
               ]
             }
@@ -250,9 +430,7 @@ export function getItems({
         {
           id: "grid",
           type: "grid-dev",
-          config: {
-            separator: true
-          },
+          config: { separator: true },
           columns: [
             {
               id: "col-1",

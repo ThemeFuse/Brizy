@@ -1,6 +1,10 @@
 import { renderStyles } from "visual/utils/cssStyle";
+import { defaultValueValue } from "visual/utils/onChange";
 
-export function style(v, vs, vd, hasSizing) {
+export function style(v, vs, vd, hasSizing, device) {
+  const dvv = (key) => defaultValueValue({ v, key, device });
+  const type = dvv("type");
+
   const styles = {
     ".brz &&.brz-btn:hover": {
       standart: [
@@ -12,7 +16,7 @@ export function style(v, vs, vd, hasSizing) {
         "cssStyleTypographyLineHeight",
         "cssStyleTypographyLetterSpacing",
         "cssStyleColor",
-        ...(hasSizing && IS_EDITOR && v.type !== "submit"
+        ...(hasSizing && IS_EDITOR && type !== "submit"
           ? []
           : ["cssStyleBorder"]),
         "cssStyleElementButtonBorderRadius",
@@ -38,7 +42,7 @@ export function style(v, vs, vd, hasSizing) {
     },
     ".brz &&:hover:after": {
       standart:
-        (hasSizing && IS_EDITOR) || v.type === "submit"
+        (hasSizing && IS_EDITOR) || type === "submit"
           ? []
           : ["cssStyleSizeHeightPercentOnly"]
     },
@@ -76,7 +80,7 @@ export function styleIcon(v, vs, vd) {
       standart: [
         "cssStyleElementButtonIconFontSize",
         "cssStyleElementButtonIconMargin",
-        "cssStyleElementIconStrokeWidth"
+        "cssStyleElementButtonIconStrokeWidth"
       ]
     }
   };

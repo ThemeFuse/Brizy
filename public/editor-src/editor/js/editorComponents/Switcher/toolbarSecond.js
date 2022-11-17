@@ -1,15 +1,20 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { NORMAL, ACTIVE } from "visual/utils/stateMode";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { ACTIVE, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
+
+  const secondIconName = dvv("secondIconName");
+  const secondIconType = dvv("secondIconType");
+
+  const switcherStyle = dvv("switcherStyle");
 
   return [
     {
@@ -63,8 +68,8 @@ export function getItems({ v, device, state }) {
                   devices: "desktop",
                   canDelete: true,
                   value: {
-                    name: v.secondIconName,
-                    type: v.secondIconType
+                    name: secondIconName,
+                    type: secondIconType
                   },
                   onChange: ({ name, type }) => {
                     return {
@@ -73,7 +78,7 @@ export function getItems({ v, device, state }) {
                     };
                   }
                 },
-                ...(v.secondIconName && v.secondIconType
+                ...(secondIconName && secondIconType
                   ? [
                       {
                         id: "iconPosition",
@@ -160,7 +165,7 @@ export function getItems({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, v.bgColorOpacity)
+            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
           }
         }
       },
@@ -231,7 +236,7 @@ export function getItems({ v, device, state }) {
           id: "navStyle2Size",
           label: t("Size"),
           type: "slider-dev",
-          disabled: v.switcherStyle === "style-1",
+          disabled: switcherStyle === "style-1",
           config: {
             min: 25,
             max: 100,
@@ -242,7 +247,7 @@ export function getItems({ v, device, state }) {
           id: "navStyle1Width",
           label: t("Width"),
           type: "slider-dev",
-          disabled: v.switcherStyle === "style-2",
+          disabled: switcherStyle === "style-2",
           config: {
             min: 0,
             max: 1000,

@@ -1,9 +1,7 @@
 import classnames from "classnames";
 import React from "react";
-import { css } from "visual/utils/cssStyle";
 import { svgUrl } from "visual/utils/image";
-import { styleSvg } from "../styles";
-import { ImageProps, Styles, V } from "../types";
+import { ImageProps, V } from "../types";
 import { showOriginalImage } from "../utils";
 
 type Props = {
@@ -16,29 +14,10 @@ type Props = {
   extraAttributes: ImageProps["extraAttributes"];
 };
 
-const SvgImage: React.FC<Props> = ({
-  v,
-  vs,
-  vd,
-  _id,
-  componentId,
-  imageSrc,
-  extraAttributes = {}
-}) => {
+const SvgImage: React.FC<Props> = ({ v, imageSrc, extraAttributes = {} }) => {
   const url = svgUrl(imageSrc, { fileName: v.imageFileName });
 
-  let svgClassName = "";
-  if (IS_EDITOR) {
-    svgClassName = css(
-      `${componentId}-${_id}-svg`,
-      `${_id}-svg`,
-      styleSvg(v, vs, vd, {
-        showOriginalImage: showOriginalImage(v)
-      }) as Styles
-    );
-  }
-
-  const styleSvgClass = classnames("brz-img", "brz-img-svg", svgClassName, {
+  const styleSvgClass = classnames("brz-img", "brz-img-svg", {
     "brz-img__original": showOriginalImage(v)
   });
 

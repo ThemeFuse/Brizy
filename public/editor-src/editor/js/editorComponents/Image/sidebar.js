@@ -1,9 +1,14 @@
-import { t } from "visual/utils/i18n";
 import { IS_WP } from "visual/utils/env";
+import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
+import { isGIF, isSVG } from "./utils";
 
-import { isSVG, isGIF } from "./utils";
+export function getItems({ v, device }) {
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
-export function getItems(v) {
+  const imageExtension = dvv("imageExtension");
+  const imageSrc = dvv("imageSrc");
+
   return [
     {
       id: "sidebarTabs",
@@ -69,9 +74,9 @@ export function getItems(v) {
                       label: t("Show Original image"),
                       disabled:
                         !IS_WP ||
-                        isSVG(v.imageExtension) ||
-                        isGIF(v.imageExtension) ||
-                        !v.imageSrc,
+                        isSVG(imageExtension) ||
+                        isGIF(imageExtension) ||
+                        !imageSrc,
                       devices: "desktop"
                     }
                   ]

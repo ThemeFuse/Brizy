@@ -19,11 +19,11 @@ export function cssStylePropertyHoverTransition(): string {
 }
 
 export function cssStylePropertyHoverTransitionColor(): string {
-  return "transition-property: color, background, border-color, box-shadow;";
+  return "transition-property: filter, color, background, border-color, box-shadow;";
 }
 
 export function cssStylePropertyHoverTransitionTransform(): string {
-  return "transition-property: color, background, border-color, box-shadow, transform;";
+  return "transition-property: filter, color, background, border-color, box-shadow, transform;";
 }
 export function cssStylePropertyHoverTransitionFill(): string {
   return "transition-property: color, fill, stroke, background, border-color, box-shadow;";

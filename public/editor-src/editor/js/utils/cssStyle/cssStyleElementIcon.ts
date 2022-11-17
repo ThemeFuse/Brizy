@@ -8,13 +8,10 @@ import {
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { checkValue } from "../checkValue";
-import * as Num from "../reader/number";
 import { CSSValue } from "../style2/types";
 
-type Size = "small" | "medium" | "large" | "custom";
 type FillType = "filled" | "outline" | "default";
 
-const getSize = checkValue<Size>(["small", "medium", "large", "custom"]);
 const getFillType = checkValue<FillType>(["filled", "outline", "default"]);
 
 const config = Config.getAll();
@@ -103,44 +100,4 @@ export function cssStyleElementIconBgGradient({
     case undefined:
       return "";
   }
-}
-
-export function cssStyleElementIconStrokeWidth({
-  v,
-  device
-}: CSSValue): string {
-  const getStrokeWidth = (size: Size, customSize: number): number => {
-    switch (size) {
-      case "small":
-        return 1.1;
-      case "medium":
-        return 1.4;
-      case "large":
-        return 2.3;
-
-      case "custom":
-        return customSize <= 24
-          ? 1
-          : customSize > 24 && customSize <= 32
-          ? 1.1
-          : customSize > 32 && customSize <= 48
-          ? 1.4
-          : customSize > 48 && customSize <= 64
-          ? 2.3
-          : customSize > 64
-          ? 3
-          : 1;
-    }
-  };
-
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-  const customSize = Num.read(dvv("customSize"));
-  const size = getSize(dvv("size"));
-  const type = dvv("type");
-
-  if (type === "outline" && customSize && size) {
-    return `stroke-width: ${getStrokeWidth(size, customSize)};`;
-  }
-
-  return "stroke-width: 1;";
 }

@@ -1,6 +1,9 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 
-export function getItems({ v }) {
+export function getItems({ v, device }) {
+  const dvv = (key) => defaultValueValue({ v, key, device });
+
   return [
     {
       id: "popoverLink",
@@ -30,7 +33,7 @@ export function getItems({ v }) {
               id: "messageRedirect",
               label: t("URL"),
               type: "inputText-dev",
-              disabled: v.redirectType !== "custom",
+              disabled: dvv("redirectType") !== "custom",
               devices: "desktop",
               placeholder: "http://"
             }
@@ -64,21 +67,9 @@ export function getItems({ v }) {
       type: "toggle-dev",
       position: 100,
       choices: [
-        {
-          icon: "nc-text-align-left",
-          title: t("Align"),
-          value: "left"
-        },
-        {
-          icon: "nc-text-align-center",
-          title: t("Align"),
-          value: "center"
-        },
-        {
-          icon: "nc-text-align-right",
-          title: t("Align"),
-          value: "right"
-        }
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
       ]
     }
   ];

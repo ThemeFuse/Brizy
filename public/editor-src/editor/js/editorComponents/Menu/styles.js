@@ -111,7 +111,8 @@ export function styleMenu(v, vs, vd) {
       standart: [
         "cssStyleElementMenuColor",
         "cssStyleElementMenuBgColor",
-        "cssStyleElementMenuBorder"
+        "cssStyleElementMenuBorder",
+        "cssStyleElementMenuBorderRadius"
       ],
       interval: [
         "cssStyleElementMMenuItemPadding",
@@ -119,6 +120,10 @@ export function styleMenu(v, vs, vd) {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-menu__ul > .brz-menu__item > a": {
+      standart: ["cssStyleElementMenuBorderRadius"]
+    },
+
     ".brz && .brz-menu__ul > .brz-menu__item:first-child": {
       interval: ["cssStyleElementMMenuItemPaddingTopZero"]
     },

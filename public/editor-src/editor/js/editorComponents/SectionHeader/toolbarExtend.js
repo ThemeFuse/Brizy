@@ -4,6 +4,7 @@ import { isWp } from "visual/global/Config/types/configs/WP";
 import { t } from "visual/utils/i18n";
 import { getAllMembershipChoices } from "visual/utils/membership";
 import { getLanguagesChoices } from "visual/utils/multilanguages";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   toolbarElementSectionGlobal,
   toolbarElementSectionSaved,
@@ -12,6 +13,8 @@ import {
 
 export function getItems({ v, device, component }) {
   const config = Config.getAll();
+
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   return [
     toolbarShowOnResponsive({
@@ -75,7 +78,7 @@ export function getItems({ v, device, component }) {
               label: t("Show to"),
               type: "multiSelect-dev",
               placeholder: "Select",
-              disabled: v.membership === "off",
+              disabled: dvv("membership") === "off",
               choices: getAllMembershipChoices(config)
             }
           ]
@@ -95,7 +98,7 @@ export function getItems({ v, device, component }) {
               label: t("Show If Language"),
               type: "multiSelect-dev",
               placeholder: "Select",
-              disabled: v.translations === "off",
+              disabled: dvv("translations") === "off",
               choices: getLanguagesChoices(config)
             }
           ]

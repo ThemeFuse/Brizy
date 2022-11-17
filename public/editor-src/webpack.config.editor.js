@@ -61,6 +61,13 @@ module.exports = (options = {}) => {
           ],
           loader: "babel-loader",
           options: babelrc.editor()
+        },
+
+        // It's only for CodeMirror
+        {
+          test: /\.(html|css)$/,
+          include: [path.resolve(__dirname, "node_modules/codemirror")],
+          loader: "null-loader"
         }
       ]
     },
@@ -74,6 +81,9 @@ module.exports = (options = {}) => {
         TARGET: JSON.stringify(options.TARGET),
         IS_EDITOR: true,
         IS_PREVIEW: false
+      }),
+      new webpack.ProvidePlugin({
+        process: "process/browser"
       })
     ],
     optimization: {
@@ -89,7 +99,7 @@ module.exports = (options = {}) => {
       }
     },
     externals: getExternal(options.TARGET),
-    devtool: options.IS_PRODUCTION ? false : "cheap-module-eval-source-map",
+    devtool: options.IS_PRODUCTION ? false : "eval-cheap-module-source-map",
     watch: !options.NO_WATCH && !options.IS_PRODUCTION,
     watchOptions: {
       ignored: new RegExp("config/icons")

@@ -6,6 +6,7 @@ import { getImageUid } from "visual/utils/api/index.wp";
 import { t } from "visual/utils/i18n";
 import { getImageFormat, preloadImage } from "visual/utils/image";
 import { ImageSetter as CloudImageSetter, Value } from "./index.cloud";
+import { getExtensionsMessage, isValidExtension } from "./utils";
 
 export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
   wpMediaFrame: WPMediaFrame | null = null;
@@ -46,6 +47,7 @@ export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
       });
       wpMediaFrame.on("select", () => {
         const attachment = wpMediaFrame.state().get("selection").first();
+        const { acceptedExtensions } = this.props;
 
         getImageUid(attachment.get("id"))
           .then((r) => {
@@ -76,12 +78,32 @@ export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
                 extension
               };
 
-              if (this.mounted) {
-                this.setState<"src" | "width" | "height" | "extension">(
-                  newValue
-                );
+              if (acceptedExtensions && acceptedExtensions.length > 0) {
+                const extension = getImageFormat(url);
+                if (isValidExtension(extension, acceptedExtensions)) {
+                  if (this.mounted) {
+                    this.setState<"src" | "width" | "height" | "extension">(
+                      newValue
+                    );
+                  }
+                  this.props.onChange(newValue, { isChanged: "image" });
+                } else {
+
+                  const extension = getExtensionsMessage(acceptedExtensions);
+                  ToastNotification.error(
+                    `${t(
+                      "Failed to upload file. Please upload a valid "
+                    )}${extension} ${t("image")}`
+                  );
+                }
+              } else {
+                if (this.mounted) {
+                  this.setState<"src" | "width" | "height" | "extension">(
+                    newValue
+                  );
+                }
+                this.props.onChange(newValue, { isChanged: "image" });
               }
-              this.props.onChange(newValue, { isChanged: "image" });
             });
           })
           .catch((e) => {

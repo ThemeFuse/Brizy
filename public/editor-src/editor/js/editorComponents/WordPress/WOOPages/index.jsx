@@ -1,18 +1,18 @@
-import React from "react";
-import jQuery from "jquery";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import Toolbar from "visual/component/Toolbar";
+import jQuery from "jquery";
+import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import { DynamicContentHelper } from "../common/DynamicContentHelper";
 import { getTerms } from "visual/utils/api";
-import toolbarConfigFn from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
 import { css } from "visual/utils/cssStyle";
+import { DynamicContentHelper } from "../common/DynamicContentHelper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
+import toolbarConfigFn from "./toolbar";
 
 // NOTE: woocommerce_* because of backwards compatibility
 const shortcodeToPlaceholder = {
@@ -39,12 +39,12 @@ export default class WOOPages extends EditorComponent {
   };
 
   componentDidMount() {
-    getTerms("product_cat").then(taxonomies => this.setState({ taxonomies }));
+    getTerms("product_cat").then((taxonomies) => this.setState({ taxonomies }));
   }
 
   containerRef = React.createRef();
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   handleDynamicContentSuccess = () => {
     const v = this.getValue();
@@ -62,6 +62,7 @@ export default class WOOPages extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     const className = classnames(
+      "brz-woo-pages",
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
 
@@ -86,6 +87,7 @@ export default class WOOPages extends EditorComponent {
                 tagName="div"
                 placeholderIcon="woo-2"
                 onSuccess={this.handleDynamicContentSuccess}
+                props={{ className: "brz-woo-page" }}
               />
             </BoxResizer>
           </Wrapper>

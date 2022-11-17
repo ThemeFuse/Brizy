@@ -1,10 +1,10 @@
+import { cssStyleStrokeWidth } from "visual/utils/cssStyle";
 import {
   styleElementButtonBorderRadius,
   styleElementButtonIconCustomSize,
   styleElementButtonIconMargin,
   styleElementButtonIconPosition,
-  styleElementButtonIconPositionCss,
-  styleElementIconStrokeWidth
+  styleElementButtonIconPositionCss
 } from "visual/utils/style2";
 
 export function cssStyleElementButtonBorderRadius({ v, device, state }) {
@@ -40,12 +40,10 @@ export function cssStyleElementButtonIconMargin({ v, device, state }) {
     : `margin-left:${iconMargin}px;margin-right:0;`;
 }
 
-export function cssStyleElementIconStrokeWidth({ v, device, state }) {
-  const strokeWidth = styleElementIconStrokeWidth({ v, device, state });
-
-  return strokeWidth === undefined ? "" : `stroke-width:${strokeWidth};`;
-}
-
 export function cssStyleElementButtonPropertyContentAlign() {
   return "align-items: center; justify-content: center;";
+}
+
+export function cssStyleElementButtonIconStrokeWidth({ v, device, state }) {
+  return cssStyleStrokeWidth({ v, device, state, prefix: "icon" });
 }

@@ -1,8 +1,8 @@
 import React, { ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
-import { showHiddenElementsSelector } from "visual/redux/selectors";
 import { updateUI } from "visual/redux/actions2";
+import { showHiddenElementsSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { IS_STORY } from "visual/utils/models";
 import { BottomPanelItem } from "./Item";
@@ -24,6 +24,7 @@ function HiddenElementsToggle(): ReactNode {
   return (
     <BottomPanelItem
       paddingSize="medium"
+      active={true}
       pointer={true}
       title={title}
       onClick={(): void => {

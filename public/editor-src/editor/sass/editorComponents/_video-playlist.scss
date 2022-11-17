@@ -102,6 +102,7 @@
   }
   .brz-video-playlist-title-video {
     word-break: break-word;
+    white-space: normal;
 
     .brz-span {
       display: block;
@@ -122,7 +123,13 @@
     flex-direction: column;
     max-height: 100%;
     overflow: auto;
+    padding-left: 0 !important;
   }
+
+  .brz-video-playlist-main {
+    padding-right: 0 !important;
+  }
+
   .brz-video-playlist-video-item {
     cursor: pointer;
     align-items: flex-start;

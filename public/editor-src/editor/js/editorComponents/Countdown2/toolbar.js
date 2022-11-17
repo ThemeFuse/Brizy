@@ -1,8 +1,9 @@
 import _ from "underscore";
+import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { IS_STORY } from "visual/utils/models";
+import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
@@ -17,7 +18,12 @@ export function getItems({ v, device, state, context }) {
     dvv("numberColorHex"),
     dvv("numberColorPalette")
   );
-  const noBorder = v.bgColorOpacity === 0 && v.borderColorOpacity === 0;
+  const noBorder =
+    dvv("bgColorOpacity") === 0 && dvv("borderColorOpacity") === 0;
+
+  const style = dvv("style");
+  const actions = dvv("actions");
+
   const richTextDC = getDynamicContentChoices(
     context.dynamicContent.config,
     DCTypes.richText
@@ -26,6 +32,8 @@ export function getItems({ v, device, state, context }) {
     context.dynamicContent.config,
     DCTypes.link
   );
+
+  const IS_STORY = isStory(Config.getAll());
 
   return [
     {
@@ -199,7 +207,7 @@ export function getItems({ v, device, state, context }) {
               options: [
                 {
                   id: "title",
-                  disabled: v.style === "style3",
+                  disabled: style === "style3",
                   type: "typography-dev",
                   config: {
                     fontFamily: "desktop" === device
@@ -213,7 +221,7 @@ export function getItems({ v, device, state, context }) {
               options: [
                 {
                   id: "message",
-                  disabled: v.actions !== "showMessage",
+                  disabled: actions !== "showMessage",
                   type: "typography-dev",
                   config: {
                     fontFamily: "desktop" === device
@@ -233,7 +241,7 @@ export function getItems({ v, device, state, context }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(numberColor, v.numberColorOpacity)
+            backgroundColor: hexToRgba(numberColor, dvv("numberColorOpacity"))
           }
         }
       },
@@ -262,7 +270,7 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "titleColor",
                   type: "colorPicker-dev",
-                  disabled: v.style === "style3",
+                  disabled: style === "style3",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -274,7 +282,7 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "messageColor",
                   type: "colorPicker-dev",
-                  disabled: v.actions !== "showMessage",
+                  disabled: actions !== "showMessage",
                   states: [NORMAL, HOVER]
                 }
               ]

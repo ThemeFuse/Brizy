@@ -1,19 +1,20 @@
+import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { isStory } from "visual/utils/models";
+import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { t } from "visual/utils/i18n";
-import { defaultValueValue } from "visual/utils/onChange";
-import { IS_STORY } from "visual/utils/models";
-
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, context }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
-  const { type } = v;
+  const type = dvv("type");
+
   const richTextDC = getDynamicContentChoices(
     context.dynamicContent.config,
     DCTypes.richText
@@ -27,6 +28,8 @@ export function getItems({ v, device, context }) {
   const isSimple = type === "simple";
   const isEmpty = type === "empty";
   const isPie = type === "pie";
+
+  const IS_STORY = isStory(Config.getAll());
 
   return [
     {
@@ -67,7 +70,7 @@ export function getItems({ v, device, context }) {
                   type: "number-dev",
                   label: t("Start"),
                   devices: "desktop",
-                  disabled: type !== "simple",
+                  disabled: !isSimple,
                   config: {
                     size: "short",
                     min: -1000000000,
@@ -176,7 +179,7 @@ export function getItems({ v, device, context }) {
         size: device === "desktop" ? "large" : "auto",
         title: t("Typography")
       },
-      disabled: type === "empty" || type === "pie",
+      disabled: isEmpty || isPie,
       position: 70,
       options: [
         {
@@ -196,7 +199,7 @@ export function getItems({ v, device, context }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
           }
         }
       },
@@ -215,7 +218,7 @@ export function getItems({ v, device, context }) {
                   id: "color",
                   type: "colorPicker-dev",
                   states: [NORMAL, HOVER],
-                  disabled: type === "empty" || type === "pie"
+                  disabled: isEmpty || isPie
                 }
               ]
             },
@@ -238,7 +241,7 @@ export function getItems({ v, device, context }) {
                 {
                   id: "strokeColor",
                   type: "colorPicker-dev",
-                  disabled: v.type !== "pie",
+                  disabled: !isPie,
                   states: [NORMAL, HOVER]
                 },
                 {

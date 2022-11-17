@@ -1,25 +1,31 @@
+import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
     dvv("thumbnailBorderColorHex"),
     dvv("thumbnailBorderColorPalette")
   );
 
-  const spacingLabel =
-    v.thumbStyle === "bottom"
-      ? t("Top")
-      : v.thumbStyle === "top"
-      ? t("Bottom")
-      : v.thumbStyle === "left"
-      ? t("Right")
-      : t("Left");
+  const thumbStyle = dvv("thumbStyle");
+
+  const leftThumbStyle = thumbStyle === "left";
+  const rightThumbStyle = thumbStyle !== "right";
+  const bottomThumbStyle = thumbStyle === "bottom";
+  const topThumbStyle = thumbStyle === "top";
+
+  const spacingLabel = bottomThumbStyle
+    ? t("Top")
+    : topThumbStyle
+    ? t("Bottom")
+    : leftThumbStyle
+    ? t("Right")
+    : t("Left");
 
   return [
     {
@@ -50,7 +56,7 @@ export function getItems({ v, device, state }) {
               id: "thumbWidth",
               label: t("Width"),
               type: "slider-dev",
-              disabled: v.thumbStyle !== "left" && v.thumbStyle !== "right",
+              disabled: !leftThumbStyle && rightThumbStyle,
               config: {
                 min: 0,
                 max: 200,
@@ -74,7 +80,7 @@ export function getItems({ v, device, state }) {
           label: t("Columns"),
           type: "slider-dev",
           devices: "desktop",
-          disabled: v.thumbStyle !== "top" && v.thumbStyle !== "bottom",
+          disabled: topThumbStyle && bottomThumbStyle,
           config: {
             min: 2,
             max: 8
@@ -85,7 +91,7 @@ export function getItems({ v, device, state }) {
           label: t("Columns"),
           type: "slider-dev",
           devices: "desktop",
-          disabled: v.thumbStyle !== "left" && v.thumbStyle !== "right",
+          disabled: !leftThumbStyle && rightThumbStyle,
           config: {
             min: 1,
             max: 8

@@ -1,11 +1,11 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { HOVER, NORMAL, ACTIVE } from "visual/utils/stateMode";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   // Color
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -34,14 +34,8 @@ export function getItems({ v, device }) {
           label: t("Style"),
           devices: "desktop",
           choices: [
-            {
-              value: "style-1",
-              icon: "nc-tags-style-2"
-            },
-            {
-              value: "style-2",
-              icon: "nc-tags-style-1"
-            }
+            { value: "style-1", icon: "nc-tags-style-2" },
+            { value: "style-2", icon: "nc-tags-style-1" }
           ]
         },
         {
@@ -95,9 +89,9 @@ export function getItems({ v, device }) {
         icon: {
           style: {
             backgroundColor:
-              v.bgColorOpacity > 0
-                ? hexToRgba(bgColorHex, v.bgColorOpacity)
-                : hexToRgba(colorHex, v.colorOpacity)
+              dvv("bgColorOpacity") > 0
+                ? hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+                : hexToRgba(colorHex, dvv("colorOpacity"))
           }
         }
       },
@@ -163,21 +157,9 @@ export function getItems({ v, device }) {
       devices: "desktop",
       position: 100,
       choices: [
-        {
-          icon: "nc-text-align-left",
-          title: t("Align"),
-          value: "left"
-        },
-        {
-          icon: "nc-text-align-center",
-          title: t("Align"),
-          value: "center"
-        },
-        {
-          icon: "nc-text-align-right",
-          title: t("Align"),
-          value: "right"
-        }
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
       ]
     },
     {
