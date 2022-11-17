@@ -1,11 +1,13 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export const getItems = ({ v, device, state }) => {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  const inputPosition = dvv("inputPosition");
 
   const { hex: inputColorHex } = getOptionColorHexByPalette(
     dvv("inputColorHex"),
@@ -120,7 +122,7 @@ export const getItems = ({ v, device, state }) => {
             min: 20,
             max: 100,
             units:
-              v.inputPosition === "left" || v.inputPosition === "right"
+              inputPosition === "left" || inputPosition === "right"
                 ? [{ value: "px", title: "px" }]
                 : [
                     { value: "px", title: "px" },

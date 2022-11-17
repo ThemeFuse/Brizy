@@ -1,1 +1,3 @@
-export { Foo } from "./Foo";
+
+export { SectionGridSimulator } from "./SectionGridSimulator";
+export { ElementGridAreaSimulator } from "./ElementGridAreaSimulator";

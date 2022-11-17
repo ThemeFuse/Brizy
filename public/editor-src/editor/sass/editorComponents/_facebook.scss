@@ -2,23 +2,36 @@
   min-height: 20px;
 }
 
+.fb-post span,
+.fb-post span iframe,
+.fb-video span,
+.fb-video span iframe,
+.fb-group,
+.fb-group span,
+.fb-group span iframe {
+  width: 100% !important;
+  min-width: 100% !important;
+}
+
 .fb-page,
 .fb-page span,
 .fb-page span iframe[style],
-.fb-post,
-.fb-video,
 .fb-comments,
 .fb-comments span,
 .fb-comments span iframe[style] {
   width: 100% !important;
   min-width: 100% !important;
+  max-height: 100% !important;
+}
+
+.brz-fb-comments,
+.brz-fb-embed {
+  width: 100%;
 }
 
 .brz-fb-page,
-.brz-fb-embed,
 .brz-fb-group {
   position: relative;
-  width: 100%;
 
   &::before {
     content: "";
@@ -31,15 +44,6 @@
     display: block;
     pointer-events: none;
   }
-}
-
-.brz-fb-group {
-  width: fit-content;
-}
-
-.brz-fb-page,
-.brz-fb-comments {
-  width: 100%;
 }
 
 .brz-fb-styles-button--small {

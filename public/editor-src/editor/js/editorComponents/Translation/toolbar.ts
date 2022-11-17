@@ -1,12 +1,11 @@
-import { Value } from ".";
-
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { t } from "visual/utils/i18n";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { ResponsiveMode } from "visual/utils/responsiveMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { Value } from ".";
 
 export function getItems({
   v,
@@ -153,7 +152,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
           }
         }
       },

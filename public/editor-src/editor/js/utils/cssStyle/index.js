@@ -54,6 +54,8 @@ export * from "./cssStyleElementEcwidProduct";
 export * from "./cssStyleElementEcwidProducts";
 // Element Ecwid Shopping Bag
 export * from "./cssStyleElementEcwidShoppingBag";
+// Facebook
+export * from "./cssStyleElementFacebook";
 // Filters
 export * from "./cssStyleElementFilters";
 // Element Form2

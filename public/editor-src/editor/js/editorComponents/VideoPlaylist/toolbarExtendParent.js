@@ -2,16 +2,17 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
     dvv("borderColorHex"),
     dvv("borderColorPalette")
   );
+
+  const positionItem = dvv("positionItem");
 
   return [
     {
@@ -38,7 +39,7 @@ export function getItems({ v, device }) {
           label: t("Thumbs"),
           type: "select-dev",
           devices: "desktop",
-          disabled: v.positionItem === "horizontal",
+          disabled: positionItem === "horizontal",
           choices: [
             { value: "above", title: "Top" },
             { value: "under", title: "Bottom" }
@@ -48,7 +49,7 @@ export function getItems({ v, device }) {
           id: "gridColumn",
           label: t("Columns"),
           type: "slider-dev",
-          disabled: v.positionItem === "horizontal",
+          disabled: positionItem === "horizontal",
           config: {
             min: 1,
             max: 6
@@ -133,7 +134,7 @@ export function getItems({ v, device }) {
           id: "widthSidebar",
           label: t("Sidebar"),
           type: "slider-dev",
-          disabled: v.positionItem === "vertical" || device === "mobile",
+          disabled: positionItem === "vertical" || device === "mobile",
           config: {
             min: 200,
             max: 1000,

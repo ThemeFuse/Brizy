@@ -300,19 +300,6 @@
     "tempSelectBorderBottomWidth": 1,
     "tempSelectBorderLeftWidth": 1,
 
-    "hoverSelectBorderWidthType": null,
-    "hoverSelectBorderWidth": null,
-    "hoverSelectBorderTopWidth": null,
-    "hoverSelectBorderRightWidth": null,
-    "hoverSelectBorderBottomWidth": null,
-    "hoverSelectBorderLeftWidth": null,
-
-    "tempHoverSelectBorderWidth": null,
-    "tempHoverSelectBorderTopWidth": null,
-    "tempHoverSelectBorderRightWidth": null,
-    "tempHoverSelectBorderBottomWidth": null,
-    "tempHoverSelectBorderLeftWidth": null,
-
     "selectBorderRadiusType": "grouped",
     "selectBorderRadius": 0,
     "selectBorderTopLeftRadius": 0,
@@ -325,19 +312,6 @@
     "tempSelectBorderTopRightRadius": 0,
     "tempSelectBorderBottomRightRadius": 0,
     "tempSelectBorderBottomLeftRadius": 0,
-
-    "hoverSelectBorderRadiusType": null,
-    "hoverSelectBorderRadius": null,
-    "hoverSelectBorderTopLeftRadius": null,
-    "hoverSelectBorderTopRightRadius": null,
-    "hoverSelectBorderBottomRightRadius": null,
-    "hoverSelectBorderBottomLeftRadius": null,
-
-    "tempHoverSelectBorderRadius": null,
-    "tempHoverSelectBorderTopLeftRadius": null,
-    "tempHoverSelectBorderTopRightRadius": null,
-    "tempHoverSelectBorderBottomRightRadius": null,
-    "tempHoverSelectBorderBottomLeftRadius": null,
 
     "boxShadow": "none",
 
@@ -420,19 +394,6 @@
     "tempBorderBottomWidth": 1,
     "tempBorderLeftWidth": 1,
 
-    "hoverBorderWidthType": null,
-    "hoverBorderWidth": null,
-    "hoverBorderTopWidth": null,
-    "hoverBorderRightWidth": null,
-    "hoverBorderBottomWidth": null,
-    "hoverBorderLeftWidth": null,
-
-    "tempHoverBorderWidth": null,
-    "tempHoverBorderTopWidth": null,
-    "tempHoverBorderRightWidth": null,
-    "tempHoverBorderBottomWidth": null,
-    "tempHoverBorderLeftWidth": null,
-
     "borderRadiusType": "grouped",
     "borderRadius": 0,
     "borderTopLeftRadius": 0,
@@ -457,19 +418,6 @@
     "tempBorderTopRightRadiusSuffix": "px",
     "tempBorderBottomRightRadiusSuffix": "px",
     "tempBorderBottomLeftRadiusSuffix": "px",
-
-    "hoverBorderRadiusType": null,
-    "hoverBorderRadius": null,
-    "hoverBorderTopLeftRadius": null,
-    "hoverBorderTopRightRadius": null,
-    "hoverBorderBottomRightRadius": null,
-    "hoverBorderBottomLeftRadius": null,
-
-    "tempHoverBorderRadius": null,
-    "tempHoverBorderTopLeftRadius": null,
-    "tempHoverBorderTopRightRadius": null,
-    "tempHoverBorderBottomRightRadius": null,
-    "tempHoverBorderBottomLeftRadius": null,
 
     "borderColorHex": "#dcdee1",
     "borderColorOpacity": 1,
@@ -627,32 +575,6 @@
     "tempTabletHoverLabelPaddingBottomSuffix": null,
     "tempTabletHoverLabelPaddingLeftSuffix": null,
 
-    "tabletBorderWidthType": null,
-    "tabletBorderWidth": null,
-    "tabletBorderTopWidth": null,
-    "tabletBorderRightWidth": null,
-    "tabletBorderBottomWidth": null,
-    "tabletBorderLeftWidth": null,
-
-    "tempTabletBorderWidth": null,
-    "tempTabletBorderTopWidth": null,
-    "tempTabletBorderRightWidth": null,
-    "tempTabletBorderBottomWidth": null,
-    "tempTabletBorderLeftWidth": null,
-
-    "tabletHoverBorderWidthType": null,
-    "tabletHoverBorderWidth": null,
-    "tabletHoverBorderTopWidth": null,
-    "tabletHoverBorderRightWidth": null,
-    "tabletHoverBorderBottomWidth": null,
-    "tabletHoverBorderLeftWidth": null,
-
-    "tempTabletHoverBorderWidth": null,
-    "tempTabletHoverBorderTopWidth": null,
-    "tempTabletHoverBorderRightWidth": null,
-    "tempTabletHoverBorderBottomWidth": null,
-    "tempTabletHoverBorderLeftWidth": null,
-
     "mobileSize": "small",
     "mobileSizeLargePadding": 20,
     "mobileSizeMediumPadding": 14,
@@ -790,32 +712,6 @@
     "tempMobileHoverLabelPaddingTopSuffix": null,
     "tempMobileHoverLabelPaddingRightSuffix": null,
     "tempMobileHoverLabelPaddingBottomSuffix": null,
-    "tempMobileHoverLabelPaddingLeftSuffix": null,
-
-    "mobileBorderWidthType": null,
-    "mobileBorderWidth": null,
-    "mobileBorderTopWidth": null,
-    "mobileBorderRightWidth": null,
-    "mobileBorderBottomWidth": null,
-    "mobileBorderLeftWidth": null,
-
-    "tempMobileBorderWidth": null,
-    "tempMobileBorderTopWidth": null,
-    "tempMobileBorderRightWidth": null,
-    "tempMobileBorderBottomWidth": null,
-    "tempMobileBorderLeftWidth": null,
-
-    "mobileHoverBorderWidthType": null,
-    "mobileHoverBorderWidth": null,
-    "mobileHoverBorderTopWidth": null,
-    "mobileHoverBorderRightWidth": null,
-    "mobileHoverBorderBottomWidth": null,
-    "mobileHoverBorderLeftWidth": null,
-
-    "tempMobileHoverBorderWidth": null,
-    "tempMobileHoverBorderTopWidth": null,
-    "tempMobileHoverBorderRightWidth": null,
-    "tempMobileHoverBorderBottomWidth": null,
-    "tempMobileHoverBorderLeftWidth": null
+    "tempMobileHoverLabelPaddingLeftSuffix": null
   }
 }

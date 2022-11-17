@@ -108,10 +108,6 @@
 
     "tempBorderStyle": "solid",
 
-    "hoverBorderStyle": null,
-
-    "tempHoverBorderStyle": null,
-
     "borderWidthType": "grouped",
     "borderWidth": 1,
     "borderTopWidth": 1,
@@ -124,19 +120,6 @@
     "tempBorderRightWidth": 1,
     "tempBorderBottomWidth": 1,
     "tempBorderLeftWidth": 1,
-
-    "hoverBorderWidthType": null,
-    "hoverBorderWidth": null,
-    "hoverBorderTopWidth": null,
-    "hoverBorderRightWidth": null,
-    "hoverBorderBottomWidth": null,
-    "hoverBorderLeftWidth": null,
-
-    "tempHoverBorderWidth": null,
-    "tempHoverBorderTopWidth": null,
-    "tempHoverBorderRightWidth": null,
-    "tempHoverBorderBottomWidth": null,
-    "tempHoverBorderLeftWidth": null,
 
     "borderRadiusType": "grouped",
     "borderRadius": 0,
@@ -151,32 +134,12 @@
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
 
-    "hoverBorderRadiusType": null,
-    "hoverBorderRadius": null,
-    "hoverBorderTopLeftRadius": null,
-    "hoverBorderTopRightRadius": null,
-    "hoverBorderBottomRightRadius": null,
-    "hoverBorderBottomLeftRadius": null,
-
-    "tempHoverBorderRadius": null,
-    "tempHoverBorderTopLeftRadius": null,
-    "tempHoverBorderTopRightRadius": null,
-    "tempHoverBorderBottomRightRadius": null,
-    "tempHoverBorderBottomLeftRadius": null,
-
     "borderColorHex": "#dcdee1",
     "borderColorOpacity": 1,
     "borderColorPalette": "",
 
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "",
-
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-
-    "tempHoverBorderColorOpacity": null,
-    "tempHoverBorderColorPalette": null,
 
     "paddingType": "ungrouped",
     "tempPaddingType": "ungrouped",

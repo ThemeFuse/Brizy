@@ -1,34 +1,35 @@
-import React from "react";
-import Config from "visual/global/Config";
-import { noop } from "underscore";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import React from "react";
+import { noop } from "underscore";
 import { TextEditor } from "visual/component/Controls/TextEditor";
-import Toolbar from "visual/component/Toolbar";
-import * as toolbarExtendLostPasswordConfig from "./toolbarExtendLostPassword";
 import CustomCSS from "visual/component/CustomCSS";
-import * as toolbarExtend from "./toolbarExtend";
-import toolbarExtendParentFn from "./toolbarExtendParent";
-import * as sidebarExtendParent from "./sidebarExtendParent";
-import * as toolbarExtendLabel from "./toolbarExtendLabel";
-import * as sidebarExtendLabel from "./sidebarExtendLabel";
-import * as sidebarExtendLostPassword from "./sidebarAutorized";
-import * as sidebarAutorized from "./sidebarAutorized";
-import * as sidebarLoginLink from "./sidebarLoginLink";
-import * as toolbarExtendCheckbox from "./toolbarExtendCheckbox";
-import * as toolbarExtendButton from "visual/editorComponents/Login/toolbarExtendButton";
+import Toolbar from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import * as sidebarExtendButton from "visual/editorComponents/Login/sidebarExtendButton";
 import * as toolbarAutorized from "visual/editorComponents/Login/toolbarAutorized";
+import * as toolbarExtendButton from "visual/editorComponents/Login/toolbarExtendButton";
+import * as toolbarLoginLink from "visual/editorComponents/Login/toolbarLoginLink";
 import * as toolbarRegisterInfo from "visual/editorComponents/Login/toolbarRegisterInfo";
 import * as toolbarRegisterLink from "visual/editorComponents/Login/toolbarRegisterLink";
-import * as toolbarLoginLink from "visual/editorComponents/Login/toolbarLoginLink";
-import defaultValue from "./defaultValue.json";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import { Wrapper } from "../tools/Wrapper";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import Config from "visual/global/Config";
+import { css } from "visual/utils/cssStyle";
 import { IS_WP } from "visual/utils/env";
+import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarAutorized from "./sidebarAutorized";
+import * as sidebarExtendLostPassword from "./sidebarAutorized";
+import * as sidebarExtend from "./sidebarExtend";
+import * as sidebarExtendLabel from "./sidebarExtendLabel";
+import * as sidebarExtendParent from "./sidebarExtendParent";
+import * as sidebarLoginLink from "./sidebarLoginLink";
+import { style } from "./styles";
+import * as toolbarExtend from "./toolbarExtend";
+import * as toolbarExtendCheckbox from "./toolbarExtendCheckbox";
+import * as toolbarExtendLabel from "./toolbarExtendLabel";
+import * as toolbarExtendLostPasswordConfig from "./toolbarExtendLostPassword";
+import toolbarExtendParentFn from "./toolbarExtendParent";
 
 class Login extends EditorComponent {
   static get componentId() {
@@ -54,21 +55,21 @@ class Login extends EditorComponent {
     this.props.extendParentToolbar(toolbarExtend);
   }
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
-  handleLinkChange = lostPassword => {
+  handleLinkChange = (lostPassword) => {
     this.patchValue({ lostPassword });
   };
 
-  handleRegisterLinkChange = registerLink => {
+  handleRegisterLinkChange = (registerLink) => {
     this.patchValue({ registerLink });
   };
 
-  handleLoginLinkChange = loginLink => {
+  handleLoginLinkChange = (loginLink) => {
     this.patchValue({ loginLink });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
   };
 
@@ -127,9 +128,13 @@ class Login extends EditorComponent {
           null,
           { allowExtend: false }
         ),
-        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend, null, {
-          allowExtend: false
-        }),
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtend,
+          sidebarExtend,
+          {
+            allowExtend: false
+          }
+        ),
         showLabel: v.showLabel,
         showPlaceholder: v.showPlaceholder,
         remember: v.remember
@@ -149,9 +154,7 @@ class Login extends EditorComponent {
         toolbarRegisterInfo: this.makeToolbarPropsFromConfig2(
           toolbarRegisterInfo,
           null,
-          {
-            allowExtend: false
-          }
+          { allowExtend: false }
         ),
         toolbarExtendLabel: this.makeToolbarPropsFromConfig2(
           toolbarExtendLabel,
@@ -163,9 +166,11 @@ class Login extends EditorComponent {
           null,
           { allowExtend: false }
         ),
-        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend, null, {
-          allowExtend: false
-        }),
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtend,
+          sidebarExtend,
+          { allowExtend: false }
+        ),
         showLabel: v.showLabel,
         showPlaceholder: v.showPlaceholder,
         remember: v.remember,
@@ -197,9 +202,13 @@ class Login extends EditorComponent {
           null,
           { allowExtend: false }
         ),
-        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend, null, {
-          allowExtend: false
-        }),
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtend,
+          sidebarExtend,
+          {
+            allowExtend: false
+          }
+        ),
         showLabel: v.showLabel,
         showPlaceholder: v.showPlaceholder,
         remember: v.remember
@@ -287,12 +296,8 @@ class Login extends EditorComponent {
   }
 
   renderLoginForm(v) {
-    const {
-      showLostPassword,
-      showRegisterLink,
-      registerLink,
-      lostPassword
-    } = v;
+    const { showLostPassword, showRegisterLink, registerLink, lostPassword } =
+      v;
 
     return (
       <>
@@ -396,7 +401,7 @@ class Login extends EditorComponent {
     const getDefaultRoles = () => {
       try {
         return JSON.stringify(
-          JSON.parse(defaultRoles)?.map(item => ({ id: item }))
+          JSON.parse(defaultRoles)?.map((item) => ({ id: item }))
         );
       } catch {
         return [];

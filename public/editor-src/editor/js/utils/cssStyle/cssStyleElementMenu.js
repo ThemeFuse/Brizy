@@ -3,6 +3,7 @@ import {
   cssStyleBgGradient,
   cssStyleBgImage,
   cssStyleBorder,
+  cssStyleBorderRadius,
   cssStyleBoxShadow,
   cssStyleColor,
   cssStyleDisplayFlex,
@@ -197,6 +198,10 @@ export function cssStyleElementMenuCurrentLinkBgColor({ v, device, state }) {
 
 export function cssStyleElementMenuCurrentBorder({ v, device }) {
   return cssStyleBorder({ v, device, state: ACTIVE, prefix: "menu" });
+}
+
+export function cssStyleElementMenuBorderRadius({ v, device, state }) {
+  return cssStyleBorderRadius({ v, device, state, prefix: "menu" });
 }
 
 // MMenu

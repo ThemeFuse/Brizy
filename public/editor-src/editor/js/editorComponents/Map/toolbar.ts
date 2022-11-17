@@ -1,8 +1,9 @@
+import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { DeviceMode } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { IS_STORY } from "visual/utils/models";
+import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
@@ -34,6 +35,8 @@ export function getItems({
     context.dynamicContent.config,
     DCTypes.richText
   );
+
+  const IS_STORY = isStory(Config.getAll());
 
   return [
     {
@@ -99,6 +102,17 @@ export function getItems({
           id: "tabsColor",
           type: "tabs-dev",
           tabs: [
+            {
+              id: "tabBackground",
+              label: t("Background"),
+              options: [
+                {
+                  id: "",
+                  type: "backgroundColor-dev",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
             {
               id: "tabBorder",
               label: t("Border"),

@@ -1,19 +1,20 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
-import * as toolbarExtend from "./toolbarExtend";
-import * as toolbarExtendParent from "./toolbarExtendParent";
-import * as sidebarExtendParent from "./sidebarExtendParent";
-import * as toolbarExtendLabel from "./toolbarExtendLabel";
-import * as sidebarExtendLabel from "./sidebarExtendLabel";
-import * as toolbarExtendButton from "./toolbarExtendButton";
-import * as sidebarExtendButton from "./sidebarExtendButton";
-import defaultValue from "./defaultValue.json";
-import { style } from "./styles";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarExtend from "./sidebarExtend";
+import * as sidebarExtendButton from "./sidebarExtendButton";
+import * as sidebarExtendLabel from "./sidebarExtendLabel";
+import * as sidebarExtendParent from "./sidebarExtendParent";
+import { style } from "./styles";
+import * as toolbarExtend from "./toolbarExtend";
+import * as toolbarExtendButton from "./toolbarExtendButton";
+import * as toolbarExtendLabel from "./toolbarExtendLabel";
+import * as toolbarExtendParent from "./toolbarExtendParent";
 
 class ResetPassword extends EditorComponent {
   static get componentId() {
@@ -35,9 +36,9 @@ class ResetPassword extends EditorComponent {
     this.props.extendParentToolbar(toolbarExtend);
   }
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
   };
 
@@ -53,9 +54,11 @@ class ResetPassword extends EditorComponent {
           sidebarExtendLabel,
           { allowExtend: false }
         ),
-        toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend, null, {
-          allowExtend: false
-        }),
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtend,
+          sidebarExtend,
+          { allowExtend: false }
+        ),
         showLabel: v.showLabel,
         showPlaceholder: v.showPlaceholder
       }

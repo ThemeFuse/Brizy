@@ -51,6 +51,16 @@
     "borderRadius": 12,
     "borderRadiusSuffix": "px",
 
+    "borderTopLeftRadius": 12,
+    "borderTopRightRadius": 12,
+    "borderBottomRightRadius": 12,
+    "borderBottomLeftRadius": 12,
+
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
     "families": {
       "fontFamily": "lato",
       "tabletFontFamily": null,
@@ -140,9 +150,6 @@
     "tabletIconSpacing": null,
     "tabletIconSpacingSuffix": null,
 
-    "tabletBorderRadius": null,
-    "tabletBorderRadiusSuffix": null,
-
     "tabletFontStyle": null,
     "tabletFontFamilyType": null,
     "tabletFontSize": null,
@@ -164,9 +171,6 @@
 
     "mobileIconSpacing": null,
     "mobileIconSpacingSuffix": null,
-
-    "mobileBorderRadius": null,
-    "mobileBorderRadiusSuffix": null,
 
     "mobileFontStyle": null,
     "mobileFontFamilyType": null,

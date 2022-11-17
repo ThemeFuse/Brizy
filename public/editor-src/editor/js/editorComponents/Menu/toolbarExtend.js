@@ -131,12 +131,7 @@ export function getItemsSimple({ v, device, state }) {
           config: {
             min: 0,
             max: 100,
-            units: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
+            units: [{ title: "px", value: "px" }]
           }
         },
         {
@@ -149,12 +144,7 @@ export function getItemsSimple({ v, device, state }) {
           config: {
             min: 0,
             max: 100,
-            units: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
+            units: [{ title: "px", value: "px" }]
           }
         }
       ]
@@ -208,7 +198,7 @@ export function getItemsSimple({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
           }
         }
       },
@@ -266,7 +256,10 @@ export function getItemsSimple({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(subMenuColorHex, v.subMenuColorOpacity)
+            backgroundColor: hexToRgba(
+              subMenuColorHex,
+              dvv("subMenuColorOpacity")
+            )
           }
         }
       },
@@ -381,7 +374,8 @@ export function getItemsMMenu({ v, device, state, context }) {
               options: [
                 {
                   id: "",
-                  type: "filters-dev"
+                  type: "filters-dev",
+                  states: [NORMAL, HOVER]
                 }
               ]
             }
@@ -417,12 +411,7 @@ export function getItemsMMenu({ v, device, state, context }) {
           config: {
             min: 0,
             max: 100,
-            units: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
+            units: [{ title: "px", value: "px" }]
           }
         },
         {
@@ -434,12 +423,7 @@ export function getItemsMMenu({ v, device, state, context }) {
           config: {
             min: 0,
             max: 100,
-            units: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
+            units: [{ title: "px", value: "px" }]
           }
         }
       ]
@@ -472,7 +456,7 @@ export function getItemsMMenu({ v, device, state, context }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(mMenuColorHex, v.mMenuColorOpacity)
+            backgroundColor: hexToRgba(mMenuColorHex, dvv("mMenuColorOpacity"))
           }
         }
       },
@@ -523,21 +507,9 @@ export function getItemsMMenu({ v, device, state, context }) {
       type: "toggle-dev",
       position: 100,
       choices: [
-        {
-          icon: "nc-text-align-left",
-          title: t("Align"),
-          value: "left"
-        },
-        {
-          icon: "nc-text-align-center",
-          title: t("Align"),
-          value: "center"
-        },
-        {
-          icon: "nc-text-align-right",
-          title: t("Align"),
-          value: "right"
-        }
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
       ]
     },
     {

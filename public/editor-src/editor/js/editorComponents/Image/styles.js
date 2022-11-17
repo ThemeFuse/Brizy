@@ -6,22 +6,30 @@ export function style(v, vs, vd, props) {
       standart: [
         "cssStyleElementImageMaxWidthPreview",
         "cssStyleElementImageHeightPreview",
-        "cssStyleBoxShadow|||preview",
+        "cssStyleElementImageBoxShadow|||preview",
         "cssStyleBorder|||preview",
-        "cssStyleBorderRadius|||preview"
+        "cssStyleBorderRadius|||preview",
+        "cssStyleElementImageMaskDropShadow"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
-    ".brz &&:hover:after": {
+    ".brz &&:hover .brz-picture:after": {
       standart: [
-        "cssStyleBoxShadow|||preview",
+        "cssStyleElementImageBoxShadow|||preview",
         "cssStyleBgColor|||preview",
         "cssStyleBgGradient|||preview"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover .brz-picture": {
-      standart: ["cssStyleElementImageFilter|||preview"],
+      standart: [
+        "cssStyleElementImageFilter|||preview",
+        "cssStyleElementImageMaskShape",
+        "cssStyleElementImageCustomImage",
+        "cssStyleElementImageMaskSize",
+        "cssStyleElementImageMaskPosition",
+        "cssStyleElementImageMaskRepeat"
+      ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     }
   };
@@ -36,10 +44,6 @@ export function styleContent(v, vs, vd, props) {
         "cssStyleElementImageMaxWidthEditor",
         "cssStyleElementImageHeightEditor"
       ]
-    },
-    ".brz &&:hover .dynamic-image": {
-      standart: ["cssStyleElementImageFilter|||editor"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     }
   };
 
@@ -50,20 +54,46 @@ export function styleWrapper(v, vs, vd, props) {
   const styles = {
     ".brz &&:hover": {
       standart: [
-        "cssStyleBorder|||editor",
+        "cssStyleElementImageFilter|||editor",
         "cssStyleElementImageWidthWrapper",
         "cssStyleElementImageHeightWrapper|||editor",
         "cssStyleElementImagePosition",
-        "cssStyleBorderRadius|||editor",
-        "cssStyleBoxShadow|||editor"
+        ...(v.maskShape === "none"
+          ? [
+              "cssStyleBorder|||editor",
+              "cssStyleBorderRadius|||editor",
+              "cssStyleElementImageBoxShadow|||editor"
+            ]
+          : []),
+        "cssStyleElementImageMaskShape",
+        "cssStyleElementImageCustomImage",
+        "cssStyleElementImageMaskSize",
+        "cssStyleElementImageMaskPosition",
+        "cssStyleElementImageMaskRepeat"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover:after": {
       standart: [
-        "cssStyleBoxShadow|||editor",
+        "cssStyleElementImageBoxShadow|||editor",
         "cssStyleBgColor|||editor",
         "cssStyleBgGradient|||editor"
+      ],
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+    }
+  };
+
+  return renderStyles({ v, vs, vd, styles, props });
+}
+
+export function styleWrapperContainer(v, vs, vd, props) {
+  const styles = {
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleBorderRadius|||editor",
+        "cssStyleBorder|||editor",
+        "cssStyleElementImageBoxShadow|||editor",
+        "cssStyleElementImageMaskDropShadow"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     }
@@ -76,13 +106,11 @@ export function styleImage(v, vs, vd, props) {
   const styles = {
     ".brz &&:hover": {
       standart: [
-        "cssStyleElementImageFilter|||editor",
         "cssStyleElementImageWidthWrapper",
         "cssStyleElementImageHeightWrapper",
         "cssStyleElementImageMarginLeft",
         "cssStyleElementImageMarginTop"
-      ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      ]
     }
   };
 
@@ -99,16 +127,6 @@ export function stylePicture(v, vs, vd, props) {
         "cssStyleElementImagePosition",
         "cssStyleElementImageSizePreview"
       ]
-    }
-  };
-
-  return renderStyles({ v, vs, vd, styles, props });
-}
-
-export function styleSvg(v, vs, vd, props) {
-  const styles = {
-    ".brz &&:hover": {
-      standart: ["cssStyleElementImageFilter|||editor"]
     }
   };
 

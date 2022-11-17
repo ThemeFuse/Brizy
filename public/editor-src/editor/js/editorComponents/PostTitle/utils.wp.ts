@@ -1,3 +1,4 @@
+import { Choice } from "visual/component/Options/types/dev/Select/types";
 import {
   getCollectionSourceItems,
   getCollectionSourceTypes
@@ -9,7 +10,7 @@ export const getSourceTypeChoices: GetSourceTypeChoices = async () => {
     const items = await getCollectionSourceTypes();
     const newItems = [{ name: "", label: "Auto" }, ...items];
 
-    return newItems.map(el => ({
+    return newItems.map((el) => ({
       value: el.name,
       title: el.label
     }));
@@ -33,3 +34,7 @@ export const getSourceIdChoices: GetSourceIdChoices = async (id: string) => {
     return [];
   }
 };
+
+// is needed to pass webpack warnings
+export const getShopifySourceIdChoices = (): Choice[] => [];
+export const getShopifySourceTypeChoices = (): Choice[] => [];

@@ -1,9 +1,12 @@
+import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
-import { IS_STORY } from "visual/utils/models";
+import { isStory } from "visual/utils/models";
 
 export const title = t("Video");
 
 export function getItems() {
+  const IS_STORY = isStory(Config.getAll());
+
   return [
     {
       id: "sidebarTabs",
@@ -27,6 +30,18 @@ export function getItems() {
                   label: t("Basic"),
                   icon: "nc-styling",
                   options: [
+                    {
+                      id: "padding",
+                      type: "padding-dev",
+                      label: t("Padding"),
+                      disabled: true
+                    },
+                    {
+                      id: "bgPadding",
+                      type: "padding-dev",
+                      label: t("Padding"),
+                      position: 50
+                    },
                     {
                       id: "border",
                       type: "corners-dev",
@@ -57,6 +72,20 @@ export function getItems() {
                   ]
                 }
               ]
+            },
+            {
+              id: "padding",
+              type: "padding-dev",
+              label: t("Padding"),
+              devices: "responsive",
+              disabled: true
+            },
+            {
+              id: "bgPadding",
+              type: "padding-dev",
+              label: t("Padding"),
+              devices: "responsive",
+              position: 50
             }
           ]
         }

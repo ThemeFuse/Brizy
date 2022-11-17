@@ -1,7 +1,11 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 
-export const title = ({ v }) => {
-  switch (v.type) {
+export const title = ({ v, device }) => {
+  const dvv = (key) => defaultValueValue({ v, key, device });
+  const type = dvv("type");
+
+  switch (type) {
     case "posts":
       return t("Posts");
     case "archives":
@@ -13,7 +17,7 @@ export const title = ({ v }) => {
     case "upsell":
       return t("Upsell");
     default:
-      throw new Error(`unknown Posts type ${v.type}`);
+      throw new Error(`unknown Posts type ${type}`);
   }
 };
 

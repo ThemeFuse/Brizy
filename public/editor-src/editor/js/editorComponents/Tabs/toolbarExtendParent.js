@@ -1,11 +1,11 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ key, v, device });
+  const dvv = (key) => defaultValueValue({ key, v, device });
 
   const { hex: contentBgColorHex } = getOptionColorHexByPalette(
     dvv("contentBgColorHex"),
@@ -23,7 +23,7 @@ export function getItems({ v, device }) {
           style: {
             backgroundColor: hexToRgba(
               contentBgColorHex,
-              v.contentBgColorOpacity
+              dvv("contentBgColorOpacity")
             )
           }
         }
@@ -57,7 +57,6 @@ export function getItems({ v, device }) {
                 }
               ]
             },
-
             {
               id: "tabBoxShadow",
               label: t("Shadow"),
@@ -73,10 +72,6 @@ export function getItems({ v, device }) {
         }
       ]
     },
-    {
-      id: "horizontalAlign",
-      type: "toggle-dev",
-      disabled: true
-    }
+    { id: "horizontalAlign", type: "toggle-dev", disabled: true }
   ];
 }

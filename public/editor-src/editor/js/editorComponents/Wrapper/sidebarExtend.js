@@ -1,16 +1,16 @@
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentChoices } from "visual/utils/options";
-import { t } from "visual/utils/i18n";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export function getItems({ v, device, context }) {
+  const dvv = (key) => defaultValueValue({ v, key, device });
+
   // Don't send items down because they will likely
   // be disabled below as Wrapper uses them itself (see toolbar.js)
-  if (v.showToolbar === "on") {
+  if (dvv("showToolbar") === "on") {
     return [];
   }
-
-  const dvv = key => defaultValueValue({ v, key, device });
 
   const isRelative = dvv("elementPosition") === "relative";
   const richTextDC = getDynamicContentChoices(

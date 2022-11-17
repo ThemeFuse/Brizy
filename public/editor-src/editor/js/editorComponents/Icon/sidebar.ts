@@ -1,7 +1,8 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
-import { IS_STORY } from "visual/utils/models";
+import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentChoices } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -25,6 +26,8 @@ export function getItems({
     context.dynamicContent.config,
     DCTypes.richText
   );
+
+  const IS_STORY = isStory(Config.getAll());
 
   return [
     {

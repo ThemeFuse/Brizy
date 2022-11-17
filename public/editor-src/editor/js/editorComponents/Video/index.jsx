@@ -67,9 +67,23 @@ class Video extends EditorComponent {
   };
 
   getVideoSrc(v) {
-    const { video, coverImageSrc, controls, start, end, loop, autoplay } = v;
+    const {
+      video,
+      coverImageSrc,
+      controls,
+      start,
+      end,
+      loop,
+      autoplay,
+      privacyMode,
+      suggestedVideos,
+      muted
+    } = v;
 
     const videoSrc = getVideoData(video);
+
+    const suggestedVideo = suggestedVideos === "any" ? 1 : 0;
+    const videoMuted = muted === "off" ? 0 : 1;
 
     let branding = v.branding;
     if (v.branding === "off") {
@@ -91,11 +105,13 @@ class Video extends EditorComponent {
           controls: controls === "on",
           branding,
           intro,
-          suggestedVideo: false,
+          suggestedVideo,
           start,
           end,
           loop: loop === "on",
-          hasCover: !!coverImageSrc
+          hasCover: !!coverImageSrc,
+          privacyMode,
+          videoMuted
         })
       : "";
   }
@@ -103,6 +119,7 @@ class Video extends EditorComponent {
   //temp
   getAutoplay(v) {
     let autoplay = v.autoplay;
+
     if (v.coverImageSrc) {
       autoplay = "off";
     } else if (v.controls === "off") {
@@ -134,7 +151,8 @@ class Video extends EditorComponent {
       intro,
       start,
       end,
-      loop
+      loop,
+      lazyLoad
     } = v;
     const videoSrc = this.getVideoSrc(v);
     const _end = loop === "on" && end ? end + 1 : end;
@@ -166,7 +184,7 @@ class Video extends EditorComponent {
       return [
         videoDataElem,
         <iframe
-          loading="lazy"
+          loading={lazyLoad === "on" ? "lazy" : "eager"}
           key="iframe"
           allowFullScreen={true}
           className="intrinsic-ignore brz-iframe"
@@ -343,7 +361,7 @@ class Video extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { type, ratio, controls, loop, muted } = v;
+    const { type, ratio, controls, loop, muted, customCSS } = v;
 
     const restrictions = {
       size: {
@@ -411,7 +429,7 @@ class Video extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <CustomCSS selectorName={this.getId()} css={customCSS}>
           <Wrapper {...this.makeWrapperProps({ className: classNameContent })}>
             <BoxResizer
               points={resizerPoints}

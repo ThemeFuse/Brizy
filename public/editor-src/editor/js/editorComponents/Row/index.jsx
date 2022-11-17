@@ -287,35 +287,33 @@ class Row extends EditorComponent {
       <Fragment>
         <SortableElement type="row" useHandle={true}>
           {(sortableElementAttr) => (
-            <ContainerBorder
-              type="row"
-              color="grey"
-              activeBorderStyle="dotted"
-              activateOnContentClick={false}
-              buttonPosition="topLeft"
-              renderButtonWrapper={this.renderToolbar}
-            >
-              {({
-                ref: containerBorderRef,
-                attr: containerBorderAttr,
-                button: ContainerBorderButton,
-                border: ContainerBorderBorder
-              }) => (
-                <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-                  <Animation
-                    ref={containerBorderRef}
-                    component={"div"}
-                    componentProps={{
-                      ...parseCustomAttributes(customAttributes),
-                      ...sortableElementAttr,
-                      ...containerBorderAttr,
-                      id: cssIDPopulation ?? customID,
-                      className: classNameRowContainer
-                    }}
-                    animationClass={animationClassName}
-                  >
-                    <ContextMenu
-                      {...this.makeContextMenuProps(contextMenuConfig)}
+            <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+              <ContainerBorder
+                type="row"
+                color="grey"
+                activeBorderStyle="dotted"
+                activateOnContentClick={false}
+                buttonPosition="topLeft"
+                renderButtonWrapper={this.renderToolbar}
+              >
+                {({
+                  ref: containerBorderRef,
+                  attr: containerBorderAttr,
+                  button: ContainerBorderButton,
+                  border: ContainerBorderBorder
+                }) => (
+                  <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+                    <Animation
+                      ref={containerBorderRef}
+                      component={"div"}
+                      componentProps={{
+                        ...parseCustomAttributes(customAttributes),
+                        ...sortableElementAttr,
+                        ...containerBorderAttr,
+                        id: cssIDPopulation ?? customID,
+                        className: classNameRowContainer
+                      }}
+                      animationClass={animationClassName}
                     >
                       <Roles allow={["admin"]} fallbackRender={() => content}>
                         <ToolbarExtend onEscape={this.handleToolbarEscape}>
@@ -324,11 +322,11 @@ class Row extends EditorComponent {
                         {ContainerBorderButton}
                         {ContainerBorderBorder}
                       </Roles>
-                    </ContextMenu>
-                  </Animation>
-                </CustomCSS>
-              )}
-            </ContainerBorder>
+                    </Animation>
+                  </CustomCSS>
+                )}
+              </ContainerBorder>
+            </ContextMenu>
           )}
         </SortableElement>
         {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
