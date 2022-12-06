@@ -299,7 +299,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 
 		if ( $result === false ) {
 			Brizy_Logger::instance()->error( 'Filed to write font content', [ 'filePath' => $filePath ] );
-			throw new Exception( __( 'Filed to write font content' ) );
+			throw new Exception( __( 'Failed to write font content', 'brizy' ) );
 		}
 
 		return array(
