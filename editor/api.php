@@ -924,7 +924,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             $out[] = [
                 'ID'    => $post->ID,
                 'title' => $post->post_title,
-                'permalink'=>get_permalink($post)
+                'permalink'=>"{{brizy_dc_permalink post_id=\"{$post->ID}\"}}"
             ];
         }
 
