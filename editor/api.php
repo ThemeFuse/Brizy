@@ -921,10 +921,15 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
         $out = [];
         foreach ($posts as $post) {
+	        $pt = get_post_type_object( $post->post_type );
             $out[] = [
                 'ID'    => $post->ID,
                 'title' => $post->post_title,
-                'permalink'=>"{{brizy_dc_permalink post_id=\"{$post->ID}\"}}"
+                'permalink'=>"{{brizy_dc_permalink post_id=\"{$post->ID}\"}}",
+                'postType' => [ 'type'          => $post->post_type,
+                                'singular_name' => $pt->labels->singular_name,
+                                'name'          => $pt->labels->name
+                ]
             ];
         }
 
