@@ -65,7 +65,7 @@ class Brizy_Admin_Membership_Membership {
 				'role' => 'default'
 			],
 			[
-				'name' => esc_html__( 'Not Logged', 'brizy' ),
+				'name' => esc_html__( 'Not Logged In', 'brizy' ),
 				'role' => 'not_logged'
 			],
 			[
