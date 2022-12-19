@@ -198,35 +198,36 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client
     {
 
         $blockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
-
-        $body = apply_filters(
-            'brizy_compiler_params',
-            array(
-                'page_id'            => (int)$config['wp']['page'],
-                'free_version'       => BRIZY_EDITOR_VERSION,
-                'free_url'           => Brizy_Config::getCompilerDownloadUrl(),
-                'config_json'        => json_encode($config),
-                'pages_json'         => json_encode(
-                    array(
-                        array(
-                            'id'       => (int)$config['wp']['page'],
-                            'data'     => $page_data,
-                            'is_index' => true,
-                        ),
-                    )
-                ),
-                'project_json'       => json_encode($project->createResponse()),
-                'global_blocks_json' => json_encode(
-                    $blockManager->createResponseForEntities($blockManager->getEntities([]))
-                ),
-            )
-        );
-
+	    $urlBuilder   = new Brizy_Editor_UrlBuilder( $project );
+	    $body         = apply_filters(
+		    'brizy_compiler_params',
+		    array(
+			    'page_id'            => (int) $config['wp']['page'],
+			    'free_version'       => BRIZY_EDITOR_VERSION,
+			    'free_url'           => Brizy_Config::getCompilerDownloadUrl(),
+			    'config_json'        => json_encode( $config ),
+			    'pages_json'         => json_encode(
+				    array(
+					    array(
+						    'id'       => (int) $config['wp']['page'],
+						    'data'     => $page_data,
+						    'is_index' => true,
+					    ),
+				    )
+			    ),
+			    'project_json'       => json_encode( $project->createResponse() ),
+			    'global_blocks_json' => json_encode(
+				    $blockManager->createResponseForEntities( $blockManager->getEntities( [] ) )
+			    ),
+			    'api'                => [
+				    'imageUrlPattern' => $urlBuilder->mediaUrlPattern()
+			    ]
+		    )
+	    );
 
         $page = parent::request($compiler_url, array('body' => $body), 'POST')->get_response_body();
 
         $template_context = array(
-
             'editorData' => array(
                 'urls'            => array(
                     'assets'      => $config['urls']['assets'],
@@ -254,7 +255,6 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client
                 'pro'  => (isset($blocks['proStyles']) ? $blocks['proStyles'] : []),
             ],
         ];
-
     }
 
     /**
