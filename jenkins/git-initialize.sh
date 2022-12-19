@@ -4,7 +4,8 @@ set -e
 # Deatached head fix.
 echo -e "\nGiT Cleanup"
 echo -e "-----------------------------------------------------------------------------"
-git merge --abort
+git reset --hard || true
+git merge --abort || true
 git clean -fd
 git fetch origin
 
