@@ -107,9 +107,10 @@ class Brizy_Public_Main {
 
 		wp_enqueue_media();
 
+		$urlBuilder = new Brizy_Editor_UrlBuilder();
 		$config_object    = $this->getConfigObject();
 		$assets_url       = $config_object->urls->assets;
-		$client_asset_url = $this->urlBuilder->plugin_url("/public");
+		$client_asset_url = $urlBuilder->plugin_url("/public");
 		$editor_js_deps   = [ 'brizy-editor-polyfill', 'brizy-editor-vendor' ];
 		$editor_js_config = json_encode( $config_object );
 
