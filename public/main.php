@@ -111,10 +111,12 @@ class Brizy_Public_Main
 
         wp_enqueue_media();
 
-        $config_object = $this->getConfigObject();
-        $assets_url = $config_object->urls->assets;
-        $editor_js_deps = ['brizy-editor-polyfill', 'brizy-editor-vendor'];
-        $editor_js_config = json_encode($config_object);
+		$urlBuilder = new Brizy_Editor_UrlBuilder();
+		$config_object    = $this->getConfigObject();
+		$assets_url       = $config_object->urls->assets;
+		$client_asset_url = $urlBuilder->plugin_url("/public");
+		$editor_js_deps   = [ 'brizy-editor-polyfill', 'brizy-editor-vendor' ];
+		$editor_js_config = json_encode( $config_object );
 
         if (class_exists('WooCommerce')) {
             $editor_js_deps[] = 'zoom';
