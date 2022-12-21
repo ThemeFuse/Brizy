@@ -78,6 +78,18 @@ class Brizy_Editor_Editor_Editor
         }
     }
 
+    public function getClientConfig($context)
+    {
+        $config = [
+            'hash'          => wp_create_nonce(Brizy_Editor_API::nonce),
+            'editorVersion' => BRIZY_EDITOR_VERSION,
+            'url'           => set_url_scheme(admin_url('admin-ajax.php')),
+            'actions'       => $this->getApiActions(),
+        ];
+
+        return $config;
+    }
+
     /**
      * @throws Exception
      */
@@ -184,14 +196,14 @@ class Brizy_Editor_Editor_Editor
         );
         $manager           = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
-        $config = $this->addRecaptchaAccounts($manager, $config, $context);
-        $config = $this->addSocialAccounts($manager, $config, $context);
-        $config = $this->addWpPostTypes($config, $context);
-        $config = $this->addTemplateFields($config, $mode === 'template', $wp_post_id, $context);
-        $config = $this->getApiActions($config, $context);
-        $config = $this->addGlobalBlocksData($config);
-        $config = $this->addGlobalBlocksData($config);
-        $config = $this->getPostLoopSources($config, $mode === 'template', $wp_post_id, $context);
+        $config              = $this->addRecaptchaAccounts($manager, $config, $context);
+        $config              = $this->addSocialAccounts($manager, $config, $context);
+        $config              = $this->addWpPostTypes($config, $context);
+        $config              = $this->addTemplateFields($config, $mode === 'template', $wp_post_id, $context);
+        $config              = $this->addGlobalBlocksData($config);
+        $config              = $this->addGlobalBlocksData($config);
+        $config              = $this->getPostLoopSources($config, $mode === 'template', $wp_post_id, $context);
+        $config['wp']['api'] = $this->getApiActions($config, $context);
 
         self::$config[$cachePostId] = apply_filters('brizy_editor_config', $config, $context);
 
@@ -1027,15 +1039,14 @@ class Brizy_Editor_Editor_Editor
     /**
      * @return array
      */
-    public function getApiActions($config, $context)
+    public function getApiActions($config = [], $context = null)
     {
 
         $pref = Brizy_Editor::prefix();
 
-        $config['wp']['api'] = array(
-            'hash' => wp_create_nonce(Brizy_Editor_API::nonce),
-            'url'  => set_url_scheme(admin_url('admin-ajax.php')),
-
+        $actions = array(
+            'hash'                       => wp_create_nonce(Brizy_Editor_API::nonce),
+            'url'                        => set_url_scheme(admin_url('admin-ajax.php')),
             'heartBeat'                  => $pref.Brizy_Editor_API::AJAX_HEARTBEAT,
             'takeOver'                   => $pref.Brizy_Editor_API::AJAX_TAKE_OVER,
             'lockProject'                => $pref.Brizy_Editor_API::AJAX_LOCK_PROJECT,
@@ -1125,7 +1136,7 @@ class Brizy_Editor_Editor_Editor
 
         );
 
-        return $config;
+        return $actions;
     }
 
     /**
