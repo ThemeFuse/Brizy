@@ -78,6 +78,18 @@ class Brizy_Editor_Editor_Editor
         }
     }
 
+    public function getClientConfig($context)
+    {
+        $config = [
+            'hash'          => wp_create_nonce(Brizy_Editor_API::nonce),
+            'editorVersion' => BRIZY_EDITOR_VERSION,
+            'url'           => set_url_scheme(admin_url('admin-ajax.php')),
+            'actions'       => $this->getApiActions(),
+        ];
+
+        return $config;
+    }
+
     /**
      * @throws Exception
      */
@@ -1052,15 +1064,14 @@ class Brizy_Editor_Editor_Editor
     /**
      * @return array
      */
-    public function getApiActions($config, $context)
+    public function getApiActions($config = [], $context = null)
     {
 
         $pref = Brizy_Editor::prefix();
 
-        $config['wp']['api'] = array(
-            'hash' => wp_create_nonce(Brizy_Editor_API::nonce),
-            'url'  => set_url_scheme(admin_url('admin-ajax.php')),
-
+        $actions = array(
+            'hash'                       => wp_create_nonce(Brizy_Editor_API::nonce),
+            'url'                        => set_url_scheme(admin_url('admin-ajax.php')),
             'heartBeat'                  => $pref.Brizy_Editor_API::AJAX_HEARTBEAT,
             'takeOver'                   => $pref.Brizy_Editor_API::AJAX_TAKE_OVER,
             'lockProject'                => $pref.Brizy_Editor_API::AJAX_LOCK_PROJECT,
@@ -1150,7 +1161,7 @@ class Brizy_Editor_Editor_Editor
 
         );
 
-        return $config;
+        return $actions;
     }
 
     /**
