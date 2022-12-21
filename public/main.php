@@ -111,12 +111,16 @@ class Brizy_Public_Main
 
         wp_enqueue_media();
 
-        $urlBuilder       = new Brizy_Editor_UrlBuilder();
-        $config_object    = $this->getConfigObject();
+        $urlBuilder           = new Brizy_Editor_UrlBuilder();
+        $config_object        = $this->getConfigObject();
+        $client_config_object = $this->getClientConfigObject();
+
+
         $assets_url       = $config_object->urls->assets;
         $client_asset_url = $urlBuilder->plugin_url("/public");
         $editor_js_deps   = ['brizy-editor-polyfill', 'brizy-editor-vendor'];
         $editor_js_config = json_encode($config_object);
+        $client_js_config = json_encode($client_config_object);
 
         if (class_exists('WooCommerce')) {
             $editor_js_deps[] = 'zoom';
@@ -144,9 +148,7 @@ class Brizy_Public_Main
         wp_add_inline_script('brizy-editor-vendor', "var __VISUAL_CONFIG__ = ${editor_js_config}; ", 'after');
         wp_add_inline_script(
             'brizy-client-editor',
-            "var __BRZ_PLUGIN_ENV__ = { hash: '".wp_create_nonce(
-                Brizy_Editor_API::nonce
-            )."'; editorVersion: '".BRIZY_EDITOR_VERSION."'; };",
+            "var __BRZ_PLUGIN_ENV__ = ${client_js_config}; ",
             'before'
         );
 
@@ -428,6 +430,15 @@ class Brizy_Public_Main
     {
         $editor        = Brizy_Editor_Editor_Editor::get(Brizy_Editor_Project::get(), $this->post);
         $config_json   = json_encode($editor->config($context));
+        $config_object = json_decode($config_json);
+
+        return $config_object;
+    }
+
+    private function getClientConfigObject($context = Brizy_Editor_Editor_Editor::EDITOR_CONTEXT)
+    {
+        $editor        = Brizy_Editor_Editor_Editor::get(Brizy_Editor_Project::get(), $this->post);
+        $config_json   = json_encode($editor->getClientConfig($context));
         $config_object = json_decode($config_json);
 
         return $config_object;
