@@ -3,12 +3,9 @@
 # Deatached head fix.
 echo -e "\nGiT Cleanup"
 echo -e "-----------------------------------------------------------------------------"
-git merge --abort
-git clean -fd
-git fetch origin
 
-echo -e "\nCheckout: $1"
-echo -e "-----------------------------------------------------------------------------"
-
-git checkout $1
-git reset --hard origin/$1
+git checkout .;
+git fetch;
+git clean -fd;
+git checkout $1;
+git reset --hard origin/$1;
