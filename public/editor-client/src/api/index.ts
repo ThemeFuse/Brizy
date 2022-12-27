@@ -1,6 +1,7 @@
 import { getConfig } from "../config";
 
 //#region Common Utils Request & PersistentRequest
+
 export function request(
   url: string,
   config: RequestInit = {}
@@ -25,13 +26,48 @@ export const makeUrl = (
   return url.toString();
 };
 
-export function getClasses(): Promise<unknown> {
-  const { url: _url, hash, getSymbols, editorVersion } = getConfig();
-  const url = makeUrl(_url, {
-    action: getSymbols,
-    version: editorVersion,
+// export function getClasses(): Promise<unknown> {
+//   const { url: _url, hash, getSymbols, editorVersion } = getConfig();
+//   const url = makeUrl(_url, {
+//     action: getSymbols,
+//     version: editorVersion,
+//     hash,
+//   });
+//
+//   return request(url, { method: "GET" });
+// }
+
+//#region Image
+
+export const getImageUid = async (id: string): Promise<{ uid: string }> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error("Invalid __BRZ_PLUGIN_ENV__");
+  }
+
+  const { pageId, url, hash, editorVersion, actions } = config;
+
+  const body = new URLSearchParams({
     hash,
+    version: editorVersion,
+    action: actions.getMediaUid,
+    post_id: pageId,
+    attachment_id: id
   });
 
-  return request(url, { method: "GET" });
-}
+  const r = await request(url, {
+    method: "POST",
+    body
+  });
+
+  const rj = await r.json();
+
+  if (rj.success) {
+    return rj.data;
+  } else {
+    throw rj;
+  }
+};
+
+//#endregion

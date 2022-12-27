@@ -1,5 +1,17 @@
+import { getConfig } from "./config";
+import { addMedia } from "./media/addMedia";
+
+const config = getConfig();
+
+if (!config) {
+  throw new Error("Invalid __BRZ_PLUGIN_ENV__");
+}
+
 const api = {
-  // All API need to be here
+  media: {
+    addMedia,
+    mediaResizeUrl: config.actions.mediaResizeUrl
+  }
 };
 
 if (window.__VISUAL_CONFIG__) {

@@ -6,6 +6,7 @@ const IS_PRODUCTION = Boolean(argv_.production);
 const WATCH = Boolean(argv_.watch);
 
 const define = {
+  "process.env": JSON.stringify("{}"),
   "process.env.IS_PRODUCTION": JSON.stringify(IS_PRODUCTION),
 };
 
@@ -19,7 +20,13 @@ esbuild
     watch: WATCH,
     sourcemap: IS_PRODUCTION ? false : "inline",
     format: "iife",
-    define: define,
+    define,
   })
-  .then(() => console.log("⚡ Done"))
+  .then(() => {
+    if (WATCH) {
+      console.log("WP API Client: ⚾ Watching for changes...");
+    } else {
+      console.log("WP API Client: ⚡ Done");
+    }
+  })
   .catch(() => process.exit(1));
