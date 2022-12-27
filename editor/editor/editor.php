@@ -85,6 +85,7 @@ class Brizy_Editor_Editor_Editor
             'editorVersion' => BRIZY_EDITOR_VERSION,
             'url'           => set_url_scheme(admin_url('admin-ajax.php')),
             'actions'       => $this->getApiActions(),
+            'pageId'        => $this->post->getWpPostId()
         ];
 
         return $config;
@@ -1158,7 +1159,7 @@ class Brizy_Editor_Editor_Editor
             'symbolUpdate'               => $pref.Brizy_Admin_Symbols_Api::UPDATE_ACTION,
             'symbolDelete'               => $pref.Brizy_Admin_Symbols_Api::DELETE_ACTION,
             'symbolList'                 => $pref.Brizy_Admin_Symbols_Api::LIST_ACTION,
-
+            'mediaResizeUrl'             => home_url()
         );
 
         return $actions;
