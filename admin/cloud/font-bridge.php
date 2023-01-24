@@ -74,12 +74,12 @@ class Brizy_Admin_Cloud_FontBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		$result   = file_put_contents( $filePath, $content );
 
 		if ( $result === false ) {
-			Brizy_Logger::instance()->critical( 'Filed to write font content',
+			Brizy_Logger::instance()->critical( 'Failed to save font in a temporary folder',
 				[
 					'url'      => $url,
 					'filePath' => $filePath
 				] );
-			throw new Exception( 'Filed to write font content' );
+			throw new Exception( 'Failed to save font in a temporary folder' );
 		}
 
 		return array(
