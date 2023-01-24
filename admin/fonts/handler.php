@@ -53,35 +53,29 @@ class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
 
 		header( 'Content-Type: text/css' );
 
-		$twigEngine = Brizy_TwigEngine::instance( path_join( BRIZY_PLUGIN_PATH, "admin/fonts/views" ) );
-		$twigEngine->getEnvironment()
-		           ->addFilter( new Twig_SimpleFilter( 'fontStyle', function ( $weight ) {
-			           $weight = preg_replace( "/\d+/", "", $weight );
+		$css = '';
 
-			           if ( trim( $weight ) == "" ) {
-				           return 'normal';
-			           }
+		foreach ( $contexts as $family => $fonts ) {
 
-			           return $weight;
-		           } ) );
-		$twigEngine->getEnvironment()
-		           ->addFilter( new Twig_SimpleFilter( 'fontType', function ( $type ) {
+			$css .= "/* $family */";
 
-			           if ( $type == 'ttf' ) {
-				           return 'truetype';
-			           } else {
-				           return $type;
-			           }
+			foreach ( $fonts as $weight => $types ) {
 
-		           } ) );
-		$twigEngine->getEnvironment()->addFilter( new Twig_SimpleFilter( 'fontWeight', function ( $weight ) {
-			return trim( preg_replace( "/[^\d]+/", "", $weight ) );
-		} ) );
+				foreach ( $types as $type => $url ) {
 
-		echo $twigEngine->render( 'fonts.css.twig', array(
-			'fonts' => $contexts
-		) );
+					$css .= "
+						@font-face {
+				            font-family: '$family';
+				            font-style: " . ( ( $style = trim( preg_replace( "/\d+/", "", $weight ) ) ) ? $style : 'normal' ) . ";
+				            font-weight: " . trim( preg_replace( "/[^\d]+/", "", $weight ) ) . ";
+				            src: local('$family'), url($url) format('" . ( $type == 'ttf' ? 'truetype' : $type ) . "');
+				        }
+					";
+				}
+			}
+		}
 
+		echo $css;
 		exit;
 	}
 

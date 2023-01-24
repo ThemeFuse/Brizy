@@ -83,7 +83,9 @@ class Brizy_Admin_Main {
 			$focalPoint = array( 'x' => 50, 'y' => 50 );
 		}
 
-		$params = array(
+		//return $twigEngine->render( 'featured-image.html.twig', $params );
+
+		return Brizy_Admin_View::render( 'featured-image', [
 			'focalPoint'        => $focalPoint,
 			'thumbnailId'       => $thumbId,
 			'thumbnailSrc'      => wp_get_attachment_image_src( $thumbId, 'original' ),
@@ -91,9 +93,7 @@ class Brizy_Admin_Main {
 			'edit_update_label' => __( 'Edit or Update Image' ),
 			'remove_label'      => $post_type_object->labels->remove_featured_image,
 			'pluginUrl'         => $urlBuilder->editor_build_url()
-		);
-
-		return $twigEngine->render( 'featured-image.html.twig', $params );
+        ] );
 	}
 
 	/**
@@ -129,6 +129,11 @@ class Brizy_Admin_Main {
 	 * @return mixed
 	 */
 	public function display_post_states( $post_states, $post ) {
+
+		if ( ! $post ) {
+			return $post_states;
+		}
+
 		try {
 			if ( Brizy_Editor_Entity::isBrizyEnabled($post->ID) ) {
 				$post_states['brizy'] = __( Brizy_Editor::get()->get_name() );
