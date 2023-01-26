@@ -157,7 +157,7 @@ class Brizy_Editor_Editor_Editor {
                 'l10n' => $this->getTexts(),
                 'pageData' => apply_filters('brizy_page_data', array()),
                 'availableRoles' => Brizy_Admin_Membership_Membership::roleList(),
-                'usersCanRegister' => get_option('users_can_register'),
+                'usersCanRegister' => $this->usersCanRegister(),
             ),
             'mode' => $mode,
             'applications' => array(
@@ -1165,4 +1165,12 @@ class Brizy_Editor_Editor_Editor {
 		return $sizes;
 	}
 
+	private function usersCanRegister() {
+
+		if ( is_multisite() ) {
+			return 'user' === apply_filters( 'wpmu_active_signup', get_site_option( 'registration', 'none' ) ) ? '1' : '0';
+		}
+
+		return get_option('users_can_register') ? '1' : '0';
+	}
 }
