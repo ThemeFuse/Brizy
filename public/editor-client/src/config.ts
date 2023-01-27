@@ -9,6 +9,7 @@ import { MValue } from "./utils/types";
 interface Actions {
   getMediaUid: string;
   mediaResizeUrl: string;
+  setProject: string;
 }
 
 interface Config {
@@ -27,6 +28,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   mediaResizeUrl: pipe(
     mPipe(Obj.readKey("mediaResizeUrl"), Str.read),
     throwOnNullish("Invalid actions: mediaResizeUrl")
+  ),
+  setProject: pipe(
+    mPipe(Obj.readKey("setProject"), Str.read),
+    throwOnNullish("Invalid actions: setProject")
   )
 });
 
