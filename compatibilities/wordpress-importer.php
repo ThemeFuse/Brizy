@@ -35,7 +35,7 @@ class Brizy_Compatibilities_WordpressImporter {
 
 		if ( count( $incompatibleBrizyPosts ) ) {
 			foreach ( $incompatibleBrizyPosts as $brizy_post ) {
-				printf( __( 'Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s ', 'brizy' ),
+				printf( __( 'Importing Brizy post &#8220;%s&#8221; will be skipped due to incompatible version: %s', 'brizy' ),
 					esc_html( $brizy_post['post_title'] ), esc_html( $brizy_post['version'] ) );
 				echo '<br />';
 			}
