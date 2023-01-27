@@ -1,5 +1,6 @@
 import { getConfig } from "./config";
 import { addMedia } from "./media/addMedia";
+import { updateProject } from "./project/updateProject";
 
 const config = getConfig();
 
@@ -11,7 +12,8 @@ const api = {
   media: {
     addMedia,
     mediaResizeUrl: config.actions.mediaResizeUrl
-  }
+  },
+  onProjectUpdate: updateProject
 };
 
 if (window.__VISUAL_CONFIG__) {
