@@ -1,22 +1,5 @@
-import {
-  styleElementRichTextMarginTop,
-  styleElementRichTextMarginBottom,
-  styleElementRichTextGradient,
-  styleElementRichTextDCGradient,
-  styleElementRichTextBGImagePositionX,
-  styleElementRichTextBGImagePositionY,
-  styleElementRichTextFontFamily
-} from "visual/utils/style2/styleElementRichText";
-import { IS_STORY } from "../models";
-import { styleState, styleTypography2FontSize } from "../style2";
-import { CSSValue } from "../style2/types";
-import { cssStyleTypography3FontSize } from "./cssStyleTypography2";
-import { styleBgImage, styleExportBgImage } from "visual/utils/style2";
 import { ElementModel } from "visual/component/Elements/Types";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
-import { State } from "visual/utils/stateMode";
-import { capByPrefix } from "visual/utils/string";
+import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import {
   cssStyleTypography2FontFamily,
@@ -25,7 +8,25 @@ import {
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
+import { isStory } from "visual/utils/models";
+import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { State } from "visual/utils/stateMode";
+import { capByPrefix } from "visual/utils/string";
+import { styleBgImage, styleExportBgImage } from "visual/utils/style2";
+import {
+  styleElementRichTextBGImagePositionX,
+  styleElementRichTextBGImagePositionY,
+  styleElementRichTextDCGradient,
+  styleElementRichTextFontFamily,
+  styleElementRichTextGradient,
+  styleElementRichTextMarginBottom,
+  styleElementRichTextMarginTop
+} from "visual/utils/style2/styleElementRichText";
+import { styleState, styleTypography2FontSize } from "../style2";
+import { CSSValue } from "../style2/types";
 import { cssStyleColor } from "./cssStyleColor";
+import { cssStyleTypography3FontSize } from "./cssStyleTypography2";
 
 export function cssStyleElementRichTextMartinTop(d: CSSValue): string {
   const marginTop = styleElementRichTextMarginTop(d);
@@ -68,7 +69,7 @@ export function cssStyleElementRichTextFontSize(d: CSSValue): string {
     defaultValueValue({ v, key, device, state });
 
   const fontStyle = dvv("typographyFontStyle");
-  if (IS_STORY) {
+  if (isStory(Config.getAll())) {
     if (fontStyle) {
       // Keys is lowercase because have problems in backend export HTML
       return `font-size:var(--brz-${fontStyle}StoryFontSize);`.toLowerCase();

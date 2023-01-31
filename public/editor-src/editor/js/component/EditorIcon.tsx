@@ -1,6 +1,6 @@
+import classnames from "classnames";
 import React, { CSSProperties, MouseEvent, ReactElement, Ref } from "react";
 import _ from "underscore";
-import classnames from "classnames";
 import { editorIconUrl } from "visual/utils/icons";
 
 export type EditorIconProps = {
@@ -22,7 +22,10 @@ const _EditorIcon = (
     style = {},
     onClick = _.noop
   } = props;
-  const className = classnames("brz-icon-svg brz-ed-icon-svg", _className);
+  const className = classnames(
+    "brz-icon-svg brz-ed-icon-svg align-[initial]",
+    _className
+  );
 
   return (
     <svg ref={ref} className={className} onClick={onClick} style={style}>

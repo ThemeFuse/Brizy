@@ -1,27 +1,28 @@
-import React, { FC, useCallback, useMemo } from "react";
 import classNames from "classnames";
-import { getColorPaletteColors } from "visual/utils/color";
+import React, { FC, useCallback, useMemo } from "react";
+import { useDispatch } from "react-redux";
 import {
   TextShadow as ShadowControl,
   Props as ShadowProps
 } from "visual/component/Controls/TextShadow";
 import {
-  Value as CValue,
-  Meta as CMeta
+  Meta as CMeta,
+  Value as CValue
 } from "visual/component/Controls/TextShadow/types";
-import { defaultValue, toElementModel, fromElementModel } from "./converters";
-import { useDispatch } from "react-redux";
-import { updateUI } from "visual/redux/actions2";
 import * as Option from "visual/component/Options/Type";
-import * as Value from "./types/Value";
-import { WithClassName } from "visual/utils/options/attributes";
 import { OptionType } from "visual/component/Options/Type";
-import * as Utils from "./utils";
-import { mPipe } from "visual/utils/fp";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { updateUI } from "visual/redux/actions2";
+import { getColorPaletteColors } from "visual/utils/color";
 import { Palette } from "visual/utils/color/Palette";
+import { mPipe } from "visual/utils/fp";
+import { WithClassName } from "visual/utils/options/attributes";
+import { defaultValue, fromElementModel, toElementModel } from "./converters";
+import * as Value from "./types/Value";
+import * as Utils from "./utils";
 import {
-  options,
   SelectType,
+  options,
   selectTypeFromValue,
   valueFromSelectType
 } from "./utils";
@@ -75,7 +76,7 @@ export const TextShadow: OptionType<Value.Value> & FC<Props> = ({
       dispatch(
         updateUI("leftSidebar", {
           isOpen: true,
-          drawerContentType: "styling"
+          drawerContentType: LeftSidebarOptionsIds.globalStyle
         })
       ),
     [dispatch]

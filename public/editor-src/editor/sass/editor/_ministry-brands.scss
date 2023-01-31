@@ -1,0 +1,6 @@
+.brz-ministryBrands {
+  &__disable--click,
+  :is(a, audio, video):active {
+    pointer-events: none;
+  }
+}

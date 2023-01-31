@@ -15,11 +15,12 @@ import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import Config from "visual/global/Config";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { isPopup } from "visual/utils/models";
 import {
   defaultValueValue,
   validateKeyByProperty
@@ -28,9 +29,9 @@ import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import * as Str from "visual/utils/string/specs";
 import { styleSizeSize } from "visual/utils/style2";
+import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
-import Items from "./Items";
 import * as sidebarConfig from "./sidebar";
 import { styleAnimation, styleContainer, styleRow } from "./styles";
 import * as toolbarConfig from "./toolbar";
@@ -71,7 +72,7 @@ class Row extends EditorComponent {
 
     if (
       value.items.length === 0 &&
-      (!inPopup || !inPopup2 || !IS_GLOBAL_POPUP)
+      (!inPopup || !inPopup2 || !isPopup(Config.getAll()))
     ) {
       this.selfDestruct();
     } else {

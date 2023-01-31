@@ -1,5 +1,5 @@
-import { useWindowSize } from "core/src/hooks";
 import React, { ReactElement } from "react";
+import { useWindowSize } from "core/hooks";
 import { GridSimulatorData } from "./types";
 import {
   gridSimulatorCellHeight,

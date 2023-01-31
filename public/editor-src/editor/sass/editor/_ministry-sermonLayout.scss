@@ -1,0 +1,9 @@
+.brz-sermonLayout {
+  .brz-sermonLayout__filter--form,
+  .brz-sermonLayout__filter--form-search,
+  video,
+  iframe,
+  audio {
+    pointer-events: none;
+  }
+}

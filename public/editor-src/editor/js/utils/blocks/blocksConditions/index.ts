@@ -1,8 +1,8 @@
 import produce from "immer";
 import Config from "visual/global/Config";
 import {
-  isCloud,
   isCMS,
+  isCloud,
   isCollectionPage,
   isCustomer,
   isEcwidCategoryPage,
@@ -21,7 +21,7 @@ import {
   GlobalBlockPosition,
   Page
 } from "visual/types";
-import { IS_TEMPLATE } from "visual/utils/models";
+import { isTemplate } from "visual/utils/models";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import { canUseCondition } from "../getAllowedGBIds";
 import { isCollectionItemRule } from "../guards";
@@ -349,7 +349,7 @@ export const getCurrentRule = (
   }
 
   if (isWp(config)) {
-    if (IS_TEMPLATE) {
+    if (isTemplate(config)) {
       group = TEMPLATES_GROUP_ID;
       type = TEMPLATE_TYPE;
     } else {

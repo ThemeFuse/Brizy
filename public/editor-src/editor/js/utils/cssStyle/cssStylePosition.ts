@@ -8,6 +8,10 @@ import { capByPrefix } from "visual/utils/string";
 import * as Str from "visual/utils/string/specs";
 import { styleZIndex } from "visual/utils/style2";
 import { CSSValue } from "visual/utils/style2/types";
+import { checkValue } from "../checkValue";
+
+type Direction = "top" | "right" | "bottom" | "left";
+const getDirection = checkValue<Direction>(["top", "right", "bottom", "left"]);
 
 export function cssStylePosition(d: CSSValue): string {
   const zIndex = styleZIndex(d);
@@ -130,4 +134,30 @@ export function cssStyleIconPosition({
     iconPosition === "left" ? "row nowrap" : "row-reverse nowrap";
 
   return position === undefined ? "" : `flex-flow:${position};`;
+}
+
+export function cssStylePositionElement({
+  v,
+  device,
+  state,
+  prefix = "",
+  direction = ""
+}: CSSValue & { direction: string }): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const position = dvv(capByPrefix(prefix, "position"));
+  const suffix = dvv(capByPrefix(prefix, "positionSuffix"));
+
+  switch (getDirection(direction)) {
+    case "top":
+      return `top:${position}${suffix};`;
+    case "right":
+      return `right:${position}${suffix};`;
+    case "bottom":
+      return `bottom:${position}${suffix};`;
+    case "left":
+      return `left:${position}${suffix};`;
+    case undefined:
+      return "";
+  }
 }

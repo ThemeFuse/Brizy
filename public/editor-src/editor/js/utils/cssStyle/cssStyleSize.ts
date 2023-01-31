@@ -1,4 +1,5 @@
-import { IS_STORY } from "visual/utils/models";
+import Config from "visual/global/Config";
+import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 import * as Str from "visual/utils/string/specs";
@@ -12,7 +13,7 @@ import {
   styleSizeWidth
 } from "visual/utils/style2";
 import { CSSValue } from "visual/utils/style2/types";
-import { mApply, MValue } from "visual/utils/value";
+import { MValue, mApply } from "visual/utils/value";
 import { checkValue } from "../checkValue";
 
 type Get = (k: string) => MValue<unknown>;
@@ -75,7 +76,9 @@ export function cssStyleSizeWidthStoryOnly({
 }: CSSValue): string {
   const width = styleSizeWidth({ v, device, state, prefix });
 
-  return !IS_STORY || width === undefined ? "" : `width:${width}%;`;
+  return !isStory(Config.getAll()) || width === undefined
+    ? ""
+    : `width:${width}%;`;
 }
 
 export function cssStyleSizeWidthHeight({

@@ -17,7 +17,8 @@ export function style(v, vs, vd, props) {
       standart: [
         "cssStyleElementImageBoxShadow|||preview",
         "cssStyleBgColor|||preview",
-        "cssStyleBgGradient|||preview"
+        "cssStyleBgGradient|||preview",
+        "cssStyleBorderRadius|||preview"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },

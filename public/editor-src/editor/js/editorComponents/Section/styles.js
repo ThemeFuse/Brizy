@@ -13,7 +13,7 @@ export function styleSection(v, vs, vd) {
     ".brz &&:hover.brz-section .brz-section__content": {
       standart: ["cssStyleSectionHeightStyle", "cssStyleDisplayFlex"]
     },
-    ".brz &&:hover .brz-container": {
+    ".brz && .brz-container": {
       standart: ["cssStyleFlexColumnVerticalAlign"]
     },
     ".brz && > .slick-slider > .brz-slick-slider__dots:hover": {
@@ -33,9 +33,9 @@ export function styleSection(v, vs, vd) {
     styles[".brz &&:hover .brz-ed-collapsible"] = {
       standart: ["cssStyleSectionToolbarOffset"]
     };
-    styles[".brz &&:hover .brz-container"].interval = [
-      "cssStyleVisibleMode|||editor"
-    ];
+    styles[".brz &&:hover .brz-container"] = {
+      interval: ["cssStyleVisibleMode|||editor"]
+    };
     styles[".brz &&:hover .brz-section__content > .brz-bg"] = {
       interval: ["cssStyleVisibleMode|||editor"]
     };

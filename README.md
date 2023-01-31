@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.1.1<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.4.13<br>
+Stable tag: 2.4.15<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.15 - 2023-01-31
+* Fixed: Menu hamburger - items link on responsive mode
 
 ### 2.4.13 - 2022-11-17
 

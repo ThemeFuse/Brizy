@@ -7,5 +7,5 @@ export interface Props {
 }
 
 export function DisabledIcon({ label, icon }: Props): ReactElement {
-  return <FatCheckIcon icon={icon} label={label} disabled={true} />;
+  return <FatCheckIcon icon={icon} label={label} />;
 }

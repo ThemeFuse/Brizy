@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, {
   ChangeEventHandler,
   FC,
@@ -6,12 +7,11 @@ import React, {
   useRef,
   useState
 } from "react";
-import classNames from "classnames";
-import { WithClassName, WithSize } from "visual/utils/options/attributes";
 import EditorIcon from "visual/component/EditorIcon";
-import * as Num from "visual/utils/math/number";
-import { inputValue } from "visual/utils/react";
 import { pipe } from "visual/utils/fp";
+import * as Num from "visual/utils/math/number";
+import { WithClassName, WithSize } from "visual/utils/options/attributes";
+import { inputValue } from "visual/utils/react";
 
 type Action = "increase" | "decrease" | "none";
 
@@ -37,12 +37,14 @@ export const NumberComponent: FC<Props> = ({
   const baseClass = "brz-ed-control__number";
   const _className = classNames(baseClass, `${baseClass}--${size}`, className);
   const clear = useCallback((): void => setAction("none"), [setAction]);
-  const handleIncrease = useCallback((): void => setAction("increase"), [
-    setAction
-  ]);
-  const handleDecrease = useCallback((): void => setAction("decrease"), [
-    setAction
-  ]);
+  const handleIncrease = useCallback(
+    (): void => setAction("increase"),
+    [setAction]
+  );
+  const handleDecrease = useCallback(
+    (): void => setAction("decrease"),
+    [setAction]
+  );
   const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     pipe(inputValue, Num.read, onChange),
     [onChange]
@@ -70,7 +72,7 @@ export const NumberComponent: FC<Props> = ({
       <input
         className="brz-input"
         type="number"
-        value={value}
+        value={value ?? ""}
         min={-999999}
         max={999999}
         onChange={handleOnChange}

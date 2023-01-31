@@ -1,5 +1,5 @@
+import { DH, DW } from "visual/editorComponents/Story/utils";
 import { roundTo } from "visual/utils/math";
-import { DW, DH } from "visual/editorComponents/Story/utils";
 
 export const calcRectangleSide = (
   value: number,

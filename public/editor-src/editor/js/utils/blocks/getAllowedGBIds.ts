@@ -11,10 +11,10 @@ import {
   CollectionItemRule,
   CollectionTypeRule,
   GlobalBlock,
-  isWPPage,
   Page,
   PageCollection,
-  Rule
+  Rule,
+  isWPPage
 } from "visual/types";
 import {
   isReferenceAllAuthor,
@@ -28,14 +28,14 @@ import {
   GetCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference as CollectionItemFieldMultiReference,
   GetCollectionItem_collectionItem_fields_CollectionItemFieldReference as CollectionItemFieldReference
 } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
-import { IS_TEMPLATE } from "visual/utils/models";
+import { isTemplate } from "visual/utils/models";
 import {
-  createEntityValue,
   CUSTOMER_TYPE,
-  getCurrentRule,
-  getEntityValue,
   TEMPLATES_GROUP_ID,
-  TEMPLATE_TYPE
+  TEMPLATE_TYPE,
+  createEntityValue,
+  getCurrentRule,
+  getEntityValue
 } from "./blocksConditions";
 import {
   isAllRule,
@@ -75,7 +75,7 @@ export function canUseCondition(globalBlock: GlobalBlock, page: Page): boolean {
     return true;
   }
 
-  return IS_TEMPLATE
+  return isTemplate(Config.getAll())
     ? canUseConditionInTemplates(globalBlock, page)
     : canUseConditionInPage(globalBlock, page);
 }
@@ -399,7 +399,6 @@ function pageWPSplitRules(rules: Rule[] = [], page: Page): ReferenceRule {
       }
 
       if (isReferenceAllIn(v)) {
-        // @ts-expect-error: skip "in"
         const [_, taxonomy] = v.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
         const taxonomies = postTerms.filter((p) => p.taxonomy === taxonomy);
 
@@ -407,7 +406,6 @@ function pageWPSplitRules(rules: Rule[] = [], page: Page): ReferenceRule {
       }
 
       if (isReferenceAllChild(v)) {
-        // @ts-expect-error: skip "child"
         const [_, taxonomy] = v.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
         const taxonomies = postTermParents.filter(
           (p) => p.taxonomy === taxonomy

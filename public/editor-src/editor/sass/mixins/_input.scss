@@ -105,7 +105,7 @@
 
 @mixin small-input {
   background-color: transparent;
-  color: $options-label-color;
+  color: $color-picker-input--color;
   font-size: $control-font-size;
   font-weight: 400;
   border: none;
@@ -116,12 +116,12 @@
   top: 0;
   left: 0;
   transition: 0.2s linear color;
-  border-bottom: 1px solid $brand-options-border;
+  border-bottom: 1px solid $color-picker-input--border;
 
   &:focus,
   &:active {
     background-color: transparent;
-    color: #fff;
+    color: $color-picker-input--active--color;
     transition: 0.2s linear color;
     box-shadow: none;
     border-color: transparent;

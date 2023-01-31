@@ -15,13 +15,13 @@ import {
 } from "./utils";
 import { isUnit, Unit } from "./types";
 import { readWithParser } from "visual/utils/reader/readWithParser";
-import { ElementModel } from "visual/component/Elements/Types";
 import * as Num from "visual/utils/math/number";
 import * as Math from "visual/utils/math";
 import * as Str from "visual/utils/string/specs";
 import { prop } from "visual/utils/object/get";
 import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { ElementModel } from "visual/component/Elements/Types";
 
 export interface Size {
   width: number;
@@ -96,7 +96,26 @@ export interface PatchUnit {
   mobileHeightSuffix?: Unit;
 }
 
-export const elementModelToValue = readWithParser<ElementModel, Value>({
+export interface ElementModelToValue extends ElementModel {
+  width: unknown | undefined;
+  height: unknown | undefined;
+  heightSuffix: unknown | undefined;
+  widthSuffix: unknown | undefined;
+  sizeType: unknown | undefined;
+  size: unknown | undefined;
+  imageExtension: unknown | undefined;
+  imagePopulation: unknown | undefined;
+  tabletWidth: unknown | undefined;
+  tabletHeight: unknown | undefined;
+  tabletWidthSuffix: unknown | undefined;
+  tabletHeightSuffix: unknown | undefined;
+  mobileWidth: unknown | undefined;
+  mobileHeight: unknown | undefined;
+  mobileWidthSuffix: unknown | undefined;
+  mobileHeightSuffix: unknown | undefined;
+}
+
+export const elementModelToValue = readWithParser<ElementModelToValue, Value>({
   height: mPipe(prop("height"), Num.read),
   width: mPipe(prop("width"), Num.read),
   heightSuffix: mPipe(prop("heightSuffix"), pass(isUnit)),
@@ -297,7 +316,7 @@ export const pathOnUnitChange = (
   const dvk = (key: string): string =>
     defaultValueKey({ key, device, state: "normal" });
   const [suffixKey] = Object.keys(patch).filter(
-    key => key === dvk("widthSuffix") || key === dvk("heightSuffix")
+    (key) => key === dvk("widthSuffix") || key === dvk("heightSuffix")
   );
   const dvv = (key: string): unknown => defaultValueValue({ key, v, device });
 

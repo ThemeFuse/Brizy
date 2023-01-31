@@ -1,0 +1,28 @@
+.brz-ministryBrands {
+  width: 100%;
+  &__item--meta--links,
+  a,
+  & > a {
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  img,
+  iframe,
+  video {
+    width: 100%;
+    height: 100%;
+  }
+
+  audio {
+    width: 100%;
+  }
+
+  &__pagination {
+    padding: 2rem;
+
+    & > a:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+  }
+}

@@ -9,7 +9,7 @@ import { GlobalBlock, Rule } from "visual/types";
 import { getRulesList } from "visual/utils/api";
 import { IS_CLOUD } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
-import { IS_EXTERNAL_POPUP } from "visual/utils/models";
+import { isExternalPopup } from "visual/utils/models";
 
 type ChangeCallbackData = {
   data: {
@@ -81,7 +81,7 @@ export function getOptions(
         }
       ];
 
-      if (!IS_EXTERNAL_POPUP) {
+      if (!isExternalPopup(Config.getAll())) {
         // ts-ignore added because cms's getRulesList method is expecting
         // CollectionItemId, wp is expecting nothing
         const asyncGetValue = IS_CLOUD

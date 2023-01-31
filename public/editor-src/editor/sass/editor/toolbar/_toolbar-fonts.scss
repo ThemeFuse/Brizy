@@ -3,7 +3,6 @@
 // --- Fonts
 $scroll-pane-margin: 6px;
 $toolbar-fonts-height: 200px; //235px;
-$toolbar-fonts-item-active: #3ebfe8;
 $font-item-offset: 10px;
 
 // --
@@ -36,13 +35,13 @@ $font-item-offset: 10px;
     align-items: center;
     bottom: 14px;
     left: $font-item-offset;
-    color: #818a91;
+    color: $toolbar-fonts-add--color;
     font-weight: 600;
     font-size: 14px;
     transition: 0.2s linear color;
 
     &:hover {
-      color: $toolbar-fonts-item-active;
+      color: $toolbar-fonts--active--color;
       transition: 0.2s linear color;
     }
     .brz-icon-svg {
@@ -61,13 +60,13 @@ $font-item-offset: 10px;
     padding-bottom: 15px;
     padding-left: $font-item-offset;
     line-height: 1;
-    color: #fff;
+    color: $toolbar-fonts--color;
     cursor: pointer;
 
     &.active,
     &:hover {
       transition: color 0.2s linear;
-      color: $toolbar-fonts-item-active;
+      color: $toolbar-fonts--active--color;
     }
   }
 
@@ -78,7 +77,7 @@ $font-item-offset: 10px;
     padding: 0;
     margin: 0 0 17px 27px;
     border: 0;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: $toolbar-fonts-separator--bg;
   }
 
   // Left content

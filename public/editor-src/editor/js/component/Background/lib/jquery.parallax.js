@@ -2,6 +2,9 @@ import $ from "jquery";
 import { attachResize, detachResize } from "./attachResize";
 import { attachWheel, detachWheel } from "./attachWheel";
 
+const parallaxInitClassName =
+  "brz-bg-image-parallax--init brz-ed-preserve-3d absolute w-full !bg-cover left-0 -top-[50vh] h-[100vh] !transition-[all] !duration-[0s] !ease-[ease] !delay-[0s] origin-[center_center_0]";
+
 // Parallax
 (function ($, window, document) {
   var pluginName = "parallax";
@@ -134,7 +137,7 @@ import { attachWheel, detachWheel } from "./attachWheel";
           imageHolder: this
         });
 
-        $node.addClass(_this.options.bgClass + "--init");
+        $node.addClass(parallaxInitClassName);
         _this.mr_setTranslate3DTransform(
           $node.get(0),
           (_this.f() + _this.options.windowHeight - top) / 2
@@ -204,7 +207,7 @@ import { attachWheel, detachWheel } from "./attachWheel";
       this.$elem
         .find("." + this.options.bgClass)
         .css({ height: "", transform: "" })
-        .removeClass(this.options.bgClass + "--init");
+        .removeClass(parallaxInitClassName);
     },
     paused: function (paused) {
       if (paused) {

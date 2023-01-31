@@ -21,6 +21,9 @@ export function style(v, vs, vd) {
     // with standard .brz-a styles
     ".brz &&:hover > .brz-a.brz-a:not(.brz-btn)": {
       standart: ["cssStyleColor"]
+    },
+    ".brz &&:hover .brz-wp-title-content": {
+      standart: ["cssStyleStrokeText"]
     }
   };
 

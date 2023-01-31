@@ -1,9 +1,10 @@
+import classnames from "classnames";
 import React, { ReactElement } from "react";
 import _ from "underscore";
-import classnames from "classnames";
 import Sortable from "visual/component/Sortable";
-import { IS_STORY } from "visual/utils/models";
+import Config from "visual/global/Config";
 import { Shortcode } from "visual/types";
+import { isStory } from "visual/utils/models";
 import { SortData } from "./types";
 
 const sortableBlindZone = {
@@ -45,7 +46,7 @@ export class Category extends React.Component<Props> {
     return (
       <Sortable
         type="addable"
-        showLines={!IS_STORY}
+        showLines={!isStory(Config.getAll())}
         blindZone={sortableBlindZone}
         dragOffset={sortableDragOffset}
         onSort={this.handleChange}

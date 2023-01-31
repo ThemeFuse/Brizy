@@ -66,28 +66,19 @@ export function cssStyleBoxShadowSection({
   prefix = ""
 }: CSSValue): string {
   const type = styleBoxShadowType({ v, device, state, prefix });
+  const horizontal = styleBoxShadowHorizontal({ v, device, state, prefix });
   const vertical = styleBoxShadowVertical({ v, device, state, prefix });
   const blur = styleBoxShadowBlur({ v, device, state, prefix });
+  const spread = styleBoxShadowSpread({ v, device, state, prefix });
   const color = styleBoxShadowColor({ v, device, state, prefix });
 
-  const diff = vertical < 0 ? -blur : blur;
-  const inBoth = vertical === 0;
-
-  if (type === "inset" || type !== "off" || (vertical !== 0 && blur !== 0)) {
-    if (inBoth) {
-      return `box-shadow:inset 0 ${
-        vertical + diff
-      }px ${blur}px -${blur}px ${color}, inset 0 -${
-        vertical + diff
-      }px ${blur}px -${blur}px ${color};display: block;`;
-    } else {
-      return `box-shadow:inset 0 ${
-        vertical + diff
-      }px ${blur}px -${blur}px ${color}, inset 0 0 0 0 ${color};display: block;`;
-    }
-  }
-
-  return "";
+  return type === "inset"
+    ? `box-shadow:${horizontal}px ${vertical}px ${blur}px ${spread}px ${color} inset; display:block;`
+    : type === "" ||
+      type === "off" ||
+      (horizontal === 0 && vertical === 0 && blur === 0 && spread === 0)
+    ? "box-shadow:none;"
+    : "";
 }
 
 export function cssStyleBoxShadowSectionOutset({

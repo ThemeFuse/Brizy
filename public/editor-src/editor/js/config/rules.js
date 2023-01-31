@@ -41,6 +41,9 @@ export default {
   "wrapper--filters": {
     showToolbar: "on"
   },
+  "wrapper-ministryBrands": {
+    showToolbar: "on"
+  },
   "wrapper--spacer": {
     marginTop: 0,
     marginBottom: 0,

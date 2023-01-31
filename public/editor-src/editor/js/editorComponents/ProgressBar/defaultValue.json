@@ -27,11 +27,7 @@
 
     "families": {
       "fontFamily": "lato",
-      "tabletFontFamily": null,
-      "mobileFontFamily": null,
-      "typographyFontFamily": "lato",
-      "tabletTypographyFontFamily": null,
-      "mobileTypographyFontFamily": null
+      "typographyFontFamily": "lato"
     },
 
     "fontStyle": "",
@@ -57,13 +53,6 @@
     "tempColorOpacity": 1,
     "tempColorPalette": "",
 
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
-
     "labelColorHex": "#f1f1f1",
     "labelColorOpacity": 1,
     "labelColorPalette": "",
@@ -71,27 +60,11 @@
     "tempLabelColorOpacity": 1,
     "tempLabelColorPalette": "",
 
-    "hoverLabelColorHex": null,
-    "hoverLabelColorOpacity": null,
-    "hoverLabelColorPalette": null,
-
-    "tempHoverLabelColorOpacity": null,
-    "tempHoverLabelColorPalette": null,
-
     "bgColorType": "solid",
 
     "bgColorHex": "#239ddb",
     "bgColorOpacity": 1,
     "bgColorPalette": "color3",
-
-    "hoverBgColorType": null,
-
-    "hoverBgColorHex": null,
-    "hoverBgColorOpacity": null,
-    "hoverBgColorPalette": null,
-
-    "tempHoverBgColorOpacity": null,
-    "tempHoverBgColorPalette": null,
 
     "tempBgColorOpacity": 1,
     "tempBgColorPalette": "color3",
@@ -104,15 +77,6 @@
 
     "tempBg2ColorOpacity": 1,
     "tempBg2ColorPalette": "",
-
-    "hoverBg2ColorType": null,
-
-    "hoverBg2ColorHex": null,
-    "hoverBg2ColorOpacity": null,
-    "hoverBg2ColorPalette": null,
-
-    "tempHoverBg2ColorOpacity": null,
-    "tempHoverBg2ColorPalette": null,
 
     "borderStyle": "solid",
 
@@ -156,19 +120,6 @@
     "tempBorderBottomRightRadiusSuffix": "px",
     "tempBorderBottomLeftRadiusSuffix": "px",
 
-    "hoverBorderRadiusType": null,
-    "hoverBorderRadius": null,
-    "hoverBorderTopLeftRadius": null,
-    "hoverBorderTopRightRadius": null,
-    "hoverBorderBottomRightRadius": null,
-    "hoverBorderBottomLeftRadius": null,
-
-    "tempHoverBorderRadius": null,
-    "tempHoverBorderTopLeftRadius": null,
-    "tempHoverBorderTopRightRadius": null,
-    "tempHoverBorderBottomRightRadius": null,
-    "tempHoverBorderBottomLeftRadius": null,
-
     "boxShadow": "none",
 
     "tempBoxShadow": "on",
@@ -190,29 +141,14 @@
     "tempBoxShadowVertical": 2,
     "tempBoxShadowHorizontal": 1,
 
-    "hoverBoxShadow": null,
-
-    "tempHoverBoxShadow": null,
-
-    "hoverBoxShadowColorHex": null,
-    "hoverBoxShadowColorOpacity": null,
-    "hoverBoxShadowColorPalette": null,
-
-    "tempHoverBoxShadowColorPalette": null,
-    "tempHoverBoxShadowColorOpacity": null,
-
-    "hoverBoxShadowBlur": null,
-    "hoverBoxShadowSpread": null,
-    "hoverBoxShadowVertical": null,
-    "hoverBoxShadowHorizontal": null,
-
-    "tempHoverBoxShadowBlur": null,
-    "tempHoverBoxShadowSpread": null,
-    "tempHoverBoxShadowVertical": null,
-    "tempHoverBoxShadowHorizontal": null,
-
     "width": 100,
     "widthSuffix": "%",
+
+    "style1Height": 30,
+    "style1HeightSuffix": "px",
+
+    "style2Height": 10,
+    "style2HeightSuffix": "px",
 
     "paddingType": "ungrouped",
 
@@ -225,10 +161,9 @@
     "customCSS": "",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
+    "hoverTransitionSuffix": "",
 
     "tabletFontStyle": "",
-    "tabletFontFamilyType": null,
     "tabletFontSize": 14,
     "tabletFontSizeSuffix": "px",
     "tabletFontWeight": 400,
@@ -236,64 +171,16 @@
     "tabletLetterSpacing": 0,
 
     "tabletTypographyFontStyle": "",
-    "tabletTypographyFontFamilyType": null,
     "tabletTypographyFontSize": 16,
     "tabletTypographyFontSizeSuffix": "px",
     "tabletTypographyFontWeight": 400,
     "tabletTypographyLineHeight": 1.3,
     "tabletTypographyLetterSpacing": 0,
 
-    "tabletBorderWidthType": null,
-    "tabletBorderWidth": null,
-    "tabletBorderTopWidth": null,
-    "tabletBorderRightWidth": null,
-    "tabletBorderBottomWidth": null,
-    "tabletBorderLeftWidth": null,
-
-    "tempTabletBorderWidth": null,
-    "tempTabletBorderTopWidth": null,
-    "tempTabletBorderRightWidth": null,
-    "tempTabletBorderBottomWidth": null,
-    "tempTabletBorderLeftWidth": null,
-
-    "tabletBorderRadiusType": null,
-    "tabletBorderRadius": null,
-    "tabletBorderTopLeftRadius": null,
-    "tabletBorderTopRightRadius": null,
-    "tabletBorderBottomLeftRadius": null,
-    "tabletBorderBottomRightRadius": null,
-
-    "tempTabletBorderRadius": null,
-    "tempTabletBorderTopLeftRadius": null,
-    "tempTabletBorderTopRightRadius": null,
-    "tempTabletBorderBottomLeftRadius": null,
-    "tempTabletBorderBottomRightRadius": null,
-
-    "tabletBorderRadiusTypeSuffix": null,
-    "tabletBorderRadiusSuffix": null,
-    "tabletBorderTopLeftRadiusSuffix": null,
-    "tabletBorderTopRightRadiusSuffix": null,
-    "tabletBorderBottomLeftRadiusSuffix": null,
-    "tabletBorderBottomRightRadiusSuffix": null,
-
-    "tempTabletBorderRadiusSuffix": null,
-    "tempTabletBorderTopLeftRadiusSuffix": null,
-    "tempTabletBorderTopRightRadiusSuffix": null,
-    "tempTabletBorderBottomLeftRadiusSuffix": null,
-    "tempTabletBorderBottomRightRadiusSuffix": null,
-
-    "tabletBgColorHex": null,
-    "tabletBgColorOpacity": null,
-    "tabletBgColorPalette": null,
-
-    "tempTabletBgColorOpacity": null,
-    "tempTabletBgColorPalette": null,
-
     "tabletWidth": null,
     "tabletWidthSuffix": null,
 
     "mobileFontStyle": "",
-    "mobileFontFamilyType": null,
     "mobileFontSize": 13,
     "mobileFontSizeSuffix": "px",
     "mobileFontWeight": 400,
@@ -301,58 +188,11 @@
     "mobileLetterSpacing": 0,
 
     "mobileTypographyFontStyle": "",
-    "mobileTypographyFontFamilyType": null,
     "mobileTypographyFontSize": 16,
     "mobileTypographyFontSizeSuffix": "px",
     "mobileTypographyFontWeight": 400,
     "mobileTypographyLineHeight": 1.1,
     "mobileTypographyLetterSpacing": 0,
-
-    "mobileBgColorHex": null,
-    "mobileBgColorOpacity": null,
-    "mobileBgColorPalette": null,
-
-    "tempMobileBgColorOpacity": null,
-    "tempMobileBgColorPalette": null,
-
-    "mobileBorderWidthType": null,
-    "mobileBorderWidth": null,
-    "mobileBorderTopWidth": null,
-    "mobileBorderRightWidth": null,
-    "mobileBorderBottomWidth": null,
-    "mobileBorderLeftWidth": null,
-
-    "tempMobileBorderWidth": null,
-    "tempMobileBorderTopWidth": null,
-    "tempMobileBorderRightWidth": null,
-    "tempMobileBorderBottomWidth": null,
-    "tempMobileBorderLeftWidth": null,
-
-    "mobileBorderRadiusType": null,
-    "mobileBorderRadius": null,
-    "mobileBorderTopLeftRadius": null,
-    "mobileBorderTopRightRadius": null,
-    "mobileBorderBottomLeftRadius": null,
-    "mobileBorderBottomRightRadius": null,
-
-    "tempMobileBorderRadius": null,
-    "tempMobileBorderTopLeftRadius": null,
-    "tempMobileBorderTopRightRadius": null,
-    "tempMobileBorderBottomLeftRadius": null,
-    "tempMobileBorderBottomRightRadius": null,
-
-    "mobileBorderRadiusTypeSuffix": null,
-    "mobileBorderRadiusSuffix": null,
-    "mobileBorderTopLeftRadiusSuffix": null,
-    "mobileBorderTopRightRadiusSuffix": null,
-    "mobileBorderBottomLeftRadiusSuffix": null,
-    "mobileBorderBottomRightRadiusSuffix": null,
-
-    "tempMobileBorderRadiusSuffix": null,
-    "tempMobileBorderTopLeftRadiusSuffix": null,
-    "tempMobileBorderTopRightRadiusSuffix": null,
-    "tempMobileBorderBottomLeftRadiusSuffix": null,
-    "tempMobileBorderBottomRightRadiusSuffix": null,
 
     "mobileWidth": null,
     "mobileWidthSuffix": null

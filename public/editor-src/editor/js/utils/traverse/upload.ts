@@ -32,7 +32,6 @@ export const getUsedModelsUpload = ({
 
       while ((hrefs = hrefRgx.exec(text))) {
         try {
-          // @ts-expect-error: variables is declared but its value is never use
           const [_, href] = hrefs; // eslint-disable-line @typescript-eslint/no-unused-vars
           const { type, upload } = decodeFromString<{
             type: string;
@@ -84,7 +83,7 @@ export const getUsedModelsUpload = ({
       const globalBlockValue = globalBlocks && globalBlocks[_id];
 
       if (globalBlockValue) {
-        getUsedModelsUpload({ models: globalBlockValue }).forEach(file => {
+        getUsedModelsUpload({ models: globalBlockValue }).forEach((file) => {
           files.add(file);
         });
       }

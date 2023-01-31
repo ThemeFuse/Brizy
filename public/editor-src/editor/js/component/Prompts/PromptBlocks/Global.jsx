@@ -4,6 +4,7 @@ import Scrollbars from "react-custom-scrollbars";
 import { connect } from "react-redux";
 import _ from "underscore";
 import Tooltip from "visual/component/Controls/Tooltip";
+import Config from "visual/global/Config";
 import { deleteGlobalBlock } from "visual/redux/actions2";
 import {
   fontsSelector,
@@ -14,7 +15,7 @@ import { assetUrl } from "visual/utils/asset";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { normalizeFonts } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { isPopup } from "visual/utils/models";
 import {
   getBlocksStylesFonts,
   getUsedModelsFonts
@@ -110,7 +111,7 @@ class Global extends Component {
 
     switch (type) {
       case "popup": {
-        gifUrl = IS_GLOBAL_POPUP
+        gifUrl = isPopup(Config.getAll())
           ? "editor/img/global_condition_popups_toolbar.gif"
           : "editor/img/global_popups_toolbar.gif";
         message = t("Nothing here yet, make a global popup first.");
@@ -198,7 +199,9 @@ class Global extends Component {
       } = block.data;
 
       const inactive =
-        IS_GLOBAL_POPUP || type === "SectionPopup" || type === "SectionPopup2"
+        isPopup(Config.getAll()) ||
+        type === "SectionPopup" ||
+        type === "SectionPopup2"
           ? false
           : globalBlocksInPage[_id];
 

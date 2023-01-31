@@ -64,19 +64,9 @@ export function getItems({ v, device, state }) {
                 {
                   id: "secondIcon",
                   label: t("Icon"),
-                  type: "iconSetter",
+                  type: "iconSetter-dev",
                   devices: "desktop",
-                  canDelete: true,
-                  value: {
-                    name: secondIconName,
-                    type: secondIconType
-                  },
-                  onChange: ({ name, type }) => {
-                    return {
-                      secondIconName: name,
-                      secondIconType: type
-                    };
-                  }
+                  config: { canDelete: true }
                 },
                 ...(secondIconName && secondIconType
                   ? [

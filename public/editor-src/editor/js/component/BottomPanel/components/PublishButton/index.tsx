@@ -1,45 +1,46 @@
-import React, { Component, ReactElement } from "react";
-import { connect, ConnectedProps } from "react-redux";
 import { match } from "fp-utilities";
-import Config from "visual/global/Config";
-import Prompts, { PromptsProps } from "visual/component/Prompts";
+import React, { Component, ReactElement } from "react";
+import { ConnectedProps, connect } from "react-redux";
 import HotKeys from "visual/component/HotKeys";
 import { ToastNotification } from "visual/component/Notifications";
-import { removeBlocks } from "visual/redux/actions2";
-import { ReduxState, StoreChanged } from "visual/redux/types";
-import { updatePageStatus, fetchPageSuccess } from "visual/redux/actions2";
-import { SavedLayout } from "visual/types";
-import { t } from "visual/utils/i18n";
+import Prompts, { PromptsProps } from "visual/component/Prompts";
+import Config from "visual/global/Config";
 import {
-  pageSelector,
-  pageDataNoRefsSelector,
+  isCMS,
+  isCloud,
+  isShopify,
+  isShopifyPage
+} from "visual/global/Config/types/configs/Cloud";
+import { isWp } from "visual/global/Config/types/configs/WP";
+import { removeBlocks } from "visual/redux/actions2";
+import { fetchPageSuccess, updatePageStatus } from "visual/redux/actions2";
+import {
   extraFontStylesSelector,
+  pageDataNoRefsSelector,
+  pageSelector,
   storeWasChangedSelector
 } from "visual/redux/selectors";
-import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
+import { ReduxState, StoreChanged } from "visual/redux/types";
+import { SavedLayout } from "visual/types";
 import {
   createBlockScreenshot,
   createSavedLayout,
   shopifyUnpublishPage
 } from "visual/utils/api";
-import { uuid } from "visual/utils/uuid";
-import { IS_STORY, IS_GLOBAL_POPUP } from "visual/utils/models";
+import { t } from "visual/utils/i18n";
 import { isNumber } from "visual/utils/math";
+import { isPopup, isStory } from "visual/utils/models";
+import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
+import { uuid } from "visual/utils/uuid";
 import { BottomPanelItem } from "../Item";
 import { Controls, Props as ControlsProps } from "./Control";
 import {
   getButtonLabel,
+  getMode,
   getTooltipPageIcon,
-  getTooltipPageTitle,
-  getMode
+  getTooltipPageTitle
 } from "./utils";
-import {
-  isShopify,
-  isShopifyPage,
-  isCMS,
-  isCloud
-} from "visual/global/Config/types/configs/Cloud";
-import { isWp } from "visual/global/Config/types/configs/WP";
+
 type Page = ReduxState["page"];
 
 const _getMode = match(
@@ -252,7 +253,7 @@ class PublishButton extends Component<Props, State> {
         this.setState({ [loading]: false });
         this[loading] = undefined;
       })
-      .catch(e => {
+      .catch((e) => {
         if (process.env.NODE_ENV === "development") {
           console.error("could not publish or save page", e);
         }
@@ -276,7 +277,7 @@ class PublishButton extends Component<Props, State> {
         this.setState({ [loading]: false });
         this[loading] = undefined;
       })
-      .catch(e => {
+      .catch((e) => {
         if (process.env.NODE_ENV === "development") {
           console.error("could not switch to draft", e);
         }
@@ -337,7 +338,7 @@ class PublishButton extends Component<Props, State> {
       data: pageData,
       dataVersion: 1,
       uid: uuid()
-    }).catch(e => {
+    }).catch((e) => {
       ToastNotification.error(t("Could not save layout"));
       console.error(e);
     });
@@ -357,9 +358,10 @@ class PublishButton extends Component<Props, State> {
   };
 
   getTooltipItems(): ControlsProps["addonAfter"] {
+    const config = Config.getAll();
     const { page } = this.props;
     const layoutItems =
-      IS_STORY || IS_GLOBAL_POPUP
+      isStory(config) || isPopup(config)
         ? []
         : [
             {

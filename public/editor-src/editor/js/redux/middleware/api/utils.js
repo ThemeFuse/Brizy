@@ -1,5 +1,6 @@
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import _ from "underscore";
+import Config from "visual/global/Config";
 import {
   createGlobalBlock as apiCreateGlobalBlock,
   createSavedBlock as apiCreateSavedBlock,
@@ -12,10 +13,10 @@ import {
   updatePopupRules as apiUpdatePopupRules,
   updateProject as apiUpdateProject
 } from "visual/utils/api";
-import { IS_CUSTOMER_PAGE } from "visual/utils/env";
+import { isCustomerPage } from "visual/utils/env";
 
 const updateFn = (() => {
-  return IS_CUSTOMER_PAGE ? apiUpdateCustomPage : apiUpdatePage;
+  return isCustomerPage(Config.getAll()) ? apiUpdateCustomPage : apiUpdatePage;
 })();
 
 export {

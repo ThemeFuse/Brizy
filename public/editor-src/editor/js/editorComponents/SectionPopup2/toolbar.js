@@ -2,7 +2,7 @@ import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isExternalPopup, isInternalPopup } from "visual/utils/models";
+import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
@@ -28,7 +28,10 @@ export function getItems({ v, device, component, context }) {
   );
 
   const config = Config.getAll();
-  const IS_GLOBAL_POPUP = isInternalPopup(config) || isExternalPopup(config);
+  const popupSettings = config.ui?.popupSettings ?? {};
+  const enableDisplayCondition = popupSettings.displayCondition;
+  const enableDelete = popupSettings.deletePopup;
+  const IS_GLOBAL_POPUP = isPopup(config);
 
   const blockType = IS_GLOBAL_POPUP ? "externalPopup" : "popup";
 
@@ -81,7 +84,7 @@ export function getItems({ v, device, component, context }) {
                 {
                   id: "popupConditions",
                   type: "popupConditions",
-                  disabled: !IS_GLOBAL_POPUP,
+                  disabled: !enableDisplayCondition,
                   position: 150
                 }
               ]
@@ -281,7 +284,7 @@ export function getItems({ v, device, component, context }) {
     {
       id: "remove",
       type: "button",
-      disabled: !IS_GLOBAL_POPUP,
+      disabled: !enableDelete,
       title: t("Delete"),
       icon: "nc-trash",
       position: 250,

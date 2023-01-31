@@ -83,7 +83,12 @@ export function cssStyleTypography3LetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, prefix });
 }
 
-export function getAllCssStyleTypography({ v, device, state, prefix = "" }) {
+export function getAllCssStyleTypography({
+  v,
+  device,
+  state,
+  prefix = "typography"
+}) {
   const fontFamily = cssStyleTypography3FontFamily({
     v,
     device,

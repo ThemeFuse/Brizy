@@ -1,14 +1,13 @@
 import { match } from "fp-utilities";
 import Config, { Cloud, Config as Conf } from "visual/global/Config";
+import { TemplateType } from "visual/global/Config/types/TemplateType";
 import {
-  isCloud,
   isCMS,
-  isCollection,
+  isCloud,
   isCustomer,
   isShopify
 } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
-import { TemplateType } from "visual/global/Config/types/TemplateType";
 
 const config = Config.getAll();
 
@@ -32,35 +31,46 @@ const isTemplate = (config: Conf, type: TemplateType): boolean => {
   return t === "" || t === type;
 };
 
-export const mode = config.mode ?? "page";
+export const isPost = (config: Conf): boolean =>
+  isWp(config) && config.wp.postType === "post";
 
-export const IS_POST = isWp(config) && config.wp.postType === "post";
+/**
+ * @deprecated, use isPro(config)
+ */
 export const IS_PRO = !!config.pro;
 
+export const isPro = (config: Conf): boolean => !!config.pro;
+
+/**
+ * @deprecated, use isWp(config) from visual/global/Config/types/configs/WP
+ */
 export const IS_WP = isWp(config);
+
+/**
+ * @deprecated, use isCloud(config) from visual/global/Config/types/configs/Cloud
+ */
 export const IS_CLOUD = isCloud(config);
 
-export const IS_CMS = isCloud(config) && isCMS(config);
+export const isPage = (config: Conf): boolean => config.mode === "page";
 
-export const IS_PAGE = config.mode === "page";
+export const isCustomerPage = (config: Conf): boolean => {
+  return isCloud(config) && isCMS(config) && isCustomer(config);
+};
 
-export const IS_CUSTOMER_PAGE =
-  isCloud(config) && isCMS(config) && isCustomer(config);
+export const isProductPage = (config: Conf): boolean =>
+  config.mode === "product";
 
-export const IS_COLLECTION_PAGE =
-  isCloud(config) && isCMS(config) && isCollection(config);
+export const isSingleTemplate = (config: Conf): boolean =>
+  isTemplate(config, "single");
 
-export const IS_SINGLE = config.mode === "single";
+export const isArchiveTemplate = (config: Conf): boolean =>
+  isTemplate(config, "archive");
 
-export const IS_PRODUCT_PAGE = config.mode === "product";
+export const isProductTemplate = (config: Conf): boolean =>
+  isTemplate(config, "product");
 
-export const IS_SINGLE_TEMPLATE = isTemplate(config, "single");
-export const IS_ARCHIVE_TEMPLATE = isTemplate(config, "archive");
-export const IS_PRODUCT_TEMPLATE = isTemplate(config, "product");
-export const IS_PRODUCT_ARCHIVE_TEMPLATE = isTemplate(
-  config,
-  "product_archive"
-);
+export const isProductArchiveTemplate = (config: Conf): boolean =>
+  isTemplate(config, "product_archive");
 
 export const isProtectedPage = (config: Conf): boolean => {
   if (isCloud(config) && isCMS(config) && "isProtected" in config.page) {

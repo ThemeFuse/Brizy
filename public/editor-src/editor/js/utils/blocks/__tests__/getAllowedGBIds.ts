@@ -1,16 +1,20 @@
+import { noop } from "underscore";
 import Config from "visual/global/Config";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Prop as WPPropConfig } from "visual/global/Config/types/configs/WP";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import {
+  ConfigCommon,
+  Mode
+} from "visual/global/Config/types/configs/ConfigCommon";
+import { Prop as WPPropConfig } from "visual/global/Config/types/configs/WP";
 import {
   AllRule,
   BlockTypeRule,
   CollectionItemRule,
   CollectionTypeRule,
-  DataCommon as PageCommon,
   GlobalBlock,
   Page,
   PageCollection,
+  DataCommon as PageCommon,
   PageCustomer,
   Rule
 } from "visual/types";
@@ -48,14 +52,15 @@ export const configCommon: ConfigCommon = {
     name: "brizy"
   },
   editorVersion: "1",
-  mode: "",
+  mode: Mode.page,
   taxonomies: [],
   postTypesTaxs: [],
   imageSizes: [],
 
   server: {
     maxUploadFileSize: 40
-  }
+  },
+  onUpdate: noop
 };
 
 interface Resolve {
@@ -199,6 +204,7 @@ describe("testing WP getAllowedGBIds", () => {
         isGuest: false,
         allowScripts: false
       },
+      modules: undefined,
       urls: {
         ...urlsCommon,
         assetsExternal: "",

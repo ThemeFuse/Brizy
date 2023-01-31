@@ -1,3 +1,5 @@
+@import "../../variables";
+
 // Tooltip
 .brz-ed-tooltip {
   &__content {
@@ -78,10 +80,10 @@
   &__item {
     position: relative;
     font-size: 13px;
-    color: #fff;
+    color: $bottom-panel-popover-item--color;
     font-weight: 600;
     padding: 16px 25px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom:1px solid $bottom-panel-popover--border;
   }
   &__item:last-child {
     border-bottom: transparent;

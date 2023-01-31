@@ -144,26 +144,11 @@ export function getItems({
               label: isStyle1 ? t("Icons") : t("Icon"),
               options: [
                 {
-                  id: "iconImage",
+                  id: "icon",
                   label: t("Icon"),
-                  // @ts-expect-error old option
-                  type: "iconSetter",
+                  type: "iconSetter-dev",
                   devices: "desktop",
-                  disabled: !isStyle1 && labelOff,
-                  value: {
-                    name: dvv("iconName"),
-                    type: dvv("iconType")
-                  },
-                  onChange: ({
-                    name,
-                    type
-                  }: {
-                    name: string;
-                    type: string;
-                  }) => ({
-                    iconName: name,
-                    iconType: type
-                  })
+                  disabled: !isStyle1 && labelOff
                 },
                 {
                   id: "groupSettings",

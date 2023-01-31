@@ -1,12 +1,12 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
-import { uploadFile } from "visual/utils/api";
 import { ToastNotification } from "visual/component/Notifications";
+import Config from "visual/global/Config";
+import { uploadFile } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import * as Num from "visual/utils/reader/number";
-import Config from "visual/global/Config";
 
 class FileUpload extends React.Component {
   static defaultProps = {
@@ -32,7 +32,7 @@ class FileUpload extends React.Component {
     this.mounted = false;
   }
 
-  handleChange = async e => {
+  handleChange = async (e) => {
     const { files } = e.target;
 
     if (!files || !files[0]) {
@@ -45,7 +45,7 @@ class FileUpload extends React.Component {
 
     const sizeFileMB = files[0].size / 1000000;
 
-    const { maxUploadFileSize } = Config.getAll().server;
+    const { maxUploadFileSize } = Config.getAll().server ?? {};
     const maxFileUpload = Num.read(maxUploadFileSize) ?? 40;
 
     if (sizeFileMB > maxFileUpload) {

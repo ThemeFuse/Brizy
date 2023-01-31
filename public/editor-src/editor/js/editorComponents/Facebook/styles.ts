@@ -9,6 +9,9 @@ export function style(
   const styles = {
     ".brz &&:hover.brz-fb-styles": {
       standart: [
+        "cssStylePaddingBG",
+        "cssStyleBgColor",
+        "cssStyleBgGradient",
         "cssStyleBoxShadow",
         "cssStyleBorder",
         "cssStyleElementFacebookWidth",
@@ -20,10 +23,16 @@ export function style(
       ]
     },
     ".brz &&:hover.brz-fb-styles-button": {
-      standart: ["cssStyleBoxShadow"],
+      standart: [
+        "cssStylePaddingBG",
+        "cssStyleBgColor",
+        "cssStyleBgGradient",
+        "cssStyleBoxShadow",
+        "cssStyleElementFacebookAlign"
+      ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionBoxShadow"
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };

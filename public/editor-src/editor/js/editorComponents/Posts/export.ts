@@ -43,10 +43,7 @@ export default function ($node: JQuery): void {
             );
 
             if (postsWrapper) {
-              // @ts-expect-error TS compiler does not recognize "replaceChildren" method
-              (postsWrapper as ParentNode).replaceChildren(
-                ...filteredPostsItems
-              );
+              postsWrapper.replaceChildren(...filteredPostsItems);
             }
 
             if (!filterItem.classList.contains(activeTagClassName)) {
