@@ -263,8 +263,9 @@
     "hoverTransitionSuffix": null,
 
     "containerType": "boxed",
+
     "containerSize": 100,
-    "containerSizeSuffix": null,
+    "containerSizeSuffix": "%",
 
     "hoverContainerType": null,
     "hoverContainerSize": null,

@@ -25,6 +25,7 @@ const webpackConfigPro = require("./webpack.config.pro");
 const sass = require("@csstools/postcss-sass");
 const postcssSCSS = require("postcss-scss");
 const autoprefixer = require("autoprefixer");
+const tailwindcss = require("tailwindcss");
 const postsCssProcessors = [
   sass({
     includePaths: ["node_modules"],
@@ -32,7 +33,8 @@ const postsCssProcessors = [
   }),
   autoprefixer({
     browsers: ["last 2 versions"]
-  })
+  }),
+  tailwindcss()
 ];
 
 const chalk = require("chalk");
@@ -60,6 +62,7 @@ const {
   NO_VERIFICATION,
   ANALYZE_EXPORT,
   ANALYZE_PREVIEW,
+  AUTHORIZATION_URL,
   paths
 } = argvVars(process.argv);
 const WP = TARGET === "WP";
@@ -119,7 +122,8 @@ function editorJS(done) {
     IS_EXPORT,
     BUILD_PATH: paths.build,
     BUILD_DIR_PRO: paths.buildPro,
-    NO_WATCH
+    NO_WATCH,
+    AUTHORIZATION_URL
   };
   const config = [
     webpackConfigEditor(options),
@@ -158,12 +162,17 @@ function editorCSS() {
         paths.editor + "/js/libs/group-all/index.scss",
         paths.editor + "/sass/main.editor.icons.scss"
       ];
+  const packages = [
+    // Currently only Components included
+    paths.packages + "/component/src/**/*.scss"
+  ];
 
   const src = [
     paths.editor + "/lib/common/*/*.css",
     paths.editor + "/lib/editor/*/*.css",
     paths.editor + "/sass/main.editor.scss",
-    ...icons
+    ...icons,
+    ...packages
   ];
   const dest = paths.build + "/editor/css";
 
@@ -262,7 +271,8 @@ function exportJS(done) {
     BUILD_PATH: paths.build,
     BUILD_DIR_PRO: paths.buildPro,
     NO_WATCH,
-    ANALYZE: ANALYZE_EXPORT || ANALYZE_PREVIEW
+    ANALYZE: ANALYZE_EXPORT || ANALYZE_PREVIEW,
+    AUTHORIZATION_URL
   };
   let config = [];
 
@@ -321,6 +331,7 @@ function exportCSS() {
   const src = [
     paths.editor + "/lib/common/*/*.css",
     paths.editor + "/lib/export/*/*.css",
+    paths.packages + "/component/src/**/*.scss",
     paths.editor + "/sass/main.export.scss"
   ];
   const dest = paths.build + "/editor/css";
@@ -406,7 +417,8 @@ function proJS(done) {
     IS_EXPORT,
     BUILD_PATH: paths.build,
     BUILD_PATH_PRO: paths.buildPro,
-    NO_WATCH
+    NO_WATCH,
+    AUTHORIZATION_URL
   };
   const config = [webpackConfigPro.editor(options)];
 
@@ -466,7 +478,10 @@ function proEditorCSS() {
     .pipe(gulp.dest(dest));
 }
 function proExportCSS() {
-  const src = paths.editor + "/sass/main.export.pro.scss";
+  const src = [
+    paths.packages + "/component/src/**/*.scss",
+    paths.editor + "/sass/main.export.pro.scss"
+  ];
   const dest = paths.buildPro + "/css";
 
   return gulp
@@ -1314,3 +1329,5 @@ exports.libs = gulp.series.apply(undefined, [
 exports.analyze_export = gulp.series(clean, exportJS);
 
 exports.analyze_preview = gulp.series(clean, exportJS);
+
+exports.translation = gulp.series(wpTranslations);

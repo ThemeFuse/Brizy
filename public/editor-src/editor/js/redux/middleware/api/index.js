@@ -8,7 +8,7 @@ import {
   PROJECT_LOCKED_ERROR
 } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
-import { IS_STORY } from "visual/utils/models";
+import { isStory } from "visual/utils/models";
 import {
   ADD_BLOCK,
   DELETE_GLOBAL_BLOCK,
@@ -17,7 +17,6 @@ import {
   MAKE_NORMAL_TO_GLOBAL_BLOCK,
   REMOVE_BLOCK,
   REORDER_BLOCKS,
-  updateError,
   UPDATE_BLOCKS,
   UPDATE_CURRENT_STYLE,
   UPDATE_CURRENT_STYLE_ID,
@@ -25,7 +24,8 @@ import {
   UPDATE_GB_RULES,
   UPDATE_GLOBAL_BLOCK,
   UPDATE_POPUP_RULES,
-  UPDATE_TRIGGERS
+  UPDATE_TRIGGERS,
+  updateError
 } from "../../actions";
 import {
   ADD_FONTS,
@@ -35,11 +35,11 @@ import {
   IMPORT_STORY,
   IMPORT_TEMPLATE,
   PUBLISH,
-  updateStoreWasChanged,
   UPDATE_CURRENT_KIT_ID,
   UPDATE_DEFAULT_FONT,
   UPDATE_DISABLED_ELEMENTS,
-  UPDATE_EXTRA_FONT_STYLES
+  UPDATE_EXTRA_FONT_STYLES,
+  updateStoreWasChanged
 } from "../../actions2";
 import { historySelector } from "../../history/selectors";
 import { REDO, UNDO } from "../../history/types";
@@ -101,7 +101,7 @@ function handlePublish({ action, state, oldState, apiHandler }) {
 
     const allApi = [];
 
-    if (!IS_STORY) {
+    if (!isStory(Config.getAll())) {
       const changedGBIds = changedGBIdsSelector(state);
       const globalBlocks = globalBlocksAssembledSelector(state);
 

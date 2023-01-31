@@ -1,27 +1,28 @@
 import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
-import Config from "visual/global/Config";
 import EditorIcon from "visual/component/EditorIcon";
+import Config from "visual/global/Config";
 import {
-  IS_INTERNAL_POPUP,
-  IS_EXTERNAL_POPUP,
-  IS_EXTERNAL_STORY
-} from "visual/utils/models";
-import { pageSlugSelector } from "visual/redux/selectors";
-import { BottomPanelItem } from "./Item";
-import {
-  isCloud,
   isCMS,
+  isCloud,
   isCustomer
 } from "visual/global/Config/types/configs/Cloud";
+import { pageSlugSelector } from "visual/redux/selectors";
+import {
+  isExternalPopup,
+  isExternalStory,
+  isInternalPopup
+} from "visual/utils/models";
+import { BottomPanelItem } from "./Item";
 
 export function PreviewButton(): ReactElement | null {
   const pageSlug = useSelector(pageSlugSelector);
+  const config = Config.getAll();
 
-  if (IS_EXTERNAL_POPUP) {
+  if (isExternalPopup(config)) {
     return null;
   }
-  const config = Config.getAll();
+
   const previewUrl = config.urls.pagePreview;
 
   let suffix = "";
@@ -33,8 +34,8 @@ export function PreviewButton(): ReactElement | null {
   let href = "";
 
   if (
-    IS_INTERNAL_POPUP ||
-    IS_EXTERNAL_STORY ||
+    isInternalPopup(config) ||
+    isExternalStory(config) ||
     (isCloud(config) && isCMS(config) && isCustomer(config))
   ) {
     href = `${previewUrl}${suffix}`;

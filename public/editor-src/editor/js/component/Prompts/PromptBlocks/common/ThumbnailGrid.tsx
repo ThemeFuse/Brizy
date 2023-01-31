@@ -1,8 +1,9 @@
-import React, { Component, ComponentType, ReactElement } from "react";
 import classnames from "classnames";
-import Thumbnail from "./Thumbnail";
-import { IS_STORY } from "visual/utils/models";
+import React, { Component, ComponentType, ReactElement } from "react";
+import Config from "visual/global/Config";
 import { ArrayType } from "visual/utils/array/types";
+import { isStory } from "visual/utils/models";
+import Thumbnail from "./Thumbnail";
 
 export interface Responsive {
   breakpoint: number;
@@ -45,12 +46,12 @@ export default class ThumbnailGrid<T extends Data> extends Component<
   State
 > {
   static defaultProps = {
-    columns: IS_STORY ? 5 : 4,
+    columns: isStory(Config.getAll()) ? 5 : 4,
     responsive: [
       {
         breakpoint: 1460,
         settings: {
-          columns: IS_STORY ? 4 : 3
+          columns: isStory(Config.getAll()) ? 4 : 3
         }
       },
       {
@@ -114,7 +115,8 @@ export default class ThumbnailGrid<T extends Data> extends Component<
 
     const gridClassName = classnames(
       "brz-ed-popup-two-blocks__grid__column",
-      IS_STORY && "brz-ed-popup-two-blocks__grid__column-stories"
+      isStory(Config.getAll()) &&
+        "brz-ed-popup-two-blocks__grid__column-stories"
     );
 
     const columns = data

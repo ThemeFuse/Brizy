@@ -49,7 +49,7 @@
 
     "families": {
       "fontFamily": "lato",
-      "subTitlefontFamily": "lato"
+      "subTitleFontFamily": "lato"
     },
 
     "fontStyle": "",
@@ -60,11 +60,11 @@
     "lineHeight": 1.5,
     "letterSpacing": 0,
 
-    "subTitlefontStyle": "",
-    "subTitlefontFamilyType": "google",
-    "subTitlefontSize": 16,
-    "subTitlefontSizeSuffix": "px",
-    "subTitlefontWeight": 400,
+    "subTitleFontStyle": "",
+    "subTitleFontFamilyType": "google",
+    "subTitleFontSize": 16,
+    "subTitleFontSizeSuffix": "px",
+    "subTitleFontWeight": 400,
     "subTitleLineHeight": 1.5,
     "subTitleLetterSpacing": 0,
 

@@ -11,13 +11,7 @@ import {
   isInternalStory,
   isPopup,
   isStory,
-  IS_EXTERNAL_POPUP,
-  IS_EXTERNAL_STORY,
-  IS_GLOBAL_POPUP,
-  IS_INTERNAL_POPUP,
-  IS_INTERNAL_STORY,
-  IS_STORY,
-  IS_TEMPLATE
+  isTemplate
 } from "./modes";
 import { createFullModelPath } from "./path";
 import { setOffsetsToElementFromWrapper } from "./setDataInElement";
@@ -52,13 +46,7 @@ export {
   setOffsetsToElementFromWrapper,
   mapModels,
   isModel,
-  IS_TEMPLATE,
-  IS_INTERNAL_POPUP,
-  IS_EXTERNAL_POPUP,
-  IS_GLOBAL_POPUP,
-  IS_STORY,
-  IS_INTERNAL_STORY,
-  IS_EXTERNAL_STORY,
+  isTemplate,
   isInternalPopup,
   isInternalStory,
   isExternalPopup,

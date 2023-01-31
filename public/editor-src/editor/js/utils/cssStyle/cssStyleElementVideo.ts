@@ -8,14 +8,11 @@ import {
   cssStyleSizeWidth
 } from "visual/utils/cssStyle";
 import {
-  styleElementVideoBgColorRatio,
-  styleElementVideoCoverPositionX,
-  styleElementVideoCoverPositionY,
   styleElementVideoCoverSrc,
-  styleElementVideoCoverZoom,
   styleElementVideoIconFontSize,
   styleElementVideoPaddingRatio
 } from "visual/utils/style2";
+import { defaultValueValue } from "../onChange";
 import { CSSValue } from "../style2/types";
 
 export function cssStyleElementVideoPaddingRatio({
@@ -33,7 +30,8 @@ export function cssStyleElementVideoBgSize({
   device,
   state
 }: CSSValue): string {
-  const coverZoom = styleElementVideoCoverZoom({ v, device, state });
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const coverZoom = dvv("coverZoom");
 
   return coverZoom === undefined ? "" : `background-size:${coverZoom}%;`;
 }
@@ -64,22 +62,6 @@ export function cssStyleElementVideoIconHeight({
   return cssStyleSizeHeight({ v, device, state, prefix: "iconSize" });
 }
 
-export function cssStyleElementVideoBgColorRatio({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  const backgroundColor = styleElementVideoBgColorRatio({
-    v,
-    device,
-    state
-  });
-
-  return backgroundColor === undefined
-    ? ""
-    : `background-color:${backgroundColor};`;
-}
-
 export function cssStyleElementVideoCoverSrc({
   v,
   device,
@@ -95,8 +77,10 @@ export function cssStyleElementVideoCoverPosition({
   device,
   state
 }: CSSValue): string {
-  const positionX = styleElementVideoCoverPositionX({ v, device, state });
-  const positionY = styleElementVideoCoverPositionY({ v, device, state });
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+
+  const positionX = dvv("coverPositionX");
+  const positionY = dvv("coverPositionY");
 
   return positionX === undefined && positionY === undefined
     ? ""

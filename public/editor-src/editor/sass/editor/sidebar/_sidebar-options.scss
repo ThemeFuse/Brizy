@@ -2,6 +2,7 @@
 .brz-ed-sidebar-options {
   height: 100%;
 }
+
 .brz-ed-sidebar__right__tabs {
   .brz-ed-control__tabs {
     justify-content: flex-start;
@@ -74,6 +75,16 @@
     }
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+}
+
+.brz-ed-control__tab__content .brz-ed-option-type {
+  &__margin-dev,
+  &__corners-dev,
+  &__padding-dev {
+    .brz-ed-control__multiSelect--value-container {
+      min-height: auto;
     }
   }
 }

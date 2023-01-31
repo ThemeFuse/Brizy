@@ -1,9 +1,10 @@
-import { uuid } from "visual/utils/uuid";
+import Config from "visual/global/Config";
 import { murmurhash2 } from "visual/utils/crypto";
 import * as onStyles from "visual/utils/cssStyle";
-import { IS_STORY } from "visual/utils/models";
+import { isStory } from "visual/utils/models";
+import { uuid } from "visual/utils/uuid";
 
-const devices = IS_STORY
+const devices = isStory(Config.getAll())
   ? {
       desktop: 1500
     }
@@ -13,7 +14,7 @@ const devices = IS_STORY
       mobile: 767
     };
 
-const states = IS_STORY
+const states = isStory(Config.getAll())
   ? {
       normal: "normal"
     }
@@ -62,15 +63,15 @@ function loopStyles({ v, vs, vd, styles, props }) {
   let mode = "";
 
   /* eslint-disable no-unused-vars */
-  Object.entries(devices).forEach(function([device, deviceValue]) {
-    Object.entries(states).forEach(function([state, stateValue]) {
+  Object.entries(devices).forEach(function ([device, deviceValue]) {
+    Object.entries(states).forEach(function ([state, stateValue]) {
       if (device === "desktop" || state === "normal") {
-        Object.entries(styles).forEach(function([styleKey, styleValue]) {
-          Object.entries(styleValue).forEach(function([
+        Object.entries(styles).forEach(function ([styleKey, styleValue]) {
+          Object.entries(styleValue).forEach(function ([
             styleKeyKey,
             styleValueValue
           ]) {
-            styleValueValue.forEach(function(currentStyle) {
+            styleValueValue.forEach(function (currentStyle) {
               const currentStyleArray = currentStyle.split("|||");
               /* eslint-enabled no-unused-vars */
               if (currentStyleArray.length === 2) {
@@ -157,21 +158,21 @@ function cssOutput({ v, styles, legacy }) {
   let standartCss = "";
   let intervalCss = "";
 
-  Object.entries(devices).forEach(function(
+  Object.entries(devices).forEach(function (
     [device, deviceValue],
     deviceKey,
     devicesArray
   ) {
-    Object.entries(states).forEach(function([state, stateValue]) {
+    Object.entries(states).forEach(function ([state, stateValue]) {
       if (legacy[state]) {
         gooutStandart = "";
         gooutInterval = "";
 
-        Object.entries(legacy[state]).forEach(function([className, type]) {
+        Object.entries(legacy[state]).forEach(function ([className, type]) {
           goStandart = "";
           goInterval = "";
 
-          Object.entries(type).forEach(function([typeKey, cssArray]) {
+          Object.entries(type).forEach(function ([typeKey, cssArray]) {
             let go = cssArray[devicesCounter];
 
             if (
@@ -226,8 +227,9 @@ function cssOutput({ v, styles, legacy }) {
             ? `@media(max-width:${deviceValue}px){`
             : `@media(max-width:${
                 devicesArray[devicesCounter][1]
-              }px) and (min-width:${devicesArray[devicesCounter + 1][1] +
-                1}px){`;
+              }px) and (min-width:${
+                devicesArray[devicesCounter + 1][1] + 1
+              }px){`;
 
         goout += standartCss + gooutStandart + (standartCss !== "" ? "}" : "");
       }
@@ -241,8 +243,9 @@ function cssOutput({ v, styles, legacy }) {
               ? `@media(max-width:${deviceValue}px){`
               : `@media(max-width:${
                   devicesArray[devicesCounter][1]
-                }px) and (min-width:${devicesArray[devicesCounter + 1][1] +
-                  1}px){`
+                }px) and (min-width:${
+                  devicesArray[devicesCounter + 1][1] + 1
+                }px){`
             : "";
 
         goout += intervalCss + gooutInterval + (intervalCss !== "" ? "}" : "");

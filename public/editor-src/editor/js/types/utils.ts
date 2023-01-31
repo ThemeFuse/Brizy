@@ -37,7 +37,6 @@ export const isReferenceAllAuthor = (
     return false;
   }
 
-  // @ts-expect-error: skip "author"
   const [_, authorId] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   return authorId === "";
@@ -54,7 +53,6 @@ export const isReferenceSpecificAuthor = (
     return false;
   }
 
-  // @ts-expect-error: skip "author"
   const [_, authorId] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   return authorId !== "";
@@ -71,7 +69,6 @@ export const isReferenceAllIn = (
     return false;
   }
 
-  // @ts-expect-error: skip "in"
   const [_, taxonomy, id] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   return taxonomy !== "" && id === undefined;
@@ -88,7 +85,6 @@ export const isReferenceSpecificIn = (
     return false;
   }
 
-  // @ts-expect-error: skip "in"
   const [_, taxonomy, id] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   return taxonomy !== "" && id !== undefined;
@@ -105,7 +101,6 @@ export const isReferenceAllChild = (
     return false;
   }
 
-  // @ts-expect-error: skip "child"
   const [_, category, id] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   return category !== "" && id === undefined;
@@ -122,7 +117,6 @@ export const isReferenceSpecificChild = (
     return false;
   }
 
-  // @ts-expect-error: skip "child"
   const [_, category, id] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   return category !== "" && id !== undefined;

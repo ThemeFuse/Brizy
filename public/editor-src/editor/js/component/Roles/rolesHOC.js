@@ -6,7 +6,7 @@ export const rolesHOC = ({
   fallbackComponent: FallbackComponent = undefined,
   allow = [],
   render = undefined,
-  fallbackRender = undefined
+  fallbackRender
 }) => {
   function rolesHOC(props, ref) {
     const roleTestPassed = allow.includes(currentUserRole());

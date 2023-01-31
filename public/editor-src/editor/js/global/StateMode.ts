@@ -1,6 +1,7 @@
-import { IS_STORY } from "visual/utils/models";
+import Config from "visual/global/Config";
+import { isStory } from "visual/utils/models";
 import { State, states as _states } from "visual/utils/stateMode";
 
-export const states: State[] = IS_STORY
-  ? _states().filter(s => s !== "hover")
+export const states: State[] = isStory(Config.getAll())
+  ? _states().filter((s) => s !== "hover")
   : _states();

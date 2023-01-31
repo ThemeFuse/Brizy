@@ -7,11 +7,11 @@ import {
   ExternalPopupCloud,
   ExternalStoryCloud,
   GlobalBlock,
+  Rule as GlobalBlockRule,
   InternalPopupCloud,
   Page,
   PageCommon,
   PageWP,
-  Rule as GlobalBlockRule,
   SavedBlock,
   SavedLayout
 } from "visual/types";
@@ -36,7 +36,6 @@ import { pipe } from "visual/utils/fp/pipe";
 import * as Json from "visual/utils/reader/json";
 import * as Num from "visual/utils/reader/number";
 import * as Obj from "visual/utils/reader/object";
-import { readKey } from "visual/utils/reader/object";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/reader/string";
 import * as Union from "visual/utils/reader/union";
@@ -390,23 +389,23 @@ export const parseCollectionSourceItem = parse<
   Record<string, unknown>,
   CollectionSourceItem
 >({
-  id: mPipe(readKey("id"), Str.read),
-  title: mPipe(readKey("title"), Str.read, onNullish("")),
-  type: mPipe(readKey("type"), Str.read)
+  id: mPipe(Obj.readKey("id"), Str.read),
+  title: mPipe(Obj.readKey("title"), Str.read, onNullish("")),
+  type: mPipe(Obj.readKey("type"), Str.read)
 });
 
 export const parsePageRules = parse<Record<string, unknown>, Rule>({
-  id: mPipe(readKey("id"), Str.read),
-  title: mPipe(readKey("title"), Str.read, onNullish("")),
-  type: mPipe(readKey("type"), Str.read)
+  id: mPipe(Obj.readKey("id"), Str.read),
+  title: mPipe(Obj.readKey("title"), Str.read, onNullish("")),
+  type: mPipe(Obj.readKey("type"), Str.read)
 });
 
 export const parseBlogSourceItem = parse<
   Record<string, unknown>,
   BlogSourceItem
 >({
-  id: mPipe(readKey("id"), Str.read),
-  title: mPipe(readKey("title"), Str.read, onNullish(""))
+  id: mPipe(Obj.readKey("id"), Str.read),
+  title: mPipe(Obj.readKey("title"), Str.read, onNullish(""))
 });
 
 //#endregion

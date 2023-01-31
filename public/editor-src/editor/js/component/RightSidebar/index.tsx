@@ -27,7 +27,7 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
     lock: undefined,
     alignment: "right",
     deviceMode: "desktop",
-    dispatch: action => action,
+    dispatch: (action) => action,
     activeTab: undefined
   };
 
@@ -40,6 +40,7 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
   unmounted = false;
 
   componentDidMount(): void {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     instance = this;
   }
 
@@ -193,7 +194,7 @@ const mapStateToProps: MapStateToProps<
   MapStateProps,
   RightSidebarProps,
   ReduxState
-> = state => {
+> = (state) => {
   const { isOpen, lock, alignment, activeTab } = uiSelector(state).rightSidebar;
 
   return {

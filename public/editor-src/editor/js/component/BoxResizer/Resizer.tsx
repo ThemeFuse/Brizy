@@ -1,13 +1,13 @@
 import React, { Component } from "react";
+import {
+  calcMaxHeightBasedOnWidth,
+  calcRectangleSide,
+  calcRectangleSize
+} from "visual/component/BoxResizer/utils";
 import ClickOutside from "visual/component/ClickOutside";
 import { DraggableDiv } from "visual/component/DraggableDiv";
 import { clamp } from "visual/utils/math";
-import { Patch, Point, SimpleRestriction, RestrictionMapping } from "./types";
-import {
-  calcRectangleSide,
-  calcRectangleSize,
-  calcMaxHeightBasedOnWidth
-} from "visual/component/BoxResizer/utils";
+import { Patch, Point, RestrictionMapping, SimpleRestriction } from "./types";
 
 interface State {
   showPoints: boolean;
@@ -234,28 +234,28 @@ export class Resizer extends Component<Props, State> {
     this.props.onChange({ patch, deltaX, deltaY, point, startRect });
   }
 
-  handleTopCenterDrag: DragHandler = dragInfo =>
+  handleTopCenterDrag: DragHandler = (dragInfo) =>
     this.handleDrag("topCenter", dragInfo);
 
-  handleBottomCenterDrag: DragHandler = dragInfo =>
+  handleBottomCenterDrag: DragHandler = (dragInfo) =>
     this.handleDrag("bottomCenter", dragInfo);
 
-  handleCenterLeftDrag: DragHandler = dragInfo =>
+  handleCenterLeftDrag: DragHandler = (dragInfo) =>
     this.handleDrag("centerLeft", dragInfo);
 
-  handleCenterRightDrag: DragHandler = dragInfo =>
+  handleCenterRightDrag: DragHandler = (dragInfo) =>
     this.handleDrag("centerRight", dragInfo);
 
-  handleTopLeftDrag: DragHandler = dragInfo =>
+  handleTopLeftDrag: DragHandler = (dragInfo) =>
     this.handleDrag("topLeft", dragInfo);
 
-  handleTopRightDrag: DragHandler = dragInfo =>
+  handleTopRightDrag: DragHandler = (dragInfo) =>
     this.handleDrag("topRight", dragInfo);
 
-  handleBottomLeftDrag: DragHandler = dragInfo =>
+  handleBottomLeftDrag: DragHandler = (dragInfo) =>
     this.handleDrag("bottomLeft", dragInfo);
 
-  handleBottomRightDrag: DragHandler = dragInfo =>
+  handleBottomRightDrag: DragHandler = (dragInfo) =>
     this.handleDrag("bottomRight", dragInfo);
 
   render(): React.ReactNode {

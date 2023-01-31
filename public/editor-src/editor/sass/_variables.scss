@@ -1,12 +1,102 @@
 @use "sass:math";
 
+// #region Toolbar Fonts Colors
+$toolbar-fonts--color: #fff;
+$toolbar-fonts--active--color: #3ebfe8;
+$toolbar-fonts-add--color: #818a91;
+$toolbar-fonts-separator--bg: rgba(255, 255, 255, 0.3);
+$toolbar-fonts-scrollbar--bg: rgba(#44474b, 0.5);
+// #region Toolbar Popover Color Picker & Color Pallete
+
+// Collor picker pointer from range (HUE, ALPHA, SATURATION)
+// & Tooltip (on alpha range pointer hover)
+$color-picker2-pointer--border: #fff;
+$color-picker2-pointer--box-shadow: rgba(0, 0, 0, 0.5);
+$color-picker2-pointer-tooltip--color: rgba(255, 255, 255, 0.85);
+$color-picker2-pointer-tooltip--bg: rgba(3, 8, 15, 0.92);
+$color-picker2-pointer-tooltip--box-shadow: rgba(0, 0, 0, 0.5);
+
+// Gradient Range
+$color-gradient-range-slider-pointer--border: #fff;
+
+// Select & options collors
+$color-picker-select--bg: #383e48;
+$color-picker-select--color: #fff;
+$color-picker-select-option--color: rgba(255, 255, 255, 0.85);
+$color-picker-select-option--border: rgba(255, 255, 255, 0.07);
+$color-picker-select-option--box-shadow: rgba(0, 0, 0, 0.5);
+$color-picker-select-option--active--color: #3dbfe8;
+
+// Bottom Color pallete & config Icon
+$color-palette--border: #3a3d43;
+$color-palette--active--border: #fff;
+$color-palette-icon--color: #828b92;
+$color-palette-icon--hover--color: #3dbfe8;
+
+// Bottom Inputs (Hex Color, Border Size)
+$color-picker-input--color: #828b92;
+$color-picker-input--border: rgba(255, 255, 255, 0.1);
+$color-picker-input--active--color: #fff;
+
+// Border size input icon
+$color-border-width-type-icon--color: #828b92;
+$color-border-width-type-icon--active--color: #33beea;
+
+// Bottom Multi Inputs (shadow TAB)
+$color-multi-input--color: #828b92;
+$color-multi-input--border: rgba(255, 255, 255, 0.1);
+$color-multi-input--active--color: #fff;
+$color-multi-input--active--border: #3dbfe8;
+$color-multi-input--hover--border: #828b92;
+// Icon (on the left of Multi Inputs #Shadow TAB#)
+$input-icon--color: #828b92;
+// #endregion
+
+// #region Popover Tabs
+$popover-tabs--color: #828b92;
+$popover-tabs--border: rgba(255, 255, 255, 0.1);
+$popover-tabs--active--color: #3dbfe8;
+$popover-tabs--active--border: #3dbfe8;
+
+// Popover Left Tabs
+$popover-tabs--left--bg: rgba(139, 147, 154, 0.92);
+$popover-tabs--left--color: #fff;
+$popover-tabs--left--box-shadow: rgba(0, 0, 0, 0.5);
+$popover-tabs--left--active--bg: rgba(3, 8, 15, 0.92);
+$popover-tabs--left--active--color: #3dbfe8;
+//#endregion
+
+// #region Bottom Toolbar Color
+$bottom-toolbar--bg: rgba(#03080f, 0.92);
+$bottom-toolbar--border: rgba(#fff, 0.15);
+$bottom-toolbar--box-shadow: rgba(#000, 0.5);
+$bottom-toolbar--color: #fff;
+$bottom-toolbar--disable--color: #828b92;
+$bottom-toolbar--active--color: #3dbfe8;
+
+$bottom-toolbar-btn--border: #006799;
+$bottom-toolbar-btn--bg: #0085ba;
+$bottom-toolbar-btn--color: #fff;
+$bottom-toolbar-btn--hover--bg: #0092cc;
+$bottom-toolbar-btn--hover--color: #fff;
+$bottom-toolbar-btn--disable--bg: #0c5876;
+$bottom-toolbar-btn--disable--color: rgba(255, 255, 255, 0.35);
+
+$bottom-toolbar-tooltip--color: #2b3039;
+$bottom-toolbar-tooltip--hover--bg: #2b3039;
+$bottom-toolbar-tooltip--hover--color: #03080f;
+$bottom-toolbar-tooltip--disable--bg: #0085ba;
+$bottom-toolbar-tooltip--disable--color: #fff;
+/// Bottom toolbar "Preview" button use $link-hover-color variable
+//#endregion
+
 // Spacing
 $space-between-controls: 15px;
 
-// Colors
-//
-// Gray scale and brand colors for use across Bootstrap.
 $brand-primary: #3dbfe8;
+
+// Spacing
+$space-between-controls: 15px; // #region Toolbar Fonts Colors
 $brand-options: #383e48;
 $brand-primary-pro: #d62c64;
 $brand-options-border: rgba(255, 255, 255, 0.1);
@@ -91,8 +181,12 @@ $notification-error-color: #f00;
 // Colors
 $toolbar-bg-color: rgba(3, 8, 15, 0.92);
 $toolbar-border-color: rgba(255, 255, 255, 0.15);
-$toolbar-item-color: $text-white;
+$toolbar-item--color: #fff;
+$toolbar-item--hover--color: #3dbfe8;
+$toolbar-badge--color: #fff;
+$toolbar-badge--bg: #3dbfe8;
 $toolbar-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+$toolbar-popover-tooltip--color: #3dbfe8;
 
 // Sizes for toolbar's item
 $toolbar-item-padding: 13px;
@@ -117,6 +211,13 @@ $toolbar-tooltip-sm-width: 171px !default;
 $toolbar-tooltip-md-width: 255px !default;
 $toolbar-tooltip-lg-width: 305px !default;
 $toolbar-tooltip-typo-width: 420px;
+
+//Bottom Toolbar Popover colors
+$bottom-panel-popover-item--color: #fff;
+$bottom-panel-popover-item--color--hover: #3dbfe8;
+$bottom-panel-popover--border: rgba(255, 255, 255, 0.1);
+$bottom-panel-popover--background: rgba(3, 8, 15, 0.92);
+$bottom-panel-popover--box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
 
 // $popover-item-width: 46px !default;
 $popover-item-height: 50px !default;
@@ -210,7 +311,7 @@ $options-handle-font-size-small: 12px;
 $options-item-height: 52px;
 $options-item-padding: 17px;
 $options-item-font-size: 13px;
-$options-label-color: $gray-light;
+$options-label-color: #828b92;
 $options-control-height: 30px;
 $options-control-radius: 4px;
 $options-border-hover-color: #818a91;
@@ -281,3 +382,29 @@ $control-background-color: $brand-options;
 $control-color: rgba(255, 255, 255, 0.85);
 $control-border-color: rgba(255, 255, 255, 0.07);
 $control-dropdown-shadow: 0 2px 13px 0 rgba(0, 0, 0, 0.1);
+
+//File upload option
+$file-upload--background: #2d323b;
+$file-upload--border: 1px dashed #444952;
+$file-upload-icon--color: rgba(94, 100, 111, 0.6);
+$file-upload--border-hover: #5e6470;
+$file-upload-icon--color-hover: #5e646f;
+$file-upload-file-name--color: #fff;
+$file-upload-file-name-icon--color: #11141d;
+
+// Switch 
+$switch--background: #383e48;
+$switch--box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.38) inset;
+$switch-icon--color: rgba(18, 20, 25, 0.7);
+$switch-handle--background: #fff;
+$switch-handle--box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.35);
+$switch-handle-line--color: #34beea;
+$switch-checked--background: #3dbfe8;
+
+// Sidebar Popover
+$sidebar-popover--background: rgba(20, 25, 35, 1);
+$sidebar-popover--box-shadow: rgb(0, 0, 0, 0.5);
+$sidebar-popover-item--color: #fff;
+$sidebar-popover-item--color--hover: #3dbfe8;
+$sidebar-popover-item--border-bottom: rgba(255, 255, 255, 0.1);
+$sidebar-popover-arrow--border-color: transparent rgba(20, 25, 35, 1) transparent transparent;

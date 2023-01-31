@@ -13,15 +13,13 @@
 
   "style": {
     "families": {
-      "fontFamily": "lato",
-      "tabletFontFamily": null,
-      "mobileFontFamily": null
+      "fontFamily": "lato"
     },
 
     "tagName": "span",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
+    "hoverTransitionSuffix": "",
 
     "fontStyle": "heading2",
     "fontFamilyType": "google",
@@ -38,13 +36,6 @@
     "tempColorOpacity": 1,
     "tempColorPalette": "",
 
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
-
     "textShadowColorHex": "#000000",
     "textShadowColorOpacity": 1,
     "textShadowColorPalette": "",
@@ -60,26 +51,19 @@
     "tempTextShadowVertical": 2,
     "tempTextShadowHorizontal": 1,
 
-    "hoverTextShadow": null,
+    "textStrokeBorderStyle": "solid",
 
-    "tempHoverTextShadow": null,
+    "textStrokeBorderColorHex": "#000000",
+    "textStrokeBorderColorOpacity": 0,
+    "textStrokeBorderColorPalette": "color2",
 
-    "hoverTextShadowColorHex": null,
-    "hoverTextShadowColorOpacity": null,
-    "hoverTextShadowColorPalette": null,
+    "textStrokeBorderWidthType": "grouped",
 
-    "tempHoverTextShadowColorPalette": null,
-    "tempHoverTextShadowColorOpacity": null,
-
-    "hoverTextShadowBlur": null,
-    "hoverTextShadowSpread": null,
-    "hoverTextShadowVertical": null,
-    "hoverTextShadowHorizontal": null,
-
-    "tempHoverTextShadowBlur": null,
-    "tempHoverTextShadowSpread": null,
-    "tempHoverTextShadowVertical": null,
-    "tempHoverTextShadowHorizontal": null,
+    "textStrokeBorderWidth": 0,
+    "textStrokeBorderTopWidth": 0,
+    "textStrokeBorderRightWidth": 0,
+    "textStrokeBorderBottomWidth": 0,
+    "textStrokeBorderLeftWidth": 0,
 
     "contentHorizontalAlign": "left",
 
@@ -87,24 +71,18 @@
     "customCSS": "",
 
     "tabletFontStyle": "heading2",
-    "tabletFontFamilyType": null,
     "tabletFontSize": 30,
     "tabletFontSizeSuffix": "px",
     "tabletFontWeight": 700,
     "tabletLineHeight": 1,
     "tabletLetterSpacing": 1,
 
-    "tabletContentHorizontalAlign": null,
-
     "mobileFontStyle": "heading2",
-    "mobileFontFamilyType": null,
     "mobileFontSize": 30,
     "mobileFontSizeSuffix": "px",
     "mobileFontWeight": 700,
     "mobileLineHeight": 1,
-    "mobileLetterSpacing": 1,
-
-    "mobileContentHorizontalAlign": null
+    "mobileLetterSpacing": 1
   },
 
   "link": {
@@ -117,12 +95,6 @@
     "linkPopulation": "",
     "linkUpload": "",
     "linkPopup": "",
-    "actionClosePopup": "off",
-
-    "tabletLinkType": null,
-    "tabletLinkPopup": null,
-
-    "mobileLinkType": null,
-    "mobileLinkPopup": null
+    "actionClosePopup": "off"
   }
 }

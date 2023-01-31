@@ -103,6 +103,7 @@ export default function ($node) {
   root.querySelectorAll(".brz-forms2__field-select").forEach((node) => {
     const $this = $(node);
     const $select = $this.find(".brz-select");
+    const isMultiple = $select.get(0).multiple;
     const placeholder = $select.data("placeholder");
     const maxItemDropdown = $select.data("max-item-dropdown");
     let initialized = false;
@@ -135,6 +136,10 @@ export default function ($node) {
           const node = $dropdown.get(0);
           scrollbars = new Scrollbars(node);
         }
+
+        if (isMultiple) {
+          $this.addClass("brz-forms2__field-select--multiple--opened");
+        }
       }, 0);
     });
 
@@ -143,6 +148,10 @@ export default function ($node) {
       if (scrollbars) {
         scrollbars.destroy();
         scrollbars = null;
+      }
+
+      if (isMultiple) {
+        $this.removeClass("brz-forms2__field-select--multiple--opened");
       }
     });
 
@@ -532,11 +541,12 @@ function getFormData(form) {
 
           if (checked) {
             elementValues.push(value);
-            dataValue.name = name;
-            dataValue.required = required;
-            dataValue.type = type;
-            dataValue.label = dataset.label;
           }
+
+          dataValue.name = name;
+          dataValue.required = required;
+          dataValue.type = type;
+          dataValue.label = dataset.label;
         });
 
         dataValue.value = elementValues.join(",");

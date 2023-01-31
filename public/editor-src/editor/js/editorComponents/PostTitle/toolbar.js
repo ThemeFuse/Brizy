@@ -3,7 +3,7 @@ import { isShopify } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
 import { IS_CLOUD } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
-import { isExternalPopup, isInternalPopup } from "visual/utils/models";
+import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -34,7 +34,7 @@ export function getItems({ v, device, component }) {
 
   const config = Config.getAll();
   const IS_SHOPIFY = isShopify(config);
-  const IS_GLOBAL_POPUP = isInternalPopup(config) || isExternalPopup(config);
+  const IS_GLOBAL_POPUP = isPopup(config);
 
   return [
     {
@@ -129,6 +129,21 @@ export function getItems({ v, device, component }) {
                 {
                   id: "color",
                   type: "colorPicker-dev",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabTextStroke",
+              label: t("Stroke"),
+              options: [
+                {
+                  id: "textStrokeBorder",
+                  type: "border-dev",
+                  config: {
+                    width: ["grouped"],
+                    styles: ["none", "solid"]
+                  },
                   states: [NORMAL, HOVER]
                 }
               ]

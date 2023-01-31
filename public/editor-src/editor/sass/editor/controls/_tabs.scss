@@ -19,8 +19,8 @@
   align-items: center;
   padding-left: $options-item-padding;
   padding-right: $options-item-padding;
-  border-bottom: 1px solid $brand-options-border;
-  color: $options-label-color;
+  border-bottom: 1px solid $popover-tabs--border;
+  color: $popover-tabs--color;
   font-family: $font-family-1;
   font-size: $popover-tabs-font-size;
   float: none;
@@ -38,11 +38,11 @@
 
     &:hover,
     &.active {
-      color: $brand-primary;
+      color: $popover-tabs--active--color;
       transition: color 0.2s linear;
     }
     &.active {
-      border-bottom-color: $brand-primary;
+      border-bottom-color: $popover-tabs--active--border;
     }
     &:not(:last-child) {
       margin-right: 15px;
@@ -81,14 +81,14 @@
   .brz-ed-control__tab {
     width: 30px;
     height: 35px;
-    background-color: rgba(139, 147, 154, 0.92);
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    background-color: $popover-tabs--left--bg;
+    box-shadow: 0 0 5px 0 $popover-tabs--left--box-shadow;
     border-top-left-radius: 7px;
     border-bottom-left-radius: 7px;
     display: flex;
     align-items: center;
     padding-left: 11px;
-    color: #fff;
+    color: $popover-tabs--left--color;
     font-size: 13px;
     cursor: pointer;
     margin: 0 0 1px;
@@ -96,8 +96,8 @@
     left: 8px;
 
     &.active {
-      color: $brand-primary;
-      background-color: rgba(3, 8, 15, 0.92);
+      color: $popover-tabs--left--active--color;
+      background-color: $popover-tabs--left--active--bg;
     }
   }
 }

@@ -1,12 +1,7 @@
 import React, { ReactNode } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ElementModel } from "visual/component/Elements/Types";
-import {
-  Editor,
-  Model,
-  OnChangeMeta,
-  Props
-} from "visual/editorComponents/EditorComponent";
+import { EditorInstance, Props } from "visual/editorComponents/EditorComponent";
 import {
   Deps,
   findMigrations,
@@ -14,6 +9,7 @@ import {
   Migration
 } from "visual/utils/migration";
 import { read as readNumber } from "visual/utils/reader/number";
+import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
 
 type DBMigration<M> = M & {
   _version: number;
@@ -27,14 +23,15 @@ export function withMigrations<
   M extends ElementModel,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   D extends DepsGetValue<any>,
-  P = Record<string, unknown>
+  P extends Record<string, unknown> = Record<string, unknown>
 >(
-  EditorComponent: Editor,
+  EditorComponent: EditorInstance,
   migrations: Migration<Deps<unknown>>[],
   deps?: D
-): Editor {
-  class EditorComponentWithMigrations extends EditorComponent<M> {
-    dbValueMigrated: Model<DBMigration<M>> | undefined = undefined;
+): EditorInstance {
+  class EditorComponentWithMigrations extends EditorComponent<M, P> {
+    dbValueMigrated: DBMigration<Props<M, P>>["dbValue"] | undefined =
+      undefined;
 
     state = {
       loading: false

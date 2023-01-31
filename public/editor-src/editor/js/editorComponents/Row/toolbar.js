@@ -2,7 +2,7 @@ import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isExternalPopup, isInternalPopup } from "visual/utils/models";
+import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
@@ -35,8 +35,7 @@ export function getItems({ v, device, component, state, context }) {
     DCTypes.image
   );
 
-  const config = Config.getAll();
-  const IS_GLOBAL_POPUP = isInternalPopup(config) || isExternalPopup(config);
+  const IS_GLOBAL_POPUP = isPopup(Config.getAll());
 
   return [
     toolbarShowOnResponsive({ v, device, devices: "responsive" }),

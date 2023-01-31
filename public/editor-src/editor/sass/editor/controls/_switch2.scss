@@ -7,7 +7,6 @@ $width: 50px;
 $height: 28px;
 $border-radius: 18px;
 $background: $brand-options; // #5aaeca
-$background-checked: $brand-primary; //#5aaeca; // #373d47
 $switchTransition: 0.15s ease-out;
 $background-light-checked: #c7c9cd;
 
@@ -30,9 +29,9 @@ $background-light-checked: #c7c9cd;
     height: inherit;
     font-size: 18px;
     text-transform: uppercase;
-    background: $background;
+    background: $switch--background;
     border-radius: inherit;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.38) inset;
+    box-shadow: $switch--box-shadow;
   }
   &--check,
   &--un-check {
@@ -41,7 +40,7 @@ $background-light-checked: #c7c9cd;
     transform: translateY(-50%);
     margin: 0;
     transition: inherit;
-    color: rgba(18, 20, 25, 0.7);
+    color: $switch-icon--color;
   }
   &--check {
     // Check √
@@ -59,9 +58,9 @@ $background-light-checked: #c7c9cd;
     top: 50%;
     left: 4px;
     transform: translateY(-50%);
-    background-color: #fff;
+    background-color: $switch-handle--background;
     border-radius: 50%;
-    box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.35);
+    box-shadow: $switch-handle--box-shadow;
     transition: left #{$switchTransition};
 
     &:after,
@@ -69,7 +68,7 @@ $background-light-checked: #c7c9cd;
       content: "";
       position: absolute;
       width: 7px;
-      border-top: 1px solid #34beea;
+      border-top: 1px solid $switch-handle-line--color;
       top: 7px;
       left: 50%;
       transform: translateX(-50%);
@@ -79,12 +78,12 @@ $background-light-checked: #c7c9cd;
     }
     &:after {
       height: 7px;
-      border-bottom: 1px solid #34beea;
+      border-bottom: 1px solid $switch-handle-line--color;
     }
   }
 
   &--on .brz-ed-control__switch2-arrows {
-    background: $background-checked;
+    background: $switch-checked--background;
 
     .brz-ed-control__switch2--check {
       opacity: 1;

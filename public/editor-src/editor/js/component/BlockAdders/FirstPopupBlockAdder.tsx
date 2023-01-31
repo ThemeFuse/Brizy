@@ -130,5 +130,6 @@ const mapDispatchToProps = (
 
 export default rolesHOC({
   allow: ["admin"],
-  component: connect(mapStateToProps, mapDispatchToProps)(FirstPopupBlockAdder)
+  component: connect(mapStateToProps, mapDispatchToProps)(FirstPopupBlockAdder),
+  fallbackRender: undefined
 });

@@ -7,8 +7,12 @@ type Props = {
 
 const Shape: React.FC<Props> = ({ shapeTop, shapeBottom }) => (
   <>
-    {shapeTop && <div className="brz-bg-shape brz-bg-shape__top" />}
-    {shapeBottom && <div className="brz-bg-shape brz-bg-shape__bottom" />}
+    {shapeTop && (
+      <div className="brz-bg-shape w-full h-full absolute inset-x-0 bg-no-repeat pointer-events-none brz-bg-shape__top top-0 after:content-[''] after:absolute after:w-full after:h-full after:top-0" />
+    )}
+    {shapeBottom && (
+      <div className="brz-bg-shape w-full h-full absolute inset-x-0 bg-no-repeat pointer-events-none brz-bg-shape__bottom bottom-0 rotate-x-180  after:content-[''] after:absolute after:w-full after:h-full after:top-0" />
+    )}
   </>
 );
 

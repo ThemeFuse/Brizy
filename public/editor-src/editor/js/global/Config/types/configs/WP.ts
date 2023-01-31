@@ -1,6 +1,7 @@
 import { Role } from "visual/utils/membership";
 import { DynamicContent } from "../DynamicContent";
 import { Config } from "../index";
+import { Module } from "../Module";
 import { Pro } from "../Pro";
 import { Project } from "../Project";
 import { Rule } from "../Rule";
@@ -91,7 +92,7 @@ export interface WP extends ConfigCommon {
   urls: Urls<"wp">;
   project: Project<"wp">;
   template_type?: TemplateType;
-
+  modules: Module<"wp">;
   wp: Prop;
 }
 

@@ -1,5 +1,4 @@
 import { DeviceMode } from "visual/types";
-import { ElementModel } from "visual/component/Elements/Types";
 import { ImageDCPatch, SizeTypePatch, UnitPatch } from "../types/ImagePatch";
 import {
   elementModelToValue,
@@ -8,7 +7,8 @@ import {
   pathOnUnitChange,
   Value,
   Size,
-  PatchUnit
+  PatchUnit,
+  ElementModelToValue
 } from "../imageChange";
 
 // init config before start the tests
@@ -18,14 +18,23 @@ beforeEach(() => {
 
 describe("Testing 'elementModelToValue' function", () => {
   test("Match properties", () => {
-    const input: ElementModel = {
+    const input: ElementModelToValue = {
       imageExtension: "gif",
       widthSuffix: "px",
       heightSuffix: "%",
       sizeType: "custom",
       width: 45,
       height: 50,
-      size: 10
+      size: 10,
+      imagePopulation: undefined,
+      tabletWidth: undefined,
+      tabletHeight: undefined,
+      tabletWidthSuffix: undefined,
+      tabletHeightSuffix: undefined,
+      mobileWidth: undefined,
+      mobileHeight: undefined,
+      mobileWidthSuffix: undefined,
+      mobileHeightSuffix: undefined
     };
 
     const output: Value = {
@@ -49,7 +58,7 @@ describe("Testing 'elementModelToValue' function", () => {
 
     expect(elementModelToValue(input)).toStrictEqual(output);
 
-    const responsiveInput: ElementModel = {
+    const responsiveInput: ElementModelToValue = {
       imageExtension: "gif",
       imagePopulation: "{{feature}}",
       widthSuffix: "px",

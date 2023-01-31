@@ -4,6 +4,6 @@
 
   &:hover {
     transition: color 0.2s linear;
-    color: $brand-primary;
+    color: $toolbar-item--hover--color;
   }
 }

@@ -3,7 +3,7 @@ import Config from "visual/global/Config";
 import { Block } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isExternalPopup, isInternalPopup, isStory } from "visual/utils/models";
+import { isPopup, isStory } from "visual/utils/models";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -46,7 +46,7 @@ export function getItems({
 
   const config = Config.getAll();
   const IS_STORY = isStory(config);
-  const IS_GLOBAL_POPUP = isInternalPopup(config) || isExternalPopup(config);
+  const IS_GLOBAL_POPUP = isPopup(config);
 
   return [
     {

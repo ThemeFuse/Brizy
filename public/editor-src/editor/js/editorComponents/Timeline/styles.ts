@@ -96,7 +96,7 @@ export function style(
     ".brz && .brz-timeline__tab:nth-child(even):before": {
       standart: ["cssStyleElementTimelineVerticalCustomPosition"]
     },
-    ".brz && .brz-timeline__tab:after, .brz-timeline__tab:before": {
+    ".brz && .brz-timeline__tab:after, && .brz-timeline__tab:before": {
       standart: ["cssStyleElementTimelineLineBgColor"]
     },
     ".brz && .brz-timeline__tab .brz-timeline__content": {

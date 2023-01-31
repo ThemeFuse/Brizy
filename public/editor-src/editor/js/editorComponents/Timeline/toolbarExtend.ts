@@ -1,19 +1,9 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
 import { Value } from "./index";
 
-export function getItems({
-  v,
-  device,
-  state
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  state: State;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const vertical = dvv("verticalMode") === "off";
@@ -97,27 +87,6 @@ export function getItems({
               label: t("Icon"),
               position: 60,
               options: [
-                {
-                  id: "iconImage",
-                  label: t("Icon"),
-                  //@ts-expect-error New option doesn't work
-                  type: "iconSetter",
-                  devices: "desktop",
-                  value: {
-                    name: dvv("name"),
-                    type: dvv("type")
-                  },
-                  onChange: ({
-                    name,
-                    type
-                  }: {
-                    name: string;
-                    type: string;
-                  }) => ({
-                    name: name,
-                    type: type
-                  })
-                },
                 {
                   id: "groupSize",
                   type: "group-dev",
@@ -254,4 +223,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

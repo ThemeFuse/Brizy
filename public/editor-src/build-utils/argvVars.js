@@ -1,8 +1,11 @@
 const path = require("path");
 
-module.exports = function(argv) {
+module.exports = function (argv) {
   const argv_ = require("minimist")(argv.slice(2));
 
+  /**
+   * @type {"WP" | "Cloud" | "Cloud-localhost"}
+   */
   const TARGET = argv_.target || argv_.t || "Cloud-localhost";
   const IS_PRODUCTION = Boolean(argv_.production);
   const IS_EXPORT = Boolean(argv_.export || argv_.e);
@@ -18,6 +21,7 @@ module.exports = function(argv) {
   const ANALYZE_PREVIEW = Boolean(argv_["analyze_preview"]);
   const COMPILER_URL =
     argv_["compiler-url"] || "http://localhost:5000/compile/v3";
+  const AUTHORIZATION_URL = argv_["authUrl"];
 
   const paths = {
     editor: path.resolve(__dirname, "../editor"),
@@ -25,6 +29,7 @@ module.exports = function(argv) {
     templates: path.resolve(__dirname, "../templates"),
     stories: path.resolve(__dirname, "../stories"),
     popups: path.resolve(__dirname, "../popups"),
+    packages: path.resolve(__dirname, "../packages"),
     build: getBuildPath(),
     buildPro: getBuildProPath(),
     buildLocal: path.resolve(__dirname, "../build")
@@ -45,6 +50,7 @@ module.exports = function(argv) {
     ANALYZE_EXPORT,
     ANALYZE_PREVIEW,
     COMPILER_URL,
+    AUTHORIZATION_URL,
     paths
   };
 

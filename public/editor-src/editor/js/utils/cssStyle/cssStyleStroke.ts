@@ -1,4 +1,8 @@
-import { styleColor } from "visual/utils/style2";
+import {
+  styleBorderColor,
+  styleBorderWidthGrouped,
+  styleColor
+} from "visual/utils/style2";
 import { checkValue } from "../checkValue";
 import { defaultValueValue } from "../onChange";
 import * as Num from "../reader/number";
@@ -57,4 +61,29 @@ export function cssStyleStrokeWidth({
   }
 
   return "stroke-width: 1;";
+}
+
+export function cssStyleStrokeText({
+  v,
+  device,
+  state,
+  prefix = "textStroke"
+}: CSSValue): string {
+  const borderStrokeWidth = styleBorderWidthGrouped({
+    v,
+    device,
+    state,
+    prefix
+  });
+
+  const borderStrokeColor = styleBorderColor({
+    v,
+    device,
+    state,
+    prefix
+  });
+
+  return borderStrokeWidth === undefined || borderStrokeColor === undefined
+    ? ""
+    : `text-stroke: ${borderStrokeColor} ${borderStrokeWidth}px; -webkit-text-stroke:${borderStrokeColor} ${borderStrokeWidth}px;`;
 }

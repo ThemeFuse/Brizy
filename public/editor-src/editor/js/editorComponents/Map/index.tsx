@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { MapEditor, MapPreview } from "component/Flex/Map/view";
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
@@ -6,6 +7,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
+import { IS_WP } from "visual/utils/env";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -20,9 +22,6 @@ export interface Value extends ElementModel {
 interface Patch {
   [k: string]: string;
 }
-
-const URL = "https://www.google.com/maps/embed/v1/place";
-const KEY = "AIzaSyCcywKcxXeMZiMwLDcLgyEnNglcLOyB_qw";
 
 const resizerPoints = [
   "topLeft",
@@ -93,13 +92,7 @@ class Map extends EditorComponent<Value> {
       "brz-map",
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
-    // intrinsic-ignore - this class is needed for WP theme twentytwenty(themes/twentytwenty/assets/js/index.js?ver=1.1)
-    // intrinsicRatioVideos - property contain function - makeFit which changes iframes width
-    // and breaks our code(video, map inside megamenu isn't showing as example)
-    const iframeClassName = classnames("brz-iframe", "intrinsic-ignore", {
-      "brz-blocked": IS_EDITOR
-    });
-    const iframeSrc = `${URL}?key=${KEY}&q=${address}&zoom=${zoom}`;
+
     const resizerRestrictions = {
       height: {
         px: { min: 25, max: Infinity },
@@ -144,13 +137,39 @@ class Map extends EditorComponent<Value> {
               value={resizerTransformValue(v)}
               onChange={this.handleResizerChange}
             >
-              <div className="brz-map-content">
-                <iframe className={iframeClassName} src={iframeSrc} />
-              </div>
+              <MapEditor
+                address={address}
+                zoom={zoom}
+                platform={IS_WP ? "WP" : "CLOUD"}
+              />
             </BoxResizer>
           </Wrapper>
         </CustomCSS>
       </Toolbar>
+    );
+  }
+
+  renderForView(v: Value, vs: Value, vd: Value): ReactNode {
+    const { address, zoom } = v;
+    const wrapperClassName = classnames(
+      "brz-map",
+      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+    );
+
+    return (
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Wrapper
+          {...this.makeWrapperProps({
+            className: wrapperClassName
+          })}
+        >
+          <MapPreview
+            address={address}
+            zoom={zoom}
+            platform={IS_WP ? "WP" : "CLOUD"}
+          />
+        </Wrapper>
+      </CustomCSS>
     );
   }
 }

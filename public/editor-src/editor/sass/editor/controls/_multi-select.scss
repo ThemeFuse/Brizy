@@ -76,7 +76,7 @@
     height: 20px;
     padding: 5px;
     line-height: 1;
-    color: #fff;
+    color: $color-picker-select--color;
     margin: 2px;
     background-color: #49515f;
     box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.04);
@@ -115,10 +115,10 @@
   &__menu {
     font-family: $font-family-1;
     z-index: z("select-portal");
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 3px 0 $color-picker-select-option--box-shadow;
     margin-top: 3px; // ? placement
     border-radius: $control-border-radius;
-    background: $options-control-background;
+    background: $color-picker-select--bg;
     min-width: 100%;
     transform: none !important;
   }
@@ -135,11 +135,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-bottom: 1px solid $control-border-color;
-    color: $control-color;
+    border-bottom: 1px solid $color-picker-select-option--border;
+    color:  $color-picker-select-option--color;
     margin: 0;
     display: flex;
     align-items: center;
+    font-family: $font-family-1;
 
     &:last-child {
       border-bottom-color: transparent;
@@ -148,7 +149,7 @@
     &:hover:not(.brz-ed-control__multiSelect__option--disabled),
     &--active {
       transition: color 0.15s linear;
-      color: $brand-primary;
+      color: $color-picker-select-option--active--color;
     }
 
     &--disabled {
@@ -165,5 +166,28 @@
     background-color: #7b7b7b;
     border-radius: 2px;
     right: -3px;
+  }
+
+  &.brz-slider__select {
+    width: 50px;
+    .brz-ed-control__multiSelect--value-container {
+      background: transparent;
+      transition: 0.2s color linear;
+
+      &:hover {
+        .brz-ed-control__multiSelect--tag--value,
+        .brz-control__select--arrow {
+          color: $brand-primary;
+        }
+      }
+    }
+    .brz-ed-control__multiSelect--tag--value {
+      color: $gray-light;
+      transition: 0.2s color linear;
+    }
+    .brz-control__select--arrow {
+      color: $gray-light;
+      transition: 0.2s color linear;
+    }
   }
 }

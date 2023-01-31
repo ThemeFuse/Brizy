@@ -44,22 +44,10 @@ export const getItems = ({
               label: t("Icon"),
               options: [
                 {
-                  id: "iconImage",
+                  id: "icon",
                   label: t("Icon"),
-                  // @ts-expect-error old option
-                  type: "iconSetter",
-                  canDelete: true,
-                  value: {
-                    name: iconName,
-                    type: dvv("iconType")
-                  },
-                  onChange: ({
-                    name,
-                    type
-                  }: {
-                    name: string;
-                    type: string;
-                  }): unknown => ({ iconName: name, iconType: type })
+                  type: "iconSetter-dev",
+                  config: { canDelete: true }
                 },
                 {
                   id: "iconPosition",

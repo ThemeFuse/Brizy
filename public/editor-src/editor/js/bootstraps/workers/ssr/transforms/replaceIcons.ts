@@ -40,7 +40,9 @@ export const replaceIcons = async ($: cheerio.Root): Promise<void> => {
         }
       }
     } catch (e) {
-      console.log("Error:", e.stack);
+      if (e instanceof Error) {
+        console.log("Error:", e.stack);
+      }
     }
   }
 

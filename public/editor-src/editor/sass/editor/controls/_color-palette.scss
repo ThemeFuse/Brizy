@@ -12,13 +12,13 @@
     border-radius: 2px;
     margin-left: 2px;
     cursor: pointer;
-    border: 1px solid #3a3d43;
+    border: 1px solid $color-palette--border;
 
     &:first-child {
       margin-left: 0;
     }
     &.active {
-      border: 2px solid #fff;
+      border: 2px solid $color-palette--active--border;
     }
   }
   &__icon {
@@ -26,11 +26,11 @@
     font-size: 14px;
     margin-left: 5px;
     display: flex;
-    color: $options-label-color;
+    color: $color-palette-icon--color;
     transition: color 0.2s linear;
 
     &:hover {
-      color: $brand-primary;
+      color: $color-palette-icon--hover--color;
     }
   }
 }

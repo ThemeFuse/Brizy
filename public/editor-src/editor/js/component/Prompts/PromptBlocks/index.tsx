@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import React, {
   Component,
   ComponentType,
@@ -6,25 +7,24 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import _ from "underscore";
-import classnames from "classnames";
-import Fixed from "visual/component/Prompts/Fixed";
 import EditorIcon from "visual/component/EditorIcon";
+import Fixed from "visual/component/Prompts/Fixed";
+import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
+import { isPopup, isStory } from "visual/utils/models";
 import { get } from "visual/utils/object/get";
 import { capitalize } from "visual/utils/string";
-
-import Layouts from "./Layouts";
 import Blocks from "./Blocks";
 import Global from "./Global";
+import Layouts from "./Layouts";
 import Library from "./Library";
 import {
-  PromptBlocksState,
-  PromptBlocksProps,
-  PromptTabsId,
   PromptBlock,
-  PromptBlockTemplate
+  PromptBlockTemplate,
+  PromptBlocksProps,
+  PromptBlocksState,
+  PromptTabsId
 } from "./types";
-import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
 
 type Tab = {
   id: PromptTabsId;
@@ -46,15 +46,20 @@ type TabComponentProps = {
 const TABS: Tab[] = [
   {
     id: "template",
-    title: IS_STORY ? t("Stories") : t("Layouts"),
+    title: isStory(Config.getAll()) ? t("Stories") : t("Layouts"),
     icon: "nc-pages",
     renderTab(props): ReactElement {
-      return <Layouts {...props} type={IS_STORY ? "stories" : "templates"} />;
+      return (
+        <Layouts
+          {...props}
+          type={isStory(Config.getAll()) ? "stories" : "templates"}
+        />
+      );
     }
   },
   {
     id: "blocks",
-    title: IS_GLOBAL_POPUP ? t("Popups") : t("Blocks"),
+    title: isPopup(Config.getAll()) ? t("Popups") : t("Blocks"),
     icon: "nc-blocks",
     renderTab(props): ReactElement {
       return <Blocks {...props} />;
@@ -62,7 +67,7 @@ const TABS: Tab[] = [
   },
   {
     id: "saved",
-    title: IS_GLOBAL_POPUP ? t("Saved Popups") : t("Saved"),
+    title: isPopup(Config.getAll()) ? t("Saved Popups") : t("Saved"),
     icon: "nc-save-section",
     renderTab(props): ReactElement {
       return <Library {...props} />;
@@ -70,7 +75,7 @@ const TABS: Tab[] = [
   },
   {
     id: "global",
-    title: IS_GLOBAL_POPUP ? t("Global Popups") : t("Global Blocks"),
+    title: isPopup(Config.getAll()) ? t("Global Popups") : t("Global Blocks"),
     icon: "nc-global",
     renderTab(props): ReactElement {
       return <Global {...props} />;
@@ -140,12 +145,8 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
 
   handleChange = (block: PromptBlock | PromptBlockTemplate): void => {
     const { currentTab } = this.state;
-    const {
-      onChangeBlocks,
-      onChangeGlobal,
-      onChangeSaved,
-      onChangeTemplate
-    } = this.props;
+    const { onChangeBlocks, onChangeGlobal, onChangeSaved, onChangeTemplate } =
+      this.props;
 
     switch (currentTab) {
       case "blocks": {
@@ -182,7 +183,7 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
       const key = `show${capitalize(id)}`;
       return !!get(key as keyof PromptBlocksProps, this.props);
     };
-    const headerTabs = TABS.filter(filterTabs).map(tab => {
+    const headerTabs = TABS.filter(filterTabs).map((tab) => {
       const className = classnames("brz-ed-popup-two-tab-item", {
         "brz-ed-popup-two-tab-item-active": tab.id === currentTab
       });

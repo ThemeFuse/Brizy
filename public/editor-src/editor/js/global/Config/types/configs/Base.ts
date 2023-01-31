@@ -11,6 +11,7 @@ import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
 import { CollectionItemId, CustomerId } from "visual/types";
 import { Role } from "visual/utils/membership";
 import { WithId } from "visual/utils/options/attributes";
+import { Module } from "../Module";
 
 export type ShopModules = undefined | Ecwid;
 
@@ -97,7 +98,5 @@ export interface Base<Platform> extends ConfigCommon, WithId<number> {
     };
   };
   whiteLabel?: WhiteLabel;
-  modules?: {
-    shop: ShopModules;
-  };
+  modules?: Module<"cloud">;
 }
