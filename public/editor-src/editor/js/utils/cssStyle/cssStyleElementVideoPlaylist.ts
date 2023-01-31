@@ -11,7 +11,6 @@ import {
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
-import { styleElementVideoImageSize } from "visual/utils/style2";
 import { CSSValue } from "../style2/types";
 
 // Style Typography Title Video
@@ -66,7 +65,8 @@ export function cssStyleElementVideoPlaylistImageSize({
   device,
   state
 }: CSSValue): string {
-  const widthImage = styleElementVideoImageSize({ v, device, state });
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const widthImage = dvv("widthImage");
 
   return widthImage === undefined
     ? ""

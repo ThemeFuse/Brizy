@@ -360,7 +360,13 @@ export function cssStyleElementImageMaskDropShadow({
   state,
   prefix = "maskShadow"
 }) {
-  return cssStyleDropShadow({ v, device, state, prefix });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  const maskShape = dvv("maskShape");
+
+  return maskShape === "none"
+    ? ""
+    : cssStyleDropShadow({ v, device, state, prefix });
 }
 
 export function cssStyleElementImageCustomImage({

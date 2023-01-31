@@ -75,7 +75,7 @@ export function apply<
  * @param {M} m
  * @return {R}
  */
-export function apply<V, P, M extends P>(
+export function apply<V, P extends Record<string, unknown>, M extends P>(
   patchers: Array<[Patcher<V, M, P>, V]>,
   m: M
 ): MValue<P> {

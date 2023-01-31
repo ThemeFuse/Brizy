@@ -1,37 +1,38 @@
 import React, { FC, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Prompts from "visual/component/Prompts";
 import { Typography as Control } from "visual/component/Controls/Typography";
-import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
-import {
-  DEFAULT_VALUE,
-  getValue,
-  getElementModel,
-  getModel
-} from "./componentUtils";
+import * as Option from "visual/component/Options/Type";
+import { OptionType } from "visual/component/Options/Type";
+import Prompts from "visual/component/Prompts";
+import { currentUserRole } from "visual/component/Roles";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { updateUI } from "visual/redux/actions2";
 import {
   deviceModeSelector,
   getDefaultFontDetailsSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import {
   fontTransform,
   getFontStyles,
   getWeightChoices
 } from "visual/utils/fonts";
-import { currentUserRole } from "visual/component/Roles";
-import { t } from "visual/utils/i18n";
-import { updateUI } from "visual/redux/actions2";
-import { Config } from "./types/Config";
-import { Value } from "./types/Value";
-import * as Option from "visual/component/Options/Type";
-import { OptionType } from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { FontsBlock } from "./types/FontsBlocks";
-import { ReduxState } from "visual/redux/types";
-import { Font } from "./types/Font";
-import * as Patch from "./types/Patch";
+import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import * as FontWeight from "visual/utils/fonts/Weight";
+import { t } from "visual/utils/i18n";
+import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import {
+  DEFAULT_VALUE,
+  getElementModel,
+  getModel,
+  getValue
+} from "./componentUtils";
+import { Config } from "./types/Config";
+import { Font } from "./types/Font";
+import { FontsBlock } from "./types/FontsBlocks";
+import * as Patch from "./types/Patch";
+import { Value } from "./types/Value";
 
 const openFontsUploader = (): void => {
   Prompts.open({
@@ -96,11 +97,13 @@ export const Typography: OptionType<Value, Patch.Patch> & FC<Props> = ({
           const value = withFontFamily
             ? Patch.fullFont({
                 ..._value,
-                [meta.isChanged]: v as Patch.FontSettings[keyof Patch.FontSettings]
+                [meta.isChanged]:
+                  v as Patch.FontSettings[keyof Patch.FontSettings]
               })
             : Patch.fontSettings({
                 ..._value,
-                [meta.isChanged]: v as Patch.FontSettings[keyof Patch.FontSettings]
+                [meta.isChanged]:
+                  v as Patch.FontSettings[keyof Patch.FontSettings]
               });
           return onChange(value);
         }
@@ -113,7 +116,7 @@ export const Typography: OptionType<Value, Patch.Patch> & FC<Props> = ({
     dispatch(
       updateUI("leftSidebar", {
         isOpen: true,
-        drawerContentType: "styling"
+        drawerContentType: LeftSidebarOptionsIds.globalStyle
       })
     );
   }, []);

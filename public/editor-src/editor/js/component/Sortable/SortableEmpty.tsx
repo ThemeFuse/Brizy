@@ -3,6 +3,7 @@ import { findDOMNode } from "react-dom";
 import _ from "underscore";
 import { rolesHOC } from "visual/component/Roles";
 import { hideToolbar } from "visual/component/Toolbar";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import UIEvents from "visual/global/UIEvents";
 import { updateUI } from "visual/redux/actions2";
 import { getStore } from "visual/redux/store";
@@ -125,7 +126,7 @@ class Sortable extends Component<Props> {
     getStore().dispatch(
       updateUI("leftSidebar", {
         isOpen: true,
-        drawerContentType: "addBaseElements"
+        drawerContentType: LeftSidebarOptionsIds.addElements
       })
     );
   };

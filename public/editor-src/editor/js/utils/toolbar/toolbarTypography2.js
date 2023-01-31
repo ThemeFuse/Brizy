@@ -1,14 +1,15 @@
-import { t } from "visual/utils/i18n";
-import { IS_STORY } from "visual/utils/models";
-import { capByPrefix } from "visual/utils/string";
+import Config from "visual/global/Config";
 import { getWeightChoices } from "visual/utils/fonts";
 import { getSuffixChoices } from "visual/utils/fonts/SizeSuffix";
-import { getOptionFontByGlobal } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
+import { isStory } from "visual/utils/models";
 import {
   defaultValueKey,
   defaultValueValue,
   saveOnChanges
 } from "visual/utils/onChange";
+import { getOptionFontByGlobal } from "visual/utils/options";
+import { capByPrefix } from "visual/utils/string";
 
 export function toolbarTypography2FontFamily({
   v,
@@ -89,7 +90,7 @@ export function toolbarTypography2FontStyle({
     className: "brz-ed-popover__font-style",
     display: "block",
     value: fontStyleValue,
-    onChange: fontStyle => {
+    onChange: (fontStyle) => {
       return {
         [fontStyleKey]: fontStyle
       };
@@ -130,7 +131,7 @@ export function toolbarTypography2FontSize({
 
   return {
     id: fontSizeKey,
-    label: IS_STORY ? t("Size") : "",
+    label: isStory(Config.getAll()) ? t("Size") : "",
     type: "stepper",
     devices,
     disabled,
@@ -139,7 +140,7 @@ export function toolbarTypography2FontSize({
     max: 100,
     step: 1,
     value: fontSizeValue,
-    onChange: fontSize => {
+    onChange: (fontSize) => {
       const values = {
         ...{ v, prefix, device, state, onChange },
         ...{ current: fontSizeKey, value: fontSize }
@@ -186,10 +187,10 @@ export function toolbarTypography2FontSizeSuffix({
     label: "Size",
     devices,
     className: "brz-control__typography-suffix",
-    disabled: IS_STORY,
+    disabled: isStory(Config.getAll()),
     choices: getSuffixChoices,
     value: fontSizeSuffixValue,
-    onChange: fontSizeSuffix => {
+    onChange: (fontSizeSuffix) => {
       const values = {
         ...{ v, prefix, device, state, onChange },
         ...{ current: fontSizeSuffixKey, value: fontSizeSuffix }
@@ -242,7 +243,7 @@ export function toolbarTypography2LineHeight({
     max: 10,
     step: 0.1,
     value: lineHeightValue,
-    onChange: lineHeight => {
+    onChange: (lineHeight) => {
       const values = {
         ...{ v, prefix, device, state, onChange },
         ...{ current: lineHeightKey, value: lineHeight }
@@ -328,7 +329,7 @@ export function toolbarTypography2FontWeight({
       family: fontFamilyValue
     }),
     value: fontWeightValue,
-    onChange: fontWeight => {
+    onChange: (fontWeight) => {
       const values = {
         ...{ v, prefix, device, state, onChange },
         ...{ current: fontWeightKey, value: fontWeight }
@@ -381,7 +382,7 @@ export function toolbarTypography2LetterSpacing({
     max: 20,
     step: 0.5,
     value: letterSpacingValue,
-    onChange: letterSpacing => {
+    onChange: (letterSpacing) => {
       const values = {
         ...{ v, prefix, device, state, onChange },
         ...{ current: letterSpacingKey, value: letterSpacing }

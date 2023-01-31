@@ -28,9 +28,9 @@ export const testGetter = <T extends Record<any, any>, K extends keyof T>(
   key: K,
   valid: Array<T[K]>
 ) => {
-  describe("Basic getter tests", function() {
+  describe("Basic getter tests", function () {
     test("Return key value from model", () => {
-      valid.map(v => expect(getter({ [key]: v } as T, {} as T[K])).toBe(v));
+      valid.map((v) => expect(getter({ [key]: v } as T, {} as T[K])).toBe(v));
     });
 
     test("if model key is missing, return orElse", () => {
@@ -70,14 +70,14 @@ export const testGetterValidation = <
 ) => {
   testGetter(getter, key, valid);
 
-  describe("Return model key value if value is valid", function() {
+  describe("Return model key value if value is valid", function () {
     test("Return key value from model, if key value is valid", () => {
-      valid.map(v => expect(getter({ [key]: v } as T, {} as T[K])).toBe(v));
+      valid.map((v) => expect(getter({ [key]: v } as T, {} as T[K])).toBe(v));
     });
 
     test("Return orElse, if key value is invalid", () => {
       const orElse = {};
-      invalid.map(v =>
+      invalid.map((v) =>
         expect(getter({ [key]: v } as T, orElse as T[K])).toBe(orElse)
       );
     });
@@ -105,20 +105,20 @@ export const testSetter = <T extends Record<any, any>, V extends T[keyof T]>(
   m: T,
   valid: V[]
 ) => {
-  describe("Testing basic setter laws", function() {
+  describe("Testing basic setter laws", function () {
     test("If value equal to current model value, return original model", () => {
-      valid.map(v => {
+      valid.map((v) => {
         const model = setter(v, m);
         expect(setter(v, model)).toBe(model);
       });
     });
 
     test("Result model key value should be equal to provided value", () => {
-      valid.map(v => expect(getter(setter(v, m))).toBe(v));
+      valid.map((v) => expect(getter(setter(v, m))).toBe(v));
     });
 
     test("If setter with same value is applied multiple times on same model, the result should be the same. s(a, s(a, m)) === s(a, m)", () => {
-      valid.map(v => {
+      valid.map((v) => {
         const m1 = setter(v, m);
         const m2 = setter(v, setter(v, m));
         expect(m2).toEqual(m1);
@@ -140,7 +140,10 @@ export const testSetter = <T extends Record<any, any>, V extends T[keyof T]>(
  * @param {M} m Model instance
  * @param {V[]} valid a list of valid values
  */
-export const testSetterValidation = <T, V extends T[keyof T]>(
+export const testSetterValidation = <
+  T extends Record<any, any>,
+  V extends T[keyof T]
+>(
   setter: Setter<V, T>,
   getter: Getter<V, T>,
   m: T,
@@ -148,9 +151,9 @@ export const testSetterValidation = <T, V extends T[keyof T]>(
 ) => {
   testSetter(setter, getter, m, valid);
 
-  describe("Testing setter with validation", function() {
+  describe("Testing setter with validation", function () {
     test("If value is valid, return updated model", () => {
-      valid.map(v => expect(getter(setter(v, m))).toBe(v));
+      valid.map((v) => expect(getter(setter(v, m))).toBe(v));
     });
   });
 };
@@ -182,9 +185,9 @@ export const testSetterTemp = <
   empty: V,
   valid: V[]
 ) => {
-  describe("Testing setter with temp value", function() {
+  describe("Testing setter with temp value", function () {
     test("If set empty value and current value is not empty, temp get current value", () => {
-      valid.map(v => {
+      valid.map((v) => {
         const model = setter(v, m);
 
         expect(tempGetter(setter(empty, model))).toEqual(v);
@@ -197,7 +200,7 @@ export const testSetterTemp = <
     });
 
     test("If set none empty value, temp is not changed", () => {
-      valid.map(v => {
+      valid.map((v) => {
         expect(tempGetter(setter(v, m))).toEqual(tempGetter(m));
       });
     });
@@ -225,7 +228,7 @@ export const testModelToggle = <T extends Record<any, any>>(
   getters: [Getter<T[keyof T], T>, T[keyof T], T[keyof T]][]
 ) => {
   const orElse = {};
-  describe("Testing model toggle functions", function() {
+  describe("Testing model toggle functions", function () {
     test("When toggle is set to false, values should have their empty values", () => {
       getters.map(([getter, empty]) => {
         expect(getter(toggle(false, m), orElse as T[keyof T])).toBe(empty);
@@ -239,7 +242,7 @@ export const testModelToggle = <T extends Record<any, any>>(
     });
 
     test("Identity test. Calling same toggle consecutively should bring same result.", () => {
-      [false, true].map(enable =>
+      [false, true].map((enable) =>
         getters.map(([getter, _]) => {
           const m1 = toggle(enable, m);
           const m2 = toggle(enable, m1);

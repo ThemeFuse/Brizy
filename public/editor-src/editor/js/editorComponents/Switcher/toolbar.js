@@ -68,19 +68,9 @@ export function getItems({ v, device, state }) {
                       {
                         id: "firstIcon",
                         label: t("Icon"),
-                        type: "iconSetter",
+                        type: "iconSetter-dev",
                         devices: "desktop",
-                        canDelete: true,
-                        value: {
-                          name: firstIconName,
-                          type: firstIconType
-                        },
-                        onChange: ({ name, type }) => {
-                          return {
-                            firstIconName: name,
-                            firstIconType: type
-                          };
-                        }
+                        config: { canDelete: true }
                       }
                     ]),
                 ...(switcherStyle === "style-1" ||

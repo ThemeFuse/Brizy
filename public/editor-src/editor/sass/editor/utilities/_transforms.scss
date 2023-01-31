@@ -5,3 +5,7 @@
 .brz-ed-rotate--90 {
   transform: rotate(-90deg);
 }
+
+.brz-ed-preserve-3d {
+  transform-style: preserve-3d;
+}

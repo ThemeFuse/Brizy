@@ -8,10 +8,7 @@ export function styleContent(
 ): [string, string, string] {
   const styles = {
     ".brz &&:hover": {
-      standart: [
-        "cssStyleElementVideoBgColorRatio",
-        "cssStyleSizeMaxWidthSize"
-      ],
+      standart: ["cssStyleSizeMaxWidthSize"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionTransform"

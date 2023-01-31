@@ -27,7 +27,7 @@ import {
 import { getBlocksInPage } from "visual/utils/blocks";
 import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
 import { findFonts, projectFontsData } from "visual/utils/fonts";
-import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
+import { isPopup, isStory } from "visual/utils/models";
 import * as Str from "visual/utils/reader/string";
 import {
   getBlocksStylesFonts,
@@ -186,9 +186,9 @@ async function getPageBlocks({
   const { html, css: glamorCSS } = renderStatic(() =>
     ReactDOMServer.renderToStaticMarkup(
       <Provider store={store}>
-        {IS_GLOBAL_POPUP ? (
+        {isPopup(config) ? (
           <PagePopup dbValue={dbValue} reduxState={reduxState} />
-        ) : IS_STORY ? (
+        ) : isStory(config) ? (
           <PageStory dbValue={dbValue} reduxState={reduxState} />
         ) : (
           <Page dbValue={dbValue} reduxState={reduxState} />

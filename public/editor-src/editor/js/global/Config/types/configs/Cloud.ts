@@ -1,6 +1,6 @@
 import { XAuthUserToken } from "visual/component/LeftSidebar/components/Cms/types/XAuth";
 import Config from "visual/global/Config";
-import { Config as Config_ } from "visual/global/Config/types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Subscription } from "visual/global/Config/types/shopify/Subscription";
 import {
   EcwidCategoryPage,
@@ -11,8 +11,8 @@ import {
   ShopifyPage
 } from "visual/types";
 import { Language } from "visual/utils/multilanguages";
-import { ShopifyTemplate } from "../shopify/ShopifyTemplate";
 import { TemplateType } from "../TemplateType";
+import { ShopifyTemplate } from "../shopify/ShopifyTemplate";
 import { Base, CollectionPage } from "./Base";
 
 //#region CMS
@@ -49,7 +49,7 @@ export const isCollection = (c: CMS): boolean =>
 export type Cloud = CMS | Shopify;
 
 // @ts-expect-error: unused variable
-export const isCloud = (config: Config_): config is Cloud =>
+export const isCloud = (config: ConfigCommon): config is Cloud =>
   TARGET === "Cloud" || TARGET === "Cloud-localhost";
 
 //#region Page

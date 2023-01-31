@@ -1,8 +1,8 @@
-import React, { MouseEventHandler, ReactElement, useCallback } from "react";
 import classNames from "classnames";
-import { WithClassName } from "visual/utils/options/attributes";
-import { EditorIcon } from "visual/component/EditorIcon";
+import React, { MouseEventHandler, ReactElement, useCallback } from "react";
 import { CheckMark } from "visual/component/CheckMark";
+import { EditorIcon } from "visual/component/EditorIcon";
+import { WithClassName } from "visual/utils/options/attributes";
 
 export interface Props extends WithClassName {
   icon: string;
@@ -11,7 +11,6 @@ export interface Props extends WithClassName {
   onCheck?: VoidFunction;
   active?: boolean;
   checked?: boolean;
-  disabled?: boolean;
 }
 
 export const FatCheckIcon = ({
@@ -21,40 +20,52 @@ export const FatCheckIcon = ({
   icon,
   label,
   onCheck,
-  onClick,
-  disabled
+  onClick
 }: Props): ReactElement => {
   const _onCheck = useCallback<MouseEventHandler>(
-    e => {
+    (e) => {
       onCheck && e.stopPropagation();
       onCheck?.();
     },
     [onCheck]
   );
 
+  const activeLabel = active ? "text-brand-primary" : "text-white";
+  const activeIcon = active ? "!text-brand-primary" : "!text-white";
+
+  const activeBorder = active
+    ? "border-brand-primary"
+    : "border-brand-options hover:border-options-border-hover";
+
   return (
     <div
       className={classNames(
         className,
-        "brz-ed--fat-icon",
-        "brz-ed--fat-check-icon",
-        {
-          "brz-ed--fat-icon__active": !!active,
-          "brz-ed--fat-icon__disabled": !!disabled
-        }
+        "brz-ed--fat-icon text-center w-[60px] cursor-pointer"
       )}
       onClick={onClick}
       title={label}
     >
-      <div className={"brz-ed--fat-icon__wrapper"}>
+      <div
+        className={`brz-ed--fat-icon__wrapper relative border-2 border-solid rounded-[3px] flex items-center justify-center w-[60px] h-[60px] transition-[border-color] duration-200 ease-linear	delay-[0s] ${activeBorder}`}
+      >
         <CheckMark
           checked={!!checked}
           onClick={_onCheck}
-          className={"brz-ed--fat-check-icon__check"}
+          className={
+            "brz-ed--fat-check-icon__check absolute -top-[5px] -left-[5px]"
+          }
         />
-        <EditorIcon icon={icon} />
+        <EditorIcon
+          icon={icon}
+          className={`text-[16px] transition-[color] duration-200 ease-linear ${activeIcon}`}
+        />
       </div>
-      <div className={"brz-ed--fat-icon__label"}>{label}</div>
+      <div
+        className={`brz-ed--fat-icon__label transition-[color] duration-200 ease-linear text-[12px] leading-[2.4em] overflow-hidden text-ellipsis whitespace-nowrap ${activeLabel}`}
+      >
+        {label}
+      </div>
     </div>
   );
 };

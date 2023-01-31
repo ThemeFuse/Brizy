@@ -1,38 +1,41 @@
-import { t } from "visual/utils/i18n";
+import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { getFontStyle } from "visual/utils/fonts";
+import { t } from "visual/utils/i18n";
+import { isPopup, isStory } from "visual/utils/models";
+import {
+  defaultValueValue,
+  mobileSyncOnChange,
+  tabletSyncOnChange
+} from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
-  defaultValueValue,
-  tabletSyncOnChange,
-  mobileSyncOnChange
-} from "visual/utils/onChange";
-import {
-  toolbarLinkAnchor,
-  toolbarStoryAnchor,
-  toolbarLinkExternal,
-  toolbarColor2,
-  toolbarColorHexField2,
-  toolbarBoxShadow2,
-  toolbarBoxShadowHexField2,
-  toolbarBoxShadowFields2,
   toolbarBgColor2,
   toolbarBgColorHexField2,
-  toolbarGradientType,
+  toolbarBorder2,
+  toolbarBorderColorHexField2,
+  toolbarBoxShadow2,
+  toolbarBoxShadowFields2,
+  toolbarBoxShadowHexField2,
+  toolbarColor2,
+  toolbarColorHexField2,
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree,
-  toolbarBorder2,
-  toolbarBorderColorHexField2
+  toolbarGradientType,
+  toolbarLinkAnchor,
+  toolbarLinkExternal,
+  toolbarStoryAnchor
 } from "visual/utils/toolbar";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
-
-import { NORMAL, HOVER } from "visual/utils/stateMode";
 
 export function getItemsForDesktop(v, component) {
+  const config = Config.getAll();
+  const IS_STORY = isStory(config);
+  const IS_GLOBAL_POPUP = isPopup(config);
   const inPopup = Boolean(component.props.meta?.sectionPopup);
   const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
   const device = "desktop";
@@ -104,7 +107,7 @@ export function getItemsForDesktop(v, component) {
                         { value: "custom", icon: "nc-more" }
                       ],
                       value: v.size,
-                      onChange: size => {
+                      onChange: (size) => {
                         return {
                           size,
 
@@ -301,7 +304,7 @@ export function getItemsForDesktop(v, component) {
                     { value: "default", icon: "nc-close" }
                   ],
                   value: v.fillType,
-                  onChange: fillType => {
+                  onChange: (fillType) => {
                     return {
                       fillType,
 
@@ -448,7 +451,7 @@ export function getItemsForDesktop(v, component) {
                         { value: "custom", icon: "nc-more" }
                       ],
                       value: v.borderRadiusType,
-                      onChange: borderRadiusType => {
+                      onChange: (borderRadiusType) => {
                         return {
                           borderRadiusType,
 
@@ -554,18 +557,12 @@ export function getItemsForDesktop(v, component) {
               label: t("Icon"),
               options: [
                 {
-                  id: "iconImage",
+                  id: "icon",
                   label: t("Icon"),
-                  type: "iconSetter",
-                  canDelete: true,
-                  value: {
-                    name: v.iconName,
-                    type: v.iconType
-                  },
-                  onChange: ({ name, type }) => ({
-                    iconName: name,
-                    iconType: type
-                  })
+                  type: "iconSetter-dev",
+                  config: {
+                    canDelete: true
+                  }
                 },
                 {
                   id: "iconPosition",
@@ -591,7 +588,7 @@ export function getItemsForDesktop(v, component) {
                         { value: "custom", icon: "nc-more" }
                       ],
                       value: v.iconSize,
-                      onChange: iconSize => {
+                      onChange: (iconSize) => {
                         let contentHeight =
                           iconSize === "custom" &&
                           fontSize * lineHeight >= v.iconCustomSize
@@ -1378,7 +1375,7 @@ export function getItemsForTablet(v, component) {
                 { value: "custom", icon: "nc-more" }
               ],
               value: v.tabletSize,
-              onChange: tabletSize => {
+              onChange: (tabletSize) => {
                 return {
                   tabletSize,
 
@@ -1641,7 +1638,7 @@ export function getItemsForMobile(v, component) {
                 { value: "custom", icon: "nc-more" }
               ],
               value: v.mobileSize,
-              onChange: mobileSize => {
+              onChange: (mobileSize) => {
                 return {
                   mobileSize,
 

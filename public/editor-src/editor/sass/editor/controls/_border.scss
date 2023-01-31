@@ -37,11 +37,11 @@
 
     .brz-icon {
       font-size: 10px;
-      color: $options-label-color;
+      color: $color-border-width-type-icon--color;
     }
 
     &--active .brz-icon {
-      color: #33beea;
+      color: $color-border-width-type-icon--active--color
     }
   }
 }

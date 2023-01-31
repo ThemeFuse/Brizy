@@ -118,6 +118,7 @@ export class Draggable<R extends HTMLElement> extends React.Component<
       this.startDrag(getClientOffset(e));
     } else {
       this.currentPosition = getClientOffset(e);
+      requestAnimationFrame(this.update);
     }
   };
 
@@ -163,8 +164,6 @@ export class Draggable<R extends HTMLElement> extends React.Component<
 
   update = (): void => {
     if (this.isMouseDown && this.startPosition && this.currentPosition) {
-      requestAnimationFrame(this.update);
-
       const deltaX = this.currentPosition.x - this.startPosition.x;
       const deltaY = this.currentPosition.y - this.startPosition.y;
       const { x: lastDeltaX, y: lastDeltaY } = this.lastDelta || { x: 0, y: 0 };

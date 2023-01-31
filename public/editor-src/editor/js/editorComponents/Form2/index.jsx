@@ -1,22 +1,22 @@
+import classnames from "classnames";
 import React from "react";
 import { noop } from "underscore";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import classnames from "classnames";
-import Config from "visual/global/Config";
+import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import { css } from "visual/utils/cssStyle";
-import { styleForm } from "./styles";
-import defaultValue from "./defaultValue.json";
-import * as toolbarExtendParent from "./toolbarExtendParent";
-import * as sidebarExtendParent from "./sidebarExtendParent";
-import * as toolbarExtendFields from "./toolbarExtendFields";
-import * as toolbarExtendButton from "./toolbarExtendButton";
-import * as sidebarExtendButton from "./sidebarExtendButton";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import BoxResizer from "visual/component/BoxResizer";
-import { IS_STORY } from "visual/utils/models";
+import Config from "visual/global/Config";
+import { css } from "visual/utils/cssStyle";
+import { isStory } from "visual/utils/models";
+import defaultValue from "./defaultValue.json";
+import * as sidebarExtendButton from "./sidebarExtendButton";
+import * as sidebarExtendParent from "./sidebarExtendParent";
+import { styleForm } from "./styles";
+import * as toolbarExtendButton from "./toolbarExtendButton";
+import * as toolbarExtendFields from "./toolbarExtendFields";
+import * as toolbarExtendParent from "./toolbarExtendParent";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -31,7 +31,7 @@ export default class Form2 extends EditorComponent {
     extendParentToolbar: noop
   };
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -42,7 +42,7 @@ export default class Form2 extends EditorComponent {
     this.props.extendParentToolbar(toolbarExtend);
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
   };
 
@@ -85,7 +85,7 @@ export default class Form2 extends EditorComponent {
       "brz-forms2",
       "brz-forms2__item",
       "brz-forms2__item-button",
-      { "brz-forms2-story": IS_STORY }
+      { "brz-forms2-story": isStory(Config.getAll()) }
     );
 
     return (
@@ -128,7 +128,7 @@ export default class Form2 extends EditorComponent {
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <Wrapper {...this.makeWrapperProps({ className })}>
-          {IS_STORY ? (
+          {isStory(Config.getAll()) ? (
             <BoxResizer
               points={resizerPoints}
               meta={this.props.meta}

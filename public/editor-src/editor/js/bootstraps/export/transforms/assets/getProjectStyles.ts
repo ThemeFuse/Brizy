@@ -1,3 +1,4 @@
+import Config from "visual/global/Config";
 import {
   getColorPaletteColors,
   makeGlobalStylesColorPalette,
@@ -9,7 +10,7 @@ import {
   makeGlobalStylesTypography,
   makeRichTextDynamicFontStylesCSS
 } from "visual/utils/fonts";
-import { IS_EXTERNAL_POPUP } from "visual/utils/models";
+import { isExternalPopup } from "visual/utils/models";
 import { MValue } from "visual/utils/value";
 
 function parseDynamicFontStyles($: cheerio.Root): string[] {
@@ -40,7 +41,7 @@ export const getProjectStyles = ($: cheerio.Root): string => {
   let getClassName = (c: string): string => c;
 
   // if we add external popup to brizy page - his global styles rewrite page global styles
-  if (IS_EXTERNAL_POPUP) {
+  if (isExternalPopup(Config.getAll())) {
     const popupId = $(".brz-popup2").attr("id");
 
     getClassName = (className: string): string => `#${popupId} ${className}`;

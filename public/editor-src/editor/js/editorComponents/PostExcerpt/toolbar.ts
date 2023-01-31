@@ -3,7 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isExternalPopup, isInternalPopup } from "visual/utils/models";
+import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -37,7 +37,7 @@ export function getItems({
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
   const config = Config.getAll();
-  const IS_GLOBAL_POPUP = isInternalPopup(config) || isExternalPopup(config);
+  const IS_GLOBAL_POPUP = isPopup(config);
 
   return [
     {

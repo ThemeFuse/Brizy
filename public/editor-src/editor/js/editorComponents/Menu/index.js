@@ -9,7 +9,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import Portal from "visual/component/Portal";
 import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import Toolbar from "visual/component/Toolbar";
 import { wInMMenu } from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -22,16 +21,14 @@ import { applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
-import { styleElementMenuMode, styleElementMMenu } from "visual/utils/style2";
+import { styleElementMMenu, styleElementMenuMode } from "visual/utils/style2";
 import { Wrapper } from "../tools/Wrapper";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
-import * as sidebarDisable from "./sidebarDisable";
 import * as sidebarExtend from "./sidebarExtend";
 import * as sidebarExtendParent from "./sidebarExtendParent";
 import { styleMenu, styleMenuContainer } from "./styles";
 import * as toolbarExtend from "./toolbarExtend";
-import * as toolbarExtendMMenuTitle from "./toolbarExtendMMenuTitle";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import { itemsToSymbols, normalizeMenuItems, symbolsToItems } from "./utils";
 
@@ -54,7 +51,6 @@ export default class Menu extends EditorComponent {
   nodeRef = React.createRef();
 
   mMenu = null;
-  changedFrom = undefined;
 
   getMeta(v) {
     const { meta } = this.props;
@@ -120,18 +116,13 @@ export default class Menu extends EditorComponent {
   }
 
   componentWillUpdate({ dbValue }) {
-    const { mMenuPosition, menuSelected, stickyTitle } = this.getValue();
+    const { mMenuPosition, menuSelected } = this.getValue();
 
     if (
       (dbValue.menuSelected && dbValue.menuSelected !== menuSelected) ||
       (dbValue.mMenuPosition && dbValue.mMenuPosition !== mMenuPosition)
     ) {
       this.destroyMMenu();
-    }
-
-    if (dbValue.stickyTitle && dbValue.stickyTitle !== stickyTitle) {
-      this.destroyMMenu();
-      this.changedFrom = "stickyTitle";
     }
   }
 
@@ -212,22 +203,11 @@ export default class Menu extends EditorComponent {
 
     const mMenuPositionTitle = dvk("mMenuPosition");
     const mMenuPositionValue = dvv(mMenuPositionTitle);
-    const stickyTitle = dvk("stickyTitle");
-    const stickyTitleValue = dvv(stickyTitle);
 
     if (meta.patch[mMenuPositionTitle]) {
       const patch = {
         ...finalValue,
         mMenuPosition: mMenuPositionValue
-      };
-
-      finalValue = merge(finalValue, patch);
-    }
-
-    if (meta.patch[stickyTitle]) {
-      const patch = {
-        ...finalValue,
-        stickyTitle: stickyTitleValue
       };
 
       finalValue = merge(finalValue, patch);
@@ -248,18 +228,11 @@ export default class Menu extends EditorComponent {
     });
 
     return (
-      <Toolbar
-        {...this.makeToolbarPropsFromConfig2(
-          toolbarExtendMMenuTitle,
-          sidebarDisable
-        )}
-      >
-        <li className={className}>
-          <a className="brz-a brz-mm-navbar__title">
-            <TextEditor value={mMenuTitle} onChange={this.handleTextChange} />
-          </a>
-        </li>
-      </Toolbar>
+      <li className={className}>
+        <a className="brz-a brz-mm-navbar__title">
+          <TextEditor value={mMenuTitle} onChange={this.handleTextChange} />
+        </a>
+      </li>
     );
   }
 
@@ -321,12 +294,12 @@ export default class Menu extends EditorComponent {
   }
 
   renderMMenu(v, vs, vd) {
-    const { menuSelected, mMenuPosition, stickyTitle } = v;
+    const { menuSelected, mMenuPosition } = v;
 
     return (
       <>
         <Portal
-          key={`${menuSelected}-${mMenuPosition}-${stickyTitle}`}
+          key={`${menuSelected}-${mMenuPosition}`}
           node={document.body}
           className="brz-ed-mmenu-portal"
         >
@@ -514,10 +487,6 @@ export default class Menu extends EditorComponent {
     };
 
     this.mMenu = new MMenu(`#${this.getId()}`, options, config);
-    if (this.changedFrom === "stickyTitle") {
-      this.openMMenu();
-      this.changedFrom = undefined;
-    }
   }
 
   destroyMMenu() {

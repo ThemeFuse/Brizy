@@ -1,18 +1,11 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { Value } from "./index";
 
-export function getItems({
-  v,
-  device
-}: {
-  v: Value;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ key, v, device });
 
   const { hex: labelBgColorHex } = getOptionColorHexByPalette(
@@ -84,4 +77,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

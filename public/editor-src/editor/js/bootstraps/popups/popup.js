@@ -38,20 +38,21 @@
           if (!hostGoogleFonts && guestGoogleFonts) {
             guestGoogleFonts.onload = res;
             hostDocument.head.appendChild(guestGoogleFonts);
-            return;
           }
 
-          var guestGoogleFontsArr = _parseGoogleFonts(guestGoogleFonts.href);
-          var hostGoogleFontsArr = _parseGoogleFonts(hostGoogleFonts.href);
-          var diff = guestGoogleFontsArr.filter(function(font) {
-            return !_includes(hostGoogleFontsArr, font);
-          });
+          if (hostGoogleFonts && guestGoogleFonts) {
+            var guestGoogleFontsArr = _parseGoogleFonts(guestGoogleFonts.href);
+            var hostGoogleFontsArr = _parseGoogleFonts(hostGoogleFonts.href);
+            var diff = guestGoogleFontsArr.filter(function(font) {
+              return !_includes(hostGoogleFontsArr, font);
+            });
 
-          if (diff.length) {
-            hostGoogleFonts.href = setGoogleFontUrl(
-              hostGoogleFontsArr.concat(diff),
-              hostGoogleFonts.href
-            );
+            if (diff.length) {
+              hostGoogleFonts.href = setGoogleFontUrl(
+                hostGoogleFontsArr.concat(diff),
+                hostGoogleFonts.href
+              );
+            }
           }
 
           res();

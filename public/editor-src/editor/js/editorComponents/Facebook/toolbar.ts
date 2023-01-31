@@ -452,6 +452,17 @@ export function getItems({
           type: "tabs-dev",
           tabs: [
             {
+              id: "tabBackground",
+              label: t("Bg"),
+              options: [
+                {
+                  id: "",
+                  type: "backgroundColor-dev",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
               id: "tabBorder",
               label: t("Border"),
               options: [

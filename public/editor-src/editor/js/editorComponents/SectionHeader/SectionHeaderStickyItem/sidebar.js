@@ -1,19 +1,18 @@
+import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { hexToRgba } from "visual/utils/color";
 import {
-  toolbarShapeTopType,
-  toolbarShapeTopFlip,
-  toolbarShapeBottomType,
   toolbarShapeBottomFlip,
-  toolbarMargin
+  toolbarShapeBottomType,
+  toolbarShapeTopFlip,
+  toolbarShapeTopType
 } from "visual/utils/toolbar";
 
 export const title = t("Header");
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: shapeTopColorHex } = getOptionColorHexByPalette(
     dvv("shapeTopColorHex"),
@@ -56,13 +55,12 @@ export function getItems({ v, device }) {
                         units: ["px"]
                       }
                     },
-                    toolbarMargin({
-                      v,
-                      device,
-                      state: "normal",
-                      onChangeGrouped: ["onChangeMarginGrouped"],
-                      onChangeUngrouped: ["onChangeMarginUngrouped"]
-                    }),
+                    {
+                      id: "margin",
+                      label: t("Margin"),
+                      type: "margin-dev",
+                      position: 60
+                    },
                     {
                       id: "border",
                       type: "corners-dev",

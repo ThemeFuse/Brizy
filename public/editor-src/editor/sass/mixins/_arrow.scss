@@ -4,6 +4,7 @@
 /// @param {color} $color - arrow color
 /// @param {string} $root [.brz-ed-arrow] - arrow root selector
 @mixin arrow($size, $color, $root: ".brz-ed-arrow") {
+
   // Arrows
   #{$root} {
     position: absolute;

@@ -26,21 +26,11 @@ export function getItems({ v, device }) {
               label: t("Icon"),
               options: [
                 {
-                  id: "iconImage",
+                  id: "icon",
                   label: t("Icon"),
-                  type: "iconSetter",
+                  type: "iconSetter-dev",
                   devices: "desktop",
-                  canDelete: true,
-                  value: {
-                    name: iconName,
-                    type: iconType
-                  },
-                  onChange: ({ name, type }) => {
-                    return {
-                      iconName: name,
-                      iconType: type
-                    };
-                  }
+                  config: { canDelete: true }
                 },
                 ...(iconName && iconType
                   ? []

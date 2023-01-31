@@ -548,9 +548,11 @@ class MenuItem extends EditorComponent {
             `{{ nav_item_${placeholderUid} menuId='${menuSelected}' itemId='${placeholderItemId}' }}`}
           <li className={className} data-menu-item-id={v.id}>
             {this.renderLink(v, vs, vd, content)}
-            {isDropDown
-              ? this.renderDropDown(v, vs, vd)
-              : this.renderMegaMenu(v, vs, vd)}
+            <div>
+              {isDropDown
+                ? this.renderDropDown(v, vs, vd)
+                : this.renderMegaMenu(v, vs, vd)}
+            </div>
           </li>
           {IS_PRO && `{{ end_nav_item_${placeholderUid} }}`}
         </>

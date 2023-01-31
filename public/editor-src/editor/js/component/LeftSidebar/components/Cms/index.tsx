@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { match, mPipe, pass } from "fp-utilities";
+import { mPipe, match, pass } from "fp-utilities";
 import React, {
   ReactElement,
   ReactNode,
@@ -14,6 +14,7 @@ import { getContext } from "visual/component/LeftSidebar/components/Cms/utils";
 import Portal from "visual/component/Portal";
 import Config, { Cloud } from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
@@ -34,14 +35,15 @@ const Component = ({ config }: Props): ReactElement => {
   const ref = useRef<HTMLIFrameElement>(null);
   const leftSidebar = useSelector(uiSelector).leftSidebar;
   const opened =
-    leftSidebar.drawerContentType === "cmsUi" && leftSidebar.isOpen;
+    leftSidebar.drawerContentType === LeftSidebarOptionsIds.cms &&
+    leftSidebar.isOpen;
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const dispatch = useDispatch();
   const update = useCallback(
     (isOpen) => {
       dispatch(
         updateUI("leftSidebar", {
-          drawerContentType: isOpen ? "cmsUi" : null,
+          drawerContentType: isOpen ? LeftSidebarOptionsIds.cms : null,
           isOpen
         })
       );
@@ -148,7 +150,7 @@ const _Component = (): ReactNode => {
 };
 
 export const Cms = {
-  id: "cms",
+  id: LeftSidebarOptionsIds.cms,
   type: "custom",
   Component: _Component
 };

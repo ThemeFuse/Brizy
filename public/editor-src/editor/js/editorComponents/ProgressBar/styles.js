@@ -10,7 +10,11 @@ export function styleBg(v, vs, vd) {
       ]
     },
     ".brz &&:hover.brz-progress-bar-style1": {
-      standart: ["cssStyleBg2Color", "cssStyleBorderRadius"],
+      standart: [
+        "cssStyleBg2Color",
+        "cssStyleBorderRadius",
+        "cssStyleSizeProgressBarStyle1Height"
+      ],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
@@ -24,7 +28,11 @@ export function styleBg(v, vs, vd) {
       ]
     },
     ".brz &&:hover.brz-progress-bar-style2 .brz-progress-bar-overlay": {
-      standart: ["cssStyleBg2Color", "cssStyleBorderRadius"],
+      standart: [
+        "cssStyleBg2Color",
+        "cssStyleBorderRadius",
+        "cssStyleSizeProgressBarStyle2Height"
+      ],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"

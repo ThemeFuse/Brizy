@@ -1,17 +1,17 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import Scrollbars from "react-custom-scrollbars";
-import Toolbar from "visual/component/Toolbar";
-import EditorIcon from "visual/component/EditorIcon";
 import { TextEditor } from "visual/component/Controls/TextEditor";
-import { hideToolbar } from "visual/component/Toolbar/index";
-import { IS_STORY } from "visual/utils/models";
+import EditorIcon from "visual/component/EditorIcon";
+import Toolbar, { hideToolbar } from "visual/component/Toolbar";
+import Config from "visual/global/Config";
 import { getFontById } from "visual/utils/fonts";
 import { getWeightChoices } from "visual/utils/fonts";
 import { getSuffixChoices } from "visual/utils/fonts/SizeSuffix";
-import { uuid } from "visual/utils/uuid";
-import { printf } from "visual/utils/string";
 import { t } from "visual/utils/i18n";
+import { isStory } from "visual/utils/models";
+import { printf } from "visual/utils/string";
+import { uuid } from "visual/utils/uuid";
 
 class FontStyle extends React.Component {
   static defaultProps = {
@@ -48,11 +48,11 @@ class FontStyle extends React.Component {
     this.setState({ active: false });
   };
 
-  handleTabsChange = device => {
+  handleTabsChange = (device) => {
     this.setState({ device });
   };
 
-  handleTextChange = text => {
+  handleTextChange = (text) => {
     this.props.onChange({ title: text });
   };
 
@@ -99,6 +99,7 @@ class FontStyle extends React.Component {
           ? tabletFontWeight
           : mobileFontWeight
     };
+    const IS_STORY = isStory(Config.getAll());
     const getToolbarItems = () => [
       {
         id: "toolbarTypography",
@@ -155,7 +156,7 @@ class FontStyle extends React.Component {
                                     disabled: IS_STORY,
                                     choices: getSuffixChoices,
                                     value: fontSizeSuffix,
-                                    onChange: fontSizeSuffix =>
+                                    onChange: (fontSizeSuffix) =>
                                       onChange({ fontSizeSuffix })
                                   },
                                   {
@@ -167,7 +168,8 @@ class FontStyle extends React.Component {
                                     max: 300,
                                     step: 1,
                                     value: fontSize,
-                                    onChange: fontSize => onChange({ fontSize })
+                                    onChange: (fontSize) =>
+                                      onChange({ fontSize })
                                   },
                                   {
                                     id: "lineHeight",
@@ -178,7 +180,7 @@ class FontStyle extends React.Component {
                                     max: 10,
                                     step: 0.1,
                                     value: lineHeight,
-                                    onChange: lineHeight =>
+                                    onChange: (lineHeight) =>
                                       onChange({ lineHeight })
                                   }
                                 ]
@@ -196,7 +198,7 @@ class FontStyle extends React.Component {
                                       type: fontFamilyType
                                     }),
                                     value: fontWeight,
-                                    onChange: fontWeight =>
+                                    onChange: (fontWeight) =>
                                       onChange({ fontWeight })
                                   },
                                   {
@@ -208,7 +210,7 @@ class FontStyle extends React.Component {
                                     max: 20,
                                     step: 0.5,
                                     value: letterSpacing,
-                                    onChange: letterSpacing =>
+                                    onChange: (letterSpacing) =>
                                       onChange({ letterSpacing })
                                   }
                                 ]
@@ -236,7 +238,7 @@ class FontStyle extends React.Component {
                                     className: "brz-control__typography-suffix",
                                     choices: getSuffixChoices,
                                     value: tabletFontSizeSuffix,
-                                    onChange: tabletFontSizeSuffix =>
+                                    onChange: (tabletFontSizeSuffix) =>
                                       onChange({ tabletFontSizeSuffix })
                                   },
                                   {
@@ -247,7 +249,7 @@ class FontStyle extends React.Component {
                                     max: 100,
                                     step: 1,
                                     value: tabletFontSize,
-                                    onChange: tabletFontSize =>
+                                    onChange: (tabletFontSize) =>
                                       onChange({ tabletFontSize })
                                   },
                                   {
@@ -259,7 +261,7 @@ class FontStyle extends React.Component {
                                     max: 10,
                                     step: 0.1,
                                     value: tabletLineHeight,
-                                    onChange: tabletLineHeight =>
+                                    onChange: (tabletLineHeight) =>
                                       onChange({ tabletLineHeight })
                                   }
                                 ]
@@ -277,7 +279,7 @@ class FontStyle extends React.Component {
                                       type: fontFamilyType
                                     }),
                                     value: tabletFontWeight,
-                                    onChange: tabletFontWeight =>
+                                    onChange: (tabletFontWeight) =>
                                       onChange({ tabletFontWeight })
                                   },
                                   {
@@ -289,7 +291,7 @@ class FontStyle extends React.Component {
                                     max: 20,
                                     step: 0.5,
                                     value: tabletLetterSpacing,
-                                    onChange: tabletLetterSpacing =>
+                                    onChange: (tabletLetterSpacing) =>
                                       onChange({ tabletLetterSpacing })
                                   }
                                 ]
@@ -317,7 +319,7 @@ class FontStyle extends React.Component {
                                     className: "brz-control__typography-suffix",
                                     choices: getSuffixChoices,
                                     value: mobileFontSizeSuffix,
-                                    onChange: mobileFontSizeSuffix =>
+                                    onChange: (mobileFontSizeSuffix) =>
                                       onChange({ mobileFontSizeSuffix })
                                   },
                                   {
@@ -328,7 +330,7 @@ class FontStyle extends React.Component {
                                     max: 100,
                                     step: 1,
                                     value: mobileFontSize,
-                                    onChange: mobileFontSize =>
+                                    onChange: (mobileFontSize) =>
                                       onChange({ mobileFontSize })
                                   },
                                   {
@@ -340,7 +342,7 @@ class FontStyle extends React.Component {
                                     max: 10,
                                     step: 0.1,
                                     value: mobileLineHeight,
-                                    onChange: mobileLineHeight =>
+                                    onChange: (mobileLineHeight) =>
                                       onChange({ mobileLineHeight })
                                   }
                                 ]
@@ -358,7 +360,7 @@ class FontStyle extends React.Component {
                                       type: fontFamilyType
                                     }),
                                     value: mobileFontWeight,
-                                    onChange: mobileFontWeight =>
+                                    onChange: (mobileFontWeight) =>
                                       onChange({ mobileFontWeight })
                                   },
                                   {
@@ -370,7 +372,7 @@ class FontStyle extends React.Component {
                                     max: 20,
                                     step: 0.5,
                                     value: mobileLetterSpacing,
-                                    onChange: mobileLetterSpacing =>
+                                    onChange: (mobileLetterSpacing) =>
                                       onChange({ mobileLetterSpacing })
                                   }
                                 ]
@@ -434,7 +436,7 @@ class FontStyleEditor extends React.Component {
 
   handleChange = (id, newValue) => {
     const { value: _value, onChange } = this.props;
-    const value = _value.map(el =>
+    const value = _value.map((el) =>
       id === el.id ? { ...el, ...newValue } : el
     );
 
@@ -468,8 +470,8 @@ class FontStyleEditor extends React.Component {
   render() {
     const { value } = this.props;
     const items = value
-      .filter(el => el.deleted !== true)
-      .map(el => (
+      .filter((el) => el.deleted !== true)
+      .map((el) => (
         <FontStyle
           key={el.id}
           showDeleteIcon={el.deletable === "on"}

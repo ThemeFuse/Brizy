@@ -125,7 +125,11 @@ function generateWPFileContent({ translations, IS_PRODUCTION, VERSION }) {
     IS_PRODUCTION ? VERSION.split("-").map(capitalize).join("") : "Dev"
   }_Texts`;
   const arrBody = translations
-    .map((t) => `\t\t\t"${t}" => __("${t}", "brizy")`)
+    .map((t) => {
+      // eslint-disable-next-line
+      const _t = t.replace(/"/g, '\\"');
+      return `\t\t\t"${_t}" => __("${_t}", "brizy")`;
+    })
     .join(",\n");
   const arr = [
     "<?php",

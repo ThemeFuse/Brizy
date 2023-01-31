@@ -3,8 +3,8 @@ import React, { ReactNode } from "react";
 import { ElementModel } from "visual/component/Elements/Types";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
-import defaultValue from "./defaultValue.json";
 import Form2FieldsItems from "./Items";
+import defaultValue from "./defaultValue.json";
 import * as sidebarExtend from "./sidebarExtend";
 import * as sidebarExtendLabel from "./sidebarExtendLabel";
 import * as sidebarExtendSelect from "./sidebarExtendSelect";
@@ -18,7 +18,12 @@ export interface Value extends ElementModel {
   placeholder: string;
 }
 
-class Form2Fields extends EditorComponent<Value> {
+interface Props {
+  labelType: string;
+  placeholder: string;
+}
+
+class Form2Fields extends EditorComponent<Value, Props> {
   static get componentId(): "Form2Fields" {
     return "Form2Fields";
   }
@@ -46,8 +51,7 @@ class Form2Fields extends EditorComponent<Value> {
       toolbarExtend: this.makeToolbarPropsFromConfig2(
         // @ts-expect-error: need to transform in .ts
         toolbarExtend,
-        sidebarExtend,
-        { allowExtend: false }
+        sidebarExtend
       ),
       itemProps: {
         labelType,

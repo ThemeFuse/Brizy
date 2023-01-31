@@ -3,7 +3,7 @@ import Config from "visual/global/Config";
 import { Block } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isExternalPopup, isInternalPopup, isStory } from "visual/utils/models";
+import { isPopup, isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -40,7 +40,7 @@ export function getItems({
 
   const config = Config.getAll();
   const IS_STORY = isStory(config);
-  const IS_GLOBAL_POPUP = isInternalPopup(config) || isExternalPopup(config);
+  const IS_GLOBAL_POPUP = isPopup(config);
 
   return [
     {
@@ -61,25 +61,10 @@ export function getItems({
               label: t("Icon"),
               options: [
                 {
-                  id: "iconImage",
+                  id: "",
                   label: t("Icon"),
-                  //@ts-expect-error New option doesn't work
-                  type: "iconSetter",
-                  position: 40,
-                  value: {
-                    name: dvv("name"),
-                    type: dvv("type")
-                  },
-                  onChange: ({
-                    name,
-                    type
-                  }: {
-                    name: string;
-                    type: string;
-                  }) => ({
-                    name: name,
-                    type: type
-                  })
+                  type: "iconSetter-dev",
+                  position: 40
                 },
                 {
                   id: "sizeGroup",

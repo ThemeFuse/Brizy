@@ -5,5 +5,7 @@
   "singleQuote": false,
   "jsxBracketSameLine": false,
   "endOfLine": "lf",
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "importOrder": ["^core/(.*)$", "^ui/(.*)$", "^visual/(.*)$", "^[./]"],
+  "importOrderSortSpecifiers": true
 }

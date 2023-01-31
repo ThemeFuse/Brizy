@@ -3,6 +3,7 @@ import Config from "visual/global/Config";
 import { urlContainsQueryString, objectToQueryString } from "visual/utils/url";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { t } from "visual/utils/i18n";
+import * as Obj from "visual/utils/reader/object";
 import { BlockTypes } from "../types";
 
 export const isBlock = (type: BlockTypes): type is "BLOCK" => type === "BLOCK";
@@ -68,19 +69,15 @@ interface CloudErrResponse {
   }[];
 }
 
-type ResponseError = WPErrResponse | CloudErrResponse;
-
-const isWPError = (e: ResponseError): e is WPErrResponse => "data" in e;
-
-const isCloudError = (e: ResponseError): e is CloudErrResponse => {
-  return "errors" in e && Array.isArray(e.errors);
+const isWPError = (e: unknown): e is WPErrResponse => {
+  return Obj.isObject(e) && "data" in e;
 };
 
-export const getError = (e: ResponseError): string => {
-  if (typeof e !== "object") {
-    return t("Something went wrong");
-  }
+const isCloudError = (e: unknown): e is CloudErrResponse => {
+  return Obj.isObject(e) && "errors" in e && Array.isArray(e.errors);
+};
 
+export const getError = (e: unknown): string => {
   if (isWPError(e)) {
     return e.data;
   }

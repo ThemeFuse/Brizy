@@ -3,9 +3,12 @@
   &__wrapper {
     overflow: hidden;
   }
+
   .brz-d-xs-flex {
     width: 100%;
+    height: 100%;
   }
+
   .brz-text__editor {
     flex-grow: 1;
     white-space: nowrap;

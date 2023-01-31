@@ -26,7 +26,6 @@ import Toolbar, {
 import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
-  OnChangeMeta,
   Props as EDProps,
   ToolbarExtend
 } from "visual/editorComponents/EditorComponent";
@@ -62,6 +61,7 @@ import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
+import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
 
 export type Value = ElementModel & {
   items: ElementModel[];
@@ -97,7 +97,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
   static experimentalDynamicContent = true;
 
-  childToolbarExtend?: ToolbarExtend;
+  childToolbarExtend?: ToolbarExtend = undefined;
 
   toolbarRef = createRef<PortalToolbar>();
 

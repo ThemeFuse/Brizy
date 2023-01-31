@@ -1,13 +1,14 @@
-import React, { ReactElement, useCallback } from "react";
 import classNames from "classnames";
+import React, { ReactElement, useCallback } from "react";
+import { NumberUnit } from "visual/component/Controls/NumberUnit";
+import { Unit, Value } from "visual/component/Controls/NumberUnit/types";
+import { Slider2 } from "visual/component/Controls/Slider2";
 import {
   WithClassName,
   WithOnChange2,
   WithValue
 } from "visual/utils/options/attributes";
-import { Slider2 } from "visual/component/Controls/Slider2";
-import { NumberUnit } from "visual/component/Controls/NumberUnit";
-import { Unit, Value } from "visual/component/Controls/NumberUnit/types";
+import { Literal } from "visual/utils/types/Literal";
 
 type Meta = { editing: boolean };
 
@@ -22,7 +23,7 @@ export type Props<U> = WithClassName &
     units: Unit<U>[];
   };
 
-export function NumberSlider<U>({
+export function NumberSlider<U extends Literal>({
   value: { number, unit },
   onChange,
   className,

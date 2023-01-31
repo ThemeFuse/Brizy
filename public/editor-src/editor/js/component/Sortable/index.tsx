@@ -6,15 +6,16 @@ import React, {
   useEffect,
   useRef
 } from "react";
-import _ from "underscore";
 import { useDispatch, useSelector } from "react-redux";
-import SortablePlugin from "./plugin";
-import UIEvents from "visual/global/UIEvents";
-import { hideToolbar } from "visual/component/Toolbar";
+import _ from "underscore";
 import { rolesHOC } from "visual/component/Roles";
+import { SortablePluginOptions } from "visual/component/Sortable/plugin/types";
+import { hideToolbar } from "visual/component/Toolbar";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import UIEvents from "visual/global/UIEvents";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors-new";
-import { SortablePluginOptions } from "visual/component/Sortable/plugin/types";
+import SortablePlugin from "./plugin";
 
 interface SortableAttr {
   "data-sortable-type": string;
@@ -119,7 +120,7 @@ const Sortable = (props: Props): ReactElement => {
     dispatch(
       updateUI("leftSidebar", {
         isOpen: true,
-        drawerContentType: "addBaseElements"
+        drawerContentType: LeftSidebarOptionsIds.addElements
       })
     );
   }, []);

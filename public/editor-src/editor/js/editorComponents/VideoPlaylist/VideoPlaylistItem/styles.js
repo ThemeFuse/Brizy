@@ -3,7 +3,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 export function styleContent(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleBorderRadius", "cssStyleElementVideoBgColorRatio"],
+      standart: ["cssStyleBorderRadius"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionTransform"

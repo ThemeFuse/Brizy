@@ -1,22 +1,15 @@
+import produce from "immer";
 import React, {
   Component,
   ComponentProps,
   ElementType,
   ReactElement
 } from "react";
-import produce from "immer";
-import UIState from "visual/global/UIState";
-import Icon from "./PromptIcon";
-import Apps from "./PromptApps";
-import Blocks from "./PromptBlocks";
-import Form from "./PromptForm";
-import KeyHelper from "./PromptKeyHelper";
-import Fonts from "./PromptFonts";
-import Conditions from "./PromptConditions";
-import Authorization from "./PromptAuthorization";
-import { PromptPageArticle } from "./PromptPageArticle";
-import { PromptPageRules } from "./PromptPageRules";
-import { PromptPageTemplate } from "./PromptPageTemplate";
+import { SignAuthorizationProps } from "visual/component/Prompts/PromptAuthorization/types";
+import { PromptBlocksProps } from "visual/component/Prompts/PromptBlocks/types";
+import { Props as PromptPageArticleProps } from "visual/component/Prompts/PromptPageArticle/types";
+import { Props as PromptPageRulesProps } from "visual/component/Prompts/PromptPageRules/types";
+import { Props as PromptPageTemplateProps } from "visual/component/Prompts/PromptPageTemplate/types";
 import {
   PromptAppsProps,
   PromptConditionsProps,
@@ -25,11 +18,19 @@ import {
   PromptIconProps,
   PromptKeyHelperProps
 } from "visual/component/Prompts/types";
-import { SignAuthorizationProps } from "visual/component/Prompts/PromptAuthorization/types";
-import { PromptBlocksProps } from "visual/component/Prompts/PromptBlocks/types";
-import { Props as PromptPageArticleProps } from "visual/component/Prompts/PromptPageArticle/types";
-import { Props as PromptPageRulesProps } from "visual/component/Prompts/PromptPageRules/types";
-import { Props as PromptPageTemplateProps } from "visual/component/Prompts/PromptPageTemplate/types";
+import UIState from "visual/global/UIState";
+import Apps from "./PromptApps";
+import Authorization from "./PromptAuthorization";
+import Blocks from "./PromptBlocks";
+import Conditions from "./PromptConditions";
+import Fonts from "./PromptFonts";
+import Form from "./PromptForm";
+import Icon from "./PromptIcon";
+import KeyHelper from "./PromptKeyHelper";
+import { PromptPageArticle } from "./PromptPageArticle";
+import { PromptPageRules } from "./PromptPageRules";
+import { PromptPageTemplate } from "./PromptPageTemplate";
+import { Prompt } from "./api";
 
 const PROMPTS = {
   icon: Icon,
@@ -45,9 +46,9 @@ const PROMPTS = {
   pageArticle: PromptPageArticle
 };
 
-type PromptTypes = typeof PROMPTS;
-type PromptKey = keyof PromptTypes;
-type PromptsMode = "single" | "stack";
+export type PromptTypes = typeof PROMPTS;
+export type PromptKey = keyof PromptTypes;
+export type PromptsMode = "single" | "stack";
 
 export type PromptsProps = {
   mode: PromptsMode;
@@ -80,7 +81,7 @@ class Prompts extends Component<Record<string, never>, PromptsState> {
     mode: PromptsMode;
     props?: ComponentProps<PromptTypes[K]>;
   }): void {
-    UIState.set("prompt", data);
+    Prompt.open(data);
   }
 
   componentDidMount(): void {
@@ -97,12 +98,12 @@ class Prompts extends Component<Record<string, never>, PromptsState> {
 
   close(position: number): void {
     this.setState(
-      produce(state => {
+      produce((state) => {
         state.prompts[position].opened = false;
       }),
       () => {
         this.setState(
-          produce(state => {
+          produce((state) => {
             state.prompts.splice(position, 1);
           })
         );
@@ -119,12 +120,12 @@ class Prompts extends Component<Record<string, never>, PromptsState> {
 
     if (promptIndex === -1) {
       this.setState(
-        produce(state => {
+        produce((state) => {
           state.prompts.push(data);
         }),
         () => {
           this.setState(
-            produce(state => {
+            produce((state) => {
               const promptLength = state.prompts.length;
               state.prompts[promptLength - 1].opened = true;
             })
@@ -134,7 +135,7 @@ class Prompts extends Component<Record<string, never>, PromptsState> {
     } else {
       if (mode === "stack") {
         this.setState(
-          produce(state => {
+          produce((state) => {
             state.prompts[promptIndex] = {
               ...data,
               opened: true
@@ -143,7 +144,7 @@ class Prompts extends Component<Record<string, never>, PromptsState> {
         );
       } else {
         this.setState(
-          produce(state => {
+          produce((state) => {
             state.prompts.forEach((_: PromptsProps, index: number) => {
               state.prompts[index].opened = false;
             });

@@ -13,7 +13,6 @@ const getItemsSimple =
     const dvv = (key) => defaultValueValue({ v, key, device });
 
     const iconName = dvv("iconName");
-    const iconType = dvv("iconType");
 
     return [
       {
@@ -46,19 +45,11 @@ const getItemsSimple =
         options: [
           {
             id: "icon",
-            type: "iconSetter",
+            type: "iconSetter-dev",
             devices: "desktop",
             label: t("Icon"),
-            canDelete: true,
-            position: 10,
-            value: {
-              name: iconName,
-              type: iconType
-            },
-            onChange: ({ name, type }) => ({
-              iconName: name,
-              iconType: type
-            })
+            config: { canDelete: true },
+            position: 10
           },
           ...(iconName === ""
             ? [
@@ -92,20 +83,12 @@ const getItemsSimple =
         disabled: level < 1,
         options: [
           {
-            id: "iconImage",
-            type: "iconSetter",
+            id: "icon",
+            type: "iconSetter-dev",
             devices: "desktop",
             label: t("Icon"),
             position: 10,
-            canDelete: true,
-            value: {
-              name: iconName,
-              type: iconType
-            },
-            onChange: ({ name, type }) => ({
-              iconName: name,
-              iconType: type
-            })
+            config: { canDelete: true }
           },
           ...(iconName === ""
             ? [
@@ -175,7 +158,6 @@ const getItemsMMenu =
     const dvv = (key) => defaultValueValue({ v, key, device });
 
     const iconName = dvv("iconName");
-    const iconType = dvv("iconType");
 
     return [
       {
@@ -189,19 +171,10 @@ const getItemsMMenu =
         options: [
           {
             id: "icon",
-            type: "iconSetter",
+            type: "iconSetter-dev",
             devices: "desktop",
             label: t("Icon"),
-            canDelete: true,
-            position: 10,
-            value: {
-              name: iconName,
-              type: iconType
-            },
-            onChange: ({ name, type }) => ({
-              iconName: name,
-              iconType: type
-            })
+            config: { canDelete: true }
           },
           ...(iconName === ""
             ? [

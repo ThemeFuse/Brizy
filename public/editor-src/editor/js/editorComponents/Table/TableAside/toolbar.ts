@@ -59,26 +59,11 @@ export function getItems({
               position: 60,
               options: [
                 {
-                  id: "iconImage",
+                  id: "",
                   label: t("Icon"),
-                  //@ts-expect-error: Old option
-                  type: "iconSetter",
+                  type: "iconSetter-dev",
                   devices: "desktop",
-                  canDelete: true,
-                  value: {
-                    name: dvv("name"),
-                    type: dvv("type")
-                  },
-                  onChange: ({
-                    name,
-                    type
-                  }: {
-                    name: string;
-                    type: string;
-                  }) => ({
-                    name: name,
-                    type: type
-                  })
+                  config: { canDelete: true }
                 },
                 ...(isIconSet ? disableIconOptions() : [])
               ]

@@ -268,6 +268,14 @@ $dropdown-arrow-size: 7px;
     }
   }
 
+  &--has-dropdown {
+    .brz-mm-menu__item-empty .brz-mm-btn {
+      display: block !important;
+      opacity: 0 !important;
+      visibility: hidden;
+    }
+  }
+
   // Menu links
   .brz-a {
     width: 100%;

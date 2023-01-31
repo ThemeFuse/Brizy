@@ -43,25 +43,10 @@ export const getItems = ({
               position: 60,
               options: [
                 {
-                  id: "iconImage",
+                  id: "",
                   label: t("Icon"),
-                  //@ts-expect-error New option doesn't work
-                  type: "iconSetter",
-                  devices: "desktop",
-                  value: {
-                    name: dvv("name"),
-                    type: dvv("type")
-                  },
-                  onChange: ({
-                    name,
-                    type
-                  }: {
-                    name: string;
-                    type: string;
-                  }) => ({
-                    name: name,
-                    type: type
-                  })
+                  type: "iconSetter-dev",
+                  devices: "desktop"
                 }
               ]
             }

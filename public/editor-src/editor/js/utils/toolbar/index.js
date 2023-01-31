@@ -59,9 +59,6 @@ export {
   toolbarLinkUpload
 } from "./toolbarLink";
 
-// Margin
-export { toolbarMargin } from "./toolbarMargin";
-
 // Show on Devices
 export {
   toolbarShowOnTablet,
