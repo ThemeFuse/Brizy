@@ -74,16 +74,11 @@ class Brizy_Admin_Main {
 		$urlBuilder       = new Brizy_Editor_UrlBuilder();
 		$post             = get_post( $postId );
 		$post_type_object = get_post_type_object( $post->post_type );
-
-		$twigEngine = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . "/admin/views/" );
-
-		$focalPoint = get_post_meta( $postId, 'brizy_attachment_focal_point', true );
+		$focalPoint       = get_post_meta( $postId, 'brizy_attachment_focal_point', true );
 
 		if ( ! $focalPoint ) {
 			$focalPoint = array( 'x' => 50, 'y' => 50 );
 		}
-
-		//return $twigEngine->render( 'featured-image.html.twig', $params );
 
 		return Brizy_Admin_View::render( 'featured-image', [
 			'focalPoint'        => $focalPoint,

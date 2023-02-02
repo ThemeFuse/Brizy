@@ -106,17 +106,15 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
             $post = ($context = Brizy_Content_ContextFactory::getGlobalContext()) ? $context->getWpPost() : get_post();
 
-                if ( $post ) {
-	                $twig           = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . '/public/views' );
-                    $commentsCount  = get_approved_comments( $post->ID, [ 'count' => true ] );
-                    $params         = [];
+            if ( $post ) {
+                $commentsCount      = get_approved_comments( $post->ID, [ 'count' => true ] );
+                $params             = [];
+                $params['author']   = get_the_author_meta( 'display_name', $post->post_author );
+                $params['date']     = get_the_date( '', $post );
+                $params['time']     = get_the_time( '', $post );
+                $params['comments'] = sprintf( _n( '%s comment', '%s comments', $commentsCount, 'brizy' ), number_format_i18n( $commentsCount ) );
 
-                    $params['author']   = get_the_author_meta( 'display_name', $post->post_author );
-                    $params['date']     = get_the_date( '', $post );
-                    $params['time']     = get_the_time( '', $post );
-                    $params['comments'] = sprintf( _n( '%s comment', '%s comments', $commentsCount, 'brizy' ), number_format_i18n( $commentsCount ) );
-
-                return $twig->render('post-info.html.twig', $params);
+                return Brizy_Editor_View::get( BRIZY_PLUGIN_PATH . '/public/views/post-info', $params );
             }
 
             return '';
@@ -202,6 +200,10 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
         $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('', 'editor_product_order_tracking', function () {
             return do_shortcode('[woocommerce_order_tracking]');
         }) );
+
+        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple(__( 'WooCommerce Notices', 'brizy' ), 'editor_woo_notice', function () {
+            return wc_print_notices( true );
+        }, self::CONFIG_KEY_TEXT ) );
     }
 
     private function filterData($property, $post)

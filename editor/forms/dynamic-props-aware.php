@@ -5,7 +5,7 @@ trait Brizy_Editor_Forms_DynamicPropsAware {
 	/**
 	 * @var string[]
 	 */
-	protected $data;
+	protected $data = [];
 
 	/**
 	 * @param $name

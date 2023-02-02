@@ -12,10 +12,7 @@ class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
 	}
 
 	/**
-	 * @return mixed|void
-	 * @throws Twig_Error_Loader
-	 * @throws Twig_Error_Runtime
-	 * @throws Twig_Error_Syntax
+	 * @return void
 	 */
 	public function process_query() {
 		global $wp_query;
@@ -57,9 +54,17 @@ class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
 
 		foreach ( $contexts as $family => $fonts ) {
 
+			if ( empty( $fonts ) || ! is_array( $fonts ) ) {
+				continue;
+			}
+
 			$css .= "/* $family */";
 
 			foreach ( $fonts as $weight => $types ) {
+
+				if ( empty( $types ) || ! is_array( $types ) ) {
+					continue;
+				}
 
 				foreach ( $types as $type => $url ) {
 

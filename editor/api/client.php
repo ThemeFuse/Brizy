@@ -185,14 +185,10 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client
      *
      * @return array
      * @throws Brizy_Editor_API_Exceptions_Exception
-     * @throws Brizy_Editor_Exceptions_NotFound
      * @throws Brizy_Editor_Http_Exceptions_BadRequest
      * @throws Brizy_Editor_Http_Exceptions_ResponseException
      * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
      * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
      */
     public function compile_page(Brizy_Editor_Project $project, $page_data, $config, $compiler_url)
     {
@@ -243,8 +239,7 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client
         $blocks = $page['blocks'];
 
         return [
-            'pageHtml'    => Brizy_TwigEngine::instance(Brizy_Editor_UrlBuilder::editor_build_path('editor/views/'))
-                                             ->render('static.html.twig', $template_context),
+            'pageHtml'    => Brizy_Editor_View::get( BRIZY_PLUGIN_PATH . '/public/views/compiled-page', $template_context ),
             'pageScripts' => [
                 'free' => $blocks['freeScripts'],
                 'pro'  => (isset($blocks['proScripts']) ? $blocks['proScripts'] : []),
