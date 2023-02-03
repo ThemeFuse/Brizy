@@ -6,9 +6,7 @@ abstract class Brizy_Admin_Serializable implements Serializable, JsonSerializabl
 	 * @return string
 	 */
 	public function serialize() {
-		$get_object_vars = get_object_vars( $this );
-
-		return serialize( $get_object_vars );
+		return serialize( $this->jsonSerialize() );
 	}
 
 	/**
@@ -19,6 +17,16 @@ abstract class Brizy_Admin_Serializable implements Serializable, JsonSerializabl
 		$vars = unserialize( $data );
 
 		foreach ( $vars as $prop => $value ) {
+			$this->$prop = $value;
+		}
+	}
+
+	public function __serialize() {
+		return $this->jsonSerialize();
+	}
+
+	public function __unserialize( $data ) {
+		foreach ( $data as $prop => $value ) {
 			$this->$prop = $value;
 		}
 	}
@@ -40,6 +48,7 @@ abstract class Brizy_Admin_Serializable implements Serializable, JsonSerializabl
 	/**
 	 * @return array|mixed
 	 */
+	#[ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return get_object_vars( $this );
 	}

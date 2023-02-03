@@ -1,50 +1,50 @@
 <div class="wrap brz-wrap-demodata">
     <div class="wp-filter" style="padding-left: 20px;">
         <div class="filter-count">
-            <span class="count theme-count">{{ count }}</span>
+            <span class="count theme-count"><?php echo $count; ?></span>
         </div>
         <ul class="filter-links">
-            <li><a href="#" data-sort="" class="current js-filter-link">{{ l10n.all }}</a></li>
-            <li><a href="#" data-sort="free" class="js-filter-link">{{ l10n.free }}</a></li>
-            <li><a href="#" data-sort="pro" class="js-filter-link">{{ l10n.pro }}</a></li>
+            <li><a href="#" data-sort="" class="current js-filter-link"><?php echo $l10n['all']; ?></a></li>
+            <li><a href="#" data-sort="free" class="js-filter-link"><?php echo $l10n['free']; ?></a></li>
+            <li><a href="#" data-sort="pro" class="js-filter-link"><?php echo $l10n['pro']; ?></a></li>
             <li>
                 <div class="brz-demo-filter-terms">
                     <select class="select2">
-                        <option value="">{{ l10n.allCategories }}</option>
-                        {% for term in terms %}
-                            <option value="{{ term.id }}">{{ term.name }}</option>
-                        {% endfor %}
+                        <option value=""><?php echo $l10n['allCategories']; ?></option>
+	                    <?php foreach( $terms as $term ): ?>
+                            <option value="<?php echo $term['id']; ?>"><?php echo $term['name']; ?></option>
+	                    <?php endforeach; ?>
                     </select>
                 </div>
             </li>
         </ul>
         <form class="search-form">
-            <label class="screen-reader-text" for="wp-filter-search-input">{{ l10n.search }}</label>
-            <input placeholder="{{ l10n.search }}..." type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search js-demo-input-search">
+            <label class="screen-reader-text" for="wp-filter-search-input"><?php echo $l10n['search']; ?></label>
+            <input placeholder="<?php echo $l10n['search']; ?>..." type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search js-demo-input-search">
         </form>
     </div>
     <div class="theme-browser content-filterable rendered">
         <div class="themes wp-clearfix">
-            {% for demo in demos %}
-                <div class="theme {{ demo.pro ? 'brz-demo-is-pro' : 'brz-demo-is-free' }}" data-terms="{{ demo.terms|join(',') }}" data-keywords="{{ demo.keywords }}" data-name="{{ demo.name }}" data-preview-link="{{ demo.url }}">
+	        <?php foreach( $demos as $demo ): ?>
+                <div class="theme <?php echo ( $demo['pro'] ? 'brz-demo-is-pro' : 'brz-demo-is-free' ); ?>" data-terms="<?php echo implode( ',', $demo['terms'] ); ?>" data-keywords="<?php echo $demo['keywords']; ?>" data-name="<?php echo $demo['name']; ?>" data-preview-link="<?php echo $demo['url']; ?>">
                     <div class="theme-screenshot" style="height: 400px">
-                        <img src="{{ demo.photo }}" loading=lazy>
+                        <img src="<?php echo $demo['photo']; ?>" loading=lazy>
                     </div>
                     <span class="brz-demo-badge">
-                        {{ demo.pro ? l10n.pro : l10n.free }}
+                        <?php echo ( $demo['pro'] ? $l10n['pro'] : $l10n['free'] ); ?>
                     </span>
-                    <span class="more-details">{{ l10n.livePreview }}</span>
+                    <span class="more-details"><?php echo $l10n['livePreview']; ?></span>
                     <div class="theme-id-container">
-                        <h3 class="theme-name">{{ demo.name }}</h3>
+                        <h3 class="theme-name"><?php echo $demo['name']; ?></h3>
                         <div class="theme-actions">
-                            {% set cannot = demo.pro and not isPro %}
-                            <a class="button load-customize{{ cannot ? ' brz-demo-item-gopro' : '' }}" href="{{ cannot ? goProUrl : '#' }}" target="_blank" data-demo-id="{{ demo.id }}">
-                                {{ cannot ? l10n.goPro : l10n.install }}
+	                        <?php $goPro = $demo['pro'] && ! $isPro; ?>
+                            <a class="button <?php echo ( $goPro ? 'brz-demo-item-gopro' : 'brz-demo-item-install' ); ?>" href="<?php echo ( $goPro ? $goProUrl : '#' ); ?>" target="_blank" data-demo-id="<?php echo $demo['id']; ?>">
+	                            <?php echo ( $goPro ? $l10n['goPro'] : $l10n['install'] ); ?>
                             </a>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
+	        <?php endforeach; ?>
         </div>
     </div>
 
@@ -67,9 +67,9 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="brz-demo-modal-content-h3">{{ l10n.t1 }}</h3>
-            <p class="brz-demo-modal-content-p">{{ l10n.t2 }}</p>
-            <button class="button button-primary js-demo-data-close-modal brz-demo-modal-content-button">{{ l10n.t3 }}</button>
+            <h3 class="brz-demo-modal-content-h3"><?php echo $l10n['t1']; ?></h3>
+            <p class="brz-demo-modal-content-p"><?php echo $l10n['t2']; ?></p>
+            <button class="button button-primary js-demo-data-close-modal brz-demo-modal-content-button"><?php echo $l10n['t3']; ?></button>
         </div>
     </script>
 
@@ -87,9 +87,9 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="brz-demo-modal-content-h3">{{ l10n.t4 }}</h3>
-            <p class="brz-demo-modal-content-p">{{ l10n.t5 }}</p>
-            <button class="button button-primary js-demo-data-close-modal brz-demo-modal-content-button">{{ l10n.t6 }}</button>
+            <h3 class="brz-demo-modal-content-h3"><?php echo $l10n['t4']; ?></h3>
+            <p class="brz-demo-modal-content-p"><?php echo $l10n['t5']; ?></p>
+            <button class="button button-primary js-demo-data-close-modal brz-demo-modal-content-button"><?php echo $l10n['t6']; ?></button>
         </div>
     </script>
 
@@ -108,8 +108,8 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="brz-demo-modal-content-h3">{{ l10n.t7 }}</h3>
-            <p class="brz-demo-modal-content-p">{{ l10n.t8 }}</p>
+            <h3 class="brz-demo-modal-content-h3"><?php echo $l10n['t7']; ?></h3>
+            <p class="brz-demo-modal-content-p"><?php echo $l10n['t8']; ?></p>
             <span class="spinner"></span>
         </div>
     </script>
@@ -131,10 +131,10 @@
                         </g>
                     </g>
                 </svg>
-                <h3 class="brz-demo-modal-content-h3">{{ l10n.t9 }}</h3>
-                <p class="brz-demo-modal-content-p">{{ l10n.t10 }}</p>
+                <h3 class="brz-demo-modal-content-h3"><?php echo $l10n['t9']; ?></h3>
+                <p class="brz-demo-modal-content-p"><?php echo $l10n['t10']; ?></p>
                 <button class="button button-primary js-demo-install brz-demo-modal-content-button" data-rm-content="0">
-                    {{ l10n.t11 }}
+	                <?php echo $l10n['t11']; ?>
                 </button>
             </div>
             <div>
@@ -154,10 +154,10 @@
                         </g>
                     </g>
                 </svg>
-                <h3 class="brz-demo-modal-content-h3">{{ l10n.t12 }}</h3>
-                <p class="brz-demo-modal-content-p">{{ l10n.t13 }}</p>
-                <button class="button button-primary js-demo-install brz-demo-modal-content-button" data-rm-content="1">{{ l10n.t11 }}</button>
-                <p class="brz-demo-modal-content-install-notice">({{ l10n.t14 }})</p>
+                <h3 class="brz-demo-modal-content-h3"><?php echo $l10n['t12']; ?></h3>
+                <p class="brz-demo-modal-content-p"><?php echo $l10n['t13']; ?></p>
+                <button class="button button-primary js-demo-install brz-demo-modal-content-button" data-rm-content="1"><?php echo $l10n['t11']; ?></button>
+                <p class="brz-demo-modal-content-install-notice">(<?php echo $l10n['t14']; ?>)</p>
             </div>
         </div>
     </script>

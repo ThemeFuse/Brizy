@@ -8,7 +8,7 @@
                     </g>
                 </svg>
             </svg>
-            {{ author }}
+            <?php echo $author; ?>
         </li>
         <li class="brz-li">
             <svg class="brz-icon-svg">
@@ -18,7 +18,7 @@
                     </g>
                 </svg>
             </svg>
-            {{ date }}
+	        <?php echo $date; ?>
         </li>
         <li class="brz-li">
             <svg class="brz-icon-svg">
@@ -28,7 +28,7 @@
                     </g>
                 </svg>
             </svg>
-            {{ time }}
+	        <?php echo $time; ?>
         </li>
         <li class="brz-li">
             <svg class="brz-icon-svg">
@@ -38,7 +38,7 @@
                     </g>
                 </svg>
             </svg>
-            {{ comments }}
+	        <?php echo $comments; ?>
         </li>
     </ul>
 </div>

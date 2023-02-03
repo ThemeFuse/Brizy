@@ -307,27 +307,9 @@ class Brizy_Admin_Templates {
 			if ( ! $templateId ) {
 				throw new Exception();
 			}
-			$ruleManager = new Brizy_Admin_Rules_Manager();
-			$rules       = $ruleManager->getRules( $templateId );
 
-			$nonce   = wp_create_nonce( Brizy_Editor_API::nonce );
-			$context = array(
-				'rules'         => $rules,
-				'types'         => array(),
-				'apply_for'     => array(),
-				'templateId'    => $templateId,
-				'reload_action' => admin_url(
-					'admin-ajax.php?action=' . self::RULE_LIST_VEIW . '&post=' . $templateId . '&hash=' . $nonce
-				),
-				'submit_action' => admin_url( 'admin-ajax.php?action=' . Brizy_Admin_Rules_Api::CREATE_RULE_ACTION ),
-				'delete_action' => admin_url(
-					'admin-ajax.php?action=' . Brizy_Admin_Rules_Api::DELETE_RULE_ACTION . '&postId=' . $templateId . '&hash=' . $nonce
-				),
-				'nonce'         => $nonce,
-			);
+			echo '<div class="brizy-template-rules submitbox"><div id="rules"></div></div>';
 
-			echo Brizy_TwigEngine::instance( path_join( BRIZY_PLUGIN_PATH, "admin/views" ) )
-			                     ->render( 'rules-box.html.twig', $context );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->error( $e->getMessage(), array( 'exception' => $e ) );
 			esc_html_e( 'Unable to show the rule box.', 'brizy' );

@@ -1,18 +1,18 @@
 <div class="brizy-featured-image hide-if-no-js">
     <div class="wrapper">
-        <img id="featured-image-el" src="{{ thumbnailSrc[0] }}" alt="" width="100%">
-        <div class="focal-point" style="left: {{ focalPoint['x'] }}%; top: {{ focalPoint['y'] }}%;"></div>
+        <img id="featured-image-el" src="<?php echo $thumbnailSrc[0]; ?>" alt="" width="100%">
+        <div class="focal-point" style="left: <?php echo $focalPoint['x']; ?>%; top: <?php echo $focalPoint['y']; ?>%;"></div>
         <div class="deleteImage">
             <a href="#" id="remove-post-thumbnail">
                 <svg class="brz-icon-svg">
-                    <use xlink:href="{{ pluginUrl }}/editor/icons/icons.svg#nc-circle-remove"></use>
+                    <use xlink:href="<?php echo $pluginUrl; ?>/editor/icons/icons.svg#nc-circle-remove"></use>
                 </svg>
             </a>
         </div>
     </div>
-    <input type="hidden" id="_thumbnail_id" name="_thumbnail_id" value="{{ thumbnailId }}">
-    <input type="hidden" id="_thumbnail_focal_point_x" name="_thumbnail_focal_point_x" value="{{ focalPoint['x'] }}"/>
-    <input type="hidden" id="_thumbnail_focal_point_y" name="_thumbnail_focal_point_y" value="{{ focalPoint['y'] }}"/>
+    <input type="hidden" id="_thumbnail_id" name="_thumbnail_id" value="<?php echo $thumbnailId; ?>">
+    <input type="hidden" id="_thumbnail_focal_point_x" name="_thumbnail_focal_point_x" value="<?php echo $focalPoint['x']; ?>"/>
+    <input type="hidden" id="_thumbnail_focal_point_y" name="_thumbnail_focal_point_y" value="<?php echo $focalPoint['y']; ?>"/>
 </div>
 
 <script>

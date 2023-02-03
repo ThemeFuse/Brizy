@@ -38,6 +38,8 @@ class Brizy_Editor {
 	 */
 	public static function prefix( $string = null ) {
 
+		$string = $string ? trim( $string ) : '';
+
 		if ( ! self::$prefix ) {
 
 			$prefix = 'brizy';
@@ -49,7 +51,7 @@ class Brizy_Editor {
 			self::$prefix = $prefix;
 		}
 
-		return self::$prefix . trim( $string );
+		return self::$prefix . $string;
 	}
 
 	/**
