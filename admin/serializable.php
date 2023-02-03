@@ -48,7 +48,7 @@ abstract class Brizy_Admin_Serializable implements Serializable, JsonSerializabl
 	/**
 	 * @return array|mixed
 	 */
-	#[ReturnTypeWillChange]
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return get_object_vars( $this );
 	}

@@ -385,9 +385,9 @@ class Brizy_Public_Main
         $needs_compile = !$this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile();
         $autosaveId = null;
         if ($is_preview) {
-            $user_id = get_current_user_id();
+            $user_id      = get_current_user_id();
             $postParentId = $this->post->getWpPostId();
-            $autosaveId = Brizy_Editor_AutoSaveAware::getAutoSavePost($postParentId, $user_id);
+	        $autosaveId   = Brizy_Editor_Post::getAutoSavePost($postParentId, $user_id);
 
             if ($autosaveId) {
                 $this->post = Brizy_Editor_Post::get($autosaveId);
