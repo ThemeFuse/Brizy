@@ -122,11 +122,11 @@ class Brizy_Public_Main
             $editor_js_deps[] = 'flexslider';
             $editor_js_deps[] = 'wc-single-product';
         }
-        wp_enqueue_style('brizy-editor', "${assets_url}/editor/css/editor.css", array(), null);
-        wp_register_script('brizy-editor-polyfill', "${assets_url}/editor/js/polyfill.js", array(), null, true);
-        wp_register_script('brizy-editor-vendor', "${assets_url}/editor/js/editor.vendor.js", array(), null, true);
-        wp_enqueue_script('brizy-editor', "${assets_url}/editor/js/editor.js", apply_filters('brizy_editor_js_deps', $editor_js_deps), null, true);
-        wp_add_inline_script('brizy-editor', "var __VISUAL_CONFIG__ = ${editor_js_config};", 'before');
+        wp_enqueue_style('brizy-editor', "$assets_url/editor/css/editor.css", array(), null);
+        wp_register_script('brizy-editor-polyfill', "$assets_url/editor/js/polyfill.js", array(), null, true);
+        wp_register_script('brizy-editor-vendor', "$assets_url/editor/js/editor.vendor.js", array(), null, true);
+        wp_enqueue_script('brizy-editor', "$assets_url/editor/js/editor.js", apply_filters('brizy_editor_js_deps', $editor_js_deps), null, true);
+        wp_add_inline_script('brizy-editor', "var __VISUAL_CONFIG__ = $editor_js_config;", 'before');
 
         do_action('brizy_editor_enqueue_scripts');
 
