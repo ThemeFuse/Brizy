@@ -56,7 +56,7 @@ class Brizy_Import_Main {
 				't2'            => __( 'Bad news, your starter template was not installed. Something went wrong and we couldn’t do it. Please contact us.', 'brizy' ),
 				't3'            => __( 'Ok', 'brizy' ),
 				't4'            => __( 'Template Successfully Installed', 'brizy' ),
-				't5'            => __( 'Good news, your starter template was successfully installed. Time to build your amaizing website fast & easy!', 'brizy' ),
+				't5'            => __( 'Good news, your starter template was successfully installed. Time to build your amazing website fast & easy!', 'brizy' ),
 				't6'            => __( 'Thank You!', 'brizy' ),
 				't7'            => __( 'Installing Starter Template', 'brizy' ),
 				't8'            => __( 'Please don’t close this window until the installation is finished. This might take up to a couple of minutes (five min, usually less).', 'brizy' ),
