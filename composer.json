@@ -25,11 +25,11 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git"
+      "url": "https://github.com/bagrinsergiu/brizy-migration-utils.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:bagrinsergiu/brizy-merge-page-assets.git"
+      "url": "https://github.com/bagrinsergiu/brizy-merge-page-assets.git"
     },
     {
       "type": "vcs",
