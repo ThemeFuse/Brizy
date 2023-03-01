@@ -144,7 +144,7 @@ class Brizy_Admin_FormEntries {
 				$class = 'disableFormLogs';
 				$val   = 0;
 			} else {
-				$label = __( 'Enable ', 'brizy' );
+				$label = __( 'Enable', 'brizy' );
 				$class = 'enableFormLogs';
 				$val   = 1;
 			}

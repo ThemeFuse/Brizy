@@ -182,7 +182,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$items = array_filter( $items );
 
 			if ( count( $items ) == 0 ) {
-				$this->error( 404, __( 'There are no block to be archived' ) );
+				$this->error( 404, __( 'There are no blocks to be archived', 'brizy' ) );
 			}
 
 			$fontManager = new Brizy_Admin_Fonts_Manager();

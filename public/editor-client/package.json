@@ -1,0 +1,24 @@
+{
+  "name": "@brizy-wp/api-client",
+  "version": "1.0.0",
+  "description": "Api Client for builder",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build -- --watch",
+    "build": "node bin/index.js",
+    "build:prod": "npm run build -- --production"
+  },
+  "keywords": [
+    "api"
+  ],
+  "author": "brizy",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17",
+    "esbuild": "^0.16.10",
+    "minimist": "^1.2.7"
+  }
+}

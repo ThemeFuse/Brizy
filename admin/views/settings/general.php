@@ -9,7 +9,9 @@
     <table class="form-table">
         <tbody>
         <tr>
-            <th scope="row"><?php echo __( 'Activate' ) . ' ' . __bt( 'brizy', 'Brizy' ) . ' ' . __( 'For' ); ?></th>
+            <th scope="row">
+                <?php echo sprintf( __( 'Activate %s for:', 'brizy' ), __bt( 'brizy', 'Brizy' ) ); ?>
+            </th>
             <td>
                 <fieldset>
 					<?php foreach ( $types as $type ) {
@@ -21,7 +23,9 @@
             </td>
         </tr>
         <tr>
-            <th scope="row"><?php echo __( 'Enable SVG uploads' ); ?></th>
+            <th scope="row">
+                <?php _e( 'Enable SVG uploads', 'brizy' ); ?>
+            </th>
             <td>
                 <label>
                     <input type="checkbox"
@@ -35,7 +39,9 @@
             </td>
         </tr>
         <tr>
-            <th scope="row"><?php echo __( 'Enable JSON uploads' ); ?></th>
+            <th scope="row">
+                <?php _e( 'Enable JSON uploads', 'brizy' ); ?>
+            </th>
             <td>
                 <label>
                     <input type="checkbox"
@@ -51,12 +57,9 @@
         </tbody>
     </table>
 
-
     <p class="submit">
-        <button type="submit"
-                name="brizy-general-submit"
-                id="submit"
-                class="button button-primary"
-        ><?php echo __( 'Save Changes', 'brizy' ); ?></button>
+        <button type="submit" name="brizy-general-submit" id="submit" class="button button-primary">
+            <?php _e( 'Save Changes', 'brizy' ); ?>
+        </button>
     </p>
 </form>

@@ -43,6 +43,16 @@ class Brizy_Editor_UrlBuilder
         return Brizy_Config::getCompilerUrls();
     }
 
+	public function mediaUrlPattern() {
+		$home_url = home_url();
+
+		$query = [
+			Brizy_Editor::prefix().'_media'=>'__MEDIA_UID__',
+			Brizy_Editor::prefix().'_crop'=>'__CROP_QUERY__'
+		];
+
+		return $home_url.(strpos( $home_url,'?' )!==false?'&':'?').http_build_query($query);
+	}
 
     public function application_form_notification_url()
     {
