@@ -142,42 +142,41 @@ class Brizy_Editor_Editor_Editor {
 			'serverTimestamp' => time(),
 			'menuData'        => $this->get_menu_data(),
 			'wp'              => array(
-				'pluginPrefix'  => Brizy_Editor::prefix(),
-				'permalink'     => get_permalink( $wp_post_id ),
-				'page'          => $wp_post_id,
-				'postType'      => get_post_type( $wp_post_id ),
-				'featuredImage' => $this->getThumbnailData( $wp_post_id ),
-				'templates'     => $this->post->get_templates(),
+				'pluginPrefix'    => Brizy_Editor::prefix(),
+				'permalink'       => get_permalink( $wp_post_id ),
+				'page'            => $wp_post_id,
+				'postType'        => get_post_type( $wp_post_id ),
+				'featuredImage'   => $this->getThumbnailData( $wp_post_id ),
+				'templates'       => $this->post->get_templates(),
 
-				'plugins'          => array(
-					'dummy'       => true,
-					'woocommerce' => self::get_woocomerce_plugin_info(),
-				),
-				'hasSidebars'      => count( $wp_registered_sidebars ) > 0,
-				'l10n'             => $this->getTexts(),
-				'pageData'         => apply_filters( 'brizy_page_data', array() ),
-				'availableRoles'   => Brizy_Admin_Membership_Membership::roleList(),
-				'usersCanRegister' => get_option( 'users_can_register' ),
-			),
-			'mode'            => $mode,
-			'applications'    => array(
-				'form' => array(
-					'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
-							Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
-						),
-				),
-			),
-			'server'          => array(
-				'maxUploadFileSize' => $this->fileUploadMaxSize(),
-			),
-			'branding'        => array( 'name' => __bt( 'brizy', 'Brizy' ) ),
-			'prefix'          => Brizy_Editor::prefix(),
-			'cloud'           => $this->getCloudInfo(),
-			'editorVersion'   => BRIZY_EDITOR_VERSION,
-			'imageSizes'      => $this->getImgSizes(),
-			'globalBlocks'    => []
+                'plugins' => array(
+                    'dummy' => true,
+                    'woocommerce' => self::get_woocomerce_plugin_info(),
+                ),
+                'hasSidebars' => count($wp_registered_sidebars) > 0,
+                'l10n' => $this->getTexts(),
+                'pageData' => apply_filters('brizy_page_data', array()),
+                'availableRoles' => Brizy_Admin_Membership_Membership::roleList(),
+                'usersCanRegister' => get_option('users_can_register'),
+            ),
+            'mode' => $mode,
+            'applications' => array(
+                'form' => array(
+                    'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
+                            Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
+                        ),
+                ),
+            ),
+            'server' => array(
+                'maxUploadFileSize' => $this->fileUploadMaxSize(),
+            ),
+            'branding' => array('name' => __bt('brizy', 'Brizy')),
+            'prefix' => Brizy_Editor::prefix(),
+            'cloud' => $this->getCloudInfo(),
+            'editorVersion' => BRIZY_EDITOR_VERSION,
+	        'imageSizes'      => $this->getImgSizes()
 		);
-		$manager           = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
+		$manager = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 
 		$config = $this->addRecaptchaAccounts( $manager, $config, $context );
 		$config = $this->addSocialAccounts( $manager, $config, $context );
@@ -185,8 +184,7 @@ class Brizy_Editor_Editor_Editor {
 		$config = $this->addTemplateFields( $config, $mode === 'template', $wp_post_id, $context );
 		$config = $this->getApiActions( $config, $context );
 		$config = $this->addGlobalBlocksData( $config );
-		$config = $this->addGlobalBlocksData( $config );
-		$config = $this->getPostLoopSources( $config, $mode === 'template', $wp_post_id, $context );
+		$config = $this->getPostLoopSources( $config,$mode === 'template', $wp_post_id, $context );
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
 
@@ -224,21 +222,21 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 
-	private function getPostLoopSources( $config, $isTemplate, $wp_post_id, $context ) {
+	private function getPostLoopSources($config, $isTemplate, $wp_post_id, $context ) {
 		$excludePostTypes = [ 'attachment' ];
 
 		$types  = get_post_types( [ 'public' => true ] );
 		$result = [];
 
 		$templateTypeArchive = false;
-		if ( $isTemplate ) {
+		if( $isTemplate ) {
 			$template_type = Brizy_Admin_Templates::getTemplateType( $wp_post_id );
-			if ( $template_type == Brizy_Admin_Templates::TYPE_ARCHIVE || $template_type == Brizy_Admin_Templates::TYPE_PRODUCT_ARCHIVE ) {
+			if($template_type==Brizy_Admin_Templates::TYPE_ARCHIVE || $template_type==Brizy_Admin_Templates::TYPE_PRODUCT_ARCHIVE ) {
 				$templateTypeArchive = true;
 			}
 		}
 
-		if ( $templateTypeArchive ) {
+		if ( $templateTypeArchive) {
 			$result[] = [
 				"name"  => "brz_current_context",
 				"label" => "Current Query"
@@ -260,16 +258,6 @@ class Brizy_Editor_Editor_Editor {
 
 		$config['wp']['postLoopSources'] = $result;
 
-
-		# as stated in this issue: https://github.com/bagrinsergiu/blox-editor/issues/21795
-		# we have to add in config the post sources
-		$config['posts']['sources'] = array_map( function ( $source ) {
-			return [
-				'value' => $source['name'],
-				'title' => $source['label']
-			];
-		}, $result );
-
 		return $config;
 	}
 
@@ -286,9 +274,9 @@ class Brizy_Editor_Editor_Editor {
 			$postTermsByKeys[ $term->term_id ] = $term;
 		}
 
-		$config['wp']['postTerms']       = $postTerms;
+		$config['wp']['postTerms']        = $postTerms;
 		$config['wp']['postTermParents'] = array_diff_key( $this->getAllParents( $postTermsByKeys ), $postTermsByKeys );
-		$config['wp']['postAuthor']      = (int) $this->post->getWpPost()->post_author;
+		$config['wp']['postAuthor']       = (int) $this->post->getWpPost()->post_author;
 
 		return $config;
 	}
@@ -876,7 +864,6 @@ class Brizy_Editor_Editor_Editor {
 		}
 
 		$config['wp']['ruleMatches'] = $this->getTemplateRuleMatches( $is_template, $wp_post_id, $template_rules );
-		$config['currentPageRules']  = $this->getTemplateRuleMatches( $is_template, $wp_post_id, $template_rules );
 
 		return $config;
 	}
@@ -900,35 +887,24 @@ class Brizy_Editor_Editor_Editor {
 				 */
 				$ruleMatches[] = array(
 					'type'       => $rule->getType(),
-					'appliedFor'      => $rule->getAppliedFor(),
+					'group'      => $rule->getAppliedFor(),
 					'entityType' => $rule->getEntityType(),
-					'entityValues'     => $rule->getEntityValues(),
+					'values'     => $rule->getEntityValues(),
 				);
 			}
 			$ruleMatches[] = array(
 				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
-				'appliedFor'      => Brizy_Admin_Rule::BRIZY_TEMPLATE,
+				'group'      => Brizy_Admin_Rule::BRIZY_TEMPLATE,
 				'entityType' => $this->post->getWpPost()->post_type,
-				'entityValues'     => array( $wpPostId ),
+				'values'     => array( $wpPostId ),
 			);
 		} else {
-//			$ruleMatches[] = array(
-//				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
-//				'group'      => Brizy_Admin_Rule::POSTS,
-//				'entityType' => $this->post->getWpPost()->post_type,
-//				'values'     => array( $wpPostId ),
-//			);
-
-			$ruleMatches   = Brizy_Admin_Rules_Manager::getCurrentPageRuleMatches();
-
-			if($ruleMatches)
-			{
-				$ruleMatches = array_map( function ( $r ) {
-					$r['type'] = Brizy_Admin_Rule::TYPE_INCLUDE;
-					return $r;
-				}, $ruleMatches );
-			}
-
+			$ruleMatches[] = array(
+				'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
+				'group'      => Brizy_Admin_Rule::POSTS,
+				'entityType' => $this->post->getWpPost()->post_type,
+				'values'     => array( $wpPostId ),
+			);
 		}
 
 		return $ruleMatches;
@@ -1029,89 +1005,88 @@ class Brizy_Editor_Editor_Editor {
 			'hash' => wp_create_nonce( Brizy_Editor_API::nonce ),
 			'url'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 
-			'heartBeat'                       => $pref . Brizy_Editor_API::AJAX_HEARTBEAT,
-			'takeOver'                        => $pref . Brizy_Editor_API::AJAX_TAKE_OVER,
-			'lockProject'                     => $pref . Brizy_Editor_API::AJAX_LOCK_PROJECT,
-			'removeLock'                      => $pref . Brizy_Editor_API::AJAX_REMOVE_LOCK,
-			'getPage'                         => $pref . Brizy_Editor_API::AJAX_GET,
-			'getPostInfo'                     => $pref . Brizy_Editor_API::AJAX_GET_POST_INFO,
-			'updatePage'                      => $pref . Brizy_Editor_API::AJAX_UPDATE,
-			'getProject'                      => $pref . Brizy_Editor_API::AJAX_GET_PROJECT,
-			'setProject'                      => $pref . Brizy_Editor_API::AJAX_SET_PROJECT,
-			'setProjectMeta'                  => $pref . Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
-			'getGlobalBlockList'              => $pref . Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
-			'getGlobalBlockListMatchingRules' => $pref . Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_MATCHING_RULES_ACTION,
-			'createGlobalBlock'               => $pref . Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
-			'updateGlobalBlock'               => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
-			'updateGlobalBlocks'              => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCKS_ACTION,
-			'deleteGlobalBlock'               => $pref . Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
-			'getRuleGroupList'                => $pref . Brizy_Admin_Rules_Api::RULE_GROUP_LIST,
-			'getLayoutByUid'                  => $pref . Brizy_Admin_Layouts_Api::GET_LAYOUT_BY_UID_ACTION,
-			'getLayoutList'                   => $pref . Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,
-			'createLayout'                    => $pref . Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
-			'updateLayout'                    => $pref . Brizy_Admin_Layouts_Api::UPDATE_LAYOUT_ACTION,
-			'deleteLayout'                    => $pref . Brizy_Admin_Layouts_Api::DELETE_LAYOUT_ACTION,
-			'cloudSignIn'                     => $pref . Brizy_Admin_Cloud_Api::AJAX_SIGNIN_ACTION,
-			'cloudSignUp'                     => $pref . Brizy_Admin_Cloud_Api::AJAX_SIGNUP_ACTION,
-			'cloudSignOut'                    => $pref . Brizy_Admin_Cloud_Api::AJAX_SIGNOUT_ACTION,
-			'cloudSyncAllowed'                => $pref . Brizy_Admin_Cloud_Api::AJAX_SYNC_ALLOWED,
-			'cloudResetPassword'              => $pref . Brizy_Admin_Cloud_Api::AJAX_RESET_PASSWORD_ACTION,
-			'cloudSync'                       => $pref . Brizy_Admin_Cloud_Api::AJAX_TRIGGER_SYNC_ACTION,
-			'createRule'                      => $pref . Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
-			'createRules'                     => $pref . Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
-			'updateRules'                     => $pref . Brizy_Admin_Rules_Api::UPDATE_RULES_ACTION,
-			'deleteRule'                      => $pref . Brizy_Admin_Rules_Api::DELETE_RULE_ACTION,
-			'getRuleList'                     => $pref . Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
-			'updateBlockPositions'            => $pref . Brizy_Admin_Blocks_Api::UPDATE_POSITIONS_ACTION,
-			'getSavedBlockByUid'              => $pref . Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
-			'getSavedBlockList'               => $pref . Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
-			'createSavedBlock'                => $pref . Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION,
-			'updateSavedBlock'                => $pref . Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
-			'deleteSavedBlock'                => $pref . Brizy_Admin_Blocks_Api::DELETE_SAVED_BLOCK_ACTION,
-			'downloadBlocks'                  => $pref . Brizy_Admin_Blocks_Api::DOWNLOAD_BLOCKS,
-			'uploadBlocks'                    => $pref . Brizy_Admin_Blocks_Api::UPLOAD_BLOCKS,
-			'downloadLayouts'                 => $pref . Brizy_Admin_Layouts_Api::DOWNLOAD_LAYOUTS,
-			'uploadLayouts'                   => $pref . Brizy_Admin_Layouts_Api::UPLOAD_LAYOUTS,
-			'media'                           => $pref . Brizy_Editor_API::AJAX_MEDIA,
-			'getMediaUid'                     => $pref . Brizy_Editor_API::AJAX_MEDIA_METAKEY,
-			'getAttachmentUid'                => $pref . Brizy_Editor_API::AJAX_CREATE_ATTACHMENT_UID,
-			'getServerTimeStamp'              => $pref . Brizy_Editor_API::AJAX_TIMESTAMP,
-			'createBlockScreenshot'           => $pref . Brizy_Editor_BlockScreenshotApi::AJAX_CREATE_BLOCK_SCREENSHOT,
-			'updateBlockScreenshot'           => $pref . Brizy_Editor_BlockScreenshotApi::AJAX_UPDATE_BLOCK_SCREENSHOT,
-			'getSidebars'                     => $pref . Brizy_Editor_API::AJAX_SIDEBARS,
-			'shortcodeContent'                => $pref . Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
-			'placeholderContent'              => $pref . Brizy_Editor_API::AJAX_PLACEHOLDER_CONTENT,
-			'placeholdersContent'             => $pref . Brizy_Editor_API::AJAX_PLACEHOLDERS_CONTENT,
-			'getPostTaxonomies'               => $pref . Brizy_Editor_API::AJAX_GET_POST_TAXONOMIES,
-			'getMenus'                        => $pref . Brizy_Editor_API::AJAX_GET_MENU_LIST,
-			'getTerms'                        => $pref . Brizy_Editor_API::AJAX_GET_TERMS,
-			'getTermsBy'                      => $pref . Brizy_Editor_API::AJAX_GET_TERMS_BY,
-			'getUsers'                        => $pref . Brizy_Editor_API::AJAX_GET_USERS,
-			'getPostObjects'                  => $pref . Brizy_Editor_API::AJAX_GET_POST_OBJECTS, // ???
-			'searchPosts'                     => $pref . Brizy_Editor_API::AJAX_SEARCH_POST,
-			'setFeaturedImage'                => $pref . Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE,
-			'setFeaturedImageFocalPoint'      => $pref . Brizy_Editor_API::AJAX_SET_IMAGE_FOCAL_PT,
-			'removeFeaturedImage'             => $pref . Brizy_Editor_API::AJAX_REMOVE_FEATURED_IMAGE,
-			'getForm'                         => $pref . Brizy_Editor_Forms_Api::AJAX_GET_FORM,
-			'createForm'                      => $pref . Brizy_Editor_Forms_Api::AJAX_CREATE_FORM,
-			'updateForm'                      => $pref . Brizy_Editor_Forms_Api::AJAX_UPDATE_FORM,
-			'deleteForm'                      => $pref . Brizy_Editor_Forms_Api::AJAX_DELETE_FORM,
-			'getIntegration'                  => $pref . Brizy_Editor_Forms_Api::AJAX_GET_INTEGRATION,
-			'createIntegration'               => $pref . Brizy_Editor_Forms_Api::AJAX_CREATE_INTEGRATION,
-			'updateIntegration'               => $pref . Brizy_Editor_Forms_Api::AJAX_UPDATE_INTEGRATION,
-			'deleteIntegration'               => $pref . Brizy_Editor_Forms_Api::AJAX_DELETE_INTEGRATION,
-			'createFont'                      => $pref . Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
-			'deleteFont'                      => $pref . Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
-			'getFonts'                        => $pref . Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION,
-			'getAccount'                      => $pref . Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNT,
-			'getAccounts'                     => $pref . Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNTS,
-			'addAccount'                      => $pref . Brizy_Editor_Accounts_Api::BRIZY_ADD_ACCOUNT,
-			'updateAccount'                   => $pref . Brizy_Editor_Accounts_Api::BRIZY_UPDATE_ACCOUNT,
-			'deleteAccount'                   => $pref . Brizy_Editor_Accounts_Api::BRIZY_DELETE_ACCOUNT,
-			'validateRecaptchaAccount'        => $pref . Brizy_Editor_Forms_Api::AJAX_VALIDATE_RECAPTCHA_ACCOUNT,
-			'rulePostsGroupList'              => $pref . Brizy_Admin_Rules_Api::RULE_POSTS_GROUP_LIST,
-			'ruleArchiveGroupList'            => $pref . Brizy_Admin_Rules_Api::RULE_ARCHIVE_GROUP_LIST,
-			'ruleTemplateGroupList'           => $pref . Brizy_Admin_Rules_Api::RULE_TEMPLATE_GROUP_LIST,
+			'heartBeat'                  => $pref . Brizy_Editor_API::AJAX_HEARTBEAT,
+			'takeOver'                   => $pref . Brizy_Editor_API::AJAX_TAKE_OVER,
+			'lockProject'                => $pref . Brizy_Editor_API::AJAX_LOCK_PROJECT,
+			'removeLock'                 => $pref . Brizy_Editor_API::AJAX_REMOVE_LOCK,
+			'getPage'                    => $pref . Brizy_Editor_API::AJAX_GET,
+			'getPostInfo'                => $pref . Brizy_Editor_API::AJAX_GET_POST_INFO,
+			'updatePage'                 => $pref . Brizy_Editor_API::AJAX_UPDATE,
+			'getProject'                 => $pref . Brizy_Editor_API::AJAX_GET_PROJECT,
+			'setProject'                 => $pref . Brizy_Editor_API::AJAX_SET_PROJECT,
+			'setProjectMeta'             => $pref . Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
+			'getGlobalBlockList'         => $pref . Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
+			'createGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
+			'updateGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
+			'updateGlobalBlocks'         => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCKS_ACTION,
+			'deleteGlobalBlock'          => $pref . Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
+			'getRuleGroupList'           => $pref . Brizy_Admin_Rules_Api::RULE_GROUP_LIST,
+			'getLayoutByUid'             => $pref . Brizy_Admin_Layouts_Api::GET_LAYOUT_BY_UID_ACTION,
+			'getLayoutList'              => $pref . Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,
+			'createLayout'               => $pref . Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
+			'updateLayout'               => $pref . Brizy_Admin_Layouts_Api::UPDATE_LAYOUT_ACTION,
+			'deleteLayout'               => $pref . Brizy_Admin_Layouts_Api::DELETE_LAYOUT_ACTION,
+			'cloudSignIn'                => $pref . Brizy_Admin_Cloud_Api::AJAX_SIGNIN_ACTION,
+			'cloudSignUp'                => $pref . Brizy_Admin_Cloud_Api::AJAX_SIGNUP_ACTION,
+			'cloudSignOut'               => $pref . Brizy_Admin_Cloud_Api::AJAX_SIGNOUT_ACTION,
+			'cloudSyncAllowed'           => $pref . Brizy_Admin_Cloud_Api::AJAX_SYNC_ALLOWED,
+			'cloudResetPassword'         => $pref . Brizy_Admin_Cloud_Api::AJAX_RESET_PASSWORD_ACTION,
+			'cloudSync'                  => $pref . Brizy_Admin_Cloud_Api::AJAX_TRIGGER_SYNC_ACTION,
+			'createRule'                 => $pref . Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
+			'createRules'                => $pref . Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
+			'updateRules'                => $pref . Brizy_Admin_Rules_Api::UPDATE_RULES_ACTION,
+			'deleteRule'                 => $pref . Brizy_Admin_Rules_Api::DELETE_RULE_ACTION,
+			'getRuleList'                => $pref . Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
+			'updateBlockPositions'       => $pref . Brizy_Admin_Blocks_Api::UPDATE_POSITIONS_ACTION,
+			'getSavedBlockByUid'         => $pref . Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
+			'getSavedBlockList'          => $pref . Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
+			'createSavedBlock'           => $pref . Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION,
+			'updateSavedBlock'           => $pref . Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
+			'deleteSavedBlock'           => $pref . Brizy_Admin_Blocks_Api::DELETE_SAVED_BLOCK_ACTION,
+			'downloadBlocks'             => $pref . Brizy_Admin_Blocks_Api::DOWNLOAD_BLOCKS,
+			'uploadBlocks'               => $pref . Brizy_Admin_Blocks_Api::UPLOAD_BLOCKS,
+			'downloadLayouts'            => $pref . Brizy_Admin_Layouts_Api::DOWNLOAD_LAYOUTS,
+			'uploadLayouts'              => $pref . Brizy_Admin_Layouts_Api::UPLOAD_LAYOUTS,
+			'media'                      => $pref . Brizy_Editor_API::AJAX_MEDIA,
+			'getMediaUid'                => $pref . Brizy_Editor_API::AJAX_MEDIA_METAKEY,
+			'getAttachmentUid'           => $pref . Brizy_Editor_API::AJAX_CREATE_ATTACHMENT_UID,
+			'getServerTimeStamp'         => $pref . Brizy_Editor_API::AJAX_TIMESTAMP,
+			'createBlockScreenshot'      => $pref . Brizy_Editor_BlockScreenshotApi::AJAX_CREATE_BLOCK_SCREENSHOT,
+			'updateBlockScreenshot'      => $pref . Brizy_Editor_BlockScreenshotApi::AJAX_UPDATE_BLOCK_SCREENSHOT,
+			'getSidebars'                => $pref . Brizy_Editor_API::AJAX_SIDEBARS,
+			'shortcodeContent'           => $pref . Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
+			'placeholderContent'         => $pref . Brizy_Editor_API::AJAX_PLACEHOLDER_CONTENT,
+			'placeholdersContent'        => $pref . Brizy_Editor_API::AJAX_PLACEHOLDERS_CONTENT,
+			'getPostTaxonomies'          => $pref . Brizy_Editor_API::AJAX_GET_POST_TAXONOMIES,
+			'getMenus'                   => $pref . Brizy_Editor_API::AJAX_GET_MENU_LIST,
+			'getTerms'                   => $pref . Brizy_Editor_API::AJAX_GET_TERMS,
+			'getTermsBy'                 => $pref . Brizy_Editor_API::AJAX_GET_TERMS_BY,
+			'getUsers'                   => $pref . Brizy_Editor_API::AJAX_GET_USERS,
+			'getPostObjects'             => $pref . Brizy_Editor_API::AJAX_GET_POST_OBJECTS, // ???
+			'searchPosts'                => $pref . Brizy_Editor_API::AJAX_SEARCH_POST,
+			'setFeaturedImage'           => $pref . Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE,
+			'setFeaturedImageFocalPoint' => $pref . Brizy_Editor_API::AJAX_SET_IMAGE_FOCAL_PT,
+			'removeFeaturedImage'        => $pref . Brizy_Editor_API::AJAX_REMOVE_FEATURED_IMAGE,
+			'getForm'                    => $pref . Brizy_Editor_Forms_Api::AJAX_GET_FORM,
+			'createForm'                 => $pref . Brizy_Editor_Forms_Api::AJAX_CREATE_FORM,
+			'updateForm'                 => $pref . Brizy_Editor_Forms_Api::AJAX_UPDATE_FORM,
+			'deleteForm'                 => $pref . Brizy_Editor_Forms_Api::AJAX_DELETE_FORM,
+			'getIntegration'             => $pref . Brizy_Editor_Forms_Api::AJAX_GET_INTEGRATION,
+			'createIntegration'          => $pref . Brizy_Editor_Forms_Api::AJAX_CREATE_INTEGRATION,
+			'updateIntegration'          => $pref . Brizy_Editor_Forms_Api::AJAX_UPDATE_INTEGRATION,
+			'deleteIntegration'          => $pref . Brizy_Editor_Forms_Api::AJAX_DELETE_INTEGRATION,
+			'createFont'                 => $pref . Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
+			'deleteFont'                 => $pref . Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
+			'getFonts'                   => $pref . Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION,
+			'getAccount'                 => $pref . Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNT,
+			'getAccounts'                => $pref . Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNTS,
+			'addAccount'                 => $pref . Brizy_Editor_Accounts_Api::BRIZY_ADD_ACCOUNT,
+			'updateAccount'              => $pref . Brizy_Editor_Accounts_Api::BRIZY_UPDATE_ACCOUNT,
+			'deleteAccount'              => $pref . Brizy_Editor_Accounts_Api::BRIZY_DELETE_ACCOUNT,
+			'validateRecaptchaAccount'   => $pref . Brizy_Editor_Forms_Api::AJAX_VALIDATE_RECAPTCHA_ACCOUNT,
+			'rulePostsGroupList'         => $pref . Brizy_Admin_Rules_Api::RULE_POSTS_GROUP_LIST,
+			'ruleArchiveGroupList'       => $pref . Brizy_Admin_Rules_Api::RULE_ARCHIVE_GROUP_LIST,
+			'ruleTemplateGroupList'      => $pref . Brizy_Admin_Rules_Api::RULE_TEMPLATE_GROUP_LIST,
 		);
 
 		return $config;

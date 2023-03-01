@@ -183,6 +183,13 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 			$layout->set_needs_compile( true );
 			//$layout->setCloudUpdateRequired( true );
 			$layout->setDataVersion( 1 );
+
+			$dependencies  = stripslashes( $this->param( 'dependencies' ) );
+			$dependencies = json_decode($dependencies);
+			if(is_array($dependencies)) {
+				$layout->setDependencies($dependencies);
+			}
+
 			$layout->save();
 
 			do_action( 'brizy_layout_created', $layout );
@@ -228,6 +235,11 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi {
 			$layout->setMeta( stripslashes( $this->param( 'meta' ) ) );
 			$layout->set_editor_data( stripslashes( $this->param( 'data' ) ) );
 			$layout->setDataVersion( $this->param( 'dataVersion' ) );
+			$dependencies  = stripslashes( $this->param( 'dependencies' ) );
+			$dependencies = json_decode($dependencies);
+			if(is_array($dependencies)) {
+				$layout->setDependencies($dependencies);
+			}
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
 				$layout->save( 1 );

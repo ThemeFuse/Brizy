@@ -67,7 +67,8 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 				'dataVersion',
 				'synchronized',
 				'synchronizable',
-				'isCloudEntity'
+				'isCloudEntity',
+				'dependencies'
 			);
 		}
 
@@ -75,6 +76,10 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
 		if ( in_array( 'uid', $fields ) ) {
 			$global['uid'] = $this->getUid();
+		}
+
+		if ( in_array( 'dependencies', $fields ) ) {
+			$global['dependencies'] = $this->getDependencies();
 		}
 
 		if ( in_array( 'status', $fields ) ) {

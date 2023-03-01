@@ -214,7 +214,8 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 				'uid',
 				'meta',
 				'data',
-				'status'
+				'status',
+				'dependencies'
 			);
 		}
 
@@ -223,7 +224,8 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 			'uid'         => $this->getUid(),
 			'status'      => get_post_status( $p_id ),
 			'dataVersion' => $this->getCurrentDataVersion(),
-			'meta'        => $this->getMeta()
+			'meta'        => $this->getMeta(),
+			'dependencies'        => $this->getDependencies()
 		);
 
 		return $global;

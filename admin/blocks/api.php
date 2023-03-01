@@ -144,6 +144,12 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			}
 		}
 
+		// try to get the global block dependencies...
+		foreach($resultBlocks as $block) {
+			$dependencies = $block->getDependencies();
+		}
+
+
 		return $blockManager->createResponseForEntities( $resultBlocks );
 	}
 
@@ -289,6 +295,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$status     = stripslashes( $this->param( 'status' ) );
 			$rulesData  = stripslashes( $this->param( 'rules' ) );
 
+
 			if ( ! in_array( $status, [ 'publish', 'draft' ] ) ) {
 				$this->error( 400, "Invalid status" );
 			}
@@ -307,6 +314,12 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			if ( $rulesData ) {
 				$rules = $this->ruleManager->createRulesFromJson( $rulesData, Brizy_Admin_Blocks_Main::CP_GLOBAL );
 				$this->ruleManager->addRules( $block->getWpPostId(), $rules );
+			}
+
+			$dependencies  = stripslashes( $this->param( 'dependencies' ) );
+			$dependencies = json_decode($dependencies);
+			if(is_array($dependencies)) {
+				$block->setDependencies($dependencies);
 			}
 
 			$block->save();
@@ -339,6 +352,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			}
 
 			$status = stripslashes( $this->param( 'status' ) );
+			$dependencies  = stripslashes( $this->param( 'dependencies' ) );
 
 			if ( ! in_array( $status, [ 'publish', 'draft' ] ) ) {
 				$this->error( 400, "Invalid post type" );
@@ -355,6 +369,12 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			 */
 			$block->setMeta( stripslashes( $this->param( 'meta' ) ) );
 			$block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
+
+			$dependencies = json_decode($dependencies);
+			if(is_array($dependencies)) {
+				$block->setDependencies($dependencies);
+			}
+
 
 			if ( (int) $this->param( 'is_autosave' ) ) {
 				$block->save( 1 );

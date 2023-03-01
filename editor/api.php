@@ -437,6 +437,12 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                 $this->post->set_needs_compile(true);
             }
 
+	        $dependencies  = stripslashes( $this->param( 'dependencies' ) );
+	        $dependencies = json_decode($dependencies);
+	        if(is_array($dependencies)) {
+		        $this->post->setDependencies($dependencies);
+	        }
+
             $this->post->getWpPost()->post_status = $status;
 
             if ((int)$this->param('is_autosave') == 1) {
