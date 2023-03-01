@@ -16,27 +16,9 @@ def discordFooter = "Version ${params.buildVersion}\n Editor Version: ${params.e
 
 env.BUILD_FOLDER_PATH = "/tmp/brizy"
 
-def scm = [
-        $class                           : 'GitSCM',
-        branches                         : [[name: '*/${releaseBranch}']],
-        doGenerateSubmoduleConfigurations: false,
-        extensions                       : [
-                [$class: 'CloneOption', depth: 1, honorRefspec: true, noTags: true, reference: '', shallow: true, timeout: 10],
-
-        ],
-        submoduleCfg                     : [],
-        userRemoteConfigs                : [
-                [
-                        credentialsId: 'ssh_with_passphrase_provided',
-                        refspec      : '+refs/heads/${releaseBranch}:refs/remotes/origin/${releaseBranch} +refs/heads/master:refs/remotes/origin/master  +refs/heads/develop:refs/remotes/origin/develop',
-                        url          : 'git@github.com:ThemeFuse/Brizy.git'
-                ]
-        ]
-]
-
 pipeline {
     options {
-     skipDefaultCheckout()
+        skipDefaultCheckout()
     }
     agent any
     environment {
@@ -58,8 +40,22 @@ pipeline {
 
         stage('CheckOut') {
             steps {
-                sh('git init')
-                checkout(scm)
+                sshagent (credentials: ['ssh_with_passphrase_provided']) {
+                    sh("""
+                        if git rev-parse --git-dir > /dev/null 2>&1; then
+                          echo "The repo is already cloned"
+                          git checkout .;
+                          git fetch;
+                          git clean -fd;
+                          git checkout ${params.releaseBranch};
+                          git reset --hard origin/${params.releaseBranch};
+                        else
+                          git config --global user.email "jenkins@brizy.io
+                          git config --global user.name "Jenkins jenkinovici
+                          git clone git@github.com:ThemeFuse/Brizy.git ./
+                        fi
+                     """)
+                }
             }
         }
 
@@ -130,7 +126,6 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['ssh_with_passphrase_provided']) {
-                    sh "git branch -u origin/${params.releaseBranch} ${params.releaseBranch}"
                     sh "./jenkins/git-publish.sh ${params.buildVersion} ${params.editorVersion} ${params.releaseBranch}"
                 }
             }

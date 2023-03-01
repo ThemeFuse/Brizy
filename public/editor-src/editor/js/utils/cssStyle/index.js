@@ -36,6 +36,8 @@ export * from "./cssStyleElementAlert";
 export * from "./cssStyleElementBreadcrumbs";
 //Element Button
 export * from "./cssStyleElementButton";
+// Calendly
+export * from "./cssStyleElementCalendly";
 // Element Carousel
 export * from "./cssStyleElementCarousel";
 // Element Comments
@@ -54,6 +56,8 @@ export * from "./cssStyleElementEcwidProduct";
 export * from "./cssStyleElementEcwidProducts";
 // Element Ecwid Shopping Bag
 export * from "./cssStyleElementEcwidShoppingBag";
+// Facebook
+export * from "./cssStyleElementFacebook";
 // Filters
 export * from "./cssStyleElementFilters";
 // Element Form2
@@ -80,6 +84,16 @@ export * from "./cssStyleElementMegaMenu";
 export * from "./cssStyleElementMenu";
 // Menu Simple
 export * from "./cssStyleElementMenuSimple";
+// Ministry Brands
+export * from "./cssStyleElementMinistryBrands";
+// Ministry Brands Event Layout
+export * from "./cssStyleElementEventLayout";
+// Ministry Group Slider
+export * from "./cssStyleElementMinistryGroupSlider";
+// Ministry Event Calendar
+export * from "./cssStyleElementMinistryEventCalendar";
+// Ministry Brands Sermon Layout
+export * from "./cssStyleElementSermonLayout";
 // Element Post Info
 export * from "./cssStyleElementPostInfo";
 // Element postNavigation
@@ -179,5 +193,3 @@ export * from "./cssStyleVisible2";
 export * from "./cssStyleZIndex";
 // Bg Video
 export * from "./styleBgVideo";
-// Calendly
-export * from "./cssStyleElementCalendly";

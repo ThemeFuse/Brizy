@@ -1,20 +1,18 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
+import classnames from "classnames";
 import React, { useCallback } from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { clamp } from "visual/utils/math";
-import { tabletSyncOnChange, mobileSyncOnChange } from "visual/utils/onChange";
-
-import classnames from "classnames";
-import { css } from "visual/utils/cssStyle";
-import { showOriginalImage } from "../utils";
-import { styleWrapper } from "../styles";
-
-import useResizerPoints from "./useResizerPoints";
-import { ImageProps, V, Patch, Styles, Meta } from "../types";
 import { getSizeType, isGIF, isSVG } from "visual/editorComponents/Image/utils";
+import { css } from "visual/utils/cssStyle";
+import { clamp } from "visual/utils/math";
+import { mobileSyncOnChange, tabletSyncOnChange } from "visual/utils/onChange";
 import { DESKTOP } from "visual/utils/responsiveMode";
+import { styleWrapper, styleWrapperContainer } from "../styles";
+import { ImageProps, Meta, Patch, Styles, V } from "../types";
+import { showOriginalImage } from "../utils";
+import useResizerPoints from "./useResizerPoints";
 
-const Image: React.FC<ImageProps> = props => {
+const Image: React.FC<ImageProps> = (props) => {
   const {
     v,
     vs,
@@ -28,6 +26,7 @@ const Image: React.FC<ImageProps> = props => {
     onEnd
   } = props;
 
+  const { maskShape } = v;
   const { points, restrictions } = useResizerPoints(props);
 
   const classNameWrapper = classnames(
@@ -54,6 +53,15 @@ const Image: React.FC<ImageProps> = props => {
     [onChange, v]
   );
 
+  const classNameWrapperContainer = classnames(
+    "brz-ed-image__wrapper-container",
+    css(
+      `${componentId}-${_id}-wrapper-container`,
+      `${_id}-wrapper-container`,
+      styleWrapperContainer(v, vs, vd)
+    )
+  );
+
   return (
     <BoxResizer
       keepAspectRatio
@@ -65,7 +73,13 @@ const Image: React.FC<ImageProps> = props => {
       onStart={onStart}
       onEnd={onEnd}
     >
-      <div className={classNameWrapper}>{props.children}</div>
+      {maskShape !== "none" ? (
+        <div className={classNameWrapperContainer}>
+          <div className={classNameWrapper}>{props.children}</div>
+        </div>
+      ) : (
+        <div className={classNameWrapper}>{props.children}</div>
+      )}
     </BoxResizer>
   );
 

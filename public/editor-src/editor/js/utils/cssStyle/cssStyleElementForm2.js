@@ -1,3 +1,4 @@
+import Config from "visual/global/Config";
 import {
   cssStyleBgColor,
   cssStyleBorder,
@@ -13,7 +14,7 @@ import {
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
-import { IS_STORY } from "visual/utils/models";
+import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   styleBorderWidthGrouped,
@@ -66,7 +67,7 @@ export function cssStyleElementForm2Margin({ v, device, state }) {
     paddingRight === undefined ||
     paddingBottom === undefined ||
     paddingLeft === undefined ||
-    IS_STORY
+    isStory(Config.getAll())
     ? ""
     : `margin:-${paddingTop}px -${paddingRight / 2}px
        -${paddingBottom}px -${paddingLeft / 2}px;`;
@@ -89,7 +90,7 @@ export function cssStyleElementForm2Padding({ v, device, state }) {
     paddingBottom === undefined ||
     paddingLeft === undefined
     ? ""
-    : IS_STORY
+    : isStory(Config.getAll())
     ? `padding:0 0 ${paddingBottom}${paddingBottomSuffix} 0;`
     : `padding:${paddingTop}${paddingTopSuffix}
       ${paddingRight / 2}${paddingRightSuffix}

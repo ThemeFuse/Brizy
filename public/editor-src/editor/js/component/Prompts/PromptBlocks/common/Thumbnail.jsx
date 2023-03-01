@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import _ from "underscore";
 import classnames from "classnames";
 import PropTypes from "prop-types";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import LazyLoadImage from "visual/component/LazyLoadImage";
+import _ from "underscore";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
-import { imageWrapperSize } from "visual/utils/image";
-import { authorizedSelector } from "visual/redux/selectors";
-import { t } from "visual/utils/i18n";
-import { IS_STORY } from "visual/utils/models";
+import LazyLoadImage from "visual/component/LazyLoadImage";
 import { ProInfo } from "visual/component/ProInfo";
-import { IS_PRO } from "visual/utils/env";
 import Config from "visual/global/Config";
+import { authorizedSelector } from "visual/redux/selectors";
+import { IS_PRO } from "visual/utils/env";
+import { t } from "visual/utils/i18n";
+import { imageWrapperSize } from "visual/utils/image";
+import { isStory } from "visual/utils/models";
 import { DownloadBlock } from "./DownloadBlock";
 
 const { upgradeToPro } = Config.get("urls");
@@ -288,7 +288,7 @@ class Thumbnail extends Component {
     const isBlank = blank && blank === "blank";
     const className = classnames(
       "brz-ed-popup-two-block",
-      IS_STORY && "brz-ed-popup-two-block-stories",
+      isStory(Config.getAll()) && "brz-ed-popup-two-block-stories",
       blockIsPro && "brz-ed-popup-two-block--pro",
       isLayout && "brz-ed-popup-two-block--layout",
       inactive && "inactive"
@@ -338,6 +338,7 @@ class Layout extends Component {
       ...otherProps
     } = this.props;
     const { thumbnailLoaded } = this.state;
+    const IS_STORY = isStory(Config.getAll());
 
     const infoClassName = classnames(
       "brz-ed-popup-two-block-info",
@@ -383,7 +384,7 @@ class Layout extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAuthorized: authorizedSelector(state) === "connected"
 });
 const LayoutThumbnail = connect(mapStateToProps)(Layout);

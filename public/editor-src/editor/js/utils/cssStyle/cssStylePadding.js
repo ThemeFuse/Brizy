@@ -1,13 +1,13 @@
 import {
-  stylePaddingType,
-  stylePaddingGrouped,
-  stylePaddingUngrouped,
-  stylePaddingGroupedSuffix,
-  stylePaddingUngroupedSuffix,
-  styleItemPaddingTop,
-  styleItemPaddingRight,
   styleItemPaddingBottom,
-  styleItemPaddingLeft
+  styleItemPaddingLeft,
+  styleItemPaddingRight,
+  styleItemPaddingTop,
+  stylePaddingGrouped,
+  stylePaddingGroupedSuffix,
+  stylePaddingType,
+  stylePaddingUngrouped,
+  stylePaddingUngroupedSuffix
 } from "visual/utils/style2";
 
 export function cssStylePaddingFourFields({ v, device, state, prefix = "" }) {
@@ -175,4 +175,8 @@ export function cssStyleItemPadding({ v, device, state }) {
   const paddingLeft = styleItemPaddingLeft({ v, device, state });
 
   return `padding:${paddingTop} ${paddingRight} ${paddingBottom} ${paddingLeft};`;
+}
+
+export function cssStylePaddingBG({ v, device, state }) {
+  return cssStylePaddingFourFields({ v, device, state, prefix: "bg" });
 }

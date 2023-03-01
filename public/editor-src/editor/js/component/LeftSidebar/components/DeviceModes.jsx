@@ -1,11 +1,13 @@
-import React from "react";
 import classnames from "classnames";
-import UIEvents from "visual/global/UIEvents";
+import React from "react";
 import HotKeys from "visual/component/HotKeys";
-import { getStore } from "visual/redux/store";
+import Config from "visual/global/Config";
+import UIEvents from "visual/global/UIEvents";
 import { setDeviceMode } from "visual/redux/actions2";
-import { IS_STORY } from "visual/utils/models";
+import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
+import { isStory } from "visual/utils/models";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 
 const getCurrentDeviceMode = () => getStore().getState().ui.deviceMode;
 
@@ -126,7 +128,7 @@ function handleHotKeys(e, { keyName }) {
   }, 300);
 }
 
-const DevicesRender = element => (
+const DevicesRender = (element) => (
   <>
     {element}
     <HotKeys
@@ -138,13 +140,13 @@ const DevicesRender = element => (
 );
 
 export const DeviceModes = {
-  id: "deviceModes",
+  id: LeftSidebarOptionsIds.deviceMode,
   type: "popover",
   title: t("Mobile view"),
   className: "brz-ed-sidebar__popover--deviceMode",
   options: [DeviceModeDesktop, DeviceModeTablet, DeviceModeMobile],
   render: DevicesRender,
-  disabled: IS_STORY,
+  disabled: isStory(Config.getAll()),
   extraProps: () => {
     const icon =
       getCurrentDeviceMode() === "mobile"

@@ -6,15 +6,6 @@ import {
   hexToRgba,
   makeRichTextColorPaletteCSS
 } from "visual/utils/color";
-import {
-  IS_ARCHIVE_TEMPLATE,
-  IS_CMS,
-  IS_POST,
-  IS_PRODUCT_ARCHIVE_TEMPLATE,
-  IS_PRODUCT_PAGE,
-  IS_PRODUCT_TEMPLATE,
-  IS_SINGLE_TEMPLATE
-} from "visual/utils/env";
 import { addFilter, applyFilter } from "visual/utils/filters";
 import {
   getFontById,
@@ -28,7 +19,7 @@ import {
   weightTypes
 } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
-import { isPopup, isStory, IS_STORY, setIds } from "visual/utils/models";
+import { isPopup, isStory, setIds } from "visual/utils/models";
 import {
   defaultValueKey,
   defaultValueValue,
@@ -71,8 +62,6 @@ global.Brizy = {
     setIds,
     isPopup,
     isStory,
-    IS_STORY,
-    IS_CMS,
 
     getAnimations,
     getDynamicContentChoices,
@@ -103,14 +92,7 @@ global.Brizy = {
     onChangeTypographyMobile,
     DCTypes,
     NORMAL,
-    HOVER,
-
-    IS_POST,
-    IS_SINGLE_TEMPLATE,
-    IS_ARCHIVE_TEMPLATE,
-    IS_PRODUCT_TEMPLATE,
-    IS_PRODUCT_ARCHIVE_TEMPLATE,
-    IS_PRODUCT_PAGE
+    HOVER
   },
   toolbar: {
     toolbarColor2,

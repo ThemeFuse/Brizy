@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { Component, ReactNode } from "react";
+import React, { ReactNode } from "react";
 import _ from "underscore";
 import { ElementModel } from "visual/component/Elements/Types";
 import {
@@ -37,11 +37,18 @@ import {
   getDCObjPreview
 } from "./DynamicContent/getDCObj";
 import { dcKeyToKey, isDCKey, keyDCInfo } from "./DynamicContent/utils";
+import { EditorComponentContext } from "./EditorComponentContext";
 import {
-  EditorComponentContext,
-  EditorComponentContextValue
-} from "./EditorComponentContext";
-import { ECDC, ECKeyDCInfo } from "./types";
+  ContextMenuItem,
+  ContextMenuProps,
+  ECDC,
+  ECKeyDCInfo,
+  Meta,
+  Model,
+  NewToolbarConfig,
+  OnChangeMeta,
+  SidebarConfig
+} from "./types";
 import {
   createOptionId,
   flattenDefaultValue,
@@ -55,67 +62,9 @@ const capitalize = ([first, ...rest]: string, lowerRest = false): string =>
 
 type Rule = string | { rule: string; mapper: <T>(m: T) => void };
 
-export type Model<M> = M & {
-  _id?: string;
-  _styles?: string[];
-  tabsState?: State.State;
-};
-
 type DefaultValueProcessed<T> = {
   defaultValueFlat: T;
   dynamicContentKeys: string[];
-};
-
-type Meta = MValue<{ [k: string]: unknown }>;
-export type OnChangeMeta<M> = Meta & {
-  patch?: Partial<Model<M>>;
-  intent?: "replace_all" | "remove_all";
-};
-
-export type ContextMenuItemButton = {
-  id: string;
-  type: "button";
-  title: string;
-  inactive?: boolean;
-  helperText: (d: { isInSubMenu: boolean }) => string;
-  onChange: () => void;
-};
-
-export type ContextMenuItemGroup = {
-  id: string;
-  type: "group";
-  title?: string;
-  icon?: string;
-  items?: ContextMenuItem[];
-};
-
-export type ContextMenuItem = ContextMenuItemButton | ContextMenuItemGroup;
-
-type ContextMenuProps<M extends ElementModel> = {
-  id: string;
-  componentId: string;
-  getItems: (v: M, c: EditorComponent<M>) => ContextMenuItem[];
-};
-
-type SidebarConfig<M> = {
-  getItems: (d: {
-    v: M;
-    component: Component;
-    device: Responsive.ResponsiveMode;
-    state: State.State;
-    context: EditorComponentContextValue;
-  }) => ToolbarItemType[];
-  title?: string | ((d: { v: M }) => string);
-};
-
-export type NewToolbarConfig<M> = {
-  getItems: (d: {
-    v: M;
-    device: Responsive.ResponsiveMode;
-    state: State.State;
-    component: Component;
-    context: EditorComponentContextValue;
-  }) => ToolbarItemType[];
 };
 
 type OldToolbarConfig<M> = {
@@ -175,9 +124,9 @@ export type Props<
 export class EditorComponent<
   M extends ElementModel,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  P = Record<any, any>,
+  P extends Record<string, any> = Record<string, unknown>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  S = Record<any, any>
+  S extends Record<string, any> = Record<string, unknown>
 > extends React.Component<Props<M, P>, S> {
   /**
    * @return {string}
@@ -302,20 +251,19 @@ export class EditorComponent<
   }
 
   getStylesValue(): ElementModel | null {
-    const { _styles } = this.getDBValue() || {};
-    const currentStyleRules = rulesSelector(this.getReduxState());
+    const dbValue = this.getDBValue();
+    const currentStyleRules: Record<string, ElementModel | undefined> =
+      rulesSelector(this.getReduxState());
 
-    if (!_styles || !currentStyleRules) {
-      return null;
+    if ("_styles" in dbValue && dbValue._styles && currentStyleRules) {
+      return dbValue._styles.reduce((acc: Partial<M>, style: string) => {
+        const ruleStyle = currentStyleRules[style];
+
+        return ruleStyle ? Object.assign(acc, ruleStyle) : acc;
+      }, {});
     }
 
-    return _styles.reduce(
-      (acc, style) =>
-        currentStyleRules[style]
-          ? Object.assign(acc, currentStyleRules[style])
-          : acc,
-      {} as Partial<M>
-    );
+    return null;
   }
 
   getDCValue(v: M): DCObjResult {
@@ -553,7 +501,7 @@ export class EditorComponent<
 
     return {
       ...otherProps,
-      _id: `${this.getId()}-${bindWithKey}`,
+      _id: `${this.getId()}-${String(bindWithKey)}`,
       defaultValue: defaultValue && defaultValue[bindWithKey],
       dbValue: dbValue && dbValue[bindWithKey],
       reduxState: this.getReduxState(),
@@ -581,7 +529,7 @@ export class EditorComponent<
 
   makeToolbarPropsFromConfig(
     config: OldToolbarConfig<M>,
-    sidebarConfig?: SidebarConfig<M>,
+    sidebarConfig?: SidebarConfig<M, P, S>,
     options = {} /* options */
   ): ToolbarExtend {
     const { onToolbarOpen, onToolbarClose, onToolbarEnter, onToolbarLeave } =
@@ -853,8 +801,8 @@ export class EditorComponent<
   }
 
   makeToolbarPropsFromConfig2(
-    config: NewToolbarConfig<M>,
-    sidebarConfig?: SidebarConfig<M>,
+    config: NewToolbarConfig<M, P, S>,
+    sidebarConfig?: SidebarConfig<M, P, S>,
     options = {}
   ): ToolbarExtend {
     const { onToolbarOpen, onToolbarClose, onToolbarEnter, onToolbarLeave } =
@@ -1134,4 +1082,12 @@ export class EditorComponent<
 
 export default EditorComponent;
 
-export type Editor = typeof EditorComponent;
+export type EditorInstance = typeof EditorComponent;
+
+export type Editor<
+  M extends ElementModel,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  P extends Record<string, any> = Record<string, unknown>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  S extends Record<string, any> = Record<string, unknown>
+> = EditorComponent<M, P, S>;

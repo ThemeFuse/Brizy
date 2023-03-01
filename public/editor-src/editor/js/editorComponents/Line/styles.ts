@@ -1,10 +1,10 @@
 import { renderStyles } from "visual/utils/cssStyle";
-import { ElementModel } from "visual/component/Elements/Types";
+import { Value } from "./index";
 
 export function style(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
+  v: Value,
+  vs: Value,
+  vd: Value
 ): [string, string, string] {
   const styles: {
     [k: string]: {
@@ -13,22 +13,38 @@ export function style(
     };
   } = {
     ".brz &&:hover": { standart: ["cssStyleSizeWidth"] },
-    ".brz &&:hover .brz-hr": { standart: ["cssStyleElementLineBorder"] },
-
+    ".brz &&:hover .brz-hr": {
+      standart: ["cssStyleElementLineBorder", "cssStyleBorderRadius"],
+      interval: ["cssStyleHoverTransition"]
+    },
     ".brz &&:hover .brz-line-container:before": {
       standart: [
+        "cssStyleElementLineContentAlignBefore",
+        "cssStyleCustomLineBgColor",
+        "cssStyleCustomLineSize",
+        "cssStyleCustomLineAmount",
         "cssStyleElementLineBorder",
-        "cssStyleElementLineContentAlignBefore"
-      ]
+        "cssStyleElementLineStyledLineType",
+        "cssStyleBorderRadius"
+      ],
+      interval: ["cssStyleHoverTransition"]
     },
     ".brz &&:hover .brz-line-container:after": {
       standart: [
+        "cssStyleElementLineDisableAfter",
+        "cssStyleElementLineContentAlignAfter",
+        "cssStyleCustomLineBgColor",
+        "cssStyleCustomLineSize",
+        "cssStyleCustomLineAmount",
         "cssStyleElementLineBorder",
-        "cssStyleElementLineContentAlignAfter"
-      ]
+        "cssStyleElementLineStyledLineType",
+        "cssStyleBorderRadius"
+      ],
+      interval: ["cssStyleHoverTransition"]
     },
     ".brz &&:hover .brz-line-content": {
-      standart: ["cssStyleColor", "cssStyleElementLineSpacing"]
+      standart: ["cssStyleColor"],
+      interval: ["cssStyleHoverTransition"]
     },
     ".brz &&:hover.brz-line-text .brz-line-content": {
       standart: [
@@ -36,11 +52,24 @@ export function style(
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
-        "cssStyleTypography2LetterSpacing"
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleElementLineSpacing",
+        "cssStyleTextShadow"
       ]
     },
     ".brz &&:hover.brz-line-icon .brz-line-content": {
-      standart: ["cssStyleElementLineIconSize"]
+      standart: ["cssStyleElementLineIconSize", "cssStyleElementLineIconRotate"]
+    },
+    ".brz &&:hover .brz-line-icon-wrapper": {
+      standart: [
+        "cssStyleBoxShadow",
+        "cssStyleBorderRadius",
+        "cssStyleElementLineSpacing",
+        "cssStyleElementLineIconBgColor",
+        "cssStyleElementLineIconBorder",
+        "cssStyleElementLineIconPadding"
+      ],
+      interval: ["cssStyleHoverTransition"]
     }
   };
 

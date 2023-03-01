@@ -11,6 +11,9 @@
     "loop": "off",
     "start": 0,
     "end": 0,
+    "privacyMode": "off",
+    "suggestedVideos": "current",
+    "lazyLoad": "on",
 
     "images": {
       "coverImageSrc": ""
@@ -305,13 +308,47 @@
     "tempHoverBoxShadowVertical": null,
     "tempHoverBoxShadowHorizontal": null,
 
+    "paddingBgColorType": "solid",
+
+    "paddingBgColorHex": "#ffffff",
+    "paddingBgColorOpacity": 0,
+    "paddingBgColorPalette": "",
+
+    "paddingGradientColorHex": "#009900",
+    "paddingGradientColorOpacity": 1,
+    "paddingGradientColorPalette": "",
+
+    "paddingGradientType": "linear",
+
+    "paddingGradientStartPointer": "startPointer",
+    "paddingGradientActivePointer": 0,
+    "paddingGradientFinishPointer": 100,
+
+    "paddingGradientLinearDegree": 90,
+    "paddingGradientRadialDegree": 90,
+
     "size": 100,
     "sizeSuffix": "%",
 
     "customCSS": "",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
+    "hoverTransitionSuffix": "",
+
+    "bgPaddingType": "grouped",
+
+    "bgPadding": 0,
+    "bgPaddingSuffix": "px",
+
+    "bgPaddingTop": 0,
+    "bgPaddingRight": 0,
+    "bgPaddingBottom": 0,
+    "bgPaddingLeft": 0,
+
+    "bgPaddingTopSuffix": "px",
+    "bgPaddingRightSuffix": "px",
+    "bgPaddingBottomSuffix": "px",
+    "bgPaddingLeftSuffix": "px",
 
     "tabletCoverImageWidth": null,
     "tabletCoverImageHeight": null,

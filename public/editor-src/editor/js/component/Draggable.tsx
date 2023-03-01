@@ -1,5 +1,5 @@
-import React, { createRef, ReactNode, RefObject } from "react";
 import $ from "jquery";
+import React, { createRef, ReactNode, RefObject } from "react";
 
 type Position = Record<"x" | "y", number>;
 const getClientOffset = (event: MouseEvent): Position => ({
@@ -100,7 +100,7 @@ export class Draggable<R extends HTMLElement> extends React.Component<
     );
 
     if (overlayNodes.length) {
-      overlayNodes.forEach(overlayNode => {
+      overlayNodes.forEach((overlayNode) => {
         overlayNode.style.willChange = "pointer-events";
         overlayNode.style.pointerEvents = "all";
 
@@ -118,24 +118,24 @@ export class Draggable<R extends HTMLElement> extends React.Component<
       this.startDrag(getClientOffset(e));
     } else {
       this.currentPosition = getClientOffset(e);
+      requestAnimationFrame(this.update);
     }
   };
 
   handleMouseUp = (): void => {
-    this.clearDragData();
-
-    if (!this.isMouseDown) {
-      this.props.onDragEnd?.();
-    }
-  };
-
-  clearDragData = (): void => {
     this.cleanMouseEvents();
 
-    if (!this.isMouseDown) {
+    // this means that draggable was only clicked and startDrag() was not triggered
+    // and is no need to clearData and call other functions
+    if (!this.isMouseDown && !global.BRZ_IS_DRAGGING) {
       return;
     }
 
+    this.clearDragData();
+    this.props.onDragEnd?.();
+  };
+
+  clearDragData = (): void => {
     const { draggingCursor } = this.props;
 
     const overlayNodes = document.querySelectorAll<HTMLDivElement>(
@@ -143,7 +143,7 @@ export class Draggable<R extends HTMLElement> extends React.Component<
     );
 
     if (overlayNodes.length) {
-      overlayNodes.forEach(overlayNode => {
+      overlayNodes.forEach((overlayNode) => {
         overlayNode.style.willChange = "";
         overlayNode.style.pointerEvents = "none";
 
@@ -164,8 +164,6 @@ export class Draggable<R extends HTMLElement> extends React.Component<
 
   update = (): void => {
     if (this.isMouseDown && this.startPosition && this.currentPosition) {
-      requestAnimationFrame(this.update);
-
       const deltaX = this.currentPosition.x - this.startPosition.x;
       const deltaY = this.currentPosition.y - this.startPosition.y;
       const { x: lastDeltaX, y: lastDeltaY } = this.lastDelta || { x: 0, y: 0 };

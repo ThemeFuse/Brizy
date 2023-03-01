@@ -84,6 +84,7 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
         size={value.sizeType}
         sizes={!disableSizes && value.extension !== "svg" ? sizes : undefined}
         onSizeChange={onTypeChange}
+        acceptedExtensions={config?.acceptedExtensions}
       />
     </>
   );

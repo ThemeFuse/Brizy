@@ -1,36 +1,37 @@
+import classnames from "classnames";
 import React from "react";
 import ReactDOM from "react-dom";
-import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
+import CustomCSS from "visual/component/CustomCSS";
+import { Roles } from "visual/component/Roles";
+import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
-import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
-import { Roles } from "visual/component/Roles";
 import {
   wInBoxedPage,
-  wInTabletPage,
+  wInFullPage,
   wInMobilePage,
-  wInFullPage
+  wInTabletPage
 } from "visual/config/columns";
-import { getStore } from "visual/redux/store";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import Config from "visual/global/Config";
 import { triggersSelector } from "visual/redux/selectors";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
-import * as toolbar from "./toolbar";
-import * as sidebar from "./sidebar";
-import * as toolbarExtend from "./toolbarExtend";
-import { styleCloseButton, styleContainer, styleContainerWrap } from "./styles";
+import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
-import defaultValue from "./defaultValue.json";
+import { getContainerW } from "visual/utils/meta";
+import { isPopup } from "visual/utils/models";
 import {
   styleElementSectionContainerType,
   styleSizeContainerSize
 } from "visual/utils/style2";
-import { getContainerW } from "visual/utils/meta";
+import defaultValue from "./defaultValue.json";
 import { SectionPopupInstances as Instances } from "./instances";
+import * as sidebar from "./sidebar";
+import { styleCloseButton, styleContainer, styleContainerWrap } from "./styles";
+import * as toolbar from "./toolbar";
+import * as toolbarExtend from "./toolbarExtend";
 
 /**
  * @deprecated use import {SectionPopupInstances} from "visual/editorComponents/SectionPopup/instances";
@@ -263,7 +264,7 @@ class SectionPopup extends EditorComponent {
     const triggers = triggersSelector(getStore().getState());
 
     let attr = {};
-    if (IS_GLOBAL_POPUP) {
+    if (isPopup(Config.getAll())) {
       const encodeIdsList = [
         "scrolling",
         "showing",
@@ -271,10 +272,10 @@ class SectionPopup extends EditorComponent {
         "referrer",
         "loggedIn"
       ];
-      const encodeData = data => encodeURIComponent(JSON.stringify(data));
-      const decodeData = data => JSON.parse(decodeURIComponent(data));
-      const convertString = name =>
-        name.replace(/([A-Z])/g, letter => `_${letter.toLowerCase()}`);
+      const encodeData = (data) => encodeURIComponent(JSON.stringify(data));
+      const decodeData = (data) => JSON.parse(decodeURIComponent(data));
+      const convertString = (name) =>
+        name.replace(/([A-Z])/g, (letter) => `_${letter.toLowerCase()}`);
 
       attr = triggers.reduce((acc, item) => {
         if (item.active) {
@@ -295,7 +296,7 @@ class SectionPopup extends EditorComponent {
     const classNameClose = classnames(
       "brz-popup",
       "brz-popup__preview",
-      { "brz-conditions-popup": IS_GLOBAL_POPUP },
+      { "brz-conditions-popup": isPopup(Config.getAll()) },
       className,
       customClassName,
       css(

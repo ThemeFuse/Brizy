@@ -10,26 +10,27 @@ import {
 } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { brizyToBranding } from "visual/utils/branding";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 
 class DrawerComponent extends React.Component {
-  handleCurrentStyleIdChange = value => {
+  handleCurrentStyleIdChange = (value) => {
     this.props.dispatch(updateCurrentStyleId(value));
   };
 
-  handleColorPaletteChange = value => {
+  handleColorPaletteChange = (value) => {
     const { currentStyle, dispatch } = this.props;
 
     dispatch(updateCurrentStyle({ ...currentStyle, colorPalette: value }));
   };
 
-  handleFontStylesChange = value => {
+  handleFontStylesChange = (value) => {
     const { currentStyle, extraFontStyles, dispatch } = this.props;
     const { fontStyles } = currentStyle;
     const mergedFontStyles = [...fontStyles, ...extraFontStyles];
 
     if (value.length > mergedFontStyles.length) {
       dispatch(
-        updateExtraFontStyles(value.filter(fs => fs.deletable === "on"))
+        updateExtraFontStyles(value.filter((fs) => fs.deletable === "on"))
       );
 
       return;
@@ -42,12 +43,12 @@ class DrawerComponent extends React.Component {
             dispatch(
               updateCurrentStyle({
                 ...currentStyle,
-                fontStyles: value.filter(fs => fs.deletable === "off")
+                fontStyles: value.filter((fs) => fs.deletable === "off")
               })
             );
           } else {
             dispatch(
-              updateExtraFontStyles(value.filter(fs => fs.deletable === "on"))
+              updateExtraFontStyles(value.filter((fs) => fs.deletable === "on"))
             );
           }
 
@@ -63,7 +64,7 @@ class DrawerComponent extends React.Component {
       currentStyle: { id, colorPalette, fontStyles },
       extraFontStyles
     } = this.props;
-    const stylesChoices = styles.map(style => ({
+    const stylesChoices = styles.map((style) => ({
       title: brizyToBranding(style.title),
       value: style.id
     }));
@@ -103,17 +104,17 @@ class DrawerComponent extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   styles: stylesSelector(state),
   currentStyle: currentStyleSelector(state),
   extraFontStyles: extraFontStylesSelector(state)
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   dispatch
 });
 
 export const Styling = {
-  id: "styling",
+  id: LeftSidebarOptionsIds.globalStyle,
   type: "drawer",
   icon: "nc-brush",
   drawerTitle: t("Styling"),

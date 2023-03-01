@@ -24,7 +24,7 @@ export class CodeMirror extends Component<Props, SimpleValue<string>> {
   constructor(props: Props) {
     super(props);
 
-    if (IS_EDITOR) {
+    if (IS_EDITOR && props.language) {
       require("codemirror/addon/display/placeholder");
       require(`codemirror/mode/${props.language}/${props.language}`);
     }
@@ -35,7 +35,7 @@ export class CodeMirror extends Component<Props, SimpleValue<string>> {
   componentDidUpdate(prevProps: Readonly<Props>): void {
     const lg = this.props.language;
 
-    if (IS_EDITOR && prevProps.language !== lg) {
+    if (IS_EDITOR && lg && prevProps.language !== lg) {
       require(`codemirror/mode/${lg}/${lg}`);
     }
   }

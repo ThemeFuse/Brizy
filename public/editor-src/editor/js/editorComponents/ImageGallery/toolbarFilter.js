@@ -1,11 +1,11 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ key, v, device });
+  const dvv = (key) => defaultValueValue({ key, v, device });
 
   // Color
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -87,9 +87,9 @@ export function getItems({ v, device }) {
         icon: {
           style: {
             backgroundColor:
-              v.bgColorOpacity > 0
-                ? hexToRgba(bgColorHex, v.bgColorOpacity)
-                : hexToRgba(colorHex, v.colorOpacity)
+              dvv("bgColorOpacity") > 0
+                ? hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+                : hexToRgba(colorHex, dvv("colorOpacity"))
           }
         }
       },
@@ -156,21 +156,9 @@ export function getItems({ v, device }) {
       devices: "desktop",
       position: 100,
       choices: [
-        {
-          icon: "nc-text-align-left",
-          title: t("Align"),
-          value: "left"
-        },
-        {
-          icon: "nc-text-align-center",
-          title: t("Align"),
-          value: "center"
-        },
-        {
-          icon: "nc-text-align-right",
-          title: t("Align"),
-          value: "right"
-        }
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
       ]
     },
     {
@@ -182,10 +170,6 @@ export function getItems({ v, device }) {
       icon: "nc-cog",
       title: t("Settings")
     },
-    {
-      id: "toolbarSettings",
-      type: "popover-dev",
-      disabled: true
-    }
+    { id: "toolbarSettings", type: "popover-dev", disabled: true }
   ];
 }

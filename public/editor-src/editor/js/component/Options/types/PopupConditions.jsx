@@ -2,10 +2,11 @@ import classNames from "classnames";
 import React from "react";
 import _ from "underscore";
 import { ConditionsComponent } from "visual/component/ConditionsComponent";
+import Config from "visual/global/Config";
 import { rulesAmountSelector, triggersSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
-import { IS_EXTERNAL_POPUP } from "visual/utils/models";
+import { isExternalPopup } from "visual/utils/models";
 
 class PopupConditionsOptionType extends React.Component {
   static defaultProps = {
@@ -16,7 +17,7 @@ class PopupConditionsOptionType extends React.Component {
   calConditionsAmount() {
     const state = getStore().getState();
     let rulesAmount = 0;
-    if (!IS_EXTERNAL_POPUP) {
+    if (!isExternalPopup(Config.getAll())) {
       rulesAmount = rulesAmountSelector(state);
       // for cases when rule was created by WP
       rulesAmount = rulesAmount === null ? 1 : rulesAmount;

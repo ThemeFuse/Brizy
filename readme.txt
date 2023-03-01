@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 6.0.3
+Tested up to: 6.1.1
 Requires PHP: 5.6.20
-Stable tag: 2.4.12
+Stable tag: 2.4.15
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,23 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.15 - 2023-01-31 =
+* Fixed: Menu hamburger - items link on responsive mode
+
+= 2.4.13 - 2022-11-17 =
+* New: Added styles and more options for the Line element
+* New: Added paddings for Counter, Embed, Video, Map, Audio & Countdown elements
+* New: Added Mask option for the Image element 
+* New: Video element new options: Lazy Load, Privacy Mode, Suggested Videos, Muted 
+* Improved: Borders moved from toolbar to sidebar 
+* Improved: Color works under CSS variables in Text CSS classes 
+* Fixed: Column width changed when you click the column resize handle 
+* Fixed: Hover styles for Update toolbar icons 
+* Fixed: Border global color on Tabs
+* Fixed: Hover styles on icons from Effects 
+* Fixed: Right Click on Row element
+* Fixed: Added new rule matches for current page
 
 = 2.4.11 - 2022-10-12 =
 * Fixed: Images URL

@@ -90,12 +90,15 @@ const loadYoutubeVideo = (
   return new YT.Player(player, {
     events: {
       onReady: function (event) {
+        const isMuted = event.target.isMuted();
+
         if (isIos) {
           event.target.pauseVideo();
         }
-        if (autoplay) {
+        if (autoplay || isMuted) {
           event.target.mute();
-        } else {
+        }
+        if (!autoplay && !isMuted) {
           event.target.unMute();
         }
         if (autoplay || (isCovered && !isIos)) {
@@ -385,7 +388,6 @@ function getVideoSrc($elem) {
   if (population) {
     var options = {
       autoplay: $coverElem.length ? 1 : 0,
-      suggestedVideo: 0,
       controls: Number(controls === "true"),
       branding: Number(branding === "true"),
       intro: Number(intro === "true"),

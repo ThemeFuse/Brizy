@@ -1,6 +1,6 @@
 import { applyFilter } from "visual/utils/filters";
-import { Shortcodes } from "visual/types";
-import { Editor as EditorComponent } from "visual/editorComponents/EditorComponent";
+import type { Shortcodes } from "visual/types";
+import type { EditorInstance as EditorComponent } from "visual/editorComponents/EditorComponent";
 
 const components: Record<string, EditorComponent | null> = {};
 let notFoundComponent: undefined | EditorComponent;

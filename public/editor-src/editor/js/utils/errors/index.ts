@@ -41,6 +41,10 @@ export class SavedLayoutError extends CustomError {
   name = "SavedLayout";
 }
 
+export class AuthError extends CustomError {
+  name = "Auth";
+}
+
 // Error Codes
 
 // polling

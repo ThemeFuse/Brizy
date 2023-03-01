@@ -180,3 +180,6 @@ export const tagsFilterLoad =
       return [];
     }
   };
+
+// is needed to pass webpack warnings
+export const createFieldCollectionId = (): string => "";

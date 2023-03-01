@@ -1,10 +1,13 @@
+import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
-import { IS_STORY } from "visual/utils/models";
+import { isStory } from "visual/utils/models";
 import { ToolbarItemType } from "../ToolbarItemType";
 
 export const title = t("Map");
 
 export function getItems(): ToolbarItemType[] {
+  const IS_STORY = isStory(Config.getAll());
+
   return [
     {
       id: "sidebarTabs",
@@ -27,6 +30,18 @@ export function getItems(): ToolbarItemType[] {
                   id: "settingsStyling",
                   label: t("Basic"),
                   options: [
+                    {
+                      id: "padding",
+                      type: "padding-dev",
+                      label: t("Padding"),
+                      disabled: true
+                    },
+                    {
+                      id: "bgPadding",
+                      type: "padding-dev",
+                      label: t("Padding"),
+                      position: 50
+                    },
                     {
                       id: "border",
                       type: "corners-dev",
@@ -56,6 +71,20 @@ export function getItems(): ToolbarItemType[] {
                   ]
                 }
               ]
+            },
+            {
+              id: "padding",
+              type: "padding-dev",
+              label: t("Padding"),
+              devices: "responsive",
+              disabled: true
+            },
+            {
+              id: "bgPadding",
+              type: "padding-dev",
+              label: t("Padding"),
+              devices: "responsive",
+              position: 50
             }
           ]
         }

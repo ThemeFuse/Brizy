@@ -1,0 +1,248 @@
+{
+  "content": {
+    "category": "",
+    "group": "",
+
+    "howmany": 9,
+
+    "slidesToShow": 3,
+
+    "showArrows": "on",
+    "showImages": "on",
+    "showMeetingDay": "on",
+    "showMeetingTimes": "on",
+    "showPagination": "off",
+    "showCategory": "off",
+    "showGroup": "off",
+    "showStatus": "off",
+    "showChildcare": "off",
+    "showResourceLink": "off",
+    "showPreview": "off",
+
+    "detailPageButton": "Button",
+    "detailPage": ""
+  },
+  "style": {
+    "families": {
+      "titleTypographyFontFamily": "lato",
+      "metaTypographyFontFamily": "lato",
+      "buttonTypographyFontFamily": "lato"
+    },
+
+    "parentBgColorType": "solid",
+
+    "parentBgColorHex": "#000000",
+    "parentBgColorOpacity": 0,
+    "parentBgColorPalette": "",
+
+    "parentGradientType": "linear",
+
+    "parentGradientColorHex": "#009900",
+    "parentGradientColorOpacity": 1,
+    "parentGradientColorPalette": "",
+
+    "parentGradientStartPointer": 0,
+    "parentGradientFinishPointer": 100,
+
+    "parentGradientActivePointer": "startPointer",
+
+    "parentGradientLinearDegree": 90,
+    "parentGradientRadialDegree": 90,
+
+    "parentBorderStyle": "solid",
+
+    "parentBorderColorHex": "#000000",
+    "parentBorderColorOpacity": 1,
+    "parentBorderColorPalette": "color2",
+
+    "parentBorderWidthType": "grouped",
+
+    "parentBorderWidth": 0,
+    "parentBorderTopWidth": 0,
+    "parentBorderRightWidth": 0,
+    "parentBorderBottomWidth": 0,
+    "parentBorderLeftWidth": 0,
+
+    "parentBoxShadow": "none",
+
+    "parentBoxShadowColorHex": "#000000",
+    "parentBoxShadowColorPalette": "",
+    "parentBoxShadowColorOpacity": 0,
+
+    "parentBoxShadowBlur": 0,
+    "parentBoxShadowSpread": 0,
+    "parentBoxShadowVertical": 0,
+    "parentBoxShadowHorizontal": 0,
+
+    "borderRadiusType": "grouped",
+
+    "borderRadius": 0,
+    "borderRadiusSuffix": "px",
+
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "itemsHorizontalAlign": "left",
+
+    "itemsBetween": 10,
+    "itemsBetweenSuffix": "px",
+
+    "titleTypographyFontStyle": "",
+    "titleTypographyFontFamilyType": "google",
+    "titleTypographyFontSize": 20,
+    "titleTypographyFontSizeSuffix": "px",
+    "titleTypographyFontWeight": 400,
+    "titleTypographyLetterSpacing": 0,
+    "titleTypographyLineHeight": 1,
+
+    "titleColorHex": "#000000",
+    "titleColorOpacity": 1,
+    "titleColorPalette": "",
+
+    "titleSpacing": 10,
+    "titleSpacingSuffix": "px",
+
+    "metaTypographyFontStyle": "",
+    "metaTypographyFontFamilyType": "google",
+    "metaTypographyFontSize": 18,
+    "metaTypographyFontSizeSuffix": "px",
+    "metaTypographyFontWeight": 400,
+    "metaTypographyLetterSpacing": 0,
+    "metaTypographyLineHeight": 1,
+
+    "metaColorHex": "#000000",
+    "metaColorOpacity": 0.9,
+    "metaColorPalette": "",
+
+    "metaSpacing": 10,
+    "metaSpacingSuffix": "px",
+
+    "mediaBorderRadiusType": "grouped",
+
+    "mediaBorderRadius": 0,
+    "mediaBorderRadiusSuffix": "px",
+
+    "mediaBorderTopLeftRadius": 0,
+    "mediaBorderTopRightRadius": 0,
+    "mediaBorderBottomRightRadius": 0,
+    "mediaBorderBottomLeftRadius": 0,
+
+    "mediaBorderTopLeftRadiusSuffix": "px",
+    "mediaBorderTopRightRadiusSuffix": "px",
+    "mediaBorderBottomRightRadiusSuffix": "px",
+    "mediaBorderBottomLeftRadiusSuffix": "px",
+
+    "arrowIconSize": "medium",
+
+    "arrowIconCustomSize": 24,
+    "arrowIconCustomSizeSuffix": "px",
+
+    "arrowColorHex": "#000000",
+    "arrowColorOpacity": 1,
+    "arrowColorPalette": "",
+
+    "arrowPosition": 0,
+    "arrowPositionSuffix": "px",
+
+    "buttonSize": "medium",
+
+    "buttonHeight": 14,
+    "buttonHeightSuffix": "px",
+
+    "buttonWidth": 50,
+    "buttonWidthSuffix": "%",
+
+    "buttonTypographyFontStyle": "",
+    "buttonTypographyFontFamilyType": "google",
+    "buttonTypographyFontSize": 15,
+    "buttonTypographyFontSizeSuffix": "px",
+    "buttonTypographyFontWeight": 400,
+    "buttonTypographyLetterSpacing": 1.3,
+    "buttonTypographyLineHeight": 1,
+
+    "buttonColorHex": "#ffffff",
+    "buttonColorOpacity": 1,
+    "buttonColorPalette": "",
+
+    "buttonBgColorType": "solid",
+
+    "buttonGradientActivePointer": "startPointer",
+    "buttonGradientStartPointer": 0,
+    "buttonGradientFinishPointer": 100,
+
+    "buttonBgColorHex": "#818a91",
+    "buttonBgColorOpacity": 1,
+    "buttonBgColorPalette": "",
+
+    "buttonGradientColorHex": "#009900",
+    "buttonGradientColorOpacity": 0.8,
+    "buttonGradientColorPalette": "",
+
+    "buttonGradientType": "linear",
+    "buttonGradientLinearDegree": 90,
+    "buttonGradientRadialDegree": 90,
+
+    "buttonBorderStyle": "none",
+
+    "buttonBorderColorHex": "#239ddb",
+    "buttonBorderColorOpacity": 0,
+    "buttonBorderColorPalette": "",
+
+    "buttonBorderRadiusType": "grouped",
+    "buttonBorderRadius": 3,
+    "buttonBorderRadiusSuffix": "px",
+
+    "buttonBorderWidthType": "grouped",
+    "buttonBorderWidth": 0,
+    "buttonBorderTopWidth": 0,
+    "buttonBorderRightWidth": 0,
+    "buttonBorderBottomWidth": 0,
+    "buttonBorderLeftWidth": 0,
+
+    "buttonBorderTopLeftRadius": 3,
+    "buttonBorderTopRightRadius": 3,
+    "buttonBorderBottomRightRadius": 3,
+    "buttonBorderBottomLeftRadius": 3,
+
+    "buttonBorderTopLeftRadiusSuffix": "px",
+    "buttonBorderTopRightRadiusSuffix": "px",
+    "buttonBorderBottomRightRadiusSuffix": "px",
+    "buttonBorderBottomLeftRadiusSuffix": "px",
+
+    "buttonBoxShadow": "none",
+
+    "buttonBoxShadowColorHex": "#000000",
+    "buttonBoxShadowColorOpacity": 0,
+    "buttonBoxShadowColorPalette": "",
+
+    "buttonBoxShadowBlur": 0,
+    "buttonBoxShadowSpread": 0,
+    "buttonBoxShadowVertical": 0,
+    "buttonBoxShadowHorizontal": 0,
+
+    "bgPaddingType": "grouped",
+
+    "bgPadding": 0,
+    "bgPaddingSuffix": "px",
+
+    "bgPaddingTop": 0,
+    "bgPaddingRight": 0,
+    "bgPaddingBottom": 0,
+    "bgPaddingLeft": 0,
+
+    "bgPaddingTopSuffix": "px",
+    "bgPaddingRightSuffix": "px",
+    "bgPaddingBottomSuffix": "px",
+    "bgPaddingLeftSuffix": "px",
+
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": ""
+  }
+}

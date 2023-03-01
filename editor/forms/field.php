@@ -32,6 +32,7 @@ class Brizy_Editor_Forms_Field extends Brizy_Admin_Serializable {
 		$this->data = unserialize( $serialized );
 	}
 
+	#[ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return $this->data;
 	}

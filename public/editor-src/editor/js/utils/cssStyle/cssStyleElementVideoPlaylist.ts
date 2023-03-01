@@ -2,6 +2,7 @@ import {
   cssStyleBgColor,
   cssStyleBorder,
   cssStyleColor,
+  cssStylePadding,
   cssStyleSizeWidthPrefix,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
@@ -10,7 +11,6 @@ import {
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
-import { styleElementVideoImageSize } from "visual/utils/style2";
 import { CSSValue } from "../style2/types";
 
 // Style Typography Title Video
@@ -65,7 +65,8 @@ export function cssStyleElementVideoPlaylistImageSize({
   device,
   state
 }: CSSValue): string {
-  const widthImage = styleElementVideoImageSize({ v, device, state });
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const widthImage = dvv("widthImage");
 
   return widthImage === undefined
     ? ""
@@ -150,4 +151,32 @@ export function cssStyleElementVideoPlaylistItemSubtitleActiveColor({
     state: "active",
     prefix: "subTitleColor"
   });
+}
+
+export function cssStyleElementVideoPlaylistCoverPaddingBG({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const p = cssStylePadding({ v, device, state, prefix: "bg" });
+
+  const noEmptyGrouped =
+    p.paddingTop === p.paddingRight &&
+    p.paddingTop === p.paddingBottom &&
+    p.paddingTop === p.paddingLeft &&
+    p.paddingTop > 0;
+
+  const empty =
+    p.paddingTop === 0 &&
+    p.paddingRight === 0 &&
+    p.paddingBottom === 0 &&
+    p.paddingLeft === 0;
+
+  if (empty) {
+    return "margin:0; padding:0!important;";
+  } else if (noEmptyGrouped) {
+    return `margin:${p.paddingTop}${p.paddingTopSuffix}; margin-right:0!important; padding:0!important;`;
+  } else {
+    return `margin:${p.paddingTop}${p.paddingTopSuffix} 0 ${p.paddingBottom}${p.paddingBottomSuffix} ${p.paddingLeft}${p.paddingLeftSuffix}; padding:0!important;`;
+  }
 }

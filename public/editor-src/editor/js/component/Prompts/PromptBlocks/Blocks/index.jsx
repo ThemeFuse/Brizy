@@ -1,24 +1,25 @@
 import React, { Component } from "react";
-import _ from "underscore";
 import { connect } from "react-redux";
-import {
-  projectSelector,
-  stylesSelector,
-  fontsSelector
-} from "visual/redux/selectors";
+import _ from "underscore";
+import Config from "visual/global/Config";
 import { importKit, updateCurrentKitId } from "visual/redux/actions2";
-import { blockTemplateThumbnailUrl } from "visual/utils/blocks";
-import { IS_EXTERNAL_POPUP } from "visual/utils/models";
-import { assetUrl } from "visual/utils/asset";
 import {
-  getUsedModelsFonts,
-  getUsedStylesFonts,
-  getBlocksStylesFonts
-} from "visual/utils/traverse";
-import { t } from "visual/utils/i18n";
-import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
-import Blocks from "./Blocks";
+  fontsSelector,
+  projectSelector,
+  stylesSelector
+} from "visual/redux/selectors";
+import { assetUrl } from "visual/utils/asset";
+import { blockTemplateThumbnailUrl } from "visual/utils/blocks";
 import { getBlockDataUrl } from "visual/utils/blocks";
+import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
+import { t } from "visual/utils/i18n";
+import { isExternalPopup } from "visual/utils/models";
+import {
+  getBlocksStylesFonts,
+  getUsedModelsFonts,
+  getUsedStylesFonts
+} from "visual/utils/traverse";
+import Blocks from "./Blocks";
 
 class BlocksContainer extends Component {
   static defaultProps = {
@@ -78,7 +79,7 @@ class BlocksContainer extends Component {
     ];
 
     // filter blocks
-    const blocksData = blocks.map(block => ({
+    const blocksData = blocks.map((block) => ({
       ...block,
       thumbnailSrc: blockTemplateThumbnailUrl(block)
     }));
@@ -101,9 +102,12 @@ class BlocksContainer extends Component {
       ...categories
     ];
 
-    const blocksData = blocks.map(block => ({
+    const blocksData = blocks.map((block) => ({
       ...block,
-      pro: IS_EXTERNAL_POPUP && block.blank === "blank" ? false : block.pro,
+      pro:
+        isExternalPopup(Config.getAll()) && block.blank === "blank"
+          ? false
+          : block.pro,
       thumbnailSrc: blockTemplateThumbnailUrl(block)
     }));
     const categoriesData = allCategoriesData.filter(
@@ -138,7 +142,7 @@ class BlocksContainer extends Component {
     this.mounted = false;
   }
 
-  handleThumbnailAdd = async thumbnailData => {
+  handleThumbnailAdd = async (thumbnailData) => {
     const { projectFonts, onAddBlocks, onClose } = this.props;
     const blockData = await this.getBlockResolve(thumbnailData.id);
     const resolve = { ...blockData, blockId: thumbnailData.id };
@@ -155,7 +159,7 @@ class BlocksContainer extends Component {
     onClose();
   };
 
-  handleImportKit = async kitId => {
+  handleImportKit = async (kitId) => {
     const { selectedKit, projectFonts, projectStyles, dispatch } = this.props;
     const { kits } = this.state;
 
@@ -216,12 +220,12 @@ class BlocksContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   selectedKit: projectSelector(state).data.selectedKit,
   projectFonts: fontsSelector(state),
   projectStyles: stylesSelector(state)
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   dispatch
 });
 

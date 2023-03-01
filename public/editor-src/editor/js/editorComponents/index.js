@@ -22,11 +22,11 @@ import Filters from "./Filters";
 import FiltersItem from "./Filters/FiltersItem";
 import FiltersOption from "./Filters/FiltersOption";
 import Form from "./Form";
-import FormField from "./Form/FormField";
-import FormFields from "./Form/FormFields";
 import Form2 from "./Form2";
 import Form2Field from "./Form2/Form2Field";
 import Form2Fields from "./Form2/Form2Fields";
+import FormField from "./Form/FormField";
+import FormFields from "./Form/FormFields";
 import GlobalBlock from "./GlobalBlock";
 import Icon from "./Icon";
 import IconText from "./IconText";
@@ -43,12 +43,13 @@ import Menu from "./Menu";
 import MenuItem from "./Menu/MenuItem";
 import SectionMegaMenu from "./Menu/SectionMegaMenu";
 import MenuSimple from "./MenuSimple";
+// import * as MinistryBrands from "./MinistryBrands";
 import Page from "./Page";
 import PagePopup from "./PagePopup";
 import PageStory from "./PageStory";
 import PostExcerpt from "./PostExcerpt";
-import Posts from "./Posts";
 import PostTitle from "./PostTitle";
+import Posts from "./Posts";
 import ProgressBar from "./ProgressBar";
 import ProtectedPage from "./ProtectedPage";
 import ResetPassword from "./ResetPassword";
@@ -188,6 +189,9 @@ export default {
 
   // Ecwid
   ...Ecwid
+
+  // Ministry Brands
+  // ...MinistryBrands
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

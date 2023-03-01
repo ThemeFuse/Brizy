@@ -43,7 +43,7 @@
 
       .brz-ed-rc-slider-handle {
         background-color: transparent;
-        border: solid 3px #fff;
+        border: solid 3px $color-gradient-range-slider-pointer--border;
 
         &:before,
         &:after {
@@ -55,10 +55,10 @@
           position: absolute;
           width: 0;
           height: 0;
-          border: solid 4px #fff;
+          border: solid 4px $color-gradient-range-slider-pointer--border;
           top: 2px;
           border-radius: 100%;
-          box-shadow: 0 0 3px 0 #fff;
+          box-shadow: 0 0 3px 0 $color-gradient-range-slider-pointer--border;
         }
       }
     }

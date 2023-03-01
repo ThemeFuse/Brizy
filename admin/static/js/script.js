@@ -300,7 +300,7 @@ jQuery(document).ready(function ($) {
                 DemoImport.searchDemo();
             } );
 
-            $( '.load-customize' ).click( function( e ) {
+            $( '.brz-demo-item-install' ).click( function( e ) {
                 e.preventDefault();
                 $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-install' ).html() );
                 $( '.brz-demo-modal' ).addClass( 'brz-demo-show-modal' );

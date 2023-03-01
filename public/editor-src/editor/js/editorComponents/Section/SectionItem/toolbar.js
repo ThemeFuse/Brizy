@@ -1,10 +1,12 @@
-import { t } from "visual/utils/i18n";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
-import {
-  getOptionColorHexByPalette,
-  getDynamicContentChoices
-} from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarBgVideoUrl,
   toolbarBorder2,
@@ -12,12 +14,10 @@ import {
   toolbarBorderWidthFourFields2,
   toolbarElementContainerTypeImageMap
 } from "visual/utils/toolbar";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export function getItems({ v, device, component, state, context }) {
-  const dvv = key => defaultValueValue({ v, key, device });
-  const dvvHover = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device });
+  const dvvHover = (key) => defaultValueValue({ v, key, device, state });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvvHover("bgColorHex"),
@@ -289,7 +289,7 @@ export function getItems({ v, device, component, state, context }) {
             {
               id: "containerSize",
               type: "slider-dev",
-              disabled: v.containerType !== "boxed",
+              disabled: dvv("containerType") !== "boxed",
               config: {
                 min: 35,
                 max: 100,

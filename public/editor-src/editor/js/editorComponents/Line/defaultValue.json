@@ -2,47 +2,76 @@
   "content": {
     "offsetX": 0,
     "offsetY": 0,
-
     "style": "default",
-
     "text": "Text",
     "textPopulation": "",
     "textPopulationFallback2": "Text",
-
     "iconName": "shape-star",
-    "iconType": "glyph"
+    "iconType": "glyph",
+    "tagName": "span"
   },
   "style": {
     "className": "",
     "customCSS": "",
 
+    "lineStyle": "solid",
+
+    "lineSize": 20,
+    "lineSizeSuffix": "px",
+
+    "weight": 1,
+    "weightSuffix": "px",
+
+    "amount": 20,
+    "amountSuffix": "px",
+
+    "iconRotate": 0,
+    "iconRotateSuffix": "deg",
+
     "horizontalAlign": "center",
 
     "spacing": 10,
     "spacingSuffix": "px",
-    "tabletSpacing": null,
-    "tabletSpacingSuffix": null,
-    "mobileSpacing": null,
-    "mobileSpacingSuffix": null,
 
-    "iconSize": 20,
+    "iconPadding": 0,
+    "iconPaddingSuffix": "px",
+
+    "borderRadius": 0,
+    "borderRadiusSuffix": "px",
+
+    "borderRadiusType": "grouped",
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "tempBorderRadius": 2,
+    "tempBorderTopLeftRadius": 2,
+    "tempBorderTopRightRadius": 2,
+    "tempBorderBottomRightRadius": 2,
+    "tempBorderBottomLeftRadius": 2,
+
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "tempBorderRadiusSuffix": "px",
+    "tempBorderTopLeftRadiusSuffix": "px",
+    "tempBorderTopRightRadiusSuffix": "px",
+    "tempBorderBottomRightRadiusSuffix": "px",
+    "tempBorderBottomLeftRadiusSuffix": "px",
+
+    "iconSizeBtns": "custom",
+
+    "iconSize": 16,
     "iconSizeSuffix": "px",
-    "tabletIconSize": null,
-    "tabletIconSizeSuffix": null,
-    "mobileIconSize": null,
-    "mobileIconSizeSuffix": null,
 
     "width": 75,
     "widthSuffix": "%",
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
 
     "families": {
-      "fontFamily": "lato",
-      "tabletFontFamily": null,
-      "mobileFontFamily": null
+      "fontFamily": "lato"
     },
 
     "fontStyle": "",
@@ -54,7 +83,6 @@
     "letterSpacing": 0,
 
     "tabletFontStyle": "",
-    "tabletFontFamilyType": null,
     "tabletFontSize": 20,
     "tabletFontSizeSuffix": "px",
     "tabletFontWeight": 400,
@@ -62,7 +90,6 @@
     "tabletLetterSpacing": 0,
 
     "mobileFontStyle": "",
-    "mobileFontFamilyType": null,
     "mobileFontSize": 20,
     "mobileFontSizeSuffix": "px",
     "mobileFontWeight": 400,
@@ -70,34 +97,104 @@
     "mobileLetterSpacing": 0,
 
     "colorHex": "#000000",
+
     "colorOpacity": 1,
-    "colorPalette": "",
     "tempColorOpacity": 1,
+
+    "colorPalette": "",
     "tempColorPalette": "",
 
     "borderColorHex": "#73777f",
+
     "borderColorOpacity": 0.75,
-    "borderColorPalette": "color7",
     "tempBorderColorOpacity": 0.75,
+
+    "borderColorPalette": "color7",
     "tempBorderColorPalette": "color7",
 
     "borderStyle": "solid",
     "tempBorderStyle": "solid",
 
-    "borderWidthType": "grouped",
     "borderWidth": 2,
-    "borderTopWidth": 2,
-    "borderRightWidth": 2,
-    "borderBottomWidth": 2,
-    "borderLeftWidth": 2,
+    "borderWidthSuffix": "px",
 
-    "tempBorderWidth": 2,
-    "tempBorderTopWidth": 2,
-    "tempBorderRightWidth": 2,
-    "tempBorderBottomWidth": 2,
-    "tempBorderLeftWidth": 2,
+    "iconBgColorHex": "#FF0000",
 
-    "tabletBorderWidth": null,
-    "mobileBorderWidth": null
+    "iconBgColorOpacity": 0,
+    "tempIconBgColorOpacity": 1,
+
+    "iconBgColorPalette": "",
+    "tempIconBgColorPalette": "color3",
+
+    "iconBorderStyle": "",
+    "tempIconBorderStyle": "solid",
+
+    "iconBorderColorHex": "#000000",
+
+    "iconBorderColorOpacity": 0,
+    "tempIconBorderColorOpacity": 1,
+
+    "iconBorderColorPalette": "",
+    "tempIconBorderColorPalette": "color3",
+
+    "iconBorderWidthType": "grouped",
+
+    "iconBorderWidth": 0,
+    "tempIconBorderWidth": 1,
+
+    "iconBorderTopWidth": 0,
+    "tempIconBorderTopWidth": 1,
+
+    "iconBorderRightWidth": 0,
+    "tempIconBorderRightWidth": 1,
+
+    "iconBorderBottomWidth": 0,
+    "tempIconBorderBottomWidth": 1,
+
+    "iconBorderLeftWidth": 0,
+    "tempIconBorderLeftWidth": 1,
+
+    "textShadowColorHex": "#FF0000",
+
+    "textShadowColorOpacity": 0,
+    "tempTextShadowColorOpacity": 1,
+
+    "textShadowColorPalette": "",
+    "tempTextShadowColorPalette": "color3",
+
+    "textShadowBlur": 0,
+    "tempTextShadowBlur": 4,
+
+    "textShadowHorizontal": 0,
+    "tempTextShadowHorizontal": 2,
+
+    "textShadowVertical": 0,
+    "tempTextShadowVertical": 1,
+
+    "boxShadow": "",
+    "tempBoxShadow": "on",
+
+    "boxShadowColorHex": "#FF0000",
+
+    "boxShadowColorPalette": "",
+    "tempBoxShadowColorPalette": "color3",
+
+    "boxShadowColorOpacity": 0,
+    "tempBoxShadowColorOpacity": 1,
+
+    "boxShadowBlur": 0,
+    "tempBoxShadowBlur": 4,
+
+    "boxShadowSpread": 0,
+    "tempBoxShadowSpread": 0,
+
+    "boxShadowVertical": 0,
+    "tempBoxShadowVertical": 2,
+
+    "boxShadowHorizontal": 0,
+    "tempBoxShadowHorizontal": 1,
+
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": ""
   }
 }

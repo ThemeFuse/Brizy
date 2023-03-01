@@ -45,21 +45,21 @@
     background-color: transparent;
     border: none;
     outline: 0;
-    color: $options-label-color;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: $color-multi-input--color;
+    border-bottom: 1px solid $color-multi-input--border;
     text-align: left;
     text-transform: uppercase;
     padding: 2px 0;
     transition: 0.2s linear color, 0.2s border-color linear;
 
     &:hover {
-      border-bottom: 1px solid $options-label-color;
+      border-bottom: 1px solid $color-multi-input--hover--border;
       transition: 0.2s border-color linear;
     }
     &:focus,
     &:active {
-      border-bottom: 1px solid $brand-primary;
-      color: #fff;
+      border-bottom: 1px solid $color-multi-input--active--border;
+      color: $color-multi-input--active--color;
       transition: 0.2s linear color, 0.2s border-color linear;
     }
   }
@@ -78,7 +78,7 @@
   }
 
   .brz-icon {
-    color: $options-label-color;
+    color: $input-icon--color;
     margin-right: 11px;
     font-size: 13px;
   }

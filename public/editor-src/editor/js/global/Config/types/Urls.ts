@@ -13,6 +13,7 @@ interface UrlsCommon {
   upgradeToPro: string;
   editorIcons: string;
   worker: string;
+  collaborationToolUrl?: string;
 }
 
 interface WPUrls extends UrlsCommon {
@@ -35,7 +36,6 @@ interface CloudUrls extends UrlsCommon {
   projectSettings: string;
   backToDashboard: string | undefined;
   prefetchFonts: string;
-  collaborationToolUrl: string;
   flags: string;
   worker: string;
 }

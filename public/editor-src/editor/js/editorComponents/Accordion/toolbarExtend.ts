@@ -74,7 +74,14 @@ export function getItems({
                     step: 0.1,
                     units: [{ value: "s", title: "s" }]
                   }
-                },
+                }
+              ]
+            },
+            {
+              id: "tabIcon",
+              label: t("Icon"),
+              position: 80,
+              options: [
                 {
                   id: "navIcon",
                   label: t("Icon"),
@@ -130,7 +137,7 @@ export function getItems({
                       type: "slider-dev",
                       disabled: dvv("navIconSize") !== "custom",
                       config: {
-                        min: 0,
+                        min: 8,
                         max: 100,
                         units: [{ title: "px", value: "px" }]
                       }

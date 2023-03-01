@@ -7,7 +7,7 @@ exports[`Test Button Snapshots Reversed 1`] = `
   class="brz-ed-control__button brz-ed-control__button-center reverse"
 >
   <svg
-    class="brz-icon-svg brz-ed-icon-svg"
+    class="brz-icon-svg brz-ed-icon-svg align-[initial]"
   >
     <use
       xlink:href="//icons.svg#nc-cog"
@@ -26,7 +26,7 @@ exports[`Test Button Snapshots With icon 1`] = `
   class="brz-ed-control__button brz-ed-control__button-center"
 >
   <svg
-    class="brz-icon-svg brz-ed-icon-svg"
+    class="brz-icon-svg brz-ed-icon-svg align-[initial]"
   >
     <use
       xlink:href="//icons.svg#nc-cog"
@@ -55,7 +55,7 @@ exports[`Test Button Snapshots With label add icon 1`] = `
   class="brz-ed-control__button brz-ed-control__button-center"
 >
   <svg
-    class="brz-icon-svg brz-ed-icon-svg"
+    class="brz-icon-svg brz-ed-icon-svg align-[initial]"
   >
     <use
       xlink:href="//icons.svg#nc-cog"
@@ -74,7 +74,7 @@ exports[`Test Button Snapshots With label and icon and align Left 1`] = `
   class="brz-ed-control__button brz-ed-control__button-left"
 >
   <svg
-    class="brz-icon-svg brz-ed-icon-svg"
+    class="brz-icon-svg brz-ed-icon-svg align-[initial]"
   >
     <use
       xlink:href="//icons.svg#nc-cog"
@@ -93,7 +93,7 @@ exports[`Test Button Snapshots With label and icon and align Right 1`] = `
   class="brz-ed-control__button brz-ed-control__button-left"
 >
   <svg
-    class="brz-icon-svg brz-ed-icon-svg"
+    class="brz-icon-svg brz-ed-icon-svg align-[initial]"
   >
     <use
       xlink:href="//icons.svg#nc-cog"

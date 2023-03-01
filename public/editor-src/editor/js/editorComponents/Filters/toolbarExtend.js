@@ -1,7 +1,7 @@
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 
 const checkOrientationChoices = (isCounterOn, choices, style1, style2) => {
@@ -213,7 +213,7 @@ const allColors = ({ filterType, checkboxType, showCounter }) => {
 };
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const { hex: optionsColor } = getOptionColorHexByPalette(
     dvv("optionsColorHex"),
@@ -590,18 +590,10 @@ export function getItems({ v, device }) {
                   position: 80,
                   options: [
                     {
-                      id: "iconImage",
+                      id: "icon",
                       label: t("Icon"),
-                      type: "iconSetter",
-                      devices: "desktop",
-                      value: {
-                        name: v.iconName,
-                        type: v.iconType
-                      },
-                      onChange: ({ name, type }) => ({
-                        iconName: name,
-                        iconType: type
-                      })
+                      type: "iconSetter-dev",
+                      devices: "desktop"
                     },
                     {
                       id: "groupSettings",

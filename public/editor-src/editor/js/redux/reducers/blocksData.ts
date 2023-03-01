@@ -1,19 +1,18 @@
 import produce from "immer";
 import { setIn } from "timm";
-import { objectTraverse2, map } from "visual/utils/object";
+import Config from "visual/global/Config";
+import { Block } from "visual/types";
 import {
-  IS_GLOBAL_POPUP,
-  IS_STORY,
   insertItemsBatch,
   isModel,
+  isPopup,
+  isStory,
   mapModels
 } from "visual/utils/models";
-
-import { blocksOrderSelector, globalBlocksSelector } from "../selectors";
-
-import { ReduxState } from "../types";
+import { map, objectTraverse2 } from "visual/utils/object";
 import { ReduxAction } from "../actions2";
-import { Block } from "visual/types";
+import { blocksOrderSelector, globalBlocksSelector } from "../selectors";
+import { ReduxState } from "../types";
 
 type BlocksData = ReduxState["blocksData"];
 type RBlocksData = (s: BlocksData, a: ReduxAction, f: ReduxState) => BlocksData;
@@ -24,7 +23,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
       const { page, globalBlocks } = action.payload;
       const items = page.data?.items || [];
 
-      if (IS_STORY && items.length === 0) {
+      if (isStory(Config.getAll()) && items.length === 0) {
         return {
           ecupxjcqmrpxjdimoebbkbnotrlufkfokjvr: {
             type: "Story",
@@ -59,7 +58,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
 
       const globalBlocksData = Object.entries(globalBlocks).reduce(
         (acc, [id, item]) => {
-          acc[id] = produce(item.data, draft => {
+          acc[id] = produce(item.data, (draft) => {
             draft.value._id = id;
           });
 
@@ -70,7 +69,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
 
       return produce<BlocksData>(
         { ...pageBlocksData, ...globalBlocksData },
-        draft => {
+        (draft) => {
           objectTraverse2(draft, (obj: Block) => {
             if (obj.type && obj.type === "GlobalBlock") {
               const { globalBlockId } = obj.value;
@@ -130,7 +129,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
         return block;
       }, state);
 
-      return produce<BlocksData>(newState, draft => {
+      return produce<BlocksData>(newState, (draft) => {
         draft[data.value._id] = data;
       });
     }
@@ -138,7 +137,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
     case "MAKE_GLOBAL_BLOCK_TO_POPUP": {
       const { block: blockData, fromBlockId, parentId } = action.payload;
 
-      if (IS_GLOBAL_POPUP) {
+      if (isPopup(Config.getAll())) {
         return {
           ...state,
           [blockData.value._id]: blockData
@@ -155,13 +154,13 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
 
       const mapChild = (model: BlocksData): BlocksData => {
         return isModel(model)
-          ? map(mapChild, childCb((model as unknown) as Block))
+          ? map(mapChild, childCb(model as unknown as Block))
           : map(mapChild, model);
       };
 
       const isParent = (data: BlocksData): boolean => {
         if (isModel(data)) {
-          return ((data as unknown) as Block).value._id === parentId;
+          return (data as unknown as Block).value._id === parentId;
         }
 
         return false;
@@ -186,7 +185,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
     case "MAKE_NORMAL_TO_GLOBAL_BLOCK": {
       const { data } = action.payload;
 
-      return produce<BlocksData>(state, draft => {
+      return produce<BlocksData>(state, (draft) => {
         draft[data.value._id] = data;
       });
     }
@@ -194,7 +193,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
     case "DELETE_GLOBAL_BLOCK": {
       const { id } = action.payload;
 
-      return produce<BlocksData>(state, draft => {
+      return produce<BlocksData>(state, (draft) => {
         draft[id].deleted = true;
       });
     }
@@ -208,7 +207,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
       const id = blocksIds[index];
 
       if (!globalBlocksIds.includes(id)) {
-        return produce(state, draft => {
+        return produce(state, (draft) => {
           delete draft[id];
         });
       }
@@ -223,11 +222,11 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
       const globalBlocksIds = Object.keys(globalBlocks);
 
       const pageBlocksIds = blocksIds.filter(
-        id => !globalBlocksIds.includes(id)
+        (id) => !globalBlocksIds.includes(id)
       );
 
-      return produce(state, draft => {
-        pageBlocksIds.forEach(id => {
+      return produce(state, (draft) => {
+        pageBlocksIds.forEach((id) => {
           delete draft[id];
         });
       });

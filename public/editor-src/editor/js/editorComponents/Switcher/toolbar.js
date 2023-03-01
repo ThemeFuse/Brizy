@@ -1,15 +1,20 @@
-import { defaultValueValue } from "visual/utils/onChange";
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { NORMAL, ACTIVE } from "visual/utils/stateMode";
+import { ACTIVE, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  const switcherStyle = dvv("switcherStyle");
+  const firstIconName = dvv("firstIconName");
+  const firstIconType = dvv("firstIconType");
+
   const { hex: bgColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "bgColorHex", device, state }),
-    defaultValueValue({ v, key: "bgColorPalette", device, state })
+    dvv("bgColorHex"),
+    dvv("bgColorPalette")
   );
-  const dvv = key => defaultValueValue({ v, key, device });
 
   return [
     {
@@ -57,29 +62,19 @@ export function getItems({ v, device, state }) {
               devices: "desktop",
               label: t("Icon"),
               options: [
-                ...(v.switcherStyle === "style-1"
+                ...(switcherStyle === "style-1"
                   ? []
                   : [
                       {
                         id: "firstIcon",
                         label: t("Icon"),
-                        type: "iconSetter",
+                        type: "iconSetter-dev",
                         devices: "desktop",
-                        canDelete: true,
-                        value: {
-                          name: v.firstIconName,
-                          type: v.firstIconType
-                        },
-                        onChange: ({ name, type }) => {
-                          return {
-                            firstIconName: name,
-                            firstIconType: type
-                          };
-                        }
+                        config: { canDelete: true }
                       }
                     ]),
-                ...(v.switcherStyle === "style-1" ||
-                (v.firstIconName && v.firstIconType)
+                ...(switcherStyle === "style-1" ||
+                (firstIconName && firstIconType)
                   ? [
                       {
                         id: "iconPosition",
@@ -166,7 +161,7 @@ export function getItems({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, v.bgColorOpacity)
+            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
           }
         }
       },
@@ -237,7 +232,7 @@ export function getItems({ v, device, state }) {
           id: "navStyle2Size",
           label: t("Size"),
           type: "slider-dev",
-          disabled: v.switcherStyle === "style-1",
+          disabled: switcherStyle === "style-1",
           config: {
             min: 25,
             max: 100,
@@ -248,7 +243,7 @@ export function getItems({ v, device, state }) {
           id: "navStyle1Width",
           label: t("Width"),
           type: "slider-dev",
-          disabled: v.switcherStyle === "style-2",
+          disabled: switcherStyle === "style-2",
           config: {
             min: 0,
             max: 1000,

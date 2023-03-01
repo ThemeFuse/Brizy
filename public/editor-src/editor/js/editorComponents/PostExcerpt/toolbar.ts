@@ -1,18 +1,19 @@
 import { Component } from "react";
-import { t } from "visual/utils/i18n";
+import { ElementModel } from "visual/component/Elements/Types";
+import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
+import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { ResponsiveMode } from "visual/utils/responsiveMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarLinkAnchor,
   toolbarLinkExternal,
   toolbarLinkPopup
 } from "visual/utils/toolbar";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { ToolbarItemType } from "../ToolbarItemType";
-import { ElementModel } from "visual/component/Elements/Types";
 
 export function getItems({
   v,
@@ -35,6 +36,9 @@ export function getItems({
   //@ts-expect-error meta doesnt exist
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
+  const config = Config.getAll();
+  const IS_GLOBAL_POPUP = isPopup(config);
+
   return [
     {
       id: "posts",
@@ -45,7 +49,7 @@ export function getItems({
         title: t("Context")
       },
       position: 70,
-      disabled: v.type === "wp",
+      disabled: dvv("type") === "wp",
       options: [
         {
           id: "sourceType",
@@ -97,21 +101,9 @@ export function getItems({
       position: 90,
       options: [
         {
-          id: "tabsColor",
-          type: "tabs-dev",
-          tabs: [
-            {
-              id: "tabText",
-              label: t("Text"),
-              options: [
-                {
-                  id: "color",
-                  type: "colorPicker-dev",
-                  states: [NORMAL, HOVER]
-                }
-              ]
-            }
-          ]
+          id: "color",
+          type: "colorPicker-dev",
+          states: [NORMAL, HOVER]
         }
       ]
     },
@@ -193,12 +185,7 @@ export function getItems({
         }
       ]
     },
-    {
-      id: "horizontalAlign",
-      type: "toggle-dev",
-      choices: [],
-      disabled: true
-    },
+    { id: "horizontalAlign", type: "toggle-dev", choices: [], disabled: true },
     {
       id: "contentHorizontalAlign",
       type: "toggle-dev",

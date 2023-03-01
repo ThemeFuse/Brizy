@@ -1,10 +1,12 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "nomal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "nomal" });
+
+  const elementType = dvv("elementType");
 
   const { hex: colorHex } = getOptionColorHexByPalette(
     dvv("categoryColorHex"),
@@ -45,7 +47,7 @@ export function getItems({ v, device }) {
           id: "topSpacing",
           type: "slider-dev",
           label: t("Between"),
-          disabled: v.elementType === "inline",
+          disabled: elementType === "inline",
           config: {
             min: 0,
             max: 100,
@@ -116,7 +118,7 @@ export function getItems({ v, device }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, v.categoryColorOpacity)
+            backgroundColor: hexToRgba(colorHex, dvv("categoryColorOpacity"))
           }
         }
       },
@@ -155,7 +157,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "dividersColor",
-                  disabled: v.elementType === "inline",
+                  disabled: elementType === "inline",
                   type: "colorPicker-dev",
                   devices: "desktop"
                 }

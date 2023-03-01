@@ -8,8 +8,8 @@
   bottom: 25px;
   right: 30px;
   border-radius: 50px;
-  box-shadow: 0 0 5px 0 rgba(#000, 0.5);
-  background-color: rgba(#03080f, 0.92);
+  box-shadow: 0 0 5px 0 $bottom-toolbar--box-shadow;
+  background-color: $bottom-toolbar--bg;
   z-index: z("sidebar");
   user-select: none;
 
@@ -18,7 +18,7 @@
     justify-content: space-between;
   }
   &__item {
-    color: $sidebar-font-color;
+    color: $bottom-toolbar--disable--color;
     font-size: 12px;
     letter-spacing: $control-letter-spacing;
     font-family: $font-family-1;
@@ -28,7 +28,7 @@
     cursor: default;
     transition: color 150ms linear;
     padding: 14px;
-    border-right: 1px solid rgba(#fff, 0.15);
+    border-right: 1px solid $bottom-toolbar--border;
 
     &:first-child {
       padding-left: 18px;
@@ -38,10 +38,6 @@
     }
     .brz-icon-svg {
       font-size: 14px;
-    }
-
-    &:hover {
-      color: $brand-primary;
     }
   }
   &__item--small {
@@ -54,15 +50,15 @@
     cursor: pointer;
   }
   &__item--active {
-    color: #fff;
+    color: $bottom-toolbar--color;
 
     &:hover {
-      color: $brand-primary;
+      color: $bottom-toolbar--active--color;
     }
   }
   &__preview {
     .brz-a {
-      color: #fff;
+      color: $bottom-toolbar--color;
       transition: color 150ms linear;
       font-size: 0;
       padding: 14px;
@@ -77,8 +73,8 @@
     align-items: stretch;
     font-size: 13px;
     line-height: 1;
-    color: #fff;
-    border-bottom: 2px solid #006799;
+    color: $bottom-toolbar-btn--color;
+    border-bottom: 2px solid $bottom-toolbar-btn--border;
     border-radius: 15px;
     height: 28px;
     text-align: center;
@@ -88,15 +84,15 @@
       height: 1em;
     }
     .brz-ed-tooltip--opened .brz-button {
-      color: #2b3039;
+      color: $bottom-toolbar-tooltip--color;
     }
     .brz-button {
       position: relative;
       height: 100%;
-      background-color: #0085ba;
+      background-color: $bottom-toolbar-btn--bg;
       border: none;
       border-left: 1px solid rgba(#fff, 0.1);
-      color: #fff;
+      color: $bottom-toolbar-btn--color;
       outline: none;
       padding-left: 7px;
       padding-right: 10px;
@@ -105,7 +101,7 @@
       transition: 0.2s linear all;
     }
     .brz-button:hover {
-      color: #03080f;
+      color: $bottom-toolbar-tooltip--hover--color;
       transition: 0.2s linear all;
     }
     .brz-button:after {
@@ -115,7 +111,7 @@
       left: -2px;
       width: 1px;
       height: 100%;
-      background-color: #2b3039;
+      background-color: $bottom-toolbar-tooltip--hover--bg;
       opacity: 0.35;
     }
     .brz-button .brz-icon-svg {
@@ -125,18 +121,18 @@
       .brz-ed-fixed-bottom-panel__btn-loading {
         &,
         &:hover {
-          color: rgba(255, 255, 255, 0.35);
-          background-color: #0c5876;
+          color: $bottom-toolbar-btn--disable--color;
+          background-color: $bottom-toolbar-btn--disable--bg;
         }
       }
       .brz-ed-tooltip__static .brz-button {
-        color: rgba(255, 255, 255, 0.35);
-        background-color: #0c5876;
+        color: $bottom-toolbar-btn--disable--color;
+        background-color: $bottom-toolbar-btn--disable--bg;
       }
       &:hover {
         .brz-button {
-          color: #fff;
-          background-color: #0085ba;
+          color: $bottom-toolbar-tooltip--disable--color;
+          background-color: $bottom-toolbar-tooltip--disable--bg;
         }
       }
     }
@@ -148,13 +144,13 @@
     line-height: 26px;
     padding-left: 14px;
     padding-right: 14px;
-    background-color: #0085ba;
+    background-color: $bottom-toolbar-btn--bg;
     border-radius: 15px;
     transition: background-color 150ms linear;
 
     &:hover {
-      background-color: #0092cc;
-      color: #fff;
+      background-color: $bottom-toolbar-btn--hover--bg;
+      color: $bottom-toolbar-btn--hover--color;
     }
     .brz-icon-svg {
       position: absolute;
@@ -181,7 +177,7 @@
     white-space: nowrap;
 
     &:hover {
-      color: $brand-primary;
+      color: $bottom-panel-popover-item--color--hover;
       transition: 0.3s linear color;
     }
     .brz-icon-svg {

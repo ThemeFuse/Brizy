@@ -1,12 +1,18 @@
+import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
+
+  const purchasesType = dvv("purchasesType");
+  const subtotal = dvv("subtotal");
+
+  const purchasesOff = dvv("purchases") === "off";
+  const plainType = purchasesType !== "plain";
+  const bubbleType = purchasesType !== "bubble";
 
   const { hex: colorHex } = getOptionColorHexByPalette(
     dvv("colorHex"),
@@ -48,7 +54,7 @@ export function getItems({ v, device }) {
                   type: "radioGroup-dev",
                   label: t("Style"),
                   devices: "desktop",
-                  disabled: v.purchases === "off",
+                  disabled: purchasesOff,
                   choices: [
                     {
                       value: "plain",
@@ -81,12 +87,12 @@ export function getItems({ v, device }) {
                 {
                   id: "spacing",
                   type: "slider-dev",
-                  disabled: v.subtotal === "off" && v.purchases === "off",
+                  disabled: subtotal === "off" && purchasesOff,
                   label: t("Spacing"),
                   config: {
                     min: 0,
                     max: 100,
-                    disabled: v.subtotal !== "on",
+                    disabled: subtotal !== "on",
                     units: [{ value: "px", title: "px" }]
                   }
                 }
@@ -118,7 +124,7 @@ export function getItems({ v, device }) {
                 {
                   id: "typography",
                   type: "typography-dev",
-                  disabled: v.subtotal !== "on",
+                  disabled: subtotal !== "on",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -132,8 +138,7 @@ export function getItems({ v, device }) {
                 {
                   id: "purchases",
                   type: "typography-dev",
-                  disabled:
-                    v.purchases === "off" || v.purchasesType !== "plain",
+                  disabled: purchasesOff || plainType,
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -183,7 +188,7 @@ export function getItems({ v, device }) {
                   id: "color",
                   type: "colorPicker-dev",
                   devices: "desktop",
-                  disabled: v.subtotal !== "on",
+                  disabled: subtotal !== "on",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -208,8 +213,7 @@ export function getItems({ v, device }) {
                   id: "purchasesColor",
                   type: "colorPicker-dev",
                   devices: "desktop",
-                  disabled:
-                    v.purchases === "off" || v.purchasesType !== "plain",
+                  disabled: purchasesOff || plainType,
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -233,8 +237,7 @@ export function getItems({ v, device }) {
                 {
                   id: "bubbleColor",
                   type: "colorPicker-dev",
-                  disabled:
-                    v.purchases === "off" || v.purchasesType !== "bubble",
+                  disabled: purchasesOff || bubbleType,
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -247,8 +250,7 @@ export function getItems({ v, device }) {
                 {
                   id: "bubbleBgColor",
                   type: "colorPicker-dev",
-                  disabled:
-                    v.purchases === "off" || v.purchasesType !== "bubble",
+                  disabled: purchasesOff || bubbleType,
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }

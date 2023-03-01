@@ -1,22 +1,22 @@
-import React, { Fragment, Component, ReactElement } from "react";
-import { connect, ConnectedProps } from "react-redux";
-import _ from "underscore";
 import classnames from "classnames";
 import FuzzySearch from "fuzzy-search";
-import UIEvents from "visual/global/UIEvents";
+import React, { Component, Fragment, ReactElement } from "react";
+import { ConnectedProps, connect } from "react-redux";
+import _ from "underscore";
+import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
+import { ProInfo } from "visual/component/ProInfo";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
-import { setIds, IS_STORY } from "visual/utils/models";
-import { t } from "visual/utils/i18n";
+import Config from "visual/global/Config";
+import UIEvents from "visual/global/UIEvents";
 import { updateDisabledElements } from "visual/redux/actions2";
 import { disabledElementsSelector } from "visual/redux/selectors";
-import { IS_PRO } from "visual/utils/env";
-import Tooltip from "visual/component/Controls/Tooltip";
-import { ProInfo } from "visual/component/ProInfo";
-import Config from "visual/global/Config";
-import { Category } from "./Category";
-import { Shortcode } from "visual/types";
 import { ReduxState } from "visual/redux/types";
+import { Shortcode } from "visual/types";
+import { IS_PRO } from "visual/utils/env";
+import { t } from "visual/utils/i18n";
+import { isStory, setIds } from "visual/utils/models";
+import { Category } from "./Category";
 import { SortData } from "./types";
 
 const { upgradeToPro } = Config.get("urls");
@@ -162,7 +162,7 @@ class ControlInner extends Component<Props, State> {
     const { isEditMode } = this.props;
     const { disabledElements, inputValue } = this.state;
     const filteredShortcodes = shortcodes.filter(
-      shortcode =>
+      (shortcode) =>
         isEditMode || (!isEditMode && !disabledElements[shortcode.component.id])
     );
     const searcher = new FuzzySearch(filteredShortcodes, ["component.title"]);
@@ -210,7 +210,7 @@ class ControlInner extends Component<Props, State> {
     const { isEditMode } = this.props;
 
     return shortcodes.map(({ component, pro }, index) => {
-      const clickFn = IS_STORY
+      const clickFn = isStory(Config.getAll())
         ? (): void => this.handleClick(shortcodes, index)
         : _.noop;
 
@@ -311,8 +311,8 @@ class ControlInner extends Component<Props, State> {
             // because native can be unstable and change
             // the order of elements with equal positions
             const prepared = _.sortBy(
-              shortcodes.filter(s => !s.component.hidden),
-              s => s.component.position || 10
+              shortcodes.filter((s) => !s.component.hidden),
+              (s) => s.component.position || 10
             );
 
             return (

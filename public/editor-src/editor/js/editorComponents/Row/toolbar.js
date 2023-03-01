@@ -1,25 +1,26 @@
-import { t } from "visual/utils/i18n";
+import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
-import {
-  getOptionColorHexByPalette,
-  getDynamicContentChoices
-} from "visual/utils/options";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { t } from "visual/utils/i18n";
+import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import {
   toolbarBgVideoUrl,
-  toolbarShowOnResponsive,
   toolbarElementContainerTypeImageMap,
   toolbarImageLinkExternal,
   toolbarLinkAnchor,
-  toolbarLinkPopup
+  toolbarLinkPopup,
+  toolbarShowOnResponsive
 } from "visual/utils/toolbar";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export function getItems({ v, device, component, state, context }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
-  const dvvh = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
+  const dvvh = (key) => defaultValueValue({ v, key, device, state });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -28,10 +29,13 @@ export function getItems({ v, device, component, state, context }) {
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
+
   const imageDynamicContentChoices = getDynamicContentChoices(
     context.dynamicContent.config,
     DCTypes.image
   );
+
+  const IS_GLOBAL_POPUP = isPopup(Config.getAll());
 
   return [
     toolbarShowOnResponsive({ v, device, devices: "responsive" }),
@@ -197,7 +201,7 @@ export function getItems({ v, device, component, state, context }) {
         inPopup || inPopup2 || IS_GLOBAL_POPUP
           ? true
           : device === "desktop"
-          ? v.linkLightBox === "on"
+          ? dvv("linkLightBox") === "on"
           : dvv("linkType") !== "popup" || dvv("linkPopup") === "",
       options: [
         {

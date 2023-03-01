@@ -1,8 +1,8 @@
-import { getAllowedGBIds } from "./getAllowedGBIds";
+import Config from "visual/global/Config";
 import { ReduxState } from "visual/redux/types";
 import { Block, GlobalBlockPosition } from "visual/types";
-
-import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
+import { isPopup, isStory } from "visual/utils/models";
+import { getAllowedGBIds } from "./getAllowedGBIds";
 
 const generateConditionBlocks = (
   ids: string[],
@@ -11,7 +11,7 @@ const generateConditionBlocks = (
 ): string[] => {
   return ids
     .filter(
-      id =>
+      (id) =>
         globalBlocks[id]?.position?.align === type &&
         globalBlocks[id].status === "publish"
     )
@@ -27,7 +27,8 @@ export const generateBlocksList = (
   globalBlocks: ReduxState["globalBlocks"],
   page: ReduxState["page"]
 ): string[] => {
-  if (IS_GLOBAL_POPUP || IS_STORY) {
+  const config = Config.getAll();
+  if (isPopup(config) || isStory(config)) {
     return pageBlocksIds;
   }
 
@@ -73,7 +74,7 @@ export function getBlocksInPage(
 
   const allBlocks = { ...transformedPageBlocks, ...globalBlocks };
 
-  const blocks = blocksIdsInPage.map(id => allBlocks[id].data);
+  const blocks = blocksIdsInPage.map((id) => allBlocks[id].data);
 
   return blocks;
 }

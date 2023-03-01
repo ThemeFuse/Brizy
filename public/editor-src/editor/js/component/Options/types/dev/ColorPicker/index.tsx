@@ -1,31 +1,32 @@
-import React, { FC, useCallback } from "react";
 import classNames from "classnames";
-import { updateUI } from "visual/redux/actions2";
+import React, { FC, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import {
   ColorPicker3,
   Props as ColorPicker3Props
 } from "visual/component/Controls/ColorPicker3";
-import { getColorPaletteColors as paletteColors } from "visual/utils/color";
-import * as Palette from "./entities/palette";
-import * as Num from "visual/utils/math/number";
-import * as Hex from "visual/utils/color/Hex";
-import { setHex, setPalette, setOpacity as _setOpacity } from "./model";
-import * as Utils from "./utils";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
-import { paletteHex } from "./utils";
 import {
-  ToElementModel,
   FromElementModel,
-  OptionType
+  OptionType,
+  ToElementModel
 } from "visual/component/Options/Type";
 import * as Option from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { Value } from "./entities/Value";
-import { useDispatch } from "react-redux";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { updateUI } from "visual/redux/actions2";
+import { getColorPaletteColors as paletteColors } from "visual/utils/color";
+import * as Hex from "visual/utils/color/Hex";
 import { Black } from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { mPipe } from "visual/utils/fp";
+import * as Num from "visual/utils/math/number";
+import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 import * as Str from "visual/utils/string/specs";
+import { Value } from "./entities/Value";
+import * as Palette from "./entities/palette";
+import { setOpacity as _setOpacity, setHex, setPalette } from "./model";
+import * as Utils from "./utils";
+import { paletteHex } from "./utils";
 
 const setOpacity = Utils.setOpacity.bind(null, _setOpacity);
 
@@ -58,7 +59,7 @@ export const ColorPicker: OptionType<Value> & FC<Props> = ({
       dispatch(
         updateUI("leftSidebar", {
           isOpen: true,
-          drawerContentType: "styling"
+          drawerContentType: LeftSidebarOptionsIds.globalStyle
         })
       ),
     [dispatch]
@@ -70,7 +71,7 @@ export const ColorPicker: OptionType<Value> & FC<Props> = ({
           mPipe(
             () => v.palette,
             Palette.fromString,
-            v => setPalette(v, value),
+            (v) => setPalette(v, value),
             onChange
           )();
           break;
@@ -78,7 +79,7 @@ export const ColorPicker: OptionType<Value> & FC<Props> = ({
           mPipe(
             () => v.hex,
             Hex.fromString,
-            v => setHex(v, value),
+            (v) => setHex(v, value),
             onChange
           )();
           break;
@@ -86,7 +87,7 @@ export const ColorPicker: OptionType<Value> & FC<Props> = ({
           mPipe(
             () => v.opacity,
             Opacity.fromNumber,
-            v => setOpacity(v, value, !!meta.opacityDragEnd),
+            (v) => setOpacity(v, value, !!meta.opacityDragEnd),
             onChange
           )();
           break;
@@ -95,10 +96,10 @@ export const ColorPicker: OptionType<Value> & FC<Props> = ({
     [value, onChange]
   );
 
-  const onHexChange = useCallback(hex => onChange(setHex(hex, value)), [
-    value,
-    onChange
-  ]);
+  const onHexChange = useCallback(
+    (hex) => onChange(setHex(hex, value)),
+    [value, onChange]
+  );
 
   return (
     <div {...attr} className={className}>
@@ -122,7 +123,7 @@ const DEFAULT_VALUE: Value = {
   tempPalette: ""
 };
 
-const getModel: FromElementModel<Value> = get => {
+const getModel: FromElementModel<Value> = (get) => {
   const palette =
     mPipe(() => get("palette"), Str.read, Palette.fromString)() ??
     DEFAULT_VALUE.palette;
@@ -145,7 +146,7 @@ const getModel: FromElementModel<Value> = get => {
   };
 };
 
-const getElementModel: ToElementModel<Value> = values => {
+const getElementModel: ToElementModel<Value> = (values) => {
   return {
     hex: values.hex,
     opacity: values.opacity,

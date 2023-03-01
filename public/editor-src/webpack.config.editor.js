@@ -45,9 +45,11 @@ module.exports = (options = {}) => {
     resolve: {
       alias: {
         visual: path.resolve(__dirname, "editor/js"),
-        ui: path.resolve(__dirname, "packages/ui"),
-        core: path.resolve(__dirname, "packages/core"),
-        elements: path.resolve(__dirname, "packages/elements")
+        ui: path.resolve(__dirname, "packages/ui/src"),
+        core: path.resolve(__dirname, "packages/core/src"),
+        component: path.resolve(__dirname, "packages/component/src"),
+        widget: path.resolve(__dirname, "packages/widget/src"),
+        widgetTemp: path.resolve(__dirname, "packages/widgetTemp/src")
       },
       extensions: getExtensions(options.TARGET)
     },
@@ -61,6 +63,13 @@ module.exports = (options = {}) => {
           ],
           loader: "babel-loader",
           options: babelrc.editor()
+        },
+
+        // It's only for CodeMirror
+        {
+          test: /\.(html|css)$/,
+          include: [path.resolve(__dirname, "node_modules/codemirror")],
+          loader: "null-loader"
         }
       ]
     },
@@ -73,7 +82,12 @@ module.exports = (options = {}) => {
         ),
         TARGET: JSON.stringify(options.TARGET),
         IS_EDITOR: true,
-        IS_PREVIEW: false
+        IS_PREVIEW: false,
+        IS_EXPORT: JSON.stringify(options.IS_EXPORT),
+        AUTHORIZATION_URL: JSON.stringify(options.AUTHORIZATION_URL)
+      }),
+      new webpack.ProvidePlugin({
+        process: "process/browser"
       })
     ],
     optimization: {
@@ -89,7 +103,7 @@ module.exports = (options = {}) => {
       }
     },
     externals: getExternal(options.TARGET),
-    devtool: options.IS_PRODUCTION ? false : "cheap-module-eval-source-map",
+    devtool: options.IS_PRODUCTION ? false : "eval-cheap-module-source-map",
     watch: !options.NO_WATCH && !options.IS_PRODUCTION,
     watchOptions: {
       ignored: new RegExp("config/icons")

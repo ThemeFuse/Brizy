@@ -12,10 +12,7 @@ class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
 	}
 
 	/**
-	 * @return mixed|void
-	 * @throws Twig_Error_Loader
-	 * @throws Twig_Error_Runtime
-	 * @throws Twig_Error_Syntax
+	 * @return void
 	 */
 	public function process_query() {
 		global $wp_query;
@@ -53,35 +50,37 @@ class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
 
 		header( 'Content-Type: text/css' );
 
-		$twigEngine = Brizy_TwigEngine::instance( path_join( BRIZY_PLUGIN_PATH, "admin/fonts/views" ) );
-		$twigEngine->getEnvironment()
-		           ->addFilter( new Twig_SimpleFilter( 'fontStyle', function ( $weight ) {
-			           $weight = preg_replace( "/\d+/", "", $weight );
+		$css = '';
 
-			           if ( trim( $weight ) == "" ) {
-				           return 'normal';
-			           }
+		foreach ( $contexts as $family => $fonts ) {
 
-			           return $weight;
-		           } ) );
-		$twigEngine->getEnvironment()
-		           ->addFilter( new Twig_SimpleFilter( 'fontType', function ( $type ) {
+			if ( empty( $fonts ) || ! is_array( $fonts ) ) {
+				continue;
+			}
 
-			           if ( $type == 'ttf' ) {
-				           return 'truetype';
-			           } else {
-				           return $type;
-			           }
+			$css .= "/* $family */";
 
-		           } ) );
-		$twigEngine->getEnvironment()->addFilter( new Twig_SimpleFilter( 'fontWeight', function ( $weight ) {
-			return trim( preg_replace( "/[^\d]+/", "", $weight ) );
-		} ) );
+			foreach ( $fonts as $weight => $types ) {
 
-		echo $twigEngine->render( 'fonts.css.twig', array(
-			'fonts' => $contexts
-		) );
+				if ( empty( $types ) || ! is_array( $types ) ) {
+					continue;
+				}
 
+				foreach ( $types as $type => $url ) {
+
+					$css .= "
+						@font-face {
+				            font-family: '$family';
+				            font-style: " . ( ( $style = trim( preg_replace( "/\d+/", "", $weight ) ) ) ? $style : 'normal' ) . ";
+				            font-weight: " . trim( preg_replace( "/[^\d]+/", "", $weight ) ) . ";
+				            src: local('$family'), url($url) format('" . ( $type == 'ttf' ? 'truetype' : $type ) . "');
+				        }
+					";
+				}
+			}
+		}
+
+		echo $css;
 		exit;
 	}
 

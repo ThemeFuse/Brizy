@@ -66,32 +66,3 @@ export function styleElementButtonIconMargin({ v, device, state }) {
     ? undefined
     : iconSpacing;
 }
-
-export function styleElementIconStrokeWidth({ v, device, state }) {
-  const iconCustomSize = defaultValueValue({
-    v,
-    key: "iconCustomSize",
-    device,
-    state
-  });
-  const iconType = defaultValueValue({
-    v,
-    key: "iconType",
-    device,
-    state
-  });
-
-  return iconType === undefined || iconCustomSize === undefined
-    ? undefined
-    : iconType === "outline" && iconCustomSize <= 24
-    ? 1
-    : iconType === "outline" && iconCustomSize > 24 && iconCustomSize <= 32
-    ? 1.1
-    : iconType === "outline" && iconCustomSize > 32 && iconCustomSize <= 48
-    ? 1.4
-    : iconType === "outline" && iconCustomSize > 48 && iconCustomSize <= 64
-    ? 2.3
-    : iconType === "outline" && iconCustomSize > 64
-    ? 3
-    : 0;
-}

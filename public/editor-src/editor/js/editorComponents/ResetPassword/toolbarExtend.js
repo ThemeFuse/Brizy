@@ -1,15 +1,15 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarElementForm2Size,
   toolbarElementLoginSpacingPx
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -43,17 +43,6 @@ export function getItems({ v, device }) {
                   v,
                   device
                 }),
-                {
-                  id: "borderRadius",
-                  type: "slider-dev",
-                  label: t("Corner"),
-                  devices: "desktop",
-                  config: {
-                    min: 0,
-                    max: 100,
-                    units: [{ value: "px", title: "px" }]
-                  }
-                },
                 toolbarElementLoginSpacingPx({ v, device, state: "normal" })
               ]
             },
@@ -90,23 +79,11 @@ export function getItems({ v, device }) {
       position: 70,
       options: [
         {
-          id: "tabsTypography",
-          type: "tabs-dev",
-          tabs: [
-            {
-              id: "tabsTypographyInput",
-              label: t("Text"),
-              options: [
-                {
-                  id: "",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: "desktop" === device
-                  }
-                }
-              ]
-            }
-          ]
+          id: "",
+          type: "typography-dev",
+          config: {
+            fontFamily: "desktop" === device
+          }
         }
       ]
     },
@@ -119,9 +96,9 @@ export function getItems({ v, device }) {
         icon: {
           style: {
             backgroundColor:
-              v.bgColorOpacity > 0
-                ? hexToRgba(borderColorHex, v.borderColorOpacity)
-                : hexToRgba(bgColorHex, v.bgColorOpacity)
+              dvv("bgColorOpacity") > 0
+                ? hexToRgba(borderColorHex, dvv("borderColorOpacity"))
+                : hexToRgba(bgColorHex, dvv("bgColorOpacity"))
           }
         }
       },

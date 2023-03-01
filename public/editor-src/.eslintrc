@@ -1,10 +1,46 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaVersion": 2019,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
+    },
+    "babelOptions": {
+      "sourceType": "unambiguous",
+      "plugins": [
+        [
+          "@babel/plugin-transform-runtime",
+          {
+            "regenerator": false,
+            "useESModules": true
+          }
+        ],
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-proposal-optional-chaining",
+        "@babel/plugin-proposal-nullish-coalescing-operator"
+      ],
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "browsers": [
+                "last 2 chrome versions",
+                "last 2 firefox versions",
+                "last 2 safari versions",
+                "last 2 edge versions"
+              ]
+            },
+            "corejs": "3.26.0",
+            "useBuiltIns": "usage",
+            "modules": false
+          }
+        ],
+        "@babel/preset-typescript",
+        "@babel/preset-react"
+      ]
     }
   },
   "extends": [
@@ -13,7 +49,11 @@
     // "plugin:react-hooks/recommended",
     "prettier"
   ],
-  // "plugins": ["graphql"],
+  "plugins": [
+    "react",
+    "@babel"
+    // "graphql"
+  ],
   "rules": {
     "semi": ["error", "always"],
     "quotes": ["error", "double"],
@@ -22,6 +62,7 @@
     "no-prototype-builtins": 0,
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
+    "react/no-unknown-property": "off",
     "graphql/template-strings": [
       "error",
       {
@@ -66,6 +107,8 @@
     "TARGET": "readonly",
     "IS_EDITOR": "readonly",
     "IS_PREVIEW": "readonly",
+    "IS_EXPORT": "readonly",
+    "AUTHORIZATION_URL": "readonly",
     "__CONFIG__": "readonly",
     "YT": "readonly",
     "getFreeLibs": "readonly",
@@ -73,7 +116,7 @@
   },
   "settings": {
     "react": {
-      "version": "16.8.6"
+      "version": "detect"
     },
     "import/resolver": {
       "webpack": {
@@ -99,7 +142,8 @@
       ],
       "plugins": ["@typescript-eslint", "graphql"],
       "rules": {
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "react/no-unknown-property": "off"
       }
     }
   ]

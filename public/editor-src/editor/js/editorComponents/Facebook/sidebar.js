@@ -32,13 +32,24 @@ export function getItems() {
                 {
                   id: "settingsStyling",
                   label: t("Basic"),
-                  icon: "nc-styling",
-                  options: []
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding-dev",
+                      label: t("Padding"),
+                      disabled: true
+                    },
+                    {
+                      id: "bgPadding",
+                      type: "padding-dev",
+                      label: t("Padding"),
+                      position: 50
+                    }
+                  ]
                 },
                 {
                   id: "moreSettingsAdvanced",
                   label: t("Advanced"),
-                  icon: "nc-cog",
                   options: [
                     {
                       id: "customCSS",
@@ -65,6 +76,20 @@ export function getItems() {
                   ]
                 }
               ]
+            },
+            {
+              id: "padding",
+              type: "padding-dev",
+              label: t("Padding"),
+              devices: "responsive",
+              disabled: true
+            },
+            {
+              id: "bgPadding",
+              type: "padding-dev",
+              label: t("Padding"),
+              devices: "responsive",
+              position: 50
             }
           ]
         }

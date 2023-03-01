@@ -1,22 +1,24 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import { connect } from "react-redux";
 import {
   SortableContainer,
   SortableElement,
   SortableHandle
 } from "react-sortable-hoc";
-import { removeAt, insert } from "timm";
+import { insert, removeAt } from "timm";
 import EditorIcon from "visual/component/EditorIcon";
+import Config from "visual/global/Config";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { removeBlock, reorderBlocks } from "visual/redux/actions2";
 import {
-  pageSelector,
+  globalBlocksSelector,
   pageBlocksAssembledSelector,
-  globalBlocksSelector
+  pageSelector
 } from "visual/redux/selectors";
 import { canUseCondition } from "visual/utils/blocks";
-import { removeBlock, reorderBlocks } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
-import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
+import { isPopup, isStory } from "visual/utils/models";
 import BlockThumbnail from "./BlockThumbnail";
 
 const DragHandle = SortableHandle(({ item }) => (
@@ -130,7 +132,7 @@ class DrawerComponent extends React.Component {
       // make an optimistic update,
       // after which update the store fo real
       this.setState(
-        state => {
+        (state) => {
           const { blocks } = state;
           const movedBlock = blocks[oldIndex];
 
@@ -153,7 +155,7 @@ class DrawerComponent extends React.Component {
     }
   };
 
-  handleItemRemove = index => {
+  handleItemRemove = (index) => {
     const {
       value: { _id }
     } = this.state.blocks[index];
@@ -185,17 +187,17 @@ class DrawerComponent extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   pageBlocks: pageBlocksAssembledSelector(state),
   globalBlocks: globalBlocksSelector(state),
   page: pageSelector(state)
 });
 
 export const BlocksSortable = {
-  id: "blocksSortable",
+  id: LeftSidebarOptionsIds.reorderBlock,
   type: "drawer",
   icon: "nc-reorder",
-  disabled: IS_GLOBAL_POPUP || IS_STORY,
+  disabled: isPopup(Config.getAll()) || isStory(Config.getAll()),
   drawerTitle: t("Reorder Blocks"),
   drawerComponent: connect(mapStateToProps)(DrawerComponent)
 };

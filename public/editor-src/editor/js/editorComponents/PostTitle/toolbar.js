@@ -3,7 +3,7 @@ import { isShopify } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
 import { IS_CLOUD } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -29,8 +29,12 @@ export function getItems({ v, device, component }) {
     dvv("colorHex"),
     dvv("colorPalette")
   );
+
+  const sourceType = dvv("sourceType");
+
   const config = Config.getAll();
   const IS_SHOPIFY = isShopify(config);
+  const IS_GLOBAL_POPUP = isPopup(config);
 
   return [
     {
@@ -64,13 +68,13 @@ export function getItems({ v, device, component }) {
           id: "sourceID",
           type: "select-dev",
           label: t("Source ID"),
-          disabled: v.sourceType === "",
+          disabled: sourceType === "",
           device: "desktop",
           placeholder: "Select",
           choices: {
             load: IS_SHOPIFY
-              ? () => getShopifySourceIdChoices(v.sourceType)
-              : () => getSourceIdChoices(v.sourceType),
+              ? () => getShopifySourceIdChoices(sourceType)
+              : () => getSourceIdChoices(sourceType),
             emptyLoad: {
               title: t("There are no choices")
             }
@@ -106,7 +110,7 @@ export function getItems({ v, device, component }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, v.colorOpacity)
+            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
           }
         }
       },
@@ -125,6 +129,21 @@ export function getItems({ v, device, component }) {
                 {
                   id: "color",
                   type: "colorPicker-dev",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabTextStroke",
+              label: t("Stroke"),
+              options: [
+                {
+                  id: "textStrokeBorder",
+                  type: "border-dev",
+                  config: {
+                    width: ["grouped"],
+                    styles: ["none", "solid"]
+                  },
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -221,11 +240,7 @@ export function getItems({ v, device, component }) {
         }
       ]
     },
-    {
-      id: "horizontalAlign",
-      type: "toggle-dev",
-      disabled: true
-    },
+    { id: "horizontalAlign", type: "toggle-dev", disabled: true },
     {
       id: "contentHorizontalAlign",
       type: "toggle-dev",

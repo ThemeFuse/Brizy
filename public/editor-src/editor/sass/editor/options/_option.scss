@@ -188,7 +188,7 @@
     transition: color 0.2s linear;
 
     &:hover {
-      color: $brand-primary;
+      color: $toolbar-item--hover--color;
       transition: color 0.2s linear;
     }
     .brz-icon-svg {

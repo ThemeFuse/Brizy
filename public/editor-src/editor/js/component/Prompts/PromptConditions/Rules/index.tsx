@@ -5,8 +5,8 @@ import EditorIcon from "visual/component/EditorIcon";
 import ScrollPane from "visual/component/ScrollPane";
 import Config from "visual/global/Config";
 import {
-  isCloud,
   isCMS,
+  isCloud,
   isCollectionPage,
   isCustomer,
   isEcwidCategoryPage,
@@ -22,7 +22,7 @@ import {
 } from "visual/utils/blocks/blocksConditions";
 import { IS_CLOUD, IS_PRO } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { isPopup } from "visual/utils/models";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import Buttons from "../Buttons";
 import ConditionChoices from "./ConditionChoices";
@@ -92,7 +92,7 @@ const Rules = (props: Props): ReactElement => {
     if (IS_PRO) {
       const config = Config.getAll();
 
-      if (IS_GLOBAL_POPUP) {
+      if (isPopup(config)) {
         const rule: AllRule = {
           type: BlockTypeRule.include
         };

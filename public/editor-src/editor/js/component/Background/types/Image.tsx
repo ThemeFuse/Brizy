@@ -40,10 +40,14 @@ const Image: React.FC<Props> = ({ showParallax, children }) => {
   const currentDeviceMode = getStore().getState().ui.deviceMode;
   showParallax = showParallax && currentDeviceMode === "desktop";
 
-  const className = classnames("brz-bg-image", {
-    "brz-bg-image-parallax": showParallax,
-    "brz-bg-image-parallax--init": showParallax && IS_EDITOR
-  });
+  const className = classnames(
+    "brz-bg-image absolute top-0 left-0 w-full h-full bg-no-repeat bg-cover",
+    {
+      "brz-bg-image-parallax": showParallax,
+      "brz-bg-image-parallax--init brz-ed-preserve-3d w-full !bg-cover left-0 -top-[50vh] h-[100vh] !transition-[all] !duration-[0s] !ease-[ease] !delay-[0s] origin-[center_center_0]":
+        showParallax && IS_EDITOR
+    }
+  );
 
   const imageRef = useRef<HTMLElement>(null);
   const isInitialMount = useRef(true);

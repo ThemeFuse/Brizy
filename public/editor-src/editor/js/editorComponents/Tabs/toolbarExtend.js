@@ -1,11 +1,11 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { HOVER, NORMAL, ACTIVE } from "visual/utils/stateMode";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ key, v, device });
+  const dvv = (key) => defaultValueValue({ key, v, device });
 
   // Color
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -57,7 +57,7 @@ export function getItems({ v, device }) {
                   type: "radioGroup-dev",
                   devices: "desktop",
                   choices:
-                    v.verticalMode === "off"
+                    dvv("verticalMode") === "off"
                       ? [
                           { value: "style-1", icon: "nc-tabs-style-2" },
                           { value: "style-2", icon: "nc-tabs-style-1" },
@@ -187,9 +187,9 @@ export function getItems({ v, device }) {
         icon: {
           style: {
             backgroundColor:
-              v.bgColorOpacity > 0
-                ? hexToRgba(bgColorHex, v.bgColorOpacity)
-                : hexToRgba(colorHex, v.colorOpacity)
+              dvv("bgColorOpacity") > 0
+                ? hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+                : hexToRgba(colorHex, dvv("colorOpacity"))
           }
         }
       },

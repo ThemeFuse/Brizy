@@ -1,11 +1,8 @@
+import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import {
-  IS_EXTERNAL_POPUP,
-  IS_GLOBAL_POPUP,
-  IS_INTERNAL_POPUP
-} from "visual/utils/models";
+import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
@@ -19,6 +16,7 @@ import {
 export function getItems({ v, device, component, context }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
   const widthSuffix = dvv("widthSuffix");
+  const columnsHeightStyle = dvv("columnsHeightStyle");
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -28,11 +26,17 @@ export function getItems({ v, device, component, context }) {
     context.dynamicContent.config,
     DCTypes.image
   );
-  const blockType =
-    IS_INTERNAL_POPUP || IS_EXTERNAL_POPUP ? "externalPopup" : "popup";
+
+  const config = Config.getAll();
+  const popupSettings = config.ui?.popupSettings ?? {};
+  const enableDisplayCondition = popupSettings.displayCondition;
+  const enableDelete = popupSettings.deletePopup;
+  const IS_GLOBAL_POPUP = isPopup(config);
+
+  const blockType = IS_GLOBAL_POPUP ? "externalPopup" : "popup";
 
   const columnsHeightStylePicker =
-    v.columnsHeightStyle === "custom"
+    columnsHeightStyle === "custom"
       ? [
           { title: t("Auto"), value: "auto" },
           { title: t("Height"), value: "custom" },
@@ -80,7 +84,7 @@ export function getItems({ v, device, component, context }) {
                 {
                   id: "popupConditions",
                   type: "popupConditions",
-                  disabled: !IS_GLOBAL_POPUP,
+                  disabled: !enableDisplayCondition,
                   position: 150
                 }
               ]
@@ -166,23 +170,8 @@ export function getItems({ v, device, component, context }) {
       position: 90,
       options: [
         {
-          id: "tabsColor",
-          type: "tabs-dev",
-          config: {
-            showSingle: true
-          },
-          tabs: [
-            {
-              id: "tabOverlay",
-              label: t("Overlay"),
-              options: [
-                {
-                  id: "",
-                  type: "backgroundColor-dev"
-                }
-              ]
-            }
-          ]
+          id: "",
+          type: "backgroundColor-dev"
         }
       ]
     },
@@ -253,8 +242,8 @@ export function getItems({ v, device, component, context }) {
               id: "columnsHeight",
               type: "slider-dev",
               disabled: !(
-                v.columnsHeightStyle === "custom" ||
-                v.columnsHeightStyle === "custom2"
+                columnsHeightStyle === "custom" ||
+                columnsHeightStyle === "custom2"
               ),
               config: {
                 min: 20,
@@ -295,7 +284,7 @@ export function getItems({ v, device, component, context }) {
     {
       id: "remove",
       type: "button",
-      disabled: !IS_GLOBAL_POPUP,
+      disabled: !enableDelete,
       title: t("Delete"),
       icon: "nc-trash",
       position: 250,

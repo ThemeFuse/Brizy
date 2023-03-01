@@ -1,12 +1,11 @@
+import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
     dvv("buttonColorHex"),
@@ -51,7 +50,7 @@ export function getItems({ v, device }) {
             {
               id: "buttonBorderRadius",
               type: "slider-dev",
-              disabled: v.buttonBorderRadiusType !== "custom",
+              disabled: dvv("buttonBorderRadiusType") !== "custom",
               config: {
                 min: 0,
                 max: 400,

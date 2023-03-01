@@ -20,13 +20,15 @@ export function styleContent(v, vs, vd) {
       ]
     },
     ".brz &&:hover .brz-soundCloud-content": {
-      standart: ["cssStyleBorderRadius"],
+      standart: ["cssStyleBorderRadius", "cssStyleBgColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover iframe": { standart: ["cssStyleSizeHeight"] }
+    ".brz &&:hover iframe": {
+      standart: ["cssStyleSizeHeight", "cssStylePaddingBG"]
+    }
   };
   return renderStyles({ v, vs, vd, styles });
 }
@@ -39,7 +41,8 @@ export function styleWrapperAudio(v, vs, vd) {
         "cssStyleBoxShadow",
         "cssStyleBorder",
         "cssStyleBgColor",
-        "cssStyleDisplayFlex"
+        "cssStyleDisplayFlex",
+        "cssStylePaddingBG"
       ],
       interval: [
         "cssStyleHoverTransition",

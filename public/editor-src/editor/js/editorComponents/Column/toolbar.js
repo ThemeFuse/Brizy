@@ -1,26 +1,27 @@
-import { t } from "visual/utils/i18n";
+import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
-import {
-  getOptionColorHexByPalette,
-  getDynamicContentChoices
-} from "visual/utils/options";
+import { t } from "visual/utils/i18n";
+import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarShowOnResponsive,
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import {
+  toolbarBgVideoUrl,
+  toolbarElementContainerTypeImageMap,
   toolbarImageLinkExternal,
   toolbarLinkAnchor,
   toolbarLinkPopup,
-  toolbarElementContainerTypeImageMap,
-  toolbarBgVideoUrl
+  toolbarShowOnResponsive
 } from "visual/utils/toolbar";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export function getItems({ v, device, component, context, state }) {
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -30,6 +31,9 @@ export function getItems({ v, device, component, context, state }) {
     context.dynamicContent.config,
     DCTypes.image
   );
+
+  const config = Config.getAll();
+  const IS_GLOBAL_POPUP = isPopup(config);
 
   return [
     toolbarShowOnResponsive({ v, device, devices: "responsive" }),
@@ -192,8 +196,8 @@ export function getItems({ v, device, component, context, state }) {
       position: 100,
       disabled:
         device === "desktop"
-          ? v.linkLightBox === "on"
-          : dvv("linkType") !== "popup" || v.linkPopup === "",
+          ? dvv("linkLightBox") === "on"
+          : dvv("linkType") !== "popup" || dvv("linkPopup") === "",
       options: [
         {
           id: "linkType",

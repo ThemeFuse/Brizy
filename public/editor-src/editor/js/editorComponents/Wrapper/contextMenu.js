@@ -155,7 +155,14 @@ const translationsMap = {
   UnlimitedBundles: t("Unlimited Bundles"),
   WiserUpsell: t("Upsell by Wiser"),
   BoldBundles: t("Bundles by Bold"),
-  CrossSell: t("CrossSell")
+  CrossSell: t("CrossSell"),
+
+  // Ministry Brands
+  GroupLayout: t("Group Layout"),
+  GroupSlider: t("Group Slider"),
+  EventLayout: t("Event Layout"),
+  EventCalendar: t("Event Calendar"),
+  SermonLayout: t("Sermon Layout")
 };
 
 export default {

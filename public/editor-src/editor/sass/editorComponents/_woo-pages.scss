@@ -1,0 +1,13 @@
+.brz-woo-page {
+  overflow: hidden;
+
+  .woocommerce .woocommerce-form-track-order .form-row .input-text {
+    margin: 0;
+  }
+}
+
+&:not(.brz-ed) {
+  .brz-woo-pages {
+    overflow: hidden;
+  }
+}

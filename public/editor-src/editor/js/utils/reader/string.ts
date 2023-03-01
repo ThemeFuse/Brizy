@@ -11,6 +11,17 @@ export const read: Reader<string> = (v) => {
   }
 };
 
+export const readOnlyString: Reader<string> = (a) => {
+  switch (typeof a) {
+    case "string":
+      return a;
+    case "number":
+      return undefined;
+    default:
+      return undefined;
+  }
+};
+
 export const is = (s: unknown): s is string => {
   return typeof s === "string";
 };

@@ -1,9 +1,8 @@
-import React, { ReactElement, RefObject, useRef } from "react";
 import jQuery from "jquery";
+import React, { ReactElement, RefObject, useRef } from "react";
 import { videoUrl } from "visual/utils/video";
-import { useLayoutEffect } from "../utils";
-
 import "../lib/jquery.background-video.js";
+import { useLayoutEffect } from "../utils";
 
 type Props = {
   video?: {
@@ -99,7 +98,7 @@ const Video: React.FC<Props> = ({ video, videoLoop, videoStart, children }) => {
     <iframe
       src={src}
       data-src={src}
-      className="brz-iframe intrinsic-ignore brz-bg-video__cover"
+      className="brz-iframe intrinsic-ignore brz-bg-video__cover absolute top-0 left-0 w-full h-full border-none !max-w-none bg-no-repeat bg-cover"
       loading="lazy"
       style={iframeStyle}
     />

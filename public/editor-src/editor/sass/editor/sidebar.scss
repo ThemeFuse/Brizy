@@ -243,8 +243,8 @@
       max-width: 190px;
       min-width: 190px;
       border-radius: $toolbar-border-radius;
-      background-color: $sidebar-bg;
-      box-shadow: $toolbar-box-shadow;
+      background-color: $sidebar-popover--background;
+      box-shadow: 0 0 5px 0 $sidebar-popover--box-shadow;
 
       &:before {
         content: "";
@@ -256,7 +256,7 @@
         border-style: solid;
         border-width: $toolbar-arrow-size $toolbar-arrow-size
           $toolbar-arrow-size 0;
-        border-color: transparent $sidebar-bg transparent transparent;
+        border-color: $sidebar-popover-arrow--border-color;
       }
     }
 
@@ -279,13 +279,13 @@
       align-items: center;
       height: 50px;
       font-size: 13px;
-      color: #fff;
+      color: $sidebar-popover-item--color;
       font-family: $font-family-1;
       font-weight: 600;
       padding: 10px 25px;
       transition: all 0.3s linear;
       white-space: nowrap;
-      border-bottom: 1px solid $brand-options-border;
+      border-bottom: 1px solid $sidebar-popover-item--border-bottom;
 
       &:last-child {
         border-bottom-color: transparent;
@@ -293,13 +293,14 @@
       .brz-icon-svg {
         margin-right: 12px;
         font-size: 12px;
+        vertical-align: top;
       }
       &:hover {
         cursor: pointer;
-        color: $brand-primary;
+        color: $sidebar-popover-item--color--hover;
       }
       &--active {
-        color: $brand-primary;
+        color: $sidebar-popover-item--color--hover;
       }
       .brz-span {
         position: relative;

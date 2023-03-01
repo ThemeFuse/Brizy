@@ -1,34 +1,33 @@
 import { getStore } from "visual/redux/store";
-import { capitalize } from "visual/utils/string";
-import * as Num from "visual/utils/math/number";
 import { roundTo } from "visual/utils/math";
-
+import * as Num from "visual/utils/math/number";
+import { ResponsiveMode } from "visual/utils/responsiveMode";
+import { capitalize } from "visual/utils/string";
+import * as Str from "visual/utils/string/specs";
+import { MValue } from "visual/utils/value";
 import {
-  RestrictionMapping,
-  RestrictionsMapping,
-  ValueMapping,
-  Restrictions,
+  Aligns,
+  DimensionSuffix,
+  DimensionSuffixs,
+  DimensionSuffixVariants,
+  Meta,
   Restriction,
-  TransformRestrictions,
+  RestrictionMapping,
+  Restrictions,
+  RestrictionsMapping,
   SimpleRestriction,
-  TransformValue,
   TransformPatch,
+  TransformRestrictions,
   TransformStory,
   TransformStoryPatch,
-  Meta,
-  Aligns,
-  DimensionSuffixs,
-  DimensionSuffix,
-  DimensionSuffixVariants
+  TransformValue,
+  ValueMapping
 } from "./types";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { MValue } from "visual/utils/value";
-import * as Str from "visual/utils/string/specs";
 import {
   calcOffsetX,
+  calcOffsetXBySize,
   calcOffsetY,
-  calcOffsetYBySize,
-  calcOffsetXBySize
+  calcOffsetYBySize
 } from "./utils";
 
 const RESTRICTIONS = {
@@ -182,7 +181,7 @@ export const transformRestrictions: TransformRestrictions = (
   }, {} as SimpleRestriction);
 };
 
-export const transformValue: TransformValue = value => {
+export const transformValue: TransformValue = (value) => {
   const keys = Object.keys(RESTRICTIONS.desktop) as (keyof Restriction)[];
   return keys.reduce((acc, key) => {
     const normalizedKey = normalizeKeyForCurrentDeviceMode(
@@ -210,9 +209,8 @@ export const resizerTransformPatch: TransformPatch = (
     const normalizedKey = normalizeKeyForCurrentDeviceMode(key);
 
     const normalizedHeightKey = normalizeKeyForCurrentDeviceMode("height");
-    const normalizedHeightSuffixKey = normalizeKeyForCurrentDeviceMode(
-      `heightSuffix`
-    );
+    const normalizedHeightSuffixKey =
+      normalizeKeyForCurrentDeviceMode(`heightSuffix`);
 
     const normalizedKeySuffix = normalizeKeyForCurrentDeviceMode(
       `${key}Suffix` as keyof DimensionSuffix

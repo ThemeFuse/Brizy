@@ -1,6 +1,6 @@
-import React, { ReactElement, useEffect, useState } from "react";
 import cn from "classnames";
 import { mPipe } from "fp-utilities";
+import React, { ReactElement, useEffect, useState } from "react";
 import { decryptIcon, fetchIcon, ParsedSVG, parseSVG } from "./utils";
 
 interface ThemeIconProps {
@@ -9,16 +9,15 @@ interface ThemeIconProps {
   className?: string;
 }
 
-export const ThemeIcon: (
-  props: ThemeIconProps
-) => ReactElement | null = IS_EDITOR ? ThemeIconEditor : ThemeIconPreview;
+export const ThemeIcon: (props: ThemeIconProps) => ReactElement | null =
+  IS_EDITOR ? ThemeIconEditor : ThemeIconPreview;
 
 function ThemeIconEditor({
   className: _className,
   type,
   name
 }: ThemeIconProps): ReactElement | null {
-  const className = cn("brz-icon-svg", _className);
+  const className = cn("brz-icon-svg align-[initial]", _className);
   const [parsed, setParsed] = useState<ParsedSVG | undefined>(undefined);
 
   useEffect(() => {
@@ -55,7 +54,7 @@ function ThemeIconPreview({
   type,
   name
 }: ThemeIconProps): ReactElement {
-  const className = cn("brz-icon-svg", _className);
+  const className = cn("brz-icon-svg align-[initial]", _className);
 
   return <svg className={className} data-type={type} data-name={name} />;
 }
