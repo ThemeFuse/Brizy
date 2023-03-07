@@ -1,9 +1,9 @@
-import TextField from "./common/TextField";
 import { t } from "visual/utils/i18n";
+import TextField from "./common/TextField";
 
 export default class Url extends TextField {
   static get componentTitle() {
-    return t("Url");
+    return t("URL");
   }
 
   static get componentType() {

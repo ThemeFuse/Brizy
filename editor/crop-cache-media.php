@@ -247,6 +247,6 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	}
 
 	public function buildPath( ...$parts ) {
-		return implode( DIRECTORY_SEPARATOR, $parts );
+		return implode( '/', $parts );
 	}
 }

@@ -1,29 +1,20 @@
-import { Component } from "react";
 import { ElementModel } from "visual/component/Elements/Types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarLinkAnchor,
   toolbarLinkExternal,
   toolbarLinkPopup
 } from "visual/utils/toolbar";
-import { ToolbarItemType } from "../ToolbarItemType";
 
-export function getItems({
-  v,
-  device,
-  component
-}: {
-  v: ElementModel;
-  device: ResponsiveMode;
-  component: Component;
-}): ToolbarItemType[] {
+// @ts-expect-error "advancedSettings" old options
+export const getItems: GetItems<ElementModel> = ({ v, device, component }) => {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state: "normal" });
 
@@ -31,9 +22,8 @@ export function getItems({
     dvv("colorHex"),
     dvv("colorPalette")
   );
-  //@ts-expect-error meta doesnt exist
+
   const inPopup = Boolean(component.props.meta.sectionPopup);
-  //@ts-expect-error meta doesnt exist
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
   const config = Config.getAll();
@@ -56,7 +46,6 @@ export function getItems({
           type: "select-dev",
           label: t("Context Type"),
           devices: "desktop",
-          placeholder: "Options",
           choices: [
             { value: "auto", title: "Auto" },
             { value: "profile", title: "Profile" }
@@ -129,7 +118,6 @@ export function getItems({
               id: "external",
               label: t("URL"),
               options: [
-                // @ts-expect-error: need to transform to new option
                 toolbarLinkExternal({
                   v,
                   config: component.context.dynamicContent.config,
@@ -153,7 +141,6 @@ export function getItems({
               id: "anchor",
               label: t("Block"),
               options: [
-                // @ts-expect-error: need to transform to new option
                 toolbarLinkAnchor({
                   v,
                   device,
@@ -167,7 +154,6 @@ export function getItems({
               id: "popup",
               label: t("Popup"),
               options: [
-                // @ts-expect-error: need to transform to new option
                 toolbarLinkPopup({
                   v,
                   device,
@@ -199,7 +185,6 @@ export function getItems({
     },
     {
       id: "advancedSettings",
-      // @ts-expect-error: need to transform to new option
       type: "advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,
@@ -209,4 +194,4 @@ export function getItems({
       icon: "nc-cog"
     }
   ];
-}
+};

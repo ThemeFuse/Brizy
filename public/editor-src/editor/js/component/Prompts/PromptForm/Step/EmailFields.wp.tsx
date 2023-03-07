@@ -1,19 +1,19 @@
 import React, { Component, ReactElement } from "react";
-import { t } from "visual/utils/i18n";
 import { IS_PRO } from "visual/utils/env";
-import Smtp from "./common/Smtp";
-import { HelperCopy } from "./common/HelperToolip";
+import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
 import {
-  FormField,
-  BaseIntegrationContext
+  BaseIntegrationContext,
+  FormField
 } from "../../common/GlobalApps/type";
+import { HelperCopy } from "./common/HelperToolip";
+import Smtp from "./common/Smtp";
 
 const helper = {
   helper(fields: FormField[]): ReactElement {
     return (
       <HelperCopy
-        descriptions={t("You can use these shortcodes in your email: ")}
+        descriptions={t("You can use these shortcodes in your email:")}
         fields={fields}
       />
     );

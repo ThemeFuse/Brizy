@@ -14,7 +14,7 @@ export const defaultValue: Value = {
   to: 100
 };
 
-export const fromElementModel: FromElementModel<Value> = parseStrict<
+export const fromElementModel: FromElementModel<"range-dev"> = parseStrict<
   FromElementModelGetter,
   Value
 >({
@@ -22,4 +22,4 @@ export const fromElementModel: FromElementModel<Value> = parseStrict<
   to: or(mPipe(callGetter("to"), Num.read), always(defaultValue.to))
 });
 
-export const toElementModel: ToElementModel<Value> = v => ({ ...v });
+export const toElementModel: ToElementModel<"range-dev"> = v => ({ ...v });

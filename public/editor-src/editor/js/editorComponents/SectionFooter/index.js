@@ -18,6 +18,8 @@ import {
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { IS_PRO } from "visual/utils/env";
 import { hasMembership } from "visual/utils/membership";
@@ -26,19 +28,17 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import {
   styleElementSectionContainerType,
   styleSizeContainerSize
 } from "visual/utils/style2";
-import defaultValue from "./defaultValue.json";
 import SectionFooterItems from "./Items";
+import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { styleAnimation, styleContainer, styleSection } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import * as State from "visual/utils/stateMode";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 
 class SectionFooter extends EditorComponent {
   static get componentId() {
@@ -102,7 +102,7 @@ class SectionFooter extends EditorComponent {
     this.setState({ isDragging: true });
   };
 
-  handlePaddingResizerChange = patch => {
+  handlePaddingResizerChange = (patch) => {
     if (this.state.isDragging) {
       this.setState({ paddingPatch: patch });
     } else {
@@ -144,7 +144,7 @@ class SectionFooter extends EditorComponent {
     };
   }
 
-  dvv = key => {
+  dvv = (key) => {
     const v = this.getValue();
     const device = deviceModeSelector(getStore().getState());
     const state = State.mRead(v.tabsState);
@@ -222,12 +222,8 @@ class SectionFooter extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const {
-      className,
-      customClassName,
-      cssClassPopulation,
-      customAttributes
-    } = v;
+    const { className, customClassName, cssClassPopulation, customAttributes } =
+      v;
 
     return IS_PRO ? (
       <ContainerBorder
@@ -322,24 +318,34 @@ class SectionFooter extends EditorComponent {
 
   renderForView(v, vs, vd) {
     const { sectionPopup, sectionPopup2 } = this.props.meta;
+    const {
+      tagName,
+      customCSS,
+      className,
+      anchorName,
+      cssIDPopulation,
+      customClassName,
+      customAttributes,
+      cssClassPopulation
+    } = v;
+
+    const blockName =
+      cssIDPopulation === "" ? anchorName || this.getId() : cssIDPopulation;
+
     const content = (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Animation
           iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
-          component={v.tagName}
+          component={tagName}
           componentProps={{
-            ...parseCustomAttributes(v.customAttributes),
+            ...parseCustomAttributes(customAttributes),
             "data-uid": this.getId(),
-            id:
-              v.cssIDPopulation === ""
-                ? v.anchorName || this.getId()
-                : v.cssIDPopulation,
+            id: blockName,
+            name: blockName,
             className: classnames(
               "brz-footer",
-              v.className,
-              v.cssClassPopulation === ""
-                ? v.customClassName
-                : v.cssClassPopulation,
+              className,
+              cssClassPopulation === "" ? customClassName : cssClassPopulation,
               css(
                 `${this.getComponentId()}-section`,
                 `${this.getId()}-section`,

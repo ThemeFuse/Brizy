@@ -22,14 +22,14 @@
       }
 
       &--value-container {
-        background-color: $color-picker-select--bg;
+        background-color: $control-bg;
         display: inline-flex;
         max-width: 100%;
       }
 
       &__option,
       &--tag {
-        font-size: $options-handle-font-size-small;
+        font-size: $options__handle-font-size-small;
 
         span {
           overflow: hidden;

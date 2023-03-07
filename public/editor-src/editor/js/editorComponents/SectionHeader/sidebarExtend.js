@@ -1,10 +1,10 @@
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentChoices } from "visual/utils/options";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export function getItems({ context }) {
   const toolbarTagsChoices = [
-    { title: t("Div"), value: "div" },
+    { title: "Div", value: "div" },
     { title: t("Header"), value: "header" },
     { title: t("Footer"), value: "footer" },
     { title: t("Main"), value: "main" },
@@ -63,12 +63,10 @@ export function getItems({ context }) {
                       config: {
                         choices: richTextDC
                       },
-                      options: [
-                        {
-                          id: "anchorName",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "anchorName",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "cssClass",
@@ -84,12 +82,10 @@ export function getItems({ context }) {
                       config: {
                         choices: richTextDC
                       },
-                      options: [
-                        {
-                          id: "customClassName",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customClassName",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "customAttributes",

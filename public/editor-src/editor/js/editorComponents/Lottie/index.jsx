@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { LottieEditor, LottieView } from "component/Flex/Lottie";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import Link from "visual/component/Link";
@@ -17,7 +18,6 @@ import * as Num from "visual/utils/reader/number";
 import { isNullish } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
-import LottieControl from "./Lottie";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
@@ -121,9 +121,9 @@ class Lottie extends EditorComponent {
     const lottieReactConfig = {
       animationData: animation,
       speed,
-      direction,
-      loop: loop === "on",
-      autoplay: autoplay === "on",
+      direction: Number(direction),
+      isLoop: loop === "on",
+      isAutoplay: autoplay === "on",
       renderer
     };
 
@@ -162,9 +162,9 @@ class Lottie extends EditorComponent {
               onChange={this.handleResizerChange}
               restrictions={restrictions}
             >
-              <LottieControl
+              <LottieEditor
                 {...lottieReactConfig}
-                key={`lottie-${loop} renderer-${renderer}`}
+                key={`renderer-${renderer}`}
               />
             </BoxResizer>
           </Wrapper>
@@ -207,25 +207,10 @@ class Lottie extends EditorComponent {
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
 
-    const classNameLottie = classnames("brz-lottie-anim", {
-      "brz-lottie__canvas": renderer === "canvas"
-    });
-
-    const _animationLink = animationFile
+    const _animationData = animationFile
       ? customFileUrl(animationFile)
       : animationLink;
 
-    const animDom = (
-      <div
-        className={classNameLottie}
-        data-animate-name={_animationLink}
-        data-anim-speed={speed}
-        data-anim-loop={loop}
-        data-anim-autoplay={autoplay}
-        data-anim-direction={direction}
-        data-render-type={renderer}
-      />
-    );
     const slideAnchor =
       linkType !== "story" || isNan(linkToSlide)
         ? {}
@@ -242,10 +227,24 @@ class Lottie extends EditorComponent {
               rel={linkExternalRel}
               slide={slideAnchor}
             >
-              {animDom}
+              <LottieView
+                animationData={_animationData}
+                speed={speed}
+                isLoop={loop}
+                isAutoplay={autoplay}
+                direction={direction}
+                renderer={renderer}
+              />
             </Link>
           ) : (
-            animDom
+            <LottieView
+              animationData={_animationData}
+              speed={speed}
+              isLoop={loop}
+              isAutoplay={autoplay}
+              direction={direction}
+              renderer={renderer}
+            />
           )}
         </Wrapper>
         {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&

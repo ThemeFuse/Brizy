@@ -1,24 +1,24 @@
-import React, { FC } from "react";
 import classNames from "classnames";
+import React, { FC } from "react";
+import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
+import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
+import {
+  Props as CSProps,
+  ColorPickerSelect
+} from "visual/component/Controls/ColorPickerSelect";
+import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
+import { Item } from "visual/component/Controls/MultiSelect/Item";
+import { Select2 } from "visual/component/Controls/Select2";
 import { t } from "visual/utils/i18n";
 import { WithClassName, WithValue } from "visual/utils/options/attributes";
-import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
-import {
-  ColorPickerSelect,
-  Props as CSProps
-} from "visual/component/Controls/ColorPickerSelect";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
-import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
-import { Value, Meta, Type, GradientType } from "./entities";
-import { fromColorMeta } from "./utils";
-import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
-import { Select2 } from "visual/component/Controls/Select2";
 import { GradientRange } from "./GradientRange";
+import { GradientType, Meta, Type, Value } from "./entities";
+import { fromColorMeta } from "./utils";
 
 type Props = WithClassName &
   WithValue<Value> & {
     onChange: (v: Value, m: Meta) => void;
-    paletteOpenSettings: () => void;
+    paletteOpenSettings?: () => void;
     palette: PaletteObject[];
     opacity: boolean;
     gradientColors: [string, string];
@@ -33,28 +33,24 @@ export const BackgroundColor: FC<Props> = ({
   opacity,
   gradientColors: [g1, g2]
 }) => {
-  const onColorChange: CSProps<Type>["onChange"] = (
-    (v, m) => {
-      onChange(
-        {
-          type: v.select,
-          hex: v.hex,
-          opacity: v.opacity,
-          palette: v.palette,
-          gradientType: value.gradientType,
-          start: value.start,
-          end: value.end,
-          active: value.active,
-          degree: value.degree
-        },
-        fromColorMeta(m)
-      );
-    }
-  );
-  const onSelectChange = (
-    (gradientType: GradientType): void =>
-      onChange({ ...value, gradientType }, { isChanged: "gradientType" })
-  );
+  const onColorChange: CSProps<Type>["onChange"] = (v, m) => {
+    onChange(
+      {
+        type: v.select,
+        hex: v.hex,
+        opacity: v.opacity,
+        palette: v.palette,
+        gradientType: value.gradientType,
+        start: value.start,
+        end: value.end,
+        active: value.active,
+        degree: value.degree
+      },
+      fromColorMeta(m)
+    );
+  };
+  const onSelectChange = (gradientType: GradientType): void =>
+    onChange({ ...value, gradientType }, { isChanged: "gradientType" });
   const _className = classNames("brz-ed-control__backgroundColor", className);
   return (
     <div className={_className}>

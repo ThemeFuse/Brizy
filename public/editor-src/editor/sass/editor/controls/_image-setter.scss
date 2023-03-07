@@ -9,6 +9,7 @@
     vertical-align: middle;
     content: "";
   }
+
   &__setter {
     text-align: center;
     display: inline-block;
@@ -23,41 +24,44 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: $focal-point-background-before;
+      background-color: $focal_point__before-bg;
     }
+
     .brz-img {
-      max-width: $focal-point-img-size;
-      max-height: $focal-point-img-size;
+      max-width: $focal_point__img-size;
+      max-height: $focal_point__img-size;
       height: 100%;
     }
   }
+
   &__point {
     position: absolute;
     z-index: 10;
-    width: $focal-point-size;
-    height: $focal-point-size;
+    width: $focal_point-size;
+    height: $focal_point-size;
     transform: translate(-50%, -50%);
-    background-color: $focal-point-background;
+    background-color: $focal_point-bg;
     border: 2px solid #fff;
-    border-radius: $focal-point-size;
+    border-radius: $focal_point-size;
     cursor: pointer;
   }
+
   &__upload {
-    width: $focal-point-width;
-    height: $focal-point-height;
-    border: 1px dashed $focal-point-border-color;
-    background-color: $focal-point-background-upload;
+    width: $focal_point-width;
+    height: $focal_point-height;
+    border: 1px dashed $focal_point-border;
+    background-color: $focal_point__upload-bg;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    font-size: $focal-point-upload-font-size;
-    color: $focal-point-upload-color;
+    font-size: $focal_point__upload-font-size;
+    color: $focal_point__upload-color;
     transition: all 0.2s linear;
 
     &:hover {
-      border-color: $focal-point-border-color--hover;
-      color: $focal-point-upload-color--hover;
+      border-color: $focal_point-border--hover;
+      color: $focal_point__upload-color--hover;
     }
 
     .brz-icon-svg {
@@ -69,23 +73,25 @@
       cursor: progress;
     }
   }
+
   &__delete {
     position: absolute;
     right: -4px;
     top: -4px;
     z-index: 11;
-    font-size: $focal-point-delete-font-size;
-    width: $focal-point-delete-font-size;
-    height: $focal-point-delete-font-size;
-    background-color: $focal-point-background-upload;
+    font-size: $focal_point__delete-font-size;
+    width: $focal_point__delete-font-size;
+    height: $focal_point__delete-font-size;
+    background-color: $focal_point__delete-bg;
     border-radius: 50%;
-    color: #fff;
+    color: $focal_point__delete-color;
     cursor: pointer;
 
     .brz-icon-svg {
       font-size: inherit !important;
     }
   }
+
   &__label--disable .brz-ed-control__focal-point__upload {
     cursor: no-drop;
   }

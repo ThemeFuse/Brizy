@@ -1,20 +1,16 @@
-import React, { FC, useCallback, useEffect } from "react";
-import { mPipe } from "fp-utilities";
+import React, { FC, useCallback, useEffect, useRef } from "react";
 import Options from "visual/component/Options";
 import Tabs from "visual/component/Controls/Tabs/Tabs";
 import Tab from "visual/component/Controls/Tabs/Tab";
 import { stateIcon, stateTitle, filterByState, itemStates } from "./utils";
 import * as State from "visual/utils/stateMode";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { callGetter, SimpleValue } from "visual/component/Options/Type";
-import * as Option from "visual/component/Options/Type";
-import { pipe } from "visual/utils/fp";
-import * as Str from "visual/utils/string/specs";
-import { isT, onNullish } from "visual/utils/value";
+import { SimpleValue } from "visual/component/Options/Type";
+import { Props as OptionProps } from "visual/component/Options/Type";
+import { isT } from "visual/utils/value";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
-import { withOptions } from "visual/component/Options/utils/filters";
 
-export interface Props extends Option.Props<SimpleValue<State.State>> {
+export interface Props extends OptionProps<SimpleValue<State.State>> {
   options: ToolbarItemType[];
   className?: string;
   location?: string;
@@ -22,9 +18,7 @@ export interface Props extends Option.Props<SimpleValue<State.State>> {
   states: State.State[];
 }
 
-export const StateMode: FC<Props> &
-  Option.OptionType<SimpleValue<State.State>> &
-  Option.SelfFilter<"stateMode-dev"> = ({
+export const StateMode: FC<Props> = ({
   options,
   states,
   className,
@@ -33,16 +27,23 @@ export const StateMode: FC<Props> &
   onChange,
   value: { value }
 }) => {
+  const onChangeRef = useRef({ onChange });
+  onChangeRef.current = { onChange };
+
   const itemsStates = options.reduce(
     (acc: State.State[], o) => [...acc, ...itemStates(o)],
     []
   );
   const statesList = states.filter(s => itemsStates.includes(s));
-  const _onChange = useCallback((value: State.State) => onChange({ value }), [
-    onChange
-  ]);
+  const _onChange = useCallback(
+    (value: State.State) => onChangeRef.current.onChange({ value }),
+    []
+  );
 
-  useEffect(() => () => onChange({ value: State.empty }), []);
+  useEffect(
+    () => () => onChangeRef.current.onChange({ value: State.empty }),
+    []
+  );
 
   switch (statesList.length) {
     case 0:
@@ -86,23 +87,3 @@ export const StateMode: FC<Props> &
       );
   }
 };
-
-StateMode.defaultValue = {
-  value: State.empty
-};
-
-StateMode.fromElementModel = pipe(
-  callGetter("value"),
-  Str.read,
-  mPipe(State.fromString),
-  onNullish(State.empty as State.State),
-  value => ({ value })
-);
-
-StateMode.toElementModel = value => value;
-
-StateMode.filter = withOptions;
-
-StateMode.reduce = (acc, t0, item) => item.options.reduce(acc, t0);
-
-StateMode.map = (fn, item) => ({ ...item, options: item.options.map(fn) });

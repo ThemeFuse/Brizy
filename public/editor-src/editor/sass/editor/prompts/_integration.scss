@@ -1,9 +1,14 @@
 // Integration
 $option-color: #626b70;
 
+//Scrollbar Color Apps
+.brz-scrollColor__light {
+  background-color: $scrollbar__popup__apps-color;
+}
+
 // --
 .brz-ed-popup-integrations {
-  font-family: $font-family-1;
+  font-family: $default-font-family;
 
   // Scroll
   .brz-ed-fixed-scroll {
@@ -45,6 +50,7 @@ $option-color: #626b70;
   &__apps {
     margin: 22px 18px 0 24px;
   }
+
   &__app {
     max-width: 112px;
     flex: 1 1 112px;
@@ -52,47 +58,55 @@ $option-color: #626b70;
     text-align: center;
     cursor: pointer;
   }
+
   &__app--connected {
     color: #48be24;
 
     .brz-ed-popup-integrations__app-icon {
       background-color: #48be24;
     }
+
     &.brz-ed-popup-integrations__app--loading {
+
       .brz-ed-popup-integrations__app-logo:hover:after,
       .brz-ed-popup-integrations__app-logo:after {
         border-color: #48be24;
       }
     }
+
     .brz-ed-popup-integrations__app-logo:hover:after,
     .brz-ed-popup-integrations__app-logo:after {
       border-color: #48be24;
     }
   }
+
   &__app--loading {
     cursor: progress;
     pointer-events: none;
 
     .brz-ed-popup-integrations__app-logo:hover:after,
     .brz-ed-popup-integrations__app-logo:after {
-      border-color: $brand-primary;
+      border-color: $brand__primary;
     }
   }
+
   &__app--pro {
-    color: $brand-primary-pro;
+    color: $brand__primary__pro;
 
     .brz-ed-popup-integrations__app-logo--open,
     .brz-ed-popup-integrations__app-logo:hover {
       &:after {
-        border-color: $brand-primary-pro;
+        border-color: $brand__primary__pro;
         background-color: rgba(255, 255, 255, 0.9);
         transition: 0.2s linear border-color, 0.2s linear background-color;
       }
+
       .brz-ed-popup-integrations__app-icon {
         opacity: 1;
         transition: 0.2s linear opacity;
       }
     }
+
     .brz-ed-badge {
       position: absolute;
       top: 6px;
@@ -100,10 +114,11 @@ $option-color: #626b70;
       z-index: 1;
     }
   }
+
   &__app-logo {
     position: relative;
     margin-bottom: 12px;
-    background-color: #fff;
+    background-color: $popup__apps__item-bg;
 
     &:after {
       content: "";
@@ -112,17 +127,20 @@ $option-color: #626b70;
       left: 0;
       width: 100%;
       height: 100%;
-      border: 3px solid transparent;
+      border: 3px solid $popup__apps__item__after-border;
       transition: 0.2s linear border-color, 0.2s linear background-color;
     }
+
     &:hover:after {
-      border-color: $brand-primary;
+      border-color: $popup__apps__item-border--hover;
       transition: 0.2s linear border-color;
     }
+
     .brz-img {
       max-width: 100%;
     }
   }
+
   &__app-icon {
     position: absolute;
     width: 24px;
@@ -131,8 +149,8 @@ $option-color: #626b70;
     top: -8px;
     right: -8px;
     border-radius: 50%;
-    background-color: $brand-primary;
-    color: #fff;
+    background-color: $popup__apps__loading-bg;
+    color: $popup__apps__loading-color;
     text-align: center;
     z-index: 2;
 
@@ -140,10 +158,12 @@ $option-color: #626b70;
       font-size: 12px;
       line-height: 16px;
     }
+
     .brz-icon-svg {
       font-size: 24px;
     }
   }
+
   &__app-icon--pro {
     color: inherit;
     font-size: 16px;
@@ -159,10 +179,11 @@ $option-color: #626b70;
     width: 30px;
     height: 30px;
   }
+
   &__app-title {
     font-family: inherit;
     font-size: 13px;
-    color: $option-color;
+    color: $popup__apps__item-color;
   }
 
   // Step Connect
@@ -180,6 +201,7 @@ $option-color: #626b70;
         max-width: 112px;
         margin-bottom: 34px;
       }
+
       .brz-p {
         line-height: 21px;
         max-width: 220px;
@@ -187,17 +209,21 @@ $option-color: #626b70;
         margin-right: auto;
       }
     }
+
     &-info {
       margin-bottom: 34px;
     }
+
     &-body {
       .brz-p {
         text-transform: uppercase;
         margin-bottom: 13px;
       }
+
       .brz-span {
-        color: $brand-primary;
+        color: $brand__primary;
       }
+
       .brz-input {
         width: 100%;
         height: 46px;
@@ -208,22 +234,26 @@ $option-color: #626b70;
         padding-right: 20px;
         outline: none;
       }
-      .brz-input:invalid ~ .brz-p {
+
+      .brz-input:invalid~.brz-p {
         opacity: 1;
         z-index: 1;
         transition: 0.2s linear opacity;
       }
-      .brz-input:focus ~ .brz-p {
+
+      .brz-input:focus~.brz-p {
         opacity: 0;
         z-index: -1;
         transition: 0.2s linear opacity;
       }
+
       .brz-ed-btn-default {
         min-width: 79px;
         margin-left: 8px;
       }
     }
   }
+
   &__connect-auth .brz-ed-btn {
     display: block;
     margin: 0 auto 9px;
@@ -236,7 +266,7 @@ $option-color: #626b70;
     flex-shrink: 0;
 
     &-stage:after,
-    &-stage > :after {
+    &-stage> :after {
       position: absolute;
       top: 0;
       left: 100%;
@@ -247,6 +277,7 @@ $option-color: #626b70;
       border-right-width: 0;
       border-left-width: 18px;
     }
+
     &-stage {
       position: relative;
       margin-right: 3px;
@@ -263,16 +294,19 @@ $option-color: #626b70;
           display: none;
         }
       }
+
       &:after {
         z-index: 1;
         transform: translateX(3px);
         border-left-color: #f0f1f2;
         margin: 0;
       }
+
       &:first-of-type {
         border-radius: 0.25em 0 0 0.25em;
       }
     }
+
     .brz-span {
       display: block;
       position: relative;
@@ -290,21 +324,24 @@ $option-color: #626b70;
         z-index: 2;
         border-left-color: inherit;
       }
+
       .brz-img {
         max-width: 42px;
       }
     }
+
     &-stage--active .brz-span {
       background-color: rgba(#22b0da, 0.25);
       border-color: rgba(#22b0da, 0.25);
       color: #102750;
     }
-    + .brz-ed-popup-integrations-step__done {
+
+    +.brz-ed-popup-integrations-step__done {
       height: auto;
     }
 
     // normalize step
-    + .brz-ed-popup-integrations-step {
+    +.brz-ed-popup-integrations-step {
       max-height: calc(100% - 108px);
     }
   }
@@ -327,6 +364,7 @@ $option-color: #626b70;
     max-height: 100%;
     flex: 1;
   }
+
   &-step__head {
     font-size: 13px;
     color: #292e37;
@@ -334,10 +372,11 @@ $option-color: #626b70;
 
     // normalize body height
     // used for scroll
-    + .brz-ed-popup-integrations-step__body {
+    +.brz-ed-popup-integrations-step__body {
       height: calc(100% - 38px);
     }
   }
+
   &-step__body {
     padding-bottom: 20px;
     height: 100%;
@@ -345,15 +384,16 @@ $option-color: #626b70;
     flex-direction: column;
 
     // scroll in safari
-    > div:not(.brz-ed-popup-integrations-step__buttons) {
+    >div:not(.brz-ed-popup-integrations-step__buttons) {
       flex-shrink: 1;
       display: flex;
 
-      > div:first-child {
+      >div:first-child {
         flex: 1;
       }
     }
   }
+
   &-step__buttons {
     display: flex;
     margin-top: 35px;
@@ -361,12 +401,14 @@ $option-color: #626b70;
     .brz-button:nth-child(1) {
       margin-right: auto;
     }
+
     .brz-button:nth-child(1):last-child,
     .brz-button:nth-child(2) {
       margin-left: auto;
       margin-right: 0;
     }
   }
+
   &-option__radio {
     color: $option-color;
 
@@ -383,14 +425,16 @@ $option-color: #626b70;
       overflow: hidden;
 
       &--active {
-        color: $brand-primary;
+        color: $brand__primary;
       }
     }
+
     .brz-control__radio-check {
       margin-right: 10px;
       vertical-align: middle;
     }
   }
+
   &-new__option {
     cursor: pointer;
     display: flex;
@@ -403,9 +447,10 @@ $option-color: #626b70;
     transition: 0.2s linear color;
 
     &:hover {
-      color: $brand-primary;
+      color: $brand__primary;
       transition: 0.2s linear color;
     }
+
     .brz-icon-svg {
       font-size: 16px;
       margin-right: 10px;
@@ -417,11 +462,13 @@ $option-color: #626b70;
     .brz-control__select {
       width: 224px;
     }
+
     .brz-p {
       color: $option-color;
       font-size: 15px;
     }
   }
+
   &--delete {
     cursor: pointer;
     color: $option-color;
@@ -434,9 +481,10 @@ $option-color: #626b70;
     transform: translateY(-50%);
 
     &:hover {
-      color: $floating-button-red;
+      color: $floating__button__red-bg;
       transition: 0.2s linear color;
     }
+
     .brz-icon-svg {
       font-size: 16px;
     }
@@ -453,6 +501,7 @@ $option-color: #626b70;
       width: 100%;
     }
   }
+
   &-fields__tooltip {
     font-size: 0;
     line-height: 1;
@@ -464,9 +513,10 @@ $option-color: #626b70;
       font-size: 13px;
     }
   }
+
   &-fields__info {
     line-height: 1.5;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     background-color: #03080f;
     color: rgba(255, 255, 255, 0.8);
     text-align: left;
@@ -479,6 +529,7 @@ $option-color: #626b70;
     .brz-span {
       color: #91cb8a;
     }
+
     .brz-p {
       font-size: 13px;
       font-weight: 600;
@@ -488,6 +539,7 @@ $option-color: #626b70;
       }
     }
   }
+
   &-step__fields-option {
     position: relative;
     display: flex;
@@ -497,19 +549,22 @@ $option-color: #626b70;
     color: $option-color;
     border-bottom: 1px solid rgba(#000, 0.1);
 
-    > .brz-d-xs-flex {
+    >.brz-d-xs-flex {
       flex-basis: 40%;
       max-width: 40%;
     }
+
     .brz-p {
       font-size: 15px;
       font-weight: 500;
     }
   }
+
   &-step__fields-option--big {
     padding-top: 15px;
     padding-bottom: 15px;
   }
+
   &-step__field,
   &-step__fields-select {
     max-width: 223px;
@@ -518,12 +573,14 @@ $option-color: #626b70;
     .brz-control__select {
       width: 100%;
     }
+
     .brz-control__select-current,
     .brz-control__select-current:hover,
     .brz-control__select-options {
       background-color: #fff;
     }
   }
+
   &-step__field,
   &-step__fields-select,
   &-step__fields-input {
@@ -542,6 +599,7 @@ $option-color: #626b70;
       border-color: transparent;
       outline: none;
     }
+
     .brz-textarea {
       height: auto;
       min-height: 70px;
@@ -549,6 +607,7 @@ $option-color: #626b70;
       padding: 10px;
     }
   }
+
   &-step__fields-upload {
     flex-basis: 60%;
     max-width: 60%;
@@ -564,6 +623,7 @@ $option-color: #626b70;
       overflow: hidden;
       display: inline-block;
     }
+
     .brz-button {
       margin-left: 14px;
     }
@@ -581,6 +641,7 @@ $option-color: #626b70;
     text-align: center;
     padding-top: 0;
   }
+
   &-step__done-icon {
     margin-bottom: 30px;
     font-size: 0;
@@ -591,6 +652,7 @@ $option-color: #626b70;
       font-size: 47px;
     }
   }
+
   &-step__done-content {
     font-size: 14px;
     color: $option-color;
@@ -599,6 +661,7 @@ $option-color: #626b70;
     margin-bottom: 42px;
   }
 }
+
 .brz-ed-popup-integration {
   height: 100%;
   display: flex;
@@ -618,15 +681,17 @@ $option-color: #626b70;
       margin-bottom: 16px;
       font-size: 13px;
     }
+
     &__codemirror .CodeMirror,
     &__codemirror .CodeMirror:focus-within {
       height: 100%;
       max-height: 100%;
     }
   }
+
   &-email__template {
     padding: 0 36px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid $modal_email__template-border-top-color;
     transform: translateY(calc(100% - 60px));
     transition: 0.18s ease-out transform;
 
@@ -634,6 +699,7 @@ $option-color: #626b70;
       transform: translate(0);
       transition: 0.18s ease-in transform;
     }
+
     &-head {
       display: flex;
       align-items: center;
@@ -641,9 +707,10 @@ $option-color: #626b70;
       padding-top: 16px;
       padding-bottom: 16px;
     }
+
     &-body {
       margin-bottom: 23px;
-      color: #626b70;
+      color: $modal_email__template__integration-color;
 
       .brz-p {
         font-size: 13px;
@@ -651,11 +718,12 @@ $option-color: #626b70;
       }
     }
   }
+
   &-email__tooltip {
     margin-left: 5px;
 
     .brz-ed-tooltip__content {
-      color: #92989c;
+      color: $modal_email__template__integration__icon-color;
       font-size: 12px;
       cursor: pointer;
     }
@@ -668,7 +736,7 @@ $option-color: #626b70;
     transition: 0.2s linear color;
 
     &:hover {
-      color: $brand-primary;
+      color: $brand__primary;
       transition: 0.2s linear color;
     }
   }
@@ -686,32 +754,39 @@ $option-color: #626b70;
     .brz-ed-popup-content {
       height: 465px;
     }
+
     .brz-ed-popup-integrations-step__account {
       .brz-ed-popup-integrations__scroll-pane .brz-ed-scroll-inner {
         max-height: 155px !important;
       }
     }
+
     .brz-ed-popup-integrations-step__lists {
       .brz-ed-popup-integrations__scroll-pane {
         .brz-ed-scroll-inner {
           max-height: 153px !important;
         }
+
         &--small .brz-ed-scroll-inner {
           max-height: 204px !important;
         }
+
         &--big .brz-ed-scroll-inner {
           max-height: 102px !important;
         }
       }
+
       &-create {
         .brz-ed-popup-integrations-step__head {
           margin-bottom: 5px;
         }
+
         .brz-ed-popup-integrations-step__buttons {
           margin-top: 25px;
         }
       }
     }
+
     .brz-ed-popup-integrations-step__fields {
       .brz-ed-popup-integrations__scroll-pane .brz-ed-scroll-inner {
         max-height: 205px !important;
@@ -724,6 +799,7 @@ $option-color: #626b70;
     &__codemirror {
       height: 145px;
     }
+
     &__template-body .brz-textarea {
       height: 130px;
       max-height: 130px;

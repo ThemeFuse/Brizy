@@ -9,7 +9,7 @@ class Brizy_Compatibilities_Woocommerce {
 	}
 
 	/*
-	 * Dont allow woo to render post_content of the terms page if it is edited with the brizy,
+	 * Don't allow woo to render post_content of terms page if it is edited with brizy,
 	 * will lead to the display of the unformatted our html above the place order button on checkout page.
 	 */
 	public function woocommerce_checkout_terms_and_conditions() {
@@ -35,17 +35,18 @@ class Brizy_Compatibilities_Woocommerce {
 
 	public function insertWooNotice( $content ) {
 
-		$notices = wc_print_notices( true );
+		$notices = wc_get_notices();
 
-		if ( empty( $content ) || empty( $notices ) || false == strpos( $content, 'brz-section__header ' ) ) {
+		if ( empty( $content ) || empty( $notices ) || ! strpos( $content, 'brz-section__header' ) || strpos( $content, 'editor_woo_notice' ) ) {
 			return $content;
 		}
 
-	    $dom = Brizy_Parser_Pquery::parseStr( $content );
+		$parser = new Brizy_Parser_Parser( $content );
+		$parser = $parser->getParser();
 
-	    $dom->query('section.brz-section__header')->after( $notices );
+		$parser->appendText( 'section', 'brz-section__header', '{{ editor_woo_notice }}' );
 
-		return $dom->html();
+		return $parser->getHtml();
 	}
 }
 

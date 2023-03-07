@@ -1,15 +1,16 @@
 .brz-helper__copy {
-  color: #91cb8a;
+  color: $modal_email__template__integration__helper-color;
   padding: 20px;
   max-width: 240px;
   line-height: 1.5;
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   font-weight: 500;
 
   &-descriptions {
     color: #fff;
     margin-bottom: 13px;
   }
+
   &--fields {
     cursor: pointer;
     display: flex;
@@ -19,25 +20,30 @@
     .brz-span:first-child {
       margin-right: 7px;
     }
+
     &:hover .brz-icon-svg {
       opacity: 1;
       transition: 0.2s linear opacity;
     }
+
     &:not(:last-child) {
       margin-bottom: 3px;
     }
   }
+
   .brz-icon-svg {
     font-size: 8px;
     margin-right: auto;
     vertical-align: middle;
-    color: rgba(#fff, 0.6);
+    color: $modal_email__template__integration__helper__copy-color;
     opacity: 0;
     transition: 0.2s linear opacity;
   }
+
   .brz-ed-animated {
     animation-duration: 0.7s;
   }
+
   .brz-p {
     font-size: 13px;
   }

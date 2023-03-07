@@ -1,5 +1,5 @@
 import React from "react";
-import * as Option from "visual/component/Options/Type";
+import { Props as OptionProps } from "visual/component/Options/Type";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 import { Image } from "./model";
 import { Patch, SizePatch } from "./types/Patch";
@@ -20,8 +20,8 @@ export interface Config {
   acceptedExtensions?: Extensions[];
 }
 
-export type Props = Option.Props<Value, Patch> &
+export type Props = OptionProps<Value, Patch> &
   WithConfig<Config> &
   WithClassName;
 
-export type Component = React.FC<Props> & Option.OptionType<Value, Patch>;
+export type Component = React.FC<Props>;

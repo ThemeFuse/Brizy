@@ -1,6 +1,6 @@
-import { getDynamicContentChoices } from "visual/utils/options";
-import { t } from "visual/utils/i18n";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { t } from "visual/utils/i18n";
+import { getDynamicContentChoices } from "visual/utils/options";
 
 export function getItems({ context }) {
   const cssIDDynamicContentChoices = getDynamicContentChoices(
@@ -68,12 +68,10 @@ export function getItems({ context }) {
                       config: {
                         choices: cssIDDynamicContentChoices
                       },
-                      options: [
-                        {
-                          id: "customID",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customID",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "cssClass",
@@ -89,12 +87,10 @@ export function getItems({ context }) {
                       config: {
                         choices: cssIDDynamicContentChoices
                       },
-                      options: [
-                        {
-                          id: "customClassName",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customClassName",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "customAttributes",

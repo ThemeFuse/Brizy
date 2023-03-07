@@ -1,7 +1,7 @@
-import { t } from "visual/utils/i18n";
-import { getDynamicContentChoices } from "visual/utils/options";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { t } from "visual/utils/i18n";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { getDynamicContentChoices } from "visual/utils/options";
 
 export function toolbarImageLinkExternal({
   v,
@@ -11,8 +11,8 @@ export function toolbarImageLinkExternal({
   state,
   devices = "all"
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const linkDynamicContentChoices = getDynamicContentChoices(
     config,
@@ -65,82 +65,5 @@ export function toolbarImageTags({ devices = "all", gallery, enableTags }) {
     placeholder: "art, nature, etc.",
     devices,
     disabled: !inGallery || !enableTags
-  };
-}
-
-export function toolbarImageBorderRadius({
-  v,
-  device,
-  state,
-  devices = "all"
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    type: "multiPicker",
-    devices,
-    picker: {
-      id: dvk("borderRadiusType"),
-      label: t("Corner"),
-      type: "radioGroup",
-      choices: [
-        {
-          value: "square",
-          icon: "nc-corners-square"
-        },
-        {
-          value: "rounded",
-          icon: "nc-corners-round"
-        },
-        {
-          value: "custom",
-          icon: "nc-more"
-        }
-      ],
-      value: dvv("borderRadiusType"),
-      onChange: borderRadiusType => ({
-        [dvk("borderRadiusType")]: borderRadiusType,
-
-        borderRadius:
-          borderRadiusType === "square"
-            ? dvv("tempBorderRadius")
-            : borderRadiusType === "rounded"
-            ? 300
-            : dvv("borderRadius")
-      })
-    },
-    choices: {
-      custom: [
-        {
-          id: dvk("borderRadius"),
-          type: "slider",
-          slider: {
-            min: 0,
-            max: 300
-          },
-          input: {
-            show: true,
-            max: 300
-          },
-          suffix: {
-            show: true,
-            choices: [
-              {
-                title: "px",
-                value: "px"
-              }
-            ]
-          },
-          value: {
-            value: dvv("borderRadius")
-          },
-          onChange: ({ value: borderRadius }) => ({
-            [dvk("borderRadius")]: borderRadius,
-            [dvk("tempBorderRadius")]: borderRadius
-          })
-        }
-      ]
-    }
   };
 }

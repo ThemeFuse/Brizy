@@ -6,7 +6,7 @@
 .brz-ed-sidebar__right__tabs {
   .brz-ed-control__tabs {
     justify-content: flex-start;
-    color: #fff;
+    color: $right_sidebar__header__tabs-color;
     margin-bottom: 15px;
 
     .brz-ed-control__tab {
@@ -17,9 +17,11 @@
       &:not(:last-child) {
         margin-right: 19px;
       }
+
       &:after {
         display: none;
       }
+
       &.active:before {
         content: "";
         position: absolute;
@@ -30,6 +32,7 @@
       }
     }
   }
+
   .brz-ed-control__tab__content {
     width: 100%;
 
@@ -39,10 +42,12 @@
       }
     }
   }
+
   .brz-ed-options-tabs-helpers {
     font-size: 12px;
   }
 }
+
 .brz-ed-sidebar-row {
   padding-bottom: 15px;
   margin-bottom: 15px;
@@ -60,19 +65,20 @@
 // Select
 .brz-ed-sidebar__right__option {
   .brz-control__select-option {
-    max-width: $control-md-width - 6; // 6 is scrollPane borderRightWidth
+    max-width: $control__md-width - 6; // 6 is scrollPane borderRightWidth
     overflow: hidden;
     text-overflow: ellipsis;
   }
 }
 
 .brz-ed-sidebar .brz-ed-control__group {
-  & > .brz-ed-option {
+  &>.brz-ed-option {
     margin-bottom: 15px;
 
     &:first-child {
       margin-bottom: 20px;
     }
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -80,6 +86,7 @@
 }
 
 .brz-ed-control__tab__content .brz-ed-option-type {
+
   &__margin-dev,
   &__corners-dev,
   &__padding-dev {

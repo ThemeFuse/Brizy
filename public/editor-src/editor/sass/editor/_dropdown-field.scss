@@ -4,6 +4,7 @@
   position: relative;
   background: #999;
 }
+
 .brz-ed-dropdown-options {
   background: #999;
   position: absolute;
@@ -12,7 +13,7 @@
   top: 100%;
   z-index: 50;
 
-  > div > div:first-child {
+  >div>div:first-child {
     border-right-width: 0 !important;
   }
 
@@ -23,21 +24,25 @@
     margin-left: -10px;
     width: 6px;
   }
+
   .brz-ed-tall-track .brz-ed-tall-thumb {
     width: 6px;
     border-radius: 3px;
     background: #44474b;
   }
 }
+
 .brz-ed-dropdown-current {
   cursor: pointer;
 }
+
 .brz-ed-dropdown-option-item {
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   cursor: pointer;
   color: #fff;
   padding-left: 24px;
 }
+
 .brz-ed-dropdown-option-item:hover,
 .brz-ed-dropdown-option-item.brz-ed-dropdown-option-item-active {
   color: #34beea;

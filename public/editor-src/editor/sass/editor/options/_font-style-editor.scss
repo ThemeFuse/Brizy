@@ -7,23 +7,27 @@
   &:last-child {
     margin-bottom: 0;
   }
+
   &__container {
-    border: 2px solid #3c424d;
+    border: 2px solid $left_sidebar__styling__font-border;
     border-radius: 3px;
     padding: 16px 20px 18px;
     transition: border-color 0.2s linear;
   }
+
   &.active,
   &:hover {
     .brz-ed-option__font-style-editor__container {
-      border-color: $brand-primary;
+      border-color: $left_sidebar__styling__font-border--active;
       transition: border-color 0.2s linear;
     }
+
     .brz-ed-option__font-style-editor--delete {
       opacity: 1;
       transition: 0.2s linear opacity;
     }
   }
+
   &__title {
     line-height: 1;
     margin-bottom: 3px;
@@ -36,11 +40,13 @@
       line-height: 1.5;
     }
   }
+
   &__sample {
-    color: #fff;
+    color: $left_sidebar__styling__font__content-color;
     line-height: 1;
     font-size: 21px;
   }
+
   &--delete {
     position: absolute;
     top: -7px;
@@ -51,12 +57,13 @@
     transition: 0.2s linear opacity;
 
     .brz-icon-svg {
-      background-color: #fff;
-      color: #15191f;
+      background-color: $left_sidebar__styling__font__icon-bg;
+      color: $left_sidebar__styling__font__icon-color;
       border-radius: 16px;
     }
   }
 }
+
 .brz-ed-option__font-styles {
   position: relative;
   height: calc(100% - 270px);
@@ -68,7 +75,7 @@
     margin-bottom: 0;
     padding-top: 33px;
     padding-bottom: 30px;
-    color: $options-label-color;
+    color: $left_sidebar__styling__add-color;
     text-align: center;
     cursor: pointer;
     transition: border-color 0.2s linear, color 0.2s linear;
@@ -81,10 +88,11 @@
     @extend .brz-ed-option__font-style-editor__container;
 
     &:hover {
-      border-color: $brand-primary;
-      color: $brand-primary;
+      border-color: $left_sidebar__styling__add-color--hover;
+      color: $left_sidebar__styling__add-color--hover;
       transition: border-color 0.2s linear, color 0.2s linear;
     }
+
     .brz-icon-svg,
     .brz-span {
       display: inline-block;
@@ -92,13 +100,16 @@
       font-size: 13px;
       line-height: 1;
     }
+
     .brz-icon-svg {
       font-size: 16px;
     }
+
     .brz-span {
       margin-left: 10px;
     }
   }
+
   &--scroll-pane {
     position: absolute;
     top: -10px;

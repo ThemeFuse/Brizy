@@ -1,27 +1,27 @@
-import React from "react";
-import _ from "underscore";
-import { setIn, mergeDeep } from "timm";
 import deepMerge from "deepmerge";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import React from "react";
+import { mergeDeep, setIn } from "timm";
+import _ from "underscore";
+import { ContextMenuExtend } from "visual/component/ContextMenu";
+import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
-import HotKeys from "visual/component/HotKeys";
-import { ContextMenuExtend } from "visual/component/ContextMenu";
-import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { hideToolbar } from "visual/component/Toolbar";
 import { MIN_COL_WIDTH } from "visual/config/columns";
-import { clamp, isNumeric } from "visual/utils/math";
-import { attachRef } from "visual/utils/react";
-import { getStore } from "visual/redux/store";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { defaultValueKey } from "visual/utils/onChange";
+import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
-import { normalizeRowColumns, getElemWidthWithoutPaddings } from "./utils";
+import { clamp, isNumeric } from "visual/utils/math";
 import * as N from "visual/utils/math/number";
+import { defaultValueKey } from "visual/utils/onChange";
+import { attachRef } from "visual/utils/react";
+import contextMenuExtendConfigFn from "./contextMenuExtend";
+import { getElemWidthWithoutPaddings, normalizeRowColumns } from "./utils";
 
 const MAX_ITEMS_IN_ROW = 6;
 
-const toDecimalTen = number => Math.round(number * 10) / 10;
+const toDecimalTen = (number) => Math.round(number * 10) / 10;
 
 class RowItems extends EditorArrayComponent {
   static get componentId() {
@@ -146,7 +146,7 @@ class RowItems extends EditorArrayComponent {
     this.popoverData = popoverData;
 
     if (this.state.isDragging) {
-      this.setState(state => ({ ...state, patch: newValue }));
+      this.setState((state) => ({ ...state, patch: newValue }));
     } else {
       this.handleValueChange(newValue);
     }
@@ -227,6 +227,8 @@ class RowItems extends EditorArrayComponent {
   }
 
   getItemProps(itemData, itemIndex, items) {
+    const { isInner } = this.props.meta.row;
+
     const isOnly = items.length === 1;
     const meta = deepMerge(this.props.meta, {
       row: {
@@ -239,7 +241,8 @@ class RowItems extends EditorArrayComponent {
       }
     });
 
-    const getConfig = device => {
+    const getConfig = (device) => {
+      const insidePopup = meta.sectionPopup2 || meta.sectionPopup;
       const position = items.length - 1 === itemIndex ? "left" : "right";
       const { min, max } = this.getColumnWidthLimitsPercent(
         itemIndex,
@@ -301,7 +304,7 @@ class RowItems extends EditorArrayComponent {
                 : itemIndex === items.length - 1
                 ? "next"
                 : undefined,
-            onChange: v => {
+            onChange: (v) => {
               switch (v) {
                 case "prev":
                   this.reorderItem(itemIndex, itemIndex - 1);
@@ -342,6 +345,7 @@ class RowItems extends EditorArrayComponent {
           type: "button",
           title: t("Delete"),
           icon: "nc-trash",
+          disabled: isOnly && insidePopup && !isInner,
           position: 250,
           onChange: () => {
             hideToolbar();
@@ -372,14 +376,14 @@ class RowItems extends EditorArrayComponent {
       meta,
       toolbarExtend,
       popoverData: this.getPopoverData,
-      onResizeStart: position => {
+      onResizeStart: (position) => {
         this.setState({ isDragging: true }, () =>
           this.handleColumnResizeStart(itemIndex, 0, position)
         );
       },
       onResize: (deltaX, position) =>
         this.handleColumnResize(itemIndex, deltaX, position),
-      onResizeEnd: position => this.handleColumnResizeEnd(itemIndex, position)
+      onResizeEnd: (position) => this.handleColumnResizeEnd(itemIndex, position)
     };
   }
 
@@ -406,7 +410,7 @@ class RowItems extends EditorArrayComponent {
     const node = this.nodeRef.current;
 
     if (node) {
-      return _.map(node.children, elem => elem.getBoundingClientRect().width);
+      return _.map(node.children, (elem) => elem.getBoundingClientRect().width);
     }
 
     return [];
@@ -514,7 +518,7 @@ class RowItems extends EditorArrayComponent {
         {(sortableRef, sortableAttr) => (
           <div
             {...sortableAttr}
-            ref={v => {
+            ref={(v) => {
               attachRef(v, sortableRef);
               attachRef(v, this.nodeRef);
             }}

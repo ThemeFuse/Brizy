@@ -140,6 +140,8 @@ class Brizy_Compatibilities_Init {
 		if ( function_exists( 'tf_autoload' ) ) {
 			new Brizy_Compatibilities_Tfuse();
 		}
+
+		new Brizy_Compatibilities_WpThemes();
 	}
 
 	private function is_plugin_active( $plugin_file ) {

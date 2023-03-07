@@ -10,17 +10,28 @@
 // Gradient // Unghi // Marime
 .brz-ed-grid__gradient__size,
 .brz-ed-grid__gradient__degree {
+  &.brz-ed-option__input-number-wrap,
   .brz-ed-option__input-number-wrap {
     @extend .brz-ed-option__input-outline;
 
+    background-color: transparent;
+    height: unset;
+    display: block;
     .brz-input {
-      width: 29px;
+      width: 30px;
+      height: unset;
+      text-indent: 0;
+      border-radius: 0;
+      &:focus {
+        background-color: transparent;
+      }
     }
   }
 }
 
 // Gradient // Unghi // Marime
 .brz-ed-grid__gradient__size {
+  &.brz-ed-option__input-number-wrap,
   .brz-ed-option__input-number-wrap {
     position: relative;
 
@@ -30,7 +41,7 @@
       width: 5px;
       height: 5px;
       display: block;
-      border: 1px solid $options-label-color;
+      border: 1px solid $options__label-color;
       border-radius: 100%;
       top: 1px;
       right: -3px;

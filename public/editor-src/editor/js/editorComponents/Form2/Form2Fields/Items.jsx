@@ -1,6 +1,6 @@
 import { setIn } from "timm";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { hideToolbar } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
 
 class Form2FieldsItems extends EditorArrayComponent {
@@ -32,7 +32,7 @@ class Form2FieldsItems extends EditorArrayComponent {
                 : itemIndex === items.length - 1
                 ? "next"
                 : undefined,
-            onChange: v => {
+            onChange: (v) => {
               switch (v) {
                 case "prev":
                   this.reorderItem(itemIndex, itemIndex - 1);

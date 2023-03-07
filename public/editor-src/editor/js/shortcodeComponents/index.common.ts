@@ -1,3 +1,6 @@
+// #region Story
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { IS_PRO } from "visual/utils/env";
 import Accordion from "./Accordion";
 import Alert from "./Alert";
@@ -44,7 +47,6 @@ import StoryLine from "./story/StoryLine";
 import StoryMap from "./story/StoryMap";
 import StoryProgressBar from "./story/StoryProgressBar";
 import StoryShape from "./story/StoryShape";
-// #region Story
 import StoryText from "./story/StoryText";
 import StoryVideo from "./story/StoryVideo";
 import Tabs from "./Tabs";
@@ -52,24 +54,17 @@ import Text from "./Text";
 import Video from "./Video";
 
 //#endregion
+const config = Config.getAll();
 
 export const essentialsCommon = [
   { component: Text, pro: false },
+  { component: Image, pro: false },
   { component: Button, pro: false },
   { component: Icon, pro: false },
   { component: Spacer, pro: false },
-  { component: Line, pro: false },
   { component: Map, pro: false },
-  { component: Embed, pro: false },
   { component: Form2, pro: false },
-  { component: IconText, pro: false },
-  { component: Counter, pro: false },
-  { component: Countdown2, pro: false },
-  { component: Tabs, pro: false },
-  { component: ProgressBar, pro: false },
-  { component: Accordion, pro: false },
-  { component: Alert, pro: false },
-
+  { component: Line, pro: false },
   ...(IS_PRO
     ? [{ component: Menu, pro: true }]
     : [
@@ -77,22 +72,34 @@ export const essentialsCommon = [
         { component: Menu, pro: true }
       ]),
 
-  { component: StarRating, pro: true },
-  { component: Table, pro: true },
-  { component: Timeline, pro: true },
-  { component: Switcher, pro: true },
-  { component: Lottie, pro: true },
-  { component: Login, pro: true },
-  { component: Calendly, pro: true }
+  ...(isCloud(config) && isShopify(config)
+    ? []
+    : [{ component: Login, pro: true }])
 ];
 
 export const media = [
-  { component: Image, pro: false },
   { component: ImageGallery, pro: true },
-  { component: Audio, pro: false },
-  { component: Carousel, pro: true },
   { component: Video, pro: false },
+  { component: Audio, pro: false },
   { component: VideoPlaylist, pro: true }
+];
+
+export const content = [
+  { component: IconText, pro: false },
+  { component: Lottie, pro: true },
+  { component: Embed, pro: false },
+  { component: StarRating, pro: true },
+  { component: Alert, pro: false },
+  { component: Counter, pro: false },
+  { component: Countdown2, pro: false },
+  { component: ProgressBar, pro: false },
+  { component: Calendly, pro: true },
+  { component: Carousel, pro: true },
+  { component: Tabs, pro: false },
+  { component: Accordion, pro: false },
+  { component: Switcher, pro: true },
+  { component: Table, pro: true },
+  { component: Timeline, pro: true }
 ];
 
 export const essentialsStory = [
@@ -123,6 +130,6 @@ export const social = [
 ];
 
 export const grid = [
-  { component: Row, pro: false },
-  { component: Columns, pro: false }
+  { component: Columns, pro: false },
+  { component: Row, pro: false }
 ];

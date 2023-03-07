@@ -1,8 +1,8 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { sortBy } from "underscore";
 import Options from "visual/component/Options";
-import * as Option from "visual/component/Options/Type";
-import { Literal, read } from "visual/utils/types/Literal";
+import { Props as OptionProps } from "visual/component/Options/Type";
+import { Literal } from "visual/utils/types/Literal";
 import { SimpleValue } from "visual/component/Options/Type";
 import {
   WithClassName,
@@ -13,7 +13,6 @@ import { Tabs as Control } from "visual/component/Controls/Tabs2";
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
 import { Props as CProps } from "visual/component/Controls/Tabs2";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { withTabs } from "visual/component/Options/utils/filters";
 
 export type Config = {
   showSingle?: boolean;
@@ -22,7 +21,7 @@ export type Config = {
   align?: CProps<Literal>["align"];
 };
 
-export type Props = Option.Props<SimpleValue<Literal>> &
+export type Props = OptionProps<SimpleValue<Literal>> &
   WithConfig<Config> &
   WithClassName & {
     tabs?: (WithId<Literal> &
@@ -34,9 +33,7 @@ export type Props = Option.Props<SimpleValue<Literal>> &
       })[];
   };
 
-export const Tabs: FC<Props> &
-  Option.OptionType<SimpleValue<Literal>> &
-  Option.SelfFilter<"tabs-dev"> = ({
+export const Tabs: FC<Props> = ({
   tabs = [],
   onChange,
   value: { value },
@@ -82,33 +79,3 @@ export const Tabs: FC<Props> &
     </Control>
   );
 };
-
-export const getModel: Option.FromElementModel<SimpleValue<Literal>> = get => ({
-  value: read(get("value"))
-});
-
-const getElementModel: Option.ToElementModel<SimpleValue<Literal>> = values => {
-  return {
-    value: values.value
-  };
-};
-
-Tabs.fromElementModel = getModel;
-
-Tabs.toElementModel = getElementModel;
-
-Tabs.defaultValue = { value: "" };
-
-Tabs.filter = withTabs;
-
-Tabs.reduce = (fn, t0, item) => {
-  return (
-    item.tabs?.reduce((acc, tab) => tab.options?.reduce(fn, acc) ?? t0, t0) ??
-    t0
-  );
-};
-
-Tabs.map = (fn, item) => ({
-  ...item,
-  tabs: item.tabs?.map(tab => ({ ...tab, options: tab.options?.map(fn) }))
-});

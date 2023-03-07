@@ -91,7 +91,7 @@ export function getItems({
         {
           id: "hoverOpacity",
           type: "slider-dev",
-          label: t("HoverOpacity"),
+          label: t("Hover Opacity"),
           disabled:
             reviewType !== "visualGallery" && reviewType !== "wallPhotos",
           config: {

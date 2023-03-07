@@ -2,4 +2,4 @@
 @import "../../mixins/arrow";
 
 // Arrows
-@include arrow($toolbar-arrow-size, $toolbar-bg-color);
+@include arrow($toolbar__arrow-size, $toolbar-bg);

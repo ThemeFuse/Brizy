@@ -1,12 +1,12 @@
 .react-contexify {
   position: fixed;
-  background-color: $toolbar-bg-color;
+  background-color: $toolbar-bg;
   background-clip: padding-box;
-  color: $options-label-color;
+  color: $options__label-color;
   border-radius: $toolbar-border-radius;
-  box-shadow: $toolbar-box-shadow;
-  font-size: $options-item-font-size;
-  font-family: $font-family-1;
+  box-shadow: 0 0 5px 0 $toolbar-box-shadow;
+  font-size: $options__item-font-size;
+  font-family: $default-font-family;
   min-width: 185px;
   outline: none;
   opacity: 0;
@@ -26,14 +26,16 @@
     bottom: 0;
     z-index: -1;
   }
+
   &__wrapper {
     width: 100%;
     height: auto;
   }
+
   &--title {
     height: 40px;
     margin-bottom: 7px;
-    border-bottom: 1px solid $brand-options-border;
+    border-bottom: 1px solid $brand__options-border;
     pointer-events: none;
 
     .react-contexify__item__content {
@@ -46,6 +48,7 @@
       }
     }
   }
+
   &__item {
     cursor: pointer;
     position: relative;
@@ -58,13 +61,15 @@
     &:hover,
     &--active,
     &--selected {
-      & > .react-contexify__item__content {
+      &>.react-contexify__item__content {
         background-color: rgba(255, 255, 255, 0.12);
-        color: $brand-primary;
+        color: $brand__primary;
       }
+
       .react-contexify__submenu-arrow {
-        border-color: $brand-primary;
+        border-color: $brand__primary;
       }
+
       .react-contexify__submenu {
         pointer-events: initial;
         opacity: 1;
@@ -97,24 +102,28 @@
       pointer-events: none;
       cursor: default;
     }
+
     &--disabled {
       .react-contexify__item--title {
         color: #9ca7b0;
       }
     }
+
     &--shortcut {
       color: #9ca7b0;
       font-weight: normal;
       font-size: 12px;
-      font-family: $font-family-1;
+      font-family: $default-font-family;
       word-spacing: 1px;
       text-transform: capitalize;
     }
+
     &__submenu {
       height: 40px;
-      border-top: 1px solid $brand-options-border;
+      border-top: 1px solid $brand__options-border;
       margin: 7px 0 -7px 0;
     }
+
     &__submenu:last-child {
       margin-bottom: 0;
     }
@@ -123,10 +132,11 @@
       outline: none;
     }
   }
+
   &__submenu {
     position: absolute;
     pointer-events: none;
-    border-top: 1px solid $toolbar-border-color;
+    border-top: 1px solid $toolbar-border;
     margin-left: 5px;
     margin-right: 5px;
 
@@ -137,13 +147,14 @@
       width: 6px;
       height: 6px;
       background-color: transparent;
-      border-top: 1px solid $options-label-color;
-      border-right: 1px solid $options-label-color;
+      border-top: 1px solid $options__label-color;
+      border-right: 1px solid $options__label-color;
       transform: rotate(45deg) translateY(-50%);
       font-size: 0;
     }
   }
 }
+
 // Cloneable
 .brz-wrapper-clone .react-contexify__wrapper {
   width: auto;

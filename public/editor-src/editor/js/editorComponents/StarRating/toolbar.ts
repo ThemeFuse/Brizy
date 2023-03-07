@@ -209,6 +209,7 @@ export function getItems({
         {
           id: "gridTypography",
           type: "grid-dev",
+          config: { separator: true },
           columns: [
             {
               id: "col-1",

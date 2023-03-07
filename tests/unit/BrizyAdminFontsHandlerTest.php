@@ -1,6 +1,6 @@
 <?php
 
-class BrizyAdminFontsHandlerTest extends\Codeception\TestCase\WPTestCase {
+class BrizyAdminFontsHandlerTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @var \UnitTester
 	 */

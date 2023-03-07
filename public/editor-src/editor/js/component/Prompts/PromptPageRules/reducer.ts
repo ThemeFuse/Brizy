@@ -1,13 +1,13 @@
-import { Setters } from "./types/Setters";
-import { Item, Invalid, Valid } from "./types";
 import { createReducer } from "visual/component/Prompts/common/states/Classic/reducer";
 import {
   Either,
   left,
   right
 } from "visual/component/Prompts/common/states/Classic/types/Either";
-import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import { t } from "visual/utils/i18n";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
+import { Invalid, Item, Valid } from "./types";
+import { Setters } from "./types/Setters";
 
 export const setters = (v: Invalid, a: Setters): Invalid => {
   switch (a.type) {
@@ -16,7 +16,7 @@ export const setters = (v: Invalid, a: Setters): Invalid => {
     case "SetRules":
       return {
         ...v,
-        items: v.items.map(i => ({
+        items: v.items.map((i) => ({
           ...i,
           selected: a.payload.includes(i.id.toString())
         })) as [Item, ...Item[]]
@@ -36,10 +36,10 @@ export const validate = (v: Invalid): Either<Invalid, Valid> => {
     });
   }
 
-  if (!items.filter(i => i.selected).length) {
+  if (!items.filter((i) => i.selected).length) {
     return left({
       ...v,
-      error: t("You must be have one selected item")
+      error: t("You must have one selected item")
     });
   }
 

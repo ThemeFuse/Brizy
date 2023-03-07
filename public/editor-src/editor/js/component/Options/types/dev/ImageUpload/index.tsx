@@ -3,14 +3,9 @@ import React, { useCallback, useMemo } from "react";
 import { ImageSetter } from "visual/component/Controls/ImageSetter";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
-import { Image } from "./model";
 import { Component } from "./Types";
-import {
-  configSizeToSize,
-  DEFAULT_VALUE,
-  fromElementModel,
-  toElementModel
-} from "./utils";
+import { Image } from "./model";
+import { configSizeToSize } from "./utils";
 
 export const ImageUpload: Component = ({ onChange, value, config, label }) => {
   const className = classNames(
@@ -89,9 +84,3 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
     </>
   );
 };
-
-ImageUpload.fromElementModel = fromElementModel;
-
-ImageUpload.toElementModel = toElementModel;
-
-ImageUpload.defaultValue = DEFAULT_VALUE;

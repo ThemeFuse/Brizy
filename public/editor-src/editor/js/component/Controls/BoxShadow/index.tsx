@@ -1,26 +1,26 @@
-import React, { FC, useCallback } from "react";
 import classNames from "classnames";
-import MultiInputOptionType from "visual/component/Options/types/MultiInput";
-import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
-import { ColorPickerSelect } from "visual/component/Controls/ColorPickerSelect";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
-import { getModifiedField } from "visual/component/Controls/BoxShadow/utils";
-import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
-import { PaletteObject } from "../ColorPalette/entities/PaletteObject";
-import {
-  Meta as CMeta,
-  Value as CValue
-} from "visual/component/Controls/ColorPickerSelect/entities";
-import {
-  WithClassName,
-  WithOnChange2,
-  WithValue
-} from "visual/utils/options/attributes";
+import React, { FC, useCallback } from "react";
 import {
   Meta,
   TypeObject,
   Value
 } from "visual/component/Controls/BoxShadow/types";
+import { getModifiedField } from "visual/component/Controls/BoxShadow/utils";
+import { ColorPickerSelect } from "visual/component/Controls/ColorPickerSelect";
+import {
+  Meta as CMeta,
+  Value as CValue
+} from "visual/component/Controls/ColorPickerSelect/entities";
+import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
+import { Item } from "visual/component/Controls/MultiSelect/Item";
+import MultiInputOptionType from "visual/component/Options/types/MultiInput";
+import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
+import {
+  WithClassName,
+  WithOnChange2,
+  WithValue
+} from "visual/utils/options/attributes";
+import { PaletteObject } from "../ColorPalette/entities/PaletteObject";
 
 export interface Props
   extends WithClassName,
@@ -29,17 +29,17 @@ export interface Props
   opacity: boolean;
   types: TypeObject[];
   palette: PaletteObject[];
-  paletteOpenSettings: () => void;
+  paletteOpenSettings?: () => void;
 }
 
 export const BoxShadow: FC<Props> = ({ value, types, onChange, ...props }) => {
   const className = classNames("brz-ed-control__boxShadow", props.className);
   const onHex = useCallback(
-    hex => onChange({ ...value, hex }, { isChanged: "hex" }),
+    (hex) => onChange({ ...value, hex }, { isChanged: "hex" }),
     [onChange]
   );
   const fieldChange = useCallback(
-    fields => {
+    (fields) => {
       const [blur, spread, vertical, horizontal] = fields;
       const current = [
         value.blur,
@@ -98,7 +98,7 @@ export const BoxShadow: FC<Props> = ({ value, types, onChange, ...props }) => {
       <ColorPickerInputs value={value.hex} onChange={onHex}>
         <MultiInputOptionType
           config={{
-            defaultIcon: ["nc-shadow"],
+            defaultIcon: "nc-shadow",
             icons: ["nc-blur", "nc-size", "nc-vertical", "nc-horizontal"]
           }}
           value={[value.blur, value.spread, value.vertical, value.horizontal]}

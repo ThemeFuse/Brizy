@@ -12,31 +12,34 @@
     border-radius: 2px;
     margin-left: 2px;
     cursor: pointer;
-    border: 1px solid $color-palette--border;
+
+    border: 1px solid $color_palette-border;
 
     &:first-child {
       margin-left: 0;
     }
+
     &.active {
-      border: 2px solid $color-palette--active--border;
+      border: 2px solid $color_palette-border--active;
     }
   }
+
   &__icon {
     cursor: pointer;
     font-size: 14px;
     margin-left: 5px;
     display: flex;
-    color: $color-palette-icon--color;
+    color: $color_palette__icon-color;
     transition: color 0.2s linear;
 
     &:hover {
-      color: $color-palette-icon--hover--color;
+      color: $color_palette__icon-color--hover;
     }
   }
 }
 
 // ColorPalette Editor
-.brz-ed-control__color-palette-editor {
+.brz-ed-option__color-palette-editor {
   display: flex;
   flex-wrap: wrap;
 
@@ -51,8 +54,9 @@
 
     &:hover,
     &.active {
-      border: 2px solid $brand-primary;
+      border: 2px solid $brand__primary;
     }
+
     &:first-child {
       margin-left: 0;
     }
@@ -60,6 +64,6 @@
 }
 
 // ColorPalette Sidebar
-.brz-ed-sidebar-control__color-palette2-editor {
+.brz-ed-sidebar-option__color-palette-editor {
   margin-bottom: 32px !important;
 }

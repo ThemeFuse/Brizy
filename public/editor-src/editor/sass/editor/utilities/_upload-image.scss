@@ -12,9 +12,11 @@ $borderWidth: 2px;
     display: inline-block;
     font-size: 0;
   }
+
   &-label {
     margin-bottom: 0;
   }
+
   &-remove {
     position: absolute;
     z-index: 2;
@@ -33,10 +35,12 @@ $borderWidth: 2px;
       background-color: #03080f;
       transition: background 0.2s linear;
     }
+
     i {
       line-height: 2.75;
     }
   }
+
   &-upload {
     position: absolute;
     top: 4px;
@@ -60,7 +64,7 @@ $borderWidth: 2px;
 
   &:before {
     content: 'Change Image';
-    font: bold 10px $font-family-1;
+    font: bold 10px $default-font-family;
     color: $text-white;
     line-height: $imageContainer;
     text-transform: uppercase;
@@ -76,6 +80,7 @@ $borderWidth: 2px;
     opacity: 0;
     transition: opacity 0.2s linear, visibility 0.2s linear;
   }
+
   &:hover {
     border-color: transparent;
 

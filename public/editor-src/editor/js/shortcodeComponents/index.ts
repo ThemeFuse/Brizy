@@ -4,7 +4,7 @@ import {
   isEcwidCategory,
   isEcwidProduct
 } from "visual/global/Config/types/configs/Base";
-import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { Shortcode, Shortcodes } from "visual/types";
 import {
@@ -19,8 +19,9 @@ import {
 import { isExternalPopup, isStory } from "visual/utils/models";
 import AssetsPosts from "./AssetsPosts";
 import Ecwid from "./Ecwid";
+import MenuSimple from "./MenuSimple";
+import MinistryBrands from "./MinistryBrands";
 import PostTitle from "./PostTitle";
-// import MinistryBrands from "./MinistryBrands";
 import Posts from "./Posts";
 import ProtectedPage from "./ProtectedPage";
 import ShopCategories from "./ShopCategories";
@@ -38,17 +39,18 @@ import {
   grid,
   media,
   mediaStory,
-  social
+  social,
+  content
 } from "./index.common";
 import Login from "./pro/Login";
+import Menu from "./pro/Menu";
 import ResetPassword from "./pro/ResetPassword";
 
 const _config = Config.getAll() as Cloud;
 
 const essentialsCloud = [
   ...essentialsCommon,
-  // ...MinistryBrands,
-  { component: Translation, pro: false }
+  ...(!isShopify(_config) ? [{ component: Translation, pro: false }] : [])
 ];
 
 const essentialsWithPosts = [
@@ -56,10 +58,14 @@ const essentialsWithPosts = [
   { component: Posts, pro: false }
 ];
 
-// Without Login
+// Without Login and Menu
 const essentialsExternalPopup = essentialsCommon.reduce(
   (acc: Shortcode[], curr: Shortcode) =>
-    curr.component !== Login ? [...acc, curr] : acc,
+    curr.component !== Login &&
+    curr.component !== Menu &&
+    curr.component !== MenuSimple
+      ? [...acc, curr]
+      : acc,
   []
 );
 
@@ -71,7 +77,9 @@ const cmsSingle = [
   { component: Posts, pro: false }
 ];
 
-const cmsAssets = [{ component: AssetsPosts, pro: false }];
+const cmsAssets = [
+  ...(!isShopify(_config) ? [{ component: AssetsPosts, pro: false }] : [])
+];
 
 const user = [
   { component: UserFirstName, pro: false },
@@ -96,6 +104,23 @@ const shop: Shortcode[] = match(
     }
   ]
 )(Config.getAll());
+
+const ministryBrands: Shortcode[] = match(
+  [isWp, () => []],
+  [
+    isCloud,
+    (v): Shortcode[] => {
+      if (v.modules?.ekklesia) {
+        return MinistryBrands;
+      }
+      return [];
+    }
+  ]
+)(Config.getAll());
+
+const ministryContent = {
+  "Ministry Content": ministryBrands
+};
 
 const EcwidProduct = Ecwid.find((c) => c.component.id === "Product");
 const productPageSpecificItems = [
@@ -123,9 +148,11 @@ const config = ((): Shortcodes => {
       user: user,
       essentials: essentialsCloud,
       media,
+      content,
       social,
       blog: cmsSingle,
       shop,
+      ...ministryContent,
       cms: cmsAssets
     };
   }
@@ -136,8 +163,10 @@ const config = ((): Shortcodes => {
       systemPages: protectedPage,
       essentials: essentialsWithPosts,
       media,
+      content,
       social,
-      shop
+      shop,
+      ...ministryContent
     };
   }
 
@@ -147,8 +176,10 @@ const config = ((): Shortcodes => {
       systemPages: resetPassword,
       essentials: essentialsWithPosts,
       media,
+      content,
       social,
-      shop
+      shop,
+      ...ministryContent
     };
   }
 
@@ -157,6 +188,7 @@ const config = ((): Shortcodes => {
       grid,
       essentials: essentialsExternalPopup,
       media,
+      content,
       social
     };
   }
@@ -167,9 +199,11 @@ const config = ((): Shortcodes => {
       blog: cmsSingle,
       essentials: essentialsCloud,
       media,
+      content,
       social,
       product: productPageSpecificItems,
       shop: productPageShopItems,
+      ...ministryContent,
       cms: cmsAssets
     };
   }
@@ -185,11 +219,26 @@ const config = ((): Shortcodes => {
       grid,
       productPageSpecificItems,
       shop: productPageShopItems,
+      ...ministryContent,
       essentials: essentialsCloud,
       media,
+      content,
       social,
       blog: cmsSingle,
       cms: cmsAssets
+    };
+  }
+
+  if (_config.modules?.ekklesia) {
+    return {
+      grid,
+      essentials: essentialsCloud,
+      media,
+      content,
+      social,
+      blog: cmsSingle,
+      cms: cmsAssets,
+      ...ministryContent
     };
   }
 
@@ -197,6 +246,7 @@ const config = ((): Shortcodes => {
     grid,
     essentials: essentialsCloud,
     media,
+    content,
     social,
     blog: cmsSingle,
     cms: cmsAssets

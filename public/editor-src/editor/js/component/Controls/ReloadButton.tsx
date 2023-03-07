@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
 import classNames from "classnames";
+import React, { ReactElement } from "react";
 import { t } from "visual/utils/i18n";
 import { WithClassName } from "visual/utils/options/attributes";
 import { Button } from "./Button";
@@ -13,8 +13,9 @@ export const ReloadButton = ({ className, onClick }: Props): ReactElement => {
     <Button
       className={classNames("brz-ed-control__reload-button", className)}
       icon={"nc-reverse"}
-      label={t("Replay Animation")}
       onClick={onClick}
-    />
+    >
+      {t("Replay Animation")}
+    </Button>
   );
 };

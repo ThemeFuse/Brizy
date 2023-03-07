@@ -6,8 +6,8 @@
   display: grid;
   grid-template-columns: auto auto;
   gap: 10px;
-  color: $brand-primary;
-  font-size: $options-item-font-size;
+  color: $brand__primary;
+  font-size: $options__item-font-size;
   transition: color 0.2s linear;
   cursor: pointer;
   display: flex;
@@ -21,6 +21,7 @@
     .brz-ed-control__label {
       order: 1;
     }
+
     .brz-icon-svg {
       order: 2;
     }
@@ -29,14 +30,16 @@
   &-left {
     justify-content: flex-start;
   }
+
   &-center {
     justify-content: center;
   }
+
   &-right {
     justify-content: flex-end;
   }
 
   &:hover {
-    color: $sidebar-font-color;
+    color: $sidebar-color;
   }
 }

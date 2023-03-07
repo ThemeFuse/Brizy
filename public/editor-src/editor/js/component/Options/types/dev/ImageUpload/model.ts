@@ -1,5 +1,8 @@
+import { parse } from "fp-utilities";
+import { pipe } from "visual/utils/fp";
 import * as Math from "visual/utils/math";
-import { Getter, setter, Setter } from "visual/utils/model";
+import { Getter, Setter, setter } from "visual/utils/model";
+import { prop } from "visual/utils/object/get";
 import * as String from "visual/utils/string/index";
 
 export interface Coordinates {
@@ -16,6 +19,28 @@ export interface Image {
   x: number;
   y: number;
 }
+
+export function eq(a: Image, b: Image): boolean {
+  return (
+    a === b ||
+    a.src === b.src ||
+    a.extension === b.extension ||
+    a.x === b.x ||
+    a.y === b.y ||
+    a.width === b.width ||
+    a.height === b.height
+  );
+}
+
+export const fromRecord = parse<Record<string, unknown>, Image>({
+  src: pipe(prop("src"), String.toString),
+  fileName: pipe(prop("fileName"), String.toString),
+  extension: pipe(prop("extension"), String.toString),
+  x: pipe(prop("x"), Math.toNonNegative),
+  y: pipe(prop("y"), Math.toNonNegative),
+  height: pipe(prop("height"), Math.toNonNegative),
+  width: pipe(prop("width"), Math.toNonNegative)
+});
 
 /**
  * Get image src

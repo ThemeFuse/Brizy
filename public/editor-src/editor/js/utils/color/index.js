@@ -1,12 +1,13 @@
 import Config from "visual/global/Config";
-import { is as _isHex } from "visual/utils/color/Hex";
+import * as Hex from "visual/utils/color/Hex";
 import {
   makeGlobalStylesColorPalette,
   makeStylePaletteCSSVar
 } from "./makeGlobalStylesColorPallete";
 
 const rgbRegex = /^rgb\s*[(]\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*[)]$/;
-const rgbaRegex = /^rgba\s*[(]\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(0*(?:\.\d+)?|1(?:\.0*)?)\s*[)]$/;
+const rgbaRegex =
+  /^rgba\s*[(]\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(0*(?:\.\d+)?|1(?:\.0*)?)\s*[)]$/;
 
 export function parseColorString(colorString) {
   if (isHex(colorString)) {
@@ -19,7 +20,7 @@ export function parseColorString(colorString) {
   var rgbResult = parseRgb(colorString);
   if (rgbResult) {
     return {
-      hex: rgbToHex(rgbResult),
+      hex: Hex.fromRgb(rgbResult),
       opacity: 1
     };
   }
@@ -27,7 +28,7 @@ export function parseColorString(colorString) {
   var rgbaResult = parseRgba(colorString);
   if (rgbaResult) {
     return {
-      hex: rgbToHex(rgbaResult),
+      hex: Hex.fromRgb(rgbaResult),
       opacity: String(rgbaResult[3])
     };
   }
@@ -35,7 +36,7 @@ export function parseColorString(colorString) {
   return null;
 }
 
-export const isHex = v => _isHex(v ?? "");
+export const isHex = (v) => Hex.is(v ?? "");
 
 export function hexToRgba(hex, opacity) {
   if (isHex(hex)) {
@@ -73,15 +74,6 @@ export function getColor(palette, hex, opacity) {
   } else {
     return hexToRgba(hex, opacity);
   }
-}
-
-function rgbToHex(rgb) {
-  return (
-    "#" +
-    ("0" + rgb[0].toString(16)).slice(-2) +
-    ("0" + rgb[1].toString(16)).slice(-2) +
-    ("0" + rgb[2].toString(16)).slice(-2)
-  );
 }
 
 function parseRgb(colorString) {

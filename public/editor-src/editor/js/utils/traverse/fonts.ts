@@ -5,8 +5,8 @@ import {
 import { mapBlockElements } from "visual/editorComponents/RichText/utils";
 import { classNamesToV } from "visual/editorComponents/RichText/utils/transforms";
 import {
-  Fonts,
   FontStyle,
+  Fonts,
   GlobalBlock,
   GoogleFont,
   UploadedFont
@@ -34,61 +34,72 @@ export const getUsedModelsFonts: GetUsedModelsFonts = ({
 }) => {
   const fontFamilies = new Set<string>();
 
+  const DCFontFamily = ({ type, value }: ElementModelType): void => {
+    const defaultStyle = getComponentDefaultValue(type).style || {};
+    const style = { ...defaultStyle, ...value };
+
+    Object.entries(defaultStyle.families || {}).forEach((fontKeys) => {
+      const [key, keyValue] = fontKeys;
+      const font = {
+        type: Str.read(value[`${key}Type`] || defaultStyle[`${key}Type`]) as
+          | FontType
+          | undefined,
+        family: Str.read(value[key] || keyValue)
+      };
+      const fontStyle = key.replace("Family", "Style");
+
+      // if exist fontStyle don't need current fontFamily
+      // in this case fontFamily is global
+      if (Str.read(style[fontStyle])) {
+        return;
+      }
+
+      if (font.type && font.family) {
+        fontFamilies.add(splitFont({ type: font.type, family: font.family }));
+      }
+    });
+  };
+
   modelTraverse(models, {
     Component({ type, value }: ElementModelType) {
-      const defaultStyle = getComponentDefaultValue(type).style || {};
-      const style = { ...defaultStyle, ...value };
-
-      Object.entries(defaultStyle.families || {}).forEach((fontKeys) => {
-        const [key, keyValue] = fontKeys;
-        const font = {
-          type: Str.read(value[`${key}Type`] || defaultStyle[`${key}Type`]) as
-            | FontType
-            | undefined,
-          family: Str.read(value[key] || keyValue)
-        };
-        const fontStyle = key.replace("Family", "Style");
-
-        // if exist fontStyle don't need current fontFamily
-        // in this case fontFamily is global
-        if (Str.read(style[fontStyle])) {
-          return;
-        }
-
-        if (font.type && font.family) {
-          fontFamilies.add(splitFont({ type: font.type, family: font.family }));
-        }
-      });
+      DCFontFamily({ type, value });
     },
+
     RichText({ type, value }: ElementModelType) {
       const defaultValue = getComponentDefaultValue(type).content || {};
+
+      const style = { ...defaultValue, ...value };
       const text = value.text || defaultValue.text;
 
-      mapBlockElements(text, (elem: cheerio.Cheerio | JQuery) => {
-        const v = classNamesToV(elem);
-        const { typographyFontFamily, typographyFontFamilyType } = v;
+      if (style.textPopulation) {
+        DCFontFamily({ type, value });
+      } else {
+        mapBlockElements(text, (elem: cheerio.Cheerio | JQuery) => {
+          const v = classNamesToV(elem.attr("class")?.split(" ") ?? []);
+          const { typographyFontFamily, typographyFontFamilyType } = v;
 
-        if (typographyFontFamily) {
-          if (typographyFontFamilyType) {
-            fontFamilies.add(
-              splitFont({
-                type: typographyFontFamilyType as FontType,
-                family: typographyFontFamily as string
-              })
-            );
-          } else {
-            // if type doesn't exist
-            // set it to unknowns
-            // and parse all fonts
-            fontFamilies.add(
-              splitFont({
-                family: typographyFontFamily as string,
-                type: "unknowns"
-              })
-            );
+          if (typographyFontFamily) {
+            if (typographyFontFamilyType) {
+              fontFamilies.add(
+                splitFont({
+                  type: typographyFontFamilyType as FontType,
+                  family: typographyFontFamily as string
+                })
+              );
+            } else {
+              // if type doesn't exist
+              // set it to unknowns
+              // and parse all fonts
+              fontFamilies.add(
+                splitFont({
+                  family: typographyFontFamily as string,
+                  type: "unknowns"
+                })
+              );
+            }
           }
-        }
-      });
+        });
+      }
     },
     GlobalBlock({ value: { _id } }: ElementModelType) {
       const id = Str.read(_id);

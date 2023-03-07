@@ -2,20 +2,20 @@
 
 // Multi Select
 .brz-ed-control__multiSelect {
-  font-family: $font-family-1;
+  font-family: $default-font-family;
 
   &--size {
     &-short {
-      width: $control-sm-width;
+      width: $control__sm-width;
       min-width: 85px;
     }
 
     &-medium {
-      width: $control-md-width;
+      width: $control__md-width;
     }
 
     &-large {
-      width: $control-lg-width;
+      width: $control__lg-width;
     }
 
     &-auto {
@@ -31,12 +31,12 @@
     letter-spacing: $control-letter-spacing;
     display: flex;
     justify-content: start;
-    background-color: $options-control-background;
+    background-color: $control-bg;
     flex-wrap: wrap;
     padding: 2px;
     min-height: $control-height;
     position: relative;
-    color: #fff;
+    color: $control__variant-color;
 
     input,
     input::placeholder {
@@ -49,6 +49,7 @@
       top: unset;
       margin: 0 0 0 5px;
     }
+
     .brz-ed-control__multiSelect--placeholder {
       color: rgba(255, 255, 255, 0.4);
     }
@@ -76,7 +77,7 @@
     height: 20px;
     padding: 5px;
     line-height: 1;
-    color: $color-picker-select--color;
+    color: $control__variant-color;
     margin: 2px;
     background-color: #49515f;
     box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.04);
@@ -93,7 +94,7 @@
       align-items: center;
     }
 
-    & > .brz-icon-svg {
+    &>.brz-icon-svg {
       cursor: pointer;
       font-size: 10px;
       margin-left: 4px;
@@ -102,7 +103,7 @@
     }
 
     .brz-icon-svg:hover {
-      color: $brand-primary;
+      color: $brand__primary;
       transition: 0.2s color linear;
     }
   }
@@ -113,12 +114,12 @@
   }
 
   &__menu {
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     z-index: z("select-portal");
-    box-shadow: 0 1px 3px 0 $color-picker-select-option--box-shadow;
+    box-shadow: 0 1px 3px 0 $picker__select__option-box-shadow;
     margin-top: 3px; // ? placement
     border-radius: $control-border-radius;
-    background: $color-picker-select--bg;
+    background: $control-bg;
     min-width: 100%;
     transform: none !important;
   }
@@ -135,12 +136,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-bottom: 1px solid $color-picker-select-option--border;
-    color:  $color-picker-select-option--color;
+    border-bottom: 1px solid $control-border;
+    color: $control-color;
     margin: 0;
     display: flex;
     align-items: center;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
 
     &:last-child {
       border-bottom-color: transparent;
@@ -149,7 +150,7 @@
     &:hover:not(.brz-ed-control__multiSelect__option--disabled),
     &--active {
       transition: color 0.15s linear;
-      color: $color-picker-select-option--active--color;
+      color: $control-color--active;
     }
 
     &--disabled {
@@ -170,21 +171,25 @@
 
   &.brz-slider__select {
     width: 50px;
+
     .brz-ed-control__multiSelect--value-container {
       background: transparent;
       transition: 0.2s color linear;
 
       &:hover {
+
         .brz-ed-control__multiSelect--tag--value,
         .brz-control__select--arrow {
-          color: $brand-primary;
+          color: $brand__primary;
         }
       }
     }
+
     .brz-ed-control__multiSelect--tag--value {
       color: $gray-light;
       transition: 0.2s color linear;
     }
+
     .brz-control__select--arrow {
       color: $gray-light;
       transition: 0.2s color linear;

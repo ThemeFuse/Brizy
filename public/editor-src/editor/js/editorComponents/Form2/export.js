@@ -533,7 +533,7 @@ function getFormData(form) {
       const isOptions = node.querySelector(
         ".brz-forms2__checkbox, .brz-forms2__radio"
       );
-      if (isOptions && elements.length > 1) {
+      if (isOptions) {
         let elementValues = [];
 
         elements.forEach((element) => {

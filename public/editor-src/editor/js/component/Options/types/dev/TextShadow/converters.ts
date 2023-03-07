@@ -3,7 +3,7 @@ import {
   FromElementModelGetter,
   ToElementModel
 } from "visual/component/Options/Type";
-import { Empty, isEmpty, isNoEmpty, NoEmpty, Value } from "./types/Value";
+import { Empty, isEmpty, isNoEmpty, NoEmpty } from "./types/Value";
 import * as Str from "visual/utils/string/specs";
 import * as Num from "visual/utils/math/number";
 import * as Hex from "visual/utils/color/Hex";
@@ -83,10 +83,10 @@ export const elementModelToEmpty = parseStrict<FromElementModelGetter, Empty>({
   )
 });
 
-export const fromElementModel: FromElementModel<Value> = g =>
+export const fromElementModel: FromElementModel<"textShadow-dev"> = g =>
   elementModelToNoEmpty(g) ?? elementModelToEmpty(g);
 
-export const toElementModel: ToElementModel<Value> = match(
+export const toElementModel: ToElementModel<"textShadow-dev"> = match(
   [
     isEmpty,
     (v): ElementModel => ({

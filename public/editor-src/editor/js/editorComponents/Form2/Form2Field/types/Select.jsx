@@ -200,7 +200,8 @@ export default class Select extends TextField {
     const clickOutsideExceptions = [
       ".brz-portal-forms__select",
       ".brz-ed-toolbar",
-      ".brz-ed-tooltip__content-portal"
+      ".brz-ed-tooltip__content-portal",
+      ".brz-ed-eyeDropper"
     ];
     const className = classnames("brz-input", {
       "brz-p-events--none": !showPlaceholder

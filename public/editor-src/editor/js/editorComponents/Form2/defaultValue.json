@@ -15,6 +15,7 @@
     "placeholder": "on",
 
     "width": 50,
+    "widthSuffix": "%",
 
     "submitWidth": 100,
     "submitWidthSuffix": "%",
@@ -46,7 +47,6 @@
     "tempPaddingBottomSuffix": "px",
     "tempPaddingLeftSuffix": "px",
 
-    "tabletHorizontalAlign": null,
     "tabletWidth": null,
     "tabletSubmitWidth": null,
     "tabletSubmitWidthSuffix": null,
@@ -78,7 +78,6 @@
     "tempTabletPaddingBottomSuffix": "px",
     "tempTabletPaddingLeftSuffix": "px",
 
-    "mobileHorizontalAlign": null,
     "mobileSubmitWidth": null,
     "mobileSubmitWidthSuffix": null,
 

@@ -140,7 +140,14 @@ class Brizy_Public_AssetEnqueueManager {
 		$assetAggregator = new AssetAggregator( array_merge( $ours, $others ) );
 
 		foreach ( $assetAggregator->getAssetList() as $asset ) {
-			$this->styles[ $this->getHandle( $asset ) ] = $asset;
+			/*
+			 * Allow the manipulation of styles from the outside,
+			 * for example when you have a duplicate meta tag viewport that can come from the theme,
+			 * you can disable ours by this filter and its name
+			 */
+			if ( apply_filters( 'brizy_add_style', $asset ) ) {
+				$this->styles[ $this->getHandle( $asset ) ] = $asset;
+			}
 		}
 
 		$registered = [];

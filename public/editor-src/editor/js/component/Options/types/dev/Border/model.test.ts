@@ -33,7 +33,7 @@ import * as Width from "./entities/width";
 import * as WidthType from "./entities/widthType";
 import * as Hex from "visual/utils/color/Hex";
 import { Value } from "visual/component/Options/types/dev/Border/entities/Value";
-import { DEFAULT_VALUE } from "visual/component/Options/types/dev/Border/utils";
+import { defaultValue } from "visual/component/Options/types/dev/Border/converters";
 
 const hexs = ["#333", "#123456"].map(Hex.unsafe);
 const opacity = times(11, i => i * 0.1).map(Opacity.unsafe);
@@ -58,24 +58,24 @@ export const testBorderIsEmpty = (m: Value): void => {
 describe("Testing 'getStyle' function", function() {
   Style.styles.forEach(style =>
     test(`Expect ${style}`, () => {
-      expect(getStyle({ ...DEFAULT_VALUE, style })).toBe(style);
+      expect(getStyle({ ...defaultValue, style })).toBe(style);
     })
   );
 });
 
 describe("Testing 'setStyle' function", function() {
-  testSetterValidation(setStyle, getStyle, DEFAULT_VALUE, Style.styles);
+  testSetterValidation(setStyle, getStyle, defaultValue, Style.styles);
   testSetterTemp(
     setStyle,
     getStyle,
     tempGetter("style"),
-    DEFAULT_VALUE,
+    defaultValue,
     Style.empty,
     filterEmpty(Style.empty, Style.styles)
   );
 
   test("When style is empty, opacity, palette, width should be empty", () => {
-    const model = setStyle(Style.empty, DEFAULT_VALUE);
+    const model = setStyle(Style.empty, defaultValue);
 
     testBorderIsEmpty(model);
   });
@@ -84,43 +84,43 @@ describe("Testing 'setStyle' function", function() {
 describe("Testing 'setHex' function", function() {
   hexs.forEach(hex =>
     test(`Expect ${hex}`, () => {
-      expect(setHex(hex, { ...DEFAULT_VALUE, hex }).hex).toBe(hex);
+      expect(setHex(hex, { ...defaultValue, hex }).hex).toBe(hex);
     })
   );
 });
 
 describe("Testing 'setOpacity' function", function() {
-  testSetterValidation(setOpacity, getOpacity, DEFAULT_VALUE, opacity);
+  testSetterValidation(setOpacity, getOpacity, defaultValue, opacity);
   testSetterTemp(
     setOpacity,
     getOpacity,
     tempGetter<"opacity", Value>("opacity"),
-    DEFAULT_VALUE,
+    defaultValue,
     Opacity.empty,
     filterEmpty(Opacity.empty, opacity)
   );
 
   test("When opacity is empty, style, palette, width should be empty", () => {
-    const model = setOpacity(Opacity.empty, DEFAULT_VALUE);
+    const model = setOpacity(Opacity.empty, defaultValue);
 
     testBorderIsEmpty(model);
   });
 });
 
 describe("Testing 'setPalette' function", function() {
-  testSetterValidation(setPalette, getPalette, DEFAULT_VALUE, Palette.palettes);
+  testSetterValidation(setPalette, getPalette, defaultValue, Palette.palettes);
 
   testSetterTemp(
     setPalette,
     getPalette,
     tempGetter<"palette", Value>("palette"),
-    DEFAULT_VALUE,
+    defaultValue,
     Palette.empty,
     filterEmpty(Palette.empty, Palette.palettes)
   );
 
   test("When palette is empty, style, opacity, width should be empty", () => {
-    const model = setPalette(Palette.empty, DEFAULT_VALUE);
+    const model = setPalette(Palette.empty, defaultValue);
 
     testBorderIsEmpty(model);
   });
@@ -129,7 +129,7 @@ describe("Testing 'setPalette' function", function() {
 describe("Testing 'getWidthType' function", function() {
   WidthType.types.forEach(widthType =>
     test(`Expect ${widthType}`, () => {
-      expect(getWidthType({ ...DEFAULT_VALUE, widthType })).toBe(widthType);
+      expect(getWidthType({ ...defaultValue, widthType })).toBe(widthType);
     })
   );
 });
@@ -138,7 +138,7 @@ describe("Testing 'setWidthType' function", function() {
   testSetterValidation(
     setWidthType,
     getWidthType,
-    DEFAULT_VALUE,
+    defaultValue,
     WidthType.types
   );
 });
@@ -148,16 +148,16 @@ describe("Testing 'getWidth' function", function() {
     .map(Width.unsafe)
     .forEach(width =>
       test(`Expect ${width}`, () => {
-        expect(getWidth({ ...DEFAULT_VALUE, width })).toBe(width);
+        expect(getWidth({ ...defaultValue, width })).toBe(width);
       })
     );
 });
 
 describe("Testing 'setWidth' function", function() {
-  testSetterValidation(setWidth, getWidth, DEFAULT_VALUE, widths);
+  testSetterValidation(setWidth, getWidth, defaultValue, widths);
 
   test("When palette is width, style, opacity, palette should be empty", () => {
-    const model = setPalette(Palette.empty, DEFAULT_VALUE);
+    const model = setPalette(Palette.empty, defaultValue);
 
     testBorderIsEmpty(model);
   });
@@ -168,7 +168,7 @@ describe("Testing 'getTopWidth' function", function() {
     .map(Width.unsafe)
     .forEach(topWidth =>
       test(`Expect ${topWidth}`, () => {
-        expect(getTopWidth({ ...DEFAULT_VALUE, topWidth })).toBe(topWidth);
+        expect(getTopWidth({ ...defaultValue, topWidth })).toBe(topWidth);
       })
     );
 });
@@ -177,12 +177,12 @@ describe("Testing 'setTopWidth' function", function() {
   testSetterValidation(
     setTopWidth,
     getTopWidth,
-    { ...DEFAULT_VALUE, widthType: WidthType.UNGROUPED },
+    { ...defaultValue, widthType: WidthType.UNGROUPED },
     widths
   );
 
   test("When palette is width, style, opacity, palette should be empty", () => {
-    const model = setPalette(Palette.empty, DEFAULT_VALUE);
+    const model = setPalette(Palette.empty, defaultValue);
 
     testBorderIsEmpty(model);
   });
@@ -193,14 +193,12 @@ describe("Testing 'getRightWidth' function", function() {
     .map(Width.unsafe)
     .forEach(rightWidth =>
       test(`Expect ${rightWidth}`, () => {
-        expect(getRightWidth({ ...DEFAULT_VALUE, rightWidth })).toBe(
-          rightWidth
-        );
+        expect(getRightWidth({ ...defaultValue, rightWidth })).toBe(rightWidth);
       })
     );
 
   test("When palette is width, style, opacity, palette should be empty", () => {
-    const model = setPalette(Palette.empty, DEFAULT_VALUE);
+    const model = setPalette(Palette.empty, defaultValue);
 
     testBorderIsEmpty(model);
   });
@@ -210,12 +208,12 @@ describe("Testing 'setRightWidth' function", function() {
   testSetterValidation(
     setRightWidth,
     getRightWidth,
-    { ...DEFAULT_VALUE, widthType: WidthType.UNGROUPED },
+    { ...defaultValue, widthType: WidthType.UNGROUPED },
     widths
   );
 
   test("When palette is width, style, opacity, palette should be empty", () => {
-    const model = setPalette(Palette.empty, DEFAULT_VALUE);
+    const model = setPalette(Palette.empty, defaultValue);
 
     testBorderIsEmpty(model);
   });
@@ -226,14 +224,14 @@ describe("Testing 'getBottomWidth' function", function() {
     .map(Width.unsafe)
     .forEach(bottomWidth =>
       test(`Expect ${bottomWidth}`, () => {
-        expect(getBottomWidth({ ...DEFAULT_VALUE, bottomWidth })).toBe(
+        expect(getBottomWidth({ ...defaultValue, bottomWidth })).toBe(
           bottomWidth
         );
       })
     );
 
   test("When palette is width, style, opacity, palette should be empty", () => {
-    const model = setPalette(Palette.empty, DEFAULT_VALUE);
+    const model = setPalette(Palette.empty, defaultValue);
 
     testBorderIsEmpty(model);
   });
@@ -243,12 +241,12 @@ describe("Testing 'setBottomWidth' function", function() {
   testSetterValidation(
     setBottomWidth,
     getBottomWidth,
-    { ...DEFAULT_VALUE, widthType: WidthType.UNGROUPED },
+    { ...defaultValue, widthType: WidthType.UNGROUPED },
     widths
   );
 
   test("When palette is width, style, opacity, palette should be empty", () => {
-    const model = setPalette(Palette.empty, DEFAULT_VALUE);
+    const model = setPalette(Palette.empty, defaultValue);
 
     testBorderIsEmpty(model);
   });
@@ -259,7 +257,7 @@ describe("Testing 'getLeftWidth' function", function() {
     .map(Width.unsafe)
     .forEach(leftWidth =>
       test(`Expect ${leftWidth}`, () => {
-        expect(getLeftWidth({ ...DEFAULT_VALUE, leftWidth })).toBe(leftWidth);
+        expect(getLeftWidth({ ...defaultValue, leftWidth })).toBe(leftWidth);
       })
     );
 });
@@ -268,12 +266,12 @@ describe("Testing 'setLeftWidth' function", function() {
   testSetterValidation(
     setLeftWidth,
     getLeftWidth,
-    { ...DEFAULT_VALUE, widthType: WidthType.UNGROUPED },
+    { ...defaultValue, widthType: WidthType.UNGROUPED },
     widths
   );
 
   test("When palette is empty, then width, style, opacity, palette should be empty", () => {
-    const model = setPalette(Palette.empty, DEFAULT_VALUE);
+    const model = setPalette(Palette.empty, defaultValue);
 
     testBorderIsEmpty(model);
   });
@@ -286,6 +284,6 @@ describe("Testing 'setLeftWidth' function", function() {
       leftWidth: Width.unsafe(2)
     };
 
-    expect(setWidth(Width.unsafe(2), DEFAULT_VALUE)).toMatchObject(r);
+    expect(setWidth(Width.unsafe(2), defaultValue)).toMatchObject(r);
   });
 });

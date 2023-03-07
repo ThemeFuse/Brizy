@@ -1,37 +1,39 @@
 @import "../../variables";
 @import "../../mixins/arrow";
 
-$main-color: rgba($control-background-color, 0.92);
+$main-color: rgba($control-bg, 0.92);
 
 // --- Helper Option
 .brz-ed-option__helper {
   margin-left: 7px;
   cursor: pointer;
-  color: rgba($gray-light, 0.35);
+  color: $popover_tooltips__icon-color;
   transition: color 0.3s ease-out;
   position: relative;
   display: inline-flex;
   align-items: center;
 
   &:hover {
-    color: rgba($gray-light, 0.6);
+    color: $popover_tooltips__icon-color--hover;
   }
+
   svg {
     overflow: visible;
   }
 
   .brz-ed-tooltip__overlay {
-    background-color: transparent;
+    background-color: $popover_tooltips__helper__overlay-bg;
 
-    @include arrow($toolbar-arrow-size, $main-color);
+    @include arrow($toolbar__arrow-size, $main-color);
   }
+
   &__content {
     font-size: 13px;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     line-height: 1.5;
     width: 240px;
-    background-color: $main-color;
-    color: rgba(255, 255, 255, 0.8);
+    background-color: $popover_tooltips__helper__content-bg;
+    color: $popover_tooltips__helper__content-color;
     text-align: left;
     padding: 13px 20px;
     border-radius: 10px;

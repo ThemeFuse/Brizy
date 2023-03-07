@@ -56,12 +56,10 @@ export function getItems({ v, context, device }) {
                       config: {
                         choices: richTextDC
                       },
-                      options: [
-                        {
-                          id: "customID",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customID",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "cssClass",
@@ -77,12 +75,10 @@ export function getItems({ v, context, device }) {
                       config: {
                         choices: richTextDC
                       },
-                      options: [
-                        {
-                          id: "customClassName",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customClassName",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "hoverTransition",

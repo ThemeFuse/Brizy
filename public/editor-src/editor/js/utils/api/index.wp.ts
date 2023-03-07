@@ -33,9 +33,9 @@ import {
   DeleteSavedLayoutById,
   GetAuthors,
   GetDynamicContent,
+  GetPostTaxonomies,
   GetPosts,
   GetPostsSourceRefs,
-  GetPostTaxonomies,
   GetRulePostsGroupList,
   GetSavedBlockById,
   GetSavedBlocksMeta,
@@ -52,6 +52,7 @@ import {
   UploadSavedPopups
 } from "./types";
 import { makeFormEncode, makeUrl } from "./utils";
+
 export { makeFormEncode, makeUrl };
 
 type Project = ReduxState["project"];
@@ -1241,7 +1242,7 @@ export async function getUploadedFonts(): Promise<unknown> {
 
 //#region Attachment byId
 
-export async function getAttachmentById(id: string): Promise<unknown> {
+export async function getAttachmentById(id: string): Promise<{ uid: string }> {
   const {
     editorVersion,
     wp: {
@@ -1321,7 +1322,11 @@ export function sendHearBeatTakeOver(): Promise<unknown> {
 //#endregion
 
 //#region GetPostObjects
-
+/////
+/////
+///// getPostObjects is not used, need to review if is needed to delete or leave it for future
+/////
+/////
 export async function getPostObjects(postType: string): Promise<unknown> {
   const {
     editorVersion,

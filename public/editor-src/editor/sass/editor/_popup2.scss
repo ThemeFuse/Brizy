@@ -3,9 +3,10 @@
   &[data-border="popup2"] {
     position: fixed;
   }
+
   &__button-go-to-editor {
     display: flex;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     position: absolute;
     left: 40px;
     top: 36px;
@@ -27,16 +28,18 @@
       text-decoration: none;
       transition: 0.2s linear color;
     }
+
     &:focus {
       outline: none;
     }
   }
+
   &__icon-go-to-editor {
     vertical-align: text-top;
     margin: auto 16px auto 0;
   }
 
-  .brz-ed-collapsible > .brz-ed-collapsible__icon {
+  .brz-ed-collapsible>.brz-ed-collapsible__icon {
     top: 34px;
   }
 }

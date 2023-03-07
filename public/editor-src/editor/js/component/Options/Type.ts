@@ -1,13 +1,13 @@
 import { ReactNode } from "react";
-import { MValue } from "visual/utils/value";
-import { OptionName } from "visual/component/Options/types";
-import { Literal } from "visual/utils/types/Literal";
 import { ElementModel } from "visual/component/Elements/Types";
 import {
-  GenericToolbarItemType,
-  ToolbarItemType
-} from "visual/editorComponents/ToolbarItemType";
+  OptionName,
+  OptionPatch,
+  OptionValue
+} from "visual/component/Options/types";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
+import { Literal } from "visual/utils/types/Literal";
+import { MValue } from "visual/utils/value";
 
 export type OnChange<T> = (v: T) => void;
 
@@ -15,13 +15,18 @@ export type SimpleValue<T> = { value: T };
 
 export type FromElementModelGetter = (k: string) => MValue<Literal>;
 
-export const callGetter = (s: string) => (
-  g: FromElementModelGetter
-): MValue<Literal> => g(s);
+export const callGetter =
+  (s: string) =>
+  (g: FromElementModelGetter): MValue<Literal> =>
+    g(s);
 
-export type FromElementModel<M> = (get: FromElementModelGetter) => Partial<M>;
+export type FromElementModel<T extends OptionName> = (
+  get: FromElementModelGetter
+) => Partial<OptionValue<T>>;
 
-export type ToElementModel<M> = (value: M) => ElementModel;
+export type ToElementModel<T extends OptionName> = (
+  value: OptionPatch<T>
+) => ElementModel;
 
 export type Props<Model, Patch = Model> = {
   value: Model;
@@ -30,36 +35,3 @@ export type Props<Model, Patch = Model> = {
   label?: ReactNode;
   description?: ReactNode;
 };
-
-export type OptionType<M, Patch = M> = {
-  fromElementModel: FromElementModel<M>;
-  defaultValue: M;
-  toElementModel: ToElementModel<Patch>;
-};
-
-export interface SelfFilter<Type extends OptionName> {
-  /**
-   * @internal
-   */
-  filter: (
-    f: (t: ToolbarItemType) => ToolbarItemType | undefined,
-    t: GenericToolbarItemType<Type>
-  ) => GenericToolbarItemType<Type> | undefined;
-
-  /**
-   * @internal
-   */
-  map: (
-    f: (t: ToolbarItemType) => ToolbarItemType,
-    t: GenericToolbarItemType<Type>
-  ) => GenericToolbarItemType<Type>;
-
-  /**
-   * @internal
-   */
-  reduce: <T>(
-    fn: (acc: T, item: ToolbarItemType) => T,
-    t0: T,
-    item: GenericToolbarItemType<Type>
-  ) => T;
-}

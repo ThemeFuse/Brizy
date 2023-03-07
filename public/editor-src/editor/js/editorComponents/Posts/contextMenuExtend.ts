@@ -10,11 +10,11 @@ import type { Editor } from "visual/editorComponents/EditorComponent";
 const os = detectOS();
 const isMac = os === "MacOS";
 
-const getKeyModifier = (isInSubMenu: boolean): "Alt" | "⌘" | "Ctrl" => {
+const getKeyModifier = (isInSubMenu: boolean): "alt" | "⌘" | "ctrl" => {
   if (isMac) {
-    return isInSubMenu ? "Alt" : "⌘";
+    return isInSubMenu ? "alt" : "⌘";
   } else {
-    return isInSubMenu ? "Alt" : "Ctrl";
+    return isInSubMenu ? "alt" : "ctrl";
   }
 };
 

@@ -1,0 +1,34 @@
+.brz {
+  .brz-progress-bar-style2 {
+    .brz-progress-bar__wrapper {
+      @apply overflow-hidden;
+    }
+    .brz-d-xs-flex {
+      @apply w-full;
+      @apply h-full;
+    }
+
+    .brz-progress-bar__percent {
+      @apply relative;
+      @apply inline-block;
+      @apply py-[4px];
+      @apply px-[7px];
+      @apply mb-[10px];
+      @apply text-center;
+    }
+    .brz-progress-bar-overlay {
+      @apply relative;
+      @apply w-full;
+    }
+
+    .brz-progress-bar-overlay::after {
+      @apply content-[''];
+      @apply absolute;
+      @apply top-0;
+      @apply left-0;
+      @apply w-full;
+      @apply h-full;
+      @apply pointer-events-none;
+    }
+  }
+}

@@ -85,7 +85,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
       type: "popover-dev",
       config: {
         icon: "nc-font",
-        size: device === "desktop" ? "large" : "auto",
+        size: device === "desktop" ? "xlarge" : "auto",
         title: t("Typography")
       },
       roles: ["admin"],
@@ -105,9 +105,13 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                 {
                   id: "gridTypography",
                   type: "grid-dev",
+                  config: {
+                    separator: true
+                  },
                   columns: [
                     {
                       id: "col-1",
+                      size: 1,
                       options: [
                         {
                           id: "typography",
@@ -121,6 +125,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                     },
                     {
                       id: "col-2",
+                      size: "auto",
                       align: "center",
                       options: [
                         {
@@ -146,10 +151,14 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                 {
                   id: "gridTypography",
                   type: "grid-dev",
+                  config: {
+                    separator: true
+                  },
                   disabled: percentageOff,
                   columns: [
                     {
                       id: "col-1",
+                      size: 1,
                       options: [
                         {
                           id: "",
@@ -162,6 +171,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                     },
                     {
                       id: "col-2",
+                      size: "auto",
                       align: "center",
                       options: [
                         {

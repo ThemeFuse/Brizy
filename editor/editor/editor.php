@@ -142,41 +142,41 @@ class Brizy_Editor_Editor_Editor {
 			'serverTimestamp' => time(),
 			'menuData'        => $this->get_menu_data(),
 			'wp'              => array(
-				'pluginPrefix'    => Brizy_Editor::prefix(),
-				'permalink'       => get_permalink( $wp_post_id ),
-				'page'            => $wp_post_id,
-				'postType'        => get_post_type( $wp_post_id ),
-				'featuredImage'   => $this->getThumbnailData( $wp_post_id ),
-				'templates'       => $this->post->get_templates(),
+				'pluginPrefix'  => Brizy_Editor::prefix(),
+				'permalink'     => get_permalink( $wp_post_id ),
+				'page'          => $wp_post_id,
+				'postType'      => get_post_type( $wp_post_id ),
+				'featuredImage' => $this->getThumbnailData( $wp_post_id ),
+				'templates'     => $this->post->get_templates(),
 
-                'plugins' => array(
-                    'dummy' => true,
-                    'woocommerce' => self::get_woocomerce_plugin_info(),
-                ),
-                'hasSidebars' => count($wp_registered_sidebars) > 0,
-                'l10n' => $this->getTexts(),
-                'pageData' => apply_filters('brizy_page_data', array()),
-                'availableRoles' => Brizy_Admin_Membership_Membership::roleList(),
-                'usersCanRegister' => get_option('users_can_register'),
-            ),
-            'mode' => $mode,
-            'applications' => array(
-                'form' => array(
-                    'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
-                            Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
-                        ),
-                ),
-            ),
-            'server' => array(
-                'maxUploadFileSize' => $this->fileUploadMaxSize(),
-            ),
-            'branding' => array('name' => __bt('brizy', 'Brizy')),
-            'prefix' => Brizy_Editor::prefix(),
-            'cloud' => $this->getCloudInfo(),
-            'editorVersion' => BRIZY_EDITOR_VERSION,
-	        'imageSizes'      => $this->getImgSizes()
+				'plugins'          => array(
+					'dummy'       => true,
+					'woocommerce' => self::get_woocomerce_plugin_info(),
+				),
+				'hasSidebars'      => count( $wp_registered_sidebars ) > 0,
+				'l10n'             => $this->getTexts(),
+				'pageData'         => apply_filters( 'brizy_page_data', array() ),
+				'availableRoles'   => Brizy_Admin_Membership_Membership::roleList(),
+				'usersCanRegister' => get_option( 'users_can_register' ),
+			),
+			'mode'            => $mode,
+			'applications'    => array(
+				'form' => array(
+					'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
+							Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
+						),
+				),
+			),
+			'server'          => array(
+				'maxUploadFileSize' => $this->fileUploadMaxSize(),
+			),
+			'branding'        => array( 'name' => __bt( 'brizy', 'Brizy' ) ),
+			'prefix'          => Brizy_Editor::prefix(),
+			'cloud'           => $this->getCloudInfo(),
+			'editorVersion'   => BRIZY_EDITOR_VERSION,
+			'imageSizes'      => $this->getImgSizes()
 		);
-		$manager = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
+		$manager           = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 
 		$config = $this->addRecaptchaAccounts( $manager, $config, $context );
 		$config = $this->addSocialAccounts( $manager, $config, $context );
@@ -185,7 +185,7 @@ class Brizy_Editor_Editor_Editor {
 		$config = $this->getApiActions( $config, $context );
 		$config = $this->addGlobalBlocksData( $config );
 		$config = $this->addGlobalBlocksData( $config );
-		$config = $this->getPostLoopSources( $config,$mode === 'template', $wp_post_id, $context );
+		$config = $this->getPostLoopSources( $config, $mode === 'template', $wp_post_id, $context );
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
 
@@ -223,21 +223,21 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 
-	private function getPostLoopSources($config, $isTemplate, $wp_post_id, $context ) {
+	private function getPostLoopSources( $config, $isTemplate, $wp_post_id, $context ) {
 		$excludePostTypes = [ 'attachment' ];
 
 		$types  = get_post_types( [ 'public' => true ] );
 		$result = [];
 
 		$templateTypeArchive = false;
-		if( $isTemplate ) {
+		if ( $isTemplate ) {
 			$template_type = Brizy_Admin_Templates::getTemplateType( $wp_post_id );
-			if($template_type==Brizy_Admin_Templates::TYPE_ARCHIVE || $template_type==Brizy_Admin_Templates::TYPE_PRODUCT_ARCHIVE ) {
+			if ( $template_type == Brizy_Admin_Templates::TYPE_ARCHIVE || $template_type == Brizy_Admin_Templates::TYPE_PRODUCT_ARCHIVE ) {
 				$templateTypeArchive = true;
 			}
 		}
 
-		if ( $templateTypeArchive) {
+		if ( $templateTypeArchive ) {
 			$result[] = [
 				"name"  => "brz_current_context",
 				"label" => "Current Query"
@@ -259,6 +259,16 @@ class Brizy_Editor_Editor_Editor {
 
 		$config['wp']['postLoopSources'] = $result;
 
+
+		# as stated in this issue: https://github.com/bagrinsergiu/blox-editor/issues/21795
+		# we have to add in config the post sources
+		$config['posts']['sources'] = array_map( function ( $source ) {
+			return [
+				'value' => $source['name'],
+				'title' => $source['label']
+			];
+		}, $result );
+
 		return $config;
 	}
 
@@ -275,9 +285,9 @@ class Brizy_Editor_Editor_Editor {
 			$postTermsByKeys[ $term->term_id ] = $term;
 		}
 
-		$config['wp']['postTerms']        = $postTerms;
+		$config['wp']['postTerms']       = $postTerms;
 		$config['wp']['postTermParents'] = array_diff_key( $this->getAllParents( $postTermsByKeys ), $postTermsByKeys );
-		$config['wp']['postAuthor']       = (int) $this->post->getWpPost()->post_author;
+		$config['wp']['postAuthor']      = (int) $this->post->getWpPost()->post_author;
 
 		return $config;
 	}

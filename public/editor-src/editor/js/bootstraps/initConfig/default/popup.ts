@@ -7,21 +7,37 @@ import {
 import { isPopup } from "visual/utils/models/modes";
 import { overwriteMerge } from "./utils";
 
-export const defaultPopupSettings: PopupSettings = {
-  deletePopup: true,
-  displayCondition: true
+const defaultGlobalPopup: PopupSettings = {
+  displayCondition: true,
+  deletePopup: true
+};
+
+export const defaultPopup: PopupSettings = {
+  horizontalAlign: true,
+  verticalAlign: true,
+  embedded: false,
+  displayCondition: false
 };
 
 export const addDefault = <C extends ConfigCommon>(config: C): C => {
   if (isPopup(config)) {
     const { ui = {} } = config;
     const defaultUI = {
-      popupSettings: addDefaults(ui.popupSettings ?? {}, defaultPopupSettings)
+      popupSettings: addDefaults(ui.popupSettings ?? {}, {
+        ...defaultPopup,
+        ...defaultGlobalPopup
+      })
     };
     const _ui = deepMerge(defaultUI, ui, { arrayMerge: overwriteMerge });
 
     return Object.assign(config, { ui: _ui });
   }
 
-  return config;
+  const { ui = {} } = config;
+  const defaultUI = {
+    popupSettings: addDefaults(ui.popupSettings ?? {}, defaultPopup)
+  };
+
+  const _ui = deepMerge(defaultUI, ui, { arrayMerge: overwriteMerge });
+  return Object.assign(config, { ui: _ui });
 };

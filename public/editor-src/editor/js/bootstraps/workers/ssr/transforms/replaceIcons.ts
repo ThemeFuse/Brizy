@@ -1,6 +1,21 @@
 import { decryptIcon, fetchIcon } from "visual/component/ThemeIcon/utils";
 
-let cache: Record<string, cheerio.Cheerio> = {};
+let cache: Record<string, string> = {};
+
+const replaceWith = (
+  $: cheerio.Root,
+  svg: string,
+  node: cheerio.Cheerio
+): void => {
+  const $svg = $(svg);
+  const attributes = Object.entries(node.attr());
+
+  for (let i = 0; i < attributes.length; i++) {
+    const [name, value] = attributes[i];
+    $svg.attr(name, value);
+  }
+  node.replaceWith($svg);
+};
 
 export const replaceIcons = async ($: cheerio.Root): Promise<void> => {
   const svgs: Array<{ type: string; name: string; node: cheerio.Cheerio }> = [];
@@ -17,26 +32,17 @@ export const replaceIcons = async ($: cheerio.Root): Promise<void> => {
   for (const { type, name, node } of svgs) {
     try {
       const cacheKey = `${type}:${name}`;
-      const cached = cache[cacheKey];
+      const cachedSvg = cache[cacheKey];
 
-      if (cached !== undefined) {
-        node.replaceWith(cached);
+      if (cachedSvg !== undefined) {
+        replaceWith($, cachedSvg, node);
       } else {
         const iconStr = await fetchIcon(type, name);
-
         const svg = decryptIcon(iconStr);
 
         if (svg) {
-          const $svg = $(svg);
-          const attributes = Object.entries(node.attr());
-
-          for (let i = 0; i < attributes.length; i++) {
-            const [name, value] = attributes[i];
-            $svg.attr(name, value);
-          }
-
-          cache[cacheKey] = $svg;
-          node.replaceWith($svg);
+          cache[cacheKey] = svg;
+          replaceWith($, svg, node);
         }
       }
     } catch (e) {

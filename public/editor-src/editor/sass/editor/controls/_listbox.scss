@@ -7,12 +7,12 @@ $listbox-scrollpane-track-thumb: 3px;
 // --
 .brz-ed-listbox {
   position: absolute;
-  background-color: $brand-options;
+  background-color: $brand__options;
   z-index: z("toolbar");
   border-radius: $control-border-radius;
-  box-shadow: $control-dropdown-shadow;
+  box-shadow: 0 2px 13px 0 $control__dropdown-box-shadow;
   color: #fff;
-  font-family: $font-family-1;
+  font-family: $default-font-family;
 
   &__optgroup-label,
   &__item {
@@ -23,7 +23,7 @@ $listbox-scrollpane-track-thumb: 3px;
     padding-right: $control-padding;
     font-size: $control-font-size;
     letter-spacing: $control-letter-spacing;
-    border-bottom: 1px solid $control-border-color;
+    border-bottom: 1px solid $control-border;
     line-height: $control-height;
     height: $control-height;
     transition: color 0.15s linear;
@@ -35,22 +35,27 @@ $listbox-scrollpane-track-thumb: 3px;
       border-bottom-color: transparent !important;
     }
   }
+
   &__item--active,
   &__item:hover {
-    color: $brand-primary;
+    color: $brand__primary;
     transition: color 0.15s linear;
   }
+
   &__item--disable {
     cursor: default;
   }
+
   &__optgroup {
     cursor: auto;
     height: auto;
     padding: 0;
   }
+
   &__optgroup-label {
-    color: $options-label-color;
+    color: $options__label-color;
   }
+
   &__optgroup .brz-ed-listbox__item {
     padding-left: 20px;
   }

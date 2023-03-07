@@ -61,7 +61,7 @@ export const getItems = ({
           type: "inputText-dev",
           helper: {
             content: t(
-              "Get your tracking page URL in the Tracking pages session of AfterShip application."
+              "Get your tracking page URL in the Tracking pages section of AfterShip application."
             )
           }
         },

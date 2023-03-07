@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.1.1
 Requires PHP: 5.6.20
-Stable tag: 2.4.15
+Stable tag: 2.4.16
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,25 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.16 - 2023-03-07 =
+* New: New eye dropper feature for colors 
+* New: Preparations for future UI color themes
+* Improved: Minified CSS in HTML 
+* Improved: Editor strings improvements 
+* Improved: Added Pro visual cues for PRO options inside the builder
+* Fixed: Value for Form checkbox was sent in lead even if empty 
+* Fixed: Background Vimeo video is getting zoomed in preview mode
+* Fixed: Right Sidebar advanced settings for icons and buttons 
+* Fixed: Losing global styling in Text element after refresh
+* Fixed: Text on top of custom video is pushed under the video in preview
+* Fixed: Made it more clear what video formats can be added for custom video URLs
+* Fixed: Removed black strip on the top of the custom video 
+* Fixed: Broken Links checker is reporting incorrect image URLs  
+* Fixed: Compatibility with php 8.1 
+* Fixed: Conflicts with SiteGround Optimizer 
+* Fixed: The possibility to disable our meta tag viewport, viewport meta tag was duplicated in some cases
+* Fixed: The disappearance of texts in the editor when TranslatePress is enabled 
 
 = 2.4.15 - 2023-01-31 =
 * Fixed: Menu hamburger - items link on responsive mode

@@ -6,7 +6,7 @@ import {
   Props as ControlProps
 } from "visual/component/Controls/Border";
 import * as Option from "visual/component/Options/Type";
-import { OptionType } from "visual/component/Options/Type";
+import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
 import { getColorPaletteColors } from "visual/utils/color";
@@ -18,12 +18,7 @@ import { Value } from "./entities/Value";
 import * as BorderStyle from "./entities/style";
 import * as Width from "./entities/width";
 import * as BorderModel from "./model";
-import {
-  DEFAULT_VALUE,
-  fromElementModel,
-  getStyleObject,
-  toElementModel
-} from "./utils";
+import { getStyleObject } from "./utils";
 import { _setOpacity } from "./utils";
 
 export interface Props
@@ -31,12 +26,7 @@ export interface Props
     WithConfig<Config>,
     WithClassName {}
 
-export const Border: OptionType<Value> & FC<Props> = ({
-  value,
-  onChange,
-  className,
-  config
-}) => {
+export const Border: FC<Props> = ({ value, onChange, className, config }) => {
   const dispatch = useDispatch();
   const styles = config?.styles ?? BorderStyle.styles;
   const hasNone = styles.includes(BorderStyle.empty);
@@ -117,11 +107,21 @@ export const Border: OptionType<Value> & FC<Props> = ({
     [dispatch]
   );
 
+  const enableGlobalStyle = useMemo((): boolean => {
+    const config = GlobalConfig.getAll();
+    const { bottomTabsOrder = [], topTabsOrder = [] } =
+      config.ui?.leftSidebar ?? {};
+
+    return [...bottomTabsOrder, ...topTabsOrder].includes(
+      LeftSidebarOptionsIds.globalStyle
+    );
+  }, []);
+
   return (
     <Control
       className={className}
       paletteList={getColorPaletteColors()}
-      paletteOpenSettings={openPaletteSidebar}
+      paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
       enableOpacity={config?.opacity ?? true}
       styles={styles.map(getStyleObject).filter(Boolean)}
       widthTypes={config?.width ?? ["grouped", "ungrouped"]}
@@ -148,7 +148,3 @@ export const Border: OptionType<Value> & FC<Props> = ({
     />
   );
 };
-
-Border.fromElementModel = fromElementModel;
-Border.toElementModel = toElementModel;
-Border.defaultValue = DEFAULT_VALUE;

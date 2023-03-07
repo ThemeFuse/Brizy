@@ -1,0 +1,33 @@
+.brz-input {
+  text-shadow: none;
+  @apply font-default-font-family;
+  @apply text-options__item-font-size;
+  @apply not-italic;
+  @apply font-normal;
+  @apply tracking-normal;
+  @apply bg-control-bg bg-none;
+  @apply text-white;
+  @apply flex-auto;
+  @apply h-control-height;
+  @apply indent-[5px];
+  @apply py-0 px-[5px];
+  @apply rounded-control-border-radius;
+  @apply border-0;
+  @apply outline-0;
+  @apply shadow-none;
+  @apply text-left;
+  @apply ml-auto;
+  @apply w-full;
+
+  &:focus,
+  &:active {
+    @apply bg-control-bg;
+    @apply text-white;
+  }
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    @apply m-0;
+  }
+}

@@ -1,20 +1,23 @@
-import React, { ComponentType, ReactElement } from "react";
 import classNames from "classnames";
-import { types } from "./types";
-import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
-import { OptionWrapper } from "visual/component/OptionWrapper";
-import { WithClassName } from "visual/utils/options/attributes";
+import React, { ComponentType, ReactElement } from "react";
 import { OptionLabel } from "visual/component/OptionLabel";
+import { OptionWrapper } from "visual/component/OptionWrapper";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
+import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import Config from "visual/global/Config";
+import { WithClassName } from "visual/utils/options/attributes";
+import { types } from "./types";
 
 export interface Props extends WithClassName {
   data: OptionDefinition;
   toolbar?: ToolbarItemsInstance;
   location?: string;
+  className?: string;
 }
 
 export interface LegacyProps extends WithClassName {
+  onChange: (v: unknown) => void;
   toolbar: ToolbarItemsInstance | null;
   location?: string;
 }
@@ -25,6 +28,9 @@ type ComponentOptionProps = Omit<Props["data"], "label"> & {
 };
 
 class Option extends React.Component<Props> {
+  onChange = (...args: [unknown]): void => {
+    this.props.data.onChange(...args);
+  };
   renderLegacy(Component: ComponentType<LegacyProps>): ReactElement {
     const {
       data = {
@@ -38,6 +44,7 @@ class Option extends React.Component<Props> {
     return (
       <Component
         {...data}
+        onChange={this.onChange}
         className={classNames("brz-ed-option", data.className, className)}
         location={location}
         toolbar={toolbar}
@@ -64,8 +71,7 @@ class Option extends React.Component<Props> {
     const className = classNames(
       "brz-ed-option",
       `brz-ed-option-type__${type}`,
-      _className,
-      __className
+      _className
     );
 
     const Label = (
@@ -78,10 +84,17 @@ class Option extends React.Component<Props> {
     );
 
     return (
-      <OptionWrapper className={className} display={display}>
+      <OptionWrapper
+        className={className}
+        display={display}
+        lock={optionProps.isPro}
+        upgradeToPro={Config.getAll().urls.upgradeToPro}
+      >
         <Component
           toolbar={this.props.toolbar}
           {...optionProps}
+          className={__className}
+          onChange={this.onChange}
           label={Label}
         />
       </OptionWrapper>

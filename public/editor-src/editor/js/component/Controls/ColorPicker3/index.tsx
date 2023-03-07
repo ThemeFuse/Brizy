@@ -1,18 +1,18 @@
-import React, { FC } from "react";
 import classNames from "classnames";
-import ColorPicker2 from "visual/component/Controls/ColorPicker2";
+import React, { FC } from "react";
 import { ColorPalette } from "visual/component/Controls/ColorPalette";
-import { WithClassName, WithValue } from "visual/utils/options/attributes";
 import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
+import ColorPicker2 from "visual/component/Controls/ColorPicker2";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { WithClassName, WithValue } from "visual/utils/options/attributes";
 
 const config = Config.getAll();
 
 export const paletteHex = (
   id: PaletteObject["id"],
   palettes: PaletteObject[]
-): string | undefined => palettes.find(p => p.id === id)?.hex;
+): string | undefined => palettes.find((p) => p.id === id)?.hex;
 
 const getHex = (
   hex: string,
@@ -35,7 +35,7 @@ export type Props = WithClassName &
   WithValue<Value> & {
     opacity: boolean;
     palette: PaletteObject[];
-    paletteOpenSettings: () => void;
+    paletteOpenSettings?: () => void;
     value: Value;
     onChange: (v: Value, m: Meta) => void;
   };

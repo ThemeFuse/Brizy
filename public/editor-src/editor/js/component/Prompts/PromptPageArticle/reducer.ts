@@ -1,13 +1,13 @@
-import { Setters } from "./types/Setters";
-import { Invalid, Valid } from "./types";
 import { createReducer } from "visual/component/Prompts/common/states/Classic/reducer";
 import {
   Either,
   left,
   right
 } from "visual/component/Prompts/common/states/Classic/types/Either";
-import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import { t } from "visual/utils/i18n";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
+import { Invalid, Valid } from "./types";
+import { Setters } from "./types/Setters";
 
 export const setters = (v: Invalid, a: Setters): Invalid => {
   switch (a.type) {
@@ -16,7 +16,7 @@ export const setters = (v: Invalid, a: Setters): Invalid => {
     case "SetBlog":
       return {
         ...v,
-        selected: v.items.find(i => i.id === a.payload) ?? v.selected
+        selected: v.items.find((i) => i.id === a.payload) ?? v.selected
       };
     case "SetTitle":
       return { ...v, title: a.payload };
@@ -36,7 +36,7 @@ export const validate = (v: Invalid): Either<Invalid, Valid> => {
   if (!selected) {
     return left({
       ...v,
-      error: t("You must be have one selected item")
+      error: t("You must have one selected item")
     });
   }
 

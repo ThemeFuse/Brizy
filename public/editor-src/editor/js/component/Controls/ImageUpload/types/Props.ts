@@ -8,6 +8,8 @@ export interface UploadData {
   name: string;
   fileName: string;
   uid: string;
+  width: number;
+  height: number;
 }
 
 export interface Props

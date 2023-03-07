@@ -1,0 +1,23 @@
+.brz-groupDetail {
+  overflow: hidden;
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  &__item {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+
+    & > * {
+      margin: 0;
+    }
+  }
+
+  .brz-ministryBrands__item--meta--links--previous {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

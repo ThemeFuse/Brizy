@@ -14,17 +14,13 @@ jest.mock("visual/component/Options/types/BlockThumbnail.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Button.jsx", () => undefined);
 jest.mock("visual/component/Options/types/ButtonTooltip.jsx", () => undefined);
 jest.mock("visual/component/Options/types/CheckGroup.jsx", () => undefined);
-jest.mock("visual/component/Options/types/CodeMirror.js", () => undefined);
 jest.mock("visual/component/Options/types/ColorFields.jsx", () => undefined);
-jest.mock("visual/component/Options/types/ColorPalette.jsx", () => undefined);
 jest.mock("visual/component/Options/types/ColorPalette2.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/ColorPaletteEditor.jsx",
   () => undefined
 );
 jest.mock("visual/component/Options/types/ColorPicker2.jsx", () => undefined);
-jest.mock("visual/component/Options/types/FileUpload.jsx", () => undefined);
-jest.mock("visual/component/Options/types/FileUpload.wp.jsx", () => undefined);
 jest.mock("visual/component/Options/types/FontFamily.jsx", () => undefined);
 jest.mock("visual/component/Options/types/FontStyle.jsx", () => undefined);
 jest.mock(
@@ -34,10 +30,8 @@ jest.mock(
 jest.mock("visual/component/Options/types/FormApps.js", () => undefined);
 jest.mock("visual/component/Options/types/GBConditions.tsx", () => undefined);
 jest.mock("visual/component/Options/types/Grid.jsx", () => undefined);
-jest.mock("visual/component/Options/types/IconSetter.jsx", () => undefined);
 jest.mock("visual/component/Options/types/ImageSetter.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Input.jsx", () => undefined);
-jest.mock("visual/component/Options/types/InputNumber.js", () => undefined);
 jest.mock(
   "visual/component/Options/types/IntegrationsApps.js",
   () => undefined
@@ -56,20 +50,20 @@ jest.mock(
 jest.mock("visual/component/Options/types/PromptAddPopup.tsx", () => undefined);
 jest.mock("visual/component/Options/types/PromptIcon.jsx", () => undefined);
 jest.mock("visual/component/Options/types/RadioGroup.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Range.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Range2.jsx", () => undefined);
 jest.mock("visual/component/Options/types/SavedBlock.tsx", () => undefined);
 jest.mock("visual/component/Options/types/Select.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Stepper.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Switch.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Tabs.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Textarea.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);
+jest.mock("visual/component/Options/types/Tabs.jsx", () => undefined);
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
   Typography: {}
 }));
 jest.mock("visual/component/Options/types/dev/IconSetter/index.tsx", () => ({
   IconSetter: {}
+}));
+jest.mock("visual/component/EyeDropper/index.tsx", () => ({
+  EyeDropper: {}
 }));
 // endregion
 

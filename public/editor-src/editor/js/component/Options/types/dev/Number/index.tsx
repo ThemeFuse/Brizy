@@ -1,12 +1,10 @@
 import { mPipe } from "fp-utilities";
 import React, { useCallback } from "react";
 import { NumberComponent as Control } from "visual/component/Controls/Number";
+import { OnChange } from "visual/component/Options/Type";
 import { useDebouncedOnChange } from "visual/component/hooks";
-import * as Option from "visual/component/Options/Type";
-import { OnChange, SimpleValue } from "visual/component/Options/Type";
 import { pipe } from "visual/utils/fp";
 import { add, clamp, subtractR } from "visual/utils/math";
-import { NumberSpec } from "visual/utils/math/number";
 import { wrap } from "visual/utils/object/get";
 import { Component } from "./Type";
 
@@ -65,21 +63,3 @@ export const Number: Component = ({
     </>
   );
 };
-
-const getModel: Option.FromElementModel<SimpleValue<number>> = (get) => ({
-  value: NumberSpec.read(get("value"))
-});
-
-const getElementModel: Option.ToElementModel<SimpleValue<number>> = (
-  values
-) => {
-  return {
-    value: values.value
-  };
-};
-
-Number.fromElementModel = getModel;
-
-Number.toElementModel = getElementModel;
-
-Number.defaultValue = { value: 0 };

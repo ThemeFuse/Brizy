@@ -112,7 +112,22 @@ export default function changeRichText($) {
         $elem = $this;
       }
 
-      $elem.html(`{{${population}}}`);
+      const dynamicContentOption = Config.getAll()?.dynamicContentOption;
+      const useCustomPlaceholder =
+        dynamicContentOption?.richText?.useCustomPlaceholder;
+
+      let _population;
+
+      if (useCustomPlaceholder) {
+        _population = population;
+        // Removed extra attribute
+        $elem.removeAttr("data-population");
+      } else {
+        _population = `{{${population}}}`;
+      }
+
+      // Override current html with placeholder
+      $elem.html(_population);
     });
 
   // replace Image

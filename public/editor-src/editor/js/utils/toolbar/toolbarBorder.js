@@ -1,11 +1,11 @@
 import { t } from "visual/utils/i18n";
-import { capByPrefix } from "visual/utils/string";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import {
   defaultValueKey,
   defaultValueValue,
   saveOnChanges
 } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { capByPrefix } from "visual/utils/string";
 
 export function toolbarBorder2({
   v,
@@ -25,8 +25,8 @@ export function toolbarBorder2({
     { value: "dotted", icon: "nc-dotted" }
   ]
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const border = capByPrefix(prefix, "border");
   const color = capByPrefix(border, "color");
   const colorHex = capByPrefix(border, "colorHex");
@@ -109,8 +109,8 @@ export function toolbarBorderColorHexField2({
   devices = "all",
   prefix = ""
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const border = capByPrefix(prefix, "border");
   const colorHex = capByPrefix(border, "colorHex");
   const colorOpacity = capByPrefix(border, "colorOpacity");
@@ -136,34 +136,19 @@ export function toolbarBorderColorHexField2({
   };
 }
 
-export function toolbarBorderWidthOneField2({
-  v,
-  device,
-  state,
-  onChange,
-  devices = "all",
-  prefix = ""
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+export function toolbarBorderWidthOneField2({ devices = "all", prefix = "" }) {
   const border = capByPrefix(prefix, "border");
   const width = capByPrefix(border, "width");
 
   return {
-    devices,
-    id: dvk(width),
+    id: width,
+    type: "number-dev",
     label: t("Size"),
-    type: "inputNumber",
-    min: 0,
-    max: 360,
-    value: dvv(width),
-    onChange: value => {
-      const values = {
-        ...{ v, device, state, prefix, onChange },
-        ...{ value }
-      };
-      return saveOnChanges(values);
-    }
+    config: {
+      min: 0,
+      max: 360
+    },
+    devices: devices
   };
 }
 
@@ -178,8 +163,8 @@ export function toolbarBorderWidthFourFields2({
   devices = "all",
   prefix = ""
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const border = capByPrefix(prefix, "border");
   const width = capByPrefix(border, "width");
   const type = capByPrefix(width, "type");

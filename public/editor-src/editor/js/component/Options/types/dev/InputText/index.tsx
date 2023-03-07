@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Input as Control } from "visual/component/Controls/Input";
-import { String } from "visual/utils/string/specs";
-import * as Option from "visual/component/Options/Type";
 import { useDebouncedEffect } from "visual/component/hooks";
-import { Component, Model } from "./Type";
+import { Component } from "./Type";
 
 export const InputText: Component = ({
   className,
@@ -55,21 +53,3 @@ export const InputText: Component = ({
     </>
   );
 };
-
-const getModel: Option.FromElementModel<Model> = get => ({
-  value: String.read(get("value"))
-});
-
-const getElementModel: Option.ToElementModel<Model> = values => {
-  return {
-    value: values.value
-  };
-};
-
-InputText.defaultValue = {
-  value: ""
-};
-
-InputText.fromElementModel = getModel;
-
-InputText.toElementModel = getElementModel;

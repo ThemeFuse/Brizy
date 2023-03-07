@@ -356,7 +356,7 @@ export function getItems({
                 },
                 {
                   id: "showFriends",
-                  label: t("Show Friends' Faces"),
+                  label: t("Show Friend's Faces"),
                   type: "switch-dev",
                   disabled: !buttonType || boxedLayout,
                   devices: "desktop"

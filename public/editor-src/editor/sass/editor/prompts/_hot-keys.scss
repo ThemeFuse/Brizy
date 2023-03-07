@@ -33,7 +33,7 @@
 .brz-ed-hotkeys-label {
   height: 30px;
   color: #ffffff;
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   font-size: 25px;
   font-weight: 400;
   letter-spacing: -0.5px;
@@ -57,6 +57,7 @@
 .brz-ed-hotkeys-combination-container-column {
   display: table;
   height: fit-content;
+  border-spacing: 12px;
 
   &:first-child {
     margin-right: 45px;
@@ -76,9 +77,9 @@
   padding-right: 82px;
   text-align: right;
   color: #ffffff;
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   font-size: 23px;
-  font-weight: 500;
+  font-weight: 600;
 
   .divider {
     margin-left: 6px;
@@ -100,9 +101,9 @@
 
 .brz-ed-hotkeys-combination-container-column-label-2 {
   color: #818a91;
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   font-size: 17px;
-  font-weight: 500;
+  font-weight: 600;
   display: table-cell;
   align-items: center;
   white-space: nowrap;
@@ -140,7 +141,7 @@
   .brz-ed-hotkeys-label {
     height: 20px;
     color: #ffffff;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: 18px;
     font-weight: 400;
     letter-spacing: -0.5px;
@@ -174,9 +175,9 @@
     padding-right: 57px;
     text-align: right;
     color: #ffffff;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
 
     .divider {
       margin-left: 6px;
@@ -198,9 +199,9 @@
 
   .brz-ed-hotkeys-combination-container-column-label-2 {
     color: #818a91;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     display: flex;
     align-items: center;
     white-space: nowrap;

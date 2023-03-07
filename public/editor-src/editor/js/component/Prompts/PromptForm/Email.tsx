@@ -1,25 +1,16 @@
-import React, { ReactElement } from "react";
 import classnames from "classnames";
-import _ from "underscore";
 import produce from "immer";
-import BaseIntegration from "../common/GlobalApps/BaseIntegration";
-import AppList from "../common/GlobalApps/StepsView/AppsList";
-import { HelperCopy } from "./Step/common/HelperToolip";
-import Tooltip from "visual/component/Controls/Tooltip";
-import Switch from "visual/component/Controls/Switch";
-import EditorIcon from "visual/component/EditorIcon";
+import React, { ReactElement } from "react";
+import _ from "underscore";
 import { CodeMirror } from "visual/component/Controls/CodeMirror";
+import { Switch } from "visual/component/Controls/Switch";
+import Tooltip from "visual/component/Controls/Tooltip";
+import EditorIcon from "visual/component/EditorIcon";
 import { assetUrl } from "visual/utils/asset";
 import { IS_PRO, IS_WP } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
-import * as AppsComponent from "./Apps";
-import {
-  getForm,
-  createForm,
-  updateForm,
-  getSmtpIntegration,
-  createSmtpIntegration
-} from "./api";
+import BaseIntegration from "../common/GlobalApps/BaseIntegration";
+import AppList from "../common/GlobalApps/StepsView/AppsList";
 import {
   AppData,
   BaseIntegrationContext,
@@ -27,6 +18,15 @@ import {
   BaseIntegrationState,
   FormField
 } from "../common/GlobalApps/type";
+import * as AppsComponent from "./Apps";
+import { HelperCopy } from "./Step/common/HelperToolip";
+import {
+  createForm,
+  createSmtpIntegration,
+  getForm,
+  getSmtpIntegration,
+  updateForm
+} from "./api";
 
 type Props = BaseIntegrationProps & {
   formId: string;
@@ -135,7 +135,7 @@ class Email extends BaseIntegration<Props, State, Context> {
     const connectedApp = appData.id;
     const { formId } = this.props;
     const { stages = [] } =
-      this.appsData.find(app => app.id === connectedApp) || {};
+      this.appsData.find((app) => app.id === connectedApp) || {};
 
     // eslint-disable-next-line prefer-const
     let { status, data: integrationData } = await getSmtpIntegration({
@@ -169,7 +169,7 @@ class Email extends BaseIntegration<Props, State, Context> {
     }
 
     this.setState(
-      produce(draft => {
+      produce((draft) => {
         draft.stages = stages;
         draft.connectedApp = connectedApp;
         draft.data[connectedApp] = Object.assign(appData, {
@@ -222,7 +222,7 @@ class Email extends BaseIntegration<Props, State, Context> {
               </p>
               <Switch
                 className="brz-ed-control__switch--light"
-                defaultValue={hasEmailTemplate}
+                value={hasEmailTemplate}
                 onChange={this.handleEnableHtml}
               />
             </div>

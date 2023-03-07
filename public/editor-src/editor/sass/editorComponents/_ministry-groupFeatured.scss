@@ -1,0 +1,17 @@
+.brz-groupFeatured {
+  overflow: hidden;
+  &__wrapper {
+    width: 100%;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+
+    & > * {
+      margin: 0;
+    }
+  }
+}

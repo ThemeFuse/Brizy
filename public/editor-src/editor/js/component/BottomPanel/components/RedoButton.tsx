@@ -24,7 +24,7 @@ export const RedoButton: React.FC = () => {
         paddingSize="medium"
         active={canRedo}
         pointer={canRedo}
-        title="Redo (CTRL+SHIFT+Z)"
+        title="Redo (ctrl+shift+Z)"
         onClick={handleRedo}
       >
         <EditorIcon icon="nc-redo" />

@@ -7,7 +7,6 @@ import {
 } from "visual/component/Controls/BoxShadow";
 import { TypeObject } from "visual/component/Controls/BoxShadow/types";
 import * as Option from "visual/component/Options/Type";
-import { OptionType } from "visual/component/Options/Type";
 import {
   setBlur,
   setHex,
@@ -17,6 +16,7 @@ import {
   setType,
   setVertical
 } from "visual/component/Options/types/dev/BoxShadow/model";
+import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
 import { getColorPaletteColors } from "visual/utils/color";
@@ -28,20 +28,14 @@ import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 import { Config } from "./entities/Config";
 import * as Type from "./entities/Type";
 import { Value } from "./entities/Value";
-import {
-  DEFAULT_VALUE,
-  _setOpacity,
-  fromElementModel,
-  getTypesItems,
-  toElementModel
-} from "./utils";
+import { _setOpacity, getTypesItems } from "./utils";
 
 export interface Props
   extends Option.Props<Value>,
     WithConfig<Config>,
     WithClassName {}
 
-export const BoxShadow: OptionType<Value> & FC<Props> = ({
+export const BoxShadow: FC<Props> = ({
   onChange,
   value,
   className,
@@ -112,6 +106,16 @@ export const BoxShadow: OptionType<Value> & FC<Props> = ({
     [dispatch]
   );
 
+  const enableGlobalStyle = useMemo((): boolean => {
+    const config = GlobalConfig.getAll();
+    const { bottomTabsOrder = [], topTabsOrder = [] } =
+      config.ui?.leftSidebar ?? {};
+
+    return [...bottomTabsOrder, ...topTabsOrder].includes(
+      LeftSidebarOptionsIds.globalStyle
+    );
+  }, []);
+
   return (
     <ShadowControl
       opacity={config?.opacity ?? true}
@@ -120,17 +124,7 @@ export const BoxShadow: OptionType<Value> & FC<Props> = ({
       onChange={onValueChange}
       types={types}
       palette={getColorPaletteColors()}
-      paletteOpenSettings={openPaletteSidebar}
+      paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
     />
   );
 };
-
-/**
- * @param {(function(key: string): string|number)} get
- * @returns {{}}
- */
-BoxShadow.fromElementModel = fromElementModel;
-
-BoxShadow.toElementModel = toElementModel;
-
-BoxShadow.defaultValue = DEFAULT_VALUE;

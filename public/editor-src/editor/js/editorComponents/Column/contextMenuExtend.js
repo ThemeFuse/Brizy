@@ -11,9 +11,9 @@ const isMac = os === "MacOS";
 
 const getDeleteKey = isInSubMenu => {
   if (isMac) {
-    return isInSubMenu ? "Alt + delete" : "⌘ + delete";
+    return isInSubMenu ? "alt + delete" : "⌘ + delete";
   } else {
-    return isInSubMenu ? "Alt + Delete" : "Delete";
+    return isInSubMenu ? "alt + delete" : "ctrl + delete";
   }
 };
 
@@ -38,14 +38,14 @@ const getItems = itemIndex => (v, component) => {
           id: "copy",
           type: "button",
           title: t("Copy"),
-          helperText: () => (isMac ? "⌘ + C" : "Ctrl + C"),
+          helperText: () => (isMac ? "⌘ + C" : "ctrl + C"),
           onChange: () => component.copy(itemIndex)
         },
         {
           id: "paste",
           type: "button",
           title: t("Paste"),
-          helperText: () => (isMac ? "⌘ + V" : "Ctrl + V"),
+          helperText: () => (isMac ? "⌘ + V" : "ctrl + V"),
           inactive: !canPaste,
           onChange: () => component.paste(itemIndex)
         },
@@ -54,14 +54,14 @@ const getItems = itemIndex => (v, component) => {
           type: "button",
           title: t("Paste Styles"),
           inactive: !canPasteStyles,
-          helperText: () => (isMac ? "⌘ + ⇧ + V" : "Ctrl + ⇧ + V"),
+          helperText: () => (isMac ? "⌘ + ⇧ + V" : "ctrl + ⇧ + V"),
           onChange: () => component.pasteStyles(itemIndex)
         },
         {
           id: "duplicate",
           type: "button",
           title: t("Duplicate"),
-          helperText: () => (isMac ? "⌘ + D" : "Ctrl + D"),
+          helperText: () => (isMac ? "⌘ + D" : "ctrl + D"),
           onChange: () => {
             component.cloneItem(itemIndex);
           }

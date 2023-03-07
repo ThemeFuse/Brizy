@@ -1,132 +1,110 @@
 import React, {
-  FC,
   ReactElement,
+  Reducer,
   useCallback,
   useEffect,
-  useMemo,
-  useState
+  useReducer,
+  useRef
 } from "react";
-import { replaceAt } from "timm";
+import { BehaviorSubject, from, of } from "rxjs";
+import {
+  catchError,
+  distinct,
+  filter,
+  map,
+  mergeMap,
+  withLatestFrom
+} from "rxjs/operators";
 import { Gallery as Control } from "visual/component/Controls/Gallery";
 import * as Option from "visual/component/Options/Type";
-import { OptionType } from "visual/component/Options/Type";
 import * as Arr from "visual/utils/array";
-import { t } from "visual/utils/i18n";
-import { UploadData } from "visual/utils/image/uploadImage";
-import { prop } from "visual/utils/object/get";
-import { defaultValue, fromElementModel, toElementModel } from "./converters";
-import { eq, Image } from "./types/Image";
+import { pipe } from "visual/utils/fp";
+import { reducer } from "./reducer";
+import * as Actions from "./types/Actions";
+import * as Image from "./types/Image";
 import * as Item from "./types/Item";
-import { allowedExtensions, maxId } from "./utils";
+import { allowedExtensions } from "./utils";
 
-type Value = Image[];
+export type Value<I extends Image.Image> = Array<Image.Image | I>;
+type Items = Item.Item<number>[];
 
-export type Props = Option.Props<Value>;
+export type Props<I extends Image.Image> = Option.Props<Value<I>>;
 
-export const Gallery: OptionType<Value> & FC<Props> = ({
+export function Gallery<I extends Image.Image>({
   label,
   value,
   onChange
-}): ReactElement => {
-  const [items, setItems] = useState<Item.Item<number>[]>(
-    value.map((payload, id) => Item.thumbnail(id, payload))
+}: Props<I>): ReactElement<Props<I>> {
+  const [items, dispatch] = useReducer<Reducer<Items, Actions.Actions>>(
+    reducer,
+    value.map((payload, i) => {
+      // generating indexes from 1 because dnd-kit doesn't work with zero index element
+      const idx = +i + 1;
+      return Item.thumbnail(idx, payload);
+    })
   );
-  const onAdd = useCallback(
-    (ps: Promise<UploadData>[]) => {
-      const max = maxId(items);
-      setItems([...items, ...ps.map((p, i) => Item.loading(i + max + 1, p))]);
-    },
-    [items, setItems]
-  );
-  const onRemove = useCallback(
-    (id: number) => setItems(items.filter((i) => i.id !== id)),
-    [items, setItems]
-  );
-  const onSuccess = useCallback(
-    (data: UploadData, id: number): void => {
-      const index = Arr.findIndex((i) => i.id === id, items);
-      if (index !== undefined) {
-        setItems(
-          replaceAt(
-            items,
-            index,
-            Item.thumbnail(id, { name: data.name, fileName: data.fileName })
-          )
-        );
-      }
-    },
-    [items, setItems]
-  );
-  const onError = useCallback(
-    (e: unknown, id: number): void => {
-      const error = typeof e === "string" ? e : t("Unable to upload");
-      const index = Arr.findIndex((i) => i.id === id, items);
-      if (index !== undefined) {
-        setItems(replaceAt(items, index, Item.error(id, error)));
-      }
-    },
-    [items, setItems]
-  );
-  const onSort = useCallback<(from: number, to: number) => void>(
-    (from, to) => setItems(Arr.move(from, to, items)),
-    [items, setItems]
-  );
+  const items$ = useRef(new BehaviorSubject<Items>(items));
+  const value$ = useRef(new BehaviorSubject<Value<I>>(value));
+  const handleOnChange = useRef({ fn: onChange });
+  handleOnChange.current.fn = onChange;
 
-  useEffect(() => {
-    const thumbs = items.filter(Item.isThumbnail).map(prop("payload"));
-    if (!Arr.eq(eq, value, thumbs)) {
-      const max = maxId(items);
-      setItems([
-        ...value.map(
-          (v, i) => Item.thumbnail(i + max + 1, v),
-          ...items.filter((i) => !Item.isThumbnail(i))
-        )
-      ]);
-    }
-  }, [value, setItems]);
+  const onRemove = useCallback(pipe(Actions.remove, dispatch), []);
+  const onSort = useCallback(
+    pipe((from: number, to: number) => Actions.sort({ from, to }), dispatch),
+    []
+  );
+  const onAdd = useCallback(pipe(Actions.add, dispatch), []);
 
+  useEffect(() => value$.current.next(value), [value]);
+  useEffect(() => items$.current.next(items), [items]);
   useEffect(() => {
-    const thumbs = items.filter(Item.isThumbnail).map(prop("payload"));
-    if (!Arr.eq(eq, value, thumbs)) {
-      onChange(thumbs);
-    }
-  }, [items, onChange]);
-
-  useEffect(() => {
-    let flag = true;
-    items.filter(Item.isLoading).map((p) =>
-      p.payload
-        .then((r) => {
-          flag && onSuccess(r, p.id);
-          return r;
+    const onUpload$ = items$.current
+      .pipe(
+        map((s) => s.filter(Item.isLoading)),
+        // from a stream of Observable<Item[]>, convert to Observable<Item>
+        mergeMap((is) => from(is)),
+        // Make sure that only new items pass
+        distinct((i) => i.id),
+        mergeMap(({ id, payload }) => {
+          return from(payload).pipe(
+            map((data) => Actions.fetchSuccess({ id, data })),
+            catchError(() =>
+              of(
+                Actions.fetchError({
+                  id,
+                  message: "Unable to load image"
+                })
+              )
+            )
+          );
         })
-        .catch((e) => {
-          flag && onError(e, p.id);
-          throw e;
-        })
-    );
+      )
+      .subscribe(dispatch);
+    const onChange$ = items$.current
+      .pipe(
+        map((is) => is.filter(Item.isThumbnail).map((i) => i.payload)),
+        withLatestFrom(value$.current),
+        filter(([newValue, current]) => !Arr.eq(Image.eq, newValue, current)),
+        map(([v]) => v)
+      )
+      .subscribe(handleOnChange.current.fn);
 
-    return (): void => {
-      flag = false;
+    return () => {
+      onChange$.unsubscribe();
+      onUpload$.unsubscribe();
     };
-  }, [items, onError, onSuccess]);
-
-  const itemsList = useMemo(() => items.map(Item.toGalleryItem), [items]);
+  }, []);
 
   return (
     <>
       {label}
-      <Control
+      <Control<number>
         allowedExtensions={allowedExtensions}
         onSort={onSort}
         onAdd={onAdd}
-        items={itemsList}
+        items={items.map(Item.toGalleryItem)}
         onRemove={onRemove}
       />
     </>
   );
-};
-
-Gallery.defaultValue = defaultValue;
-Gallery.fromElementModel = fromElementModel;
-Gallery.toElementModel = toElementModel;
+}

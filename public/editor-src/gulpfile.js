@@ -188,16 +188,8 @@ function editorCSS() {
           console.log("Sass Syntax Error", err);
         })
     )
-    .pipe(
-      cleanCSS({
-        format: {
-          breaks: {
-            afterRuleEnds: true
-          }
-        }
-      })
-    )
     .pipe(gulpPlugins.concat("editor.css"))
+    .pipe(cleanCSS())
     .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.write()))
     .pipe(gulp.dest(dest));
 }
@@ -349,6 +341,7 @@ function exportCSS() {
         })
     )
     .pipe(gulpPlugins.concat("preview.css"))
+    .pipe(cleanCSS())
     .pipe(gulp.dest(dest));
 }
 function exportLibsCSS() {
@@ -383,6 +376,7 @@ function exportLibsCSS() {
         })
     )
     .pipe(gulpPlugins.rename(rename))
+    .pipe(cleanCSS())
     .pipe(gulp.dest(dest, { sourcemaps: !IS_PRODUCTION }));
 }
 function exportTwig() {
@@ -468,12 +462,8 @@ function proEditorCSS() {
           console.log("Sass Syntax Error", err);
         })
     )
-    .pipe(
-      cleanCSS({
-        format: { breaks: { afterRuleEnds: true } }
-      })
-    )
     .pipe(gulpPlugins.concat("editor.pro.css"))
+    .pipe(cleanCSS())
     .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.write()))
     .pipe(gulp.dest(dest));
 }
@@ -497,6 +487,7 @@ function proExportCSS() {
         })
     )
     .pipe(gulpPlugins.concat("preview.pro.css"))
+    .pipe(cleanCSS())
     .pipe(gulp.dest(dest));
 }
 function proExportLibsCSS() {
@@ -531,6 +522,7 @@ function proExportLibsCSS() {
         })
     )
     .pipe(gulpPlugins.rename(rename))
+    .pipe(cleanCSS())
     .pipe(gulp.dest(dest, { sourcemaps: !IS_PRODUCTION }));
 }
 

@@ -1,10 +1,10 @@
-import React, { CSSProperties, ReactElement } from "react";
 import classnames from "classnames";
+import React, { CSSProperties, ReactElement } from "react";
 import { Popper } from "react-popper";
+import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { getPosition as getToolbarPosition } from "visual/component/Toolbar/state";
 import { clamp } from "visual/utils/math";
 import { WithClassName } from "visual/utils/options/attributes";
-import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 
 const TOOLBAR_MARGIN = 14;
 
@@ -37,7 +37,7 @@ interface Prs extends WithClassName {
   arrow: boolean;
   arrowPlacement: "top" | "bottom";
   arrowPlacementStyle: CSSProperties;
-  size?: "small" | "medium" | "big" | "large" | "auto";
+  size?: "small" | "medium" | "large" | "xlarge" | "auto";
   offset: number;
   toolbar?: ToolbarItemsInstance;
   inPortal: boolean;
@@ -130,9 +130,8 @@ export class TooltipContent extends React.Component<Props, State> {
     const viewportHeight = document.documentElement.clientHeight;
     const pageScroll = document.documentElement.scrollTop;
     // const pageHeight = document.documentElement.scrollHeight;
-    const pageHasOverflowHidden = document.documentElement.classList.contains(
-      "brz-ow-hidden"
-    );
+    const pageHasOverflowHidden =
+      document.documentElement.classList.contains("brz-ow-hidden");
 
     const toolbarPosition = getToolbarPosition();
 
@@ -161,7 +160,7 @@ export class TooltipContent extends React.Component<Props, State> {
     let placementStyle: CSSProperties = {};
 
     const getLeft = (): number => {
-      const padding = 2;
+      const padding = 31;
       const minX = padding;
       const maxX = viewportWidth - tooltipRect.width - padding;
       const x =
@@ -216,12 +215,14 @@ export class TooltipContent extends React.Component<Props, State> {
     }
 
     // Arrow
-
     const arrowPlacement = tooltipAlignment === "above" ? "top" : "bottom";
+    const arrowPosition =
+      getLeft() === 31 ? toolbarItemRect.width - 21 : toolbarItemRect.width / 2;
+
     const arrowPlacementStyle = {
       left:
         toolbarItemRect.left +
-        toolbarItemRect.width / 2 -
+        arrowPosition -
         (Number(placementStyle.left) || 0)
     };
 

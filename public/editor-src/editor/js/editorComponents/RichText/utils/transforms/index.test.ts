@@ -22,11 +22,11 @@ function generateElem(classNames: string[]) {
   return $("p");
 }
 
-describe("Old Typography", function() {
+describe("Old Typography", function () {
   test("old typography was set", () => {
     const $elem = generateElem(["brz-tp-header1"]);
 
-    const { v } = classNamesToV2($elem);
+    const { v } = classNamesToV2($elem.attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "header1",
@@ -63,7 +63,7 @@ describe("Old Typography", function() {
   });
 });
 
-describe("New Typography", function() {
+describe("New Typography", function () {
   test("all typography was set", () => {
     const $elem = generateElem([
       "brz-tp-lg-paragraph",
@@ -71,7 +71,7 @@ describe("New Typography", function() {
       "brz-tp-xs-abovetitle"
     ]);
 
-    const { v } = classNamesToV2($elem);
+    const { v } = classNamesToV2($elem.attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "paragraph",
@@ -110,7 +110,7 @@ describe("New Typography", function() {
   test("Tablet typography was missing", () => {
     const $elem = generateElem(["brz-tp-lg-paragraph", "brz-tp-xs-abovetitle"]);
 
-    const { v } = classNamesToV2($elem);
+    const { v } = classNamesToV2($elem.attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "paragraph",
@@ -147,7 +147,7 @@ describe("New Typography", function() {
   });
 });
 
-describe("Change fs, fw, lh, ls, hA, mT, mB", function() {
+describe("Change fs, fw, lh, ls, hA, mT, mB", function () {
   test("desktop styles were set", () => {
     const $elem = generateElem([
       "brz-text-lg-center",
@@ -160,7 +160,7 @@ describe("Change fs, fw, lh, ls, hA, mT, mB", function() {
       "brz-lh-lg-1"
     ]);
 
-    const { v } = classNamesToV2($elem);
+    const { v } = classNamesToV2($elem.attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "",
@@ -198,7 +198,7 @@ describe("Change fs, fw, lh, ls, hA, mT, mB", function() {
   test("ls, lh were set", () => {
     const $elem = generateElem(["brz-ls-lg-m_3_5", "brz-lh-lg-1_7"]);
 
-    const { v } = classNamesToV2($elem);
+    const { v } = classNamesToV2($elem.attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "",
@@ -254,7 +254,7 @@ describe("Change fs, fw, lh, ls, hA, mT, mB", function() {
       "brz-mb-xs-36"
     ]);
 
-    const { v } = classNamesToV2($elem);
+    const { v } = classNamesToV2($elem.attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "paragraph",
@@ -291,7 +291,7 @@ describe("Change fs, fw, lh, ls, hA, mT, mB", function() {
   });
 });
 
-describe("Onchange FontFamily", function() {
+describe("Onchange FontFamily", function () {
   test("google font", () => {
     const $elem = generateElem([
       "brz-tp-lg-empty",
@@ -299,7 +299,7 @@ describe("Onchange FontFamily", function() {
       "brz-ft-google"
     ]);
 
-    const { v } = classNamesToV2($elem);
+    const { v } = classNamesToV2($elem.attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "",
@@ -341,7 +341,7 @@ describe("Onchange FontFamily", function() {
       "brz-ft-upload"
     ]);
 
-    const { v } = classNamesToV2($elem);
+    const { v } = classNamesToV2($elem.attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "",
@@ -378,7 +378,7 @@ describe("Onchange FontFamily", function() {
   });
 });
 
-describe("Intermediate styles", function() {
+describe("Intermediate styles", function () {
   test("all intermediate classnames added", () => {
     const $elem = generateElem([
       "brz-ff-sanchez",
@@ -400,7 +400,7 @@ describe("Intermediate styles", function() {
       "brz-ls-xs-im-0"
     ]);
 
-    const { v } = classNamesToV2($elem);
+    const { v } = classNamesToV2($elem.attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "",
@@ -437,7 +437,7 @@ describe("Intermediate styles", function() {
   });
 });
 
-describe("Empty classNames", function() {
+describe("Empty classNames", function () {
   test("tablet & mobile empty classnames", () => {
     const $elem = generateElem([
       "brz-tp-header1",
@@ -445,7 +445,7 @@ describe("Empty classNames", function() {
       "brz-tp-xs-empty"
     ]);
 
-    const { v } = classNamesToV2($elem);
+    const { v } = classNamesToV2($elem.attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "header1",
@@ -482,12 +482,12 @@ describe("Empty classNames", function() {
   });
 });
 
-describe("Tags p, h1, list", function() {
+describe("Tags p, h1, list", function () {
   test("h1 tag", () => {
     const html = `<html><head></head><body class="brz"><div class="brz-rich-text"><h1 class="brz-tp-header1"><span class="brz-cp-color7">Text</span></h1></div></body></html>`;
     const $ = cheerio.load(html);
 
-    const { v } = classNamesToV2($("h1"));
+    const { v } = classNamesToV2($("h1").attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "header1",
@@ -527,7 +527,7 @@ describe("Tags p, h1, list", function() {
     const html = `<ol><li class="brz-tp-lg-paragraph brz-bcp-color7"><span class="brz-cp-color7">The point of using dummy text for yo</span></li></ol>`;
     const $ = cheerio.load(html);
 
-    const { v } = classNamesToV2($("li"));
+    const { v } = classNamesToV2($("li").attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "paragraph",
@@ -569,7 +569,7 @@ describe("Tags p, h1, list", function() {
       "brz-bcp-color2,color7"
     ]);
 
-    const { v } = classNamesToV2($elem);
+    const { v } = classNamesToV2($elem.attr("class")?.split(" ") ?? []);
 
     expect(v).toEqual({
       typographyFontStyle: "paragraph",

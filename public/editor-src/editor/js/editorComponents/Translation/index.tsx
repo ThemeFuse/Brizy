@@ -11,7 +11,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import Config from "visual/global/Config";
-import { CMS, isCloud, isCMS } from "visual/global/Config/types/configs/Cloud";
+import { CMS, isCMS, isCloud } from "visual/global/Config/types/configs/Cloud";
 import { css } from "visual/utils/cssStyle";
 import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
 import defaultValue from "./defaultValue.json";
@@ -239,7 +239,7 @@ export default class Translation extends EditorComponent<Value, Props, State> {
           <DynamicContentHelper
             placeholder={`{{translation_switcher namedisplay="${nameDisplay}"}}`}
             tagName="div"
-            props={{ className: "brz-translation__dc" }}
+            props={{ className: "brz-translation__dc h-full" }}
           />
         </Wrapper>
       </CustomCSS>

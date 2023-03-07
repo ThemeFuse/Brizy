@@ -29,7 +29,7 @@ export function getItems({ v, device }) {
           tabs: [
             {
               id: "tabTypographyParagraph",
-              label: t("P"),
+              label: "P",
               options: [
                 {
                   id: "paragraph",
@@ -42,7 +42,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "tabTypographyH1",
-              label: t("H1"),
+              label: "H1",
               options: [
                 {
                   id: "h1",
@@ -55,7 +55,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "tabTypographyH2",
-              label: t("H2"),
+              label: "H2",
               options: [
                 {
                   id: "h2",
@@ -68,7 +68,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "tabTypographyH3",
-              label: t("H3"),
+              label: "H3",
               options: [
                 {
                   id: "h3",
@@ -81,7 +81,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "tabTypographyH4",
-              label: t("H4"),
+              label: "H4",
               options: [
                 {
                   id: "h4",
@@ -94,7 +94,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "tabTypographyH5",
-              label: t("H5"),
+              label: "H5",
               options: [
                 {
                   id: "h5",
@@ -107,7 +107,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "tabTypographyH6",
-              label: t("H6"),
+              label: "H6",
               options: [
                 {
                   id: "h6",
@@ -144,7 +144,7 @@ export function getItems({ v, device }) {
           tabs: [
             {
               id: "tabParagraph",
-              label: t("P"),
+              label: "P",
               options: [
                 {
                   id: "paragraphColor",
@@ -154,7 +154,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "tabH1",
-              label: t("H1"),
+              label: "H1",
               options: [
                 {
                   id: "h1Color",
@@ -164,7 +164,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "tabH2",
-              label: t("H2"),
+              label: "H2",
               options: [
                 {
                   id: "h2Color",
@@ -174,7 +174,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "tabH3",
-              label: t("H3"),
+              label: "H3",
               options: [
                 {
                   id: "h3Color",
@@ -184,7 +184,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "tabH4",
-              label: t("H4"),
+              label: "H4",
               options: [
                 {
                   id: "h4Color",
@@ -194,7 +194,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "tabH5",
-              label: t("H5"),
+              label: "H5",
               options: [
                 {
                   id: "h5Color",
@@ -204,7 +204,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "tabH6",
-              label: t("H6"),
+              label: "H6",
               options: [
                 {
                   id: "h6Color",

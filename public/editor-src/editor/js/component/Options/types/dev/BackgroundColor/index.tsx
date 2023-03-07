@@ -1,4 +1,4 @@
-import React, { ComponentProps, FC } from "react";
+import React, { ComponentProps, FC, useMemo } from "react";
 import { BackgroundColor as Bg } from "visual/component/Controls/BackgroundColor";
 import * as O from "visual/component/Options/Type";
 import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
@@ -6,6 +6,7 @@ import {
   paletteHex,
   setOpacity
 } from "visual/component/Options/types/dev/ColorPicker/utils";
+import Config from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
 import { getStore } from "visual/redux/store";
@@ -14,12 +15,7 @@ import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { Value } from "./entities/Value";
 import * as Model from "./model";
-import {
-  DEFAULT_VALUE,
-  fromElementModel,
-  toBgControlValue,
-  toElementModel
-} from "./utils";
+import { toBgControlValue } from "./utils";
 
 export type Props = O.Props<Value> & {
   config?: {
@@ -36,11 +32,7 @@ const openSidebar = (): void => {
   );
 };
 
-export const BackgroundColor: FC<Props> & O.OptionType<Value> = ({
-  value,
-  onChange,
-  config
-}) => {
+export const BackgroundColor: FC<Props> = ({ value, onChange, config }) => {
   const _onChange: ComponentProps<typeof Bg>["onChange"] = (v, m) => {
     const isStart = !(value.type === "gradient" && value.active === "end");
     switch (m.isChanged) {
@@ -96,20 +88,25 @@ export const BackgroundColor: FC<Props> & O.OptionType<Value> = ({
     hex: paletteHex(value.palette, palette) ?? value.hex,
     gradientHex: paletteHex(value.gradientPalette, palette) ?? value.gradientHex
   };
+
+  const enableGlobalStyle = useMemo((): boolean => {
+    const config = Config.getAll();
+    const { bottomTabsOrder = [], topTabsOrder = [] } =
+      config.ui?.leftSidebar ?? {};
+
+    return [...bottomTabsOrder, ...topTabsOrder].includes(
+      LeftSidebarOptionsIds.globalStyle
+    );
+  }, []);
+
   return (
     <Bg
       value={toBgControlValue(_value)}
       onChange={_onChange}
-      paletteOpenSettings={openSidebar}
+      paletteOpenSettings={enableGlobalStyle ? openSidebar : undefined}
       palette={paletteColors()}
       opacity={config?.opacity ?? true}
       gradientColors={[_value.hex, _value.gradientHex]}
     />
   );
 };
-
-BackgroundColor.fromElementModel = fromElementModel;
-
-BackgroundColor.toElementModel = toElementModel;
-
-BackgroundColor.defaultValue = DEFAULT_VALUE;

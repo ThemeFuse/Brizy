@@ -1,24 +1,25 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
-import CustomCSS from "visual/component/CustomCSS";
+import { Audio as AudioComponent } from "component/Flex/Audio";
+import { SoundCloud } from "component/Flex/SoundCloud";
+import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { ThemeIcon } from "visual/component/ThemeIcon";
+import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
+import { customFileUrl } from "visual/utils/customFile";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import {
   styleContent,
-  styleWrapperAudio,
   styleControls,
-  styleIcon
+  styleIcon,
+  styleWrapperAudio
 } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import { customFileUrl } from "visual/utils/customFile";
-import defaultValue from "./defaultValue.json";
-import { Wrapper } from "../tools/Wrapper";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import * as toolbarConfig from "./toolbar";
 
 const resizerPoints = [
   "topLeft",
@@ -40,7 +41,7 @@ class Audio extends EditorComponent {
 
   static experimentalDynamicContent = true;
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   getResizerRestrictions(v) {
     return {
@@ -107,10 +108,6 @@ class Audio extends EditorComponent {
     };
   }
 
-  renderCover() {
-    return <div className="brz-audio__cover" />;
-  }
-
   renderSoundCloud(v) {
     const {
       url,
@@ -127,43 +124,35 @@ class Audio extends EditorComponent {
       controlsHex,
       controlsPalette
     } = v;
-    // intrinsic-ignore - this class is needed for WP theme twentytwenty(themes/twentytwenty/assets/js/index.js?ver=1.1)
-    // intrinsicRatioVideos - property contain function - makeFit which changes iframes width
-    // and breaks our code(video, map inside megamenu isn't showing as example)
-    const wrapperClassName = classnames("brz-iframe", "intrinsic-ignore", {
-      "brz-blocked": IS_EDITOR
-    });
 
     const { hex: controlsColorHex } = getOptionColorHexByPalette(
       controlsHex,
       controlsPalette
     );
-
     const controlsColor = controlsColorHex.split("#")[1];
 
-    const src = `https://w.soundcloud.com/player/?url=${url}&auto_play=${autoPlay ===
-      "on"}&how_teaser=true&visual=${showArtwork ===
-      "on"}&color=${controlsColor}&buying=${buyButton ===
-      "on"}&sharing=${shareButton === "on"}&download=${downloadButton ===
-      "on"}&show_artwork=${artWork === "on"}&show_playcount=${playCounts ===
-      "on"}&show_user=${username === "on"}&show_comments=${comments ===
-      "on"}&liking=${likeButton === "on"}&`;
-
     return url ? (
-      <div className="brz-soundCloud-content">
-        <iframe
-          className={wrapperClassName}
-          scrolling="no"
-          frameBorder="no"
-          src={src}
-        />
-      </div>
+      <SoundCloud
+        src={url}
+        isAutoPlay={autoPlay === "on"}
+        isVisual={showArtwork === "on"}
+        showLikeButton={likeButton === "on"}
+        showBuyButton={buyButton === "on"}
+        showDownloadButton={downloadButton === "on"}
+        showShareButton={shareButton === "on"}
+        showComments={comments === "on"}
+        showPlayCounts={playCounts === "on"}
+        showUsername={username === "on"}
+        showArtwork={artWork === "on"}
+        controlsColor={controlsColor}
+        className={IS_EDITOR ? "brz-blocked" : ""}
+      />
     ) : (
       <Placeholder icon="sound-cloud" />
     );
   }
 
-  renderCustom(v, vs, vd) {
+  renderAudio(v, vs, vd) {
     const {
       loop,
       audio,
@@ -172,7 +161,7 @@ class Audio extends EditorComponent {
       showProgressBarTrack,
       showProgressBarVolume
     } = v;
-    const audioFile = customFileUrl(audio);
+
     const classNameAudio = classnames(
       "brz-custom-audio",
       css(
@@ -189,102 +178,67 @@ class Audio extends EditorComponent {
         styleControls(v, vs, vd)
       )
     );
-    const styleIconClass = css(
+    const classNameIcon = css(
       `${this.constructor.componentId}-icon`,
       `${this.getId()}-icon`,
       styleIcon(v, vs, vd)
     );
-    const playClassName = classnames(
-      "brz-icon-svg",
-      "brz-audio-play",
-      styleIconClass
+
+    const audioSource = customFileUrl(audio) ?? "";
+
+    return IS_PREVIEW ? (
+      <AudioComponent
+        src={audioSource}
+        isLoop={loop === "on"}
+        showCurrentTime={showCurrentTime === "on"}
+        showDurationTime={showDurationTime === "on"}
+        showProgressBarTrack={showProgressBarTrack === "on"}
+        showProgressBarVolume={showProgressBarVolume === "on"}
+        classNameAudio={classNameAudio}
+        classNameControls={classNameControls}
+        classNameIcon={classNameIcon}
+      />
+    ) : (
+      <AudioComponent
+        src={audioSource}
+        showCurrentTime={showCurrentTime === "on"}
+        showDurationTime={showDurationTime === "on"}
+        showProgressBarTrack={showProgressBarTrack === "on"}
+        showProgressBarVolume={showProgressBarVolume === "on"}
+        classNameAudio={classNameAudio}
+        classNameControls={classNameControls}
+        classNameIcon={classNameIcon}
+      />
     );
-    const pauseClassName = classnames(
-      "brz-hidden",
-      "brz-icon-svg",
-      "brz-audio-pause",
-      styleIconClass
-    );
-    const muteClassName = classnames(
-      "brz-icon-svg",
-      "brz-audio-mute",
-      styleIconClass
-    );
-    const unmuteClassName = classnames(
-      "brz-hidden",
-      "brz-icon-svg",
-      "brz-audio-unmute",
-      styleIconClass
+  }
+
+  renderForView(v, vs, vd) {
+    const { type } = v;
+
+    const classNameContent = classnames(
+      { "brz-audio": type === "custom" },
+      { "brz-soundcloud": type === "soundcloud" },
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        styleContent(v, vs, vd)
+      )
     );
 
     return (
-      <div className={classNameAudio}>
-        {this.renderCover(v, vs, vd)}
-        <div className="brz-audio-play-pause-btn brz-d-xs-flex">
-          <ThemeIcon
-            className={playClassName}
-            name="button-play"
-            type="glyph"
-          />
-          {IS_PREVIEW && (
-            <ThemeIcon
-              className={pauseClassName}
-              name="button-pause"
-              type="glyph"
-            />
-          )}
-        </div>
-        <div className={classNameControls}>
-          {showCurrentTime === "on" && (
-            <span className="brz-audio-current-time">0:00</span>
-          )}
-          {showProgressBarTrack === "on" && (
-            <div className="brz-audio-slider">
-              <div className="brz-audio-progress" />
-            </div>
-          )}
-          {showDurationTime === "on" && (
-            <span className="brz-audio-total-time">0:00</span>
-          )}
-        </div>
-        {showProgressBarVolume === "on" && (
-          <div className="brz-audio-volume brz-d-xs-flex">
-            <div className="brz-audio-volume-btn brz-d-xs-flex">
-              <ThemeIcon
-                className={muteClassName}
-                name="volume-97"
-                type="glyph"
-              />
-              {IS_PREVIEW && (
-                <ThemeIcon
-                  className={unmuteClassName}
-                  name="volume-ban"
-                  type="glyph"
-                />
-              )}
-            </div>
-
-            <div className="brz-audio-volume-controls brz-d-xs-flex">
-              <div className="brz-audio-slider">
-                <div className="brz-audio-progress" />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {IS_PREVIEW && (
-          <audio
-            preload="none"
-            src={audioFile}
-            {...(loop === "on" ? { loop } : {})}
-          />
-        )}
-      </div>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Wrapper {...this.makeWrapperProps({ className: classNameContent })}>
+          {type === "custom"
+            ? this.renderAudio(v, vs, vd)
+            : this.renderSoundCloud(v)}
+        </Wrapper>
+      </CustomCSS>
     );
   }
 
   renderForEdit(v, vs, vd) {
     const { type } = v;
+
     const classNameContent = classnames(
       { "brz-audio": type === "custom" },
       { "brz-soundcloud": type === "soundcloud" },
@@ -309,8 +263,8 @@ class Audio extends EditorComponent {
               onChange={this.handleResizerChange}
             >
               {type === "custom"
-                ? this.renderCustom(v, vs, vd)
-                : this.renderSoundCloud(v, vs, vd)}
+                ? this.renderAudio(v, vs, vd)
+                : this.renderSoundCloud(v)}
             </BoxResizer>
           </Wrapper>
         </CustomCSS>

@@ -1,7 +1,7 @@
 @import "../../variables";
 
 .brz-ed-control__multiSelect2 {
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   width: 136px;
 
   &__value {
@@ -10,14 +10,14 @@
     min-height: $control-height;
     padding: 0 $control-padding;
     border-radius: $control-border-radius;
-    background-color: $options-control-background;
+    background-color: $options__control-bg;
     font-size: $control-font-size;
     letter-spacing: $control-letter-spacing;
-    color: #fff;
+    color: $options__control-color;
     cursor: pointer;
 
     &--placeholder {
-      color: rgba(255, 255, 255, 0.4);
+      color: $options__control__placeholder-color;
     }
 
     &--loading {
@@ -40,13 +40,13 @@
     width: 100%;
     margin-top: 3px;
     border-radius: $control-border-radius;
-    background: $options-control-background;
+    background: $options__control-bg;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
     transform: none !important;
 
     &--with-search {
       .brz-ed-control__multiSelect2__option:first-child {
-        border-top: 1px solid $control-border-color;
+        border-top: 1px solid $control-border;
       }
     }
   }
@@ -86,7 +86,7 @@
     height: $control-height;
     margin: 0;
     padding: 0 $control-padding;
-    border-bottom: 1px solid $control-border-color;
+    border-bottom: 1px solid $control-border;
     font-size: $control-font-size;
     letter-spacing: $control-letter-spacing;
     line-height: $control-height;
@@ -100,7 +100,7 @@
 
     &--active,
     &:hover {
-      color: $brand-primary;
+      color: $brand__primary;
     }
 
     &--disabled {
@@ -118,8 +118,9 @@
       font-size: 12px;
       color: #5b6068;
     }
+
     &--active .brz-ed-control__multiSelect2__option-checkbox {
-      color: $brand-primary;
+      color: $brand__primary;
     }
 
     &-text {

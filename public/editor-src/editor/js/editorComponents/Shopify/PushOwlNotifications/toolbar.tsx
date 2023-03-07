@@ -45,7 +45,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "preDisplay",
           type: "select-dev",
-          label: t("Pre-display Button"),
+          label: t("Pre-display"),
           helper: {
             content: t("The button's state before visitors have subscribed")
           },

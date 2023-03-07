@@ -1,8 +1,8 @@
 import React, { FC, ReactElement } from "react";
 import classNames from "classnames";
 import { NonEmptyArray } from "visual/utils/array/types";
-import * as Option from "visual/component/Options/Type";
-import { Literal, read } from "visual/utils/types/Literal";
+import { Props as OptionProps } from "visual/component/Options/Type";
+import { Literal } from "visual/utils/types/Literal";
 import { IconToggle } from "visual/component/Controls/IconToggle";
 import {
   IconToggleItem,
@@ -17,12 +17,12 @@ type Choice = {
   value: Literal;
 };
 
-export type Props = Option.Props<SimpleValue<Literal>> &
+export type Props = OptionProps<SimpleValue<Literal>> &
   WithClassName & {
     choices: Choice[];
   };
 
-export const Toggle: FC<Props> & Option.OptionType<SimpleValue<Literal>> = ({
+export const Toggle: FC<Props> = ({
   className,
   choices,
   value: { value },
@@ -53,19 +53,3 @@ export const Toggle: FC<Props> & Option.OptionType<SimpleValue<Literal>> = ({
     </>
   ) : null;
 };
-
-const getModel: Option.FromElementModel<SimpleValue<Literal>> = get => ({
-  value: read(get("value"))
-});
-
-const getElementModel: Option.ToElementModel<SimpleValue<Literal>> = values => {
-  return {
-    value: values.value
-  };
-};
-
-Toggle.fromElementModel = getModel;
-
-Toggle.toElementModel = getElementModel;
-
-Toggle.defaultValue = { value: "" };

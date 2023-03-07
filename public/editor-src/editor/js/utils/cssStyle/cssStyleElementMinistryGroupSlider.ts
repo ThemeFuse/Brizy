@@ -15,6 +15,7 @@ import {
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "visual/utils/style2/types";
+import { ACTIVE } from "../stateMode";
 
 export function cssStyleElementMinistryGroupSliderTitleSpacing({
   v,
@@ -282,4 +283,24 @@ export function cssStyleElementMinistryGroupSliderButtonBoxShadow({
   state
 }: CSSValue): string {
   return cssStyleBoxShadow({ v, device, state, prefix: "button" });
+}
+
+export function cssStyleElementMinistryGroupSliderDotsColorColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "dotsBg" });
+}
+
+export function cssStyleElementMinistryGroupSliderDotsColorColorActive({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleBgColor({
+    v,
+    device,
+    state: ACTIVE,
+    prefix: "dotsBg"
+  });
 }

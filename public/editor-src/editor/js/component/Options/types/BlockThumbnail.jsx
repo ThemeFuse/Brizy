@@ -1,19 +1,19 @@
-import React from "react";
-import produce from "immer";
-import _ from "underscore";
 import classnames from "classnames";
+import produce from "immer";
+import React from "react";
 import { connect } from "react-redux";
-import ScrollPane from "visual/component/ScrollPane";
+import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
-import { blockThumbnailData } from "visual/utils/blocks";
-import { preloadImage } from "visual/utils/image";
+import ScrollPane from "visual/component/ScrollPane";
+import { updateBlocks, updateGlobalBlock } from "visual/redux/actions2";
 import {
-  pageBlocksSelector,
+  globalBlocksAssembled2Selector,
   pageBlocksAssembledRawSelector,
-  globalBlocksAssembled2Selector
+  pageBlocksSelector
 } from "visual/redux/selectors";
-import { updateGlobalBlock, updateBlocks } from "visual/redux/actions2";
+import { blockThumbnailData } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
+import { preloadImage } from "visual/utils/image";
 
 const MAX_THUMBNAIL_WIDTH = 132;
 
@@ -35,7 +35,7 @@ class BlockThumbnail extends React.Component {
     this.anchorInputRefs = null;
   }
 
-  handleThumbnailClick = id => {
+  handleThumbnailClick = (id) => {
     if (this.props.value === id) {
       this.props.onChange("");
     } else {
@@ -53,8 +53,8 @@ class BlockThumbnail extends React.Component {
       // if we add "contact" once again we must detect that it's already used
       // and transform it to "contact-2"
       const blockAnchorNames = blocks
-        .filter(block => block.value._id !== id)
-        .map(block => {
+        .filter((block) => block.value._id !== id)
+        .map((block) => {
           if (block.type === "GlobalBlock") {
             block = globalBlocks[block.value._id].data;
           }
@@ -84,7 +84,7 @@ class BlockThumbnail extends React.Component {
       return value._id === id;
     });
     if (blockToUpdate.type !== "GlobalBlock") {
-      const updatedBlocks = blocks.map(block => {
+      const updatedBlocks = blocks.map((block) => {
         return block.value._id === id
           ? {
               ...block,
@@ -99,7 +99,7 @@ class BlockThumbnail extends React.Component {
       dispatch(updateBlocks({ blocks: updatedBlocks }));
     } else {
       const _id = blockToUpdate.value._id;
-      const globalBlock = produce(globalBlocks[_id], draft => {
+      const globalBlock = produce(globalBlocks[_id], (draft) => {
         draft.data.value.anchorName = anchorName;
       });
 
@@ -132,10 +132,10 @@ class BlockThumbnail extends React.Component {
   renderThumbnails() {
     const { value, pageBlocksAssembled, globalBlocks } = this.props;
     const blocks = pageBlocksAssembled.filter(
-      block => block.value._blockVisibility !== "unlisted"
+      (block) => block.value._blockVisibility !== "unlisted"
     );
 
-    return blocks.map(block => {
+    return blocks.map((block) => {
       if (block.type === "GlobalBlock") {
         block = globalBlocks[block.value._id].data;
       }
@@ -154,7 +154,7 @@ class BlockThumbnail extends React.Component {
         >
           <BlockThumbnailImage blockData={block} />
           <AnchorInput
-            ref={el => {
+            ref={(el) => {
               // when the component unmounts this function is also called
               // with el being null and this.anchorInputRefs is also null from componentWillUnmount
               // thus causing property of null error if not guarded
@@ -164,7 +164,7 @@ class BlockThumbnail extends React.Component {
             }}
             id={_id}
             value={inputValue}
-            onChange={value => this.handleInputChange(value, _id)}
+            onChange={(value) => this.handleInputChange(value, _id)}
           />
         </div>
       );
@@ -201,9 +201,15 @@ class BlockThumbnailImage extends React.Component {
     showSpinner: true
   };
 
+  mounted = false;
+
   componentDidMount() {
     this.mounted = true;
     this.preloadThumbnail(this.state.blockData);
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   preloadThumbnail(blockData) {
@@ -257,11 +263,11 @@ class AnchorInput extends React.Component {
     }
   }
 
-  handleContainerClick = e => {
+  handleContainerClick = (e) => {
     e.stopPropagation();
   };
 
-  handleInputChange = e => {
+  handleInputChange = (e) => {
     this.setState(
       {
         inputValue: e.target.value
@@ -286,7 +292,7 @@ class AnchorInput extends React.Component {
           className="brz-input"
           type="text"
           autoComplete="off"
-          placeholder={t("block-name")}
+          placeholder={t("Block Name")}
           value={this.state.inputValue}
           onChange={this.handleInputChange}
           id={inputID}
@@ -299,7 +305,7 @@ class AnchorInput extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   pageBlocks: pageBlocksSelector(state),
   pageBlocksAssembled: pageBlocksAssembledRawSelector(state),
   globalBlocks: globalBlocksAssembled2Selector(state)

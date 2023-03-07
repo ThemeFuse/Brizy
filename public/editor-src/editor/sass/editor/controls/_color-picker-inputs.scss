@@ -1,10 +1,29 @@
 @import "../../mixins/input";
+@import "../../variables";
 
 .brz-ed-control__color-picker-inputs {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
   margin-top: $control-padding;
+
+  &__hex-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  &__eye-dropper {
+    font-size: 11px;
+    color: $gray-light;
+    cursor: pointer;
+    transition: color 200ms, filter 200ms;
+
+    &--active {
+      color: $gray-lighter;
+      filter: drop-shadow(0px 0px 4px #fff);
+    }
+  }
 
   .brz-ed-control__input-hex {
     flex: none;

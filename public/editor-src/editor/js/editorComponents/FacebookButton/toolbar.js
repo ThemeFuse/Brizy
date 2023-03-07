@@ -120,7 +120,7 @@ export function getItems({ v, device, state }) {
                 },
                 {
                   id: "showFriends",
-                  label: t("Show Friends' Faces"),
+                  label: t("Show Friend's Faces"),
                   type: "switch-dev",
                   disabled: boxedLayout,
                   devices: "desktop"

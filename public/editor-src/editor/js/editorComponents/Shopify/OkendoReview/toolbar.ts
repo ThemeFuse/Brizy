@@ -39,7 +39,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
           label: t("Include Q & A"),
           type: "switch-dev",
           disabled: reviewType !== "widget",
-          helper: { content: t("Works if PRO Plan") }
+          helper: { content: t("Works with PRO Plan") }
         },
         {
           id: "showHeader",

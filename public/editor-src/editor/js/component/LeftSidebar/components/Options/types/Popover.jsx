@@ -1,10 +1,10 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import ClickOutside from "visual/component/ClickOutside";
 import EditorIcon from "visual/component/EditorIcon";
 import Options from "visual/component/LeftSidebar/components/Options";
-import { getStore } from "visual/redux/store";
 import { updateUI } from "visual/redux/actions2";
+import { getStore } from "visual/redux/store";
 
 export default class DrawerPopover extends React.Component {
   static defaultProps = {
@@ -121,7 +121,9 @@ export default class DrawerPopover extends React.Component {
         <div className={className} title={title} onClick={this.handleClick}>
           <EditorIcon icon={icon} />
           {this.state.isOpen && (
-            <div className={popoverClassName}>{this.renderOptions()}</div>
+            <div className={popoverClassName} title="">
+              {this.renderOptions()}
+            </div>
           )}
         </div>
       </ClickOutside>

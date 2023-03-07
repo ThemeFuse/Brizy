@@ -122,11 +122,11 @@ class Brizy_Public_Main
             $editor_js_deps[] = 'flexslider';
             $editor_js_deps[] = 'wc-single-product';
         }
-        wp_enqueue_style('brizy-editor', "${assets_url}/editor/css/editor.css", array(), null);
-        wp_register_script('brizy-editor-polyfill', "${assets_url}/editor/js/polyfill.js", array(), null, true);
-        wp_register_script('brizy-editor-vendor', "${assets_url}/editor/js/editor.vendor.js", array(), null, true);
-        wp_enqueue_script('brizy-editor', "${assets_url}/editor/js/editor.js", apply_filters('brizy_editor_js_deps', $editor_js_deps), null, true);
-        wp_add_inline_script('brizy-editor', "var __VISUAL_CONFIG__ = ${editor_js_config};", 'before');
+        wp_enqueue_style('brizy-editor', "$assets_url/editor/css/editor.css", array(), null);
+        wp_register_script('brizy-editor-polyfill', "$assets_url/editor/js/polyfill.js", array(), null, true);
+        wp_register_script('brizy-editor-vendor', "$assets_url/editor/js/editor.vendor.js", array(), null, true);
+        wp_enqueue_script('brizy-editor', "$assets_url/editor/js/editor.js", apply_filters('brizy_editor_js_deps', $editor_js_deps), null, true);
+        wp_add_inline_script('brizy-editor', "var __VISUAL_CONFIG__ = $editor_js_config;", 'before');
 
         do_action('brizy_editor_enqueue_scripts');
 
@@ -274,27 +274,9 @@ class Brizy_Public_Main
      */
     function _filter_the_content($content)
     {
-        if (is_main_query() && !doing_filter('brizy_content')) {
-
-            try {
-                //$config_object = $this->getConfigObject();
-                $context = array(
-                    //'editorData'    => $config_object,
-                    'editorVersion' => BRIZY_EDITOR_VERSION,
-                );
-
-                if (WP_DEBUG) {
-                    $context['DEBUG'] = true;
-                }
-
-                $render_block = Brizy_TwigEngine::instance(self::path('views'))
-                    ->render('editor.html.twig', $context);
-
-                return $render_block;
-            } catch (Exception $e) {
-                return $e->getMessage();
-            }
-        }
+	    if ( is_main_query() && ! doing_filter( 'brizy_content' ) ) {
+		    return '<div id="brz-ed-root"></div><div id="brz-popups"></div>';
+	    }
 
         return $content;
     }
@@ -324,15 +306,13 @@ class Brizy_Public_Main
         	return;
         }
 
-        $params['content'] = apply_filters(
+        echo apply_filters(
             'brizy_content',
 	        $html,
             Brizy_Editor_Project::get(),
             $this->post->getWpPost(),
             'head'
         );
-
-        echo Brizy_TwigEngine::instance(self::path('views'))->render('head-partial.html.twig', $params);
     }
 
     /**
@@ -405,9 +385,9 @@ class Brizy_Public_Main
         $needs_compile = !$this->post->isCompiledWithCurrentVersion() || $this->post->get_needs_compile();
         $autosaveId = null;
         if ($is_preview) {
-            $user_id = get_current_user_id();
+            $user_id      = get_current_user_id();
             $postParentId = $this->post->getWpPostId();
-            $autosaveId = Brizy_Editor_AutoSaveAware::getAutoSavePost($postParentId, $user_id);
+	        $autosaveId   = Brizy_Editor_Post::getAutoSavePost($postParentId, $user_id);
 
             if ($autosaveId) {
                 $this->post = Brizy_Editor_Post::get($autosaveId);
@@ -433,6 +413,10 @@ class Brizy_Public_Main
         }
     }
 
+	/**
+	 * @return void
+	 * @throws Exception
+	 */
 	public function loadEditPage() {
 
 		query_posts( [
@@ -452,29 +436,23 @@ class Brizy_Public_Main
 			$favicon = ob_get_clean();
 		}
 
-		$context = array(
-			'editorData'    => $config_object,
-			'editorVersion' => BRIZY_EDITOR_VERSION,
-			'iframe_url'    => add_query_arg(
+		$context = [
+			'iframe_url' => add_query_arg(
 				[
 					'is-editor-iframe' => time(),
-					'post'             => $this->post->getWpPostId()
+					'post'             => $this->post->getWpPostId(),
 				],
 				get_permalink( $this->post->getWpPostId() )
 			),
-			'page_title'    => apply_filters(
+			'page_title' => apply_filters(
 				'the_title',
 				$this->post->getWpPost()->post_title,
 				$this->post->getWpPostId()
 			),
-			'favicon'       => $favicon,
-			'styles'        => [ $config_object->urls->assets . "/editor/css/editor.css" ],
-			'scripts'       => [ $config_object->urls->assets . "/editor/js/polyfill.js" ],
-		);
-
-		if ( defined( 'BRIZY_DEVELOPMENT' ) ) {
-			$context['DEBUG'] = true;
-		}
+			'favicon'    => $favicon,
+			'styles'     => [ $config_object->urls->assets . "/editor/css/editor.css" ],
+			'scripts'    => [ $config_object->urls->assets . "/editor/js/polyfill.js" ],
+		];
 
 		$context = apply_filters( 'brizy_editor_page_context', $context );
 
@@ -482,7 +460,7 @@ class Brizy_Public_Main
 			throw new Exception( 'Invalid template context. Probably a bad filter implementation' );
 		}
 
-		echo Brizy_TwigEngine::instance( self::path( 'views' ) )->render( 'page.html.twig', $context );
+		Brizy_Editor_View::render( BRIZY_PLUGIN_PATH . '/public/views/page', $context );
 
 		die();
 	}

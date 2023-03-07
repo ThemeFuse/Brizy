@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import React from "react";
 import Animation from "visual/component/Animation";
-import { fromElementModel } from "visual/component/Options/types/dev/Margin/utils";
+import { fromElementModel } from "visual/component/Options/types/dev/Margin/converters";
 import {
   wInBoxedPage,
   wInFullPage,
@@ -13,6 +13,7 @@ import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { cloneItem } from "visual/utils/models";
 import {
@@ -20,18 +21,17 @@ import {
   validateKeyByProperty
 } from "visual/utils/onChange";
 import { NORMAL } from "visual/utils/stateMode";
+import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import defaultValue from "./defaultValue.json";
 import SectionItems from "./Items";
+import defaultValue from "./defaultValue.json";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleSection } from "./styles";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import * as State from "visual/utils/stateMode";
-import { getStore } from "visual/redux/store";
 
 const config = Config.getAll();
 
-const getV = (v, device) => key =>
+const getV = (v, device) => (key) =>
   defaultValueValue({
     v,
     key: createOptionId("margin", key),
@@ -95,7 +95,7 @@ export default class Section extends EditorComponent {
     }
   }
 
-  dvv = key => {
+  dvv = (key) => {
     const v = this.getValue();
     const device = deviceModeSelector(getStore().getState());
     const state = State.mRead(v.tabsState);
@@ -223,12 +223,8 @@ export default class Section extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const {
-      className,
-      customClassName,
-      cssClassPopulation,
-      customAttributes
-    } = v;
+    const { className, customClassName, cssClassPopulation, customAttributes } =
+      v;
 
     const classNameSection = classnames(
       "brz-section",
@@ -307,7 +303,8 @@ export default class Section extends EditorComponent {
       customClassName,
       cssIDPopulation,
       cssClassPopulation,
-      customAttributes
+      customAttributes,
+      anchorName
     } = v;
     const { sectionPopup, sectionPopup2 } = this.props.meta;
 
@@ -324,11 +321,14 @@ export default class Section extends EditorComponent {
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
 
+    const blockName =
+      cssIDPopulation === "" ? anchorName || this.getId() : cssIDPopulation;
+
     const props = {
       ...parseCustomAttributes(customAttributes),
       "data-uid": this.getId(),
-      id:
-        cssIDPopulation === "" ? v.anchorName || this.getId() : cssIDPopulation,
+      id: blockName,
+      name: blockName,
       className: classNameSection
     };
 

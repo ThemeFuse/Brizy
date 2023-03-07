@@ -3,7 +3,7 @@ const webpack = require("webpack");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const editorConfigFn = require("./webpack.config.editor");
-const babelrc = require("./babelrc.config.all");
+const swcrc = require("./swc.config.all");
 
 module.exports = (options) => {
   const editorConfig = editorConfigFn(options);
@@ -24,7 +24,7 @@ module.exports = (options) => {
     // and uses it on compile
     // /\/editor\/js\/component\/Options\//,
     /\/editor\/js\/utils\/toolbar\//,
-    /\/node_modules\/react-lottie\//,
+    /\/node_modules\/lottie-react\//,
     /\/node_modules\/jquery\//,
     /\/node_modules\/react-facebook\//
   ];
@@ -51,8 +51,8 @@ module.exports = (options) => {
             path.resolve(__dirname, "editor"),
             path.resolve(__dirname, "packages")
           ],
-          loader: "babel-loader",
-          options: babelrc.export()
+          loader: "swc-loader",
+          options: swcrc.export(options)
         },
         {
           test(path) {
@@ -76,7 +76,21 @@ module.exports = (options) => {
         IS_EDITOR: false,
         IS_PREVIEW: true,
         window: "undefined"
-      })
+      }),
+      new webpack.NormalModuleReplacementPlugin(
+        /visual\/component\/Toolbar/,
+        (r) => {
+          switch (r.request) {
+            case "visual/component/Toolbar/state":
+              r.request = "visual/component/ToolbarMock/state.ts";
+              break;
+            default:
+              r.request = "visual/component/ToolbarMock/Toolbar.ts";
+          }
+
+          return r;
+        }
+      )
     ],
     devtool: false,
     watch: editorConfig.watch,

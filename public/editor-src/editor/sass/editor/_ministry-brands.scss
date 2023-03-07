@@ -1,6 +1,18 @@
 .brz-ministryBrands {
   &__disable--click,
+  select,
+  input,
+  button[type="submit"],
+  div:has(> iframe),
   :is(a, audio, video):active {
     pointer-events: none;
+  }
+
+  &__editor-slider {
+    display: block !important;
+  }
+
+  .brz-formWidget iframe {
+    height: 500px !important;
   }
 }

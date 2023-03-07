@@ -405,3 +405,16 @@ export function cssStyleElementRichTextH6LetterSpacing({
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h6" });
 }
+
+export function cssStyleElementRichTextDCUppercase({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const capitalize = dvv("dynamicTextCapitalize");
+
+  return capitalize === "on" ? `text-transform : uppercase !important;` : "";
+}

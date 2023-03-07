@@ -1,17 +1,28 @@
+const swcConfig = {
+  module: {
+    type: "commonjs"
+  },
+  jsc: {
+    parser: {
+      syntax: "typescript",
+      tsx: true
+    }
+  }
+};
+
 module.exports = {
   moduleNameMapper: {
     "^visual/(.*)$": "<rootDir>/editor/js/$1"
   },
   transform: {
-    "\\.(tsx|ts|js|jsx)?$": "ts-jest"
+    "\\.(tsx|ts|js|jsx)?$": ["@swc/jest", swcConfig]
   },
+
+  modulePathIgnorePatterns: ["packages/optionControls"],
   transformIgnorePatterns: ["/node_modules/(?!(nanoid)/)"],
   globals: {
     TARGET: "Jest",
     IS_EDITOR: true,
-    "ts-jest": {
-      babelConfig: true
-    },
     __VISUAL_CONFIG__: {
       imageSizes: [
         {

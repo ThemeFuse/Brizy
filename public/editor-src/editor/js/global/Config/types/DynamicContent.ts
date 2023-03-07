@@ -1,3 +1,5 @@
+import { Response } from "./configs/common";
+
 export enum DCTypes {
   image = "image",
   link = "link",
@@ -6,11 +8,14 @@ export enum DCTypes {
   multiReference = "multiReference"
 }
 
-export interface ConfigDCItem {
+interface BaseDCItem {
   label: string;
   placeholder: string;
   alias?: string;
   display?: "block" | "inline";
+}
+
+export interface ConfigDCItem extends BaseDCItem {
   optgroup?: ConfigDCItem[];
 }
 
@@ -42,3 +47,10 @@ type Cnf = {
 };
 
 export type DynamicContent<T extends "wp" | "cloud"> = Cnf[T];
+
+export interface DynamicContentOption {
+  [DCTypes.richText]: {
+    useCustomPlaceholder?: boolean;
+    handler: (res: Response<BaseDCItem>, rej: Response<string>) => void;
+  };
+}

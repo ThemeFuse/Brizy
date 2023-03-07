@@ -6,8 +6,11 @@
 
     .brz-eventCalendar_wrap {
       .brz-eventCalendar-pagination {
-        display: flex;
-        align-items: center;
+        &,
+        & a {
+          display: flex;
+          align-items: center;
+        }
 
         .brz-eventCalendar-pagination-previous.off,
         .brz-eventCalendar-pagination-next.off {
@@ -35,9 +38,19 @@
             table-layout: fixed;
             border-collapse: separate;
 
+            .brz-eventCalendar-row-weekdays {
+              th {
+                padding: 0.5rem;
+                border: 0;
+              }
+            }
+
             tbody .brz-eventCalendar-row {
               .brz-eventCalendar-day {
                 vertical-align: top;
+                word-break: break-word;
+                height: 120px;
+                padding: 5px;
 
                 .brz-eventCalendar-links {
                   padding: 0;
@@ -46,6 +59,7 @@
 
                   li .brz-eventCalendar-title a {
                     text-decoration: none;
+                    color: inherit;
                   }
                 }
 

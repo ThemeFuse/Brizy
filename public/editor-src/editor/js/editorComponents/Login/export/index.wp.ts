@@ -1,11 +1,11 @@
 import { getData, validateInputs } from "./utils";
 import {
-  ElementType,
-  loginDisplay,
-  handleSubmit,
+  addAlerts,
   getErrorMessages,
-  addAlerts
+  handleSubmit,
+  loginDisplay
 } from "./utils.common";
+import { getCurrentType } from "./utils.wp";
 
 const wpHeaders = {
   accept: "*/*",
@@ -15,39 +15,38 @@ const fetchHeaders = new Headers(wpHeaders);
 
 let isSubmitEnabled = true;
 
-export default function($node: JQuery): void {
+export default function ($node: JQuery): void {
   const node: Element = $node.get(0);
 
-  node.querySelectorAll(".brz-login").forEach(element => {
+  node.querySelectorAll(".brz-login").forEach((element) => {
     loginDisplay(element);
 
     const errorMessages = getErrorMessages(element);
 
     // for WP we made AJAX only for Login
     element
-      .querySelectorAll<HTMLFormElement>(".brz-login-form__login")
-      .forEach(form => {
-        form.addEventListener("submit", e => {
+      .querySelectorAll<HTMLFormElement>(
+        ".brz-login-form__login, .brz-login-form__forgot, .brz-login-form__register"
+      )
+      .forEach((form) => {
+        form.addEventListener("submit", (e) => {
           e.preventDefault();
+          const elementType = getCurrentType(form);
 
-          if (isSubmitEnabled) {
-            const valid = validateInputs(
-              ElementType.login,
-              form,
-              errorMessages
-            );
+          if (isSubmitEnabled && elementType) {
+            const valid = validateInputs(elementType, form, errorMessages);
 
             const { action: fetchUrl } = form;
 
             if (valid.success) {
-              const formData = getData(ElementType.login, form);
+              const formData = getData(elementType, form);
 
               isSubmitEnabled = false;
               const submit = form.querySelector(".brz-btn");
               submit?.classList.add("brz-blocked");
 
               handleSubmit(
-                ElementType.login,
+                elementType,
                 fetchUrl,
                 formData,
                 fetchHeaders,
