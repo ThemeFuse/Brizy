@@ -83,6 +83,8 @@ class Brizy_Editor_Editor_Editor {
 			'pageId'        => $this->post->getWpPostId()
 		];
 
+		$config = $this->getApiConfigFields( $config, $context );
+
 		return $config;
 	}
 
@@ -198,7 +200,7 @@ class Brizy_Editor_Editor_Editor {
         $config = $this->addGlobalBlocksData( $config );
 		$config = $this->addGlobalBlocksData( $config );
 		$config = $this->getPostLoopSources( $config, $mode === 'template', $wp_post_id, $context );
-		$config              = $this->getCompilerRequiredFields( $config, $context );
+		$config              = $this->getApiConfigFields( $config, $context );
 		$config = $this->addContentDefaults( $config, $context );
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
@@ -237,15 +239,13 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 
-	private function getCompilerRequiredFields( $config, $context ) {
-
-		if ( $context != Brizy_Editor_Editor_Editor::COMPILE_CONTEXT ) {
-			return $config;
-		}
-
+	private function getApiConfigFields( $config, $context ) {
 		$config['api'] = [
 			'media' => [
 				'mediaResizeUrl' => home_url()
+			],
+			'customFile' => [
+				'customFileUrl' => home_url()
 			]
 		];
 
@@ -1145,7 +1145,6 @@ class Brizy_Editor_Editor_Editor {
 			'symbolUpdate'               => $pref . Brizy_Admin_Symbols_Api::UPDATE_ACTION,
 			'symbolDelete'               => $pref . Brizy_Admin_Symbols_Api::DELETE_ACTION,
 			'symbolList'                 => $pref . Brizy_Admin_Symbols_Api::LIST_ACTION,
-			'mediaResizeUrl'             => home_url()
 		);
 
 		return $actions;

@@ -139,3 +139,37 @@ export function updateProject(
 }
 
 //#endregion
+
+//#region Attachment byId
+
+export async function getAttachmentById(id: string): Promise<{ uid: string }> {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error("Invalid __BRZ_PLUGIN_ENV__");
+  }
+
+  const { editorVersion, url, hash, actions } = config;
+
+  const body = new URLSearchParams({
+    hash,
+    version: editorVersion,
+    action: actions.getAttachmentUid,
+    attachment_id: id
+  });
+
+  const r = await request(url, {
+    method: "POST",
+    body
+  });
+
+  const rj = await r.json();
+
+  if (rj.success) {
+    return rj.data;
+  } else {
+    throw rj;
+  }
+}
+
+//#endregion
