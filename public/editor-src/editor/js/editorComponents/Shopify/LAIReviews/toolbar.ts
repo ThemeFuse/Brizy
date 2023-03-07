@@ -26,14 +26,14 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
           choices: [
             { title: t("Star"), value: "star" },
             { title: t("Widget"), value: "widget" },
-            { title: t("HomePage"), value: "homePageReview" },
+            { title: t("Homepage"), value: "homePageReview" },
             { title: t("Showcase"), value: "showcase" }
           ],
           helper: {
             content:
               widgetType !== "star"
                 ? t(
-                    "Use only one widget per page among Widget, HomePage Review, Showcase Review"
+                    "Use only one widget per page like Widget, HomePage Review, Showcase Review"
                   )
                 : ""
           }

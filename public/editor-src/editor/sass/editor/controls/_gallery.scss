@@ -17,8 +17,9 @@
   }
 
   &__item {
-    background: $focal-point-background-upload;
+    background: $focal_point__upload-bg;
     position: relative;
+    aspect-ratio: 1;
 
     &--loading,
     &--add,
@@ -26,7 +27,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      border: dashed 1px $focal-point-border-color;
+      border: dashed 1px $focal_point-border;
     }
 
     &--loading,
@@ -59,8 +60,8 @@
       margin: 0;
       padding: 0;
       position: absolute;
-      top: -(math.div($toolbar-static-font-size,2));
-      right: -(math.div($toolbar-static-font-size,2));
+      top: -(math.div($toolbar__static-font-size, 2));
+      right: -(math.div($toolbar__static-font-size, 2));
       cursor: pointer;
       outline: none;
       background: #000;
@@ -70,8 +71,8 @@
 
       &__icon {
         pointer-events: none;
-        font-size: $toolbar-static-font-size;
-        color: $sidebar-font-color;
+        font-size: $toolbar__static-font-size;
+        color: $sidebar-color;
       }
     }
   }
@@ -81,6 +82,7 @@
   }
 
   .brz-ed-control__gallery__item {
+
     &--loading,
     &--thumbnail,
     &--error {
@@ -89,17 +91,18 @@
   }
 
   .brz-ed-tooltip__overlay {
-    background-color: $options-control-background;
+    background-color: $options__control-bg;
     color: #fff;
     border-radius: 4px;
     padding: 10px 20px;
     width: 25px;
 
     .brz-ed-arrow--top:after {
-      border-top-color: $options-control-background;
+      border-top-color: $options__control-bg;
     }
+
     .brz-ed-arrow--bottom:after {
-      border-bottom-color: $options-control-background;
+      border-bottom-color: $options__control-bg;
     }
   }
 }

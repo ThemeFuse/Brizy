@@ -6,8 +6,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { percentageToPixels } from "visual/utils/meta";
-import { defaultValueValue } from "visual/utils/onChange";
-import { MOBILE, TABLET } from "visual/utils/responsiveMode";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
@@ -55,7 +53,6 @@ class Carousel extends EditorComponent {
     const { meta } = this.props;
     const {
       slidesToShow,
-      spacing,
       sliderPaddingType,
       sliderPadding,
       sliderPaddingSuffix,
@@ -134,31 +131,17 @@ class Carousel extends EditorComponent {
             meta.mobileW
           );
 
-    const tabletSpacing = defaultValueValue({
-      v,
-      key: "spacing",
-      device: TABLET,
-      state: "normal"
-    });
-    const mobileSpacing = defaultValueValue({
-      v,
-      key: "spacing",
-      device: MOBILE,
-      state: "normal"
-    });
-    const desktopW = meta.desktopW - (spacing + paddingW);
-    const tabletW = meta.tabletW - (tabletSpacing + tabletPaddingW);
-    const mobileW = meta.mobileW - (mobileSpacing + mobilePaddingW);
+    const desktopW = meta.desktopW - paddingW;
+    const tabletW = meta.tabletW - tabletPaddingW;
+    const mobileW = meta.mobileW - mobilePaddingW;
 
     return {
       ...meta,
-      desktopW: Math.round((desktopW / slidesToShow) * 10) / 10,
-      desktopWNoSpacing:
-        Math.round((meta.desktopWNoSpacing / slidesToShow) * 10) / 10,
-      tabletW: Math.round((tabletW / tabletSlidesToShow) * 10) / 10,
-      tabletWNoSpacing:
-        Math.round((meta.tabletWNoSpacing / tabletSlidesToShow) * 10) / 10,
-      mobileW: Math.round(mobileW * 10) / 10,
+      desktopW: Math.round(desktopW / slidesToShow),
+      desktopWNoSpacing: Math.round(meta.desktopWNoSpacing / slidesToShow),
+      tabletW: Math.round(tabletW / tabletSlidesToShow),
+      tabletWNoSpacing: Math.round(meta.tabletWNoSpacing / tabletSlidesToShow),
+      mobileW: Math.round(mobileW),
       mobileWNoSpacing: meta.mobileWNoSpacing,
       inCarousel: true,
       inGrid: false

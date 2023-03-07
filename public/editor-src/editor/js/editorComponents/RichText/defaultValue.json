@@ -30,6 +30,8 @@
     "tabletBgSizeType": null,
     "mobileBgSizeType": null,
 
+    "dynamicTextCapitalize": "off",
+
     "bgImageWidth": 0,
     "bgImageHeight": 0,
 

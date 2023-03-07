@@ -1,5 +1,6 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { Choices, OptGroup } from "./types/Choices";
 
 /**
@@ -28,7 +29,11 @@ export const bindPopulation = (option: ToolbarItemType): ToolbarItemType => {
     config: {
       choices: population
     },
-    options: [o]
+    option: o,
+    fallback: {
+      ...o,
+      id: keyToDCFallback2Key(o.id)
+    }
   };
 };
 

@@ -1,20 +1,20 @@
-import React from "react";
-import { connect } from "react-redux";
 import classnames from "classnames";
 import { isT } from "fp-utilities";
+import React from "react";
+import { connect } from "react-redux";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { currentUserRole } from "visual/component/Roles";
-import EditorIcon from "visual/component/EditorIcon";
 import ClickOutside from "visual/component/ClickOutside";
+import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
-import { ToolbarItems, ToolbarItemsProps } from "./ToolbarItems";
-import { monitor, ToolbarMonitorHandler } from "./monitor";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
-import { setPosition } from "./state";
-import { DeviceMode } from "visual/types";
-import { ReduxState } from "visual/redux/types";
+import { currentUserRole } from "visual/component/Roles";
 import { filterOptions } from "visual/component/Toolbar/PortalToolbar/utils";
+import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { ReduxState } from "visual/redux/types";
+import { DeviceMode } from "visual/types";
+import { ToolbarItems, ToolbarItemsProps } from "./ToolbarItems";
+import { ToolbarMonitorHandler, monitor } from "./monitor";
+import { setPosition } from "./state";
 
 interface CollapsibleToolbarProps extends Omit<ToolbarItemsProps, "items"> {
   getItems: () => OptionDefinition[];
@@ -41,7 +41,8 @@ interface PropsWithState extends CollapsibleToolbarProps {
 
 class _CollapsibleToolbar
   extends React.Component<PropsWithState, CollapsibleToolbarState>
-  implements ToolbarMonitorHandler {
+  implements ToolbarMonitorHandler
+{
   static defaultProps = {
     animation: "leftToRight",
     global: false,
@@ -64,6 +65,7 @@ class _CollapsibleToolbar
       ".brz-ed-tooltip__content-portal",
       ".brz-ed-popup-integrations",
       ".brz-ed-popup-authorization",
+      ".brz-ed-eyeDropper",
       ...(TARGET === "WP"
         ? [
             ".media-modal", // class of the WP media modal
@@ -103,10 +105,7 @@ class _CollapsibleToolbar
     const device = this.props.device;
     const role = currentUserRole();
 
-    return this.props
-      .getItems()
-      .map(filterOptions(device, role))
-      .filter(isT);
+    return this.props.getItems().map(filterOptions(device, role)).filter(isT);
   };
 
   getSidebarItems = (): OptionDefinition[] => {
@@ -248,7 +247,7 @@ export default connect<
   {},
   CollapsibleToolbarProps,
   ReduxState
->(s => ({ device: s.ui.deviceMode }), null, null, { forwardRef: true })(
+>((s) => ({ device: s.ui.deviceMode }), null, null, { forwardRef: true })(
   // @ts-expect-error, Not clear why TS doesn't like this
   _CollapsibleToolbar
 );

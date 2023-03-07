@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
 import { Disconnect } from "../../common/GlobalApps/StepsView";
 import { deleteAccount } from "../../common/GlobalApps/api";
-import { pendingRequest } from "visual/utils/api";
 
 class RecaptchaDisconnect extends Component {
   static contextType = Context;
@@ -55,7 +55,7 @@ class RecaptchaDisconnect extends Component {
     return (
       <Disconnect
         {...this.context.app}
-        descriptions={`${t("Are you want to delete account")} ?`}
+        descriptions={`${t("Are you sure you want to delete your account?")}`}
         nextLoading={nextLoading}
         prevLoading={prevLoading}
         error={error}

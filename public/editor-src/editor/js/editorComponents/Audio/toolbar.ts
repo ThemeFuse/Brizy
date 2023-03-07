@@ -83,7 +83,7 @@ export function getItems({
                 }),
                 {
                   id: "autoPlay",
-                  label: t("Auto Play"),
+                  label: t("Autoplay"),
                   type: "switch-dev",
                   disabled: customType
                 }

@@ -1,5 +1,5 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { FromElementModel, OptionType } from "visual/component/Options/Type";
+import { ComponentProps } from "react";
+import { Props } from "visual/component/Options/Type";
 import { Population } from "visual/component/Options/types/common/Population/Population";
 import { Animation } from "visual/component/Options/types/dev/Animation";
 import { BackgroundColor } from "visual/component/Options/types/dev/BackgroundColor";
@@ -9,8 +9,10 @@ import { Button as ButtonDev } from "visual/component/Options/types/dev/Button";
 // Option types that are in development
 import { ColorPicker as ColorPickerDev } from "visual/component/Options/types/dev/ColorPicker";
 import { Corners } from "visual/component/Options/types/dev/Corners";
+import { FileUpload as FileUploadDev } from "visual/component/Options/types/dev/FileUpload";
 import { Filters } from "visual/component/Options/types/dev/Filters";
 import { Gallery } from "visual/component/Options/types/dev/Gallery";
+import { GalleryForGallery } from "visual/component/Options/types/dev/GalleryForGallery";
 import { Grid as GridDev } from "visual/component/Options/types/dev/Grid";
 import { Group } from "visual/component/Options/types/dev/Group";
 import { IconPicker } from "visual/component/Options/types/dev/IconPicker";
@@ -22,37 +24,24 @@ import { InternalLink } from "visual/component/Options/types/dev/InternalLink";
 import { Motion } from "visual/component/Options/types/dev/Motion";
 import { MultiSelect } from "visual/component/Options/types/dev/MultiSelect2";
 import { Order } from "visual/component/Options/types/dev/Order";
+import { PayPal } from "visual/component/Options/types/dev/PayPal";
 import { Range as RangeDev } from "visual/component/Options/types/dev/Range";
+import { SavedBlockOption as SavedBlockDev } from "visual/component/Options/types/dev/SavedBlock";
 import { Select as SelectDev } from "visual/component/Options/types/dev/Select";
 import { SidebarTabs } from "visual/component/Options/types/dev/SidebarTabs";
 import { SidebarTabsButton } from "visual/component/Options/types/dev/SidebarTabsButton";
 import { Switch as SwitchDev } from "visual/component/Options/types/dev/Switch";
 import { TextShadow } from "visual/component/Options/types/dev/TextShadow";
+import { Transform } from "visual/component/Options/types/dev/Transform";
 import { Typography } from "visual/component/Options/types/dev/Typography";
-import { getOr } from "visual/utils/object/get";
 import AdvancedSettings from "./AdvancedSettings";
 import BlockThumbnail from "./BlockThumbnail";
 import Button from "./Button";
 import CheckGroup from "./CheckGroup";
-import CodeMirror from "./CodeMirror";
 import ColorFields from "./ColorFields";
-import ColorPalette from "./ColorPalette";
 import ColorPalette2 from "./ColorPalette2";
 import ColorPaletteEditor from "./ColorPaletteEditor";
 import ColorPicker2 from "./ColorPicker2";
-import { StateMode } from "./common/StateMode";
-import { Alert } from "./dev/Alert";
-import { CodeMirror as CodeMirrorDev } from "./dev/CodeMirror";
-import { Margin } from "./dev/Margin";
-import { Number } from "./dev/Number";
-import { Padding } from "./dev/Padding";
-import { Popover as PopoverDev } from "./dev/Popover";
-import { RadioGroup as RadioGroupDev } from "./dev/RadioGroup";
-import { Slider as SliderDev } from "./dev/Slider";
-import { Tabs as TabsDev } from "./dev/Tabs";
-import { Textarea as TextareaDev } from "./dev/Textarea";
-import { Toggle as ToggleDev } from "./dev/Toggle";
-import FileUpload from "./FileUpload";
 import FontFamily from "./FontFamily";
 import FontStyle from "./FontStyle";
 import FontStyleEditor from "./FontStyleEditor";
@@ -60,10 +49,8 @@ import FormApps from "./FormApps";
 import GBConditions from "./GBConditions";
 import GlobalBlock from "./GlobalBlock";
 import Grid from "./Grid";
-import IconSetter from "./IconSetter";
 import ImageSetter from "./ImageSetter";
 import Input from "./Input";
-import InputNumber from "./InputNumber";
 import IntegrationsApps from "./IntegrationsApps";
 import MultiInput from "./MultiInput";
 import MultiInputPickerOptionType from "./MultiInputPickerOptionType";
@@ -73,16 +60,26 @@ import PopupConditions from "./PopupConditions";
 import PromptAddPopup from "./PromptAddPopup";
 import PromptIcon from "./PromptIcon";
 import RadioGroup from "./RadioGroup";
-import Range from "./Range";
 import Range2 from "./Range2";
 import SavedBlock from "./SavedBlock";
 import Select from "./Select";
 import Slider from "./Slider";
 import Stepper from "./Stepper";
-import Switch from "./Switch";
-import Tabs from "./Tabs";
-import Textarea from "./Textarea";
 import Toggle from "./Toggle";
+import Tabs from "./Tabs";
+import { StateMode } from "./common/StateMode";
+import { Alert } from "./dev/Alert";
+import { CodeMirror as CodeMirrorDev } from "./dev/CodeMirror";
+import { GlobalBlockOption as GlobalBlockDev } from "./dev/GlobalBlock";
+import { Margin } from "./dev/Margin";
+import { Number } from "./dev/Number";
+import { Padding } from "./dev/Padding";
+import { Popover as PopoverDev } from "./dev/Popover";
+import { RadioGroup as RadioGroupDev } from "./dev/RadioGroup";
+import { Slider as SliderDev } from "./dev/Slider";
+import { Tabs as TabsDev } from "./dev/Tabs";
+import { Textarea as TextareaDev } from "./dev/Textarea";
+import { Toggle as ToggleDev } from "./dev/Toggle";
 
 const newTypes = {
   "alert-dev": Alert,
@@ -96,6 +93,7 @@ const newTypes = {
   "boxShadow-dev": BoxShadow,
   "border-dev": Border,
   "filters-dev": Filters,
+  "fileUpload-dev": FileUploadDev,
   "group-dev": Group,
   "grid-dev": GridDev,
   "imageUpload-dev": ImageUpload,
@@ -112,6 +110,7 @@ const newTypes = {
   "radioGroup-dev": RadioGroupDev,
   "range-dev": RangeDev,
   "padding-dev": Padding,
+  "paypal-dev": PayPal,
   "popover-dev": PopoverDev,
   "population-dev": Population,
   "select-dev": SelectDev,
@@ -124,7 +123,11 @@ const newTypes = {
   "typography-dev": Typography,
   "textShadow-dev": TextShadow,
   "gallery-dev": Gallery,
-  "stateMode-dev": StateMode
+  "gallery-for-gallery-dev": GalleryForGallery,
+  "stateMode-dev": StateMode,
+  "transform-dev": Transform,
+  "savedBlock-dev": SavedBlockDev,
+  "globalBlock-dev": GlobalBlockDev
 };
 
 const oldTypes = {
@@ -133,10 +136,8 @@ const oldTypes = {
   button: Button,
   savedBlock: SavedBlock,
   globalBlock: GlobalBlock,
-  codeMirror: CodeMirror,
   colorFields: ColorFields,
   colorPaletteEditor: ColorPaletteEditor,
-  colorPalette: ColorPalette,
   colorPalette2: ColorPalette2,
   colorPicker2: ColorPicker2,
   fontFamily: FontFamily,
@@ -144,13 +145,11 @@ const oldTypes = {
   fontStyleEditor: FontStyleEditor,
   formApps: FormApps,
   grid: Grid,
-  iconSetter: IconSetter,
   imageSetter: ImageSetter,
   input: Input,
   multiInput: MultiInput,
   multiInputPicker: MultiInputPickerOptionType,
   multiPicker: MultiPicker,
-  textarea: Textarea,
   popover: Popover,
   popupConditions: PopupConditions,
   gbConditions: GBConditions,
@@ -161,14 +160,10 @@ const oldTypes = {
   select: Select,
   slider: Slider,
   stepper: Stepper,
-  switch: Switch,
-  tabs: Tabs,
   toggle: Toggle,
-  inputNumber: InputNumber,
-  range: Range,
+  tabs: Tabs,
   range2: Range2,
-  integrationsApps: IntegrationsApps,
-  fileUpload: FileUpload
+  integrationsApps: IntegrationsApps
 } as const;
 
 export const types = { ...oldTypes, ...newTypes };
@@ -176,65 +171,17 @@ export const types = { ...oldTypes, ...newTypes };
 export type OptionTypes = typeof newTypes;
 export type OptionName = keyof OptionTypes;
 
-export type OptionValue<T extends OptionName> =
-  OptionTypes[T] extends OptionType<infer M> ? M : unknown;
+export type OptionValue<T extends OptionName> = ComponentProps<
+  OptionTypes[T]
+> extends Props<infer M>
+  ? M
+  : unknown;
 
-export function applyDefaultValueToOption<T>(
-  values: T,
-  type: keyof OptionTypes
-): T {
-  const option = newTypes[type];
-
-  if (!option.defaultValue) return values;
-
-  const valueEntries = Object.entries(option.defaultValue) as [
-    keyof T,
-    T[keyof T]
-  ][];
-
-  return valueEntries.reduce((acc, [key, defaultOptionValue]) => {
-    acc[key] = Object.prototype.hasOwnProperty.call(values, key)
-      ? values[key]
-      : defaultOptionValue;
-    return acc;
-  }, values);
-}
-
-/**
- * Returns a function that creates the option model object from element model
- */
-export const fromElementModel = <T extends OptionName>(
-  type: T
-): FromElementModel<OptionValue<T>> => {
-  return (getFn): Partial<OptionValue<T>> => {
-    // @ts-expect-error: remove this when all options will be written in typescript
-    const option = types[type] as OptionType<OptionValue<T>>;
-    const model = getOr(() => ({}), "fromElementModel", option);
-
-    return applyDefaultValueToOption<Partial<OptionValue<T>>>(
-      model(getFn),
-      type
-    );
-  };
-};
-
-/**
- * Returns a function that creates the element model object from element model
- */
-export const toElementModel = <T extends OptionName>(
-  type: T,
-  get: (k: string) => string
-): ((values: OptionValue<T>) => ElementModel) => {
-  return (values): ElementModel => {
-    // @ts-expect-error: remove this when all options will be written in typescript
-    const option = types[type] as OptionType<OptionValue<T>>;
-    const model = getOr(() => ({}), "toElementModel", option);
-
-    return Object.entries(model(values)).reduce((acc, [k, v]) => {
-      acc[get(k)] = v;
-      return acc;
-    }, {} as ElementModel);
-  };
-};
+export type OptionPatch<
+  T extends OptionName
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+> = ComponentProps<OptionTypes[T]> extends Props<any, infer M>
+  ? M
+  : OptionValue<T>;
 
 export default types;

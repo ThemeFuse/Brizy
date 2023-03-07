@@ -2,9 +2,10 @@
 
 // Buttons
 .brz-ed-control__reload-button {
-  font-size: $options-handle-font-size;
-  color: $options-border-hover-color;
+  font-size: $options__handle-font-size;
+  color: $options__item-color--hover;
   align-items: center;
+
   .brz-icon-svg {
     font-size: 10px;
   }

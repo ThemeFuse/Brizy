@@ -30,7 +30,7 @@ export function getItems({
       position: 10,
       config: {
         icon: "nc-button",
-        title: t("Buy Now")
+        title: t("Buy now")
       },
       options: [
         {

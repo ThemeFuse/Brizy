@@ -1,21 +1,21 @@
-import React, { ReactElement, useCallback, useMemo } from "react";
 import classNames from "classnames";
-import MultiInputOptionType from "visual/component/Options/types/MultiInput";
-import { getModifiedField } from "./utils";
+import React, { ReactElement, useCallback, useMemo } from "react";
+import {
+  Props as CProps,
+  ColorPickerSelect
+} from "visual/component/Controls/ColorPickerSelect";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
-import { PaletteObject } from "../ColorPalette/entities/PaletteObject";
+import { Item } from "visual/component/Controls/MultiSelect/Item";
+import MultiInputOptionType from "visual/component/Options/types/MultiInput";
+import { Hex } from "visual/utils/color/Hex";
 import {
   WithClassName,
   WithOnChange2,
   WithValue
 } from "visual/utils/options/attributes";
+import { PaletteObject } from "../ColorPalette/entities/PaletteObject";
 import { Meta, Value } from "./types";
-import { Hex } from "visual/utils/color/Hex";
-import {
-  ColorPickerSelect,
-  Props as CProps
-} from "visual/component/Controls/ColorPickerSelect";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
+import { getModifiedField } from "./utils";
 
 export interface Props<P, O>
   extends WithClassName,
@@ -23,12 +23,12 @@ export interface Props<P, O>
     WithOnChange2<Value<P, O>, Meta<P, O>> {
   opacity: boolean;
   palette: PaletteObject[];
-  paletteOpenSettings: () => void;
+  paletteOpenSettings?: () => void;
   options: Array<{ id: O; title: string }>;
 }
 
 const multiInputConfig = {
-  defaultIcon: ["nc-shadow"],
+  defaultIcon: "nc-shadow",
   icons: ["nc-blur", "nc-vertical", "nc-horizontal"]
 };
 
@@ -54,11 +54,11 @@ export function TextShadow<P extends string, O extends string>({
     [onChange, value]
   );
   const onHex = useCallback(
-    hex => onChange({ ...value, hex }, { isChanged: "hex" }),
+    (hex) => onChange({ ...value, hex }, { isChanged: "hex" }),
     [onChange]
   );
   const fieldChange = useCallback(
-    fields => {
+    (fields) => {
       const [blur, vertical, horizontal] = fields;
       const current = [value.blur, value.vertical, value.horizontal];
       const isChanged = getModifiedField(fields, current);

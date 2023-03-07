@@ -1,24 +1,22 @@
-import { setIn } from "timm";
 import {
-  MouseSettings,
-  ScrollSettings,
+  Settings as MotionSettings,
   Viewport as MotionViewport,
-  Settings as MotionSettings
+  MouseSettings,
+  ScrollSettings
 } from "@brizy/motion/es/types";
-import { MouseAttr, ScrollAttr, ScrollMotionAttr } from "./types";
+import { setIn } from "timm";
 import { ElementModel } from "visual/component/Elements/Types";
-import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
-import { NORMAL } from "visual/utils/stateMode";
-import { IS_PRO } from "visual/utils/env";
 import { FromElementModelGetter } from "visual/component/Options/Type";
-import {
-  fromElementModel,
-  Value as MotionValue
-} from "visual/component/Options/types/dev/Motion/types/Value";
+import { fromElementModel } from "visual/component/Options/types/dev/Motion/converters";
+import { Value as MotionValue } from "visual/component/Options/types/dev/Motion/types/Value";
 import { Viewport } from "visual/component/Options/types/dev/Motion/types/Viewport";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
+import { IS_PRO } from "visual/utils/env";
 import { defaultValueValue } from "visual/utils/onChange/device";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { NORMAL } from "visual/utils/stateMode";
 import { encodeToString } from "visual/utils/string";
+import { MouseAttr, ScrollAttr, ScrollMotionAttr } from "./types";
 
 const optionTypeScrollToAttr = (settings: ScrollSettings): ScrollAttr => {
   switch (settings.type) {
@@ -225,7 +223,7 @@ export const makeOptionToAttr = (options: MotionSettings): ScrollMotionAttr => {
   let attr: ScrollMotionAttr = {};
 
   if (Array.isArray(scroll)) {
-    scroll.forEach(option => {
+    scroll.forEach((option) => {
       const attrOption = optionTypeScrollToAttr(option);
       attr = { ...attr, ...attrOption };
     });
@@ -234,7 +232,7 @@ export const makeOptionToAttr = (options: MotionSettings): ScrollMotionAttr => {
   }
 
   if (Array.isArray(mouse)) {
-    mouse.forEach(option => {
+    mouse.forEach((option) => {
       const attrOption = optionTypeMouseToAttr(option);
       attr = { ...attr, ...attrOption };
     });
@@ -257,21 +255,21 @@ export const makeOptionValueToMotion = (
   let settings = undefined;
 
   if (IS_PRO) {
-    const getDesktop: FromElementModelGetter = k =>
+    const getDesktop: FromElementModelGetter = (k) =>
       defaultValueValue({
         v,
         key: createOptionId(prefix, k),
         device: DESKTOP,
         state: NORMAL
       });
-    const getTablet: FromElementModelGetter = k =>
+    const getTablet: FromElementModelGetter = (k) =>
       defaultValueValue({
         v,
         key: createOptionId(prefix, k),
         device: TABLET,
         state: NORMAL
       });
-    const getMobile: FromElementModelGetter = k =>
+    const getMobile: FromElementModelGetter = (k) =>
       defaultValueValue({
         v,
         key: createOptionId(prefix, k),

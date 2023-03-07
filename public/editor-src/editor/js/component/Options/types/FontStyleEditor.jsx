@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import React from "react";
-import Scrollbars from "react-custom-scrollbars";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import EditorIcon from "visual/component/EditorIcon";
+import { Scrollbar } from "visual/component/Scrollbar";
 import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 import Config from "visual/global/Config";
 import { getFontById } from "visual/utils/fonts";
@@ -105,7 +105,7 @@ class FontStyle extends React.Component {
         id: "toolbarTypography",
         type: "popover",
         icon: "nc-font",
-        size: "large",
+        size: "xlarge",
         display: "inside",
         onOpenDirect: true,
         options: [
@@ -208,7 +208,7 @@ class FontStyle extends React.Component {
                                     display: "block",
                                     min: -20,
                                     max: 20,
-                                    step: 0.5,
+                                    step: 0.1,
                                     value: letterSpacing,
                                     onChange: (letterSpacing) =>
                                       onChange({ letterSpacing })
@@ -456,17 +456,6 @@ class FontStyleEditor extends React.Component {
     onChange(newValue);
   };
 
-  renderThumbs = ({ style, ...props }) => (
-    <div
-      {...props}
-      style={{
-        ...style,
-        borderRadius: "inherit",
-        backgroundColor: "#3f4652"
-      }}
-    />
-  );
-
   render() {
     const { value } = this.props;
     const items = value
@@ -483,12 +472,7 @@ class FontStyleEditor extends React.Component {
     return (
       <div className="brz-ed-option__font-styles">
         <div className="brz-ed-option__font-styles--scroll-pane">
-          <Scrollbars
-            renderThumbHorizontal={this.renderThumbs}
-            renderThumbVertical={this.renderThumbs}
-          >
-            {items}
-          </Scrollbars>
+          <Scrollbar theme="dark">{items}</Scrollbar>
         </div>
         <div
           className="brz-ed-option__font-styles--add"

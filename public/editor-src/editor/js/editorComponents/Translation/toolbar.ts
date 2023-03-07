@@ -1,19 +1,12 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from ".";
 
-export function getItems({
-  v,
-  device
-}: {
-  v: Value;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
@@ -30,7 +23,7 @@ export function getItems({
         icon: "nc-multi-languages",
         title: t("Translation")
       },
-      position: 70,
+      position: 10,
       options: [
         {
           id: "tabsCurrentElement",
@@ -133,7 +126,7 @@ export function getItems({
         size: device === "desktop" ? "large" : "auto",
         title: t("Typography")
       },
-      position: 70,
+      position: 20,
       options: [
         {
           id: "",
@@ -157,7 +150,7 @@ export function getItems({
         }
       },
       devices: "desktop",
-      position: 80,
+      position: 30,
       options: [
         {
           id: "color",
@@ -217,7 +210,7 @@ export function getItems({
       config: {
         title: t("Settings")
       },
-      position: 110,
+      position: 50,
       options: [
         {
           id: "width",
@@ -284,4 +277,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

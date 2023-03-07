@@ -1,0 +1,59 @@
+@import "style";
+
+// --- Input Control
+.brz-ed-control__input2 {
+  input {
+    @apply font-default-font-family;
+    @apply text-control-font-size;
+    @apply not-italic;
+    @apply font-normal;
+    @apply tracking-normal;
+    @apply bg-input-bg bg-none;
+    @apply text-input-color;
+    @apply flex-auto;
+    @apply h-control-height;
+    @apply indent-[5px];
+    @apply px-0 py-[5px];
+    @apply rounded;
+    @apply border-0;
+    @apply outline-0;
+    @apply shadow-none;
+    @apply drop-shadow-none;
+    @apply text-left;
+    @apply left-auto;
+    @apply w-full;
+    @apply min-h-[initial];
+
+    // Placeholder
+    &::placeholder {
+      @apply text-input__placeholder-color;
+      @apply italic;
+      @apply text-[1em];
+    }
+
+    &:focus,
+    &:active {
+      @apply bg-input-bg;
+      @apply text-input-color;
+      @apply outline-0;
+    }
+
+  }
+
+  // Size Styles
+  &--large input {
+    @apply max-w-control__lg-width;
+  }
+
+  &--medium input {
+    @apply max-w-control__md-width;
+  }
+
+  &--short input {
+    @apply max-w-control__sm-width;
+  }
+
+  &--auto input {
+    @apply flex-auto;
+  }
+}

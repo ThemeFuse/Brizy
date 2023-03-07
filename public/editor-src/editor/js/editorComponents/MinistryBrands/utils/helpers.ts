@@ -18,30 +18,15 @@ export const getOption = (
     : [];
 };
 
-export const getChoicesById = (
-  arr: Record<string, Literal>[] | undefined
-): Choice[] => {
-  return arr
-    ? [
-        { title: "None", value: "" },
-        ...arr.map((item) => ({
-          title: String(item.post_title),
-          value: item.ID
-        }))
-      ]
-    : [];
-};
-
-export const getAttr = (
-  option: Switch,
-  key: string,
-  value?: unknown
-): string => {
-  if (value) {
-    return option === "on" ? `${key}='${value}'` : `${key}=''`;
-  }
+export const getAttr = (option: Switch, key: string): string => {
   return option === "on" ? `${key}='1'` : `${key}='0'`;
 };
+
+export const getFeatures = (option: Switch, placeholder: string) =>
+  option === "on" ? `${placeholder}='${placeholder}'` : "";
+
+export const getDetail = (placeholder: string): string =>
+  encodeURI(placeholder);
 
 export const changeContentVisibility = ({
   items,

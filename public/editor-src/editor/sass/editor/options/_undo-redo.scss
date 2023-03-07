@@ -8,8 +8,8 @@
   bottom: 25px;
   right: 30px;
   border-radius: 50px;
-  box-shadow: 0 0 5px 0 $bottom-toolbar--box-shadow;
-  background-color: $bottom-toolbar--bg;
+  box-shadow: 0 0 5px 0 $bottom_toolbar-box-shadow;
+  background-color: $bottom_toolbar-bg;
   z-index: z("sidebar");
   user-select: none;
 
@@ -17,64 +17,74 @@
     display: flex;
     justify-content: space-between;
   }
+
   &__item {
-    color: $bottom-toolbar--disable--color;
+    color: $bottom_toolbar__disable-color;
     font-size: 12px;
     letter-spacing: $control-letter-spacing;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-weight: 400;
     display: flex;
     align-items: center;
     cursor: default;
     transition: color 150ms linear;
     padding: 14px;
-    border-right: 1px solid $bottom-toolbar--border;
+    border-right: 1px solid $bottom_toolbar-border;
 
     &:first-child {
       padding-left: 18px;
     }
+
     &:last-child {
       border-right: none;
     }
+
     .brz-icon-svg {
       font-size: 14px;
     }
   }
+
   &__item--small {
     padding: 8px 13px;
   }
+
   &__item--none {
     padding: 0;
   }
+
   &__item--pointer {
     cursor: pointer;
   }
+
   &__item--active {
-    color: $bottom-toolbar--color;
+    color: $bottom_toolbar-color;
 
     &:hover {
-      color: $bottom-toolbar--active--color;
+      color: $bottom_toolbar-color--active;
     }
   }
+
   &__preview {
     .brz-a {
-      color: $bottom-toolbar--color;
+      color: $bottom_toolbar-color;
       transition: color 150ms linear;
       font-size: 0;
       padding: 14px;
     }
+
     &:hover .brz-a {
-      color: $brand-primary;
+      color: $brand__primary;
     }
   }
+
   &__btn {
     cursor: pointer;
     display: flex;
     align-items: stretch;
     font-size: 13px;
     line-height: 1;
-    color: $bottom-toolbar-btn--color;
-    border-bottom: 2px solid $bottom-toolbar-btn--border;
+    color: $bottom_toolbar__btn-color;
+    border-bottom: 2px solid $bottom_toolbar__btn-border;
     border-radius: 15px;
     height: 28px;
     text-align: center;
@@ -83,16 +93,18 @@
       width: 1em;
       height: 1em;
     }
+
     .brz-ed-tooltip--opened .brz-button {
-      color: $bottom-toolbar-tooltip--color;
+      color: $bottom_toolbar__tooltip-color;
     }
+
     .brz-button {
       position: relative;
       height: 100%;
-      background-color: $bottom-toolbar-btn--bg;
+      background-color: $bottom_toolbar__btn-bg;
       border: none;
       border-left: 1px solid rgba(#fff, 0.1);
-      color: $bottom-toolbar-btn--color;
+      color: $bottom_toolbar__btn-color;
       outline: none;
       padding-left: 7px;
       padding-right: 10px;
@@ -100,10 +112,12 @@
       border-radius: 0 15px 15px 0;
       transition: 0.2s linear all;
     }
+
     .brz-button:hover {
-      color: $bottom-toolbar-tooltip--hover--color;
+      color: $bottom_toolbar__tooltip-color--hover;
       transition: 0.2s linear all;
     }
+
     .brz-button:after {
       content: "";
       position: absolute;
@@ -111,32 +125,38 @@
       left: -2px;
       width: 1px;
       height: 100%;
-      background-color: $bottom-toolbar-tooltip--hover--bg;
+      background-color: $bottom_toolbar__tooltip-bg--hover;
       opacity: 0.35;
     }
+
     .brz-button .brz-icon-svg {
       font-size: 8px;
     }
+
     &-disabled {
       .brz-ed-fixed-bottom-panel__btn-loading {
+
         &,
         &:hover {
-          color: $bottom-toolbar-btn--disable--color;
-          background-color: $bottom-toolbar-btn--disable--bg;
+          color: $bottom_toolbar__btn__disable-color;
+          background-color: $bottom_toolbar__btn__disable-bg;
         }
       }
+
       .brz-ed-tooltip__static .brz-button {
-        color: $bottom-toolbar-btn--disable--color;
-        background-color: $bottom-toolbar-btn--disable--bg;
+        color: $bottom_toolbar__btn__disable-color;
+        background-color: $bottom_toolbar__btn__disable-bg;
       }
+
       &:hover {
         .brz-button {
-          color: $bottom-toolbar-tooltip--disable--color;
-          background-color: $bottom-toolbar-tooltip--disable--bg;
+          color: $bottom_toolbar__tooltip__disable-color;
+          background-color: $bottom_toolbar__tooltip__disable-bg;
         }
       }
     }
   }
+
   &__btn-loading {
     position: relative;
     height: 100%;
@@ -144,14 +164,15 @@
     line-height: 26px;
     padding-left: 14px;
     padding-right: 14px;
-    background-color: $bottom-toolbar-btn--bg;
+    background-color: $bottom_toolbar__btn-bg;
     border-radius: 15px;
     transition: background-color 150ms linear;
 
     &:hover {
-      background-color: $bottom-toolbar-btn--hover--bg;
-      color: $bottom-toolbar-btn--hover--color;
+      background-color: $bottom_toolbar__btn-bg--hover;
+      color: $bottom_toolbar__btn-color--hover;
     }
+
     .brz-icon-svg {
       position: absolute;
       top: 50%;
@@ -160,6 +181,7 @@
       margin-left: -0.5em;
     }
   }
+
   &__btn-popover .brz-ed-fixed-bottom-panel__btn-loading {
     border-radius: 15px 0 0 15px;
     padding-left: 14px;
@@ -169,6 +191,7 @@
       margin-left: 0;
     }
   }
+
   &-popover__item {
     display: flex;
     align-items: center;
@@ -177,9 +200,10 @@
     white-space: nowrap;
 
     &:hover {
-      color: $bottom-panel-popover-item--color--hover;
+      color: $bottom_panel__popover__item-color--hover;
       transition: 0.3s linear color;
     }
+
     .brz-icon-svg {
       margin-right: 10px;
       font-size: 12px;

@@ -8,11 +8,11 @@
   flex-direction: column;
   background-color: rgba(237, 237, 237, 0.92);
   color: #292E37;
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   line-height: 1.4;
   font-size: 13px;
   font-weight: 600;
-  border: 3px solid $brand-primary-pro;
+  border: 3px solid $brand__primary__pro;
   padding: 30px 20px;
 
   &--absolute {
@@ -23,18 +23,21 @@
     height: 100%;
     z-index: 2;
   }
+
   &-title.brz-p {
     font-size: 13px;
     font-weight: 600;
     margin: 0 0 12px;
   }
+
   &-link.brz-a {
-    color: $brand-primary-pro !important;
+    color: $brand__primary__pro !important;
 
     &:hover {
-      color: $brand-primary-pro !important;
+      color: $brand__primary__pro !important;
     }
   }
+
   &-lock {
     width: 90px;
     height: 90px;
@@ -42,11 +45,12 @@
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    background-color: $brand-primary-pro;
+    background-color: $brand__primary__pro;
     color: #fff;
     border-radius: 90px;
     margin-bottom: 12px;
   }
+
   &-removed.brz-p {
     margin-bottom: 12px;
     font-weight: 600;

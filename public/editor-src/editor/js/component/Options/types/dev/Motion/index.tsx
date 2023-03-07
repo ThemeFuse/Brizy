@@ -1,30 +1,24 @@
 import React, { FC, useCallback, useMemo } from "react";
 import { identity } from "underscore";
-import { pipe } from "visual/utils/fp";
-import * as Option from "visual/component/Options/Type";
-import { WithClassName } from "visual/utils/options/attributes";
-import { OptionWrapper } from "visual/component/OptionWrapper";
-import { FatIconsGrid } from "visual/component/FatIconsGrid";
 import { Group } from "visual/component/Controls/Group";
-import { Icon } from "./components/Icon";
-import { DisabledIcon } from "./components/DisabledIcon";
-import { effectIcon, effectOptions, effectTitle } from "./utils";
-import {
-  Value,
-  fromElementModel,
-  effects,
-  Effect,
-  EffectValue
-} from "./types/Value";
+import { FatIconsGrid } from "visual/component/FatIconsGrid";
+import { OptionWrapper } from "visual/component/OptionWrapper";
+import * as Option from "visual/component/Options/Type";
 import { OnChange } from "visual/component/Options/Type";
-import * as Patch from "./types/Patch";
+import { pipe } from "visual/utils/fp";
+import { WithClassName } from "visual/utils/options/attributes";
+import { DisabledIcon } from "./components/DisabledIcon";
+import { Icon } from "./components/Icon";
 import { Config } from "./types/Config";
+import * as Patch from "./types/Patch";
+import { Effect, EffectValue, Value, effects } from "./types/Value";
+import { effectIcon, effectOptions, effectTitle } from "./utils";
 
 export interface Props extends Option.Props<Value, Patch.Patch>, WithClassName {
   config?: Config;
 }
 
-export const Motion: FC<Props> & Option.OptionType<Value, Patch.Patch> = ({
+export const Motion: FC<Props> = ({
   className,
   label,
   value,
@@ -36,7 +30,7 @@ export const Motion: FC<Props> & Option.OptionType<Value, Patch.Patch> = ({
   const activeEffect = active ? value[active] : undefined;
   const EffectComponent = active && effectOptions(active);
   const onCheck = useCallback<OnChange<Effect>>(
-    e => onChange(Patch.enable(e, !value[e], active === e)),
+    (e) => onChange(Patch.enable(e, !value[e], active === e)),
     [value, onChange]
   );
 
@@ -56,7 +50,7 @@ export const Motion: FC<Props> & Option.OptionType<Value, Patch.Patch> = ({
       <OptionWrapper display={"block"} className={"brz-ed-option"}>
         {label}
         <FatIconsGrid>
-          {effects.map(v =>
+          {effects.map((v) =>
             disabled.includes(v) ? (
               <DisabledIcon
                 key={v}
@@ -88,19 +82,3 @@ export const Motion: FC<Props> & Option.OptionType<Value, Patch.Patch> = ({
     </div>
   );
 };
-
-Motion.defaultValue = {
-  active: undefined,
-  vertical: undefined,
-  horizontal: undefined,
-  blur: undefined,
-  mouseTrack: undefined,
-  rotate: undefined,
-  scale: undefined,
-  mouseTilt: undefined,
-  transparency: undefined
-};
-
-Motion.fromElementModel = fromElementModel;
-
-Motion.toElementModel = Patch.toElementModel;

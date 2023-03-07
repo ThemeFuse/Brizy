@@ -13,7 +13,7 @@
 
     .brz-label {
       word-break: keep-all;
-      color: $options-label-color;
+      color: $options__label-color;
       margin-right: 5px;
     }
 
@@ -37,11 +37,11 @@
 
     .brz-icon {
       font-size: 10px;
-      color: $color-border-width-type-icon--color;
+      color: $border__width__type__icon-color;
     }
 
     &--active .brz-icon {
-      color: $color-border-width-type-icon--active--color
+      color: $border__width__type__icon-color--active
     }
   }
 }

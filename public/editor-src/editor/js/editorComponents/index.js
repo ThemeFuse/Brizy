@@ -43,7 +43,7 @@ import Menu from "./Menu";
 import MenuItem from "./Menu/MenuItem";
 import SectionMegaMenu from "./Menu/SectionMegaMenu";
 import MenuSimple from "./MenuSimple";
-// import * as MinistryBrands from "./MinistryBrands";
+import * as MinistryBrands from "./MinistryBrands";
 import Page from "./Page";
 import PagePopup from "./PagePopup";
 import PageStory from "./PageStory";
@@ -188,10 +188,10 @@ export default {
   ...Shopify,
 
   // Ecwid
-  ...Ecwid
+  ...Ecwid,
 
   // Ministry Brands
-  // ...MinistryBrands
+  ...MinistryBrands
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

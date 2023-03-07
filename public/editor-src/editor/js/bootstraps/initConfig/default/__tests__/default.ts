@@ -89,7 +89,18 @@ describe("testing initConfig", () => {
     // (1)
     [
       { ...configCommon, mode: Mode.page },
-      { ...configCommon, mode: Mode.page }
+      {
+        ...configCommon,
+        mode: Mode.page,
+        ui: {
+          popupSettings: {
+            displayCondition: false,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
+          }
+        }
+      }
     ],
 
     // (2)
@@ -101,7 +112,10 @@ describe("testing initConfig", () => {
         ui: {
           popupSettings: {
             displayCondition: true,
-            deletePopup: true
+            deletePopup: true,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
           }
         }
       }
@@ -116,7 +130,10 @@ describe("testing initConfig", () => {
         ui: {
           popupSettings: {
             displayCondition: true,
-            deletePopup: true
+            deletePopup: true,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
           }
         }
       }
@@ -129,7 +146,10 @@ describe("testing initConfig", () => {
         mode: Mode.internal_popup,
         ui: {
           popupSettings: {
-            displayCondition: false
+            displayCondition: false,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
           }
         }
       },
@@ -139,7 +159,10 @@ describe("testing initConfig", () => {
         ui: {
           popupSettings: {
             displayCondition: false,
-            deletePopup: true
+            deletePopup: true,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
           }
         }
       }
@@ -153,7 +176,10 @@ describe("testing initConfig", () => {
         ui: {
           popupSettings: {
             displayCondition: true,
-            deletePopup: false
+            deletePopup: false,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
           }
         }
       },
@@ -163,7 +189,10 @@ describe("testing initConfig", () => {
         ui: {
           popupSettings: {
             displayCondition: true,
-            deletePopup: false
+            deletePopup: false,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
           }
         }
       }
@@ -184,7 +213,10 @@ describe("testing initConfig", () => {
         ui: {
           popupSettings: {
             displayCondition: true,
-            deletePopup: true
+            deletePopup: true,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
           }
         }
       }
@@ -197,7 +229,10 @@ describe("testing initConfig", () => {
         mode: Mode.page,
         ui: {
           popupSettings: {
-            displayCondition: false
+            displayCondition: false,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
           },
           leftSidebar: {}
         }
@@ -207,7 +242,10 @@ describe("testing initConfig", () => {
         mode: Mode.page,
         ui: {
           popupSettings: {
-            displayCondition: false
+            displayCondition: false,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
           },
           leftSidebar: {}
         }
@@ -224,7 +262,14 @@ describe("testing initConfig", () => {
       {
         ...configCommon,
         mode: Mode.page,
-        ui: {}
+        ui: {
+          popupSettings: {
+            displayCondition: false,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
+          }
+        }
       }
     ],
 
@@ -241,7 +286,10 @@ describe("testing initConfig", () => {
         ui: {
           popupSettings: {
             displayCondition: true,
-            deletePopup: true
+            deletePopup: true,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
           }
         }
       }
@@ -257,7 +305,15 @@ describe("testing initConfig", () => {
       configCommon,
       {
         ...configCommon,
-        ui: { leftSidebar: leftSidebarDefaultConfig }
+        ui: {
+          leftSidebar: leftSidebarDefaultConfig,
+          popupSettings: {
+            displayCondition: false,
+            embedded: false,
+            horizontalAlign: true,
+            verticalAlign: true
+          }
+        }
       }
     ],
 

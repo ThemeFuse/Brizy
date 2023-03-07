@@ -1,12 +1,13 @@
-import * as Str from "visual/utils/reader/string";
+import { mPipe } from "fp-utilities";
+import { V } from "visual/types";
+import { Dictionary } from "visual/types/utils";
+import { GetDynamicContent } from "visual/utils/api/types";
 import * as Obj from "visual/utils/reader/object";
+import * as Str from "visual/utils/reader/string";
 import { camelCase } from "visual/utils/string";
 import { MValue } from "visual/utils/value";
-import { V } from "visual/types";
 import { ECKeyDCInfo } from "../types";
-import { Dictionary } from "visual/types/utils";
 import { DCPlaceholderObj } from "./types";
-import { GetDynamicContent } from "visual/utils/api/types";
 
 //#region keys
 
@@ -51,6 +52,7 @@ export const keyDCInfo = (v: V, key: string): ECKeyDCInfo => {
 
 //#region placeholder
 
+const _unescape = mPipe(Str.read, unescape);
 export function placeholderObjFromStr(
   placeholder: string
 ): MValue<DCPlaceholderObj> {
@@ -73,7 +75,7 @@ export function placeholderObjFromStr(
 
   while ((match = r2.exec(attrStr.trim()))) {
     attr = attr ?? {};
-    attr[match[1]] = match[3];
+    attr[match[1]] = _unescape(match[3]);
   }
 
   return attr ? { name, attr } : { name };
@@ -103,14 +105,15 @@ export function placeholderObjFromECKeyDCInfo(
   return placeholderObj;
 }
 
+const _escape = mPipe(Str.read, escape);
 export function placeholderObjToStr(placeholderObj: DCPlaceholderObj): string {
   const { name, attr } = placeholderObj;
 
   const attrStr = attr
     ? Object.keys(attr)
         .sort()
-        .flatMap(k => {
-          const v = Str.read(attr[k]);
+        .flatMap((k) => {
+          const v = _escape(attr[k]);
           return v !== undefined ? `${k}='${v}'` : [];
         })
         .join(" ")
@@ -134,7 +137,7 @@ export const dcApiProxyTestFetcher: GetDynamicContent = ({ placeholders }) => {
 
       return [
         postId,
-        value.map(placeholder => {
+        value.map((placeholder) => {
           const placeholderObj = placeholderObjFromStr(placeholder);
 
           if (

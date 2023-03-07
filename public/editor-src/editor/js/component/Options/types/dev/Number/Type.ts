@@ -1,5 +1,7 @@
-import * as Option from "visual/component/Options/Type";
-import { OptionType, SimpleValue } from "visual/component/Options/Type";
+import {
+  SimpleValue,
+  Props as OptionProps
+} from "visual/component/Options/Type";
 import { FC } from "react";
 import {
   WithClassName,
@@ -15,8 +17,8 @@ export type Config = WithSize & {
   spinner: boolean;
 };
 
-export type Props = Option.Props<SimpleValue<number>> &
+export type Props = OptionProps<SimpleValue<number>> &
   WithConfig<Config> &
   WithClassName;
 
-export type Component = OptionType<SimpleValue<number>> & FC<Props>;
+export type Component = FC<Props>;

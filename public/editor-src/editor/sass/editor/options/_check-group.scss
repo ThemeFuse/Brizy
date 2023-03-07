@@ -9,11 +9,12 @@ $box-height: $control-height;
     margin-right: 5px;
   }
 }
+
 .brz-ed-option__check-group--boxed {
   width: $box-width;
   height: $box-height;
-  border-right: 1px solid $control-border-color;
-  background-color: $control-background-color;
+  border-right: 1px solid $control-border;
+  background-color: $control-bg;
   color: #fff;
   overflow: hidden;
   display: inline-block;
@@ -22,11 +23,13 @@ $box-height: $control-height;
     border-top-left-radius: $control-border-radius;
     border-bottom-left-radius: $control-border-radius;
   }
+
   &:last-child {
     border-right: transparent;
     border-top-right-radius: $control-border-radius;
     border-bottom-right-radius: $control-border-radius;
   }
+
   .brz-ed-option__check-group__icon {
     display: flex;
     align-items: center;
@@ -36,9 +39,10 @@ $box-height: $control-height;
     cursor: pointer;
     transition: background-color 0.2s linear;
   }
+
   &.active {
     .brz-ed-option__check-group__icon {
-      background-color: $brand-primary;
+      background-color: $brand__primary;
     }
   }
 }

@@ -43,6 +43,7 @@
     &::-moz-range-track {
       @include track;
     }
+
     &::-webkit-slider-runnable-track {
       @include track;
     }
@@ -51,7 +52,7 @@
   &__values {
     display: flex;
     justify-content: space-between;
-    color: $options-border-hover-color;
+    color: $options__item-color--hover;
     font-size: 9px;
     margin: 0 9px;
     height: 0;

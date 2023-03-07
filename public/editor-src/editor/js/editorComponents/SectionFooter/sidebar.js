@@ -1,22 +1,22 @@
-import { t } from "visual/utils/i18n";
-import {
-  getOptionColorHexByPalette,
-  getDynamicContentChoices
-} from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
-import { hexToRgba } from "visual/utils/color";
-import {
-  toolbarShapeTopType,
-  toolbarShapeTopFlip,
-  toolbarShapeBottomType,
-  toolbarShapeBottomFlip
-} from "visual/utils/toolbar";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
+import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
+import {
+  toolbarShapeBottomFlip,
+  toolbarShapeBottomType,
+  toolbarShapeTopFlip,
+  toolbarShapeTopType
+} from "visual/utils/toolbar";
 
 export const title = t("Footer");
 
 export function getItems({ v, device, context }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: shapeTopColorHex } = getOptionColorHexByPalette(
     dvv("shapeTopColorHex"),
@@ -28,7 +28,7 @@ export function getItems({ v, device, context }) {
   );
 
   const toolbarTagsChoices = [
-    { title: t("Div"), value: "div" },
+    { title: "Div", value: "div" },
     { title: t("Header"), value: "header" },
     { title: t("Footer"), value: "footer" },
     { title: t("Main"), value: "main" },
@@ -275,12 +275,10 @@ export function getItems({ v, device, context }) {
                       config: {
                         choices: richTextDC
                       },
-                      options: [
-                        {
-                          id: "anchorName",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "anchorName",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "cssClass",
@@ -296,12 +294,10 @@ export function getItems({ v, device, context }) {
                       config: {
                         choices: richTextDC
                       },
-                      options: [
-                        {
-                          id: "customClassName",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customClassName",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "customAttributes",

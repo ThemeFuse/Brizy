@@ -204,7 +204,8 @@ class Icon extends EditorComponent<Value, Props> {
       popup: linkPopup,
       upload: linkUpload,
       action: "",
-      lightBox: ""
+      lightBox: "",
+      page: ""
     };
 
     const classNameIcon = classnames(

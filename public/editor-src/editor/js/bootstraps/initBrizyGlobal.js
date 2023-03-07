@@ -29,7 +29,6 @@ import {
   tabletSyncOnChange
 } from "visual/utils/onChange";
 import {
-  getAnimations,
   getDynamicContentByPlaceholder,
   getDynamicContentChoices,
   getOptionColorHexByPalette,
@@ -44,8 +43,7 @@ import {
   toolbarFilterContrast,
   toolbarFilterHue,
   toolbarFilterSaturation,
-  toolbarLinkPopup,
-  toolbarLinkUpload
+  toolbarLinkPopup
 } from "visual/utils/toolbar";
 
 global.Brizy = {
@@ -63,7 +61,6 @@ global.Brizy = {
     isPopup,
     isStory,
 
-    getAnimations,
     getDynamicContentChoices,
     getDynamicContentByPlaceholder,
     getShapes,
@@ -102,7 +99,6 @@ global.Brizy = {
     toolbarFilterBrightness,
     toolbarFilterContrast,
     toolbarLinkPopup,
-    toolbarLinkUpload,
     toolbarElementAudioUpload
   }
 };

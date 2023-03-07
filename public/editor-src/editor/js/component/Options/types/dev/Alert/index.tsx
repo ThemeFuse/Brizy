@@ -8,10 +8,7 @@ export type Config = {
 
 export type Props = Option.Props<undefined> & WithConfig<Config>;
 
-export const Alert: React.FC<Props> & Option.OptionType<undefined> = ({
-  config,
-  label
-}) => {
+export const Alert: React.FC<Props> = ({ config, label }) => {
   return (
     <>
       {label}
@@ -22,12 +19,3 @@ export const Alert: React.FC<Props> & Option.OptionType<undefined> = ({
     </>
   );
 };
-
-const getModel: Option.FromElementModel<undefined> = () => undefined;
-const getElementModel: Option.ToElementModel<undefined> = () => ({});
-
-Alert.fromElementModel = getModel;
-Alert.toElementModel = getElementModel;
-
-// @ts-expect-error: Variable 'defaultValue' implicitly has an 'any' type
-Alert.defaultValue = undefined;

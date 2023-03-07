@@ -166,12 +166,10 @@ export function getItems({ v, device, context }) {
                       config: {
                         choices: richTextDC
                       },
-                      options: [
-                        {
-                          id: "customID",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customID",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "cssClass",
@@ -187,12 +185,10 @@ export function getItems({ v, device, context }) {
                       config: {
                         choices: richTextDC
                       },
-                      options: [
-                        {
-                          id: "customClassName",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customClassName",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "customAttributes",

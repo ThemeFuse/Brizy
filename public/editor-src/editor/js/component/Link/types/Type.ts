@@ -7,7 +7,8 @@ export type Type =
   | "lightBox"
   | "popup"
   | "upload"
-  | "action";
+  | "action"
+  | "page";
 
 export const types: Type[] = [
   "external",
@@ -19,9 +20,9 @@ export const types: Type[] = [
   "action"
 ];
 
-export const read: Reader<Type> = v =>
+export const read: Reader<Type> = (v) =>
   types.includes(v as Type) ? (v as Type) : undefined;
 
 export const empty: Type = "external";
 
-export const mRead: MRead<Type> = v => read(v) ?? empty;
+export const mRead: MRead<Type> = (v) => read(v) ?? empty;

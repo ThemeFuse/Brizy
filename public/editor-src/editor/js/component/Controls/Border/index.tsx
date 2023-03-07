@@ -1,23 +1,24 @@
-import React, { FC, useCallback } from "react";
 import classNames from "classnames";
-import { mApply } from "visual/utils/value";
-import { t } from "visual/utils/i18n/t";
-import EditorIcon from "visual/component/EditorIcon";
-import { ColorPickerSelect } from "visual/component/Controls/ColorPickerSelect";
-import * as BorderWidthType from "visual/component/Options/types/dev/Border/entities/widthType";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
-import { toggleType } from "./utils";
-import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
+import React, { FC, useCallback } from "react";
 import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
-import { WithClassName } from "visual/utils/options/attributes";
-import { OnChange } from "visual/component/Options/Type";
-import * as BorderStyle from "visual/component/Options/types/dev/Border/entities/style";
-import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
+import { ColorPickerSelect } from "visual/component/Controls/ColorPickerSelect";
 import {
   Meta,
   Value
 } from "visual/component/Controls/ColorPickerSelect/entities";
+import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
+import { Item } from "visual/component/Controls/MultiSelect/Item";
+import EditorIcon from "visual/component/EditorIcon";
+import { OnChange } from "visual/component/Options/Type";
+import * as BorderStyle from "visual/component/Options/types/dev/Border/entities/style";
+import * as BorderWidthType from "visual/component/Options/types/dev/Border/entities/widthType";
+import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
+import { t } from "visual/utils/i18n/t";
+import { WithClassName } from "visual/utils/options/attributes";
+import { mApply } from "visual/utils/value";
 import { Width } from "./Width";
+import { toggleType } from "./utils";
+
 type Style = BorderStyle.Style;
 
 export type StyleObject = {
@@ -30,7 +31,7 @@ export interface Props extends WithClassName {
   enableOpacity: boolean;
   styles: StyleObject[];
   paletteList: PaletteObject[];
-  paletteOpenSettings: () => void;
+  paletteOpenSettings?: () => void;
   widthTypes: ("grouped" | "ungrouped")[];
   style: Style;
   onChangeStyle: OnChange<Style>;

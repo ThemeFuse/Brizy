@@ -4,7 +4,7 @@ import { Block } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL, State } from "visual/utils/stateMode";
@@ -25,7 +25,6 @@ export interface Value extends ElementModel {
 export function getItems({
   v,
   device,
-  state,
   component
 }: {
   v: Value;
@@ -33,7 +32,6 @@ export function getItems({
   state: State;
   component: EditorComponent<Value>;
 }): ToolbarItemType[] {
-  const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
@@ -76,13 +74,13 @@ export function getItems({
           }
         },
         {
-          id: dvk("animationFile"),
+          id: "animationFile",
           label: t("Lottie File"),
-          // @ts-expect-error: Old option
-          type: "fileUpload",
-          acceptedExtensions: [".json"],
-          devices: "desktop",
-          value: dvv("animationFile")
+          type: "fileUpload-dev",
+          config: {
+            allowedExtensions: [".json"]
+          },
+          devices: "desktop"
         },
         {
           id: "renderer",
@@ -95,7 +93,7 @@ export function getItems({
         },
         {
           id: "autoplay",
-          label: t("Auto play"),
+          label: t("Autoplay"),
           type: "switch-dev"
         },
         {

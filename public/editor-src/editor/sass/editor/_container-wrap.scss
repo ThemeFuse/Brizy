@@ -5,7 +5,7 @@
     position: relative;
     height: 2px;
     margin-top: -2px;
-    background-color: $brand-primary;
+    background-color: $brand__primary;
     user-select: none;
 
     .floating-action-button {
@@ -15,12 +15,13 @@
       transform: translate(-50%, -50%);
     }
   }
+
   &-plus {
     position: relative;
     z-index: z("adder-block");
     height: 2px;
     margin-top: -2px;
-    background-color: $brand-primary;
+    background-color: $brand__primary;
 
     &--fixed {
       position: fixed;
@@ -38,7 +39,7 @@
     width: 54px;
     height: 54px;
     border-radius: 50%;
-    background-color: $brand-primary;
+    background-color: $brand__primary;
     cursor: pointer;
     z-index: 10;
     transition: background 200ms linear;
@@ -56,12 +57,15 @@
       margin: -8px 0 0 -1px;
       transition: transform 200ms linear;
     }
+
     &:before {
       transform: rotate(90deg);
     }
+
     &:hover {
       background: #03080f;
     }
+
     &--small {
       width: 28px;
       height: 28px;
@@ -114,12 +118,14 @@
       bottom: 8px;
       opacity: 1;
     }
+
     .brz-ed-container-trigger {
       background: #03080f;
 
       &:after {
         transform: rotate(45deg);
       }
+
       &:before {
         transform: rotate(135deg);
       }
@@ -132,13 +138,14 @@
     text-align: center;
     font-size: 1px;
 
-    & > * + * {
+    &>*+* {
       margin-left: 5px;
     }
   }
+
   &-tab {
     &-item {
-      font-family: $font-family-1;
+      font-family: $default-font-family;
       text-transform: uppercase;
       display: inline-block;
       height: 30px;
@@ -153,6 +160,7 @@
       user-select: none;
       -webkit-font-smoothing: antialiased;
     }
+
     &-active {
       background: #03080f;
       color: #fff;
@@ -171,12 +179,14 @@
     &-in {
       padding-top: 14px;
     }
+
     &-scroll {
       width: 100% !important;
       height: 100%;
       overflow: hidden;
     }
   }
+
   &-block {
     position: relative;
     display: inline-block;
@@ -194,6 +204,7 @@
       left: 0;
       height: 188px;
     }
+
     &:after {
       content: "";
       display: block;
@@ -206,11 +217,13 @@
       opacity: 0;
       transition: opacity 150ms;
     }
+
     &.brz-ed-container-block-hover:after {
       opacity: 1;
     }
+
     .brz-ed-container-title {
-      font-family: $font-family-1;
+      font-family: $default-font-family;
       text-align: center;
       line-height: 16px;
       position: absolute;
@@ -224,6 +237,7 @@
       transition: bottom 200ms;
       z-index: 2;
     }
+
     &.brz-ed-container-block-hover .brz-ed-container-title {
       bottom: 10px;
     }
@@ -256,10 +270,12 @@
         margin: -8px 0 0 -1px;
         transition: transform 200ms;
       }
+
       &:before {
         transform: rotate(90deg);
       }
     }
+
     &.brz-ed-container-block-hover .brz-ed-container-block-btn {
       top: 50%;
       opacity: 1;
@@ -296,7 +312,7 @@
   background-color: #fff;
   text-align: center;
   border-radius: 5px;
-  border: 2px dashed $brand-primary;
+  border: 2px dashed $brand__primary;
   padding: 62px 0;
   display: flex;
   justify-content: space-between;
@@ -304,13 +320,14 @@
   align-items: center;
 
   &-heading {
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-weight: bolder;
     font-size: 15px;
     color: #292e37;
   }
+
   &-heading2 {
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-style: italic;
     font-size: 15px;
     color: #9da0a6;
@@ -319,7 +336,7 @@
 
 // Box shadow for the last block
 .brz-ed-wrap-block-item {
-  background-color: #fff;
+  background-color: $container-bg;
 
   &:nth-last-child(2) {
     box-shadow: 0 15px 15px -10px rgba(0, 0, 0, 0.1);
@@ -331,6 +348,7 @@
   opacity: 0;
   transition: opacity 0.15s linear;
 }
+
 .brz-ed-wrap-block-item:hover .brz-ed-container-plus,
 .brz-ed-wrap-block-item.brz-ed-under-bar .brz-ed-container-plus,
 .brz-ed-wrap-block-item .brz-ed-container-plus.brz-ed-container-open {
@@ -348,6 +366,7 @@
 
 // --- Responsive
 @media screen and (max-width: 1400px) {
+
   // Visual Wrap
   .brz-ed-wrap-block-empty-page {
     width: 360px;

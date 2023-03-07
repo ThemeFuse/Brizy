@@ -9,15 +9,14 @@ import {
   Meta as CMeta,
   Value as CValue
 } from "visual/component/Controls/TextShadow/types";
-import * as Option from "visual/component/Options/Type";
-import { OptionType } from "visual/component/Options/Type";
+import { Props as OptionProps } from "visual/component/Options/Type";
+import Config from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
 import { getColorPaletteColors } from "visual/utils/color";
 import { Palette } from "visual/utils/color/Palette";
 import { mPipe } from "visual/utils/fp";
 import { WithClassName } from "visual/utils/options/attributes";
-import { defaultValue, fromElementModel, toElementModel } from "./converters";
 import * as Value from "./types/Value";
 import * as Utils from "./utils";
 import {
@@ -27,13 +26,9 @@ import {
   valueFromSelectType
 } from "./utils";
 
-export interface Props extends Option.Props<Value.Value>, WithClassName {}
+export interface Props extends OptionProps<Value.Value>, WithClassName {}
 
-export const TextShadow: OptionType<Value.Value> & FC<Props> = ({
-  onChange,
-  value,
-  className
-}) => {
+export const TextShadow: FC<Props> = ({ onChange, value, className }) => {
   const dispatch = useDispatch();
   const _className = classNames("brz-ed-option__textShadow", className);
   const onValueChange = useCallback<
@@ -91,6 +86,16 @@ export const TextShadow: OptionType<Value.Value> & FC<Props> = ({
     [value]
   );
 
+  const enableGlobalStyle = useMemo((): boolean => {
+    const config = Config.getAll();
+    const { bottomTabsOrder = [], topTabsOrder = [] } =
+      config.ui?.leftSidebar ?? {};
+
+    return [...bottomTabsOrder, ...topTabsOrder].includes(
+      LeftSidebarOptionsIds.globalStyle
+    );
+  }, []);
+
   return (
     <ShadowControl<Palette, SelectType>
       opacity={true}
@@ -98,14 +103,8 @@ export const TextShadow: OptionType<Value.Value> & FC<Props> = ({
       value={shadowValue}
       onChange={onValueChange}
       palette={getColorPaletteColors()}
-      paletteOpenSettings={openPaletteSidebar}
+      paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
       options={options}
     />
   );
 };
-
-TextShadow.fromElementModel = fromElementModel;
-
-TextShadow.toElementModel = toElementModel;
-
-TextShadow.defaultValue = defaultValue;

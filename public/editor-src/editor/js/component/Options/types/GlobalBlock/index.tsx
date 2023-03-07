@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { noop } from "underscore";
 import { getOptions } from "visual/component/ConditionsComponent";
-import SwitchControl from "visual/component/Controls/Switch";
+import { Switch as SwitchControl } from "visual/component/Controls/Switch";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import Prompts from "visual/component/Prompts";
-import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
 import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
+import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
 import {
   ActionMakeGlobalBlockToPopup,
   ActionMakeGlobalToNormalBlock,
@@ -291,7 +291,7 @@ class OptionTypeGlobalBlock extends Component<GlobalBlockProps> {
         {(label || helper) && this.renderLabel()}
         <SwitchControl
           key={this.switchKey}
-          defaultValue={this.isGlobalBlock()}
+          value={this.isGlobalBlock()}
           onChange={this.handleChange}
         />
       </div>

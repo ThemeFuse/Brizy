@@ -15,7 +15,7 @@ function youtubeLoadScript(cb) {
         script.async = true;
         script.src = "https://www.youtube.com/iframe_api";
 
-        script.onerror = function() {
+        script.onerror = function () {
           cb(new Error("Failed to load" + script.src));
         };
 
@@ -34,7 +34,7 @@ function youtubeLoadScript(cb) {
       if (window.Brz === undefined) {
         window.onYouTubeIframeAPIReady = () => {
           isAlreadyMounted = true;
-          callbacks.forEach(function(cb) {
+          callbacks.forEach(function (cb) {
             cb();
           });
         };
@@ -43,7 +43,7 @@ function youtubeLoadScript(cb) {
       if (window.Brz) {
         window.Brz.on("elements.video.iframe.ready", () => {
           isAlreadyMounted = true;
-          callbacks.forEach(function(cb) {
+          callbacks.forEach(function (cb) {
             cb();
           });
         });
@@ -64,15 +64,15 @@ function Youtube($iframe, settings) {
 }
 
 $.extend(Youtube.prototype, {
-  _init: function($iframe) {
+  _init: function ($iframe) {
     this.player = new YT.Player($iframe.get(0), {
       events: {
-        onReady: function(event) {
+        onReady: function (event) {
           event.target.mute();
           event.target.seekTo(this._start);
           event.target.playVideo();
         }.bind(this),
-        onStateChange: function(event) {
+        onStateChange: function (event) {
           if (this._loop && event.data == YT.PlayerState.ENDED) {
             event.target.seekTo(this._start);
             event.target.playVideo();
@@ -81,32 +81,32 @@ $.extend(Youtube.prototype, {
       }
     });
   },
-  mute: function() {
+  mute: function () {
     this.player.mute();
   },
-  unMute: function() {
+  unMute: function () {
     this.player.unMute();
   },
-  play: function() {
+  play: function () {
     if (this.player && typeof this.player.playVideo === "function") {
       this.player.playVideo();
     }
   },
-  stop: function() {
+  stop: function () {
     this.player.stopVideo();
   },
-  pause: function() {
+  pause: function () {
     this.player.pauseVideo();
   },
-  setLoop: function(value) {
+  setLoop: function (value) {
     this.play();
     this._loop = value;
   },
-  seekTo: function(seconds = 0) {
+  seekTo: function (seconds = 0) {
     this._start = seconds;
     this.player.seekTo(seconds);
   },
-  destroy: function() {
+  destroy: function () {
     // this.player.destroy();
     this.player = null;
   }
@@ -116,7 +116,7 @@ function Vimeo($iframe, settings) {
   var loop = settings.loop;
   var start = settings.start || 0;
 
-  var sendMessage = function(method, value) {
+  var sendMessage = function (method, value) {
     $iframe.get(0).contentWindow &&
       $iframe.get(0).contentWindow.postMessage(
         JSON.stringify({
@@ -129,7 +129,7 @@ function Vimeo($iframe, settings) {
 
   window.addEventListener(
     "message",
-    function(event) {
+    function (event) {
       if (!event.origin.includes("vimeo")) return;
       var parsedData = JSON.parse(event.data);
 
@@ -153,7 +153,7 @@ function Vimeo($iframe, settings) {
           // hack. Find a better way
           if (loop) {
             setTimeout(
-              function() {
+              function () {
                 sendMessage("play");
               }.bind(this),
               260
@@ -175,27 +175,27 @@ function Vimeo($iframe, settings) {
   sendMessage("ping");
 
   return {
-    mute: function() {
+    mute: function () {
       sendMessage("setVolume", 0);
     },
-    unMute: function() {
+    unMute: function () {
       sendMessage("setVolume", 100);
     },
-    play: function() {
+    play: function () {
       sendMessage("play");
     },
-    pause: function() {
+    pause: function () {
       sendMessage("pause");
     },
-    setLoop: function(value) {
+    setLoop: function (value) {
       this.play();
       loop = value;
     },
-    seekTo: function(seconds = 0) {
+    seekTo: function (seconds = 0) {
       start = seconds;
       sendMessage("setCurrentTime", seconds);
     },
-    destroy: function() {
+    destroy: function () {
       sendMessage("unload");
       sendMessage("removeEventListener", "loaded");
       sendMessage("removeEventListener", "finish");
@@ -203,7 +203,7 @@ function Vimeo($iframe, settings) {
   };
 }
 
-(function($, window) {
+(function ($, window) {
   var pluginName = "backgroundVideo";
   var dataKey = "plugin_" + pluginName;
 
@@ -219,14 +219,14 @@ function Vimeo($iframe, settings) {
   }
 
   $.extend(Plugin.prototype, {
-    _init: function(settings) {
+    _init: function (settings) {
       if (settings.type === "youtube") {
         this._player = new Youtube(this.$iframe, settings);
       } else if (settings.type === "vimeo") {
         this._player = new Vimeo(this.$iframe, settings);
       }
     },
-    _setSizes: function() {
+    _setSizes: function () {
       var size = getSize.call(this);
 
       this.$iframe
@@ -235,9 +235,20 @@ function Vimeo($iframe, settings) {
         .css({ left: size.left, top: size.top });
 
       function getSize() {
+        const adminBar = document.getElementById("wpadminbar");
+
+        // This is needed for check preview height section
+        if (adminBar) {
+          adminBar.style.display = "none";
+        }
+
         var RATIO = 1.78;
         var width = this.$elem.width();
         var height = this.$elem.height();
+
+        if (adminBar) {
+          adminBar.style.removeProperty("display");
+        }
 
         if (width / RATIO < height) {
           var pWidth = Math.ceil(height * RATIO);
@@ -260,15 +271,15 @@ function Vimeo($iframe, settings) {
         }
       }
     },
-    _attachEvents: function() {
+    _attachEvents: function () {
       $(window).on("resize", this._setSizes);
     },
-    _detachEvents: function() {
+    _detachEvents: function () {
       $(window).off("resize", this._setSizes);
     },
 
     // api
-    refresh: function(type, value) {
+    refresh: function (type, value) {
       if (type === "typeChange") {
         this._player.destroy();
         this._init(value);
@@ -280,7 +291,7 @@ function Vimeo($iframe, settings) {
       }
     },
 
-    destroy: function() {
+    destroy: function () {
       this._detachEvents();
       this._player.destroy();
       this.$iframe = null;
@@ -288,15 +299,15 @@ function Vimeo($iframe, settings) {
     }
   });
 
-  $.fn[pluginName] = function(options) {
+  $.fn[pluginName] = function (options) {
     if (options === undefined || typeof options === "object") {
-      return this.each(function() {
+      return this.each(function () {
         if (!$.data(this, dataKey)) {
           $.data(this, dataKey, new Plugin(this, options));
         }
       });
     } else if (typeof options === "string" && options === "destroy") {
-      return this.each(function() {
+      return this.each(function () {
         var instance = $.data(this, dataKey);
 
         if (instance instanceof Plugin) {
@@ -306,7 +317,7 @@ function Vimeo($iframe, settings) {
     } else {
       var args = Array.prototype.slice.call(arguments, 1)[0];
 
-      return this.each(function() {
+      return this.each(function () {
         var instance = $.data(this, dataKey);
 
         if (instance instanceof Plugin) {

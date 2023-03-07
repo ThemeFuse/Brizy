@@ -1,20 +1,20 @@
 import React, { FC } from "react";
-import { Switch as Control } from "visual/component/Controls/Switch2";
-import * as Option from "visual/component/Options/Type";
+import { Switch as Control } from "visual/component/Controls/Switch";
+import { Props as OptionProps } from "visual/component/Options/Type";
 import { SimpleValue } from "visual/component/Options/Type";
-import { Literal, read } from "visual/utils/types/Literal";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { Literal } from "visual/utils/types/Literal";
 
 export type Config = {
   on: Literal;
   off: Literal;
 };
 
-export type Props = Option.Props<SimpleValue<Literal>> &
+export type Props = OptionProps<SimpleValue<Literal>> &
   WithConfig<Config> &
   WithClassName;
 
-export const Switch: FC<Props> & Option.OptionType<SimpleValue<Literal>> = ({
+export const Switch: FC<Props> = ({
   onChange,
   config,
   className,
@@ -34,19 +34,3 @@ export const Switch: FC<Props> & Option.OptionType<SimpleValue<Literal>> = ({
     </>
   );
 };
-
-const getModel: Option.FromElementModel<SimpleValue<Literal>> = get => ({
-  value: read(get("value"))
-});
-
-const getElementModel: Option.ToElementModel<SimpleValue<Literal>> = values => {
-  return {
-    value: values.value
-  };
-};
-
-Switch.fromElementModel = getModel;
-
-Switch.toElementModel = getElementModel;
-
-Switch.defaultValue = { value: "" };

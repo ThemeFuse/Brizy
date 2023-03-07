@@ -5,15 +5,16 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -($spinner-size / 2);
-    margin-left: -($spinner-size / 2);
-    border: $spinner-border-width solid $spinner-border-bg-color;
-    border-top: $spinner-border-width solid $spinner-border-animate-color;
+    margin-top: -($content__loading-size / 2);
+    margin-left: -($content__loading-size / 2);
+    border: $content__loading-border-width solid $content__loading-border;
+    border-top: $content__loading-border-width solid $content__loading-border-top;
     border-radius: 50%;
-    width: $spinner-size;
-    height: $spinner-size;
+    width: $content__loading-size;
+    height: $content__loading-size;
     animation: spin 2s linear infinite;
   }
+
   .brz-ed-bar-row {
     visibility: hidden;
     opacity: 0;

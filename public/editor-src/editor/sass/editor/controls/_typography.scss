@@ -1,42 +1,48 @@
+@import "../../variables";
+
 .brz-ed-control__typography {
-  display: flex;
+  display: grid;
+  grid-template-columns: 208px 175px;
+  width: 100%;
+
+  &--style-only {
+    grid-template-columns: 170px;
+  }
 
   .brz-ed-font__typography {
-    width: 54%;
-    height: 185px;
-    padding: 7px 3px 30px 0;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: $options__item-padding;
+    padding: $options__item-padding;
 
     .brz-ed-font__name {
       &:first-child {
         padding-top: 0;
       }
 
-      padding-left: 10px;
+      padding-left: 0;
+      padding-bottom: 13px;
       background: none;
     }
 
     .brz-ed-font__typography-adder {
-      bottom: 0;
-      left: 12px;
+      position: relative;
+      left: unset;
+      bottom: unset;
     }
   }
 
   .brz-ed-control__typography-styles {
-    padding: 0;
+    padding: $options__item-padding;
     display: flex;
     flex-wrap: wrap;
-    width: 145px;
-
-    &:nth-child(2) {
-      width: 46%;
-      padding-left: 14px;
-    }
 
     .brz-ed-component__label {
       margin-right: 0;
+      white-space: nowrap;
     }
 
-    .brz-ed__col {
+    .brz-ed__col:not(:first-child) {
       padding: 6px 0 0 0;
     }
 
@@ -46,11 +52,11 @@
 
     .brz-ed__col-1-2 {
       &:nth-of-type(even) {
-        padding-right: 10px;
+        padding-right: 7px;
       }
 
       &:nth-of-type(odd) {
-        padding-left: 10px;
+        padding-left: 7px;
       }
 
       width: 50%;

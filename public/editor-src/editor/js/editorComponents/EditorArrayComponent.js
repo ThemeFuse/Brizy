@@ -249,10 +249,8 @@ export default class EditorArrayComponent extends EditorComponent {
         this.changeVerticalAlign(itemIndex, "increase");
         return;
       case "alt+del":
-      case "del":
-      case "cmd+backspace":
+      case "ctrl+del":
       case "cmd+del":
-      case "right_cmd+backspace":
       case "right_cmd+del":
         this.removeItem(itemIndex);
         return;
@@ -621,13 +619,16 @@ function attachMenu(value) {
 
     if (type === "Menu") {
       const { menuSelected: dbMenuSelected, symbols = {} } = value;
-      const menuSelected = dbMenuSelected || menusConfig[0].id;
-      const menuConfig =
-        menusConfig.find((menu) => menu.id === menuSelected) || {};
+      const menuSelected = dbMenuSelected || menusConfig[0]?.id;
 
-      return produce(block, (draft) => {
-        draft.value.items = symbolsToItems(menuConfig.items || [], symbols);
-      });
+      if (menuSelected) {
+        const menuConfig =
+          menusConfig.find((menu) => menu.id === menuSelected) || {};
+
+        return produce(block, (draft) => {
+          draft.value.items = symbolsToItems(menuConfig.items || [], symbols);
+        });
+      }
     }
 
     return block;

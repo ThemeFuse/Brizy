@@ -2,10 +2,10 @@ import { EditorComponentContextValue } from "../../EditorComponentContext";
 import { ECKeyDCInfo } from "../../types";
 import { BatchFetcher, DCApiProxy, DCApiProxyConfig } from "../DCApiProxy";
 import {
-  getDCObjPreview,
-  getDCObjEditor_,
   DCObjComplete,
-  DCObjIncomplete
+  DCObjIncomplete,
+  getDCObjEditor_,
+  getDCObjPreview
 } from "../getDCObj";
 import { dcApiProxyTestFetcher } from "../utils";
 
@@ -126,13 +126,13 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{a att='some attribute' x='xyz'}}"
+          a: "{{a att='some%20attribute' x='xyz'}}"
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{a att='some attribute' x='xyz'}}"
+            dcValue: "{{a att='some%20attribute' x='xyz'}}"
           }
         }
       }
@@ -179,13 +179,13 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{post_author _fallback='King Arthur'}}"
+          a: "{{post_author _fallback='King%20Arthur'}}"
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{post_author _fallback='King Arthur'}}"
+            dcValue: "{{post_author _fallback='King%20Arthur'}}"
           }
         }
       }
@@ -204,13 +204,13 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{post_author _fallback='King Arthur' att='history'}}"
+          a: "{{post_author _fallback='King%20Arthur' att='history'}}"
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{post_author _fallback='King Arthur' att='history'}}"
+            dcValue: "{{post_author _fallback='King%20Arthur' att='history'}}"
           }
         }
       }
@@ -230,15 +230,14 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a:
-            "{{post_author _fallback='King Arthur' att='history' att2='England'}}"
+          a: "{{post_author _fallback='King%20Arthur' att='history' att2='England'}}"
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
             dcValue:
-              "{{post_author _fallback='King Arthur' att='history' att2='England'}}"
+              "{{post_author _fallback='King%20Arthur' att='history' att2='England'}}"
           }
         }
       }
@@ -260,13 +259,13 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{post_author _fallback='King Arthur' a='qwerty'}}"
+          a: "{{post_author _fallback='King%20Arthur' a='qwerty'}}"
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{post_author _fallback='King Arthur' a='qwerty'}}"
+            dcValue: "{{post_author _fallback='King%20Arthur' a='qwerty'}}"
           }
         }
       }
@@ -285,15 +284,14 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a:
-            "{{post_author _fallback='King Arthur' a='123' att='changed' b='abc'}}"
+          a: "{{post_author _fallback='King%20Arthur' a='123' att='changed' b='abc'}}"
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
             dcValue:
-              "{{post_author _fallback='King Arthur' a='123' att='changed' b='abc'}}"
+              "{{post_author _fallback='King%20Arthur' a='123' att='changed' b='abc'}}"
           }
         }
       }
@@ -324,7 +322,7 @@ describe("Testing 'getDCObjPreview' function", () => {
         type: "complete",
         value: {
           a: "{{post_title}}",
-          b: "{{post_author _fallback='King Arthur' att='history' y='tho'}}"
+          b: "{{post_author _fallback='King%20Arthur' att='history' y='tho'}}"
         },
         details: {
           a: {
@@ -336,7 +334,7 @@ describe("Testing 'getDCObjPreview' function", () => {
             loaded: true,
             staticValue: "b static",
             dcValue:
-              "{{post_author _fallback='King Arthur' att='history' y='tho'}}"
+              "{{post_author _fallback='King%20Arthur' att='history' y='tho'}}"
           }
         }
       }

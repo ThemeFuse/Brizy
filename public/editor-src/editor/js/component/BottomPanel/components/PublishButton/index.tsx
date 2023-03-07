@@ -175,7 +175,7 @@ class PublishButton extends Component<Props, State> {
       prompt: "pageRules",
       mode: "single",
       props: {
-        headTitle: t("SELECT FOR WHAT TEMPLATE IS USED"),
+        headTitle: t("SELECT FOR WHAT THE TEMPLATE IS USED"),
         pageTitle: isShopifyPage(page) ? page.title : undefined,
         selectedLayout: isShopifyPage(page) ? page.layout : undefined,
         onClose: (): void => {
@@ -346,7 +346,7 @@ class PublishButton extends Component<Props, State> {
     if (!screenshotsSupported) {
       ToastNotification.warn(
         t("Your block was saved without screenshot, browser is not compatible"),
-        { hideAfter: 5 }
+        5
       );
     }
 

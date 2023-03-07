@@ -10,6 +10,7 @@ class ColorPalette2Picker extends React.Component {
   static defaultProps = {
     className: "",
     colors: null,
+    globalStyle: true,
     value: "",
     onChange: () => console.log("ColorPalette default onChange")
   };
@@ -51,12 +52,14 @@ class ColorPalette2Picker extends React.Component {
     return (
       <div className={wrapperClassName}>
         {squares}
-        <div
-          className="brz-ed-option__color-palette2__icon"
-          onClick={this.handleSidebarOpen}
-        >
-          <EditorIcon icon="nc-cog" />
-        </div>
+        {this.props.globalStyle && (
+          <div
+            className="brz-ed-option__color-palette2__icon"
+            onClick={this.handleSidebarOpen}
+          >
+            <EditorIcon icon="nc-cog" />
+          </div>
+        )}
       </div>
     );
   }

@@ -1,14 +1,13 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
-import * as toolbarExtendConfig from "./toolbarExtend";
-import * as sidebarExtendConfig from "./sidebarExtend";
-import { styleSection } from "./styles";
 import StoryItems from "./Items";
 import defaultValue from "./defaultValue.json";
-
-import { DW, TW, MW } from "./utils";
+import * as sidebarExtendConfig from "./sidebarExtend";
+import { styleSection } from "./styles";
+import * as toolbarExtendConfig from "./toolbarExtend";
+import { DW, MW, TW } from "./utils";
 
 class Story extends EditorComponent {
   static get componentId() {
@@ -48,12 +47,8 @@ class Story extends EditorComponent {
   }
 
   renderItems(v) {
-    const {
-      sliderLoop,
-      sliderAutoPlay,
-      sliderAutoPlaySpeed,
-      sliderAnimation
-    } = v;
+    const { sliderLoop, sliderAutoPlay, sliderAutoPlaySpeed, sliderAnimation } =
+      v;
 
     const itemsProps = this.makeSubcomponentProps({
       sliderLoop,

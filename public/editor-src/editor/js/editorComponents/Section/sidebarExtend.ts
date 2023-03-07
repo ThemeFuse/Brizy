@@ -10,7 +10,7 @@ export function getItems({
   context: EditorComponentContextValue;
 }): ToolbarItemType[] {
   const toolbarTagsChoices = [
-    { title: t("Div"), value: "div" },
+    { title: "Div", value: "div" },
     { title: t("Header"), value: "header" },
     { title: t("Footer"), value: "footer" },
     { title: t("Main"), value: "main" },
@@ -86,12 +86,10 @@ export function getItems({
                         content: "Add your custom block name, example: my-block"
                       },
                       config: { choices: richTextDC },
-                      options: [
-                        {
-                          id: "anchorName",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "anchorName",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "cssClass",
@@ -107,12 +105,10 @@ export function getItems({
                       config: {
                         choices: richTextDC
                       },
-                      options: [
-                        {
-                          id: "customClassName",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customClassName",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "customAttributes",

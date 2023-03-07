@@ -52,8 +52,9 @@
       right: 10px;
       top: auto;
     }
+
     &:hover {
-      color: $brand-primary;
+      color: $brand__primary;
     }
   }
 
@@ -64,6 +65,7 @@
       bottom: 1px;
     }
   }
+
   &--down {
     bottom: 0;
 

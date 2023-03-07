@@ -1,0 +1,12 @@
+@import "../../variables";
+
+.brz-ed-control__prompt-form__button .brz-ed-control__label {
+  background: $brand__primary;
+  color: white;
+  border-radius: 4px;
+  width: 37px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

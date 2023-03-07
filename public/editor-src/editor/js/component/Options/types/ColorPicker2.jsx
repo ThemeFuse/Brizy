@@ -1,15 +1,16 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
 import ColorPicker2 from "visual/component/Controls/ColorPicker2";
 import Select from "visual/component/Controls/Select";
-import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
 import EditorIcon from "visual/component/EditorIcon";
-import Range2 from "./Range2";
-import ColorPalette2 from "./ColorPalette2";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import ColorPalette2 from "./ColorPalette2";
+import Range2 from "./Range2";
 
 const config = Config.getAll();
 const disablePalette = isCloud(config) && isShopify(config);
@@ -54,7 +55,17 @@ class ColorPicker2OptionType extends React.Component {
     onChange: _.noop
   };
 
-  handleChange = value => {
+  enabledGlobalStyle() {
+    const config = Config.getAll();
+    const { bottomTabsOrder = [], topTabsOrder = [] } =
+      config.ui?.leftSidebar ?? {};
+
+    return [...bottomTabsOrder, ...topTabsOrder].includes(
+      LeftSidebarOptionsIds.globalStyle
+    );
+  }
+
+  handleChange = (value) => {
     const { value: _value, onChange } = this.props;
     const gradientChanged =
       _value.select === "gradient" && _value.activePointer === "finishPointer";
@@ -98,7 +109,8 @@ class ColorPicker2OptionType extends React.Component {
       <ColorPalette2
         choices={choices}
         value={value}
-        onChange={value => {
+        globalStyle={this.enabledGlobalStyle()}
+        onChange={(value) => {
           this.handleChange({
             palette: value,
             isChanged: "palette"
@@ -183,7 +195,7 @@ class ColorPicker2OptionType extends React.Component {
         className="brz-control__select--dark brz-control__select__auto"
         defaultValue={value.select}
         itemHeight={select.itemHeight || 24}
-        onChange={value => {
+        onChange={(value) => {
           this.handleChange({
             select: value,
             isChanged: "select"

@@ -1,17 +1,16 @@
 import React, { useMemo } from "react";
-import * as Option from "visual/component/Options/Type";
-import { WithClassName } from "visual/utils/options/attributes";
 import classNames from "classnames";
+import { Props as OptionProps } from "visual/component/Options/Type";
+import { WithClassName } from "visual/utils/options/attributes";
 import { Value, Choice } from "./types";
 import { FatIcon } from "visual/component/Controls/FatIcon";
 import { FatIconsGrid } from "visual/component/FatIconsGrid";
-import { getElementModel, getModel } from "./utils";
 
-export interface Props extends Option.Props<Value>, WithClassName {
+export interface Props extends OptionProps<Value>, WithClassName {
   choices?: Choice[];
 }
 
-export const IconPicker: React.FC<Props> & Option.OptionType<Value> = ({
+export const IconPicker: React.FC<Props> = ({
   className,
   choices,
   label,
@@ -39,8 +38,3 @@ export const IconPicker: React.FC<Props> & Option.OptionType<Value> = ({
     </div>
   );
 };
-
-IconPicker.fromElementModel = getModel;
-IconPicker.toElementModel = getElementModel;
-
-IconPicker.defaultValue = undefined;

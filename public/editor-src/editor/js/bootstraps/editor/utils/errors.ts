@@ -2,12 +2,7 @@ import { ToastNotification } from "visual/component/Notifications";
 import { CustomError } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 
-export const showError = (data: {
-  e: unknown;
-  container?: HTMLElement;
-  hideAfter?: number;
-}): void => {
-  const { e, container, hideAfter } = data;
+export const showError = (e: unknown, hideAfter?: number): void => {
   const isCustomError = e instanceof CustomError;
 
   /* eslint-disable no-console */
@@ -23,8 +18,5 @@ export const showError = (data: {
       ? e.getMessage()
       : t("Something went wrong");
 
-  ToastNotification.error(message, {
-    hideAfter,
-    toastContainer: container
-  });
+  ToastNotification.error(message, hideAfter);
 };

@@ -25,22 +25,26 @@
 }
 
 .brz-ed-control__codeMirror {
+
   // Line size
   &--short {
     &:focus-within {
       height: 200px;
     }
   }
+
   &--medium {
     &:focus-within {
       height: 300px;
     }
   }
+
   &--large {
     &:focus-within {
       height: 400px;
     }
   }
+
   &--auto {
     &:focus-within {
       height: auto;
@@ -52,13 +56,12 @@
   /* Set height, width, borders, and global font properties here */
   font-family: monospace;
   height: 30px;
-  color: black;
   direction: ltr;
   padding: 3px;
   border-radius: 4px;
 
   .CodeMirror-placeholder {
-    color: #cccccc;
+    color: $toolbar__code_mirror-text-color;
   }
 
   pre {
@@ -96,15 +99,19 @@
 /* PADDING */
 
 .CodeMirror-lines {
-  padding: 3px; /* Vertical padding around content */
+  padding: 3px;
+  /* Vertical padding around content */
 }
+
 .CodeMirror pre {
-  padding: 0 4px; /* Horizontal padding of content */
+  padding: 0 4px;
+  /* Horizontal padding of content */
 }
 
 .CodeMirror-scrollbar-filler,
 .CodeMirror-gutter-filler {
-  background-color: white; /* The little square between H and V scrollbars */
+  background-color: white;
+  /* The little square between H and V scrollbars */
 }
 
 /* GUTTER */
@@ -127,6 +134,7 @@
 .CodeMirror-guttermarker {
   color: white;
 }
+
 .CodeMirror-guttermarker-subtle {
   color: #999;
 }
@@ -134,28 +142,33 @@
 /* CURSOR */
 
 .CodeMirror-cursor {
-  border-left: 1px solid white;
+  border-left: 1px solid $toolbar__code_mirror__cursor-color;
   border-right: none;
   width: 0;
 }
+
 /* Shown when moving in bi-directional text */
 .CodeMirror div.CodeMirror-secondarycursor {
   border-left: 1px solid silver;
 }
+
 .cm-fat-cursor .CodeMirror-cursor {
   width: auto;
   border: 0 !important;
   background: #7e7;
 }
+
 .cm-fat-cursor div.CodeMirror-cursors {
   z-index: 1;
 }
+
 .cm-fat-cursor-mark {
   background-color: rgba(20, 255, 20, 0.5);
   -webkit-animation: blink 1.06s steps(1) infinite;
   -moz-animation: blink 1.06s steps(1) infinite;
   animation: blink 1.06s steps(1) infinite;
 }
+
 .cm-animate-fat-cursor {
   width: auto;
   border: 0;
@@ -164,37 +177,39 @@
   animation: blink 1.06s steps(1) infinite;
   background-color: #7e7;
 }
+
 @-moz-keyframes blink {
-  0% {
-  }
+  0% {}
+
   50% {
     background-color: transparent;
   }
-  100% {
-  }
+
+  100% {}
 }
+
 @-webkit-keyframes blink {
-  0% {
-  }
+  0% {}
+
   50% {
     background-color: transparent;
   }
-  100% {
-  }
+
+  100% {}
 }
+
 @keyframes blink {
-  0% {
-  }
+  0% {}
+
   50% {
     background-color: transparent;
   }
-  100% {
-  }
+
+  100% {}
 }
 
 /* Can style cursor different in overwrite (non-insert) mode */
-.CodeMirror-overwrite .CodeMirror-cursor {
-}
+.CodeMirror-overwrite .CodeMirror-cursor {}
 
 .cm-tab {
   display: inline-block;
@@ -209,6 +224,7 @@
   bottom: -20px;
   overflow: hidden;
 }
+
 .CodeMirror-ruler {
   border-left: 1px solid #ccc;
   top: 0;
@@ -219,94 +235,118 @@
 /* DEFAULT THEME */
 
 .cm-s-default .cm-header {
-  color: blue;
+  color: $toolbar__code_mirror__header-color;
 }
+
 .cm-s-default .cm-quote {
-  color: #090;
+  color: $toolbar__code_mirror__quote-color;
 }
+
 .cm-negative {
-  color: #d44;
+  color: $toolbar__code_mirror__negative-color;
 }
+
 .cm-positive {
-  color: #292;
+  color: $toolbar__code_mirror__positive-color;
 }
+
 .cm-header,
 .cm-strong {
   font-weight: bold;
 }
+
 .cm-em {
   font-style: italic;
 }
+
 .cm-link {
   text-decoration: underline;
 }
+
 .cm-strikethrough {
   text-decoration: line-through;
 }
 
 .cm-s-default .cm-keyword {
-  color: #be85c8;
+  color: $toolbar__code_mirror__keyword-color;
 }
+
 .cm-s-default .cm-atom {
-  color: #9195da;
+  color: $toolbar__code_mirror__atom-color;
 }
+
 .cm-s-default .cm-number {
-  color: #78b9a1;
+  color: $toolbar__code_mirror__number-color;
 }
+
 .cm-s-default .cm-def {
-  color: #8abeff;
+  color: $toolbar__code_mirror__def-color;
 }
+
 .cm-s-default .cm-variable,
 .cm-s-default .cm-punctuation,
 .cm-s-default .cm-property,
-.cm-s-default .cm-operator {
-}
+.cm-s-default .cm-operator {}
+
 .cm-s-default .cm-variable-2 {
-  color: #2f97ff;
+  color: $toolbar__code_mirror__variable__2-color;
 }
+
 .cm-s-default .cm-variable-3,
 .cm-s-default .cm-type {
-  color: rgb(22, 170, 116);
+  color: $toolbar__code_mirror__variable__3-color;
 }
+
 .cm-s-default .cm-comment {
-  color: #ea9e53;
+  color: $toolbar__code_mirror__comment-color;
 }
+
 .cm-s-default .cm-string {
-  color: #fd7e7e;
+  color: $toolbar__code_mirror__string-color;
 }
+
 .cm-s-default .cm-string-2 {
-  color: #f50;
+  color: $toolbar__code_mirror__string__2-color;
 }
+
 .cm-s-default .cm-meta {
-  color: #555;
+  color: $toolbar__code_mirror__meta-color;
 }
+
 .cm-s-default .cm-qualifier {
-  color: #91cb8a;
+  color: $toolbar__code_mirror__qualifier-color;
 }
+
 .cm-s-default .cm-builtin {
-  color: #96cfe4;
+  color: $toolbar__code_mirror__builtin-color;
 }
+
 .cm-s-default .cm-bracket {
-  color: #997;
+  color: $toolbar__code_mirror__bracket-color;
 }
+
 .cm-s-default .cm-tag {
-  color: #91cb8a;
+  color: $toolbar__code_mirror__tag-color;
 }
+
 .cm-s-default .cm-attribute {
-  color: #55b0ff;
+  color: $toolbar__code_mirror__attribute-color;
 }
+
 .cm-s-default .cm-hr {
-  color: #999;
+  color: $toolbar__code_mirror__hr-color;
 }
+
 .cm-s-default .cm-link {
-  color: #55b0ff;
+  color: $toolbar__code_mirror__link-color;
 }
 
 .cm-s-default .cm-error {
-  color: #f88b8b;
+  color: $toolbar__code_mirror__error-color;
 }
+
 .cm-invalidchar {
-  color: #f00;
+  color: $toolbar__code_mirror__invalidchar-color;
 }
 
 .CodeMirror-composing {
@@ -318,12 +358,15 @@
 div.CodeMirror span.CodeMirror-matchingbracket {
   color: #0b0;
 }
+
 div.CodeMirror span.CodeMirror-nonmatchingbracket {
   color: #a22;
 }
+
 .CodeMirror-matchingtag {
   background: rgba(255, 150, 0, 0.3);
 }
+
 .CodeMirror-activeline-background {
   background: #e8f2ff;
 }
@@ -336,24 +379,27 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 .CodeMirror {
   position: relative;
   overflow: hidden;
-  background: #292b2e;
-  color: white;
+  background: $toolbar__code_mirror-bg;
+  color: $toolbar__code_mirror-color;
 }
 
 .CodeMirror-scroll {
-  overflow: scroll !important; /* Things will break if this is overridden */
+  overflow: scroll !important;
+  /* Things will break if this is overridden */
   /* 30px is the magic margin used to hide the element's real scrollbars */
   /* See overflow: hidden in .CodeMirror */
   margin-bottom: -30px;
   margin-right: -30px;
   padding-bottom: 30px;
   height: 100%;
-  outline: none; /* Prevent dragging from highlighting the element */
+  outline: none;
+  /* Prevent dragging from highlighting the element */
   position: relative;
 }
+
 .CodeMirror-sizer {
   position: relative;
-  border-right: 30px solid transparent;
+  border-right: 30px solid $toolbar__code_mirror__sizer-border-right-color;
 }
 
 /* The fake, visible scrollbars. Used to force redraw during scrolling
@@ -367,22 +413,26 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
   z-index: 6;
   display: none;
 }
+
 .CodeMirror-vscrollbar {
   right: 0;
   top: 0;
   overflow-x: hidden;
   overflow-y: hidden;
 }
+
 .CodeMirror-hscrollbar {
   bottom: 0;
   left: 0;
   overflow-y: hidden;
   overflow-x: scroll;
 }
+
 .CodeMirror-scrollbar-filler {
   right: 0;
   bottom: 0;
 }
+
 .CodeMirror-gutter-filler {
   left: 0;
   bottom: 0;
@@ -403,33 +453,39 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
   vertical-align: top;
   margin-bottom: -30px;
 }
+
 .CodeMirror-gutter-wrapper {
   position: absolute;
   z-index: 4;
   background: none !important;
   border: none !important;
 }
+
 .CodeMirror-gutter-background {
   position: absolute;
   top: 0;
   bottom: 0;
   z-index: 4;
 }
+
 .CodeMirror-gutter-elt {
   position: absolute;
   cursor: default;
   z-index: 4;
 }
+
 .CodeMirror-gutter-wrapper ::selection {
   background-color: transparent;
 }
+
 .CodeMirror-gutter-wrapper ::-moz-selection {
   background-color: transparent;
 }
 
 .CodeMirror-lines {
   cursor: text;
-  min-height: 1px; /* prevents collapsing before first draw */
+  min-height: 1px;
+  /* prevents collapsing before first draw */
 }
 
 .CodeMirror-wrap pre {
@@ -450,11 +506,11 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 .CodeMirror-linewidget {
   position: relative;
   z-index: 2;
-  padding: 0.1px; /* Force widget margins to stay inside of the container */
+  padding: 0.1px;
+  /* Force widget margins to stay inside of the container */
 }
 
-.CodeMirror-widget {
-}
+.CodeMirror-widget {}
 
 .CodeMirror-rtl pre {
   direction: rtl;
@@ -486,6 +542,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
   position: absolute;
   pointer-events: none;
 }
+
 .CodeMirror-measure pre {
   position: static;
 }
@@ -495,6 +552,7 @@ div.CodeMirror-cursors {
   position: relative;
   z-index: 3;
 }
+
 div.CodeMirror-dragcursors {
   visibility: visible;
 }
@@ -504,22 +562,26 @@ div.CodeMirror-dragcursors {
 }
 
 .CodeMirror-selected {
-  background: #0b69da;
+  background: $toolbar__code_mirror__selected-bg;
 }
+
 .CodeMirror-focused .CodeMirror-selected {
-  background: #0b69da;
+  background: $toolbar__code_mirror__selected-bg;
 }
+
 .CodeMirror-crosshair {
   cursor: crosshair;
 }
+
 .CodeMirror-line::selection,
-.CodeMirror-line > span::selection,
-.CodeMirror-line > span > span::selection {
+.CodeMirror-line>span::selection,
+.CodeMirror-line>span>span::selection {
   background: #d7d4f0;
 }
+
 .CodeMirror-line::-moz-selection,
-.CodeMirror-line > span::-moz-selection,
-.CodeMirror-line > span > span::-moz-selection {
+.CodeMirror-line>span::-moz-selection,
+.CodeMirror-line>span>span::-moz-selection {
   background: #d7d4f0;
 }
 
@@ -534,6 +596,7 @@ div.CodeMirror-dragcursors {
 }
 
 @media print {
+
   /* Hide the cursor when printing */
   .CodeMirror div.CodeMirror-cursors {
     visibility: hidden;

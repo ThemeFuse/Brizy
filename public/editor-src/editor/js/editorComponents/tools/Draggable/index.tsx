@@ -1,9 +1,9 @@
 import React, { FC, ReactNode, Ref, useCallback, useState } from "react";
+import { Draggable as Drag } from "visual/component/Draggable";
 import { WithOnChange } from "visual/utils/options/attributes";
-import { Value } from "./entities/Value";
 import { HAlign } from "visual/utils/position/HAlign";
 import { VAlign } from "visual/utils/position/VAlign";
-import { Draggable as Drag } from "visual/component/Draggable";
+import { Value } from "./entities/Value";
 
 type Delta = { deltaX: number; deltaY: number };
 type Props = WithOnChange<Value> & {
@@ -80,7 +80,8 @@ export const Draggable: FC<Props> = ({
       exceptions={[
         ".brz-ed-toolbar",
         ".brz-ed-tooltip__content-portal",
-        ".brz-rich-text .brz-ed-content-editable-focus"
+        ".brz-rich-text .brz-ed-content-editable-focus",
+        ".brz-ed-eyeDropper"
       ]}
       onDragStart={onDragStart}
       onDrag={onDrag}

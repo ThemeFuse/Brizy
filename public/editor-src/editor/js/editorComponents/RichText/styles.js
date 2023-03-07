@@ -25,8 +25,12 @@ export function styleDC(v, vs, vd) {
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing",
-        "cssStyleElementRichTextBgImage"
+        "cssStyleElementRichTextBgImage",
+        "cssStyleElementRichTextDCUppercase"
       ]
+    },
+    ".brz &&:hover *": {
+      standart: ["cssStyleElementRichTextDCUppercase"]
     },
     ".brz &&:hover > .brz-a.brz-a:not(.brz-btn)": {
       standart: [
@@ -89,15 +93,16 @@ export function styleDC(v, vs, vd) {
         "cssStyleElementRichTextH6LetterSpacing"
       ]
     },
-    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span)": {
-      standart: [
-        "cssStyleElementRichTextFontFamily",
-        "cssStyleElementRichTextFontSize",
-        "cssStyleTypography3LineHeight",
-        "cssStyleTypography3FontWeight",
-        "cssStyleTypography3LetterSpacing"
-      ]
-    },
+    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span)":
+      {
+        standart: [
+          "cssStyleElementRichTextFontFamily",
+          "cssStyleElementRichTextFontSize",
+          "cssStyleTypography3LineHeight",
+          "cssStyleTypography3FontWeight",
+          "cssStyleTypography3LetterSpacing"
+        ]
+      },
     ".brz && strong, .brz && b": {
       standart: [
         "cssStyleElementRichTextFontFamily",

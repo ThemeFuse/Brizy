@@ -136,7 +136,7 @@ export function getItems({ v, device, component }) {
                       options: [
                         {
                           id: "sliderAutoPlay",
-                          label: t("Auto Play"),
+                          label: t("Autoplay"),
                           type: "switch-dev"
                         },
                         {

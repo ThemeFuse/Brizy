@@ -1,4 +1,7 @@
-import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import {
+  keyToDCFallback2Key,
+  placeholderObjFromStr
+} from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
@@ -136,15 +139,17 @@ export const getItems =
                           ? imageDynamicContentChoices
                           : undefined
                     },
-                    options: [
-                      {
-                        id: "",
-                        type: "imageUpload-dev",
-                        config: {
-                          edit: device === "desktop"
-                        }
+                    fallback: {
+                      id: keyToDCFallback2Key("image"),
+                      type: "imageUpload-dev"
+                    },
+                    option: {
+                      id: "",
+                      type: "imageUpload-dev",
+                      config: {
+                        edit: device === "desktop"
                       }
-                    ]
+                    }
                   },
                   {
                     id: "zoom",
@@ -306,7 +311,7 @@ export const getItems =
                     type: "select-dev",
                     disabled: maskShapeIsDisabled || maskSize === "cover",
                     choices: [
-                      { title: t("No-Repeat"), value: "no-repeat" },
+                      { title: t("No Repeat"), value: "no-repeat" },
                       { title: t("Repeat"), value: "repeat" },
                       { title: t("Repeat-X"), value: "repeat-x" },
                       { title: t("Repeat-Y"), value: "repeat-y" },

@@ -9,6 +9,7 @@
   &__lists {
     margin: 22px 18px 0 24px;
   }
+
   &__item {
     flex: 1 1 114px;
     max-width: 114px;
@@ -16,9 +17,10 @@
     text-align: center;
     position: relative;
   }
+
   &__item-logo {
     height: 114px;
-    background-color: #fff;
+    background-color: $popup__fonts__item-bg;
     margin-bottom: 12px;
     line-height: 114px;
     font-size: 50px;
@@ -35,22 +37,27 @@
       border: 3px solid transparent;
       transition: 0.3s ease-in-out border-color;
     }
+
     &:hover:after {
-      border-color: $brand-primary;
+      border-color: $popup__fonts__item-border--hover;
       transition: 0.3s ease-in-out border-color;
     }
   }
+
   &__item--selected .brz-ed-popup-fonts__item-logo:after {
-    border-color: #48be24;
+    border-color: $popup__fonts__item__selected-border;
   }
+
   &__item--selected .brz-ed-popup-integrations__app-icon {
-    background-color: #48be24;
+    background-color: $popup__fonts__item__selected__icon-bg;
   }
+
   &__item-title {
     font-family: inherit;
     font-size: 13px;
-    color: #626b70;
+    color: $popup__fonts__item__title-color;
   }
+
   &__delete {
     position: absolute;
     top: -7px;
@@ -60,6 +67,7 @@
     z-index: 2;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
+
   &__item:hover .brz-ed-popup-fonts__delete {
     opacity: 1;
     transform: scale(1);

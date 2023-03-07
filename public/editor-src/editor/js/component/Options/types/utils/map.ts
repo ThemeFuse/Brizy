@@ -1,24 +1,71 @@
+import { OptionName } from "visual/component/Options/types";
 import {
-  GenericToolbarItemType,
-  ToolbarItemType
-} from "visual/editorComponents/ToolbarItemType";
-import types, { OptionName } from "visual/component/Options/types";
+  Map,
+  withColumns,
+  withOptions,
+  withTabs
+} from "visual/component/Options/utils/map";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 
-const getMap = <T extends OptionName>(
-  t: T
-): ((
-  f: (t: ToolbarItemType) => ToolbarItemType,
-  t: GenericToolbarItemType<T>
-) => ToolbarItemType) =>
-  // @ts-expect-error, Need to find a way to filter better options with map
-  types[t]?.map;
+type Maps = {
+  [T in OptionName]: Map<T> | undefined;
+};
+
+const fns: Maps = {
+  "alert-dev": undefined,
+  "animation-dev": undefined,
+  "backgroundColor-dev": undefined,
+  "border-dev": undefined,
+  "boxShadow-dev": undefined,
+  "button-dev": undefined,
+  "codeMirror-dev": undefined,
+  "colorPicker-dev": undefined,
+  "corners-dev": undefined,
+  "fileUpload-dev": undefined,
+  "filters-dev": undefined,
+  "gallery-dev": undefined,
+  "gallery-for-gallery-dev": undefined,
+  "grid-dev": withColumns,
+  "group-dev": withOptions,
+  "iconPicker-dev": undefined,
+  "iconsPicker-dev": undefined,
+  "iconSetter-dev": undefined,
+  "imageUpload-dev": undefined,
+  "inputText-dev": undefined,
+  "internalLink-dev": undefined,
+  "margin-dev": undefined,
+  "motion-dev": undefined,
+  "multiSelect-dev": undefined,
+  "number-dev": undefined,
+  "order-dev": undefined,
+  "padding-dev": undefined,
+  "paypal-dev": undefined,
+  "popover-dev": withOptions,
+  "population-dev": undefined,
+  "radioGroup-dev": undefined,
+  "range-dev": undefined,
+  "select-dev": undefined,
+  "sidebarTabs-dev": withTabs,
+  "sidebarTabsButton-dev": undefined,
+  "slider-dev": undefined,
+  "stateMode-dev": withOptions,
+  "switch-dev": undefined,
+  "tabs-dev": withTabs,
+  "textarea-dev": undefined,
+  "textShadow-dev": undefined,
+  "toggle-dev": undefined,
+  "transform-dev": undefined,
+  "typography-dev": undefined,
+  "savedBlock-dev": undefined,
+  "globalBlock-dev": undefined
+};
 
 export function _map(
   f: (t: ToolbarItemType) => ToolbarItemType,
   t: ToolbarItemType
 ): ToolbarItemType {
-  const map = getMap(t.type);
   const mapped = f(t);
+  const map = fns[mapped.type] as Map<OptionName>;
 
   return map
     ? map((t: ToolbarItemType): ToolbarItemType => _map(f, t), mapped)
@@ -37,5 +84,5 @@ export function map<T extends ToolbarItemType>(
     | [(t: ToolbarItemType) => ToolbarItemType]
     | [(t: ToolbarItemType) => ToolbarItemType, T]
 ): ((t: T) => ToolbarItemType) | ToolbarItemType {
-  return args.length === 1 ? t => _map(args[0], t) : _map(args[0], args[1]);
+  return args.length === 1 ? (t) => _map(args[0], t) : _map(args[0], args[1]);
 }

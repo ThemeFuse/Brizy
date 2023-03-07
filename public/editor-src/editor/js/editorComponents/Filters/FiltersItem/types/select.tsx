@@ -1,10 +1,10 @@
 import React, { ReactElement, ReactNode, useState } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import Toolbar from "visual/component/Toolbar";
-import { ThemeIcon } from "visual/component/ThemeIcon";
+import _ from "underscore";
 import ClickOutside from "visual/component/ClickOutside";
 import { TextEditor } from "visual/component/Controls/TextEditor";
-import _ from "underscore";
+import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
 import { PortalToolbarProps } from "visual/component/Toolbar/PortalToolbar";
 
 const MAX_ITEM_DROPDOWN = 5;
@@ -96,7 +96,8 @@ export const SelectFilters = ({
     ".brz-filters__select__dropdown",
     ".brz-portal-forms__select",
     ".brz-ed-toolbar",
-    ".brz-ed-tooltip__content-portal"
+    ".brz-ed-tooltip__content-portal",
+    ".brz-ed-eyeDropper"
   ];
 
   return IS_EDITOR ? (

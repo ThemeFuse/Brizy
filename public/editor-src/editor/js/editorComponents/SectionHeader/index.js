@@ -8,27 +8,27 @@ import Portal from "visual/component/Portal";
 import { ProBlocked } from "visual/component/ProBlocked";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import Sticky from "visual/component/Sticky";
-import { hideToolbar, ToolbarExtend } from "visual/component/Toolbar";
+import { ToolbarExtend, hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { getOpenedMegaMenu } from "visual/editorComponents/Menu/MenuItem";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { IS_PRO } from "visual/utils/env";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import * as State from "visual/utils/stateMode";
 import { capitalize } from "visual/utils/string";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleSection } from "./styles";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import * as State from "visual/utils/stateMode";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 
 const STICKY_ITEM_INDEX = 1;
 
@@ -75,6 +75,15 @@ export default class SectionHeader extends EditorComponent {
     return stateUpdate || this.optionalSCU(nextProps);
   }
 
+  componentDidMount() {
+    const { type } = this.getValue();
+
+    // Need rerender for Portal component
+    if (type === "animated") {
+      this.forceUpdate();
+    }
+  }
+
   componentDidUpdate() {
     if (this.isUpdated) {
       return;
@@ -104,7 +113,7 @@ export default class SectionHeader extends EditorComponent {
     this.selfDestruct();
   };
 
-  handleStickyChange = isSticky => {
+  handleStickyChange = (isSticky) => {
     hideToolbar();
 
     const tooltip = getCurrentTooltip();
@@ -215,7 +224,7 @@ export default class SectionHeader extends EditorComponent {
     };
   }
 
-  dvv = key => {
+  dvv = (key) => {
     const v = this.getValue();
     const device = deviceModeSelector(getStore().getState());
     const state = State.mRead(v.tabsState);
@@ -249,7 +258,9 @@ export default class SectionHeader extends EditorComponent {
       <Sticky
         refSelector={`#${this.getId()}`}
         type="animated"
-        render={isSticky => this.renderAnimatedSticky({ v, vs, vd, isSticky })}
+        render={(isSticky) =>
+          this.renderAnimatedSticky({ v, vs, vd, isSticky })
+        }
         onChange={this.handleStickyChange}
       />
     );
@@ -314,7 +325,7 @@ export default class SectionHeader extends EditorComponent {
       <Sticky
         refSelector={`#${this.getId()}`}
         type="fixed"
-        render={isSticky => this.renderFixedSticky({ v, isSticky })}
+        render={(isSticky) => this.renderFixedSticky({ v, isSticky })}
         onChange={this.handleStickyChange}
       />
     );
@@ -364,7 +375,6 @@ export default class SectionHeader extends EditorComponent {
       customAttributes,
       tagName
     } = v;
-
     return IS_PRO ? (
       <Animation
         component={tagName}
@@ -439,23 +449,33 @@ export default class SectionHeader extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
+    const {
+      type,
+      tagName,
+      className,
+      anchorName,
+      customClassName,
+      customAttributes,
+      cssIDPopulation,
+      cssClassPopulation
+    } = v;
+
+    const blockName =
+      cssIDPopulation === "" ? anchorName || this.getId() : cssIDPopulation;
+
     const content = (
       <Animation
-        component={v.tagName}
+        component={tagName}
         componentProps={{
-          ...parseCustomAttributes(v.customAttributes),
-          id:
-            v.cssIDPopulation === ""
-              ? v.anchorName || this.getId()
-              : v.cssIDPopulation,
+          ...parseCustomAttributes(customAttributes),
+          id: blockName,
+          name: blockName,
           style: this.getStyle(v),
           ref: this.sectionNode,
           className: classnames(
             "brz-section brz-section__header",
-            v.className,
-            v.cssClassPopulation === ""
-              ? v.customClassName
-              : v.cssClassPopulation,
+            className,
+            cssClassPopulation === "" ? customClassName : cssClassPopulation,
             css(
               `${this.getComponentId()}`,
               `${this.getId()}`,
@@ -466,7 +486,7 @@ export default class SectionHeader extends EditorComponent {
         }}
         animationClass={this.getAnimationClassName(v, vs, vd)}
       >
-        {this[`render${capitalize(v.type)}`]({ v, vs, vd })}
+        {this[`render${capitalize(type)}`]({ v, vs, vd })}
       </Animation>
     );
 

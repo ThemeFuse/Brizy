@@ -1,10 +1,14 @@
 import { property } from "underscore";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { bindPopulation, isOptgroup } from "./utils";
-import { PopulationMethod } from "./types/PopulationMethod";
+import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import {
+  GenericToolbarItemType,
+  ToolbarItemType
+} from "visual/editorComponents/ToolbarItemType";
 import { Choices, OptGroup } from "./types/Choices";
+import { PopulationMethod } from "./types/PopulationMethod";
+import { bindPopulation, isOptgroup } from "./utils";
 
-describe("Testing 'bindPopulation' function", function() {
+describe("Testing 'bindPopulation' function", function () {
   const method: PopulationMethod = { title: "test", value: "test" };
   const option: ToolbarItemType = {
     id: "test",
@@ -63,7 +67,8 @@ describe("Testing 'bindPopulation' function", function() {
       id: "test",
       type: "population-dev",
       config: { choices: [method] },
-      options: [option]
+      fallback: { ...option, id: keyToDCFallback2Key(o.id) },
+      option: option
     };
 
     expect(bindPopulation(withPopulation)).toEqual(result);
@@ -82,28 +87,28 @@ describe("Testing 'bindPopulation' function", function() {
       content: "Test helper"
     }
   };
-  const r = bindPopulation(o);
+  const r = bindPopulation(o) as GenericToolbarItemType<"population-dev">;
 
   test.each(["label", "helper", "position"])(
     "If option has %s, remove it from option and add to population",
-    k => {
+    (k) => {
       expect(property(k)(r)).toBe(property(k)(o));
-      expect(property(["options", 0])(r)).not.toHaveProperty(k);
+      expect(r.option).not.toHaveProperty(k);
+      expect(r.fallback).not.toHaveProperty(k);
     }
   );
 
   test.each(["id", "classname"])(
     "If option has %s, add it also to population",
-    k => {
+    (k) => {
       expect(property(k)(r)).toBe(property(k)(o));
-      expect(property(["options", 0, k])(r)).toBe(property(k)(o));
+      expect(r.option?.id).toBe(o.id);
     }
   );
 
   test("Remove population key from original option", () => {
-    expect(property(["options", 0])(r)).not.toHaveProperty(
-      property("population")(o)
-    );
+    expect(r.option).not.toHaveProperty("population");
+    expect(r.fallback).not.toHaveProperty("population");
   });
 
   test("Is optgroup", () => {

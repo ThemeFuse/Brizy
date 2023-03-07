@@ -4,15 +4,15 @@
 // TextField
 .brz-ed-option__text-box {
   width: 44px;
-  border-bottom: 1px solid $brand-options-border;
+  border-bottom: 1px solid $brand__options-border;
   margin-left: 17px;
   padding: 0 0 4px;
 
   .brz-label {
     display: flex;
     align-items: center;
-    color: $options-label-color;
-    font-family: $font-family-1;
+    color: $options__label-color;
+    font-family: $default-font-family;
     font-size: 13px;
     font-weight: 400;
     font-style: normal;
@@ -21,6 +21,7 @@
     padding: 0;
     margin: 0;
   }
+
   &__input,
   &__helper {
     position: relative;
@@ -28,18 +29,21 @@
     max-width: 90%;
     line-height: 1;
   }
+
   &__helper {
     font-family: inherit;
     font-size: inherit;
     margin-left: 3px;
 
     &--active {
-      color: $brand-primary;
+      color: $brand__primary;
     }
   }
-  &__input > .brz-invisible {
+
+  &__input>.brz-invisible {
     line-height: 1.1;
   }
+
   &--fixed-width {
     width: 65px;
     margin-left: 13px;
@@ -48,6 +52,7 @@
     .brz-label {
       align-items: center;
     }
+
     .brz-ed-option__text-box__input {
       margin-right: 2px;
 
@@ -55,21 +60,24 @@
         content: "";
         width: 100%;
         height: 1px;
-        background-color: $brand-options-border;
+        background-color: $brand__options-border;
         position: absolute;
         bottom: -3px;
         left: 0;
       }
     }
+
     .brz-ed-option__text-box__helper {
       cursor: pointer;
       margin-left: 5px;
     }
+
     .brz-ed-control__text-box--resizer {
       position: relative;
     }
   }
 }
+
 .brz-ed-control__text-box--resizer {
   @include small-input;
 

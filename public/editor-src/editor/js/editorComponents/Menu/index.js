@@ -370,7 +370,8 @@ export default class Menu extends EditorComponent {
       ".brz-menu",
       ".brz-menu__container",
       ".brz-ed-fixed",
-      ".media-modal"
+      ".media-modal",
+      ".brz-ed-eyeDropper"
     ];
     const className = classnames(
       "brz-menu__container",

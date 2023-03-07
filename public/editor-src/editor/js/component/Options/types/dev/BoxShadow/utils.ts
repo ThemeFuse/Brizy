@@ -14,35 +14,10 @@ import * as ColorUtils from "visual/component/Options/types/dev/ColorPicker/util
 import { get, _apply } from "visual/utils/model";
 import { t } from "visual/utils/i18n";
 import * as T from "visual/component/Options/types/dev/BoxShadow/entities/Type";
-import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
-import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import * as Blur from "visual/utils/cssProps/Blur";
-import * as Str from "visual/utils/string/specs";
-import * as Num from "visual/utils/math/number";
 import { Value } from "./entities/Value";
-import { FromElementModel } from "visual/component/Options/Type";
-import { mPipe } from "visual/utils/fp";
 import { TypeObject } from "visual/component/Controls/BoxShadow/types";
-import { ElementModel } from "visual/component/Elements/Types";
-
-export const DEFAULT_VALUE: Value = {
-  type: T.empty,
-  tempType: T.OUTSET,
-  hex: Hex.Black,
-  opacity: Opacity.empty,
-  tempOpacity: Opacity.unsafe(1),
-  palette: Palette.empty,
-  tempPalette: Palette.empty,
-  blur: Blur.unsafe(0),
-  tempBlur: Blur.unsafe(4),
-  spread: 0,
-  tempSpread: 2,
-  vertical: 0,
-  tempVertical: 0,
-  horizontal: 0,
-  tempHorizontal: 0
-};
 
 /**
  * Toggles shadow type
@@ -153,85 +128,6 @@ export const toLegacyType = (v: T.Type): "" | "on" | T.Type => {
     default:
       return v;
   }
-};
-
-/**
- *
- * @param get
- * @return {object}
- */
-export const fromElementModel: FromElementModel<Value> = get => {
-  const partial = {
-    type: mPipe(() => get("value"), Str.read, fromLegacyType)() ?? T.empty,
-    opacity:
-      mPipe(() => get("colorOpacity"), Num.read, Opacity.fromNumber)() ??
-      Opacity.empty,
-    blur: mPipe(() => get("blur"), Num.read, Blur.fromNumber)() ?? Blur.empty,
-    spread: mPipe(() => get("spread"), Num.read)() ?? 0
-  };
-
-  const isEmpty =
-    partial.type === T.empty ||
-    partial.opacity === Opacity.empty ||
-    (partial.blur === Blur.empty && partial.spread === 0);
-
-  return {
-    type: isEmpty ? DEFAULT_VALUE.type : partial.type,
-    tempType:
-      mPipe(() => get("tempValue"), Str.read, fromLegacyType)() ??
-      DEFAULT_VALUE.tempType,
-    hex:
-      mPipe(() => get("colorHex"), Str.read, Hex.fromString)() ??
-      DEFAULT_VALUE.hex,
-    opacity: isEmpty ? DEFAULT_VALUE.opacity : partial.opacity,
-    tempOpacity:
-      mPipe(() => get("tempColorOpacity"), Num.read, Opacity.fromNumber)() ??
-      DEFAULT_VALUE.tempOpacity,
-    palette: isEmpty
-      ? DEFAULT_VALUE.palette
-      : mPipe(() => get("colorPalette"), Str.read, Palette.fromString)() ??
-        Palette.empty,
-    tempPalette:
-      mPipe(() => get("tempColorPalette"), Str.read, Palette.fromString)() ??
-      DEFAULT_VALUE.tempPalette,
-    blur: isEmpty ? DEFAULT_VALUE.blur : partial.blur,
-    tempBlur:
-      mPipe(() => get("tempBlur"), Num.read, Blur.fromNumber)() ??
-      DEFAULT_VALUE.tempBlur,
-    spread: isEmpty ? DEFAULT_VALUE.spread : partial.spread,
-    tempSpread:
-      mPipe(() => get("tempSpread"), Num.read)() ?? DEFAULT_VALUE.tempSpread,
-    vertical: isEmpty ? 0 : Num.read(get("vertical")) ?? DEFAULT_VALUE.vertical,
-    tempVertical: Num.read(get("tempVertical")) ?? DEFAULT_VALUE.tempVertical,
-    horizontal: isEmpty
-      ? 0
-      : Num.read(get("horizontal")) ?? DEFAULT_VALUE.horizontal,
-    tempHorizontal:
-      Num.read(get("tempHorizontal")) ?? DEFAULT_VALUE.tempHorizontal
-  };
-};
-
-/**
- * Converts box shadow model to db model
- */
-export const toElementModel = (m: Value): ElementModel => {
-  return {
-    value: toLegacyType(m.type),
-    tempValue: toLegacyType(m.tempType),
-    colorHex: m.hex,
-    colorPalette: m.palette,
-    tempColorPalette: m.tempPalette,
-    colorOpacity: m.opacity,
-    tempColorOpacity: m.tempOpacity,
-    blur: m.blur,
-    tempBlur: m.tempBlur,
-    spread: m.spread,
-    tempSpread: m.tempSpread,
-    vertical: m.vertical,
-    tempVertical: m.tempVertical,
-    horizontal: m.horizontal,
-    tempHorizontal: m.tempHorizontal
-  };
 };
 
 /**

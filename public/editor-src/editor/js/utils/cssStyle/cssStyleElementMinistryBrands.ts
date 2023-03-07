@@ -6,6 +6,7 @@ import {
   cssStyleColor,
   cssStyleDisplayFlex,
   cssStyleFlexColumnHorizontalAlign,
+  cssStyleFlexHorizontalAlign,
   cssStyleSpacing,
   cssStyleTextAlign,
   getAllCssStyleTypography
@@ -104,6 +105,46 @@ export function cssStyleElementOfMinistryBrandsMetaLinksBgGradient({
   state
 }: CSSValue): string {
   return cssStyleBgGradient({ v, device, state, prefix: "metaLinks" });
+}
+
+export const cssStyleElementOfMinistryBrandsMetaLinksBoxShadow = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    prefix: "metaLinks"
+  });
+};
+
+export const cssStyleElementOfMinistryBrandsMetaLinksBorder = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    prefix: "metaLinks"
+  });
+};
+
+// Media
+export function cssStyleElementOfMinistryBrandsMediaTypography({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "mediaLinksTypography"
+  });
 }
 
 // Preview
@@ -264,6 +305,22 @@ export function cssStyleElementOfMinistryBrandsHorizontalAlign({
   const flex = cssStyleDisplayFlex();
 
   return `${flex}${alignItems}${textAlign} flex-direction:column;`;
+}
+
+export function cssStyleElementOfMinistryBrandsButtonsHorizontalAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const alignItems = cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    prefix: "item"
+  });
+  const flex = cssStyleDisplayFlex();
+
+  return `${flex}${alignItems}`;
 }
 
 export function cssStyleElementOfMinistryBrandsSpacing({
@@ -452,5 +509,84 @@ export const cssStyleElementMinistryBrandsButtonsBorder = ({
     device,
     state,
     prefix: "detailButton"
+  });
+};
+
+// Register Button
+export const cssStyleElementMinistryBrandsRegisterButtonTypography = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "registerButtonTypography"
+  });
+};
+
+export const cssStyleElementMinistryBrandsRegisterButtonBgColor = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    prefix: "registerButtonBg"
+  });
+};
+
+export const cssStyleElementMinistryBrandsRegisterButtonBgGradient = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    prefix: "registerButton"
+  });
+};
+
+export const cssStyleElementMinistryBrandsRegisterButtonColor = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "registerButtonColor"
+  });
+};
+
+export const cssStyleElementMinistryBrandsRegisterButtonBoxShadow = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    prefix: "registerButton"
+  });
+};
+
+export const cssStyleElementMinistryBrandsRegisterButtonBorder = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    prefix: "registerButton"
   });
 };

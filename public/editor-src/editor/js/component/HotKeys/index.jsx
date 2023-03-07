@@ -1,20 +1,20 @@
+import { produce } from "immer";
 import React from "react";
 import { getIn } from "timm";
-import { produce } from "immer";
-import Config from "visual/global/Config";
-import { getStore } from "visual/redux/store";
 import { rolesHOC } from "visual/component/Roles";
-import {
-  getClosestParent,
-  mapModels,
-  createFullModelPath
-} from "visual/utils/models";
-import {
-  pageDataNoRefsSelector,
-  copiedElementNoRefsSelector
-} from "visual/redux/selectors";
-import HotKeysPlugin from "./HotKeysPlugin";
 import { symbolsToItems } from "visual/editorComponents/Menu/utils";
+import Config from "visual/global/Config";
+import {
+  copiedElementNoRefsSelector,
+  pageDataNoRefsSelector
+} from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import {
+  createFullModelPath,
+  getClosestParent,
+  mapModels
+} from "visual/utils/models";
+import HotKeysPlugin from "./HotKeysPlugin";
 
 const menusConfig = Config.get("menuData");
 
@@ -31,10 +31,8 @@ const keyNamesShortKeys = {
     "shift+right_cmd+V"
   ],
   delete: [
-    "del",
-    "cmd+backspace",
+    "ctrl+del",
     "cmd+del",
-    "right_cmd+backspace",
     "right_cmd+del"
   ],
   horizontalAlign: [
@@ -57,7 +55,7 @@ const keyNamesShortKeys = {
   showSidebarAdvanced: ["ctrl+K", "cmd+K", "right_cmd+K"]
 };
 
-const getShortKeysByShortcuts = types => {
+const getShortKeysByShortcuts = (types) => {
   return types.reduce((acc, key) => {
     if (keyNamesShortKeys[key]) {
       acc = [...acc, ...keyNamesShortKeys[key]];
@@ -81,7 +79,7 @@ class HotKeys extends React.Component {
       // this enables toolbar's escape handler to work properly inside SectionPopup.
       // It filters out the popup's own escape handler when the toolbar is open
       const toolbarEscapeItem = items.find(
-        item => item.id === "key-helper-toolbar-escape"
+        (item) => item.id === "key-helper-toolbar-escape"
       );
       if (toolbarEscapeItem) {
         return [toolbarEscapeItem];
@@ -162,7 +160,8 @@ class HotKeys extends React.Component {
       ".brz-ed-sidebar__right",
       "#brz-toolbar-portal",
       ".brz-ed-tooltip__content-portal",
-      ".brz-ed-popup-integrations"
+      ".brz-ed-popup-integrations",
+      ".brz-ed-eyeDropper"
     ];
 
     const deleteKeyWasPressed = keyNamesShortKeys.delete.includes(keyName);
@@ -236,16 +235,16 @@ export default rolesHOC({
 });
 
 function attachMenu(value) {
-  return mapModels(block => {
+  return mapModels((block) => {
     const { type, value } = block;
 
     if (type === "Menu") {
       const { menuSelected: dbMenuSelected, symbols = {} } = value;
       const menuSelected = dbMenuSelected || menusConfig[0].id;
       const menuConfig =
-        menusConfig.find(menu => menu.id === menuSelected) || {};
+        menusConfig.find((menu) => menu.id === menuSelected) || {};
 
-      return produce(block, draft => {
+      return produce(block, (draft) => {
         draft.value.items = symbolsToItems(menuConfig.items || [], symbols);
       });
     }

@@ -1,11 +1,4 @@
 .brz-eventLayout {
-  .brz-eventLayout--filters {
-    .brz-eventLayout--filters-form,
-    .brz-eventLayout--filters-form-search {
-      pointer-events: none;
-    }
-  }
-
   .brz-eventLayout--list-item,
   .brz-eventLayout--calendar-item {
     display: block !important;

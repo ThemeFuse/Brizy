@@ -4,11 +4,11 @@
   transition: 0.2s linear color;
 
   &--active {
-    color: $brand-primary;
+    color: $brand__primary;
     transition: 0.2s linear color;
   }
   &:hover {
-    color: $brand-primary;
+    color: $brand__primary;
     transition: 0.2s linear color;
   }
 }

@@ -1,50 +1,60 @@
 @import "../../mixins/input";
 
 .brz-ed-control__population {
-  flex: 1 1 auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(20%, 100%) auto;
+  gap: 10px;
   align-items: center;
   justify-content: flex-end;
   min-width: 0;
+  width: 100%;
 
   &__input {
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: $control-font-size;
     font-style: normal;
     font-weight: 400;
     letter-spacing: 0;
-    background: $control-background-color none;
+    background: $control-bg none;
     color: #fff;
-    flex: 1 1 136px;
-    min-width: 136px;
-    width: 100%;
+    min-width: $control__lg-width;
     height: $control-height;
-    text-indent: 5px;
-    padding: 0 5px;
+    padding: 0 5px 0 10px;
     border-radius: $control-border-radius;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 5px;
     align-items: center;
-    justify-content: space-between;
 
     .brz-ed-icon-svg {
       cursor: pointer;
-      min-width: 13px;
+      width: 13px;
       margin-left: auto;
     }
+
     .brz-span {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    & > .brz-ed-control__popover {
+      height: 13px;
     }
   }
 
   .brz-control__select-population {
     display: flex;
     flex: 0;
-    margin-left: 10px;
 
     &--only-icon {
       margin-left: 0;
     }
+  }
+}
+
+.brz-ed-control__grid__column {
+  .brz-ed-option.brz-ed-option-type__population-dev {
+    padding: 10px 15px 15px 8px;
   }
 }

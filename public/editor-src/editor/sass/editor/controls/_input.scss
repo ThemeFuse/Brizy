@@ -2,13 +2,13 @@
 
 // --- Input Control
 .brz-ed-control__input {
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   font-size: $control-font-size;
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0;
-  background: $control-background-color none;
-  color: #fff;
+  background: $control-bg none;
+  color: $control__variant-color;
   width: auto;
   flex: 1 1 auto;
   height: $control-height;
@@ -25,10 +25,11 @@
 
   &:focus,
   &:active {
-    background-color: $control-background-color;
-    color: #fff;
+    background-color: $control-bg;
+    color: $control__variant-color;
     outline: 0;
   }
+
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -38,7 +39,7 @@
   // Placeholder
   @include placeholder {
     & {
-      color: rgba(234, 241, 255, 0.2);
+      color: $input__placeholder-color;
       font-style: italic;
       font-size: 1em;
     }
@@ -46,14 +47,17 @@
 
   // Size Styles
   &--large {
-    max-width: $control-lg-width;
+    max-width: $control__lg-width;
   }
+
   &--medium {
-    max-width: $control-md-width;
+    max-width: $control__md-width;
   }
+
   &--small {
-    max-width: $control-sm-width;
+    max-width: $control__sm-width;
   }
+
   &--auto {
     max-width: 100%;
   }

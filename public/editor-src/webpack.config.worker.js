@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const babelrc = require("./babelrc.config.all");
+const swcrc = require("./swc.config.all");
 const editorConfigFn = require("./webpack.config.editor");
 
 exports.screenshots = (options) => {
@@ -49,7 +49,7 @@ exports.ssr = (options) => {
     // and uses it on compile
     // /\/editor\/js\/component\/Options\//,
     /\/editor\/js\/utils\/toolbar\//,
-    /\/node_modules\/react-lottie\//,
+    /\/node_modules\/lottie-react\//,
     /\/node_modules\/jquery\//,
     /\/node_modules\/react-facebook\//
   ];
@@ -71,8 +71,8 @@ exports.ssr = (options) => {
             path.resolve(__dirname, "editor"),
             path.resolve(__dirname, "packages")
           ],
-          loader: "babel-loader",
-          options: babelrc.editor()
+          loader: "swc-loader",
+          options: swcrc.editor(options)
         },
         {
           test(path) {

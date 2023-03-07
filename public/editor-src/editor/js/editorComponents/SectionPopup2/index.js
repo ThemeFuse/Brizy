@@ -189,6 +189,13 @@ class SectionPopup2 extends EditorComponent {
   renderItems(v, vs, vd) {
     const meta = this.getMeta(v);
     const { containerClassName, showCloseButtonAfter } = v;
+
+    const config = Config.getAll();
+    const popupSettings = config.ui?.popupSettings ?? {};
+    const embedded = popupSettings.embedded === true;
+    const isGlobal = isPopup(config);
+    const isSimple = !isGlobal;
+
     const className = classnames(
       "brz-popup2__close",
       IS_PREVIEW && showCloseButtonAfter && "brz-hidden"
@@ -222,17 +229,19 @@ class SectionPopup2 extends EditorComponent {
         <div className={innerClassName}>
           <SortableZIndex zIndex={1}>
             <div className="brz-container__wrap">
-              <Toolbar
-                {...this.makeToolbarPropsFromConfig2(
-                  toolbarCloseConfig,
-                  sidebarCloseConfig,
-                  { allowExtend: false }
-                )}
-              >
-                <div className={className}>
-                  <ThemeIcon name="close-popup" type="editor" />
-                </div>
-              </Toolbar>
+              {((isGlobal && !embedded) || isSimple) && (
+                <Toolbar
+                  {...this.makeToolbarPropsFromConfig2(
+                    toolbarCloseConfig,
+                    sidebarCloseConfig,
+                    { allowExtend: false }
+                  )}
+                >
+                  <div className={className}>
+                    <ThemeIcon name="close-popup" type="editor" />
+                  </div>
+                </Toolbar>
+              )}
 
               <div className={classNameContainer}>
                 <EditorArrayComponent {...itemsProps} />
@@ -257,12 +266,14 @@ class SectionPopup2 extends EditorComponent {
       customCSS
     } = v;
     const id = this.getId();
-    const isGlobal = isPopup(Config.getAll());
+    const config = Config.getAll();
+    const isGlobal = isPopup(config);
 
     const classNamePopup = classnames(
       "brz-popup2",
       "brz-popup2__editor",
       `brz-popup2__${columnsHeightStyle}`,
+      "brz-popup2--fixed",
       { "brz-popup2--opened": this.state.isOpened },
       className,
       customClassName,
@@ -343,10 +354,15 @@ class SectionPopup2 extends EditorComponent {
       customCSS
     } = v;
     const config = Config.getAll();
+
     const triggers = triggersSelector(this.getReduxState());
     const isGlobal = isPopup(config);
     const isInternal = isInternalPopup(config);
     const isExternal = isExternalPopup(config);
+    const isSimple = !isGlobal;
+
+    const popupSettings = config.ui?.popupSettings ?? {};
+    const embedded = popupSettings.embedded;
 
     let attr = {};
     if (isGlobal) {
@@ -392,6 +408,9 @@ class SectionPopup2 extends EditorComponent {
     if (clickOutsideToClose === "on") {
       attr["data-click_outside_to_close"] = "true";
     }
+    if (embedded === true) {
+      attr["data-brz-embedded"] = "true";
+    }
     if (showCloseButtonAfter) {
       attr["data-show-close-button-after"] = showCloseButtonAfter;
     }
@@ -401,7 +420,9 @@ class SectionPopup2 extends EditorComponent {
       "brz-popup2__preview",
       `brz-popup2__${columnsHeightStyle}`,
       {
-        "brz-simple-popup": !isGlobal,
+        "brz-popup2--static": isGlobal && embedded,
+        "brz-popup2--fixed": (!embedded && isGlobal) || isSimple,
+        "brz-simple-popup": isSimple,
         "brz-conditions-popup": isGlobal,
         "brz-conditions-internal-popup": isInternal,
         "brz-conditions-external-popup": isExternal

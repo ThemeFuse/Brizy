@@ -11,14 +11,14 @@ export default class MouseOverElement extends Component {
     onLeaveSuccess: _.noop
   };
 
-  isMounted = true;
+  isMount = true;
 
   timeoutId = null;
 
   enterSuccess = false;
 
   componentDidMount() {
-    this.isMounted = true;
+    this.isMount = true;
 
     // eslint-disable-next-line react/no-find-dom-node
     const elem = ReactDOM.findDOMNode(this);
@@ -28,7 +28,7 @@ export default class MouseOverElement extends Component {
   }
 
   componentWillUnmount() {
-    this.isMounted = false;
+    this.isMount = false;
 
     // eslint-disable-next-line react/no-find-dom-node
     const elem = ReactDOM.findDOMNode(this);
@@ -45,7 +45,7 @@ export default class MouseOverElement extends Component {
   };
 
   handleMouseEnterTimeout = () => {
-    if (!this.isMounted) {
+    if (!this.isMount) {
       return;
     }
 

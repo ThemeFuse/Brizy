@@ -1,4 +1,5 @@
 import { isT, mPipe, pass } from "fp-utilities";
+import { UploadData } from "visual/component/Options/types/dev/FileUpload/types/Value";
 import Config from "visual/global/Config";
 import { Cloud, Shopify } from "visual/global/Config/types/configs/Cloud";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
@@ -53,6 +54,7 @@ import {
   UploadSavedPopups
 } from "./types";
 import { makeFormEncode, makeUrl } from "./utils";
+
 export * from "./cms";
 export * from "./cms/page";
 export * from "./cms/popup";
@@ -421,7 +423,7 @@ export function getUploadedFonts(): Promise<unknown> {
 
 //#region Upload Files
 
-export async function uploadFile(file: File): Promise<unknown> {
+export async function uploadFile(file: File): Promise<UploadData> {
   const {
     project: { id },
     urls: { api }

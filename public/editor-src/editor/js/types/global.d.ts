@@ -53,7 +53,7 @@ declare global {
     controller: {
       Library: {
         new (config: {
-          library: WPMediaLibrary;
+          library?: WPMediaLibrary;
           multiple: boolean;
           title: string;
           filterable: "uploaded";

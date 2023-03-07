@@ -3,6 +3,7 @@
   "parserOptions": {
     "ecmaVersion": 2019,
     "sourceType": "module",
+    "requireConfigFile": false,
     "ecmaFeatures": {
       "jsx": true
     },

@@ -1,13 +1,13 @@
 import React from "react";
-import { IconSetter as IconSetterControl } from "visual/component/Controls/IconSetter";
-import * as Option from "visual/component/Options/Type";
+import { Props as OptionProps } from "visual/component/Options/Type";
 import { WithConfig } from "visual/utils/options/attributes";
+import { IconSetter as IconSetterControl } from "visual/component/Controls/IconSetter";
+import { Value } from "./types/Value";
 import { Config } from "./types/Config";
-import { fromElementModel, toElementModel, Value } from "./types/Value";
 
-export type Props = Option.Props<Value> & WithConfig<Config>;
+export interface Props extends OptionProps<Value>, WithConfig<Config> {}
 
-export const IconSetter: React.FC<Props> & Option.OptionType<Value> = ({
+export const IconSetter: React.FC<Props> = ({
   config,
   onChange,
   value,
@@ -24,7 +24,3 @@ export const IconSetter: React.FC<Props> & Option.OptionType<Value> = ({
     </>
   );
 };
-
-IconSetter.fromElementModel = fromElementModel;
-IconSetter.toElementModel = toElementModel;
-IconSetter.defaultValue = undefined;

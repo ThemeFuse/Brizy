@@ -27,7 +27,10 @@ export class Typography extends PureComponent {
 
     const _className = classNames(
       "brz-ed-control__typography",
-      props.className
+      props.className,
+      {
+        "brz-ed-control__typography--style-only": !props.fontFamily
+      }
     );
 
     return (
@@ -134,10 +137,7 @@ Typography.propTypes = {
   className: T.string,
   onChange: T.func.isRequired,
   fontFamily: T.bool,
-  fonts: FontFamily.propTypes.fonts,
   font: T.string.isRequired,
-  fontAdd: FontFamily.propTypes.addFont,
-  fontAddLabel: FontFamily.propTypes.addFontLabel,
   styles: FontStyle.propTypes.styles,
   style: T.string.isRequired,
   styleLabel: FontStyle.propTypes.label,

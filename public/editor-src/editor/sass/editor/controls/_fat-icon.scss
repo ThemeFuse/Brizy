@@ -15,7 +15,7 @@ $transition: 0.2s linear;
   }
 
   &__wrapper {
-    border: solid 2px $brand-options;
+    border: solid 2px $brand__options;
     border-radius: 3px;
     display: flex;
     align-items: center;
@@ -30,7 +30,7 @@ $transition: 0.2s linear;
   }
 
   &__label {
-    font-size: $toolbar-static-font-size;
+    font-size: $toolbar__static-font-size;
     line-height: 2.4em;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -38,16 +38,16 @@ $transition: 0.2s linear;
   }
 
   &:not(.brz-ed--fat-icon__active):hover .brz-ed--fat-icon__wrapper {
-    border-color: $options-border-hover-color;
+    border-color: $options__item-color--hover;
   }
 
   &__active .brz-icon-svg,
   &__active .brz-ed--fat-icon__label {
-    color: $brand-primary;
+    color: $brand__primary;
   }
 
   &__active .brz-ed--fat-icon__wrapper {
-    border-color: $brand-primary;
+    border-color: $brand__primary;
   }
 
   &__disabled {

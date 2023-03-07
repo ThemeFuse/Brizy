@@ -37,7 +37,7 @@ export const getItems = (): ToolbarItemType[] => {
           id: "htmlTag",
           label: t("HTML Tag"),
           type: "inputText-dev",
-          placeholder: t("<div data-fera...")
+          placeholder: "<div data-fera..."
         }
       ]
     },

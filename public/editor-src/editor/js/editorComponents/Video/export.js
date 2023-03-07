@@ -210,13 +210,18 @@ export default function ($node) {
   if ($youtubeVideos.length > 0) {
     youtubeLoadScript();
 
-    if (window.onYouTubeIframeAPIReady === undefined) {
-      window.onYouTubeIframeAPIReady = () => {
-        if (window.Brz) {
-          window.Brz.emit("elements.video.iframe.ready");
-        }
-      };
-    }
+    // is some cases we already have "onYouTubeIframeAPIReady" on window, ex: #22054
+    const oldOnYouTubeIframeAPIReady = window.onYouTubeIframeAPIReady;
+
+    window.onYouTubeIframeAPIReady = () => {
+      if (typeof oldOnYouTubeIframeAPIReady === "function") {
+        oldOnYouTubeIframeAPIReady();
+      }
+
+      if (window.Brz) {
+        window.Brz.emit("elements.video.iframe.ready");
+      }
+    };
   }
 
   window.Brz.on("elements.video.iframe.ready", () => {

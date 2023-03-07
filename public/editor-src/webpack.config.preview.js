@@ -1,12 +1,12 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const editorConfigFn = require("./webpack.config.editor");
-const babelrc = require("./babelrc.config.all");
+const swcrc = require("./swc.config.all");
 const LibsConfig = require("./editor/js/bootstraps/libs.json");
 
-exports.preview = options => {
+exports.preview = (options) => {
   const editorConfig = editorConfigFn(options);
   const config = {
     mode: editorConfig.mode,
@@ -28,8 +28,8 @@ exports.preview = options => {
         {
           test: /\.(ts|js)$/,
           include: [path.resolve(__dirname, "editor")],
-          loader: "babel-loader",
-          options: babelrc.preview()
+          loader: "swc-loader",
+          options: swcrc.preview(options)
         }
       ]
     },
@@ -52,7 +52,7 @@ exports.preview = options => {
   return options.ANALYZE ? { ...config, ...configAnalyze } : config;
 };
 
-exports.libs = options => {
+exports.libs = (options) => {
   const editorConfig = editorConfigFn(options);
   const { free } = LibsConfig;
   const entry = free.reduce((acc, curr) => {
@@ -77,8 +77,8 @@ exports.libs = options => {
         {
           test: /\.(ts|js)$/,
           include: [path.resolve(__dirname, "editor")],
-          loader: "babel-loader",
-          options: babelrc.preview()
+          loader: "swc-loader",
+          options: swcrc.preview(options)
         }
       ]
     },

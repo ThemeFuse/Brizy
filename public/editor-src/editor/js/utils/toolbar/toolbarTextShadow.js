@@ -1,10 +1,10 @@
 import { t } from "visual/utils/i18n";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import {
   defaultValueKey,
   defaultValueValue,
   saveOnChanges
 } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { capByPrefix } from "visual/utils/string";
 
 export function toolbarTextShadow({
@@ -19,8 +19,8 @@ export function toolbarTextShadow({
   prefix = "",
   devices = "all"
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const textShadow = capByPrefix(prefix, "textShadow");
   const colorHex = capByPrefix(textShadow, "colorHex");
   const colorOpacity = capByPrefix(textShadow, "colorOpacity");
@@ -94,8 +94,8 @@ export function toolbarTextShadowHexField2({
   prefix = "",
   devices = "all"
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const textShadow = capByPrefix(prefix, "textShadow");
   const field = capByPrefix(textShadow, "field");
   const colorHex = capByPrefix(textShadow, "colorHex");
@@ -134,8 +134,8 @@ export function toolbarTextShadowFields2({
   prefix = "",
   devices = "all"
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const textShadow = capByPrefix(prefix, "textShadow");
   const fields = capByPrefix(textShadow, "fields");
   const blur = capByPrefix(textShadow, "blur");
@@ -149,7 +149,7 @@ export function toolbarTextShadowFields2({
     id: dvk(fields),
     type: "multiInput",
     config: {
-      defaultIcon: ["nc-shadow"],
+      defaultIcon: "nc-shadow",
       icons: ["nc-blur", "nc-vertical", "nc-horizontal"]
     },
     value: [dvv(blur), dvv(vertical), dvv(horizontal)],

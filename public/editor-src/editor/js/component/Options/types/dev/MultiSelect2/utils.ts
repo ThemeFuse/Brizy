@@ -1,46 +1,8 @@
 import _ from "underscore";
 import * as Str from "visual/utils/reader/string";
-import { read as readLiteral } from "visual/utils/types/Literal";
 import { t } from "visual/utils/i18n";
 import { printf } from "visual/utils/string";
-import {
-  ToElementModel,
-  FromElementModel
-} from "visual/component/Options/Type";
-import { Value, ChoicesSync, ChoicesAsync, ElementModelValue } from "./types";
-
-export const DEFAULT_VALUE: ElementModelValue = { value: [] };
-
-export const fromElementModel: FromElementModel<ElementModelValue> = get => {
-  let value: Value;
-  try {
-    value = JSON.parse(Str.read(get("value")) ?? "[]");
-  } catch (e) {
-    value = DEFAULT_VALUE.value;
-  }
-
-  if (!Array.isArray(value) || !value.length) {
-    return DEFAULT_VALUE;
-  }
-
-  const v = value.reduce((acc: Value, i) => {
-    const value = readLiteral(i);
-
-    if (value) {
-      acc.push(value);
-    }
-
-    return acc;
-  }, []);
-
-  return { value: v };
-};
-
-export const toElementModel: ToElementModel<ElementModelValue> = value => {
-  return {
-    value: JSON.stringify(value.value)
-  };
-};
+import { Value, ChoicesSync, ChoicesAsync } from "./types";
 
 export function isChoicesSync(
   choices: ChoicesSync | ChoicesAsync

@@ -1,4 +1,8 @@
+@import "../../variables";
+
 .brz-ed-option-wrapper {
+  position: relative;
+
   &.brz-ed-option__block {
     flex-direction: row;
     align-items: center;
@@ -18,5 +22,32 @@
   }
   &.brz-ed-grid__option {
     padding: 0;
+  }
+
+  &__isLocked > *:not(.brz-ed-option-wrapper__lock) {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  &__lock {
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    &__icon {
+      cursor: pointer;
+      color: $brand__primary__pro;
+      width: 11px;
+      height: 11px;
+      border: 10px solid #fff;
+      background: #fff;
+      box-sizing: content-box;
+      border-radius: 50%;
+    }
   }
 }

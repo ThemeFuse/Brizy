@@ -8,8 +8,8 @@ export function toolbarElementVideoPlaySize({
   disabled = false,
   state
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   return {
     id: dvk("iconSize"),
@@ -46,25 +46,5 @@ export function toolbarElementVideoPlaySize({
         [dvk("iconSizeHeight")]: value
       };
     }
-  };
-}
-
-export function toolbarElementVideoUpload({
-  v,
-  device,
-  state,
-  devices = "all",
-  disabled = false
-}) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
-  const dvk = key => defaultValueKey({ key, device, state });
-  return {
-    id: dvk("custom"),
-    label: t("File"),
-    type: "fileUpload",
-    acceptedExtensions: ["video/*"],
-    devices,
-    disabled,
-    value: dvv("custom")
   };
 }
