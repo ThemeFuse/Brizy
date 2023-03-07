@@ -8,26 +8,52 @@ import { MValue } from "./utils/types";
 
 interface Actions {
   getMediaUid: string;
-  mediaResizeUrl: string;
+  getAttachmentUid: string;
   setProject: string;
 }
 
+interface API {
+  mediaResizeUrl: string;
+  customFileUrl: string;
+}
 interface Config {
   hash: string;
   editorVersion: string;
   url: string;
   pageId: string;
   actions: Actions;
+  api: API;
 }
+
+const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
+  mediaResizeUrl: pipe(
+    mPipe(
+      Obj.readKey("media"),
+      Obj.read,
+      Obj.readKey("mediaResizeUrl"),
+      Str.read
+    ),
+    throwOnNullish("Invalid actions: mediaResizeUrl")
+  ),
+  customFileUrl: pipe(
+    mPipe(
+      Obj.readKey("customFile"),
+      Obj.read,
+      Obj.readKey("customFileUrl"),
+      Str.read
+    ),
+    throwOnNullish("Invalid actions: customFileUrl")
+  )
+});
 
 const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getMediaUid: pipe(
     mPipe(Obj.readKey("getMediaUid"), Str.read),
     throwOnNullish("Invalid actions: getMediaUid")
   ),
-  mediaResizeUrl: pipe(
-    mPipe(Obj.readKey("mediaResizeUrl"), Str.read),
-    throwOnNullish("Invalid actions: mediaResizeUrl")
+  getAttachmentUid: pipe(
+    mPipe(Obj.readKey("getAttachmentUid"), Str.read),
+    throwOnNullish("Invalid actions: getAttachmentUid")
   ),
   setProject: pipe(
     mPipe(Obj.readKey("setProject"), Str.read),
@@ -55,6 +81,10 @@ const reader = parseStrict<PLUGIN_ENV, Config>({
   actions: pipe(
     mPipe(Obj.readKey("actions"), Obj.read, actionsReader),
     throwOnNullish("Invalid: Actions")
+  ),
+  api: pipe(
+    mPipe(Obj.readKey("api"), Obj.read, apiReader),
+    throwOnNullish("Invalid: api")
   )
 });
 

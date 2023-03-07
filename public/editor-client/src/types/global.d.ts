@@ -10,7 +10,11 @@ export interface PLUGIN_ENV {
   editorVersion?: string;
   actions?: {
     getMediaUid?: string;
+    getAttachmentUid?: string;
+  };
+  api?: {
     mediaResizeUrl?: string;
+    customFileUrl?: string;
   };
 }
 
@@ -31,6 +35,19 @@ export interface VISUAL_CONFIG {
         ) => void;
       };
     };
+    // File
+    customFile?: {
+      customFileUrl?: string;
+
+      addFile?: {
+        label?: string;
+        handler: (
+          res: Response<AddFileData>,
+          rej: Response<string>,
+          extra: AddFileExtra
+        ) => void;
+      };
+    };
   };
 
   //#endregion
@@ -44,7 +61,7 @@ declare global {
       };
       states: WPMediaLibrary;
     }): WPMediaFrame;
-    on: (name: "select" | "close", cb: () => void) => void;
+    on: (name: "select" | "close" | "escape", cb: () => void) => void;
     open: () => void;
     detach: () => void;
     controller: {
