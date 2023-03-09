@@ -1,22 +1,22 @@
-import React, { Component, HTMLAttributes } from "react";
 import classnames from "classnames";
+import React, { Component, HTMLAttributes } from "react";
 import { connect } from "react-redux";
-import Prompts, { PromptsProps } from "visual/component/Prompts";
 import EditorIcon from "visual/component/EditorIcon";
-import {
-  pageDataNoRefsSelector,
-  extraFontStylesSelector
-} from "visual/redux/selectors";
-import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import { ToastNotification } from "visual/component/Notifications";
-import { createBlockScreenshot, createSavedBlock } from "visual/utils/api";
-import { findDeep } from "visual/utils/object";
-import { uuid } from "visual/utils/uuid";
-import { t } from "visual/utils/i18n";
-import { Block, SavedBlock } from "visual/types";
+import Prompts, { PromptsProps } from "visual/component/Prompts";
+import {
+  extraFontStylesSelector,
+  pageDataNoRefsSelector
+} from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { getWhiteLabel } from "visual/utils/whiteLabel";
+import { Block, SavedBlock } from "visual/types";
+import { createBlockScreenshot, createSavedBlock } from "visual/utils/api";
+import { t } from "visual/utils/i18n";
 import { isNumber } from "visual/utils/math";
+import { findDeep } from "visual/utils/object";
+import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
+import { uuid } from "visual/utils/uuid";
+import { getWhiteLabel } from "visual/utils/whiteLabel";
 
 type SavedBlockMapStateToProps = {
   isAuthorized: boolean;
@@ -165,7 +165,7 @@ class OptionTypeSavedBlock extends Component<SavedBlockProps, SavedBlockState> {
       meta,
       uid: uuid(),
       dataVersion: 1
-    }).catch(err => {
+    }).catch((err) => {
       if (blockType === "normal") {
         ToastNotification.error(t("Could not Create Saved Block"));
       } else {
@@ -178,7 +178,7 @@ class OptionTypeSavedBlock extends Component<SavedBlockProps, SavedBlockState> {
     if (!screenshotsSupported) {
       ToastNotification.warn(
         t("Your block was saved without screenshot, browser is not compatible"),
-        { hideAfter: 5 }
+        5
       );
     }
 

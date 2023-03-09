@@ -1,0 +1,35 @@
+.brz-eventList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+
+  &__container {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(var(--columnCount), var(--columnSize));
+    word-break: break-word;
+  }
+
+  &__item {
+    & > * {
+      margin: 0 0 0.5rem 0;
+    }
+    &--meta {
+      &--title {
+        a {
+          color: inherit;
+        }
+      }
+      &--image--link {
+        &:active {
+          pointer-events: none;
+        }
+      }
+    }
+
+    & > *:not(:last-child) {
+      margin: 0 0 10px 0;
+    }
+  }
+}

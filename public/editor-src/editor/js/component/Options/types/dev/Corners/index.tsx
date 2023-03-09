@@ -2,16 +2,7 @@ import React, { FC, useCallback, useMemo } from "react";
 import { Value } from "./types/Value";
 import * as V from "./types/Value";
 import * as Option from "visual/component/Options/Type";
-import { OptionType } from "visual/component/Options/Type";
-import {
-  defaultValue,
-  fromElementModel,
-  getIcon,
-  toElementModel,
-  unitSetter,
-  unitTitle,
-  valueSetter
-} from "./utils";
+import { getIcon, unitSetter, unitTitle, valueSetter } from "./utils";
 import { mPipe, pipe } from "visual/utils/fp";
 import { Spacing, Props as SP } from "visual/component/Controls/Spacing";
 import { Edge } from "visual/component/Controls/Spacing/types";
@@ -24,12 +15,7 @@ import { Config } from "./types/Config";
 
 export interface Props extends Option.Props<Value>, WithConfig<Config> {}
 
-export const Corners: OptionType<Value> & FC<Props> = ({
-  value,
-  onChange,
-  label,
-  config
-}) => {
+export const Corners: FC<Props> = ({ value, onChange, label, config }) => {
   const onType = useCallback(
     pipe((v: Type): Value => V.setType(v, value), onChange),
     [value, onChange]
@@ -123,9 +109,3 @@ export const Corners: OptionType<Value> & FC<Props> = ({
     />
   );
 };
-
-Corners.fromElementModel = fromElementModel;
-
-Corners.toElementModel = toElementModel;
-
-Corners.defaultValue = defaultValue;

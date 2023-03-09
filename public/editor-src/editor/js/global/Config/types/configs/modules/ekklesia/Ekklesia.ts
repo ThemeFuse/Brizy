@@ -7,7 +7,7 @@ export interface EkklesiaModules {
   recentSermons: Record<string, Literal>;
   smallgroups: Record<string, Literal>;
   terms: EkklesiaTerms;
-  pages: Record<string, Literal>[];
+  forms: Record<string, string>;
 }
 
 interface EkklesiaTerms {

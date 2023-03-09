@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import Config from "visual/global/Config";
-import Scrollbars from "react-custom-scrollbars";
 import Grid from "./Grid";
 import GridItem from "./GridItem";
 import { Context } from "../../Context";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
+import { Scrollbar } from "visual/component/Scrollbar";
 
 const ConfigUrls = Config.get("urls");
 
@@ -15,7 +15,6 @@ class AppList extends Component {
 
   static defaultProps = {
     apps: [],
-    height: "100%",
     proExceptions: false,
     error: null
   };
@@ -67,12 +66,12 @@ class AppList extends Component {
   }
 
   render() {
-    const { apps, height, proExceptions, error } = this.props;
+    const { apps, proExceptions, error } = this.props;
     const { connectedApps } = this.context;
     const { loadingApp } = this.state;
 
     return (
-      <Scrollbars style={{ height }}>
+      <Scrollbar theme="light">
         {error && this.renderError()}
         {proExceptions && this.renderProException()}
         <Grid
@@ -89,7 +88,7 @@ class AppList extends Component {
             />
           )}
         />
-      </Scrollbars>
+      </Scrollbar>
     );
   }
 }

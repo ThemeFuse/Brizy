@@ -22,7 +22,7 @@
   }
 
   &--separator .brz-ed-grid-option__column:not(:first-child) {
-    border-left: 1px solid $brand-options-border;
+    border-left: 1px solid $brand__options-border;
     margin-left: $control-padding;
     padding-left: $control-padding;
   }
@@ -52,7 +52,7 @@
   }
 
   .brz-ed-grid__option:hover {
-    color: $brand-primary;
+    color: $brand__primary;
     transition: color 0.2s linear;
   }
 }

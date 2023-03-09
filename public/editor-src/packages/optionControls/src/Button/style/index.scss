@@ -1,0 +1,47 @@
+@import "style";
+
+.brz-ed-control__button {
+  @apply text-brand__primary;
+  @apply text-options__item-font-size;
+  @apply gap-[10px];
+  @apply transition-[color] duration-200 ease-linear;
+  @apply cursor-pointer;
+  @apply flex;
+  @apply w-full;
+
+  .brz-icon-svg {
+    @apply text-toolbar-font-size;
+  }
+
+  &.reverseTheme {
+    @apply text-sidebar-color;
+    @apply p-[13px_3px];
+
+    &:hover {
+      @apply text-brand__primary;
+    }
+  }
+
+  &.reverse {
+    .brz-ed-control__label {
+      @apply order-1;
+    }
+    .brz-icon-svg {
+      @apply order-2;
+    }
+  }
+
+  &-left {
+    @apply justify-start;
+  }
+  &-center {
+    @apply justify-center;
+  }
+  &-right {
+    @apply justify-end;
+  }
+
+  &:hover {
+    @apply text-sidebar-color;
+  }
+}

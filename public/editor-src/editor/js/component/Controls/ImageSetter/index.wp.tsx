@@ -1,7 +1,7 @@
 import classnames from "classnames";
-import ToastNotification from "cogo-toast";
 import React, { ReactElement, ReactText } from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import { ToastNotification } from "visual/component/Notifications";
 import { getImageUid } from "visual/utils/api/index.wp";
 import { t } from "visual/utils/i18n";
 import { getImageFormat, preloadImage } from "visual/utils/image";
@@ -88,7 +88,6 @@ export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
                   }
                   this.props.onChange(newValue, { isChanged: "image" });
                 } else {
-
                   const extension = getExtensionsMessage(acceptedExtensions);
                   ToastNotification.error(
                     `${t(

@@ -58,7 +58,7 @@ class RadioGroupOptionType extends React.Component {
 
       const radioClassName = classnames(
         {
-          "brz-ed-option__radio-group--boxed w-[37px] h-[30px] border-t-0 border-r border-b-0 border-l-0 border-solid border-r-control-color bg-inkblot text-white overflow-hidden first:rounded-tl-[4px] first:rounded-bl-[4px] [&:nth-last-child(2)]:border-r-0 [&:nth-last-child(2)]:rounded-tr-[4px] [&:nth-last-child(2)]:rounded-br-[4px]":
+          "brz-ed-option__radio-group--boxed w-[37px] h-[30px] border-t-0 border-r border-b-0 border-l-0 border-solid border-r-control-color bg-option-content-bg text-option-content-color overflow-hidden first:rounded-tl-[4px] first:rounded-bl-[4px] [&:nth-last-child(2)]:border-r-0 [&:nth-last-child(2)]:rounded-tr-[4px] [&:nth-last-child(2)]:rounded-br-[4px]":
             icon
         },
         { "bg-brand-primary": active }

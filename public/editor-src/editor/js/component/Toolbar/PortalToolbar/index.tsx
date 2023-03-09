@@ -10,14 +10,14 @@ import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
 import {
-  DeactivationOptions,
-  monitor,
-  ToolbarMonitorHandler
-} from "../monitor";
-import {
   ToolbarExtendContext,
   ToolbarExtendContextType
 } from "../ToolbarExtend";
+import {
+  DeactivationOptions,
+  ToolbarMonitorHandler,
+  monitor
+} from "../monitor";
 import {
   PortalToolbarPositioner,
   PortalToolbarPositionerProps
@@ -305,12 +305,13 @@ class _PortalToolbar
     }
   };
 
-  getOutSideExceptions = (): (string | ((t: HTMLElement) => void))[] => {
+  getOutSideExceptions = (): (string | ((t: HTMLElement) => boolean))[] => {
     return [
       ".brz-ed-sidebar__right",
       ".brz-ed-tooltip__content-portal",
       ".brz-ed-fixed",
       ".brz-ed-box__resizer--point",
+      ".brz-ed-eyeDropper",
       ...(TARGET === "WP"
         ? [
             ".media-modal", // class of the WP media modal

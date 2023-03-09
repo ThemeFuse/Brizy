@@ -1,13 +1,19 @@
 // Popups
 .brz-popup2 {
-  position: fixed;
   width: 100% !important;
   height: 100%;
-  top: 0;
-  left: 0;
-  z-index: z("section-popup");
   max-width: 100% !important;
 
+  &--fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: z("section-popup");
+  }
+  &--static {
+    position: relative;
+    overflow-y: hidden;
+  }
   &__close {
     position: absolute;
     z-index: 2;
@@ -62,13 +68,14 @@
 
 // Popup for preview
 .brz-popup2__preview {
-  z-index: -1;
-  visibility: hidden;
-  // translate(0, -110%) -110 have problems with animations and IntersectionObserver
-  transform: translate(0, -110%);
-  opacity: 0;
-  transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity;
-
+  &.brz-popup2--fixed {
+    z-index: -1;
+    visibility: hidden;
+    // translate(0, -110%) -110 have problems with animations and IntersectionObserver
+    transform: translate(0, -110%);
+    opacity: 0;
+    transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity;
+  }
   &.brz-popup2--opened {
     z-index: z("section-popup-opened");
     visibility: visible;

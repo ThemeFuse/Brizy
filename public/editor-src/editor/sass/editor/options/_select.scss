@@ -6,14 +6,14 @@
     margin-left: 8px;
     margin-bottom: 0;
     font-size: 16px;
-    color: $options-label-color;
+    color: $options__label-color;
     line-height: 1;
     display: flex;
     cursor: pointer;
     transition: color 0.2s linear;
 
     &:hover {
-      color: $brand-primary;
+      color: $brand__primary;
     }
   }
   .brz-control__select-current {
@@ -81,14 +81,12 @@
 
 // Gradient
 .brz-ed__select--transparent {
-  padding: 0px !important;
-  height: 13px !important;
-  min-height: 13px !important;
   border-bottom: 0px;
   margin-bottom: 0px;
 
   .brz-control__select {
-    width: 110px;
+    width: fit-content;
+    margin: 0 30%;
   }
 
   .brz-control__select-current,
@@ -112,9 +110,12 @@
       position: relative;
       right: auto;
     }
+    &:hover {
+      cursor: pointer;
+    }
   }
   .brz-control__select-options {
-    width: 112px;
+    width: fit-content;
     margin-top: 10px;
     margin-left: -10px;
   }
@@ -135,7 +136,7 @@
     width: 112px;
     height: $control-height;
     border-radius: $control-border-radius;
-    background-color: $options-control-background;
+    background-color: $options__control-bg;
   }
 
   &__spinner {

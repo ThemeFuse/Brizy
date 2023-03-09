@@ -1,16 +1,21 @@
 .brz-ed-control__popover--content .brz-ed-option.brz-ed-option-type__grid-dev {
   padding: 0;
 
-  .brz-ed-control__grid__column {
-    &:first-child:not(:last-child) > .brz-ed-option {
-      padding-right: 0;
-    }
-    &:last-child:not(:first-child) > .brz-ed-option {
-      padding-left: 0;
-    }
-    &:not(:first-child):not(:last-child) > .brz-ed-option {
-      padding-right: 0;
-      padding-left: 0;
-    }
-  }
+  //.brz-ed-control__grid__column {
+  //  &:first-child:not(:last-child) > .brz-ed-option {
+  //    padding-right: 0;
+  //  }
+  //  &:last-child:not(:first-child) > .brz-ed-option {
+  //    padding-left: 0;
+  //  }
+  //  &:not(:first-child):not(:last-child) > .brz-ed-option {
+  //    padding-right: 0;
+  //    padding-left: 0;
+  //  }
+  //}
+}
+
+.brz-ed-control__popover--content
+.brz-ed-option.brz-ed-option-type__typography-dev {
+  padding: 0;
 }

@@ -262,13 +262,13 @@ const changeRadialDegree = (backgroundGradient, value) => {
 
 function getPopulationTabs({ populationColor }, onChange) {
   const translationsMap = {
-    p: t("P"),
-    h1: t("H1"),
-    h2: t("H2"),
-    h3: t("H3"),
-    h4: t("H4"),
-    h5: t("H5"),
-    h6: t("H6")
+    p: "P",
+    h1: "H1",
+    h2: "H2",
+    h3: "H3",
+    h4: "H4",
+    h5: "H5",
+    h6: "H6"
   };
 
   return Object.entries(populationColor).reduce((acc, [key, headerValue]) => {
@@ -296,11 +296,11 @@ function getPopulationTabs({ populationColor }, onChange) {
             })
         },
         {
-          type: "grid",
+          type: "grid-dev",
           className: "brz-ed-grid__color-fileds",
           columns: [
             {
-              width: 41,
+              size: "auto",
               options: [
                 {
                   id: "paragraphColorFields",
@@ -438,11 +438,12 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                 onChange(changeColor(v.backgroundGradient, value))
             },
             {
-              type: "grid",
-              className: "brz-ed-grid__color-fileds",
+              type: "grid-dev",
+              className:
+                "brz-ed-grid__color-fileds brz-ed-grid__color--gradient-field__wrap brz-ed-option",
               columns: [
                 {
-                  width: 30,
+                  size: "auto",
                   options: [
                     {
                       ...toolbarBgColorHexField2({
@@ -457,7 +458,8 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                   ]
                 },
                 {
-                  width: 52,
+                  size: "auto",
+                  className: "brz-ed-grid__color--gradient-field",
                   options: [
                     {
                       ...toolbarGradientType({
@@ -476,7 +478,8 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
                   ]
                 },
                 {
-                  width: 18,
+                  size: "auto",
+                  className: "brz-ed-grid__color--gradient-degree",
                   options: [
                     {
                       ...toolbarGradientLinearDegree({

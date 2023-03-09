@@ -14,6 +14,7 @@
       right: auto;
     }
   }
+
   &.brz-ed-sidebar__right--align-right {
     left: auto;
     right: 0;
@@ -34,11 +35,13 @@
       from {
         box-shadow: 0 0 0 rgba(0, 0, 0, 0);
       }
+
       to {
-        box-shadow: $sidebar-right-content-shadow;
+        box-shadow: 0 0 10px 0 $sidebar__right_content-box-shadow;
       }
     }
   }
+
   .brz-ed-sidebar__main .brz-ed-control__tabs {
     margin-bottom: 15px;
     padding-left: 0;
@@ -56,10 +59,11 @@
     font-size: 0px;
     cursor: pointer;
 
-    & > .brz-icon-svg {
+    &>.brz-icon-svg {
       font-size: 12px;
     }
-    & > .brz-ed-sidebar__right__icon-tooltip {
+
+    &>.brz-ed-sidebar__right__icon-tooltip {
       top: calc(100% + 8px);
 
       &:after {
@@ -70,15 +74,16 @@
     }
 
     &:hover {
-      color: $brand-primary;
+      color: $brand__primary;
 
-      & > .brz-ed-sidebar__right__icon-tooltip {
+      &>.brz-ed-sidebar__right__icon-tooltip {
         opacity: 1;
         visibility: visible;
         transition-delay: 750ms;
       }
     }
   }
+
   &__header-icon:last-child {
     margin-left: 15px;
   }
@@ -94,16 +99,18 @@
     padding: 0 45px;
     text-align: center;
   }
+
   &__empty-icon {
     font-size: 18px;
     margin-bottom: 25px;
-    color: #818a91;
+    color: $sidebar__icon-color;
   }
+
   &__empty-text {
     font-size: 13px;
     font-weight: 600;
     line-height: 20px;
-    color: #7f8994;
+    color: $sidebar__content-color;
   }
 
   // Tabs
@@ -116,7 +123,7 @@
 
   .brz-ed-tooltip--opened .brz-ed-popover__tooltip--icon-custom {
     border-width: 2px;
-    border-color: $brand-primary;
+    border-color: $brand__primary;
   }
 
   // Options
@@ -125,6 +132,7 @@
     padding: 15px 0;
 
     .brz-ed-option-type__colorPicker {
+
       &,
       &-dev {
         padding: 15px;
@@ -152,7 +160,7 @@
             cursor: pointer;
 
             &:hover {
-              border: 2px solid $brand-primary;
+              border: 2px solid $brand__primary;
             }
           }
         }
@@ -160,11 +168,15 @@
     }
   }
 
-  &__tabs > .brz-ed-option {
+  &__tabs>.brz-ed-option {
     padding: 23px 30px 30px;
 
     &.brz-ed-option-type__sidebarTabs-dev {
       padding: 0;
     }
   }
+}
+
+.brz-scrollColor__dark {
+  background-color: $scrollbar__sidebar-color;
 }

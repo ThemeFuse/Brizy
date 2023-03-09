@@ -6,6 +6,7 @@ import {
   makeGlobalStylesColorPalette,
   makeRichTextColorPaletteCSS
 } from "visual/utils/color";
+import { makeVariablesColor } from "visual/utils/cssVariables";
 import { addClass, removeClass } from "visual/utils/dom/classNames";
 import {
   makeDefaultFontCSS,
@@ -18,10 +19,10 @@ import {
   ADD_BLOCK,
   COPY_ELEMENT,
   HYDRATE,
-  updateCopiedElement,
   UPDATE_CURRENT_STYLE,
   UPDATE_CURRENT_STYLE_ID,
-  UPDATE_UI
+  UPDATE_UI,
+  updateCopiedElement
 } from "../actions";
 import {
   ADD_FONTS,
@@ -151,7 +152,6 @@ function handleHydrate(callbacks) {
     const fontStyles = [..._fontStyles, ...extraFontStyles];
 
     const defaultFont = getDefaultFontDetailsSelector(state);
-
     // Generate default @fontFace uses in project font
     const $defaultFonts = jQuery("<style>")
       .attr("id", "brz-project-default-font")
@@ -188,6 +188,16 @@ function handleHydrate(callbacks) {
       .html(makeGlobalStylesTypography(fontStyles));
     jQuery("head", document).append(typographyStyle);
 
+    // Config _variables scss
+    const themeVariables = makeVariablesColor();
+    if (themeVariables) {
+      const configVariables = jQuery("<style>")
+        .attr({ type: "text/css", rel: "stylesheet", id: "themeVariables" })
+        .html(themeVariables);
+
+      jQuery("head", document).append(configVariables);
+      jQuery("head", parentDocument).append(configVariables.clone());
+    }
     // ColorPalette
     const $richTextPaletteStyle = jQuery("<style>")
       .attr("id", "brz-rich-text-colors")

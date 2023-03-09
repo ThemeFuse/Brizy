@@ -37,7 +37,7 @@ export class AuthProvider implements APIAuthProvider {
           })
         });
         if (!r.ok) {
-          throw new AuthError(t("Failed to authenticate invalid token"));
+          throw new AuthError(t("Failed to authenticate: invalid token"));
         }
 
         return await r.json();

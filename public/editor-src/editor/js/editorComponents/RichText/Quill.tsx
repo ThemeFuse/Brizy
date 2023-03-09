@@ -14,7 +14,7 @@ import { css1 } from "visual/utils/cssStyle";
 import { isStory } from "visual/utils/models";
 import { uuid } from "visual/utils/uuid";
 import { styleHeading } from "./styles";
-import { getFormats, mapBlockElements } from "./utils";
+import { createLabel, getFormats, mapBlockElements } from "./utils";
 import bindings from "./utils/bindings";
 import Quill from "./utils/quill";
 import {
@@ -242,7 +242,7 @@ class QuillComponent extends React.Component<Props> {
   };
 
   handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-    if (event.key === "#") {
+    if (event.key === "#" || event.key === "@") {
       (this.quill as Quill).format("prepopulation", "visible");
     }
   };
@@ -275,7 +275,10 @@ class QuillComponent extends React.Component<Props> {
       return mapBlockElements(html, ($elem: JQuery) => {
         const uniqId = uuid(5);
 
-        const className = this.getClassName($elem, uniqId);
+        const className = this.getClassName(
+          $elem.attr("class")?.split(" ") ?? [],
+          uniqId
+        );
 
         $elem.attr("data-generated-css", className);
         $elem.attr("data-uniq-id", uniqId);
@@ -284,7 +287,9 @@ class QuillComponent extends React.Component<Props> {
       return mapBlockElements(html, ($elem: cheerio.Cheerio) => {
         const uniqId = uuid(5);
 
-        const { v, vs, vd } = classNamesToV2($elem);
+        const { v, vs, vd } = classNamesToV2(
+          $elem.attr("class")?.split(" ") ?? []
+        );
         const styles = styleHeading(v, vs, vd);
 
         const { className } = css1(
@@ -347,8 +352,8 @@ class QuillComponent extends React.Component<Props> {
     return extraClassNames;
   }
 
-  getClassName($elem: JQuery | cheerio.Cheerio, uniqId: string): string {
-    const { v, vs, vd } = classNamesToV2($elem);
+  getClassName(classList: string[], uniqId: string): string {
+    const { v, vs, vd } = classNamesToV2(classList);
     const styles = styleHeading(v, vs, vd);
 
     const { className } = css1(
@@ -370,16 +375,20 @@ class QuillComponent extends React.Component<Props> {
     const existingIds: string[] = [];
 
     lines.forEach((line) => {
-      const domNode = line.domNode as HTMLElement;
+      const domNode: Element = line.domNode;
 
-      const uniqId = domNode.getAttribute("data-uniq-id") || uuid(5);
+      let uniqId = domNode.getAttribute("data-uniq-id") as string;
 
       // it's needed for cases when new paragraph was created and we should set to him new id
       if (existingIds.includes(uniqId)) {
+        uniqId = uuid(5);
         domNode.setAttribute("data-uniq-id", uniqId);
       }
 
-      const className = this.getClassName(jQuery(domNode), uniqId);
+      const className = this.getClassName(
+        Array.from(domNode.classList),
+        uniqId
+      );
 
       // temp to find out a better way to implement this
       // const { attributes = {} } = line.attributes || {};
@@ -400,9 +409,19 @@ class QuillComponent extends React.Component<Props> {
     display: ConfigDCItem["display"];
     placeholder: ConfigDCItem["placeholder"];
   }): void => {
+    const dynamicContentOption = Config.getAll()?.dynamicContentOption;
+    const dcOptionRichText = dynamicContentOption?.richText;
+    const useCustomPlaceholder = dcOptionRichText?.useCustomPlaceholder;
+
     const { label: _label, display, placeholder } = data;
-    const label = `#${_label}`;
-    const population = placeholder.replace("{{", "").replace("}}", "");
+    const label =
+      typeof dcOptionRichText?.handler === "function"
+        ? _label
+        : createLabel(_label);
+    const population = useCustomPlaceholder
+      ? placeholder
+      : placeholder.replace("{{", "").replace("}}", "");
+
     const quill = this.quill as Quill;
     const selection = quill.getSelection(true);
     const [leafBlot, offset] = quill.getLeaf(selection.index);

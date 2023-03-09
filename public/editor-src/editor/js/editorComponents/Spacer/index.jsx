@@ -1,14 +1,14 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import BoxResizer from "visual/component/BoxResizer";
 import classnames from "classnames";
+import { Gap } from "component/Flex/Gap/view";
+import React from "react";
+import BoxResizer from "visual/component/BoxResizer";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
+import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
-
-import defaultValue from "./defaultValue.json";
+import * as toolbarConfig from "./toolbar";
 
 const resizerPoints = ["bottomCenter"];
 const resizerRestrictions = {
@@ -36,7 +36,7 @@ class Spacer extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   renderForEdit(v, vs, vd) {
     const className = classnames(
@@ -61,10 +61,23 @@ class Spacer extends EditorComponent {
           value={v}
           onChange={this.handleResizerChange}
         >
-          <div className={className} />
+          <Gap className={className} />
         </BoxResizer>
       </Toolbar>
     );
+  }
+
+  renderForView(v, vs, vd) {
+    const className = classnames(
+      "brz-spacer",
+      css(
+        `${this.constructor.componentId}`,
+        `${this.getId()}`,
+        style(v, vs, vd)
+      )
+    );
+
+    return <Gap className={className} />;
   }
 }
 

@@ -1,9 +1,9 @@
-import React from "react";
-import T from "prop-types";
 import classnames from "classnames";
+import T from "prop-types";
+import React from "react";
 import ClickOutside from "visual/component/ClickOutside";
-import { getStore } from "visual/redux/store";
 import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import ContainerBorderButton from "./ContainerBorderButton";
 
 export default class ContainerBorder extends React.Component {
@@ -29,7 +29,8 @@ export default class ContainerBorder extends React.Component {
     clickOutsideExceptions: [
       "#brz-toolbar-portal",
       ".brz-ed-sidebar__right",
-      ".brz-ed-tooltip__content-portal"
+      ".brz-ed-tooltip__content-portal",
+      ".brz-ed-eyeDropper"
     ],
     hiddenInResponsive: false
   };
@@ -88,11 +89,11 @@ export default class ContainerBorder extends React.Component {
     clearTimeout(this.isHiddenTime);
   }
 
-  handleContentClick = e => {
+  handleContentClick = (e) => {
     this.handleActivationEvent(e);
   };
 
-  handleButtonClick = e => {
+  handleButtonClick = (e) => {
     this.handleActivationEvent(e);
   };
 
@@ -113,7 +114,7 @@ export default class ContainerBorder extends React.Component {
     }
   };
 
-  handleToolbarOpen = e => {
+  handleToolbarOpen = (e) => {
     const { hiddenInResponsive } = this.props;
     this.device = deviceModeSelector(getStore().getState());
 
@@ -127,7 +128,7 @@ export default class ContainerBorder extends React.Component {
     }
   };
 
-  handleToolbarClose = e => {
+  handleToolbarClose = (e) => {
     if (e.detail?.hideContainerBorder === false) {
       return;
     }
@@ -141,7 +142,7 @@ export default class ContainerBorder extends React.Component {
     }, 250);
   };
 
-  handleActivationEvent = e => {
+  handleActivationEvent = (e) => {
     const { activateOnContentClick } = this.props;
 
     if (e.brzContainerBorderHandled) {
@@ -214,7 +215,7 @@ export default class ContainerBorder extends React.Component {
     }
   }
 
-  renderButton = props => {
+  renderButton = (props) => {
     const { buttonPosition } = this.props;
 
     return (

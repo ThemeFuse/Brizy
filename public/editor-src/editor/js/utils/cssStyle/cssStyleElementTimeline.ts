@@ -1,6 +1,8 @@
+import { ElementModel } from "visual/component/Elements/Types";
 import { checkValue2 } from "visual/utils/checkValue";
 import {
   cssStyleDisplayBlock,
+  cssStyleDisplayGrid,
   cssStyleDisplayNone,
   cssStylePositionAbsolute,
   cssStylePositionRelative,
@@ -48,6 +50,13 @@ function styleElementTimelineLineForIcon({ v, device }: CSSValue): number {
       return 0;
   }
 }
+
+const isStyle3Horizontal = (
+  orientation: "on" | "off",
+  style: "style-1" | "style-2" | "style-3"
+) => {
+  return orientation === "off" && style === "style-3";
+};
 
 function styleElementTimelineIconHeightWidth({
   v,
@@ -1265,3 +1274,90 @@ export function cssStyleElementTimelineVerticalTabBeforeStyle3({
     ? cssStyleDisplayNone()
     : "";
 }
+
+export const cssStyleElementTimelineHorizontalStyle3GridTemplateColumns = ({
+  v,
+  device
+}: CSSValue): string => {
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const orientation = dvv("verticalMode");
+  const style = dvv("timelineStyle");
+
+  if (isStyle3Horizontal(orientation, style)) {
+    const itemsNumber = (v.items as ElementModel[]).length;
+    const columnsNumber = dvv("tabsCount");
+
+    return `grid-template-columns: repeat(${itemsNumber}, ${
+      100 / columnsNumber
+    }%);`;
+  }
+
+  return "";
+};
+
+export const cssStyleElementTimelineHorizontalStyle3GridTemplateRows = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const orientation = dvv("verticalMode");
+  const style = dvv("timelineStyle");
+
+  if (isStyle3Horizontal(orientation, style)) {
+    const iconHeight = styleElementTimelineIconHeightWidth({
+      v,
+      device,
+      state
+    });
+
+    return `${cssStyleDisplayGrid()}grid-template-rows: 1fr ${iconHeight}px max-content;`;
+  }
+
+  return "";
+};
+
+export const cssStyleElementTimelineHoziontalStyle3TabStyles = ({
+  v,
+  device
+}: CSSValue): string => {
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const orientation = dvv("verticalMode");
+  const style = dvv("timelineStyle");
+
+  if (isStyle3Horizontal(orientation, style)) {
+    return "grid-column: auto/auto;display: flex;flex-direction: column;width: 100%;";
+  }
+
+  return "";
+};
+
+export const cssStyleElementTimelineHoziontalStyle3TabStylesOdd = ({
+  v,
+  device
+}: CSSValue): string => {
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const orientation = dvv("verticalMode");
+  const style = dvv("timelineStyle");
+
+  if (isStyle3Horizontal(orientation, style)) {
+    return "grid-row: 2/4;display: flex;";
+  }
+
+  return "";
+};
+
+export const cssStyleElementTimelineHoziontalStyle3TabStylesEven = ({
+  v,
+  device
+}: CSSValue): string => {
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const orientation = dvv("verticalMode");
+  const style = dvv("timelineStyle");
+
+  if (isStyle3Horizontal(orientation, style)) {
+    return "grid-row: 1/3;flex-direction: column-reverse; align-self:flex-end;";
+  }
+
+  return "";
+};

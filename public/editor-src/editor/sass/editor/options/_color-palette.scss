@@ -18,20 +18,22 @@
     &:first-child {
       margin-left: 0;
     }
+
     &.active {
       border: 2px solid #fff;
     }
   }
+
   &__icon {
     cursor: pointer;
     font-size: 16px;
     margin-left: 10px;
     display: flex;
-    color: $options-label-color;
+    color: $options__label-color;
     transition: color 0.2s linear;
 
     &:hover {
-      color: $brand-primary;
+      color: $brand__primary;
     }
   }
 }
@@ -44,7 +46,7 @@
   &__item {
     width: 23px;
     height: 23px;
-    border: 1px solid #1e232a;
+    border: 1px solid $left_sidebar__styling__palette-border;
     border-radius: 2px;
     margin-left: 3px;
     cursor: pointer;
@@ -52,8 +54,9 @@
 
     &:hover,
     &.active {
-      border: 2px solid $brand-primary;
+      border: 2px solid $left_sidebar__styling__palette-border--active;
     }
+
     &:first-child {
       margin-left: 0;
     }

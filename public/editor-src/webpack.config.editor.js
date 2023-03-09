@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const babelrc = require("./babelrc.config.all");
+const swcrc = require("./swc.config.all");
 
 const getExtensions = (target) => {
   const defaultExtensions = [".ts", ".tsx", ".js", ".jsx", ".json"];
@@ -61,8 +61,8 @@ module.exports = (options = {}) => {
             path.resolve(__dirname, "editor"),
             path.resolve(__dirname, "packages")
           ],
-          loader: "babel-loader",
-          options: babelrc.editor()
+          loader: "swc-loader",
+          options: swcrc.editor(options)
         },
 
         // It's only for CodeMirror

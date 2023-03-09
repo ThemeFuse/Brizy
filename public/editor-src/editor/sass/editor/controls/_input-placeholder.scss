@@ -12,7 +12,7 @@
     z-index: 1;
     top: 50%;
     right: 20px;
-    color: $brand-primary;
+    color: $brand__primary;
     cursor: pointer;
     transform: translateY(-0.5em);
   }
@@ -51,7 +51,7 @@
     transition: 0.2s linear opacity;
   }
   .brz-span {
-    color: $brand-primary;
+    color: $brand__primary;
     padding-left: 3px;
   }
 }

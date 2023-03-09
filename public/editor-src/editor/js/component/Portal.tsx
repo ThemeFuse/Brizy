@@ -30,12 +30,6 @@ export default function Portal({
   }
 
   useEffect(() => {
-    // specific case sometime portal used direct in render
-    // and node.appendChild is executed before reactDOM render
-    if (elRef.current && !node.contains(elRef.current)) {
-      node.appendChild(elRef.current);
-    }
-
     return () => {
       if (elRef.current) {
         node.removeChild(elRef.current);

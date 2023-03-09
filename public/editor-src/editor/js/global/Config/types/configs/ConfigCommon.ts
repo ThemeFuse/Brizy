@@ -1,8 +1,12 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { Post } from "visual/component/Options/types/dev/InternalLink/types/Post";
+import { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
 import { PageCommon, Project } from "visual/types";
+import { DynamicContentOption } from "../DynamicContent";
+import { Response } from "./common";
 
 export enum Mode {
   page = "page",
@@ -56,6 +60,9 @@ export enum LeftSidebarPageSettingsOptionsIds {
 export interface PopupSettings {
   displayCondition?: boolean;
   deletePopup?: boolean;
+  embedded?: boolean;
+  horizontalAlign?: boolean;
+  verticalAlign?: boolean;
 }
 
 export interface UpdateRes {
@@ -63,7 +70,24 @@ export interface UpdateRes {
   projectData: Project;
 }
 
+export interface Theme {
+  colors: {
+    "--primary-dark"?: string;
+    "--secondary-dark"?: string;
+    "--tertiary-dark"?: string;
+    "--primary-white"?: string;
+    "--secondary-white"?: string;
+    "--tertiary-white"?: string;
+    "--primary-gray"?: string;
+    "--secondary-gray"?: string;
+    "--tertiary-gray"?: string;
+    "--active-color"?: string;
+  };
+}
+
 interface _ConfigCommon<Mode> {
+  tokenV1?: string;
+
   auth?: {
     token: string;
   };
@@ -125,7 +149,14 @@ interface _ConfigCommon<Mode> {
     };
 
     //#endregion
+    theme?: Theme;
   };
+
+  //#endregion
+
+  //#region DynamicContentOption
+
+  dynamicContentOption?: DynamicContentOption;
 
   //#endregion
 
@@ -134,6 +165,29 @@ interface _ConfigCommon<Mode> {
   onLoad?: VoidFunction;
 
   onUpdate: (res: UpdateRes, config?: ConfigCommon) => void;
+
+  //#endregion
+
+  //#region API
+
+  api?: {
+    linkPages?: {
+      label?: string;
+      defaultSelected?: string;
+      handler: (res: Response<Post[]>, rej: Response<string>) => void;
+      handlerSearch: (
+        res: Response<Post[]>,
+        rej: Response<string>,
+        args: {
+          id: string;
+          search: string;
+        }
+      ) => void;
+    };
+    sourceTypes?: {
+      getSourceChoices: () => ChoicesAsync;
+    };
+  };
 
   //#endregion
 }

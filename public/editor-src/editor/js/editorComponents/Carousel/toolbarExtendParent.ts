@@ -62,7 +62,7 @@ export function getItems({
                   options: [
                     {
                       id: "sliderAutoPlay",
-                      label: t("Auto Play"),
+                      label: t("Autoplay"),
                       type: "switch-dev"
                     },
                     {

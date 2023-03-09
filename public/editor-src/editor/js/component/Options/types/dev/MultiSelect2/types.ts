@@ -1,5 +1,4 @@
 import {
-  OptionType,
   Props as OptionProps,
   SimpleValue
 } from "visual/component/Options/Type";
@@ -35,5 +34,3 @@ export type Props = OptionProps<ElementModelValue> &
     choices: ChoicesSync | ChoicesAsync;
     placeholder?: string;
   };
-
-export type StaticProps = OptionType<ElementModelValue>;

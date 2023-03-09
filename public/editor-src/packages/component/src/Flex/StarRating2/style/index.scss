@@ -1,0 +1,17 @@
+.brz-starrating {
+  @apply flex;
+  @apply items-center;
+  @apply flex-nowrap;
+
+  &-style2-container {
+    @apply flex;
+    @apply py-[2px];
+    @apply px-[9px];
+    .brz-starrating-text {
+      @apply self-center;
+    }
+    .brz-starrating-icon-wrap {
+      @apply self-center;
+    }
+  }
+}

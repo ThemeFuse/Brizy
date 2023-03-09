@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 
 export default {
   id: "CrossSell",
-  title: t("CrossSell"),
+  title: t("Cross Sell"),
   icon: "nc-cog",
   resolve: {
     type: "Wrapper",

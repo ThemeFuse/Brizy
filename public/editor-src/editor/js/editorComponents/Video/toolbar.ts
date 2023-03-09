@@ -11,10 +11,7 @@ import {
 } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import {
-  toolbarElementVideoPlaySize,
-  toolbarElementVideoUpload
-} from "visual/utils/toolbar";
+import { toolbarElementVideoPlaySize } from "visual/utils/toolbar";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
 import { ToolbarItemType } from "../ToolbarItemType";
 
@@ -70,6 +67,7 @@ export function getItems({
   const youtubeType = type === "youtube";
   const vimeoType = type === "vimeo";
   const customType = type === "custom";
+  const urlType = type === "url";
   const offControls = dvv("controls") === "off";
   const onAutoplay = dvv("autoplay") === "on";
 
@@ -106,7 +104,7 @@ export function getItems({
                   type: "select-dev",
                   devices: "desktop",
                   choices: [
-                    { title: t("Youtube"), value: "youtube" },
+                    { title: t("YouTube"), value: "youtube" },
                     { title: t("Vimeo"), value: "vimeo" },
                     ...customRatio,
                     { title: t("URL"), value: "url" }
@@ -126,14 +124,16 @@ export function getItems({
                     { title: "21:9", value: "21:9" }
                   ]
                 },
-                // @ts-expect-error: Old option
-                toolbarElementVideoUpload({
-                  v,
-                  device,
+                {
+                  id: "custom",
+                  type: "fileUpload-dev",
+                  label: t("File"),
+                  config: {
+                    allowedExtensions: ["video/*"]
+                  },
                   devices: "desktop",
-                  state: "normal",
                   disabled: !customType
-                }),
+                },
                 {
                   id: "video",
                   label: t("Link"),
@@ -142,10 +142,13 @@ export function getItems({
                   population: videoDynamicContentChoices,
                   disabled: customType,
                   placeholder: youtubeType
-                    ? t("Youtube")
+                    ? t("YouTube")
                     : vimeoType
                     ? t("Vimeo")
-                    : t("Url")
+                    : t("https://"),
+                  helper: {
+                    content: urlType ? t("This is .mp4 URL.") : ""
+                  }
                 }
               ]
             },

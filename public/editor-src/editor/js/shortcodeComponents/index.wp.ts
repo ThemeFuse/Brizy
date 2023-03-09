@@ -11,7 +11,6 @@ import {
 import { isStory } from "visual/utils/models";
 import { hasSidebars, pluginActivated } from "visual/utils/wp";
 import Archive from "./Archive";
-// import MinistryBrands from "./MinistryBrands/index";
 import PostExcerpt from "./PostExcerpt";
 import PostTitle from "./PostTitle";
 import Posts from "./Posts";
@@ -26,7 +25,8 @@ import {
   grid,
   media,
   mediaStory,
-  social
+  social,
+  content
 } from "./index.common";
 import Products from "./pro/Products";
 import Review from "./pro/Review.js";
@@ -55,11 +55,7 @@ const _config = Config.getAll() as WP;
 
 const hasWoocommerce = pluginActivated("woocommerce");
 
-const essentialsWP = [
-  ...essentialsCommon,
-  { component: Search, pro: true }
-  // ...MinistryBrands
-];
+const essentialsWP = [...essentialsCommon, { component: Search, pro: true }];
 
 const wordpressShortcodes = [
   ...(hasSidebars() ? [{ component: WPSidebar, pro: false }] : []),
@@ -138,6 +134,7 @@ const config = ((): Shortcodes => {
       woocommerce: woocommerceShortcodes,
       essentials: essentialsWP,
       media,
+      content,
       social: social,
       wordpress: wordpressShortcodes
     };
@@ -150,6 +147,7 @@ const config = ((): Shortcodes => {
       woocommerce: woocommerceShortcodes,
       essentials: essentialsWP,
       media,
+      content,
       social: social,
       wordpress: wordpressShortcodes
     };
@@ -161,6 +159,7 @@ const config = ((): Shortcodes => {
       archive: postArchiveShortcodes,
       essentials: essentialsWP,
       media,
+      content,
       social: social,
       wordpress: wordpressShortcodes,
       woocommerce: woocommerceShortcodes
@@ -174,6 +173,7 @@ const config = ((): Shortcodes => {
       wordpress: wordpressShortcodes,
       essentials: essentialsWP,
       media,
+      content,
       social: social,
       woocommerce: woocommerceShortcodes
     };
@@ -183,6 +183,7 @@ const config = ((): Shortcodes => {
     grid,
     essentials: essentialsWP,
     media,
+    content,
     social: social,
     single: singleShortcodes,
     wordpress: wordpressShortcodes,

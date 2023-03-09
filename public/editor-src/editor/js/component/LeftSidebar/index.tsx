@@ -39,7 +39,9 @@ export const LeftSidebar: FC = () => {
       exceptions={[
         ".brz-ed-sortable--empty",
         ".brz-ed-toolbar",
-        ".brz-ed-fixed-bottom-panel"
+        ".brz-ed-fixed-bottom-panel",
+        ".brz-ed-animated",
+        ".brz-ed-eyeDropper"
       ]}
     >
       <PointerEvents>

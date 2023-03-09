@@ -1,22 +1,22 @@
-import React, { ChangeEvent, Component, ReactElement, ReactNode } from "react";
-import _ from "underscore";
 import { match } from "fp-utilities";
+import React, { ChangeEvent, Component, ReactElement, ReactNode } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import Switch from "visual/component/Controls/Switch";
+import _ from "underscore";
+import { Alert } from "visual/component/Alert";
+import ReactSelect from "visual/component/Controls/ReactSelect";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import ReactSelect from "visual/component/Controls/ReactSelect";
+import { Switch } from "visual/component/Controls/Switch";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
-import { Button } from "../../../Button";
 import { t } from "visual/utils/i18n";
-import { Alert } from "visual/component/Alert";
+import { Button } from "../../../Button";
 import {
-  Props,
-  SelectData,
   InputData,
-  SwitchData,
+  Props,
   SearchData,
+  SelectData,
+  SwitchData,
   isInput,
   isSearch,
   isSelect,
@@ -109,7 +109,7 @@ export class Fields extends Component<Props> {
       <div className="brz-ed-popup-integrations-step__fields-input">
         <Switch
           className="brz-ed-control__switch--light"
-          defaultValue={value}
+          value={value ?? false}
           onChange={(checked: boolean): void => {
             this.props.onActive(name, checked);
           }}
@@ -215,14 +215,8 @@ export class Fields extends Component<Props> {
   }
 
   render(): ReactElement {
-    const {
-      description,
-      error,
-      prevLoading,
-      nextLoading,
-      onPrev,
-      onNext
-    } = this.props;
+    const { description, error, prevLoading, nextLoading, onPrev, onNext } =
+      this.props;
 
     return (
       <div className="brz-ed-popup-integrations-step brz-ed-popup-integrations-step__fields">

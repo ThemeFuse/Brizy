@@ -1,10 +1,10 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useCallback } from "react";
+import { findDeep } from "visual/utils/object";
+import { Empty } from "visual/utils/string/specs";
 import Input from "./Input";
 import Select from "./Select";
-import { isOptgroup } from "./utils";
 import { Choices, OptGroup } from "./types/Choices";
-import { Empty } from "visual/utils/string/specs";
-import { findDeep } from "visual/utils/object";
+import { isOptgroup } from "./utils";
 
 export interface Props<T extends string | number> {
   choices: (Choices<T> | OptGroup<T>)[];
@@ -21,6 +21,8 @@ export default function Population<T extends string | number>({
 }: Props<T>): ReactElement {
   let input: ReactElement | undefined;
 
+  const handleRemove = useCallback(() => onChange(""), [onChange]);
+
   if (value) {
     const activeItem: Choices<T> | null = findDeep(
       choices,
@@ -29,7 +31,7 @@ export default function Population<T extends string | number>({
       }
     ).obj;
 
-    input = <Input value={activeItem?.title ?? ""} onChange={onChange} />;
+    input = <Input value={activeItem?.title ?? ""} onRemove={handleRemove} />;
   } else {
     input = renderUnset?.();
   }

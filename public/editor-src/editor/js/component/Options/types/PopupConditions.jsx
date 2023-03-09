@@ -48,7 +48,7 @@ class PopupConditionsOptionType extends React.Component {
           <span className="brz-ed-option__popup_conditions-count">
             {this.calConditionsAmount()}
           </span>
-          {t(" Display Conditions")}
+          {t("Display Conditions")}
         </div>
       </ConditionsComponent>
     );

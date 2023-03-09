@@ -93,13 +93,13 @@ export const styleTitle = (v: Style): string => {
     case LegacyEffectType.jello:
       return t("Jello");
     case LegacyEffectType.lightSpeedIn:
-      return t("LightSpeedIn");
+      return t("Light Speed In");
     case LegacyEffectType.pulse:
       return t("Pulse");
     case LegacyEffectType.rollIn:
-      return t("RollIn");
+      return t("Roll In");
     case LegacyEffectType.rubberBand:
-      return t("RubberBand");
+      return t("Rubber Band");
     case LegacyEffectType.shake:
       return t("Shake");
     case LegacyEffectType.swing:

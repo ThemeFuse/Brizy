@@ -6,13 +6,13 @@
 
   &--point {
     position: absolute;
-    width: $resize-shortcode-width;
-    height: $resize-shortcode-height;
-    border-radius: round(math.div($resize-shortcode-width, 2));
+    width: $resize__shortcode-width;
+    height: $resize__shortcode-height;
+    border-radius: round(math.div($resize__shortcode-width, 2));
     border: 2px solid #fff;
     opacity: 1;
     visibility: visible;
-    background-color: $brand-primary;
+    background-color: $brand__primary;
     z-index: z("cloneable-bar") + 1;
 
     &:before {
@@ -27,53 +27,53 @@
   &--top-left {
     cursor: nwse-resize;
     bottom: auto;
-    left: $resize-point-position;
-    top: $resize-point-position;
+    left: $resize__point-position;
+    top: $resize__point-position;
   }
   &--top-center {
     cursor: ns-resize;
     left: 50%;
-    margin-left: $resize-point-position;
-    top: $resize-point-position - 1;
+    margin-left: $resize__point-position;
+    top: $resize__point-position - 1;
     bottom: auto;
   }
   &--top-right {
     cursor: nesw-resize;
     bottom: auto;
-    right: $resize-point-position;
-    top: $resize-point-position;
+    right: $resize__point-position;
+    top: $resize__point-position;
   }
   &--center-left {
     cursor: col-resize;
     top: 50%;
-    margin-top: $resize-point-position;
-    left: $resize-point-position;
+    margin-top: $resize__point-position;
+    left: $resize__point-position;
     right: auto;
   }
   &--center-right {
     cursor: col-resize;
     top: 50%;
-    margin-top: $resize-point-position;
-    right: $resize-point-position;
+    margin-top: $resize__point-position;
+    right: $resize__point-position;
     left: auto;
   }
   &--bottom-left {
     cursor: nesw-resize;
-    bottom: $resize-point-position;
-    left: $resize-point-position;
+    bottom: $resize__point-position;
+    left: $resize__point-position;
     top: auto;
   }
   &--bottom-center {
     cursor: ns-resize;
     left: 50%;
-    margin-left: $resize-point-position;
-    bottom: $resize-point-position - 1;
+    margin-left: $resize__point-position;
+    bottom: $resize__point-position - 1;
     top: auto;
   }
   &--bottom-right {
     cursor: nwse-resize;
-    bottom: $resize-point-position;
-    right: $resize-point-position;
+    bottom: $resize__point-position;
+    right: $resize__point-position;
     top: auto;
   }
 }

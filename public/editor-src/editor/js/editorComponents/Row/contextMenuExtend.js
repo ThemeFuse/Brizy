@@ -8,17 +8,17 @@ const isMac = os === "MacOS";
 
 const getKeyModifier = isInSubMenu => {
   if (isMac) {
-    return isInSubMenu ? "Alt" : "⌘";
+    return isInSubMenu ? "alt" : "⌘";
   } else {
-    return isInSubMenu ? "Alt" : "Ctrl";
+    return isInSubMenu ? "alt" : "ctrl";
   }
 };
 
 const getDeleteKey = isInSubMenu => {
   if (isMac) {
-    return isInSubMenu ? "Alt + delete" : "⌘ + delete";
+    return isInSubMenu ? "alt + delete" : "⌘ + delete";
   } else {
-    return isInSubMenu ? "Alt + Delete" : "Delete";
+    return isInSubMenu ? "alt + delete" : "ctrl + delete";
   }
 };
 

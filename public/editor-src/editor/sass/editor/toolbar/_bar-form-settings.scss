@@ -7,35 +7,39 @@
 
     .brz-ed-bar-label,
     .brz-ed-bar-field .brz-input {
-      border-bottom: 1px solid $toolbar-border-color;
+      border-bottom: 1px solid $toolbar-border;
     }
+
     &:last-child {
+
       .brz-ed-bar-label,
       .brz-ed-bar-field .brz-input {
         border-bottom-color: transparent;
       }
     }
   }
+
   .brz-ed-bar-label {
     min-width: $popover-item-width;
-    height: $popover-item-height;
-    padding: 0 $popover-item-padding;
+    height: $popover__item-height;
+    padding: 0 $popover__item-padding;
     margin-right: 0;
-    color: $toolbar-text-color;
+    color: $toolbar-color;
     text-align: center;
 
     i {
-      font-size: $popover-form-icon-size;
-      line-height: $popover-item-height;
+      font-size: $popover__form__icon-size;
+      line-height: $popover__item-height;
     }
   }
+
   .brz-ed-bar-field .brz-input {
     width: ($popover-md-width - $popover-item-width * 2);
-    height: $popover-item-height;
+    height: $popover__item-height;
     background-color: transparent;
     border: none;
     outline: none;
-    font-size: $popover-form-input-font-size;
+    font-size: $popover__form__input-font-size;
     font-family: inherit;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -43,7 +47,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-right: 1px solid $toolbar-border-color;
+    border-right: 1px solid $toolbar-border;
     padding-right: 5px;
   }
 }
@@ -51,19 +55,19 @@
 // Submit
 .brz-ed-bar-form-submit {
   width: $popover-item-width;
-  height: $popover-item-height;
-  line-height: $popover-item-height;
+  height: $popover__item-height;
+  line-height: $popover__item-height;
   text-align: center;
   font-size: $popover-links-arrow-size;
   display: inline-block;
   vertical-align: top;
-  color: $toolbar-text-color;
+  color: $toolbar-color;
   transition: color 0.1s linear;
 
   &:focus,
   &:hover {
     transition: color 0.1s linear;
-    color: $brand-primary;
+    color: $brand__primary;
   }
 }
 
@@ -79,14 +83,16 @@ $form-apps-scrollpane-track-background: #44474b;
 
   width: $popover-width;
   margin-left: -($popover-width/2 - $popover-item-width/2);
-  font-family: $font-family-1;
+  font-family: $default-font-family;
 
   .brz-ed-bar-settings {
     width: 100%;
   }
+
   .brz-ed-bar-row {
     padding: 20px 0 18px;
   }
+
   .brz-ed-popup-apps-items {
     position: relative;
     margin: 8px 0 10px;
@@ -94,9 +100,11 @@ $form-apps-scrollpane-track-background: #44474b;
     width: 65px;
     text-align: center;
   }
+
   .brz-ed-popup-apps-items:first-child .brz-ed-popup-app-logo {
     background: #5db8d3;
   }
+
   .brz-ed-popup-app-logo {
     width: 47px;
     height: 47px;
@@ -111,13 +119,15 @@ $form-apps-scrollpane-track-background: #44474b;
       overflow: hidden;
       border-radius: 5px;
     }
+
     .brz-ed-popup-app-active-icon {
       top: -4px;
       right: 5px;
     }
   }
+
   .brz-ed-popup-app-title {
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: 11px;
     line-height: 1;
     color: rgba(255, 255, 255, 0.6);
@@ -144,6 +154,7 @@ $form-apps-scrollpane-track-background: #44474b;
       }
     }
   }
+
   .brz-ed-tall-track {
     border-radius: 0 3px 3px 0;
   }
@@ -161,6 +172,7 @@ $form-apps-scrollpane-track-background: #44474b;
       margin-bottom: 0;
     }
   }
+
   .select-icon-delete,
   .select-icon-add {
     width: 28px;
@@ -173,9 +185,10 @@ $form-apps-scrollpane-track-background: #44474b;
     i {
       line-height: 28px;
     }
+
     &:hover {
       transition: 0.2s linear color;
-      color: $brand-primary;
+      color: $brand__primary;
     }
   }
 }

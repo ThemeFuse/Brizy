@@ -703,28 +703,38 @@ export function getItemsForDesktop(v, component) {
       type: "popover-dev",
       config: {
         icon: "nc-font",
-        size: "large",
+        size: "xlarge",
         title: t("Typography")
       },
-      roles: ["admin"],
       position: 70,
       options: [
         {
-          type: "grid",
+          id: "gridTypography",
+          type: "grid-dev",
+          className: "brz-typography-grid",
+          config: {
+            separator: true
+          },
           columns: [
             {
-              width: 95,
-              vAlign: "center",
+              id: "col-1",
+              size: 1,
+              align: "center",
               options: [
                 {
                   id: "",
-                  type: "typography-dev"
+                  type: "typography-dev",
+                  config: {
+                    fontFamily: device === "desktop"
+                  }
                 }
               ]
             },
             {
-              width: 5,
-              vAlign: "center",
+              id: "col-2",
+              size: "auto",
+              align: "center",
+              className: "brz-typography-population",
               options: [
                 {
                   id: "text",
@@ -732,7 +742,8 @@ export function getItemsForDesktop(v, component) {
                   config: {
                     iconOnly: true,
                     choices: richTextDC
-                  }
+                  },
+                  devices: "desktop"
                 }
               ]
             }
@@ -777,110 +788,10 @@ export function getItemsForDesktop(v, component) {
                       id: "tabBg",
                       label: t("Bg"),
                       options: [
-                        toolbarBgColor2({
-                          v,
-                          device,
-                          state: "normal",
-                          onChangeType: ["onChangeBgColorType2"],
-                          onChangeHex: ["onChangeBgColorHexButton2"],
-                          onChangePalette: ["onChangeBgColorPaletteButton2"],
-                          onChangeGradientHex: [
-                            "onChangeBgColorHexAndOpacity2",
-                            "onChangeBgColorHexAndOpacityPalette2",
-                            "onChangeBgColorHexAndOpacityDependencies2"
-                          ],
-                          onChangeGradientPalette: [
-                            "onChangeBgColorPalette2",
-                            "onChangeBgColorPaletteOpacity2",
-                            "onChangeBgColorHexAndOpacityDependencies2"
-                          ],
-                          onChangeGradient: ["onChangeGradientRange2"]
-                        }),
                         {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 30,
-                              options: [
-                                toolbarBgColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  prefix:
-                                    defaultValueValue({
-                                      v,
-                                      key: "gradientActivePointer",
-                                      device,
-                                      state: "normal"
-                                    }) === "startPointer"
-                                      ? "bg"
-                                      : "gradient",
-                                  onChange: ["onChangeBgColorFieldsButton2"]
-                                })
-                              ]
-                            },
-                            {
-                              width: 52,
-                              options: [
-                                toolbarGradientType({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  className:
-                                    "brz-ed__select--transparent brz-ed__select--align-right",
-                                  disabled:
-                                    defaultValueValue({
-                                      v,
-                                      key: "bgColorType",
-                                      device,
-                                      state: "normal"
-                                    }) === "solid"
-                                })
-                              ]
-                            },
-                            {
-                              width: 18,
-                              options: [
-                                toolbarGradientLinearDegree({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  disabled:
-                                    defaultValueValue({
-                                      v,
-                                      key: "bgColorType",
-                                      device,
-                                      state: "normal"
-                                    }) === "solid" ||
-                                    defaultValueValue({
-                                      v,
-                                      key: "gradientType",
-                                      device,
-                                      state: "normal"
-                                    }) === "radial"
-                                }),
-                                toolbarGradientRadialDegree({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  disabled:
-                                    defaultValueValue({
-                                      v,
-                                      key: "bgColorType",
-                                      device,
-                                      state: "normal"
-                                    }) === "solid" ||
-                                    defaultValueValue({
-                                      v,
-                                      key: "gradientType",
-                                      device,
-                                      state: "normal"
-                                    }) === "linear"
-                                })
-                              ]
-                            }
-                          ]
+                          id: "",
+                          type: "backgroundColor-dev",
+                          states: [NORMAL, HOVER]
                         }
                       ]
                     },
@@ -888,29 +799,10 @@ export function getItemsForDesktop(v, component) {
                       id: "tabText",
                       label: t("Text"),
                       options: [
-                        toolbarColor2({
-                          v,
-                          device,
-                          state: "normal",
-                          onChangeHex: ["onChangeColorHexButtonIcon2"],
-                          onChangePalette: ["onChangeColorPaletteButtonIcon2"]
-                        }),
                         {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 100,
-                              options: [
-                                toolbarColorHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  onChange: ["onChangeColorFieldsButtonIcon2"]
-                                })
-                              ]
-                            }
-                          ]
+                          id: "color",
+                          type: "colorPicker-dev",
+                          states: [NORMAL, HOVER]
                         }
                       ]
                     },
@@ -929,59 +821,10 @@ export function getItemsForDesktop(v, component) {
                       id: "tabBoxShadow",
                       label: t("Shadow"),
                       options: [
-                        toolbarBoxShadow2({
-                          v,
-                          device,
-                          state: "normal",
-                          onChangeType: [
-                            "onChangeBoxShadowType2",
-                            "onChangeBoxShadowTypeDependencies2"
-                          ],
-                          onChangeHex: [
-                            "onChangeBoxShadowHexAndOpacity2",
-                            "onChangeBoxShadowHexAndOpacityPalette2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ],
-                          onChangePalette: [
-                            "onChangeBoxShadowPalette2",
-                            "onChangeBoxShadowPaletteOpacity2",
-                            "onChangeBoxShadowHexAndOpacityDependencies2"
-                          ]
-                        }),
                         {
-                          type: "grid",
-                          className: "brz-ed-grid__color-fileds",
-                          columns: [
-                            {
-                              width: 41,
-                              options: [
-                                toolbarBoxShadowHexField2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  onChange: [
-                                    "onChangeBoxShadowHexAndOpacity2",
-                                    "onChangeBoxShadowHexAndOpacityPalette2",
-                                    "onChangeBoxShadowHexAndOpacityDependencies2"
-                                  ]
-                                })
-                              ]
-                            },
-                            {
-                              width: 59,
-                              options: [
-                                toolbarBoxShadowFields2({
-                                  v,
-                                  device,
-                                  state: "normal",
-                                  onChange: [
-                                    "onChangeBoxShadowFields2",
-                                    "onChangeBoxShadowFieldsDependencies2"
-                                  ]
-                                })
-                              ]
-                            }
-                          ]
+                          id: "boxShadow",
+                          type: "boxShadow-dev",
+                          states: [NORMAL, HOVER]
                         }
                       ]
                     }

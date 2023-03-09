@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 
 export default {
   id: "WideBundle",
-  title: t("Wide Bundle"),
+  title: t("WideBundle"),
   icon: "nc-cog",
   resolve: {
     type: "Wrapper",

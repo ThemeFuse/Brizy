@@ -18,8 +18,28 @@
     width: 100%;
   }
 
+  &__item--meta {
+    &--register-button,
+    &--button {
+      padding: 12px 24px;
+      cursor: pointer;
+      border-radius: 3px;
+      a {
+        color: inherit;
+      }
+    }
+  }
+
   &__pagination {
     padding: 2rem;
+
+    a#off {
+      cursor: default;
+      color: rgba(0, 0, 0, 0.3) !important;
+      &:hover {
+        color: rgba(0, 0, 0, 0.1) !important;
+      }
+    }
 
     & > a:not(:last-child) {
       margin-right: 0.5rem;

@@ -13,7 +13,7 @@ export type Props = WithClassName &
     onOpen?: () => void;
     onClose?: () => void;
     title?: string;
-    size: "small" | "medium" | "large" | "auto";
+    size: "small" | "medium" | "large" | "xlarge" | "auto";
     clickOutsideExceptions?: string[];
     placement: TooltipProps["placement"];
   };

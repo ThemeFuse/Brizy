@@ -1,5 +1,5 @@
-import React, { FC, useCallback } from "react";
 import classNames from "classnames";
+import React, { FC, useCallback } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { WithClassName, WithOnChange } from "visual/utils/options/attributes";
 import { PaletteObject } from "./entities/PaletteObject";
@@ -8,7 +8,7 @@ type Props = WithClassName &
   WithOnChange<string> & {
     palette: PaletteObject[];
     value: string;
-    openSettings: () => void;
+    openSettings?: () => void;
   };
 
 export const ColorPalette: FC<Props> = ({
@@ -40,12 +40,15 @@ export const ColorPalette: FC<Props> = ({
           />
         );
       })}
-      <div
-        className="brz-ed-control__color-palette__icon"
-        onClick={openSettings}
-      >
-        <EditorIcon icon="nc-cog" />
-      </div>
+
+      {openSettings && (
+        <div
+          className="brz-ed-control__color-palette__icon"
+          onClick={openSettings}
+        >
+          <EditorIcon icon="nc-cog" />
+        </div>
+      )}
     </div>
   );
 };

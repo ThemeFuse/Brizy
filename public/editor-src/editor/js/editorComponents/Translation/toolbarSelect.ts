@@ -1,19 +1,13 @@
-import { t } from "visual/utils/i18n";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { ToolbarItemType } from "../ToolbarItemType";
-import { ElementModel } from "visual/component/Elements/Types";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { getOptionColorHexByPalette } from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { Value } from ".";
 
-export function getItems({
-  v,
-  device
-}: {
-  v: ElementModel;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
+// @ts-expect-error type "button" old options
+export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
   const { hex: selectColorHex } = getOptionColorHexByPalette(
@@ -99,15 +93,13 @@ export function getItems({
     },
     {
       id: "duplicate",
-      // @ts-expect-error: old type
       type: "button",
       disabled: true
     },
     {
       id: "remove",
-      // @ts-expect-error: old type
       type: "button",
       disabled: true
     }
   ];
-}
+};

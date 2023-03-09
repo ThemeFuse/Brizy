@@ -5,6 +5,7 @@
       max-height: 240px;
       border-right-style: none !important;
     }
+
     .brz-ed-tall-track {
       right: -10px;
     }
@@ -25,6 +26,7 @@
         align-items: center;
       }
     }
+
     &:after {
       content: "";
       position: absolute;
@@ -32,14 +34,16 @@
       left: 0;
       width: 100%;
       height: 100%;
-      border: 2px solid transparent;
+      border: 2px solid $thumbnail__block__item__after-border;
       transition: 0.2s linear border-color;
     }
+
     &:hover:after,
     &.active:after {
-      border-color: $brand-primary;
+      border-color: $thumbnail__block__item-border--active;
       transition: 0.2s linear border-color;
     }
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -64,7 +68,7 @@
     width: 100%;
     height: 100%;
     font-size: 24px;
-    color: rgba(94, 100, 111, 0.6);
+    color: $thumbnail__block__loader-bg;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -80,8 +84,8 @@
     z-index: 1;
     width: 140px;
     height: 22px;
-    background: #3dbfe8;
-    color: white;
+    background: $thumbnail__block__item__anchor-bg;
+    color: $thumbnail__block__item__anchor-color;
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     font-size: 13px;
@@ -93,41 +97,46 @@
       font-style: italic;
       margin-left: 5px;
     }
+
     .brz-input {
       width: 108px;
       padding: 0px 5px;
       border: none;
       background: none;
-      color: white;
+      color: $thumbnail__block__item__anchor-color;
       text-align: left;
-      font-family: $font-family-1;
+      font-family: $default-font-family;
       font-size: 13px;
       font-weight: 600;
 
       &:focus {
         outline: none;
       }
+
       &::placeholder {
-        color: white;
+        color: $thumbnail__block__item__anchor-color;
         opacity: 0.6;
-        font-family: $font-family-1;
+        font-family: $default-font-family;
         font-size: 13px;
         font-weight: 600;
         font-style: italic;
       }
     }
+
     .brz-label {
-      color: #ffffff;
+      color: $thumbnail__block__item__anchor-color;
       cursor: pointer;
       margin: 3px 0 0 0;
     }
+
     .brz-icon-svg {
       width: 18px;
       height: 18px;
       padding: 5px;
     }
+
     .brz-icon-svg:hover {
-      color: #03080f;
+      color: $thumbnail__block__item__anchor__icon-color--hover;
       opacity: 0.92;
     }
   }

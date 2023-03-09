@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Tabs Snapshots Check showSingle true 1`] = `
+<div
+  class="brz-ed-control__tabs-wrapper"
+>
+  <ul
+    class="brz-ul brz-ed-control__tabs brz-justify-content-xs-center brz-ed-control__tabs__top"
+  >
+    <li
+      class="brz-li brz-ed-control__tab active"
+    >
+      <span
+        class="brz-span"
+      >
+        Button
+      </span>
+    </li>
+  </ul>
+  <div
+    class="brz-ed-control__tab__content brz-ed-control__tabs__content__top"
+  >
+    <div
+      class="brz-ed-control__button brz-ed-control__button-center reverse reverseTheme"
+    >
+      <span
+        class="brz-ed-control__label"
+      >
+        Button Tab
+      </span>
+    </div>
+    <div
+      class="brz-ed-control__button brz-ed-control__button-center reverse reverseTheme"
+    >
+      <span
+        class="brz-ed-control__label"
+      >
+        Button Tab
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test Tabs Snapshots Tabs on left end 1`] = `
+<div
+  class="brz-ed-control__tabs-wrapper"
+>
+  <ul
+    class="brz-ul brz-ed-control__tabs brz-justify-content-xs-end brz-ed-control__tabs__left"
+  >
+    <li
+      class="brz-li brz-ed-control__tab"
+    >
+      <span
+        class="brz-span"
+      >
+        Button
+      </span>
+    </li>
+    <li
+      class="brz-li brz-ed-control__tab active"
+    >
+      <span
+        class="brz-span"
+      >
+        Icon
+      </span>
+    </li>
+  </ul>
+  <div
+    class="brz-ed-control__tab__content brz-ed-control__tabs__content__left"
+  >
+    <div
+      class="brz-ed-control__button brz-ed-control__button-center reverse reverseTheme"
+    >
+      <span
+        class="brz-ed-control__label"
+      >
+        Icon Tab
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test Tabs Snapshots Tabs on top center 1`] = `
+<div
+  class="brz-ed-control__tabs-wrapper"
+>
+  <ul
+    class="brz-ul brz-ed-control__tabs brz-justify-content-xs-center brz-ed-control__tabs__top"
+  >
+    <li
+      class="brz-li brz-ed-control__tab"
+    >
+      <span
+        class="brz-span"
+      >
+        Button
+      </span>
+    </li>
+    <li
+      class="brz-li brz-ed-control__tab active"
+    >
+      <span
+        class="brz-span"
+      >
+        Icon
+      </span>
+    </li>
+  </ul>
+  <div
+    class="brz-ed-control__tab__content brz-ed-control__tabs__content__top"
+  >
+    <div
+      class="brz-ed-control__button brz-ed-control__button-center reverse reverseTheme"
+    >
+      <span
+        class="brz-ed-control__label"
+      >
+        Icon Tab
+      </span>
+    </div>
+  </div>
+</div>
+`;

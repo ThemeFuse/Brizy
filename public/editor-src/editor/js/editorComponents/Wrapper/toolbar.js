@@ -35,6 +35,7 @@ export function getItems({ v, device }) {
     {
       id: "advancedSettings",
       type: "advancedSettings",
+      title: t("Settings"),
       devices: "desktop",
       position: 110,
       roles: ["admin"],

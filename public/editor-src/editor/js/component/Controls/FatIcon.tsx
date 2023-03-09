@@ -17,12 +17,16 @@ export const FatIcon = ({
   label,
   onClick
 }: Props): ReactElement => {
-  const activeLabel = active ? "text-brand-primary" : "text-white";
-  const activeIcon = active ? "!text-brand-primary" : "!text-white";
+  const activeLabel = active
+    ? "text-right-sidebar-item--active"
+    : "text-right-sidebar-item-label";
+  const activeIcon = active
+    ? "!text-right-sidebar-item--active"
+    : "!text-right-sidebar-item";
 
   const activeBorder = active
-    ? "border-brand-primary"
-    : " border-brand-options hover:border-options-border-hover";
+    ? "border-right-sidebar-item--active"
+    : "border-right-sidebar-item-border  hover:border-right-sidebar-item-border--hover";
 
   return (
     <div

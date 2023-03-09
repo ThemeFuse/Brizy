@@ -2,16 +2,12 @@ import { mPipe } from "fp-utilities";
 import React, { FC } from "react";
 import { Slider } from "visual/component/Controls/Spacing/Slider";
 import * as Option from "visual/component/Options/Type";
-import { OptionType } from "visual/component/Options/Type";
 import { fromNumber } from "visual/utils/math/Positive";
 import { FilterSlider } from "./FilterSlider";
 import { Value } from "./types/Value";
-import { empty, fromElementModel, set, toElementModel } from "./utils";
+import { empty, set } from "./utils";
 
-export const Filters: OptionType<Value> & FC<Option.Props<Value>> = ({
-  value,
-  onChange
-}) => {
+export const Filters: FC<Option.Props<Value>> = ({ value, onChange }) => {
   return (
     <div className="brz-ed-control__filters">
       <Slider
@@ -51,12 +47,3 @@ export const Filters: OptionType<Value> & FC<Option.Props<Value>> = ({
     </div>
   );
 };
-
-Filters.defaultValue = {
-  hue: 0,
-  saturation: 0,
-  contrast: 0,
-  brightness: 0
-};
-Filters.fromElementModel = fromElementModel;
-Filters.toElementModel = toElementModel;

@@ -1,18 +1,18 @@
-import React, { useCallback, useRef, useState, ReactElement } from "react";
 import { match } from "fp-utilities";
+import React, { ReactElement, useCallback, useRef, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
+import { SavedBlock, SavedLayout } from "visual/types";
+import { getSavedBlockById, getSavedLayoutById } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
-import { BlockTypes } from "../types";
+import { blockIsPro } from "visual/utils/traverse/blockIsPro";
 import {
   getExportBlocksUrls,
   isBlock,
   isLayout,
   isPopup
 } from "../common/utils";
-import { getSavedBlockById, getSavedLayoutById } from "visual/utils/api";
-import { SavedBlock, SavedLayout } from "visual/types";
-import { blockIsPro } from "visual/utils/traverse/blockIsPro";
+import { BlockTypes } from "../types";
 
 export interface Props {
   id: string;
@@ -25,9 +25,7 @@ const showNotification = (type: BlockTypes): void => {
     [isLayout, (): string => t("Could not download Saved Layout")],
     [isPopup, (): string => t("Could not download Saved Popup")]
   );
-  ToastNotification.error(message(type), {
-    toastContainer: window.parent.document.body
-  });
+  ToastNotification.error(message(type));
 };
 
 export const DownloadBlock = (props: Props): ReactElement => {

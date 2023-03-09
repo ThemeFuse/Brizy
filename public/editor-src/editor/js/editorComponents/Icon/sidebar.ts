@@ -68,12 +68,10 @@ export function getItems({
                           "Add your custom ID without the #pound, example: my-id"
                       },
                       config: { choices: richTextDC },
-                      options: [
-                        {
-                          id: "customID",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customID",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "cssClass",
@@ -87,12 +85,10 @@ export function getItems({
                           "Add your custom class without the .dot, example: my-class"
                       },
                       config: { choices: richTextDC },
-                      options: [
-                        {
-                          id: "customClassName",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customClassName",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "hoverTransition",

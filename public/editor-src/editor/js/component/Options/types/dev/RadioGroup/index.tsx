@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from "react";
-import * as O from "visual/component/Options/Type";
+import { Props as OptionProps } from "visual/component/Options/Type";
 import * as L from "visual/utils/types/Literal";
 import { Literal } from "visual/utils/types/Literal";
 import { SimpleValue } from "visual/component/Options/Type";
@@ -8,12 +8,12 @@ import { RadioGroup2 } from "visual/component/Controls/RadioGroup2";
 import { Item } from "visual/component/Controls/RadioGroup2/Item";
 import { Choice } from "./Choice";
 
-export type Props = O.Props<SimpleValue<Literal>> &
+export type Props = OptionProps<SimpleValue<Literal>> &
   WithClassName & {
     choices: Choice[];
   };
 
-export const RadioGroup: FC<Props> & O.OptionType<SimpleValue<Literal>> = ({
+export const RadioGroup: FC<Props> = ({
   value: { value },
   choices,
   onChange,
@@ -41,19 +41,3 @@ export const RadioGroup: FC<Props> & O.OptionType<SimpleValue<Literal>> = ({
     </>
   );
 };
-
-const getModel: O.FromElementModel<SimpleValue<Literal>> = get => ({
-  value: L.read(get("value"))
-});
-
-const getElementModel: O.ToElementModel<SimpleValue<Literal>> = values => {
-  return {
-    value: values.value
-  };
-};
-
-RadioGroup.fromElementModel = getModel;
-
-RadioGroup.toElementModel = getElementModel;
-
-RadioGroup.defaultValue = { value: "" };

@@ -75,12 +75,10 @@ export function getItems({ v, device, context }) {
                       config: {
                         choices: cssIDDynamicContentChoices
                       },
-                      options: [
-                        {
-                          id: "customID",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customID",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "cssClass",
@@ -96,12 +94,10 @@ export function getItems({ v, device, context }) {
                       config: {
                         choices: cssIDDynamicContentChoices
                       },
-                      options: [
-                        {
-                          id: "customClassName",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customClassName",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "customAttributes",

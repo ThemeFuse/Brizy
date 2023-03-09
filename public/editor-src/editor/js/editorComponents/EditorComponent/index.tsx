@@ -1,11 +1,10 @@
 import classNames from "classnames";
 import React, { ReactNode } from "react";
 import _ from "underscore";
+import { noop } from "underscore";
 import { ElementModel } from "visual/component/Elements/Types";
-import {
-  fromElementModel,
-  toElementModel
-} from "visual/component/Options/types";
+import { fromElementModel } from "visual/component/Options/types/utils/fromElementModel";
+import { toElementModel } from "visual/component/Options/types/utils/toElementModel";
 import { mergeOptions, optionMap } from "visual/component/Options/utils";
 import {
   OptionDefinition,
@@ -16,6 +15,7 @@ import * as GlobalState from "visual/global/StateMode";
 import { deviceModeSelector, rulesSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
+import { IS_PRO } from "visual/utils/env";
 import { applyFilter } from "visual/utils/filters";
 import {
   defaultValueKey,
@@ -780,21 +780,24 @@ export class EditorComponent<
         getKey(id, key, isDev)
       );
 
-      option.onChange = (value: ElementModel | Literal, meta: Meta): void => {
-        const id = getKey(option.id, "", isDev);
-        const patch: Partial<Model<M>> = isDev
-          ? deps(elementModel(value))
-          : oldOnchange
-          ? oldOnchange(value, meta)
-          : defaultOnChange(id, value as Literal);
+      option.onChange =
+        option.isPro === true && !IS_PRO
+          ? noop
+          : (value: ElementModel | Literal, meta: Meta): void => {
+              const id = getKey(option.id, "", isDev);
+              const patch: Partial<Model<M>> = isDev
+                ? deps(elementModel(value))
+                : oldOnchange
+                ? oldOnchange(value, meta)
+                : defaultOnChange(id, value as Literal);
 
-        if (patch) {
-          if (process.env.NODE_ENV === "development") {
-            this.validatePatch(patch, option, state, device);
-          }
-          this.patchValue(patch);
-        }
-      };
+              if (patch) {
+                if (process.env.NODE_ENV === "development") {
+                  this.validatePatch(patch, option, state, device);
+                }
+                this.patchValue(patch);
+              }
+            };
 
       return option;
     }, optionMap(wrapOption, items));

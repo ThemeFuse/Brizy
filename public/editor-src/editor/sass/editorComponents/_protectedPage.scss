@@ -26,6 +26,7 @@
         }
       }
     }
+
     &__button {
       flex: auto;
 
@@ -41,7 +42,7 @@
     padding: 17px 30px;
     margin-top: 15px;
 
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: 12px;
     line-height: 2;
     letter-spacing: 2.5px;

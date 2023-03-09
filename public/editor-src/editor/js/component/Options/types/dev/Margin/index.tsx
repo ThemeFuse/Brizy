@@ -1,17 +1,8 @@
 import React, { FC, useCallback, useMemo } from "react";
 import { Value } from "./types/Value";
 import * as V from "./types/Value";
-import * as Option from "visual/component/Options/Type";
-import { OptionType } from "visual/component/Options/Type";
-import {
-  defaultValue,
-  fromElementModel,
-  getIcon,
-  toElementModel,
-  toSpacingValue,
-  unitSetter,
-  valueSetter
-} from "./utils";
+import { Props as OptionProps } from "visual/component/Options/Type";
+import { getIcon, toSpacingValue, unitSetter, valueSetter } from "./utils";
 import { pipe } from "visual/utils/fp";
 import { Spacing, Props as SP } from "visual/component/Controls/Spacing";
 import { SpacingUnit } from "visual/component/Options/utils/SpacingUnit";
@@ -21,14 +12,9 @@ import { WithConfig } from "visual/utils/options/attributes";
 import { Config } from "./types/Config";
 import { ToSpacingEdges } from "./types/ToSpacingEdges";
 
-export interface Props extends Option.Props<Value>, WithConfig<Config> {}
+export interface Props extends OptionProps<Value>, WithConfig<Config> {}
 
-export const Margin: OptionType<Value> & FC<Props> = ({
-  value,
-  onChange,
-  label,
-  config
-}) => {
+export const Margin: FC<Props> = ({ value, onChange, label, config }) => {
   const edges = config?.edges ?? "all";
   type E = ToSpacingEdges<typeof edges>;
   const onType = useCallback(
@@ -76,9 +62,3 @@ export const Margin: OptionType<Value> & FC<Props> = ({
     />
   );
 };
-
-Margin.fromElementModel = fromElementModel;
-
-Margin.toElementModel = toElementModel;
-
-Margin.defaultValue = defaultValue;

@@ -181,7 +181,7 @@ describe("Testing 'placeholderObjFromStr' function", () => {
     ["{ test }}"],
     ["a='123' b='456'"],
     ["{ a='123' b='456' }"]
-  ])("Invalid str %#", str => {
+  ])("Invalid str %#", (str) => {
     expect(placeholderObjFromStr(str)).toStrictEqual(undefined);
   });
 
@@ -206,7 +206,11 @@ describe("Testing 'placeholderObjFromStr' function", () => {
       { name: "test", attr: { ac: "1", DC: "z" } }
     ],
     ["{{ a-b-c }}", { name: "a-b-c" }],
-    ["{{ a='123' b='456' }}", { name: "a", attr: { b: "456" } }]
+    ["{{ a='123' b='456' }}", { name: "a", attr: { b: "456" } }],
+    [
+      "{{ a='123' _fallback='test' }}",
+      { name: "a", attr: { _fallback: "test" } }
+    ]
   ])("Valid str %#", (str, expected) => {
     expect(placeholderObjFromStr(str)).toStrictEqual(expected);
   });
@@ -308,6 +312,10 @@ describe("Testing 'placeholderObjToStr' function", () => {
         attr: { x: 777, c: "xxx", b: "abc", a: 123, _fallback: "fb" }
       },
       "{{h_i_j _fallback='fb' a='123' b='abc' c='xxx' x='777'}}"
+    ],
+    [
+      { name: "test", attr: { placeholder: "This is O'reilly book" } },
+      "{{test placeholder='This%20is%20O%27reilly%20book'}}"
     ]
   ])("no. %#", (placeholderObj, expected) => {
     expect(placeholderObjToStr(placeholderObj)).toStrictEqual(expected);

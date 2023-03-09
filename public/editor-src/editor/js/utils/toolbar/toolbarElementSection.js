@@ -1,11 +1,11 @@
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { t } from "visual/utils/i18n";
 import {
   defaultValueKey,
   defaultValueValue,
   saveOnChanges
 } from "visual/utils/onChange";
-import Config from "visual/global/Config";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 
 export function toolbarElementSectionBoxShadow({ v, device, state, onChange }) {
   const boxShadowBlurValue = defaultValueValue({
@@ -26,7 +26,7 @@ export function toolbarElementSectionBoxShadow({ v, device, state, onChange }) {
     id: defaultValueKey({ key: "boxShadow", device, state }),
     type: "multiInput",
     config: {
-      defaultIcon: ["nc-shadow"],
+      defaultIcon: "nc-shadow",
       icons: ["nc-blur", "nc-vertical"]
     },
     value: [boxShadowBlurValue, boxShadowVerticalValue],
@@ -52,19 +52,21 @@ export function toolbarElementSectionSaved({
   disabled = false,
   devices = "all"
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
 
   return {
     devices,
     position,
-    blockType,
     id: dvk("makeItSaved"),
-    type: "savedBlock",
-    icon: "nc-save-section",
     disabled,
-    title: t("Save"),
-    tooltipContent: t("Saved"),
-    value: { blockId: component.getId() }
+    type: "savedBlock-dev",
+    config: {
+      icon: "nc-save-section",
+      blockType,
+      title: t("Save"),
+      tooltipContent: t("Saved"),
+      blockId: component.getId()
+    }
   };
 }
 
@@ -83,22 +85,21 @@ export function toolbarElementSectionGlobal({
   blockType,
   devices = "all"
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
   const componentId = component.getId();
   const config = Config.getAll();
   const disabled = isCloud(config) && isShopify(config);
 
   return {
     devices,
-    blockType,
     id: dvk("makeItGlobal"),
     label: t("Make it Global"),
-    type: "globalBlock",
+    type: "globalBlock-dev",
     disabled,
-    position: 125,
-    value: {
+    config: {
       _id: componentId,
-      parentId: getInstanceParentId(component.props.instanceKey, blockType)
+      parentId: getInstanceParentId(component.props.instanceKey, blockType),
+      blockType
     }
   };
 }

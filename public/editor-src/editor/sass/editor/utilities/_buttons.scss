@@ -12,7 +12,7 @@
   white-space: nowrap;
   transition: all 0.3s ease;
   text-decoration: none;
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   font-size: 14px;
   padding: 12px 18px;
   line-height: 1;
@@ -23,6 +23,7 @@
     outline: 0;
     background-image: none;
   }
+
   &:focus {
     outline: none;
   }
@@ -33,11 +34,13 @@
       margin-left: 10px;
       vertical-align: middle;
     }
+
     span {
       display: inline-block;
       vertical-align: middle;
     }
   }
+
   &-icon--left {
     .brz-icon-svg {
       margin-left: 0;
@@ -72,6 +75,7 @@
 .brz-ed-btn-rounded {
   border-radius: 3px;
 }
+
 .brz-ed-btn-round {
   border-radius: 100px;
 }
@@ -86,33 +90,41 @@
       font-size: 12px;
     }
   }
+
   &.brz-ed-btn--loading {
     font-size: 16px;
     padding-top: 10px;
     padding-bottom: 10px;
   }
 }
+
 .brz-ed-btn-xs {
   font-size: 10px;
   padding: 9px 18px;
 }
+
 .brz-ed-btn-xs-2 {
   font-size: 13px;
   padding: 6px 18px;
   line-height: 1.1;
 }
+
 .brz-ed-btn-full {
   width: 100%;
 }
+
 .brz-ed-btn-width-1 {
   min-width: 130px;
 }
+
 .brz-ed-btn-width-2 {
   min-width: 193px;
 }
+
 .brz-ed-btn-width-3 {
   min-width: 102px;
 }
+
 .brz-ed-btn-width-4 {
   min-width: 116px;
 }
@@ -142,6 +154,7 @@
     background-color: #283337;
   }
 }
+
 .brz-ed-btn-dark-outline {
   color: #3b474b;
   border-color: #3b474b;
@@ -156,14 +169,15 @@
 // Teal
 .brz-ed-btn-teal {
   border-color: transparent !important;
-  background-color: $floating-button-tail !important;
+  background-color: $floating__button__tail-bg !important;
   color: #fff !important;
 
   &:hover {
     border-color: transparent !important;
-    background-color: rgba($floating-button-tail, 0.8) !important;
+    background-color: $floating__button__second__tail-bg !important;
   }
 }
+
 .brz-ed-btn-teal-outline {
   color: #34beea;
   border-color: #34beea;
@@ -178,8 +192,8 @@
 
 // Blue
 .brz-ed-btn-blue {
-  border-color: $floating-button-blue !important;
-  background-color: $floating-button-blue !important;
+  border-color: $floating__button__blue-bg !important;
+  background-color: $floating__button__blue-bg !important;
   color: #fff !important;
 
   &:hover {
@@ -200,6 +214,7 @@
     background-color: #8dc63f;
   }
 }
+
 .brz-ed-btn-green-outline {
   color: #8dc63f;
   border-color: #8dc63f;
@@ -223,6 +238,7 @@
     background-color: rgba(129, 138, 145, 0.8);
   }
 }
+
 .brz-ed-btn-gray-outline {
   color: rgba(#292e37, 0.5);
   border-color: rgba(#292e37, 0.5);
@@ -236,8 +252,8 @@
 
 // Red
 .brz-ed-btn-red {
-  border-color: $floating-button-red;
-  background-color: $floating-button-red;
+  border-color: $floating__button__red-bg;
+  background-color: $floating__button__red-bg;
   color: #fff !important;
 
   &:hover,
@@ -246,6 +262,7 @@
     background-color: #df3c3c;
   }
 }
+
 .brz-ed-btn-red-outline {
   color: #df3c3c;
   border-color: #df3c3c;
@@ -260,7 +277,7 @@
 // PRO
 .brz-ed-btn-pro {
   border-color: transparent;
-  background-color: $brand-primary-pro;
+  background-color: $brand__primary__pro;
   color: #fff;
   font-size: 14px;
   font-weight: 600;
@@ -268,7 +285,7 @@
   &:hover,
   &:focus {
     border-color: transparent;
-    background-color: rgba($brand-primary-pro, 0.8);
+    background-color: rgba($brand__primary__pro, 0.8);
   }
 }
 
@@ -276,10 +293,11 @@
 //
 // Teal
 .brz-ed-btn-teal--hover:hover {
-  border-color: $floating-button-tail !important;
-  background-color: $floating-button-tail !important;
+  border-color: $floating__button__tail-bg !important;
+  background-color: $floating__button__tail-bg !important;
 }
+
 .brz-ed-btn-red--hover:hover {
-  border-color: $floating-button-red !important;
-  background-color: $floating-button-red !important;
+  border-color: $floating__button__red-bg !important;
+  background-color: $floating__button__red-bg !important;
 }

@@ -254,7 +254,7 @@ export function getItems({ v, device, state, context }) {
           tabs: [
             {
               id: "tabNumber",
-              label: t("Nr"),
+              label: t("Nr."),
               options: [
                 {
                   id: "numberColor",

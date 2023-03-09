@@ -7,10 +7,7 @@ import { encodeToString } from "visual/utils/string";
 import {
   toolbarLinkAnchor,
   toolbarLinkExternal,
-  toolbarLinkExternalBlank,
-  toolbarLinkExternalRel,
-  toolbarLinkPopup,
-  toolbarLinkUpload
+  toolbarLinkPopup
 } from "visual/utils/toolbar";
 import getColorToolbar from "./color";
 import { checkTextIncludeTag } from "./utils/checkTextIncludeTag";
@@ -70,6 +67,8 @@ const getItems =
       v.textPopulation
     );
 
+    const disableButtonDynamicTextCapitalize =
+      !v.textPopulation || device !== "desktop";
     const richTextDC = getDynamicContentChoices(
       context.dynamicContent.config,
       DCTypes.richText
@@ -93,7 +92,7 @@ const getItems =
         type: "popover-dev",
         config: {
           icon: "nc-font",
-          size: device === "desktop" ? "large" : "auto",
+          size: device === "desktop" ? "xlarge" : "auto",
           title: t("Typography")
         },
         roles: ["admin"],
@@ -113,11 +112,15 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyParagraph",
-                    type: "grid",
+                    type: "grid-dev",
+                    config: {
+                      separator: true
+                    },
                     columns: [
                       {
-                        width: 95,
-                        vAlign: "center",
+                        id: "col-1",
+                        size: 1,
+                        align: "center",
                         options: [
                           {
                             id: "typography",
@@ -130,12 +133,14 @@ const getItems =
                         ]
                       },
                       {
-                        width: 5,
-                        vAlign: "center",
+                        id: "col-2",
+                        size: "auto",
+                        align: "center",
                         options: [
                           {
                             id: "text",
                             type: "population-dev",
+                            disabled: richTextDC.length === 0,
                             config: {
                               iconOnly: true,
                               choices: richTextDC
@@ -154,12 +159,16 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyH1",
-                    type: "grid",
+                    type: "grid-dev",
+                    config: {
+                      separator: true
+                    },
                     disabled: disableHeadingTags(v, "h1"),
                     columns: [
                       {
-                        width: 95,
-                        vAlign: "center",
+                        id: "col-1",
+                        size: 1,
+                        align: "center",
                         options: [
                           {
                             id: "h1",
@@ -172,12 +181,14 @@ const getItems =
                         ]
                       },
                       {
-                        width: 5,
-                        vAlign: "center",
+                        id: "col-2",
+                        size: "auto",
+                        align: "center",
                         options: [
                           {
                             id: "text",
                             type: "population-dev",
+                            disabled: richTextDC.length === 0,
                             config: {
                               iconOnly: true,
                               choices: richTextDC
@@ -196,12 +207,13 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyH2",
-                    type: "grid",
+                    type: "grid-dev",
                     disabled: disableHeadingTags(v, "h2"),
                     columns: [
                       {
-                        width: 95,
-                        vAlign: "center",
+                        id: "col-1",
+                        size: 1,
+                        align: "center",
                         options: [
                           {
                             id: "h2",
@@ -214,12 +226,14 @@ const getItems =
                         ]
                       },
                       {
-                        width: 5,
-                        vAlign: "center",
+                        id: "col-2",
+                        size: "auto",
+                        align: "center",
                         options: [
                           {
                             id: "text",
                             type: "population-dev",
+                            disabled: richTextDC.length === 0,
                             config: {
                               iconOnly: true,
                               choices: richTextDC
@@ -238,12 +252,13 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyH3",
-                    type: "grid",
+                    type: "grid-dev",
                     disabled: disableHeadingTags(v, "h3"),
                     columns: [
                       {
-                        width: 95,
-                        vAlign: "center",
+                        id: "col-1",
+                        size: 1,
+                        align: "center",
                         options: [
                           {
                             id: "h3",
@@ -256,12 +271,14 @@ const getItems =
                         ]
                       },
                       {
-                        width: 5,
-                        vAlign: "center",
+                        id: "col-2",
+                        size: "auto",
+                        align: "center",
                         options: [
                           {
                             id: "text",
                             type: "population-dev",
+                            disabled: richTextDC.length === 0,
                             config: {
                               iconOnly: true,
                               choices: richTextDC
@@ -280,12 +297,13 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyH4",
-                    type: "grid",
+                    type: "grid-dev",
                     disabled: disableHeadingTags(v, "h4"),
                     columns: [
                       {
-                        width: 95,
-                        vAlign: "center",
+                        id: "col-1",
+                        size: 1,
+                        align: "center",
                         options: [
                           {
                             id: "h4",
@@ -298,12 +316,14 @@ const getItems =
                         ]
                       },
                       {
-                        width: 5,
-                        vAlign: "center",
+                        id: "col-2",
+                        size: "auto",
+                        align: "center",
                         options: [
                           {
                             id: "text",
                             type: "population-dev",
+                            disabled: richTextDC.length === 0,
                             config: {
                               iconOnly: true,
                               choices: richTextDC
@@ -322,12 +342,13 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyH5",
-                    type: "grid",
+                    type: "grid-dev",
                     disabled: disableHeadingTags(v, "h5"),
                     columns: [
                       {
-                        width: 95,
-                        vAlign: "center",
+                        id: "col-1",
+                        size: 1,
+                        align: "center",
                         options: [
                           {
                             id: "h5",
@@ -340,12 +361,14 @@ const getItems =
                         ]
                       },
                       {
-                        width: 5,
-                        vAlign: "center",
+                        id: "col-2",
+                        size: "auto",
+                        align: "center",
                         options: [
                           {
                             id: "text",
                             type: "population-dev",
+                            disabled: richTextDC.length === 0,
                             config: {
                               iconOnly: true,
                               choices: richTextDC
@@ -364,12 +387,13 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyH6",
-                    type: "grid",
+                    type: "grid-dev",
                     disabled: disableHeadingTags(v, "h6"),
                     columns: [
                       {
-                        width: 95,
-                        vAlign: "center",
+                        id: "col-1",
+                        size: 1,
+                        align: "center",
                         options: [
                           {
                             id: "h6",
@@ -382,12 +406,14 @@ const getItems =
                         ]
                       },
                       {
-                        width: 5,
-                        vAlign: "center",
+                        id: "col-2",
+                        size: "auto",
+                        align: "center",
                         options: [
                           {
                             id: "text",
                             type: "population-dev",
+                            disabled: richTextDC.length === 0,
                             config: {
                               iconOnly: true,
                               choices: richTextDC
@@ -403,6 +429,16 @@ const getItems =
             ]
           }
         ]
+      },
+      {
+        id: "dynamicTextCapitalize",
+        type: "button",
+        icon: "nc-tp-capitalize",
+        title: t("Uppercase"),
+        position: 75,
+        disabled: disableButtonDynamicTextCapitalize,
+        value: v.dynamicTextCapitalize === "on",
+        onChange: (value) => ({ dynamicTextCapitalize: value ? "on" : "off" })
       },
       getColorToolbar(
         { ...v, isPopulationBlock },
@@ -513,7 +549,7 @@ const getItems =
         id: "capitalize",
         type: "button",
         icon: "nc-tp-capitalize",
-        title: t("Capitalize"),
+        title: t("Uppercase"),
         position: 75,
         disabled: disableButtons,
         value: v.capitalize,
@@ -582,12 +618,14 @@ const getItems =
                         })
                   },
                   {
-                    ...toolbarLinkExternalBlank({ v }),
+                    id: "linkExternalBlank",
+                    type: "switch-dev",
+                    label: t("Open In New Tab"),
                     disabled: device !== "desktop",
                     ...(v.textPopulation
                       ? {}
                       : {
-                          onChange: (linkExternalBlank) =>
+                          dependencies: ({ linkExternalBlank }) => {
                             onChange({
                               link: encodeToString({
                                 type: v.linkType,
@@ -601,16 +639,19 @@ const getItems =
                                 upload: v.linkUpload,
                                 linkToSlide: v.linkToSlide
                               })
-                            })
+                            });
+                          }
                         })
                   },
                   {
-                    ...toolbarLinkExternalRel({ v }),
+                    id: "linkExternalRel",
+                    type: "switch-dev",
+                    label: t("Make it Nofollow"),
                     disabled: device !== "desktop",
                     ...(v.textPopulation
                       ? {}
                       : {
-                          onChange: (linkExternalRel) =>
+                          dependencies: ({ linkExternalRel }) =>
                             onChange({
                               link: encodeToString({
                                 type: v.linkType,
@@ -667,12 +708,14 @@ const getItems =
                 disabled: device !== "desktop",
                 options: [
                   {
-                    ...toolbarLinkUpload({ v, component }),
+                    id: "linkUpload",
+                    label: t("File"),
+                    type: "fileUpload-dev",
                     disabled: !proEnabled || device !== "desktop",
                     ...(v.textPopulation
                       ? {}
                       : {
-                          onChange: (upload) =>
+                          dependencies: ({ linkUpload }) => {
                             onChange({
                               link: encodeToString({
                                 type: v.linkType,
@@ -683,10 +726,11 @@ const getItems =
                                 externalType: v.linkExternalType,
                                 population: v.linkPopulation,
                                 popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                                upload,
+                                upload: linkUpload,
                                 linkToSlide: v.linkToSlide
                               })
-                            })
+                            });
+                          }
                         })
                   }
                 ]
@@ -833,26 +877,27 @@ const getItems =
             className: "brz-control__select--small",
             disabled: isPopulationBlock,
             choices: [
-              { title: t("P"), value: "p" },
-              { title: t("H1"), value: "h1" },
-              { title: t("H2"), value: "h2" },
-              { title: t("H3"), value: "h3" },
-              { title: t("H4"), value: "h4" },
-              { title: t("H5"), value: "h5" },
-              { title: t("H6"), value: "h6" },
-              { title: t("PRE"), value: "pre" }
+              { title: "P", value: "p" },
+              { title: "H1", value: "h1" },
+              { title: "H2", value: "h2" },
+              { title: "H3", value: "h3" },
+              { title: "H4", value: "h4" },
+              { title: "H5", value: "h5" },
+              { title: "H6", value: "h6" },
+              { title: "PRE", value: "pre" }
             ],
             onChange: (tagName) => onChange(getBlockTag(tagName)),
             value: v.tagName
           },
           {
             id: "grid",
-            type: "grid",
-            separator: true,
+            type: "grid-dev",
+            config: {
+              separator: true
+            },
             columns: [
               {
-                id: "grid-settings",
-                width: 50,
+                size: 1,
                 options: [
                   {
                     id: "styles",
@@ -867,8 +912,7 @@ const getItems =
                 ]
               },
               {
-                id: "grid-effects",
-                width: 50,
+                size: 1,
                 options: [
                   {
                     id: "effects",

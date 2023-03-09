@@ -1,26 +1,25 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { CodeMirror as Control } from "visual/component/Controls/CodeMirror";
-import { useDebouncedEffect } from "visual/component/hooks";
 import * as Option from "visual/component/Options/Type";
+import { useDebouncedEffect } from "visual/component/hooks";
 import {
   WithClassName,
   WithConfig,
   WithPlaceholder,
   WithSize
 } from "visual/utils/options/attributes";
-import { String } from "visual/utils/string/specs";
 
 export type Config = WithSize & {
   language: "html" | "css" | "javascript" | "markdown" | "xml";
 };
 
-export type Model = Option.SimpleValue<string>;
+type Model = Option.SimpleValue<string>;
 export type Props = Option.Props<Model> &
   WithConfig<Config> &
   WithClassName &
   WithPlaceholder;
 
-export const CodeMirror: FC<Props> & Option.OptionType<Model> = ({
+export const CodeMirror: FC<Props> = ({
   className,
   onChange,
   value: { value },
@@ -42,6 +41,7 @@ export const CodeMirror: FC<Props> & Option.OptionType<Model> = ({
     1000,
     [_value]
   );
+
   useEffect(() => {
     if (value !== ref.current) {
       setValue(value);
@@ -68,21 +68,3 @@ export const CodeMirror: FC<Props> & Option.OptionType<Model> = ({
     </>
   );
 };
-
-const getModel: Option.FromElementModel<Model> = (get) => ({
-  value: String.read(get("value"))
-});
-
-const getElementModel: Option.ToElementModel<Model> = (values) => {
-  return {
-    value: values.value
-  };
-};
-
-CodeMirror.defaultValue = {
-  value: ""
-};
-
-CodeMirror.fromElementModel = getModel;
-
-CodeMirror.toElementModel = getElementModel;

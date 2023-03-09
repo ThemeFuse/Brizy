@@ -18,11 +18,11 @@ export default class PromptKeyHelper extends Component {
     const isMac = os === "MacOS";
     const src = isMac
       ? `${assetUrl("editor/img/mac-keyboard1x.png")} 1x , ${assetUrl(
-          "editor/img/mac-keyboard2x.png"
-        )} 2x`
+        "editor/img/mac-keyboard2x.png"
+      )} 2x`
       : `${assetUrl("editor/img/pc-keyboard1x.png")} 1x , ${assetUrl(
-          "editor/img/pc-keyboard2x.png"
-        )} 2x`;
+        "editor/img/pc-keyboard2x.png"
+      )} 2x`;
 
     return (
       <Fixed
@@ -47,7 +47,7 @@ export default class PromptKeyHelper extends Component {
             <div className="brz-ed-hotkeys-combination-container-column">
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd + C" : "Ctrl + C"}
+                  {isMac ? "cmd + C" : "ctrl + C"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Copy")}
@@ -55,7 +55,7 @@ export default class PromptKeyHelper extends Component {
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd + V" : "Ctrl + V"}
+                  {isMac ? "cmd + V" : "ctrl + V"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Paste")}
@@ -63,7 +63,7 @@ export default class PromptKeyHelper extends Component {
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd + shift + V" : "Ctrl + Shift + V"}
+                  {isMac ? "cmd + shift + V" : "ctrl + shift + V"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Paste Style")}
@@ -71,7 +71,7 @@ export default class PromptKeyHelper extends Component {
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd + D" : "Ctrl + D"}
+                  {isMac ? "cmd + D" : "ctrl + D"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Duplicate")}
@@ -79,7 +79,7 @@ export default class PromptKeyHelper extends Component {
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd + delete" : "Delete"}
+                  {isMac ? "cmd + delete" : "ctrl + delete"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Delete")}
@@ -87,12 +87,12 @@ export default class PromptKeyHelper extends Component {
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd +" : "Ctrl +"}
+                  {isMac ? "cmd +" : "ctrl +"}
                   <EditorIcon
                     className="brz-ed-hotkeys-icons"
                     icon="nc-arrow"
                   />
-                  <span className="divider"> / </span>
+                  <span className="divider">/</span>
                   <EditorIcon
                     className="brz-ed-hotkeys-icons brz-ed-deg180"
                     icon="nc-arrow"
@@ -104,12 +104,12 @@ export default class PromptKeyHelper extends Component {
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd +" : "Ctrl +"}
+                  {isMac ? "cmd +" : "ctrl +"}
                   <EditorIcon
                     className="brz-ed-hotkeys-icons brz-ed-deg90"
                     icon="nc-arrow"
                   />
-                  <span className="divider"> / </span>
+                  <span className="divider">/</span>
                   <EditorIcon
                     className="brz-ed-hotkeys-icons brz-ed-deg270"
                     icon="nc-arrow"
@@ -121,7 +121,15 @@ export default class PromptKeyHelper extends Component {
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "esc" : "Esc"}
+                  {isMac ? "cmd + shift + P" : "ctrl + shift + P"}
+                </span>
+                <span className="brz-ed-hotkeys-combination-container-column-label-2">
+                  {t("Preview Page")}
+                </span>
+              </div>
+              <div className="brz-ed-hotkeys-combination-container-column-list">
+                <span className="brz-ed-hotkeys-combination-container-column-label">
+                  {isMac ? "esc" : "esc"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Select Parent Element")}
@@ -131,7 +139,7 @@ export default class PromptKeyHelper extends Component {
             <div className="brz-ed-hotkeys-combination-container-column">
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd + Z" : "Ctrl + Z"}
+                  {isMac ? "cmd + Z" : "ctrl + Z"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Undo")}
@@ -139,7 +147,7 @@ export default class PromptKeyHelper extends Component {
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd + shift + Z" : "Ctrl + Shift + Z"}
+                  {isMac ? "cmd + shift + Z" : "ctrl + shift + Z"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Redo")}
@@ -147,32 +155,32 @@ export default class PromptKeyHelper extends Component {
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd + S" : "Ctrl + S"}
+                  {isMac ? "cmd + S" : "ctrl + S"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  {t("Save Draft / Update Page")}
+                  {t("Save")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd +" : "Ctrl +"}
-                  <EditorIcon
-                    className="brz-ed-hotkeys-icons"
-                    icon="nc-plus2"
-                  />
-                  <span className="divider"> / </span>
+                  {isMac ? "cmd +" : "ctrl +"}
                   <EditorIcon
                     className="brz-ed-hotkeys-icons"
                     icon="nc-minus"
                   />
+                  <span className="divider">/</span>
+                  <EditorIcon
+                    className="brz-ed-hotkeys-icons"
+                    icon="nc-plus2"
+                  />
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
-                  {t("Responsive Zoom In / Out")}
+                  {t("Responsive Zoom Out / In")}
                 </span>
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd +" : "Ctrl +"}
+                  {isMac ? "cmd +" : "ctrl +"}
                   <EditorIcon
                     className="brz-ed-hotkeys-icons"
                     icon="nc-alert-circle-que"
@@ -184,7 +192,7 @@ export default class PromptKeyHelper extends Component {
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd + shift + A" : "Ctrl + Shift + A"}
+                  {isMac ? "cmd + shift + A" : "ctrl + shift + A"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Add New Block / Layout")}
@@ -193,7 +201,7 @@ export default class PromptKeyHelper extends Component {
 
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd + M" : "Ctrl + M"}
+                  {isMac ? "cmd + M" : "ctrl + M"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Styling")}
@@ -201,7 +209,7 @@ export default class PromptKeyHelper extends Component {
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
-                  {isMac ? "cmd + K" : "Ctrl + K"}
+                  {isMac ? "cmd + K" : "ctrl + K"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Effects")}

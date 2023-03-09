@@ -1,0 +1,51 @@
+.brz-sermonFeatured {
+  overflow: hidden;
+  &__item {
+    & > * {
+      margin: 0;
+    }
+
+    &--meta--title {
+      a {
+        color: inherit;
+      }
+    }
+
+    &--media {
+      width: 100%;
+
+      &--container {
+        width: 100%;
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 0;
+        height: 0;
+        overflow: hidden;
+
+        &:active {
+          pointer-events: none;
+        }
+
+        iframe,
+        video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: 0 !important;
+        }
+      }
+
+      &--links {
+        display: flex;
+        gap: 10px;
+        padding: 0;
+      }
+    }
+
+    li {
+      list-style: none;
+    }
+  }
+}

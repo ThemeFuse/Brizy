@@ -116,6 +116,9 @@ export default function ($node) {
     .find(
       ".brz-simple-popup, .brz-conditions-internal-popup, .brz-conditions-external-popup"
     )
+    .filter(function () {
+      return !($(this).attr("data-brz-embedded") === "true");
+    })
     .each(function () {
       const $this = $(this);
 
@@ -128,6 +131,7 @@ export default function ($node) {
           const clickedOutSideToClose = $this.attr(
             "data-click_outside_to_close"
           );
+
           const clickedOutSideContent =
             $(e.target).closest(".brz-container").length === 0;
           const clickedTheCross = $(e.target).closest(

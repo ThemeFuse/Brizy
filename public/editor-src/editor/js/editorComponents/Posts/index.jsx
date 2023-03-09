@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import React from "react";
-import { from, Subject } from "rxjs";
+import { Subject, from } from "rxjs";
 import {
   debounceTime,
   distinctUntilChanged,
@@ -28,9 +28,9 @@ import { getPostsSourceRefs } from "visual/utils/api";
 import { css } from "visual/utils/cssStyle";
 import { tabletSyncOnChange } from "visual/utils/onChange";
 import * as json from "visual/utils/reader/json";
+import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
-import Items from "./Items";
 import { migrations } from "./migrations";
 import * as sidebarExtendFilter from "./sidebarExtendFilter";
 import * as sidebarExtendPagination from "./sidebarExtendPagination";

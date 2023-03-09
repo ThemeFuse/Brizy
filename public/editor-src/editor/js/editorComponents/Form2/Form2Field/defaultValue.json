@@ -23,24 +23,17 @@
   "style": {
     "width": 100,
     "widthSuffix": "%",
-    
+
     "height": 165,
-    "heightSuffix": null,
+    "heightSuffix": "px",
+
     "min": "",
     "max": "",
 
     "columns": 1,
 
     "tabletColumns": null,
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-    "tabletHeight": null,
-    "tabletHeightSuffix": null,
 
-    "mobileColumns": null,
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
-    "mobileHeight": null,
-    "mobileHeightSuffix": null
+    "mobileColumns": null
   }
 }

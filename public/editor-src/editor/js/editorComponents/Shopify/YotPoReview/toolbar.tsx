@@ -53,7 +53,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
         },
         {
           id: "appKey",
-          label: t("AppKey"),
+          label: t("Application Key"),
           type: "inputText-dev",
           disabled: reviewType !== "bottomLine",
           placeholder: t("Insert AppKey"),

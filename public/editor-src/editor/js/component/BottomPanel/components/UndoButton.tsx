@@ -24,7 +24,7 @@ export const UndoButton: React.FC = () => {
         paddingSize="medium"
         active={canUndo}
         pointer={canUndo}
-        title="Undo (CTRL+Z)"
+        title="Undo (ctrl+Z)"
         onClick={handleUndo}
       >
         <EditorIcon icon="nc-undo" />

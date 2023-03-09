@@ -155,7 +155,7 @@ const pageCurtain = window.parent.document.querySelector(
 
                 res({ ...pageHTML, pageData, projectData });
               } catch (e) {
-                showError({ e });
+                showError(e);
               }
             })();
           }
@@ -179,6 +179,6 @@ const pageCurtain = window.parent.document.querySelector(
       }
     );
   } catch (e) {
-    showError({ e, container: pageCurtain, hideAfter: 0 });
+    showError(e, 0);
   }
 })();

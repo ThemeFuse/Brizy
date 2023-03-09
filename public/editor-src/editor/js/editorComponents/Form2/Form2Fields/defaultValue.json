@@ -14,14 +14,8 @@
   "style": {
     "families": {
       "fontFamily": "lato",
-      "tabletFontFamily": null,
-      "mobileFontFamily": null,
       "labelFontFamily": "lato",
-      "tabletLabelFontFamily": null,
-      "mobileLabelFontFamily": null,
-      "checkboxFontFamily": "lato",
-      "tabletCheckboxFontFamily": null,
-      "mobileCheckboxFontFamily": null
+      "checkboxFontFamily": "lato"
     },
 
     "size": "medium",
@@ -169,13 +163,6 @@
     "tempColorOpacity": 0.7,
     "tempColorPalette": "",
 
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
-
     "checkboxColorHex": "#73777f",
     "checkboxColorOpacity": 0.7,
     "checkboxColorPalette": "",
@@ -198,16 +185,7 @@
     "tempSelectColorOpacity": 0.7,
     "tempSelectColorPalette": "",
 
-    "hoverSelectColorHex": null,
-    "hoverSelectColorOpacity": null,
-    "hoverSelectColorPalette": null,
-
-    "tempHoverSelectColorOpacity": null,
-    "tempHoverSelectColorPalette": null,
-
     "selectBgColorType": "solid",
-
-    "hoverSelectBgColorType": null,
 
     "selectBgColorHex": "#ffffff",
     "selectBgColorOpacity": 1,
@@ -215,13 +193,6 @@
 
     "tempSelectBgColorOpacity": 1,
     "tempSelectBgColorPalette": "",
-
-    "hoverSelectBgColorHex": null,
-    "hoverSelectBgColorOpacity": null,
-    "hoverSelectBgColorPalette": null,
-
-    "tempHoverSelectBgColorOpacity": null,
-    "tempHoverSelectBgColorPalette": null,
 
     "selectBoxShadow": "",
 
@@ -244,27 +215,6 @@
     "tempSelectBoxShadowVertical": 2,
     "tempSelectBoxShadowHorizontal": 1,
 
-    "hoverSelectBoxShadow": null,
-
-    "tempHoverSelectBoxShadow": null,
-
-    "hoverSelectBoxShadowColorHex": null,
-    "hoverSelectBoxShadowColorOpacity": null,
-    "hoverSelectBoxShadowColorPalette": null,
-
-    "tempHoverSelectBoxShadowColorPalette": null,
-    "tempHoverSelectBoxShadowColorOpacity": null,
-
-    "hoverSelectBoxShadowBlur": null,
-    "hoverSelectBoxShadowSpread": null,
-    "hoverSelectBoxShadowVertical": null,
-    "hoverSelectBoxShadowHorizontal": null,
-
-    "tempHoverSelectBoxShadowBlur": null,
-    "tempHoverSelectBoxShadowSpread": null,
-    "tempHoverSelectBoxShadowVertical": null,
-    "tempHoverSelectBoxShadowHorizontal": null,
-
     "selectBorderColorHex": "#dcdee1",
     "selectBorderColorOpacity": 1,
     "selectBorderColorPalette": "",
@@ -272,20 +222,9 @@
     "tempSelectBorderColorOpacity": 1,
     "tempSelectBorderColorPalette": "",
 
-    "hoverSelectBorderColorHex": null,
-    "hoverSelectBorderColorOpacity": null,
-    "hoverSelectBorderColorPalette": null,
-
-    "tempHoverSelectBorderColorOpacity": null,
-    "tempHoverSelectBorderColorPalette": null,
-
     "selectBorderStyle": "solid",
 
     "tempSelectBorderStyle": "solid",
-
-    "hoverSelectBorderStyle": null,
-
-    "tempHoverSelectBorderStyle": null,
 
     "selectBorderWidthType": "grouped",
     "selectBorderWidth": 1,
@@ -334,30 +273,7 @@
     "tempBoxShadowVertical": 2,
     "tempBoxShadowHorizontal": 1,
 
-    "hoverBoxShadow": null,
-
-    "tempHoverBoxShadow": null,
-
-    "hoverBoxShadowColorHex": null,
-    "hoverBoxShadowColorOpacity": null,
-    "hoverBoxShadowColorPalette": null,
-
-    "tempHoverBoxShadowColorPalette": null,
-    "tempHoverBoxShadowColorOpacity": null,
-
-    "hoverBoxShadowBlur": null,
-    "hoverBoxShadowSpread": null,
-    "hoverBoxShadowVertical": null,
-    "hoverBoxShadowHorizontal": null,
-
-    "tempHoverBoxShadowBlur": null,
-    "tempHoverBoxShadowSpread": null,
-    "tempHoverBoxShadowVertical": null,
-    "tempHoverBoxShadowHorizontal": null,
-
     "bgColorType": "solid",
-
-    "hoverBgColorType": null,
 
     "bgColorHex": "#ffffff",
     "bgColorOpacity": 1,
@@ -366,20 +282,9 @@
     "tempBgColorOpacity": 1,
     "tempBgColorPalette": "",
 
-    "hoverBgColorHex": null,
-    "hoverBgColorOpacity": null,
-    "hoverBgColorPalette": null,
-
-    "tempHoverBgColorOpacity": null,
-    "tempHoverBgColorPalette": null,
-
     "borderStyle": "solid",
 
     "tempBorderStyle": "solid",
-
-    "hoverBorderStyle": null,
-
-    "tempHoverBorderStyle": null,
 
     "borderWidthType": "grouped",
     "borderWidth": 1,
@@ -426,13 +331,6 @@
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "",
 
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-
-    "tempHoverBorderColorOpacity": null,
-    "tempHoverBorderColorPalette": null,
-
     "hoverTransition": 50,
 
     "tabletSize": "medium",
@@ -441,7 +339,6 @@
     "tabletSizeMediumPadding": 14,
     "tabletSizeSmallPadding": 10,
 
-    "tabletLabelFontFamilyType": null,
     "tabletLabelFontStyle": "",
     "tabletLabelFontSize": 14,
     "tabletLabelFontSizeSuffix": "px",
@@ -449,9 +346,6 @@
     "tabletLabelFontWeight": 400,
     "tabletLabelLetterSpacing": 0,
 
-    "tabletLabelHorizontalAlign": null,
-
-    "tabletFontFamilyType": null,
     "tabletFontStyle": "",
     "tabletFontSize": 14,
     "tabletFontSizeSuffix": "px",
@@ -459,7 +353,6 @@
     "tabletLetterSpacing": 0,
     "tabletFontWeight": 400,
 
-    "tabletCheckboxFontFamilyType": null,
     "tabletCheckboxFontStyle": "",
     "tabletCheckboxFontSize": 14,
     "tabletCheckboxFontSizeSuffix": "px",
@@ -580,7 +473,6 @@
     "mobileSizeMediumPadding": 14,
     "mobileSizeSmallPadding": 10,
 
-    "mobileLabelFontFamilyType": null,
     "mobileLabelFontStyle": "",
     "mobileLabelFontSize": 14,
     "mobileLabelFontSizeSuffix": "px",
@@ -588,9 +480,6 @@
     "mobileLabelFontWeight": 400,
     "mobileLabelLetterSpacing": 0,
 
-    "mobileLabelHorizontalAlign": null,
-
-    "mobileFontFamilyType": null,
     "mobileFontStyle": "",
     "mobileFontSize": 14,
     "mobileFontSizeSuffix": "px",
@@ -598,7 +487,6 @@
     "mobileFontWeight": 400,
     "mobileLetterSpacing": 0,
 
-    "mobileCheckboxFontFamilyType": null,
     "mobileCheckboxFontStyle": "",
     "mobileCheckboxFontSize": 14,
     "mobileCheckboxFontSizeSuffix": "px",

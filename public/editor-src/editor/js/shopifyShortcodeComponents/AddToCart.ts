@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 
 export default {
   id: "AddToCart",
-  title: t("Add to Cart"),
+  title: t("Add to cart"),
   icon: "nc-woo-add-to-cart",
   resolve: {
     type: "Wrapper",

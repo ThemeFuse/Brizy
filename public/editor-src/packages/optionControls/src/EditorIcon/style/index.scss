@@ -1,0 +1,39 @@
+.brz-icon-svg {
+  @apply inline-block;
+  @apply w-[1em];
+  @apply h-[1em];
+  @apply stroke-none;
+  @apply max-w-none;
+  @apply relative;
+  @apply fill-current;
+  @apply text-[currentColor];
+
+  use {
+    /* change 'inherit' to a color value if you want to add a secondary color to Nucleo icons */
+    @apply fill-inherit;
+  }
+  path {
+    @apply transition-none;
+  }
+
+  &.grid-16 {
+    @apply h-[16px];
+    @apply w-[16px];
+  }
+  &.grid-24 {
+    @apply h-[24px];
+    @apply w-[24px];
+  }
+  &.glyph {
+    @apply fill-current;
+    @apply stroke-none;
+  }
+  &.outline {
+    @apply stroke-current;
+    @apply fill-none;
+
+    &.stroke-2 {
+      @apply stroke-[2px];
+    }
+  }
+}

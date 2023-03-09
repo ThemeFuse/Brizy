@@ -17,7 +17,7 @@ const getItems: ContextGetItems<Value> = (_, component) => {
           id: "remove",
           type: "button",
           title: t("Delete"),
-          helperText: () => (isMac ? "⌘ + delete" : "Delete"),
+          helperText: () => (isMac ? "⌘ + delete" : "ctrl + delete"),
           onChange: () => {
             hideToolbar();
             component.selfDestruct();

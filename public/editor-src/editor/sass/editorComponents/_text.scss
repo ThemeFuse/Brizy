@@ -118,10 +118,6 @@
     }
   }
 
-  .link--external {
-    text-decoration: $link-is-not-empty;
-  }
-
   .brz-tp__dc-block {
     @include clearfix;
   }

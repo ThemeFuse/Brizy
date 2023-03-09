@@ -1,17 +1,17 @@
-import { Effect, EffectValue } from "./Value";
 import { ElementModel } from "visual/component/Elements/Types";
-import { flattenObject } from "visual/component/Options/types/dev/Motion/utils";
-import * as Vertical from "visual/component/Options/types/dev/Motion/types/Vertical";
-import * as Horizontal from "visual/component/Options/types/dev/Motion/types/Horizontal";
-import * as Transparency from "visual/component/Options/types/dev/Motion/types/Transparency";
 import * as Blur from "visual/component/Options/types/dev/Motion/types/Blur";
+import * as Horizontal from "visual/component/Options/types/dev/Motion/types/Horizontal";
+import * as Tilt from "visual/component/Options/types/dev/Motion/types/MouseTilt";
+import * as MouseTrack from "visual/component/Options/types/dev/Motion/types/MouseTrack";
 import * as Rotate from "visual/component/Options/types/dev/Motion/types/Rotate";
 import * as Scale from "visual/component/Options/types/dev/Motion/types/Scale";
-import * as MouseTrack from "visual/component/Options/types/dev/Motion/types/MouseTrack";
-import * as Tilt from "visual/component/Options/types/dev/Motion/types/MouseTilt";
+import * as Transparency from "visual/component/Options/types/dev/Motion/types/Transparency";
+import * as Vertical from "visual/component/Options/types/dev/Motion/types/Vertical";
+import { flattenObject } from "visual/component/Options/types/dev/Motion/utils";
 import { capByPrefix } from "visual/utils/string";
+import { Effect, EffectValue } from "./Value";
 
-enum Type {
+export enum Type {
   active = "active",
   enable = "enable",
   effect = "effect"

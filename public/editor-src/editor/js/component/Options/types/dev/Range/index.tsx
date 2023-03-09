@@ -1,13 +1,9 @@
 import React, { FC, useCallback } from "react";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import {
-  Props as OptionProps,
-  OptionType
-} from "visual/component/Options/Type";
+import { Props as OptionProps } from "visual/component/Options/Type";
 import { RangeSlider as Control } from "visual/component/Controls/RangeSlider";
 import { useThrottleOnChange } from "visual/component/hooks";
 import { Value, eq } from "./types/Value";
-import * as Converters from "./converters";
 
 export type Config = {
   min?: number;
@@ -21,7 +17,7 @@ export type Config = {
 
 export type Props = OptionProps<Value> & WithConfig<Config> & WithClassName;
 
-export const Range: FC<Props> & OptionType<Value> = ({
+export const Range: FC<Props> = ({
   className,
   onChange,
   value,
@@ -63,7 +59,3 @@ export const Range: FC<Props> & OptionType<Value> = ({
     </>
   );
 };
-
-Range.defaultValue = Converters.defaultValue;
-Range.fromElementModel = Converters.fromElementModel;
-Range.toElementModel = Converters.toElementModel;

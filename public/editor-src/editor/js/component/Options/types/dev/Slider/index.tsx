@@ -1,11 +1,9 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import * as Option from "visual/component/Options/Type";
 import { NumberSlider } from "visual/component/Controls/NumberSlider";
-import { NumberSpec } from "visual/utils/math/number";
-import { useThrottleEffect } from "visual/component/hooks";
-import { String } from "visual/utils/string/specs";
 import { Unit } from "visual/component/Controls/NumberUnit/types";
+import * as Option from "visual/component/Options/Type";
+import { useThrottleEffect } from "visual/component/hooks";
+import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 import { Value, eq } from "./types/Value";
 
 export type Config = {
@@ -21,7 +19,7 @@ export type Config = {
 
 export type Props = Option.Props<Value> & WithConfig<Config> & WithClassName;
 
-export const Slider: FC<Props> & Option.OptionType<Value> = ({
+export const Slider: FC<Props> = ({
   className,
   onChange,
   value,
@@ -76,27 +74,4 @@ export const Slider: FC<Props> & Option.OptionType<Value> = ({
       />
     </>
   );
-};
-
-const getModel: Option.FromElementModel<Value> = get => {
-  return {
-    value: NumberSpec.read(get("value")),
-    unit: String.read(get("suffix"))
-  };
-};
-
-const getElementModel: Option.ToElementModel<Value> = values => {
-  return {
-    value: values.value,
-    suffix: values.unit
-  };
-};
-
-Slider.fromElementModel = getModel;
-
-Slider.toElementModel = getElementModel;
-
-Slider.defaultValue = {
-  value: 0,
-  unit: ""
 };

@@ -1,4 +1,3 @@
-@use "sass:math";
 @import "../../variables";
 
 // Grid
@@ -15,25 +14,19 @@
       &-start {
         justify-content: flex-start;
       }
+
       &-center {
         justify-content: center;
       }
+
       &-end {
         justify-content: flex-end;
       }
     }
 
-    & > * {
+    &>* {
       flex: none;
     }
-  }
-
-  .brz-ed-control__grid__column:first-child {
-    padding-right: math.div($options-item-padding, 2);
-  }
-
-  .brz-ed-control__grid__column:not(:first-child) {
-    padding-left: math.div($options-item-padding, 2);
   }
 
   .brz-ed-control__grid__column:first-child:last-child {
@@ -46,7 +39,7 @@
     position: absolute;
     content: "";
     height: 100%;
-    border-left: 1px solid $brand-options-border;
+    border-left: 1px solid $brand__options-border;
     left: 0;
   }
 }

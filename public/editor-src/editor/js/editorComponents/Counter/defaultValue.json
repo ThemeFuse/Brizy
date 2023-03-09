@@ -2,9 +2,12 @@
   "content": {
     "start": 0,
     "startPopulation": "",
+    "startPopulationFallback2": null,
+
 
     "end": 100,
     "endPopulation": "",
+    "endPopulationFallback2": null,
 
     "duration": 2,
     "durationSuffix": "",

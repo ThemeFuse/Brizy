@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Switch } from "visual/component/Controls/Switch2";
+import { Switch } from "visual/component/Controls/Switch";
 import { OptionLabel } from "visual/component/OptionLabel";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 

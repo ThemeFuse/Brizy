@@ -13,7 +13,7 @@
     margin-left: auto;
     width: auto;
 
-    &--linear + .brz-ed-control__backgroundColor--degree {
+    &--linear+.brz-ed-control__backgroundColor--degree {
       position: relative;
 
       &:after {
@@ -22,7 +22,7 @@
         width: 5px;
         height: 5px;
         display: block;
-        border: 1px solid $options-label-color;
+        border: 1px solid $options__label-color;
         border-radius: 100%;
         top: 1px;
         right: -3px;
@@ -43,7 +43,7 @@
 
       .brz-ed-rc-slider-handle {
         background-color: transparent;
-        border: solid 3px $color-gradient-range-slider-pointer--border;
+        border: solid 3px $gradient__range__slider__pointer-border;
 
         &:before,
         &:after {
@@ -55,10 +55,10 @@
           position: absolute;
           width: 0;
           height: 0;
-          border: solid 4px $color-gradient-range-slider-pointer--border;
+          border: solid 4px $gradient__range__slider__pointer-border;
           top: 2px;
           border-radius: 100%;
-          box-shadow: 0 0 3px 0 $color-gradient-range-slider-pointer--border;
+          box-shadow: 0 0 3px 0 $gradient__range__slider__pointer-border;
         }
       }
     }

@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as Option from "visual/component/Options/Type";
+import { Props as OptionProps } from "visual/component/Options/Type";
 import Options from "visual/component/Options";
 import { RightSidebarTabs as Control } from "visual/component/Controls/RightSidebarTabs";
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
@@ -10,16 +10,14 @@ import { uiSelector } from "visual/redux/selectors-new";
 import { prop } from "visual/utils/object/get";
 import { updateUI } from "visual/redux/actions2";
 import { nextAlign } from "./utils";
-import { ElementModel } from "visual/component/Elements/Types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { withTabs } from "visual/component/Options/utils/filters";
 
 export interface Tab {
   id: string;
   title: string;
 }
 
-export interface Props extends Option.Props<undefined> {
+export interface Props extends OptionProps<undefined> {
   tabs: (WithId<string> &
     WithClassName & {
       title?: string;
@@ -31,9 +29,7 @@ export interface Props extends Option.Props<undefined> {
 
 const selector = pipe(uiSelector, prop("rightSidebar"));
 
-export const SidebarTabs: FC<Props> &
-  Option.OptionType<undefined> &
-  Option.SelfFilter<"sidebarTabs-dev"> = ({ tabs, toolbar }) => {
+export const SidebarTabs: FC<Props> = ({ tabs, toolbar }) => {
   const { alignment, lock, isOpen, activeTab } = useSelector(selector);
   const dispatch = useDispatch();
   const onLock = useCallback(
@@ -86,17 +82,3 @@ export const SidebarTabs: FC<Props> &
     </Control>
   );
 };
-
-// @ts-expect-error: Variable 'defaultValue' implicitly has an 'any' type.
-SidebarTabs.defaultValue = undefined;
-SidebarTabs.fromElementModel = (): undefined => undefined;
-SidebarTabs.toElementModel = (): ElementModel => ({});
-SidebarTabs.filter = withTabs;
-
-SidebarTabs.reduce = (fn, t0, item) =>
-  item.tabs?.reduce((acc, { options }) => options.reduce(fn, acc), t0) ?? t0;
-
-SidebarTabs.map = (fn, item) => ({
-  ...item,
-  tabs: item.tabs?.map(tab => ({ ...tab, options: tab.options.map(fn) }))
-});

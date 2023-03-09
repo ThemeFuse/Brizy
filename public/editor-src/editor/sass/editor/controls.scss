@@ -5,7 +5,6 @@
 
 // Switch
 @import "controls/switch";
-@import "controls/switch2";
 
 // Range UI Slider
 @import "controls/slider";
@@ -120,3 +119,12 @@
 
 // RangeSlider
 @import "controls/range-slider";
+
+// FileUpload
+@import "controls/file-upload";
+
+// PromptForm
+@import "controls/_promptForm.scss";
+
+// Internal Link
+@import "controls/internalLink";

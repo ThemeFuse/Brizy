@@ -136,7 +136,7 @@ export type GetPosts = (data?: {
   postType?: string[];
   excludePostType?: string[];
   abortSignal?: AbortSignal;
-}) => Promise<{ ID: number; title: string }[]>;
+}) => Promise<{ ID: number; title: string; permalink: string }[]>;
 
 export type GetPostTaxonomies = (data: {
   taxonomy: string;

@@ -17,7 +17,7 @@ export const getItems = (): ToolbarItemType[] => {
           id: "embededCode",
           label: t("Trusted's embed code"),
           type: "inputText-dev",
-          placeholder: t("<div class='trusted-...'")
+          placeholder: "<div class='trusted-...'"
         }
       ]
     },

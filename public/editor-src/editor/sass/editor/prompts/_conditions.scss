@@ -5,10 +5,10 @@
 
 .brz-ed-option__popup_conditions {
   min-height: 0 !important;
-  color: #3dbfe8;
+  color: $right_toolbar__display__condition-color;
   transition: color 0.2s linear;
   cursor: pointer;
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   font-size: 13px;
   font-weight: 600;
   padding-top: 15px;
@@ -23,10 +23,10 @@
     width: 19px;
     height: 19px;
     border-radius: 50%;
-    background-color: #3dbfe8;
-    color: #03080f;
+    background-color: $right_toolbar__display__condition__icon-bg;
+    color: $right_toolbar__display__condition__icon-color;
     transition: background-color 0.2s linear;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: 12px;
     font-weight: 600;
     line-height: 14px;
@@ -38,10 +38,10 @@
   }
 
   &:hover {
-    color: #fff !important;
+    color: $right_toolbar__display__condition-color--hover !important;
 
     .brz-ed-option__popup_conditions-count {
-      background-color: #fff;
+      background-color: $right_toolbar__display__condition__icon-bg--hover;
     }
   }
 }
@@ -75,13 +75,14 @@
       }
     }
   }
+
   &__add-condition {
     display: flex;
     align-items: center;
     padding: 15px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     color: #818a91;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: 15px;
     font-weight: 600;
     line-height: 18px;
@@ -90,14 +91,17 @@
     &:hover {
       color: #2b3039;
     }
+
     &:first-child {
       margin-top: 10px;
       border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
+
     .brz-icon-svg {
       margin-right: 8px;
     }
   }
+
   &__remove {
     margin-left: auto;
     cursor: pointer;
@@ -107,27 +111,30 @@
       color: #2b3039;
     }
   }
+
   &__head * {
     margin: 0 0 22px;
     color: #2b3039;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: 13px;
     font-weight: bold;
     letter-spacing: 0.5px;
     line-height: 16px;
   }
+
   &__trigger-once {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-bottom: 15px;
     color: #818a91;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: 15px;
     font-weight: 600;
     line-height: 18px;
     cursor: pointer;
   }
+
   .brz-ed-popup-conditions__type {
     display: flex;
     align-items: center;
@@ -142,7 +149,7 @@
       display: flex;
       align-items: center;
       color: #fff;
-      font-family: $font-family-1;
+      font-family: $default-font-family;
       line-height: 1;
       font-size: 14px;
       font-weight: 600;
@@ -152,30 +159,36 @@
         margin-right: 10px;
       }
     }
+
     &-include {
       .brz-ed-popup-conditions__type-text {
         background-color: #3dbfe8;
+
         &:hover {
           background-color: #31a7cd;
         }
       }
     }
+
     &-exclude {
       .brz-ed-popup-conditions__type-text {
-        background-color: $brand-primary-pro;
+        background-color: $brand__primary__pro;
+
         &:hover {
           background-color: #c12659;
         }
       }
     }
   }
+
   &__select {
     flex: 1;
     margin-right: 21px;
 
-    & > .brz-ed-popup-conditions__select {
+    &>.brz-ed-popup-conditions__select {
       margin-right: 0;
     }
+
     .brz-control__select {
       flex: 1;
       margin-right: 10px;
@@ -183,6 +196,7 @@
       &:last-child {
         margin-right: 0;
       }
+
       &-current {
         background: #fff;
 
@@ -190,18 +204,22 @@
           background: #fff;
         }
       }
+
       &-option {
         color: rgba(#2b3039, 0.85);
       }
+
       &-options {
         background: #fff;
         width: 170px;
       }
+
       &-optgroup {
         border-bottom: 1px solid #e6e6e6;
       }
     }
   }
+
   &__buttons {
     margin-top: 20px;
     display: flex;
@@ -212,7 +230,7 @@
       min-width: 102px;
       border-radius: 3px;
       color: #fff;
-      font-family: $font-family-1;
+      font-family: $default-font-family;
       font-size: 14px;
       font-weight: 600;
       border: 0;
@@ -226,24 +244,28 @@
       &__cancel {
         background-color: rgba(43, 48, 57, 0.5);
       }
+
       &__save {
         background-color: #3dbfe8;
       }
     }
   }
+
   & .brz-input {
     width: 100%;
     border-radius: 3px;
     border: 0;
     padding: 7px 10px;
     color: #2b3039;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: 13px;
     outline: none;
   }
+
   .brz-ed-scroll-inner {
     border-right-width: 0 !important;
   }
+
   .brz-ed-tall-track {
     right: 0 !important;
   }

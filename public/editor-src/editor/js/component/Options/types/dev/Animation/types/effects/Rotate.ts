@@ -81,12 +81,12 @@ export const getDirectionTitle = (v: Direction): string => {
     case Direction.none:
       return t("None");
     case Direction.upRight:
-      return t("UpRight");
+      return t("Up Right");
     case Direction.upLeft:
-      return t("UpLeft");
+      return t("Up Left");
     case Direction.downLeft:
-      return t("DownLeft");
+      return t("Down Left");
     case Direction.downRight:
-      return t("DownRight");
+      return t("Down Right");
   }
 };

@@ -1,27 +1,27 @@
+import { mPipe } from "fp-utilities";
 import React, { JSXElementConstructor, useCallback, useMemo } from "react";
+import { NumberSlider } from "visual/component/Controls/NumberSlider";
+import { OptionLabel } from "visual/component/OptionLabel";
+import { OptionWrapper } from "visual/component/OptionWrapper";
+import { OnChange } from "visual/component/Options/Type";
+import { useDebouncedOnChange } from "visual/component/hooks";
+import { t } from "visual/utils/i18n";
+import { EffectProps } from "../types/EffectProps";
 import {
   Direction as ScaleDirection,
   Scale as V,
   XPosition,
   YPosition
 } from "../types/Scale";
-import { EffectProps } from "../types/EffectProps";
-import { t } from "visual/utils/i18n";
-import { OnChange } from "visual/component/Options/Type";
+import * as Speed from "../types/utils/Speed";
 import { Direction, Props } from "./Direction";
 import { Viewport } from "./Viewport";
-import { OptionLabel } from "visual/component/OptionLabel";
-import { NumberSlider } from "visual/component/Controls/NumberSlider";
-import { OptionWrapper } from "visual/component/OptionWrapper";
-import { mPipe } from "fp-utilities";
-import * as Speed from "../types/utils/Speed";
-import { useDebouncedOnChange } from "visual/component/hooks";
 
 const directionTitle: { [k in ScaleDirection]: string } = {
   up: t("Up"),
   down: t("Down"),
-  downUp: t("DownUp"),
-  upDown: t("UpDown")
+  downUp: t("Down Up"),
+  upDown: t("Up Down")
 };
 
 const xPositionTitle: { [k in XPosition]: string } = {
@@ -41,20 +41,20 @@ export const Scale: JSXElementConstructor<EffectProps<V>> = ({
   onChange
 }) => {
   const onDirectionChange = useCallback<OnChange<V["direction"]>>(
-    direction => onChange({ ...value, direction }),
+    (direction) => onChange({ ...value, direction }),
     [value, onChange]
   );
   const onXChange = useCallback<OnChange<V["x"]>>(
-    x => onChange({ ...value, x }),
+    (x) => onChange({ ...value, x }),
     [value, onChange]
   );
   const onYChange = useCallback<OnChange<V["y"]>>(
-    y => onChange({ ...value, y }),
+    (y) => onChange({ ...value, y }),
     [value, onChange]
   );
 
   const onSpeedChange = useCallback(
-    mPipe(Speed.fromNumber, speed => onChange({ ...value, speed })),
+    mPipe(Speed.fromNumber, (speed) => onChange({ ...value, speed })),
     [value, onChange]
   );
 
@@ -65,7 +65,7 @@ export const Scale: JSXElementConstructor<EffectProps<V>> = ({
   );
 
   const onViewportChange = useCallback<OnChange<V["viewport"]>>(
-    viewport => onChange({ ...value, viewport }),
+    (viewport) => onChange({ ...value, viewport }),
     [value, onChange]
   );
   const directions = useMemo<Props<V["direction"]>["directions"]>(

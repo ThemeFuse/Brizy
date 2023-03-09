@@ -105,4 +105,13 @@
     max-width: none;
     max-height: none;
   }
+
+  div
+    .bundle_form
+    .cart
+    .bundle_wrap
+    .bundle_button
+    .single_add_to_cart_button.bundle_add_to_cart_button {
+    width: max-content;
+  }
 }

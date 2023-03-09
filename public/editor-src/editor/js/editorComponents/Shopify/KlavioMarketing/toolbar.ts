@@ -16,7 +16,7 @@ export const getItems = (): ToolbarItemType[] => {
         {
           id: "formID",
           type: "inputText-dev",
-          label: t("Embed FormID"),
+          label: t("Embed Form Id"),
           placeholder: "Enter form code"
         }
       ]

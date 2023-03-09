@@ -1,12 +1,12 @@
-import { ToElementModel } from "visual/component/Options/Type";
+import { ElementModel } from "visual/component/Elements/Types";
 import { mPipe } from "visual/utils/fp";
-import * as Num from "visual/utils/math/number";
 import * as Positive from "visual/utils/math/Positive";
+import * as Num from "visual/utils/math/number";
 import { or, parseStrict } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/string/specs";
 import { IsEqual } from "visual/utils/types/Eq";
-import { call, Get } from "../utils";
-import { fromString, LegacyEffectType } from "./LegacyEffectType";
+import { Get, call } from "../utils";
+import { LegacyEffectType, fromString } from "./LegacyEffectType";
 
 export type LegacyModel = {
   name: LegacyEffectType;
@@ -34,7 +34,7 @@ export const fromElementModel = parseStrict<Get, LegacyModel>({
   ])
 });
 
-export const toElementModel: ToElementModel<LegacyModel> = (v) => {
+export const toElementModel = (v: LegacyModel): ElementModel => {
   return {
     name: v.name,
     duration: v.duration,

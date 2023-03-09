@@ -112,25 +112,25 @@
 
 // Colors
 .brz-ed-border--grey > .brz-ed-border__button {
-  background-color: $by-block-border-grey;
+  background-color: $by__block__border__grey;
 }
 .brz-ed-border--blue > .brz-ed-border__button {
-  background-color: $by-block-border-blue;
+  background-color: $by__block__border__blue;
 }
 .brz-ed-border--red > .brz-ed-border__button {
-  background-color: $by-block-border-red;
+  background-color: $by__block__border__red;
 }
 .brz-ed-border:hover,
 .brz-ed-border--hovered,
 .brz-ed-border--active {
   &.brz-ed-border--grey > .brz-ed-border__inner {
-    border-color: $by-block-border-grey;
+    border-color: $by__block__border__grey;
   }
   &.brz-ed-border--blue > .brz-ed-border__inner {
-    border-color: $by-block-border-blue;
+    border-color: $by__block__border__blue;
   }
   &.brz-ed-border--red > .brz-ed-border__inner {
-    border-color: $by-block-border-red;
+    border-color: $by__block__border__red;
   }
 }
 
@@ -195,37 +195,37 @@
 [data-border--hovered],
 [data-border--active] {
   &[data-border--grey] > .brz-ed-border__inner {
-    border-color: $by-block-border-grey;
+    border-color: $by__block__border__grey;
   }
   &[data-border--blue] > .brz-ed-border__inner {
-    border-color: $by-block-border-blue;
+    border-color: $by__block__border__blue;
   }
   &[data-border--red] > .brz-ed-border__inner {
-    border-color: $by-block-border-red;
+    border-color: $by__block__border__red;
   }
 }
 
 // Colors
 [data-border--grey] > .brz-ed-border__button {
-  background-color: $by-block-border-grey;
+  background-color: $by__block__border__grey;
 }
 [data-border--blue] > .brz-ed-border__button {
-  background-color: $by-block-border-blue;
+  background-color: $by__block__border__blue;
 }
 [data-border--red] > .brz-ed-border__button {
-  background-color: $by-block-border-red;
+  background-color: $by__block__border__red;
 }
 [data-border]:hover,
 [data-border--hovered],
 [data-border--active] {
   &[data-border--grey] > .brz-ed-border__inner {
-    border-color: $by-block-border-grey;
+    border-color: $by__block__border__grey;
   }
   &[data-border--blue] > .brz-ed-border__inner {
-    border-color: $by-block-border-blue;
+    border-color: $by__block__border__blue;
   }
   &[data-border--red] > .brz-ed-border__inner {
-    border-color: $by-block-border-red;
+    border-color: $by__block__border__red;
   }
 }
 

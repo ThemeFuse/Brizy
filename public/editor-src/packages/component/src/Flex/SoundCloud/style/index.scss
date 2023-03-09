@@ -1,0 +1,36 @@
+.brz {
+  .brz-soundcloud {
+    @apply relative;
+    @apply text-[0];
+
+    &:before {
+      @apply content-[''];
+      @apply absolute;
+      @apply w-full;
+      @apply h-full;
+      @apply z-[3];
+      @apply pointer-events-none;
+    }
+    .brz-soundCloud-content {
+      @apply overflow-hidden;
+      @apply relative;
+      @apply h-full;
+      @apply w-full;
+
+      iframe {
+        @apply w-full;
+      }
+      &:before {
+        @apply content-[''];
+        @apply w-full;
+        @apply h-full;
+        @apply absolute;
+        @apply top-0;
+        @apply left-0;
+        @apply z-[2];
+        @apply block;
+        @apply pointer-events-none;
+      }
+    }
+  }
+}

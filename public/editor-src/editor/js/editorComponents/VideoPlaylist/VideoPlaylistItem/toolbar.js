@@ -92,7 +92,7 @@ export function getItems({ v, device }) {
                   label: t("Type"),
                   type: "select-dev",
                   choices: [
-                    { value: "youtube", title: "Youtube" },
+                    { value: "youtube", title: "YouTube" },
                     { value: "vimeo", title: "Vimeo" }
                   ]
                 },
@@ -103,7 +103,7 @@ export function getItems({ v, device }) {
                   devices: "desktop",
                   placeholder:
                     type === "youtube"
-                      ? t("Youtube")
+                      ? t("YouTube")
                       : type === "vimeo"
                       ? t("Vimeo")
                       : ""

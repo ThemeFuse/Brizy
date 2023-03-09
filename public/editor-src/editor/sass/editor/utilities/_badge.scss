@@ -2,11 +2,11 @@
 
 // Badges
 .brz-ed-badge {
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   font-size: 9px;
   font-weight: 600;
   color: #fff;
-  background-color: $brand-primary;
+  background-color: $brand__primary;
   border-radius: 4px;
   text-transform: uppercase;
   display: inline-block;
@@ -14,8 +14,9 @@
   padding: 4px 5px;
 
   &--pro {
-    background-color: $brand-primary-pro;
+    background-color: $brand__primary__pro;
   }
+
   &--new {
     background-color: $green;
   }
@@ -30,14 +31,14 @@
   justify-content: center;
   font-size: 12px;
   border-radius: 28px;
-  background-color: #fff;
-  color: #03080f;
+  background-color: $popup__fonts__icon__delete-bg;
+  color: $popup__fonts__icon__delete-color;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
   cursor: pointer;
   transition: 0.2s linear opacity, 0.2s linear color;
 
   &:hover {
-    color: #ed2164;
+    color: $popup__fonts__icon__delete-color--hover;
     transition: 0.2s linear color;
   }
 }

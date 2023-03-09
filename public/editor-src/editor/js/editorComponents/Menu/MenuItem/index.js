@@ -464,6 +464,7 @@ class MenuItem extends EditorComponent {
       ".brz-ed-fixed",
       ".brz-portal-forms__select",
       ".brz-mm-menu_opened",
+      ".brz-ed-eyeDropper",
       this.insideMegaMenu,
       ".react-contexify",
       ...(TARGET === "WP"

@@ -24,11 +24,7 @@ export type Props = Option.Props<undefined> &
   WithConfig<Config> &
   WithClassName;
 
-export const Order: React.FC<Props> & Option.OptionType<undefined> = ({
-  className,
-  config,
-  label
-}) => {
+export const Order: React.FC<Props> = ({ className, config, label }) => {
   const onChange = config?.onChange ?? empty;
   const disable = config?.disable ?? "none";
 
@@ -84,12 +80,3 @@ export const Order: React.FC<Props> & Option.OptionType<undefined> = ({
     </div>
   );
 };
-
-const getModel: Option.FromElementModel<undefined> = () => undefined;
-const getElementModel: Option.ToElementModel<undefined> = () => ({});
-
-Order.fromElementModel = getModel;
-Order.toElementModel = getElementModel;
-
-// @ts-expect-error: Variable 'defaultValue' implicitly has an 'any' type.
-Order.defaultValue = undefined;
