@@ -37,28 +37,28 @@ export function styleBgImage({ v, device, state }: CSSValue): string {
   const hoverBgImageFileName = dvvHover("bgImageFileName");
 
   if (isPredefinedSize(bgSize) || isOriginalSize(bgSize)) {
-    return `url(${imageSpecificSize(bgImageSrc, {
+    return `url("${imageSpecificSize(bgImageSrc, {
       size: bgSizeType,
       fileName: bgImageFileName
-    })})`;
+    })}")`;
   }
 
   const hover =
     hoverMedia === "image" && hoverBgImageSrc !== "" && !hoverBgPopulation
-      ? `url(${
+      ? `url("${
           isSVG(hoverBgImageExtension)
             ? svgUrl(hoverBgImageSrc, { fileName: hoverBgImageFileName })
             : imageUrl(hoverBgImageSrc, { fileName: hoverBgImageFileName })
-        })`
+        }")`
       : "none";
 
   const normal =
     media === "image" && bgImageSrc !== "" && bgPopulation === ""
-      ? `url(${
+      ? `url("${
           isSVG(bgImageExtension)
             ? svgUrl(bgImageSrc, { fileName: bgImageFileName })
             : imageUrl(bgImageSrc, { fileName: bgImageFileName })
-        })`
+        }")`
       : "none";
   return isHover === "hover" ? hover : normal;
 }
@@ -78,7 +78,7 @@ export function styleExportBgImage({ v, device, state }: CSSValue): string {
     ? svgUrl(bgImageSrc, { fileName: bgImageFileName })
     : imageUrl(bgImageSrc, { fileName: bgImageFileName });
   return media === "image" && (bgImageSrc !== "" || bgPopulation !== "")
-    ? `url(${bgImage})`
+    ? `url("${bgImage}")`
     : "none";
 }
 

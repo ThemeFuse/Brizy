@@ -93,7 +93,7 @@ class RichText extends EditorComponent {
           const newUrl = await getImagePopulation(placeholder, itemId);
           if (newUrl) {
             element.classList.add("brz-population-mask__style");
-            element.style.backgroundImage = `url(${newUrl})`;
+            element.style.backgroundImage = `url("${newUrl}")`;
           }
         }
       });

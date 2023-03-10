@@ -383,7 +383,7 @@ export function cssStyleElementImageCustomImage({
   const fileName = dvv(capByPrefix(prefix, "imageFileName"));
 
   if ((extension === "png" || extension === "svg") && src) {
-    const image = `-webkit-mask-image:  url(${imageUrl(src, { fileName })});`;
+    const image = `-webkit-mask-image:  url("${imageUrl(src, { fileName })}");`;
     return maskShape === "custom" ? image : "";
   }
 

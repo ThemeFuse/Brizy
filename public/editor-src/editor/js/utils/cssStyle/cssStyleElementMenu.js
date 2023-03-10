@@ -32,14 +32,14 @@ import {
   styleBorderStyle,
   styleBorderWidthGrouped,
   styleColor,
+  styleElementMMenu,
+  styleElementMMenuIconPosition,
+  styleElementMMenuIconSpacing,
   styleElementMenuIconPosition,
   styleElementMenuIconSpacing,
   styleElementMenuMode,
   styleElementMenuSubMenuIconPosition,
   styleElementMenuSubMenuIconSpacing,
-  styleElementMMenu,
-  styleElementMMenuIconPosition,
-  styleElementMMenuIconSpacing,
   styleItemMarginBottom,
   styleItemMarginLeft,
   styleItemMarginRight,
@@ -270,7 +270,7 @@ export function cssStyleElementMMenuDynamicImage({ v, device, state }) {
 
   const bg = defaultValueValue({ v, key: "bg", device, state });
 
-  return bgPopulation !== "" ? `background-image: url(${bg})` : "";
+  return bgPopulation !== "" ? `background-image: url("${bg}")` : "";
 }
 
 export function cssStyleElementMMenuImageFilter({ v, device, state }) {
