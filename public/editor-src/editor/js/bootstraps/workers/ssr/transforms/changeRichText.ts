@@ -168,12 +168,12 @@ export const changeRichText = ($: cheerio.Root): void => {
       if (population) {
         $this.css({
           ...newCSS,
-          "background-image": `url(${imagePopulationUrl(population)})`
+          "background-image": `url("${imagePopulationUrl(population)}")`
         });
       } else if (imgUrl)
         $this.css({
           ...newCSS,
-          "background-image": `url(${imgUrl})`
+          "background-image": `url("${imgUrl}")`
         });
 
       $this.removeAttr("data-image_src");

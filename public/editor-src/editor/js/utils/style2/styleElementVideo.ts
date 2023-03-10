@@ -69,12 +69,12 @@ export function styleElementVideoCoverSrc({
   }
 
   if (isSVG(extension)) {
-    return `url(${svgUrl(src, { fileName })})`;
+    return `url("${svgUrl(src, { fileName })}")`;
   }
 
   if (sizeType === "custom") {
-    return `url(${imageUrl(src, { fileName })})`;
+    return `url("${imageUrl(src, { fileName })}")`;
   }
 
-  return `url(${imageSpecificSize(src, { size: sizeType, fileName })})`;
+  return `url("${imageSpecificSize(src, { size: sizeType, fileName })}")`;
 }
