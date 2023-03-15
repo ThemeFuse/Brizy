@@ -1,4 +1,5 @@
 import { getConfig } from "./config";
+import { addFile } from "./customFile/addFile";
 import { addMedia } from "./media/addMedia";
 import { updateProject } from "./project/updateProject";
 
@@ -11,7 +12,11 @@ if (!config) {
 const api = {
   media: {
     addMedia,
-    mediaResizeUrl: config.actions.mediaResizeUrl
+    mediaResizeUrl: config.api.mediaResizeUrl
+  },
+  customFile: {
+    addFile,
+    customFileUrl: config.api.customFileUrl
   },
   onProjectUpdate: updateProject
 };
