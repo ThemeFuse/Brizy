@@ -1,12 +1,12 @@
-import React, { ReactElement } from "react";
 import classNames from "classnames";
-import { WithClassName } from "visual/utils/options/attributes";
+import React, { ReactElement, ReactNode } from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import { WithClassName } from "visual/utils/options/attributes";
 
 export interface Props extends WithClassName {
   onClick: VoidFunction;
   reverse?: boolean;
-  label?: string;
+  children?: ReactNode;
   icon?: string;
   align?: "left" | "center" | "right";
 }
@@ -15,11 +15,11 @@ export const Button = ({
   className,
   onClick,
   icon,
-  label,
+  children,
   reverse,
   align = "center"
 }: Props): ReactElement | null => {
-  return label || icon ? (
+  return children || icon ? (
     <div
       className={classNames(
         "brz-ed-control__button",
@@ -32,7 +32,7 @@ export const Button = ({
       onClick={onClick}
     >
       {icon && <EditorIcon icon={icon} />}
-      <span className={"brz-ed-control__label"}>{label}</span>
+      <span className={"brz-ed-control__label"}>{children}</span>
     </div>
   ) : null;
 };

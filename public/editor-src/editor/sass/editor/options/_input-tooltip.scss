@@ -1,8 +1,8 @@
 // --- Link Tooltip
 .brz-ed-popover__inner {
   //width: 275px;
-  background-color: $toolbar-bg-color;
-  box-shadow: $toolbar-box-shadow;
+  background-color: $toolbar-bg;
+  box-shadow: 0 0 5px 0 $toolbar-box-shadow;
   border-radius: 8px;
   position: relative;
 
@@ -17,13 +17,15 @@
     width: 215px;
     margin-top: 25px;
     margin-bottom: 25px;
-    background-color: $toolbar-bg-color;
-    box-shadow: $toolbar-box-shadow;
+    background-color: $toolbar-bg;
+    box-shadow: 0 0 5px 0 $toolbar-box-shadow;
     border-radius: 8px;
   }
+
   .brz-ed-tooltip__content {
     padding-left: 17px;
   }
+
   .brz-ed-arrow--bottom-left:after,
   .brz-ed-arrow--top-left:after {
     left: 29px;

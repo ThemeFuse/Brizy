@@ -1,13 +1,13 @@
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentChoices } from "visual/utils/options";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export const title = t("Row");
 
 export function getItems({ component, context }) {
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const toolbarTagsChoices = [
-    { title: t("Div"), value: "div" },
+    { title: "Div", value: "div" },
     { title: t("Header"), value: "header" },
     { title: t("Footer"), value: "footer" },
     { title: t("Main"), value: "main" },
@@ -128,12 +128,10 @@ export function getItems({ component, context }) {
                       config: {
                         choices: richTextDC
                       },
-                      options: [
-                        {
-                          id: "customID",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customID",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "cssClass",
@@ -149,12 +147,10 @@ export function getItems({ component, context }) {
                       config: {
                         choices: richTextDC
                       },
-                      options: [
-                        {
-                          id: "customClassName",
-                          type: "inputText-dev"
-                        }
-                      ]
+                      option: {
+                        id: "customClassName",
+                        type: "inputText-dev"
+                      }
                     },
                     {
                       id: "customAttributes",

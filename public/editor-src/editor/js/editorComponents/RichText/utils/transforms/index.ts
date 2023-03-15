@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-
+import { ElementModel } from "visual/component/Elements/Types";
+import { isNumeric } from "visual/utils/math";
 import {
   blockValues,
-  inlineValues,
-  legacyValues,
-  customValues,
   currentBlockValues,
-  currentValues
+  currentValues,
+  customValues,
+  inlineValues,
+  legacyValues
 } from "./defaultValues";
-
-import * as Str from "visual/utils/reader/string";
-import { isNumeric } from "visual/utils/math";
-import { ElementModel } from "visual/component/Elements/Types";
 
 export {
   blockValues,
@@ -34,17 +31,15 @@ export const VToClassNames = (v: ElementModel): string => {
   return classNames.join(" ");
 };
 
-export const classNamesToV = (
-  $elem: cheerio.Cheerio | JQuery
-): ElementModel => {
-  return classNamesToV2($elem).v;
+export const classNamesToV = (classList: string[]): ElementModel => {
+  return classNamesToV2(classList).v;
 };
 
 export const classNamesToV2 = (
-  $elem: cheerio.Cheerio | JQuery
+  classList: string[]
 ): { v: ElementModel; vs: ElementModel; vd: ElementModel } => {
   const vd = getDefaultValues();
-  const elemV = getElementValues($elem);
+  const elemV = getElementValues(classList);
 
   const v = { ...vd, ...elemV };
 
@@ -66,19 +61,14 @@ export const getDefaultValues = (): ElementModel => {
   return acc;
 };
 
-export const getElementValues = (
-  $elem: cheerio.Cheerio | JQuery
-): ElementModel => {
+export const getElementValues = (classList: string[]): ElementModel => {
   const acc: ElementModel = {};
-  const classNameAsString: string | undefined = Str.read($elem.attr("class"));
   // add conditions for data attributes and styles if it's needed
 
-  if (classNameAsString) {
+  if (classList.length) {
     const regex = new RegExp("^(.*)-(.*$)");
 
-    const classNames: string[] = classNameAsString.split(" ");
-
-    classNames.forEach(className => {
+    classList.forEach((className) => {
       const result = className.match(regex);
       if (result) {
         const [, prefix, value] = result;
@@ -154,7 +144,5 @@ function quillStringToNumber(str: string): number {
 }
 
 function quillNumberToString(num: number): string {
-  return String(num)
-    .replace(".", "_")
-    .replace("-", "m_");
+  return String(num).replace(".", "_").replace("-", "m_");
 }

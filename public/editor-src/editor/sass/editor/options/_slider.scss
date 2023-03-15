@@ -6,24 +6,29 @@
     margin-right: 18px;
     display: flex;
   }
+
   .brz-ed-option-field__text-box {
     min-height: initial;
   }
+
   .brz-ed-control__slider {
     width: auto;
     flex: 1 1 auto;
   }
+
   &__content {
     display: flex;
     align-items: center;
     width: 100%;
     color: #ffffff;
   }
+
   &-suffix {
     .brz-ed-option__text-box {
       width: 65px;
       border-color: transparent;
     }
+
     .brz-ed-option__text-box__input {
       position: relative;
 
@@ -34,20 +39,22 @@
         left: 0;
         width: calc(100% + 3px);
         height: 1px;
-        background-color: $brand-options-border;
+        background-color: $brand__options-border;
       }
     }
   }
+
   &__suffix {
     display: flex;
     flex-wrap: wrap;
   }
+
   &__suffix-item {
     padding-left: 5px;
     cursor: pointer;
 
     &--active {
-      color: $brand-primary;
+      color: $brand__primary;
     }
   }
 }

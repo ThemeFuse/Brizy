@@ -22,14 +22,14 @@ const getItems = itemIndex => (v, component) => {
           id: "copy",
           type: "button",
           title: t("Copy"),
-          helperText: () => (isMac ? "⌘ + C" : "Ctrl + C"),
+          helperText: () => (isMac ? "⌘ + C" : "ctrl + C"),
           onChange: () => component.copy(itemIndex)
         },
         {
           id: "paste",
           type: "button",
           title: t("Paste"),
-          helperText: () => (isMac ? "⌘ + V" : "Ctrl + V"),
+          helperText: () => (isMac ? "⌘ + V" : "ctrl + V"),
           inactive: !canPaste,
           onChange: () => component.paste(itemIndex)
         },
@@ -37,7 +37,7 @@ const getItems = itemIndex => (v, component) => {
           id: "pasteStyles",
           type: "button",
           title: t("Paste Styles"),
-          helperText: () => (isMac ? "⌘ + ⇧ + V" : "Ctrl + ⇧ + V"),
+          helperText: () => (isMac ? "⌘ + ⇧ + V" : "ctrl + ⇧ + V"),
           inactive: !canPaste,
           onChange: () => component.pasteStyles(itemIndex)
         },
@@ -45,7 +45,7 @@ const getItems = itemIndex => (v, component) => {
           id: "duplicate",
           type: "button",
           title: t("Duplicate"),
-          helperText: () => (isMac ? "⌘ + D" : "Ctrl + D"),
+          helperText: () => (isMac ? "⌘ + D" : "ctrl + D"),
           onChange: () => {
             component.cloneItem(itemIndex);
           }
@@ -54,7 +54,7 @@ const getItems = itemIndex => (v, component) => {
           id: "remove",
           type: "button",
           title: t("Delete"),
-          helperText: () => (isMac ? "⌘ + delete" : "Delete"),
+          helperText: () => (isMac ? "⌘ + delete" : "ctrl + delete"),
           onChange: () => {
             hideToolbar();
             component.removeItem(itemIndex);

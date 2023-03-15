@@ -1,10 +1,11 @@
 /* Alert boxes */
 .brz-ed-alert {
-  font: 600 14px/18px $font-family-1;
+  font: 600 14px/18px $default-font-family;
   background-color: #f2f2f2;
   padding: 12px 15px;
   margin: 0 0 20px;
 }
+
 .brz-ed-alert-error {
   border-left: 4px solid #df3c3c;
   color: #df3c3c;
@@ -14,6 +15,7 @@
     color: #df3c3c !important;
   }
 }
+
 .brz-ed-alert-success {
   border-left: 4px solid #6ab504;
   color: #6ab504;
@@ -23,6 +25,7 @@
     color: #6ab504 !important;
   }
 }
+
 .brz-ed-alert-info {
   border-left: 4px solid #47a9c8;
   color: #656b6f;
@@ -34,12 +37,14 @@
     color: #47a9c8;
     border-color: #47a9c8;
   }
+
   .brz-span {
     color: #47a9c8 !important;
   }
 }
+
 .popup-icon-info {
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   display: inline-block;
   border: 2px solid #ccc;
   color: #ccc;
@@ -58,7 +63,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  color: $brand-primary-pro;
+  color: $brand__primary__pro;
   background-color: #e0e1e2;
   padding: 21px 36px;
 }

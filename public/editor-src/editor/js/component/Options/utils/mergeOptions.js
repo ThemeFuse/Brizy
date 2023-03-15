@@ -1,6 +1,6 @@
 import _ from "underscore";
 
-export default function mergeOptions(options1, options2) {
+export function mergeOptions(options1, options2) {
   let merge = false;
   // has columns
   for (let i = 0; i < options2.length; i++) {
@@ -55,3 +55,5 @@ function sortOptions(options) {
 
   return _.sortBy(options, "position");
 }
+
+export default mergeOptions;

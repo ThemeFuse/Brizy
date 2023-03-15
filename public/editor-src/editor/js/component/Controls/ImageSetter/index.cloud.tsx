@@ -1,5 +1,4 @@
 import classnames from "classnames";
-import ToastNotification from "cogo-toast";
 import React, {
   ChangeEvent,
   ChangeEventHandler,
@@ -11,6 +10,7 @@ import { noop } from "rxjs";
 import { Item } from "visual/component/Controls/MultiSelect/Item";
 import { Select2 } from "visual/component/Controls/Select2";
 import EditorIcon from "visual/component/EditorIcon";
+import { ToastNotification } from "visual/component/Notifications";
 import { Extensions } from "visual/component/Options/types/dev/ImageUpload/Types";
 import { t } from "visual/utils/i18n";
 import {

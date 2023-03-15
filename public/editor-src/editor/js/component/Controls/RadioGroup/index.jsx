@@ -1,6 +1,6 @@
-import _ from "underscore";
-import React from "react";
 import classnames from "classnames";
+import React from "react";
+import _ from "underscore";
 
 export default class RadioGroup extends React.Component {
   static defaultProps = {
@@ -10,13 +10,13 @@ export default class RadioGroup extends React.Component {
     onChange: _.noop
   };
 
-  onClick = value => {
+  onClick = (value) => {
     this.props.onChange(value);
   };
 
   getCurrent = () => {
     return (
-      _.find(this.props.children, child => {
+      _.find(this.props.children, (child) => {
         return child.props.value === this.props.defaultValue;
       }) || this.props.children[0]
     );
@@ -36,7 +36,10 @@ export default class RadioGroup extends React.Component {
 
   render() {
     const { className: _className, name, defaultValue } = this.props;
-    const className = classnames("brz-ed-control__radio-group", _className);
+    const className = classnames(
+      "brz-ed-control__radio-group flex items-center",
+      _className
+    );
     return (
       <div className={className}>
         {this.renderOptions()}

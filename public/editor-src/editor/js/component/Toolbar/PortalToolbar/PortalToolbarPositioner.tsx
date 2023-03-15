@@ -1,6 +1,6 @@
 import React from "react";
-import { ToolbarItems, ToolbarItemsProps } from "../ToolbarItems";
 import { clamp } from "visual/utils/math";
+import { ToolbarItems, ToolbarItemsProps } from "../ToolbarItems";
 import { setPosition } from "../state";
 
 const SIDEBAR_WIDTH = 58;
@@ -23,9 +23,7 @@ export type PortalToolbarPositionerProps = {
   "containerRef" | "arrowRef" | "arrow" | "onContentChange"
 >;
 
-export class PortalToolbarPositioner extends React.Component<
-  PortalToolbarPositionerProps
-> {
+export class PortalToolbarPositioner extends React.Component<PortalToolbarPositionerProps> {
   static defaultProps = {
     offsetTop: 14,
     offsetBottom: 14,
@@ -104,7 +102,9 @@ export class PortalToolbarPositioner extends React.Component<
 
     // toolbar css
     toolbar.style.top = `${toolbarTop}px`;
-    toolbar.style.left = `${toolbarClampedLeft}px`;
+    toolbar.style.left =
+      toolbarClampedLeft === 0 ? "20px" : `${toolbarClampedLeft}px`;
+
     if (position === "fixed") {
       toolbar.style.position = "fixed";
     }

@@ -1,16 +1,16 @@
-import React from "react";
-import { Dispatch } from "redux";
-import { connect, MapStateToProps } from "react-redux";
 import classnames from "classnames";
-import Options from "visual/component/Options";
+import React from "react";
+import { MapStateToProps, connect } from "react-redux";
+import { Dispatch } from "redux";
 import EditorIcon from "visual/component/EditorIcon";
-import { Animation } from "./Animation";
-import { Scrollbars } from "./Scrollbars";
-import { uiSelector, deviceModeSelector } from "visual/redux/selectors";
-import { updateUI, ActionUpdateUI } from "visual/redux/actions2";
-import { t } from "visual/utils/i18n";
-import { ReduxState } from "visual/redux/types";
+import Options from "visual/component/Options";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { ActionUpdateUI, updateUI } from "visual/redux/actions2";
+import { deviceModeSelector, uiSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
+import { t } from "visual/utils/i18n";
+import { Scrollbar } from "../Scrollbar";
+import { Animation } from "./Animation";
 
 type DeviceModes = ReduxState["ui"]["deviceMode"];
 type RightSidebarStore = ReduxState["ui"]["rightSidebar"];
@@ -27,7 +27,7 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
     lock: undefined,
     alignment: "right",
     deviceMode: "desktop",
-    dispatch: action => action,
+    dispatch: (action) => action,
     activeTab: undefined
   };
 
@@ -40,6 +40,7 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
   unmounted = false;
 
   componentDidMount(): void {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     instance = this;
   }
 
@@ -122,33 +123,17 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
     );
   }
 
-  renderScrollbarsThumb = ({
-    style
-  }: {
-    style: React.CSSProperties;
-  }): React.ReactElement => {
-    return (
-      <div
-        style={{
-          ...style,
-          borderRadius: "inherit",
-          backgroundColor: "#3f4652"
-        }}
-      />
-    );
-  };
-
   renderItems(items: OptionDefinition[]): React.ReactNode {
     return (
       <div className="brz-ed-sidebar__main brz-ed-sidebar__right__options">
-        <Scrollbars>
+        <Scrollbar theme="dark">
           <Options
             className="brz-ed-sidebar__right__tabs"
             optionClassName="brz-ed-sidebar__right__option"
             data={items}
             location="rightSidebar"
           />
-        </Scrollbars>
+        </Scrollbar>
       </div>
     );
   }
@@ -193,7 +178,7 @@ const mapStateToProps: MapStateToProps<
   MapStateProps,
   RightSidebarProps,
   ReduxState
-> = state => {
+> = (state) => {
   const { isOpen, lock, alignment, activeTab } = uiSelector(state).rightSidebar;
 
   return {

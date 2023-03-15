@@ -1,17 +1,16 @@
+import classnames from "classnames";
 import React, {
   Component,
   CSSProperties,
   ReactElement,
   RefObject
 } from "react";
-import classnames from "classnames";
 import ResizeAware from "react-resize-aware";
 import UIEvents from "visual/global/UIEvents";
-
 import Image from "./types/Image";
 import Map from "./types/Map";
-import Video from "./types/Video";
 import Shape from "./types/Shape";
+import Video from "./types/Video";
 
 type Props = {
   image?: string;
@@ -88,7 +87,7 @@ class Background extends Component<Props> {
     return (
       <>
         {needRenderMedia(this.props) && (
-          <div className="brz-bg">
+          <div className="brz-bg overflow-hidden absolute top-0 left-0 w-full h-full">
             {image && (
               <Image showParallax={parallax}>
                 {({ innerRef, attr }): ReactElement => (
@@ -106,7 +105,10 @@ class Background extends Component<Props> {
                   <div
                     ref={innerRef as RefObject<HTMLDivElement>}
                     {...attr}
-                    className={classnames("brz-bg-video", attr.className)}
+                    className={classnames(
+                      "brz-bg-video absolute top-0 left-0 w-full h-full",
+                      attr.className
+                    )}
                   >
                     {children}
                   </div>
@@ -114,11 +116,13 @@ class Background extends Component<Props> {
               </Video>
             )}
             {map && (
-              <div className="brz-bg-map">
+              <div className="brz-bg-map absolute top-0 left-0 w-full h-full">
                 {map && <Map map={map} mapZoom={mapZoom} />}
               </div>
             )}
-            {opacity && <div className="brz-bg-color" />}
+            {opacity && (
+              <div className="brz-bg-color absolute top-0 left-0 w-full h-full" />
+            )}
             {(shapeTop || shapeBottom) && (
               <Shape shapeTop={shapeTop} shapeBottom={shapeBottom} />
             )}

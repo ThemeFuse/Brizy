@@ -1,17 +1,18 @@
 import React, { useCallback } from "react";
 import { rolesHOC } from "visual/component/Roles";
 import { hideToolbar, showLastHiddenToolbar } from "visual/component/Toolbar";
-import { IS_STORY } from "visual/utils/models";
+import Config from "visual/global/Config";
+import { isStory } from "visual/utils/models";
 import { Resizer } from "./Resizer";
 import {
-  transformRestrictions,
-  transformValue,
   resizerTransformPatch,
   resizerTransformStory,
   resizerTransformStoryPatch,
-  transformAlign
+  transformAlign,
+  transformRestrictions,
+  transformValue
 } from "./transforms";
-import { V, Meta, RestrictionMapping, Restrictions, Patch } from "./types";
+import { Meta, Patch, RestrictionMapping, Restrictions, V } from "./types";
 
 type RM = RestrictionMapping;
 
@@ -48,7 +49,7 @@ const BoxResizer: React.FC<Props> = ({
   // and old props were using
   const getValue = useCallback((): RM => {
     let transformedValue = transformValue(resizerV);
-    if (IS_STORY) {
+    if (isStory(Config.getAll())) {
       transformedValue = resizerTransformStory(transformedValue, value);
     }
 
@@ -86,7 +87,7 @@ const BoxResizer: React.FC<Props> = ({
     ({ patch, point, startRect }: Patch): void => {
       let path = resizerTransformPatch(patch, startValue as RM, value);
 
-      if (IS_STORY) {
+      if (isStory(Config.getAll())) {
         path = resizerTransformStoryPatch(
           path,
           startValue as RM,

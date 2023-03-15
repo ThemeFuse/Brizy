@@ -1,27 +1,29 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useRef } from "react";
 import { useSelector } from "react-redux";
-import Config from "visual/global/Config";
 import EditorIcon from "visual/component/EditorIcon";
+import HotKeys from "visual/component/HotKeys";
+import Config from "visual/global/Config";
 import {
-  IS_INTERNAL_POPUP,
-  IS_EXTERNAL_POPUP,
-  IS_EXTERNAL_STORY
-} from "visual/utils/models";
-import { pageSlugSelector } from "visual/redux/selectors";
-import { BottomPanelItem } from "./Item";
-import {
-  isCloud,
-  isCMS,
-  isCustomer
+  isCloud, isCMS, isCustomer
 } from "visual/global/Config/types/configs/Cloud";
+import { pageSlugSelector } from "visual/redux/selectors";
+import {
+  isExternalPopup,
+  isExternalStory,
+  isInternalPopup
+} from "visual/utils/models";
+import { BottomPanelItem } from "./Item";
+import { hotKeysForPreview, redirectToPreview } from "./utils";
 
 export function PreviewButton(): ReactElement | null {
   const pageSlug = useSelector(pageSlugSelector);
+  const config = Config.getAll();
+  const refForAnchor = useRef<HTMLAnchorElement>(null);
 
-  if (IS_EXTERNAL_POPUP) {
+  if (isExternalPopup(config)) {
     return null;
   }
-  const config = Config.getAll();
+
   const previewUrl = config.urls.pagePreview;
 
   let suffix = "";
@@ -33,8 +35,8 @@ export function PreviewButton(): ReactElement | null {
   let href = "";
 
   if (
-    IS_INTERNAL_POPUP ||
-    IS_EXTERNAL_STORY ||
+    isInternalPopup(config) ||
+    isExternalStory(config) ||
     (isCloud(config) && isCMS(config) && isCustomer(config))
   ) {
     href = `${previewUrl}${suffix}`;
@@ -43,20 +45,28 @@ export function PreviewButton(): ReactElement | null {
   }
 
   return (
-    <BottomPanelItem
-      paddingSize="none"
-      pointer={true}
-      className="brz-ed-fixed-bottom-panel__preview"
-      title="Preview"
-    >
-      <a
-        href={href}
-        className="brz-a"
-        target="_blank"
-        rel="noopener noreferrer"
+    <>
+      <BottomPanelItem
+        paddingSize="none"
+        pointer={true}
+        className="brz-ed-fixed-bottom-panel__preview"
+        title="Preview (ctrl+shift+P)"
       >
-        <EditorIcon icon="nc-preview" />
-      </a>
-    </BottomPanelItem>
+        <a
+          href={href}
+          className="brz-a"
+          target="_blank"
+          rel="noopener noreferrer"
+          ref={refForAnchor}
+        >
+          <EditorIcon icon="nc-preview" />
+        </a>
+      </BottomPanelItem>
+      <HotKeys
+        keyNames={hotKeysForPreview}
+        id="key-helper-preview"
+        onKeyDown={() => redirectToPreview(refForAnchor)}
+      />
+    </>
   );
 }

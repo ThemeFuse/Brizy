@@ -1,28 +1,12 @@
-import React, { FC, useCallback, useMemo } from "react";
 import classNames from "classnames";
-import { getColorPaletteColors } from "visual/utils/color";
+import React, { FC, useCallback, useMemo } from "react";
+import { useDispatch } from "react-redux";
 import {
   BoxShadow as ShadowControl,
   Props as ShadowProps
 } from "visual/component/Controls/BoxShadow";
-import {
-  DEFAULT_VALUE,
-  getTypesItems,
-  _setOpacity,
-  toElementModel,
-  fromElementModel
-} from "./utils";
-import { useDispatch } from "react-redux";
-import { updateUI } from "visual/redux/actions2";
+import { TypeObject } from "visual/component/Controls/BoxShadow/types";
 import * as Option from "visual/component/Options/Type";
-import { Value } from "./entities/Value";
-import * as Type from "./entities/Type";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { Config } from "./entities/Config";
-import { OptionType } from "visual/component/Options/Type";
-import * as Opacity from "visual/utils/cssProps/opacity";
-import * as Blur from "visual/utils/cssProps/Blur";
-import * as Hex from "visual/utils/color/Hex";
 import {
   setBlur,
   setHex,
@@ -32,15 +16,26 @@ import {
   setType,
   setVertical
 } from "visual/component/Options/types/dev/BoxShadow/model";
-import { TypeObject } from "visual/component/Controls/BoxShadow/types";
+import GlobalConfig from "visual/global/Config";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { updateUI } from "visual/redux/actions2";
+import { getColorPaletteColors } from "visual/utils/color";
+import * as Hex from "visual/utils/color/Hex";
+import * as Blur from "visual/utils/cssProps/Blur";
+import * as Opacity from "visual/utils/cssProps/opacity";
 import { pipe } from "visual/utils/fp";
+import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { Config } from "./entities/Config";
+import * as Type from "./entities/Type";
+import { Value } from "./entities/Value";
+import { _setOpacity, getTypesItems } from "./utils";
 
 export interface Props
   extends Option.Props<Value>,
     WithConfig<Config>,
     WithClassName {}
 
-export const BoxShadow: OptionType<Value> & FC<Props> = ({
+export const BoxShadow: FC<Props> = ({
   onChange,
   value,
   className,
@@ -105,11 +100,21 @@ export const BoxShadow: OptionType<Value> & FC<Props> = ({
       dispatch(
         updateUI("leftSidebar", {
           isOpen: true,
-          drawerContentType: "styling"
+          drawerContentType: LeftSidebarOptionsIds.globalStyle
         })
       ),
     [dispatch]
   );
+
+  const enableGlobalStyle = useMemo((): boolean => {
+    const config = GlobalConfig.getAll();
+    const { bottomTabsOrder = [], topTabsOrder = [] } =
+      config.ui?.leftSidebar ?? {};
+
+    return [...bottomTabsOrder, ...topTabsOrder].includes(
+      LeftSidebarOptionsIds.globalStyle
+    );
+  }, []);
 
   return (
     <ShadowControl
@@ -119,17 +124,7 @@ export const BoxShadow: OptionType<Value> & FC<Props> = ({
       onChange={onValueChange}
       types={types}
       palette={getColorPaletteColors()}
-      paletteOpenSettings={openPaletteSidebar}
+      paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
     />
   );
 };
-
-/**
- * @param {(function(key: string): string|number)} get
- * @returns {{}}
- */
-BoxShadow.fromElementModel = fromElementModel;
-
-BoxShadow.toElementModel = toElementModel;
-
-BoxShadow.defaultValue = DEFAULT_VALUE;

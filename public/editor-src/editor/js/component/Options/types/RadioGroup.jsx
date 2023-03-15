@@ -1,6 +1,6 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
 import RadioGroup from "visual/component/Controls/RadioGroup";
 import RadioGroupItem from "visual/component/Controls/RadioGroup/RadioGroupItem";
 import EditorIcon from "visual/component/EditorIcon";
@@ -20,9 +20,13 @@ class RadioGroupOptionType extends React.Component {
     onChange: _.noop
   };
 
-  renderIcon = icon => {
+  renderIcon = (icon) => {
     return (
-      <div className="brz-ed-option__radio-group__icon">
+      <div
+        className={
+          "brz-ed-option__radio-group__icon flex items-center justify-center h-full text-[16px] cursor-pointer transition-[background-color] duration-200 ease-linear delay-[0s]"
+        }
+      >
         <EditorIcon icon={icon} />
       </div>
     );
@@ -48,11 +52,17 @@ class RadioGroupOptionType extends React.Component {
     );
   };
 
-  renderRadioChoices = choices => {
+  renderRadioChoices = (choices) => {
     return choices.map(({ value, title, icon }) => {
-      const radioClassName = classnames({
-        "brz-ed-option__radio-group--boxed": icon
-      });
+      const active = _.isEqual(value, this.props.value);
+
+      const radioClassName = classnames(
+        {
+          "brz-ed-option__radio-group--boxed w-[37px] h-[30px] border-t-0 border-r border-b-0 border-l-0 border-solid border-r-control-color bg-option-content-bg text-option-content-color overflow-hidden first:rounded-tl-[4px] first:rounded-bl-[4px] [&:nth-last-child(2)]:border-r-0 [&:nth-last-child(2)]:rounded-tr-[4px] [&:nth-last-child(2)]:rounded-br-[4px]":
+            icon
+        },
+        { "bg-brand-primary": active }
+      );
       return (
         <RadioGroupItem key={value} value={value} className={radioClassName}>
           {icon ? this.renderIcon(icon) : null}
@@ -62,7 +72,7 @@ class RadioGroupOptionType extends React.Component {
     });
   };
 
-  renderTitle = title => {
+  renderTitle = (title) => {
     return <div className="brz-ed-option__radio-group__title">{title}</div>;
   };
 

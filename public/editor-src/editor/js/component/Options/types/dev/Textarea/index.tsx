@@ -1,7 +1,9 @@
 import React, { FC, useState } from "react";
 import { Textarea as Control } from "visual/component/Controls/Textarea";
-import { String } from "visual/utils/string/specs";
-import * as Option from "visual/component/Options/Type";
+import {
+  Props as OptionProps,
+  SimpleValue
+} from "visual/component/Options/Type";
 import { useDebouncedEffect } from "visual/component/hooks";
 import {
   WithClassName,
@@ -13,13 +15,13 @@ import {
 export type Config = WithSize & {
   lines: number;
 };
-export type Model = Option.SimpleValue<string>;
-export type Props = Option.Props<Model> &
+export type Model = SimpleValue<string>;
+export type Props = OptionProps<Model> &
   WithConfig<Config> &
   WithClassName &
   WithPlaceholder;
 
-export const Textarea: FC<Props> & Option.OptionType<Model> = ({
+export const Textarea: FC<Props> = ({
   className,
   onChange,
   value: { value },
@@ -52,22 +54,4 @@ export const Textarea: FC<Props> & Option.OptionType<Model> = ({
       />
     </>
   );
-};
-
-const getModel: Option.FromElementModel<Model> = get => ({
-  value: String.read(get("value"))
-});
-
-const getElementModel: Option.ToElementModel<Model> = values => {
-  return {
-    value: values.value
-  };
-};
-
-Textarea.fromElementModel = getModel;
-
-Textarea.toElementModel = getElementModel;
-
-Textarea.defaultValue = {
-  value: ""
 };

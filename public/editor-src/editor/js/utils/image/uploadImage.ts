@@ -3,6 +3,8 @@ import { uploadImage as apiUploadImage } from "visual/utils/api";
 
 export interface UploadData {
   name: string;
+  width: number;
+  height: number;
   fileName: string;
   uid: string;
 }
@@ -96,6 +98,21 @@ export function uploadImage(imageFile: File, options?: Partial<Options>): void {
       return apiUploadImage({
         base64: strippedBase64,
         filename: imageFile.name
+      }).then((r) => {
+        const image = new Image();
+        image.src = base64;
+
+        return new Promise<UploadData>((res, rej) => {
+          image.onload = () => {
+            res({
+              ...r,
+              fileName: imageFile.name,
+              width: image.width,
+              height: image.height
+            });
+          };
+          image.onerror = rej;
+        });
       });
     })
     .then(onUpload)

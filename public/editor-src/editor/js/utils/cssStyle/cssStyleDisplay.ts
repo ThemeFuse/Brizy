@@ -2,6 +2,10 @@ export function cssStyleDisplayFlex(): string {
   return "display:flex;";
 }
 
+export function cssStyleDisplayGrid(): string {
+  return "display:grid;";
+}
+
 export function cssStyleDisplayInlineFlex(): string {
   return "display:inline-flex;";
 }

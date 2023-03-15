@@ -3,9 +3,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import Editor from "visual/component/Editor";
-import { ToastNotification } from "visual/component/Notifications";
 import Config from "visual/global/Config";
 import { editorRendered, hydrate } from "visual/redux/actions";
+import { pageSelector, projectSelector } from "visual/redux/selectors";
 import { createStore } from "visual/redux/store";
 import {
   addProjectLockedBeacon,
@@ -13,12 +13,12 @@ import {
   getProject,
   removeProjectLockedSendBeacon
 } from "visual/utils/api";
+import { AuthProvider } from "visual/utils/api/providers/Auth";
 import { flatMap } from "visual/utils/array";
 import { assetUrl } from "visual/utils/asset";
 import { getBlocksInPage } from "visual/utils/blocks";
-import { CustomError, PageError } from "visual/utils/errors";
+import { PageError } from "visual/utils/errors";
 import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
-import { t } from "visual/utils/i18n";
 import {
   getBlocksStylesFonts,
   getUsedModelsFonts,
@@ -28,6 +28,7 @@ import { getAuthorized } from "visual/utils/user/getAuthorized";
 import "../registerEditorParts";
 import { getCurrentPage } from "./getCurrentPage";
 import getMiddleware from "./middleware";
+import { showError } from "./utils/errors";
 
 const appDiv = document.querySelector("#brz-ed-root");
 const pageCurtain = window.parent.document.querySelector(
@@ -37,12 +38,12 @@ const pageCurtain = window.parent.document.querySelector(
 (async function main() {
   try {
     if (!appDiv) {
-      pageCurtain.classList.add("has-load-error");
+      pageCurtain?.classList.add("has-load-error");
       throw new PageError("could not find #brz-ed-root");
     }
-
-    const projectStatus = Config.get("project").status || {};
-    const { isSyncAllowed = false } = Config.get("cloud") || {};
+    const config = Config.getAll();
+    const projectStatus = config.project.status || {};
+    const { isSyncAllowed = false } = config.cloud || {};
     if (projectStatus && !projectStatus.locked) {
       await addProjectLockedBeacon();
     }
@@ -50,7 +51,7 @@ const pageCurtain = window.parent.document.querySelector(
     const [project, currentPage, globalBlocks, blocksThumbnailSizes] =
       await Promise.all([
         getProject(),
-        getCurrentPage(Config.getAll()),
+        getCurrentPage(config),
         getGlobalBlocks(),
         fetch(assetUrl("thumbs/blocksThumbnailSizes.json")).then((r) =>
           r.json()
@@ -126,36 +127,58 @@ const pageCurtain = window.parent.document.querySelector(
       );
     }
 
+    config.onUpdate = (res) => {
+      store.dispatch({
+        type: "PUBLISH",
+        payload: {
+          status: store.getState().page.status
+        },
+        meta: {
+          onSuccess: () => {
+            (async () => {
+              try {
+                const state = store.getState();
+                const pageData = pageSelector(state);
+                const projectData = projectSelector(state);
+                let pageHTML = {};
+
+                if (IS_EXPORT) {
+                  try {
+                    if (AUTHORIZATION_URL) {
+                      const Auth = new AuthProvider(AUTHORIZATION_URL);
+                      await Auth.send();
+                    }
+                  } catch (e) {
+                    console.warn("Compile without export");
+                  }
+                }
+
+                res({ ...pageHTML, pageData, projectData });
+              } catch (e) {
+                showError(e);
+              }
+            })();
+          }
+        }
+      });
+    };
+
     ReactDOM.render(
       <Provider store={store}>
         <Editor />
       </Provider>,
       appDiv,
       () => {
-        pageCurtain.parentElement.removeChild(pageCurtain);
+        pageCurtain?.parentElement.removeChild(pageCurtain);
 
         store.dispatch(editorRendered());
+
+        if (typeof config.onLoad === "function") {
+          config.onLoad();
+        }
       }
     );
   } catch (e) {
-    const isCustomError = e instanceof CustomError;
-
-    /* eslint-disable no-console */
-    if (isCustomError) {
-      console.error("editor bootstrap error", e.getMessage());
-    } else {
-      console.error("editor bootstrap error", e);
-    }
-    /* eslint-enabled no-console */
-
-    const message =
-      isCustomError && e.getMessage()
-        ? e.getMessage()
-        : t("Something went wrong");
-
-    ToastNotification.error(message, {
-      hideAfter: 0,
-      toastContainer: pageCurtain
-    });
+    showError(e, 0);
   }
 })();

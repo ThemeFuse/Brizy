@@ -14,7 +14,7 @@ const TABS: PromptAuthorizationTabs[] = [
   },
   {
     id: "signUp",
-    title: t("SignUp"),
+    title: t("Sign Up"),
     icon: "nc-add",
     component: SignUp
   }

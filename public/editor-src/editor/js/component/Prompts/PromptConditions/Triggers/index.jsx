@@ -1,20 +1,18 @@
 import React from "react";
-import { setIn, removeAt } from "timm";
-import EditorIcon from "visual/component/EditorIcon";
-import ItemWrapper from "../common/ItemWrapper";
-import Switch from "visual/component/Controls/Switch";
-import ScrollPane from "visual/component/ScrollPane";
+import { connect } from "react-redux";
+import { removeAt, setIn } from "timm";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import Buttons from "../Buttons";
-
-import { connect } from "react-redux";
-import { triggersSelector } from "visual/redux/selectors";
+import { Switch } from "visual/component/Controls/Switch";
+import EditorIcon from "visual/component/EditorIcon";
+import ScrollPane from "visual/component/ScrollPane";
 import { updateTriggers } from "visual/redux/actions";
-
-import items from "./items";
+import { triggersSelector } from "visual/redux/selectors";
 import { IS_PRO } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
+import Buttons from "../Buttons";
+import ItemWrapper from "../common/ItemWrapper";
+import items from "./items";
 
 class Triggers extends React.Component {
   constructor(props) {
@@ -59,7 +57,7 @@ class Triggers extends React.Component {
     }
   };
 
-  handleTriggerOnceChange = triggerOnce => {
+  handleTriggerOnceChange = (triggerOnce) => {
     if (IS_PRO) {
       this.setState({ triggerOnce });
     }
@@ -76,7 +74,7 @@ class Triggers extends React.Component {
     }
   };
 
-  handleWrapperTriggerRemove = index => {
+  handleWrapperTriggerRemove = (index) => {
     if (IS_PRO) {
       this.setState({ values: removeAt(this.state.values, index) });
     }
@@ -140,7 +138,7 @@ class Triggers extends React.Component {
 
     return items
       .filter(({ id, duplicatesAmount = 1 }) => {
-        const isAlreadyInValues = values.find(trigger => trigger.id === id);
+        const isAlreadyInValues = values.find((trigger) => trigger.id === id);
         const currentDuplicatesAreLess =
           currentDuplicatesAmount[id] &&
           duplicatesAmount > currentDuplicatesAmount[id];
@@ -155,10 +153,10 @@ class Triggers extends React.Component {
           { id: nextId, duplicatesAmount: nextDuplicatesAmount = 0 }
         ) => {
           const isPrevAlreadyInValues = values.find(
-            trigger => trigger.id === prevId
+            (trigger) => trigger.id === prevId
           );
           const isNextAlreadyInValues = values.find(
-            trigger => trigger.id === nextId
+            (trigger) => trigger.id === nextId
           );
           if (isPrevAlreadyInValues) {
             return 1;
@@ -195,7 +193,7 @@ class Triggers extends React.Component {
         className="brz-control__select--light"
         itemHeight={30}
         defaultValue={currentId}
-        onChange={newValue => this.handleTriggerChange(index, newValue)}
+        onChange={(newValue) => this.handleTriggerChange(index, newValue)}
       >
         {triggersList}
       </Select>
@@ -213,7 +211,7 @@ class Triggers extends React.Component {
         <Component
           {...item}
           {...trigger}
-          onChange={value => this.handleValueChange(index, value)}
+          onChange={(value) => this.handleValueChange(index, value)}
         />
       ) : null;
 
@@ -222,7 +220,7 @@ class Triggers extends React.Component {
           showTypeButton={false}
           key={index}
           active={trigger.active}
-          onChange={value => this.handleWrapperTriggerChange(index, value)}
+          onChange={(value) => this.handleWrapperTriggerChange(index, value)}
           onRemove={() => this.handleWrapperTriggerRemove(index)}
         >
           {this.renderTriggers(index)}
@@ -235,10 +233,7 @@ class Triggers extends React.Component {
       <>
         <div className="brz-ed-popup-conditions__trigger-once">
           <div>{t("Trigger Popup Only Once")}</div>
-          <Switch
-            defaultValue={triggerOnce}
-            onChange={this.handleTriggerOnceChange}
-          />
+          <Switch value={triggerOnce} onChange={this.handleTriggerOnceChange} />
         </div>
         <ScrollPane
           style={{
@@ -265,9 +260,9 @@ class Triggers extends React.Component {
   }
 }
 
-const stateToProps = state => ({ values: triggersSelector(state) });
+const stateToProps = (state) => ({ values: triggersSelector(state) });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   dispatch
 });
 

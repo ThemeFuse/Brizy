@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Product Sku");
+export const title = t("Product SKU");
 
 const helperHTML = `
 <p class="brz-p">You can use the following selectors to create targeted CSS.</p>

@@ -1,5 +1,6 @@
+import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
-import { IS_GLOBAL_POPUP } from "visual/utils/models";
+import { isPopup } from "visual/utils/models";
 
 export default {
   getItems
@@ -20,7 +21,7 @@ function getItems(v, component) {
           v.showToolbar === "off" ||
           inPopup ||
           inPopup2 ||
-          IS_GLOBAL_POPUP ||
+          isPopup(Config.getAll()) ||
           meta.isInSubMenu
         );
       },

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { logout, sync } from "visual/component/Prompts/PromptAuthorization/api";
 import { ToastNotification } from "visual/component/Notifications";
+import { logout, sync } from "visual/component/Prompts/PromptAuthorization/api";
 import { t } from "visual/utils/i18n";
 
 type Disconnect = {
@@ -22,23 +22,19 @@ export const useDisconnect = (): Disconnect => {
   useEffect(() => {
     if (loading) {
       logout()
-        .then(r => {
+        .then((r) => {
           if (!r.status || r.status >= 400) {
             updateError(r);
-            ToastNotification.error(t("Something went wrong"), {
-              toastContainer: window.parent.document.body
-            });
+            ToastNotification.error(t("Something went wrong"));
           } else {
             setLoading(false);
             updateDisconnect(true);
           }
         })
-        .catch(e => {
+        .catch((e) => {
           setLoading(false);
           updateError(e);
-          ToastNotification.error(t("Something went wrong"), {
-            toastContainer: window.parent.document.body
-          });
+          ToastNotification.error(t("Something went wrong"));
         });
     }
   }, [loading]);
@@ -71,27 +67,21 @@ export const useSync = (): Sync => {
   useEffect(() => {
     if (loading) {
       sync()
-        .then(r => {
+        .then((r) => {
           if (!r.status || r.status >= 400) {
             updateError(r);
-            ToastNotification.error(t("Unsuccessful sync"), {
-              toastContainer: window.parent.document.body
-            });
+            ToastNotification.error(t("Unsuccessful sync"));
           } else {
             setLoading(false);
             updateSync(true);
 
-            ToastNotification.success(t("Done, your library was synced"), {
-              toastContainer: window.parent.document.body
-            });
+            ToastNotification.success(t("Done, your library has synced"));
           }
         })
-        .catch(e => {
+        .catch((e) => {
           setLoading(false);
           updateError(e);
-          ToastNotification.error(t("Unsuccessful sync"), {
-            toastContainer: window.parent.document.body
-          });
+          ToastNotification.error(t("Unsuccessful sync"));
         });
     }
   }, [loading]);

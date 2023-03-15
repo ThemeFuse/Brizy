@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import { ToastContainer } from "react-toastify";
 import BottomPanel from "visual/component/BottomPanel";
 import HotKeys from "visual/component/HotKeys";
 import { LeftSidebar } from "visual/component/LeftSidebar";
@@ -75,6 +76,9 @@ class Editor extends React.Component {
           id="key-helper-editor"
           onKeyDown={this.handleKeyDown}
         />
+        <Portal node={this.parentWindowDocument.body}>
+          <ToastContainer />
+        </Portal>
       </>
     );
   }

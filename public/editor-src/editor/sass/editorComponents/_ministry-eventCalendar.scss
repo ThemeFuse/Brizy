@@ -1,0 +1,151 @@
+.brz-eventCalendar__wrapper {
+  width: 100%;
+
+  .brz-eventCalendar {
+    overflow: hidden;
+
+    .brz-eventCalendar_wrap {
+      .brz-eventCalendar-pagination {
+        &,
+        & a {
+          display: flex;
+          align-items: center;
+        }
+
+        .brz-eventCalendar-pagination-previous.off,
+        .brz-eventCalendar-pagination-next.off {
+          opacity: 0.2 !important;
+          pointer-events: none;
+        }
+
+        .brz-eventCalendar-heading {
+          display: inline-block;
+          vertical-align: middle;
+          text-transform: uppercase;
+        }
+      }
+
+      .brz-eventCalendar-layout {
+        .brz-eventCalendar-month:first-of-type {
+          display: block;
+        }
+
+        .brz-eventCalendar-month {
+          display: none;
+
+          .brz-eventCalendar-table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: separate;
+
+            .brz-eventCalendar-row-weekdays {
+              th {
+                padding: 0.5rem;
+                border: 0;
+              }
+            }
+
+            tbody .brz-eventCalendar-row {
+              .brz-eventCalendar-day {
+                vertical-align: top;
+                word-break: break-word;
+                height: 120px;
+                padding: 5px;
+
+                .brz-eventCalendar-links {
+                  padding: 0;
+                  list-style-type: none;
+                  text-decoration: none;
+
+                  li .brz-eventCalendar-title a {
+                    text-decoration: none;
+                    color: inherit;
+                  }
+                }
+
+                .brz-eventCalendar-day-number {
+                  display: flex;
+                  margin: 0 0 1rem 0;
+
+                  span {
+                    display: flex;
+                    align-items: center;
+                    align-content: space-around;
+                    justify-content: space-around;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+&:not(.brz-ed) {
+  .brz-eventCalendar__wrapper
+    .brz-eventCalendar
+    .brz-eventCalendar_wrap
+    .brz-eventCalendar-layout {
+    .brz-eventCalendar-month.active {
+      display: block;
+    }
+
+    .brz-eventCalendar-month {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .brz-eventCalendar__wrapper
+    .brz-eventCalendar
+    .brz-eventCalendar_wrap
+    .brz-eventCalendar-layout {
+    .brz-eventCalendar-month {
+      display: none;
+
+      .brz-eventCalendar-table {
+        border-spacing: 0;
+
+        tbody {
+          .brz-eventCalendar-row-weekdays {
+            display: none;
+            flex-wrap: wrap;
+            width: 100%;
+
+            th {
+              display: none;
+            }
+          }
+
+          tr {
+            .brz-eventCalendar-day-np {
+              display: none;
+            }
+          }
+
+          .brz-eventCalendar-row {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+
+            .brz-eventCalendar-day-np {
+              display: none;
+            }
+
+            .brz-eventCalendar-day {
+              display: block;
+              clear: both;
+              height: auto;
+              width: 100%;
+              max-width: 100%;
+              min-height: 120px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

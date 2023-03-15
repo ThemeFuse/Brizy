@@ -34,21 +34,42 @@ export interface UnitPatch {
 }
 
 // is it correct fn name?
-export const fromImageElementModel = readWithParser<ElementModel, ImagePatch>({
+interface FromImageElementModel extends ElementModel {
+  imageSrc: unknown | undefined;
+  imageExtension: unknown | undefined;
+  imageHeight: unknown | undefined;
+  imageWidth: unknown | undefined;
+}
+
+export const fromImageElementModel = readWithParser<
+  FromImageElementModel,
+  ImagePatch
+>({
   imageSrc: mPipe(prop("imageSrc"), Str.read),
   imageExtension: mPipe(prop("imageExtension"), Str.read),
   imageHeight: mPipe(prop("imageHeight"), Num.read),
   imageWidth: mPipe(prop("imageWidth"), Num.read)
 });
 
+interface FromImageDCElementModel extends ElementModel {
+  imagePopulation: unknown | undefined;
+}
+
 export const fromImageDCElementModel = readWithParser<
-  ElementModel,
+  FromImageDCElementModel,
   ImageDCPatch
 >({
   imagePopulation: mPipe(prop("imagePopulation"), Str.read)
 });
 
-export const patchImageSizeType = readWithParser<ElementModel, SizeTypePatch>({
+interface PatchImageSizeType extends ElementModel {
+  sizeType: unknown | undefined;
+}
+
+export const patchImageSizeType = readWithParser<
+  PatchImageSizeType,
+  SizeTypePatch
+>({
   sizeType: mPipe(prop("sizeType"), Str.read)
 });
 

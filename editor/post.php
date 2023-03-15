@@ -480,6 +480,10 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	 */
 	public function set_editor_data( $content ) {
 
+		if ( is_null( $content ) ) {
+			$content = '';
+		}
+
 		if ( base64_decode( $content, true ) !== false ) {
 			$this->editor_data = $content;
 		} else {

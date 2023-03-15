@@ -1,3 +1,12 @@
+import { ComponentProps } from "react";
+import {
+  OptionName,
+  OptionTypes,
+  OptionValue
+} from "visual/component/Options/types";
+import { UserRole } from "visual/types";
+import { Device } from "visual/utils/devices";
+import { Disabled } from "visual/utils/disabled";
 import {
   WithClassName,
   WithHelper,
@@ -5,16 +14,7 @@ import {
   WithLabel,
   WithPopulation
 } from "visual/utils/options/attributes";
-import {
-  OptionName,
-  OptionTypes,
-  OptionValue
-} from "visual/component/Options/types";
-import { ComponentProps } from "react";
-import { Device } from "visual/utils/devices";
-import { Disabled } from "visual/utils/disabled";
 import { State } from "visual/utils/stateMode";
-import { UserRole } from "visual/types";
 
 export type GenericToolbarItemType<K extends OptionName> = WithId<string> &
   WithLabel &
@@ -40,15 +40,15 @@ export type GenericToolbarItemType<K extends OptionName> = WithId<string> &
     states?: State[];
     position?: number;
     roles?: UserRole[]; //TODO: Make sure that roles are a concrete type, not string
+    isPro?: boolean;
   };
 
 type ToolbarItemsTypes = { [P in OptionName]: GenericToolbarItemType<P> };
 
 export type ToolbarItemType = ToolbarItemsTypes[keyof ToolbarItemsTypes];
 
-export type OptionDefinition<
-  T extends OptionName = OptionName
-> = GenericToolbarItemType<T> & {
-  value: OptionValue<T>;
-  onChange: (v: OptionValue<T>) => void;
-};
+export type OptionDefinition<T extends OptionName = OptionName> =
+  GenericToolbarItemType<T> & {
+    value: OptionValue<T>;
+    onChange: (v: OptionValue<T>) => void;
+  };

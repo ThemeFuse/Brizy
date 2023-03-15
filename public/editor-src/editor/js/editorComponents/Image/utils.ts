@@ -1,11 +1,13 @@
-import Config from "visual/global/Config";
-import * as Str from "visual/utils/string/specs";
-import { clamp, roundTo } from "visual/utils/math";
-import { ImageSize, Unit, V } from "./types";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { defaultValueValue } from "visual/utils/onChange";
+import { Value as ImageUploadValue } from "visual/component/Options/types/dev/ImageUpload/Types";
 import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import Config from "visual/global/Config";
+import { imageSpecificSize, imageUrl } from "visual/utils/image";
+import { clamp, roundTo } from "visual/utils/math";
+import { defaultValueValue } from "visual/utils/onChange";
+import { ResponsiveMode } from "visual/utils/responsiveMode";
+import * as Str from "visual/utils/string/specs";
 import { isNullish } from "visual/utils/value";
+import { ImageSize, Unit, V } from "./types";
 
 export interface ImageValue {
   size: number;
@@ -280,3 +282,56 @@ export const showOriginalImage = (v: V): boolean =>
       v.imageSrc &&
       v.showOriginalImage === "on"
   );
+
+export function getCustomImageUrl(
+  v: ImageUploadValue,
+  wrapperSize: WrapperSizes,
+  imageSize: ImageSize
+): { url: string; source: string | null } {
+  const cW = Math.round(wrapperSize.width);
+  const cH = Math.round(wrapperSize.height);
+
+  const sizeType = v.sizeType;
+  const size = getImageSize(sizeType);
+
+  if (isPredefinedSize(size) || isOriginalSize(size)) {
+    const url = imageSpecificSize(v.src, { size: sizeType });
+
+    return {
+      source: url,
+      url: `${url} 1x, ${url} 2x`
+    };
+  }
+
+  const { width: iW, height: iH } = imageSize;
+
+  const oX = Math.abs(imageSize.marginLeft);
+  const oY = Math.abs(imageSize.marginTop);
+  const src = v.src;
+  const options = {
+    iW: Math.round(iW),
+    iH: Math.round(iH),
+    oX: Math.round(oX),
+    oY: Math.round(oY),
+    cW: Math.round(cW),
+    cH: Math.round(cH)
+  };
+  const url = imageUrl(src, options);
+
+  return {
+    source: url,
+    url: `${url} 1x, ${imageUrl(src, multiplier(options, 2))} 2x`
+  };
+}
+
+export function multiplier<
+  T extends Record<string, string | number | undefined>
+>(data: T, num: number): T {
+  const maxRetinaSize = 9000; // restrictions for backend
+  return Object.entries(data).reduce((acc: T, [key, value]) => {
+    acc[key as keyof T] = (
+      typeof value === "number" ? Math.min(value * num, maxRetinaSize) : value
+    ) as T[keyof T];
+    return acc;
+  }, data);
+}

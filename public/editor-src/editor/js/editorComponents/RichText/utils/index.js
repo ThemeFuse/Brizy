@@ -1,8 +1,14 @@
+import { mPipe, optional, parseStrict, pass } from "fp-utilities";
 import Config from "visual/global/Config";
 import { isHex } from "visual/utils/color";
+import { pipe } from "visual/utils/fp";
 import { getDynamicContentByPlaceholder } from "visual/utils/options";
+import * as Obj from "visual/utils/reader/object";
+import * as Str from "visual/utils/reader/string";
 import { decodeFromString } from "visual/utils/string";
+import { onNullish, throwOnNullish } from "visual/utils/value";
 import { classNamesToV } from "./transforms";
+
 // have problems with cheerio it declared _ as global variables
 const $doc = IS_EDITOR ? require("jquery") : require("cheerio");
 
@@ -57,7 +63,7 @@ const getCSSVarValue = (cssVar) => {
   return getComputedStyle(document.documentElement).getPropertyValue(cssVar);
 };
 
-const parseShadow = (str = "") => {
+export const parseShadow = (str = "") => {
   if (str.includes("var")) {
     const regExp =
       /rgba\(var\((.*?)\),(\d+(?:\.\d+)?)\)+\s+(\d+px)\s?(\d+px)\s?(\d+px)/;
@@ -155,7 +161,9 @@ const getLink = (value = "{}") => {
 };
 
 export const getFormats = ($elem, format = {}, deviceMode) => {
-  const v = classNamesToV($elem.closest("p, :header, pre, li"));
+  const v = classNamesToV(
+    $elem.closest("p, :header, pre, li").attr("class")?.split(" ") ?? []
+  );
   const dynamicContent = Config.get("dynamicContent") || {};
   format = flatFormats(format);
 
@@ -258,4 +266,24 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
       : null,
     tagName: getTagName(format, $elem)
   };
+};
+
+export const dcItemOptionParser = parseStrict({
+  label: pipe(
+    mPipe(pass(Obj.isObject), Obj.readKey("label"), Str.read),
+    throwOnNullish("Invalid label")
+  ),
+  placeholder: pipe(
+    mPipe(pass(Obj.isObject), Obj.readKey("placeholder"), Str.read),
+    throwOnNullish("Invalid placeholder")
+  ),
+  display: pipe(
+    mPipe(pass(Obj.isObject), Obj.readKey("display"), Str.read),
+    onNullish("inline")
+  ),
+  alias: optional((v) => Str.read(v.alias))
+});
+
+export const createLabel = (label) => {
+  return `#${label}`;
 };

@@ -5,11 +5,11 @@
 .brz-ed-popover__options .brz-ed-option,
 .brz-ed-sidebar__right__option,
 .brz-ed-sidebar__right .brz-ed-option {
-  font-family: $font-family-1;
-  font-size: $options-item-font-size;
+  font-family: $default-font-family;
+  font-size: $options__item-font-size;
   line-height: normal;
-  min-height: $options-item-height;
-  border-bottom: 1px solid $brand-options-border;
+  min-height: $options__item-height;
+  border-bottom: 1px solid $brand__options-border;
   margin-bottom: -1px;
 
   &:last-child {
@@ -22,7 +22,7 @@
   transition: color 0.2s linear;
 
   &:hover {
-    color: $brand-primary;
+    color: $brand__primary;
     transition: color 0.2s linear;
   }
 }
@@ -31,16 +31,17 @@
 .brz-ed-popover__options,
 .brz-ed-popover__option {
   .brz-ed-option {
-    padding: 10px $options-item-padding;
+    padding: 10px $options__item-padding;
     user-select: none;
 
     &:first-child {
       padding-top: 15px;
       border-top-color: transparent;
     }
+
     &:last-child {
       padding-bottom: 15px;
-      min-height: $options-item-height;
+      min-height: $options__item-height;
     }
   }
 
@@ -50,35 +51,41 @@
     padding: 0;
   }
 }
-.brz-ed-tabs__option--inline:first-child:last-child > {
-  .brz-ed-tabs__options > {
-    .brz-ed-popover__option {
+
+.brz-ed-tabs__option--inline:first-child:last-child> {
+
+  .brz-ed-popover__option,
+  .brz-ed-tabs__options>.brz-ed-popover__option {
+    &:first-child {
+      padding-top: 15px;
+    }
+
+    &:last-child {
+      padding-bottom: 15px;
+    }
+  }
+
+  .brz-ed-control__tabs__top+.brz-ed-control__tab__content> {
+
+    .brz-ed-popover__option,
+    .brz-ed-tabs__options>.brz-ed-popover__option {
       &:first-child {
-        padding-top: 15px;
+        padding-top: 10px;
       }
+
       &:last-child {
         padding-bottom: 15px;
       }
     }
   }
-  .brz-ed-control__tabs__top + .brz-ed-control__tab__content > {
-    .brz-ed-tabs__options > {
-      .brz-ed-popover__option {
-        &:first-child {
-          padding-top: 10px;
-        }
-        &:last-child {
-          padding-bottom: 15px;
-        }
-      }
-    }
-  }
 }
+
 .brz-ed-control__tabs__content__left {
   min-height: 89px;
 }
-.brz-ed-tabs__option--inline + .brz-ed-option__advanced {
-  border-top: 1px solid $brand-options-border;
+
+.brz-ed-tabs__option--inline+.brz-ed-option__advanced {
+  border-top: 1px solid $brand__options-border;
 }
 
 // Option
@@ -89,60 +96,68 @@
     justify-content: space-between;
     text-align: left;
   }
+
   &__block {
     display: flex;
     flex-direction: column;
     align-items: normal;
     text-align: left;
 
-    & > .brz-ed-option__label {
+    &>.brz-ed-option__label {
       flex-basis: auto;
       margin-right: 0;
       justify-content: space-between;
       margin-bottom: 6px;
     }
+
     &.brz-ed-option__slider {
       padding-top: 15px !important;
     }
+
     .brz-input,
     .brz-ed-option__input-container {
       width: 100%;
       max-width: 100%;
     }
+
     .brz-ed-option__input-number-wrap {
       position: relative;
     }
   }
+
   &__advanced {
     padding-top: 15px;
-    color: $brand-primary;
+    color: $brand__primary;
     transition: color 0.2s linear;
     font-size: 0;
 
     &:hover {
       color: #fff;
     }
+
     .brz-icon-svg {
       font-size: 16px;
     }
+
     .brz-ed-option__icon {
       font-size: 0;
     }
+
     .brz-ed-option__label {
       flex-basis: 100%;
       color: inherit;
       font-weight: 600;
       margin: 0 0 0 9px;
       cursor: pointer;
-      font-size: $options-item-font-size;
+      font-size: $options__item-font-size;
     }
   }
 
   // Option Label
   &__label {
-    font-family: $font-family-1;
-    font-size: $options-item-font-size;
-    color: $options-label-color;
+    font-family: $default-font-family;
+    font-size: $options__item-font-size;
+    color: $options__label-color;
     font-weight: 600;
     margin-right: 17px;
     display: flex;
@@ -181,16 +196,17 @@
 }
 
 // Toolbar
-.brz-ed-toolbar__item > {
+.brz-ed-toolbar__item> {
   .brz-ed-option__advanced {
     border: none;
     color: inherit;
     transition: color 0.2s linear;
 
     &:hover {
-      color: $brand-primary;
+      color: $toolbar__item-color--hover;
       transition: color 0.2s linear;
     }
+
     .brz-icon-svg {
       font-size: $toolbar-font-size;
     }
@@ -202,7 +218,7 @@
 
   &__icon {
     font-size: 16px;
-    color: #fff;
+    color: $right_sidebar__icon-color;
   }
 
   &__text {
@@ -210,7 +226,7 @@
   }
 
   // Cannot use `&__icon + &__text` as `.brz-ed-option__label__text` !== `&__text`
-  &__icon + .brz-ed-option__label__text {
+  &__icon+.brz-ed-option__label__text {
     margin-left: 10px;
   }
 }

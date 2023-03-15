@@ -8,7 +8,7 @@ import CreateList from "./CreateList";
 
 const getError = (type, app) => {
   if (type === "server") {
-    return t("List are not created please connect the support");
+    return t("No lists were created, please contact our support");
   }
 
   const {

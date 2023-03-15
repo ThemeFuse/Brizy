@@ -90,7 +90,7 @@ function postsQuery(v: V): WPPostsQuery {
       for (const [taxonomy, terms] of parseTerms(incTerm)) {
         includeQuery[index++] = {
           taxonomy,
-          field: "id",
+          field: "term_id",
           terms
         };
       }
@@ -98,14 +98,14 @@ function postsQuery(v: V): WPPostsQuery {
 
     if (hasExcTerms) {
       excludeQuery = {
-        relation: "OR"
+        relation: "AND"
       };
 
       let index = 0;
       for (const [taxonomy, terms] of parseTerms(excTerm)) {
         excludeQuery[index++] = {
           taxonomy,
-          field: "id",
+          field: "term_id",
           terms,
           operator: "NOT IN"
         };

@@ -1,87 +1,143 @@
-import React from "react";
+import {
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors
+} from "@dnd-kit/core";
+import {
+  restrictToVerticalAxis,
+  restrictToWindowEdges
+} from "@dnd-kit/modifiers";
+import {
+  SortableContext,
+  arrayMove,
+  useSortable,
+  verticalListSortingStrategy
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import classnames from "classnames";
+import React from "react";
 import { connect } from "react-redux";
-import {
-  SortableContainer,
-  SortableElement,
-  SortableHandle
-} from "react-sortable-hoc";
-import { removeAt, insert } from "timm";
 import EditorIcon from "visual/component/EditorIcon";
+import Config from "visual/global/Config";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { removeBlock, reorderBlocks } from "visual/redux/actions2";
 import {
-  pageSelector,
+  globalBlocksSelector,
   pageBlocksAssembledSelector,
-  globalBlocksSelector
+  pageSelector
 } from "visual/redux/selectors";
 import { canUseCondition } from "visual/utils/blocks";
-import { removeBlock, reorderBlocks } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
-import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
+import { isPopup, isStory } from "visual/utils/models";
 import BlockThumbnail from "./BlockThumbnail";
 
-const DragHandle = SortableHandle(({ item }) => (
-  <BlockThumbnail blockData={item} />
-));
+const DragHandle = ({ item }) => <BlockThumbnail blockData={item} />;
 
-const SortableItem = SortableElement(
-  ({ item, globalBlocks, page, onRemove }) => {
-    if (item.type === "GlobalBlock") {
-      const { _id } = item.value;
+const SortableItem = ({ item, globalBlocks, page, onRemove, id }) => {
+  if (item.type === "GlobalBlock") {
+    const { _id } = item.value;
 
-      try {
-        if (!canUseCondition(globalBlocks[_id], page)) {
-          return <div />;
-        }
-      } catch {
+    try {
+      if (!canUseCondition(globalBlocks[_id], page)) {
         return <div />;
       }
+    } catch {
+      return <div />;
     }
+  }
 
-    return (
-      <div className="brz-ed-sidebar-block-item">
+  const { active, attributes, listeners, transform, transition, setNodeRef } =
+    useSortable({ id });
+
+  const isActive = active?.id === id;
+  const style = {
+    transform: CSS.Translate.toString(transform),
+    transition
+  };
+
+  return (
+    <div
+      className="brz-ed-sidebar-block-item"
+      style={{ zIndex: isActive ? 1 : 0 }}
+    >
+      <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
         <DragHandle item={item} />
-        <div className="brz-ed-sidebar-block-remove" onClick={onRemove}>
-          <EditorIcon icon="nc-circle-remove-2" className="brz-ed-bar-icon" />
-        </div>
       </div>
+      <div className="brz-ed-sidebar-block-remove" onClick={onRemove}>
+        <EditorIcon icon="nc-circle-remove-2" className="brz-ed-bar-icon" />
+      </div>
+    </div>
+  );
+};
+
+const SortableList = ({
+  isSorting,
+  items,
+  globalBlocks,
+  page,
+  onItemRemove,
+  onSortEnd,
+  onSortStart
+}) => {
+  //sortable context doesnt accept complex objects (array of ids needed)
+  const filteredItemsIds = [];
+  const filteredItems = [];
+
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    const id = item.value._id;
+
+    if (item.value._blockVisibility === "unlisted") continue;
+
+    filteredItemsIds.push(id);
+    filteredItems.push(
+      <SortableItem
+        key={item.value._id}
+        item={item}
+        globalBlocks={globalBlocks}
+        page={page}
+        id={id}
+        onRemove={() => onItemRemove(i)}
+      />
     );
   }
-);
 
-const SortableList = SortableContainer(
-  ({ isSorting, items, innerRef, globalBlocks, page, onItemRemove }) => {
-    const filteredItems = [];
-
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-
-      if (item.value._blockVisibility === "unlisted") {
-        continue;
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      // creates a delay so the click events could trigger
+      activationConstraint: {
+        distance: 10
       }
+    }),
+    useSensor(KeyboardSensor)
+  );
 
-      filteredItems.push(
-        <SortableItem
-          key={item.value._id}
-          item={item}
-          globalBlocks={globalBlocks}
-          page={page}
-          index={i}
-          onRemove={() => onItemRemove(i)}
-        />
-      );
-    }
+  const className = classnames("brz-ed-sidebar-sortable", {
+    "brz-ed-sidebar-sortable--sorting": isSorting
+  });
 
-    const className = classnames("brz-ed-sidebar-sortable", {
-      "brz-ed-sidebar-sortable--sorting": isSorting
-    });
-
-    return (
-      <div ref={innerRef} className={className}>
-        {filteredItems}
-      </div>
-    );
-  }
-);
+  return (
+    <div className={className}>
+      <DndContext
+        onDragStart={onSortStart}
+        onDragEnd={onSortEnd}
+        sensors={sensors}
+        modifiers={[restrictToWindowEdges, restrictToVerticalAxis]}
+        collisionDetection={closestCenter}
+      >
+        <SortableContext
+          items={filteredItemsIds}
+          strategy={verticalListSortingStrategy}
+        >
+          {filteredItems}
+        </SortableContext>
+      </DndContext>
+    </div>
+  );
+};
 
 class DrawerComponent extends React.Component {
   static getDerivedStateFromProps(props, state) {
@@ -111,7 +167,7 @@ class DrawerComponent extends React.Component {
 
   content = React.createRef();
 
-  handleBeforeSortStart = () => {
+  handleSortStart = () => {
     this.setState({ isSorting: true });
   };
 
@@ -125,35 +181,45 @@ class DrawerComponent extends React.Component {
     return node && node.parentElement;
   };
 
-  handleSortEnd = ({ oldIndex, newIndex }) => {
-    if (oldIndex !== newIndex) {
-      // make an optimistic update,
-      // after which update the store fo real
-      this.setState(
-        state => {
-          const { blocks } = state;
-          const movedBlock = blocks[oldIndex];
+  handleSortEnd = (event) => {
+    const { active, over } = event;
 
-          return {
-            blocks: insert(removeAt(blocks, oldIndex), newIndex, movedBlock),
-            optimistic: true,
-            isSorting: false
-          };
-        },
-        () => {
-          setTimeout(() => {
-            this.props.dispatch(reorderBlocks({ oldIndex, newIndex }));
-          }, 100);
-        }
-      );
-    } else {
-      this.setState({
+    if (!over) {
+      return this.setState({
         isSorting: false
       });
     }
+    const oldIndex = this.state.blocks.findIndex(
+      (item) => item.value._id === active.id
+    );
+    const newIndex = this.state.blocks.findIndex(
+      (item) => item.value._id === over.id
+    );
+
+    if (oldIndex === newIndex) {
+      return this.setState({
+        isSorting: false
+      });
+    }
+    // make an optimistic update,
+    // after which update the store fo real
+    this.setState(
+      (state) => {
+        const { blocks } = state;
+
+        return {
+          blocks: arrayMove(blocks, oldIndex, newIndex),
+          optimistic: true,
+          isSorting: false
+        };
+      },
+      () => {
+        this.props.dispatch(reorderBlocks({ oldIndex, newIndex }));
+      }
+    );
   };
 
-  handleItemRemove = index => {
+  handleItemRemove = (index) => {
     const {
       value: { _id }
     } = this.state.blocks[index];
@@ -177,7 +243,7 @@ class DrawerComponent extends React.Component {
         page={page}
         contentWindow={this.getContentWindow}
         getContainer={this.getContainer}
-        onSortStart={this.handleBeforeSortStart}
+        onSortStart={this.handleSortStart}
         onSortEnd={this.handleSortEnd}
         onItemRemove={this.handleItemRemove}
       />
@@ -185,17 +251,17 @@ class DrawerComponent extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   pageBlocks: pageBlocksAssembledSelector(state),
   globalBlocks: globalBlocksSelector(state),
   page: pageSelector(state)
 });
 
 export const BlocksSortable = {
-  id: "blocksSortable",
+  id: LeftSidebarOptionsIds.reorderBlock,
   type: "drawer",
   icon: "nc-reorder",
-  disabled: IS_GLOBAL_POPUP || IS_STORY,
+  disabled: isPopup(Config.getAll()) || isStory(Config.getAll()),
   drawerTitle: t("Reorder Blocks"),
   drawerComponent: connect(mapStateToProps)(DrawerComponent)
 };

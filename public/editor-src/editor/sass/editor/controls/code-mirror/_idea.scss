@@ -1,89 +1,117 @@
 .cm-s-idea {
-  background: #fff;
-  color: #000;
+  background: $modal_email__template__code_mirror-bg;
+  color: $modal_email__template__code_mirror-color;
 }
+
 .cm-s-idea span.cm-meta {
-  color: #808000;
+  color: $modal_email__template__code_mirror__meta;
 }
+
 .cm-s-idea span.cm-number {
-  color: #00f;
+  color: $modal_email__template__code_mirror__number;
 }
+
 .cm-s-idea span.cm-keyword {
   line-height: 1em;
   font-weight: bold;
-  color: #000080;
+  color: $modal_email__template__code_mirror__keyword;
 }
+
 .cm-s-idea span.cm-atom {
   font-weight: bold;
-  color: #000080;
+  color: $modal_email__template__code_mirror__atom;
 }
+
 .cm-s-idea span.cm-def {
-  color: #000;
+  color: $modal_email__template__code_mirror__def;
 }
+
 .cm-s-idea span.cm-variable {
-  color: black;
+  color: $modal_email__template__code_mirror__variable;
 }
+
 .cm-s-idea span.cm-variable-2 {
-  color: black;
+  color: $modal_email__template__code_mirror__variable;
 }
-.cm-s-idea span.cm-variable-3, .cm-s-idea span.cm-type {
-  color: black;
+
+.cm-s-idea span.cm-variable-3,
+.cm-s-idea span.cm-type {
+  color: $modal_email__template__code_mirror__variable;
 }
+
 .cm-s-idea span.cm-property {
-  color: black;
+  color: $modal_email__template__code_mirror__property;
 }
+
 .cm-s-idea span.cm-operator {
-  color: black;
+  color: $modal_email__template__code_mirror__operator;
 }
+
 .cm-s-idea span.cm-comment {
-  color: #808080;
+  color: $modal_email__template__code_mirror__comment;
 }
+
 .cm-s-idea span.cm-string {
-  color: #008000;
+  color: $modal_email__template__code_mirror__string;
 }
+
 .cm-s-idea span.cm-string-2 {
-  color: #008000;
+  color: $modal_email__template__code_mirror__string;
 }
+
 .cm-s-idea span.cm-qualifier {
-  color: #555;
+  color: $modal_email__template__code_mirror__qualifier;
 }
+
 .cm-s-idea span.cm-error {
-  color: #f00;
+  color: $modal_email__template__code_mirror__error;
 }
+
 .cm-s-idea span.cm-attribute {
-  color: #00f;
+  color: $modal_email__template__code_mirror__attribute;
 }
+
 .cm-s-idea span.cm-tag {
-  color: #000080;
+  color: $modal_email__template__code_mirror__tag;
 }
+
 .cm-s-idea span.cm-link {
-  color: #00f;
+  color: $modal_email__template__code_mirror__link;
 }
+
 .cm-s-idea .CodeMirror-activeline-background {
-  background: #fffae3;
+  background: $modal_email__template__code_mirror__activeline-bg;
 }
+
 .cm-s-idea span.cm-builtin {
-  color: #30a;
+  color: $modal_email__template__code_mirror__builtin;
 }
+
 .cm-s-idea span.cm-bracket {
-  color: #cc7;
+  color: $modal_email__template__code_mirror__bracket;
 }
+
 .cm-s-idea {
-  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono,
+    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
 }
+
 .cm-s-idea .CodeMirror-matchingbracket {
-  outline: 1px solid grey;
-  color: black !important;
+  outline: 1px solid $modal_email__template__code_mirror__matchingbracket-outline;
+  color: $modal_email__template__code_mirror__matchingbracket-color !important;
 }
+
 .cm-s-idea .CodeMirror-cursor {
-  border-left: 1px solid black;
+  border-left: 1px solid $modal_email__template__code_mirror__cursor;
 }
+
 .CodeMirror-hints.idea {
-  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
-  color: #616569;
-  background-color: #ebf3fd !important;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  color: $modal_email__template__code_mirror__hints-color;
+  background-color: $modal_email__template__code_mirror__hints-bg !important;
 }
+
 .CodeMirror-hints.idea .CodeMirror-hint-active {
-  background-color: #a2b8c9 !important;
-  color: #5c6065 !important;
+  background-color: $modal_email__template__code_mirror__hints-bg--active !important;
+  color: $modal_email__template__code_mirror__hints--active !important;
 }

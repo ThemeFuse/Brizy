@@ -1,14 +1,12 @@
+import classnames from "classnames";
 import React, { Component } from "react";
 import _ from "underscore";
-import classnames from "classnames";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { ProInfo } from "visual/component/ProInfo";
-import { IS_PRO } from "visual/utils/env";
 import Config from "visual/global/Config";
+import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
-
-const { upgradeToPro } = Config.get("urls");
 
 export default class GridItem extends Component {
   static defaultProps = {
@@ -44,6 +42,7 @@ export default class GridItem extends Component {
       "brz-ed-popup-integrations__app-logo",
       this.state.tooltipOpen && "brz-ed-popup-integrations__app-logo--open"
     );
+    const { upgradeToPro } = Config.getAll().urls;
 
     return (
       <div className="brz-ed-popup-integrations__app brz-ed-popup-integrations__app--pro">
@@ -110,6 +109,8 @@ export default class GridItem extends Component {
   }
 
   render() {
-    return !IS_PRO && this.props.pro ? this.renderPro() : this.renderFree();
+    return !isPro(Config.getAll()) && this.props.pro
+      ? this.renderPro()
+      : this.renderFree();
   }
 }

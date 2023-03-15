@@ -1,12 +1,13 @@
 import { Role } from "visual/utils/membership";
 import { DynamicContent } from "../DynamicContent";
-import { Config } from "../index";
+import { Module } from "../Module";
 import { Pro } from "../Pro";
 import { Project } from "../Project";
 import { Rule } from "../Rule";
 import { TemplateType } from "../TemplateType";
 import { Urls } from "../Urls";
 import { User } from "../User";
+import { Config } from "../index";
 import { ConfigCommon } from "./ConfigCommon";
 
 type Term = {
@@ -81,6 +82,7 @@ export interface Prop {
 
   availableRoles: Role[];
   page: string;
+  l10n?: Record<string, string>;
 }
 
 export interface WP extends ConfigCommon {
@@ -91,7 +93,7 @@ export interface WP extends ConfigCommon {
   urls: Urls<"wp">;
   project: Project<"wp">;
   template_type?: TemplateType;
-
+  modules: Module<"wp">;
   wp: Prop;
 }
 

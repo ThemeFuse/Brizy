@@ -4,17 +4,17 @@
 
   &:hover {
     transition: color 0.2s linear;
-    color: $brand-primary;
+    color: $toolbar__item-color--hover;
   }
 }
 
 // Round Plus Button
 .floating-action-button {
   position: relative;
-  width: $block-adder-icon-size;
-  height: $block-adder-icon-size;
+  width: $block__adder__icon-size;
+  height: $block__adder__icon-size;
   border-radius: 50%;
-  background: $brand-primary;
+  background: $block__adder__icon-bg;
   cursor: pointer;
   z-index: 10;
   transition: background 200ms linear;
@@ -25,21 +25,25 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    background: #fff;
+    background: $block__adder__icon__before-bg;
     transform: translate(-50%, -50%);
     transition: transform 200ms linear;
   }
+
   &:before {
     width: 16px;
     height: 2px;
   }
+
   &:after {
     width: 2px;
     height: 16px;
   }
+
   &:hover {
-    background: #03080f;
+    background: $block__adder__icon-bg--hover;
   }
+
   &--icon {
     color: #fff;
     font-size: 16px;
@@ -50,6 +54,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
     }
+
     &:after,
     &:before {
       display: none;

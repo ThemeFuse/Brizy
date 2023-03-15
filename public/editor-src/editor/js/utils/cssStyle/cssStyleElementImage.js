@@ -360,7 +360,13 @@ export function cssStyleElementImageMaskDropShadow({
   state,
   prefix = "maskShadow"
 }) {
-  return cssStyleDropShadow({ v, device, state, prefix });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  const maskShape = dvv("maskShape");
+
+  return maskShape === "none"
+    ? ""
+    : cssStyleDropShadow({ v, device, state, prefix });
 }
 
 export function cssStyleElementImageCustomImage({
@@ -377,7 +383,7 @@ export function cssStyleElementImageCustomImage({
   const fileName = dvv(capByPrefix(prefix, "imageFileName"));
 
   if ((extension === "png" || extension === "svg") && src) {
-    const image = `-webkit-mask-image:  url(${imageUrl(src, { fileName })});`;
+    const image = `-webkit-mask-image:  url("${imageUrl(src, { fileName })}");`;
     return maskShape === "custom" ? image : "";
   }
 

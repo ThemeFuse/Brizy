@@ -9,27 +9,29 @@
   // Reset margin that may be set from outside
   margin: 0;
 }
+
 .brz-ed-control__tab__content {
   flex: 1 1 auto;
   max-width: 100%;
 }
+
 .brz-ed-control__tabs:not(.brz-ed-control__tabs__left) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  padding-left: $options-item-padding;
-  padding-right: $options-item-padding;
-  border-bottom: 1px solid $brand-options-border;
-  color: $options-label-color;
-  font-family: $font-family-1;
-  font-size: $popover-tabs-font-size;
+  padding-left: $options__item-padding;
+  padding-right: $options__item-padding;
+  border-bottom: 1px solid $popover__tabs-border;
+  color: $popover__tabs-color;
+  font-family: $default-font-family;
+  font-size: $popover__tabs-font-size;
   float: none;
 
   .brz-ed-control__tab {
     cursor: pointer;
     transition: color 0.2s linear;
     border-bottom: 2px solid transparent;
-    height: $popover-tabs-height;
+    height: $popover__tabs-height;
     display: inline-flex;
     align-items: center;
     margin: 0 0 -1px;
@@ -38,12 +40,14 @@
 
     &:hover,
     &.active {
-      color: $brand-primary;
+      color: $popover__tabs-color--active;
       transition: color 0.2s linear;
     }
+
     &.active {
-      border-bottom-color: $brand-primary;
+      border-bottom-color: $popover__tabs-border--active;
     }
+
     &:not(:last-child) {
       margin-right: 15px;
     }
@@ -60,7 +64,7 @@
         font-size: 16px;
         flex: 1 0 auto;
 
-        & + .brz-span:not(:empty) {
+        &+.brz-span:not(:empty) {
           margin-left: 10px;
         }
       }
@@ -81,14 +85,14 @@
   .brz-ed-control__tab {
     width: 30px;
     height: 35px;
-    background-color: rgba(139, 147, 154, 0.92);
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    background-color: $popover__tabs_left-bg;
+    box-shadow: 0 0 5px 0 $popover__tabs_left-box-shadow;
     border-top-left-radius: 7px;
     border-bottom-left-radius: 7px;
     display: flex;
     align-items: center;
     padding-left: 11px;
-    color: #fff;
+    color: $popover__tabs_left-color;
     font-size: 13px;
     cursor: pointer;
     margin: 0 0 1px;
@@ -96,9 +100,15 @@
     left: 8px;
 
     &.active {
-      color: $brand-primary;
-      background-color: rgba(3, 8, 15, 0.92);
+      color: $popover__tabs_left-color--active;
+      background-color: $popover__tabs_left-bg--active;
     }
+  }
+}
+
+.brz-ed-control__tabs__top+.brz-ed-control__tab__content {
+  .brz-ed-control__tabs__left {
+    top: 0;
   }
 }
 
@@ -110,7 +120,7 @@
     margin-right: 10px;
     padding: 0;
 
-    & + .brz-ed-control__tab__content {
+    &+.brz-ed-control__tab__content {
       margin-bottom: -9px;
     }
   }

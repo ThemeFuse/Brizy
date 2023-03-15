@@ -13,6 +13,14 @@
   min-width: 100% !important;
 }
 
+.fb-page[fb-xfbml-state="rendered"] {
+  display: block;
+}
+
+.fb-page[fb-xfbml-state="parsed"] {
+  display: none;
+}
+
 .fb-page,
 .fb-page span,
 .fb-page span iframe[style],
@@ -49,8 +57,45 @@
 .brz-fb-styles-button--small {
   &-button {
     height: 20px;
+
+    div .fb-like span {
+      height: 20px !important;
+    }
   }
   &-boxed {
     height: 64px;
+
+    div .fb-like span {
+      height: 64px !important;
+
+      iframe {
+        max-height: inherit;
+      }
+    }
+  }
+}
+
+.brz-fb-like {
+  display: flex;
+  align-items: center;
+}
+
+&:not(.brz-ed) {
+  .brz-fb-styles-button--small {
+    &-button {
+      .fb-like span {
+        height: 20px !important;
+      }
+    }
+
+    &-boxed {
+      .fb-like span {
+        height: 64px !important;
+
+        iframe {
+          max-height: inherit;
+        }
+      }
+    }
   }
 }

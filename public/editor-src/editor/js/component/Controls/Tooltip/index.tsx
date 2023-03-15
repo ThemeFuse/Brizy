@@ -1,11 +1,11 @@
-import React, { ReactElement, ReactNode, RefObject } from "react";
-import _ from "underscore";
 import classnames from "classnames";
+import React, { ReactElement, ReactNode, RefObject } from "react";
 import { Manager, Reference } from "react-popper";
-import Portal from "visual/component/Portal";
+import _ from "underscore";
 import ClickOutside from "visual/component/ClickOutside";
-import { TooltipContent as Content, Props as ContentProps } from "./Content";
+import Portal from "visual/component/Portal";
 import { WithClassName } from "visual/utils/options/attributes";
+import { TooltipContent as Content, Props as ContentProps } from "./Content";
 
 const stack: Tooltip[] = [];
 
@@ -22,7 +22,7 @@ export interface Prs extends WithClassName {
   openOnClick: boolean;
   closeDelay: number;
   overlay: ReactNode;
-  size?: ContentProps["size"];
+  size?: "small" | "medium" | "large" | "xlarge" | "auto";
   title?: string;
   offset: number;
   toolbar: ContentProps["toolbar"];
@@ -276,7 +276,8 @@ export class Tooltip extends React.Component<Props> {
     );
     const clickOutsideExceptions = [
       ...(_clickOutsideExceptions ?? []),
-      ".brz-ed-tooltip__content-portal"
+      ".brz-ed-tooltip__content-portal",
+      ".brz-ed-eyeDropper"
     ];
 
     return (

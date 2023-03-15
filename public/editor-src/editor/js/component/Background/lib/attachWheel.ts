@@ -4,7 +4,6 @@ const nodeStack = new Map<HTMLElement, Emit>();
 
 const handleWheel = (e: Event) => {
   const count = nodeStack.size;
-  // @ts-expect-error: unused variables
   const [_, nodeCb] = [...nodeStack][count - 1]; // eslint-disable-line @typescript-eslint/no-unused-vars
   nodeCb?.(e);
 };

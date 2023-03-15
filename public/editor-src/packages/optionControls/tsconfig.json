@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "jest-utils": ["./jest-utils"],
+    },
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "target": "es6",
+    "module": "ESNext",
+    "lib": ["dom", "es2017"],
+    "skipLibCheck": true,
+    "outDir": "es",
+    "declaration": true
+  },
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "es",
+    "dist",
+    "mocks",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
+}

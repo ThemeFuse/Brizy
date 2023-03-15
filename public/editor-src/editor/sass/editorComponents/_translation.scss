@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-
   cursor: pointer;
 
   &__code {
@@ -13,14 +12,11 @@
     }
   }
 
-  &__dc {
-    height: 100%;
-  }
-
   .select2-container {
     position: relative !important;
     top: auto !important;
     left: auto !important;
+    width: inherit !important;
   }
 
   &__select {
@@ -66,7 +62,6 @@
   .select2 {
     align-self: center;
     height: 100%;
-    width: 100% !important;
 
     .selection .select2-selection {
       background-color: inherit;
@@ -90,21 +85,22 @@
       border: inherit;
       border-radius: 0;
 
-      .select2-results > .select2-results__options {
-        max-height: initial;
-        font-family: inherit;
-        font-weight: inherit;
-        font-size: inherit;
-        line-height: inherit;
-        letter-spacing: inherit;
+      .select2-results {
+        width: 100%;
+        display: inline-flex;
 
-        .select2-results__option {
-          .brz-translation__select-item {
-            height: 100%;
-          }
+        > .select2-results__options {
+          width: 100%;
+          max-height: initial;
 
-          &:not(:last-child) {
-            border-bottom-width: 0 !important;
+          .select2-results__option {
+            .brz-translation__select-item {
+              height: 100%;
+            }
+
+            &:not(:last-child) {
+              border-bottom-width: 0 !important;
+            }
           }
         }
       }

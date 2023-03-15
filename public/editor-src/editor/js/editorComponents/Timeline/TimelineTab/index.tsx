@@ -4,7 +4,9 @@ import { TextEditor } from "visual/component/Controls/TextEditor";
 import { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorComponent, {
+  ToolbarExtend
+} from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
@@ -26,7 +28,13 @@ export interface Value extends ElementModel {
   colorOpacity: number;
 }
 
-export default class TimelineTab extends EditorComponent<Value> {
+interface Props {
+  verticalMode: string;
+  timelineStyle: string;
+  toolbarExtendLabel: ToolbarExtend;
+}
+
+export default class TimelineTab extends EditorComponent<Value, Props> {
   static get componentId(): "TimelineTab" {
     return "TimelineTab";
   }

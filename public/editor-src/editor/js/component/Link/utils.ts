@@ -1,9 +1,9 @@
-import { MValue } from "visual/utils/value";
-import { Type } from "./types/Type";
-import { Target } from "./types/Target";
+import Config from "visual/global/Config";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
-import Config from "visual/global/Config";
+import { MValue } from "visual/utils/value";
+import { Target } from "./types/Target";
+import { Type } from "./types/Type";
 
 type Data = { items: Array<{ value: { _id: string; anchorName: string } }> };
 
@@ -15,7 +15,7 @@ export const getAttr = (
   type A = JSX.IntrinsicAttributes;
   type K = keyof A;
   return Object.keys(attr)
-    .filter(key => attr[key as keyof typeof attr] !== "")
+    .filter((key) => attr[key as keyof typeof attr] !== "")
     .reduce((obj: A, key) => {
       obj[key as K] = attr[key as keyof typeof attr];
       return obj;
@@ -43,7 +43,9 @@ export const getHref = (type: Type, _href: string): string => {
           getStore().getState()
         ) as MValue<Data>;
         const pageBlocks = pageDataNoRefs?.items || [];
-        const blockByHref = pageBlocks.find(block => block.value._id === _href);
+        const blockByHref = pageBlocks.find(
+          (block) => block.value._id === _href
+        );
         const anchorName =
           (blockByHref && blockByHref.value.anchorName) || _href;
 
@@ -60,6 +62,7 @@ export const getHref = (type: Type, _href: string): string => {
       href = isWP ? `${customFile}${name}` : `${customFile}/${name}`;
       break;
     }
+    case "page":
     case "lightBox":
     case "external": {
       href = _href;

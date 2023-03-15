@@ -1,7 +1,7 @@
-import { t } from "visual/utils/i18n";
-import { getDynamicContentChoices } from "visual/utils/options";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { t } from "visual/utils/i18n";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { getDynamicContentChoices } from "visual/utils/options";
 
 export function toolbarLinkAnchor({
   v,
@@ -10,8 +10,8 @@ export function toolbarLinkAnchor({
   devices = "all",
   disabled = false
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   return {
     id: dvk("linkAnchor"),
@@ -34,23 +34,6 @@ export function toolbarStoryAnchor({ disabled = false, devices = "all" }) {
       min: 1,
       max: 1000000
     }
-  };
-}
-
-export function toolbarLinkUpload({
-  v,
-  device,
-  state,
-  disabled = false,
-  devices = "all"
-}) {
-  return {
-    id: defaultValueKey({ key: "linkUpload", device, state }),
-    label: t("File"),
-    type: "fileUpload",
-    disabled,
-    devices,
-    value: defaultValueValue({ v, key: "linkUpload", device, state })
   };
 }
 
@@ -91,37 +74,6 @@ export function toolbarLinkExternal({ v, config, devices = "all" }) {
   };
 }
 
-export function toolbarLinkExternalBlank({
-  v,
-  device,
-  state,
-  devices = "all"
-}) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    id: dvk("linkExternalBlank"),
-    type: "switch",
-    label: t("Open In New Tab"),
-    devices,
-    value: dvv("linkExternalBlank")
-  };
-}
-
-export function toolbarLinkExternalRel({ v, device, state, devices = "all" }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
-
-  return {
-    id: dvk("linkExternalRel"),
-    type: "switch",
-    label: t("Make it Nofollow"),
-    devices,
-    value: dvv("linkExternalRel")
-  };
-}
-
 export function toolbarLinkPopup({
   v,
   device,
@@ -131,8 +83,8 @@ export function toolbarLinkPopup({
   component,
   devices = "all"
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   return {
     id: dvk("linkPopup"),

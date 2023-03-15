@@ -287,6 +287,16 @@ class Brizy_Editor_Editor_Editor {
 
 		$config['wp']['postLoopSources'] = $result;
 
+
+		# as stated in this issue: https://github.com/bagrinsergiu/blox-editor/issues/21795
+		# we have to add in config the post sources
+		$config['posts']['sources'] = array_map( function ( $source ) {
+			return [
+				'value' => $source['name'],
+				'title' => $source['label']
+			];
+		}, $result );
+
 		return $config;
 	}
 

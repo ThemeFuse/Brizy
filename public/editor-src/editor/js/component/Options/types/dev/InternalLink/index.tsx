@@ -1,103 +1,119 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
-import { Select2 } from "visual/component/Controls/Select2";
-import { FromElementModel, OptionType } from "visual/component/Options/Type";
-import * as Option from "visual/component/Options/Type";
-import {
-  WithClassName,
-  WithConfig,
-  WithSize
-} from "visual/utils/options/attributes";
-import { MValue } from "visual/utils/value";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
-import { trimTitle } from "./utils";
-import { getPosts } from "./store";
-import { Post, read } from "./types/Post";
-import { pipe } from "visual/utils/fp";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
+import _ from "underscore";
+import { Control } from "visual/component/Controls/InternalLink";
+import { Status } from "visual/component/Controls/InternalLink/types";
+import { ToastNotification } from "visual/component/Notifications";
+import Config from "visual/global/Config";
+import { Choice } from "../Select/types";
+import type { DebouncedSearch, Props } from "./types";
+import { Post } from "./types/Post";
+import { normalizeItems } from "./utils";
 
-export type Props = Option.Props<MValue<Post>> &
-  WithConfig<WithSize> &
-  WithClassName;
-
-export type Component = OptionType<MValue<Post>> & FC<Props>;
-
-export const InternalLink: Component = ({
+export const InternalLink: React.FC<Props> = ({
   className,
   onChange,
   value,
-  config,
-  label
+  label,
+  placeholder,
+  config
 }) => {
-  // Use this flag in order to track if the element is mounted, as there is
-  // no way to cancel promises
-  let unmounted = false;
-  const ref = useRef<boolean>();
+  const { postType = "" } = config ?? {};
+
+  const { label: configLabel, handlerSearch } = useMemo(() => {
+    const editorConfig = Config.getAll();
+
+    const { label, handlerSearch } = editorConfig?.api?.linkPages ?? {};
+
+    return { label, handlerSearch };
+  }, [Config.getAll()]);
+
+  const lastPostType = useRef<string>(postType);
+  const debouncedSearch = useRef<DebouncedSearch>();
   const [items, setItems] = useState<Post[]>(value ? [value] : []);
-  const _onChange = useCallback(
-    pipe(
-      (v: number): Post | undefined => items.find(i => i.id === v),
-      onChange
-    ),
-    [onChange, items]
-  );
-  const loadPosts = (): void => {
-    ref.current ||
-      getPosts()
-        .then(items => {
-          if (!unmounted) {
-            setItems(items);
-            ref.current = true;
+  const [status, setStatus] = useState<Status>(Status.INITIAL);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (postType && lastPostType.current !== postType) {
+      resetValue();
+      lastPostType.current = postType;
+    }
+  }, [postType]);
+
+  useEffect(() => {
+    debouncedSearch.current = _.debounce((search: string) => {
+      if (postType && search && search.trim() !== "" && handlerSearch) {
+        setLoading(true);
+
+        const res = (r: Post[]) => {
+          if (r.length > 0) {
+            setItems(r);
+            setStatus(Status.SUCCESS);
+          } else {
+            setItems([]);
+            setStatus(Status.NO_RESULT);
           }
-        })
-        .catch(() => setItems([]));
+          setLoading(false);
+        };
+
+        const rej = (errMsg: string) => {
+          setLoading(false);
+          setStatus(Status.ERROR);
+          ToastNotification.error(errMsg);
+        };
+
+        handlerSearch(res, rej, {
+          id: postType,
+          search
+        });
+      }
+    }, 1000);
+
+    return () => {
+      debouncedSearch.current?.cancel();
+    };
+  }, [postType]);
+
+  const onSearchChange = (searchValue: string): void => {
+    debouncedSearch?.current?.(searchValue);
+    if (!searchValue) {
+      setItems([]);
+      setStatus(Status.INITIAL);
+    }
   };
 
-  useEffect(
-    (): (() => void) => (): void => {
-      unmounted = true;
-    },
-    []
+  const resetValue = () => {
+    setItems([]);
+    _onChange({ title: "", value: "" });
+  };
+
+  const _onChange = useCallback(
+    (v: Choice) => onChange({ id: String(v.value), title: v.title }),
+    [onChange]
   );
+
+  const _items = normalizeItems(items);
 
   return (
     <>
-      {label}
-      <Select2<number>
-        className={className}
+      {configLabel ?? label}
+      <Control
+        className={className ?? ""}
+        value={value}
+        placeholder={placeholder}
+        resetValue={resetValue}
+        items={_items}
+        status={status}
+        loading={loading}
         onChange={_onChange}
-        size={config?.size ?? "auto"}
-        editable={true}
-        value={value?.id ?? 0}
-        onOpen={loadPosts}
-      >
-        {items.map(({ id, title }) => (
-          <Item<number> value={id} key={id}>
-            {trimTitle(title)}
-          </Item>
-        ))}
-      </Select2>
+        onSearch={onSearchChange}
+      />
     </>
   );
-};
-
-const getModel: FromElementModel<MValue<Post>> = get =>
-  read({
-    id: get("value"),
-    title: get("title")
-  });
-
-const getElementModel: Option.ToElementModel<MValue<Post>> = values => {
-  return {
-    value: values?.id,
-    title: values?.title
-  };
-};
-
-InternalLink.fromElementModel = getModel;
-
-InternalLink.toElementModel = getElementModel;
-
-InternalLink.defaultValue = {
-  // @ts-expect-error: What default value(id) should be?
-  id: null,
-  title: ""
 };

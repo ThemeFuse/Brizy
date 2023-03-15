@@ -1,7 +1,7 @@
 .brz-ed-component__label {
-  font-family: $font-family-1;
-  font-size: $options-item-font-size;
-  color: $options-label-color;
+  font-family: $default-font-family;
+  font-size: $options__item-font-size;
+  color: $options__label-color;
   font-weight: 600;
   flex-basis: auto;
   margin-right: 17px;

@@ -1,10 +1,11 @@
 import React, { ReactElement, useRef } from "react";
-import { ColorFormats } from "tinycolor2";
 import _ from "underscore";
+import {
+  HSLAChange,
+  HSVAChange
+} from "visual/component/Controls/ColorPicker2/types";
 import { hexToRgba, isHex } from "visual/utils/color";
 import Brizy from "./Brizy";
-
-type RGBA = ColorFormats.RGBA;
 
 const DEFAULT_HEX = "#000000";
 const DEFAULT_OPACITY = 1;
@@ -47,23 +48,13 @@ function ColorPicker2({
     ? DEFAULT_OPACITY
     : value.opacity;
 
-  const handleChange = (value: {
-    hex: string;
-    rgb: RGBA;
-    wasChanged: string;
-    opacityDragEnd: boolean | undefined;
-  }): void => {
-    const {
-      hex,
-      rgb: { a: opacity },
-      wasChanged,
-      opacityDragEnd
-    } = value;
+  const handleChange = (value: HSVAChange | HSLAChange): void => {
+    const { hex = "", rgb, wasChanged, opacityDragEnd } = value;
 
-    const newHex = hex.toLowerCase();
+    const newHex = hex?.toLowerCase();
     throttleOnChange?.({
       hex: newHex,
-      opacity: Number(Number(opacity).toFixed(2)),
+      opacity: Number(Number(rgb?.a).toFixed(2)),
       isChanged: wasChanged === "opacity" ? "opacity" : "hex",
       opacityDragEnd: !!opacityDragEnd
     });

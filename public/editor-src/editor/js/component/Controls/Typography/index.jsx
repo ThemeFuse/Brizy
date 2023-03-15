@@ -1,31 +1,36 @@
-import React, { PureComponent } from "react";
-import T from "prop-types";
 import classNames from "classnames";
-import { t } from "visual/utils/i18n";
-import Select from "visual/component/Controls/Select";
-import Stepper from "visual/component/Controls/Stepper";
-import SelectItem from "visual/component/Controls/Select/SelectItem";
-import { FontStyle } from "./FontStyle";
-import { Label } from "visual/component/Label";
+import T from "prop-types";
+import React, { PureComponent } from "react";
 import { FontFamily } from "visual/component/Controls/FontFamily";
-import { IS_STORY } from "visual/utils/models";
+import Select from "visual/component/Controls/Select";
+import SelectItem from "visual/component/Controls/Select/SelectItem";
+import Stepper from "visual/component/Controls/Stepper";
+import { Label } from "visual/component/Label";
+import Config from "visual/global/Config";
+import { t } from "visual/utils/i18n";
+import { isStory } from "visual/utils/models";
+import { FontStyle } from "./FontStyle";
 
 export class Typography extends PureComponent {
-  onFontFamily = v => this.props.onChange(v, { isChanged: "fontFamily" });
-  onFontStyle = v => this.props.onChange(v, { isChanged: "fontStyle" });
-  onFontSize = v => this.props.onChange(v, { isChanged: "fontSize" });
-  onFontSizeSuffix = v =>
+  onFontFamily = (v) => this.props.onChange(v, { isChanged: "fontFamily" });
+  onFontStyle = (v) => this.props.onChange(v, { isChanged: "fontStyle" });
+  onFontSize = (v) => this.props.onChange(v, { isChanged: "fontSize" });
+  onFontSizeSuffix = (v) =>
     this.props.onChange(v, { isChanged: "fontSizeSuffix" });
-  onFontWeight = v => this.props.onChange(v, { isChanged: "fontWeight" });
-  onLineHeight = v => this.props.onChange(v, { isChanged: "lineHeight" });
-  onLetterSpacing = v => this.props.onChange(v, { isChanged: "letterSpacing" });
+  onFontWeight = (v) => this.props.onChange(v, { isChanged: "fontWeight" });
+  onLineHeight = (v) => this.props.onChange(v, { isChanged: "lineHeight" });
+  onLetterSpacing = (v) =>
+    this.props.onChange(v, { isChanged: "letterSpacing" });
 
   render() {
     const props = this.props;
 
     const _className = classNames(
       "brz-ed-control__typography",
-      props.className
+      props.className,
+      {
+        "brz-ed-control__typography--style-only": !props.fontFamily
+      }
     );
 
     return (
@@ -50,7 +55,7 @@ export class Typography extends PureComponent {
             />
           </div>
           <div className="brz-ed__col brz-ed__col-1-2">
-            {IS_STORY ? (
+            {isStory(Config.getAll()) ? (
               <Label>{props.sizeLabel}</Label>
             ) : (
               <div className="brz-control__typography-suffix">
@@ -132,10 +137,7 @@ Typography.propTypes = {
   className: T.string,
   onChange: T.func.isRequired,
   fontFamily: T.bool,
-  fonts: FontFamily.propTypes.fonts,
   font: T.string.isRequired,
-  fontAdd: FontFamily.propTypes.addFont,
-  fontAddLabel: FontFamily.propTypes.addFontLabel,
   styles: FontStyle.propTypes.styles,
   style: T.string.isRequired,
   styleLabel: FontStyle.propTypes.label,

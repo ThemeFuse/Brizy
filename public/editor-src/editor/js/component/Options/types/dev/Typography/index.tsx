@@ -1,37 +1,33 @@
 import React, { FC, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Prompts from "visual/component/Prompts";
 import { Typography as Control } from "visual/component/Controls/Typography";
-import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
-import {
-  DEFAULT_VALUE,
-  getValue,
-  getElementModel,
-  getModel
-} from "./componentUtils";
+import * as Option from "visual/component/Options/Type";
+import Prompts from "visual/component/Prompts";
+import { currentUserRole } from "visual/component/Roles";
+import GlobalConfig from "visual/global/Config";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { updateUI } from "visual/redux/actions2";
 import {
   deviceModeSelector,
   getDefaultFontDetailsSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import {
   fontTransform,
   getFontStyles,
   getWeightChoices
 } from "visual/utils/fonts";
-import { currentUserRole } from "visual/component/Roles";
-import { t } from "visual/utils/i18n";
-import { updateUI } from "visual/redux/actions2";
-import { Config } from "./types/Config";
-import { Value } from "./types/Value";
-import * as Option from "visual/component/Options/Type";
-import { OptionType } from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { FontsBlock } from "./types/FontsBlocks";
-import { ReduxState } from "visual/redux/types";
-import { Font } from "./types/Font";
-import * as Patch from "./types/Patch";
+import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import * as FontWeight from "visual/utils/fonts/Weight";
+import { t } from "visual/utils/i18n";
+import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { getValue } from "./componentUtils";
+import { Config } from "./types/Config";
+import { Font } from "./types/Font";
+import { FontsBlock } from "./types/FontsBlocks";
+import * as Patch from "./types/Patch";
+import { Value } from "./types/Value";
 
 const openFontsUploader = (): void => {
   Prompts.open({
@@ -45,11 +41,7 @@ export interface Props
     WithConfig<Config>,
     WithClassName {}
 
-export const Typography: OptionType<Value, Patch.Patch> & FC<Props> = ({
-  value,
-  onChange,
-  config
-}) => {
+export const Typography: FC<Props> = ({ value, onChange, config }) => {
   const dispatch = useDispatch();
   const unDeletedFonts = useSelector<ReduxState, ReduxState["fonts"]>(
     unDeletedFontsSelector
@@ -96,11 +88,13 @@ export const Typography: OptionType<Value, Patch.Patch> & FC<Props> = ({
           const value = withFontFamily
             ? Patch.fullFont({
                 ..._value,
-                [meta.isChanged]: v as Patch.FontSettings[keyof Patch.FontSettings]
+                [meta.isChanged]:
+                  v as Patch.FontSettings[keyof Patch.FontSettings]
               })
             : Patch.fontSettings({
                 ..._value,
-                [meta.isChanged]: v as Patch.FontSettings[keyof Patch.FontSettings]
+                [meta.isChanged]:
+                  v as Patch.FontSettings[keyof Patch.FontSettings]
               });
           return onChange(value);
         }
@@ -113,8 +107,18 @@ export const Typography: OptionType<Value, Patch.Patch> & FC<Props> = ({
     dispatch(
       updateUI("leftSidebar", {
         isOpen: true,
-        drawerContentType: "styling"
+        drawerContentType: LeftSidebarOptionsIds.globalStyle
       })
+    );
+  }, []);
+
+  const enableGlobalStyle = useMemo((): boolean => {
+    const config = GlobalConfig.getAll();
+    const { bottomTabsOrder = [], topTabsOrder = [] } =
+      config.ui?.leftSidebar ?? {};
+
+    return [...bottomTabsOrder, ...topTabsOrder].includes(
+      LeftSidebarOptionsIds.globalStyle
     );
   }, []);
 
@@ -134,7 +138,7 @@ export const Typography: OptionType<Value, Patch.Patch> & FC<Props> = ({
       fontAddLabel={t("Add New Font")}
       styles={styles}
       style={_value.fontStyle}
-      styleOpenSettings={handleOpenStyles}
+      styleOpenSettings={enableGlobalStyle ? handleOpenStyles : undefined}
       size={_value.fontSize}
       sizeSuffix={_value.fontSizeSuffix}
       sizeSuffixes={SizeSuffix.getSuffixChoices}
@@ -154,9 +158,3 @@ export const Typography: OptionType<Value, Patch.Patch> & FC<Props> = ({
     />
   );
 };
-
-Typography.fromElementModel = getModel;
-
-Typography.toElementModel = getElementModel;
-
-Typography.defaultValue = DEFAULT_VALUE;

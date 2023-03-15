@@ -3,7 +3,6 @@
 // --- Fonts
 $scroll-pane-margin: 6px;
 $toolbar-fonts-height: 200px; //235px;
-$toolbar-fonts-item-active: #3ebfe8;
 $font-item-offset: 10px;
 
 // --
@@ -18,7 +17,7 @@ $font-item-offset: 10px;
   &__typography {
     height: $toolbar-fonts-height;
     flex-grow: 1;
-    border-right: 1px solid $toolbar-border-color;
+    border-right: 1px solid $toolbar-border;
     overflow: hidden; // FIXME
     padding: 7px 3px 45px 0;
     position: relative;
@@ -29,6 +28,7 @@ $font-item-offset: 10px;
       overflow: hidden;
     }
   }
+
   &__typography-adder {
     cursor: pointer;
     position: absolute;
@@ -36,19 +36,21 @@ $font-item-offset: 10px;
     align-items: center;
     bottom: 14px;
     left: $font-item-offset;
-    color: #818a91;
+    color: $toolbar__fonts__add-color;
     font-weight: 600;
     font-size: 14px;
     transition: 0.2s linear color;
 
     &:hover {
-      color: $toolbar-fonts-item-active;
+      color: $toolbar__fonts-color--active;
       transition: 0.2s linear color;
     }
+
     .brz-icon-svg {
       margin-right: 10px;
     }
   }
+
   &__right {
     display: flex;
     flex-direction: column;
@@ -61,13 +63,13 @@ $font-item-offset: 10px;
     padding-bottom: 15px;
     padding-left: $font-item-offset;
     line-height: 1;
-    color: #fff;
+    color: $toolbar__fonts-color;
     cursor: pointer;
 
     &.active,
     &:hover {
       transition: color 0.2s linear;
-      color: $toolbar-fonts-item-active;
+      color: $toolbar__fonts-color--active;
     }
   }
 
@@ -78,16 +80,17 @@ $font-item-offset: 10px;
     padding: 0;
     margin: 0 0 17px 27px;
     border: 0;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: $toolbar__fonts__separator-bg;
   }
 
   // Left content
   &-field {
     margin-bottom: 18px;
   }
+
   &__label {
-    color: $options-label-color;
-    font-size: $options-item-font-size;
+    color: $options__label-color;
+    font-size: $options__item-font-size;
     margin-bottom: 8px;
   }
 }

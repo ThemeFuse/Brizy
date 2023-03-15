@@ -33,7 +33,7 @@ export function getItems({ v, device, state }) {
         },
         {
           id: "autoPlay",
-          label: t("Auto Play"),
+          label: t("Autoplay"),
           type: "switch-dev",
           devices: "desktop"
         },

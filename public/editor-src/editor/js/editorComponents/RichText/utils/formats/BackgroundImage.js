@@ -1,6 +1,7 @@
 import Quill from "quill";
 import { imageUrl, svgUrl } from "visual/utils/image";
 import { getImagePopulation } from "../requests/ImagePopulation";
+
 let Inline = Quill.import("blots/inline");
 const isSVG = (extension) => extension === "svg";
 
@@ -60,7 +61,7 @@ class BackgroundImage extends Inline {
           .getAttribute("data-item_id");
         getImagePopulation(population, itemId).then((url) => {
           if (url) {
-            node.style.backgroundImage = `url(${url})`;
+            node.style.backgroundImage = `url("${url}")`;
             node.classList.add("brz-population-mask__style");
           }
         });
@@ -72,7 +73,7 @@ class BackgroundImage extends Inline {
       node.classList.add("brz-text-mask");
       node.classList.remove("brz-population-mask");
       node.classList.remove("brz-population-mask__style");
-      node.style.backgroundImage = `url(${imgUrl})`;
+      node.style.backgroundImage = `url("${imgUrl}")`;
       node.style.backgroundPosition = `${x}% ${y}%`;
       node.removeAttribute("data-image_population");
       node.setAttribute("data-image_src", src);

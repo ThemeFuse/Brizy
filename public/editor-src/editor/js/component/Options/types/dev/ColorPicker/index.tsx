@@ -1,31 +1,24 @@
-import React, { FC, useCallback } from "react";
 import classNames from "classnames";
-import { updateUI } from "visual/redux/actions2";
+import React, { FC, useCallback, useMemo } from "react";
+import { useDispatch } from "react-redux";
 import {
   ColorPicker3,
   Props as ColorPicker3Props
 } from "visual/component/Controls/ColorPicker3";
-import { getColorPaletteColors as paletteColors } from "visual/utils/color";
-import * as Palette from "./entities/palette";
-import * as Num from "visual/utils/math/number";
-import * as Hex from "visual/utils/color/Hex";
-import { setHex, setPalette, setOpacity as _setOpacity } from "./model";
-import * as Utils from "./utils";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
-import { paletteHex } from "./utils";
-import {
-  ToElementModel,
-  FromElementModel,
-  OptionType
-} from "visual/component/Options/Type";
 import * as Option from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { Value } from "./entities/Value";
-import { useDispatch } from "react-redux";
-import { Black } from "visual/utils/color/Hex";
+import GlobalConfig from "visual/global/Config";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { updateUI } from "visual/redux/actions2";
+import { getColorPaletteColors as paletteColors } from "visual/utils/color";
+import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { mPipe } from "visual/utils/fp";
-import * as Str from "visual/utils/string/specs";
+import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { Value } from "./entities/Value";
+import * as Palette from "./entities/palette";
+import { setOpacity as _setOpacity, setHex, setPalette } from "./model";
+import * as Utils from "./utils";
 
 const setOpacity = Utils.setOpacity.bind(null, _setOpacity);
 
@@ -40,7 +33,7 @@ export interface Props
   attr?: Record<string, string>;
 }
 
-export const ColorPicker: OptionType<Value> & FC<Props> = ({
+export const ColorPicker: FC<Props> = ({
   className: _className,
   attr,
   onChange,
@@ -58,7 +51,7 @@ export const ColorPicker: OptionType<Value> & FC<Props> = ({
       dispatch(
         updateUI("leftSidebar", {
           isOpen: true,
-          drawerContentType: "styling"
+          drawerContentType: LeftSidebarOptionsIds.globalStyle
         })
       ),
     [dispatch]
@@ -70,7 +63,7 @@ export const ColorPicker: OptionType<Value> & FC<Props> = ({
           mPipe(
             () => v.palette,
             Palette.fromString,
-            v => setPalette(v, value),
+            (v) => setPalette(v, value),
             onChange
           )();
           break;
@@ -78,7 +71,7 @@ export const ColorPicker: OptionType<Value> & FC<Props> = ({
           mPipe(
             () => v.hex,
             Hex.fromString,
-            v => setHex(v, value),
+            (v) => setHex(v, value),
             onChange
           )();
           break;
@@ -86,7 +79,7 @@ export const ColorPicker: OptionType<Value> & FC<Props> = ({
           mPipe(
             () => v.opacity,
             Opacity.fromNumber,
-            v => setOpacity(v, value, !!meta.opacityDragEnd),
+            (v) => setOpacity(v, value, !!meta.opacityDragEnd),
             onChange
           )();
           break;
@@ -95,10 +88,20 @@ export const ColorPicker: OptionType<Value> & FC<Props> = ({
     [value, onChange]
   );
 
-  const onHexChange = useCallback(hex => onChange(setHex(hex, value)), [
-    value,
-    onChange
-  ]);
+  const onHexChange = useCallback(
+    (hex) => onChange(setHex(hex, value)),
+    [value, onChange]
+  );
+
+  const enableGlobalStyle = useMemo((): boolean => {
+    const config = GlobalConfig.getAll();
+    const { bottomTabsOrder = [], topTabsOrder = [] } =
+      config.ui?.leftSidebar ?? {};
+
+    return [...bottomTabsOrder, ...topTabsOrder].includes(
+      LeftSidebarOptionsIds.globalStyle
+    );
+  }, []);
 
   return (
     <div {...attr} className={className}>
@@ -107,56 +110,9 @@ export const ColorPicker: OptionType<Value> & FC<Props> = ({
         opacity={config?.opacity ?? true}
         onChange={_onChange}
         palette={paletteColors()}
-        paletteOpenSettings={openLeftSidebar}
+        paletteOpenSettings={enableGlobalStyle ? openLeftSidebar : undefined}
       />
       <ColorPickerInputs value={value.hex} onChange={onHexChange} />
     </div>
   );
 };
-
-const DEFAULT_VALUE: Value = {
-  hex: Black,
-  opacity: Opacity.unsafe(1),
-  tempOpacity: Opacity.unsafe(1),
-  palette: "",
-  tempPalette: ""
-};
-
-const getModel: FromElementModel<Value> = get => {
-  const palette =
-    mPipe(() => get("palette"), Str.read, Palette.fromString)() ??
-    DEFAULT_VALUE.palette;
-
-  return {
-    hex:
-      paletteHex(palette, paletteColors()) ??
-      mPipe(get, Str.read, Hex.fromString)("hex") ??
-      DEFAULT_VALUE.hex,
-    opacity:
-      mPipe(() => get("opacity"), Num.read, Opacity.fromNumber)() ??
-      DEFAULT_VALUE.opacity,
-    palette: palette,
-    tempOpacity:
-      mPipe(() => get("tempOpacity"), Num.read, Opacity.fromNumber)() ??
-      DEFAULT_VALUE.tempOpacity,
-    tempPalette:
-      mPipe(get, Str.read, Palette.fromString)("tempPalette") ??
-      DEFAULT_VALUE.palette
-  };
-};
-
-const getElementModel: ToElementModel<Value> = values => {
-  return {
-    hex: values.hex,
-    opacity: values.opacity,
-    palette: values.palette,
-    tempOpacity: values.tempOpacity,
-    tempPalette: values.tempPalette
-  };
-};
-
-ColorPicker.defaultValue = DEFAULT_VALUE;
-
-ColorPicker.fromElementModel = getModel;
-
-ColorPicker.toElementModel = getElementModel;

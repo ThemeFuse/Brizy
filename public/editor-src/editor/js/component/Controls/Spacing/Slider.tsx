@@ -7,6 +7,7 @@ import {
 import { OptionLabel } from "visual/component/OptionLabel";
 import { OnChange } from "visual/component/Options/Type";
 import { OptionWrapper } from "visual/component/OptionWrapper";
+import { Literal } from "visual/utils/types/Literal";
 
 export type Props<U> = {
   className?: string;
@@ -23,7 +24,7 @@ export type Props<U> = {
   title?: string;
 };
 
-export function Slider<U>({
+export function Slider<U extends Literal>({
   value,
   unit,
   onUnit,

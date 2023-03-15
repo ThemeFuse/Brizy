@@ -42,7 +42,7 @@ import {
 } from "visual/utils/api/types";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { IS_WP } from "visual/utils/env";
-import { normalizeFonts, normalizeFontStyles } from "visual/utils/fonts";
+import { normalizeFontStyles, normalizeFonts } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
 import { BlockScreenshots } from "visual/utils/screenshots/types";
 import {
@@ -401,13 +401,9 @@ class Library extends Component<
       case BLOCK: {
         this.handleAddBlock(uid).catch(() => {
           this.handleLoadingBlock(uid, type, false);
-          const { getParentNode } = this.props;
-          const parent = (getParentNode && getParentNode()) || document;
-          const doc = parent.ownerDocument?.body;
 
           ToastNotification.error(
-            t("Unable to insert block. Please try again or contact support"),
-            { toastContainer: doc }
+            t("Unable to insert block. Please try again or contact support")
           );
         });
         break;
@@ -415,13 +411,9 @@ class Library extends Component<
       case POPUP: {
         this.handleAddPopup(uid).catch(() => {
           this.handleLoadingBlock(uid, type, false);
-          const { getParentNode } = this.props;
-          const parent = (getParentNode && getParentNode()) || document;
-          const doc = parent.ownerDocument?.body;
 
           ToastNotification.error(
-            t("Unable to insert popup. Please try again or contact support"),
-            { toastContainer: doc }
+            t("Unable to insert popup. Please try again or contact support")
           );
         });
         break;
@@ -429,13 +421,9 @@ class Library extends Component<
       case LAYOUT: {
         this.handleAddLayout(uid).catch(() => {
           this.handleLoadingBlock(uid, type, false);
-          const { getParentNode } = this.props;
-          const parent = (getParentNode && getParentNode()) || document;
-          const doc = parent.ownerDocument?.body;
 
           ToastNotification.error(
-            t("Unable to insert layout. Please try again or contact support"),
-            { toastContainer: doc }
+            t("Unable to insert layout. Please try again or contact support")
           );
         });
         break;
@@ -531,9 +519,7 @@ class Library extends Component<
         this.setState({ importLoading: false });
 
         data.errors.forEach(({ message }) => {
-          ToastNotification.error(message, {
-            toastContainer: window.parent.document.body
-          });
+          ToastNotification.error(message);
         });
       }
     } catch (e) {
@@ -545,9 +531,7 @@ class Library extends Component<
         this.setState({ importLoading: false }, () => {
           const message = getError(e);
 
-          ToastNotification.error(message, {
-            toastContainer: window.parent.document.body
-          });
+          ToastNotification.error(message);
         });
       }
     }
@@ -565,7 +549,7 @@ class Library extends Component<
       thumbnailSrc: url,
       thumbnailWidth: width,
       thumbnailHeight: height,
-      showRemoveIcon: block.isCloudEntity !== true && isAdminRole,
+      showRemoveIcon: !block.isCloudEntity && isAdminRole,
       loading: false
     };
   }

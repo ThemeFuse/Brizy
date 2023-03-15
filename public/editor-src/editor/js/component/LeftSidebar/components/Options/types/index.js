@@ -1,11 +1,11 @@
 import Button from "./Button";
+import Custom from "./Custom";
+import Drawer from "./Drawer";
+import { Languages } from "./Languages";
 import Link from "./Link";
 import Popover from "./Popover";
-import Drawer from "./Drawer";
-import Custom from "./Custom";
 import { Roles } from "./Roles";
 import Template from "./Template";
-import { Languages } from "./Languages";
 
 export default {
   button: Button,
@@ -13,7 +13,7 @@ export default {
   popover: Popover,
   drawer: Drawer,
   custom: Custom,
-  showMembership: Roles,
+  membership: Roles,
   template: Template,
   language: Languages
 };

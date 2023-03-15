@@ -1,0 +1,14 @@
+.brz-eventLayout {
+  .brz-eventLayout--list-item,
+  .brz-eventLayout--calendar-item {
+    display: block !important;
+  }
+
+  .brz-eventLayout--list-item:not(:first-child) {
+    display: none !important;
+  }
+
+  .brz-eventLayout--calendar-item:not(:first-child) {
+    display: none !important;
+  }
+}

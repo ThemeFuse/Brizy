@@ -1,28 +1,33 @@
 import Config, { WP } from "visual/global/Config";
 import { Shortcodes } from "visual/types/index.js";
 import {
-  IS_ARCHIVE_TEMPLATE,
-  IS_PAGE,
-  IS_POST,
-  IS_PRODUCT_ARCHIVE_TEMPLATE,
-  IS_PRODUCT_PAGE,
-  IS_PRODUCT_TEMPLATE,
-  IS_SINGLE_TEMPLATE
+  isArchiveTemplate,
+  isPost,
+  isProductArchiveTemplate,
+  isProductPage,
+  isProductTemplate,
+  isSingleTemplate
 } from "visual/utils/env";
 import { isStory } from "visual/utils/models";
 import { hasSidebars, pluginActivated } from "visual/utils/wp";
 import Archive from "./Archive";
+import PostExcerpt from "./PostExcerpt";
+import PostTitle from "./PostTitle";
+import Posts from "./Posts";
+import WOOCategories from "./WOOCategories";
+import WOOPages from "./WOOPages";
+import WPCustomShortcode from "./WPCustomShortcode";
+import WPFeaturedImage from "./WPFeaturedImage";
+import WPSidebar from "./WPSidebar";
 import {
   essentialsCommon,
   essentialsStory,
   grid,
   media,
   mediaStory,
-  social
+  social,
+  content
 } from "./index.common";
-import PostExcerpt from "./PostExcerpt";
-import Posts from "./Posts";
-import PostTitle from "./PostTitle";
 import Products from "./pro/Products";
 import Review from "./pro/Review.js";
 import Search from "./pro/Search";
@@ -45,24 +50,16 @@ import WPBreadcrumbs from "./pro/WPBreadcrumbs";
 import WPPostContent from "./pro/WPPostContent";
 import WPPostInfo from "./pro/WPPostInfo";
 import WPPostNavigation from "./pro/WPPostNavigation";
-import WOOCategories from "./WOOCategories";
-import WOOPages from "./WOOPages";
-import WPCustomShortcode from "./WPCustomShortcode";
-import WPFeaturedImage from "./WPFeaturedImage";
-import WPSidebar from "./WPSidebar";
 
 const _config = Config.getAll() as WP;
 
 const hasWoocommerce = pluginActivated("woocommerce");
 
-const featuredImage = { component: WPFeaturedImage, pro: true };
-
 const essentialsWP = [...essentialsCommon, { component: Search, pro: true }];
 
 const wordpressShortcodes = [
   ...(hasSidebars() ? [{ component: WPSidebar, pro: false }] : []),
-  { component: WPCustomShortcode, pro: false },
-  ...(IS_SINGLE_TEMPLATE || IS_POST || IS_PAGE ? [] : [featuredImage])
+  { component: WPCustomShortcode, pro: false }
 ];
 
 const woocommerceShortcodes = hasWoocommerce
@@ -76,14 +73,15 @@ const woocommerceShortcodes = hasWoocommerce
   : [];
 
 const singleShortcodes = [
-  featuredImage,
-
+  { component: WPFeaturedImage, pro: true },
   { component: PostTitle, pro: true },
   { component: PostExcerpt, pro: true },
-  ...(IS_SINGLE_TEMPLATE ? [{ component: WPPostContent, pro: true }] : []),
+  ...(isSingleTemplate(_config)
+    ? [{ component: WPPostContent, pro: true }]
+    : []),
   { component: WPPostInfo, pro: true },
   { component: WPBreadcrumbs, pro: true },
-  ...(IS_SINGLE_TEMPLATE || IS_POST
+  ...(isSingleTemplate(_config) || isPost(_config)
     ? [{ component: WPPostNavigation, pro: true }]
     : []),
   { component: Posts, pro: true }
@@ -129,49 +127,53 @@ const config = ((): Shortcodes => {
     return { essentials: essentialsStory, media: mediaStory };
   }
 
-  if (IS_PRODUCT_TEMPLATE || IS_PRODUCT_PAGE) {
+  if (isProductTemplate(_config) || isProductPage(_config)) {
     return {
       grid,
       product: productShortcodes,
       woocommerce: woocommerceShortcodes,
       essentials: essentialsWP,
       media,
+      content,
       social: social,
       wordpress: wordpressShortcodes
     };
   }
 
-  if (IS_PRODUCT_ARCHIVE_TEMPLATE) {
+  if (isProductArchiveTemplate(_config)) {
     return {
       grid,
       archive: productArchiveShortcodes,
       woocommerce: woocommerceShortcodes,
       essentials: essentialsWP,
       media,
+      content,
       social: social,
       wordpress: wordpressShortcodes
     };
   }
 
-  if (IS_ARCHIVE_TEMPLATE) {
+  if (isArchiveTemplate(_config)) {
     return {
       grid,
       archive: postArchiveShortcodes,
       essentials: essentialsWP,
       media,
+      content,
       social: social,
       wordpress: wordpressShortcodes,
       woocommerce: woocommerceShortcodes
     };
   }
 
-  if (IS_SINGLE_TEMPLATE || IS_POST) {
+  if (isSingleTemplate(_config) || isPost(_config)) {
     return {
       grid,
       single: singleShortcodes,
       wordpress: wordpressShortcodes,
       essentials: essentialsWP,
       media,
+      content,
       social: social,
       woocommerce: woocommerceShortcodes
     };
@@ -181,6 +183,7 @@ const config = ((): Shortcodes => {
     grid,
     essentials: essentialsWP,
     media,
+    content,
     social: social,
     single: singleShortcodes,
     wordpress: wordpressShortcodes,

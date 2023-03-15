@@ -1,11 +1,13 @@
 &:not(.brz-ed) {
   .brz-login {
+
     .brz-login-form,
     .brz-login__authorized {
       display: none;
     }
   }
 }
+
 .brz-login {
   width: 100%;
 
@@ -13,20 +15,25 @@
     * {
       display: inline;
     }
+
     p {
       margin: 0;
     }
+
     span {
       cursor: pointer;
     }
+
     a {
       text-decoration: none;
     }
   }
+
   span.psw {
     float: right;
     padding-top: 16px;
   }
+
   .brz-input {
     width: 100%;
     height: auto;
@@ -48,15 +55,18 @@
       opacity: 0.5;
     }
   }
+
   &__item {
     flex-grow: 1;
     flex-shrink: 0;
   }
+
   &__item-button {
     .brz-login__item {
       width: 100%;
       overflow: hidden;
     }
+
     .brz-btn {
       outline: none;
       width: 100%;
@@ -64,10 +74,12 @@
       padding-left: 0;
       padding-right: 0;
     }
+
     .brz-icon-svg {
       flex-grow: 0;
     }
   }
+
   &__alert {
     min-height: 55px;
     width: 100%;
@@ -75,7 +87,7 @@
     margin-top: 15px;
     word-break: break-word;
 
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: 12px;
     line-height: 2;
     letter-spacing: 2.5px;
@@ -87,6 +99,7 @@
     &--success {
       background-color: #15d053;
     }
+
     &--error {
       background-color: #f00;
     }
@@ -102,6 +115,7 @@
       }
     }
   }
+
   .brz-control__check-group-option {
     display: flex;
     align-items: center;
@@ -110,6 +124,7 @@
       margin-right: 10px;
     }
   }
+
   .brz-login__field-label {
     display: block;
   }
@@ -121,12 +136,14 @@
       text-decoration: none;
     }
   }
+
   .brz-login-form__field-lost-password,
   .brz-login-form__field-register-link,
   .brz-login-form__field-login-link {
     width: 100%;
     cursor: pointer;
   }
+
   .brz-login-form__field-remember-off.brz-login-form__field-Remember,
   .brz-login-form__field-registerInfo-off {
     padding: 0 !important;

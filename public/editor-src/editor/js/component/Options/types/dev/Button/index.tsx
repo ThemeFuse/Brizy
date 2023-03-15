@@ -1,6 +1,6 @@
 import React from "react";
-import * as Option from "visual/component/Options/Type";
 import { Button as Control } from "visual/component/Controls/Button";
+import * as Option from "visual/component/Options/Type";
 import { WithConfig } from "visual/utils/options/attributes";
 
 export interface Config {
@@ -13,29 +13,13 @@ export interface Props extends Option.Props<undefined>, WithConfig<Config> {
   onClick: VoidFunction;
 }
 
-export const Button: React.FC<Props> & Option.OptionType<undefined> = ({
-  label,
-  onClick,
-  config
-}) => {
+export const Button: React.FC<Props> = ({ label, onClick, config }) => {
   return (
     <>
       {label}
-      <Control
-        onClick={onClick}
-        label={config?.text}
-        icon={config?.icon}
-        reverse={config?.reverse}
-      />
+      <Control onClick={onClick} icon={config?.icon} reverse={config?.reverse}>
+        {config?.text}
+      </Control>
     </>
   );
 };
-
-const getModel: Option.FromElementModel<undefined> = () => undefined;
-const getElementModel: Option.ToElementModel<undefined> = () => ({});
-
-Button.fromElementModel = getModel;
-Button.toElementModel = getElementModel;
-
-// @ts-expect-error: Variable 'defaultValue' implicitly has an 'any' type
-Button.defaultValue = undefined;

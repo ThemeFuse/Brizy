@@ -26,26 +26,30 @@
               background-color: transparent;
             }
           }
+
           .sub-menu {
             display: block;
             left: 15px;
           }
         }
-        & > .menu-item {
+
+        &>.menu-item {
           padding: 0;
 
-          & > .sub-menu {
+          &>.sub-menu {
             top: 100%;
             padding: 5px 0;
           }
         }
       }
+
       .brz-menu-simple__icon {
         display: inline-block;
       }
     }
   }
 }
+
 &.brz-ed--tablet {
   .brz-menu-simple {
     text-align: center;
@@ -73,20 +77,23 @@
               background-color: transparent;
             }
           }
+
           .sub-menu {
             display: block;
             left: 15px;
           }
         }
-        & > .menu-item {
+
+        &>.menu-item {
           padding: 0;
 
-          & > .sub-menu {
+          &>.sub-menu {
             top: 100%;
             padding: 5px 0;
           }
         }
       }
+
       .brz-menu-simple__icon {
         display: inline-block;
       }
@@ -101,7 +108,7 @@
   padding: 0 20px;
   border-radius: 3px;
   background-color: #ececec;
-  font-family: $font-family-1;
+  font-family: $default-font-family;
   font-size: 15px;
   text-overflow: ellipsis;
   overflow: hidden;

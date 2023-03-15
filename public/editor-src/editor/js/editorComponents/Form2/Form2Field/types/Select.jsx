@@ -1,16 +1,16 @@
-import React from "react";
-import _ from "underscore";
 import classnames from "classnames";
+import React from "react";
 import Scrollbars from "react-custom-scrollbars";
-import { replaceAt, addLast, removeAt } from "timm";
-import TextField from "./common/TextField";
-import Portal from "visual/component/Portal";
-import EditorIcon from "visual/component/EditorIcon";
-import { ThemeIcon } from "visual/component/ThemeIcon";
+import { addLast, removeAt, replaceAt } from "timm";
+import _ from "underscore";
 import ClickOutside from "visual/component/ClickOutside";
+import EditorIcon from "visual/component/EditorIcon";
+import Portal from "visual/component/Portal";
+import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
-import Toolbar from "visual/component/Toolbar";
+import TextField from "./common/TextField";
 
 const MAX_ITEM_DROPDOWN = 5;
 
@@ -33,8 +33,11 @@ export default class Select extends TextField {
   };
 
   getClassName() {
+    const { multipleSelection } = this.props;
+
     return classnames(
       "brz-forms2__field brz-forms2__field-select",
+      { "brz-forms2__field-select--multiple": multipleSelection === "on" },
       this.props.selectClassName
     );
   }
@@ -71,18 +74,18 @@ export default class Select extends TextField {
     }
   };
 
-  handleOptionsRemove = index => {
+  handleOptionsRemove = (index) => {
     const options = removeAt(this.props.options, index);
     this.props.onChange({ options });
   };
 
-  handleKeyUp = e => {
+  handleKeyUp = (e) => {
     if (e.keyCode === 13) {
       this.handleOptionsAdd();
     }
   };
 
-  handleClick = e => {
+  handleClick = (e) => {
     e.preventDefault();
     const node = this.input.current;
     node && node.classList.add("brz-ed-dd-cancel");
@@ -93,7 +96,7 @@ export default class Select extends TextField {
     node && node.classList.remove("brz-ed-dd-cancel");
   };
 
-  handleOpen = e => {
+  handleOpen = (e) => {
     this.setState(({ isOpen }) => ({ isOpen: !isOpen }), this.forceUpdate);
     this.handleClick(e);
   };
@@ -118,7 +121,7 @@ export default class Select extends TextField {
             <input
               className="brz-input"
               value={item}
-              onChange={e => this.handleOptionsChange(e.target.value, index)}
+              onChange={(e) => this.handleOptionsChange(e.target.value, index)}
             />
           </div>
           {isDesktop && (
@@ -173,7 +176,7 @@ export default class Select extends TextField {
                       onChange={({ target: { value } }) => {
                         this.setState({ newItemValue: value });
                       }}
-                      onKeyUp={e => this.handleKeyUp(e)}
+                      onKeyUp={(e) => this.handleKeyUp(e)}
                     />
                   </div>
                   <div
@@ -197,7 +200,8 @@ export default class Select extends TextField {
     const clickOutsideExceptions = [
       ".brz-portal-forms__select",
       ".brz-ed-toolbar",
-      ".brz-ed-tooltip__content-portal"
+      ".brz-ed-tooltip__content-portal",
+      ".brz-ed-eyeDropper"
     ];
     const className = classnames("brz-input", {
       "brz-p-events--none": !showPlaceholder
@@ -216,7 +220,7 @@ export default class Select extends TextField {
                 ref={this.input}
                 className={className}
                 value={attr.placeholder}
-                onChange={e => {
+                onChange={(e) => {
                   this.handleChange({ placeholder: e.target.value });
                 }}
                 onBlur={this.handleBlur}
@@ -226,7 +230,7 @@ export default class Select extends TextField {
                 {...attr}
                 ref={this.input}
                 className={className}
-                onChange={e => {
+                onChange={(e) => {
                   this.handleChange({
                     label: e.target.value,
                     placeholder: e.target.value
@@ -249,7 +253,7 @@ export default class Select extends TextField {
 
   renderForView(v) {
     const { label, attr } = v;
-    const options = v.options.filter(option => option && option.trim());
+    const options = v.options.filter((option) => option && option.trim());
 
     return options.length ? (
       <div className={this.getClassName(v)}>

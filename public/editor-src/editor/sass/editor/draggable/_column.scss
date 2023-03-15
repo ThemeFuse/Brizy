@@ -1,6 +1,6 @@
 @use "sass:math";
 // Resizer between Column
-$resize-width: 20px;
+$resize__width: 20px;
 
 // ---
 .brz-ed-draggable__column {
@@ -9,7 +9,7 @@ $resize-width: 20px;
   position: absolute;
   top: 0;
   z-index: z("column-resize");
-  width: $resize-width;
+  width: $resize__width;
   height: 100%;
   cursor: col-resize;
 
@@ -21,19 +21,23 @@ $resize-width: 20px;
     left: 50%;
     border-radius: 8px;
     transform: translate(-3px, -50%);
-    background-color: $resize-blue;
+    background-color: $resize__blue-bg;
   }
+
   &--left {
-    left: -(math.div($resize-width, 2));
+    left: -(math.div($resize__width, 2));
   }
+
   &--right {
-    right: -(math.div($resize-width, 2));
+    right: -(math.div($resize__width, 2));
   }
+
   &--red {
     .brz-ed-draggable__column--item {
-      background-color: $resize-red;
+      background-color: $resize__red-bg;
     }
   }
+
   &-popover {
     position: absolute;
     top: -18px;
@@ -42,15 +46,15 @@ $resize-width: 20px;
     text-align: center;
     padding: 15px 18px;
     min-width: 135px;
-    height: $toolbar-item-height;
-    border-radius: math.div($toolbar-item-height, 2);
+    height: $toolbar__item-height;
+    border-radius: math.div($toolbar__item-height, 2);
     color: #fff;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-weight: 600;
     font-size: 14px;
     line-height: 1;
-    background-color: $toolbar-bg-color;
-    box-shadow: $toolbar-box-shadow;
+    background-color: $toolbar-bg;
+    box-shadow: 0 0 5px 0 $toolbar-box-shadow;
 
     &:after {
       content: "";
@@ -59,14 +63,16 @@ $resize-width: 20px;
       left: 50%;
       margin-left: -6px;
       bottom: -6px;
-      border-top: 6px solid $toolbar-bg-color;
+      border-top: 6px solid $toolbar-bg;
       border-left: 6px solid transparent;
       border-right: 6px solid transparent;
     }
+
     &__divider {
       margin: 0 7px;
       color: #6e787f;
     }
+
     * {
       word-break: normal;
       overflow-wrap: normal;
@@ -75,13 +81,13 @@ $resize-width: 20px;
 }
 
 // containerBorder button
-.brz-ed-draggable__column ~ .brz-ed-border__button {
+.brz-ed-draggable__column~.brz-ed-border__button {
   z-index: z("column-resize");
 }
 
 // Hide Resize for last-child on desktop
 &.brz-ed--desktop {
-  .brz-columns:last-child > .brz-ed-draggable__column--right {
+  .brz-columns:last-child>.brz-ed-draggable__column--right {
     display: none;
   }
 }
@@ -92,6 +98,7 @@ $resize-width: 20px;
   .brz-ed-draggable__column-popover {
     min-width: 85px;
   }
+
   .brz-ed-draggable__column--left {
     display: none;
   }

@@ -3,6 +3,7 @@
   "parserOptions": {
     "ecmaVersion": 2019,
     "sourceType": "module",
+    "requireConfigFile": false,
     "ecmaFeatures": {
       "jsx": true
     },
@@ -107,6 +108,8 @@
     "TARGET": "readonly",
     "IS_EDITOR": "readonly",
     "IS_PREVIEW": "readonly",
+    "IS_EXPORT": "readonly",
+    "AUTHORIZATION_URL": "readonly",
     "__CONFIG__": "readonly",
     "YT": "readonly",
     "getFreeLibs": "readonly",

@@ -12,6 +12,11 @@ export function style(
         "cssStyleDisplayFlex",
         "cssStyleElementTimelineTabs",
         "cssStyleElementTimelineTabsHorizontalStyle3"
+      ],
+      // Horizontal Style-3
+      interval: [
+        "cssStyleElementTimelineHorizontalStyle3GridTemplateColumns",
+        "cssStyleElementTimelineHorizontalStyle3GridTemplateRows"
       ]
     },
     ".brz && .brz-timeline__nav--title": {
@@ -54,19 +59,25 @@ export function style(
         "cssStyleElementTimelineVerticalTab",
         "cssStyleElementTimelineCustomTabWidth",
         "cssStyleElementTimelineVerticalPosition"
-      ]
+      ],
+      // Horizontal Style-3
+      interval: ["cssStyleElementTimelineHoziontalStyle3TabStyles"]
     },
     ".brz && .brz-timeline__tab:nth-child(odd)": {
       standart: [
         "cssStyleElementTimelineVerticalCustomTabPositionOdd",
         "cssStyleElementTimelineTabHorizontalStyle3Odd"
-      ]
+      ],
+      // Horizontal Style-3
+      interval: ["cssStyleElementTimelineHoziontalStyle3TabStylesOdd"]
     },
     ".brz && .brz-timeline__tab:nth-child(even)": {
       standart: [
         "cssStyleElementTimelineTabCustomStyle",
         "cssStyleElementTimelineVerticalCustomTabPosition"
-      ]
+      ],
+      // Horizontal Style-3
+      interval: ["cssStyleElementTimelineHoziontalStyle3TabStylesEven"]
     },
     ".brz && .brz-timeline__tab:last-child": {
       standart: ["cssStyleElementTimelineVerticalLastTab"]
@@ -96,7 +107,7 @@ export function style(
     ".brz && .brz-timeline__tab:nth-child(even):before": {
       standart: ["cssStyleElementTimelineVerticalCustomPosition"]
     },
-    ".brz && .brz-timeline__tab:after, .brz-timeline__tab:before": {
+    ".brz && .brz-timeline__tab:after, && .brz-timeline__tab:before": {
       standart: ["cssStyleElementTimelineLineBgColor"]
     },
     ".brz && .brz-timeline__tab .brz-timeline__content": {

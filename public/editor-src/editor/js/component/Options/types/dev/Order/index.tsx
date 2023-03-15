@@ -1,16 +1,16 @@
+import classNames from "classnames";
 import React, { useCallback } from "react";
+import EditorIcon from "visual/component/EditorIcon";
 import * as Option from "visual/component/Options/Type";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import EditorIcon from "visual/component/EditorIcon";
-import {
-  isDisabled,
-  firstText,
-  secondText,
-  firstArrow,
-  secondArrow
-} from "./utils";
 import { Align } from "./types";
-import classNames from "classnames";
+import {
+  firstArrow,
+  firstText,
+  isDisabled,
+  secondArrow,
+  secondText
+} from "./utils";
 
 const empty = (): void => undefined;
 
@@ -24,11 +24,7 @@ export type Props = Option.Props<undefined> &
   WithConfig<Config> &
   WithClassName;
 
-export const Order: React.FC<Props> & Option.OptionType<undefined> = ({
-  className,
-  config,
-  label
-}) => {
+export const Order: React.FC<Props> = ({ className, config, label }) => {
   const onChange = config?.onChange ?? empty;
   const disable = config?.disable ?? "none";
 
@@ -46,36 +42,41 @@ export const Order: React.FC<Props> & Option.OptionType<undefined> = ({
     <div
       className={classNames(
         className,
-        "brz-ed-option__order",
-        `brz-ed-option__order__${align}`
+        "brz-ed-option__order flex justify-center items-center p-[13px_0]",
+        `brz-ed-option__order__${
+          align === "vertical" ? "vertical flex-col p-[7px_0]" : "horizontal"
+        }`
       )}
     >
       {label}
-      <span title={firstText(align)} onClick={onLeft}>
+      <span title={firstText(align)} onClick={onLeft} className="flex">
         <EditorIcon
           icon={firstArrow(align)}
-          className={classNames({
-            "brz-ed__disabled": isDisabled("prev", disable)
-          })}
+          className={classNames(
+            "transition-[color] duration-200 ease-linear delay-[0s] text-white text-[13px] [&:not(.brz-ed__disabled)]:hover:text-brand-primary",
+            {
+              "brz-ed__disabled !text-gray-light cursor-default": isDisabled(
+                "prev",
+                disable
+              )
+            }
+          )}
         />
       </span>
-      <span title={secondText(align)} onClick={onRight}>
+      <span title={secondText(align)} onClick={onRight} className="flex">
         <EditorIcon
           icon={secondArrow(align)}
-          className={classNames({
-            "brz-ed__disabled": isDisabled("next", disable)
-          })}
+          className={classNames(
+            "transition-[color] duration-200 ease-linear delay-[0s] text-white text-[13px] [&:not(.brz-ed__disabled)]:hover:text-brand-primary",
+            {
+              "brz-ed__disabled !text-gray-light cursor-default": isDisabled(
+                "next",
+                disable
+              )
+            }
+          )}
         />
       </span>
     </div>
   );
 };
-
-const getModel: Option.FromElementModel<undefined> = () => undefined;
-const getElementModel: Option.ToElementModel<undefined> = () => ({});
-
-Order.fromElementModel = getModel;
-Order.toElementModel = getElementModel;
-
-// @ts-expect-error: Variable 'defaultValue' implicitly has an 'any' type.
-Order.defaultValue = undefined;

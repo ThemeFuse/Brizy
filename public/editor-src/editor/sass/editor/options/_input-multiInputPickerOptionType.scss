@@ -11,9 +11,10 @@
     margin-right: 6px;
 
     &:hover {
-      border-bottom: 1px solid $options-label-color;
+      border-bottom: 1px solid $options__label-color;
       transition: 0.2s border-color linear;
     }
+
     &:last-of-type {
       margin-right: 3px;
     }
@@ -47,7 +48,7 @@
     height: 16px;
     width: 25px;
     color: #818a91;
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: 13px;
     font-weight: 600;
     line-height: 16px;
@@ -61,6 +62,7 @@
     cursor: pointer;
   }
 }
+
 .brz-ed-option__multi-border--active {
   .brz-icon {
     color: #33beea;

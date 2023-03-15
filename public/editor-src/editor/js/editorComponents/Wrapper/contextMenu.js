@@ -76,10 +76,10 @@ const translationsMap = {
   WOOProductMeta: t("Product Meta"),
   WOORating: t("Product Rating"),
   WOOCart: t("Shop Cart"),
-  WOOAddToCart: t("Add To Cart"),
+  WOOAddToCart: t("Add to cart"),
   WOOPrice: t("Product Price"),
   WOOStock: t("Product Stock"),
-  WOOSku: t("Product Sku"),
+  WOOSku: t("Product SKU"),
   WOOGallery: t("Product Gallery"),
   WOOAttributes: t("Product Attributes"),
   WOOCategories: t("Shop Categories"),
@@ -92,6 +92,7 @@ const translationsMap = {
   EcwidShoppingBag: t("Shopping Bag"),
 
   // Shopify
+  AddToCart: t("Add To Cart"),
   Quantity: t("Quantity"),
   KlavyioMarketing: t("Email Marketing by Klaviyo"),
   PreProduct: t("PreProduct"),
@@ -119,11 +120,11 @@ const translationsMap = {
   GrowaveWishlist: t("Wishlist by Growave"),
   BoldProduct: t("Product Options by Bold"),
   SnowBall: t("Marketing by Social SnowBall"),
-  HeroWishList: t("WishList by Hero"),
+  HeroWishList: t("Wishlist by Hero"),
   SpecialOffers: t("Special Offers"),
   TrustedBadge: t("Badges by Trusted"),
   OnVoard: t("Notifications by OnVoard"),
-  WideBundle: t("Wide Bundle"),
+  WideBundle: t("WideBundle"),
   HextomBadges: t("Badges by Hextom"),
   ZoorixUpsell: t("Upsell by Zoorix"),
   VideoShopping: t("Video Shopping"),
@@ -155,7 +156,24 @@ const translationsMap = {
   UnlimitedBundles: t("Unlimited Bundles"),
   WiserUpsell: t("Upsell by Wiser"),
   BoldBundles: t("Bundles by Bold"),
-  CrossSell: t("CrossSell")
+  CrossSell: t("Cross Sell"),
+
+  // Ministry Brands
+  MinistryBrandsGroupLayout: t("Group Layout"),
+  MinistryBrandsGroupSlider: t("Group Slider"),
+  MinistryBrandsEventLayout: t("Event Layout"),
+  MinistryBrandsEventCalendar: t("Event Calendar"),
+  MinistryBrandsSermonLayout: t("Sermon Layout"),
+  MinistryBrandsSermonList: t("Sermon List"),
+  MinistryBrandsSermonFeatured: t("Sermon Featured"),
+  MinistryBrandsSermonDetail: t("Sermon Detail"),
+  MinistryBrandsGroupList: t("Group List"),
+  MinistryBrandsGroupDetail: t("Group Detail"),
+  MinistryBrandsEventFeatured: t("Event Featured"),
+  MinistryBrandsGroupFeatured: t("Group Featured"),
+  MinistryBrandsEventList: t("Event List"),
+  MinistryBrandsEventDetail: t("Event Detail"),
+  MinistryBrandsFormWidget: t("Form Widget")
 };
 
 export default {

@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { Calendly as CalendlyComponent } from "component/Flex/Calendly";
 import React, { ReactNode } from "react";
-import { InlineWidget as CalendlyWidget } from "react-calendly";
 import BoxResizer from "visual/component/BoxResizer";
 import { Patch } from "visual/component/BoxResizer/types";
 import { ElementModel } from "visual/component/Elements/Types";
@@ -76,7 +76,7 @@ class Calendly extends EditorComponent<Value, Props> {
             {!link ? (
               <Placeholder icon="calendly" />
             ) : (
-              <CalendlyWidget url={link} />
+              <CalendlyComponent link={link} />
             )}
           </BoxResizer>
         </Wrapper>

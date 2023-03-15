@@ -11,6 +11,7 @@ export { default as FileUpload } from "./Form2/Form2Field/types/FileUpload/expor
 export { default as Image } from "./Image/export.js";
 export { default as Login } from "./Login/export";
 export { default as Map } from "./Map/export.ts";
+export * from "./MinistryBrands/index.export";
 export { default as ProgressBar } from "./ProgressBar/export.js";
 export { default as Protected } from "./ProtectedPage/export.ts";
 export { default as ResetPassword } from "./ResetPassword/export.ts";

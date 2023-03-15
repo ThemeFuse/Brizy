@@ -4,13 +4,13 @@
 // --- Input Control
 .brz-ed-control__input2 {
   input {
-    font-family: $font-family-1;
+    font-family: $default-font-family;
     font-size: $control-font-size;
     font-style: normal;
     font-weight: 400;
     letter-spacing: 0;
-    background: $control-background-color none;
-    color: #fff;
+    background: $input-bg none;
+    color: $input-color;
     flex: 1 1 auto;
     height: $control-height;
     text-indent: 5px;
@@ -27,14 +27,14 @@
 
     &:focus,
     &:active {
-      background-color: $control-background-color;
-      color: #fff;
+      background-color: $input-bg;
+      color: $input-color;
     }
 
     // Placeholder
     @include placeholder {
       & {
-        color: rgba(234, 241, 255, 0.2);
+        color: $input__placeholder-color;
         font-style: italic;
         font-size: 1em;
       }
@@ -47,14 +47,14 @@
   }
 
   &--large input {
-    max-width: $control-lg-width;
+    max-width: $control__lg-width;
   }
 
   &--medium input {
-    max-width: $control-md-width;
+    max-width: $control__md-width;
   }
 
   &--short input {
-    max-width: $control-sm-width;
+    max-width: $control__sm-width;
   }
 }

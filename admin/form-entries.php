@@ -80,8 +80,7 @@ class Brizy_Admin_FormEntries {
 				}
 			}
 
-			echo Brizy_TwigEngine::instance( path_join( BRIZY_PLUGIN_PATH, "admin/views" ) )
-			                     ->render( 'form-data.html.twig', array( 'data' => $data ) );
+			echo Brizy_Admin_View::render( 'form-data', [ 'data' => $data ] );
 		}
 
 		if ( $column_name == 'created_date' ) {

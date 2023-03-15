@@ -1,15 +1,10 @@
 import React, { FC } from "react";
-import { Props, StaticProps } from "./types";
+import { Props } from "./types";
 import { Sync } from "./Sync";
 import { Async } from "./Async";
-import {
-  getModel,
-  getElementModel,
-  defaultValue,
-  isChoicesSync
-} from "./utils";
+import { isChoicesSync } from "./utils";
 
-export const Select: FC<Props> & StaticProps = props => {
+export const Select: FC<Props> = props => {
   if (isChoicesSync(props.choices)) {
     return (
       <>
@@ -26,6 +21,3 @@ export const Select: FC<Props> & StaticProps = props => {
     );
   }
 };
-Select.fromElementModel = getModel;
-Select.toElementModel = getElementModel;
-Select.defaultValue = defaultValue;

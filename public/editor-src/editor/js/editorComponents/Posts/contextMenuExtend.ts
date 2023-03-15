@@ -1,27 +1,25 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import {
-  ContextMenuItem,
-  EditorComponent
-} from "visual/editorComponents/EditorComponent";
+  ContextGetItems,
+  ContextMenuItem
+} from "visual/editorComponents/EditorComponent/types";
 import { detectOS } from "visual/utils/dom/detectOS";
 import { t } from "visual/utils/i18n";
+import type { Editor } from "visual/editorComponents/EditorComponent";
 
 const os = detectOS();
 const isMac = os === "MacOS";
 
-const getKeyModifier = (isInSubMenu: boolean): "Alt" | "⌘" | "Ctrl" => {
+const getKeyModifier = (isInSubMenu: boolean): "alt" | "⌘" | "ctrl" => {
   if (isMac) {
-    return isInSubMenu ? "Alt" : "⌘";
+    return isInSubMenu ? "alt" : "⌘";
   } else {
-    return isInSubMenu ? "Alt" : "Ctrl";
+    return isInSubMenu ? "alt" : "ctrl";
   }
 };
 
 type GetItems = {
-  getItems: (
-    v: ElementModel,
-    c: EditorComponent<ElementModel>
-  ) => ContextMenuItem[];
+  getItems: ContextGetItems<ElementModel>;
 };
 
 export default (itemIndex: number): GetItems => ({
@@ -30,10 +28,7 @@ export default (itemIndex: number): GetItems => ({
 
 const getItems =
   (itemIndex: number) =>
-  (
-    _: ElementModel,
-    component: EditorComponent<ElementModel>
-  ): ContextMenuItem[] => {
+  (_: ElementModel, component: Editor<ElementModel>): ContextMenuItem[] => {
     // @ts-expect-error need transform EditorArrayComponent to ts
     const copiedElement = component.getCurrentCopiedElement();
     const canPaste = copiedElement && copiedElement.type !== "Row";

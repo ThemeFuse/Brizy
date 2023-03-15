@@ -1,7 +1,9 @@
-import Config from "visual/global/Config";
+import Config, { isWp } from "visual/global/Config";
 import { translate } from "./translate";
 
-const WP = Config.get("wp") || {};
-const dictionary = WP.l10n || {};
+export const t = (key: string): string => {
+  const config = Config.getAll();
+  const dictionary = isWp(config) ? config.wp?.l10n ?? {} : {};
 
-export const t = (key: string): string => translate(dictionary, key);
+  return translate(dictionary, key);
+};

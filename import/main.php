@@ -76,8 +76,8 @@ class Brizy_Import_Main {
 			$args          = array_merge( $args, $this->provider->getAllDemos() );
 			$args['count'] = count( $args['demos'] );
 
-			$twig = Brizy_TwigEngine::instance( BRIZY_PLUGIN_PATH . '/import/views' );
-			echo $twig->render('starter-templates.html.twig', $args);
+			Brizy_Editor_View::render( BRIZY_PLUGIN_PATH . '/import/views/starter-templates', $args );
+
 		} catch ( Exception $e ) {
 			echo $e->getMessage();
 		}

@@ -453,6 +453,11 @@ class Brizy_Editor_UrlBuilder
     }
 
 	static public function cleanPath($path) {
+
+		if ( ! $path ) {
+			return $path;
+		}
+
 		$path =  preg_replace("/\.?\.\//m",'',$path);
 		$path =  preg_replace("/(\/+)\.+(\/+)/m",'$1$2',$path);
 		$path =  preg_replace("/\.{2,}/m",'/',$path);

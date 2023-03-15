@@ -36,7 +36,7 @@ const GbConditionsOptionType: React.FC<Props> = ({
         <span className="brz-ed-option__popup_conditions-count">
           {rules.length}
         </span>
-        {t(" Display Conditions")}
+        {t("Display Conditions")}
       </div>
     </ConditionsComponent>
   );

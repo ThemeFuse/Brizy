@@ -1,0 +1,16 @@
+.brz-map-content {
+  @apply overflow-hidden;
+  @apply relative;
+
+  @apply h-full;
+  @apply w-full;
+
+  .brz-iframe {
+    @apply absolute;
+    @apply top-0;
+    @apply left-0;
+    @apply w-full;
+    @apply h-full;
+    @apply border-none;
+  }
+}

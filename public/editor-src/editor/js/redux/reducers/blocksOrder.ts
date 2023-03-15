@@ -1,9 +1,9 @@
 import { insert, removeAt, replaceAt } from "timm";
+import Config from "visual/global/Config";
 import { generateBlocksList } from "visual/utils/blocks";
-import { IS_GLOBAL_POPUP, IS_STORY } from "visual/utils/models";
-
-import { ReduxState } from "../types";
+import { isPopup, isStory } from "visual/utils/models";
 import { ReduxAction } from "../actions2";
+import { ReduxState } from "../types";
 
 type BlocksOrder = ReduxState["blocksOrder"];
 type RBlocksOrder = (
@@ -17,7 +17,7 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
     case "HYDRATE": {
       const items = action.payload.page.data?.items || [];
 
-      if (IS_STORY && items.length === 0) {
+      if (isStory(Config.getAll()) && items.length === 0) {
         return ["ecupxjcqmrpxjdimoebbkbnotrlufkfokjvr"];
       }
 
@@ -61,12 +61,12 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
     }
 
     case "MAKE_GLOBAL_BLOCK_TO_POPUP": {
-      if (IS_GLOBAL_POPUP) {
+      if (isPopup(Config.getAll())) {
         const { block, fromBlockId } = action.payload;
 
         return replaceAt(
           state,
-          state.findIndex(_id => _id === fromBlockId),
+          state.findIndex((_id) => _id === fromBlockId),
           block.value._id
         );
       }
@@ -78,7 +78,7 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
 
       return replaceAt(
         state,
-        state.findIndex(_id => _id === fromBlockId),
+        state.findIndex((_id) => _id === fromBlockId),
         block.value._id
       );
     }
@@ -93,7 +93,7 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
       const { blocks: templateBlocks } = action.payload;
       const { insertIndex } = action.meta;
 
-      const blocksIdsList = templateBlocks.map(item => item.value._id);
+      const blocksIdsList = templateBlocks.map((item) => item.value._id);
 
       return insert(state, insertIndex, blocksIdsList);
     }
@@ -101,7 +101,7 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
     case "UPDATE_BLOCKS": {
       const { blocks } = action.payload;
 
-      return blocks.map(block => block.value._id);
+      return blocks.map((block) => block.value._id);
     }
 
     // if block is a slider & globalBlock and we remove
@@ -112,7 +112,7 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
       const { id, data } = action.payload as { id: string; data: any };
 
       if (data.value === null) {
-        return state.filter(_id => _id !== id);
+        return state.filter((_id) => _id !== id);
       }
 
       return state;

@@ -1,16 +1,17 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import { StarRating1 } from "component/Flex/StarRating1";
+import { StarRating2 } from "component/Flex/StarRating2";
+import React from "react";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
-import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
 import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 export default class StarRating extends EditorComponent {
   static get componentId() {
@@ -21,50 +22,18 @@ export default class StarRating extends EditorComponent {
 
   static experimentalDynamicContent = true;
 
-  handleTextChange = patch => {
+  handleTextChange = (patch) => {
     this.patchValue(patch);
   };
 
-  renderStars(v) {
-    const { iconName, iconType, rating, ratingScale } = v;
-
-    const stars = Array(ratingScale)
-      .fill()
-      .map((_, i) => (
-        <div key={i} className="brz-starrating-icon-wrap">
-          <ThemeIcon
-            name={iconName}
-            type={iconType}
-            className="brz-starrating-color-empty"
-          />
-          <span
-            className="brz-starrating-color"
-            style={{
-              // this is done with calc because v.rating can have dynamic content
-              // which means that we can not do the math in js,
-              // because it would look like: "{{ brizy_dc_post_title }}" - i
-              width: `calc((${v.rating} - ${i}) * 100%)`
-            }}
-          >
-            <ThemeIcon name={iconName} type={iconType} />
-          </span>
-        </div>
-      ));
-
-    return (
-      <div className="brz-starrating-container" title={rating}>
-        {stars}
-      </div>
-    );
-  }
-
   renderForEdit(v, vs, vd) {
-    const { iconName, iconType, label, rating } = v;
+    const { iconName, iconType, label, rating, ratingScale, ratingStyle } = v;
     const className = classnames(
       "brz-starrating",
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
-    const labelText = (
+
+    const labelElement = (
       <Text
         className="brz-starrating-text"
         id="text"
@@ -79,29 +48,71 @@ export default class StarRating extends EditorComponent {
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Wrapper {...this.makeWrapperProps({ className })}>
-            {v.ratingStyle === "style1" && (
-              <>
-                {label === "on" && labelText}
-                {this.renderStars(v)}
-                {label === "on-right" && labelText}
-              </>
+            {ratingStyle === "style1" && (
+              <StarRating1
+                label={labelElement}
+                showLeftLabel={label === "on"}
+                showRightLabel={label === "on-right"}
+                rating={rating}
+                ratingScale={ratingScale}
+                iconName={iconName}
+                iconType={iconType}
+              />
             )}
 
-            {v.ratingStyle === "style2" && (
-              <div className="brz-starrating-style2-container">
-                <span className="brz-starrating-text">{rating}</span>
-                {label !== "off" && (
-                  <ThemeIcon
-                    className="brz-starrating-icon-wrap"
-                    name={iconName}
-                    type={iconType}
-                  />
-                )}
-              </div>
+            {ratingStyle === "style2" && (
+              <StarRating2
+                showIcon={label !== "off"}
+                rating={rating}
+                iconName={iconName}
+                iconType={iconType}
+              />
             )}
           </Wrapper>
         </CustomCSS>
       </Toolbar>
+    );
+  }
+
+  renderForView(v, vs, vd) {
+    const { iconName, iconType, label, rating, ratingScale, ratingStyle } = v;
+    const className = classnames(
+      "brz-starrating",
+      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+    );
+    const labelElement = (
+      <Text
+        className="brz-starrating-text"
+        id="text"
+        v={v}
+        onChange={this.handleTextChange}
+      />
+    );
+    return (
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Wrapper {...this.makeWrapperProps({ className })}>
+          {ratingStyle === "style1" && (
+            <StarRating1
+              label={labelElement}
+              showLeftLabel={label === "on"}
+              showRightLabel={label === "on-right"}
+              rating={rating}
+              ratingScale={ratingScale}
+              iconName={iconName}
+              iconType={iconType}
+            />
+          )}
+
+          {ratingStyle === "style2" && (
+            <StarRating2
+              showIcon={label !== "off"}
+              rating={rating}
+              iconName={iconName}
+              iconType={iconType}
+            />
+          )}
+        </Wrapper>
+      </CustomCSS>
     );
   }
 }

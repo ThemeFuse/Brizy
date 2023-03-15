@@ -18,7 +18,6 @@ export { toolbarColor2, toolbarColorHexField2 } from "./toolbarColor";
 
 // Gradient
 export {
-  toolbarGradientRange,
   toolbarGradientType,
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree
@@ -53,14 +52,8 @@ export {
   toolbarLinkAnchor,
   toolbarLinkExternal,
   toolbarStoryAnchor,
-  toolbarLinkExternalBlank,
-  toolbarLinkExternalRel,
-  toolbarLinkPopup,
-  toolbarLinkUpload
+  toolbarLinkPopup
 } from "./toolbarLink";
-
-// Margin
-export { toolbarMargin } from "./toolbarMargin";
 
 // Show on Devices
 export {
@@ -71,9 +64,6 @@ export {
 
 // Custom CSS Class
 export { toolbarCustomCSSClass } from "./toolbarCustomCSSClass";
-
-// Entrance Animation
-export { toolbarEntranceAnimation } from "./toolbarAnimation";
 
 // Filter
 export {
@@ -106,10 +96,7 @@ export {
 } from "./toolbarElementSection";
 
 // Element Video
-export {
-  toolbarElementVideoUpload,
-  toolbarElementVideoPlaySize
-} from "./toolbarElementVideo";
+export { toolbarElementVideoPlaySize } from "./toolbarElementVideo";
 
 // Element SoundCloud
 export { toolbarElementSoundCloudStyle } from "./toolbarElementSoundCloud";
@@ -120,8 +107,7 @@ export { toolbarElementCloneableSpacing } from "./toolbarElementCloneable";
 // Element Image
 export {
   toolbarImageLinkExternal,
-  toolbarImageTags,
-  toolbarImageBorderRadius
+  toolbarImageTags
 } from "./toolbarElementImage";
 
 // Typography
@@ -154,11 +140,6 @@ export {
   toolbarShapeBottomType,
   toolbarShapeBottomFlip
 } from "./toolbarShape";
-
-// Element Audio
-export {
-  toolbarElementAudioUpload
-} from "./toolbarElementAudio";
 
 // Element WP Posts
 export {

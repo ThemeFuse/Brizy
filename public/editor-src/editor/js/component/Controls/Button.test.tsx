@@ -1,7 +1,7 @@
+import { fireEvent, render } from "@testing-library/react";
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import { Button } from "./Button";
 import Config from "visual/global/Config";
+import { Button } from "./Button";
 
 describe("Test Button", () => {
   beforeAll(() => {
@@ -31,14 +31,16 @@ describe("Test Button", () => {
     });
 
     test("With label", () => {
-      const button = render(<Button onClick={onClick} label={"Test"} />);
+      const button = render(<Button onClick={onClick}>Test</Button>);
 
       expect(button.container.firstChild).toMatchSnapshot();
     });
 
     test("With label add icon", () => {
       const button = render(
-        <Button onClick={onClick} label={"Test"} icon={"nc-cog"} />
+        <Button onClick={onClick} icon={"nc-cog"}>
+          Test
+        </Button>
       );
 
       expect(button.container.firstChild).toMatchSnapshot();
@@ -46,12 +48,9 @@ describe("Test Button", () => {
 
     test("With label and icon and align Left", () => {
       const button = render(
-        <Button
-          onClick={onClick}
-          label={"Test"}
-          icon={"nc-cog"}
-          align={"left"}
-        />
+        <Button onClick={onClick} icon={"nc-cog"} align={"left"}>
+          Test
+        </Button>
       );
 
       expect(button.container.firstChild).toMatchSnapshot();
@@ -59,12 +58,9 @@ describe("Test Button", () => {
 
     test("With label and icon and align Right", () => {
       const button = render(
-        <Button
-          onClick={onClick}
-          label={"Test"}
-          icon={"nc-cog"}
-          align={"left"}
-        />
+        <Button onClick={onClick} icon={"nc-cog"} align={"left"}>
+          Test
+        </Button>
       );
 
       expect(button.container.firstChild).toMatchSnapshot();
@@ -72,12 +68,9 @@ describe("Test Button", () => {
 
     test("Reversed", () => {
       const button = render(
-        <Button
-          onClick={onClick}
-          label={"Test"}
-          icon={"nc-cog"}
-          reverse={true}
-        />
+        <Button onClick={onClick} icon={"nc-cog"} reverse={true}>
+          Test
+        </Button>
       );
 
       expect(button.container.firstChild).toMatchSnapshot();
@@ -86,7 +79,9 @@ describe("Test Button", () => {
 
   test("Test onClick", () => {
     const button = render(
-      <Button onClick={onClick} icon={"nc-cog"} label={"Test"} />
+      <Button onClick={onClick} icon={"nc-cog"}>
+        Test
+      </Button>
     );
     const input = button.container.firstElementChild;
 

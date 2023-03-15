@@ -8,7 +8,8 @@ import ImagesLoaded from "imagesloaded";
 import Isotope from "isotope-layout";
 import Lottie from "lottie-web";
 import Scrollbars from "perfect-scrollbar";
-import { Dropdown } from "../libs/dropdown";
+import { Dropdown } from "visual/libs/dropdown";
+import { initEkklesiaPopups } from "visual/libs/group-7";
 
 // Our own jquery plugins
 
@@ -22,6 +23,7 @@ interface BrizyLibs {
   Animation?: (s: string | Element, settings: IntersectionObserverInit) => void;
   // @ts-expect-error: Cannot use namespace 'Motion' as a type.
   Motions?: Motion;
+  initEkklesiaPopups: typeof initEkklesiaPopups;
 }
 
 interface BrizyProLibs {
@@ -51,7 +53,7 @@ declare global {
     controller: {
       Library: {
         new (config: {
-          library: WPMediaLibrary;
+          library?: WPMediaLibrary;
           multiple: boolean;
           title: string;
           filterable: "uploaded";

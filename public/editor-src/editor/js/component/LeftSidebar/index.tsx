@@ -1,14 +1,15 @@
-import React, { useCallback, FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import classnames from "classnames";
+import React, { FC, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import PointerEvents from "visual/component/PointerEvents";
+import Config from "visual/global/Config";
+import { isCloud } from "visual/global/Config/types";
 import { updateUI } from "visual/redux/actions2";
-import items from "./items";
-import DrawerOptions from "./components/Options";
-import classnames from "classnames";
-import { IS_CLOUD } from "visual/utils/env";
 import { leftSidebarSelector } from "visual/redux/selectors";
-import { IS_STORY } from "visual/utils/models";
+import { isStory } from "visual/utils/models/modes";
+import DrawerOptions from "./components/Options";
+import { getOptions } from "./options";
 
 export const LeftSidebar: FC = () => {
   const dispatch = useDispatch();
@@ -28,8 +29,9 @@ export const LeftSidebar: FC = () => {
   );
 
   const opened = drawerContentType === "cmsUi" && isOpen;
-
-  const leftSidebarCssV2 = IS_CLOUD && !IS_STORY;
+  const config = Config.getAll();
+  const leftSidebarCssV2 = isCloud(config) && !isStory(config);
+  const { top, bottom } = getOptions(config);
 
   return (
     <ClickOutside
@@ -37,7 +39,9 @@ export const LeftSidebar: FC = () => {
       exceptions={[
         ".brz-ed-sortable--empty",
         ".brz-ed-toolbar",
-        ".brz-ed-fixed-bottom-panel"
+        ".brz-ed-fixed-bottom-panel",
+        ".brz-ed-animated",
+        ".brz-ed-eyeDropper"
       ]}
     >
       <PointerEvents>
@@ -50,11 +54,11 @@ export const LeftSidebar: FC = () => {
           >
             <DrawerOptions
               className="brz-ed-sidebar__control--top"
-              data={items.top}
+              data={top}
             />
             <DrawerOptions
               className="brz-ed-sidebar__control--bottom"
-              data={items.bottom}
+              data={bottom}
             />
           </div>
         </div>

@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 
 export default {
   id: "AutomizelyOrderTracking",
-  title: t("Order Tracking by Automazily"),
+  title: t("Order Tracking by Automizely"),
   icon: "nc-cog",
   resolve: {
     type: "Wrapper",

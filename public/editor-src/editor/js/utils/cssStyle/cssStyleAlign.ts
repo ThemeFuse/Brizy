@@ -111,6 +111,19 @@ export function cssStyleFlexColumnVerticalAlign({
   return alignItems ? `justify-content:${FlexVerticalAligns[alignItems]};` : "";
 }
 
+export function cssStyleFlexColumnHorizontalAlign({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const alignItems = readHorizontalAlign(
+    styleAlignHorizontal({ v, device, state, prefix })
+  );
+
+  return alignItems ? `align-items:${FlexHorizontalAligns[alignItems]};` : "";
+}
+
 export function cssStyleTextAlign({
   v,
   device,
@@ -122,6 +135,11 @@ export function cssStyleTextAlign({
   return textAlign ? `text-align:${textAlign};` : "";
 }
 
-export function cssStyleContentAlign({ v, device, state }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "content" });
+export function cssStyleContentAlign({
+  v,
+  device,
+  state,
+  prefix = "content"
+}: CSSValue): string {
+  return cssStyleTextAlign({ v, device, state, prefix });
 }

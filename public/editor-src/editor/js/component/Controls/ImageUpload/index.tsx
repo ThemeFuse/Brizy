@@ -1,9 +1,9 @@
-import React, { ChangeEvent, FC, useCallback } from "react";
-import { Props } from "./types/Props";
-import { mPipe } from "visual/utils/fp";
-import { map } from "visual/utils/array";
-import { uploadImagePromise } from "visual/utils/image/uploadImage";
 import classNames from "classnames";
+import React, { ChangeEvent, FC, useCallback } from "react";
+import { map } from "visual/utils/array";
+import { mPipe } from "visual/utils/fp";
+import { uploadImagePromise } from "visual/utils/image/uploadImage";
+import { Props } from "./types/Props";
 
 export * from "./types/Props";
 
@@ -13,9 +13,10 @@ export const ImageUpload: FC<Props> = ({
   onChange,
   className
 }) => {
-  const upload = useCallback(uploadImagePromise.bind(null, allowedExtensions), [
-    allowedExtensions
-  ]);
+  const upload = useCallback(
+    (image: File) => uploadImagePromise(allowedExtensions, image),
+    [allowedExtensions]
+  );
   const _onChange = useCallback(
     mPipe(
       (e: ChangeEvent<HTMLInputElement>) => e.target?.files,

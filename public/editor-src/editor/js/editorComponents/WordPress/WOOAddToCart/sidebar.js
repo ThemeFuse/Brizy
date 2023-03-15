@@ -1,5 +1,6 @@
 import { t } from "visual/utils/i18n";
-export const title = t("Add To Cart");
+
+export const title = t("Add to cart");
 
 const helperHTML = `
 <p class="brz-p">You can use the following selectors to create targeted CSS.</p>

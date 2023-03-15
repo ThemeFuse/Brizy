@@ -152,7 +152,7 @@ export type WPTaxQuery = {
 
 export type WPTaxQueryItem = {
   taxonomy: string;
-  field: "id";
+  field: "term_id";
   terms: string;
   operator?: "IN" | "NOT IN";
 };

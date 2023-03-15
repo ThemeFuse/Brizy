@@ -17,13 +17,13 @@
     .brz-ed-popover__option,
     .brz-ed-grid__option {
       padding-right: 10px;
-      padding-left: $popover-item-padding;
+      padding-left: $popover__item-padding;
     }
     &:last-child {
       .brz-ed-popover__option,
       .brz-ed-grid__option {
         padding-left: 10px;
-        padding-right: $popover-item-padding;
+        padding-right: $popover__item-padding;
       }
     }
   }
@@ -94,11 +94,11 @@
         width: auto;
 
         cursor: pointer;
-        color: $options-label-color;
+        color: $options__label-color;
         background-color: transparent;
 
         &:hover {
-          color: $brand-primary;
+          color: $brand__primary;
         }
 
         .brz-control__select-option {

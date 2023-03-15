@@ -4,9 +4,11 @@
     margin-left: 10px;
   }
 }
+
 .brz-ed-option__input-number-wrap {
   position: relative;
 }
+
 .brz-ed-option__input-container {
   position: relative;
 
@@ -21,7 +23,7 @@
     transition: 0.2s linear color;
 
     &:hover {
-      color: $brand-primary;
+      color: $brand__primary;
       transition: 0.2s linear color;
     }
   }
@@ -31,7 +33,7 @@
 .brz-ed-option__input__population {
   @extend .brz-ed-control__input;
 
-  width: $control-lg-width;
+  width: $control__lg-width;
   line-height: $control-height;
   padding-right: 30px;
   white-space: nowrap;
@@ -45,25 +47,27 @@
     background-color: transparent;
     border: none;
     outline: 0;
-    color: $options-label-color;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: $multi_input-color;
+    border-bottom: 1px solid $multi_input-border;
     text-align: left;
     text-transform: uppercase;
     padding: 2px 0;
     transition: 0.2s linear color, 0.2s border-color linear;
 
     &:hover {
-      border-bottom: 1px solid $options-label-color;
+      border-bottom: 1px solid $multi_input-border--hover;
       transition: 0.2s border-color linear;
     }
+
     &:focus,
     &:active {
-      border-bottom: 1px solid $brand-primary;
-      color: #fff;
+      border-bottom: 1px solid $multi_input-border--active;
+      color: $multi_input-color--active;
       transition: 0.2s linear color, 0.2s border-color linear;
     }
   }
 }
+
 .brz-ed-option__multi-input {
   .brz-input {
     width: 17px;
@@ -78,7 +82,7 @@
   }
 
   .brz-icon {
-    color: $options-label-color;
+    color: $input__icon-color;
     margin-right: 11px;
     font-size: 13px;
   }
@@ -99,7 +103,7 @@
     padding: 0px 0px 0px 4px;
   }
 
-  &:focus-within > .brz-icon {
+  &:focus-within>.brz-icon {
     color: #33beea;
   }
 }

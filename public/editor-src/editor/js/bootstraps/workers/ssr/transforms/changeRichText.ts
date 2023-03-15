@@ -116,7 +116,24 @@ export const changeRichText = ($: cheerio.Root): void => {
       $elem = $this;
     }
 
-    $elem.html(`{{${population}}}`);
+    const dynamicContentOption = Config.getAll()?.dynamicContentOption;
+    const useCustomPlaceholder =
+      dynamicContentOption?.richText?.useCustomPlaceholder;
+
+    let _population;
+
+    if (useCustomPlaceholder) {
+      _population = population;
+      // Removed extra attribute
+      $elem.removeAttr("data-population");
+    } else {
+      _population = `{{${population}}}`;
+    }
+
+    // Override current html with placeholder
+    if (_population) {
+      $elem.html(_population);
+    }
   });
 
   // replace Image
@@ -151,12 +168,12 @@ export const changeRichText = ($: cheerio.Root): void => {
       if (population) {
         $this.css({
           ...newCSS,
-          "background-image": `url(${imagePopulationUrl(population)})`
+          "background-image": `url("${imagePopulationUrl(population)}")`
         });
       } else if (imgUrl)
         $this.css({
           ...newCSS,
-          "background-image": `url(${imgUrl})`
+          "background-image": `url("${imgUrl}")`
         });
 
       $this.removeAttr("data-image_src");
@@ -194,6 +211,7 @@ function getLinkContentByType(
     case "external":
     case "story":
     case "action":
+    case "page":
       return href;
   }
 }

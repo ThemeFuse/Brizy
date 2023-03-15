@@ -4,10 +4,10 @@
 // --- Tooltip
 .brz-ed-popover__tooltip {
   &.brz-ed-tooltip--opened .brz-ed-tooltip__content {
-    color: $brand-primary;
+    color: $toolbar__popover_tooltip-color;
 
     .brz-ed-popover__tooltip--icon-custom {
-      border-color: $brand-primary;
+      border-color: $toolbar__popover_tooltip-color;
     }
   }
 
@@ -15,38 +15,35 @@
   &--icon-custom {
     width: 16px;
     height: 16px;
-    border: 2px solid #fff;
+    border: 2px solid $toolbar__item-color;
     border-radius: 2px;
     transition: border-color 0.2s linear;
   }
 }
+
 .brz-ed-tooltip__overlay {
   cursor: auto;
-  background-color: $toolbar-bg-color;
-  box-shadow: $toolbar-box-shadow;
+  background-color: $toolbar-bg;
+  box-shadow: 0 0 5px 0 $popover_tooltips__helper__overlay-box-shadow;
   border-radius: $toolbar-border-radius;
 
   .brz-ed-tooltip--top-start,
   .brz-ed-tooltip--right-end {
-    border-radius: $toolbar-border-radius $toolbar-border-radius
-      $toolbar-border-radius math.div($toolbar-border-radius, 2);
+    border-radius: $toolbar-border-radius $toolbar-border-radius $toolbar-border-radius math.div($toolbar-border-radius, 2);
   }
 
   .brz-ed-tooltip--top-end,
   .brz-ed-tooltip--left-end {
-    border-radius: $toolbar-border-radius $toolbar-border-radius
-      math.div($toolbar-border-radius, 2) $toolbar-border-radius;
+    border-radius: $toolbar-border-radius $toolbar-border-radius math.div($toolbar-border-radius, 2) $toolbar-border-radius;
   }
 
   .brz-ed-tooltip--bottom-start,
   .brz-ed-tooltip--right-start {
-    border-radius: math.div($toolbar-border-radius, 2) $toolbar-border-radius
-      $toolbar-border-radius $toolbar-border-radius;
+    border-radius: math.div($toolbar-border-radius, 2) $toolbar-border-radius $toolbar-border-radius $toolbar-border-radius;
   }
 
   .brz-ed-tooltip--bottom-end,
   .brz-ed-tooltip--left-start {
-    border-radius: $toolbar-border-radius math.div($toolbar-border-radius, 2)
-      $toolbar-border-radius $toolbar-border-radius;
+    border-radius: $toolbar-border-radius math.div($toolbar-border-radius, 2) $toolbar-border-radius $toolbar-border-radius;
   }
 }

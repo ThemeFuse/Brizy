@@ -1,14 +1,16 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { getColorPaletteColors } from "visual/utils/color";
-import { getStore } from "visual/redux/store";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
+import { getStore } from "visual/redux/store";
+import { getColorPaletteColors } from "visual/utils/color";
 
 class ColorPalette2Picker extends React.Component {
   static defaultProps = {
     className: "",
     colors: null,
+    globalStyle: true,
     value: "",
     onChange: () => console.log("ColorPalette default onChange")
   };
@@ -17,7 +19,7 @@ class ColorPalette2Picker extends React.Component {
     getStore().dispatch(
       updateUI("leftSidebar", {
         isOpen: true,
-        drawerContentType: "styling"
+        drawerContentType: LeftSidebarOptionsIds.globalStyle
       })
     );
   };
@@ -29,7 +31,7 @@ class ColorPalette2Picker extends React.Component {
       className
     );
     const colors = propColors || getColorPaletteColors();
-    const squares = colors.map(color => {
+    const squares = colors.map((color) => {
       const className = classnames("brz-ed-option__color-palette2__item", {
         active: color.id === value
       });
@@ -50,12 +52,14 @@ class ColorPalette2Picker extends React.Component {
     return (
       <div className={wrapperClassName}>
         {squares}
-        <div
-          className="brz-ed-option__color-palette2__icon"
-          onClick={this.handleSidebarOpen}
-        >
-          <EditorIcon icon="nc-cog" />
-        </div>
+        {this.props.globalStyle && (
+          <div
+            className="brz-ed-option__color-palette2__icon"
+            onClick={this.handleSidebarOpen}
+          >
+            <EditorIcon icon="nc-cog" />
+          </div>
+        )}
       </div>
     );
   }

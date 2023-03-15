@@ -20,7 +20,7 @@ export const getItems = ({ v, device, state }) => {
       type: "popover-dev",
       config: {
         icon: "nc-woo-add-to-cart",
-        title: t("Add To Cart")
+        title: t("Add to cart")
       },
       position: 10,
       options: [

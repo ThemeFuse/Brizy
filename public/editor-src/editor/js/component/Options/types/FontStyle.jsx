@@ -1,17 +1,18 @@
 import React from "react";
-import Select from "./Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
-import { getStore } from "visual/redux/store";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
+import { getStore } from "visual/redux/store";
 import { getFontStyles } from "visual/utils/fonts";
+import Select from "./Select";
 
 class FontStyle extends Select {
   handleSidebarOpen() {
     getStore().dispatch(
       updateUI("leftSidebar", {
         isOpen: true,
-        drawerContentType: "styling"
+        drawerContentType: LeftSidebarOptionsIds.globalStyle
       })
     );
   }

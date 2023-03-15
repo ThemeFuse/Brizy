@@ -1,6 +1,6 @@
 import { mPipe } from "visual/utils/fp";
-import * as Num from "visual/utils/math/number";
 import * as Positive from "visual/utils/math/Positive";
+import * as Num from "visual/utils/math/number";
 import { EffectType } from "./EffectType";
 import { LegacyModel } from "./LegacyModel";
 
@@ -28,5 +28,5 @@ export const delayFromLegacyModel = mPipe(
 
 export const infiniteAnimationFromLegacyModel = mPipe(
   (v: LegacyModel) => v.infiniteAnimation,
-  v => Boolean(v)
+  (v) => Boolean(v)
 );

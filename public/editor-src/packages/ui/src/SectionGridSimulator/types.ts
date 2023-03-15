@@ -1,7 +1,7 @@
 import {
   GridBoxedCellWidth,
   GridBoxesCellHeight
-} from "elements/src/SectionGrid/types";
+} from "widgetTemp/SectionGrid/types";
 
 export type GridSimulator = {
   containerType: string;

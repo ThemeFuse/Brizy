@@ -1,7 +1,7 @@
 import {
   gridBoxedCellWidth,
   gridBoxesCellHeight
-} from "elements/src/SectionGrid/utils";
+} from "widgetTemp/SectionGrid/utils";
 import {
   GridSimulator,
   GridSimulatorBoxedCellWidth,

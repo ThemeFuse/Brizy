@@ -4,7 +4,7 @@
     "allowUnreachableCode": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-
+    "skipLibCheck": true,
     "allowJs": true,
     "checkJs": false,
     "target": "ESNext",
@@ -17,10 +17,13 @@
     "baseUrl": ".",
     "jsx": "react",
     "paths": {
-      "visual/*": ["editor/js/*"],
-      "ui/*": ["packages/ui/*"],
-      "core/*": ["packages/core/*"],
-      "elements/*": ["packages/elements/*"]
+      "visual/*": ["editor/js/*"], 
+      "ui/*": ["packages/ui/src/*"],
+      "optionControls/*" : ["packages/optionControls/src/*"],
+      "core/*": ["packages/core/src/*"],
+      "component/*": ["packages/component/src/*"],
+      "widget/*": ["packages/widget/src/*"],
+      "widgetTemp/*": ["packages/widgetTemp/src/*"]
     }
   },
   "include": [

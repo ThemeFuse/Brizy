@@ -1,23 +1,23 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import { mergeIn } from "timm";
 import { noop } from "underscore";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import Items from "./items";
-import * as toolbarExtendParent from "./toolbarExtendParent";
-import * as sidebarExtendParentConfig from "./sidebarExtendParent";
-import * as toolbarFilterConfig from "./toolbarFilter";
-import * as sidebarFilterConfig from "./sidebarFilter";
-import defaultValue from "./defaultValue.json";
-import { style, styleForFilter } from "./styles";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { applyFilter } from "visual/utils/filters";
-import { Wrapper } from "../tools/Wrapper";
 import { defaultValueValue } from "visual/utils/onChange";
 import { MOBILE, TABLET } from "visual/utils/responsiveMode";
-import { TextEditor } from "visual/component/Controls/TextEditor";
+import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import Items from "./items";
+import * as sidebarExtendParentConfig from "./sidebarExtendParent";
+import * as sidebarFilterConfig from "./sidebarFilter";
+import { style, styleForFilter } from "./styles";
+import * as toolbarExtendParent from "./toolbarExtendParent";
+import * as toolbarFilterConfig from "./toolbarFilter";
 
 class ImageGallery extends EditorComponent {
   static get componentId() {
@@ -26,7 +26,7 @@ class ImageGallery extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleAllTagChange = allTag => {
+  handleAllTagChange = (allTag) => {
     this.patchValue({ allTag });
   };
 
@@ -79,7 +79,7 @@ class ImageGallery extends EditorComponent {
     return this.isotope;
   };
 
-  handleRef = el => {
+  handleRef = (el) => {
     this.node = el;
   };
 
@@ -92,7 +92,7 @@ class ImageGallery extends EditorComponent {
   handleValueChange(newValue, meta) {
     if (meta.patch.lightBox) {
       const { lightBox } = newValue;
-      const items = newValue.items.map(el =>
+      const items = newValue.items.map((el) =>
         mergeIn(el, ["value"], {
           linkType: lightBox === "on" ? "lightBox" : "external",
           linkLightBox: lightBox
@@ -107,7 +107,13 @@ class ImageGallery extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const { spacing, gridColumn, tabletGridColumn, mobileGridColumn } = v;
+    const {
+      spacing,
+      gridColumn,
+      tabletGridColumn,
+      mobileGridColumn,
+      enableTags
+    } = v;
     const tabletSpacing = defaultValueValue({
       v,
       key: "spacing",
@@ -136,7 +142,7 @@ class ImageGallery extends EditorComponent {
       mobileWNoSpacing: Math.round(mobileWNoSpacing),
       gallery: {
         inGallery: true,
-        enableTags: v.enableTags === "on"
+        enableTags: enableTags === "on"
       }
     });
   }
@@ -153,7 +159,7 @@ class ImageGallery extends EditorComponent {
   }
 
   renderTags(v, vs, vd) {
-    const { filterStyle, items } = v;
+    const { filterStyle, items, allTag } = v;
     const filterClassName = classnames(
       "brz-image__gallery-filter",
       `brz-image__gallery-filter--${filterStyle}`,
@@ -167,18 +173,21 @@ class ImageGallery extends EditorComponent {
       "brz-li brz-image__gallery-filter__item",
       `brz-image__gallery-filter__item--${filterStyle}`
     );
-    const tags = items.reduce(
-      (acc, curr) => {
+    const tags = items
+      .reduce((acc, curr) => {
         const tags = this.getTags(curr.value.tags).filter(
-          tag => !acc.includes(tag)
+          (tag) => !acc.includes(tag)
         );
 
         return acc.concat(tags);
-      },
-      [v.allTag]
-    );
+      }, [])
+      .sort(function (a, b) {
+        return a.localeCompare(b);
+      });
 
-    const options = tags.map((tag, index) => {
+    const sortingTags = [allTag].concat(tags);
+
+    const options = sortingTags.map((tag, index) => {
       const tagClassName = tag.replace(/\s/g, "-");
 
       return (
@@ -199,17 +208,17 @@ class ImageGallery extends EditorComponent {
                   : ""
               }`
             }
-            data-filter={tag === v.allTag ? "*" : tagClassName}
+            data-filter={tag === allTag ? "*" : tagClassName}
             onClick={() => {
               const iso = this.getIsotope();
               this.handleFilterClick(tag);
               iso.arrange({
-                filter: tag === v.allTag ? "*" : `.${tagClassName}`
+                filter: tag === allTag ? "*" : `.${tagClassName}`
               });
             }}
           >
-            {tag === v.allTag ? (
-              <TextEditor value={v.allTag} onChange={this.handleAllTagChange} />
+            {tag === allTag ? (
+              <TextEditor value={allTag} onChange={this.handleAllTagChange} />
             ) : (
               tag
             )}
@@ -226,7 +235,7 @@ class ImageGallery extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { lightBox, enableTags } = v;
+    const { lightBox, enableTags, customCSS } = v;
     const className = classnames(
       "brz-image__gallery-wrapper",
       "brz-d-xs-flex brz-flex-xs-wrap",
@@ -247,13 +256,13 @@ class ImageGallery extends EditorComponent {
 
     const tags = v.items.reduce((acc, curr) => {
       const tags = this.getTags(curr.value.tags).filter(
-        tag => !acc.includes(tag)
+        (tag) => !acc.includes(tag)
       );
       return acc.concat(tags);
     }, []);
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Wrapper
           {...this.makeWrapperProps({ className: "brz-image__gallery" })}
         >

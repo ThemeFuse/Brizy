@@ -2,8 +2,6 @@ import { JSXElementConstructor } from "react";
 import { FromElementModelGetter } from "visual/component/Options/Type";
 import { t } from "visual/utils/i18n";
 import { capByPrefix } from "visual/utils/string";
-import { Effect, EffectValue } from "./types/Value";
-import { EffectProps } from "./types/EffectProps";
 import { Blur } from "./components/Blur";
 import { Horizontal } from "./components/Horizontal";
 import { MouseTrack } from "./components/MouseTrack";
@@ -12,6 +10,8 @@ import { Scale } from "./components/Scale";
 import { Tilt } from "./components/Tilt";
 import { Transparency } from "./components/Transparency";
 import { Vertical } from "./components/Vertical";
+import { EffectProps } from "./types/EffectProps";
+import { Effect, EffectValue } from "./types/Value";
 
 export const effectIcon = (effect: Effect): string => {
   switch (effect) {

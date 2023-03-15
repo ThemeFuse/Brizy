@@ -356,7 +356,7 @@ export function getItems({
                 },
                 {
                   id: "showFriends",
-                  label: t("Show Friends' Faces"),
+                  label: t("Show Friend's Faces"),
                   type: "switch-dev",
                   disabled: !buttonType || boxedLayout,
                   devices: "desktop"
@@ -451,6 +451,17 @@ export function getItems({
           id: "tabsColor",
           type: "tabs-dev",
           tabs: [
+            {
+              id: "tabBackground",
+              label: t("Bg"),
+              options: [
+                {
+                  id: "",
+                  type: "backgroundColor-dev",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
             {
               id: "tabBorder",
               label: t("Border"),

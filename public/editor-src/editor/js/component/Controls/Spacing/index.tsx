@@ -1,13 +1,14 @@
-import React, { ReactElement, ReactNode, useMemo } from "react";
 import classNames from "classnames";
-import { OptionWrapper } from "visual/component/OptionWrapper";
+import React, { ReactElement, ReactNode, useMemo } from "react";
+import { Group } from "visual/component/Controls/Group";
 import { RadioGroup2 } from "visual/component/Controls/RadioGroup2";
 import { Item } from "visual/component/Controls/RadioGroup2/Item";
-import { Group } from "visual/component/Controls/Group";
-import { WithClassName } from "visual/utils/options/attributes";
 import { OnChange } from "visual/component/Options/Type";
-import { Slider, Props as SP } from "./Slider";
-import { Type, Edge, edges, types } from "./types";
+import { OptionWrapper } from "visual/component/OptionWrapper";
+import { WithClassName } from "visual/utils/options/attributes";
+import { Literal } from "visual/utils/types/Literal";
+import { Props as SP, Slider } from "./Slider";
+import { Edge, edges, Type, types } from "./types";
 
 type Edges<E extends Edge> = "all" | E;
 
@@ -32,7 +33,7 @@ type Callbacks<U> = {
   };
 };
 
-export function Spacing<U, E extends Edge>({
+export function Spacing<U extends Literal, E extends Edge>({
   className,
   label,
   type,
@@ -64,7 +65,7 @@ export function Spacing<U, E extends Edge>({
       <OptionWrapper display={"inline"} className={"brz-ed-option"}>
         {label}
         <RadioGroup2<Props<U, E>["type"]> onChange={onType}>
-          {types.map(t => (
+          {types.map((t) => (
             <Item<typeof t>
               key={t}
               icon={getIcon(t)}
@@ -89,7 +90,7 @@ export function Spacing<U, E extends Edge>({
       {type === "ungrouped" &&
         Object.keys(value)
           .filter((e): e is Exclude<Edges<E>, "all"> => e !== "all")
-          .map(e => (
+          .map((e) => (
             <Slider
               key={e}
               icon={getIcon(e)}

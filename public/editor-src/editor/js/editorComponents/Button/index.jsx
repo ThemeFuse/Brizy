@@ -1,27 +1,27 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import { ThemeIcon } from "visual/component/ThemeIcon";
-import Link from "visual/component/Link";
+import React from "react";
+import BoxResizer from "visual/component/BoxResizer";
 import { Text } from "visual/component/ContentOptions/types";
+import CustomCSS from "visual/component/CustomCSS";
+import Link from "visual/component/Link";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
-import { getStore } from "visual/redux/store";
+import { hasSizing } from "visual/editorComponents/Button/utils";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
-import * as toolbarConfig from "./toolbar";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
+import { pipe } from "visual/utils/fp";
+import * as Num from "visual/utils/reader/number";
+import * as State from "visual/utils/stateMode";
+import { isNullish } from "visual/utils/value";
+import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleIcon } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import defaultValue from "./defaultValue.json";
-import { Wrapper } from "../tools/Wrapper";
-import BoxResizer from "visual/component/BoxResizer";
-import { hasSizing } from "visual/editorComponents/Button/utils";
-import * as State from "visual/utils/stateMode";
-import { pipe } from "visual/utils/fp";
-import { isNullish } from "visual/utils/value";
-import * as Num from "visual/utils/reader/number";
-import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import * as toolbarConfig from "./toolbar";
 
 const resizerPoints = [
   "topLeft",
@@ -54,9 +54,9 @@ export default class Button extends EditorComponent {
 
   static experimentalDynamicContent = true;
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
-  handleTextChange = patch => this.patchValue(patch);
+  handleTextChange = (patch) => this.patchValue(patch);
 
   renderIcon(v, vs, vd) {
     const iconClassName = classnames(
@@ -126,7 +126,8 @@ export default class Button extends EditorComponent {
       customClassName,
       customID,
       cssIDPopulation,
-      cssClassPopulation
+      cssClassPopulation,
+      pageLink
     } = v;
 
     const className = classnames(
@@ -153,7 +154,8 @@ export default class Button extends EditorComponent {
       story: isNan(linkToSlide) ? "" : `slide-${linkToSlide}`,
       external: v[linkExternalType],
       popup: linkPopup,
-      upload: linkUpload
+      upload: linkUpload,
+      page: pageLink
     };
 
     let props = {
@@ -167,7 +169,7 @@ export default class Button extends EditorComponent {
     };
 
     if (IS_EDITOR) {
-      props.onDragStart = e => {
+      props.onDragStart = (e) => {
         e.preventDefault();
         return false;
       };
@@ -198,7 +200,7 @@ export default class Button extends EditorComponent {
   renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
-      itemProps: itemData => {
+      itemProps: (itemData) => {
         let {
           blockId,
           value: { popupId }

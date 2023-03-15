@@ -1,16 +1,18 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
 import classnames from "classnames";
-import { Text } from "visual/component/ContentOptions/types";
-import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import { css } from "visual/utils/cssStyle";
-import { styleBg, styleBar } from "./styles";
-import defaultValue from "./defaultValue.json";
+import { ProgressBar1 } from "component/Flex/ProgressBar1";
+import { ProgressBar2 } from "component/Flex/ProgressBar2";
+import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
+import { Text } from "visual/component/ContentOptions/types";
+import CustomCSS from "visual/component/CustomCSS";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
 import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { styleBar, styleBg } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 const resizerRestrictions = {
@@ -57,93 +59,27 @@ export default class ProgressBar extends EditorComponent {
 
   static experimentalDynamicContent = true;
 
-  handleResizerChange = patch => this.patchValue(patch);
-
-  handleTextChange = patch => this.patchValue(patch);
-
-  renderStyle1(v, vs, vd) {
-    const { percentage, showText, showPercentage } = v;
-    const classNameBar = classnames(
-      "brz-d-xs-flex",
-      "brz-justify-content-xs-between",
-      "brz-align-items-xs-center",
-      "brz-progress-bar__wrapper",
-      css(
-        `${this.constructor.componentId}-bar`,
-        `${this.getId()}-bar`,
-        styleBar(v, vs, vd)
-      )
-    );
-
-    return (
-      <div className={classNameBar} data-progress={percentage}>
-        {showText === "on" && (
-          <Text
-            id="text"
-            v={v}
-            className="brz-progress-bar__text"
-            onChange={this.handleTextChange}
-          />
-        )}
-        {showPercentage === "on" && (
-          <span className="brz-span brz-progress-bar__percent">
-            {percentage}%
-          </span>
-        )}
-      </div>
-    );
-  }
-
-  renderStyle2(v, vs, vd) {
-    const { percentage, showPercentage } = v;
-    const classNameBar = classnames(
-      "brz-d-xs-flex",
-      "brz-justify-content-xs-between",
-      "brz-align-items-xs-center",
-      "brz-progress-bar__wrapper",
-      css(
-        `${this.constructor.componentId}-bar`,
-        `${this.getId()}-bar`,
-        styleBar(v, vs, vd)
-      )
-    );
-
-    return (
-      <>
-        {showPercentage === "on" && (
-          <span
-            className="brz-span brz-progress-bar__percent"
-            style={{
-              marginLeft: `${
-                percentage >= 94 ? percentage - 7 : percentage - 1
-              }%`
-            }}
-          >
-            {percentage}%
-          </span>
-        )}
-        <div className="brz-progress-bar-overlay">
-          <div
-            className={classNameBar}
-            data-progress={percentage}
-            style={{
-              width: `${percentage}%`,
-              maxWidth: `${percentage}%`
-            }}
-          />
-        </div>
-      </>
-    );
-  }
+  handleChange = (patch) => this.patchValue(patch);
 
   renderForEdit(v, vs, vd) {
     const {
       className,
       customCSS,
       showText,
+      percentage,
       showPercentage,
       progressBarStyle
     } = v;
+
+    const _showPercentage = showPercentage === "on";
+
+    const classNameBar = classnames(
+      css(
+        `${this.constructor.componentId}-bar`,
+        `${this.getId()}-bar`,
+        styleBar(v, vs, vd)
+      )
+    );
 
     const classNameBg = classnames(
       className,
@@ -158,6 +94,15 @@ export default class ProgressBar extends EditorComponent {
         `${this.getId()}-bg`,
         styleBg(v, vs, vd)
       )
+    );
+
+    const progressBarText = (
+      <Text
+        id="text"
+        v={v}
+        className="brz-progress-bar__text"
+        onChange={this.handleChange}
+      />
     );
 
     return (
@@ -176,15 +121,94 @@ export default class ProgressBar extends EditorComponent {
               restrictions={resizerRestrictions}
               meta={this.props.meta}
               value={v}
-              onChange={this.handleResizerChange}
+              onChange={this.handleChange}
             >
-              {progressBarStyle === "style1"
-                ? this.renderStyle1(v, vs, vd)
-                : this.renderStyle2(v, vs, vd)}
+              {progressBarStyle === "style1" ? (
+                <ProgressBar1
+                  text={progressBarText}
+                  className={classNameBar}
+                  showText={showText === "on"}
+                  showPercentage={_showPercentage}
+                  percentage={percentage}
+                />
+              ) : (
+                <ProgressBar2
+                  className={classNameBar}
+                  showPercentage={_showPercentage}
+                  percentage={percentage}
+                />
+              )}
             </BoxResizer>
           </Wrapper>
         </CustomCSS>
       </Toolbar>
+    );
+  }
+
+  renderForView(v, vs, vd) {
+    const {
+      className,
+      customCSS,
+      showText,
+      percentage,
+      showPercentage,
+      progressBarStyle
+    } = v;
+
+    const _showPercentage = showPercentage === "on";
+
+    const classNameBar = classnames(
+      css(
+        `${this.constructor.componentId}-bar`,
+        `${this.getId()}-bar`,
+        styleBar(v, vs, vd)
+      )
+    );
+
+    const classNameBg = classnames(
+      className,
+      "brz-progress-bar",
+      `brz-progress-bar-${progressBarStyle}`,
+      {
+        "brz-without-percent": showPercentage === "off",
+        "brz-without-text": progressBarStyle === "style1" && showText === "off"
+      },
+      css(
+        `${this.constructor.componentId}-bg`,
+        `${this.getId()}-bg`,
+        styleBg(v, vs, vd)
+      )
+    );
+
+    const progressBarText = (
+      <Text id="text" v={v} className="brz-progress-bar__text" />
+    );
+
+    return (
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
+        <Wrapper
+          {...this.makeWrapperProps({
+            className: classNameBg,
+            attributes: { "data-type": progressBarStyle }
+          })}
+        >
+          {progressBarStyle === "style1" ? (
+            <ProgressBar1
+              text={progressBarText}
+              className={classNameBar}
+              showText={showText === "on"}
+              showPercentage={_showPercentage}
+              percentage={percentage}
+            />
+          ) : (
+            <ProgressBar2
+              className={classNameBar}
+              showPercentage={_showPercentage}
+              percentage={percentage}
+            />
+          )}
+        </Wrapper>
+      </CustomCSS>
     );
   }
 }
