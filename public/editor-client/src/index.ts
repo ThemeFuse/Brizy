@@ -1,6 +1,7 @@
 import { getConfig } from "./config";
 import { addFile } from "./customFile/addFile";
 import { addMedia } from "./media/addMedia";
+import { addMediaGallery } from "./media/addMediaGallery";
 import { updateProject } from "./project/updateProject";
 
 const config = getConfig();
@@ -12,6 +13,7 @@ if (!config) {
 const api = {
   media: {
     addMedia,
+    addMediaGallery,
     mediaResizeUrl: config.api.mediaResizeUrl
   },
   customFile: {
