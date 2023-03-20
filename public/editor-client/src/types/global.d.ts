@@ -34,6 +34,15 @@ export interface VISUAL_CONFIG {
           extra: AddMediaExtra
         ) => void;
       };
+
+      addMediaGallery?: {
+        label?: string;
+        handler: (
+          res: Response<Array<AddImageData>>,
+          rej: Response<string>,
+          extra: AddMediaExtra
+        ) => void;
+      };
     };
     // File
     customFile?: {
