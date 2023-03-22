@@ -78,7 +78,9 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
 
 	public function getGroupedPlaceholdersForApiResponse() {
 		$groups = $this->getGroupedPlaceholders();
-		$result = [];
+		$result = [
+            'liveInBuilder' => true
+        ];
 		foreach ( $groups as $group => $entries ) {
 
 			$result[ $group ] = array_map( function ( $entry ) {
