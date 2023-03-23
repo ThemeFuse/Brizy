@@ -44,10 +44,8 @@ pipeline {
                     sh("""
                         if git rev-parse --git-dir > /dev/null 2>&1; then
                           echo "The repo is already cloned"
-                          git checkout .;
                           git fetch;
                           git clean -fd;
-                          git checkout ${params.releaseBranch};
                           git reset --hard origin/${params.releaseBranch};
                         else
                           git config --global user.email "jenkins@brizy.io
