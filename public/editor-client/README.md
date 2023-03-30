@@ -36,5 +36,9 @@ export interface __BRZ_PLUGIN_ENV__ {
     getMediaUid: string;
     mediaResizeUrl: string;
   };
+  api?: {
+    mediaResizeUrl?: string;
+    customFileUrl?: string;
+  };
 }
 ```
