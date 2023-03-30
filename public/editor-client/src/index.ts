@@ -2,7 +2,6 @@ import { getConfig } from "./config";
 import { addFile } from "./customFile/addFile";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
-import { updateProject } from "./project/updateProject";
 
 const config = getConfig();
 
@@ -19,8 +18,7 @@ const api = {
   customFile: {
     addFile,
     customFileUrl: config.api.customFileUrl
-  },
-  onProjectUpdate: updateProject
+  }
 };
 
 if (window.__VISUAL_CONFIG__) {
