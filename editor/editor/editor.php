@@ -386,8 +386,7 @@ class Brizy_Editor_Editor_Editor {
 		return $result;
 	}
 
-	private
-	function getTermParents(
+	private function getTermParents(
 		$term
 	) {
 		$parents = [];
