@@ -386,9 +386,7 @@ class Brizy_Editor_Editor_Editor {
 		return $result;
 	}
 
-	private function getTermParents(
-		$term
-	) {
+	private function getTermParents( $term ) {
 		$parents = [];
 		if ( $term->parent ) {
 			$parent = get_term_by( 'id', $term->parent, $term->taxonomy );
