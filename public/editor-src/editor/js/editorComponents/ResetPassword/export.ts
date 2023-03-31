@@ -1,26 +1,27 @@
 import { addAlerts, getErrorMessages } from "../Login/export/utils.common";
 import {
-  handleSubmit,
-  validateInputs,
+  CloudURL,
   getData,
-  CloudURL
+  handleSubmit,
+  validateInputs
 } from "./utils.export";
 
-export default function($node: JQuery): void {
-  const node: Element = $node.get(0);
+export default function ($node: JQuery): void {
+  const node = $node.get(0);
+  if (!node) return;
 
   const cloudHeaders = { "Content-Type": "application/json" };
   const fetchHeaders = new Headers(cloudHeaders);
 
   let isSubmitEnabled = true;
 
-  node.querySelectorAll(".brz-reset-psw").forEach(element => {
+  node.querySelectorAll(".brz-reset-psw").forEach((element) => {
     const errorMessages = getErrorMessages(element);
 
     const form = element.querySelector<HTMLFormElement>(".brz-reset-psw-form");
 
     form &&
-      form.addEventListener("submit", e => {
+      form.addEventListener("submit", (e) => {
         e.preventDefault();
 
         if (isSubmitEnabled) {

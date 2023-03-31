@@ -1,10 +1,8 @@
-import { ComponentType } from "react";
-
-export type PromptAuthorizationTabs = {
+export type PromptAuthorizationTabs<T> = {
   id: string;
   title: string;
   icon: string;
-  component: ComponentType;
+  component: T;
 };
 
 export type SignAuthorizationProps = {

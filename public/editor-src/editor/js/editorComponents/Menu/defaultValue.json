@@ -269,6 +269,7 @@
     "itemPaddingRight": 10,
     "itemPaddingBottom": 0,
     "itemPaddingLeft": 10,
+    "itemPaddingSuffix": "px",
 
     "tabletIconSize": 12,
     "tabletItemPadding": 10,

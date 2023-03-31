@@ -86,7 +86,7 @@
   font-weight: 400;
   letter-spacing: 0;
   background: $control-bg none;
-  color: #fff;
+  color: $control__input-text;
   flex: 1 1 auto;
   height: $control-height;
   text-indent: 5px;
@@ -103,7 +103,7 @@
   &:focus,
   &:active {
     background-color: $control-bg;
-    color: #fff;
+    color: $control__input-text;
   }
 }
 

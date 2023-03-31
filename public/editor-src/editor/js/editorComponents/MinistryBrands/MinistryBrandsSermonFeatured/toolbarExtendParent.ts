@@ -3,7 +3,7 @@ import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
-import { getOption } from "../utils/helpers";
+import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
@@ -15,13 +15,8 @@ export const getItems: GetItems<Value, Props> = ({
   state
 }) => {
   const _config = Config.getAll();
-  const ekklesia = _config.modules?.ekklesia;
+  const { apiUrl } = _config.modules?.ekklesia ?? {};
   const { getSourceChoices } = _config.api?.sourceTypes ?? {};
-
-  const recentSermons = getOption(ekklesia?.recentSermons);
-  const group = getOption(ekklesia?.groups);
-  const series = getOption(ekklesia?.series);
-  const categories = getOption(ekklesia?.terms?.sermon);
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
@@ -48,21 +43,21 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   label: t("Category"),
                   type: "select-dev",
-                  choices: categories
+                  choices: getEkklesiaChoiches({ key: "sermon", url: apiUrl })
                 },
                 {
                   id: "group",
                   devices: "desktop",
                   label: t("Group"),
                   type: "select-dev",
-                  choices: group
+                  choices: getEkklesiaChoiches({ key: "groups", url: apiUrl })
                 },
                 {
                   id: "series",
                   devices: "desktop",
                   label: t("Series"),
                   type: "select-dev",
-                  choices: series
+                  choices: getEkklesiaChoiches({ key: "series", url: apiUrl })
                 }
               ]
             },
@@ -209,7 +204,10 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Recent Sermons"),
                   type: "select-dev",
                   devices: "desktop",
-                  choices: recentSermons,
+                  choices: getEkklesiaChoiches({
+                    key: "recentSermons",
+                    url: apiUrl
+                  }),
                   helper: {
                     content: t(
                       "Select a recent sermon. Use only if you are not using 'Sermon Slug' below and 'Display Latest' is set to 'No'."

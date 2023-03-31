@@ -2,7 +2,7 @@ import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
-import { getOption } from "../utils/helpers";
+import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({
@@ -13,11 +13,8 @@ export const getItems: GetItems<Value, Props> = ({
   component
 }) => {
   const _config = Config.getAll();
-  const ekklesia = _config.modules?.ekklesia;
+  const { apiUrl } = _config.modules?.ekklesia ?? {};
   const { getSourceChoices } = _config.api?.sourceTypes ?? {};
-
-  const group = getOption(ekklesia?.groups);
-  const categories = getOption(ekklesia?.terms?.event);
 
   return [
     {
@@ -42,13 +39,13 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "category",
                   label: t("Category"),
                   type: "select-dev",
-                  choices: categories
+                  choices: getEkklesiaChoiches({ key: "event", url: apiUrl })
                 },
                 {
                   id: "group",
                   label: t("Group"),
                   type: "select-dev",
-                  choices: group
+                  choices: getEkklesiaChoiches({ key: "groups", url: apiUrl })
                 },
                 {
                   id: "numberOfMonths",

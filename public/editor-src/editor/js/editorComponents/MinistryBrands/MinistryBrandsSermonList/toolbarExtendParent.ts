@@ -3,7 +3,7 @@ import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
-import { getOption } from "../utils/helpers";
+import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
@@ -15,12 +15,8 @@ export const getItems: GetItems<Value, Props> = ({
   context
 }) => {
   const _config = Config.getAll();
-  const ekklesia = _config.modules?.ekklesia;
+  const { apiUrl } = _config.modules?.ekklesia ?? {};
   const { getSourceChoices } = _config.api?.sourceTypes ?? {};
-
-  const group = getOption(ekklesia?.groups);
-  const series = getOption(ekklesia?.series);
-  const categories = getOption(ekklesia?.terms?.sermon);
 
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
@@ -47,21 +43,21 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Category"),
                   type: "select-dev",
                   devices: "desktop",
-                  choices: categories
+                  choices: getEkklesiaChoiches({ key: "sermon", url: apiUrl })
                 },
                 {
                   id: "group",
                   label: t("Group"),
                   type: "select-dev",
                   devices: "desktop",
-                  choices: group
+                  choices: getEkklesiaChoiches({ key: "groups", url: apiUrl })
                 },
                 {
                   id: "series",
                   label: t("Series"),
                   type: "select-dev",
                   devices: "desktop",
-                  choices: series
+                  choices: getEkklesiaChoiches({ key: "series", url: apiUrl })
                 }
               ]
             },

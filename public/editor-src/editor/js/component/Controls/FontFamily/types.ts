@@ -9,7 +9,7 @@ export type FontsBlock = Partial<{
 }>;
 
 export interface Props {
-  addFont: undefined | (() => void);
+  addFont?: VoidFunction;
   onChange: (font: FontWithType) => void;
   value: string;
   className?: string;
@@ -25,7 +25,7 @@ export interface FontSizes {
 }
 
 export interface FontObject {
-  brizyId: string;
+  brizyId?: string;
   family: string;
   id: string;
   title: string;

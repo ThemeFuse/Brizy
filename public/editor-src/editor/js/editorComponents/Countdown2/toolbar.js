@@ -120,18 +120,39 @@ export function getItems({ v, device, state, context }) {
                     { value: 360, title: t("- 6:00 (Chicago, Dallas)") },
                     { value: 300, title: t("- 5:00 (New York, Miami)") },
                     { value: 240, title: t("- 4:00 (Halifax, Manaus)") },
-                    { value: 180, title: t("- 3:00 (Brasilia, Santiago)") },
+                    {
+                      value: 180,
+                      title: t("- 3:00 (Brasilia, Santiago, Argentina)")
+                    },
                     { value: 120, title: t("- 2:00 (Noronha)") },
                     { value: 60, title: t("- 1:00 (Cape Verde)") },
                     { value: 0, title: t("00:00 (London, Dublin)") },
-                    { value: -60, title: t("+ 1:00 (Berlin, Paris)") },
-                    { value: -120, title: t("+ 2:00 (Athens, Istanbul)") },
+                    {
+                      value: -60,
+                      title: t("+ 1:00 (Berlin, Paris, Morocco, Netherlands)")
+                    },
+                    {
+                      value: -120,
+                      title: t("+ 2:00 (Athens, Istanbul, Romania)")
+                    },
                     { value: -180, title: t("+ 3:00 (Moscow, Baghdad)") },
+                    { value: -200, title: t("+ 3:30 (Iran)") },
                     { value: -240, title: t("+ 4:00 (Dubai, Baku)") },
+                    { value: -280, title: t("+ 4:30 (Afghanistan)") },
                     { value: -300, title: t("+ 5:00 (Yekaterinburg)") },
-                    { value: -360, title: t("+ 6:00 (Nur-Sultan)") },
-                    { value: -420, title: t("+ 7:00 (Bangkok, Jakarta)") },
-                    { value: -480, title: t("+ 8:00 (Singapore, Beijing)") },
+                    { value: -320, title: t("+ 5:30 (India)") },
+                    {
+                      value: -360,
+                      title: t("+ 6:00 (Nur-Sultan, Kyrgyzstan)")
+                    },
+                    {
+                      value: -420,
+                      title: t("+ 7:00 (Bangkok, Jakarta, Vietnam)")
+                    },
+                    {
+                      value: -480,
+                      title: t("+ 8:00 (Singapore, Beijing, Malaysia)")
+                    },
                     { value: -540, title: t("+ 9:00 (Tokyo, Seoul)") },
                     { value: -600, title: t("+ 10:00 (Sydney, Melbourne)") },
                     { value: -660, title: t("+ 11:00 (Ponape)") },

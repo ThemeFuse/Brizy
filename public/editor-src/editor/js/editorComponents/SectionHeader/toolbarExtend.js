@@ -14,6 +14,9 @@ import {
 export function getItems({ v, device, component }) {
   const config = Config.getAll();
 
+  const isMultiLanguageDisabled =
+    config.elements?.header?.multilanguage === false;
+
   const dvv = (key) => defaultValueValue({ v, key, device });
 
   return [
@@ -91,7 +94,8 @@ export function getItems({ v, device, component }) {
             {
               id: "translations",
               label: t("Multi-Language"),
-              type: "switch-dev"
+              type: "switch-dev",
+              disabled: isMultiLanguageDisabled
             },
             {
               id: "translationsLangs",

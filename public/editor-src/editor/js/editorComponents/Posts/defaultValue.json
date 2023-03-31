@@ -31,7 +31,7 @@
     "mobileGridColumnSuffix": "",
 
     "padding": 0,
-    "paddingSuffix": "",
+    "paddingSuffix": "px",
 
     "tabletPadding": null,
     "tabletPaddingSuffix": null,

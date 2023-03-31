@@ -66,7 +66,8 @@ const fns: Reducers = {
   "typography-dev": undefined,
   "transform-dev": undefined,
   "savedBlock-dev": undefined,
-  "globalBlock-dev": undefined
+  "globalBlock-dev": undefined,
+  "formApps-dev": undefined
 };
 
 export function reduce<T>(

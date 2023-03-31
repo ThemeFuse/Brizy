@@ -1,4 +1,7 @@
-export interface IProps {
+import { Ref } from "react";
+import { AutoCorrectingInput } from "./index";
+
+export interface CommonProps {
   className?: string;
   value: number;
   onChange: (value: number) => void;
@@ -11,9 +14,16 @@ export interface IProps {
   onMouseEnter?: VoidFunction;
   onMouseLeave?: VoidFunction;
   size?: number;
+  handleDecrementCb?: () => void;
 }
 
-export interface IState {
+export interface StepperProps extends CommonProps {
+  stepperSize: "small" | "medium" | "large" | "auto";
+  handleDecrementCb: () => void;
+  inputRef: Ref<AutoCorrectingInput>;
+}
+
+export interface State {
   text: string | number;
   value: number;
   prevPropsValue: number;

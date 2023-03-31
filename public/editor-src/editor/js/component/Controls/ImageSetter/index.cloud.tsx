@@ -132,15 +132,25 @@ export class ImageSetter<T extends ReactText> extends React.Component<
     this.props.onChange(newValue, { isChanged: "image" });
   };
 
+  handleCancel = () => {
+    this.setState({ loading: false });
+    window.removeEventListener("focus", this.handleCancel);
+  };
+
+  handleImageClick = () => {
+    this.setState({ loading: true });
+    window.addEventListener("focus", this.handleCancel);
+  };
+
   handleImageChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { files } = e.target;
     const file = files?.[0];
 
+    window.removeEventListener("focus", this.handleCancel);
+
     if (!file) {
       return;
     }
-
-    this.setState({ loading: true });
 
     uploadImage(file, {
       acceptedExtensions: this._extensions,
@@ -153,6 +163,9 @@ export class ImageSetter<T extends ReactText> extends React.Component<
               "Failed to upload file. Please upload a valid JPG, PNG, SVG or GIF image."
             )
           );
+          if (this.mounted) {
+            this.setState({ loading: false });
+          }
           return;
         }
 
@@ -274,6 +287,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
             accept="image/*"
             hidden
             onChange={onUpload ?? this.handleImageChange}
+            onClick={this.handleImageClick}
           />
         )}
       </label>

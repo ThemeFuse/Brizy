@@ -1,6 +1,9 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { Post } from "visual/component/Options/types/dev/InternalLink/types/Post";
-import { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
+import {
+  ChoicesAsync,
+  ChoicesSync
+} from "visual/component/Options/types/dev/Select/types";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
@@ -63,6 +66,8 @@ export interface PopupSettings {
   embedded?: boolean;
   horizontalAlign?: boolean;
   verticalAlign?: boolean;
+  scrollPageBehind?: boolean;
+  clickOutsideToClose?: boolean;
 }
 
 export interface UpdateRes {
@@ -184,8 +189,34 @@ interface _ConfigCommon<Mode> {
         }
       ) => void;
     };
+
     sourceTypes?: {
       getSourceChoices: () => ChoicesAsync;
+    };
+
+    sourceItems?: {
+      handler: (
+        res: Response<ChoicesSync>,
+        rej: Response<string>,
+        args: {
+          id: string;
+        }
+      ) => void;
+    };
+  };
+
+  //#endregion
+
+  //#region Elements
+  elements?: {
+    section?: {
+      multilanguage: boolean;
+    };
+    footer?: {
+      multilanguage: boolean;
+    };
+    header?: {
+      multilanguage: boolean;
     };
   };
 

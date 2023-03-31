@@ -177,7 +177,7 @@ class FontStyle extends React.Component {
                                     type: "stepper",
                                     display: "block",
                                     min: 1,
-                                    max: 10,
+                                    max: 20,
                                     step: 0.1,
                                     value: lineHeight,
                                     onChange: (lineHeight) =>
@@ -246,7 +246,7 @@ class FontStyle extends React.Component {
                                     type: "stepper",
                                     display: "block",
                                     min: 1,
-                                    max: 100,
+                                    max: 300,
                                     step: 1,
                                     value: tabletFontSize,
                                     onChange: (tabletFontSize) =>
@@ -258,7 +258,7 @@ class FontStyle extends React.Component {
                                     type: "stepper",
                                     display: "block",
                                     min: 1,
-                                    max: 10,
+                                    max: 20,
                                     step: 0.1,
                                     value: tabletLineHeight,
                                     onChange: (tabletLineHeight) =>
@@ -327,7 +327,7 @@ class FontStyle extends React.Component {
                                     type: "stepper",
                                     display: "block",
                                     min: 1,
-                                    max: 100,
+                                    max: 300,
                                     step: 1,
                                     value: mobileFontSize,
                                     onChange: (mobileFontSize) =>
@@ -339,7 +339,7 @@ class FontStyle extends React.Component {
                                     type: "stepper",
                                     display: "block",
                                     min: 1,
-                                    max: 10,
+                                    max: 20,
                                     step: 0.1,
                                     value: mobileLineHeight,
                                     onChange: (mobileLineHeight) =>

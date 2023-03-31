@@ -1,0 +1,11 @@
+.brz-shopify-quantity-style1 {
+  input {
+    border: 2px #5555FF dashed;
+    padding: 1em 0 1em 1em;
+    width: 50px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

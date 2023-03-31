@@ -94,6 +94,7 @@
     "className": "",
 
     "customAttributes": "",
+    "closeCustomAttributes": "",
     "customAttributesPopulation": "",
 
     "closePosition": "outside",
@@ -288,8 +289,13 @@
     "tempBorderBottomLeftRadius": 0,
 
     "containerClassName": "",
+    "closeCustomClassName":"",
 
     "customCSS": "",
+    "closeCustomCSS": "",
+    "closeCustomID": "",
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": "",
 
     "tabletClosePosition": null,
     "tabletPopupRowVerticalAlign": null,

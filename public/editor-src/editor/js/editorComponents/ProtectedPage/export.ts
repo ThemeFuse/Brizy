@@ -1,7 +1,8 @@
 import { decodeFromString } from "visual/utils/string";
 
-export default function($node: JQuery): void {
+export default function ($node: JQuery): void {
   const node = $node.get(0);
+  if (!node) return;
 
   type Messages = {
     empty: string;
@@ -61,7 +62,7 @@ export default function($node: JQuery): void {
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(data => {
+    }).then((data) => {
       submit?.classList.remove("brz-blocked");
       clearAlerts(form);
 
@@ -79,8 +80,8 @@ export default function($node: JQuery): void {
 
   node
     .querySelectorAll<HTMLFormElement>(".brz-protected-form")
-    .forEach(form => {
-      form.addEventListener("submit", e => {
+    .forEach((form) => {
+      form.addEventListener("submit", (e) => {
         e.preventDefault();
 
         const { empty } = getErrorMessages(form);

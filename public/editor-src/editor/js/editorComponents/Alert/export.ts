@@ -1,7 +1,8 @@
-export default function($node: JQuery): void {
+export default function ($node: JQuery): void {
   const node = $node.get(0);
+  if (!node) return;
 
-  node.querySelectorAll(".brz-alert").forEach(item => {
+  node.querySelectorAll(".brz-alert").forEach((item) => {
     const closeButton = item.querySelector(".brz-alert-close");
     const showCloseButtonAfter = item.getAttribute("data-delay");
     const delay = showCloseButtonAfter ? Number(showCloseButtonAfter) : 0;

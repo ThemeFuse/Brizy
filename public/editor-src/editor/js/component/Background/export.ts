@@ -92,7 +92,8 @@ const fn: ExportFunction = ($node) => {
     $this.backgroundVideo({ type, loop, start });
 
     window.Brz.on("elements.story.init", (element: HTMLElement) => {
-      if (element.contains($this.get(0))) {
+      const node = $this.get(0);
+      if (node && element.contains(node)) {
         $this.backgroundVideo("typeChange", { type, loop, start });
       }
     });

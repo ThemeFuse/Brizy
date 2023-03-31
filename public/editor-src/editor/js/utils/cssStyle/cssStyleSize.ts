@@ -1,7 +1,9 @@
 import Config from "visual/global/Config";
+import * as Num from "visual/utils/math/number";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import * as Str from "visual/utils/string/specs";
 import {
   styleSizeContainerSize,
@@ -63,9 +65,9 @@ export function cssStyleSizeWidthPrefix({
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
   const width = Str.read(dvv(capByPrefix(prefix, "")));
-  const unit = Str.read(dvv(capByPrefix(prefix, "suffix")));
+  const unit = Str.read(dvv(capByPrefix(prefix, "suffix"))) || "px";
 
-  return width === undefined ? "" : `width:${width}${unit};`;
+  return Num.read(width) === undefined ? "" : `width:${width}${unit};`;
 }
 
 export function cssStyleSizeWidthStoryOnly({
@@ -129,7 +131,7 @@ export function cssStyleSizeSizeHeight({
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
   const width = styleSizeSize({ v, device, state, prefix });
-  const unit = Str.read(dvv(capByPrefix(prefix, "sizeSuffix")));
+  const unit = Str.read(dvv(capByPrefix(prefix, "sizeSuffix"))) || "px";
 
   return width === undefined ? "" : `height:${width}${unit};`;
 }
@@ -146,7 +148,7 @@ export function cssStyleSizeHeightPxOnly({
   state
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
-  const unit = Str.read(dvv("heightSuffix"));
+  const unit = Str.read(dvv("heightSuffix")) || "px";
 
   return unit === "px"
     ? mApply(
@@ -167,7 +169,7 @@ export function cssStyleSizeHeightPercentOnly({
   state
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
-  const unit = Str.read(dvv("heightSuffix"));
+  const unit = Str.read(dvv("heightSuffix")) || "px";
 
   return unit === "%"
     ? mApply(
@@ -187,9 +189,11 @@ export function cssStyleSizeMaxWidth({
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
   const width = styleSizeWidth({ v, device, state, prefix });
-  const unit = Str.read(dvv(capByPrefix(prefix, "widthSuffix")));
+  const unit = Str.read(dvv(capByPrefix(prefix, "widthSuffix"))) || "%";
 
-  return width === undefined ? "" : `max-width:${width}${unit};`;
+  return width === undefined
+    ? ""
+    : `max-width:${width}${NoEmptyString.is(unit) ? unit : "%"};`;
 }
 
 export function cssStyleSizeMaxWidthSize({
@@ -200,9 +204,11 @@ export function cssStyleSizeMaxWidthSize({
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
   const size = styleSizeSize({ v, device, state, prefix });
-  const unit = Str.read(dvv(capByPrefix(prefix, "sizeSuffix")));
+  const unit = Str.read(dvv(capByPrefix(prefix, "sizeSuffix"))) || "%";
 
-  return size === undefined ? "" : `max-width:${size}${unit};`;
+  return size === undefined
+    ? ""
+    : `max-width:${size}${NoEmptyString.is(unit) ? unit : "%"};`;
 }
 
 export function cssStyleSizeMaxWidthPrefixEmpty({
@@ -213,9 +219,11 @@ export function cssStyleSizeMaxWidthPrefixEmpty({
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
   const size = Str.read(dvv(capByPrefix(prefix, "")));
-  const unit = Str.read(dvv(capByPrefix(prefix, "suffix")));
+  const unit = Str.read(dvv(capByPrefix(prefix, "suffix"))) ?? "%";
 
-  return size === undefined ? "" : `max-width:${size}${unit};`;
+  return Num.read(size) === undefined
+    ? ""
+    : `max-width:${size}${NoEmptyString.is(unit) ? unit : "%"};`;
 }
 
 export function cssStyleSizeMaxWidthContainer({
@@ -236,7 +244,7 @@ export function cssStyleSizeMinWidth({
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
   const width = styleSizeWidth({ v, device, state, prefix });
-  const unit = Str.read(dvv(capByPrefix(prefix, "widthSuffix")));
+  const unit = Str.read(dvv(capByPrefix(prefix, "widthSuffix"))) || "px";
 
   return width === undefined ? "" : `min-width:${width}${unit};`;
 }
@@ -249,7 +257,7 @@ export function cssStyleSizeMinHeightPx({
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
   const height = styleSizeHeight({ v, device, state, prefix });
-  const unit = Str.read(dvv(capByPrefix(prefix, "heightSuffix")));
+  const unit = Str.read(dvv(capByPrefix(prefix, "heightSuffix"))) || "px";
 
   return height === undefined ? "" : `min-height:${height}${unit};`;
 }
@@ -262,7 +270,7 @@ export function cssStyleSizeSize({
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
   const width = styleSizeSize({ v, device, state, prefix });
-  const unit = Str.read(dvv(capByPrefix(prefix, "sizeSuffix")));
+  const unit = Str.read(dvv(capByPrefix(prefix, "sizeSuffix"))) || "px";
 
   return width === undefined ? "" : `width:${width}${unit};`;
 }
@@ -275,7 +283,7 @@ export function cssStyleSizeSizePercent({
 }: CSSValue): string {
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
   const width = styleSizeSize({ v, device, state, prefix });
-  const unit = Str.read(dvv(capByPrefix(prefix, "sizeSuffix")));
+  const unit = Str.read(dvv(capByPrefix(prefix, "sizeSuffix"))) || "px";
 
   return width === undefined ? "" : `width:${width}${unit};`;
 }
@@ -298,7 +306,7 @@ export function cssStyleSizeSpacingWidth({
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
 
   const size = styleSizeSpacing({ v, device, state, prefix });
-  const suffix = Str.read(dvv(capByPrefix(prefix, "spacingSuffix")));
+  const suffix = Str.read(dvv(capByPrefix(prefix, "spacingSuffix"))) || "";
 
   return size === undefined ? "" : `width:${size}${suffix};`;
 }
@@ -312,7 +320,7 @@ export function cssStyleSizeSpacingHeight({
   const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
 
   const size = styleSizeSpacing({ v, device, state, prefix });
-  const suffix = Str.read(dvv(capByPrefix(prefix, "spacingSuffix")));
+  const suffix = Str.read(dvv(capByPrefix(prefix, "spacingSuffix"))) || "";
 
   return size === undefined ? "" : `height:${size}${suffix};`;
 }
@@ -352,6 +360,33 @@ export function cssStyleSizeFontSizeIcon({
       return `font-size:32px;`;
     case "custom":
       return `font-size:${customSize}${customSizeSuffix};`;
+    case undefined:
+      return "";
+  }
+}
+
+export function cssStyleSizeMinWidthIcon({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
+  const size = getSize(dvv(capByPrefix(prefix, "iconSize")));
+  const customSize = dvv(capByPrefix(prefix, "iconCustomSize"));
+  const customSizeSuffix = Str.read(
+    dvv(capByPrefix(prefix, "iconCustomSizeSuffix"))
+  );
+
+  switch (size) {
+    case "small":
+      return `min-width:16px;`;
+    case "medium":
+      return `min-width:24px;`;
+    case "large":
+      return `min-width:32px;`;
+    case "custom":
+      return `min-width:${customSize}${customSizeSuffix};`;
     case undefined:
       return "";
   }

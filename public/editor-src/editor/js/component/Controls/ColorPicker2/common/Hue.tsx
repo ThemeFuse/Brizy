@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React, { Component, ComponentType, MouseEvent, TouchEvent } from "react";
 import { HSLAChange } from "visual/component/Controls/ColorPicker2/types";
 import * as hue from "../helpers/hue";
+import { disableIframeEvents, enableIframeEvents, isInIframe } from "../utils";
 
 import HSLA = tinycolor.ColorFormats.HSLA;
 
@@ -46,6 +47,9 @@ export class Hue extends Component<Props> {
     const contentWindow = this.props.contentWindow();
 
     if (contentWindow) {
+      if (!isInIframe(contentWindow)) {
+        disableIframeEvents(contentWindow);
+      }
       contentWindow.addEventListener(
         "mousemove",
         this.handleChange as () => void
@@ -55,6 +59,10 @@ export class Hue extends Component<Props> {
   };
 
   handleMouseUp = () => {
+    const contentWindow = this.props.contentWindow();
+    if (contentWindow && !isInIframe(contentWindow)) {
+      enableIframeEvents(contentWindow);
+    }
     this.unbindEventListeners();
   };
 

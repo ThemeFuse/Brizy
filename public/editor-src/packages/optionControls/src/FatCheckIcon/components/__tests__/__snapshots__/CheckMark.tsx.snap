@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test props className should be className 1`] = `
+<span
+  class="brz-ed--check-mark className brz-ed--check-mark__checked"
+/>
+`;
+
+exports[`Test props if is checked should have className brz-ed--check-mark__checked 1`] = `
+<span
+  class="brz-ed--check-mark brz-ed--check-mark__checked"
+/>
+`;
+
+exports[`Test props if isn't checked should have className brz-ed--check-mark__unchecked 1`] = `
+<span
+  class="brz-ed--check-mark brz-ed--check-mark__unchecked"
+/>
+`;

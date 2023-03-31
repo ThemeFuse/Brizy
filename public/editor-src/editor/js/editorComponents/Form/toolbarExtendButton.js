@@ -73,12 +73,12 @@ export function getItems({ v }) {
     },
     {
       id: "apps",
-      type: "formApps",
-      icon: "nc-extensions-2",
+      type: "formApps-dev",
       devices: "desktop",
-      value: {
+      config: {
         id: v._id,
-        fields
+        fields,
+        icon: "nc-extensions-2"
       }
     }
   ];

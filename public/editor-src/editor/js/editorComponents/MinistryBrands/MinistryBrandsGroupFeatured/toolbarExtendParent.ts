@@ -3,7 +3,7 @@ import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
-import { getOption } from "../utils/helpers";
+import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
@@ -15,12 +15,8 @@ export const getItems: GetItems<Value, Props> = ({
   context
 }) => {
   const _config = Config.getAll();
-  const ekklesia = _config.modules?.ekklesia;
+  const { apiUrl } = _config.modules?.ekklesia ?? {};
   const { getSourceChoices } = _config.api?.sourceTypes ?? {};
-
-  const group = getOption(ekklesia?.groups);
-  const recentGroups = getOption(ekklesia?.smallgroups);
-  const categories = getOption(ekklesia?.terms?.smallgroup);
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
@@ -47,7 +43,10 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   label: t("Category"),
                   type: "select-dev",
-                  choices: categories,
+                  choices: getEkklesiaChoiches({
+                    key: "smallgroup",
+                    url: apiUrl
+                  }),
                   helper: {
                     content: t(
                       "This option only applies to 'Always Show Latest'."
@@ -59,7 +58,7 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   label: t("Group"),
                   type: "select-dev",
-                  choices: group,
+                  choices: getEkklesiaChoiches({ key: "groups", url: apiUrl }),
                   helper: {
                     content: t(
                       "This option only applies to 'Always Show Latest'."
@@ -71,7 +70,10 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   label: t("Recent Groups"),
                   type: "select-dev",
-                  choices: recentGroups,
+                  choices: getEkklesiaChoiches({
+                    key: "smallgroups",
+                    url: apiUrl
+                  }),
                   helper: {
                     content: t(
                       "Select a recent group. Use only if you are not using 'Group Slug' below and 'Always Show Latest' is set to 'No'."

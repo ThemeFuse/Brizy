@@ -1,4 +1,6 @@
+import { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
 import Config, { WP } from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ReduxState } from "visual/redux/types";
 import { CloudPopup, GlobalBlock, PageWP, Rule } from "visual/types";
 import { paginationData } from "visual/utils/api/const";
@@ -1614,4 +1616,21 @@ export const uploadImage = (): Promise<string> => {
 };
 export const uploadFile = (): Promise<string> => {
   return Promise.reject("Not implemented");
+};
+
+export const getSourceIds = (
+  type: string,
+  config: ConfigCommon
+): ChoicesAsync["load"] => {
+  const sourceItemsHandler = config?.api?.sourceItems?.handler;
+
+  return () => {
+    return new Promise((res, rej) => {
+      if (typeof sourceItemsHandler === "function") {
+        sourceItemsHandler(res, rej, { id: type });
+      } else {
+        rej("Missing api handler in config");
+      }
+    });
+  };
 };

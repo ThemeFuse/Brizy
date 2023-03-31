@@ -20,6 +20,7 @@ exports[`Test ColorPalette snapshots Default usage 1`] = `
     class="brz-ed-control__color-palette__icon"
   >
     <svg
+      class="brz-icon-svg brz-ed-icon-svg align-[initial]"
       fill="currentColor"
       height="1em"
       viewBox="0 0 16 16"

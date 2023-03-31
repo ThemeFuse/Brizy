@@ -1,0 +1,18 @@
+.icons-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+.iconBox {
+  width: 16%;
+  height: 100px;
+  align-items: center;
+  justify-content: center;
+  margin: 2px;
+  background-color: #1fb6ff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.iconName {
+  margin-top: 5px;
+}

@@ -47,7 +47,8 @@ export function styleInner(
         "cssStyleContainerPopup2CloseState",
         "cssStyleContainerPopup2ClosePosition",
         "cssStyleContainerPopup2CloseColor"
-      ]
+      ],
+      interval: ["cssStyleHoverTransition"]
     },
     ".brz && > .brz-container__wrap .brz-popup2__close:hover .brz-icon-svg": {
       standart: [

@@ -87,6 +87,16 @@ export function getItems({ v, device }) {
             max: 100,
             units: [{ value: "%", title: "%" }]
           }
+        },
+        {
+          id: "styles",
+          type: "sidebarTabsButton-dev",
+          config: {
+            tabId: "styles",
+            text: t("Styling"),
+            icon: "nc-cog",
+            align: "left"
+          }
         }
       ]
     },

@@ -14,7 +14,9 @@ export const MapPreview = (props: Props): ReactElement => {
     "intrinsic-ignore": platform === "WP"
   });
 
-  const iframeSrc = `${URL}?key=${KEY}&q=${address}&zoom=${zoom}`;
+  const iframeSrc = `${URL}?key=${KEY}&q=${encodeURIComponent(
+    address
+  )}&zoom=${zoom}`;
 
   return (
     <div className="brz-map-content">

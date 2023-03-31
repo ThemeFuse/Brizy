@@ -66,3 +66,4 @@ export { UnlimitedBundles } from "./UnlimitedBundles";
 export { WiserUpsell } from "./WiserUpsell";
 export { BoldBundles } from "./BoldBundles";
 export { CrossSell } from "./CrossSellbyCross";
+export { Vendor } from "widget/Shopify/Vendor";

@@ -1,12 +1,101 @@
-.brz-input {
-  text-shadow: none;
+// styles from _input.scss 'small-input' mixin
+@tailwind components;
+
+@layer components {
+  .brz-small-input {
+    @apply bg-transparent;
+    @apply text-picker__input-color;
+    @apply text-options__item-font-size;
+    @apply font-normal;
+    @apply border-0;
+    @apply outline-0;
+    @apply py-[2px] px-0;
+    @apply leading-none;
+    @apply top-0 left-0;
+    @apply transition-[color] duration-[0.2s] ease-linear;
+    @apply border-b border-b-picker__input-border;
+    -moz-appearance: textfield; // Remove spin button on Firefox
+
+    &:focus,
+    &:active {
+      @apply bg-transparent;
+      @apply text-picker__input-color--active;
+      @apply transition-[color] duration-[0.2s] ease-linear;
+      @apply shadow-none;
+      @apply border-transparent;
+      @apply outline-0;
+    }
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      @apply m-0;
+      -webkit-appearance: none;
+    }
+  }
+}
+
+.brz-auto-correcting-input.brz-auto-correcting-input--background-color {
+  @apply brz-small-input;
+  @apply flex-none;
+  @apply w-[30px];
+}
+
+.brz-auto-correcting-input.brz-auto-correcting-input--width {
+  @apply brz-small-input;
+  @apply w-[17px];
+  @apply my-0 mx-[4px];
+}
+
+.brz-auto-correcting-input.brz-auto-correcting-input--multi-input {
+  @apply bg-transparent;
+  @apply border-0;
+  @apply outline-0;
+  @apply text-multi_input-color;
+  @apply border-b border-b-multi_input-border;
+  @apply text-left;
+  @apply uppercase;
+  @apply py-[2px] px-0;
+  @apply transition-[color] transition-[border-color] duration-[0.2s] ease-linear;
+  @apply w-[17px];
+  @apply outline-none;
+  @apply mr-[8px];
+
+  &:hover {
+    @apply border-b border-b-multi_input-border--hover;
+    @apply transition-[border-color] ease-linear duration-[0.2s];
+  }
+
+  &:focus,
+  &:active {
+    @apply border-b border-b-multi_input-border--active;
+    @apply text-multi_input-color--active;
+    @apply transition-[color] transition-[border-color] ease-linear duration-[0.2s];
+  }
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    @apply m-0;
+    -webkit-appearance: none;
+  }
+}
+
+.brz-auto-correcting-input.brz-auto-correcting-input--box-resizer {
+  @apply brz-small-input;
+  @apply p-0;
+  @apply absolute;
+  @apply w-[105%] h-full;
+  @apply border-0;
+}
+
+.brz-auto-correcting-input.brz-auto-correcting-input--stepper {
   @apply font-default-font-family;
   @apply text-options__item-font-size;
   @apply not-italic;
   @apply font-normal;
   @apply tracking-normal;
   @apply bg-control-bg bg-none;
-  @apply text-white;
+  @apply text-control__variant-color;
+  @apply w-full;
   @apply flex-auto;
   @apply h-control-height;
   @apply indent-[5px];
@@ -17,17 +106,41 @@
   @apply shadow-none;
   @apply text-left;
   @apply ml-auto;
-  @apply w-full;
+  text-shadow: none;
+  -moz-appearance: textfield; // Remove spin button on Firefox
 
   &:focus,
   &:active {
     @apply bg-control-bg;
-    @apply text-white;
+    @apply text-control__variant-color;
+    @apply outline-0;
   }
 
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
     @apply m-0;
+    -webkit-appearance: none;
+  }
+
+  &::placeholder {
+    @apply italic;
+    @apply text-input__placeholder-color;
+    @apply text-[1em];
+  }
+
+  &-large {
+    @apply max-w-control__lg-width;
+  }
+
+  &-medium {
+    @apply max-w-control__md-width;
+  }
+
+  &-small {
+    @apply max-w-control__sm-width;
+  }
+
+  &-auto {
+    @apply max-w-[100%];
   }
 }

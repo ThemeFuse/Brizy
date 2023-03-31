@@ -2,7 +2,7 @@ import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
-import { getOption } from "../utils/helpers";
+import { getEkklesiaChoiches } from "../utils/helpers";
 import type { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings old option
@@ -22,13 +22,8 @@ export const getItems: GetItems<Value, Props> = ({
   const isNotExtraCategory3Filter = v.addCategoryFilter3 === "off";
 
   const _config = Config.getAll();
-  const ekklesia = _config.modules?.ekklesia;
+  const { apiUrl } = _config.modules?.ekklesia ?? {};
   const { getSourceChoices } = _config.api?.sourceTypes ?? {};
-
-  const parentCategoryChoices = getOption(ekklesia?.terms?.eventsLvl?.parents);
-  const categoryFilterParentChoices = getOption(
-    ekklesia?.terms?.eventsLvl?.childs
-  );
 
   return [
     {
@@ -257,7 +252,11 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Parent Category"),
                   type: "select-dev",
                   devices: "desktop",
-                  choices: parentCategoryChoices,
+                  choices: getEkklesiaChoiches({
+                    key: "eventsLvl",
+                    subKey: "parents",
+                    url: apiUrl
+                  }),
                   helper: {
                     content: t(
                       "Defines which level 1 category to use as a base for the layout."
@@ -282,7 +281,11 @@ export const getItems: GetItems<Value, Props> = ({
                       label: t("Parent"),
                       devices: "desktop",
                       disabled: isNotCategoryFilter,
-                      choices: categoryFilterParentChoices,
+                      choices: getEkklesiaChoiches({
+                        key: "eventsLvl",
+                        subKey: "childs",
+                        url: apiUrl
+                      }),
                       helper: {
                         content: t(
                           "Defines which level 2 category for this specific filter. If selected will show the next level of categories as select options. If a Parent Category is selected above make sure to select a child category of that parent."
@@ -376,7 +379,12 @@ export const getItems: GetItems<Value, Props> = ({
                       label: t("Parent"),
                       devices: "desktop",
                       disabled: isNotExtraCategory1Filter,
-                      choices: categoryFilterParentChoices,
+                      choices: getEkklesiaChoiches({
+                        key: "eventsLvl",
+                        subKey: "childs",
+                        url: apiUrl
+                      }),
+
                       helper: {
                         content: t(
                           "Additional category filters require this selection. Defines which level 2 category for this specific filter. If selected will show the next level of categories as select options. If a Parent Category is selected above make sure to select a child category of that parent."
@@ -421,7 +429,11 @@ export const getItems: GetItems<Value, Props> = ({
                       label: t("Parent"),
                       devices: "desktop",
                       disabled: isNotExtraCategory2Filter,
-                      choices: categoryFilterParentChoices,
+                      choices: getEkklesiaChoiches({
+                        key: "eventsLvl",
+                        subKey: "childs",
+                        url: apiUrl
+                      }),
                       helper: {
                         content: t(
                           "Additional category filters require this selection. Defines which level 2 category for this specific filter. If selected will show the next level of categories as select options. If a Parent Category is selected above make sure to select a child category of that parent."
@@ -467,7 +479,11 @@ export const getItems: GetItems<Value, Props> = ({
                       label: t("Parent"),
                       devices: "desktop",
                       disabled: isNotExtraCategory3Filter,
-                      choices: categoryFilterParentChoices,
+                      choices: getEkklesiaChoiches({
+                        key: "eventsLvl",
+                        subKey: "childs",
+                        url: apiUrl
+                      }),
                       helper: {
                         content: t(
                           "Additional category filters require this selection. Defines which level 2 category for this specific filter. If selected will show the next level of categories as select options. If a Parent Category is selected above make sure to select a child category of that parent."

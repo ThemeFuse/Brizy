@@ -36,5 +36,4 @@ export const getSourceIdChoices: GetSourceIdChoices = async (id: string) => {
 };
 
 // is needed to pass webpack warnings
-export const getShopifySourceIdChoices = (): Choice[] => [];
 export const getShopifySourceTypeChoices = (): Choice[] => [];

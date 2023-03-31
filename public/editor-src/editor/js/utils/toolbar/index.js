@@ -42,7 +42,6 @@ export {
 } from "./toolbarBoxShadow";
 
 export {
-  toolbarTextShadow,
   toolbarTextShadowHexField2,
   toolbarTextShadowFields2
 } from "./toolbarTextShadow";
@@ -140,13 +139,6 @@ export {
   toolbarShapeBottomType,
   toolbarShapeBottomFlip
 } from "./toolbarShape";
-
-// Element WP Posts
-export {
-  toolbarElementPostsTaxonomy,
-  toolbarElementPostsColumns,
-  toolbarElementPostsRows
-} from "./toolbarElementPosts";
 
 // Element Carousel
 export {

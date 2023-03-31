@@ -3,6 +3,8 @@
     "messageSuccess": "",
     "messageError": "",
     "messageRedirect": "",
+    "customAttributes": null,
+    "customCSS": "",
     "items": [],
 
     "offsetX": 0,

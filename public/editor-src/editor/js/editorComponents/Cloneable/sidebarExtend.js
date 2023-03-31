@@ -1,10 +1,10 @@
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentChoices } from "visual/utils/options";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 export function getItems({ v, device, context }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const isRelative = dvv("elementPosition") === "relative";
   const richTextDC = getDynamicContentChoices(
@@ -157,7 +157,8 @@ export function getItems({ v, device, context }) {
                       label: t("Custom Attributes"),
                       type: "codeMirror-dev",
                       position: 45,
-                      placeholder: "key1:value1\nkey2:value2",
+                      // eslint-disable-next-line
+                      placeholder: 'key1:"value1"\nkey2:"value2"',
                       display: "block",
                       devices: "desktop",
                       helper: {

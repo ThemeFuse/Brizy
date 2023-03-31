@@ -1,11 +1,3 @@
-import {
-  styleElementWOOAttributesSpacing,
-  styleElementWOOAttributesBetween,
-  styleBorderWidthUngrouped,
-  styleBorderStyle,
-  styleBorderColor,
-  styleElementWOOAttributesStyleBorder
-} from "visual/utils/style2";
 import { cssStyleColor } from "visual/utils/cssStyle";
 import {
   cssStyleTypography2FontFamily,
@@ -15,6 +7,14 @@ import {
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle/cssStyleTypography2";
 import { defaultValueValue } from "visual/utils/onChange";
+import {
+  styleBorderColor,
+  styleBorderStyle,
+  styleBorderWidthUngrouped,
+  styleElementWOOAttributesBetween,
+  styleElementWOOAttributesSpacing,
+  styleElementWOOAttributesStyleBorder
+} from "visual/utils/style2";
 
 export function cssStyleElementWOOAdditionalTitleFontFamily({ v, device }) {
   return cssStyleTypography2FontFamily({ v, device, prefix: "title" });
@@ -41,7 +41,7 @@ export function cssStyleElementWOOAdditionalTitleColor({ v, device, state }) {
 }
 
 export function cssStyleElementWOOAdditionalTitleSpacing({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   return `padding-bottom: ${dvv("titleSpacing")}px;`;
 }
@@ -117,7 +117,7 @@ export function cssStyleElementWOOAttributesBorder({ v, device, state }) {
     return styleBorder === "table" ? borderWidth : 0;
   };
 
-  return borderWidth === undefined
+  return borderWidth === undefined || borderStyle === "none"
     ? ""
     : `border-top: ${disabledIsBottom(
         styleBorder,

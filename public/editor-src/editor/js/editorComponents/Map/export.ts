@@ -14,6 +14,7 @@ const setParentListeners = (parent: HTMLElement): void => {
 
 export default function ($node: JQuery): void {
   const node = $node.get(0);
+  if (!node) return;
 
   node.querySelectorAll<HTMLElement>(".brz-map").forEach((item) => {
     const mapWrapper = item.querySelector<HTMLElement>(".brz-map-content");

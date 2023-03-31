@@ -1,14 +1,16 @@
 import classNames from "classnames";
-import React, { ReactElement, ReactNode } from "react";
+import React, { MouseEvent, ReactElement, ReactNode } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { WithClassName } from "visual/utils/options/attributes";
 
 export interface Props extends WithClassName {
-  onClick: VoidFunction;
+  onClick: (event: MouseEvent<HTMLDivElement>) => void;
   reverse?: boolean;
   children?: ReactNode;
   icon?: string;
   align?: "left" | "center" | "right";
+  reverseTheme?: boolean;
+  title?: string;
 }
 
 export const Button = ({
@@ -17,7 +19,9 @@ export const Button = ({
   icon,
   children,
   reverse,
-  align = "center"
+  align = "center",
+  reverseTheme = false,
+  title
 }: Props): ReactElement | null => {
   return children || icon ? (
     <div
@@ -25,14 +29,17 @@ export const Button = ({
         "brz-ed-control__button",
         `brz-ed-control__button-${align}`,
         className,
+
         {
-          reverse: !!reverse
+          reverse: !!reverse,
+          reverseTheme: !!reverseTheme
         }
       )}
       onClick={onClick}
+      title={title}
     >
       {icon && <EditorIcon icon={icon} />}
-      <span className={"brz-ed-control__label"}>{children}</span>
+      {children && <span className={"brz-ed-control__label"}>{children}</span>}
     </div>
   ) : null;
 };

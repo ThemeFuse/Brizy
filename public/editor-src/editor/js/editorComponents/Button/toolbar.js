@@ -739,6 +739,7 @@ export function getItemsForDesktop(v, component) {
                 {
                   id: "text",
                   type: "population-dev",
+                  disabled: richTextDC.length === 0,
                   config: {
                     iconOnly: true,
                     choices: richTextDC

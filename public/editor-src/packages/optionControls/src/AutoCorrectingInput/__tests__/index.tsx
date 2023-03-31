@@ -2,8 +2,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React, { useState } from "react";
 import { AutoCorrectingInput } from "../index";
 
-const MockComponent = ({ number }: { number?: number }) => {
-  const [value, setValue] = useState<number>(number ?? 0);
+const MockComponent = ({ currentValue }: { currentValue?: number }) => {
+  const [value, setValue] = useState<number>(currentValue ?? 0);
   return (
     <AutoCorrectingInput
       value={value}
@@ -43,7 +43,7 @@ describe("Test AutoCorrectingInput", () => {
           min={0}
           step={1}
           size={100}
-          className="brz-input"
+          className="custom-classname"
           onBlur={emptyFn}
           onFocus={emptyFn}
           onMouseEnter={emptyFn}
@@ -64,7 +64,7 @@ describe("Test AutoCorrectingInput", () => {
     });
 
     test("Checking only numbers", async () => {
-      render(<MockComponent number={55} />);
+      render(<MockComponent currentValue={55} />);
 
       const component = screen.getByDisplayValue(55);
 
@@ -80,7 +80,7 @@ describe("Test AutoCorrectingInput", () => {
     });
 
     test("Changing value", async () => {
-      render(<MockComponent number={42} />);
+      render(<MockComponent currentValue={42} />);
 
       const component = screen.getByDisplayValue(42);
 
@@ -96,7 +96,7 @@ describe("Test AutoCorrectingInput", () => {
     });
 
     test("Checking max value and min value", async () => {
-      render(<MockComponent number={11} />);
+      render(<MockComponent currentValue={11} />);
       const component = screen.getByDisplayValue(11);
       expect(component).toBeInTheDocument();
 

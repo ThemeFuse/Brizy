@@ -153,46 +153,9 @@ export function getItems({
               ]
             },
             {
-              id: "tabCurrentElementAdvanced",
-              label: t("Advanced"),
+              id: "tabCurrentElementPlayback",
+              label: t("Playback"),
               options: [
-                {
-                  id: "groupSettings",
-                  type: "group-dev",
-                  devices: "desktop",
-                  options: [
-                    {
-                      id: "controls",
-                      label: t("Controls"),
-                      type: "switch-dev"
-                    },
-                    {
-                      id: "controlsIconCustomSize",
-                      type: "slider-dev",
-                      label: t("Size"),
-                      disabled: !customType || dvv("controls") !== "on",
-                      config: {
-                        min: 1,
-                        max: 40,
-                        units: [{ title: "px", value: "px" }]
-                      }
-                    }
-                  ]
-                },
-                {
-                  id: "branding",
-                  label: t("Branding"),
-                  type: "switch-dev",
-                  devices: "desktop",
-                  disabled: offControls || !youtubeType
-                },
-                {
-                  id: "intro",
-                  label: t("Intro"),
-                  type: "switch-dev",
-                  devices: "desktop",
-                  disabled: !vimeoType
-                },
                 {
                   id: "autoplay",
                   label: t("Autoplay"),
@@ -212,20 +175,6 @@ export function getItems({
                   label: t("Loop"),
                   type: "switch-dev",
                   devices: "desktop"
-                },
-                {
-                  id: "lazyLoad",
-                  label: t("Lazy Load"),
-                  type: "switch-dev",
-                  devices: "desktop",
-                  disabled: !youtubeType
-                },
-                {
-                  id: "privacyMode",
-                  label: t("Privacy Mode"),
-                  type: "switch-dev",
-                  devices: "desktop",
-                  disabled: !youtubeType
                 },
                 {
                   id: "suggestedVideos",
@@ -270,11 +219,11 @@ export function getItems({
               ]
             },
             {
-              id: "tabCurrentElementCover",
-              label: t("Cover"),
+              id: "tabCurrentElementPlayer",
+              label: t("Player"),
               options: [
                 {
-                  label: t("Cover"),
+                  label: t("Cover Image"),
                   id: "cover",
                   type: "imageUpload-dev",
                   devices: "desktop"
@@ -298,7 +247,58 @@ export function getItems({
                   state: "normal",
                   devices: "desktop",
                   disabled: noCover
-                })
+                }),
+                {
+                  id: "groupSettings",
+                  type: "group-dev",
+                  devices: "desktop",
+                  options: [
+                    {
+                      id: "controls",
+                      label: t("Controls"),
+                      type: "switch-dev"
+                    },
+                    {
+                      id: "controlsIconCustomSize",
+                      type: "slider-dev",
+                      label: t("Size"),
+                      disabled: !customType || dvv("controls") !== "on",
+                      config: {
+                        min: 1,
+                        max: 40,
+                        units: [{ title: "px", value: "px" }]
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "branding",
+                  label: t("Branding"),
+                  type: "switch-dev",
+                  devices: "desktop",
+                  disabled: offControls || !youtubeType
+                },
+                {
+                  id: "intro",
+                  label: t("Intro"),
+                  type: "switch-dev",
+                  devices: "desktop",
+                  disabled: !vimeoType
+                },
+                {
+                  id: "lazyLoad",
+                  label: t("Lazy Load"),
+                  type: "switch-dev",
+                  devices: "desktop",
+                  disabled: !youtubeType
+                },
+                {
+                  id: "privacyMode",
+                  label: t("Privacy Mode"),
+                  type: "switch-dev",
+                  devices: "desktop",
+                  disabled: !youtubeType
+                }
               ]
             }
           ]

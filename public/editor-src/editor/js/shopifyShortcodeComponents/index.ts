@@ -1,8 +1,13 @@
 import { Shortcodes } from "visual/types";
 import AddToCart from "./AddToCart";
+import BlogPostContent from "./BlogPostContent";
 import BlogTitle from "./BlogTitle";
+import CollectionDescription from "./CollectionDescription";
 import CollectionTitle from "./CollectionTitle";
+import ProductDescription from "./ProductDescription";
 import ProductTitle from "./ProductTitle";
+import Vendor from "./Vendor";
+
 // import AliExpressReview from "./AliExpressReview";
 // import AppstleSubscription from "./AppstleSubscription";
 // import AreviewReviews from "./AreviewReviews";
@@ -74,6 +79,7 @@ import ProductTitle from "./ProductTitle";
 const config = ((): Shortcodes => {
   return {
     base: [
+      { component: ProductDescription, pro: false },
       { component: ProductTitle, pro: false },
       { component: AddToCart, pro: false },
       // { component: Quantity, pro: false },
@@ -143,10 +149,17 @@ const config = ((): Shortcodes => {
       // { component: BoldBundles, pro: false },
       // { component: Variations, pro: false },
       // { component: WiserUpsell, pro: false },
-      // { component: CrossSell, pro: false }
+      // { component: CrossSell, pro: false },
+      { component: Vendor, pro: false }
     ],
-    collection: [{ component: CollectionTitle, pro: false }],
-    blog: [{ component: BlogTitle, pro: false }]
+    blog: [
+      { component: BlogTitle, pro: false },
+      { component: BlogPostContent, pro: false }
+    ],
+    collection: [
+      { component: CollectionTitle, pro: false },
+      { component: CollectionDescription, pro: false }
+    ]
   };
 })();
 
