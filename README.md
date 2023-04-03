@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.1.1<br>
+Tested up to: 6.2<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.4.17<br>
+Stable tag: 2.4.18<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,31 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.18 - 2023-04-03
+* Fixed: onclick Custom Attribute RightSidebar 
+* Fixed: Responsive brackground map 
+* Fixed: Reorder column - option 
+* Fixed: Background overflow && z-index auto 
+* Fixed: Tabs text on responsiveMode 
+* Fixed: Opacity for language switcher drop-down 
+* Fixed: Form input length validation 
+* Fixed: Flash on hover transition bg gradient 
+* Fixed: Text link 
+* Fixed: Global Style Colorpicker 
+* Fixed: Element Tabs icon 
+* Fixed: Form Email input length 
+* Fixed: Text with Mask 
+* Fixed: Option file upload remove 
+* Fixed: Resolve CSS conflicts with woo commerce products 
+* Fixed: Added dom encoding to utf-8 
+* Improved: ImageUpload canceling 
+* Improved: Countdown new timezone 
+* Improved: LeftSidebar Bottom panel 
+* Improved: Video Element options 
+* Improved: Text font size option increased to 200 
+* Improved: Multiline for Custom Attribute 
+* Updated: Slick Slider 
 
 ### 2.4.17 - 2023-03-10
 * Fixed: Screenshots
