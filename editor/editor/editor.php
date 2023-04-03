@@ -196,11 +196,11 @@ class Brizy_Editor_Editor_Editor {
 		$config = $this->addSocialAccounts( $manager, $config, $context );
 		$config = $this->addWpPostTypes( $config, $context );
 		$config = $this->addTemplateFields( $config, $mode === 'template', $wp_post_id, $context );
-		$config = $this->getApiActions($config, $context);
+		$config['wp']['api'] = $this->getApiActions($config, $context);
         $config = $this->addGlobalBlocksData( $config );
 		$config = $this->addGlobalBlocksData( $config );
 		$config = $this->getPostLoopSources( $config, $mode === 'template', $wp_post_id, $context );
-		$config              = $this->getApiConfigFields( $config, $context );
+		$config = $this->getApiConfigFields( $config, $context );
 		$config = $this->addContentDefaults( $config, $context );
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
