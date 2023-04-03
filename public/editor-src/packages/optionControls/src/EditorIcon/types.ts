@@ -1,6 +1,11 @@
 export enum IconsName {
+  Close = "Close",
+  CheckSmall = "CheckSmall",
+  Spinner = "Spinner",
   Duplicate = "Duplicate",
+  CheckCircle = "CheckCircle",
   Settings = "Settings",
+  Heart = "Heart",
   "t2-sermon-list" = "MinistryBrandsSermonList",
   "t2-sermon-detail" = "MinistryBrandsSermonDetail",
   "t2-sermon-featured" = "MinistryBrandsSermonFeatured",
@@ -14,5 +19,10 @@ export enum IconsName {
   "t2-group-detail" = "MinistryBrandsGroupDetail",
   "t2-group-featured" = "MinistryBrandsGroupFeatured",
   "t2-group-slider" = "MinistryBrandsGroupSlider",
-  "t2-group-layout" = "MinistryBrandsGroupLayout"
+  "t2-group-layout" = "MinistryBrandsGroupLayout",
+  "nc-stre-up" = "StreUp",
+  "nc-stre-down" = "StreDown",
+  MediaImage = "MediaImage",
+  MediaVideo = "MediaVideo",
+  MediaMap = "MediaMap"
 }

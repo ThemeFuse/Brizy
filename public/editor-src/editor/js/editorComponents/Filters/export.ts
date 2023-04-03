@@ -1,8 +1,9 @@
 import $ from "jquery";
 import { getFreeLibs } from "visual/libs";
 
-export default function($node: JQuery): void {
+export default function ($node: JQuery): void {
   const node = $node.get(0);
+  if (!node) return;
 
   const range = (node: Element): void => {
     const inputLeft: HTMLInputElement | null = node.querySelector(
@@ -94,7 +95,7 @@ export default function($node: JQuery): void {
   const radio = (node: Element): void => {
     const activeClass = "brz-filters__radio-option--active";
     node.addEventListener("change", (): void => {
-      node.querySelectorAll<HTMLInputElement>(".brz-input").forEach(item => {
+      node.querySelectorAll<HTMLInputElement>(".brz-input").forEach((item) => {
         const parent = item.closest(".brz-filters__radio-option");
 
         if (item.checked && !parent?.classList.contains(activeClass)) {
@@ -127,12 +128,11 @@ export default function($node: JQuery): void {
   };
 
   const active = (node: Element): void => {
-    const container: HTMLElement | null = node.querySelector(
-      ".brz-filters__tags"
-    );
+    const container: HTMLElement | null =
+      node.querySelector(".brz-filters__tags");
 
     if (container)
-      container.addEventListener("click", e => {
+      container.addEventListener("click", (e) => {
         const node = e.target;
 
         if (node instanceof Element) {
@@ -143,9 +143,11 @@ export default function($node: JQuery): void {
   };
 
   const rating = (node: Element): void => {
-    const stars: NodeListOf<Element & {
-      starValue: number;
-    }> = node.querySelectorAll(".brz-starrating-icon-wrap");
+    const stars: NodeListOf<
+      Element & {
+        starValue: number;
+      }
+    > = node.querySelectorAll(".brz-starrating-icon-wrap");
 
     const starRate = (e: MouseEvent): void => {
       const type = e.type;
@@ -195,7 +197,7 @@ export default function($node: JQuery): void {
       stars[i].starValue = i + 1;
 
       ["mouseover", "mouseout", "click"].forEach((event): void => {
-        stars[i].addEventListener(event, e => starRate(e as MouseEvent));
+        stars[i].addEventListener(event, (e) => starRate(e as MouseEvent));
       });
     }
   };
@@ -232,10 +234,13 @@ export default function($node: JQuery): void {
     // Custom Scrollbars
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let scrollbars: any;
-    $select.on("select2:opening", function(): void {
+    $select.on("select2:opening", function (): void {
       // waiting appear the dropdown in the dom
-      setTimeout(function() {
+      setTimeout(function () {
         const $dropdown = $this.find(".select2-dropdown");
+        const node = $dropdown.get(0);
+        if (!node) return;
+
         const itemHeight = parseInt(
           $dropdown
             .find(".select2-results__options .select2-results__option")
@@ -245,15 +250,14 @@ export default function($node: JQuery): void {
         $dropdown.css("maxHeight", itemHeight * 5);
 
         const { Scrollbars } = getFreeLibs();
-        if ($dropdown.length && Scrollbars) {
-          const node = $dropdown.get(0);
+        if (Scrollbars) {
           scrollbars = new Scrollbars(node);
         }
       }, 0);
     });
 
     // destroy custom scrollbar when dropdown closed
-    $select.on("select2:close", function() {
+    $select.on("select2:close", function () {
       if (scrollbars) {
         scrollbars.destroy();
         scrollbars = null;

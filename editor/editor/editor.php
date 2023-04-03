@@ -186,6 +186,7 @@ class Brizy_Editor_Editor_Editor {
 		$config = $this->addGlobalBlocksData( $config );
 		$config = $this->addGlobalBlocksData( $config );
 		$config = $this->getPostLoopSources( $config, $mode === 'template', $wp_post_id, $context );
+		$config = $this->addContentDefaults( $config, $context );
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
 
@@ -222,6 +223,23 @@ class Brizy_Editor_Editor_Editor {
 		return $config;
 	}
 
+	private function addContentDefaults( $config, $context ) {
+		$config['contentDefaults'] = [
+			'Button'           => [ 'linkSource' => 'page' ],
+			'RichText'         => [ 'linkSource' => 'page' ],
+			'Column'           => [ 'linkSource' => 'page' ],
+			'Row'              => [ 'linkSource' => 'page' ],
+			'Icon'             => [ 'linkSource' => 'page' ],
+			'Image'            => [ 'linkSource' => 'page' ],
+			'Lottie'           => [ 'linkSource' => 'page' ],
+			'PostExcerpt'      => [ 'linkSource' => 'page' ],
+			'PostTitle'        => [ 'linkSource' => 'page' ],
+			'ProductMetafield' => [ 'linkSource' => 'page' ],
+			'Posts'            => [ 'source' => 'post', 'orderBy' => 'ID', 'order' => 'ASC' ]
+		];
+
+		return $config;
+	}
 
 	private function getPostLoopSources( $config, $isTemplate, $wp_post_id, $context ) {
 		$excludePostTypes = [ 'attachment' ];
@@ -672,7 +690,6 @@ class Brizy_Editor_Editor_Editor {
 	 * @return array
 	 */
 	private function getMegaMenuItems() {
-
 		return array(
 			(object) ( array(
 				'type'  => "SectionMegaMenu",
@@ -1161,7 +1178,6 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	private function getImgSizes() {
-
 		$sizes = [];
 
 		foreach ( Brizy_Editor::get_all_image_sizes() as $name => $size ) {

@@ -1,28 +1,35 @@
 import classnames from "classnames";
 import React from "react";
-import { MapStateToProps, connect } from "react-redux";
-import { Dispatch } from "redux";
+import { ConnectedProps, connect } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import Options from "visual/component/Options";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
-import { ActionUpdateUI, updateUI } from "visual/redux/actions2";
+import { updateUI } from "visual/redux/actions2";
 import { deviceModeSelector, uiSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
 import { Scrollbar } from "../Scrollbar";
 import { Animation } from "./Animation";
 
-type DeviceModes = ReduxState["ui"]["deviceMode"];
-type RightSidebarStore = ReduxState["ui"]["rightSidebar"];
-type RightSidebarProps = RightSidebarStore & {
-  deviceMode: DeviceModes;
-  dispatch: Dispatch<ActionUpdateUI>;
-};
-
 export let instance: RightSidebarInner | undefined;
 
-export class RightSidebarInner extends React.Component<RightSidebarProps> {
-  static defaultProps: RightSidebarProps = {
+const mapStateToProps = (state: ReduxState) => {
+  const { isOpen, lock, alignment, activeTab } = uiSelector(state).rightSidebar;
+
+  return {
+    isOpen,
+    lock,
+    alignment,
+    activeTab,
+    deviceMode: deviceModeSelector(state)
+  };
+};
+const connector = connect(mapStateToProps);
+
+type Props = ConnectedProps<typeof connector>;
+
+export class RightSidebarInner extends React.Component<Props> {
+  static defaultProps: Props = {
     isOpen: false,
     lock: undefined,
     alignment: "right",
@@ -44,7 +51,7 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
     instance = this;
   }
 
-  componentDidUpdate(prevProps: RightSidebarProps): void {
+  componentDidUpdate(prevProps: Props): void {
     if (prevProps.deviceMode !== this.props.deviceMode) {
       this.getItems = undefined;
       this.getTitle = undefined;
@@ -59,10 +66,10 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
   onLockClick = (): void => {
     const { isOpen, lock, alignment, activeTab } = this.props;
     const items = this.getItems !== undefined ? this.getItems() : undefined;
-    const newStore: RightSidebarStore = {
+    const newStore = {
       activeTab,
       alignment,
-      lock: lock === "manual" ? undefined : "manual",
+      lock: lock === "manual" ? undefined : ("manual" as const),
       isOpen:
         lock !== undefined && (items === undefined || items.length === 0)
           ? false
@@ -100,7 +107,7 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
       this.getItems = undefined;
       this.getTitle = undefined;
 
-      const newStore: RightSidebarStore = {
+      const newStore = {
         isOpen: false,
         lock,
         alignment,
@@ -173,20 +180,4 @@ export class RightSidebarInner extends React.Component<RightSidebarProps> {
   }
 }
 
-type MapStateProps = RightSidebarStore & { deviceMode: DeviceModes };
-const mapStateToProps: MapStateToProps<
-  MapStateProps,
-  RightSidebarProps,
-  ReduxState
-> = (state) => {
-  const { isOpen, lock, alignment, activeTab } = uiSelector(state).rightSidebar;
-
-  return {
-    isOpen,
-    lock,
-    alignment,
-    activeTab,
-    deviceMode: deviceModeSelector(state)
-  };
-};
-export const RightSidebar = connect(mapStateToProps)(RightSidebarInner);
+export const RightSidebar = connector(RightSidebarInner);

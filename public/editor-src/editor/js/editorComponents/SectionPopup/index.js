@@ -310,6 +310,7 @@ class SectionPopup extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div
           className={classNameClose}
+          id={this.instanceKey}
           data-brz-popup={this.instanceKey}
           {...attr}
         >

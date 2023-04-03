@@ -173,6 +173,7 @@ $popover__tabs_left-box-shadow: var(--popover__tabs_left-box-shadow, rgba($black
 $control-color--active: var(--active-color, $blue-21);
 $control-color: var(--primary-gray, rgba($white, 0.85));
 $control-bg: var(--secondary-dark, $gray-1);
+$control__input-text: var(--primary-gray, $white);
 $control__variant-color: var(--primary-gray, $white);
 $control-border: var(--tertiary-white, rgba($white, 0.07));
 $control__scroll_pane-bg: var(--control__scroll_pane-bg, $gray-9);
@@ -589,8 +590,8 @@ $thumbnail__block__scroll__pane-border: var(--thumbnail__block__scroll__pane-bor
 $thumbnail__block__loader-bg: var(--thumbnail__block__loader-bg, rgba($gray-7, 0.6));
 
 // Input
-$input-bg: var(--primary-dark, $gray-1);
-$input-color: var(--primary-white, $white);
+$input-bg: var(--secondary-dark, $gray-1);
+$input-color: var(--primary-gray, $white);
 $input__placeholder-color: var(--input__placeholder-color, rgba($blue-23, 0.2));
 
 // Extract Popover tooltip colors

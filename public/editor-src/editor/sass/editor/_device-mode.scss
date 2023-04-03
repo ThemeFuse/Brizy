@@ -19,6 +19,10 @@ $containers-width: map-get($container-max-widths, "lg");
   }
 }
 
+.brz-ed--no-events {
+  pointer-events: none;
+}
+
 // Container
 .brz-ed-iframe--desktop {
   min-width: $containers-width;

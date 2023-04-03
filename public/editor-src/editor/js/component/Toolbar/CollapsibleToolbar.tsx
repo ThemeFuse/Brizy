@@ -43,13 +43,6 @@ class _CollapsibleToolbar
   extends React.Component<PropsWithState, CollapsibleToolbarState>
   implements ToolbarMonitorHandler
 {
-  static defaultProps = {
-    animation: "leftToRight",
-    global: false,
-    membership: false,
-    language: false
-  };
-
   state = {
     opened: false
   };
@@ -179,7 +172,7 @@ class _CollapsibleToolbar
   }
 
   renderToolbar(): React.ReactNode {
-    const { animation } = this.props;
+    const { animation = "leftToRight" } = this.props;
     const animationClassName =
       animation === "leftToRight"
         ? "animation-left-right"
@@ -248,6 +241,5 @@ export default connect<
   CollapsibleToolbarProps,
   ReduxState
 >((s) => ({ device: s.ui.deviceMode }), null, null, { forwardRef: true })(
-  // @ts-expect-error, Not clear why TS doesn't like this
   _CollapsibleToolbar
 );

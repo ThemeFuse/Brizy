@@ -13,9 +13,6 @@
   }
 
   .select2-container {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
     width: inherit !important;
   }
 
@@ -84,6 +81,7 @@
       overflow: hidden;
       border: inherit;
       border-radius: 0;
+      background-color: transparent;
 
       .select2-results {
         width: 100%;

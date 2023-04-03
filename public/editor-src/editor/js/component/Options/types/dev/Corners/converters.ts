@@ -1,18 +1,18 @@
+import { parseStrict } from "fp-utilities";
 import {
-  callGetter,
   FromElementModel,
   FromElementModelGetter,
-  ToElementModel
+  ToElementModel,
+  callGetter
 } from "visual/component/Options/Type";
-import { Value } from "visual/component/Options/types/dev/Corners/types/Value";
-import { parseStrict } from "visual/utils/reader/readWithParser";
-import { mPipe, pipe } from "visual/utils/fp";
-import * as Str from "visual/utils/string/specs";
-import * as Type from "visual/component/Options/utils/Type";
-import { onNullish } from "visual/utils/value";
-import * as Num from "visual/utils/math/number";
-import * as Positive from "visual/utils/math/Positive";
 import * as Unit from "visual/component/Options/types/dev/Corners/types/Unit";
+import { Value } from "visual/component/Options/types/dev/Corners/types/Value";
+import * as Type from "visual/component/Options/utils/Type";
+import { mPipe, pipe } from "visual/utils/fp";
+import * as Positive from "visual/utils/math/Positive";
+import * as Num from "visual/utils/math/number";
+import * as Str from "visual/utils/string/specs";
+import { onNullish } from "visual/utils/value";
 
 export const fromElementModel: FromElementModel<"corners-dev"> = parseStrict<
   FromElementModelGetter,
@@ -96,7 +96,7 @@ export const fromElementModel: FromElementModel<"corners-dev"> = parseStrict<
   )
 });
 
-export const toElementModel: ToElementModel<"corners-dev"> = v => {
+export const toElementModel: ToElementModel<"corners-dev"> = (v) => {
   return {
     radiusType: v.type,
     radius: v.value,

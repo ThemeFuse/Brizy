@@ -16,7 +16,9 @@ export const defaultPopup: PopupSettings = {
   horizontalAlign: true,
   verticalAlign: true,
   embedded: false,
-  displayCondition: false
+  displayCondition: false,
+  scrollPageBehind: true,
+  clickOutsideToClose: true
 };
 
 export const addDefault = <C extends ConfigCommon>(config: C): C => {

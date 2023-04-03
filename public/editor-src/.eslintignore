@@ -6,3 +6,4 @@
 *.test.ts
 **/libs/**
 /packages/optionControls/**
+/packages/icons/**

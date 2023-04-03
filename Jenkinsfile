@@ -48,7 +48,6 @@ pipeline {
                           git checkout .;
                           git fetch;
                           git clean -fd;
-                          git checkout ${params.releaseBranch};
                           git reset --hard origin/${params.releaseBranch};
                         else
                           git config --global user.email "jenkins@brizy.io

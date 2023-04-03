@@ -52,13 +52,6 @@ export function style(
     ".brz &&:hover .brz-groupDetail__item": {
       standart: ["cssStyleElementOfMinistryBrandsHorizontalAlign"]
     },
-    ".brz && .brz-groupDetail__item--meta--preview *:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsPreviewTypography",
-        "cssStyleElementOfMinistryBrandsPreviewColor"
-      ],
-      interval: ["cssStyleHoverTransition"]
-    },
     ".brz && .brz-groupDetail__item--meta:hover": {
       standart: ["getAllCssStyleTypography", "cssStyleColor"],
       interval: ["cssStyleHoverTransition"]
@@ -77,7 +70,34 @@ export function style(
           "cssStyleElementOfMinistryBrandsMetaLinksColor"
         ],
         interval: ["cssStyleHoverTransition"]
-      }
+      },
+    ".brz && .brz-groupDetail__item--meta--preview p:hover": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsParagraphTypography",
+        "cssStyleElementOfMinistryBrandsParagraphColor"
+      ],
+      interval: ["cssStyleHoverTransition"]
+    },
+    ".brz && .brz-groupDetail__item--meta--preview h4:hover": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsH4Typography",
+        "cssStyleElementOfMinistryBrandsH4Color"
+      ],
+      interval: ["cssStyleHoverTransition"]
+    },
+    ".brz && .brz-groupDetail__item--meta--preview ul": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsListPaddingLeft",
+        "cssStyleElementOfMinistryBrandsListTypes"
+      ]
+    },
+    ".brz && .brz-groupDetail__item--meta--preview ul:hover li": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsListTypography",
+        "cssStyleElementOfMinistryBrandsListColor"
+      ],
+      interval: ["cssStyleHoverTransition"]
+    }
   };
 
   return renderStyles({ v, vs, vd, styles });

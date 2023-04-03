@@ -1,0 +1,35 @@
+.brz-shopify-quantity-style2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .brz-button {
+    background-color: #5D6B82;
+    width: 50px;
+    height: 50px;
+    border-radius: 3px;
+  }
+
+  input {
+    border: 1px solid #D1D5DB;
+    text-align: center;
+    margin: 0 5px;
+    border-radius: 5px;
+    height: 50px;
+    width: 80px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type=number] {
+      -moz-appearance: textfield;
+    }
+  }
+}

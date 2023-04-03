@@ -45,6 +45,8 @@ export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
           priority: 20
         })
       });
+
+      this.setState({ loading: true });
       wpMediaFrame.on("select", () => {
         const attachment = wpMediaFrame.state().get("selection").first();
         const { acceptedExtensions } = this.props;
@@ -65,6 +67,9 @@ export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
                     "Failed to upload file. Please upload a valid JPG, PNG, SVG or GIF image."
                   )
                 );
+                if (this.mounted) {
+                  this.setState({ loading: false });
+                }
                 return;
               }
 
@@ -108,9 +113,11 @@ export class ImageSetter<T extends ReactText> extends CloudImageSetter<T> {
           .catch((e) => {
             console.error("failed to get attachment uid", e);
           });
+        this.setState({ loading: false });
       });
       wpMediaFrame.on("close", () => {
         html?.classList.remove("brz-ow-hidden");
+        this.setState({ loading: false });
       });
 
       this.wpMediaFrame = wpMediaFrame;

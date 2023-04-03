@@ -13,6 +13,7 @@ import { fromElementModel as colorPicker } from "visual/component/Options/types/
 import { fromElementModel as corners } from "visual/component/Options/types/dev/Corners/converters";
 import { fromElementModel as fileUpload } from "visual/component/Options/types/dev/FileUpload/converters";
 import { fromElementModel as filters } from "visual/component/Options/types/dev/Filters/converters";
+import { fromElementModel as formApps } from "visual/component/Options/types/dev/FormApps/converters";
 import { fromElementModel as gallery } from "visual/component/Options/types/dev/Gallery/converters";
 import { fromElementModel as galleryForGallery } from "visual/component/Options/types/dev/GalleryForGallery/converters";
 import { fromElementModel as globalBlock } from "visual/component/Options/types/dev/GlobalBlock/converters";
@@ -98,7 +99,8 @@ const fns: FromElementModelFns = {
   "transform-dev": transform,
   "typography-dev": typography,
   "savedBlock-dev": savedBlock,
-  "globalBlock-dev": globalBlock
+  "globalBlock-dev": globalBlock,
+  "formApps-dev": formApps
 };
 
 /**

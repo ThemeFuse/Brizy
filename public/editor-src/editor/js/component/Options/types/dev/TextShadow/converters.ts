@@ -1,27 +1,24 @@
+import { parseStrict } from "fp-utilities";
+import { ElementModel } from "visual/component/Elements/Types";
 import {
   FromElementModel,
   FromElementModelGetter,
   ToElementModel
 } from "visual/component/Options/Type";
-import { Empty, isEmpty, isNoEmpty, NoEmpty } from "./types/Value";
-import * as Str from "visual/utils/string/specs";
-import * as Num from "visual/utils/math/number";
+import { call } from "visual/component/Options/types/dev/Animation/utils";
 import * as Hex from "visual/utils/color/Hex";
-import * as Opacity from "visual/utils/cssProps/opacity";
-import * as Blur from "visual/utils/cssProps/Blur";
 import * as Palette from "visual/utils/color/Palette";
+import * as Blur from "visual/utils/cssProps/Blur";
+import * as Opacity from "visual/utils/cssProps/opacity";
+import { mPipe, pipe } from "visual/utils/fp";
+import { match } from "visual/utils/fp/match";
+import * as Num from "visual/utils/math/number";
+import { optional, readWithParser } from "visual/utils/reader/readWithParser";
+import * as Str from "visual/utils/string/specs";
+import { onNullish } from "visual/utils/value";
 import { NoEmptyBlur, fromBlur } from "./types/NoEmptyBlur";
 import { NoEmptyOpacity, fromOpacity } from "./types/NoEmptyOpacity";
-import {
-  optional,
-  parseStrict,
-  readWithParser
-} from "visual/utils/reader/readWithParser";
-import { mPipe, pipe } from "visual/utils/fp";
-import { call } from "visual/component/Options/types/dev/Animation/utils";
-import { onNullish } from "visual/utils/value";
-import { match } from "visual/utils/fp/match";
-import { ElementModel } from "visual/component/Elements/Types";
+import { Empty, NoEmpty, isEmpty, isNoEmpty } from "./types/Value";
 
 export const defaultValue: Empty = {
   blur: 0,
@@ -83,7 +80,7 @@ export const elementModelToEmpty = parseStrict<FromElementModelGetter, Empty>({
   )
 });
 
-export const fromElementModel: FromElementModel<"textShadow-dev"> = g =>
+export const fromElementModel: FromElementModel<"textShadow-dev"> = (g) =>
   elementModelToNoEmpty(g) ?? elementModelToEmpty(g);
 
 export const toElementModel: ToElementModel<"textShadow-dev"> = match(

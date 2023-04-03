@@ -1,16 +1,16 @@
 .brz-rich-text {
   .link--anchor,
   .link--story,
+  .link--external,
+  .link--upload,
   .link--popup {
     &:not(.is-empty) {
-      text-decoration: $link-is-not-empty;
 
       @include hover {
         text-decoration: $link-is-not-empty;
       }
     }
     &.is-empty {
-      text-decoration: $link-is-empty;
 
       @include hover {
         text-decoration: $link-is-empty;

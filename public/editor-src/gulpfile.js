@@ -905,14 +905,7 @@ function zipIcons() {
   const src = paths.editor + "/icons/**/*";
   const dest = paths.build + "/editor";
 
-  return gulp
-    .src(src)
-    .pipe(
-      gulpPlugins.archiver("icons.zip", {
-        zlib: { level: 9 }
-      })
-    )
-    .pipe(gulp.dest(dest));
+  return gulp.src(src).pipe(gulpPlugins.zip("icons.zip")).pipe(gulp.dest(dest));
 }
 
 function watch() {

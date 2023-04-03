@@ -257,12 +257,17 @@ class Icon extends EditorComponent<Value, Props> {
         </Link>
       );
     }
+    const showId =
+      Str.mRead(customID).length === 0 &&
+      Str.mRead(cssIDPopulation).length === 0;
 
     const props = {
-      id:
-        cssIDPopulation === ""
-          ? Str.mRead(customID)
-          : Str.mRead(cssIDPopulation),
+      ...(!showId && {
+        id:
+          cssIDPopulation === ""
+            ? Str.mRead(customID)
+            : Str.mRead(cssIDPopulation)
+      }),
       className:
         cssClassPopulation === ""
           ? Str.mRead(customClassName)

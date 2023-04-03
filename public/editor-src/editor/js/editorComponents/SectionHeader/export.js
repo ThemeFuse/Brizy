@@ -8,8 +8,16 @@ export default function ($node) {
       return $(this).closest(".brz-section__header").get(0);
     },
     onStickyChange: function (isSticky) {
-      $(this).toggleClass("brz-section__header--animated-closed", !isSticky);
-      $(this).toggleClass("brz-section__header--animated-opened", isSticky);
+      const opened = "brz-section__header--animated-opened";
+      const closed = "brz-section__header--animated-closed";
+
+      if (isSticky) {
+        this.classList.add(opened);
+        this.classList.remove(closed);
+      } else {
+        this.classList.add(closed);
+        this.classList.remove(opened);
+      }
 
       if (isSticky) {
         window.Brz.emit("elements.headerSticky.show", {

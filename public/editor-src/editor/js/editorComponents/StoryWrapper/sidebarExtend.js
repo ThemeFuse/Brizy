@@ -104,7 +104,8 @@ export function getItems({ v, device, context }) {
                       label: t("Custom Attributes"),
                       type: "codeMirror-dev",
                       position: 45,
-                      placeholder: "key1:value1\nkey2:value2",
+                      // eslint-disable-next-line
+                      placeholder: 'key1:"value1"\nkey2:"value2"',
                       display: "block",
                       helper: {
                         content:

@@ -18,7 +18,7 @@ import { Value, eq } from "../types/Value";
 export interface Props {
   value: Value;
   extensions: string[];
-  onChange: (v: Value) => void;
+  onChange: (v: Value | undefined) => void;
 }
 
 const valueToState = (v: Value): St.State =>
@@ -80,6 +80,12 @@ export function Uploader({ value, extensions, onChange }: Props): ReactElement {
       ToastNotification.warn(state.message, 5);
     }
   }, [state.type === "Err"]);
+
+  useEffect(() => {
+    if (state.type === "Empty") {
+      onChange(undefined);
+    }
+  }, [state.type, onChange]);
 
   useEffect(() => {
     switch (state.type) {

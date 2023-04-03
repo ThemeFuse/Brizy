@@ -2,7 +2,6 @@ import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import {
-  defaultValueKey,
   defaultValueValue,
   mobileSyncOnChange,
   tabletSyncOnChange
@@ -20,7 +19,6 @@ const getMenuChoices = () => {
 };
 
 export function getItems({ v, device }) {
-  const dvk = (key) => defaultValueKey({ key, device });
   const dvv = (key) => defaultValueValue({ v, key, device });
 
   const menuChoices = getMenuChoices();
@@ -116,32 +114,16 @@ export function getItems({ v, device }) {
           ]
         },
         {
-          id: dvk("itemPadding"),
-          type: "slider",
+          id: "itemPadding",
+          type: "slider-dev",
           label: t("Spacing"),
           roles: ["admin"],
           position: 50,
-          slider: {
-            min: 0,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [{ title: "px", value: "px" }]
-          },
           disabled: v.items.length === 1 || dvv("mMenu") === "on",
-          value: {
-            value: dvv("itemPadding")
-          },
-          onChange: ({ value }) => {
-            return {
-              [dvk("itemPadding")]: value,
-              [dvk("itemPaddingRight")]: value,
-              [dvk("itemPaddingLeft")]: value
-            };
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
           }
         }
       ]

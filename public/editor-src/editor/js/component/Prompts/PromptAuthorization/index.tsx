@@ -1,11 +1,11 @@
-import React from "react";
+import React, { ComponentType } from "react";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { PromptAuthorizationTabs } from "./types";
 
-const TABS: PromptAuthorizationTabs[] = [
+const TABS: PromptAuthorizationTabs<Omit<ComponentType, "children">>[] = [
   {
     id: "signIn",
     title: t("Cloud"),

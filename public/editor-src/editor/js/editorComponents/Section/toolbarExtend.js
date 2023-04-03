@@ -15,6 +15,8 @@ import {
 export function getItems({ v, device, component }) {
   const config = Config.getAll();
 
+  const isMultiLanguageDisabled =
+    config.elements?.section?.multilanguage === false;
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
   const slider = dvv("slider");
 
@@ -106,7 +108,8 @@ export function getItems({ v, device, component }) {
                     {
                       id: "translations",
                       label: t("Multi-Language"),
-                      type: "switch-dev"
+                      type: "switch-dev",
+                      disabled: isMultiLanguageDisabled
                     },
                     {
                       id: "translationsLangs",

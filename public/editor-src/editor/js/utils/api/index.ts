@@ -1,7 +1,9 @@
 import { isT, mPipe, pass } from "fp-utilities";
 import { UploadData } from "visual/component/Options/types/dev/FileUpload/types/Value";
+import { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
 import Config from "visual/global/Config";
 import { Cloud, Shopify } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { ReduxState } from "visual/redux/types";
 import { GlobalBlock } from "visual/types";
@@ -823,7 +825,7 @@ function getCollectionSourceItems(v: T): Promise<CollectionSourceItem[]> {
   );
 
   const url = makeUrl(`${urls.api}/pages/${project.id}/type`, {
-    earchCriteria: v.by,
+    searchCriteria: v.by,
     searchValue: v.value
   });
 
@@ -1076,3 +1078,20 @@ export const getPostsSourceRefs: GetPostsSourceRefs = (type) => {
 };
 
 //#endregion
+
+export const getSourceIds = (
+  type: string,
+  config: ConfigCommon
+): ChoicesAsync["load"] => {
+  const sourceItemsHandler = config?.api?.sourceItems?.handler;
+
+  return () => {
+    return new Promise((res, rej) => {
+      if (typeof sourceItemsHandler === "function") {
+        sourceItemsHandler(res, rej, { id: type });
+      } else {
+        rej("Missing api handler in config");
+      }
+    });
+  };
+}

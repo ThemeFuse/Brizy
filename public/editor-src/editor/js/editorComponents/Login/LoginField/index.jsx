@@ -1,20 +1,20 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import { TextEditor } from "visual/component/Controls/TextEditor";
-import defaultValue from "./defaultValue";
-import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
 import classnames from "classnames";
-import { css } from "visual/utils/cssStyle";
-import { style } from "visual/editorComponents/Login/LoginField/styles";
+import React from "react";
 import CheckboxControls, {
   CheckGroupItem as CheckboxControlsItem
 } from "visual/component/Controls/CheckGroup";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { style } from "visual/editorComponents/Login/LoginField/styles";
+import { css } from "visual/utils/cssStyle";
 import { IS_WP } from "visual/utils/env";
+import defaultValue from "./defaultValue";
+import * as toolbarConfig from "./toolbar";
 
-const readLoginType = type => {
+const readLoginType = (type) => {
   switch (type) {
     case "Email":
     case "Password":
@@ -26,16 +26,16 @@ const readLoginType = type => {
   }
 };
 
-const getFieldType = type => {
+const getFieldType = (type) => {
   switch (type) {
     case "Email":
-      return "text";
+      return "email";
     case "Password":
       return "password";
   }
 };
 
-const getFieldName = type => {
+const getFieldName = (type) => {
   switch (type) {
     case "Email":
       return IS_WP ? "log" : "email";
@@ -56,15 +56,15 @@ class LoginField extends EditorComponent {
     active: {}
   };
 
-  handleActive = active => {
+  handleActive = (active) => {
     this.setState({ active });
   };
 
-  handleLabelChange = label => {
+  handleLabelChange = (label) => {
     this.patchValue({ label });
   };
 
-  handleLabelRememberChange = label => {
+  handleLabelRememberChange = (label) => {
     this.patchValue({ label });
   };
 
@@ -123,12 +123,8 @@ class LoginField extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     const { active } = this.state;
-    const {
-      remember,
-      showLabel,
-      toolbarExtendLabel,
-      toolbarExtendCheckbox
-    } = this.props;
+    const { remember, showLabel, toolbarExtendLabel, toolbarExtendCheckbox } =
+      this.props;
 
     const { type } = v;
 
@@ -174,7 +170,7 @@ class LoginField extends EditorComponent {
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
                     required
-                    onChange={e => {
+                    onChange={(e) => {
                       showLabel === "on"
                         ? this.patchValue({
                             placeholder: e.target.value
@@ -237,6 +233,7 @@ class LoginField extends EditorComponent {
     };
 
     const _type = readLoginType(type);
+    const isEmail = getFieldType(_type) === "email";
 
     if (_type) {
       return (
@@ -251,6 +248,7 @@ class LoginField extends EditorComponent {
               <div className="brz-login__field">
                 <input
                   type={getFieldType(_type)}
+                  maxLength={isEmail ? 255 : undefined}
                   name={getFieldName(_type)}
                   className="brz-input"
                   placeholder={this.getPlaceholder(v)}

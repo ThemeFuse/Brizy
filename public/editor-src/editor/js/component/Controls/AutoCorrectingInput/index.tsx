@@ -21,6 +21,7 @@ interface IProps extends Props<number>, WithClassName {
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   size?: number;
+  handleDecrementCb?: () => void;
 }
 
 interface IState {

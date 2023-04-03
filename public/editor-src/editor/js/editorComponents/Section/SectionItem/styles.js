@@ -29,7 +29,10 @@ export function style(v, vs, vd, props) {
     },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
       standart: ["cssStyleBgColor", "cssStyleBgGradient"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      interval: [
+        "cssStyleHoverTransitionFlash",
+        "cssStylePropertyHoverTransition"
+      ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-map": {
       standart: ["cssStyleFilter", "cssStyleBgMediaMap"],

@@ -1,0 +1,9 @@
+// Animation
+.brz-ed-animated {
+  animation-duration: 0.15s;
+  animation-fill-mode: both;
+
+  &--spin {
+    @apply animate-spin;
+  }
+}

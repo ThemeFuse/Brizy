@@ -1,7 +1,7 @@
 import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { getAllMembershipChoices } from "visual/utils/membership";
@@ -20,6 +20,9 @@ import {
 
 export function getItems({ v, device, component, context }) {
   const config = Config.getAll();
+  const isMultiLanguageDisabled =
+    config.elements?.footer?.multilanguage === false;
+
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const sectionHeightSuffix = dvv("sectionHeightSuffix");
@@ -97,7 +100,8 @@ export function getItems({ v, device, component, context }) {
             {
               id: "translations",
               label: t("Multi-Language"),
-              type: "switch-dev"
+              type: "switch-dev",
+              disabled: isMultiLanguageDisabled
             },
             {
               id: "translationsLangs",

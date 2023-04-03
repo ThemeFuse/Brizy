@@ -96,7 +96,7 @@ export function cssStyleElementIconBgGradient({
       return cssStyleBgGradient({ v, device, state, prefix });
     case "outline":
     case "default":
-      return "background-image: transparent;";
+      return "background-image: none;";
     case undefined:
       return "";
   }

@@ -1,21 +1,21 @@
-import { mPipe, pass } from "fp-utilities";
-import * as Vertical from "./Vertical";
-import * as Horizontal from "./Horizontal";
-import * as Transparency from "./Transparency";
+import { mPipe, parseStrict, pass } from "fp-utilities";
+import {
+  FromElementModelGetter,
+  callGetter
+} from "visual/component/Options/Type";
+import * as Viewport from "visual/component/Options/types/dev/Motion/types/Viewport";
+import * as Unit from "visual/utils/math/Unit";
+import { optional } from "visual/utils/reader/readWithParser";
+import { isEnabled } from "../utils";
 import * as Blur from "./Blur";
+import * as Horizontal from "./Horizontal";
+import * as MouseTilt from "./MouseTilt";
+import * as MouseTrack from "./MouseTrack";
 import * as Rotate from "./Rotate";
 import * as Scale from "./Scale";
-import * as MouseTrack from "./MouseTrack";
-import * as MouseTilt from "./MouseTilt";
-import { optional, parseStrict } from "visual/utils/reader/readWithParser";
-import {
-  callGetter,
-  FromElementModelGetter
-} from "visual/component/Options/Type";
-import { isEnabled } from "../utils";
+import * as Transparency from "./Transparency";
+import * as Vertical from "./Vertical";
 import { wrap } from "./utils";
-import * as Unit from "visual/utils/math/Unit";
-import * as Viewport from "visual/component/Options/types/dev/Motion/types/Viewport";
 
 export type Effect = Exclude<keyof Value, "active">;
 

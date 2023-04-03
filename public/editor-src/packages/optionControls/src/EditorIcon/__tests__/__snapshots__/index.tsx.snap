@@ -2,6 +2,7 @@
 
 exports[`Test Icon Snapshots Render Default Icon 1`] = `
 <svg
+  class="brz-icon-svg brz-ed-icon-svg align-[initial]"
   fill="currentColor"
   height="1em"
   viewBox="0 0 16 16"

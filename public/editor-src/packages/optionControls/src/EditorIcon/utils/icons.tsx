@@ -1,5 +1,12 @@
 import {
+  CheckSmall,
+  Close,
+  CheckCircle,
   Duplicate,
+  Heart,
+  MediaImage,
+  MediaMap,
+  MediaVideo,
   MinistryBrandsEventCalendar,
   MinistryBrandsEventDetail,
   MinistryBrandsEventFeatured,
@@ -14,13 +21,24 @@ import {
   MinistryBrandsSermonFeatured,
   MinistryBrandsSermonLayout,
   MinistryBrandsSermonList,
-  Settings
+  Settings,
+  StreDown,
+  StreUp,
+  Spinner
 } from "@brizy/ui-icons";
 import { IconsName } from "../types";
 
 export const Icons = {
+  [IconsName.CheckSmall]: CheckSmall,
+  [IconsName.MediaImage]: MediaImage,
+  [IconsName.MediaVideo]: MediaVideo,
+  [IconsName.MediaMap]: MediaMap,
+  [IconsName.Heart]: Heart,
+  [IconsName.Spinner]: Spinner,
   [IconsName.Duplicate]: Duplicate,
+  [IconsName.CheckCircle]: CheckCircle,
   [IconsName.Settings]: Settings,
+  [IconsName.Close]: Close,
   [IconsName["t2-sermon-list"]]: MinistryBrandsSermonList,
   [IconsName["t2-sermon-detail"]]: MinistryBrandsSermonDetail,
   [IconsName["t2-sermon-featured"]]: MinistryBrandsSermonFeatured,
@@ -34,5 +52,7 @@ export const Icons = {
   [IconsName["t2-group-detail"]]: MinistryBrandsGroupDetail,
   [IconsName["t2-group-featured"]]: MinistryBrandsGroupFeatured,
   [IconsName["t2-group-slider"]]: MinistryBrandsGroupSlider,
-  [IconsName["t2-group-layout"]]: MinistryBrandsGroupLayout
+  [IconsName["t2-group-layout"]]: MinistryBrandsGroupLayout,
+  [IconsName["nc-stre-up"]]: StreUp,
+  [IconsName["nc-stre-down"]]: StreDown
 };

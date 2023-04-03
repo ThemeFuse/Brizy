@@ -26,7 +26,7 @@ export function cssStyleSectionMaxWidth({ v, device, state }) {
   let maxWidth = `calc(${toPercentage} * var(--brz-section-container-max-width, 1170px));`;
 
   if (device === TABLET || device === MOBILE) {
-    maxWidth = `${containerSize}%`;
+    maxWidth = `${containerSize}%;`;
   }
 
   return containerType === "boxed"

@@ -34,13 +34,13 @@ import UserPhoneNumber from "./UserPhoneNumber";
 import UserRoles from "./UserRoles";
 import UserUsername from "./UserUsername";
 import {
+  content,
   essentialsCommon,
   essentialsStory,
   grid,
   media,
   mediaStory,
-  social,
-  content
+  social
 } from "./index.common";
 import Login from "./pro/Login";
 import Menu from "./pro/Menu";

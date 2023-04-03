@@ -1,5 +1,6 @@
-export default function($node: JQuery): void {
+export default function ($node: JQuery): void {
   const node = $node.get(0);
+  if (!node) return;
 
   const formatTime = (time: number): string => {
     const min: number = Math.floor(time / 60);
@@ -9,7 +10,7 @@ export default function($node: JQuery): void {
   };
 
   const clickedElement = (event: Event, item: Element | null): boolean => {
-    return Boolean(item && event.composedPath().find(el => el === item));
+    return Boolean(item && event.composedPath().find((el) => el === item));
   };
 
   const changeIconVisibility = (
@@ -36,7 +37,7 @@ export default function($node: JQuery): void {
     return (offsetLeft * 100) / sliderWidth;
   };
 
-  node.querySelectorAll(".brz-audio").forEach(item => {
+  node.querySelectorAll(".brz-audio").forEach((item) => {
     const audio = item.querySelector("audio");
 
     if (audio) {
@@ -60,9 +61,9 @@ export default function($node: JQuery): void {
       const stopPreviousTrack = (item: Element): void => {
         const elementsToStop: Element[] = Array.from(
           node.querySelectorAll(".brz-audio")
-        ).filter(_item => _item !== item);
+        ).filter((_item) => _item !== item);
 
-        elementsToStop.forEach(item => {
+        elementsToStop.forEach((item) => {
           const audio: HTMLAudioElement | null = item.querySelector(
             ".brz-custom-audio audio"
           );
@@ -105,7 +106,7 @@ export default function($node: JQuery): void {
         playPauseBtnNode && changeIconVisibility(playPauseBtnNode, false);
       });
 
-      item.addEventListener("click", event => {
+      item.addEventListener("click", (event) => {
         const isPlayPauseClick = clickedElement(event, playPauseBtnNode);
         const isSliderClick = clickedElement(event, sliderProgressNode);
         const isMuteClick = clickedElement(event, muteBtnNode);

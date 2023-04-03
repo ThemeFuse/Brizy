@@ -215,6 +215,16 @@ export function getItems({
         { icon: "nc-align-bottom-right", value: "bottomRight", title: "" },
         { icon: "nc-align-bottom-left", value: "bottomLeft", title: "" }
       ]
+    },
+    {
+      id: "advancedSettings",
+      // @ts-expect-error: Old option
+      type: "advancedSettings",
+      roles: ["admin"],
+      position: 110,
+      icon: "nc-cog",
+      devices: "desktop",
+      title: t("Settings")
     }
   ];
 }

@@ -1,0 +1,90 @@
+@use "sass:math";
+
+$control-height: 30px;
+
+// --- Stepper
+.brz-ed-control__stepper {
+  @apply relative;
+  @apply w-control__sm-width;
+  @apply h-control-height;
+  @apply rounded-control-border-radius;
+  @apply overflow-hidden;
+  @apply bg-control-bg;
+  @apply text-control-color;
+  @apply text-left;
+  @apply flex;
+  @apply items-center;
+}
+
+.brz-ed-control__stepper--value,
+.brz-ed-control__stepper--arrows {
+  @apply relative;
+  @apply min-w-0;
+}
+
+.brz-ed-control__stepper--value {
+  @apply font-default-font-family;
+  @apply text-control-font-size;
+  @apply tracking-control-letter-spacing;
+  @apply leading-none;
+  @apply w-[65%];
+  @apply basis-[65%];
+  @apply pt-[2px];
+  @apply max-w-full;
+
+  .brz-ed-control__input {
+    @apply bg-control-bg;
+    @apply max-w-full;
+    @apply pl-[5px];
+    @apply m-0;
+    @apply w-full;
+    @apply text-center;
+    @apply indent-0;
+  }
+}
+
+.brz-ed-control__stepper--arrows {
+  @apply w-[35%];
+  @apply basis-[35%];
+  @apply h-control-height;
+}
+
+.brz-ed-control__stepper--up,
+.brz-ed-control__stepper--down {
+  @apply flex items-center justify-center;
+  @apply w-full;
+  @apply absolute;
+  @apply right-0;
+  @apply text-[8px];
+  @apply cursor-pointer;
+  @apply text-control-color;
+  @apply transition-[color] ease-linear duration-200;
+  height: math.div($control-height, 2);
+  line-height: math.div($control-height, 2);
+
+  .brz-icon-svg {
+    @apply absolute;
+    @apply right-[10px];
+    @apply top-auto;
+  }
+
+  &:hover {
+    @apply text-control-color--active;
+  }
+}
+
+.brz-ed-control__stepper--up {
+  @apply top-0;
+
+  .brz-icon-svg {
+    @apply bottom-[1px];
+  }
+}
+
+.brz-ed-control__stepper--down {
+  @apply bottom-0;
+
+  .brz-icon-svg {
+    @apply top-[1px];
+  }
+}

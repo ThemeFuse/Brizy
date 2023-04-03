@@ -51,7 +51,10 @@ module.exports = (options = {}) => {
         widget: path.resolve(__dirname, "packages/widget/src"),
         widgetTemp: path.resolve(__dirname, "packages/widgetTemp/src")
       },
-      extensions: getExtensions(options.TARGET)
+      extensions: getExtensions(options.TARGET),
+      fallback: {
+        "process/browser": require.resolve("process/browser")
+      }
     },
     module: {
       rules: [

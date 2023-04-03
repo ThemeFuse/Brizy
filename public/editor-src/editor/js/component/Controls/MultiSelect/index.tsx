@@ -1,13 +1,13 @@
-import React, { ReactElement, useEffect, useState, KeyboardEvent } from "react";
-import { uniq, initial } from "underscore";
-import { WithClassName, WithSize } from "visual/utils/options/attributes";
+import React, { KeyboardEvent, ReactElement, useEffect, useState } from "react";
+import { initial, uniq } from "underscore";
 import { OnChange } from "visual/component/Options/Type";
+import { WithClassName, WithSize } from "visual/utils/options/attributes";
+import { Literal } from "visual/utils/types/Literal";
+import { Component } from "./Component";
+import { Props as ItemProps } from "./Item";
+import { SelectItem } from "./SelectItem";
 import { Tag } from "./Tag";
 import { arrowFn } from "./utils";
-import { Component } from "./Component";
-import { SelectItem } from "./SelectItem";
-import { Props as ItemProps } from "./Item";
-import { Literal } from "visual/utils/types/Literal";
 
 export type ItemType<T> = ReactElement<ItemProps<T>>;
 
@@ -48,11 +48,11 @@ export function MultiSelect<T extends Literal>({
     }
   }, [children]);
 
-  const onRemove: OnChange<T> = v => {
-    onChange(value.filter(i => i !== v));
+  const onRemove: OnChange<T> = (v) => {
+    onChange(value.filter((i) => i !== v));
   };
   const tags = value.reduce((acc, v) => {
-    const item = children.find(c => c.props.value === v);
+    const item = children.find((c) => c.props.value === v);
 
     if (item !== undefined) {
       acc.push(
@@ -68,6 +68,19 @@ export function MultiSelect<T extends Literal>({
     return acc;
   }, [] as ReactElement[]);
 
+  // if no default value found add first children
+  if (tags.length === 0) {
+    const [first] = children;
+    tags.push(
+      <Tag
+        key={first.props.value}
+        onRemove={(): void => onRemove(first.props.value)}
+      >
+        {first.props.children}
+      </Tag>
+    );
+  }
+
   const nonSelectedChildren = children.filter(
     ({ props }) => !(hideSelected && value.includes(props.value))
   );
@@ -76,19 +89,19 @@ export function MultiSelect<T extends Literal>({
     onChange(uniq([...value, i]));
     onInputChange?.("");
   };
-  const onKeyDown: OnChange<KeyboardEvent> = e => {
+  const onKeyDown: OnChange<KeyboardEvent> = (e) => {
     const key = e.key;
     switch (key) {
       case "ArrowDown":
       case "ArrowUp": {
-        const filtered = nonSelectedChildren.filter(i => !i.props.disabled);
+        const filtered = nonSelectedChildren.filter((i) => !i.props.disabled);
 
         if (filtered.length > 0) {
           const nextActive =
             active !== undefined
               ? arrowFn(key)(
                   active,
-                  filtered.map(i => i.props.value)
+                  filtered.map((i) => i.props.value)
                 )
               : filtered[0].props.value;
           setActive(nextActive);

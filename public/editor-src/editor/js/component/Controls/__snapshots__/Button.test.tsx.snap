@@ -32,9 +32,6 @@ exports[`Test Button Snapshots With icon 1`] = `
       xlink:href="//icons.svg#nc-cog"
     />
   </svg>
-  <span
-    class="brz-ed-control__label"
-  />
 </div>
 `;
 

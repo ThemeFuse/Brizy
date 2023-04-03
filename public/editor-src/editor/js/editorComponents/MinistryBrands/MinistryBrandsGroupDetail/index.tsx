@@ -7,9 +7,11 @@ import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarDate from "../toolbarDate";
+import * as toolbarH4 from "../toolbarH4";
+import * as toolbarList from "../toolbarList";
 import * as toolbarMetaLinks from "../toolbarMetaLinks";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
-import * as toolbarPreview from "../toolbarPreview";
+import * as toolbarParagraph from "../toolbarParagraph";
 import * as toolbarTitle from "../toolbarTitle";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
@@ -76,26 +78,44 @@ export class MinistryBrandsGroupDetail extends EditorComponent<Value, Props> {
             >
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
-                  toolbarPreview,
+                  toolbarParagraph,
                   undefined,
                   {
                     allowExtend: false
                   }
                 )}
-                selector=".brz-groupDetail__item--meta--preview *"
+                selector=".brz-groupDetail__item--meta--preview p"
               >
-                <Wrapper
-                  {...this.makeWrapperProps({
-                    className
+                <Toolbar
+                  {...this.makeToolbarPropsFromConfig2(toolbarH4, undefined, {
+                    allowExtend: false
                   })}
+                  selector=".brz-groupDetail__item--meta--preview h4"
                 >
-                  <DynamicContentHelper
-                    placeholder={getPlaceholder(v)}
-                    props={{ className: "brz-groupDetail" }}
-                    blocked={false}
-                    tagName="div"
-                  />
-                </Wrapper>
+                  <Toolbar
+                    {...this.makeToolbarPropsFromConfig2(
+                      toolbarList,
+                      undefined,
+                      {
+                        allowExtend: false
+                      }
+                    )}
+                    selector=".brz-groupDetail__item--meta--preview ul"
+                  >
+                    <Wrapper
+                      {...this.makeWrapperProps({
+                        className
+                      })}
+                    >
+                      <DynamicContentHelper
+                        placeholder={getPlaceholder(v)}
+                        props={{ className: "brz-groupDetail" }}
+                        blocked={false}
+                        tagName="div"
+                      />
+                    </Wrapper>
+                  </Toolbar>
+                </Toolbar>
               </Toolbar>
             </Toolbar>
           </Toolbar>

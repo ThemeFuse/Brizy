@@ -246,42 +246,18 @@
 
   // Popover
   &__popover {
-    position: relative;
-
     &-content {
-      position: absolute;
-      bottom: 10px;
-      left: 58px;
       max-width: 190px;
       min-width: 190px;
       border-radius: $toolbar-border-radius;
       background-color: $sidebar__popover-bg;
       box-shadow: 0 0 5px 0 $sidebar__popover-box-shadow;
-
-      &:before {
-        content: "";
-        position: absolute;
-        left: -$toolbar__arrow-size;
-        bottom: 18px;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: $toolbar__arrow-size $toolbar__arrow-size $toolbar__arrow-size 0;
-        border-color: transparent $sidebar__popover__arrow-border transparent transparent;
-      }
     }
 
     // Custom position popover
     &--deviceMode {
       .brz-ed-sidebar__popover-content {
-        bottom: -25px;
         min-width: 130px;
-
-        &:before {
-          bottom: 0;
-          top: 50%;
-          transform: translateY(-50%);
-        }
       }
     }
 
