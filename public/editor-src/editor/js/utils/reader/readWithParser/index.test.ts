@@ -1,12 +1,13 @@
+import { parseStrict } from "fp-utilities";
 import { mPipe, pipe } from "visual/utils/fp";
-import { optional, parseStrict, readWithParser, strict, or } from "./index";
-import * as Str from "visual/utils/string/specs";
-import * as Num from "visual/utils/math/number";
 import * as Positive from "visual/utils/math/Positive";
-import { onNullish } from "visual/utils/value";
+import * as Num from "visual/utils/math/number";
 import { prop } from "visual/utils/object/get";
+import * as Str from "visual/utils/string/specs";
+import { onNullish } from "visual/utils/value";
+import { optional, or, readWithParser, strict } from "./index";
 
-describe("Testing 'readWithParser' function", function() {
+describe("Testing 'readWithParser' function", function () {
   type User = {
     userName: string;
     userAge: string;
@@ -25,7 +26,7 @@ describe("Testing 'readWithParser' function", function() {
         {
           name: mPipe(prop("userName"), Str.read),
           age: mPipe(prop("userAge"), Num.read, Positive.fromNumber),
-          email: v => v.email
+          email: (v) => v.email
         },
         { userName: "Tom", userAge: "23", email: null }
       )
@@ -38,7 +39,7 @@ describe("Testing 'readWithParser' function", function() {
         {
           name: mPipe(prop("userName"), Str.read),
           age: mPipe(prop("userAge"), Num.read, Positive.fromNumber),
-          email: v => v.email
+          email: (v) => v.email
         },
         { userName: "Tom", userAge: "-44", email: null }
       )
@@ -57,8 +58,8 @@ describe("Testing 'readWithParser' function", function() {
     };
 
     const parser = readWithParser<User, Person>({
-      name: v => v.userName,
-      age: optional(v => Num.read(v.userAge))
+      name: (v) => v.userName,
+      age: optional((v) => Num.read(v.userAge))
     });
 
     expect(parser({ userName: "Test", userAge: "test" })).toStrictEqual({
@@ -79,15 +80,15 @@ describe("Testing 'readWithParser' function", function() {
     };
 
     const parser = readWithParser<User, Person>({
-      name: v => v.userName,
-      age: strict(v => Num.read(v.userAge))
+      name: (v) => v.userName,
+      age: strict((v) => Num.read(v.userAge))
     });
 
     expect(parser({ userName: "Test", userAge: "test" })).toBe(undefined);
   });
 });
 
-describe("Testing 'parseStrict' function", function() {
+describe("Testing 'parseStrict' function", function () {
   type User = {
     userName: string;
     userAge: string;
@@ -102,7 +103,7 @@ describe("Testing 'parseStrict' function", function() {
     expect(
       parseStrict<User, Person>(
         {
-          name: v => v.userName,
+          name: (v) => v.userName,
           age: pipe(
             prop("userAge"),
             mPipe(Num.read, Positive.fromNumber),
@@ -126,8 +127,8 @@ describe("Testing 'parseStrict' function", function() {
     };
 
     const parser = parseStrict<User, Person>({
-      name: v => v.userName,
-      age: optional(v => Num.read(v.userAge))
+      name: (v) => v.userName,
+      age: optional((v) => Num.read(v.userAge))
     });
 
     expect(parser({ userName: "Test", userAge: "test" })).toStrictEqual({
@@ -144,7 +145,7 @@ describe("Testing 'or' function", () => {
     type C = { c: number };
 
     const parseC = readWithParser<A | B, C>({
-      c: or([v => (v as A).a, v => (v as B).b])
+      c: or([(v) => (v as A).a, (v) => (v as B).b])
     });
 
     expect(parseC({ a: 34, b: 53 })).toStrictEqual({ c: 34 });

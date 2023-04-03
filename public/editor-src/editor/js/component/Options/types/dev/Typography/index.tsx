@@ -131,7 +131,7 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
   return (
     <Control
       onChange={_onChange}
-      fontFamily={config?.fontFamily}
+      showFontFamily={config?.fontFamily ?? true}
       fonts={fonts}
       font={_value.fontFamily}
       fontAdd={currentUserRole() === "admin" ? openFontsUploader : undefined}
@@ -150,11 +150,16 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
       letterSpacingMax={config?.letterSpacing?.max ?? 20}
       letterSpacingStep={0.1}
       lineHeightMin={config?.lineHeight?.min ?? 1}
-      lineHeightMax={config?.lineHeight?.max ?? 10}
+      lineHeightMax={config?.lineHeight?.max ?? 20}
       lineHeightStep={0.1}
       sizeMin={config?.fontSize?.min ?? 0}
-      sizeMax={config?.fontSize?.max ?? 100}
+      sizeMax={config?.fontSize?.max ?? 300}
       sizeStep={1}
+      letterSpacingLabel={t("Letter Sp.")}
+      lineHeightLabel={t("Line Hgt.")}
+      sizeLabel={t("Size")}
+      styleLabel={t("Typography")}
+      weightLabel={t("Weight")}
     />
   );
 };

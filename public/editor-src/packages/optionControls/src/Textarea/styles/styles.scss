@@ -1,0 +1,48 @@
+.brz-ed-control__textarea2 {
+
+  &,
+  &:focus,
+  &:active,
+  &:hover {
+    @apply outline-none;
+  }
+
+  &--auto {
+    @apply w-[auto];
+    @apply flex-auto;
+  }
+
+  &--short {
+    @apply w-control__sm-width;
+    @apply flex-[0_0_control__sm-width];
+  }
+
+  &--medium {
+    @apply w-control__md-width;
+    @apply flex-[0_0_control__md-width];
+  }
+
+  &--large {
+    @apply w-control__lg-width;
+    @apply flex-[0_0_control__lg-width];
+  }
+
+  @apply font-default-font-family;
+  @apply text-control-font-size;
+  @apply tracking-control-letter-spacing;
+  @apply leading-[22px];
+  @apply bg-control-bg;
+  @apply text-white;
+  @apply w-[auto] h-[auto];
+  @apply py-[5px] px-[10px];
+  @apply rounded-control-border-radius;
+  @apply border-0;
+  @apply outline-none;
+  @apply resize-none;
+
+  &::placeholder {
+    @apply text-[rgba(234_241_255_0.2)];
+    @apply italic;
+    @apply text-[1em];
+  }
+}

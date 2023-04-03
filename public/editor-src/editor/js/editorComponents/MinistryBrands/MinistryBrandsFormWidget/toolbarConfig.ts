@@ -1,12 +1,11 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
-import { getOption } from "../utils/helpers";
+import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = () => {
-  const ekklesia = Config.getAll()?.modules?.ekklesia;
-  const forms = getOption(ekklesia?.forms);
+  const { apiUrl } = Config.getAll()?.modules?.ekklesia ?? {};
 
   return [
     {
@@ -31,7 +30,7 @@ export const getItems: GetItems<Value, Props> = () => {
                   id: "form",
                   label: t("Forms"),
                   type: "select-dev",
-                  choices: forms
+                  choices: getEkklesiaChoiches({ key: "forms", url: apiUrl })
                 }
               ]
             }

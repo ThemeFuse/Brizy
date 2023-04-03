@@ -35,7 +35,7 @@ export function getItems({ v, context, device }) {
                 align: "start"
               },
               devices: "desktop",
-              disabled: type === "submit" || type === "search",
+              disabled: type === "search",
               tabs: [
                 {
                   id: "moreSettingsAdvanced",

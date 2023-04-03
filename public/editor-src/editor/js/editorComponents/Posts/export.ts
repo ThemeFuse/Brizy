@@ -3,6 +3,7 @@ import { getProLibs } from "visual/libs";
 
 export default function ($node: JQuery): void {
   const root = $node.get(0);
+  if (!root) return;
 
   root.querySelectorAll<HTMLElement>(".brz-posts").forEach((item) => {
     const filtersWrapper = item.querySelector<HTMLElement>(

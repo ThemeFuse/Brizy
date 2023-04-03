@@ -150,8 +150,8 @@ export const changeRichText = ($: cheerio.Root): void => {
         ? svgUrl(src, { fileName })
         : imageUrl(src, { fileName });
 
-      // @ts-expect-error: incorrect types for cheerio
       // required some property
+      // @ts-expect-error: need to be without params
       const css = $this.css();
       const newCSS = Object.entries(css).reduce((acc, [property, value]) => {
         // cheeriojs have bug for background-image: url("someurl")
@@ -168,12 +168,12 @@ export const changeRichText = ($: cheerio.Root): void => {
       if (population) {
         $this.css({
           ...newCSS,
-          "background-image": `url("${imagePopulationUrl(population)}")`
+          "background-image": `url('${imagePopulationUrl(population)}')`
         });
       } else if (imgUrl)
         $this.css({
           ...newCSS,
-          "background-image": `url("${imgUrl}")`
+          "background-image": `url('${imgUrl}')`
         });
 
       $this.removeAttr("data-image_src");

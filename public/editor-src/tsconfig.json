@@ -17,9 +17,10 @@
     "baseUrl": ".",
     "jsx": "react",
     "paths": {
-      "visual/*": ["editor/js/*"], 
+      "visual/*": ["editor/js/*"],
       "ui/*": ["packages/ui/src/*"],
       "optionControls/*" : ["packages/optionControls/src/*"],
+      "icons/*" : ["packages/icons/src/*"],
       "core/*": ["packages/core/src/*"],
       "component/*": ["packages/component/src/*"],
       "widget/*": ["packages/widget/src/*"],

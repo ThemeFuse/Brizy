@@ -16,7 +16,8 @@ const fetchHeaders = new Headers(wpHeaders);
 let isSubmitEnabled = true;
 
 export default function ($node: JQuery): void {
-  const node: Element = $node.get(0);
+  const node = $node.get(0);
+  if (!node) return;
 
   node.querySelectorAll(".brz-login").forEach((element) => {
     loginDisplay(element);

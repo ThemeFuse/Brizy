@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import React, {
-  Component,
   CSSProperties,
+  Component,
   ReactElement,
   RefObject
 } from "react";
@@ -87,7 +87,7 @@ class Background extends Component<Props> {
     return (
       <>
         {needRenderMedia(this.props) && (
-          <div className="brz-bg overflow-hidden absolute top-0 left-0 w-full h-full">
+          <div className="brz-bg overflow-hidden !z-auto absolute top-0 left-0 w-full h-full">
             {image && (
               <Image showParallax={parallax}>
                 {({ innerRef, attr }): ReactElement => (

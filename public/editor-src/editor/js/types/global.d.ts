@@ -103,9 +103,12 @@ declare global {
     parallax(p: unknown, x?: boolean): void;
     backgroundVideo(b: unknown, c?: unknown): void;
     select2(s: {
-      width: string;
+      width?: string;
       minimumResultsForSearch: number;
       dropdownParent: JQuery;
+      templateResult?: (item: Record<string, unknown>) => HTMLDivElement;
+      templateSelection?: (item: Record<string, unknown>) => HTMLDivElement;
+      dropdownAutoWidth?: boolean;
     }): void;
   }
 

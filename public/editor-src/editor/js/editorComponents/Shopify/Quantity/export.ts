@@ -1,3 +1,5 @@
+import { mPipe } from "fp-utilities";
+import { distinctUntilChanged, map } from "rxjs/operators";
 import { getStore } from "visual/libs/shopify/Stores/AddToCart";
 import {
   CartApiMock,
@@ -5,17 +7,17 @@ import {
 } from "visual/libs/shopify/Stores/types/Api.mock";
 import { ProductHandle } from "visual/libs/shopify/types/Product";
 import { read } from "visual/utils/math/number";
-import { mPipe } from "fp-utilities";
 import { prop } from "visual/utils/object/get";
-import { distinctUntilChanged, map } from "rxjs/operators";
 import { readKey } from "visual/utils/reader/object";
 
-export default function($node: JQuery): void {
+export default function ($node: JQuery): void {
   const node = $node.get(0);
+  if (!node) return;
+
   const cartClient = new CartApiMock();
   const productClient = new ProductApiMock();
 
-  node.querySelectorAll(`.brz-shopify-quantity`).forEach(item => {
+  node.querySelectorAll(`.brz-shopify-quantity`).forEach((item) => {
     const t = item.getAttribute("data-product-handle") as ProductHandle | "";
     const input = item.querySelector(
       "input[type=number]"
@@ -25,12 +27,12 @@ export default function($node: JQuery): void {
       return;
     }
 
-    productClient.get(t).then(p => {
+    productClient.get(t).then((p) => {
       const store = getStore(p, cartClient);
 
       store.observable
         .pipe(map(prop("quantity")), distinctUntilChanged(), map(String))
-        .subscribe(v => (input.value = v));
+        .subscribe((v) => (input.value = v));
 
       item.addEventListener(
         "change",

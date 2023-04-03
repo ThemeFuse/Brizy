@@ -2,6 +2,7 @@ import { ExportFunction } from "visual/types";
 
 export const fn: ExportFunction = ($node) => {
   const node = $node.get(0);
+  if (!node) return;
 
   node.querySelectorAll<HTMLElement>(".brz-eventDetail").forEach((element) => {
     element.addEventListener("click", (e) => {

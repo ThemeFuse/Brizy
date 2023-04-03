@@ -14,6 +14,7 @@ import { toElementModel as colorPicker } from "visual/component/Options/types/de
 import { toElementModel as corners } from "visual/component/Options/types/dev/Corners/converters";
 import { toElementModel as fileUpload } from "visual/component/Options/types/dev/FileUpload/converters";
 import { toElementModel as filters } from "visual/component/Options/types/dev/Filters/converters";
+import { toElementModel as formApps } from "visual/component/Options/types/dev/FormApps/converters";
 import { toElementModel as gallery } from "visual/component/Options/types/dev/Gallery/converters";
 import { toElementModel as galleryForGallery } from "visual/component/Options/types/dev/GalleryForGallery/converters";
 import { toElementModel as globalBlock } from "visual/component/Options/types/dev/GlobalBlock/converters";
@@ -98,7 +99,8 @@ const fns: ToElementModelFns = {
   "transform-dev": transform,
   "typography-dev": typography,
   "savedBlock-dev": savedBlock,
-  "globalBlock-dev": globalBlock
+  "globalBlock-dev": globalBlock,
+  "formApps-dev": formApps
 };
 
 /**

@@ -47,6 +47,7 @@ import * as MinistryBrands from "./MinistryBrands";
 import Page from "./Page";
 import PagePopup from "./PagePopup";
 import PageStory from "./PageStory";
+import WPPostContent from "./PostContent";
 import PostExcerpt from "./PostExcerpt";
 import PostTitle from "./PostTitle";
 import Posts from "./Posts";
@@ -183,6 +184,7 @@ export default {
   PostTitle,
   PostExcerpt,
   Posts,
+  WPPostContent,
 
   // Shopify
   ...Shopify,

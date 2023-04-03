@@ -1,6 +1,7 @@
+import classNames from "classnames";
 import React, { ChangeEvent } from "react";
 import _ from "underscore";
-import { IProps, IState } from "./types";
+import { CommonProps, State } from "./types";
 import {
   correctNumber,
   formatInputValue,
@@ -10,7 +11,7 @@ import {
 
 const DEBOUNCE_WAIT = 1000;
 
-export class AutoCorrectingInput extends React.Component<IProps, IState> {
+export class AutoCorrectingInput extends React.Component<CommonProps, State> {
   static defaultProps = {
     className: "",
     value: 0,
@@ -32,7 +33,7 @@ export class AutoCorrectingInput extends React.Component<IProps, IState> {
     prevPropsValue: this.props.value
   };
 
-  static getDerivedStateFromProps(props: IProps, state: IState) {
+  static getDerivedStateFromProps(props: CommonProps, state: State) {
     if (props.value !== state.prevPropsValue) {
       return {
         text: formatInputValue(props.value, props.step),
@@ -50,7 +51,7 @@ export class AutoCorrectingInput extends React.Component<IProps, IState> {
 
   increment() {
     this.setState(
-      (state: IState, props) => {
+      (state, props) => {
         const { min, max, step } = props;
         const { text, value } = state;
         const textValue = Number(text);
@@ -79,7 +80,7 @@ export class AutoCorrectingInput extends React.Component<IProps, IState> {
 
   decrement() {
     this.setState(
-      (state: IState, props) => {
+      (state, props) => {
         const { min, max, step } = props;
         const { text, value } = state;
         const textValue = Number(text);
@@ -115,7 +116,7 @@ export class AutoCorrectingInput extends React.Component<IProps, IState> {
 
   debouncedOnChange = _.debounce(() => {
     this.setState(
-      (state: IState, props) => {
+      (state, props) => {
         const { min, max, step } = props;
         const { text, value } = state;
         const textValue = parseFloat(String(text));
@@ -137,6 +138,7 @@ export class AutoCorrectingInput extends React.Component<IProps, IState> {
       }
     );
   }, DEBOUNCE_WAIT);
+
   render() {
     const {
       className,
@@ -153,7 +155,7 @@ export class AutoCorrectingInput extends React.Component<IProps, IState> {
 
     return (
       <input
-        className={className}
+        className={classNames("brz-auto-correcting-input", className)}
         type="number"
         value={text}
         min={min}

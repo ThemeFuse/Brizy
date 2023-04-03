@@ -47,6 +47,8 @@ export const getItems: GetItems<Value> = ({
   const enabledEmbedded = popupSettings.embedded === true;
   const enabledHorizontalAlign = popupSettings.horizontalAlign === true;
   const enabledVerticalAlign = popupSettings.verticalAlign === true;
+  const enableScrollPageBehind = popupSettings.scrollPageBehind === true;
+  const enableclickOutsideToClose = popupSettings.clickOutsideToClose === true;
 
   const blockType = IS_GLOBAL_POPUP ? "externalPopup" : "popup";
 
@@ -95,6 +97,7 @@ export const getItems: GetItems<Value> = ({
                   id: "scrollPage",
                   label: t("Scroll Page Behind"),
                   type: "switch-dev",
+                  disabled: !enableScrollPageBehind,
                   position: 100
                 },
                 {
@@ -112,7 +115,8 @@ export const getItems: GetItems<Value> = ({
                 {
                   id: "clickOutsideToClose",
                   label: t("Click Outside to Close"),
-                  type: "switch-dev"
+                  type: "switch-dev",
+                  disabled: !enableclickOutsideToClose
                 },
                 {
                   id: "groupShowCloseButton",

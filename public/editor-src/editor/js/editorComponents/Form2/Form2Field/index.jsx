@@ -1,14 +1,14 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
+import React from "react";
 import Toolbar from "visual/component/Toolbar";
-import * as types from "./types/index";
-import * as toolbar from "./toolbar";
-import * as sidebar from "./sidebar";
-import defaultValue from "./defaultValue";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
 import { uuid } from "visual/utils/uuid";
+import defaultValue from "./defaultValue";
+import * as sidebar from "./sidebar";
+import { style } from "./styles";
+import * as toolbar from "./toolbar";
+import * as types from "./types/index";
 
 class Form2Field extends EditorComponent {
   static get componentId() {
@@ -70,7 +70,7 @@ class Form2Field extends EditorComponent {
             <Component.Label
               id={this.getId()}
               value={v}
-              onChange={value => this.patchValue(value)}
+              onChange={(value) => this.patchValue(value)}
             />
           </Toolbar>
         )}
@@ -82,7 +82,7 @@ class Form2Field extends EditorComponent {
               labelType={labelType}
               toolbarExtendSelect={toolbarExtendSelect}
               selectClassName={selectClassName}
-              onChange={value => this.patchValue(value)}
+              onChange={(value) => this.patchValue(value)}
             />
           </div>
         </Toolbar>
@@ -104,7 +104,7 @@ class Form2Field extends EditorComponent {
     const classNameField = classnames(
       "brz-forms2__item",
       className,
-      { "brz-d-none": v.type === "Hidden" },
+      { "brz-d-none": type === "Hidden" },
       css(
         `${this.constructor.componentId}-field`,
         `${this.getId()}-field`,

@@ -1,13 +1,13 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import { TextEditor } from "visual/component/Controls/TextEditor";
-import defaultValue from "./defaultValue";
-import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
 import classnames from "classnames";
-import { css } from "visual/utils/cssStyle";
+import React from "react";
+import { TextEditor } from "visual/component/Controls/TextEditor";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
+import { css } from "visual/utils/cssStyle";
 import { IS_WP } from "visual/utils/env";
+import defaultValue from "./defaultValue";
+import * as toolbarConfig from "./toolbar";
 
 class ForgotPasswordField extends EditorComponent {
   static get componentId() {
@@ -16,7 +16,7 @@ class ForgotPasswordField extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleLabelChange = label => {
+  handleLabelChange = (label) => {
     this.patchValue({ label });
   };
 
@@ -81,7 +81,7 @@ class ForgotPasswordField extends EditorComponent {
                     type="email"
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
-                    onChange={e => {
+                    onChange={(e) => {
                       this.patchValue({
                         placeholder: e.target.value
                       });
@@ -93,7 +93,7 @@ class ForgotPasswordField extends EditorComponent {
                     type="email"
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
-                    onChange={e => {
+                    onChange={(e) => {
                       this.patchValue({
                         label: e.target.value,
                         placeholder: e.target.value
@@ -138,6 +138,7 @@ class ForgotPasswordField extends EditorComponent {
             <div className="brz-login__field">
               <input
                 type="email"
+                maxLength="255"
                 name={IS_WP ? "user_login" : "email"}
                 className="brz-input"
                 placeholder={this.getPlaceholder(v)}

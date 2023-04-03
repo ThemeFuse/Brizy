@@ -1,12 +1,15 @@
 import { useArgs } from "@storybook/client-api";
 import { ComponentStory } from "@storybook/react";
 import React from "react";
-import { AutoCorrectingInput as Control } from "../index";
+import { AutoCorrectingInput as Control } from "../";
 import "../style/index.scss";
 
 export default {
   title: "Component/AutoCorrectingInput",
-  component: Control
+  component: Control,
+  parameters: {
+    backgrounds: { default: "dark" }
+  }
 };
 
 const Template: ComponentStory<typeof Control> = (args) => {
@@ -16,10 +19,9 @@ const Template: ComponentStory<typeof Control> = (args) => {
   return <Control {...args} onChange={onChange} />;
 };
 
-export const AutoCorrectingInput: ComponentStory<typeof Control> =
-  Template.bind({});
-AutoCorrectingInput.args = {
-  className: "brz-input",
+export const Simple: ComponentStory<typeof Control> = Template.bind({});
+Simple.args = {
+  className: "",
   value: 0,
   min: 0,
   max: 100,

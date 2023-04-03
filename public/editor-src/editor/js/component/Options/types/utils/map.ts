@@ -57,7 +57,8 @@ const fns: Maps = {
   "transform-dev": undefined,
   "typography-dev": undefined,
   "savedBlock-dev": undefined,
-  "globalBlock-dev": undefined
+  "globalBlock-dev": undefined,
+  "formApps-dev": undefined
 };
 
 export function _map(

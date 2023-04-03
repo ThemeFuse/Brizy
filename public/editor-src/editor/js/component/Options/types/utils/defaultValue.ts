@@ -12,6 +12,7 @@ import { defaultValue as colorPicker } from "visual/component/Options/types/dev/
 import { defaultValue as corners } from "visual/component/Options/types/dev/Corners/converters";
 import { defaultValue as fileUpload } from "visual/component/Options/types/dev/FileUpload/converters";
 import { defaultValue as filters } from "visual/component/Options/types/dev/Filters/converters";
+import { defaultValue as formApps } from "visual/component/Options/types/dev/FormApps/converters";
 import { defaultValue as gallery } from "visual/component/Options/types/dev/Gallery/converters";
 import { defaultValue as galleryForGallery } from "visual/component/Options/types/dev/GalleryForGallery/converters";
 import { defaultValue as globalBlock } from "visual/component/Options/types/dev/GlobalBlock/converters";
@@ -95,7 +96,8 @@ export const defaultValues: DefaultValues = {
   "transform-dev": transform,
   "typography-dev": typography,
   "savedBlock-dev": savedBlock,
-  "globalBlock-dev": globalBlock
+  "globalBlock-dev": globalBlock,
+  "formApps-dev": formApps
 };
 
 export function applyDefaultValueToOption<T>(values: T, type: OptionName): T {

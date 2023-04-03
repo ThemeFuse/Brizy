@@ -48,9 +48,17 @@ type Cnf = {
 
 export type DynamicContent<T extends "wp" | "cloud"> = Cnf[T];
 
+interface DynamicContentOptionExtra {
+  keyCode: string;
+}
+
 export interface DynamicContentOption {
   [DCTypes.richText]: {
     useCustomPlaceholder?: boolean;
-    handler: (res: Response<BaseDCItem>, rej: Response<string>) => void;
+    handler: (
+      res: Response<BaseDCItem>,
+      rej: Response<string>,
+      extra: DynamicContentOptionExtra
+    ) => void;
   };
 }

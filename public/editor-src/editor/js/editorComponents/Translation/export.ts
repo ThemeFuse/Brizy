@@ -55,9 +55,10 @@ const handleTemplateSelection =
 
 export default function ($node: JQuery): void {
   const root = $node.get(0);
+  if (!root) return;
 
   root.querySelectorAll<HTMLElement>(".brz-translation").forEach((element) => {
-    const $this = $(element);
+    const $this = $(element).find(".brz-translation__dc") ?? $(element);
 
     const showFlags = element.getAttribute("data-showflags") === "on";
     const showName = element.getAttribute("data-showname") === "on";
@@ -68,7 +69,6 @@ export default function ($node: JQuery): void {
       $(selectDom).select2({
         minimumResultsForSearch: Infinity,
         dropdownParent: $this,
-        // @ts-expect-error: select2 doesn't have .ts
         templateResult: handleTemplateResult({ showFlags, showName }),
         templateSelection: handleTemplateSelection({ showFlags, showName }),
         dropdownAutoWidth: true

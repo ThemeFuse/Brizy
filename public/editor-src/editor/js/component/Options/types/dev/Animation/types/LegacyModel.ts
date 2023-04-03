@@ -1,8 +1,8 @@
+import { mPipe, parseStrict } from "fp-utilities";
 import { ElementModel } from "visual/component/Elements/Types";
-import { mPipe } from "visual/utils/fp";
 import * as Positive from "visual/utils/math/Positive";
 import * as Num from "visual/utils/math/number";
-import { or, parseStrict } from "visual/utils/reader/readWithParser";
+import { or } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/string/specs";
 import { IsEqual } from "visual/utils/types/Eq";
 import { Get, call } from "../utils";

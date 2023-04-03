@@ -62,7 +62,8 @@ const fns: Filters = {
   "savedBlock-dev": undefined,
   "globalBlock-dev": undefined,
   // @ts-expect-error Old option, here should not be "tabs" option, it will be removed when all toolbars will work with "tabs-dev"
-  tabs: withTabs
+  tabs: withTabs,
+  "formApps-dev": undefined
 };
 
 const getFilter = <T extends OptionName>(

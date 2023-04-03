@@ -1,7 +1,6 @@
 @import "../../variables";
 
 // Buttons
-
 .brz-ed-control__button {
   display: grid;
   grid-template-columns: auto auto;
@@ -16,29 +15,33 @@
   .brz-icon-svg {
     font-size: $toolbar-font-size;
   }
-
   &.reverse {
     .brz-ed-control__label {
       order: 1;
     }
-
     .brz-icon-svg {
       order: 2;
+    }
+  }
+
+  &.reverseTheme {
+    color: $sidebar-color;
+    padding: 13px 3px;
+
+    &:hover {
+      color: $brand__primary;
     }
   }
 
   &-left {
     justify-content: flex-start;
   }
-
   &-center {
     justify-content: center;
   }
-
   &-right {
     justify-content: flex-end;
   }
-
   &:hover {
     color: $sidebar-color;
   }

@@ -5,7 +5,7 @@ const scrollTo = (config: {
   duration: number;
   targetNode?: HTMLElement;
 }): Promise<void> =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     const { endLocation, duration, targetNode } = config;
 
     window.Brz.emit("elements.anchor.startScrolled", targetNode);
@@ -58,8 +58,9 @@ const getEndLocation = (
   return 0;
 };
 
-export default function($node: JQuery): void {
+export default function ($node: JQuery): void {
   const root = $node.get(0);
+  if (!root) return;
   const anchorSelector =
     ".brz-a:not([data-brz-link-type='popup']), .brz-anchor, .link--anchor, .link--external, .brz-menu__ul a.menu-item";
 
@@ -84,9 +85,8 @@ export default function($node: JQuery): void {
 
   const handleRootClick = (e: Event): void => {
     if (e.target instanceof Element) {
-      const targetNode: HTMLAnchorElement | null = e.target.closest(
-        anchorSelector
-      );
+      const targetNode: HTMLAnchorElement | null =
+        e.target.closest(anchorSelector);
       if (targetNode) {
         const anchorHash = targetNode.hash.trim();
         const targetHref = targetNode.href;

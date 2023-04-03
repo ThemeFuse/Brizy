@@ -2,7 +2,7 @@ import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
-import { getOption } from "../utils/helpers";
+import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
@@ -13,9 +13,7 @@ export const getItems: GetItems<Value, Props> = ({
   component,
   context
 }) => {
-  const ekklesia = Config.getAll()?.modules?.ekklesia;
-
-  const recentSermons = getOption(ekklesia?.recentSermons);
+  const { apiUrl } = Config.getAll()?.modules?.ekklesia ?? {};
 
   return [
     {
@@ -40,7 +38,10 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Recent Sermons"),
                   type: "select-dev",
                   devices: "desktop",
-                  choices: recentSermons,
+                  choices: getEkklesiaChoiches({
+                    key: "recentSermons",
+                    url: apiUrl
+                  }),
                   helper: {
                     content: t(
                       "Select a recent sermon as an example to style/setup. Since this is the sermon detail landing page this sermon will be replaced with the linked sermon."

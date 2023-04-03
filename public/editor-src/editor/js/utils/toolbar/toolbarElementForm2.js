@@ -46,9 +46,12 @@ export function toolbarElementForm2Apps({ v, device, state, devices = "all" }) {
   return {
     devices,
     id: dvk("apps"),
-    type: "formApps",
-    icon: "nc-extensions-2",
-    value: { id: v._id, fields }
+    type: "formApps-dev", 
+    config: { 
+      id: v._id, 
+      fields, 
+      icon: "nc-extensions-2" 
+    }
   };
 }
 export function toolbarElementForm2Size({ v, device, state, devices = "all" }) {

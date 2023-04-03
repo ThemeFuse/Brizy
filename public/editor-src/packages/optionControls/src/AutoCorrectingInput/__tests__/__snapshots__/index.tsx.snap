@@ -2,7 +2,7 @@
 
 exports[`Test AutoCorrectingInput Snapshots Changing value 1`] = `
 <input
-  class=""
+  class="brz-auto-correcting-input"
   max="100"
   min="0"
   step="1"
@@ -13,7 +13,7 @@ exports[`Test AutoCorrectingInput Snapshots Changing value 1`] = `
 
 exports[`Test AutoCorrectingInput Snapshots Checking max value and min value 1`] = `
 <input
-  class=""
+  class="brz-auto-correcting-input"
   max="100"
   min="0"
   step="1"
@@ -24,7 +24,7 @@ exports[`Test AutoCorrectingInput Snapshots Checking max value and min value 1`]
 
 exports[`Test AutoCorrectingInput Snapshots Checking max value and min value 2`] = `
 <input
-  class=""
+  class="brz-auto-correcting-input"
   max="100"
   min="0"
   step="1"
@@ -35,7 +35,7 @@ exports[`Test AutoCorrectingInput Snapshots Checking max value and min value 2`]
 
 exports[`Test AutoCorrectingInput Snapshots Checking only numbers 1`] = `
 <input
-  class=""
+  class="brz-auto-correcting-input"
   max="100"
   min="0"
   step="1"
@@ -47,7 +47,7 @@ exports[`Test AutoCorrectingInput Snapshots Checking only numbers 1`] = `
 exports[`Test AutoCorrectingInput Snapshots Render with all possible properties 1`] = `
 <div>
   <input
-    class="brz-input"
+    class="brz-auto-correcting-input custom-classname"
     max="100"
     min="0"
     size="100"
@@ -61,7 +61,7 @@ exports[`Test AutoCorrectingInput Snapshots Render with all possible properties 
 exports[`Test AutoCorrectingInput Snapshots Render with all required properties 1`] = `
 <div>
   <input
-    class=""
+    class="brz-auto-correcting-input"
     max="100"
     min="0"
     step="1"

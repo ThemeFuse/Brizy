@@ -2,6 +2,7 @@ import React, { Component, ComponentType, MouseEvent, TouchEvent } from "react";
 import _ from "underscore";
 import { HSVAChange } from "visual/component/Controls/ColorPicker2/types";
 import * as saturation from "../helpers/saturation";
+import { disableIframeEvents, enableIframeEvents, isInIframe } from "../utils";
 
 import HSLA = tinycolor.ColorFormats.HSLA;
 import HSVA = tinycolor.ColorFormats.HSVA;
@@ -59,6 +60,10 @@ export class Saturation extends Component<Props> {
     const contentWindow = this.props.contentWindow();
 
     if (contentWindow) {
+      if (!isInIframe(contentWindow)) {
+        disableIframeEvents(contentWindow);
+      }
+
       contentWindow.addEventListener(
         "mousemove",
         this.handleChange as () => void
@@ -68,6 +73,10 @@ export class Saturation extends Component<Props> {
   };
 
   handleMouseUp = () => {
+    const contentWindow = this.props.contentWindow();
+    if (contentWindow && !isInIframe(contentWindow)) {
+      enableIframeEvents(contentWindow);
+    }
     this.unbindEventListeners();
   };
 

@@ -4,7 +4,7 @@ const tailwindConfigPath = path.resolve(__dirname, "tailwind.config.js");
 module.exports = {
   stories: ["../**/docs/*stories.@(md|mdx)", "../**/docs/*.@(js|jsx|ts|tsx)"],
   staticDirs: [
-    { from: "../assets/icons", to: "/assets/icons" },
+    { from: "../assets", to: "/assets" },
     { from: "../style", to: "/style" }
   ],
   features: {
@@ -26,6 +26,5 @@ module.exports = {
       }
     }
   ],
-
   framework: "@storybook/react"
 };

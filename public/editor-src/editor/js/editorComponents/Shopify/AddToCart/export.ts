@@ -8,6 +8,8 @@ import { ProductHandle } from "visual/libs/shopify/types/Product";
 
 export default function ($node: JQuery): void {
   const node = $node.get(0);
+  if (!node) return;
+
   const cartClient = new CartApiMock();
   const productClient = new ProductApiMock();
 

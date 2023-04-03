@@ -70,6 +70,7 @@ import Tabs from "./Tabs";
 import { StateMode } from "./common/StateMode";
 import { Alert } from "./dev/Alert";
 import { CodeMirror as CodeMirrorDev } from "./dev/CodeMirror";
+import { FormApps as FormAppsDev } from "./dev/FormApps";
 import { GlobalBlockOption as GlobalBlockDev } from "./dev/GlobalBlock";
 import { Margin } from "./dev/Margin";
 import { Number } from "./dev/Number";
@@ -127,7 +128,8 @@ const newTypes = {
   "stateMode-dev": StateMode,
   "transform-dev": Transform,
   "savedBlock-dev": SavedBlockDev,
-  "globalBlock-dev": GlobalBlockDev
+  "globalBlock-dev": GlobalBlockDev,
+  "formApps-dev": FormAppsDev
 };
 
 const oldTypes = {

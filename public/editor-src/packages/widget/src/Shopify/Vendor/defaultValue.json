@@ -1,0 +1,77 @@
+{
+  "content": {
+    "popup": "",
+    "popups": [],
+    "linkSource": "",
+    "sourceID": "",
+    "sourceType": ""
+  },
+
+  "link": {
+    "actionClosePopup": "off",
+    "linkAnchor": "",
+    "linkExternal": "",
+    "linkExternalBlank": "off",
+    "linkExternalRel": "off",
+    "linkExternalType": "linkExternal",
+    "linkPage": "",
+    "linkPageTitle": "",
+    "linkPopulation": "",
+    "linkPopup": "",
+    "linkType": "external",
+    "linkUpload": ""
+  },
+
+  "style": {
+    "colorHex": "#000000",
+    "colorOpacity": 1,
+    "colorPalette": "",
+    "customCSS": "",
+
+    "families": {
+      "fontFamily": "lato"
+    },
+
+    "fontFamilyType": "google",
+    "fontSize": 56,
+    "fontSizeSuffix": "px",
+    "fontStyle": "paragraph",
+    "fontWeight": 400,
+    "tabletFontSize": 30,
+    "tabletFontSizeSuffix": "px",
+    "tabletFontStyle": "heading2",
+    "tabletFontWeight": 700,
+
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": "",
+
+    "letterSpacing": 0,
+
+    "lineHeight": 1.3,
+
+    "tabletLetterSpacing": 1,
+    "tabletLineHeight": 1,
+
+    "contentHorizontalAlign": "left",
+
+    "tagName": "span",
+
+    "textShadowBlur": 0,
+    "textShadowColorHex": "#000000",
+    "textShadowColorOpacity": 1,
+    "textShadowColorPalette": "",
+    "textShadowHorizontal": 0,
+    "textShadowVertical": 0,
+
+    "textStrokeBorderBottomWidth": 0,
+    "textStrokeBorderColorHex": "#000000",
+    "textStrokeBorderColorOpacity": 0,
+    "textStrokeBorderColorPalette": "color2",
+    "textStrokeBorderLeftWidth": 0,
+    "textStrokeBorderRightWidth": 0,
+    "textStrokeBorderStyle": "solid",
+    "textStrokeBorderTopWidth": 0,
+    "textStrokeBorderWidth": 0,
+    "textStrokeBorderWidthType": "grouped"
+  }
+}

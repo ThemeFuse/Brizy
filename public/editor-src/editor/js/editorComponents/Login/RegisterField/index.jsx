@@ -1,17 +1,17 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import { TextEditor } from "visual/component/Controls/TextEditor";
-import defaultValue from "./defaultValue";
-import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
 import classnames from "classnames";
-import { css } from "visual/utils/cssStyle";
-import { style } from "visual/editorComponents/Login/LoginField/styles";
+import React from "react";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { style } from "visual/editorComponents/Login/LoginField/styles";
+import { css } from "visual/utils/cssStyle";
 import { IS_WP } from "visual/utils/env";
+import defaultValue from "./defaultValue";
+import * as toolbarConfig from "./toolbar";
 
-const readRegisterWpType = type => {
+const readRegisterWpType = (type) => {
   switch (type) {
     case "Name":
     case "RegisterEmail":
@@ -22,7 +22,7 @@ const readRegisterWpType = type => {
   }
 };
 
-const readRegisterCloudType = type => {
+const readRegisterCloudType = (type) => {
   switch (type) {
     case "FirstName":
     case "LastName":
@@ -45,7 +45,7 @@ class RegisterField extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleLabelChange = label => {
+  handleLabelChange = (label) => {
     this.patchValue({ label });
   };
 
@@ -242,7 +242,7 @@ class RegisterField extends EditorComponent {
                     type="text"
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
-                    onChange={e => {
+                    onChange={(e) => {
                       this.patchValue({
                         placeholder: e.target.value
                       });
@@ -254,7 +254,7 @@ class RegisterField extends EditorComponent {
                     type="text"
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
-                    onChange={e => {
+                    onChange={(e) => {
                       this.patchValue({
                         label: e.target.value,
                         placeholder: e.target.value
@@ -302,7 +302,7 @@ class RegisterField extends EditorComponent {
                     type="text"
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
-                    onChange={e => {
+                    onChange={(e) => {
                       this.patchValue({
                         placeholder: e.target.value
                       });
@@ -314,7 +314,7 @@ class RegisterField extends EditorComponent {
                     type="text"
                     placeholder={this.getPlaceholder(v)}
                     value={this.getPlaceholder(v)}
-                    onChange={e => {
+                    onChange={(e) => {
                       this.patchValue({
                         label: e.target.value,
                         placeholder: e.target.value
@@ -371,6 +371,9 @@ class RegisterField extends EditorComponent {
               <input
                 type={this.getWpFieldType(type)}
                 name={this.getWpFieldName(type)}
+                maxLength={
+                  this.getWpFieldType(type) === "email" ? 255 : undefined
+                }
                 className="brz-input"
                 placeholder={this.getPlaceholder(v)}
                 defaultValue=""
@@ -400,6 +403,9 @@ class RegisterField extends EditorComponent {
               <input
                 type={this.getCloudFieldType(type)}
                 name={this.getCloudFieldName(type)}
+                maxLength={
+                  this.getCloudFieldType(type) === "email" ? 255 : undefined
+                }
                 className="brz-input"
                 placeholder={this.getPlaceholder(v)}
                 defaultValue=""

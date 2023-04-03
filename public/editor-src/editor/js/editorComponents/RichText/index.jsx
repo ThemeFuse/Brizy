@@ -141,7 +141,16 @@ class RichText extends EditorComponent {
           const rej = (msg) => {
             ToastNotification.error(msg);
           };
-          config.dynamicContentOption.richText.handler(res, rej);
+
+          const keyCode = formats.prepopulation?.at(-1);
+          if (!keyCode) return;
+          // ignoring characters typed after # or @
+          const triggerCodes = ["#", "@"];
+          const isTargetKey = triggerCodes.some((key) => key === keyCode);
+
+          if (!isTargetKey) return;
+
+          config.dynamicContentOption.richText.handler(res, rej, { keyCode });
         }
 
         this.setState(newState, () => this.toolbarRef.current.show());
@@ -234,6 +243,7 @@ class RichText extends EditorComponent {
       this.tmpPopups = values.popups;
     }
 
+    this.patchValue(values);
     // TODO NEED review and exclude ReactDOM.findDOMNode
     // eslint-disable-next-line react/no-find-dom-node
     if (!ReactDOM.findDOMNode(this).contains(prevActive)) {
@@ -376,7 +386,6 @@ class RichText extends EditorComponent {
     if (v.textPopulation) {
       return { v, vs, vd };
     }
-
     return {
       v: { ...v, ...this.state.formats },
       vs,

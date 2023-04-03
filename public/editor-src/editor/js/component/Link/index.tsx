@@ -1,20 +1,20 @@
+import classNames from "classnames";
 import React, {
   CSSProperties,
-  forwardRef,
   PropsWithChildren,
   ReactElement,
   Ref,
+  forwardRef,
   useEffect,
   useRef
 } from "react";
-import classNames from "classnames";
 import { WithClassName } from "visual/utils/options/attributes";
-import * as Str from "visual/utils/string/specs";
-import { getAttr, getHref, getRel, getTarget } from "./utils";
-import { Type, empty as defaultType } from "./types/Type";
-import { Target, empty as defaultTarget } from "./types/Target";
-import { StoryAnchorAttribute } from "./types/Slide";
 import { attachRef } from "visual/utils/react";
+import * as Str from "visual/utils/string/specs";
+import { StoryAnchorAttribute } from "./types/Slide";
+import { Target, empty as defaultTarget } from "./types/Target";
+import { Type, empty as defaultType } from "./types/Type";
+import { getAttr, getHref, getRel, getTarget } from "./utils";
 
 type Props = PropsWithChildren<
   WithClassName & {
@@ -62,7 +62,7 @@ const _Link = (
       // added native preventDefault
       // because some library like Google Tag Manager
       // attach onclick event before react events
-      node.addEventListener("click", e => {
+      node.addEventListener("click", (e) => {
         e.preventDefault();
       });
     }
@@ -82,7 +82,7 @@ const _Link = (
         attachRef(v, ref || null);
         attachRef(v, innerRef || null);
       }}
-      id={id}
+      {...(id && { id })}
     >
       {children}
     </a>

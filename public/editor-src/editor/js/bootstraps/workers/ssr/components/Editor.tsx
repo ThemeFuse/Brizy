@@ -6,11 +6,11 @@ import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { Provider } from "react-redux";
 import {
-  getAssets,
   ScriptsFree,
   ScriptsPro,
   StylesFree,
-  StylesPro
+  StylesPro,
+  getAssets
 } from "visual/bootstraps/export/transforms/assets";
 import { items as googleFonts } from "visual/config/googleFonts.json";
 import Config, { isWp } from "visual/global/Config";
@@ -31,6 +31,7 @@ import { MValue } from "visual/utils/value";
 import "../../../registerEditorParts";
 import { changeMenuUid } from "../transforms/changeMenuUid";
 import { changeRichText } from "../transforms/changeRichText";
+import { customAttributes } from "../transforms/customAttributes";
 import { dynamicContent } from "../transforms/dynamicContent";
 import { extractPopups } from "../transforms/extractPopups";
 import { replaceIcons } from "../transforms/replaceIcons";
@@ -142,6 +143,7 @@ export const Editor: SSREditor = async (props) => {
   await replaceIcons($pageHTML);
   changeRichText($pageHTML);
   changeMenuUid($pageHTML);
+  customAttributes($pageHTML);
 
   if (isWp(config) && !config.user.allowScripts) {
     XSS($pageHTML);

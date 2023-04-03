@@ -30,6 +30,7 @@ import { isExternalPopup, isInternalPopup, isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import * as Str from "visual/utils/string/specs";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as sidebarCloseConfig from "./sidebarClose";
@@ -188,8 +189,16 @@ class SectionPopup2 extends EditorComponent {
 
   renderItems(v, vs, vd) {
     const meta = this.getMeta(v);
-    const { containerClassName, showCloseButtonAfter } = v;
-
+    const {
+      containerClassName,
+      showCloseButtonAfter,
+      closeCustomClassName,
+      closeCustomAttributes,
+      closeCustomCSS,
+      closeCustomID,
+      cssIDPopulation
+    } = v;
+    const _closeCustomID = Str.mRead(closeCustomID) || undefined;
     const config = Config.getAll();
     const popupSettings = config.ui?.popupSettings ?? {};
     const embedded = popupSettings.embedded === true;
@@ -198,7 +207,8 @@ class SectionPopup2 extends EditorComponent {
 
     const className = classnames(
       "brz-popup2__close",
-      IS_PREVIEW && showCloseButtonAfter && "brz-hidden"
+      IS_PREVIEW && showCloseButtonAfter && "brz-hidden",
+      closeCustomClassName
     );
     const innerClassName = classnames(
       "brz-popup2__inner",
@@ -224,6 +234,12 @@ class SectionPopup2 extends EditorComponent {
       }
     });
 
+    const props = {
+      ...parseCustomAttributes(closeCustomAttributes),
+      id: cssIDPopulation ?? _closeCustomID,
+      className: className
+    };
+
     return (
       <Background value={v} meta={meta}>
         <div className={innerClassName}>
@@ -237,9 +253,14 @@ class SectionPopup2 extends EditorComponent {
                     { allowExtend: false }
                   )}
                 >
-                  <div className={className}>
-                    <ThemeIcon name="close-popup" type="editor" />
-                  </div>
+                  <CustomCSS
+                    selectorName={`${this.getId()}--close`}
+                    css={closeCustomCSS}
+                  >
+                    <div {...props}>
+                      <ThemeIcon name="close-popup" type="editor" />
+                    </div>
+                  </CustomCSS>
                 </Toolbar>
               )}
 
@@ -363,6 +384,8 @@ class SectionPopup2 extends EditorComponent {
 
     const popupSettings = config.ui?.popupSettings ?? {};
     const embedded = popupSettings.embedded;
+    const scrollPageBehind = popupSettings.scrollPageBehind;
+    const clickOutside = popupSettings.clickOutsideToClose;
 
     let attr = {};
     if (isGlobal) {
@@ -402,10 +425,10 @@ class SectionPopup2 extends EditorComponent {
       }, {});
     }
 
-    if (scrollPage === "on") {
+    if (scrollPage === "on" && scrollPageBehind === true) {
       attr["data-scroll_page"] = "true";
     }
-    if (clickOutsideToClose === "on") {
+    if (clickOutsideToClose === "on" && clickOutside === true) {
       attr["data-click_outside_to_close"] = "true";
     }
     if (embedded === true) {

@@ -6,7 +6,6 @@ interface UserCommon {
 
 interface UserCloud extends UserCommon {
   isGuest: boolean;
-  isApproved: boolean;
 }
 
 interface UserWP extends UserCommon {

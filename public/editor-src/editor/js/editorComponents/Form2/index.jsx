@@ -10,6 +10,7 @@ import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import Config from "visual/global/Config";
 import { css } from "visual/utils/cssStyle";
 import { isStory } from "visual/utils/models";
+import * as Attr from "visual/utils/string/parseCustomAttributes";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendButton from "./sidebarExtendButton";
 import * as sidebarExtendParent from "./sidebarExtendParent";
@@ -67,7 +68,7 @@ export default class Form2 extends EditorComponent {
     return <EditorArrayComponent {...itemsProps} />;
   }
 
-  renderButton() {
+  renderButton(v) {
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       sliceStartIndex: 1,
@@ -80,25 +81,30 @@ export default class Form2 extends EditorComponent {
         )
       }
     });
-
     const className = classnames(
       "brz-forms2",
       "brz-forms2__item",
       "brz-forms2__item-button",
       { "brz-forms2-story": isStory(Config.getAll()) }
     );
+    const props = {
+      ...Attr.mRead(v.customAttributes),
+      className: className
+    };
 
     return (
-      <div className={className}>
-        <EditorArrayComponent {...itemsProps} />
-        {IS_PREVIEW && (
-          <ThemeIcon
-            className="brz-form-spinner brz-invisible brz-ed-animated--spin"
-            name="circle-02"
-            type="glyph"
-          />
-        )}
-      </div>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <div {...props}>
+          <EditorArrayComponent {...itemsProps} />
+          {IS_PREVIEW && (
+            <ThemeIcon
+              className="brz-form-spinner brz-invisible brz-ed-animated--spin"
+              name="circle-02"
+              type="glyph"
+            />
+          )}
+        </div>
+      </CustomCSS>
     );
   }
 

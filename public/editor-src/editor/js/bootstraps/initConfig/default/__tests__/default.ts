@@ -4,6 +4,7 @@ import {
   LeftSidebarOptionsIds,
   Mode
 } from "visual/global/Config/types/configs/ConfigCommon";
+import { getSourceItems } from "../api/getSourceItems";
 import { addDefault as addDefaultLeftSidebar } from "../leftSidebar";
 import { addDefault as addDefaultPopup } from "../popup";
 
@@ -97,7 +98,9 @@ describe("testing initConfig", () => {
             displayCondition: false,
             embedded: false,
             horizontalAlign: true,
-            verticalAlign: true
+            verticalAlign: true,
+            clickOutsideToClose: true,
+            scrollPageBehind: true
           }
         }
       }
@@ -115,7 +118,9 @@ describe("testing initConfig", () => {
             deletePopup: true,
             embedded: false,
             horizontalAlign: true,
-            verticalAlign: true
+            verticalAlign: true,
+            clickOutsideToClose: true,
+            scrollPageBehind: true
           }
         }
       }
@@ -133,7 +138,9 @@ describe("testing initConfig", () => {
             deletePopup: true,
             embedded: false,
             horizontalAlign: true,
-            verticalAlign: true
+            verticalAlign: true,
+            clickOutsideToClose: true,
+            scrollPageBehind: true
           }
         }
       }
@@ -149,7 +156,9 @@ describe("testing initConfig", () => {
             displayCondition: false,
             embedded: false,
             horizontalAlign: true,
-            verticalAlign: true
+            verticalAlign: true,
+            clickOutsideToClose: true,
+            scrollPageBehind: true
           }
         }
       },
@@ -162,7 +171,9 @@ describe("testing initConfig", () => {
             deletePopup: true,
             embedded: false,
             horizontalAlign: true,
-            verticalAlign: true
+            verticalAlign: true,
+            clickOutsideToClose: true,
+            scrollPageBehind: true
           }
         }
       }
@@ -179,7 +190,9 @@ describe("testing initConfig", () => {
             deletePopup: false,
             embedded: false,
             horizontalAlign: true,
-            verticalAlign: true
+            verticalAlign: true,
+            clickOutsideToClose: true,
+            scrollPageBehind: true
           }
         }
       },
@@ -192,7 +205,9 @@ describe("testing initConfig", () => {
             deletePopup: false,
             embedded: false,
             horizontalAlign: true,
-            verticalAlign: true
+            verticalAlign: true,
+            clickOutsideToClose: true,
+            scrollPageBehind: true
           }
         }
       }
@@ -216,7 +231,9 @@ describe("testing initConfig", () => {
             deletePopup: true,
             embedded: false,
             horizontalAlign: true,
-            verticalAlign: true
+            verticalAlign: true,
+            clickOutsideToClose: true,
+            scrollPageBehind: true
           }
         }
       }
@@ -229,6 +246,8 @@ describe("testing initConfig", () => {
         mode: Mode.page,
         ui: {
           popupSettings: {
+            clickOutsideToClose: true,
+            scrollPageBehind: true,
             displayCondition: false,
             embedded: false,
             horizontalAlign: true,
@@ -245,7 +264,9 @@ describe("testing initConfig", () => {
             displayCondition: false,
             embedded: false,
             horizontalAlign: true,
-            verticalAlign: true
+            verticalAlign: true,
+            clickOutsideToClose: true,
+            scrollPageBehind: true
           },
           leftSidebar: {}
         }
@@ -267,7 +288,9 @@ describe("testing initConfig", () => {
             displayCondition: false,
             embedded: false,
             horizontalAlign: true,
-            verticalAlign: true
+            verticalAlign: true,
+            clickOutsideToClose: true,
+            scrollPageBehind: true
           }
         }
       }
@@ -289,7 +312,9 @@ describe("testing initConfig", () => {
             deletePopup: true,
             embedded: false,
             horizontalAlign: true,
-            verticalAlign: true
+            verticalAlign: true,
+            clickOutsideToClose: true,
+            scrollPageBehind: true
           }
         }
       }
@@ -311,7 +336,9 @@ describe("testing initConfig", () => {
             displayCondition: false,
             embedded: false,
             horizontalAlign: true,
-            verticalAlign: true
+            verticalAlign: true,
+            clickOutsideToClose: true,
+            scrollPageBehind: true
           }
         }
       }
@@ -445,5 +472,26 @@ describe("testing initConfig", () => {
     ]
   ])("addDefaultLeftSidebar nr %#", (config, resolve) => {
     expect(addDefaultLeftSidebar(config)).toStrictEqual(resolve);
+  });
+
+  test.each<[ConfigCommon]>([
+    [
+      {
+        ...configCommon,
+        api: {
+          sourceItems: {
+            handler: noop
+          }
+        }
+      }
+    ]
+  ])("getSourceItems is called", (config) => {
+    const handler = getSourceItems(config)?.api?.sourceItems?.handler;
+
+    const mockCallback = jest.fn((res, rej, args) => handler?.(res, rej, args));
+
+    mockCallback(noop, noop, { id: "shopify-product" });
+
+    expect(mockCallback).toHaveBeenCalledTimes(1);
   });
 });

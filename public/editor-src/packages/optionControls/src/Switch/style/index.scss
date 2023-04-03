@@ -1,0 +1,131 @@
+@import "style";
+
+.brz-ed-control__switch {
+  &-arrows {
+    @apply relative;
+    @apply inline-block;
+    @apply align-middle;
+    @apply w-[50px];
+    @apply h-[28px];
+    @apply text-[18px];
+    @apply uppercase;
+    @apply bg-switch-bg;
+    @apply rounded-[inherit];
+    @apply shadow-[inset_0_1px_1px] shadow-switch-box-shadow;
+    @apply rounded-[18px];
+    @apply cursor-pointer;
+    @apply m-0;
+    @apply leading-[1];
+  }
+
+  &--check,
+  &--un-check {
+    @apply absolute;
+    @apply top-[50%];
+    @apply -translate-y-[50%];
+    @apply translate-x-0;
+    @apply rotate-0;
+    @apply skew-x-0;
+    @apply skew-y-0;
+    @apply scale-100;
+    @apply m-0;
+    @apply transition-[inherit];
+    @apply text-switch__icon-color;
+  }
+
+  &--check {
+    // Check √
+    @apply left-[8px];
+    @apply opacity-0;
+    @apply text-[12px];
+  }
+
+  &--un-check {
+    // Close x
+    @apply right-[11px];
+    @apply text-[8px];
+  }
+
+  &--handle {
+    @apply w-[20px];
+    @apply h-[20px];
+    @apply absolute;
+    @apply top-[50%];
+    @apply left-[4px];
+    @apply -translate-y-[50%];
+    @apply translate-x-0;
+    @apply rotate-0;
+    @apply skew-x-0;
+    @apply skew-y-0;
+    @apply scale-100;
+    @apply bg-switch__handle-bg;
+    @apply rounded-[50%];
+    @apply shadow-[0_0_10px_1px] shadow-switch__handle-box-shadow;
+    @apply transition-[left];
+    @apply duration-150;
+    @apply ease-out;
+
+    &:after,
+    &:before {
+      content: "";
+      @apply absolute;
+      @apply w-[7px];
+      @apply border-solid;
+      @apply border-switch__handle__line-color;
+      @apply border-0;
+      @apply border-t-[1px];
+      @apply top-[7px];
+      @apply left-[50%];
+      @apply -translate-x-[50%];
+      @apply translate-y-0;
+      @apply rotate-0;
+      @apply skew-x-0;
+      @apply skew-y-0;
+      @apply scale-100;
+    }
+
+    &:before {
+      @apply top-[10px];
+    }
+
+    &:after {
+      @apply h-[5px];
+      @apply border-solid;
+      @apply border-switch__handle__line-color;
+      @apply border-b-[1px];
+    }
+  }
+
+  &--on .brz-ed-control__switch-arrows {
+    @apply bg-switch__checked-bg #{!important};
+
+    .brz-ed-control__switch--check {
+      @apply opacity-[1];
+    }
+
+    .brz-ed-control__switch--un-check {
+      @apply opacity-0;
+    }
+
+    .brz-ed-control__switch--handle {
+      @apply left-[25px];
+    }
+  }
+
+  &--light {
+    .brz-ed-control__switch-arrows {
+      @apply bg-[#c7c9cd];
+    }
+
+    .brz-ed-control__switch--handle {
+      &:after {
+        @apply border-t-[#bfbfbf];
+        @apply border-b-[#bfbfbf];
+      }
+
+      &:before {
+        @apply border-t-[#bfbfbf];
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RadioGroup snapshots Default usage 1`] = `
+<div
+  class="brz-ed-control__radio-group2"
+>
+  <div
+    class="brz-ed-control__radio-group2__item"
+    title="title1"
+  />
+  <div
+    class="brz-ed-control__radio-group2__item"
+    title="title2"
+  />
+</div>
+`;

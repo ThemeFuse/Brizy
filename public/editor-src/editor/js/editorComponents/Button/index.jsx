@@ -74,11 +74,14 @@ export default class Button extends EditorComponent {
   }
 
   renderSubmit(v, vs, vd, content) {
+    const { cssClassPopulation, customClassName, cssIDPopulation, customID } =
+      v;
     const state = State.mRead(v.tabsState);
     const device = deviceModeSelector(getStore().getState());
     const className = classnames(
       "brz-btn",
       "brz-btn-submit",
+      cssClassPopulation === "" ? customClassName : cssClassPopulation,
       css(
         `${this.constructor.componentId}-bg`,
         `${this.getId()}-bg`,
@@ -92,7 +95,10 @@ export default class Button extends EditorComponent {
       <Wrapper
         {...this.makeWrapperProps({ className })}
         component={componentType}
-        attributes={this.props.attributes}
+        attributes={{
+          ...this.props.attributes,
+          id: cssIDPopulation === "" ? customID : cssIDPopulation
+        }}
       >
         {hasSizing(v, device, state) && v.type !== "submit" ? (
           <BoxResizer

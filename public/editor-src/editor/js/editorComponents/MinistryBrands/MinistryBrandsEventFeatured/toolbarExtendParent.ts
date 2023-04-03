@@ -3,7 +3,7 @@ import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
-import { getOption } from "../utils/helpers";
+import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
@@ -15,12 +15,8 @@ export const getItems: GetItems<Value, Props> = ({
   device
 }) => {
   const _config = Config.getAll();
-  const ekklesia = _config.modules?.ekklesia;
+  const { apiUrl } = _config.modules?.ekklesia ?? {};
   const { getSourceChoices } = _config.api?.sourceTypes ?? {};
-
-  const category = getOption(ekklesia?.terms.event);
-  const group = getOption(ekklesia?.groups);
-  const recentEvents = getOption(ekklesia?.events);
 
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
@@ -47,7 +43,7 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   label: t("Category"),
                   type: "select-dev",
-                  choices: category,
+                  choices: getEkklesiaChoiches({ key: "event", url: apiUrl }),
                   helper: {
                     content: t("This option only applies to 'Show Latest'.")
                   }
@@ -57,7 +53,7 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   label: t("Group"),
                   type: "select-dev",
-                  choices: group,
+                  choices: getEkklesiaChoiches({ key: "groups", url: apiUrl }),
                   helper: {
                     content: t("This option only applies to 'Show Latest'.")
                   }
@@ -67,7 +63,7 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   label: t("Recent Events"),
                   type: "select-dev",
-                  choices: recentEvents,
+                  choices: getEkklesiaChoiches({ key: "events", url: apiUrl }),
                   helper: {
                     content: t(
                       'Select a recent event. Use only if you are not using "Event Slug" below and "Always Show Latest" is set to "No".'

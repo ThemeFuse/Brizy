@@ -1,0 +1,12 @@
+.brz-span {
+  @apply float-none;
+  @apply m-0;
+  @apply p-0;
+  @apply font-[inherit];
+  @apply text-inherit;
+  //TODO add inherit property to font-weight in tailwind
+  font-weight: inherit;
+  @apply leading-[inherit];
+  @apply tracking-[inherit];
+  @apply text-[inherit];
+}
