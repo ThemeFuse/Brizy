@@ -24,6 +24,8 @@ class Brizy_Import_Importer extends WP_Importer {
 	private $post_orphans = [];
 	private $extractor;
 
+	private $url_remap = [];
+
 	/**
 	 * @param $data
 	 * @param Brizy_Import_Extractor $extractor
