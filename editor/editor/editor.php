@@ -227,85 +227,9 @@ class Brizy_Editor_Editor_Editor {
 
 	private function addModuleGroups( $config, $context ) {
 
-		// common
-		$config['moduleGroups'][] = [ 'label' => "grid", 'moduleNames' => [ "Columns", "Row" ] ];
-		$config['moduleGroups'][] = [
-			'label'        => "essentials",
-			'modulesNames' => [
-				"Text",
-				"Image",
-				"Button",
-				"Icon",
-				"Spacer",
-				"Map",
-				"Form2",
-				"Line",
-				"Menu",
-				"MenuSimple",
-				"Login",
-				"Search"
-			]
-		];
+		$moduleGroupCollector = new Brizy_Editor_Editor_ModuleGroups_Manager();
 
-		$config['moduleGroups'][] = [
-			'label'        => "media",
-			'modulesNames' => [ "ImageGallery", "Video", "Audio", "VideoPlaylist" ]
-		];
-		$config['moduleGroups'][] = [
-			'label'        => "content",
-			'modulesNames' => [
-				"IconText",
-				"Lottie",
-				"Embed",
-				"StarRating",
-				"Alert",
-				"Counter",
-				"Countdown2",
-				"ProgressBar",
-				"Calendly",
-				"Carousel",
-				"Tabs",
-				"Accordion",
-				"Switcher",
-				"Table",
-				"Timeline"
-			]
-		];
-		$config['moduleGroups'][] = [
-			'label'        => "social",
-			'modulesNames' => [ "Facebook", "Twitter", "FacebookComments" ]
-		];
-
-		if ( isset( $config['wp']['hasSidebar'] ) ) {
-			$config['moduleGroups'][] = [
-				'label'        => "wordpress",
-				'modulesNames' => [
-					"WPSidebar",
-					"WPCustomShortcode"
-				]
-			];
-		}
-
-		// stories
-		$config['moduleGroups'][] = [
-			'label'       => "essentials",
-			'moduleNames' => [
-				"StoryButton",
-				"StoryIcon",
-				"StoryEmbed",
-				"StoryText",
-				"StoryMap",
-				"StoryProgressBar",
-				"StoryLine",
-				"StoryCountdown2",
-				"StoryCounter",
-				"StoryShape",
-				"StoryForm2",
-				"StoryStarRating",
-				"StoryLottie"
-			]
-		];
-		$config['moduleGroups'][] = [ 'label' => "media", 'moduleNames' => [ "StoryImage", "StoryVideo" ] ];
+		$config['moduleGroups'] = $moduleGroupCollector->getAll($config);
 
 		return $config;
 	}
