@@ -7,7 +7,7 @@ class Brizy_Editor_Editor_ModuleGroups_Manager {
 	 */
 	private $providers = [];
 
-	public function __construct( Brizy_Editor_Editor_ModuleGroups_ProviderInterface $providers  ) {
+	public function __construct() {
 		$this->providers[] = new Brizy_Editor_Editor_ModuleGroups_StoryProvider();
 		$this->providers[] = new Brizy_Editor_Editor_ModuleGroups_GridProvider();
 		$this->providers[] = new Brizy_Editor_Editor_ModuleGroups_EssentialProvider();
@@ -20,7 +20,6 @@ class Brizy_Editor_Editor_ModuleGroups_Manager {
 		$this->providers[] = new Brizy_Editor_Editor_ModuleGroups_WordpressProvider();
 
 		$this->providers = apply_filters( 'brizy_editor_config_module_group_collectors', $this->providers );
-		$this->providers = $providers;
 	}
 
 	public function getAll( $context ) {
