@@ -799,7 +799,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
     {
         $name = md5(time());
         $post = wp_insert_post(array(
-            'post_title' => $name,
+            'post_title' => '',
             'post_name' => $name,
             'post_status' => $status,
             'post_type' => $type,

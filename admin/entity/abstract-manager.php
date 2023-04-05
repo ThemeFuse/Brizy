@@ -103,7 +103,7 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 
 		$name  = md5( time() );
 		$apost = wp_insert_post( array(
-			'post_title'  => $name,
+			'post_title'  => '',
 			'post_name'   => $name,
 			'post_status' => $status,
 			'post_type'   => $type

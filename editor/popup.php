@@ -1,4 +1,4 @@
-q<?php
+<?php
 /**
  * Created by PhpStorm.
  * User: alex
@@ -172,8 +172,6 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 	public function jsonSerialize() {
 		$data                = get_object_vars( $this );
 		$data['editor_data'] = base64_decode( $data['editor_data'] );
-
-
 		$data['cloudId'] = $this->getCloudId();
 		$data['meta']    = $this->getMeta();
 		$data['title'] = $this->getTitle();
