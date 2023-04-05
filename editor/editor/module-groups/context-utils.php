@@ -2,30 +2,34 @@
 
 trait Brizy_Editor_Editor_ModuleGroups_ContextUtils {
 	protected function hasSidebar( $context ) {
-		return isset( $context['hasSidebars'] ) && $context['hasSidebars'];
+		return isset( $context['wp']['hasSidebars'] ) && $context['wp']['hasSidebars'];
 	}
 
 	protected function isStory( $context ) {
-		return isset( $context['mode'] ) && $context['mode'] === 'internal_story';
+		return $this->isMode($context,'internal_story');
 	}
 
 	protected function isProduct( $context ) {
-		return isset( $context['mode'] ) && $context['mode'] === 'product';
+		return $this->isMode($context,'product');
 	}
 
 	protected function isPopup( $context ) {
-		return isset( $context['mode'] ) && $context['mode'] === 'internal_popup';
+		return $this->isMode($context,'internal_popup');
 	}
 
 	protected function isTemplate( $context ) {
-		return isset( $context['mode'] ) && $context['mode'] === 'template';
+		return $this->isMode($context,'template');
+	}
+
+	protected function isMode( $context, $mode ) {
+		return isset( $context['mode'] ) && $context['mode'] === $mode;
 	}
 
 	protected function isPostType( $context, $type ) {
 		return isset( $context['wp']['postType'] ) && $context['wp']['postType'] === $type;
 	}
 
-	protected function isWoocomerceEnabled(  ) {
+	protected function isWoocomerceEnabled() {
 		return class_exists( WooCommerce::class );
 	}
 

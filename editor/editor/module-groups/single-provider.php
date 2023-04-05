@@ -5,7 +5,7 @@ class Brizy_Editor_Editor_ModuleGroups_SingleProvider implements Brizy_Editor_Ed
 	use Brizy_Editor_Editor_ModuleGroups_ContextUtils;
 
 	public function supportContext( $context ) {
-		return $this->isTemplateType($context,'single') || $this->isPostType($context,'post') || $this->isTemplate($context);
+		return $this->isTemplateType($context,'single') || $this->isPostType($context,'post') || $this->isTemplate($context) || $this->isMode($context,'page');
 	}
 
 	public function collect( $context ) {
