@@ -46,7 +46,7 @@ class Brizy_Editor_Editor_ModuleGroups_ModuleGroup {
 	 * @param string[] $moduleNames
 	 */
 	public function set_module_names( $moduleNames ) {
-		$this->moduleNames = array_unique(array_filter(array_values($moduleNames)));
+		$this->moduleNames = array_values(array_unique(array_filter($moduleNames)));
 	}
 
 	public function add_module_names( $modulesNames ) {
