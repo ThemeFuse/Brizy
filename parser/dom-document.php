@@ -59,7 +59,7 @@ class Brizy_Parser_DomDocument implements Brizy_Parser_DomInterface {
 		$xpath      = new DOMXPath( $this->dom );
 
 		/** @var DOMElement $e */
-		foreach ( $xpath->query( '//' . $tag . '[contains(attribute::class, "' . $cssClass . '")]' ) as $e ) {
+		foreach ( $xpath->query( '//*[contains(attribute::class, "' . $cssClass . '")]' ) as $e ) {
 			$e->appendChild( $textNode );
 		}
 
