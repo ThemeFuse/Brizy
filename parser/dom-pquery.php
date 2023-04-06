@@ -22,7 +22,7 @@ class Brizy_Parser_DomPquery implements Brizy_Parser_DomInterface {
 	 * @inheritDoc
 	 */
 	public function appendText( $tag, $cssClass, $text ) {
-		$this->dom->query( "*.$cssClass" )->after( $text );
+		$this->dom->query( ".$cssClass" )->after( $text );
 	}
 
 	/**
