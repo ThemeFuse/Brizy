@@ -62,34 +62,35 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface {
 
 			foreach ( $provider->getPlaceholders() as $placeholder ) {
 
-				if ( $placeholder->getGroup() ) {
-					$result[ $placeholder->getGroup() ][] = $placeholder;
-				}
-			}
-		}
+                if ($placeholder->getGroup()) {
+                    $result[$placeholder->getGroup()][] = $placeholder;
+                }
+            }
+        }
 
 		return apply_filters( 'brizy_placeholders', self::$cache_grouped_placeholders = $result );
 	}
 
-	public function getGroupedPlaceholdersForApiResponse() {
-		$groups = $this->getGroupedPlaceholders();
-		$result = [];
-		foreach ( $groups as $group => $entries ) {
+    public function getGroupedPlaceholdersForApiResponse()
+    {
+        $groups = $this->getGroupedPlaceholders();
+        $result = [];
+        foreach ($groups as $group => $entries) {
 
-			$result[ $group ] = array_map( function ( $entry ) {
+            $result[$group] = array_map(function (PlaceholderInterface $entry) {
 
-				$placeholder = [
-					'placeholder' => '{{' . $entry->getPlaceholder() . '}}',
-					'label'       => $entry->getLabel(),
-					'display'     => $entry->getDisplay()
-				];
+                $placeholder = [
+                    'placeholder' => '{{' . $entry->getPlaceholder() . '}}',
+                    'label' => $entry->getLabel(),
+                    'display' => $entry->getDisplay()
+                ];
 
-				return apply_filters( 'editor_placeholder_data', $placeholder, $entry );
-			}, $entries );
-		}
+                return apply_filters('editor_placeholder_data', $entry->getConfigStructure(), $entry);
+            }, $entries);
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
 	/**
 	 * @param $name
