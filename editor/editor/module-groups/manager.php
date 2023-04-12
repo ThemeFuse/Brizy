@@ -16,6 +16,7 @@ class Brizy_Editor_Editor_ModuleGroups_Manager {
 		$this->providers[] = new Brizy_Editor_Editor_ModuleGroups_SocialProvider();
 		$this->providers[] = new Brizy_Editor_Editor_ModuleGroups_SingleProvider();
 		$this->providers[] = new Brizy_Editor_Editor_ModuleGroups_ArchiveProvider();
+		$this->providers[] = new Brizy_Editor_Editor_ModuleGroups_WooArchiveProvider();
 		$this->providers[] = new Brizy_Editor_Editor_ModuleGroups_ProductProvider();
 		$this->providers[] = new Brizy_Editor_Editor_ModuleGroups_WordpressProvider();
 
