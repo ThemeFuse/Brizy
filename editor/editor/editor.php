@@ -236,7 +236,9 @@ class Brizy_Editor_Editor_Editor
 
         $moduleGroupCollector = new Brizy_Editor_Editor_ModuleGroups_Manager();
 
-        $config['ui'] = ['moduleGroups' => $moduleGroupCollector->getAll($config)];
+        $config['ui'] = [
+            'leftSideBar' => ['moduleGroups' => $moduleGroupCollector->getAll($config)]
+        ];
 
         return $config;
     }
