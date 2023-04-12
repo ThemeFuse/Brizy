@@ -237,7 +237,7 @@ class Brizy_Editor_Editor_Editor
         $moduleGroupCollector = new Brizy_Editor_Editor_ModuleGroups_Manager();
 
         $config['ui'] = [
-            'leftSideBar' => ['moduleGroups' => $moduleGroupCollector->getAll($config)]
+            'leftSidebar' => ['moduleGroups' => $moduleGroupCollector->getAll($config)]
         ];
 
         return $config;
@@ -298,7 +298,6 @@ class Brizy_Editor_Editor_Editor
         }
 
         $config['wp']['postLoopSources'] = $result;
-
 
         # as stated in this issue: https://github.com/bagrinsergiu/blox-editor/issues/21795
         # we have to add in config the post sources

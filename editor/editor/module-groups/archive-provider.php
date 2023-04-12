@@ -11,7 +11,7 @@ class Brizy_Editor_Editor_ModuleGroups_ArchiveProvider implements Brizy_Editor_E
 	public function collect( $context ) {
 		return [
 			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'archives', [
-				"WOOArchives",
+				$this->isTemplateType( $context, 'product_archive' ) ? "WOOArchives": "Archive" ,
 				"PostTitle",
 				"PostExcerpt",
 				"Posts"
