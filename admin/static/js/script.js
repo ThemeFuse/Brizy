@@ -377,3 +377,18 @@ jQuery(document).ready(function ($) {
 });
 
 
+/* admin page "Getting Started" -> brizy/admin/getting-started.php */
+
+function gs_menu_tab(evt, gs_menu_tab_select) {
+    var i, gs_content_tab, gs_menu_tab;
+    gs_content_tab = document.getElementsByClassName("gs_content_tab");
+    for (i = 0; i < gs_content_tab.length; i++) {
+        gs_content_tab[i].style.display = "none";
+    }
+    gs_menu_tab = document.getElementsByClassName("gs_menu_tab");
+    for (i = 0; i < gs_menu_tab.length; i++) {
+        gs_menu_tab[i].className = gs_menu_tab[i].className.replace(" gs_menu_tab_active", "");
+    }
+    document.getElementById(gs_menu_tab_select).style.display = "block";
+    evt.currentTarget.className += " gs_menu_tab_active";
+}

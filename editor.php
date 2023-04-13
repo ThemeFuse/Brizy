@@ -340,6 +340,7 @@ class Brizy_Editor {
 
 			if ( is_admin() ) {
 				Brizy_Admin_Main::instance();
+                new Brizy_Admin_GettingStarted();
 				$this->initFeedback();
 			}
 

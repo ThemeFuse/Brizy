@@ -873,3 +873,194 @@ box-shadow: 0px 2px 0px 0px #e3e3e3;
 .notice-warning .brz-major-update-warning__icon {
     color: #f56e28;
 }
+
+
+
+/* admin page "Getting Started" -> brizy/admin/getting-started.php */
+
+.gs_content {
+    display: flex;
+    justify-content: center;
+}
+.gs_container {
+    width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.gs_title_page {
+    margin-top: 70px;
+    color: #141923;
+    font-family: Helvetica;
+    font-size: 43px;
+    font-weight: bold;
+    letter-spacing: -1.3px;
+    line-height: 52px;
+}
+.gs_subtitle_page {
+    margin-top: 15px;
+    color: #141923;
+    font-family: Helvetica;
+    font-size: 24px;
+    letter-spacing: -0.6px;
+    line-height: 38px;
+}
+.gs_video_page {
+    margin-top: 70px;
+    height: 450px;
+    width: 800px;
+    border-radius: 6px;
+    border-radius: 6px;
+    background-color: #D8D8D8;
+}
+.gs_nav_menu {
+    margin-top: 70px;
+}
+.gs_menu_tab {
+    cursor: pointer;
+    color: #020202;
+    font-family: Helvetica;
+    font-size: 19px;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+    line-height: 23px;
+    padding: 22px 23px;
+    transition: 0.3s
+}
+.gs_menu_tab:hover {
+    color: #fff;
+    background-color: #274ACC;
+}
+.gs_menu_tab_active {
+    color: #274ACC;
+    border-bottom: solid 6px #274ACC;
+}
+.gs_content_tab {
+    margin-top: 22px;
+    width: 100%;
+    animation: gsContentTabShow 0.7s;
+} @-webkit-keyframes gsContentTabShow {
+      0% {
+          opacity: 0;
+      }
+
+      100% {
+          opacity: 1;
+      }
+  }
+.gs_content_tab_one {  }
+.gs_content_tab_two {
+    display: none;
+}
+.gs_tab_block {
+    display: flex;
+    margin-top: 70px;
+}
+.gs_tab_block_inverse {
+    flex-direction: row-reverse;
+}
+.gs_tab_block div {
+    width: 100%;
+}
+.gs_tab_block div a {  }
+.gs_tab_block div a img {
+    height: 439px;
+    width: 439px;
+    border-radius: 6px;
+    background-color: #D8D8D8;
+    object-fit: cover;
+}
+.gs_tab_block div .gs_title_tab {
+    margin-top: 103px;
+    width: 90%;
+    color: #141923;
+    font-family: Helvetica;
+    font-size: 27px;
+    font-weight: bold;
+    letter-spacing: -0.82px;
+    line-height: 35px;
+}
+.gs_tab_block div .gs_subtitle_tab {
+    margin-top: 60px;
+    width: 90%;
+    color: #141923;
+    font-family: Helvetica;
+    font-size: 19px;
+    letter-spacing: -0.6px;
+    line-height: 27px;
+}
+.gs_tab_block div a {
+    text-decoration: none;
+}
+.gs_tab_block div .gs_button_tab {
+    margin-top: 40px;
+    height: 18px;
+    width: max-content;
+    color: #FFFFFF;
+    font-family: Helvetica;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: -0.4px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 3px;
+    padding: 17px 50px;
+    background-color: #274ACC;
+}
+.gs_content_tab_bottom {
+    margin-top: 70px;
+}
+.gs_content_tab_bottom:before, .gs_content_tab_bottom:after {
+    height: 4px;
+    display: block;
+    width: 110%;
+    background: #D8D8D8;
+    border-right: 1px white;
+    content: '';
+    margin-left: -5%;
+}
+.gs_tab_block_bottom {
+    margin: 70px 0px;
+    display: flex;
+}
+.gs_tab_block_bottom div {
+    width: 100%;
+}
+.gs_tab_block_bottom .gs_tab_block_bottom_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right: 150px;
+    width: 101%;
+}
+.gs_tab_block_bottom div a {  }
+.gs_tab_block_bottom div a img {
+    height: 204px;
+    width: 336px;
+    border-radius: 6px;
+    background-color: #D8D8D8;
+}
+.gs_tab_block_bottom div .gs_title_tab_bottom {
+    color: #141923;
+    font-family: Helvetica;
+    font-size: 27px;
+    font-weight: bold;
+    letter-spacing: -0.82px;
+    line-height: 35px;
+}
+.gs_tab_block_bottom div .gs_subtitle_tab_bottom {
+    color: #141923;
+    font-family: Helvetica;
+    font-size: 19px;
+    letter-spacing: -0.6px;
+    line-height: 27px;
+}
+.gs_tab_block_bottom div a {
+    color: #3858E9;
+    font-family: Helvetica;
+    font-size: 19px;
+    font-weight: bold;
+    letter-spacing: -0.6px;
+    line-height: 27px;
+}
+.gs_tab_block_bottom div a .gs_button_tab_bottom {  }
