@@ -55,12 +55,12 @@ class Brizy_Editor {
 	}
 
 	/**
-	 * @deprecated
-	 * Return the prefix
-	 *
 	 * @param string $string
 	 *
 	 * @return string
+	 * @deprecated
+	 * Return the prefix
+	 *
 	 */
 	public static function setPrefix( $string ) {
 
@@ -96,7 +96,7 @@ class Brizy_Editor {
 		add_action( 'init', array( $this, 'resetPermalinks' ), - 2000 );
 		add_action( 'init', array( $this, 'initialize' ), - 2000 );
 		add_action( 'init', [ $this, 'handleEditorEditMode' ], 0 );
-		add_action( 'wp',   [ $this, 'handleEditorPreviewMode' ] );
+		add_action( 'wp', [ $this, 'handleEditorPreviewMode' ] );
 	}
 
 	public function initialize() {
@@ -121,7 +121,7 @@ class Brizy_Editor {
 			if ( ! Brizy_Editor_Project::get()->getWpPost() ) {
 				return;
 			}
-		} catch (Exception $e) {
+		} catch ( Exception $e ) {
 			Brizy_Admin_Flash::instance()->add_error( 'On run migrations, get project throw the message: ' . $e->getMessage() );
 		}
 
@@ -149,16 +149,16 @@ class Brizy_Editor {
 		Brizy_Admin_FormEntries::_init();
 		Brizy_Admin_Fonts_Main::_init();
 		Brizy_Admin_Blocks_Main::_init();
-        Brizy_Admin_Stories_Main::_init();
+		Brizy_Admin_Stories_Main::_init();
 
 		if ( Brizy_Editor_User::is_user_allowed() ) {
 			Brizy_Admin_Svg_Main::_init();
-            Brizy_Admin_Json_Main::_init();
+			Brizy_Admin_Json_Main::_init();
 			Brizy_Admin_Layouts_Main::_init();
 			Brizy_Admin_Membership_Membership::_init();
 
 			// the cloud will be always initialized with the exception when the white label is enabled
-			if ( !(class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled()) ) {
+			if ( ! ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) ) {
 				Brizy_Admin_Cloud::_init();
 			}
 		}
@@ -205,7 +205,7 @@ class Brizy_Editor {
 	}
 
 	public function handleEditorEditMode() {
-		$pid  = Brizy_Editor::get()->currentPostId();
+		$pid = Brizy_Editor::get()->currentPostId();
 
 		if ( ! $pid || ! Brizy_Editor_Entity::isBrizyEnabled( $pid ) || ! Brizy_Editor_User::is_user_allowed() ) {
 			return;
@@ -260,7 +260,7 @@ class Brizy_Editor {
 				return $revisionCount;
 			}
 
-			if ( Brizy_Editor_Entity::isBrizyEnabled($post->ID) ) {
+			if ( Brizy_Editor_Entity::isBrizyEnabled( $post->ID ) ) {
 				$num = $revisionCount;
 			}
 		} catch ( Exception $e ) {
@@ -305,9 +305,9 @@ class Brizy_Editor {
 		Brizy_Admin_Layouts_Main::registerCustomPosts();
 		Brizy_Admin_Fonts_Main::registerCustomPosts();
 		Brizy_Admin_FormEntries::registerCustomPost();
-        Brizy_Admin_Stories_Main::registerCustomPosts();
-        Brizy_Admin_Popups_Main::registerCustomPosts();
-        Brizy_Admin_Blocks_Main::registerCustomPosts();
+		Brizy_Admin_Stories_Main::registerCustomPosts();
+		Brizy_Admin_Popups_Main::registerCustomPosts();
+		Brizy_Admin_Blocks_Main::registerCustomPosts();
 		Brizy_Admin_Templates::registerCustomPostTemplate();
 	}
 
@@ -340,7 +340,7 @@ class Brizy_Editor {
 
 			if ( is_admin() ) {
 				Brizy_Admin_Main::instance();
-                new Brizy_Admin_GettingStarted();
+				new Brizy_Admin_GettingStarted();
 				$this->initFeedback();
 			}
 
@@ -542,10 +542,10 @@ class Brizy_Editor {
 
 		if ( is_null( self::$is_allowed_for_current_user ) ) {
 			self::$is_allowed_for_current_user = (
-					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE )
-					||
-					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
-				);
+				current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE )
+				||
+				current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
+			);
 		}
 
 		return self::$is_allowed_for_current_user;
@@ -580,7 +580,7 @@ class Brizy_Editor {
 		}
 
 		/** The filter image_size_names_choose is documented in wp-admin/includes/media.php */
-		$image_sizes = array_filter( apply_filters( 'image_size_names_choose', $image_sizes ), function( $size ) {
+		$image_sizes = array_filter( apply_filters( 'image_size_names_choose', $image_sizes ), function ( $size ) {
 			return ! empty( $size['width'] ) && ! empty( $size['height'] );
 		} );
 
@@ -594,7 +594,7 @@ class Brizy_Editor {
 		}
 
 		if ( ! array_key_exists( 'original', $image_sizes ) ) {
-            $image_sizes = ['original'=>['label'=>__( 'Original', 'brizy' )]] + $image_sizes;
+			$image_sizes = [ 'original' => [ 'label' => __( 'Original', 'brizy' ) ] ] + $image_sizes;
 		}
 
 		return $image_sizes;
