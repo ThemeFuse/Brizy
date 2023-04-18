@@ -31,7 +31,7 @@
 		<div class="brz-content-tab brz-content-tab-active">
 			<div class="brz-tab-block">
 				<div>
-					<a href="admin.php?page=starter-templates">
+					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
 						<img
 							src="<?php echo $imgPath ?>1_Go_to_starter_Templates.jpg"
 							alt="">
@@ -45,7 +45,7 @@
 						class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Perfect if you want to start with a premade website and go from there. Go to the %s Starter Templates %s page of the plugin, in the main sidebar.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="admin.php?page=starter-templates">
+					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
 						<p class="brz-button-tab">
 							<?php _e( 'View Starter Templates', 'brizy' ); ?>
 						</p>
@@ -55,7 +55,7 @@
 
 			<div class="brz-tab-block brz-tab-block-inverse">
 				<div>
-					<a href="admin.php?page=starter-templates">
+					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
 						<img
 							src="<?php echo $imgPath ?>2_Browse_Websites_Library.jpg"
 							alt="">
@@ -68,7 +68,7 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'With %s over 150 ready made websites %s & landing pages, our library was carefully crafted by professional designers to let you quickly spin up a new website.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="admin.php?page=starter-templates">
+					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
 						<p class="brz-button-tab">
 							<?php _e( 'Browse All Designs', 'brizy' ); ?>
 						</p>
@@ -78,7 +78,7 @@
 
 			<div class="brz-tab-block">
 				<div>
-					<a href="admin.php?page=starter-templates">
+					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
 						<img
 							src="<?php echo $imgPath ?>3_Install_with_1_click.jpg"
 							alt="">
@@ -91,7 +91,7 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'When you decided, %s press the Install button. %s This will let you start from a ready made website by installing all content: images, copy, pages, menus & more.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="admin.php?page=starter-templates">
+					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
 						<p class="brz-button-tab">
 							<?php _e( 'Install a Ready Made Website', 'brizy' ); ?>
 						</p>
@@ -101,7 +101,7 @@
 
 			<div class="brz-tab-block brz-tab-block-inverse">
 				<div>
-					<a href="edit.php?post_type=page">
+					<a href="<?php echo admin_url('edit.php?post_type=page'); ?>">
 						<img
 							src="<?php echo $imgPath ?>4_Start_editing.jpg"
 							alt="">
@@ -114,7 +114,7 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Once the install is done, you can edit any imported page by going to Pages, find the page name and %s press the Edit with button. %s ', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="edit.php?post_type=page">
+					<a href="<?php echo admin_url('edit.php?post_type=page'); ?>">
 						<p class="brz-button-tab">
 							<?php _e( 'Go to All Pages', 'brizy' ); ?>
 						</p>
@@ -155,7 +155,7 @@
 		<div class="brz-content-tab">
 			<div class="brz-tab-block">
 				<div>
-					<a href="admin.php?page=starter-templates">
+					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
 						<img
 							src="<?php echo $imgPath ?>1_Go_to_Pages.jpg"
 							alt="">
@@ -178,7 +178,7 @@
 
 			<div class="brz-tab-block brz-tab-block-inverse">
 				<div>
-					<a href="admin.php?page=starter-templates">
+					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
 						<img
 							src="<?php echo $imgPath ?>2_Create_New_Page.jpg"
 							alt="">
@@ -191,7 +191,7 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Add a new page by pressing the %s Add New %s button from the top of the page.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="admin.php?page=starter-templates">
+					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
 						<p class="brz-button-tab">
 							<?php _e( 'Create a New Page', 'brizy' ); ?>
 						</p>
@@ -201,7 +201,7 @@
 
 			<div class="brz-tab-block">
 				<div>
-					<a href="admin.php?page=starter-templates">
+					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
 						<img
 							src="<?php echo $imgPath ?>3_Edit_with_Builder.jpg"
 							alt="">
@@ -214,7 +214,7 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Press the %s Edit with Builders %s button to load the drag and drop visual builder and start editting your page.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="admin.php?page=starter-templates">
+					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
 						<p class="brz-button-tab">
 							<?php _e( 'Create a New Page', 'brizy' ); ?>
 						</p>
