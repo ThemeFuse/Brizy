@@ -69,6 +69,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 				'dataVersion',
 				'synchronized',
 				'synchronizable',
+				'author',
 				'isCloudEntity'
 			);
 		}
@@ -113,6 +114,10 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
 		if ( in_array( 'isCloudEntity', $fields ) ) {
 			$global['isCloudEntity'] = false;
+		}
+
+		if ( in_array( 'author', $fields ) ) {
+			$global['author'] = $this->getWpPost()->post_author;
 		}
 
 		return $global;

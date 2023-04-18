@@ -182,7 +182,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 	public function createResponse( $fields = array() ) {
 
-		$p_id      = (int) $this->getWpPostId();
+		$p_id = (int) $this->getWpPostId();
 
 		$global = array(
 			'title'       => $the_title = $this->getTitle(),
@@ -193,7 +193,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			'template'    => get_page_template_slug( $p_id ),
 			'status'      => get_post_status( $p_id ),
 			'url'         => get_the_permalink( $p_id ),
-			'dataVersion' => $this->getCurrentDataVersion()
+			'dataVersion' => $this->getCurrentDataVersion(),
+			'author'      => $this->getWpPost()->post_author
 		);
 
 		return $global;
@@ -275,7 +276,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		if ( $noFilters ) {
 			$content = $post->post_content;
 		} else {
-			$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
+			$context             = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
 			$placeholderProvider = new Brizy_Content_PlaceholderWpProvider( $context );
 			$context->setProvider( $placeholderProvider );
 			$extractor = new \BrizyPlaceholders\Extractor( $placeholderProvider );
@@ -720,7 +721,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			$this->set_pro_plugin_version( isset( $storage_post['pro_plugin_version'] ) ? $storage_post['pro_plugin_version'] : null );
 			$this->compiled_html_head = isset( $storage_post['compiled_html_head'] ) ? $storage_post['compiled_html_head'] : null;
 			$this->compiled_html_body = isset( $storage_post['compiled_html_body'] ) ? $storage_post['compiled_html_body'] : null;
-			$this->lastUserEdited = isset( $storage_post['lastUserEdited'] ) ? $storage_post['lastUserEdited'] : null;
+			$this->lastUserEdited     = isset( $storage_post['lastUserEdited'] ) ? $storage_post['lastUserEdited'] : null;
 		}
 	}
 

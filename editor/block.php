@@ -87,7 +87,8 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 				'dataVersion',
 				'synchronized',
 				'synchronizable',
-				'isCloudEntity'
+				'isCloudEntity',
+				'author'
 			);
 		}
 
@@ -119,6 +120,10 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 
 		if ( in_array( 'tags', $fields ) ) {
 			$global['tags'] = $this->getTags();
+		}
+
+		if ( in_array( 'author', $fields ) ) {
+			$global['author'] = $this->getWpPost()->post_author;
 		}
 
 

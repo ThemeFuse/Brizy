@@ -220,7 +220,8 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 				'title',
 				'tags',
 				'data',
-				'status'
+				'status',
+				'author'
 			);
 		}
 
@@ -252,6 +253,10 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 
 		if ( in_array( 'tags', $fields ) ) {
 			$global['tags'] = $this->getTags();
+		}
+
+		if ( in_array( 'author', $fields ) ) {
+			$global['author'] = $this->getWpPost()->post_author;
 		}
 
 		return $global;
