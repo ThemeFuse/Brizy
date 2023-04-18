@@ -6,11 +6,24 @@
 
 class Brizy_Admin_GettingStarted {
 
+	public $isWhiteLabel;
+	public $brizyBrandedOrIsWhiteLabelImgUrl = BRIZY_PLUGIN_URL . '/admin/static/img/getting-started/brizy-branded/';
+	const SLUG = 'getting-started';
+	const STARTER_TEMPLATES_URL = 'admin.php?page=starter-templates';
+	const POST_TYPE_PAGE_URL = '/wp-admin/edit.php?post_type=page';
+	const BRIZY_BRANDED_VIDEO_URL = '';
+	const BRIZY_ACADEMY_URL = '';
+
 	/**
 	 * Brizy_Admin_Getting_Started constructor.
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', [ $this, 'addSubmenuPageGettingStarted' ], 20 );
+
+		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+			$this->isWhiteLabel                     = true;
+			$this->brizyBrandedOrIsWhiteLabelImgUrl = BRIZY_PLUGIN_URL . '/admin/static/img/getting-started/white-label/';
+		}
 	}
 
 	public function addSubmenuPageGettingStarted() {
@@ -19,16 +32,12 @@ class Brizy_Admin_GettingStarted {
 			return;
 		}
 
-		add_filter( 'screen_options_show_screen', function ( $display ) {
-			return isset( $_GET['page'] ) && $_GET['page'] == 'starter-templates' ? false : $display;
-		} );
-
 		add_submenu_page(
 			Brizy_Admin_Settings::menu_slug(),
 			__( 'Getting Started', 'brizy' ),
-			__( 'Getting Started', 'brizy' ),
+			__( 'Getting Started', 'breezy' ),
 			'manage_options',
-			'getting-started',
+			self::SLUG,
 			[ $this, 'renderTemplatesPage' ],
 			8
 		);
@@ -37,7 +46,12 @@ class Brizy_Admin_GettingStarted {
 	public function renderTemplatesPage() {
 
 		$args = [
-			'isWhiteLabel' => class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled(),
+			'brizyBrandedOrIsWhiteLabel'       => $this->isWhiteLabel,
+			'brizyBrandedOrIsWhiteLabelImgUrl' => $this->brizyBrandedOrIsWhiteLabelImgUrl,
+			'starterTemplatesUrl'              => self::STARTER_TEMPLATES_URL,
+			'postTypePageUrl'                  => self::POST_TYPE_PAGE_URL,
+			'brizyBrandedVideoUrl'             => self::BRIZY_BRANDED_VIDEO_URL,
+			'brizyAcademyUrl'                  => self::BRIZY_ACADEMY_URL,
 		];
 
 		try {
@@ -46,16 +60,12 @@ class Brizy_Admin_GettingStarted {
 			echo $e->getMessage();
 		}
 
-		function change_footer_admin() {
-			return ' ';
-		}
-
-		add_filter( 'admin_footer_text', 'change_footer_admin', 99 );
-		function change_footer_version() {
-			return ' ';
-		}
-
-		add_filter( 'update_footer', 'change_footer_version', 99 );
+		add_filter( 'admin_footer_text', function () {
+			return '';
+		} );
+		add_filter( 'update_footer', function () {
+			return '';
+		} );
 	}
 
 	public static function redirectAfterActivation( $plugin ) {
@@ -65,5 +75,3 @@ class Brizy_Admin_GettingStarted {
 		exit( wp_redirect( admin_url( 'admin.php?page=getting-started' ) ) );
 	}
 }
-
-
