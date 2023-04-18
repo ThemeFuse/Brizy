@@ -252,7 +252,7 @@ class Brizy_Editor_Editor_Editor {
 				"link"  => $config['urls']['backToDashboard']
 			]
 		];
-		$config['ui'] = [
+		$config['ui']['leftSidebar'] = [
 			"topTabsOrder"    => [ "addElements", "reorderBlock", "globalStyle" ],
 			"bottomTabsOrder" => [ "deviceMode", "pageSettings", "more" ],
 			"pageSettings"    => [
@@ -266,7 +266,6 @@ class Brizy_Editor_Editor_Editor {
 				"options" => array_filter( $options )
 			]
 		];
-
 
 		return $config;
 	}
