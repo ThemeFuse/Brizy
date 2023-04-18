@@ -9,15 +9,15 @@
 		<div class="brz-subtitle-page">
 			<?php _e( 'Build no-code WordPress websites fast & easy', 'brizy' ); ?>
 		</div>
-		<?php if ( ! $brizyBrandedOrIsWhiteLabel ) { ?>
+		<?php if ( ! $name ) : ?>
 			<video class="brz-video-page"
-			       poster="<?php echo $brizyBrandedOrIsWhiteLabelImgUrl ?>Video_Cover.jpg"
+			       poster="<?php echo $imgPath ?>Video_Cover.jpg"
 			       controls>
-				<source src="<?php echo $brizyBrandedVideoUrl ?>" type="video/mp4">
+				<source src="" type="video/mp4">
 				<source src="" type="video/ogg">
 				<?php _e( 'Your browser does not support the video tag.', 'brizy' ); ?>
 			</video>
-		<?php } ?>
+		<?php endif; ?>
 
 		<nav class="brz-nav-menu">
 			<span class="brz-menu-tab brz-menu-tab-active">
@@ -31,9 +31,9 @@
 		<div class="brz-content-tab brz-content-tab-active">
 			<div class="brz-tab-block">
 				<div>
-					<a href="<?php echo $starterTemplatesUrl ?>">
+					<a href="admin.php?page=starter-templates">
 						<img
-							src="<?php echo $brizyBrandedOrIsWhiteLabelImgUrl ?>1_Go_to_starter_Templates.jpg"
+							src="<?php echo $imgPath ?>1_Go_to_starter_Templates.jpg"
 							alt="">
 					</a>
 				</div>
@@ -45,7 +45,7 @@
 						class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Perfect if you want to start with a premade website and go from there. Go to the %s Starter Templates %s page of the plugin, in the main sidebar.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo $starterTemplatesUrl ?>">
+					<a href="admin.php?page=starter-templates">
 						<p class="brz-button-tab">
 							<?php _e( 'View Starter Templates', 'brizy' ); ?>
 						</p>
@@ -55,9 +55,9 @@
 
 			<div class="brz-tab-block brz-tab-block-inverse">
 				<div>
-					<a href="<?php echo $starterTemplatesUrl ?>">
+					<a href="admin.php?page=starter-templates">
 						<img
-							src="<?php echo $brizyBrandedOrIsWhiteLabelImgUrl ?>2_Browse_Websites_Library.jpg"
+							src="<?php echo $imgPath ?>2_Browse_Websites_Library.jpg"
 							alt="">
 					</a>
 				</div>
@@ -68,7 +68,7 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'With %s over 150 ready made websites %s & landing pages, our library was carefully crafted by professional designers to let you quickly spin up a new website.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo $starterTemplatesUrl ?>">
+					<a href="admin.php?page=starter-templates">
 						<p class="brz-button-tab">
 							<?php _e( 'Browse All Designs', 'brizy' ); ?>
 						</p>
@@ -78,9 +78,9 @@
 
 			<div class="brz-tab-block">
 				<div>
-					<a href="<?php echo $starterTemplatesUrl ?>">
+					<a href="admin.php?page=starter-templates">
 						<img
-							src="<?php echo $brizyBrandedOrIsWhiteLabelImgUrl ?>3_Install_with_1_click.jpg"
+							src="<?php echo $imgPath ?>3_Install_with_1_click.jpg"
 							alt="">
 					</a>
 				</div>
@@ -91,7 +91,7 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'When you decided, %s press the Install button. %s This will let you start from a ready made website by installing all content: images, copy, pages, menus & more.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo $starterTemplatesUrl ?>">
+					<a href="admin.php?page=starter-templates">
 						<p class="brz-button-tab">
 							<?php _e( 'Install a Ready Made Website', 'brizy' ); ?>
 						</p>
@@ -101,9 +101,9 @@
 
 			<div class="brz-tab-block brz-tab-block-inverse">
 				<div>
-					<a href="<?php echo $postTypePageUrl ?>">
+					<a href="edit.php?post_type=page">
 						<img
-							src="<?php echo $brizyBrandedOrIsWhiteLabelImgUrl ?>4_Start_editing.jpg"
+							src="<?php echo $imgPath ?>4_Start_editing.jpg"
 							alt="">
 					</a>
 				</div>
@@ -114,7 +114,7 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Once the install is done, you can edit any imported page by going to Pages, find the page name and %s press the Edit with button. %s ', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo $postTypePageUrl ?>">
+					<a href="edit.php?post_type=page">
 						<p class="brz-button-tab">
 							<?php _e( 'Go to All Pages', 'brizy' ); ?>
 						</p>
@@ -124,12 +124,12 @@
 
 
 			<div class="brz-content-tab-bottom">
-				<?php if ( ! $brizyBrandedOrIsWhiteLabel ) { ?>
+				<?php if ( ! $name ) : ?>
 					<div class="brz-tab-block-bottom">
 						<div>
-							<a href="<?php echo $brizyAcademyUrl ?>">
+							<a href="">
 								<img
-									src="<?php echo $brizyBrandedOrIsWhiteLabelImgUrl ?>Visit_Brizy_Academy.jpg"
+									src="<?php echo $imgPath ?>Visit_Brizy_Academy.jpg"
 									alt="">
 							</a>
 						</div>
@@ -140,14 +140,14 @@
 							<div class="brz-subtitle-tab-bottom">
 								<?php _e( 'Follow step by step guides and tutorials on how to build your website and bring your web presence to life.', 'brizy' ); ?>
 							</div>
-							<a href="<?php echo $brizyAcademyUrl ?>">
+							<a href="">
 								<p class="brz-button-tab-bottom">
 									<?php _e( 'Visit the Academy', 'brizy' ); ?>
 								</p>
 							</a>
 						</div>
 					</div>
-				<?php } ?>
+				<?php endif; ?>
 			</div>
 		</div>
 
@@ -155,9 +155,9 @@
 		<div class="brz-content-tab">
 			<div class="brz-tab-block">
 				<div>
-					<a href="<?php echo $starterTemplatesUrl ?>">
+					<a href="admin.php?page=starter-templates">
 						<img
-							src="<?php echo $brizyBrandedOrIsWhiteLabelImgUrl ?>1_Go_to_Pages.jpg"
+							src="<?php echo $imgPath ?>1_Go_to_Pages.jpg"
 							alt="">
 					</a>
 				</div>
@@ -168,7 +168,7 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Perfect if you want to add %s pages %s to your existing website. Go to Pages, in the main sidebar.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo $starterTemplatesUrl ?>">
+					<a href="admin.php?page=starter-templates">
 						<p class="brz-button-tab">
 							<?php _e( 'Create a New Page', 'brizy' ); ?>
 						</p>
@@ -178,9 +178,9 @@
 
 			<div class="brz-tab-block brz-tab-block-inverse">
 				<div>
-					<a href="<?php echo $starterTemplatesUrl ?>">
+					<a href="admin.php?page=starter-templates">
 						<img
-							src="<?php echo $brizyBrandedOrIsWhiteLabelImgUrl ?>2_Create_New_Page.jpg"
+							src="<?php echo $imgPath ?>2_Create_New_Page.jpg"
 							alt="">
 					</a>
 				</div>
@@ -191,7 +191,7 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Add a new page by pressing the %s Add New %s button from the top of the page.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo $starterTemplatesUrl ?>">
+					<a href="admin.php?page=starter-templates">
 						<p class="brz-button-tab">
 							<?php _e( 'Create a New Page', 'brizy' ); ?>
 						</p>
@@ -201,9 +201,9 @@
 
 			<div class="brz-tab-block">
 				<div>
-					<a href="<?php echo $starterTemplatesUrl ?>">
+					<a href="admin.php?page=starter-templates">
 						<img
-							src="<?php echo $brizyBrandedOrIsWhiteLabelImgUrl ?>3_Edit_with_Builder.jpg"
+							src="<?php echo $imgPath ?>3_Edit_with_Builder.jpg"
 							alt="">
 					</a>
 				</div>
@@ -214,7 +214,7 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Press the %s Edit with Builders %s button to load the drag and drop visual builder and start editting your page.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo $starterTemplatesUrl ?>">
+					<a href="admin.php?page=starter-templates">
 						<p class="brz-button-tab">
 							<?php _e( 'Create a New Page', 'brizy' ); ?>
 						</p>
@@ -224,12 +224,12 @@
 
 
 			<div class="brz-content-tab-bottom">
-				<?php if ( ! $brizyBrandedOrIsWhiteLabel ) { ?>
+				<?php if ( ! $name ) : ?>
 					<div class="brz-tab-block-bottom">
 						<div>
-							<a href="<?php echo $brizyAcademyUrl ?>">
+							<a href="">
 								<img
-									src="<?php echo $brizyBrandedOrIsWhiteLabelImgUrl ?>Visit_Brizy_Academy.jpg"
+									src="<?php echo $imgPath ?>Visit_Brizy_Academy.jpg"
 									alt="">
 							</a>
 						</div>
@@ -240,14 +240,14 @@
 							<div class="brz-subtitle-tab-bottom">
 								<?php _e( 'Follow step by step guides and tutorials on how to build your website and bring your web presence to life.', 'brizy' ); ?>
 							</div>
-							<a href="<?php echo $brizyAcademyUrl ?>">
+							<a href="">
 								<p class="brz-button-tab-bottom">
 									<?php _e( 'Visit the Academy', 'brizy' ); ?>
 								</p>
 							</a>
 						</div>
 					</div>
-				<?php } ?>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>

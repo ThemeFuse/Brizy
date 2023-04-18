@@ -6,24 +6,13 @@
 
 class Brizy_Admin_GettingStarted {
 
-	public $isWhiteLabel;
-	public $brizyBrandedOrIsWhiteLabelImgUrl = BRIZY_PLUGIN_URL . '/admin/static/img/getting-started/brizy-branded/';
 	const SLUG = 'getting-started';
-	const STARTER_TEMPLATES_URL = 'admin.php?page=starter-templates';
-	const POST_TYPE_PAGE_URL = '/wp-admin/edit.php?post_type=page';
-	const BRIZY_BRANDED_VIDEO_URL = '';
-	const BRIZY_ACADEMY_URL = '';
 
 	/**
 	 * Brizy_Admin_Getting_Started constructor.
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', [ $this, 'addSubmenuPageGettingStarted' ], 20 );
-
-		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
-			$this->isWhiteLabel                     = true;
-			$this->brizyBrandedOrIsWhiteLabelImgUrl = BRIZY_PLUGIN_URL . '/admin/static/img/getting-started/white-label/';
-		}
 	}
 
 	public function addSubmenuPageGettingStarted() {
@@ -45,13 +34,17 @@ class Brizy_Admin_GettingStarted {
 
 	public function renderTemplatesPage() {
 
+		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+			$this->isWhiteLabel         = true;
+			$this->brandedOrLabelImgUrl = BRIZY_PLUGIN_URL . '/admin/static/img/getting-started/white-label/';
+		} else {
+			$this->isWhiteLabel         = false;
+			$this->brandedOrLabelImgUrl = BRIZY_PLUGIN_URL . '/admin/static/img/getting-started/brizy-branded/';
+		}
+
 		$args = [
-			'brizyBrandedOrIsWhiteLabel'       => $this->isWhiteLabel,
-			'brizyBrandedOrIsWhiteLabelImgUrl' => $this->brizyBrandedOrIsWhiteLabelImgUrl,
-			'starterTemplatesUrl'              => self::STARTER_TEMPLATES_URL,
-			'postTypePageUrl'                  => self::POST_TYPE_PAGE_URL,
-			'brizyBrandedVideoUrl'             => self::BRIZY_BRANDED_VIDEO_URL,
-			'brizyAcademyUrl'                  => self::BRIZY_ACADEMY_URL,
+			'name'    => $this->isWhiteLabel,
+			'imgPath' => $this->brandedOrLabelImgUrl,
 		];
 
 		try {
