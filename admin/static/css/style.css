@@ -1086,6 +1086,9 @@ a.brizy-button--primary:hover {
     content: '';
     margin-left: -5%;
 }
+.brz-content-tab-bottom:after {
+    margin-top: -4px;
+}
 
 .brz-tab-block-bottom {
     margin: 70px 0px;
