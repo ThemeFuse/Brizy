@@ -3,7 +3,6 @@
 /**
  * Class Brizy_Getting_Started
  */
-
 class Brizy_Admin_GettingStarted {
 
 	const SLUG = 'getting-started';
@@ -24,7 +23,7 @@ class Brizy_Admin_GettingStarted {
 		add_submenu_page(
 			Brizy_Admin_Settings::menu_slug(),
 			__( 'Getting Started', 'brizy' ),
-			__( 'Getting Started', 'breezy' ),
+			__( 'Getting Started', 'brizy' ),
 			'manage_options',
 			self::SLUG,
 			[ $this, 'renderTemplatesPage' ],
@@ -35,16 +34,16 @@ class Brizy_Admin_GettingStarted {
 	public function renderTemplatesPage() {
 
 		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
-			$this->isWhiteLabel         = true;
-			$this->brandedOrLabelImgUrl = plugin_dir_url( __FILE__ ) . 'static/img/getting-started/white-label/';
+			$isWhiteLabel         = true;
+			$brandedOrLabelImgUrl = plugin_dir_url( __FILE__ ) . 'static/img/getting-started/white-label/';
 		} else {
-			$this->isWhiteLabel         = false;
-			$this->brandedOrLabelImgUrl = plugin_dir_url( __FILE__ ) . 'static/img/getting-started/brizy-branded/';
+			$isWhiteLabel         = false;
+			$brandedOrLabelImgUrl = plugin_dir_url( __FILE__ ) . 'static/img/getting-started/brizy-branded/';
 		}
 
 		$args = [
-			'name'    => $this->isWhiteLabel,
-			'imgPath' => $this->brandedOrLabelImgUrl,
+			'isWhiteLabel' => $isWhiteLabel,
+			'imgPath'      => $brandedOrLabelImgUrl,
 		];
 
 		try {
@@ -65,6 +64,6 @@ class Brizy_Admin_GettingStarted {
 		if ( $plugin != BRIZY_PLUGIN_BASE && ( ! defined( 'BRIZY_PRO_PLUGIN_BASE' ) || $plugin != BRIZY_PRO_PLUGIN_BASE ) || ( ! empty( $_POST['checked'] ) && count( $_POST['checked'] ) > 1 ) ) {
 			return;
 		}
-		exit( wp_redirect( admin_url( 'admin.php?page=getting-started' ) ) );
+		exit( wp_redirect( admin_url( 'admin.php?page=' . self::SLUG ) ) );
 	}
 }

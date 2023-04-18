@@ -9,7 +9,7 @@
 		<div class="brz-subtitle-page">
 			<?php _e( 'Build no-code WordPress websites fast & easy', 'brizy' ); ?>
 		</div>
-		<?php if ( ! $name ) : ?>
+		<?php if ( ! $isWhiteLabel ) : ?>
 			<video class="brz-video-page"
 			       poster="<?php echo $imgPath ?>Video_Cover.jpg"
 			       controls>
@@ -124,7 +124,7 @@
 
 
 			<div class="brz-content-tab-bottom">
-				<?php if ( ! $name ) : ?>
+				<?php if ( ! $isWhiteLabel ) : ?>
 					<div class="brz-tab-block-bottom">
 						<div>
 							<a href="">
@@ -224,7 +224,7 @@
 
 
 			<div class="brz-content-tab-bottom">
-				<?php if ( ! $name ) : ?>
+				<?php if ( ! $isWhiteLabel ) : ?>
 					<div class="brz-tab-block-bottom">
 						<div>
 							<a href="">
