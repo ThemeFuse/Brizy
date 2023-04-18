@@ -207,7 +207,7 @@ class Brizy_Editor_Editor_Editor {
 		$is_story    = $this->isStory( $config );
 		$is_template = $this->isTemplate( $config );
 
-		$options      = [
+		$options                     = [
 			! Brizy_Compatibilities_BrizyProCompatibility::isPro() ?
 				[
 					"type"       => "link",
@@ -264,6 +264,21 @@ class Brizy_Editor_Editor_Editor {
 			],
 			"more"            => [
 				"options" => array_filter( $options )
+			]
+		];
+
+		$config['ui']['popupSettings'] = [
+			[
+				"horizontalAlign"     => true,
+				"verticalAlign"       => true,
+				"embedded"            => false,
+				"displayCondition"    => false,
+				"scrollPageBehind"    => true,
+				"clickOutsideToClose" => true
+			],
+			[
+				"displayCondition" => true,
+				"deletePopup"      => true
 			]
 		];
 
