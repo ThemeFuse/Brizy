@@ -1,7 +1,7 @@
 <?php defined( 'ABSPATH' ) or die; ?>
 
 <div class="brz-content">
-	<div class="brz-container">`
+	<div class="brz-container">
 		<div
 			class="brz-title-page">
 			<?php echo sprintf( __( 'Welcome to %s', 'brizy' ), __bt( 'brizy', 'Brizy' ) ) ?>
@@ -40,10 +40,8 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Perfect if you want to start with a premade website and go from there. Go to the %s Starter Templates %s page of the plugin, in the main sidebar.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
-						<p class="brz-button-tab">
-							<?php _e( 'View Starter Templates', 'brizy' ); ?>
-						</p>
+					<a class="brz-button-tab" href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
+						<?php _e( 'View Starter Templates', 'brizy' ); ?>
 					</a>
 				</div>
 			</div>
@@ -61,10 +59,8 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'With %s over 150 ready made websites %s & landing pages, our library was carefully crafted by professional designers to let you quickly spin up a new website.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
-						<p class="brz-button-tab">
-							<?php _e( 'Browse All Designs', 'brizy' ); ?>
-						</p>
+					<a class="brz-button-tab" href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
+						<?php _e( 'Browse All Designs', 'brizy' ); ?>
 					</a>
 				</div>
 			</div>
@@ -82,10 +78,8 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'When you decided, %s press the Install button. %s This will let you start from a ready made website by installing all content: images, copy, pages, menus & more.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
-						<p class="brz-button-tab">
-							<?php _e( 'Install a Ready Made Website', 'brizy' ); ?>
-						</p>
+					<a class="brz-button-tab" href="<?php echo admin_url('admin.php?page=starter-templates'); ?>">
+						<?php _e( 'Install a Ready Made Website', 'brizy' ); ?>
 					</a>
 				</div>
 			</div>
@@ -103,37 +97,10 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Once the install is done, you can edit any imported page by going to Pages, find the page name and %s press the Edit with button. %s ', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo admin_url('edit.php?post_type=page'); ?>">
-						<p class="brz-button-tab">
-							<?php _e( 'Go to All Pages', 'brizy' ); ?>
-						</p>
+					<a class="brz-button-tab" href="<?php echo admin_url('edit.php?post_type=page'); ?>">
+						<?php _e( 'Go to All Pages', 'brizy' ); ?>
 					</a>
 				</div>
-			</div>
-
-			<div class="brz-content-tab-bottom">
-				<?php if ( ! $isWhiteLabel ) : ?>
-					<div class="brz-tab-block-bottom">
-						<div>
-							<a href="https://support.brizy.io/hc/en-us/categories/360001183911-Brizy-WordPress-Plugin" target="_blank">
-								<img src="<?php echo $imgPath ?>Visit_Brizy_Academy.jpg" alt="">
-							</a>
-						</div>
-						<div class="brz-tab-block-bottom-content">
-							<div class="brz-title-tab-bottom">
-								<?php _e( 'Visit the Brizy Academy', 'brizy' ); ?>
-							</div>
-							<div class="brz-subtitle-tab-bottom">
-								<?php _e( 'Follow step by step guides and tutorials on how to build your website and bring your web presence to life.', 'brizy' ); ?>
-							</div>
-							<a href="https://support.brizy.io/hc/en-us/categories/360001183911-Brizy-WordPress-Plugin" target="_blank">
-								<p class="brz-button-tab-bottom">
-									<?php _e( 'Visit the Academy', 'brizy' ); ?>
-								</p>
-							</a>
-						</div>
-					</div>
-				<?php endif; ?>
 			</div>
 		</div>
 
@@ -151,10 +118,8 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Perfect if you want to add %s pages %s to your existing website. Go to Pages, in the main sidebar.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo admin_url( 'post-new.php?post_type=page' ); ?>">
-						<p class="brz-button-tab">
-							<?php _e( 'Create a New Page', 'brizy' ); ?>
-						</p>
+					<a class="brz-button-tab" href="<?php echo admin_url( 'post-new.php?post_type=page' ); ?>">
+						<?php _e( 'Create a New Page', 'brizy' ); ?>
 					</a>
 				</div>
 			</div>
@@ -172,10 +137,8 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Add a new page by pressing the %s Add New %s button from the top of the page.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo admin_url('post-new.php?post_type=page'); ?>">
-						<p class="brz-button-tab">
+					<a class="brz-button-tab" href="<?php echo admin_url('post-new.php?post_type=page'); ?>">
 							<?php _e( 'Create a New Page', 'brizy' ); ?>
-						</p>
 					</a>
 				</div>
 			</div>
@@ -193,38 +156,34 @@
 					<div class="brz-subtitle-tab">
 						<?php echo sprintf( __( 'Press the %s Edit with Builders %s button to load the drag and drop visual builder and start editting your page.', 'brizy' ), '<strong>', '</strong>' ); ?>
 					</div>
-					<a href="<?php echo admin_url('post-new.php?post_type=page'); ?>">
-						<p class="brz-button-tab">
-							<?php _e( 'Create a New Page', 'brizy' ); ?>
-						</p>
+					<a class="brz-button-tab" href="<?php echo admin_url('post-new.php?post_type=page'); ?>">
+						<?php _e( 'Create a New Page', 'brizy' ); ?>
 					</a>
 				</div>
 			</div>
+		</div>
 
-			<div class="brz-content-tab-bottom">
-				<?php if ( ! $isWhiteLabel ) : ?>
-					<div class="brz-tab-block-bottom">
-						<div>
-							<a href="https://support.brizy.io/hc/en-us/categories/360001183911-Brizy-WordPress-Plugin" target="_blank">
-								<img src="<?php echo $imgPath ?>Visit_Brizy_Academy.jpg" alt="">
-							</a>
-						</div>
-						<div class="brz-tab-block-bottom-content">
-							<div class="brz-title-tab-bottom">
-								<?php _e( 'Visit the Brizy Academy', 'brizy' ); ?>
-							</div>
-							<div class="brz-subtitle-tab-bottom">
-								<?php _e( 'Follow step by step guides and tutorials on how to build your website and bring your web presence to life.', 'brizy' ); ?>
-							</div>
-							<a href="https://support.brizy.io/hc/en-us/categories/360001183911-Brizy-WordPress-Plugin" target="_blank">
-								<p class="brz-button-tab-bottom">
-									<?php _e( 'Visit the Academy', 'brizy' ); ?>
-								</p>
-							</a>
-						</div>
+		<div class="brz-bottom">
+			<?php if ( ! $isWhiteLabel ) : ?>
+				<div class="brz-bottom-block">
+					<div>
+						<a href="https://www.youtube.com/playlist?list=PLSWJ3G5dn_5h9ikUryu0yIxGrdYupOY2I" target="_blank">
+							<img src="<?php echo $imgPath ?>Visit_Brizy_Academy.jpg" alt="">
+						</a>
 					</div>
-				<?php endif; ?>
-			</div>
+					<div class="brz-bottom-block-content">
+						<div class="brz-bottom-block-title">
+							<?php _e( 'Visit the Brizy Academy', 'brizy' ); ?>
+						</div>
+						<div class="brz-bottom-block-subtitle">
+							<?php _e( 'Follow step by step guides and tutorials on how to build your website and bring your web presence to life.', 'brizy' ); ?>
+						</div>
+						<a href="https://www.youtube.com/playlist?list=PLSWJ3G5dn_5h9ikUryu0yIxGrdYupOY2I" target="_blank">
+							<?php _e( 'Visit the Academy', 'brizy' ); ?>
+						</a>
+					</div>
+				</div>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

@@ -1010,6 +1010,7 @@ a.brizy-button--primary:hover {
 
 .brz-tab-block {
     display: flex;
+    align-items: center;
     margin-top: 70px;
 }
 
@@ -1030,7 +1031,6 @@ a.brizy-button--primary:hover {
 }
 
 .brz-tab-block div .brz-title-tab {
-    margin-top: 103px;
     width: 90%;
     color: #141923;
     font-family: Helvetica;
@@ -1041,13 +1041,14 @@ a.brizy-button--primary:hover {
 }
 
 .brz-tab-block div .brz-subtitle-tab {
-    margin-top: 60px;
+    margin-top: 25px;
     width: 90%;
     color: #141923;
     font-family: Helvetica;
     font-size: 19px;
     letter-spacing: -0.6px;
     line-height: 27px;
+    margin-bottom: 60px;
 }
 
 .brz-tab-block div a {
@@ -1056,7 +1057,6 @@ a.brizy-button--primary:hover {
 
 
 .brz-tab-block div .brz-button-tab {
-    margin-top: 40px;
     height: 18px;
     width: max-content;
     color: #FFFFFF;
@@ -1072,12 +1072,13 @@ a.brizy-button--primary:hover {
 }
 
 
-.brz-content-tab-bottom {
+.brz-bottom {
     margin-top: 70px;
+    width: 100%;
 }
 
-.brz-content-tab-bottom:before,
-.brz-content-tab-bottom:after {
+.brz-bottom:before,
+.brz-bottom:after {
     height: 4px;
     display: block;
     width: 110%;
@@ -1086,20 +1087,20 @@ a.brizy-button--primary:hover {
     content: '';
     margin-left: -5%;
 }
-.brz-content-tab-bottom:after {
+.brz-bottom:after {
     margin-top: -4px;
 }
 
-.brz-tab-block-bottom {
+.brz-bottom-block {
     margin: 70px 0px;
     display: flex;
 }
 
-.brz-tab-block-bottom div {
+.brz-bottom-block div {
     width: 100%;
 }
 
-.brz-tab-block-bottom .brz-tab-block-bottom-content {
+.brz-bottom-block .brz-bottom-block-content {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -1107,14 +1108,14 @@ a.brizy-button--primary:hover {
     width: 101%;
 }
 
-.brz-tab-block-bottom div a img {
+.brz-bottom-block div a img {
     height: 204px;
     width: 336px;
     border-radius: 6px;
     background-color: #D8D8D8;
 }
 
-.brz-tab-block-bottom div .brz-title-tab-bottom {
+.brz-bottom-block div .brz-bottom-block-title {
     color: #141923;
     font-family: Helvetica;
     font-size: 27px;
@@ -1123,7 +1124,7 @@ a.brizy-button--primary:hover {
     line-height: 35px;
 }
 
-.brz-tab-block-bottom div .brz-subtitle-tab-bottom {
+.brz-bottom-block div .brz-bottom-block-subtitle {
     color: #141923;
     font-family: Helvetica;
     font-size: 19px;
@@ -1131,7 +1132,7 @@ a.brizy-button--primary:hover {
     line-height: 27px;
 }
 
-.brz-tab-block-bottom div a {
+.brz-bottom-block div a {
     color: #3858E9;
     font-family: Helvetica;
     font-size: 19px;
@@ -1179,19 +1180,19 @@ a.brizy-button--primary:hover {
         margin-top: 30px;
     }
 
-    .brz-content-tab-bottom {
+    .brz-bottom {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-    .brz-content-tab-bottom:before, .brz-content-tab-bottom:after {
-        width: 90%;
+    .brz-bottom:before, .brz-bottom:after {
+        /*width: 90%;*/
     }
-    .brz-tab-block-bottom {
+    .brz-bottom-block {
         flex-direction: column;
         text-align: -webkit-center;
     }
-    .brz-tab-block-bottom div .brz-title-tab-bottom {
+    .brz-bottom-block div .brz-bottom-block-title {
         margin-top: 30px;
     }
 }
