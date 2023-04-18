@@ -55,15 +55,22 @@ class Brizy_Admin_GettingStarted {
 		add_filter( 'admin_footer_text', function () {
 			return '';
 		} );
+
 		add_filter( 'update_footer', function () {
 			return '';
 		} );
 	}
 
 	public static function redirectAfterActivation( $plugin ) {
+
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			return;
+		}
+
 		if ( $plugin != BRIZY_PLUGIN_BASE && ( ! defined( 'BRIZY_PRO_PLUGIN_BASE' ) || $plugin != BRIZY_PRO_PLUGIN_BASE ) || ( ! empty( $_POST['checked'] ) && count( $_POST['checked'] ) > 1 ) ) {
 			return;
 		}
+
 		exit( wp_redirect( admin_url( 'admin.php?page=' . self::SLUG ) ) );
 	}
 }
