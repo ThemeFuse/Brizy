@@ -36,10 +36,10 @@ class Brizy_Admin_GettingStarted {
 
 		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
 			$this->isWhiteLabel         = true;
-			$this->brandedOrLabelImgUrl = BRIZY_PLUGIN_URL . '/admin/static/img/getting-started/white-label/';
+			$this->brandedOrLabelImgUrl = plugin_dir_url( __FILE__ ) . 'static/img/getting-started/white-label/';
 		} else {
 			$this->isWhiteLabel         = false;
-			$this->brandedOrLabelImgUrl = BRIZY_PLUGIN_URL . '/admin/static/img/getting-started/brizy-branded/';
+			$this->brandedOrLabelImgUrl = plugin_dir_url( __FILE__ ) . 'static/img/getting-started/brizy-branded/';
 		}
 
 		$args = [
