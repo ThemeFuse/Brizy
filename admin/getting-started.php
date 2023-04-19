@@ -12,25 +12,21 @@ class Brizy_Admin_GettingStarted {
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', [ $this, 'addSubmenuPageGettingStarted' ], 20 );
+		add_action( 'network_admin_menu', [ $this, 'addSubmenuPageGettingStarted' ], 20 );
 	}
 
 	public function addSubmenuPageGettingStarted() {
 
-		if ( is_network_admin() ) {
-			return;
-		}
-
 		add_submenu_page(
-			Brizy_Admin_Settings::menu_slug(),
+			current_action() == 'network_admin_menu' ? Brizy_Admin_NetworkSettings::menu_slug() : Brizy_Admin_Settings::menu_slug(),
 			__( 'Getting Started', 'brizy' ),
 			__( 'Getting Started', 'brizy' ),
-			'manage_options',
+			current_action() == 'network_admin_menu' ? 'manage_network' : 'manage_options',
 			self::SLUG,
-			[ $this, 'renderTemplatesPage' ],
+			[$this, 'renderTemplatesPage'],
 			8
 		);
 	}
-
 	public function renderTemplatesPage() {
 
 		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
@@ -69,6 +65,10 @@ class Brizy_Admin_GettingStarted {
 
 		if ( $plugin != BRIZY_PLUGIN_BASE && ( ! defined( 'BRIZY_PRO_PLUGIN_BASE' ) || $plugin != BRIZY_PRO_PLUGIN_BASE ) || ( ! empty( $_POST['checked'] ) && count( $_POST['checked'] ) > 1 ) ) {
 			return;
+		}
+
+		if ( is_network_admin() ) {
+			exit( wp_redirect( network_admin_url( 'admin.php?page=' . self::SLUG ) ) );
 		}
 
 		exit( wp_redirect( admin_url( 'admin.php?page=' . self::SLUG ) ) );
