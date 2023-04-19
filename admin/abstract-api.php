@@ -23,7 +23,7 @@ abstract class Brizy_Admin_AbstractApi {
 
 		$version = $this->param( 'version' );
 		if ( $version !== BRIZY_EDITOR_VERSION ) {
-			Brizy_Logger::instance()->critical( 'Request with invalid version',
+			Brizy_Logger::instance()->critical( 'Request with invalid editor version',
 				[
 					'editorVersion'   => BRIZY_EDITOR_VERSION,
 					'providedVersion' => $version
