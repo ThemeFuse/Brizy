@@ -278,7 +278,7 @@ class Brizy_Editor_Editor_Editor {
 				]
 			],
 			"more"            => [
-				"options" => array_filter( $options )
+				"options" => array_values(array_filter( $options ))
 			]
 		];
 
