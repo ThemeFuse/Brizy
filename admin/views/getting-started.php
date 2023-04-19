@@ -2,19 +2,17 @@
 
 <div class="brz-content">
 	<div class="brz-container">
-		<div
-			class="brz-title-page">
+
+		<div class="brz-title-page">
 			<?php echo sprintf( __( 'Welcome to %s', 'brizy' ), __bt( 'brizy', 'Brizy' ) ) ?>
 		</div>
+
 		<div class="brz-subtitle-page">
 			<?php _e( 'Build no-code WordPress websites fast & easy', 'brizy' ); ?>
 		</div>
+
 		<?php if ( ! $isWhiteLabel ) : ?>
-			<video class="brz-video-page" poster="<?php echo $imgPath ?>Video_Cover.jpg" controls>
-				<source src="" type="video/mp4">
-				<source src="" type="video/ogg">
-				<?php _e( 'Your browser does not support the video tag.', 'brizy' ); ?>
-			</video>
+			<iframe class="brz-video-page" src="https://www.youtube.com/embed/xiym9N3B_Hk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 		<?php endif; ?>
 
 		<nav class="brz-nav-menu">
