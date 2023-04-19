@@ -2,6 +2,8 @@
 
 class Brizy_Editor_Editor_Editor {
 
+	use Brizy_Editor_Editor_ModuleGroups_ContextUtils;
+
 	const COMPILE_CONTEXT = 'compile';
 	const EDITOR_CONTEXT = 'editor';
 
@@ -190,12 +192,93 @@ class Brizy_Editor_Editor_Editor {
 		$config = $this->getPostLoopSources( $config, $mode === 'template', $wp_post_id, $context );
 		$config = $this->addContentDefaults( $config, $context );
 		$config = $this->addModuleGroups( $config, $context );
+		$config = $this->addUIConfig( $config, $context );
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
 
 		do_action( 'brizy_create_editor_config_after' );
 
 		return self::$config[ $cachePostId ];
+	}
+
+	private function addUIConfig( $config, $context ) {
+
+		$is_popup    = $this->isPopup( $config );
+		$is_story    = $this->isStory( $config );
+		$is_template = $this->isTemplate( $config );
+
+		$options                     = [
+			! Brizy_Compatibilities_BrizyProCompatibility::isPro() ?
+				[
+					"type"       => "link",
+					"icon"       => "nc-unlock",
+					"label"      => __bt( "Upgrade to Pro", 'brizy' ),
+					"link"       => $config['urls']['upgradeToPro'],
+					"linkTarget" => "_blank",
+				] : null,
+			[
+				"type"       => "link",
+				"icon"       => "nc-info",
+				"label"      => __bt( "About us", 'brizy' ),
+				"link"       => $config['urls']['about'],
+				"linkTarget" => "_blank"
+			],
+			[
+				"type"       => "link",
+				"icon"       => "nc-help-docs",
+				"label"      => __bt( "Support", 'brizy' ),
+				"link"       => $config['urls']['support'],
+				"linkTarget" => "_blank",
+				"roles"      => [ "admin" ]
+			],
+			[
+				"type"  => "shortcuts",
+				"icon"  => "nc-alert-circle-que",
+				"label" => __bt( "Shortcuts", 'brizy' ),
+				"link"  => "#"
+			],
+			[
+				"type"       => "link",
+				"icon"       => "nc-cog",
+				"label"      => __bt( "Plugin Settings", 'brizy' ),
+				"link"       => $config['urls']['pluginSettings'],
+				"linkTarget" => "_blank",
+				"roles"      => [ "admin" ]
+			],
+			[
+				"type"  => "link",
+				"icon"  => "nc-back",
+				"label" => __bt( "Go to Dashboard", 'brizy' ),
+				"link"  => $config['urls']['backToDashboard']
+			]
+		];
+		$config['ui']['leftSidebar'] = [
+			"topTabsOrder"    => [ "addElements", "reorderBlock", "globalStyle" ],
+			"bottomTabsOrder" => [ "deviceMode", "pageSettings", "more" ],
+			"pageSettings"    => [
+				"options" => [
+					"template"      => ! ( $is_popup || $is_story ),
+					"membership"    => ! ( $is_popup || $is_story ),
+					"featuredImage" => ! ( $is_popup || $is_story ) && ! $is_template
+				]
+			],
+			"more"            => [
+				"options" => array_filter( $options )
+			]
+		];
+
+		$config['ui']['popupSettings'] = [
+			"horizontalAlign"      => true,
+			"verticalAlign"        => true,
+			"embedded"             => false,
+			"displayCondition"     => false,
+			"scrollPageBehind"     => true,
+			"clickOutsideToClose"  => true,
+			"deletePopup"          => true,
+			"backgroundPreviewUrl" => $config['urls']['pagePreview']
+		];
+
+		return $config;
 	}
 
 	/**
@@ -230,7 +313,9 @@ class Brizy_Editor_Editor_Editor {
 
 		$moduleGroupCollector = new Brizy_Editor_Editor_ModuleGroups_Manager();
 
-        $config['ui']['leftSidebar'] = ['moduleGroups' => $moduleGroupCollector->getAll($config)];
+		$config['ui']  [
+			'leftSidebar'] = [ 'moduleGroups' => $moduleGroupCollector->getAll( $config ) ]
+		;
 
 		return $config;
 	}
