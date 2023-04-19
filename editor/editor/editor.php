@@ -91,7 +91,6 @@ class Brizy_Editor_Editor_Editor {
 
 		$parent_post_type  = get_post_type( $this->post->getWpPostId() );
 		$wp_post_id        = $this->post->getWpPostId();
-		$preview_post_link = $this->getPreviewUrl( $this->post->getWpPost() );
 
 		$change_template_url = set_url_scheme(
 			admin_url( 'admin-post.php?post=' . $this->post->getWpPostId() . '&action=_brizy_change_template' )
@@ -120,7 +119,6 @@ class Brizy_Editor_Editor_Editor {
 				'templateIcons'      => $this->urlBuilder->proxy_url( 'editor/icons' ),
 				'templateFonts'      => $this->urlBuilder->external_fonts_url(),
 				'editorFonts'        => home_url( '/' ),
-				'pagePreview'        => $preview_post_link,
 				'about'              => __bt( 'about-url', apply_filters( 'brizy_about_url', Brizy_Config::ABOUT_URL ) ),
 				'backToDashboard'    => get_edit_post_link( $wp_post_id, null ),
 				'assetsExternal'     => $this->urlBuilder->external_asset_url() . "",
@@ -275,7 +273,7 @@ class Brizy_Editor_Editor_Editor {
 			"scrollPageBehind"     => true,
 			"clickOutsideToClose"  => true,
 			"deletePopup"          => true,
-			"backgroundPreviewUrl" => ""
+			"backgroundPreviewUrl" => $this->getPreviewUrl( $this->post->getWpPost() )
 		];
 
 		return $config;
