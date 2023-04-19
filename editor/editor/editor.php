@@ -268,18 +268,14 @@ class Brizy_Editor_Editor_Editor {
 		];
 
 		$config['ui']['popupSettings'] = [
-			[
-				"horizontalAlign"     => true,
-				"verticalAlign"       => true,
-				"embedded"            => false,
-				"displayCondition"    => false,
-				"scrollPageBehind"    => true,
-				"clickOutsideToClose" => true
-			],
-			[
-				"displayCondition" => true,
-				"deletePopup"      => true
-			]
+			"horizontalAlign"      => true,
+			"verticalAlign"        => true,
+			"embedded"             => false,
+			"displayCondition"     => false,
+			"scrollPageBehind"     => true,
+			"clickOutsideToClose"  => true,
+			"deletePopup"          => true,
+			"backgroundPreviewUrl" => ""
 		];
 
 		return $config;
