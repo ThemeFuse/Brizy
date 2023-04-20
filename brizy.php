@@ -17,7 +17,7 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && stripos($_SERVER['HTTP_X_FORWAR
     $_SERVER['HTTPS'] = 'on';
 }
 
-define('BRIZY_DEVELOPMENT', true);
+define('BRIZY_DEVELOPMENT', true );
 define('BRIZY_LOG', false);
 define('BRIZY_VERSION', '2.4.18');
 define('BRIZY_MINIMUM_PRO_VERSION', '2.4.15');
@@ -68,7 +68,7 @@ function brizy_notices()
             <?php
             printf(
                 __(
-                    '%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>',
+                    '%1$s requires PHP version 5.6+, your currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>',
                     'brizy'
                 ),
                 __bt('brizy', 'Brizy'),
