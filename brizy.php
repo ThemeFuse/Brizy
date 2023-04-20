@@ -69,7 +69,7 @@ function brizy_notices()
             <?php
             printf(
                 __(
-                    '%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>',
+                    '%1$s requires PHP version 5.6+, your currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>',
                     'brizy'
                 ),
                 __bt('brizy', 'Brizy'),
