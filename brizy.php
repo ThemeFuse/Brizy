@@ -18,10 +18,10 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && stripos($_SERVER['HTTP_X_FORWAR
 }
 
 define('BRIZY_DEVELOPMENT', true );
-define('BRIZY_LOG', false);
+define('BRIZY_LOG', false );
 define('BRIZY_VERSION', '2.4.18');
 define('BRIZY_MINIMUM_PRO_VERSION', '2.4.15');
-define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '255-wp');
+define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '255-wp' );
 define('BRIZY_SYNC_VERSION', '255');
 define('BRIZY_FILE', __FILE__);
 define('BRIZY_PLUGIN_BASE', plugin_basename(BRIZY_FILE));
@@ -40,6 +40,7 @@ if (BRIZY_DEVELOPMENT) {
 add_action('plugins_loaded', 'brizy_load');
 add_action('init', 'brizy_load_text_domain');
 add_action('upgrader_process_complete', 'brizy_upgrade_completed', 10, 2);
+add_action( 'activated_plugin', 'Brizy_Admin_GettingStarted::redirectAfterActivation' );
 
 register_activation_hook(BRIZY_FILE, 'brizy_install');
 register_deactivation_hook(BRIZY_FILE, 'brizy_clean');
