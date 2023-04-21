@@ -19,8 +19,9 @@ export const addMedia: AddMediaData = {
       );
       return;
     }
-
+    const iframe = parent.document.querySelector("#brz-ed-iframe");
     const html = document.querySelector("html");
+
     const wpMediaFrame = wp.media({
       library: {
         type: "image"
@@ -56,9 +57,11 @@ export const addMedia: AddMediaData = {
         });
     });
     wpMediaFrame.on("close", () => {
+      iframe?.classList.remove("media-modal-open");
       html?.classList.remove("brz-ow-hidden");
     });
 
+    iframe?.classList.add("media-modal-open");
     // block html scroll
     html?.classList.add("brz-ow-hidden");
 
