@@ -87,7 +87,7 @@ pipeline {
 
         stage('Build editor client') {
             steps {
-               sh "./jenkins/build-editor-client.sh ${BUILD_FOLDER_PATH}/public/editor-client"
+               sh "./jenkins/build-editor-client.sh ./public/editor-client"
             }
         }
         stage('Make a copy and clean the plugin') {
