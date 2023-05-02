@@ -116,62 +116,6 @@
     "tempBoxShadowBlur": 4,
     "tempBoxShadowSpread": 0,
     "tempBoxShadowVertical": 2,
-    "tempBoxShadowHorizontal": 1,
-
-    "hoverBoxShadow": null,
-
-    "hoverBgColorHex": null,
-    "hoverBgColorOpacity": null,
-    "hoverBgColorPalette": null,
-
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
-
-    "hoverBoxShadowColorHex": null,
-    "hoverBoxShadowColorPalette": null,
-    "hoverBoxShadowColorOpacity": null,
-    "tempHoverBoxShadowColorPalette": null,
-    "tempHoverBoxShadowColorOpacity": null,
-
-    "hoverBoxShadowBlur": null,
-    "hoverBoxShadowSpread": null,
-    "hoverBoxShadowVertical": null,
-    "hoverBoxShadowHorizontal": null,
-
-    "tempHoverBoxShadowHorizontal": null,
-
-    "tempHoverBgColorOpacity": null,
-    "tempHoverBgColorPalette": null,
-
-    "tempHoverBoxShadow": null,
-    "tempHoverBoxShadowBlur": null,
-    "tempHoverBoxShadowSpread": null,
-    "tempHoverBoxShadowVertical": null,
-
-    "hoverBorderStyle": null,
-    "tempHoverBorderStyle": null,
-
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-    "tempHoverBorderColorOpacity": null,
-    "tempHoverBorderColorPalette": null,
-
-    "hoverBorderWidthType": null,
-
-    "hoverBorderWidth": null,
-    "hoverBorderTopWidth": null,
-    "hoverBorderRightWidth": null,
-    "hoverBorderBottomWidth": null,
-    "hoverBorderLeftWidth": null,
-
-    "tempHoverBorderWidth": null,
-    "tempHoverBorderTopWidth": null,
-    "tempHoverBorderLeftWidth": null,
-    "tempHoverBorderRightWidth": null,
-    "tempHoverBorderBottomWidth": null
+    "tempBoxShadowHorizontal": 1
   }
 }

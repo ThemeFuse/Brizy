@@ -1,4 +1,5 @@
-import { useReducer, useEffect, useRef, useContext } from "react";
+import { useContext, useEffect, useMemo, useReducer, useRef } from "react";
+import Config from "visual/global/Config";
 import { EditorComponentContext } from "../EditorComponentContext";
 import { DCApiProxyInstance } from "./DCApiProxy";
 
@@ -85,7 +86,11 @@ export function useDC(
   const {
     dynamicContent: { itemId }
   } = useContext(EditorComponentContext);
-  const apiProxyConfig = { postId: itemId };
+
+  const useCustomPlaceholder = useMemo(() => {
+    return Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
+  }, []);
+  const apiProxyConfig = { postId: itemId, useCustomPlaceholder };
 
   useEffect(() => {
     if (state.status !== "initial") {
@@ -127,12 +132,12 @@ export function useDC(
       fetchController.current = controller;
 
       DCApiProxyInstance.getDC([placeholder], apiProxyConfig)
-        .then(r => {
+        .then((r) => {
           if (signal.aborted === false) {
             dispatch({ type: "fetch_success", data: r[0] });
           }
         })
-        .catch(e => {
+        .catch((e) => {
           if (signal.aborted === false) {
             dispatch({ type: "fetch_fail", error: e });
           }

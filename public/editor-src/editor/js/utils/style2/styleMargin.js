@@ -1,23 +1,46 @@
 import { defaultValueValue } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 
-export function styleMarginType({ v, device, state }) {
-  return defaultValueValue({ v, key: "marginType", device, state });
+export function styleMarginType({ v, device, state, prefix = "" }) {
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, "marginType"));
 }
 
-export function styleMarginGrouped({ v, device, state }) {
-  return defaultValueValue({ v, key: "margin", device, state });
+export function styleMarginGrouped({ v, device, state, prefix = "" }) {
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, "margin"));
 }
 
-export function styleMarginUngrouped({ v, device, state, current }) {
-  return defaultValueValue({ v, key: current, device, state });
+export function styleMarginUngrouped({
+  v,
+  device,
+  state,
+  current,
+  prefix = ""
+}) {
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, current));
 }
 
-export function styleMarginGroupedSuffix({ v, device, state }) {
-  return defaultValueValue({ v, key: "marginSuffix", device, state });
+export function styleMarginGroupedSuffix({ v, device, state, prefix = "" }) {
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, "marginSuffix"));
 }
 
-export function styleMarginUngroupedSuffix({ v, device, state, current }) {
-  return defaultValueValue({ v, key: current, device, state });
+export function styleMarginUngroupedSuffix({
+  v,
+  device,
+  state,
+  current,
+  prefix = ""
+}) {
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  return dvv(capByPrefix(prefix, current));
 }
 
 export function styleItemMarginTop({ v, device }) {

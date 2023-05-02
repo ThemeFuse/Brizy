@@ -1,28 +1,28 @@
+import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
-import {
-  getOptionColorHexByPalette,
-  getDynamicContentChoices
-} from "visual/utils/options";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarElementSectionSaved,
-  toolbarElementSectionGlobal
-} from "visual/utils/toolbar";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+  getDynamicContentOption,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { getInstanceParentId } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component, context }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const config = Config.getAll();
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
-  const imageDynamicContentChoices = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.image
-  );
+  const imageDynamicContentChoices = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.image
+  });
 
   return [
     {
@@ -35,13 +35,18 @@ export function getItems({ v, device, component, context }) {
       devices: "desktop",
       position: 70,
       options: [
-        toolbarElementSectionGlobal({
-          device,
-          component,
-          blockType: "popup",
+        {
+          id: "makeItGlobal",
+          label: t("Make it Global"),
+          type: "globalBlock-dev",
           devices: "desktop",
-          state: "normal"
-        })
+          disabled: isCloud(config) && isShopify(config),
+          config: {
+            _id: component.getId(),
+            parentId: getInstanceParentId(component.props.instanceKey, "popup"),
+            blockType: "popup"
+          }
+        }
       ]
     },
     {
@@ -115,12 +120,18 @@ export function getItems({ v, device, component, context }) {
         }
       ]
     },
-    toolbarElementSectionSaved({
-      device,
-      component,
-      blockType: "popup",
-      state: "normal",
-      devices: "desktop"
-    })
+    {
+      id: "makeItSaved",
+      type: "savedBlock-dev",
+      devices: "desktop",
+      position: 90,
+      config: {
+        icon: "nc-save-section",
+        blockType: "popup",
+        title: t("Save"),
+        tooltipContent: t("Saved"),
+        blockId: component.getId()
+      }
+    }
   ];
 }

@@ -52,7 +52,6 @@ import Grid from "./Grid";
 import ImageSetter from "./ImageSetter";
 import Input from "./Input";
 import IntegrationsApps from "./IntegrationsApps";
-import MultiInput from "./MultiInput";
 import MultiInputPickerOptionType from "./MultiInputPickerOptionType";
 import MultiPicker from "./MultiPicker";
 import Popover from "./Popover";
@@ -149,7 +148,6 @@ const oldTypes = {
   grid: Grid,
   imageSetter: ImageSetter,
   input: Input,
-  multiInput: MultiInput,
   multiInputPicker: MultiInputPickerOptionType,
   multiPicker: MultiPicker,
   popover: Popover,

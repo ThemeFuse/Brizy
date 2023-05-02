@@ -1,8 +1,8 @@
-import { onNullish } from "visual/utils/value";
 import { memoize } from "underscore";
-import { camelCase } from "visual/utils/string";
 import * as Responsive from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
+import { camelCase } from "visual/utils/string";
+import { onNullish } from "visual/utils/value";
 
 /**
  * Returns default device
@@ -17,13 +17,10 @@ export const defaultDevice = () => "desktop";
  * @param {string} device
  * @return {boolean}
  */
-export const isDefault = device => device === defaultDevice();
+export const isDefault = (device) => device === defaultDevice();
 
 function syncOnChange(device, v, key) {
-  const capKey =
-    String(key)
-      .charAt(0)
-      .toUpperCase() + String(key).substr(1);
+  const capKey = String(key).charAt(0).toUpperCase() + String(key).substr(1);
   const deviceKey = device + capKey;
 
   return onNullish(v[key], v[deviceKey]);
@@ -90,14 +87,18 @@ export function defaultValueValue({
   state = "normal"
 }) {
   const deviceKey = defaultValueKey({ key, device, state });
-  const _key = defaultValueKey({ key, device: Responsive.empty, state });
-  const __key = defaultValueKey({
+  const _key = defaultValueKey({ key, device, state: State.empty });
+  const __key = defaultValueKey({ key, device: Responsive.empty, state });
+  const ___key = defaultValueKey({
     key,
     device: Responsive.empty,
     state: State.empty
   });
 
-  return onNullish(v[__key], onNullish(v[_key], v[deviceKey]));
+  return onNullish(
+    v[___key],
+    onNullish(onNullish(v[__key], v[_key]), v[deviceKey])
+  );
 }
 
 /**
@@ -141,7 +142,7 @@ export function deviceStateValueByKey(v, key) {
 }
 
 export function validateKeyByProperty(v, key, property) {
-  return states().some(state => {
+  return states().some((state) => {
     const value = defaultValueValue({ v, key, ...state });
 
     return value && value !== property;
@@ -149,5 +150,5 @@ export function validateKeyByProperty(v, key, property) {
 }
 
 export function makeKeyByStateDevice(v, key) {
-  return states().map(state => defaultValueKey({ key, ...state }));
+  return states().map((state) => defaultValueKey({ key, ...state }));
 }

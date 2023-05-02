@@ -1,15 +1,13 @@
 import _ from "underscore";
 import {
   ConfigDCItem,
-  DynamicContent
+  DCGroup
 } from "visual/global/Config/types/DynamicContent";
 import { TypeChoices } from "./types";
 
-type Options = DynamicContent<"wp"> | DynamicContent<"cloud">;
+type Options = DCGroup<"wp"> | DCGroup<"cloud">;
 
-const isCloudDynamicContent = (
-  options: Options
-): options is DynamicContent<"cloud"> =>
+const isCloudDynamicContent = (options: Options): options is DCGroup<"cloud"> =>
   "reference" in options && "multiReference" in options;
 
 export interface Choice {
@@ -54,13 +52,16 @@ const optionsToChoices = <T extends keyof Options>(
 };
 
 export const getDynamicContentChoices = (
-  options: DynamicContent<"wp"> | DynamicContent<"cloud">,
+  options: DCGroup<"wp"> | DCGroup<"cloud">,
   type: TypeChoices
 ): (Choice | OptGroup)[] => {
-  if (!options) {
+  const item = options?.[type];
+
+  if (!options || !item || typeof item === "function") {
     return [];
   }
-  const choices = optionsToChoices(options[type]);
+
+  const choices = optionsToChoices(item);
 
   const choicesReference: OptGroup[] = [];
 
@@ -70,10 +71,12 @@ export const getDynamicContentChoices = (
     const refs = [...(reference ?? []), ...(multiReference ?? [])];
 
     refs.forEach(({ title, dynamicContent }) => {
-      const optgroup = optionsToChoices(dynamicContent[type]);
+      if (Array.isArray(dynamicContent[type])) {
+        const optgroup = optionsToChoices(dynamicContent[type]);
 
-      if (optgroup.length) {
-        choicesReference.push({ optgroup, title });
+        if (optgroup.length) {
+          choicesReference.push({ optgroup, title });
+        }
       }
     });
   }

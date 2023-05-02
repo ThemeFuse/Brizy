@@ -1,18 +1,20 @@
+import classNames from "classnames";
 import React, {
   ComponentProps,
   ComponentType,
-  createElement,
-  forwardRef,
   PropsWithChildren,
   PropsWithRef,
   ReactElement,
   Ref,
-  RefObject
+  RefObject,
+  createElement,
+  forwardRef
 } from "react";
-import classNames from "classnames";
-import * as Observer from "./Observer";
-import { mApply } from "visual/utils/value";
+import UIEvents from "visual/global/UIEvents";
 import { WithClassName } from "visual/utils/options/attributes";
+import { mApply } from "visual/utils/value";
+import * as Observer from "./Observer";
+import { AnimationEvents } from "./utils";
 
 type CProps = PropsWithRef<unknown> & WithClassName;
 type Component<P> = ComponentType<P> | keyof JSX.IntrinsicElements;
@@ -24,6 +26,7 @@ type Props<P extends CProps> = PropsWithChildren<
     iterationCount?: number;
     component: Component<P>;
     componentProps: P;
+    animationId?: string;
   }
 >;
 
@@ -45,15 +48,44 @@ class _Animation<
   }
 
   private updateId?: number;
+  private animationStartedId?: number;
+  private mounted = false;
+
+  handleAnimationStarted() {
+    UIEvents.emit(AnimationEvents.entranceOn, {
+      animationIsRunning: true,
+      animationId: this.props.animationId
+    });
+  }
+
+  handleAnimationFinished() {
+    UIEvents.emit(AnimationEvents.entranceOff, {
+      animationIsRunning: false,
+      animationId: this.props.animationId
+    });
+  }
 
   componentDidMount(): void {
+    this.mounted = true;
     this.updateRef();
 
     if (this.props.animationClass) {
+      this.animationStartedId = requestAnimationFrame(() => {
+        this.handleAnimationStarted();
+      });
+
       mApply(
-        n => Observer.connect(n, this.handleIntersection),
+        (n) => Observer.connect(n, this.handleIntersection),
         this.ref.current
       );
+      this.ref.current?.addEventListener("animationend", () => {
+        if (this.mounted) {
+          this.handleAnimationFinished();
+          this.setState({
+            animationClass: "none"
+          });
+        }
+      });
     }
   }
 
@@ -62,14 +94,24 @@ class _Animation<
 
     if (prevProps.animationClass !== this.props.animationClass) {
       if (this.props.animationClass) {
+        this.handleAnimationStarted();
         mApply(
-          n => Observer.connect(n, this.handleIntersection),
+          (n) => Observer.connect(n, this.handleIntersection),
           this.ref.current
         );
 
         mApply(cancelAnimationFrame, this.updateId);
         this.updateId = requestAnimationFrame(() => {
           this.setState({ animationClass: this.props.animationClass });
+
+          this.ref.current?.addEventListener("animationend", () => {
+            if (this.mounted) {
+              this.setState({
+                animationClass: "none"
+              });
+              this.handleAnimationFinished();
+            }
+          });
         });
       } else {
         mApply(Observer.disconnect, this.ref.current);
@@ -80,6 +122,10 @@ class _Animation<
   componentWillUnmount(): void {
     mApply(Observer.disconnect, this.ref.current);
     mApply(cancelAnimationFrame, this.updateId);
+    mApply(cancelAnimationFrame, this.animationStartedId);
+    UIEvents.off(AnimationEvents.entranceOn, this.handleAnimationStarted);
+    UIEvents.off(AnimationEvents.entranceOff, this.handleAnimationFinished);
+    this.mounted = false;
   }
 
   handleIntersection = ({
@@ -114,6 +160,7 @@ class _Animation<
     const props = {
       ...otherProps,
       className,
+      "data-animationid": this.props?.animationId,
       ref: this.ref
     };
 
@@ -137,7 +184,8 @@ class _Animation<
         "brz-animated": hasAnimation,
         [this.getAnimationClass() ?? ""]: hasAnimation
       }),
-      ref: this.ref
+      ref: this.ref,
+      "data-animationid": this.props?.animationId
     };
 
     // @ts-expect-error: find why this does not type check

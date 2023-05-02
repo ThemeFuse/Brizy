@@ -465,8 +465,8 @@ export function getItems({ v, device }) {
                       label: t("Position"),
                       type: "radioGroup-dev",
                       choices: [
-                        { value: "on", icon: "nc-filters-left" },
-                        { value: "inline", icon: "nc-filters-inline" }
+                        { value: "on", icon: { name: "nc-filters-left" } },
+                        { value: "inline", icon: { name: "nc-filters-inline" } }
                       ]
                     }
                   : {},

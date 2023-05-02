@@ -1,5 +1,14 @@
-import { optional, pass, mPipe } from "fp-utilities";
+import { mPipe, optional, pass } from "fp-utilities";
+import { ElementModel } from "visual/component/Elements/Types";
+import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { DeviceMode } from "visual/types";
+import * as Math from "visual/utils/math";
+import * as Num from "visual/utils/math/number";
+import { prop } from "visual/utils/object/get";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { readWithParser } from "visual/utils/reader/readWithParser";
+import * as Str from "visual/utils/string/specs";
+import { Unit, isUnit } from "./types";
 import {
   ImageDCPatch,
   ImagePatch,
@@ -13,15 +22,6 @@ import {
   isOriginalSize,
   isPredefinedSize
 } from "./utils";
-import { isUnit, Unit } from "./types";
-import { readWithParser } from "visual/utils/reader/readWithParser";
-import * as Num from "visual/utils/math/number";
-import * as Math from "visual/utils/math";
-import * as Str from "visual/utils/string/specs";
-import { prop } from "visual/utils/object/get";
-import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import { ElementModel } from "visual/component/Elements/Types";
 
 export interface Size {
   width: number;
@@ -256,9 +256,13 @@ export const patchOnSizeTypeChange = (
 export const patchOnDCChange = (
   cW: number,
   patch: ImageDCPatch,
-  wrapperSizes: Size
+  wrapperSizes: Size,
+  useCustomPlaceholder: boolean
 ): PatchDC => {
-  const placeholderData = placeholderObjFromStr(patch.imagePopulation);
+  const placeholderData = placeholderObjFromStr(
+    patch.imagePopulation,
+    useCustomPlaceholder
+  );
 
   if (placeholderData === undefined) {
     return {

@@ -2,7 +2,7 @@ import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
-import { getDynamicContentChoices } from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { encodeToString } from "visual/utils/string";
 import {
   toolbarLinkAnchor,
@@ -19,7 +19,13 @@ export default function (v, onChange) {
 }
 
 const dependenciesOption = (v, onChange) => {
-  return v.textPopulation ? {} : { dependencies: (v) => onChange(v) };
+  return v.textPopulation
+    ? {}
+    : {
+        dependencies: (data) => {
+          "tag" in data ? onChange(getBlockTag(data.tag)) : onChange(data);
+        }
+      };
 };
 
 const getBlockTag = (value) => {
@@ -69,10 +75,11 @@ const getItems =
 
     const disableButtonDynamicTextCapitalize =
       !v.textPopulation || device !== "desktop";
-    const richTextDC = getDynamicContentChoices(
-      context.dynamicContent.config,
-      DCTypes.richText
-    );
+    const richTextDC = getDynamicContentOption({
+      options: context.dynamicContent.config,
+      type: DCTypes.richText,
+      config: { iconOnly: true }
+    });
 
     const dependencies = dependenciesOption(v, onChange);
 
@@ -140,11 +147,8 @@ const getItems =
                           {
                             id: "text",
                             type: "population-dev",
-                            disabled: richTextDC.length === 0,
-                            config: {
-                              iconOnly: true,
-                              choices: richTextDC
-                            },
+                            disabled: !richTextDC,
+                            config: richTextDC,
                             devices: "desktop"
                           }
                         ]
@@ -188,11 +192,8 @@ const getItems =
                           {
                             id: "text",
                             type: "population-dev",
-                            disabled: richTextDC.length === 0,
-                            config: {
-                              iconOnly: true,
-                              choices: richTextDC
-                            },
+                            disabled: !richTextDC,
+                            config: richTextDC,
                             devices: "desktop"
                           }
                         ]
@@ -233,11 +234,8 @@ const getItems =
                           {
                             id: "text",
                             type: "population-dev",
-                            disabled: richTextDC.length === 0,
-                            config: {
-                              iconOnly: true,
-                              choices: richTextDC
-                            },
+                            disabled: !richTextDC,
+                            config: richTextDC,
                             devices: "desktop"
                           }
                         ]
@@ -278,11 +276,8 @@ const getItems =
                           {
                             id: "text",
                             type: "population-dev",
-                            disabled: richTextDC.length === 0,
-                            config: {
-                              iconOnly: true,
-                              choices: richTextDC
-                            },
+                            disabled: !richTextDC,
+                            config: richTextDC,
                             devices: "desktop"
                           }
                         ]
@@ -323,11 +318,8 @@ const getItems =
                           {
                             id: "text",
                             type: "population-dev",
-                            disabled: richTextDC.length === 0,
-                            config: {
-                              iconOnly: true,
-                              choices: richTextDC
-                            },
+                            disabled: !richTextDC,
+                            config: richTextDC,
                             devices: "desktop"
                           }
                         ]
@@ -368,11 +360,8 @@ const getItems =
                           {
                             id: "text",
                             type: "population-dev",
-                            disabled: richTextDC.length === 0,
-                            config: {
-                              iconOnly: true,
-                              choices: richTextDC
-                            },
+                            disabled: !richTextDC,
+                            config: richTextDC,
                             devices: "desktop"
                           }
                         ]
@@ -413,11 +402,8 @@ const getItems =
                           {
                             id: "text",
                             type: "population-dev",
-                            disabled: richTextDC.length === 0,
-                            config: {
-                              iconOnly: true,
-                              choices: richTextDC
-                            },
+                            disabled: !richTextDC,
+                            config: richTextDC,
                             devices: "desktop"
                           }
                         ]
@@ -873,7 +859,7 @@ const getItems =
           {
             id: "tag",
             label: t("HTML Tag"),
-            type: "select",
+            type: "select-dev",
             className: "brz-control__select--small",
             disabled: isPopulationBlock,
             choices: [
@@ -886,8 +872,7 @@ const getItems =
               { title: "H6", value: "h6" },
               { title: "PRE", value: "pre" }
             ],
-            onChange: (tagName) => onChange(getBlockTag(tagName)),
-            value: v.tagName
+            ...dependencies
           },
           {
             id: "grid",

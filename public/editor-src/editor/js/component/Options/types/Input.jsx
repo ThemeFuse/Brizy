@@ -1,8 +1,8 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
-import EditorIcon from "visual/component/EditorIcon";
 import Tooltip from "visual/component/Controls/Tooltip";
+import EditorIcon from "visual/component/EditorIcon";
 import Population from "./common/Population";
 
 const DEBOUNCE_WAIT = 1000;
@@ -41,7 +41,7 @@ class InputOptionType extends React.Component {
     this.isFocused && this.handleInputBlur();
   }
 
-  handleInputChange = e => {
+  handleInputChange = (e) => {
     const value = e.target.value;
 
     this.setState({ value }, () => {
@@ -56,13 +56,11 @@ class InputOptionType extends React.Component {
     });
   };
 
-  handlePopulationChange = population => {
-    this.setState({ value: "" }, () => {
-      const valueExtend = { population };
-      const metaExtend = { changed: "population" };
+  handlePopulationChange = (population) => {
+    const valueExtend = { population };
+    const metaExtend = { changed: "population" };
 
-      this.handleChange(valueExtend, metaExtend);
-    });
+    this.handleChange(valueExtend, metaExtend);
   };
 
   handleChange = (valueExtend = {}, metaExtend = {}) => {
@@ -105,13 +103,8 @@ class InputOptionType extends React.Component {
   };
 
   renderLabel() {
-    const {
-      label,
-      helper,
-      helperContent,
-      helperPlacement,
-      population
-    } = this.props;
+    const { label, helper, helperContent, helperPlacement, population } =
+      this.props;
 
     return (
       <div
@@ -171,7 +164,11 @@ class InputOptionType extends React.Component {
       helper,
       label,
       display,
-      population: { choices: populationChoices, show: populationShow },
+      population: {
+        choices: populationChoices,
+        show: populationShow,
+        handlerChoices: populationHandlerChoices
+      },
       value: { population: populationValue }
     } = this.props;
     const className = classnames(
@@ -185,6 +182,7 @@ class InputOptionType extends React.Component {
       <div className="brz-d-xs-flex brz-align-items-xs-center">
         <Population
           choices={populationChoices}
+          handlerChoices={populationHandlerChoices}
           value={populationValue}
           renderUnset={this.renderInput}
           onChange={this.handlePopulationChange}

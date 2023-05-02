@@ -1,8 +1,6 @@
-import { imageSpecificSize, imageUrl, svgUrl } from "visual/utils/image";
+import { getImageUrl } from "visual/utils/image";
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "./types";
-
-const isSVG = (extension: string) => extension === "svg";
 
 export function styleElementVideoPaddingRatio({
   v,
@@ -57,7 +55,6 @@ export function styleElementVideoCoverSrc({
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const src = dvv("coverImageSrc");
   const fileName = dvv("coverImageFileName");
-  const extension = dvv("coverImageExtension");
   const sizeType = dvv("coverSizeType") ?? "custom";
 
   if (src === undefined) {
@@ -68,13 +65,5 @@ export function styleElementVideoCoverSrc({
     return "none";
   }
 
-  if (isSVG(extension)) {
-    return `url("${svgUrl(src, { fileName })}")`;
-  }
-
-  if (sizeType === "custom") {
-    return `url("${imageUrl(src, { fileName })}")`;
-  }
-
-  return `url("${imageSpecificSize(src, { size: sizeType, fileName })}")`;
+  return `url("${getImageUrl({ uid: src, fileName, sizeType })}")`;
 }

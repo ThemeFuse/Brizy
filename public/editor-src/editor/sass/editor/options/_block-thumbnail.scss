@@ -1,16 +1,11 @@
 // Block Anchor
 .brz-ed-option__block-thumbnail {
-  .brz-ed-scroll-pane {
-    .brz-ed-scroll-inner {
-      max-height: 240px;
-      border-right-style: none !important;
-    }
-
-    .brz-ed-tall-track {
-      right: -10px;
-    }
+  .brz-scrollColor__dark {
+    right: 22px;
   }
-
+  & > div:last-child {
+    left: 34px
+  }
   &-item {
     margin-bottom: 0px;
     max-width: 140px;

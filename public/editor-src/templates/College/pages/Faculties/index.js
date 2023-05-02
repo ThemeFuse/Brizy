@@ -728,7 +728,7 @@ module.exports = {
                                                                         hoverColorPalette: "color4",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?course_cat=mathematics"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -941,7 +941,7 @@ module.exports = {
                                                                         hoverColorPalette: "color4",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?course_cat=mathematics"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -1253,7 +1253,7 @@ module.exports = {
                                                                         hoverColorPalette: "color4",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?course_cat=mathematics"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -1466,7 +1466,7 @@ module.exports = {
                                                                         hoverColorPalette: "color4",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?course_cat=mathematics"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -1778,7 +1778,7 @@ module.exports = {
                                                                         hoverColorPalette: "color4",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?course_cat=mathematics"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -1990,7 +1990,7 @@ module.exports = {
                                                                         hoverColorPalette: "color4",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?course_cat=mathematics"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],

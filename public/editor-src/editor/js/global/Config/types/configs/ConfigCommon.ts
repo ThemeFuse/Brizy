@@ -4,12 +4,19 @@ import {
   ChoicesAsync,
   ChoicesSync
 } from "visual/component/Options/types/dev/Select/types";
+import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
+import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { PageCommon, Project } from "visual/types";
-import { DynamicContentOption } from "../DynamicContent";
-import { Response } from "./common";
+import {
+  AddFileData,
+  AddFileExtra,
+  AddImageData,
+  AddImageExtra,
+  Response
+} from "./common";
 
 export enum Mode {
   page = "page",
@@ -90,6 +97,13 @@ export interface Theme {
   };
 }
 
+export enum ElementTypes {
+  Quantity = "Quantity",
+  ProductMetafield = "ProductMetafield",
+  BlogPostMeta = "BlogPostMeta",
+  Price = "Price"
+}
+
 interface _ConfigCommon<Mode> {
   tokenV1?: string;
 
@@ -161,7 +175,7 @@ interface _ConfigCommon<Mode> {
 
   //#region DynamicContentOption
 
-  dynamicContentOption?: DynamicContentOption;
+  dynamicContent?: DynamicContent<"wp"> | DynamicContent<"cloud">;
 
   //#endregion
 
@@ -176,6 +190,45 @@ interface _ConfigCommon<Mode> {
   //#region API
 
   api?: {
+    // Media
+    media?: {
+      mediaResizeUrl?: string;
+
+      addMedia?: {
+        label?: string;
+        handler: (
+          res: Response<AddImageData>,
+          rej: Response<string>,
+          extra: AddImageExtra
+        ) => void;
+      };
+
+      // Image Gallery
+      addMediaGallery?: {
+        label?: string;
+        handler: (
+          res: Response<Array<AddImageData>>,
+          rej: Response<string>,
+          extra: AddImageExtra
+        ) => void;
+      };
+    };
+
+    // File
+    customFile?: {
+      fileUrl?: string;
+
+      addFile?: {
+        label?: string;
+        handler: (
+          res: Response<AddFileData>,
+          rej: Response<string>,
+          extra: AddFileExtra
+        ) => void;
+      };
+    };
+
+    // Link Pages
     linkPages?: {
       label?: string;
       defaultSelected?: string;
@@ -205,9 +258,27 @@ interface _ConfigCommon<Mode> {
     };
   };
 
+  //#region contentDefaults
+
+  contentDefaults?: {
+    Quantity?: {
+      linkSource?: string;
+    };
+    Price?: {
+      sourceType?: ShopifyTemplate.Product;
+    };
+    ProductMetafield?: {
+      linkSource: string;
+    };
+    BlogPostMeta?: {
+      linkSource?: string;
+    };
+  };
+
   //#endregion
 
   //#region Elements
+
   elements?: {
     section?: {
       multilanguage: boolean;

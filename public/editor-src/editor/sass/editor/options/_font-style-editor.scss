@@ -49,17 +49,19 @@
 
   &--delete {
     position: absolute;
-    top: -7px;
-    right: -6px;
-    color: #fff;
+    top: 28px;
+    right: -11px;
     font-size: 16px;
+    padding: 2px 6px 1px 6px;
+    border-radius: 100%;
+    background-color: $left_sidebar__styling__font__icon-bg;
+    color: $left_sidebar__styling__font__icon-color;
     opacity: 0;
     transition: 0.2s linear opacity;
 
     .brz-icon-svg {
-      background-color: $left_sidebar__styling__font__icon-bg;
-      color: $left_sidebar__styling__font__icon-color;
-      border-radius: 16px;
+      width: 12px;
+      height: 12px;
     }
   }
 }
@@ -107,18 +109,6 @@
 
     .brz-span {
       margin-left: 10px;
-    }
-  }
-
-  &--scroll-pane {
-    position: absolute;
-    top: -10px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    .brz-ed-scroll-inner {
-      padding-top: 10px;
     }
   }
 }

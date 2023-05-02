@@ -176,3 +176,7 @@
     z-index: auto;
   }
 }
+
+&.brz-ed .brz-woocart__sidebar .brz-woocart__sidebar-image__block .brz-a {
+  pointer-events: none;
+}

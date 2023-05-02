@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { noop } from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
-import ScrollPane from "visual/component/ScrollPane";
+import { Scrollbar } from "visual/component/Scrollbar";
 import Config from "visual/global/Config";
 import {
   isCMS,
@@ -163,13 +163,7 @@ const Rules = (props: Props): ReactElement => {
           <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
         </div>
       ) : (
-        <ScrollPane
-          style={{
-            overflow: "hidden",
-            height: "350px"
-          }}
-          className="brz-ed-scroll--medium brz-ed-scroll--new-dark"
-        >
+        <Scrollbar autoHeightMax="350px" theme="light">
           {rules !== null && (
             <ConditionChoices
               rules={rules}
@@ -183,7 +177,7 @@ const Rules = (props: Props): ReactElement => {
           >
             <EditorIcon icon="nc-add" /> {t("Add new display condition")}
           </div>
-        </ScrollPane>
+        </Scrollbar>
       )}
 
       {error && <div className="error">{error}</div>}

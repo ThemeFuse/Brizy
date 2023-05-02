@@ -5,7 +5,7 @@ import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -52,10 +52,11 @@ export function getItems({
     dvv("borderColorPalette")
   );
 
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText,
+    config: { iconOnly: true }
+  });
 
   return [
     {
@@ -95,28 +96,48 @@ export function getItems({
                   position: 30,
                   devices: "desktop",
                   choices: [
-                    { value: "solid", icon: "nc-solid", title: "" },
-                    { value: "dashed", icon: "nc-dashed", title: "" },
-                    { value: "dotted", icon: "nc-dotted", title: "" },
-                    { value: "double", icon: "nc-double", title: "" },
-                    { value: "groove", icon: "nc-groove", title: "" },
-                    { value: "ridge", icon: "nc-ridge", title: "" },
-                    { value: "inset", icon: "nc-inset", title: "" },
-                    { value: "outset", icon: "nc-outset", title: "" },
+                    { value: "solid", icon: { name: "nc-solid" }, title: "" },
+                    { value: "dashed", icon: { name: "nc-dashed" }, title: "" },
+                    { value: "dotted", icon: { name: "nc-dotted" }, title: "" },
+                    { value: "double", icon: { name: "nc-double" }, title: "" },
+                    { value: "groove", icon: { name: "nc-groove" }, title: "" },
+                    { value: "ridge", icon: { name: "nc-ridge" }, title: "" },
+                    { value: "inset", icon: { name: "nc-inset" }, title: "" },
+                    { value: "outset", icon: { name: "nc-outset" }, title: "" },
                     {
                       title: "",
                       value: "diagonal-dash",
-                      icon: "nc-diagonal-dash"
+                      icon: { name: "nc-diagonal-dash" }
                     },
-                    { title: "", value: "fence", icon: "nc-fence" },
-                    { title: "", value: "fence2", icon: "nc-fence2" },
-                    { title: "", value: "hand-dashes", icon: "nc-hand-dashes" },
-                    { title: "", value: "hand-dots", icon: "nc-hand-dots" },
-                    { title: "", value: "hand-flows", icon: "nc-hand-flows" },
-                    { title: "", value: "hand-leaves", icon: "nc-hand-leaves" },
-                    { title: "", value: "line-dot", icon: "nc-line-dot" },
-                    { title: "", value: "stars", icon: "nc-stars" },
-                    { title: "", value: "waves", icon: "nc-waves" }
+                    { title: "", value: "fence", icon: { name: "nc-fence" } },
+                    { title: "", value: "fence2", icon: { name: "nc-fence2" } },
+                    {
+                      title: "",
+                      value: "hand-dashes",
+                      icon: { name: "nc-hand-dashes" }
+                    },
+                    {
+                      title: "",
+                      value: "hand-dots",
+                      icon: { name: "nc-hand-dots" }
+                    },
+                    {
+                      title: "",
+                      value: "hand-flows",
+                      icon: { name: "nc-hand-flows" }
+                    },
+                    {
+                      title: "",
+                      value: "hand-leaves",
+                      icon: { name: "nc-hand-leaves" }
+                    },
+                    {
+                      title: "",
+                      value: "line-dot",
+                      icon: { name: "nc-line-dot" }
+                    },
+                    { title: "", value: "stars", icon: { name: "nc-stars" } },
+                    { title: "", value: "waves", icon: { name: "nc-waves" } }
                   ]
                 },
                 {
@@ -302,10 +323,7 @@ export function getItems({
                   id: "text",
                   devices: "desktop",
                   type: "population-dev",
-                  config: {
-                    iconOnly: true,
-                    choices: richTextDC
-                  }
+                  config: richTextDC
                 }
               ]
             }

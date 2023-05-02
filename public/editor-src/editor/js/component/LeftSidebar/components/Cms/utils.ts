@@ -4,15 +4,18 @@ import { Locale } from "visual/component/LeftSidebar/components/Cms/types/Locale
 import * as ShopModule from "visual/component/LeftSidebar/components/Cms/types/Modules/Shop";
 import { fromNumber } from "visual/component/LeftSidebar/components/Cms/types/ProjectId";
 import { getWhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
-import { ShopModules } from "visual/global/Config/types/configs/Base";
 import {
-  Cloud as CloudConfig,
+  ShopModules,
+  isEcwidShop,
+  isShopifyShop
+} from "visual/global/Config/types/configs/Base";
+import {
   CMS,
+  Cloud as CloudConfig,
+  Shopify as ShopifyConf,
   isCMS,
-  isShopify,
-  Shopify as ShopifyConf
+  isShopify
 } from "visual/global/Config/types/configs/Cloud";
-import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
 import { Cloud, Context, Shopify } from "./types/List";
 
 const cloud = (config: CMS): Cloud => {
@@ -26,7 +29,7 @@ const cloud = (config: CMS): Cloud => {
     user: { isPro: !!config.pro },
     previewUrl: config.cms.collectionPreviewUrl,
     domainUrl: config.urls.preview,
-    mediaUrl: config.urls.image,
+    mediaUrl: config.api?.media?.mediaResizeUrl ?? "",
     settingsUrl: config.urls.projectSettings,
     protectedPagePassword: config.project.protectedPagePassword,
     whiteLabel: getWhiteLabel(config),
@@ -72,8 +75,9 @@ const cloud = (config: CMS): Cloud => {
           (v: ShopModules): v is undefined => v == undefined,
           (): ShopModule.Disabled => ({ disabled: true })
         ],
+        [isShopifyShop, (): ShopModule.Disabled => ({ disabled: true })],
         [
-          (v: ShopModules): v is Ecwid => v?.type === "ecwid",
+          isEcwidShop,
           (v): ShopModule.Ecwid => ({
             disabled: false,
             type: "ecwid",
@@ -107,7 +111,7 @@ const shopify = (config: ShopifyConf): Shopify => {
     __type: "shopify",
     development: process.env.NODE_ENV === "development",
     previewUrl: config.cms.collectionPreviewUrl,
-    mediaUrl: config.urls.image,
+    mediaUrl: config.api?.media?.mediaResizeUrl ?? "",
     customerPreviewUrl: config.cms.customerPreviewUrl,
     subscription: config.subscription,
     user: { isPro: !!config.pro },

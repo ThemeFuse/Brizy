@@ -267,6 +267,7 @@
 
     "itemClassName": "",
     "itemPadding": 10,
+    "itemPaddingSuffix": "px",
     "itemPaddingTop": 0,
     "itemPaddingRight": 10,
     "itemPaddingBottom": 20,

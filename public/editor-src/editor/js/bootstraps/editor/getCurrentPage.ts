@@ -1,18 +1,19 @@
 import { match } from "fp-utilities";
 import { Config } from "visual/global/Config/types";
 import {
+  ShopModules,
   isCollectionPage,
   isCustomerPage,
   isEcwidCategory,
   isEcwidProduct,
-  ShopModules
+  isEcwidShop,
+  isShopifyShop
 } from "visual/global/Config/types/configs/Base";
 import {
-  isCloud,
   isCMS,
+  isCloud,
   isShopify
 } from "visual/global/Config/types/configs/Cloud";
-import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { CollectionItemId, Page, PageWP } from "visual/types";
 import {
@@ -46,11 +47,8 @@ export const getCurrentPage: (config: Config) => Promise<Page> = match(
                     (s: ShopModules): s is undefined => s === undefined,
                     () => Promise.reject()
                   ],
-                  [
-                    (s: ShopModules): s is Ecwid =>
-                      (s as Ecwid)?.type === "ecwid",
-                    (s) => getEcwidProduct(p.id, s)
-                  ]
+                  [isShopifyShop, () => Promise.reject()],
+                  [isEcwidShop, (s) => getEcwidProduct(p.id, s)]
                 )(c.modules?.shop)
             ],
             [
@@ -61,11 +59,8 @@ export const getCurrentPage: (config: Config) => Promise<Page> = match(
                     (s: ShopModules): s is undefined => s === undefined,
                     () => Promise.reject()
                   ],
-                  [
-                    (s: ShopModules): s is Ecwid =>
-                      (s as Ecwid)?.type === "ecwid",
-                    (s) => getEcwidCategory(p.id, s)
-                  ]
+                  [isShopifyShop, () => Promise.reject()],
+                  [isEcwidShop, (s) => getEcwidCategory(p.id, s)]
                 )(c.modules?.shop)
             ]
           )(c.page)

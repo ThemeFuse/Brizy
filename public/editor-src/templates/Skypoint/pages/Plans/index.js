@@ -713,7 +713,7 @@ module.exports = {
                                                                                                                                                             mobilePaddingBottom: 11,
                                                                                                                                                             mobilePaddingLeft: 26,
                                                                                                                                                             linkExternalBlank: "off",
-                                                                                                                                                            linkExternal: "https://demo.themefuse.com/realtor-wordpress-theme/?page_id=641"
+                                                                                                                                                            linkExternal: ""
                                                                                                                                                         }
                                                                                                                                                     }
                                                                                                                                                 ],
@@ -1293,7 +1293,7 @@ module.exports = {
                                                                                                                                                             mobilePaddingBottom: 11,
                                                                                                                                                             mobilePaddingLeft: 26,
                                                                                                                                                             linkExternalBlank: "off",
-                                                                                                                                                            linkExternal: "https://demo.themefuse.com/realtor-wordpress-theme/?page_id=641"
+                                                                                                                                                            linkExternal: ""
                                                                                                                                                         }
                                                                                                                                                     }
                                                                                                                                                 ],
@@ -1873,7 +1873,7 @@ module.exports = {
                                                                                                                                                             mobilePaddingBottom: 11,
                                                                                                                                                             mobilePaddingLeft: 26,
                                                                                                                                                             linkExternalBlank: "off",
-                                                                                                                                                            linkExternal: "https://demo.themefuse.com/realtor-wordpress-theme/?page_id=641"
+                                                                                                                                                            linkExternal: ""
                                                                                                                                                         }
                                                                                                                                                     }
                                                                                                                                                 ],
@@ -2453,7 +2453,7 @@ module.exports = {
                                                                                                                                                             mobilePaddingBottom: 11,
                                                                                                                                                             mobilePaddingLeft: 26,
                                                                                                                                                             linkExternalBlank: "off",
-                                                                                                                                                            linkExternal: "https://demo.themefuse.com/realtor-wordpress-theme/?page_id=641"
+                                                                                                                                                            linkExternal: ""
                                                                                                                                                         }
                                                                                                                                                     }
                                                                                                                                                 ],

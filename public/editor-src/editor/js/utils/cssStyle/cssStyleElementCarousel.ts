@@ -1,6 +1,5 @@
 import * as Num from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
-import { stylePaddingUngrouped } from "../style2/stylePadding";
 import { CSSValue } from "../style2/types";
 import { cssStyleColor } from "./cssStyleColor";
 
@@ -32,49 +31,33 @@ export function cssStyleElementCarouselColorArrow({
 
 export function cssStyleElementCarouselPaddingLeftRight({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
-  return `padding-left: ${stylePaddingUngrouped({
-    v,
-    device,
-    state,
-    prefix: "slider",
-    current: "paddingLeft"
-  })}px; 
-  padding-right: ${stylePaddingUngrouped({
-    v,
-    device,
-    state,
-    prefix: "slider",
-    current: "paddingRight"
-  })}px;`;
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const paddingRight = Num.read(dvv("sliderPaddingRight")) ?? 70;
+  const paddingRightSuffix = dvv("sliderPaddingRightSuffix");
+  const paddingLeft = Num.read(dvv("sliderPaddingLeft")) ?? 70;
+  const paddingLeftSuffix = dvv("sliderPaddingLeftSuffix");
+
+  return `padding-right: ${paddingRight}${paddingRightSuffix}; padding-left: ${paddingLeft}${paddingLeftSuffix};`;
 }
 
 export function cssStyleElementCarouselMarginPadding({
   v,
-  device,
-  state
+  device
 }: CSSValue): string {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
   const sliderMargin = Num.read(dvv("sliderMargin")) ?? 0;
+  const sliderMarginSuffix = dvv("sliderMarginSuffix") ?? "px";
+  const paddingTop = Num.read(dvv("sliderPaddingTop")) ?? 10;
+  const paddingBottom = Num.read(dvv("sliderPaddingBottom")) ?? 30;
+  const paddingTopSuffix = dvv("sliderPaddingTopSuffix");
+  const paddingBottomSuffix = dvv("sliderPaddingBottomSuffix");
 
-  return `padding-top: ${stylePaddingUngrouped({
-    v,
-    device,
-    state,
-    prefix: "slider",
-    current: "paddingTop"
-  })}px; 
-  padding-bottom: ${stylePaddingUngrouped({
-    v,
-    device,
-    state,
-    prefix: "slider",
-    current: "paddingBottom"
-  })}px;
-  margin-left:${sliderMargin}px;
-  margin-right:${sliderMargin}px;`;
+  return `padding-top: ${paddingTop}${paddingTopSuffix}; 
+          padding-bottom: ${paddingBottom}${paddingBottomSuffix};
+          margin-left:${sliderMargin}${sliderMarginSuffix};
+          margin-right:${sliderMargin}${sliderMarginSuffix};`;
 }
 
 export function cssStyleElementCarouselSpacing({

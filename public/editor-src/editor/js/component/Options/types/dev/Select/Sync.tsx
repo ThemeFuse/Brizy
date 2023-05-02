@@ -1,13 +1,14 @@
-import React, { ReactElement, FC } from "react";
-import { Select2 } from "visual/component/Controls/Select2";
+import classnames from "classnames";
+import React, { FC, ReactElement } from "react";
 import {
   Item,
   Props as ItemProps
 } from "visual/component/Controls/MultiSelect/Item";
+import { Select2 } from "visual/component/Controls/Select2";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { Literal } from "visual/utils/types/Literal";
-import { toElement } from "./utils";
 import { ChoicesSync, Props } from "./types";
+import { toElement } from "./utils";
 
 type ItemInstance = ReactElement<ItemProps<Literal>>;
 
@@ -16,7 +17,8 @@ export const Sync: FC<Omit<Props, "choices"> & { choices: ChoicesSync }> = ({
   value: { value },
   placeholder,
   choices,
-  onChange
+  onChange,
+  className
 }) => {
   return (
     <Select2<Literal>
@@ -28,14 +30,29 @@ export const Sync: FC<Omit<Props, "choices"> & { choices: ChoicesSync }> = ({
         onChange(toElement(value));
       }}
     >
-      {choices.map(
-        ({ title, icon, value }, i): ItemInstance => (
+      {choices.map(({ title, icon, value }, i): ItemInstance => {
+        let icon_;
+
+        if (icon) {
+          const iconClassName = classnames(
+            "brz--space-right",
+            icon.className,
+            className
+          );
+          if (icon.name) {
+            icon_ = <EditorIcon icon={icon.name} className={iconClassName} />;
+          } else {
+            icon_ = <div className={iconClassName} />;
+          }
+        }
+
+        return (
           <Item key={i} value={value}>
-            {icon && <EditorIcon icon={icon} className={"brz--space-right"} />}
+            {icon_}
             {title}
           </Item>
-        )
-      )}
+        );
+      })}
     </Select2>
   );
 };

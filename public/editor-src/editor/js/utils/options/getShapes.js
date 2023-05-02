@@ -1,3 +1,5 @@
+const shapeClassName = "brz-ed-shape brz-ed-shape--";
+
 export const getShapes = () => [
   {
     title: "None",
@@ -5,253 +7,253 @@ export const getShapes = () => [
   },
   {
     icon: {
-      className: "brz-ed-shape--1"
+      className: `${shapeClassName}1`
     },
     value: "1"
   },
   {
     icon: {
-      className: "brz-ed-shape--2"
+      className: `${shapeClassName}2`
     },
     value: "2"
   },
   {
     icon: {
-      className: "brz-ed-shape--3"
+      className: `${shapeClassName}3`
     },
     value: "3"
   },
   {
     icon: {
-      className: "brz-ed-shape--4"
+      className: `${shapeClassName}4`
     },
     value: "4"
   },
   {
     icon: {
-      className: "brz-ed-shape--5"
+      className: `${shapeClassName}5`
     },
     value: "5"
   },
   {
     icon: {
-      className: "brz-ed-shape--6"
+      className: `${shapeClassName}6`
     },
     value: "6"
   },
   {
     icon: {
-      className: "brz-ed-shape--7"
+      className: `${shapeClassName}7`
     },
     value: "7"
   },
   {
     icon: {
-      className: "brz-ed-shape--8"
+      className: `${shapeClassName}8`
     },
     value: "8"
   },
   {
     icon: {
-      className: "brz-ed-shape--9"
+      className: `${shapeClassName}9`
     },
     value: "9"
   },
   {
     icon: {
-      className: "brz-ed-shape--10"
+      className: `${shapeClassName}10`
     },
     value: "10"
   },
   {
     icon: {
-      className: "brz-ed-shape--11"
+      className: `${shapeClassName}11`
     },
     value: "11"
   },
   {
     icon: {
-      className: "brz-ed-shape--12"
+      className: `${shapeClassName}12`
     },
     value: "12"
   },
   {
     icon: {
-      className: "brz-ed-shape--13"
+      className: `${shapeClassName}13`
     },
     value: "13"
   },
   {
     icon: {
-      className: "brz-ed-shape--14"
+      className: `${shapeClassName}14`
     },
     value: "14"
   },
   {
     icon: {
-      className: "brz-ed-shape--15"
+      className: `${shapeClassName}15`
     },
     value: "15"
   },
   {
     icon: {
-      className: "brz-ed-shape--16"
+      className: `${shapeClassName}16`
     },
     value: "16"
   },
   {
     icon: {
-      className: "brz-ed-shape--17"
+      className: `${shapeClassName}17`
     },
     value: "17"
   },
   {
     icon: {
-      className: "brz-ed-shape--18"
+      className: `${shapeClassName}18`
     },
     value: "18"
   },
   {
     icon: {
-      className: "brz-ed-shape--19"
+      className: `${shapeClassName}19`
     },
     value: "19"
   },
   {
     icon: {
-      className: "brz-ed-shape--20"
+      className: `${shapeClassName}20`
     },
     value: "20"
   },
   {
     icon: {
-      className: "brz-ed-shape--21"
+      className: `${shapeClassName}21`
     },
     value: "21"
   },
   {
     icon: {
-      className: "brz-ed-shape--22"
+      className: `${shapeClassName}22`
     },
     value: "22"
   },
   {
     icon: {
-      className: "brz-ed-shape--23"
+      className: `${shapeClassName}23`
     },
     value: "23"
   },
   {
     icon: {
-      className: "brz-ed-shape--24"
+      className: `${shapeClassName}24`
     },
     value: "24"
   },
   {
     icon: {
-      className: "brz-ed-shape--25"
+      className: `${shapeClassName}25`
     },
     value: "25"
   },
   {
     icon: {
-      className: "brz-ed-shape--26"
+      className: `${shapeClassName}26`
     },
     value: "26"
   },
   {
     icon: {
-      className: "brz-ed-shape--27"
+      className: `${shapeClassName}27`
     },
     value: "27"
   },
   {
     icon: {
-      className: "brz-ed-shape--28"
+      className: `${shapeClassName}28`
     },
     value: "28"
   },
   {
     icon: {
-      className: "brz-ed-shape--29"
+      className: `${shapeClassName}29`
     },
     value: "29"
   },
   {
     icon: {
-      className: "brz-ed-shape--30"
+      className: `${shapeClassName}30`
     },
     value: "30"
   },
   {
     icon: {
-      className: "brz-ed-shape--31"
+      className: `${shapeClassName}31`
     },
     value: "31"
   },
   {
     icon: {
-      className: "brz-ed-shape--32"
+      className: `${shapeClassName}32`
     },
     value: "32"
   },
   {
     icon: {
-      className: "brz-ed-shape--33"
+      className: `${shapeClassName}33`
     },
     value: "33"
   },
   {
     icon: {
-      className: "brz-ed-shape--34"
+      className: `${shapeClassName}34`
     },
     value: "34"
   },
   {
     icon: {
-      className: "brz-ed-shape--35"
+      className: `${shapeClassName}35`
     },
     value: "35"
   },
   {
     icon: {
-      className: "brz-ed-shape--36"
+      className: `${shapeClassName}36`
     },
     value: "36"
   },
   {
     icon: {
-      className: "brz-ed-shape--37"
+      className: `${shapeClassName}37`
     },
     value: "37"
   },
   {
     icon: {
-      className: "brz-ed-shape--38"
+      className: `${shapeClassName}38`
     },
     value: "38"
   },
   {
     icon: {
-      className: "brz-ed-shape--39"
+      className: `${shapeClassName}39`
     },
     value: "39"
   },
   {
     icon: {
-      className: "brz-ed-shape--40"
+      className: `${shapeClassName}40`
     },
     value: "40"
   },
   {
     icon: {
-      className: "brz-ed-shape--41"
+      className: `${shapeClassName}41`
     },
     value: "41"
   },
   {
     icon: {
-      className: "brz-ed-shape--42"
+      className: `${shapeClassName}42`
     },
     value: "42"
   }

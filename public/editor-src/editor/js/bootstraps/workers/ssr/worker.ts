@@ -8,7 +8,7 @@ import { Output } from "./components/Editor";
 // See webpack.config.worker.js
 const getWorkerUrl = (config: Config): string => {
   const url = config.urls.worker ?? assetUrl("editor/js");
-  return `${url}/ssr.worker.js`;
+  return `${url}/ssr.worker.min.js`;
 };
 
 const initWorker = (config: Config): Worker => {

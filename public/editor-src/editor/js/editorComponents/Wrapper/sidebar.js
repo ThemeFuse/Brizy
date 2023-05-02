@@ -1,16 +1,17 @@
+import { hoverEffects } from "visual/component/Options/types/dev/Animation/utils";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getDynamicContentChoices } from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 
 export function getItems({ v, device, context }) {
   const dvv = (key) => defaultValueValue({ v, key, device });
 
   const isRelative = dvv("elementPosition") === "relative";
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
 
   return [
     {
@@ -157,9 +158,7 @@ export function getItems({ v, device, context }) {
                         content:
                           "Add your custom ID without the #pound, example: my-id"
                       },
-                      config: {
-                        choices: richTextDC
-                      },
+                      config: richTextDC,
                       option: {
                         id: "customID",
                         type: "inputText-dev"
@@ -176,9 +175,7 @@ export function getItems({ v, device, context }) {
                         content:
                           "Add your custom class without the .dot, example: my-class"
                       },
-                      config: {
-                        choices: richTextDC
-                      },
+                      config: richTextDC,
                       option: {
                         id: "customClassName",
                         type: "inputText-dev"
@@ -311,6 +308,23 @@ export function getItems({ v, device, context }) {
                     {
                       id: "animation",
                       type: "animation-dev"
+                    }
+                  ]
+                },
+                {
+                  id: "tabHover",
+                  label: t("Hover"),
+                  options: [
+                    {
+                      id: "hover",
+                      type: "animation-dev",
+                      devices: "desktop",
+                      config: {
+                        types: hoverEffects,
+                        replay: false,
+                        infiniteAnimation: false,
+                        delay: false
+                      }
                     }
                   ]
                 }

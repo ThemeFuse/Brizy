@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test IconToggle Snapshots Render Center Icon 1`] = `
+<div
+  class="brz-ed-control__icon-carousel"
+  title="Align center"
+>
+  <svg
+    class="brz-icon-svg brz-ed-icon-svg align-[initial]"
+    height="1em"
+    viewBox="0 0 16 16"
+    width="1em"
+  >
+    <g>
+      <g
+        fill="currentColor"
+      >
+        <path
+          d="M0 1h16v2H0z"
+          fill="currentColor"
+        />
+        <path
+          d="M3 5h10v2H3z"
+          data-color="color-2"
+        />
+        <path
+          d="M0 9h16v2H0z"
+          fill="currentColor"
+        />
+        <path
+          d="M3 13h10v2H3z"
+          data-color="color-2"
+        />
+      </g>
+    </g>
+  </svg>
+</div>
+`;
+
+exports[`Test IconToggle Snapshots Render Right Icon 1`] = `
+<div
+  class="brz-ed-control__icon-carousel"
+  title="Align right"
+>
+  <svg
+    class="brz-icon-svg brz-ed-icon-svg align-[initial]"
+    height="1em"
+    viewBox="0 0 16 16"
+    width="1em"
+  >
+    <g>
+      <g
+        fill="currentColor"
+      >
+        <path
+          d="M0 1h16v2H0z"
+          fill="currentColor"
+        />
+        <path
+          d="M6 5h10v2H6z"
+          data-color="color-2"
+        />
+        <path
+          d="M0 9h16v2H0z"
+          fill="currentColor"
+        />
+        <path
+          d="M6 13h10v2H6z"
+          data-color="color-2"
+        />
+      </g>
+    </g>
+  </svg>
+</div>
+`;
+
+exports[`Test IconToggle Snapshots Render left Icon 1`] = `
+<div
+  class="brz-ed-control__icon-carousel"
+  title="Align left"
+>
+  <svg
+    class="brz-icon-svg brz-ed-icon-svg align-[initial]"
+    height="1em"
+    viewBox="0 0 16 16"
+    width="1em"
+  >
+    <g>
+      <g
+        fill="currentColor"
+      >
+        <path
+          d="M0 1h16v2H0z"
+          fill="currentColor"
+        />
+        <path
+          d="M0 5h10v2H0z"
+          data-color="color-2"
+        />
+        <path
+          d="M0 9h16v2H0z"
+          fill="currentColor"
+        />
+        <path
+          d="M0 13h10v2H0z"
+          data-color="color-2"
+        />
+      </g>
+    </g>
+  </svg>
+</div>
+`;

@@ -71,12 +71,6 @@
   }
 }
 
-// Form Settings Apps
-// Scroll Pane
-$form-apps-scrollpane-track-width: 3px;
-$form-apps-scrollpane-track-thumb: 3px;
-$form-apps-scrollpane-track-background: #44474b;
-
 // ---
 .brz-ed-bar-form-apps {
   $popover-width: 288px;
@@ -131,32 +125,6 @@ $form-apps-scrollpane-track-background: #44474b;
     font-size: 11px;
     line-height: 1;
     color: rgba(255, 255, 255, 0.6);
-  }
-
-  // ScrollPane
-  .brz-ed-scroll-pane {
-    .brz-ed-tall-thumb {
-      width: $form-apps-scrollpane-track-width;
-      background-color: transparent;
-      border-radius: 3px;
-
-      &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        left: 3px;
-        top: 10px;
-        bottom: 10px;
-        width: $form-apps-scrollpane-track-thumb;
-        min-height: $form-apps-scrollpane-track-thumb;
-        background-color: $form-apps-scrollpane-track-background;
-        border-radius: 2px;
-      }
-    }
-  }
-
-  .brz-ed-tall-track {
-    border-radius: 0 3px 3px 0;
   }
 }
 

@@ -1,18 +1,16 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import {
-  toolbarElementSectionGlobal,
-  toolbarElementSectionSaved
-} from "visual/utils/toolbar";
+import { getInstanceParentId } from "visual/utils/toolbar";
 import { Value } from "./toolbarClose";
 
 // @ts-expect-error need to change to new options
@@ -32,10 +30,10 @@ export const getItems: GetItems<Value> = ({
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
-  const imageDynamicContentChoices = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.image
-  );
+  const imageDynamicContentChoices = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.image
+  });
 
   const config = Config.getAll();
 
@@ -86,13 +84,21 @@ export const getItems: GetItems<Value> = ({
               id: "tabPopup",
               label: t("Popup"),
               options: [
-                toolbarElementSectionGlobal({
-                  device,
-                  component,
-                  blockType,
+                {
+                  id: "makeItGlobal",
+                  label: t("Make it Global"),
+                  type: "globalBlock-dev",
                   devices: "desktop",
-                  state: "normal"
-                }),
+                  disabled: isCloud(config) && isShopify(config),
+                  config: {
+                    _id: component.getId(),
+                    parentId: getInstanceParentId(
+                      component.props.instanceKey,
+                      blockType
+                    ),
+                    blockType
+                  }
+                },
                 {
                   id: "scrollPage",
                   label: t("Scroll Page Behind"),
@@ -195,13 +201,19 @@ export const getItems: GetItems<Value> = ({
         }
       ]
     },
-    toolbarElementSectionSaved({
-      device,
-      component,
-      blockType: "popup",
-      state: "normal",
-      devices: "desktop"
-    }),
+    {
+      id: "makeItSaved",
+      type: "savedBlock-dev",
+      devices: "desktop",
+      position: 90,
+      config: {
+        icon: "nc-save-section",
+        blockType: "popup",
+        title: t("Save"),
+        tooltipContent: t("Saved"),
+        blockId: component.getId()
+      }
+    },
     {
       id: "horizontalAlign",
       type: "toggle-dev",

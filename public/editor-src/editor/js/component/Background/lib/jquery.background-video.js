@@ -19,8 +19,7 @@ function youtubeLoadScript(cb) {
           cb(new Error("Failed to load" + script.src));
         };
 
-        const firstScriptTag = document.getElementsByTagName("script")[0];
-        firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
+        document.body.append(script);
       }
 
       if (window.onYouTubeIframeAPIReady === undefined) {

@@ -153,6 +153,7 @@
     "tempGradientColorPalette": "",
 
     "colorType": "solid",
+    "tag": "p",
 
     "textShadowColorHex": "#000000",
     "textShadowColorOpacity": 0,

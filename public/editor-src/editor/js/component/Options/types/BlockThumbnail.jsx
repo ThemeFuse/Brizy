@@ -4,7 +4,7 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
-import ScrollPane from "visual/component/ScrollPane";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { updateBlocks, updateGlobalBlock } from "visual/redux/actions2";
 import {
   globalBlocksAssembled2Selector,
@@ -183,12 +183,7 @@ class BlockThumbnail extends React.Component {
     return (
       <div {...attr} className={className}>
         {label || helper ? this.renderLabel() : null}
-        <ScrollPane
-          style={{ height: "100%", overflow: "hidden" }}
-          className="brz-ed-scroll-pane brz-ed-scroll--small brz-ed-scroll--darker"
-        >
-          {this.renderThumbnails()}
-        </ScrollPane>
+        <Scrollbar autoHeightMax="240px" theme="dark">{this.renderThumbnails()}</Scrollbar>
       </div>
     );
   }

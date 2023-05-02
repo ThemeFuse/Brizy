@@ -54,8 +54,13 @@ export const keyDCInfo = (v: V, key: string): ECKeyDCInfo => {
 
 const _unescape = mPipe(Str.read, unescape);
 export function placeholderObjFromStr(
-  placeholder: string
+  placeholder: string,
+  useCustomPlaceholder: boolean
 ): MValue<DCPlaceholderObj> {
+  if (useCustomPlaceholder) {
+    return { name: placeholder };
+  }
+
   const r1 = /^{{\s*([\w-]+)(.*?)\s*}}$/;
   const nameAndAttr = r1.exec(placeholder);
 
@@ -82,13 +87,17 @@ export function placeholderObjFromStr(
 }
 
 export function placeholderObjFromECKeyDCInfo(
-  info: ECKeyDCInfo
+  info: ECKeyDCInfo,
+  useCustomPlaceholder: boolean
 ): MValue<DCPlaceholderObj> {
   if (!info.hasDC) {
     return undefined;
   }
 
-  const placeholderObj = placeholderObjFromStr(info.dcValue);
+  const placeholderObj = placeholderObjFromStr(
+    info.dcValue,
+    useCustomPlaceholder
+  );
 
   if (!placeholderObj) {
     return undefined;
@@ -106,8 +115,15 @@ export function placeholderObjFromECKeyDCInfo(
 }
 
 const _escape = mPipe(Str.read, escape);
-export function placeholderObjToStr(placeholderObj: DCPlaceholderObj): string {
+export function placeholderObjToStr(
+  placeholderObj: DCPlaceholderObj,
+  useCustomPlaceholder: boolean
+): string {
   const { name, attr } = placeholderObj;
+
+  if (useCustomPlaceholder) {
+    return name;
+  }
 
   const attrStr = attr
     ? Object.keys(attr)
@@ -122,13 +138,19 @@ export function placeholderObjToStr(placeholderObj: DCPlaceholderObj): string {
   return attrStr.length > 0 ? `{{${name} ${attrStr}}}` : `{{${name}}}`;
 }
 
-export function isPlaceholderStr(str: string): boolean {
-  return placeholderObjFromStr(str) !== undefined;
+export function isPlaceholderStr(
+  str: string,
+  useCustomPlaceholder: boolean
+): boolean {
+  return placeholderObjFromStr(str, useCustomPlaceholder) !== undefined;
 }
 
 //#endregion
 
-export const dcApiProxyTestFetcher: GetDynamicContent = ({ placeholders }) => {
+export const dcApiProxyTestFetcher: GetDynamicContent = ({
+  placeholders,
+  useCustomPlaceholder
+}) => {
   const entries: [string, string[]][] = Object.entries(placeholders).map(
     ([postId, value]) => {
       if (value === undefined) {
@@ -138,7 +160,10 @@ export const dcApiProxyTestFetcher: GetDynamicContent = ({ placeholders }) => {
       return [
         postId,
         value.map((placeholder) => {
-          const placeholderObj = placeholderObjFromStr(placeholder);
+          const placeholderObj = placeholderObjFromStr(
+            placeholder,
+            useCustomPlaceholder
+          );
 
           if (
             placeholderObj === undefined ||

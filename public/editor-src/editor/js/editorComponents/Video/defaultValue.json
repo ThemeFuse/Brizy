@@ -51,6 +51,7 @@
     "className": "",
 
     "iconSize": 80,
+    "iconSizeSuffix": "px",
 
     "iconSizeWidth": 80,
     "iconSizeWidthSuffix": "px",

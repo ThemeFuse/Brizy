@@ -1,7 +1,7 @@
 import {
-  DCApiProxy as DCApiProxy_,
   BatchFetcher,
-  DCApiProxyConfig
+  DCApiProxyConfig,
+  DCApiProxy as DCApiProxy_
 } from "../DCApiProxy";
 import { dcApiProxyTestFetcher } from "../utils";
 
@@ -9,7 +9,7 @@ jest.useFakeTimers();
 
 const mockFetcher = () => jest.fn(dcApiProxyTestFetcher);
 
-describe("Testing 'DCApiProxy'", function() {
+describe("Testing 'DCApiProxy'", function () {
   const config = (postId: string) => ({ postId });
   const fetcher = mockFetcher();
   const DCApiProxy = new DCApiProxy_({
@@ -135,7 +135,7 @@ describe("Testing 'BatchFetcher'", () => {
     expectedPlaceholders: { [postId: string]: string[] };
   }
 
-  const config: (postId: string) => DCApiProxyConfig = postId => ({ postId });
+  const config: (postId: string) => DCApiProxyConfig = (postId) => ({ postId });
 
   test.each<[BatchFetcherTestArgs]>([
     //#region 1 postId
@@ -273,6 +273,49 @@ describe("Testing 'BatchFetcher'", () => {
     async ({ getDCArgs, expectedResults, expectedPlaceholders }) => {
       const fetcher = mockFetcher();
       const batchFetcher = new BatchFetcher(fetcher);
+      const promises = getDCArgs.map(([args, config]) =>
+        batchFetcher.getDC(args, config)
+      );
+
+      jest.runAllTimers();
+
+      const getDCResponses = await Promise.all(promises);
+
+      expect(getDCResponses).toEqual(expectedResults);
+      expect(fetcher.mock.calls.length).toBe(1);
+      expect(fetcher.mock.calls[0][0].placeholders).toStrictEqual(
+        expectedPlaceholders
+      );
+    }
+  );
+
+  test.each<[BatchFetcherTestArgs]>([
+    //#region 1 postId
+    [
+      {
+        getDCArgs: [
+          [["[[ a ]]"], config("p1")],
+          [["[[ b ]]", "[ c ]"], config("p1")],
+          [["[ d ]"], config("p1")]
+        ],
+        expectedResults: [
+          ["p1_[[ a ]]"],
+          ["p1_[[ b ]]", "p1_[ c ]"],
+          ["p1_[ d ]"]
+        ],
+        expectedPlaceholders: {
+          p1: ["[[ a ]]", "[[ b ]]", "[ c ]", "[ d ]"]
+        }
+      }
+    ]
+    //#endregion
+  ])(
+    "Custom Placeholders",
+    async ({ getDCArgs, expectedResults, expectedPlaceholders }) => {
+      const fetcher = mockFetcher();
+      const batchFetcher = new BatchFetcher(fetcher, {
+        useCustomPlaceholder: true
+      });
       const promises = getDCArgs.map(([args, config]) =>
         batchFetcher.getDC(args, config)
       );

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import _ from "underscore";
-import ScrollPane from "visual/component/ScrollPane";
-import { Button } from "visual/component/Prompts/common/Button";
 import EditorIcon from "visual/component/EditorIcon";
+import { Button } from "visual/component/Prompts/common/Button";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
 
 class ViewEdit extends Component {
@@ -58,14 +58,7 @@ class ViewEdit extends Component {
       );
     });
 
-    return (
-      <ScrollPane
-        style={{ maxHeight: 255 }}
-        className="brz-ed-popup-integrations__scroll-pane"
-      >
-        {options}
-      </ScrollPane>
-    );
+    return <Scrollbar autoHeightMax="255px" theme="light">{options}</Scrollbar>;
   }
 
   render() {

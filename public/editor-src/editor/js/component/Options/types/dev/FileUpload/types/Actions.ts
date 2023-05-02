@@ -1,11 +1,13 @@
-import { UploadData, Value } from "../types/Value";
+import { Value } from "../types/Value";
+import { WithValue } from "./Value";
 
 export interface Upload {
   type: "Upload";
-  payload: File;
 }
 
-export const upload = (payload: File): Upload => ({ type: "Upload", payload });
+export const upload = (): Upload => ({
+  type: "Upload"
+});
 
 export interface Err {
   type: "Err";
@@ -16,10 +18,10 @@ export const err = (payload: string): Err => ({ type: "Err", payload });
 
 export interface Success {
   type: "Success";
-  payload: UploadData;
+  payload: WithValue;
 }
 
-export const success = (payload: UploadData): Success => ({
+export const success = (payload: WithValue): Success => ({
   type: "Success",
   payload
 });

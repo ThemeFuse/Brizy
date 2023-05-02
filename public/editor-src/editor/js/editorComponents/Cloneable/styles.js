@@ -38,7 +38,7 @@ export function styleContainer(v, vs, vd) {
 export function styleItem(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleItemPadding"]
+      standart: ["cssStyleElementCloneablePadding"]
     }
   };
   return renderStyles({ v, vs, vd, styles });

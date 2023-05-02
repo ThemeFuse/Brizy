@@ -4,8 +4,8 @@ import {
   cssStyleColor,
   cssStylePadding,
   cssStyleSizeFontSize,
-  cssStyleSizeHeight,
-  cssStyleSizeWidth
+  cssStyleSizeSize,
+  cssStyleSizeSizeHeight
 } from "visual/utils/cssStyle";
 import {
   styleElementVideoCoverSrc,
@@ -51,7 +51,7 @@ export function cssStyleElementVideoIconWidth({
   device,
   state
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "iconSize" });
+  return cssStyleSizeSize({ v, device, state, prefix: "icon" });
 }
 
 export function cssStyleElementVideoIconHeight({
@@ -59,7 +59,7 @@ export function cssStyleElementVideoIconHeight({
   device,
   state
 }: CSSValue): string {
-  return cssStyleSizeHeight({ v, device, state, prefix: "iconSize" });
+  return cssStyleSizeSizeHeight({ v, device, state, prefix: "icon" });
 }
 
 export function cssStyleElementVideoCoverSrc({

@@ -2265,7 +2265,7 @@ module.exports = {
                                                                         tempHoverBgColorPalette: "color3",
                                                                         hoverBorderColorHex: "#af2654",
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/car-repair-wordpress-theme/?page_id=466"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],

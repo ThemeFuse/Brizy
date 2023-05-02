@@ -1,19 +1,20 @@
 import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
 import { WhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
 import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { Pro } from "visual/global/Config/types/Pro";
 import { Project } from "visual/global/Config/types/Project";
 import { Urls } from "visual/global/Config/types/Urls";
 import { User } from "visual/global/Config/types/User";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
 import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
 import { CollectionItemId, CustomerId } from "visual/types";
 import { Role } from "visual/utils/membership";
 import { WithId } from "visual/utils/options/attributes";
 import { Module } from "../Module";
+import { Shopify } from "./modules/shop/Shopify";
 
-export type ShopModules = undefined | Ecwid;
+export type ShopModules = undefined | Ecwid | Shopify;
 
 // region Page
 interface BasePage<Id extends string> {
@@ -100,3 +101,9 @@ export interface Base<Platform> extends ConfigCommon, WithId<number> {
   whiteLabel?: WhiteLabel;
   modules?: Module<"cloud">;
 }
+
+export const isEcwidShop = (shop: ShopModules): shop is Ecwid =>
+  shop?.type === "ecwid";
+
+export const isShopifyShop = (shop: ShopModules): shop is Shopify =>
+  shop?.type === "shopify";

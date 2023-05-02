@@ -16,6 +16,8 @@ describe("Testing 'imagePopulationUrl' function", () => {
       result: "{{brizy_dc_img_featured_image _fallback='test' cH='20' cW='10'}}"
     }
   ])("Valid str", ({ tag, cH, cW, result }) =>
-    expect(imagePopulationUrl(tag, { cW, cH })).toBe(result)
+    expect(
+      imagePopulationUrl(tag, { cW, cH, useCustomPlaceholder: false })
+    ).toBe(result)
   );
 });

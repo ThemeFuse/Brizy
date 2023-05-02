@@ -53,12 +53,10 @@
     "mobileBetweenThumbnailSuffix": null,
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
+    "hoverTransitionSuffix": "",
 
     "borderStyle": "solid",
     "tempBorderStyle": "solid",
-    "hoverBorderStyle": null,
-    "tempHoverBorderStyle": null,
 
     "borderWidthType": "grouped",
     "borderWidth": 0,
@@ -72,19 +70,6 @@
     "tempBorderRightWidth": 4,
     "tempBorderBottomWidth": 4,
     "tempBorderLeftWidth": 4,
-
-    "hoverBorderWidthType": null,
-    "hoverBorderWidth": null,
-    "hoverBorderTopWidth": null,
-    "hoverBorderRightWidth": null,
-    "hoverBorderBottomWidth": null,
-    "hoverBorderLeftWidth": null,
-
-    "tempHoverBorderWidth": null,
-    "tempHoverBorderTopWidth": null,
-    "tempHoverBorderRightWidth": null,
-    "tempHoverBorderBottomWidth": null,
-    "tempHoverBorderLeftWidth": null,
 
     "borderRadiusType": "grouped",
     "borderRadius": 0,
@@ -111,69 +96,6 @@
     "tempBorderBottomRightRadiusSuffix": 0,
     "tempBorderBottomLeftRadiusSuffix": 0,
 
-    "hoverBorderRadiusType": null,
-    "hoverBorderRadius": null,
-    "hoverBorderTopLeftRadius": null,
-    "hoverBorderTopRightRadius": null,
-    "hoverBorderBottomRightRadius": null,
-    "hoverBorderBottomLeftRadius": null,
-
-    "tempHoverBorderRadius": null,
-    "tempHoverBorderTopLeftRadius": null,
-    "tempHoverBorderTopRightRadius": null,
-    "tempHoverBorderBottomRightRadius": null,
-    "tempHoverBorderBottomLeftRadius": null,
-
-    "tabletBorderRadiusType": null,
-    "tabletBorderRadius": null,
-    "tabletBorderTopLeftRadius": null,
-    "tabletBorderTopRightRadius": null,
-    "tabletBorderBottomLeftRadius": null,
-    "tabletBorderBottomRightRadius": null,
-
-    "tempTabletBorderRadius": null,
-    "tempTabletBorderTopLeftRadius": null,
-    "tempTabletBorderTopRightRadius": null,
-    "tempTabletBorderBottomLeftRadius": null,
-    "tempTabletBorderBottomRightRadius": null,
-
-    "tabletBorderRadiusSuffix": null,
-    "tabletBorderTopLeftRadiusSuffix": null,
-    "tabletBorderTopRightRadiusSuffix": null,
-    "tabletBorderBottomLeftRadiusSuffix": null,
-    "tabletBorderBottomRightRadiusSuffix": null,
-
-    "tempTabletBorderRadiusSuffix": null,
-    "tempTabletBorderTopLeftRadiusSuffix": null,
-    "tempTabletBorderTopRightRadiusSuffix": null,
-    "tempTabletBorderBottomLeftRadiusSuffix": null,
-    "tempTabletBorderBottomRightRadiusSuffix": null,
-
-    "mobileBorderRadiusType": null,
-    "mobileBorderRadius": null,
-    "mobileBorderTopLeftRadius": null,
-    "mobileBorderTopRightRadius": null,
-    "mobileBorderBottomLeftRadius": null,
-    "mobileBorderBottomRightRadius": null,
-
-    "tempMobileBorderRadius": null,
-    "tempMobileBorderTopLeftRadius": null,
-    "tempMobileBorderTopRightRadius": null,
-    "tempMobileBorderBottomLeftRadius": null,
-    "tempMobileBorderBottomRightRadius": null,
-
-    "mobileBorderRadiusSuffix": null,
-    "mobileBorderTopLeftRadiusSuffix": null,
-    "mobileBorderTopRightRadiusSuffix": null,
-    "mobileBorderBottomLeftRadiusSuffix": null,
-    "mobileBorderBottomRightRadiusSuffix": null,
-
-    "tempMobileBorderRadiusSuffix": null,
-    "tempMobileBorderTopLeftRadiusSuffix": null,
-    "tempMobileBorderTopRightRadiusSuffix": null,
-    "tempMobileBorderBottomLeftRadiusSuffix": null,
-    "tempMobileBorderBottomRightRadiusSuffix": null,
-
     "borderColorHex": "#66738d",
     "borderColorOpacity": 0,
     "borderColorPalette": "",
@@ -181,17 +103,8 @@
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "",
 
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-
-    "tempHoverBorderColorOpacity": null,
-    "tempHoverBorderColorPalette": null,
-
     "thumbnailBorderStyle": "solid",
     "tempThumbnailBorderStyle": "solid",
-    "hoverThumbnailBorderStyle": null,
-    "tempHoverThumbnailBorderStyle": null,
 
     "thumbnailBorderWidthType": "grouped",
     "thumbnailBorderWidth": 0,
@@ -205,19 +118,6 @@
     "tempThumbnailBorderRightWidth": 4,
     "tempThumbnailBorderBottomWidth": 4,
     "tempThumbnailBorderLeftWidth": 4,
-
-    "hoverThumbnailBorderWidthType": null,
-    "hoverThumbnailBorderWidth": null,
-    "hoverThumbnailBorderTopWidth": null,
-    "hoverThumbnailBorderRightWidth": null,
-    "hoverThumbnailBorderBottomWidth": null,
-    "hoverThumbnailBorderLeftWidth": null,
-
-    "tempHoverThumbnailBorderWidth": null,
-    "tempHoverThumbnailBorderTopWidth": null,
-    "tempHoverThumbnailBorderRightWidth": null,
-    "tempHoverThumbnailBorderBottomWidth": null,
-    "tempHoverThumbnailBorderLeftWidth": null,
 
     "thumbnailBorderRadiusType": "grouped",
     "thumbnailBorderRadius": 0,
@@ -244,82 +144,12 @@
     "tempThumbnailBorderBottomRightRadiusSuffix": "px",
     "tempThumbnailBorderBottomLeftRadiusSuffix": "px",
 
-    "hoverThumbnailBorderRadiusType": null,
-    "hoverThumbnailBorderRadius": null,
-    "hoverThumbnailBorderTopLeftRadius": null,
-    "hoverThumbnailBorderTopRightRadius": null,
-    "hoverThumbnailBorderBottomRightRadius": null,
-    "hoverThumbnailBorderBottomLeftRadius": null,
-
-    "tempHoverThumbnailBorderRadius": null,
-    "tempHoverThumbnailBorderTopLeftRadius": null,
-    "tempHoverThumbnailBorderTopRightRadius": null,
-    "tempHoverThumbnailBorderBottomRightRadius": null,
-    "tempHoverThumbnailBorderBottomLeftRadius": null,
-
-    "tabletThumbnailBorderRadiusType": null,
-    "tabletThumbnailBorderRadius": null,
-    "tabletThumbnailBorderTopLeftRadius": null,
-    "tabletThumbnailBorderTopRightRadius": null,
-    "tabletThumbnailBorderBottomLeftRadius": null,
-    "tabletThumbnailBorderBottomRightRadius": null,
-
-    "tempTabletThumbnailBorderRadius": null,
-    "tempTabletThumbnailBorderTopLeftRadius": null,
-    "tempTabletThumbnailBorderTopRightRadius": null,
-    "tempTabletThumbnailBorderBottomLeftRadius": null,
-    "tempTabletThumbnailBorderBottomRightRadius": null,
-
-    "tabletThumbnailBorderRadiusSuffix": null,
-    "tabletThumbnailBorderTopLeftRadiusSuffix": null,
-    "tabletThumbnailBorderTopRightRadiusSuffix": null,
-    "tabletThumbnailBorderBottomLeftRadiusSuffix": null,
-    "tabletThumbnailBorderBottomRightRadiusSuffix": null,
-
-    "tempTabletThumbnailBorderRadiusSuffix": null,
-    "tempTabletThumbnailBorderTopLeftRadiusSuffix": null,
-    "tempTabletThumbnailBorderTopRightRadiusSuffix": null,
-    "tempTabletThumbnailBorderBottomLeftRadiusSuffix": null,
-    "tempTabletThumbnailBorderBottomRightRadiusSuffix": null,
-
-    "mobileThumbnailBorderRadiusType": null,
-    "mobileThumbnailBorderRadius": null,
-    "mobileThumbnailBorderTopLeftRadius": null,
-    "mobileThumbnailBorderTopRightRadius": null,
-    "mobileThumbnailBorderBottomLeftRadius": null,
-    "mobileThumbnailBorderBottomRightRadius": null,
-
-    "tempMobileThumbnailBorderRadius": null,
-    "tempMobileThumbnailBorderTopLeftRadius": null,
-    "tempMobileThumbnailBorderTopRightRadius": null,
-    "tempMobileThumbnailBorderBottomLeftRadius": null,
-    "tempMobileThumbnailBorderBottomRightRadius": null,
-
-    "mobileThumbnailBorderRadiusSuffix": null,
-    "mobileThumbnailBorderTopLeftRadiusSuffix": null,
-    "mobileThumbnailBorderTopRightRadiusSuffix": null,
-    "mobileThumbnailBorderBottomLeftRadiusSuffix": null,
-    "mobileThumbnailBorderBottomRightRadiusSuffix": null,
-
-    "tempMobileThumbnailBorderRadiusSuffix": null,
-    "tempMobileThumbnailBorderTopLeftRadiusSuffix": null,
-    "tempMobileThumbnailBorderTopRightRadiusSuffix": null,
-    "tempMobileThumbnailBorderBottomLeftRadiusSuffix": null,
-    "tempMobileThumbnailBorderBottomRightRadiusSuffix": null,
-
     "thumbnailBorderColorHex": "#66738d",
     "thumbnailBorderColorOpacity": 0,
     "thumbnailBorderColorPalette": "",
 
     "tempThumbnailBorderColorOpacity": 1,
     "tempThumbnailBorderColorPalette": "",
-
-    "hoverThumbnailBorderColorHex": null,
-    "hoverThumbnailBorderColorOpacity": null,
-    "hoverThumbnailBorderColorPalette": null,
-
-    "tempHoverThumbnailBorderColorOpacity": null,
-    "tempHoverThumbnailBorderColorPalette": null,
 
     "boxShadow": "none",
 
@@ -342,65 +172,6 @@
     "tempBoxShadowVertical": 2,
     "tempBoxShadowHorizontal": 1,
 
-    "hoverBoxShadow": null,
-
-    "tempHoverBoxShadow": null,
-
-    "hoverBoxShadowColorHex": null,
-    "hoverBoxShadowColorOpacity": null,
-    "hoverBoxShadowColorPalette": null,
-
-    "tempHoverBoxShadowColorPalette": null,
-    "tempHoverBoxShadowColorOpacity": null,
-
-    "hoverBoxShadowBlur": null,
-    "hoverBoxShadowSpread": null,
-    "hoverBoxShadowVertical": null,
-    "hoverBoxShadowHorizontal": null,
-
-    "tempHoverBoxShadowBlur": null,
-    "tempHoverBoxShadowSpread": null,
-    "tempHoverBoxShadowVertical": null,
-    "tempHoverBoxShadowHorizontal": null,
-
-    "tabletBoxShadow": null,
-
-    "tabletBoxShadowColorHex": null,
-    "tabletBoxShadowColorOpacity": null,
-    "tabletBoxShadowColorPalette": null,
-
-    "tempTabletBoxShadowColorPalette": null,
-    "tempTabletBoxShadowColorOpacity": null,
-
-    "tabletBoxShadowBlur": null,
-    "tabletBoxShadowSpread": null,
-    "tabletBoxShadowVertical": null,
-    "tabletBoxShadowHorizontal": null,
-
-    "tempTabletBoxShadowBlur": null,
-    "tempTabletBoxShadowSpread": null,
-    "tempTabletBoxShadowVertical": null,
-    "tempTabletBoxShadowHorizontal": null,
-
-    "mobileBoxShadow": null,
-
-    "mobileBoxShadowColorHex": null,
-    "mobileBoxShadowColorOpacity": null,
-    "mobileBoxShadowColorPalette": null,
-
-    "tempMobileBoxShadowColorPalette": null,
-    "tempMobileBoxShadowColorOpacity": null,
-
-    "mobileBoxShadowBlur": null,
-    "mobileBoxShadowSpread": null,
-    "mobileBoxShadowVertical": null,
-    "mobileBoxShadowHorizontal": null,
-
-    "tempMobileBoxShadowBlur": null,
-    "tempMobileBoxShadowSpread": null,
-    "tempMobileBoxShadowVertical": null,
-    "tempMobileBoxShadowHorizontal": null,
-
     "thumbnailBoxShadow": "",
 
     "tempThumbnailBoxShadow": "on",
@@ -420,65 +191,6 @@
     "tempThumbnailBoxShadowBlur": 4,
     "tempThumbnailBoxShadowSpread": 0,
     "tempThumbnailBoxShadowVertical": 2,
-    "tempThumbnailBoxShadowHorizontal": 1,
-
-    "hoverThumbnailBoxShadow": null,
-
-    "tempHoverThumbnailBoxShadow": null,
-
-    "hoverThumbnailBoxShadowColorHex": null,
-    "hoverThumbnailBoxShadowColorOpacity": null,
-    "hoverThumbnailBoxShadowColorPalette": null,
-
-    "tempHoverThumbnailBoxShadowColorPalette": null,
-    "tempHoverThumbnailBoxShadowColorOpacity": null,
-
-    "hoverThumbnailBoxShadowBlur": null,
-    "hoverThumbnailBoxShadowSpread": null,
-    "hoverThumbnailBoxShadowVertical": null,
-    "hoverThumbnailBoxShadowHorizontal": null,
-
-    "tempHoverThumbnailBoxShadowBlur": null,
-    "tempHoverThumbnailBoxShadowSpread": null,
-    "tempHoverThumbnailBoxShadowVertical": null,
-    "tempHoverThumbnailBoxShadowHorizontal": null,
-
-    "tabletThumbnailBoxShadow": null,
-
-    "tabletThumbnailBoxShadowColorHex": null,
-    "tabletThumbnailBoxShadowColorOpacity": null,
-    "tabletThumbnailBoxShadowColorPalette": null,
-
-    "tempTabletThumbnailBoxShadowColorPalette": null,
-    "tempTabletThumbnailBoxShadowColorOpacity": null,
-
-    "tabletThumbnailBoxShadowBlur": null,
-    "tabletThumbnailBoxShadowSpread": null,
-    "tabletThumbnailBoxShadowVertical": null,
-    "tabletThumbnailBoxShadowHorizontal": null,
-
-    "tempTabletThumbnailBoxShadowBlur": null,
-    "tempTabletThumbnailBoxShadowSpread": null,
-    "tempTabletThumbnailBoxShadowVertical": null,
-    "tempTabletThumbnailBoxShadowHorizontal": null,
-
-    "mobileThumbnailBoxShadow": null,
-
-    "mobileThumbnailBoxShadowColorHex": null,
-    "mobileThumbnailBoxShadowColorOpacity": null,
-    "mobileThumbnailBoxShadowColorPalette": null,
-
-    "tempMobileThumbnailBoxShadowColorPalette": null,
-    "tempMobileThumbnailBoxShadowColorOpacity": null,
-
-    "mobileThumbnailBoxShadowBlur": null,
-    "mobileThumbnailBoxShadowSpread": null,
-    "mobileThumbnailBoxShadowVertical": null,
-    "mobileThumbnailBoxShadowHorizontal": null,
-
-    "tempMobileThumbnailBoxShadowBlur": null,
-    "tempMobileThumbnailBoxShadowSpread": null,
-    "tempMobileThumbnailBoxShadowVertical": null,
-    "tempMobileThumbnailBoxShadowHorizontal": null
+    "tempThumbnailBoxShadowHorizontal": 1
   }
 }

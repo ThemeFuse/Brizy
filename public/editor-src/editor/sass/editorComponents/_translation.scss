@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  position:relative;
   cursor: pointer;
 
   &__code {
@@ -14,6 +15,7 @@
 
   .select2-container {
     width: inherit !important;
+    left: 0 !important;
   }
 
   &__select {
@@ -38,6 +40,7 @@
       align-items: center;
       justify-content: center;
       flex-wrap: nowrap;
+      padding: 0 10px;
 
       .brz-span {
         white-space: nowrap;
@@ -66,6 +69,8 @@
       border-radius: inherit;
 
       .select2-selection__rendered {
+        display: flex;
+        height: inherit;
         color: inherit;
       }
     }
@@ -76,7 +81,7 @@
     }
 
     &-dropdown {
-      top: 1px;
+      top: -3px;
       max-height: 200px;
       overflow: hidden;
       border: inherit;
@@ -92,6 +97,8 @@
           max-height: initial;
 
           .select2-results__option {
+            padding: 0 10px;
+            display: flex;
             .brz-translation__select-item {
               height: 100%;
             }

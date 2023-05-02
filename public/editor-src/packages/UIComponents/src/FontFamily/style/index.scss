@@ -1,0 +1,54 @@
+// Font Options
+.brz-ed-font {
+  &__typography {
+    @apply grid grid-rows-[1fr_auto];
+    @apply font-default-font-family;
+    @apply gap-options__item-padding;
+    @apply p-options__item-padding;
+    @apply h-[200px];
+    @apply border-0 border-r-[1px] border-solid border-toolbar-border;
+    @apply overflow-hidden;
+    @apply relative;
+  }
+
+  &__typography-adder {
+    @apply cursor-pointer;
+    @apply relative;
+    @apply flex items-center;
+    @apply bottom-[14px];
+    @apply left-[10px];
+    @apply text-toolbar__fonts__add-color  text-[14px];
+    @apply font-semibold;
+    @apply transition-[color] duration-200 ease-linear;
+    @apply left-[unset];
+    @apply bottom-[unset];
+
+    &:hover {
+      @apply text-toolbar__fonts-color--active;
+    }
+
+    .brz-icon-svg {
+      @apply mr-[10px];
+    }
+  }
+
+  &__name {
+    @apply transition-[color] duration-200 ease-linear;
+    @apply pb-[13px];
+    @apply leading-[1];
+    @apply text-toolbar__fonts-color;
+    @apply cursor-pointer;
+
+    &:first-child {
+      @apply pt-0;
+    }
+    @apply pl-0 pb-[13px];
+    @apply bg-none;
+
+    &.active,
+    &:hover {
+      @apply transition-[color] duration-200 ease-linear;
+      @apply text-toolbar__fonts-color--active;
+    }
+  }
+}

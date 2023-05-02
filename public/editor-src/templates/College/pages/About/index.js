@@ -1085,7 +1085,7 @@ module.exports = {
                                                                         hoverColorPalette: "color7",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?page_id=2186"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],

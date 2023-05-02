@@ -1,0 +1,217 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Number Snapshots By default showArrows should be true and size auto 1`] = `
+<div
+  class="brz-ed-control__number brz-ed-control__number--auto"
+>
+  <input
+    class="brz-input"
+    max="999999"
+    min="-999999"
+    type="number"
+    value=""
+  />
+  <div
+    class="brz-ed-control__number--arrows"
+  >
+    <div
+      class="brz-ed-control__number--up"
+    />
+    <div
+      class="brz-ed-control__number--down"
+    />
+  </div>
+</div>
+`;
+
+exports[`Test Number Snapshots className should be className 1`] = `
+<div
+  class="brz-ed-control__number brz-ed-control__number--auto className"
+>
+  <input
+    class="brz-input"
+    max="999999"
+    min="-999999"
+    type="number"
+    value=""
+  />
+  <div
+    class="brz-ed-control__number--arrows"
+  >
+    <div
+      class="brz-ed-control__number--up"
+    />
+    <div
+      class="brz-ed-control__number--down"
+    />
+  </div>
+</div>
+`;
+
+exports[`Test Number Snapshots size should be auto 1`] = `
+<div
+  class="brz-ed-control__number brz-ed-control__number--auto"
+>
+  <input
+    class="brz-input"
+    max="999999"
+    min="-999999"
+    type="number"
+    value=""
+  />
+  <div
+    class="brz-ed-control__number--arrows"
+  >
+    <div
+      class="brz-ed-control__number--up"
+    />
+    <div
+      class="brz-ed-control__number--down"
+    />
+  </div>
+</div>
+`;
+
+exports[`Test Number Snapshots size should be large 1`] = `
+<div
+  class="brz-ed-control__number brz-ed-control__number--large"
+>
+  <input
+    class="brz-input"
+    max="999999"
+    min="-999999"
+    type="number"
+    value=""
+  />
+  <div
+    class="brz-ed-control__number--arrows"
+  >
+    <div
+      class="brz-ed-control__number--up"
+    />
+    <div
+      class="brz-ed-control__number--down"
+    />
+  </div>
+</div>
+`;
+
+exports[`Test Number Snapshots size should be medium 1`] = `
+<div
+  class="brz-ed-control__number brz-ed-control__number--medium"
+>
+  <input
+    class="brz-input"
+    max="999999"
+    min="-999999"
+    type="number"
+    value=""
+  />
+  <div
+    class="brz-ed-control__number--arrows"
+  >
+    <div
+      class="brz-ed-control__number--up"
+    />
+    <div
+      class="brz-ed-control__number--down"
+    />
+  </div>
+</div>
+`;
+
+exports[`Test Number Snapshots size should be short 1`] = `
+<div
+  class="brz-ed-control__number brz-ed-control__number--short"
+>
+  <input
+    class="brz-input"
+    max="999999"
+    min="-999999"
+    type="number"
+    value=""
+  />
+  <div
+    class="brz-ed-control__number--arrows"
+  >
+    <div
+      class="brz-ed-control__number--up"
+    />
+    <div
+      class="brz-ed-control__number--down"
+    />
+  </div>
+</div>
+`;
+
+exports[`Test Number Snapshots value should be -1 1`] = `
+<div
+  class="brz-ed-control__number brz-ed-control__number--auto"
+>
+  <input
+    class="brz-input"
+    max="999999"
+    min="-999999"
+    type="number"
+    value="-1"
+  />
+  <div
+    class="brz-ed-control__number--arrows"
+  >
+    <div
+      class="brz-ed-control__number--up"
+    />
+    <div
+      class="brz-ed-control__number--down"
+    />
+  </div>
+</div>
+`;
+
+exports[`Test Number Snapshots value should be 0 1`] = `
+<div
+  class="brz-ed-control__number brz-ed-control__number--auto"
+>
+  <input
+    class="brz-input"
+    max="999999"
+    min="-999999"
+    type="number"
+    value="0"
+  />
+  <div
+    class="brz-ed-control__number--arrows"
+  >
+    <div
+      class="brz-ed-control__number--up"
+    />
+    <div
+      class="brz-ed-control__number--down"
+    />
+  </div>
+</div>
+`;
+
+exports[`Test Number Snapshots value should be 1 1`] = `
+<div
+  class="brz-ed-control__number brz-ed-control__number--auto"
+>
+  <input
+    class="brz-input"
+    max="999999"
+    min="-999999"
+    type="number"
+    value="1"
+  />
+  <div
+    class="brz-ed-control__number--arrows"
+  >
+    <div
+      class="brz-ed-control__number--up"
+    />
+    <div
+      class="brz-ed-control__number--down"
+    />
+  </div>
+</div>
+`;

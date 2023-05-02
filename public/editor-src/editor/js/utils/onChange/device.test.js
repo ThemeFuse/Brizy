@@ -1,17 +1,24 @@
 import {
   defaultValueKey,
   defaultValueKey2,
+  defaultValueValue,
   defaultValueValue2
 } from "visual/utils/onChange/device";
 import {
-  defaultMode,
   DESKTOP,
   MOBILE,
-  TABLET
+  TABLET,
+  defaultMode
 } from "visual/utils/responsiveMode";
-import { empty as emptyState, HOVER, NORMAL } from "visual/utils/stateMode";
+import * as Responsive from "visual/utils/responsiveMode";
+import {
+  ACTIVE,
+  HOVER,
+  NORMAL,
+  empty as emptyState
+} from "visual/utils/stateMode";
 
-describe("Testing 'defaultValueKey' function", function() {
+describe("Testing 'defaultValueKey' function", function () {
   const key = "test";
 
   test("Always prefix the id is with device|state keys", () => {
@@ -99,7 +106,7 @@ describe("Testing 'defaultValueKey' function", function() {
   });
 });
 
-describe("Testing 'defaultValueKey2' function", function() {
+describe("Testing 'defaultValueKey2' function", function () {
   const key = "test";
 
   test("Always prefix the id is with device|state keys", () => {
@@ -145,7 +152,7 @@ describe("Testing 'defaultValueKey2' function", function() {
   });
 });
 
-describe("Testing 'defaultValueValue2' function", function() {
+describe("Testing 'defaultValueValue2' function", function () {
   test("Return the value by specified key, device, state", () => {
     const key = "test";
     const v = {
@@ -172,6 +179,115 @@ describe("Testing 'defaultValueValue2' function", function() {
     expect(defaultValueValue2({ v, key, device: TABLET })).toBe(1);
     expect(defaultValueValue2({ v, key, state: HOVER })).toBe(1);
     expect(defaultValueValue2({ v, key, device: TABLET, state: HOVER })).toBe(
+      1
+    );
+  });
+});
+
+describe("Testing defaultValueValue function", () => {
+  const v = {
+    test: 1,
+    hoverTest: 1.1,
+    activeTest: 1.2,
+
+    tabletTest: 2,
+    hoverTabletTest: 2.1,
+    activeTabletTest: 2.2,
+
+    mobileTest: 3,
+    hoverMobileTest: 3.1,
+    activeMobileTest: 3.2
+  };
+  const key = "test";
+
+  test("return the initial value", () => {
+    expect(defaultValueValue({ v, key })).toBe(1);
+  });
+
+  test("return the initial value by state", () => {
+    expect(
+      defaultValueValue({ v, key, device: Responsive.empty, state: HOVER })
+    ).toBe(1.1);
+    expect(
+      defaultValueValue({ v, key, device: Responsive.empty, state: ACTIVE })
+    ).toBe(1.2);
+  });
+
+  test("return the initial value by device", () => {
+    expect(defaultValueValue({ v, key, device: TABLET })).toBe(2);
+    expect(defaultValueValue({ v, key, device: MOBILE })).toBe(3);
+  });
+
+  test("return the initial value by device and state", () => {
+    expect(defaultValueValue({ v, key, device: TABLET, state: HOVER })).toBe(
+      2.1
+    );
+    expect(defaultValueValue({ v, key, device: TABLET, state: ACTIVE })).toBe(
+      2.2
+    );
+    expect(defaultValueValue({ v, key, device: MOBILE, state: HOVER })).toBe(
+      3.1
+    );
+    expect(defaultValueValue({ v, key, device: MOBILE, state: ACTIVE })).toBe(
+      3.2
+    );
+  });
+
+  test("If in device mode key by state doesn't exist, take key by device", () => {
+    const v = {
+      test: 1,
+      hoverTest: 1.1,
+      activeTest: 1.2,
+
+      tabletTest: 2,
+      mobileTest: 3
+    };
+    expect(defaultValueValue({ v, key, device: TABLET, state: HOVER })).toBe(2);
+    expect(defaultValueValue({ v, key, device: TABLET, state: ACTIVE })).toBe(
+      2
+    );
+    expect(defaultValueValue({ v, key, device: MOBILE, state: HOVER })).toBe(3);
+    expect(defaultValueValue({ v, key, device: MOBILE, state: ACTIVE })).toBe(
+      3
+    );
+  });
+
+  test("If in device mode key by state doesn't exist amd key by device doesn't exist, take original state key", () => {
+    const v = {
+      test: 1,
+      hoverTest: 1.1,
+      activeTest: 1.2
+    };
+    expect(defaultValueValue({ v, key, device: TABLET, state: HOVER })).toBe(
+      1.1
+    );
+    expect(defaultValueValue({ v, key, device: TABLET, state: ACTIVE })).toBe(
+      1.2
+    );
+    expect(defaultValueValue({ v, key, device: MOBILE, state: HOVER })).toBe(
+      1.1
+    );
+    expect(defaultValueValue({ v, key, device: MOBILE, state: ACTIVE })).toBe(
+      1.2
+    );
+  });
+
+  test("If in device mode exists only original key, take original key", () => {
+    const v = {
+      test: 1
+    };
+    expect(
+      defaultValueValue({ v, key, device: defaultMode(), state: HOVER })
+    ).toBe(1);
+    expect(
+      defaultValueValue({ v, key, device: defaultMode(), state: ACTIVE })
+    ).toBe(1);
+    expect(defaultValueValue({ v, key, device: TABLET, state: HOVER })).toBe(1);
+    expect(defaultValueValue({ v, key, device: TABLET, state: ACTIVE })).toBe(
+      1
+    );
+    expect(defaultValueValue({ v, key, device: MOBILE, state: HOVER })).toBe(1);
+    expect(defaultValueValue({ v, key, device: MOBILE, state: ACTIVE })).toBe(
       1
     );
   });

@@ -1,34 +1,38 @@
-import { isPlaceholderStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import Config, { WP } from "visual/global/Config";
-import * as Str from "visual/utils/string/specs";
+import { defaultCrop } from "visual/global/Config/types/configs/common";
+import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
 import {
   isAbsoluteUrl,
   objectToQueryString,
   urlContainsQueryString
 } from "visual/utils/url";
-import { FilterOption, ImageSpecificSize, ImageUrl, SvgUrl } from "./types";
-import { getFilter } from "./utils";
+import { MValue } from "visual/utils/value";
+import { Data } from "./types";
+import { getFilter, isCropSize } from "./utils";
 
-const defaultOptions: FilterOption = {
-  iW: 5000,
-  iH: "any"
-};
-
-const imageUrl: ImageUrl = (src, options = defaultOptions) => {
-  if (isAbsoluteUrl(src) || isPlaceholderStr(src)) {
-    return src;
+export const getImageUrl = (data: Data): MValue<string> => {
+  if (!isNoEmptyString(data.uid)) {
+    return undefined;
   }
 
-  if (src) {
-    const config = Config.getAll() as WP;
+  if (isAbsoluteUrl(data.uid)) {
+    return data.uid;
+  }
+
+  const config = Config.getAll() as WP;
+  const { api = {} } = config ?? {};
+  const { media = {} } = api;
+
+  if (media.mediaResizeUrl) {
+    const { uid: src, sizeType } = data;
     const prefix = config.prefix ?? "brizy";
-    const siteUrl = config.urls.site;
-    const imageUrlPrefix = urlContainsQueryString(siteUrl)
-      ? `${siteUrl}&`
-      : `${siteUrl}/?`;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { fileName, ..._filterOptions } = options;
-    const filter = getFilter({ ...defaultOptions, ..._filterOptions });
+    const imageUrlPrefix = urlContainsQueryString(media.mediaResizeUrl)
+      ? `${media.mediaResizeUrl}&`
+      : `${media.mediaResizeUrl}/?`;
+
+    const filter = isCropSize(data)
+      ? getFilter({ ...defaultCrop, ...data.crop })
+      : sizeType;
     const queryString = objectToQueryString({
       [`${prefix}_media`]: src,
       [`${prefix}_crop`]: filter
@@ -37,35 +41,5 @@ const imageUrl: ImageUrl = (src, options = defaultOptions) => {
     return `${imageUrlPrefix}${queryString}`;
   }
 
-  return null;
-};
-
-export default imageUrl;
-
-export const svgUrl: SvgUrl = (_src) => {
-  const src = Str.read(_src);
-
-  if (src) {
-    const config = Config.getAll();
-    return `${config.urls.customFile}${src}`;
-  }
-
-  return null;
-};
-
-export const imageSpecificSize: ImageSpecificSize = (src, options) => {
-  const config = Config.getAll() as WP;
-  const siteUrl = config.urls.site;
-  const { size } = options;
-
-  const imageUrlPrefix = urlContainsQueryString(siteUrl)
-    ? `${siteUrl}&`
-    : `${siteUrl}/?`;
-  const prefix = config.prefix ?? "brizy";
-  const queryString = objectToQueryString({
-    [`${prefix}_media`]: src,
-    [`${prefix}_crop`]: size
-  });
-
-  return `${imageUrlPrefix}${queryString}`;
+  return undefined;
 };

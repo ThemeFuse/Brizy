@@ -1,11 +1,16 @@
+import Config from "visual/global/Config";
 import { Shortcodes } from "visual/types";
 import AddToCart from "./AddToCart";
 import BlogPostContent from "./BlogPostContent";
+import getBlogPostMeta from "./BlogPostMeta";
 import BlogTitle from "./BlogTitle";
 import CollectionDescription from "./CollectionDescription";
 import CollectionTitle from "./CollectionTitle";
+import getPrice from "./Price";
 import ProductDescription from "./ProductDescription";
+import getProductMetafield from "./ProductMetafield";
 import ProductTitle from "./ProductTitle";
+import getQuantity from "./Quantity";
 import Vendor from "./Vendor";
 
 // import AliExpressReview from "./AliExpressReview";
@@ -37,7 +42,6 @@ import Vendor from "./Vendor";
 // import PaywhirlSubscription from "./PaywhirlSubscription";
 // import PowrContactForm from "./PowrContactForm";
 // import PreProduct from "./PreProduct";
-// import Price from "./Price";
 // import ProductOptions from "./ProductOptions";
 // import ProductReview from "./ProductReview";
 // import PushOwlNotifications from "./PushOwlNotifications";
@@ -77,13 +81,17 @@ import Vendor from "./Vendor";
 // import CrossSell from "./CrossSell";
 
 const config = ((): Shortcodes => {
+  const config = Config.getAll();
   return {
     base: [
       { component: ProductDescription, pro: false },
       { component: ProductTitle, pro: false },
       { component: AddToCart, pro: false },
+      { component: getPrice(config), pro: false },
+      { component: getQuantity(config), pro: false },
+      { component: getProductMetafield(config), pro: false },
+      { component: getBlogPostMeta(config), pro: false },
       // { component: Quantity, pro: false },
-      // { component: Price, pro: false },
       // { component: ProductReview, pro: false },
       // { component: KlavyioMarketing, pro: false },
       // { component: PreProduct, pro: false },

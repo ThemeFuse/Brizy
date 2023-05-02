@@ -1355,7 +1355,7 @@ module.exports = {
                                                                         tempPaddingTB: 10,
                                                                         tempPaddingTop: 10,
                                                                         tempPaddingBottom: 10,
-                                                                        linkExternal: "https://demo.themefuse.com/creed/?page_id=1522",
+                                                                        linkExternal: "",
                                                                         linkExternalBlank: "off"
                                                                     }
                                                                 }
@@ -1517,7 +1517,7 @@ module.exports = {
                                                                         tempBgColorPalette: "",
                                                                         bgColorHex: "#08402e",
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/creed/?page_id=1530",
+                                                                        linkExternal: "",
                                                                         linkType: "external"
                                                                     }
                                                                 }

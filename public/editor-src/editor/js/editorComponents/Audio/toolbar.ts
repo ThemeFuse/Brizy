@@ -4,7 +4,7 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -39,10 +39,10 @@ export function getItems({
     dvv("borderColorHex"),
     dvv("borderColorPalette")
   );
-  const linkDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.link
-  );
+  const linkDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.link
+  });
 
   const type = dvv("type");
   const customType = type === "custom";

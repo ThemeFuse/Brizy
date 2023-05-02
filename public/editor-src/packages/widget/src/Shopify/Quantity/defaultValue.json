@@ -1,0 +1,156 @@
+{
+  "content": {
+    "sourceID": "",
+    "sourceType": ""
+  },
+  "style": {
+    "families": {
+      "fontFamily": "lato"
+    },
+
+    "bgButtonColor": "",
+    "bgButtonColorHex": "#ffffff",
+    "bgButtonColorOpacity": 1,
+    "bgButtonColorPalette": "",
+
+    "bgInputColor": "",
+    "bgInputColorHex": "#ffffff",
+    "bgInputColorOpacity": 1,
+    "bgInputColorPalette": "",
+
+    "borderBottomLeftRadius": 2,
+    "borderBottomRightRadius": 2,
+    "borderRadiusType": "square",
+    "borderTopLeftRadius": 2,
+    "borderTopRightRadius": 2,
+
+    "boxShadow": "none",
+
+    "buttonBorder": "#1C1C1C",
+    "buttonBorderBottomWidth": 1,
+    "buttonBorderColorHex": "#000000",
+    "buttonBorderColorOpacity": 1,
+    "buttonBorderColorPalette": "",
+    "buttonBorderLeftWidth": 1,
+    "buttonBorderRadius": 2,
+    "buttonBorderRadiusSuffix": "px",
+    "buttonBorderRightWidth": 1,
+    "buttonBorderStyle": "solid",
+    "buttonBorderTopWidth": 1,
+    "buttonBorderWidth": 1,
+    "buttonBorderWidthType": "grouped",
+
+    "buttonBoxShadow": "",
+    "buttonBoxShadowBlur": 0,
+    "buttonBoxShadowColorHex": "#000000",
+    "buttonBoxShadowColorOpacity": 1,
+    "buttonBoxShadowColorPalette": "",
+    "buttonBoxShadowHorizontal": 0,
+    "buttonBoxShadowSpread": 0,
+    "buttonBoxShadowVertical": 0,
+
+    "buttonSize": "small",
+    "buttonSpacing": 15,
+    "buttonSpacingSuffix": "px",
+
+    "colorHex": "#1C1C1C",
+    "colorOpacity": 1,
+    "colorPalette": "",
+
+    "customCSS": "",
+
+    "fontFamilyType": "google",
+    "fontSize": 16,
+    "fontSizeSuffix": "px",
+    "fontStyle": "paragraph",
+    "fontWeight": 700,
+
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": "",
+
+    "iconCustomSize": 16,
+    "iconCustomSizeSuffix": "px",
+    "iconSize": "small",
+
+    "inputBorder": "#1C1C1C",
+    "inputBorderBottomWidth": 0,
+    "inputBorderColorHex": "#000000",
+    "inputBorderColorOpacity": 1,
+    "inputBorderColorPalette": "",
+    "inputBorderLeftWidth": 0,
+    "inputBorderRadius": 2,
+    "inputBorderRadiusSuffix": "px",
+    "inputBorderRightWidth": 0,
+    "inputBorderStyle": "solid",
+    "inputBorderTopWidth": 0,
+    "inputBorderWidth": 1,
+    "inputBorderWidthType": "grouped",
+
+    "inputBoxShadow": "",
+    "inputBoxShadowBlur": 0,
+    "inputBoxShadowColorHex": "#000000",
+    "inputBoxShadowColorOpacity": 1,
+    "inputBoxShadowColorPalette": "",
+    "inputBoxShadowHorizontal": 0,
+    "inputBoxShadowSpread": 0,
+    "inputBoxShadowVertical": 0,
+
+    "inputSize": "small",
+    "letterSpacing": 3,
+    "lineHeight": 1,
+
+    "paddingBottom" : "",
+    "paddingBottomSuffix" : "",
+
+    "padding": 0,
+    "buttonWidth": 42,
+    "buttonWidthSuffix": "px",
+    "buttonHeight": 55,
+    "buttonHeightSuffix": "px",
+
+    "inputWidth": 42,
+    "inputWidthSuffix": "px",
+    "inputHeight": 55,
+    "inputHeightSuffix": "px",
+
+    "paddingLeft": 0,
+    "paddingLeftSuffix": "px",
+    "paddingRight": 0,
+    "paddingRightSuffix": "px",
+    "paddingSuffix": "px",
+    "paddingTop": 0,
+    "paddingTopSuffix": "px",
+
+    "paddingType": "grouped",
+
+    "quantityButtonBorder": "",
+    "quantityButtonBorderBottomLeftRadius": 1,
+    "quantityButtonBorderBottomLeftRadiusSuffix": "px",
+    "quantityButtonBorderBottomRightRadius": 1,
+    "quantityButtonBorderBottomRightRadiusSuffix": "px",
+    "quantityButtonBorderRadius": 1,
+    "quantityButtonBorderRadiusSuffix": "px",
+    "quantityButtonBorderRadiusType": "grouped",
+    "quantityButtonBorderTopLeftRadius": 1,
+    "quantityButtonBorderTopLeftRadiusSuffix": "px",
+    "quantityButtonBorderTopRightRadius": 1,
+    "quantityButtonBorderTopRightRadiusSuffix": "px",
+
+    "quantityInputBorder": "",
+    "quantityInputBorderBottomLeftRadius": 1,
+    "quantityInputBorderBottomLeftRadiusSuffix": "px",
+    "quantityInputBorderBottomRightRadius": 1,
+    "quantityInputBorderBottomRightRadiusSuffix": "px",
+    "quantityInputBorderRadius": 1,
+    "quantityInputBorderRadiusSuffix": "px",
+    "quantityInputBorderRadiusType": "grouped",
+    "quantityInputBorderTopLeftRadius": 1,
+    "quantityInputBorderTopLeftRadiusSuffix": "px",
+    "quantityInputBorderTopRightRadius": 1,
+    "quantityInputBorderTopRightRadiusSuffix": "px",
+
+    "quantityStyle": "style-1",
+
+    "widthSuffix": "%"
+  }
+}

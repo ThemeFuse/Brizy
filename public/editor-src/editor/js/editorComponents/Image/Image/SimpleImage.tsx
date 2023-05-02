@@ -2,8 +2,12 @@
 import classnames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { MIN_COL_WIDTH } from "visual/config/columns";
+import {
+  SizeType,
+  defaultCrop
+} from "visual/global/Config/types/configs/common";
 import { css } from "visual/utils/cssStyle";
-import { imageSpecificSize, imageUrl } from "visual/utils/image";
+import { getImageUrl } from "visual/utils/image";
 import {
   defaultValueValue,
   mobileSyncOnChange,
@@ -17,20 +21,31 @@ import { calcImageSizes } from "../utils";
 interface RetinaData {
   src: string;
   fileName: string;
-  sizeType: string;
+  sizeType: SizeType;
   maxCw: number;
 }
 
 const formatRetinaSrc = (data: RetinaData): string => {
   const { sizeType, src, maxCw, fileName } = data;
+
   switch (sizeType) {
-    case "custom": {
-      const url_1X = imageUrl(src, { iW: maxCw, iH: "any", fileName });
-      const url_2X = imageUrl(src, { iW: maxCw * 2, iH: "any", fileName });
+    case SizeType.custom: {
+      const url_1X = getImageUrl({
+        fileName,
+        uid: src,
+        sizeType: SizeType.custom,
+        crop: { ...defaultCrop, iW: maxCw }
+      });
+      const url_2X = getImageUrl({
+        fileName,
+        uid: src,
+        sizeType: SizeType.custom,
+        crop: { ...defaultCrop, iW: maxCw * 2 }
+      });
       return `${url_1X} 1x, ${url_2X} 2x`;
     }
     default: {
-      const url = imageSpecificSize(src, { size: sizeType, fileName });
+      const url = getImageUrl({ fileName, sizeType, uid: src });
       return `${url} 1x, ${url} 2x`;
     }
   }
@@ -38,12 +53,20 @@ const formatRetinaSrc = (data: RetinaData): string => {
 
 const formatSrc = (data: RetinaData): string => {
   const { sizeType, src, maxCw, fileName } = data;
+
   switch (sizeType) {
-    case "custom": {
-      return imageUrl(src, { iW: maxCw, iH: "any", fileName }) ?? "";
+    case SizeType.custom: {
+      return (
+        getImageUrl({
+          fileName,
+          sizeType: SizeType.custom,
+          uid: src,
+          crop: { ...defaultCrop, iW: maxCw, iH: "any" }
+        }) ?? ""
+      );
     }
     default: {
-      return imageSpecificSize(src, { size: sizeType, fileName }) ?? "";
+      return getImageUrl({ sizeType, uid: src, fileName }) ?? "";
     }
   }
 };
@@ -94,9 +117,9 @@ const SimpleImage: React.FC<ImageProps> = (props) => {
   }, [desktopW, tabletW, mobileW, width, height, zoom]);
 
   const imageSizes = getImageSizes();
-  const sizeType = dvv<string>("sizeType", DESKTOP);
-  const tabletSizeType = dvv<string>("sizeType", TABLET);
-  const mobileSizeType = dvv<string>("sizeType", MOBILE);
+  const sizeType = dvv<SizeType>("sizeType", DESKTOP);
+  const tabletSizeType = dvv<SizeType>("sizeType", TABLET);
+  const mobileSizeType = dvv<SizeType>("sizeType", MOBILE);
 
   // ! find less hacky way
   const responsiveUrls = getResponsiveUrls && getResponsiveUrls(imageSizes);

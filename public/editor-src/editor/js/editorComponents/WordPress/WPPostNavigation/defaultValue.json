@@ -72,29 +72,6 @@
     "tempBgColorOpacity": 1,
     "tempBgColorPalette": "",
 
-    "hoverTitleColorHex": null,
-    "hoverTitleColorOpacity": null,
-    "hoverTitleColorPalette": null,
-
-    "tempHoverTitleColorOpacity": null,
-    "tempHoverTitleColorPalette": null,
-
-    "hoverPostColorHex": null,
-    "hoverPostColorOpacity": null,
-    "hoverPostColorPalette": null,
-
-    "tempHoverPostColorOpacity": null,
-    "tempHoverPostColorPalette": null,
-
-    "hoverBgColorType": null,
-
-    "hoverBgColorHex": null,
-    "hoverBgColorOpacity": null,
-    "hoverBgColorPalette": null,
-
-    "tempHoverBgColorOpacity": null,
-    "tempHoverBgColorPalette": null,
-
     "tabletTitleTypographyFontStyle": "",
     "tabletTitleTypographyFontFamilyType": null,
     "tabletTitleTypographyFontSize": 14,

@@ -56,28 +56,7 @@
     "tempTextColorPalette": "",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
-
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
-
-    "hoverBgStarColorHex": null,
-    "hoverBgStarColorOpacity": null,
-    "hoverBgStarColorPalette": null,
-
-    "tempHoverBgStarColorOpacity": null,
-    "tempHoverBgStarColorPalette": null,
-
-    "hoverTextColorHex": null,
-    "hoverTextColorOpacity": null,
-    "hoverTextColorPalette": null,
-
-    "tempHoverTextColorOpacity": null,
-    "tempHoverTextColorPalette": null,
+    "hoverTransitionSuffix": "",
 
     "tabletRatingSize": null,
     "tabletRatingSizeSuffix": null,

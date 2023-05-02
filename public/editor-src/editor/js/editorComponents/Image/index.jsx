@@ -134,8 +134,15 @@ class Image extends EditorComponent {
     if (imageDC !== undefined) {
       const wrapperSize = this.getWrapperSizes(v)[device];
       const containerWidth = this.getContainerSize()[device];
+      const useCustomPlaceholder =
+        Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
 
-      return patchOnDCChange(containerWidth, patch, wrapperSize);
+      return patchOnDCChange(
+        containerWidth,
+        patch,
+        wrapperSize,
+        useCustomPlaceholder
+      );
     }
 
     if (imageUnit !== undefined) {
@@ -246,13 +253,19 @@ class Image extends EditorComponent {
     cH = Math.round(cH);
 
     if (v.imagePopulation) {
+      const useCustomPlaceholder =
+        Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
       const src = v.imageSrc;
       const options = { cW: Math.round(cW), cH: Math.round(cH) };
-      const url = imagePopulationUrl(src, options);
+      const options2X = multiplier(options, 2);
+      const url = imagePopulationUrl(src, { ...options, useCustomPlaceholder });
 
       return {
         source: url,
-        url: `${url} 1x, ${imagePopulationUrl(src, multiplier(options, 2))} 2x`
+        url: `${url} 1x, ${imagePopulationUrl(src, {
+          ...options2X,
+          useCustomPlaceholder
+        })} 2x`
       };
     }
 
@@ -431,19 +444,28 @@ class Image extends EditorComponent {
     }
 
     if (dbValue.imagePopulation) {
-      const placeholderData = placeholderObjFromStr(dbValue.imagePopulation);
+      const { imageSizes, dynamicContent } = Config.getAll();
+      const useCustomPlaceholder =
+        dynamicContent?.useCustomPlaceholder ?? false;
+      const placeholderData = placeholderObjFromStr(
+        dbValue.imagePopulation,
+        useCustomPlaceholder
+      );
       const attr = placeholderData?.attr;
       const name = placeholderData?.name;
 
       if (name !== undefined && attr?.size !== undefined) {
-        const { imageSizes } = Config.getAll();
         const imageData = imageSizes?.find(({ name }) => name === attr.size);
 
         if (imageSizes !== undefined && imageData === undefined) {
           const _attr = { ...attr, size: "original" };
+
           value = {
             ...value,
-            imagePopulation: placeholderObjToStr({ name, attr: _attr })
+            imagePopulation: placeholderObjToStr(
+              { name, attr: _attr },
+              useCustomPlaceholder
+            )
           };
         }
       }

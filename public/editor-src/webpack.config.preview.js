@@ -13,13 +13,14 @@ exports.preview = (options) => {
     entry: "./editor/js/bootstraps/preview/index.js",
     output: {
       ...editorConfig.output,
-      filename: "preview.js"
+      filename: "preview.min.js"
     },
     resolve: {
       alias: {
         "visual/libs": path.resolve(__dirname, "editor/js/libs"),
         "visual/utils": path.resolve(__dirname, "editor/js/utils"),
-        "visual/global": path.resolve(__dirname, "editor/js/global")
+        "visual/global": path.resolve(__dirname, "editor/js/global"),
+        widget: path.resolve(__dirname, "packages/widget/src")
       },
       extensions: editorConfig.resolve.extensions
     },
@@ -27,7 +28,10 @@ exports.preview = (options) => {
       rules: [
         {
           test: /\.(ts|js)$/,
-          include: [path.resolve(__dirname, "editor")],
+          include: [
+            path.resolve(__dirname, "editor"),
+            path.resolve(__dirname, "packages")
+          ],
           loader: "swc-loader",
           options: swcrc.preview(options)
         }
@@ -65,7 +69,7 @@ exports.libs = (options) => {
     entry: entry,
     output: {
       path: path.resolve(options.BUILD_PATH, "editor/js"),
-      filename: "[name].js",
+      filename: "[name].min.js",
       library: "BrizyLibs",
       libraryTarget: "window"
     },

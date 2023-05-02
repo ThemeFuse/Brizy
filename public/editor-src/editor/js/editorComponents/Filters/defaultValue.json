@@ -174,20 +174,6 @@
     "tempCheckIconColorOpacity": 0.75,
     "tempCheckIconColorPalette": "color7",
 
-    "hoverCheckIconColorHex": null,
-    "hoverCheckIconColorOpacity": null,
-    "hoverCheckIconColorPalette": null,
-
-    "tempHoverCheckIconColorOpacity": null,
-    "tempHoverCheckIconColorPalette": null,
-
-    "activeCheckIconColorHex": null,
-    "activeCheckIconColorOpacity": null,
-    "activeCheckIconColorPalette": null,
-
-    "tempActiveCheckIconColorOpacity": null,
-    "tempActiveCheckIconColorPalette": null,
-
     "checkIconBorderStyle": "none",
 
     "checkIconBorderColorHex": "#dcdee1",
@@ -197,29 +183,7 @@
     "tempCheckIconBorderColorOpacity": 1,
     "tempCheckIconBorderColorPalette": "",
 
-    "hoverCheckIconBorderColorHex": null,
-    "hoverCheckIconBorderColorOpacity": null,
-    "hoverCheckIconBorderColorPalette": null,
-
-    "tempHoverCheckIconBorderColorOpacity": null,
-    "tempHoverCheckIconBorderColorPalette": null,
-
-    "activeCheckIconBorderColorHex": null,
-    "activeCheckIconBorderColorOpacity": null,
-    "activeCheckIconBorderColorPalette": null,
-
-    "tempActiveCheckIconBorderColorOpacity": null,
-    "tempActiveCheckIconBorderColorPalette": null,
-
     "tempCheckIconBorderStyle": "solid",
-
-    "hoverCheckIconBorderStyle": null,
-
-    "tempHoverCheckIconBorderStyle": null,
-
-    "activeCheckIconBorderStyle": null,
-
-    "tempActiveCheckIconBorderStyle": null,
 
     "checkIconBorderWidthType": "grouped",
     "checkIconBorderWidth": 1,
@@ -233,32 +197,6 @@
     "tempCheckIconBorderRightWidth": 1,
     "tempCheckIconBorderBottomWidth": 1,
     "tempCheckIconBorderLeftWidth": 1,
-
-    "hoverCheckIconBorderWidthType": null,
-    "hoverCheckIconBorderWidth": null,
-    "hoverCheckIconBorderTopWidth": null,
-    "hoverCheckIconBorderRightWidth": null,
-    "hoverCheckIconBorderBottomWidth": null,
-    "hoverCheckIconBorderLeftWidth": null,
-
-    "tempHoverCheckIconBorderWidth": null,
-    "tempHoverCheckIconBorderTopWidth": null,
-    "tempHoverCheckIconBorderRightWidth": null,
-    "tempHoverCheckIconBorderBottomWidth": null,
-    "tempHoverCheckIconBorderLeftWidth": null,
-
-    "activeCheckIconBorderWidthType": null,
-    "activeCheckIconBorderWidth": null,
-    "activeCheckIconBorderTopWidth": null,
-    "activeCheckIconBorderRightWidth": null,
-    "activeCheckIconBorderBottomWidth": null,
-    "activeCheckIconBorderLeftWidth": null,
-
-    "tempActiveCheckIconBorderWidth": null,
-    "tempActiveCheckIconBorderTopWidth": null,
-    "tempActiveCheckIconBorderRightWidth": null,
-    "tempActiveCheckIconBorderBottomWidth": null,
-    "tempActiveCheckIconBorderLeftWidth": null,
 
     "checkIconBorderRadiusType": "grouped",
     "tempCheckIconBorderRadiusType": "grouped",
@@ -315,61 +253,12 @@
     "tempCheckIconBoxShadowVertical": 2,
     "tempCheckIconBoxShadowHorizontal": 1,
 
-    "hoverCheckIconBoxShadow": null,
-
-    "tempHoverCheckIconBoxShadow": null,
-
-    "hoverCheckIconBoxShadowColorHex": null,
-    "hoverCheckIconBoxShadowColorOpacity": null,
-    "hoverCheckIconBoxShadowColorPalette": null,
-
-    "tempHoverCheckIconBoxShadowColorPalette": null,
-    "tempHoverCheckIconBoxShadowColorOpacity": null,
-
-    "hoverCheckIconBoxShadowBlur": null,
-    "hoverCheckIconBoxShadowSpread": null,
-    "hoverCheckIconBoxShadowVertical": null,
-    "hoverCheckIconBoxShadowHorizontal": null,
-
-    "tempHoverCheckIconBoxShadowBlur": null,
-    "tempHoverCheckIconBoxShadowSpread": null,
-    "tempHoverCheckIconBoxShadowVertical": null,
-    "tempHoverCheckIconBoxShadowHorizontal": null,
-
-    "activeCheckIconBoxShadow": null,
-
-    "tempActiveCheckIconBoxShadow": null,
-
-    "activeCheckIconBoxShadowColorHex": null,
-    "activeCheckIconBoxShadowColorOpacity": null,
-    "activeCheckIconBoxShadowColorPalette": null,
-
-    "tempActiveCheckIconBoxShadowColorPalette": null,
-    "tempActiveCheckIconBoxShadowColorOpacity": null,
-
-    "activeCheckIconBoxShadowBlur": null,
-    "activeCheckIconBoxShadowSpread": null,
-    "activeCheckIconBoxShadowVertical": null,
-    "activeCheckIconBoxShadowHorizontal": null,
-
-    "tempActiveCheckIconBoxShadowBlur": null,
-    "tempActiveCheckIconBoxShadowSpread": null,
-    "tempActiveCheckIconBoxShadowVertical": null,
-    "tempActiveCheckIconBoxShadowHorizontal": null,
-
     "textColorHex": "#73777f",
     "textColorOpacity": 0.75,
     "textColorPalette": "color7",
 
     "tempTextColorOpacity": 0.75,
     "tempTextColorPalette": "color7",
-
-    "hoverTextColorHex": null,
-    "hoverTextColorOpacity": null,
-    "hoverTextColorPalette": null,
-
-    "tempHoverTextColorOpacity": null,
-    "tempHoverTextColorPalette": null,
 
     "titleColorHex": "#73777f",
     "titleColorOpacity": 0.75,
@@ -382,8 +271,6 @@
 
     "optionsBgColorType": "solid",
 
-    "hoverOptionsBgColorType": null,
-
     "optionsBgColorHex": "#ffffff",
     "optionsBgColorOpacity": 1,
     "optionsBgColorPalette": "",
@@ -391,26 +278,12 @@
     "tempOptionsBgColorOpacity": 1,
     "tempOptionsBgColorPalette": "",
 
-    "hoverOptionsBgColorHex": null,
-    "hoverOptionsBgColorOpacity": null,
-    "hoverOptionsBgColorPalette": null,
-
-    "tempHoverOptionsBgColorOpacity": null,
-    "tempHoverOptionsBgColorPalette": null,
-
     "optionsColorHex": "#73777f",
     "optionsColorOpacity": 0.75,
     "optionsColorPalette": "color7",
 
     "tempOptionsColorOpacity": 0.75,
     "tempOptionsColorPalette": "color7",
-
-    "hoverOptionsColorHex": null,
-    "hoverOptionsColorOpacity": null,
-    "hoverOptionsColorPalette": null,
-
-    "tempHoverOptionsColorOpacity": null,
-    "tempHoverOptionsColorPalette": null,
 
     "optionsBorderStyle": "solid",
 
@@ -421,18 +294,7 @@
     "tempOptionsBorderColorOpacity": 1,
     "tempOptionsBorderColorPalette": "",
 
-    "hoverOptionsBorderColorHex": null,
-    "hoverOptionsBorderColorOpacity": null,
-    "hoverOptionsBorderColorPalette": null,
-
-    "tempHoverOptionsBorderColorOpacity": null,
-    "tempHoverOptionsBorderColorPalette": null,
-
     "tempOptionsBorderStyle": "solid",
-
-    "hoverOptionsBorderStyle": null,
-
-    "tempHoverOptionsBorderStyle": null,
 
     "optionsBorderWidthType": "grouped",
     "optionsBorderWidth": 1,
@@ -446,19 +308,6 @@
     "tempOptionsBorderRightWidth": 1,
     "tempOptionsBorderBottomWidth": 1,
     "tempOptionsBorderLeftWidth": 1,
-
-    "hoverOptionsBorderWidthType": null,
-    "hoverOptionsBorderWidth": null,
-    "hoverOptionsBorderTopWidth": null,
-    "hoverOptionsBorderRightWidth": null,
-    "hoverOptionsBorderBottomWidth": null,
-    "hoverOptionsBorderLeftWidth": null,
-
-    "tempHoverOptionsBorderWidth": null,
-    "tempHoverOptionsBorderTopWidth": null,
-    "tempHoverOptionsBorderRightWidth": null,
-    "tempHoverOptionsBorderBottomWidth": null,
-    "tempHoverOptionsBorderLeftWidth": null,
 
     "optionsBorderRadiusType": "grouped",
     "tempOptionsBorderRadiusType": "grouped",
@@ -597,10 +446,6 @@
 
     "checkboxBgColorType": "solid",
 
-    "hoverCheckboxBgColorType": null,
-
-    "activeCheckboxBgColorType": null,
-
     "checkboxBgColorHex": "#ffffff",
     "checkboxBgColorOpacity": 0,
     "checkboxBgColorPalette": "",
@@ -608,40 +453,12 @@
     "tempCheckboxBgColorOpacity": 0,
     "tempCheckboxBgColorPalette": "",
 
-    "hoverCheckboxBgColorHex": null,
-    "hoverCheckboxBgColorOpacity": null,
-    "hoverCheckboxBgColorPalette": null,
-
-    "tempHoverCheckboxBgColorOpacity": null,
-    "tempHoverCheckboxBgColorPalette": null,
-
-    "activeCheckboxBgColorHex": null,
-    "activeCheckboxBgColorOpacity": null,
-    "activeCheckboxBgColorPalette": null,
-
-    "tempActiveCheckboxBgColorOpacity": null,
-    "tempActiveCheckboxBgColorPalette": null,
-
     "checkboxTextColorHex": "#73777f",
     "checkboxTextColorOpacity": 0.75,
     "checkboxTextColorPalette": "color7",
 
     "tempCheckboxTextColorOpacity": 0.75,
     "tempCheckboxTextColorPalette": "color7",
-
-    "hoverCheckboxTextColorHex": null,
-    "hoverCheckboxTextColorOpacity": null,
-    "hoverCheckboxTextColorPalette": null,
-
-    "tempHoverCheckboxTextColorOpacity": null,
-    "tempHoverCheckboxTextColorPalette": null,
-
-    "activeCheckboxTextColorHex": null,
-    "activeCheckboxTextColorOpacity": null,
-    "activeCheckboxTextColorPalette": null,
-
-    "tempActiveCheckboxTextColorOpacity": null,
-    "tempActiveCheckboxTextColorPalette": null,
 
     "checkboxBorderStyle": "",
 
@@ -652,29 +469,7 @@
     "tempCheckboxBorderColorOpacity": 1,
     "tempCheckboxBorderColorPalette": "",
 
-    "hoverCheckboxBorderColorHex": null,
-    "hoverCheckboxBorderColorOpacity": null,
-    "hoverCheckboxBorderColorPalette": null,
-
-    "tempHoverCheckboxBorderColorOpacity": null,
-    "tempHoverCheckboxBorderColorPalette": null,
-
-    "activeCheckboxBorderColorHex": null,
-    "activeCheckboxBorderColorOpacity": null,
-    "activeCheckboxBorderColorPalette": null,
-
-    "tempActiveCheckboxBorderColorOpacity": null,
-    "tempActiveCheckboxBorderColorPalette": null,
-
     "tempCheckboxBorderStyle": "solid",
-
-    "hoverCheckboxBorderStyle": null,
-
-    "tempHoverCheckboxBorderStyle": null,
-
-    "activeCheckboxBorderStyle": null,
-
-    "tempActiveCheckboxBorderStyle": null,
 
     "checkboxBorderWidthType": "grouped",
     "checkboxBorderWidth": 0,
@@ -688,32 +483,6 @@
     "tempCheckboxBorderRightWidth": 2,
     "tempCheckboxBorderBottomWidth": 2,
     "tempCheckboxBorderLeftWidth": 2,
-
-    "hoverCheckboxBorderWidthType": null,
-    "hoverCheckboxBorderWidth": null,
-    "hoverCheckboxBorderTopWidth": null,
-    "hoverCheckboxBorderRightWidth": null,
-    "hoverCheckboxBorderBottomWidth": null,
-    "hoverCheckboxBorderLeftWidth": null,
-
-    "tempHoverCheckboxBorderWidth": null,
-    "tempHoverCheckboxBorderTopWidth": null,
-    "tempHoverCheckboxBorderRightWidth": null,
-    "tempHoverCheckboxBorderBottomWidth": null,
-    "tempHoverCheckboxBorderLeftWidth": null,
-
-    "activeCheckboxBorderWidthType": null,
-    "activeCheckboxBorderWidth": null,
-    "activeCheckboxBorderTopWidth": null,
-    "activeCheckboxBorderRightWidth": null,
-    "activeCheckboxBorderBottomWidth": null,
-    "activeCheckboxBorderLeftWidth": null,
-
-    "tempActiveCheckboxBorderWidth": null,
-    "tempActiveCheckboxBorderTopWidth": null,
-    "tempActiveCheckboxBorderRightWidth": null,
-    "tempActiveCheckboxBorderBottomWidth": null,
-    "tempActiveCheckboxBorderLeftWidth": null,
 
     "checkboxBorderRadiusType": "grouped",
     "tempCheckboxBorderRadiusType": "grouped",
@@ -836,48 +605,6 @@
     "tempCheckboxBoxShadowVertical": 2,
     "tempCheckboxBoxShadowHorizontal": 1,
 
-    "hoverCheckboxBoxShadow": null,
-
-    "tempHoverCheckboxBoxShadow": null,
-
-    "hoverCheckboxBoxShadowColorHex": null,
-    "hoverCheckboxBoxShadowColorOpacity": null,
-    "hoverCheckboxBoxShadowColorPalette": null,
-
-    "tempHoverCheckboxBoxShadowColorPalette": null,
-    "tempHoverCheckboxBoxShadowColorOpacity": null,
-
-    "hoverCheckboxBoxShadowBlur": null,
-    "hoverCheckboxBoxShadowSpread": null,
-    "hoverCheckboxBoxShadowVertical": null,
-    "hoverCheckboxBoxShadowHorizontal": null,
-
-    "tempHoverCheckboxBoxShadowBlur": null,
-    "tempHoverCheckboxBoxShadowSpread": null,
-    "tempHoverCheckboxBoxShadowVertical": null,
-    "tempHoverCheckboxBoxShadowHorizontal": null,
-
-    "activeCheckboxBoxShadow": null,
-
-    "tempActiveCheckboxBoxShadow": null,
-
-    "activeCheckboxBoxShadowColorHex": null,
-    "activeCheckboxBoxShadowColorOpacity": null,
-    "activeCheckboxBoxShadowColorPalette": null,
-
-    "tempActiveCheckboxBoxShadowColorPalette": null,
-    "tempActiveCheckboxBoxShadowColorOpacity": null,
-
-    "activeCheckboxBoxShadowBlur": null,
-    "activeCheckboxBoxShadowSpread": null,
-    "activeCheckboxBoxShadowVertical": null,
-    "activeCheckboxBoxShadowHorizontal": null,
-
-    "tempActiveCheckboxBoxShadowBlur": null,
-    "tempActiveCheckboxBoxShadowSpread": null,
-    "tempActiveCheckboxBoxShadowVertical": null,
-    "tempActiveCheckboxBoxShadowHorizontal": null,
-
     "checkboxPaddingType": "grouped",
     "tempCheckboxPaddingType": "grouped",
 
@@ -988,8 +715,6 @@
 
     "selectOptionBgColorType": "solid",
 
-    "hoverSelectOptionBgColorType": null,
-
     "selectOptionBgColorHex": "#ffffff",
     "selectOptionBgColorOpacity": 1,
     "selectOptionBgColorPalette": "",
@@ -997,26 +722,12 @@
     "tempSelectOptionBgColorOpacity": 1,
     "tempSelectOptionBgColorPalette": "",
 
-    "hoverSelectOptionBgColorHex": null,
-    "hoverSelectOptionBgColorOpacity": null,
-    "hoverSelectOptionBgColorPalette": null,
-
-    "tempHoverSelectOptionBgColorOpacity": null,
-    "tempHoverSelectOptionBgColorPalette": null,
-
     "selectOptionColorHex": "#73777f",
     "selectOptionColorOpacity": 0.75,
     "selectOptionColorPalette": "color7",
 
     "tempSelectOptionColorOpacity": 0.75,
     "tempSelectOptionColorPalette": "color7",
-
-    "hoverSelectOptionColorHex": null,
-    "hoverSelectOptionColorOpacity": null,
-    "hoverSelectOptionColorPalette": null,
-
-    "tempHoverSelectOptionColorOpacity": null,
-    "tempHoverSelectOptionColorPalette": null,
 
     "selectOptionBorderStyle": "solid",
 
@@ -1027,18 +738,7 @@
     "tempSelectOptionBorderColorOpacity": 1,
     "tempSelectOptionBorderColorPalette": "",
 
-    "hoverSelectOptionBorderColorHex": null,
-    "hoverSelectOptionBorderColorOpacity": null,
-    "hoverSelectOptionBorderColorPalette": null,
-
-    "tempHoverSelectOptionBorderColorOpacity": null,
-    "tempHoverSelectOptionBorderColorPalette": null,
-
     "tempSelectOptionBorderStyle": "solid",
-
-    "hoverSelectOptionBorderStyle": null,
-
-    "tempHoverSelectOptionBorderStyle": null,
 
     "selectOptionBorderWidthType": "grouped",
     "selectOptionBorderWidth": 1,
@@ -1052,19 +752,6 @@
     "tempSelectOptionBorderRightWidth": 1,
     "tempSelectOptionBorderBottomWidth": 1,
     "tempSelectOptionBorderLeftWidth": 1,
-
-    "hoverSelectOptionBorderWidthType": null,
-    "hoverSelectOptionBorderWidth": null,
-    "hoverSelectOptionBorderTopWidth": null,
-    "hoverSelectOptionBorderRightWidth": null,
-    "hoverSelectOptionBorderBottomWidth": null,
-    "hoverSelectOptionBorderLeftWidth": null,
-
-    "tempHoverSelectOptionBorderWidth": null,
-    "tempHoverSelectOptionBorderTopWidth": null,
-    "tempHoverSelectOptionBorderRightWidth": null,
-    "tempHoverSelectOptionBorderBottomWidth": null,
-    "tempHoverSelectOptionBorderLeftWidth": null,
 
     "selectOptionBoxShadow": "",
 
@@ -1094,30 +781,7 @@
     "tempSelectOptionBoxShadowVertical": 2,
     "tempSelectOptionBoxShadowHorizontal": 1,
 
-    "hoverSelectOptionBoxShadow": null,
-
-    "tempHoverSelectOptionBoxShadow": null,
-
-    "hoverSelectOptionBoxShadowColorHex": null,
-    "hoverSelectOptionBoxShadowColorOpacity": null,
-    "hoverSelectOptionBoxShadowColorPalette": null,
-
-    "tempHoverSelectOptionBoxShadowColorPalette": null,
-    "tempHoverSelectOptionBoxShadowColorOpacity": null,
-
-    "hoverSelectOptionBoxShadowBlur": null,
-    "hoverSelectOptionBoxShadowSpread": null,
-    "hoverSelectOptionBoxShadowVertical": null,
-    "hoverSelectOptionBoxShadowHorizontal": null,
-
-    "tempHoverSelectOptionBoxShadowBlur": null,
-    "tempHoverSelectOptionBoxShadowSpread": null,
-    "tempHoverSelectOptionBoxShadowVertical": null,
-    "tempHoverSelectOptionBoxShadowHorizontal": null,
-
     "bgColorType": "solid",
-
-    "tempBgColorType": null,
 
     "gradientActivePointer": "startPointer",
     "gradientStartPointer": 0,
@@ -1169,16 +833,9 @@
     "tempHoverGradientColorOpacity": 0.8,
     "tempHoverGradientColorPalette": "",
 
-    "rangeBorderStyle": null,
-
     "rangeBorderColorHex": "#73777f",
     "rangeBorderColorOpacity": 1,
     "rangeBorderColorPalette": "",
-
-    "tempRangeBorderColorOpacity": null,
-    "tempRangeBorderColorPalette": null,
-
-    "tempRangeBorderStyle": null,
 
     "rangeBorderWidthType": "grouped",
     "rangeBorderWidth": 1,
@@ -1198,16 +855,6 @@
     "rangeStrokeBorderColorHex": "#73777f",
     "rangeStrokeBorderColorOpacity": 1,
     "rangeStrokeBorderColorPalette": "",
-
-    "tempRangeStrokeBorderColorOpacity": null,
-    "tempRangeStrokeBorderColorPalette": null,
-
-    "hoverRangeStrokeBorderColorHex": null,
-    "hoverRangeStrokeBorderColorOpacity": null,
-    "hoverRangeStrokeBorderColorPalette": null,
-
-    "tempHoverRangeStrokeBorderColorOpacity": null,
-    "tempHoverRangeStrokeBorderColorPalette": null,
 
     "activeRangeStrokeBorderColorHex": "#73777f",
     "activeRangeStrokeBorderColorOpacity": 1,
@@ -1239,47 +886,11 @@
     "tempRangeStrokeBorderBottomWidth": 5,
     "tempRangeStrokeBorderLeftWidth": 5,
 
-    "hoverRangeStrokeBorderWidthType": null,
-    "hoverRangeStrokeBorderWidth": null,
-    "hoverRangeStrokeBorderTopWidth": null,
-    "hoverRangeStrokeBorderRightWidth": null,
-    "hoverRangeStrokeBorderBottomWidth": null,
-    "hoverRangeStrokeBorderLeftWidth": null,
-
-    "tempHoverRangeStrokeBorderWidth": null,
-    "tempHoverRangeStrokeBorderTopWidth": null,
-    "tempHoverRangeStrokeBorderRightWidth": null,
-    "tempHoverRangeStrokeBorderBottomWidth": null,
-    "tempHoverRangeStrokeBorderLeftWidth": null,
-
-    "activeRangeStrokeBorderWidthType": null,
-    "activeRangeStrokeBorderWidth": null,
-    "activeRangeStrokeBorderTopWidth": null,
-    "activeRangeStrokeBorderRightWidth": null,
-    "activeRangeStrokeBorderBottomWidth": null,
-    "activeRangeStrokeBorderLeftWidth": null,
-
-    "tempActiveRangeStrokeBorderWidth": null,
-    "tempActiveRangeStrokeBorderTopWidth": null,
-    "tempActiveRangeStrokeBorderRightWidth": null,
-    "tempActiveRangeStrokeBorderBottomWidth": null,
-    "tempActiveRangeStrokeBorderLeftWidth": null,
-
     "rangePointsBorderStyle": "solid",
 
     "rangePointsBorderColorHex": "#73777f",
     "rangePointsBorderColorOpacity": 1,
     "rangePointsBorderColorPalette": "",
-
-    "tempRangePointsBorderColorOpacity": null,
-    "tempRangePointsBorderColorPalette": null,
-
-    "hoverRangePointsBorderColorHex": null,
-    "hoverRangePointsBorderColorOpacity": null,
-    "hoverRangePointsBorderColorPalette": null,
-
-    "tempHoverRangePointsBorderColorOpacity": null,
-    "tempHoverRangePointsBorderColorPalette": null,
 
     "tempRangePointsBorderStyle": "solid",
 
@@ -1299,19 +910,6 @@
     "tempRangePointsBorderRightWidth": 15,
     "tempRangePointsBorderBottomWidth": 15,
     "tempRangePointsBorderLeftWidth": 15,
-
-    "hoverRangePointsBorderWidthType": null,
-    "hoverRangePointsBorderWidth": null,
-    "hoverRangePointsBorderTopWidth": null,
-    "hoverRangePointsBorderRightWidth": null,
-    "hoverRangePointsBorderBottomWidth": null,
-    "hoverRangePointsBorderLeftWidth": null,
-
-    "tempHoverRangePointsBorderWidth": null,
-    "tempHoverRangePointsBorderTopWidth": null,
-    "tempHoverRangePointsBorderRightWidth": null,
-    "tempHoverRangePointsBorderBottomWidth": null,
-    "tempHoverRangePointsBorderLeftWidth": null,
 
     "colorHex": "#ffffff",
     "colorOpacity": 1,
@@ -1341,20 +939,6 @@
     "tempRatingActiveColorOpacity": 0.75,
     "tempRatingActiveColorPalette": "color7",
 
-    "hoverRatingActiveColorHex": null,
-    "hoverRatingActiveColorOpacity": null,
-    "hoverRatingActiveColorPalette": null,
-
-    "tempHoverRatingActiveColorOpacity": null,
-    "tempHoverRatingActiveColorPalette": null,
-
-    "activeRatingActiveColorHex": null,
-    "activeRatingActiveColorOpacity": null,
-    "activeRatingActiveColorPalette": null,
-
-    "tempActiveRatingActiveColorOpacity": null,
-    "tempActiveRatingActiveColorPalette": null,
-
     "borderStyle": "",
 
     "borderColorHex": "#66738d",
@@ -1364,18 +948,7 @@
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "",
 
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-
-    "tempHoverBorderColorOpacity": null,
-    "tempHoverBorderColorPalette": null,
-
     "tempBorderStyle": "solid",
-
-    "hoverBorderStyle": null,
-
-    "tempHoverBorderStyle": null,
 
     "borderWidthType": "grouped",
     "borderWidth": 0,
@@ -1389,19 +962,6 @@
     "tempBorderRightWidth": 2,
     "tempBorderBottomWidth": 2,
     "tempBorderLeftWidth": 2,
-
-    "hoverBorderWidthType": null,
-    "hoverBorderWidth": null,
-    "hoverBorderTopWidth": null,
-    "hoverBorderRightWidth": null,
-    "hoverBorderBottomWidth": null,
-    "hoverBorderLeftWidth": null,
-
-    "tempHoverBorderWidth": null,
-    "tempHoverBorderTopWidth": null,
-    "tempHoverBorderRightWidth": null,
-    "tempHoverBorderBottomWidth": null,
-    "tempHoverBorderLeftWidth": null,
 
     "borderRadiusType": "grouped",
     "tempBorderRadiusType": "grouped",
@@ -1439,27 +999,6 @@
     "tempBoxShadowVertical": 2,
     "tempBoxShadowHorizontal": 1,
 
-    "hoverBoxShadow": null,
-
-    "tempHoverBoxShadow": null,
-
-    "hoverBoxShadowColorHex": null,
-    "hoverBoxShadowColorOpacity": null,
-    "hoverBoxShadowColorPalette": null,
-
-    "tempHoverBoxShadowColorPalette": null,
-    "tempHoverBoxShadowColorOpacity": null,
-
-    "hoverBoxShadowBlur": null,
-    "hoverBoxShadowSpread": null,
-    "hoverBoxShadowVertical": null,
-    "hoverBoxShadowHorizontal": null,
-
-    "tempHoverBoxShadowBlur": null,
-    "tempHoverBoxShadowSpread": null,
-    "tempHoverBoxShadowVertical": null,
-    "tempHoverBoxShadowHorizontal": null,
-
     "tabletOptionWidth": 100,
     "tabletOptionWidthSuffix": "%",
 
@@ -1469,14 +1008,6 @@
     "tabletWidthDateOption": 100,
     "tabletWidthDateOptionSuffix": "%",
 
-    "tabletHorizontalAlign": null,
-
-    "tabletHorizontalAlignBtn": null,
-
-    "tabletHorizontalAlignOption": null,
-
-    "tabletHorizontalAlignLabel": null,
-
     "tabletIconSize": null,
     "tabletIconCustomSize": null,
     "tabletIconCustomSizeSuffix": null,
@@ -1484,27 +1015,6 @@
     "tabletIconSmallSize": null,
     "tabletIconMediumSize": null,
     "tabletIconLargeSize": null,
-
-    "tabletIconSpacing": null,
-
-    "tabletBoxShadow": null,
-
-    "tabletBoxShadowColorHex": null,
-    "tabletBoxShadowColorOpacity": null,
-    "tabletBoxShadowColorPalette": null,
-
-    "tempTabletBoxShadowColorPalette": null,
-    "tempTabletBoxShadowColorOpacity": null,
-
-    "tabletBoxShadowBlur": null,
-    "tabletBoxShadowSpread": null,
-    "tabletBoxShadowVertical": null,
-    "tabletBoxShadowHorizontal": null,
-
-    "tempTabletBoxShadowBlur": null,
-    "tempTabletBoxShadowSpread": null,
-    "tempTabletBoxShadowVertical": null,
-    "tempTabletBoxShadowHorizontal": null,
 
     "tabletTitleFontStyle": "",
     "tabletTitleFontFamilyType": null,
@@ -1617,14 +1127,6 @@
     "mobileWidthDateOption": 100,
     "mobileWidthDateOptionSuffix": "%",
 
-    "mobileHorizontalAlign": null,
-
-    "mobileHorizontalAlignBtn": null,
-
-    "mobileHorizontalAlignOption": null,
-
-    "mobileHorizontalAlignLabel": null,
-
     "mobileIconSize": null,
     "mobileIconCustomSize": null,
     "mobileIconCustomSizeSuffix": null,
@@ -1632,27 +1134,6 @@
     "mobileIconSmallSize": null,
     "mobileIconMediumSize": null,
     "mobileIconLargeSize": null,
-
-    "mobileIconSpacing": null,
-
-    "mobileBoxShadow": null,
-
-    "mobileBoxShadowColorHex": null,
-    "mobileBoxShadowColorOpacity": null,
-    "mobileBoxShadowColorPalette": null,
-
-    "tempMobileBoxShadowColorPalette": null,
-    "tempMobileBoxShadowColorOpacity": null,
-
-    "mobileBoxShadowBlur": null,
-    "mobileBoxShadowSpread": null,
-    "mobileBoxShadowVertical": null,
-    "mobileBoxShadowHorizontal": null,
-
-    "tempMobileBoxShadowBlur": null,
-    "tempMobileBoxShadowSpread": null,
-    "tempMobileBoxShadowVertical": null,
-    "tempMobileBoxShadowHorizontal": null,
 
     "mobileTitleFontStyle": "",
     "mobileTitleFontFamilyType": null,

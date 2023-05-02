@@ -6,7 +6,7 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
-import { imageSpecificSize, imageUrl } from "visual/utils/image";
+import { getImageUrl } from "visual/utils/image";
 import { getUrlQueryParam } from "visual/utils/url";
 import {
   videoData as getVideoData,
@@ -74,13 +74,12 @@ class VideoPlaylistItem extends EditorComponent {
     } = v;
     const { onActiveItem, active } = this.props;
     const videoSrc = this.getVideoSrc(v);
-    const coverUrl =
-      coverSizeType === "custom"
-        ? imageUrl(coverImageSrc, { fileName: coverImageFileName })
-        : imageSpecificSize(coverImageSrc, {
-            size: coverSizeType,
-            fileName: coverImageFileName
-          });
+    const coverUrl = getImageUrl({
+      uid: coverImageSrc,
+      fileName: coverImageFileName,
+      sizeType: coverSizeType
+    });
+
     const classNameContent = classnames(
       "brz-video-playlist-video-item",
       { "brz-video-playlist-video-item__cover": v.coverImageSrc },

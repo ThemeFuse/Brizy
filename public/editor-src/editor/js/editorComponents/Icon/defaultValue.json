@@ -124,10 +124,6 @@
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "color3",
 
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-
     "tempHoverBorderColorOpacity": 1,
     "tempHoverBorderColorPalette": "color3",
 

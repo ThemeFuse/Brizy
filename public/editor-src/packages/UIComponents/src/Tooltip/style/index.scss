@@ -1,0 +1,131 @@
+@import "../../../style";
+
+// Tooltip
+.brz-ed-tooltip {
+  &__content {
+    @apply relative z-[1];
+  }
+  &__overlay {
+    @apply absolute left-0 top-0;
+    @apply font-default-font-family;
+    z-index: z("tooltip-overlay");
+  }
+
+  // Size
+  &--auto {
+    @apply w-auto;
+  }
+
+  &--small {
+    @apply w-toolbar_tooltip__sm-width;
+  }
+
+  &--medium {
+    @apply w-toolbar_tooltip__md-width;
+  }
+
+  &--large {
+    @apply w-toolbar_tooltip__typo-width-no-population;
+  }
+
+  &--xlarge {
+    @apply w-toolbar_tooltip__typo-width;
+  }
+
+  // Static
+&__static {
+  @apply relative flex justify-center;
+
+  .brz-ed-tooltip--top-center {
+    @apply left-auto top-auto bottom-spaceBetween;
+  }
+
+  .brz-ed-tooltip--bottom-center {
+    @apply left-auto top-spaceBetween;
+  }
+
+  .brz-ed-tooltip--top-right,
+  .brz-ed-tooltip--bottom-right {
+    @apply right-[-15px] left-auto;
+  }
+
+  .brz-ed-tooltip--top-left,
+  .brz-ed-tooltip--bottom-left {
+    @apply left-[-15px];
+  }
+
+  .brz-ed-tooltip--top-right,
+  .brz-ed-tooltip--top-left {
+    @apply top-auto bottom-spaceBetween;
+  }
+
+  .brz-ed-tooltip--bottom-right,
+  .brz-ed-tooltip--bottom-left {
+    @apply top-spaceBetween;
+  }
+}
+
+  // Delay
+  &--delay-1 {
+    @apply [animation-delay:_0.6s];
+  }
+
+  &--delay-2 {
+    @apply [animation-delay:_1s];
+  }
+
+  // Items
+  &__item {
+    @apply border-b-bottom_panel__popover-border border-b border-x-0 border-t-0 border-solid;
+    @apply relative;
+    @apply text-[13px] font-semibold;
+    @apply px-[25px] py-[16px];
+    @apply text-bottom_panel__popover__item-color;
+  }
+
+  &__item:last-child {
+      @apply border-b-[transparent];
+  }
+  &__item.brz-ed-fixed-bottom-panel-popover__item {
+    .brz-icon-svg {
+      @apply min-w-[1em];
+    }
+
+    .brz-span {
+      @apply overflow-hidden text-ellipsis;
+    }
+  }
+}
+// Pro Uses for PromptBlocks | Fonts
+.brz-ed-tooltip-content__pro {
+  @apply font-semibold text-[rgba(255,255,255,0.8)] text-[13px] leading-[18px] text-left;
+  @apply pl-[22px] pr-[18px] py-[18px];
+  @apply font-default-font-family;
+
+  &-title {
+    @apply mb-[17px];
+  }
+
+  &-body .brz-icon-svg {
+    @apply text-[10px] mr-[8px];
+  }
+
+  .brz-p {
+    @apply text-[inherit] font-semibold;
+  }
+}
+
+// --- Tooltip
+.brz-ed-tooltip__overlay {
+  @apply cursor-auto;
+  @apply bg-toolbar-bg;
+  @apply shadow-popover_tooltips__helper__overlay-box-shadow;
+  @apply rounded-toolbar-border-radius;
+}
+
+// Tooltip overlay Bottom Publish
+.brz-ed-tooltip__overlay-publish-button {
+  @apply w-[162px];
+}
+
+
