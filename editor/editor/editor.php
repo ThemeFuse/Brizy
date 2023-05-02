@@ -196,18 +196,18 @@ class Brizy_Editor_Editor_Editor {
 		);
 		$manager           = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 
-		$config = $this->addRecaptchaAccounts( $manager, $config, $context );
-		$config = $this->addSocialAccounts( $manager, $config, $context );
-		$config = $this->addWpPostTypes( $config, $context );
-		$config = $this->addTemplateFields( $config, $mode === 'template', $wp_post_id, $context );
-		$config['wp']['api'] = $this->getApiActions($config, $context);
-        $config = $this->addGlobalBlocksData( $config );
-		$config = $this->addGlobalBlocksData( $config );
-		$config = $this->getPostLoopSources( $config, $mode === 'template', $wp_post_id, $context );
-		$config = $this->getApiConfigFields( $config, $context );
-		$config = $this->addContentDefaults( $config, $context );
-		$config = $this->addModuleGroups( $config, $context );
-		$config = $this->addUIConfig( $config, $context );
+		$config              = $this->addRecaptchaAccounts( $manager, $config, $context );
+		$config              = $this->addSocialAccounts( $manager, $config, $context );
+		$config              = $this->addWpPostTypes( $config, $context );
+		$config              = $this->addTemplateFields( $config, $mode === 'template', $wp_post_id, $context );
+		$config['wp']['api'] = $this->getApiActions( $config, $context );
+		$config              = $this->addGlobalBlocksData( $config );
+		$config              = $this->addGlobalBlocksData( $config );
+		$config              = $this->getPostLoopSources( $config, $mode === 'template', $wp_post_id, $context );
+		$config              = $this->getApiConfigFields( $config, $context );
+		$config              = $this->addContentDefaults( $config, $context );
+		$config              = $this->addModuleGroups( $config, $context );
+		$config              = $this->addUIConfig( $config, $context );
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
 
@@ -227,21 +227,21 @@ class Brizy_Editor_Editor_Editor {
 				[
 					"type"       => "link",
 					"icon"       => "nc-unlock",
-					"label"      => __bt( "Upgrade to Pro", 'brizy' ),
+					"label"      => __bt( "Upgrade to Pro", "Upgrade to Pro", 'brizy' ),
 					"link"       => $config['urls']['upgradeToPro'],
 					"linkTarget" => "_blank",
 				] : null,
 			[
 				"type"       => "link",
 				"icon"       => "nc-info",
-				"label"      => __bt( "About us", 'brizy' ),
+				"label"      => __bt( "About us", "About us", 'brizy' ),
 				"link"       => $config['urls']['about'],
 				"linkTarget" => "_blank"
 			],
 			[
 				"type"       => "link",
 				"icon"       => "nc-help-docs",
-				"label"      => __bt( "Support", 'brizy' ),
+				"label"      => __bt( "Support", "Support", 'brizy' ),
 				"link"       => $config['urls']['support'],
 				"linkTarget" => "_blank",
 				"roles"      => [ "admin" ]
@@ -249,13 +249,13 @@ class Brizy_Editor_Editor_Editor {
 			[
 				"type"  => "shortcuts",
 				"icon"  => "nc-alert-circle-que",
-				"label" => __bt( "Shortcuts", 'brizy' ),
+				"label" => __bt( "Shortcuts", "Shortcuts", 'brizy' ),
 				"link"  => "#"
 			],
 			[
 				"type"       => "link",
 				"icon"       => "nc-cog",
-				"label"      => __bt( "Plugin Settings", 'brizy' ),
+				"label"      => __bt( "Plugin Settings", "Plugin Settings", 'brizy' ),
 				"link"       => $config['urls']['pluginSettings'],
 				"linkTarget" => "_blank",
 				"roles"      => [ "admin" ]
@@ -263,7 +263,7 @@ class Brizy_Editor_Editor_Editor {
 			[
 				"type"  => "link",
 				"icon"  => "nc-back",
-				"label" => __bt( "Go to Dashboard", 'brizy' ),
+				"label" => __bt( "Go to Dashboard", "Go to Dashboard", 'brizy' ),
 				"link"  => $config['urls']['backToDashboard']
 			]
 		];
@@ -278,7 +278,7 @@ class Brizy_Editor_Editor_Editor {
 				]
 			],
 			"more"            => [
-				"options" => array_values(array_filter( $options ))
+				"options" => array_values( array_filter( $options ) )
 			]
 		];
 
@@ -328,9 +328,7 @@ class Brizy_Editor_Editor_Editor {
 
 		$moduleGroupCollector = new Brizy_Editor_Editor_ModuleGroups_Manager();
 
-		$config['ui']  [
-			'leftSidebar'] = [ 'moduleGroups' => $moduleGroupCollector->getAll( $config ) ]
-		;
+		$config['ui']  ['leftSidebar'] = [ 'moduleGroups' => $moduleGroupCollector->getAll( $config ) ];
 
 		return $config;
 	}
@@ -338,7 +336,7 @@ class Brizy_Editor_Editor_Editor {
 
 	private function getApiConfigFields( $config, $context ) {
 		$config['api'] = [
-			'media' => [
+			'media'      => [
 				'mediaResizeUrl' => home_url()
 			],
 			'customFile' => [
@@ -410,7 +408,9 @@ class Brizy_Editor_Editor_Editor {
 				'value' => $source['name'],
 				'title' => $source['label']
 			];
-		}, $result );return $config;
+		}, $result );
+
+		return $config;
 	}
 
 	private function addGlobalBlocksData( $config ) {
