@@ -286,7 +286,7 @@ class Brizy_Editor_Editor_Editor {
 			"horizontalAlign"      => true,
 			"verticalAlign"        => true,
 			"embedded"             => false,
-			"displayCondition"     => false,
+			"displayCondition"     => $is_popup,
 			"scrollPageBehind"     => true,
 			"clickOutsideToClose"  => true,
 			"deletePopup"          => true,
