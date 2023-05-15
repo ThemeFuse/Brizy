@@ -1,7 +1,7 @@
-import { t } from "src/utils/i18n";
+import { getCollectionSourceItems } from "../api";
 import { ChoicesSync } from "../types/Choices";
 import { Response } from "../types/Response";
-import { getCollectionSourceItems } from "./utils";
+import { t } from "../utils/i18n";
 
 export const getCollectionItemsIds = {
   async handler(
@@ -13,7 +13,7 @@ export const getCollectionItemsIds = {
       const data = await getCollectionSourceItems(extra.id);
 
       const items = [
-        { title: "None", value: "" },
+        { title: t("None"), value: "" },
         ...data.posts.map(({ ID, title }: { ID: string; title: string }) => ({
           value: ID,
           title
