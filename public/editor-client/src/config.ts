@@ -39,6 +39,7 @@ interface Actions {
   getPostObjects: string;
 
   searchPosts: string;
+  getPostObjects: string;
 }
 
 interface API {
@@ -179,6 +180,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   searchPosts: pipe(
     mPipe(Obj.readKey("searchPosts"), Str.read),
     throwOnNullish("INvalid actions: searchPosts")
+  ),
+  getPostObjects: pipe(
+    mPipe(Obj.readKey("getPostObjects"), Str.read),
+    throwOnNullish("Invalid actions: getPostObjects")
   )
 });
 
