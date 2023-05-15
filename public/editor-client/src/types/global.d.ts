@@ -16,6 +16,7 @@ export interface PLUGIN_ENV {
     mediaResizeUrl?: string;
     customFileUrl?: string;
   };
+  l10n?: Record<string, string>;
 }
 
 export interface VISUAL_CONFIG {

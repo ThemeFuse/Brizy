@@ -1,6 +1,7 @@
 import { getImageUid } from "../api";
 import { AddMediaData } from "../types/Media";
 import { getExtension } from "../utils/getExtension";
+import { t } from "../utils/i18n";
 import { isValidExtension } from "../utils/isValidExtension";
 
 export const addMedia: AddMediaData = {
@@ -9,13 +10,15 @@ export const addMedia: AddMediaData = {
     const wp = window.wp || window.parent.wp;
 
     if (!wp) {
-      rej("Could not find WordPress on global object (window.wp)");
+      rej(t("Could not find WordPress on global object (window.wp)"));
       return;
     }
 
     if (!wp.media) {
       rej(
-        "Could not find WordPress media object (window.wp.media). Make sure the WordPress media script is enqueued."
+        t(
+          "Could not find WordPress media object (window.wp.media). Make sure the WordPress media script is enqueued."
+        )
       );
       return;
     }
@@ -51,7 +54,7 @@ export const addMedia: AddMediaData = {
           res({ uid: r.uid, fileName: filename });
         })
         .catch((r: unknown) => {
-          rej("failed to get attachment uid");
+          rej(t("failed to get attachment uid"));
           console.error(r);
         });
     });

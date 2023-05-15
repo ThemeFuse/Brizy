@@ -4,6 +4,7 @@ import {
   ImageUpload,
   SelectionData
 } from "../types/Media";
+import { t } from "../utils/i18n";
 import { uploadImage } from "./utils";
 
 export const addMediaGallery: AddMediaGallery = {
@@ -12,13 +13,15 @@ export const addMediaGallery: AddMediaGallery = {
     const wp = window.wp || window.parent.wp;
 
     if (!wp) {
-      rej("Could not find WordPress on global object (window.wp)");
+      rej(t("Could not find WordPress on global object (window.wp)"));
       return;
     }
 
     if (!wp.media) {
       rej(
-        "Could not find WordPress media object (window.wp.media). Make sure the WordPress media script is enqueued."
+        t(
+          "Could not find WordPress media object (window.wp.media). Make sure the WordPress media script is enqueued."
+        )
       );
       return;
     }
@@ -62,9 +65,10 @@ export const addMediaGallery: AddMediaGallery = {
 
           if ((e as { status: number }).status === 413) {
             errorMsg =
-              (e as { message?: string }).message || "Image file is too large.";
+              (e as { message?: string }).message ||
+              t("Image file is too large.");
           } else {
-            errorMsg = "Failed to upload file. Please upload a valid image";
+            errorMsg = t("Failed to upload file. Please upload a valid image");
           }
           rej(errorMsg);
         });
