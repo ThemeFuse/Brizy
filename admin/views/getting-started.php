@@ -165,7 +165,7 @@
 			<?php if ( ! $isWhiteLabel ) : ?>
 				<div class="brz-bottom-block">
 					<div>
-						<a href="https://www.youtube.com/playlist?list=PLSWJ3G5dn_5h9ikUryu0yIxGrdYupOY2I" target="_blank">
+						<a href="https://www.brizy.io/brizy-wordpress-101" target="_blank">
 							<img src="<?php echo $imgPath ?>Visit_Brizy_Academy.jpg" alt="">
 						</a>
 					</div>
@@ -176,7 +176,7 @@
 						<div class="brz-bottom-block-subtitle">
 							<?php _e( 'Follow step by step guides and tutorials on how to build your website and bring your web presence to life.', 'brizy' ); ?>
 						</div>
-						<a href="https://www.youtube.com/playlist?list=PLSWJ3G5dn_5h9ikUryu0yIxGrdYupOY2I" target="_blank">
+						<a href="https://www.brizy.io/brizy-wordpress-101" target="_blank">
 							<?php _e( 'Visit the Academy', 'brizy' ); ?>
 						</a>
 					</div>
