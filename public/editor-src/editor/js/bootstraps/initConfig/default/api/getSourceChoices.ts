@@ -11,7 +11,7 @@ export const getSourceChoices = <C extends ConfigCommon>(config: C): C => {
   const loadSourceTypes = async () => {
     const sourceTypes = await getCollectionSourceTypes(config);
     return [
-      { title: "Not Selected", value: "" },
+      { title: "None", value: "" },
       ...sourceTypes.map((item) => ({ title: item.title, value: item.id }))
     ];
   };

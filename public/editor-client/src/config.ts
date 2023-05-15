@@ -24,13 +24,15 @@ interface Actions {
   getLayoutByUid: string;
   updateLayout: string;
   deleteLayout: string;
+
+  getPostObjects: string;
 }
 
 interface API {
   mediaResizeUrl: string;
   customFileUrl: string;
 }
-interface Config {
+export interface Config {
   hash: string;
   editorVersion: string;
   url: string;
@@ -117,6 +119,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   deleteLayout: pipe(
     mPipe(Obj.readKey("deleteLayout"), Str.read),
     throwOnNullish("Invalid actions: deleteLayout")
+  ),
+  getPostObjects: pipe(
+    mPipe(Obj.readKey("getPostObjects"), Str.read),
+    throwOnNullish("Invalid actions: getPostObjects")
   )
 });
 
