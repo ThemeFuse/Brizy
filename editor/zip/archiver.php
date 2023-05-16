@@ -214,7 +214,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 
     public function isVersionSupported($version)
     {
-        $version = preg_replace("/-.*/i", "", $version);
+        $version = preg_replace("/-wp/i", "", $version);
         return version_compare($this->getEditorVersion(), $version, '>=');
     }
 
