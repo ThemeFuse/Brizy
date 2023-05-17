@@ -206,6 +206,7 @@ class Brizy_Editor_Editor_Editor {
 		$config              = $this->getApiConfigFields( $config, $context );
 		$config              = $this->addContentDefaults( $config, $context );
 		$config              = $this->addUIConfig( $config, $context );
+		$config              = $this->addProjectData( $config, $context );
 		$config              = $this->addModuleGroups( $config, $context );
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
@@ -329,6 +330,13 @@ class Brizy_Editor_Editor_Editor {
 
 		$config['ui']['leftSidebar'] = array_merge(  $config['ui']['leftSidebar'],[ 'moduleGroups' => $moduleGroupCollector->getAll( $config ) ]);
 
+		return $config;
+	}
+
+
+	private function addProjectData( $config, $context ) {
+
+		$config['projectData'] = Brizy_Editor_Project::get()->createResponse();;
 		return $config;
 	}
 
