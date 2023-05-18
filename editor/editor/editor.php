@@ -336,7 +336,10 @@ class Brizy_Editor_Editor_Editor {
 
 	private function addProjectData( $config, $context ) {
 
-		$config['projectData'] = Brizy_Editor_Project::get()->createResponse();;
+		$response              = Brizy_Editor_Project::get()->createResponse();
+		$response['data']      = json_decode( $response['data'] );
+		$config['projectData'] = $response;
+
 		return $config;
 	}
 
