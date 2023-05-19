@@ -25,7 +25,8 @@ class Brizy_Editor_Editor_ModuleGroups_ContentProvider implements Brizy_Editor_E
 				"Accordion",
 				"Switcher",
 				"Table",
-				"Timeline"
+				"Timeline",
+				"Login"
 			] ),
 		];
 	}
