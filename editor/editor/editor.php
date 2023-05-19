@@ -141,8 +141,7 @@ class Brizy_Editor_Editor_Editor {
 
 				// wp specific
 				'changeTemplate'     => $change_template_url,
-				'upgradeToPro'       =>
-					apply_filters( 'brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL ),
+				'upgradeToPro'       => Brizy_Config::getUpgradeUrl(),
 
 				'support'          =>
 					Brizy_Config::getSupportUrl(),

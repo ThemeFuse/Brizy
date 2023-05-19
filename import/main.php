@@ -67,8 +67,8 @@ class Brizy_Import_Main {
 				't13'           => __( 'Choose this option if you want to start fresh and delete your current content. A backup is advisable, there is no turning back from this.', 'brizy' ),
 				't14'           => __( 'Deletes your current content', 'brizy' ),
 			],
-			'supportUrl' => Brizy_Config::SUPPORT_URL,
-			'goProUrl'   => Brizy_Config::GO_PRO_DASHBOARD_URL,
+			'supportUrl' => Brizy_Config::getSupportUrl(),
+			'goProUrl'   => Brizy_Config::getUpgradeUrl(),
 			'isPro'      => Brizy_Compatibilities_BrizyProCompatibility::isPro(),
 		];
 

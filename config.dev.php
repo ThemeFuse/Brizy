@@ -22,10 +22,9 @@ class Brizy_Config {
 	const PLATFORM_CLIENT_SECRET = "3dfj9r23uqgws0kws0cgsgs0008owcwo4o0o08sgs8o4wgco4";
 	const PLATFORM_EMAIL = "admin@admin.com";
 
-	const UPGRADE_TO_PRO_URL = "https://www.brizy.io/pricing/";
+	const UPGRADE_TO_PRO_URL = "https://www.brizy.io/pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 	const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://brizy.io";
-	const GO_PRO_DASHBOARD_URL = "https://www.brizy.io/pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
 	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
 	const EDITOR_BUILD_RELATIVE_PATH = 'public/editor-build/dev';
 
@@ -94,5 +93,9 @@ class Brizy_Config {
 		$value = isset($_ENV[$name]) ? $_ENV[$name] : null;
 		$value = isset($_SERVER[$name])  ? $_SERVER[$name] : $value;
 		return $value;
+	}
+
+	static public function getUpgradeUrl() {
+		return apply_filters( 'brizy_upgrade_to_pro_url', self::UPGRADE_TO_PRO_URL );
 	}
 }
