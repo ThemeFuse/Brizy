@@ -205,8 +205,8 @@ class Brizy_Editor_Editor_Editor {
 		$config              = $this->getPostLoopSources( $config, $mode === 'template', $wp_post_id, $context );
 		$config              = $this->getApiConfigFields( $config, $context );
 		$config              = $this->addContentDefaults( $config, $context );
-		$config              = $this->addModuleGroups( $config, $context );
 		$config              = $this->addUIConfig( $config, $context );
+		$config              = $this->addModuleGroups( $config, $context );
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
 
@@ -327,7 +327,7 @@ class Brizy_Editor_Editor_Editor {
 
 		$moduleGroupCollector = new Brizy_Editor_Editor_ModuleGroups_Manager();
 
-		$config['ui']  ['leftSidebar'] = [ 'moduleGroups' => $moduleGroupCollector->getAll( $config ) ];
+		$config['ui']['leftSidebar'] = [ 'moduleGroups' => $moduleGroupCollector->getAll( $config ) ];
 
 		return $config;
 	}
