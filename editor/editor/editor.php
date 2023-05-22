@@ -290,7 +290,7 @@ class Brizy_Editor_Editor_Editor {
 			"displayCondition"     => $is_popup,
 			"scrollPageBehind"     => true,
 			"clickOutsideToClose"  => true,
-			"deletePopup"          => true,
+			"deletePopup"          => $is_popup,
 			"backgroundPreviewUrl" => $config['urls']['pagePreview']
 		];
 
