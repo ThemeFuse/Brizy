@@ -358,7 +358,7 @@ class Brizy_Editor_Editor_Editor {
 			'PostExcerpt'      => [ 'linkSource' => 'page' ],
 			'PostTitle'        => [ 'linkSource' => 'page' ],
 			'ProductMetafield' => [ 'linkSource' => 'page' ],
-			'Posts'            => [ 'source' => 'post', 'orderBy' => 'ID', 'order' => 'ASC' ]
+			'Posts'            => [ 'type'=>'posts', 'source' => 'post', 'orderBy' => 'ID', 'order' => 'ASC' ]
 		];
 
 		return $config;
