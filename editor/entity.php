@@ -310,7 +310,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	 * @return int
 	 */
 	public function getCurrentDataVersion() {
-		return (int) ( get_post_meta( $this->getWpPostId(), self::BRIZY_DATA_VERSION_KEY, true ) ?: 0 );
+		return (int) ( get_post_meta( $this->getWpPostId(), self::BRIZY_DATA_VERSION_KEY, true ) ?: 1 );
 	}
 
 

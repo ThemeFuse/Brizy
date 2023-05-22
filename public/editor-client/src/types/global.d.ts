@@ -1,4 +1,7 @@
+import { AutoSave } from "./AutoSave";
 import { AddMediaData, AddMediaExtra } from "./Media";
+import { OnChange } from "./OnChange";
+import { PublishData } from "./Project";
 
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
@@ -20,6 +23,35 @@ export interface PLUGIN_ENV {
 }
 
 export interface VISUAL_CONFIG {
+  //#region UI
+
+  ui?: {
+    //#region Publish
+
+    publish?: {
+      label?: string;
+      handler: (
+        res: Response<PublishData>,
+        rej: Response<string>,
+        extra: PublishData
+      ) => void;
+    };
+
+    //#endregion
+  };
+
+  //#endregion
+
+  //#region Events
+
+  onAutoSave?: (data: AutoSave) => void;
+
+  // Triggered when the user change the
+  // pageData, globalBlocks or projectData
+  onChange?: (data: OnChange) => void;
+
+  //#endregion
+
   //#region API
 
   api?: {

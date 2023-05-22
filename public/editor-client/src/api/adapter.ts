@@ -1,3 +1,4 @@
+import { Project } from "../types/Project";
 import {
   CreatedSavedBlock,
   CreatedSavedLayout,
@@ -153,5 +154,20 @@ export const parseSavedLayout = (
 
   return { ...savedLayout, data, meta };
 };
+
+//#endregion
+
+//#region Project
+
+type APIProject = Omit<Project, "data" | "dataVersion"> & {
+  data: string;
+  dataVersion: string;
+};
+
+export const stringifyProject = (project: Project): APIProject => ({
+  ...project,
+  data: JSON.stringify(project.data),
+  dataVersion: `${project.dataVersion}`
+});
 
 //#endregion
