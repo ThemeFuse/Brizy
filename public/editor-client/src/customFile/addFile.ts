@@ -1,5 +1,6 @@
 import { getAttachmentById } from "../api";
 import { AddFileData } from "../types/File";
+import { t } from "../utils/i18n";
 
 export const addFile: AddFileData = {
   label: "Image",
@@ -7,13 +8,15 @@ export const addFile: AddFileData = {
     const wp = window.wp || window.parent.wp;
 
     if (!wp) {
-      rej("Could not find WordPress on global object (window.wp)");
+      rej(t("Could not find WordPress on global object (window.wp)"));
       return;
     }
 
     if (!wp.media) {
       rej(
-        "Could not find WordPress media object (window.wp.media). Make sure the WordPress media script is enqueued."
+        t(
+          "Could not find WordPress media object (window.wp.media). Make sure the WordPress media script is enqueued."
+        )
       );
       return;
     }
@@ -24,7 +27,7 @@ export const addFile: AddFileData = {
       states: new wp.media.controller.Library({
         library: wp.media.query({ type: "image" }),
         multiple: false,
-        title: "Upload file",
+        title: t("Upload file"),
         filterable: "uploaded",
         priority: 20
       })
@@ -44,7 +47,7 @@ export const addFile: AddFileData = {
     });
 
     frame.on("escape", () => {
-      rej("File upload cancelled");
+      rej(t("File upload cancelled"));
     });
 
     frame.open();

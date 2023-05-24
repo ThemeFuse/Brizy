@@ -41,13 +41,13 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
 
     protected function initializeApiActions()
     {
-        $pref = 'wp_ajax_' . Brizy_Editor::prefix();
-        add_action($pref . self::DOWNLOAD_LAYOUTS, array($this, 'actionDownloadLayouts'));
-        add_action($pref . self::GET_LAYOUT_BY_UID_ACTION, array($this, 'actionGetLayoutByUid'));
-        add_action($pref . self::GET_LAYOUTS_ACTION, array($this, 'actionGetLayouts'));
-        add_action($pref . self::CREATE_LAYOUT_ACTION, array($this, 'actionCreateLayout'));
-        add_action($pref . self::UPDATE_LAYOUT_ACTION, array($this, 'actionUpdateLayout'));
-        add_action($pref . self::DELETE_LAYOUT_ACTION, array($this, 'actionDeleteLayout'));
+        $pref = 'wp_ajax_'.Brizy_Editor::prefix();
+        add_action($pref.self::DOWNLOAD_LAYOUTS, array($this, 'actionDownloadLayouts'));
+        add_action($pref.self::GET_LAYOUT_BY_UID_ACTION, array($this, 'actionGetLayoutByUid'));
+        add_action($pref.self::GET_LAYOUTS_ACTION, array($this, 'actionGetLayouts'));
+        add_action($pref.self::CREATE_LAYOUT_ACTION, array($this, 'actionCreateLayout'));
+        add_action($pref.self::UPDATE_LAYOUT_ACTION, array($this, 'actionUpdateLayout'));
+        add_action($pref.self::DELETE_LAYOUT_ACTION, array($this, 'actionDeleteLayout'));
     }
 
     public function actionDownloadLayouts()
@@ -82,19 +82,21 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
                 $this->error(404, __('There are no layouts to be archived'));
             }
 
-            $zipPath = "Layout-" . date(DATE_ATOM) . ".zip";
+            $zipPath     = "Layout-".date(DATE_ATOM).".zip";
             $fontManager = new Brizy_Admin_Fonts_Manager();
-            $zip = new Brizy_Editor_Zip_Archiver(Brizy_Editor_Project::get(),
+            $zip         = new Brizy_Editor_Zip_Archiver(
+                Brizy_Editor_Project::get(),
                 $fontManager,
-                BRIZY_SYNC_VERSION);
-            $zipPath = $zip->createZip($items, $zipPath);
+                BRIZY_SYNC_VERSION
+            );
+            $zipPath     = $zip->createZip($items, $zipPath);
 
             header("Pragma: public");
             header("Expires: 0");
             header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
             header("Cache-Control: private", false);
             header("Content-Type: application/octet-stream");
-            header("Content-Disposition: attachment; filename=\"" . basename($zipPath) . "\";");
+            header("Content-Disposition: attachment; filename=\"".basename($zipPath)."\";");
             header("Content-Transfer-Encoding: binary");
 
             echo file_get_contents($zipPath);
@@ -189,7 +191,19 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
             $layout->setMeta(stripslashes($this->param('meta')));
             $layout->set_editor_data($editorData);
             $layout->set_needs_compile(true);
-            //$layout->setCloudUpdateRequired( true );
+
+	        if($this->param('title'))
+	        {
+		        $layout->setTitle(stripslashes($this->param('title')));
+	        }
+
+	        if($this->param('tags'))
+	        {
+		        $layout->setTags(stripslashes($this->param('tags')));
+	        }
+
+
+	        //$layout->setCloudUpdateRequired( true );
             $layout->setDataVersion(1);
             $layout->save();
 
@@ -213,19 +227,11 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
                 $this->error('400', 'Invalid uid');
             }
 
-            if (!$this->param('data')) {
-                $this->error('400', 'Invalid data');
-            }
-
-            if (!$this->param('meta')) {
-                $this->error(400, 'Invalid meta data');
-            }
-
-            if (!$this->param('dataVersion')) {
+            if ( ! $this->param('dataVersion')) {
                 $this->error(400, 'Invalid data version');
             }
             $layoutManager = new Brizy_Admin_Layouts_Manager();
-            $layout = $layoutManager->getEntity($this->param('uid'));
+            $layout        = $layoutManager->getEntity($this->param('uid'));
 
             if (!$layout) {
                 $this->error(400, 'Layout not found');
@@ -234,8 +240,23 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
             /**
              * @var Brizy_Editor_Layout $layout ;
              */
-            $layout->setMeta(stripslashes($this->param('meta')));
-            $layout->set_editor_data(stripslashes($this->param('data')));
+
+            if ($this->param('meta')) {
+                $layout->setMeta(stripslashes($this->param('meta')));
+            }
+            if ($this->param('data')) {
+                $layout->set_editor_data(stripslashes($this->param('data')));
+            }
+	        if($this->param('title'))
+	        {
+		        $layout->setTitle(stripslashes($this->param('title')));
+	        }
+
+	        if($this->param('tags'))
+	        {
+		        $layout->setTags(stripslashes($this->param('tags')));
+	        }
+
             $layout->setDataVersion($this->param('dataVersion'));
 
             if ((int)$this->param('is_autosave')) {

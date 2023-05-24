@@ -13,6 +13,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	const BRIZY_POST_EDITOR_VERSION = 'brizy-post-editor-version';
 	const BRIZY_POST_COMPILER_VERSION = 'brizy-post-compiler-version';
 	const BRIZY_POST_PLUGIN_VERSION = 'brizy-post-plugin-version';
+	const BRIZY_TAGS = 'brizy-tags';
 
 	static protected $instance = null;
 	static protected $compiled_page = [];
@@ -181,11 +182,10 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 	public function createResponse( $fields = array() ) {
 
-		$p_id      = (int) $this->getWpPostId();
-		$the_title = get_the_title( $p_id );
+		$p_id = (int) $this->getWpPostId();
 
 		$global = array(
-			'title'       => $the_title,
+			'title'       => $the_title = $this->getTitle(),
 			'slug'        => sanitize_title( $the_title ),
 			'data'        => $this->get_editor_data(),
 			'id'          => $p_id,
@@ -193,7 +193,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			'template'    => get_page_template_slug( $p_id ),
 			'status'      => get_post_status( $p_id ),
 			'url'         => get_the_permalink( $p_id ),
-			'dataVersion' => $this->getCurrentDataVersion()
+			'dataVersion' => $this->getCurrentDataVersion(),
+			'author'      => $this->getWpPost()->post_author
 		);
 
 		return $global;
@@ -232,6 +233,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 		$postarr = [
 			'ID'           => $this->getWpPostId(),
+			'post_title'   => $this->getTitle(),
 			'post_content' => $this->getPostContent( $createRevision )
 		];
 
@@ -274,7 +276,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		if ( $noFilters ) {
 			$content = $post->post_content;
 		} else {
-			$context = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
+			$context             = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), null, $post, null );
 			$placeholderProvider = new Brizy_Content_PlaceholderWpProvider( $context );
 			$context->setProvider( $placeholderProvider );
 			$extractor = new \BrizyPlaceholders\Extractor( $placeholderProvider );
@@ -581,7 +583,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	public function isCompiledWithCurrentVersion() {
 		$proVersion = defined( 'BRIZY_PRO_VERSION' ) ? BRIZY_PRO_VERSION : null;
 
-		return $this->get_compiler_version() === BRIZY_EDITOR_VERSION && $this->get_pro_plugin_version() === $proVersion && $this->plugin_version===BRIZY_VERSION;
+		return $this->get_compiler_version() === BRIZY_EDITOR_VERSION && $this->get_pro_plugin_version() === $proVersion && $this->plugin_version === BRIZY_VERSION;
 	}
 
 	/**
@@ -691,6 +693,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		//$storageData          = $storage->get_storage();
 		$storage_post = $storage->get( $this->getObjectKey(), false );
 
+		$this->setTitle( get_the_title( $this->getWpPostId() ) );
+
 		// check for deprecated forms of posts
 		if ( $storage_post instanceof self ) {
 			$this->set_editor_data( $storage_post->editor_data );
@@ -717,7 +721,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			$this->set_pro_plugin_version( isset( $storage_post['pro_plugin_version'] ) ? $storage_post['pro_plugin_version'] : null );
 			$this->compiled_html_head = isset( $storage_post['compiled_html_head'] ) ? $storage_post['compiled_html_head'] : null;
 			$this->compiled_html_body = isset( $storage_post['compiled_html_body'] ) ? $storage_post['compiled_html_body'] : null;
-			$this->lastUserEdited = isset( $storage_post['lastUserEdited'] ) ? $storage_post['lastUserEdited'] : null;
+			$this->lastUserEdited     = isset( $storage_post['lastUserEdited'] ) ? $storage_post['lastUserEdited'] : null;
 		}
 	}
 
@@ -727,6 +731,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 	 * @return mixed
 	 */
 	protected function populateAutoSavedData( $autosave ) {
+		$autosave->setTitle( $this->getTitle() );
 		$autosave->set_template( $this->get_template() );
 		$autosave->set_editor_data( $this->get_editor_data() );
 		$autosave->set_editor_version( $this->get_editor_version() );

@@ -1,6 +1,7 @@
-import { mPipe, parseStrict } from "fp-utilities";
+import { mPipe, optional, parseStrict } from "fp-utilities";
 import { PLUGIN_ENV } from "./types/global";
 import { pipe } from "./utils/fp/pipe";
+import { onNullish } from "./utils/onNullish";
 import * as Obj from "./utils/reader/object";
 import * as Str from "./utils/reader/string";
 import { throwOnNullish } from "./utils/throwOnNullish";
@@ -10,6 +11,19 @@ interface Actions {
   getMediaUid: string;
   getAttachmentUid: string;
   setProject: string;
+
+  getSavedBlockList: string;
+  getSavedBlockByUid: string;
+  createSavedBlock: string;
+  updateSavedBlock: string;
+  deleteSavedBlock: string;
+  uploadBlocks: string;
+
+  createLayout: string;
+  getLayoutList: string;
+  getLayoutByUid: string;
+  updateLayout: string;
+  deleteLayout: string;
 }
 
 interface API {
@@ -23,6 +37,7 @@ interface Config {
   pageId: string;
   actions: Actions;
   api: API;
+  l10n?: Record<string, string>;
 }
 
 const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
@@ -58,6 +73,50 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   setProject: pipe(
     mPipe(Obj.readKey("setProject"), Str.read),
     throwOnNullish("Invalid actions: setProject")
+  ),
+  createSavedBlock: pipe(
+    mPipe(Obj.readKey("createSavedBlock"), Str.read),
+    throwOnNullish("Invalid actions: createSavedBlock")
+  ),
+  getSavedBlockList: pipe(
+    mPipe(Obj.readKey("getSavedBlockList"), Str.read),
+    throwOnNullish("Invalid actions: getSavedBlockList")
+  ),
+  getSavedBlockByUid: pipe(
+    mPipe(Obj.readKey("getSavedBlockByUid"), Str.read),
+    throwOnNullish("Invalid actions: getSavedBlockByUid")
+  ),
+  updateSavedBlock: pipe(
+    mPipe(Obj.readKey("updateSavedBlock"), Str.read),
+    throwOnNullish("Invalid actions: updateSavedBlock")
+  ),
+  deleteSavedBlock: pipe(
+    mPipe(Obj.readKey("deleteSavedBlock"), Str.read),
+    throwOnNullish("Invalid actions: deleteSavedBlock")
+  ),
+  uploadBlocks: pipe(
+    mPipe(Obj.readKey("uploadBlocks"), Str.read),
+    throwOnNullish("Invalid actions: uploadBlocks")
+  ),
+  createLayout: pipe(
+    mPipe(Obj.readKey("createLayout"), Str.read),
+    throwOnNullish("Invalid actions: createLayout")
+  ),
+  getLayoutList: pipe(
+    mPipe(Obj.readKey("getLayoutList"), Str.read),
+    throwOnNullish("Invalid actions: getLayoutList")
+  ),
+  getLayoutByUid: pipe(
+    mPipe(Obj.readKey("getLayoutByUid"), Str.read),
+    throwOnNullish("Invalid actions: getLayoutByUid")
+  ),
+  updateLayout: pipe(
+    mPipe(Obj.readKey("updateLayout"), Str.read),
+    throwOnNullish("Invalid actions: updateLayout")
+  ),
+  deleteLayout: pipe(
+    mPipe(Obj.readKey("deleteLayout"), Str.read),
+    throwOnNullish("Invalid actions: deleteLayout")
   )
 });
 
@@ -85,7 +144,8 @@ const reader = parseStrict<PLUGIN_ENV, Config>({
   api: pipe(
     mPipe(Obj.readKey("api"), Obj.read, apiReader),
     throwOnNullish("Invalid: api")
-  )
+  ),
+  l10n: optional(pipe(Obj.readKey("l10n"), Obj.read, onNullish({})))
 });
 
 export const getConfig = (): MValue<Config> => {

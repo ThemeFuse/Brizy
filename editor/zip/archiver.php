@@ -83,7 +83,8 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         $block = $item->getPost();
         $data = array(
             'class' => get_class($block),
-            'meta' => $block->getMeta(),
+            'title'         => $block->getTitle(),
+			'meta' => $block->getMeta(),
             'media' => $block->getMedia(),
             'data' => $block->get_editor_data(),
             'editorVersion' => $block->get_editor_version(),
@@ -96,7 +97,11 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             'hasPro' => $item->isPro()
         );
 
-        $z->addEmptyDir($block->getUid());
+        if ( method_exists( $block, 'getTags' ) ) {
+			$data['tags'] = $block->getTags();
+		}
+
+		$z->addEmptyDir( $block->getUid() );
 
         $media = json_decode($block->getMedia());
         $meta = json_decode($block->getMeta());
@@ -184,12 +189,21 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         }
 
         /**
-         * @var Brizy_Editor_Post $block ;
+         * @var Brizy_Editor_Block $block ;
          */
         $block = $this->getManager($entityClass)->createEntity(md5(random_bytes(10)), 'publish');
         $block->set_needs_compile(true);
         $block->set_editor_data($data->data);
         $block->setMeta($data->meta);
+
+		if ( $data->title ) {
+			$block->setTitle( $data->title );
+		}
+
+		if ( method_exists( $entityClass, 'setTags' ) ) {
+			$block->setTags( $data->tags );
+		}
+
         $block->setMedia($data->media);
         $block->set_editor_version($data->editorVersion);
         $block->setDataVersion(1);

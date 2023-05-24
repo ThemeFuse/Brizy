@@ -20,6 +20,12 @@
     "baseUrl": ".",
     "outDir": "build"
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "build"]
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "build",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts",
+    "src/**/__tests__/*"
+  ]
 }

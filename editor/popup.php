@@ -9,6 +9,9 @@
 
 class Brizy_Editor_Popup extends Brizy_Editor_Post {
 
+
+    use Brizy_Editor_PostTagsAware;
+
 	const BRIZY_META = 'brizy-meta';
 	const BRIZY_MEDIA = 'brizy-media';
 	const BRIZY_CLOUD_CONTAINER = 'brizy-cloud-container';
@@ -169,10 +172,10 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 	public function jsonSerialize() {
 		$data                = get_object_vars( $this );
 		$data['editor_data'] = base64_decode( $data['editor_data'] );
-
-
 		$data['cloudId'] = $this->getCloudId();
 		$data['meta']    = $this->getMeta();
+		$data['title'] = $this->getTitle();
+		$data['tags'] = $this->getTags();
 
 		unset( $data['wp_post'] );
 
@@ -191,6 +194,8 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 		if ( isset( $data['cloudId'] ) ) {
 			$this->cloudId = $data['cloudId'];
 		}
+
+		$this->loadInstanceTags();
 	}
 
 	/**
@@ -207,61 +212,53 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 	public function createResponse( $fields = array() ) {
 
 		$p_id      = (int) $this->getWpPostId();
-		$the_title = get_the_title( $p_id );
 
 		if ( empty( $fields ) ) {
 			$fields = array(
 				'uid',
 				'meta',
+				'title',
+				'tags',
 				'data',
-				'status'
+				'status',
+				'author'
 			);
 		}
 
-		$global = array(
-			'data'        => $this->get_editor_data(),
-			'uid'         => $this->getUid(),
-			'status'      => get_post_status( $p_id ),
-			'dataVersion' => $this->getCurrentDataVersion(),
-			'meta'        => $this->getMeta()
-		);
+		$global = array();
+
+		if ( in_array( 'data', $fields ) ) {
+			$global['data'] = $this->get_editor_data();
+		}
+
+		if ( in_array( 'uid', $fields ) ) {
+			$global['uid'] = $this->getUid();
+		}
+
+		if ( in_array( 'status', $fields ) ) {
+			$global['status'] = get_post_status( $p_id );
+		}
+
+		if ( in_array( 'dataVersion', $fields ) ) {
+			$global['dataVersion'] = $this->getCurrentDataVersion();
+		}
+
+		if ( in_array( 'meta', $fields ) ) {
+			$global['meta'] = $this->getMeta();
+		}
+
+		if ( in_array( 'title', $fields ) ) {
+			$global['title'] = $this->getTitle();
+		}
+
+		if ( in_array( 'tags', $fields ) ) {
+			$global['tags'] = $this->getTags();
+		}
+
+		if ( in_array( 'author', $fields ) ) {
+			$global['author'] = $this->getWpPost()->post_author;
+		}
 
 		return $global;
 	}
-
-//
-//	/**
-//	 * @param Brizy_Editor_Popup $post
-//	 * @param array $fields
-//	 *
-//	 * @return array
-//	 */
-//	public static function postData( Brizy_Editor_Popup $post, $fields = array() ) {
-//
-//		$p_id = (int) $post->getWpPostId();
-//
-//		if ( empty( $fields ) ) {
-//			$fields = array( 'uid', 'id', 'meta', 'data', 'status' );
-//		}
-//
-//		$global = array();
-//
-//		if ( in_array( 'uid', $fields ) ) {
-//			$global['uid'] = $post->getUid();
-//		}
-//		if ( in_array( 'status', $fields ) ) {
-//			$global['status'] = get_post_status( $p_id );
-//		}
-//		if ( in_array( 'data', $fields ) ) {
-//			$global['data'] = $post->get_editor_data();
-//		}
-//		if ( in_array( 'meta', $fields ) ) {
-//			$global['meta'] = $post->getMeta();
-//		}
-//
-//
-//		return $global;
-//	}
-
-
 }
