@@ -22,7 +22,7 @@ class Brizy_Editor_Editor_ModuleGroups_SingleProvider implements Brizy_Editor_Ed
                 "WPBreadcrumbs",
                 "WPPostNavigation",
                 "Posts"
-            ]),
+            ], 600 ),
         ];
     }
 }

@@ -15,7 +15,7 @@ class Brizy_Editor_Editor_ModuleGroups_MediaProvider implements Brizy_Editor_Edi
 				"Video",
 				"Audio",
 				"VideoPlaylist"
-			] ),
+			], 300 ),
 		];
 	}
 }

@@ -24,8 +24,11 @@ class Brizy_Editor_Editor_ModuleGroups_StoryProvider implements Brizy_Editor_Edi
 				"StoryForm2",
 				"StoryStarRating",
 				"StoryLottie"
-			] ),
-			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'media', [ "StoryImage", "StoryVideo" ] ),
+			], 500 ),
+			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'media', [
+                "StoryImage",
+                "StoryVideo"
+            ], 550 ),
 		];
 	}
 }
