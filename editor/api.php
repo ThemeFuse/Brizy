@@ -291,7 +291,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 //		}
 //	}
 
-
     /**
      * @internal
      **/

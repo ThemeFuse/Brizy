@@ -1,5 +1,3 @@
-import { Response } from "./Response";
-
 //#region Project
 
 export interface Project {
@@ -8,15 +6,13 @@ export interface Project {
   dataVersion: number;
 }
 
-interface ProjectExtra {
+export interface PublishData {
+  // TODO  Currently only projectData is used
+  //  Need to add pageData and globalBlocks
+  projectData?: Project;
   is_autosave: 1 | 0;
+  // pageData: PageCommon;
+  // globalBlocks: Array<GlobalBlock>;
 }
-
-export type UpdateProject = (
-  project: Project,
-  res: Response<Project>,
-  rej: Response<string>,
-  extra: ProjectExtra
-) => void;
 
 //#endregion

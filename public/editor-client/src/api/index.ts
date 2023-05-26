@@ -17,6 +17,7 @@ import {
   stringifySavedBlock
 } from "./adapter";
 import { makeFormEncode } from "./utils";
+import { stringifyProject } from "./adapter";
 
 //#region Common Utils Request & PersistentRequest
 
@@ -134,14 +135,8 @@ export const getImageUid = async (id: string): Promise<{ uid: string }> => {
 
 //#region Project
 
-type _Project = Omit<Project, "data">;
-
-export interface APIProject extends _Project {
-  data: string;
-}
-
 export function updateProject(
-  project: APIProject,
+  project: Project,
   meta: { is_autosave?: 1 | 0 } = {}
 ): Promise<unknown> {
   const config = getConfig();
@@ -158,10 +153,10 @@ export function updateProject(
     hash
   });
   const { is_autosave = 1 } = meta;
-  const { data, dataVersion } = project;
+  const data = stringifyProject(project);
   const body = new URLSearchParams({
-    data,
-    dataVersion: `${dataVersion}`,
+    data: data.data,
+    dataVersion: data.dataVersion,
     is_autosave: `${is_autosave}`
   });
 
