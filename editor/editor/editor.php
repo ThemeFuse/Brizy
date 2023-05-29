@@ -208,6 +208,7 @@ class Brizy_Editor_Editor_Editor {
 		$config              = $this->addUIConfig( $config, $context );
 		$config              = $this->addProjectData( $config, $context );
 		$config              = $this->addModuleGroups( $config, $context );
+		$config              = $this->addPageData( $config, $context );
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
 
@@ -324,11 +325,18 @@ class Brizy_Editor_Editor_Editor {
 		return $config;
 	}
 
+	private function addPageData( $config, $context ) {
+
+		$config['pageData'] = $this->post->createConfigData();
+
+		return $config;
+	}
+
 	private function addModuleGroups( $config, $context ) {
 
 		$moduleGroupCollector = new Brizy_Editor_Editor_ModuleGroups_Manager();
 
-		$config['ui']['leftSidebar'] = array_merge(  $config['ui']['leftSidebar'],[ 'moduleGroups' => $moduleGroupCollector->getAll( $config ) ]);
+		$config['ui']['leftSidebar'] = array_merge( $config['ui']['leftSidebar'], [ 'moduleGroups' => $moduleGroupCollector->getAll( $config ) ] );
 
 		return $config;
 	}
@@ -369,7 +377,7 @@ class Brizy_Editor_Editor_Editor {
 			'PostExcerpt'      => [ 'linkSource' => 'page' ],
 			'PostTitle'        => [ 'linkSource' => 'page' ],
 			'ProductMetafield' => [ 'linkSource' => 'page' ],
-			'Posts'            => [ 'type'=>'posts', 'source' => 'post', 'orderBy' => 'ID', 'order' => 'ASC' ]
+			'Posts'            => [ 'type' => 'posts', 'source' => 'post', 'orderBy' => 'ID', 'order' => 'ASC' ]
 		];
 
 		return $config;

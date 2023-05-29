@@ -200,6 +200,26 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 		return $global;
 	}
 
+	public function createConfigData() {
+
+		$p_id = (int) $this->getWpPostId();
+
+		$data = array(
+			'_kind'       => "wp",
+			'id'          => $p_id,
+			'data'        => json_decode( $this->get_editor_data() ),
+			'dataVersion' => $this->getCurrentDataVersion(),
+			'title'       => $the_title = $this->getTitle(),
+			'slug'        => sanitize_title( $the_title ),
+			'status'      => get_post_status( $p_id ),
+			'is_index'    => false,
+			'template'    => get_page_template_slug( $p_id ),
+			'url'         => esc_url( apply_filters( 'the_permalink', get_permalink( $p_id ), $this->getWpPost() ) )
+		);
+
+		return $data;
+	}
+
 
 	public function convertToOptionValue() {
 
