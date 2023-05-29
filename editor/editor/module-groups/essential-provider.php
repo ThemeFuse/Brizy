@@ -22,7 +22,7 @@ class Brizy_Editor_Editor_ModuleGroups_EssentialProvider implements Brizy_Editor
                 "MenuSimple",
                 "Menu",
 				"Search"
-			], 250 ),
+			], 300 ),
 		];
 	}
 }

@@ -25,13 +25,13 @@ class Brizy_Editor_Editor_ModuleGroups_ProductProvider implements Brizy_Editor_E
 				"WOOUpsell",
 				"WOOBreadcrumbs",
 				"Review"
-			], 150 ),
+			], 200 ),
 			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'woocomerce', [
 				"WOOCategories",
 				"WOOPages",
 				"Products",
 				"WOOCart"
-			], 200 )
+			], 250 )
 		];
 	}
 }

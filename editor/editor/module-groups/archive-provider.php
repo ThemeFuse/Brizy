@@ -15,7 +15,7 @@ class Brizy_Editor_Editor_ModuleGroups_ArchiveProvider implements Brizy_Editor_E
 				"PostTitle",
 				"PostExcerpt",
 				"Posts"
-			], 100 )
+			], 150 )
 		];
 	}
 }

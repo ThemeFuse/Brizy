@@ -15,7 +15,7 @@ class Brizy_Editor_Editor_ModuleGroups_WooArchiveProvider implements Brizy_Edito
 				"PostTitle",
 				"PostExcerpt",
 				"Posts"
-			], 450 )
+            ], $this->isTemplateType($context, 'product_archive' ) ? 100 : 550 ),
 		];
 	}
 }

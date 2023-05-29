@@ -9,7 +9,6 @@ class Brizy_Editor_Editor_ModuleGroups_GridProvider implements Brizy_Editor_Edit
 	}
 
     public function collect( $context ) {
-//        return [ new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'grid', ["Columns", "Row"], 50 ),];
         return [
             new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'grid', [
                 "Columns",

@@ -33,10 +33,17 @@ class Brizy_Editor_Editor_ModuleGroups_Manager {
 			$modules = $this->mergeGroups( $modules, $collector->collect( $context ) );
 		}
 
-		$result = [];
-		foreach ( $modules as $module ) {
-			$result[] = $module->toArrayStruct();
-		}
+        $result = [];
+        foreach ( $modules as $module ) {
+            if (isset($result[$module->getPosition()])) {
+                throw new Exception('The position [' . $module->getPosition() . '] is already take by other module');
+            }
+
+            $result[$module->getPosition()] = $module->toArrayStruct();
+        }
+
+        // sort by order
+        $result[] = ksort( $result );
 
 		return $result;
 	}

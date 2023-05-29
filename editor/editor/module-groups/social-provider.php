@@ -14,7 +14,7 @@ class Brizy_Editor_Editor_ModuleGroups_SocialProvider implements Brizy_Editor_Ed
                 "Facebook",
                 "Twitter",
                 "FacebookComments"
-            ], 400 ),
+            ], 450 ),
 		];
 	}
 }
