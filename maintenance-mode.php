@@ -142,22 +142,11 @@ class Brizy_MaintenanceMode {
 
 	private function get_user_ip() {
 
-		if ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			if ( strpos( $_SERVER['HTTP_X_FORWARDED_FOR'], ',' ) > 0 ) {
-				$addr = explode( ",", $_SERVER['HTTP_X_FORWARDED_FOR'] );
-
-				return trim( $addr[0] );
-			}
-
-			return $_SERVER['HTTP_X_FORWARDED_FOR'];
-
-		} elseif ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
-			return $_SERVER['REMOTE_ADDR'];
-		} elseif ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
-			return $_SERVER['HTTP_CLIENT_IP'];
-		} else {
+		if ( empty( $_SERVER['REMOTE_ADDR'] ) || ! filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP ) ) {
 			return 'unknown.ip';
 		}
+
+		return $_SERVER['REMOTE_ADDR'];
 	}
 
 	private function is_login() {
