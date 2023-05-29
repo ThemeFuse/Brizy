@@ -9,7 +9,7 @@ class Brizy_Editor_Editor_ModuleGroups_ProductProvider implements Brizy_Editor_E
 	}
 
 	public function collect( $context ) {
-		$Brizy_Editor_Editor_ModuleGroups_ModuleGroup_Product = new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'product', [
+		$brizy_Editor_Editor_ModuleGroups_ModuleGroup_Product = new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'product', [
 			"WOOProductTitle",
 			"WOOExcerpt",
 			"WOOProductContent",
@@ -26,7 +26,7 @@ class Brizy_Editor_Editor_ModuleGroups_ProductProvider implements Brizy_Editor_E
 			"Review"
 		], 200 );
 
-		$Brizy_Editor_Editor_ModuleGroups_ModuleGroup_Woocomerce = new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'woocomerce', [
+		$brizy_Editor_Editor_ModuleGroups_ModuleGroup_Woocomerce = new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'woocomerce', [
 			"WOOCategories",
 			"WOOPages",
 			"Products",
@@ -35,11 +35,11 @@ class Brizy_Editor_Editor_ModuleGroups_ProductProvider implements Brizy_Editor_E
 
 		if ( $this->isTemplateType( $context, 'product') ) {
 			return [
-				$Brizy_Editor_Editor_ModuleGroups_ModuleGroup_Product,
-				$Brizy_Editor_Editor_ModuleGroups_ModuleGroup_Woocomerce
+				$brizy_Editor_Editor_ModuleGroups_ModuleGroup_Product,
+				$brizy_Editor_Editor_ModuleGroups_ModuleGroup_Woocomerce
 			];
 		}
 
-		return [ $Brizy_Editor_Editor_ModuleGroups_ModuleGroup_Woocomerce ];
+		return [ $brizy_Editor_Editor_ModuleGroups_ModuleGroup_Woocomerce ];
 	}
 }

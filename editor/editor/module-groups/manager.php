@@ -41,7 +41,6 @@ class Brizy_Editor_Editor_ModuleGroups_Manager {
             }
 
             $result[$module->getPosition()] = $module->toArrayStruct();
-
         }
 
         // sort by order
