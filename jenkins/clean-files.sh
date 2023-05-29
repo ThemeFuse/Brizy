@@ -44,6 +44,7 @@ echo -e "Clean vendor folder"
 
 echo -e "Clean plugin root folder"
 rm -rf ./public/editor-src \
+       ./public/editor-client/node_modules \
        ./.phpunit* \
        ./.env* \
        .idea \
@@ -62,7 +63,6 @@ rm -rf ./public/editor-src \
        ./*.dev.php \
        ./jenkins \
        ./*.zip
-
 
 (
    find ./vendor -type d -name "twig" -prune -o -type d -name tests -print &&
