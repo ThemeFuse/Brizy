@@ -367,7 +367,8 @@ class Brizy_Editor_Editor_Editor {
 			'Image'            => [ 'linkSource' => 'page' ],
 			'Lottie'           => [ 'linkSource' => 'page' ],
 			'PostExcerpt'      => [ 'linkSource' => 'page' ],
-			'PostTitle'        => [ 'linkSource' => 'page' ],
+			'PostTitle'        => [ 'linkSource' => 'page', "_population"=>[ "name"=>"brizy_dc_post_title","placeholder"=>"{{brizy_dc_post_title}}" ] ],
+			'PostContent'      => [ 'linkSource' => 'page', "_population"=>[ "name"=>"brizy_dc_post_content","placeholder"=>"{{brizy_dc_post_content}}" ] ],
 			'ProductMetafield' => [ 'linkSource' => 'page' ],
 			'Posts'            => [ 'type'=>'posts', 'source' => 'post', 'orderBy' => 'ID', 'order' => 'ASC' ]
 		];
