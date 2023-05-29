@@ -34,18 +34,20 @@ class Brizy_Editor_Editor_ModuleGroups_Manager {
 		}
 
         $result = [];
+
         foreach ( $modules as $module ) {
             if (isset($result[$module->getPosition()])) {
                 throw new Exception('The position [' . $module->getPosition() . '] is already take by other module');
             }
 
             $result[$module->getPosition()] = $module->toArrayStruct();
+
         }
 
         // sort by order
-        $result[] = ksort( $result );
+        ksort( $result );
 
-		return $result;
+		return array_values( $result );
 	}
 
 	/**
