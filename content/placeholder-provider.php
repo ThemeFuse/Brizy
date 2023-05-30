@@ -88,7 +88,7 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface {
 			}, $entries );
 		}
 
-		return [ 'groups' => $result ];
+		return $result;
 	}
 
 	/**
