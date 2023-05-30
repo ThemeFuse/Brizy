@@ -349,16 +349,16 @@ class Brizy_Editor_Editor_Editor {
 
 	private function addContentDefaults( $config, $context ) {
 		$config['contentDefaults'] = [
-			'Button'           => [ 'linkSource' => 'page' ],
-			'RichText'         => [ 'linkSource' => 'page' ],
-			'Column'           => [ 'linkSource' => 'page' ],
-			'Row'              => [ 'linkSource' => 'page' ],
-			'Icon'             => [ 'linkSource' => 'page' ],
-			'Image'            => [ 'linkSource' => 'page' ],
-			'Lottie'           => [ 'linkSource' => 'page' ],
-			'PostExcerpt'      => [ 'linkSource' => 'page' ],
-			'PostTitle'        => [ 'linkSource' => 'page' ],
-			'ProductMetafield' => [ 'linkSource' => 'page' ],
+			'Button'           => [ 'linkSource' => 'page' ,'linkType'=>'page'],
+			'RichText'         => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'Column'           => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'Row'              => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'Icon'             => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'Image'            => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'Lottie'           => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'PostExcerpt'      => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'PostTitle'        => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'ProductMetafield' => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
 			'Posts'            => [ 'source' => 'post', 'orderBy' => 'ID', 'order' => 'ASC' ]
 		];
 
