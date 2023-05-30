@@ -365,7 +365,7 @@ class Brizy_Editor_Editor_Editor {
 		return $config;
 	}
 
-	private function addContentDefaults($config, $context) {
+	private function addContentDefaults( $config, $context ) {
 		$config['contentDefaults'] = [
 			'Row'              => ['linkSource' => 'page'],
 			'ProductMetafield' => ['linkSource' => 'page'],
@@ -382,9 +382,9 @@ class Brizy_Editor_Editor_Editor {
 			'Posts'            => [
 				'_styles'  => [ 'posts', 'posts-posts' ],
 				'_version' => 3,
-				'order'    => '',
-				'orderBy'  => '',
-				'source'   => '',
+				'order'    => 'ASC',
+				'orderBy'  => 'ID',
+				'source'   => 'post',
 				'type'     => 'posts',
 				'items'    => [
 					[
