@@ -19,10 +19,10 @@ class Brizy_Editor_Editor_ModuleGroups_EssentialProvider implements Brizy_Editor
 				"Map",
 				"Form2",
 				"Line",
-				"Menu",
-				"MenuSimple",
+                "MenuSimple",
+                "Menu",
 				"Search"
-			] ),
+			], 300 ),
 		];
 	}
 }
