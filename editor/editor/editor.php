@@ -365,20 +365,113 @@ class Brizy_Editor_Editor_Editor {
 		return $config;
 	}
 
-	private function addContentDefaults( $config, $context ) {
+	private function addContentDefaults($config, $context) {
 		$config['contentDefaults'] = [
-			'Button'           => [ 'linkSource' => 'page' ],
-			'RichText'         => [ 'linkSource' => 'page' ],
-			'Column'           => [ 'linkSource' => 'page' ],
-			'Row'              => [ 'linkSource' => 'page' ],
-			'Icon'             => [ 'linkSource' => 'page' ],
-			'Image'            => [ 'linkSource' => 'page' ],
-			'Lottie'           => [ 'linkSource' => 'page' ],
-			'PostExcerpt'      => [ 'linkSource' => 'page' ],
-			'PostTitle'        => [ 'linkSource' => 'page', "_population"=>[ "name"=>"brizy_dc_post_title","placeholder"=>"{{brizy_dc_post_title}}" ] ],
-			'PostContent'      => [ 'linkSource' => 'page', "_population"=>[ "name"=>"brizy_dc_post_content","placeholder"=>"{{brizy_dc_post_content}}" ] ],
-			'ProductMetafield' => [ 'linkSource' => 'page' ],
-			'Posts'            => [ 'type' => 'posts', 'source' => 'post', 'orderBy' => 'ID', 'order' => 'ASC' ]
+			'Row'              => ['linkSource' => 'page'],
+			'ProductMetafield' => ['linkSource' => 'page'],
+			'Button'           => ['linkSource' => 'page', 'linkType' => 'page'],
+			'RichText'         => ['linkSource' => 'page', 'linkType' => 'page'],
+			'Icon'             => ['linkSource' => 'page', 'linkType' => 'page'],
+			'Image'            => ['linkSource' => 'page', 'linkType' => 'page'],
+			'Lottie'           => ['linkSource' => 'page', 'linkType' => 'page'],
+			'PostExcerpt'      => ['linkSource' => 'page', 'linkType' => 'page'],
+			'FeaturedImage'    => ['linkSource' => 'page', 'linkType' => 'page'],
+			'Column'           => ['linkSource' => 'page', 'linkType' => 'page', 'items' => []],
+			'PostContent'      => ['linkSource' => 'page', '_population' => ['name' => 'brizy_dc_post_content', 'placeholder' => '{{brizy_dc_post_content}}']],
+			'PostTitle'        => ['linkSource' => 'page', 'linkType' => 'page', '_population' => ['name' => 'brizy_dc_post_title', 'placeholder' => '{{brizy_dc_post_title}}']],
+			'Posts'            => [
+				'_styles'  => [ 'posts', 'posts-posts' ],
+				'_version' => 3,
+				'order'    => '',
+				'orderBy'  => '',
+				'source'   => '',
+				'type'     => 'posts',
+				'items'    => [
+					[
+						'type'  => 'Column',
+						'value' => [
+							'_styles' => [ 'posts--column' ],
+							'items'   => [
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [ 'wrapper', 'wrapper--image' ],
+										'items'   => [
+											[
+												'type'  => 'Image',
+												'value' => [
+													'_styles'         => [ 'image', 'image--dynamic' ],
+													'imagePopulation' => '{{brizy_dc_img_featured_image}}',
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postTitle',
+											'wrapper-postTitle-posts',
+											'wrapper-postTitle-posts-posts'
+										],
+										'items'   => [
+											[
+												'type'  => 'WPPostsTitle',
+												'value' => [
+													'_styles' => [
+														'postTitle',
+														'postTitle-posts',
+														'postTitle-posts-posts'
+													],
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postExcerpt',
+											'wrapper-postExcerpt-posts',
+											'wrapper-postExcerpt-posts-posts'
+										],
+										'items'   => [
+											[
+												'type'  => 'WPPostExcerpt',
+												'value' => [
+													'_styles' => [
+														'postExcerpt',
+														'postExcerpt-posts',
+														'postExcerpt-posts-posts'
+													],
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Cloneable',
+									'value' => [
+										'_styles' => [ 'wrapper-clone', 'wrapper-clone--button' ],
+										'items'   => [
+											[
+												'type'  => 'Button',
+												'value' => [
+													'_styles' => [ 'button', 'button--dynamic' ],
+												],
+											],
+										],
+									],
+								],
+							],
+						],
+					],
+				],
+			],
 		];
 
 		return $config;
