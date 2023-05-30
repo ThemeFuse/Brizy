@@ -1,15 +1,15 @@
 import React from "react";
-import { replaceAt, addLast, removeAt } from "timm";
+import { addLast, removeAt, replaceAt } from "timm";
 import _ from "underscore";
-import TextField from "./common/TextField";
-import EditorIcon from "visual/component/EditorIcon";
-import { ThemeIcon } from "visual/component/ThemeIcon";
 import ClickOutside from "visual/component/ClickOutside";
 import SelectControl from "visual/component/Controls/Select";
-import ScrollPane from "visual/component/ScrollPane";
 import SelectControlItem from "visual/component/Controls/Select/SelectItem";
+import EditorIcon from "visual/component/EditorIcon";
+import { Scrollbar } from "visual/component/Scrollbar";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
+import TextField from "./common/TextField";
 
 export default class Select extends TextField {
   static get componentTitle() {
@@ -38,17 +38,17 @@ export default class Select extends TextField {
     this.setState({ newItemValue: "" });
     this.props.onChange({ options });
   };
-  handleOptionsRemove = index => {
+  handleOptionsRemove = (index) => {
     const options = removeAt(this.props.options, index);
     this.props.onChange({ options });
   };
-  handleKeyUp = e => {
+  handleKeyUp = (e) => {
     if (e.keyCode === 13) {
       this.handleOptionsAdd();
     }
   };
 
-  handleClick = e => {
+  handleClick = (e) => {
     e.preventDefault();
     const node = this.selectInput;
     node.classList.add("brz-ed-dd-cancel");
@@ -67,7 +67,7 @@ export default class Select extends TextField {
             <input
               className="brz-input"
               value={item}
-              onChange={e => this.handleOptionsChange(e.target.value, index)}
+              onChange={(e) => this.handleOptionsChange(e.target.value, index)}
             />
           </div>
           {isDesktop ? (
@@ -83,7 +83,7 @@ export default class Select extends TextField {
     });
   };
 
-  renderForEdit = v => {
+  renderForEdit = (v) => {
     const isDesktop = getStore().getState().ui.deviceMode === "desktop";
     const { isOpen, newItemValue } = this.state;
     const scrollPaneHeight =
@@ -95,11 +95,11 @@ export default class Select extends TextField {
           <div className="brz-forms__select-current brz-forms__field">
             <input
               {...v}
-              ref={el => {
+              ref={(el) => {
                 this.selectInput = el;
               }}
               className="brz-input"
-              onClick={e => {
+              onClick={(e) => {
                 this.setState({ isOpen: !isOpen });
                 this.handleClick(e);
               }}
@@ -113,7 +113,7 @@ export default class Select extends TextField {
           </div>
           {isOpen && (
             <div className="brz-forms__select-list brz-ed-dd-cancel">
-              <ScrollPane style={{ height: scrollPaneHeight }}>
+              <Scrollbar autoHeightMax={scrollPaneHeight} theme="light">
                 {this.renderOptions()}
                 {isDesktop ? (
                   <div className="brz-forms__select-item">
@@ -125,7 +125,7 @@ export default class Select extends TextField {
                         onChange={({ target: { value } }) =>
                           this.setState({ newItemValue: value })
                         }
-                        onKeyUp={e => this.handleKeyUp(e)}
+                        onKeyUp={(e) => this.handleKeyUp(e)}
                       />
                     </div>
                     <div
@@ -136,7 +136,7 @@ export default class Select extends TextField {
                     </div>
                   </div>
                 ) : null}
-              </ScrollPane>
+              </Scrollbar>
             </div>
           )}
         </div>
@@ -144,7 +144,7 @@ export default class Select extends TextField {
     );
   };
 
-  renderForView = v => {
+  renderForView = (v) => {
     const { label, options } = this.props;
 
     return (

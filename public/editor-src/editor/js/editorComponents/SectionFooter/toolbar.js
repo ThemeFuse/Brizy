@@ -8,15 +8,12 @@ import { getAllMembershipChoices } from "visual/utils/membership";
 import { getLanguagesChoices } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import {
-  toolbarElementSectionGlobal,
-  toolbarElementSectionSaved,
-  toolbarShowOnResponsive
-} from "visual/utils/toolbar";
+import { toolbarShowOnResponsive } from "visual/utils/toolbar";
+import { getInstanceParentId } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component, context }) {
   const config = Config.getAll();
@@ -24,17 +21,16 @@ export function getItems({ v, device, component, context }) {
     config.elements?.footer?.multilanguage === false;
 
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
-
   const sectionHeightSuffix = dvv("sectionHeightSuffix");
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
-  const imageDynamicContentChoices = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.image
-  );
+  const imageDynamicContentChoices = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.image
+  });
 
   return [
     toolbarShowOnResponsive({
@@ -57,12 +53,18 @@ export function getItems({ v, device, component, context }) {
           id: "groupSettings",
           type: "group-dev",
           options: [
-            toolbarElementSectionGlobal({
-              device,
-              component,
+            {
+              id: "makeItGlobal",
+              label: t("Make it Global"),
+              type: "globalBlock-dev",
               devices: "desktop",
-              state: "normal"
-            }),
+              disabled: isCloud(config) && isShopify(config),
+              config: {
+                _id: component.getId(),
+                parentId: getInstanceParentId(component.props.instanceKey),
+                blockType: "normal"
+              }
+            },
             {
               id: "gbConditions",
               disabled: !component.props.meta.globalBlockId,
@@ -200,13 +202,19 @@ export function getItems({ v, device, component, context }) {
         }
       ]
     },
-    toolbarElementSectionSaved({
-      device,
-      component,
-      state: "normal",
+    {
+      id: "makeItSaved",
+      type: "savedBlock-dev",
       devices: "desktop",
-      blockType: "normal"
-    }),
+      position: 90,
+      config: {
+        icon: "nc-save-section",
+        blockType: "normal",
+        title: t("Save"),
+        tooltipContent: t("Saved"),
+        blockId: component.getId()
+      }
+    },
     {
       id: "toolbarSettings",
       type: "popover-dev",

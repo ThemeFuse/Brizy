@@ -11,6 +11,7 @@ import {
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
 import { Props as WrapperProps } from "visual/editorComponents/tools/Wrapper";
+import Config from "visual/global/Config";
 import * as GlobalState from "visual/global/StateMode";
 import { deviceModeSelector, rulesSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
@@ -122,7 +123,7 @@ export type Props<
 } & P;
 
 export class EditorComponent<
-  M extends ElementModel,
+  M extends ElementModel = ElementModel,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   P extends Record<string, any> = Record<string, unknown>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -267,6 +268,7 @@ export class EditorComponent<
   }
 
   getDCValue(v: M): DCObjResult {
+    const _config = Config.getAll();
     const config = this.getDefaultValueProcessed().dynamicContentKeys;
     const getDCObjKeys: ECKeyDCInfo[] = [];
 
@@ -279,9 +281,13 @@ export class EditorComponent<
     }
 
     const dcObjKeysAfterHook = this.getDCValueHook(getDCObjKeys, v);
+    const dynamicContent = _config.dynamicContent;
+    const replaceDC = dynamicContent?.liveInBuilder ?? false;
+    const useCustomPlaceholder = dynamicContent?.useCustomPlaceholder ?? false;
 
-    if (IS_PREVIEW) {
-      return getDCObjPreview(dcObjKeysAfterHook).value;
+    // Can be disabled by Config
+    if (!replaceDC || IS_PREVIEW) {
+      return getDCObjPreview(dcObjKeysAfterHook, useCustomPlaceholder).value;
     }
 
     this._dc.pendingDCObjIncomplete?.abortGetComplete();
@@ -293,7 +299,11 @@ export class EditorComponent<
 
       return {};
     } else {
-      const dcObj = getDCObjEditor(dcObjKeysAfterHook, this.context);
+      const dcObj = getDCObjEditor(
+        dcObjKeysAfterHook,
+        this.context,
+        useCustomPlaceholder
+      );
 
       if (dcObj.type === "complete") {
         this._dc.keys = dcObj.details;
@@ -754,10 +764,7 @@ export class EditorComponent<
     return optionMap((option) => {
       const { id, type, onChange: oldOnchange } = option;
 
-      if (Responsive.empty === device) {
-        // Apply state mode only in desktop device mode
-        option = bindStateToOption(GlobalState.states, option);
-      }
+      option = bindStateToOption(GlobalState.states, option, device);
 
       //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
       const isDev = inDevelopment(type);

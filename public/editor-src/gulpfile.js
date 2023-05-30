@@ -188,7 +188,7 @@ function editorCSS() {
           console.log("Sass Syntax Error", err);
         })
     )
-    .pipe(gulpPlugins.concat("editor.css"))
+    .pipe(gulpPlugins.concat("editor.min.css"))
     .pipe(cleanCSS())
     .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.write()))
     .pipe(gulp.dest(dest));
@@ -306,7 +306,7 @@ function exportJS(done) {
       }
       if (ANALYZE_PREVIEW) {
         fs.writeFileSync(
-          path.resolve(paths.build, "editor/js/preview.js.webpack-stats.json"),
+          path.resolve(paths.build, "editor/js/preview.min.js.webpack-stats.json"),
           JSON.stringify(stats.toJson().children[0]),
           "utf8"
         );
@@ -340,7 +340,7 @@ function exportCSS() {
           console.log("Sass Syntax Error", err);
         })
     )
-    .pipe(gulpPlugins.concat("preview.css"))
+    .pipe(gulpPlugins.concat("preview.min.css"))
     .pipe(cleanCSS())
     .pipe(gulp.dest(dest));
 }
@@ -353,7 +353,7 @@ function exportLibsCSS() {
   const rename = (path) => {
     if (path.extname) {
       path.extname = ".css";
-      path.basename = path.dirname;
+      path.basename = `${path.dirname}.min`;
       path.dirname = "";
     }
   };
@@ -462,7 +462,7 @@ function proEditorCSS() {
           console.log("Sass Syntax Error", err);
         })
     )
-    .pipe(gulpPlugins.concat("editor.pro.css"))
+    .pipe(gulpPlugins.concat("editor.pro.min.css"))
     .pipe(cleanCSS())
     .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.write()))
     .pipe(gulp.dest(dest));
@@ -486,7 +486,7 @@ function proExportCSS() {
           console.log("Sass Syntax Error", err);
         })
     )
-    .pipe(gulpPlugins.concat("preview.pro.css"))
+    .pipe(gulpPlugins.concat("preview.pro.min.css"))
     .pipe(cleanCSS())
     .pipe(gulp.dest(dest));
 }
@@ -499,7 +499,7 @@ function proExportLibsCSS() {
   const rename = (path) => {
     if (path.extname) {
       path.extname = ".css";
-      path.basename = path.dirname;
+      path.basename = `${path.dirname}.min`;
       path.dirname = "";
     }
   };
@@ -856,16 +856,16 @@ function buildVersions(done) {
 function buildStats(done) {
   const files = [
     // editor
-    ["editor.js", paths.build + "/editor/js/editor.js"],
-    ["editor.vendor.js", paths.build + "/editor/js/editor.vendor.js"],
-    ["editor.css", paths.build + "/editor/css/editor.css"],
+    ["editor.min.js", paths.build + "/editor/js/editor.min.js"],
+    ["editor.vendor.min.js", paths.build + "/editor/js/editor.vendor.min.js"],
+    ["editor.min.css", paths.build + "/editor/css/editor.min.css"],
 
     // export
-    ["preview.js", paths.build + "/editor/js/preview.js"],
-    ["preview.css", paths.build + "/editor/css/preview.css"],
+    ["preview.min.js", paths.build + "/editor/js/preview.min.js"],
+    ["preview.min.css", paths.build + "/editor/css/preview.min.css"],
 
     // polyfill
-    ["polyfill.js", paths.build + "/editor/js/polyfill.js"],
+    ["polyfill.min.js", paths.build + "/editor/js/polyfill.min.js"],
 
     // static
     ["export.js", paths.build + "/editor/js/export.js"]
@@ -879,7 +879,7 @@ function buildStats(done) {
   if (IS_PRO) {
     const files = [
       // editor
-      ["editor.pro.js", paths.buildPro + "/js/editor.pro.js"]
+      ["editor.pro.min.js", paths.buildPro + "/js/editor.pro.min.js"]
     ];
     fs.writeFileSync(
       paths.buildPro + "/stats.json",

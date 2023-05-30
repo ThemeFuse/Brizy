@@ -1,3 +1,4 @@
+import { ChoicesSync } from "visual/component/Options/types/dev/MultiSelect2/types";
 import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -7,7 +8,6 @@ import {
   getTaxonomies
 } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { toolbarElementCarouselTaxonomy } from "visual/utils/toolbar";
 import { ToolbarItemType } from "../ToolbarItemType";
 import { Value } from "./toolbarExtend";
 
@@ -27,14 +27,31 @@ export function getItems({
   );
 
   const sliderArrowsChoices = [
-    { title: t("None"), icon: "nc-none", value: "none" },
-    { title: t("Thin"), icon: "nc-right-arrow-thin", value: "thin" },
-    { title: t("Heavy"), icon: "nc-right-arrow-heavy", value: "heavy" },
-    { title: t("Tail"), icon: "nc-right-arrow-tail", value: "tail" },
-    { title: t("Round"), icon: "nc-right-arrow-filled", value: "filled" },
-    { title: t("Outline"), icon: "nc-right-arrow-outline", value: "outline" }
+    { title: t("None"), icon: { name: "nc-none" }, value: "none" },
+    { title: t("Thin"), icon: { name: "nc-right-arrow-thin" }, value: "thin" },
+    {
+      title: t("Heavy"),
+      icon: { name: "nc-right-arrow-heavy" },
+      value: "heavy"
+    },
+    { title: t("Tail"), icon: { name: "nc-right-arrow-tail" }, value: "tail" },
+    {
+      title: t("Round"),
+      icon: { name: "nc-right-arrow-filled" },
+      value: "filled"
+    },
+    {
+      title: t("Outline"),
+      icon: { name: "nc-right-arrow-outline" },
+      value: "outline"
+    }
   ];
 
+  const getCategories = () => {
+    const taxonomies = getTaxonomies();
+
+    return taxonomies.flatMap((category) => category.optgroup) as ChoicesSync;
+  };
   const wordpress = Boolean(Config.get("wp"));
 
   return [
@@ -146,20 +163,24 @@ export function getItems({
                   type: "select-dev",
                   devices: "desktop",
                   choices: [
-                    { title: t("None"), icon: "nc-none", value: "none" },
+                    {
+                      title: t("None"),
+                      icon: { name: "nc-none" },
+                      value: "none"
+                    },
                     {
                       title: t("Circle"),
-                      icon: "nc-circle-outline",
+                      icon: { name: "nc-circle-outline" },
                       value: "circle"
                     },
                     {
                       title: t("Diamond"),
-                      icon: "nc-diamond-outline",
+                      icon: { name: "nc-diamond-outline" },
                       value: "diamond"
                     },
                     {
                       title: t("Square"),
-                      icon: "nc-square-outline",
+                      icon: { name: "nc-square-outline" },
                       value: "square"
                     }
                   ]
@@ -187,15 +208,23 @@ export function getItems({
           type: "switch-dev",
           devices: "desktop"
         },
-        // @ts-expect-error: Old function
-        toolbarElementCarouselTaxonomy({
-          v,
-          device,
-          state: "normal",
-          devices: "desktop",
+
+        {
+          id: "taxonomy",
+          label: t("Categories"),
           disabled: dvv("dynamic") === "off",
-          choices: getTaxonomies()
-        }),
+          devices: "desktop",
+          type: "select-dev",
+          choices: getCategories(),
+          //@ts-expect-error: Old function
+          dependencies: ({ taxonomy }: { taxonomy: string }) => {
+            const [, taxonomyId] = taxonomy.split("|");
+            return {
+              taxonomy,
+              taxonomyId
+            };
+          }
+        },
         {
           id: "orderBy",
           label: t("Filter By"),

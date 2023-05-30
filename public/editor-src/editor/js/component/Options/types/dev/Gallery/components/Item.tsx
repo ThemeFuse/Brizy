@@ -1,8 +1,9 @@
 import React, { ReactElement } from "react";
-import { imageUrl } from "visual/utils/image";
-import { Thumbnail } from "visual/component/Controls/Gallery/components/Thumbnail";
-import { Loading } from "visual/component/Controls/Gallery/components/Loading";
 import { Error } from "visual/component/Controls/Gallery/components/Error";
+import { Loading } from "visual/component/Controls/Gallery/components/Loading";
+import { Thumbnail } from "visual/component/Controls/Gallery/components/Thumbnail";
+import { SizeType } from "visual/global/Config/types/configs/common";
+import { getImageUrl } from "visual/utils/image";
 import { Item as ItemType } from "../types/Item";
 
 export interface Props<T> {
@@ -12,14 +13,16 @@ export interface Props<T> {
 
 export function Item<T>({ item, onRemove }: Props<T>): ReactElement {
   switch (item.__type) {
-    case "thumbnail":
-      return (
-        <Thumbnail<T>
-          id={item.id}
-          src={imageUrl(item.payload.name, { iW: 42, iH: 42 }) ?? ""}
-          onRemove={onRemove}
-        />
-      );
+    case "thumbnail": {
+      const src =
+        getImageUrl({
+          uid: item.payload.uid,
+          fileName: item.payload.fileName,
+          sizeType: SizeType.custom,
+          crop: { iW: 42, iH: 42 }
+        }) ?? "";
+      return <Thumbnail<T> id={item.id} src={src} onRemove={onRemove} />;
+    }
     case "loading":
       return <Loading<T> id={item.id} onRemove={onRemove} />;
     case "error":

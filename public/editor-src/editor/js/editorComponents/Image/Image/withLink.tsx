@@ -1,15 +1,55 @@
 import classnames from "classnames";
 import React from "react";
 import Link from "visual/component/Link";
+import Config from "visual/global/Config";
+import { SizeType } from "visual/global/Config/types/configs/common";
 import { pipe } from "visual/utils/fp";
-import { imagePopulationUrl, imageUrl } from "visual/utils/image";
+import {
+  defaultImagePopulation,
+  getImageUrl,
+  imagePopulationUrl
+} from "visual/utils/image";
 import * as Num from "visual/utils/reader/number";
 import * as Str from "visual/utils/string/specs";
-import { isNullish } from "visual/utils/value";
+import { MValue, isNullish } from "visual/utils/value";
 import { ImageProps } from "../types";
 import { isGIF, isSVG } from "../utils";
 
 const isNan = pipe(Num.read, isNullish);
+
+interface Data {
+  linkType: string;
+  imagePopulation: string;
+  imageExtension: string;
+  imageSrc: string;
+  imageFileName: string;
+}
+const getLightBoxUrl = (data: Data): MValue<string> => {
+  const { linkType, imagePopulation, imageExtension, imageSrc, imageFileName } =
+    data;
+
+  const isInvalidType =
+    !imageSrc ||
+    linkType !== "lightBox" ||
+    isSVG(imageExtension) ||
+    isGIF(imageExtension);
+
+  if (isInvalidType) {
+    return undefined;
+  }
+
+  return imagePopulation
+    ? imagePopulationUrl(imagePopulation, {
+        ...defaultImagePopulation,
+        useCustomPlaceholder:
+          Config.getAll().dynamicContent?.useCustomPlaceholder ?? false
+      })
+    : getImageUrl({
+        uid: imageSrc,
+        fileName: imageFileName,
+        sizeType: SizeType.custom
+      });
+};
 
 function withLink(
   WrappedComponent: React.ComponentType<ImageProps>
@@ -39,11 +79,14 @@ function withLink(
       external: Str.read(props.v[linkExternalType]),
       popup: linkPopup,
       upload: linkUpload,
-      lightBox: imagePopulation
-        ? imagePopulationUrl(imagePopulation)
-        : isSVG(imageExtension) || isGIF(imageExtension)
-        ? ""
-        : Str.read(imageUrl(imageSrc, { fileName: imageFileName })),
+      lightBox:
+        getLightBoxUrl({
+          linkType,
+          imageSrc,
+          imagePopulation,
+          imageExtension,
+          imageFileName
+        }) ?? "",
       action: ""
     };
     if (linkHrefs[linkType] !== "") {

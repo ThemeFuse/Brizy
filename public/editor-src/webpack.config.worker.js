@@ -15,7 +15,7 @@ exports.screenshots = (options) => {
     },
     output: {
       path: editorConfig.output.path,
-      filename: "[name].worker.js"
+      filename: "[name].worker.min.js"
     },
     module: editorConfig.module,
     resolve: {
@@ -60,7 +60,7 @@ exports.ssr = (options) => {
     entry: "./editor/js/bootstraps/workers/ssr/index.ts",
     output: {
       ...editorConfig.output,
-      filename: "ssr.worker.js"
+      filename: "ssr.worker.min.js"
     },
     resolve: editorConfig.resolve,
     module: {

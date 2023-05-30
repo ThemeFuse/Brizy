@@ -6,7 +6,7 @@ import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -24,14 +24,14 @@ export function getItems({ v, device, state, context }) {
   const style = dvv("style");
   const actions = dvv("actions");
 
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
-  const linkDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.link
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
+  const linkDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.link
+  });
 
   const IS_STORY = isStory(Config.getAll());
 
@@ -112,18 +112,32 @@ export function getItems({ v, device, state, context }) {
                   type: "select-dev",
                   devices: "desktop",
                   choices: [
-                    { value: 660, title: t("- 11:00 (Niue)") },
-                    { value: 600, title: t("- 10:00 (Honolulu, Papeete)") },
-                    { value: 540, title: t("- 9:00 (Anchorage)") },
+                    {
+                      value: 660,
+                      title: t("- 12:00 (International Date Line West)")
+                    },
+                    { value: 620, title: t("- 11:00 (Niue)") },
+                    {
+                      value: 600,
+                      title: t("- 10:00 (Honolulu, Papeete, Hawaii)")
+                    },
+                    { value: 580, title: t("- 9:30 (Marquesas)") },
+                    { value: 540, title: t("- 9:00 (Anchorage, Alaska)") },
                     { value: 480, title: t("- 8:00 (Los Angeles)") },
                     { value: 420, title: t("- 7:00 (Denver, Phoenix)") },
                     { value: 360, title: t("- 6:00 (Chicago, Dallas)") },
                     { value: 300, title: t("- 5:00 (New York, Miami)") },
-                    { value: 240, title: t("- 4:00 (Halifax, Manaus)") },
+                    { value: 280, title: t("- 4:30 (Caracas)") },
+                    {
+                      value: 240,
+                      title: t("- 4:00 (Halifax, Manaus, Santiago)")
+                    },
+                    { value: 200, title: t("- 3:30 (Newfoundland)") },
                     {
                       value: 180,
                       title: t("- 3:00 (Brasilia, Santiago, Argentina)")
                     },
+                    { value: 160, title: t("- 2:30 (Newfoundland Daylight)") },
                     { value: 120, title: t("- 2:00 (Noronha)") },
                     { value: 60, title: t("- 1:00 (Cape Verde)") },
                     { value: 0, title: t("00:00 (London, Dublin)") },
@@ -138,13 +152,15 @@ export function getItems({ v, device, state, context }) {
                     { value: -180, title: t("+ 3:00 (Moscow, Baghdad)") },
                     { value: -200, title: t("+ 3:30 (Iran)") },
                     { value: -240, title: t("+ 4:00 (Dubai, Baku)") },
-                    { value: -280, title: t("+ 4:30 (Afghanistan)") },
+                    { value: -280, title: t("+ 4:30 (Afghanistan, Kabul)") },
                     { value: -300, title: t("+ 5:00 (Yekaterinburg)") },
                     { value: -320, title: t("+ 5:30 (India)") },
+                    { value: -340, title: t("+ 5:45 (Kathmandu, Nepal)") },
                     {
                       value: -360,
                       title: t("+ 6:00 (Nur-Sultan, Kyrgyzstan)")
                     },
+                    { value: -400, title: t("+ 6:30 (Yangon)") },
                     {
                       value: -420,
                       title: t("+ 7:00 (Bangkok, Jakarta, Vietnam)")
@@ -153,10 +169,16 @@ export function getItems({ v, device, state, context }) {
                       value: -480,
                       title: t("+ 8:00 (Singapore, Beijing, Malaysia)")
                     },
+                    { value: -500, title: t("+ 8:30 (Pyongyang)") },
                     { value: -540, title: t("+ 9:00 (Tokyo, Seoul)") },
-                    { value: -600, title: t("+ 10:00 (Sydney, Melbourne)") },
+                    { value: -580, title: t("+ 9:30 (Darwin, Adelaide)") },
+                    {
+                      value: -600,
+                      title: t("+ 10:00 (Sydney, Melbourne, Canberra)")
+                    },
+                    { value: -620, title: t("+ 10:30 (Lord Howe Island)") },
                     { value: -660, title: t("+ 11:00 (Ponape)") },
-                    { value: -720, title: t("+ 12:00 (Auckland)") }
+                    { value: -720, title: t("+ 12:00 (Auckland, Magadan)") }
                   ]
                 }
               ]

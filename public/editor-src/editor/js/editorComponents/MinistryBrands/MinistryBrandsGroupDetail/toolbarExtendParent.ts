@@ -103,6 +103,11 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "showContent",
                   type: "switch-dev",
                   label: t("Content")
+                },
+                {
+                  id: "showPreviousPage",
+                  type: "switch-dev",
+                  label: t("Previous Page")
                 }
               ]
             }

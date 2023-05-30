@@ -1,0 +1,16 @@
+.brz-ed-control__imageUpload {
+  @apply bg-focal_point__upload-bg;
+  @apply relative;
+  @apply aspect-[1];
+  @apply flex;
+  @apply justify-center;
+  @apply items-center;
+  @apply border-dashed border-[1px] border-focal_point-border;
+  @apply cursor-pointer;
+
+  &__icon {
+    @apply text-toolbar-font-size;
+    @apply text-white;
+    @apply opacity-[15%];
+  }
+}

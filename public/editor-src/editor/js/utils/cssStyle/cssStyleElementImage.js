@@ -1,7 +1,8 @@
 import { getSizeType, isGIF, isSVG } from "visual/editorComponents/Image/utils";
+import { SizeType } from "visual/global/Config/types/configs/common";
 import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
 import { cssStyleDropShadow } from "visual/utils/cssStyle/cssStyleDropShadow";
-import { imageUrl } from "visual/utils/image";
+import { getImageUrl } from "visual/utils/image";
 import { roundTo } from "visual/utils/math";
 import { defaultValueValue } from "visual/utils/onChange";
 import { isNullish } from "visual/utils/value";
@@ -383,7 +384,12 @@ export function cssStyleElementImageCustomImage({
   const fileName = dvv(capByPrefix(prefix, "imageFileName"));
 
   if ((extension === "png" || extension === "svg") && src) {
-    const image = `-webkit-mask-image:  url("${imageUrl(src, { fileName })}");`;
+    const url = getImageUrl({
+      fileName,
+      uid: src,
+      sizeType: SizeType.custom
+    });
+    const image = `-webkit-mask-image:  url("${url}");`;
     return maskShape === "custom" ? image : "";
   }
 

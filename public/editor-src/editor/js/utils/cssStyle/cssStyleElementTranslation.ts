@@ -1,6 +1,7 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleColor } from "../style2";
 import { CSSValue } from "../style2/types";
+import { cssStyleFlexHorizontalAlign } from "./cssStyleAlign";
 import { cssStyleBgColor } from "./cssStyleBgColor";
 import { cssStyleBorder } from "./cssStyleBorder";
 import { cssStyleBoxShadow } from "./cssStyleBoxShadow";
@@ -26,7 +27,6 @@ export function cssStyleElementTranslationFlagSpacing({
 
   return `margin-right: ${flagSpacing}${flagSpacingSuffix};`;
 }
-
 // #endregion
 
 //#region TEXT
@@ -103,5 +103,18 @@ export function cssStyleElementTranslationWidth({
   const width = dvv("width");
   const suffix = dvv("widthSuffix");
 
-  return `width: ${width}${suffix}!important;`;
+  return `width: ${width}${suffix}!important;min-width:${width}${suffix}!important;`;
+}
+
+export function cssStyleElementTranslationAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    prefix: "select"
+  });
 }

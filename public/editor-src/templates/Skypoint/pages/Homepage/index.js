@@ -166,7 +166,7 @@ module.exports = {
                                                                         mobilePaddingBottom: 11,
                                                                         mobilePaddingLeft: 26,
                                                                         tempBgColorPalette: "color2",
-                                                                        linkExternal: "https://demo.themefuse.com/realtor-wordpress-theme/?page_id=584",
+                                                                        linkExternal: "",
                                                                         linkExternalBlank: "off"
                                                                     }
                                                                 },
@@ -230,7 +230,7 @@ module.exports = {
                                                                         mobilePaddingTop: 11,
                                                                         mobilePaddingBottom: 11,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/realtor-wordpress-theme/?page_id=641"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],

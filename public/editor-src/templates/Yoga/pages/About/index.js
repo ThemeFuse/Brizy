@@ -1078,7 +1078,7 @@ module.exports = {
                                                                         tempBorderColorPalette: "color4",
                                                                         colorPalette: "color4",
                                                                         hoverBorderColorOpacity: 0.8,
-                                                                        linkExternal: "https://demo.themefuse.com/sport-wordpress-theme/?page_id=473",
+                                                                        linkExternal: "",
                                                                         linkExternalBlank: "off",
                                                                         hoverBgColorOpacity: 1,
                                                                         tempHoverBgColorOpacity: 1,

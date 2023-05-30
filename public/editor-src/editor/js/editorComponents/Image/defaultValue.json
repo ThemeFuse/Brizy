@@ -219,6 +219,11 @@
 
     "maskShadowBlur": 0,
     "maskShadowVertical": 0,
-    "maskShadowHorizontal": 0
+    "maskShadowHorizontal": 0,
+
+    "hoverName": "none",
+    "hoverDuration": 600,
+    "hoverDelay": 0,
+    "hoverInfiniteAnimation": true
   }
 }

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import _ from "underscore";
-import ScrollPane from "visual/component/ScrollPane";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
-import { Button } from "../../../common/Button";
 import { capitalize } from "visual/utils/string";
+import { Button } from "../../../common/Button";
 
 export default class CreateList extends Component {
   static defaultProps = {
@@ -40,7 +40,7 @@ export default class CreateList extends Component {
         <input
           className="brz-input"
           value={apiKeyValue[name]}
-          onChange={e => {
+          onChange={(e) => {
             onChange(name, e.target.value);
           }}
         />
@@ -72,7 +72,7 @@ export default class CreateList extends Component {
           maxItems="6"
           itemHeight="30"
           inPortal={true}
-          onChange={itemTarget => {
+          onChange={(itemTarget) => {
             onChange(name, itemTarget);
           }}
         >
@@ -90,7 +90,7 @@ export default class CreateList extends Component {
         <textarea
           className="brz-textarea"
           value={apiKeyValue[name]}
-          onChange={e => {
+          onChange={(e) => {
             onChange(name, e.target.value);
           }}
         />
@@ -113,25 +113,12 @@ export default class CreateList extends Component {
       );
     });
 
-    return (
-      <ScrollPane
-        style={{ maxHeight: 255 }}
-        className="brz-ed-scroll-pane brz-ed-popup-integrations__scroll-pane"
-      >
-        {fields}
-      </ScrollPane>
-    );
+    return <Scrollbar autoHeightMax="255px" theme="light">{fields}</Scrollbar>;
   }
 
   render() {
-    const {
-      listsCreate,
-      nextLoading,
-      prevLoading,
-      error,
-      onPrev,
-      onNext
-    } = this.props;
+    const { listsCreate, nextLoading, prevLoading, error, onPrev, onNext } =
+      this.props;
 
     return (
       <div className="brz-ed-popup-integrations-step brz-ed-popup-integrations-step__lists-create">

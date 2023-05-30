@@ -5,7 +5,7 @@ import { t } from "visual/utils/i18n";
 import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -27,10 +27,10 @@ export function getItems({ v, device, component, context, state }) {
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
-  const imageDynamicContentChoices = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.image
-  );
+  const imageDynamicContentChoices = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.image
+  });
 
   const config = Config.getAll();
   const IS_GLOBAL_POPUP = isPopup(config);

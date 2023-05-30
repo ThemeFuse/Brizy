@@ -142,7 +142,10 @@ class ImageGallery extends EditorComponent {
       mobileWNoSpacing: Math.round(mobileWNoSpacing),
       gallery: {
         inGallery: true,
-        enableTags: enableTags === "on"
+        enableTags: enableTags === "on",
+        hoverName: v.hoverName,
+        hoverDuration: v.hoverDuration,
+        hoverInfiniteAnimation: v.hoverInfiniteAnimation
       }
     });
   }

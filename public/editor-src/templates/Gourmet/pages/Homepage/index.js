@@ -302,7 +302,7 @@ module.exports = {
                                                 hoverColorOpacity: 1,
                                                 mobileFontStyle: "button",
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/gourmet/?page_id=3198"
+                                                linkExternal: ""
                                             }
                                         }
                                     ],
@@ -595,7 +595,7 @@ module.exports = {
                                                                         hoverColorPalette: "color6",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/gourmet/?page_id=3198"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],

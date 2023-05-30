@@ -16,14 +16,18 @@ import {
   withLatestFrom
 } from "rxjs/operators";
 import { Gallery as Control } from "visual/component/Controls/Gallery";
+import { ToastNotification } from "visual/component/Notifications";
 import * as Option from "visual/component/Options/Type";
+import Config from "visual/global/Config";
+import { AddImageData } from "visual/global/Config/types/configs/common";
 import * as Arr from "visual/utils/array";
 import { pipe } from "visual/utils/fp";
+import { t } from "visual/utils/i18n";
 import { reducer } from "./reducer";
 import * as Actions from "./types/Actions";
 import * as Image from "./types/Image";
 import * as Item from "./types/Item";
-import { allowedExtensions } from "./utils";
+import { allowedExtensions, toUploadData } from "./utils";
 
 export type Value<I extends Image.Image> = Array<Image.Image | I>;
 type Items = Item.Item<number>[];
@@ -53,7 +57,27 @@ export function Gallery<I extends Image.Image>({
     pipe((from: number, to: number) => Actions.sort({ from, to }), dispatch),
     []
   );
-  const onAdd = useCallback(pipe(Actions.add, dispatch), []);
+
+  const onAdd = useCallback(() => {
+    const config = Config.getAll();
+    const { media } = config.api ?? {};
+
+    if (media?.addMediaGallery) {
+      const res = (data: Array<AddImageData>) => {
+        pipe(Actions.add, dispatch)(data.map(toUploadData));
+      };
+      const rej = (t: string): void => {
+        ToastNotification.error(t);
+      };
+
+      media.addMediaGallery.handler(res, rej, {
+        acceptedExtensions: allowedExtensions
+      });
+    } else {
+      ToastNotification.error(t("Missing addMediaGallery key in config.api"));
+      pipe(Actions.add, dispatch)([]);
+    }
+  }, []);
 
   useEffect(() => value$.current.next(value), [value]);
   useEffect(() => items$.current.next(items), [items]);
@@ -99,7 +123,6 @@ export function Gallery<I extends Image.Image>({
     <>
       {label}
       <Control<number>
-        allowedExtensions={allowedExtensions}
         onSort={onSort}
         onAdd={onAdd}
         items={items.map(Item.toGalleryItem)}

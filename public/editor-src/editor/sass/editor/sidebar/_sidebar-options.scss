@@ -65,7 +65,7 @@
 // Select
 .brz-ed-sidebar__right__option {
   .brz-control__select-option {
-    max-width: $control__md-width - 6; // 6 is scrollPane borderRightWidth
+    max-width: $control__md-width - 6; // 6 is scrollbar borderRightWidth
     overflow: hidden;
     text-overflow: ellipsis;
   }

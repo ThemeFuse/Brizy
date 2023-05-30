@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Search Snapshots and Props isLoading should be true 1`] = `
+<div
+  class="brz-ed-control__internalLink__search"
+>
+  <input
+    class="brz-input"
+    placeholder="Type to Search ..."
+    spellcheck="false"
+  />
+</div>
+`;
+
+exports[`Test Search Snapshots and Props loading shouldn't be 1`] = `
+<div
+  class="brz-ed-control__internalLink__search"
+>
+  <input
+    class="brz-input"
+    placeholder="Type to Search ..."
+    spellcheck="false"
+  />
+  <svg
+    class="brz-icon-svg brz-ed-icon-svg align-[initial] brz-ed-control__internalLink__spinner brz-ed-control__internalLink__spinner--hidden"
+    height="1em"
+    viewBox="0 0 16 16"
+    width="1em"
+  >
+    <g>
+      <g
+        class="nc-loop_circle-02-16"
+        transform="rotate(359.71071426823204 8 8)"
+      >
+        <path
+          d="M8,16c-4.4111328,0-8-3.5888672-8-8s3.5888672-8,8-8s8,3.5888672,8,8S12.4111328,16,8,16z M8,2C4.6914062,2,2,4.6914062,2,8s2.6914062,6,6,6s6-2.6914062,6-6S11.3085938,2,8,2z"
+          fill="currentColor"
+          opacity="0.4"
+        />
+        <path
+          d="M16,8h-2c0-3.3085938-2.6914062-6-6-6V0C12.4111328,0,16,3.5888672,16,8z"
+          data-color="color-2"
+        />
+      </g>
+      <script>
+        !function(){function t(t){this.element=t,this.animationId,this.start=null,this.init()}if(!window.requestAnimationFrame){var i=null;window.requestAnimationFrame=function(t,n){var e=(new Date).getTime();i||(i=e);var a=Math.max(0,16-(e-i)),o=window.setTimeout(function(){t(e+a)},a);return i=e+a,o}}t.prototype.init=function(){var t=this;this.animationId=window.requestAnimationFrame(t.triggerAnimation.bind(t))},t.prototype.reset=function(){var t=this;window.cancelAnimationFrame(t.animationId)},t.prototype.triggerAnimation=function(t){var i=this;this.start||(this.start=t);var n=t-this.start;504&gt;n||(this.start=this.start+504),this.element.setAttribute("transform","rotate("+Math.min(n/1.4,360)+" 8 8)");if(document.documentElement.contains(this.element))window.requestAnimationFrame(i.triggerAnimation.bind(i))};var n=document.getElementsByClassName("nc-loop_circle-02-16"),e=[];if(n)for(var a=0;n.length&gt;a;a++)!function(i){e.push(new t(n[i]))}(a);document.addEventListener("visibilitychange",function(){"hidden"==document.visibilityState?e.forEach(function(t){t.reset()}):e.forEach(function(t){t.init()})})}();
+      </script>
+    </g>
+  </svg>
+</div>
+`;

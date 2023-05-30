@@ -25,6 +25,7 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { attachRef } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import * as Str from "visual/utils/string/specs";
@@ -183,11 +184,20 @@ class Column extends EditorComponent {
     );
   };
 
+  getRef = (portalToolbar) => {
+    if (this.props.getParentRef) {
+      return this.props.getParentRef(portalToolbar?.node) ?? this.toolbarRef;
+    }
+    return this.toolbarRef;
+  };
+
   renderToolbar = (ContainerBorderButton) => {
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
-        ref={this.toolbarRef}
+        ref={(el) => {
+          attachRef(el, this.getRef(el));
+        }}
       >
         <SortableHandle>
           <ContainerBorderButton />

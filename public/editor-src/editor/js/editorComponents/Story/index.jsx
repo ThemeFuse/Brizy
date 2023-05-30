@@ -47,8 +47,14 @@ class Story extends EditorComponent {
   }
 
   renderItems(v) {
-    const { sliderLoop, sliderAutoPlay, sliderAutoPlaySpeed, sliderAnimation } =
-      v;
+    const {
+      sliderLoop,
+      sliderAutoPlay,
+      sliderAutoPlaySpeed,
+      sliderAnimation,
+      cssClassPopulation,
+      customClassName
+    } = v;
 
     const itemsProps = this.makeSubcomponentProps({
       sliderLoop,
@@ -60,7 +66,9 @@ class Story extends EditorComponent {
         rerender: {
           sliderLoop,
           sliderAutoPlay,
-          sliderAutoPlaySpeed
+          sliderAutoPlaySpeed,
+          cssClassPopulation,
+          customClassName
         }
       },
       bindWithKey: "items",

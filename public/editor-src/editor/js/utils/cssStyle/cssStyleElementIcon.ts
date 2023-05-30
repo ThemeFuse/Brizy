@@ -12,7 +12,11 @@ import { CSSValue } from "../style2/types";
 
 type FillType = "filled" | "outline" | "default";
 
-const getFillType = checkValue<FillType>(["filled", "outline", "default"]);
+export const getFillType = checkValue<FillType>([
+  "filled",
+  "outline",
+  "default"
+]);
 
 const config = Config.getAll();
 const IS_STORY = isStory(config);

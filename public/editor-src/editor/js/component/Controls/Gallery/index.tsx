@@ -68,7 +68,6 @@ const SortableItem = function <T extends UniqueIdentifier>({
 interface SortableProps<T> extends WithClassName {
   axis?: string;
   items: Item<T>[];
-  allowedExtensions: UploadProps["allowedExtensions"];
   onAdd: UploadProps["onChange"];
   onRemove: (id: T) => void;
   onSortEnd: (active: UniqueIdentifier, over: UniqueIdentifier) => void;
@@ -76,7 +75,6 @@ interface SortableProps<T> extends WithClassName {
 
 const Sortable = function <T extends number | string>({
   className,
-  allowedExtensions,
   items,
   onAdd,
   onRemove,
@@ -120,7 +118,6 @@ const Sortable = function <T extends number | string>({
       </DndContext>
       <ImageUpload
         onChange={onAdd}
-        allowedExtensions={allowedExtensions}
         className="brz-ed-control__gallery__item brz-ed-control__gallery__item--add"
       >
         <EditorIcon
@@ -137,7 +134,6 @@ export interface Props<T extends number | string> extends WithClassName {
   items: Item<T>[];
   onAdd: UploadProps["onChange"];
   onRemove: (id: T) => void;
-  allowedExtensions: UploadProps["allowedExtensions"];
 }
 
 export function Gallery<T extends number | string>({
@@ -145,8 +141,7 @@ export function Gallery<T extends number | string>({
   items,
   onSort,
   onAdd,
-  onRemove,
-  allowedExtensions
+  onRemove
 }: Props<T>): ReactElement {
   const _onSort = useCallback(
     (activeId, overId) => {
@@ -162,7 +157,6 @@ export function Gallery<T extends number | string>({
   return (
     <Sortable<T>
       axis="xy"
-      allowedExtensions={allowedExtensions}
       onAdd={onAdd}
       onSortEnd={_onSort}
       onRemove={onRemove}

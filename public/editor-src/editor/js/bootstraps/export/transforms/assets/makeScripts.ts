@@ -9,7 +9,7 @@ type MakeScripts = {
   pro?: ScriptsPro;
 };
 
-// main => preview.js | preview.pro.js only one added in the page
+// main => preview.min.js | preview.pro.min.js only one added in the page
 // generic => contain [initMain]
 // libsMap => contain all groups[libs] js
 // libsSelectors = contain all libs selector found in page
@@ -25,7 +25,7 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
     score: MAIN_SCORE,
     content: {
       type: "file",
-      url: assetUrl("editor/js/preview.js"),
+      url: assetUrl("editor/js/preview.min.js"),
       attr: {
         class: "brz-script brz-script-preview"
       }
@@ -58,7 +58,7 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
       score: LIBS_SCORE,
       content: {
         type: "file",
-        url: assetUrl(`editor/js/${name}.js`),
+        url: assetUrl(`editor/js/${name}.min.js`),
         attr: {
           class: "brz-script brz-script-preview-lib",
           "data-group": name
@@ -103,7 +103,7 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
       score: MAIN_SCORE,
       content: {
         type: "file",
-        url: `${proUrls.assets}/js/preview.pro.js`,
+        url: `${proUrls.assets}/js/preview.pro.min.js`,
         attr: {
           class: "brz-script brz-script-preview-pro"
         }
@@ -121,7 +121,7 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
         score: LIBS_SCORE + 1,
         content: {
           type: "file",
-          url: `${proUrls.assets}/js/${name}.pro.js`,
+          url: `${proUrls.assets}/js/${name}.pro.min.js`,
           attr: {
             class: `brz-script brz-script-preview-lib-pro`,
             "data-group": name

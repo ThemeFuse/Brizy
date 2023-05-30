@@ -4,7 +4,7 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -45,10 +45,10 @@ export function getItems({
     dvv("style2BgColorPalette")
   );
 
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
 
   return [
     {
@@ -200,7 +200,7 @@ export function getItems({
       type: "popover-dev",
       config: {
         icon: "nc-font",
-        size: device === "desktop" ? "large" : "auto",
+        size: device === "desktop" ? "xlarge" : "auto",
         title: t("Typography")
       },
       disabled: labelOff && isStyle1,
@@ -214,6 +214,7 @@ export function getItems({
             {
               id: "col-1",
               align: "center",
+              size: 1,
               options: [
                 {
                   id: "",
@@ -228,14 +229,16 @@ export function getItems({
             {
               id: "col-2",
               align: "center",
+              size: "auto",
               options: [
                 {
                   id: "text",
                   type: "population-dev",
                   config: {
-                    iconOnly: true,
-                    choices: richTextDC
+                    ...richTextDC,
+                    iconOnly: true
                   },
+                  disabled: richTextDC === undefined,
                   devices: "desktop"
                 }
               ]

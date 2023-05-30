@@ -383,6 +383,15 @@ $option-color: #626b70;
     display: flex;
     flex-direction: column;
 
+    .brz-scrollbar__wrapper {
+      & > div:nth-child(2) {
+        bottom: -15px !important;
+      }
+      & > div:last-child {
+        right: -15px!important;
+      }
+    }
+
     // scroll in safari
     >div:not(.brz-ed-popup-integrations-step__buttons) {
       flex-shrink: 1;
@@ -751,31 +760,7 @@ $option-color: #626b70;
 // --- Responsive
 @media screen and (max-height: 899px) {
   .brz-ed-popup-integrations {
-    .brz-ed-popup-content {
-      height: 465px;
-    }
-
-    .brz-ed-popup-integrations-step__account {
-      .brz-ed-popup-integrations__scroll-pane .brz-ed-scroll-inner {
-        max-height: 155px !important;
-      }
-    }
-
     .brz-ed-popup-integrations-step__lists {
-      .brz-ed-popup-integrations__scroll-pane {
-        .brz-ed-scroll-inner {
-          max-height: 153px !important;
-        }
-
-        &--small .brz-ed-scroll-inner {
-          max-height: 204px !important;
-        }
-
-        &--big .brz-ed-scroll-inner {
-          max-height: 102px !important;
-        }
-      }
-
       &-create {
         .brz-ed-popup-integrations-step__head {
           margin-bottom: 5px;
@@ -784,12 +769,6 @@ $option-color: #626b70;
         .brz-ed-popup-integrations-step__buttons {
           margin-top: 25px;
         }
-      }
-    }
-
-    .brz-ed-popup-integrations-step__fields {
-      .brz-ed-popup-integrations__scroll-pane .brz-ed-scroll-inner {
-        max-height: 205px !important;
       }
     }
   }

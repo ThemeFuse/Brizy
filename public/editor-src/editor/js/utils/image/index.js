@@ -1,18 +1,17 @@
-import preloadImage from "./preloadImage";
-import uploadImage from "./uploadImage.ts";
-import imageUrl, { svgUrl, imageSpecificSize } from "./imageUrl";
-import imageWrapperSize from "./imageWrapperSize";
-import imagePopulationUrl from "./imagePopulationUrl";
 import { getImageFormat, isSVG } from "./imageFormat";
+import imagePopulationUrl, {
+  defaultImagePopulation
+} from "./imagePopulationUrl";
+import { getImageUrl } from "./imageUrl";
+import imageWrapperSize from "./imageWrapperSize";
+import preloadImage from "./preloadImage";
 
 export {
   preloadImage,
-  uploadImage,
-  imageUrl,
-  svgUrl,
   imagePopulationUrl,
   imageWrapperSize,
   getImageFormat,
   isSVG,
-  imageSpecificSize
+  getImageUrl,
+  defaultImagePopulation
 };

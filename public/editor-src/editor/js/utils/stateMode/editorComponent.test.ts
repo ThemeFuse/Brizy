@@ -1,3 +1,4 @@
+import { DESKTOP } from "visual/utils/responsiveMode";
 import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
 import { ToolbarItemType } from "../../editorComponents/ToolbarItemType";
 import { states } from "./index";
@@ -37,7 +38,6 @@ jest.mock(
   "visual/component/Options/types/IntegrationsApps.js",
   () => undefined
 );
-jest.mock("visual/component/Options/types/MultiInput.js", () => undefined);
 jest.mock(
   "visual/component/Options/types/MultiInputPickerOptionType.js",
   () => undefined
@@ -141,7 +141,7 @@ describe("Testing `bindStateToOption` function", () => {
       ]
     };
 
-    expect(bindStateToOption(states(), option)).toBe(option);
+    expect(bindStateToOption(states(), option, DESKTOP)).toBe(option);
   });
 
   describe("Dealing with popover", () => {
@@ -158,7 +158,9 @@ describe("Testing `bindStateToOption` function", () => {
         options: [wrapInState(optionsWithState)]
       };
 
-      expect(bindStateToOption(states(), popover)).toStrictEqual(resultPopover);
+      expect(bindStateToOption(states(), popover, DESKTOP)).toStrictEqual(
+        resultPopover
+      );
     });
 
     test("If popover has options that do not support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
@@ -174,7 +176,9 @@ describe("Testing `bindStateToOption` function", () => {
         options
       };
 
-      expect(bindStateToOption(states(), popover)).toStrictEqual(resultPopover);
+      expect(bindStateToOption(states(), popover, DESKTOP)).toStrictEqual(
+        resultPopover
+      );
     });
 
     test("If popover has other popover as children that has options that support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
@@ -190,7 +194,9 @@ describe("Testing `bindStateToOption` function", () => {
         ]
       };
 
-      expect(bindStateToOption(states(), popover)).toStrictEqual(popover);
+      expect(bindStateToOption(states(), popover, DESKTOP)).toStrictEqual(
+        popover
+      );
     });
 
     test("If popover has tabs as children that has options that support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
@@ -200,7 +206,9 @@ describe("Testing `bindStateToOption` function", () => {
         options: [tabsWithState]
       };
 
-      expect(bindStateToOption(states(), popover)).toStrictEqual(popover);
+      expect(bindStateToOption(states(), popover, DESKTOP)).toStrictEqual(
+        popover
+      );
     });
 
     test("If tabs has an option as children that has options that support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
@@ -228,7 +236,7 @@ describe("Testing `bindStateToOption` function", () => {
         ]
       };
 
-      expect(bindStateToOption(states(), input)).toStrictEqual(result);
+      expect(bindStateToOption(states(), input, DESKTOP)).toStrictEqual(result);
     });
   });
 
@@ -262,7 +270,7 @@ describe("Testing `bindStateToOption` function", () => {
         ]
       };
 
-      expect(bindStateToOption(states(), input)).toStrictEqual(result);
+      expect(bindStateToOption(states(), input, DESKTOP)).toStrictEqual(result);
     });
 
     test("If tabs has options that do not support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
@@ -275,7 +283,7 @@ describe("Testing `bindStateToOption` function", () => {
         ]
       };
 
-      expect(bindStateToOption(states(), input)).toStrictEqual(input);
+      expect(bindStateToOption(states(), input, DESKTOP)).toStrictEqual(input);
     });
 
     test("If tabs has popover as children that has options that support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
@@ -297,7 +305,7 @@ describe("Testing `bindStateToOption` function", () => {
         ]
       };
 
-      expect(bindStateToOption(states(), input)).toStrictEqual(input);
+      expect(bindStateToOption(states(), input, DESKTOP)).toStrictEqual(input);
     });
 
     test("If tabs has other tabs as children that has options that support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
@@ -313,7 +321,7 @@ describe("Testing `bindStateToOption` function", () => {
         ]
       };
 
-      expect(bindStateToOption(states(), input)).toStrictEqual(input);
+      expect(bindStateToOption(states(), input, DESKTOP)).toStrictEqual(input);
     });
 
     test("If popover has an option as children that has options that support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
@@ -329,7 +337,7 @@ describe("Testing `bindStateToOption` function", () => {
         options: [wrapInState([gridWithState])]
       };
 
-      expect(bindStateToOption(states(), input)).toStrictEqual(result);
+      expect(bindStateToOption(states(), input, DESKTOP)).toStrictEqual(result);
     });
   });
 });

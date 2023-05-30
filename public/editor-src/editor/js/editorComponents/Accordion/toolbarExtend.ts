@@ -88,31 +88,47 @@ export function getItems({
                   type: "select-dev",
                   devices: "desktop",
                   choices: [
-                    { value: "none", title: "None", icon: "nc-none" },
+                    {
+                      value: "none",
+                      title: "None",
+                      icon: {
+                        name: "nc-none"
+                      }
+                    },
                     {
                       value: "thin",
                       title: "Thin",
-                      icon: "nc-down-arrow-thin"
+                      icon: {
+                        name: "nc-down-arrow-thin"
+                      }
                     },
                     {
                       value: "heavy",
                       title: "Heavy",
-                      icon: "nc-down-arrow-heavy"
+                      icon: {
+                        name: "nc-down-arrow-heavy"
+                      }
                     },
                     {
                       value: "tail",
                       title: "Tail",
-                      icon: "nc-down-arrow-tail"
+                      icon: {
+                        name: "nc-down-arrow-tail"
+                      }
                     },
                     {
                       value: "filled",
                       title: "Round",
-                      icon: "nc-down-arrow-filled"
+                      icon: {
+                        name: "nc-down-arrow-filled"
+                      }
                     },
                     {
                       value: "outline",
                       title: "Outline",
-                      icon: "nc-down-arrow-outline"
+                      icon: {
+                        name: "nc-down-arrow-outline"
+                      }
                     }
                   ]
                 },

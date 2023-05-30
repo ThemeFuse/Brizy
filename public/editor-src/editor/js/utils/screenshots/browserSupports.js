@@ -1,7 +1,28 @@
 // mainly inspired by html2canvas
 let browsersSupports;
+let count = 0;
 
-export const browserSupports = () => {
+export const browserSupports = async () => {
+  while (count < 5) {
+    browsersSupports = undefined;
+    let isSupported = await _browserSupports();
+
+    if (isSupported) {
+      count = 0;
+      return isSupported;
+    } else {
+      count = count + 1;
+    }
+  }
+
+  if (count > 5) {
+    browsersSupports = false;
+  }
+
+  return Promise.reject(false);
+};
+
+export const _browserSupports = () => {
   if (browsersSupports) {
     return Promise.resolve(true);
   }

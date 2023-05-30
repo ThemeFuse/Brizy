@@ -10,7 +10,7 @@ import { capByPrefix } from "../string";
 import { CSSValue } from "../style2/types";
 
 type Size = "small" | "medium" | "large" | "custom";
-const getSize = checkValue<Size>(["small", "medium", "large", "custom"]);
+export const getSize = checkValue<Size>(["small", "medium", "large", "custom"]);
 
 export function cssStyleStroke({
   v,

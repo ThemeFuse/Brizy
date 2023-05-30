@@ -22,7 +22,7 @@ export function parseCustomAttributes(attributes: string): Attributes {
 
   const res: Attributes = {};
   // const regex = /([\w_-]+)[:=]\s*?(?:(["'])([^\n]+)\2|([^\s'"]+))/g;
-  const regex = /(?:\s*([\w_-]+)[:=]\s*(["'])(.*?)\2\s*)/gms;
+  const regex = /(?:\s*([\w_-]+)[:=]\s*((?<!\\)["'])(.*?)(?<!\\)\2\s*)/gms;
   let match = regex.exec(attributes);
 
   while (match) {

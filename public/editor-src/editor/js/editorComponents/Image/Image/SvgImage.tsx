@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React from "react";
-import { svgUrl } from "visual/utils/image";
+import { SizeType } from "visual/global/Config/types/configs/common";
+import { getImageUrl } from "visual/utils/image";
 import { ImageProps, V } from "../types";
 import { showOriginalImage } from "../utils";
 
@@ -15,15 +16,15 @@ type Props = {
 };
 
 const SvgImage: React.FC<Props> = ({ v, imageSrc, extraAttributes = {} }) => {
-  const url = svgUrl(imageSrc, { fileName: v.imageFileName });
+  const url = getImageUrl({
+    uid: imageSrc,
+    sizeType: SizeType.original,
+    fileName: v.imageFileName
+  });
 
   const styleSvgClass = classnames("brz-img", "brz-img-svg", {
     "brz-img__original": showOriginalImage(v)
   });
-
-  if (!url) {
-    return null;
-  }
 
   return (
     <img

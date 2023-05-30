@@ -2802,7 +2802,7 @@ module.exports = {
                                                                         tempPaddingRL: 70,
                                                                         tempPaddingRight: 70,
                                                                         tempPaddingLeft: 70,
-                                                                        linkExternal: "https://demo.themefuse.com/sport-wordpress-theme/?page_id=483",
+                                                                        linkExternal: "",
                                                                         linkExternalBlank: "off"
                                                                     }
                                                                 }

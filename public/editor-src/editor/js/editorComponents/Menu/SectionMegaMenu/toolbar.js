@@ -1,25 +1,25 @@
-import { t } from "visual/utils/i18n";
-import { hexToRgba } from "visual/utils/color";
-import {
-  getOptionColorHexByPalette,
-  getDynamicContentChoices
-} from "visual/utils/options";
-import { defaultValueValue } from "visual/utils/onChange";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
-import { toolbarShowOnResponsive } from "visual/utils/toolbar";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
+import {
+  getDynamicContentOption,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { toolbarShowOnResponsive } from "visual/utils/toolbar";
 
 export function getItems({ v, device, context }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
-  const imageDynamicContentChoices = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.image
-  );
+  const imageDynamicContentChoices = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.image
+  });
 
   return [
     toolbarShowOnResponsive({

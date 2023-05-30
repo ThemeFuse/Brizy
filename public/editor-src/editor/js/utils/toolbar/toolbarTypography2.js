@@ -1,6 +1,4 @@
 import Config from "visual/global/Config";
-import { getWeightChoices } from "visual/utils/fonts";
-import { getSuffixChoices } from "visual/utils/fonts/SizeSuffix";
 import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import {
@@ -151,56 +149,6 @@ export function toolbarTypography2FontSize({
   };
 }
 
-export function toolbarTypography2FontSizeSuffix({
-  v,
-  prefix = "",
-  device,
-  state,
-  devices = "all",
-  onChange
-}) {
-  const fontSizeSuffixKey = defaultValueKey({
-    key: capByPrefix(prefix, "fontSizeSuffix"),
-    device,
-    state
-  });
-
-  const fontSizeSuffixValue = getOptionFontByGlobal(
-    fontSizeSuffixKey,
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontSizeSuffix"),
-      device,
-      state
-    }),
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontStyle"),
-      device,
-      state
-    })
-  );
-
-  return {
-    id: "fontSizeSuffix",
-    type: "select",
-    label: "Size",
-    devices,
-    className: "brz-control__typography-suffix",
-    disabled: isStory(Config.getAll()),
-    choices: getSuffixChoices,
-    value: fontSizeSuffixValue,
-    onChange: (fontSizeSuffix) => {
-      const values = {
-        ...{ v, prefix, device, state, onChange },
-        ...{ current: fontSizeSuffixKey, value: fontSizeSuffix }
-      };
-
-      return saveOnChanges(values);
-    }
-  };
-}
-
 export function toolbarTypography2LineHeight({
   v,
   prefix = "",
@@ -247,92 +195,6 @@ export function toolbarTypography2LineHeight({
       const values = {
         ...{ v, prefix, device, state, onChange },
         ...{ current: lineHeightKey, value: lineHeight }
-      };
-
-      return saveOnChanges(values);
-    }
-  };
-}
-
-export function toolbarTypography2FontWeight({
-  v,
-  prefix = "",
-  device,
-  state,
-  disabled = false,
-  devices = "all",
-  onChange
-}) {
-  const fontWeightKey = defaultValueKey({
-    key: capByPrefix(prefix, "fontWeight"),
-    device,
-    state
-  });
-
-  const fontFamilyTypeValue = getOptionFontByGlobal(
-    "fontFamilyType",
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontFamilyType"),
-      device,
-      state
-    }),
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontStyle"),
-      device,
-      state
-    })
-  );
-
-  const fontFamilyValue = getOptionFontByGlobal(
-    "fontFamily",
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontFamily"),
-      device,
-      state
-    }),
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontStyle"),
-      device,
-      state
-    })
-  );
-
-  const fontWeightValue = getOptionFontByGlobal(
-    fontWeightKey,
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontWeight"),
-      device,
-      state
-    }),
-    defaultValueValue({
-      v,
-      key: capByPrefix(prefix, "fontStyle"),
-      device,
-      state
-    })
-  );
-
-  return {
-    id: fontWeightKey,
-    label: t("Weight"),
-    type: "select",
-    devices,
-    disabled,
-    display: "block",
-    choices: getWeightChoices({
-      type: fontFamilyTypeValue,
-      family: fontFamilyValue
-    }),
-    value: fontWeightValue,
-    onChange: (fontWeight) => {
-      const values = {
-        ...{ v, prefix, device, state, onChange },
-        ...{ current: fontWeightKey, value: fontWeight }
       };
 
       return saveOnChanges(values);

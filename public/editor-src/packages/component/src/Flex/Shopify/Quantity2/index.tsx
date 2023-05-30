@@ -1,6 +1,6 @@
 import { Button } from "component/Flex/Button";
 import React, { ReactElement } from "react";
-import EditorIcon from "visual/component/EditorIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import { Props } from "./types";
 
 export const Quantity2 = ({
@@ -11,24 +11,26 @@ export const Quantity2 = ({
   onDecrease,
   onIncrease,
   step = 1,
-  value = 1
+  value = 1,
+  attr
 }: Props): ReactElement => {
   return (
     <div className="brz-shopify-quantity-style2">
-      <Button className="brz-button" onClick={onDecrease}>
-        <EditorIcon icon="nc-remove" />
+      <Button className="brz-button-decrement" onClick={onDecrease}>
+        <ThemeIcon name="simple-delete" type="outline" />
       </Button>
       <input
         className={className}
         max={max}
         min={min}
         step={step}
-        value={value}
+        defaultValue={value}
+        {...attr}
         type="number"
         onChange={onChange}
       />
-      <Button className="brz-button" onClick={onIncrease}>
-        <EditorIcon icon="nc-warning" />
+      <Button className="brz-button-increment" onClick={onIncrease}>
+        <ThemeIcon name="simple-add" type="outline" />
       </Button>
     </div>
   );

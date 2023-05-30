@@ -76,33 +76,12 @@
     "tempColorOpacity": 0.7,
     "tempColorPalette": "",
 
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
-
-    "hoverBgColorHex": null,
-    "hoverBgColorOpacity": null,
-    "hoverBgColorPalette": null,
-
-    "tempHoverBgColorPalette": null,
-    "tempHoverBgColorOpacity": null,
-
     "textColorHex": "#000000",
     "textColorOpacity": 0.7,
     "textColorPalette": "",
 
     "tempTextColorOpacity": 0.7,
     "tempTextColorPalette": "",
-
-    "hoverTextColorHex": null,
-    "hoverTextColorOpacity": null,
-    "hoverTextColorPalette": null,
-
-    "tempHoverTextColorOpacity": null,
-    "tempHoverTextColorPalette": null,
 
     "borderStyle": "solid",
 
@@ -257,29 +236,6 @@
     "tempBoxShadowSpread": 0,
     "tempBoxShadowVertical": 2,
     "tempBoxShadowHorizontal": 1,
-
-    "hoverBoxShadow": null,
-
-    "tempHoverBoxShadow": null,
-
-    "hoverBoxShadowColorHex": null,
-    "hoverBoxShadowColorOpacity": null,
-    "hoverBoxShadowColorPalette": null,
-
-    "tempHoverBoxShadowColorPalette": null,
-    "tempHoverBoxShadowColorOpacity": null,
-
-    "hoverBoxShadowBlur": null,
-    "hoverBoxShadowSpread": null,
-    "hoverBoxShadowVertical": null,
-    "hoverBoxShadowHorizontal": null,
-
-    "tempHoverBoxShadowBlur": null,
-    "tempHoverBoxShadowSpread": null,
-    "tempHoverBoxShadowVertical": null,
-    "tempHoverBoxShadowHorizontal": null,
-
-    "tabletHorizontalAlign": null,
 
     "tabletSubmitWidth": null,
     "tabletSubmitWidthSuffix": null,

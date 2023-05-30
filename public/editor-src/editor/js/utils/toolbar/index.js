@@ -36,15 +36,12 @@ export {
 
 //Box Shadow
 export {
+  toolbarBoxShadowFields2,
   toolbarBoxShadow2,
-  toolbarBoxShadowHexField2,
-  toolbarBoxShadowFields2
+  toolbarBoxShadowHexField2
 } from "./toolbarBoxShadow";
 
-export {
-  toolbarTextShadowHexField2,
-  toolbarTextShadowFields2
-} from "./toolbarTextShadow";
+export { toolbarTextShadowHexField2 } from "./toolbarTextShadow";
 
 // Anchor and URL
 export {
@@ -60,9 +57,6 @@ export {
   toolbarShowOnMobile,
   toolbarShowOnResponsive
 } from "./toolbarShowOnDevices";
-
-// Custom CSS Class
-export { toolbarCustomCSSClass } from "./toolbarCustomCSSClass";
 
 // Filter
 export {
@@ -88,20 +82,10 @@ export {
 export { toolbarElementContainerTypeImageMap } from "./toolbarElementContainer";
 
 // Element Section
-export {
-  toolbarElementSectionBoxShadow,
-  toolbarElementSectionSaved,
-  toolbarElementSectionGlobal
-} from "./toolbarElementSection";
-
-// Element Video
-export { toolbarElementVideoPlaySize } from "./toolbarElementVideo";
+export { getInstanceParentId } from "./toolbarElementSection";
 
 // Element SoundCloud
 export { toolbarElementSoundCloudStyle } from "./toolbarElementSoundCloud";
-
-// Element Cloneable
-export { toolbarElementCloneableSpacing } from "./toolbarElementCloneable";
 
 // Element Image
 export {
@@ -114,9 +98,7 @@ export {
   toolbarTypography2FontFamily,
   toolbarTypography2FontStyle,
   toolbarTypography2FontSize,
-  toolbarTypography2FontSizeSuffix,
   toolbarTypography2LineHeight,
-  toolbarTypography2FontWeight,
   toolbarTypography2LetterSpacing
 } from "./toolbarTypography2";
 
@@ -124,13 +106,9 @@ export {
 export { toolbarElementWPPostsNumber } from "./toolbarElementWPPosts";
 
 export {
-  toolbarElementForm2SpacingPx,
   toolbarElementForm2Apps,
   toolbarElementForm2Size
 } from "./toolbarElementForm2";
-
-// Element Login
-export { toolbarElementLoginSpacingPx } from "./toolbarElementLogin";
 
 // Shape
 export {
@@ -139,12 +117,3 @@ export {
   toolbarShapeBottomType,
   toolbarShapeBottomFlip
 } from "./toolbarShape";
-
-// Element Carousel
-export {
-  toolbarElementCarouselTaxonomy,
-  toolbarElementCarouselPadding
-} from "./toolbarElementCarousel";
-
-// Twitter
-export { toolbarElementTwitter } from "./toolbarElementTwitter";

@@ -18,7 +18,7 @@ module.exports = {
     "\\.(tsx|ts|js|jsx)?$": ["@swc/jest", swcConfig]
   },
 
-  modulePathIgnorePatterns: ["packages/optionControls", "packages/icons"],
+  modulePathIgnorePatterns: ["packages/UIComponents", "packages/icons"],
   transformIgnorePatterns: ["/node_modules/(?!(nanoid)/)"],
   globals: {
     TARGET: "Jest",

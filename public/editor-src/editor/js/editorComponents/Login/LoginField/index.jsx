@@ -29,7 +29,7 @@ const readLoginType = (type) => {
 const getFieldType = (type) => {
   switch (type) {
     case "Email":
-      return "email";
+      return "text";
     case "Password":
       return "password";
   }
@@ -233,7 +233,7 @@ class LoginField extends EditorComponent {
     };
 
     const _type = readLoginType(type);
-    const isEmail = getFieldType(_type) === "email";
+    const isEmail = type === "Email";
 
     if (_type) {
       return (

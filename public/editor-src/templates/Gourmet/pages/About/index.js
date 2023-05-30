@@ -454,7 +454,7 @@ module.exports = {
                                                 mobilePaddingTop: 11,
                                                 mobilePaddingBottom: 11,
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/gourmet/?page_id=3198"
+                                                linkExternal: ""
                                             }
                                         }
                                     ],

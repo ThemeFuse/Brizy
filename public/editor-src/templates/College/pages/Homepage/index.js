@@ -131,7 +131,7 @@ module.exports = {
                                                 hoverColorPalette: "color2",
                                                 hoverColorOpacity: 1,
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/the-college/?page_id=2181"
+                                                linkExternal: ""
                                             }
                                         }
                                     ],
@@ -283,7 +283,7 @@ module.exports = {
                                                 tempHoverBgColorPalette: "color3",
                                                 hoverBorderColorHex: "#239ddb",
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/the-college/?page_id=2181"
+                                                linkExternal: ""
                                             }
                                         }
                                     ],
@@ -442,7 +442,7 @@ module.exports = {
                                                 tempHoverBgColorPalette: "color3",
                                                 hoverBorderColorHex: "#239ddb",
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/the-college/?page_id=2181"
+                                                linkExternal: ""
                                             }
                                         }
                                     ],
@@ -667,7 +667,7 @@ module.exports = {
                                                                         hoverColorPalette: "color7",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?page_id=2181"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -1483,7 +1483,7 @@ module.exports = {
                                                                         hoverColorPalette: "color2",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?course_cat=lessons-and-courses"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -1651,7 +1651,7 @@ module.exports = {
                                                                         hoverColorPalette: "color2",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?page_id=2186"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -1819,7 +1819,7 @@ module.exports = {
                                                                         hoverColorPalette: "color2",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?page_id=2189"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -2823,7 +2823,7 @@ module.exports = {
                                                                         hoverColorPalette: "color3",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?p=374"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -3057,7 +3057,7 @@ module.exports = {
                                                                         hoverColorPalette: "color3",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?p=374"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -3291,7 +3291,7 @@ module.exports = {
                                                                         hoverColorPalette: "color3",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?p=374"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -3525,7 +3525,7 @@ module.exports = {
                                                                         hoverColorPalette: "color3",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/the-college/?p=374"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],

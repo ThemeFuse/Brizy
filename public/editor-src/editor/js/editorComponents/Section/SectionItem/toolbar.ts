@@ -5,7 +5,7 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -29,10 +29,10 @@ export const getItems: GetItems<ElementModel> = ({
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
-  const imageDynamicContentChoices = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.image
-  );
+  const imageDynamicContentChoices = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.image
+  });
 
   // @ts-expect-error need to add type isSlider
   const { isSlider: inSlider } = component.props.meta.section;

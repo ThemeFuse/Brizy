@@ -1291,7 +1291,7 @@ module.exports = {
                                                                         hoverColorPalette: "color3",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/car-repair-wordpress-theme/?page_id=477"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -1584,7 +1584,7 @@ module.exports = {
                                                                         hoverColorPalette: "color3",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/car-repair-wordpress-theme/?page_id=477"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -1803,7 +1803,7 @@ module.exports = {
                                                                         hoverColorPalette: "color3",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/car-repair-wordpress-theme/?page_id=477"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -2096,7 +2096,7 @@ module.exports = {
                                                                         hoverColorPalette: "color3",
                                                                         hoverColorOpacity: 1,
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/car-repair-wordpress-theme/?page_id=477"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -2362,7 +2362,7 @@ module.exports = {
                                                                         hoverBorderColorPalette: "color3",
                                                                         tempHoverBorderColorPalette: "color3",
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/car-repair-wordpress-theme/?page_id=477"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],

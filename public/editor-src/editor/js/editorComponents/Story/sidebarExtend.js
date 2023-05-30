@@ -1,13 +1,12 @@
-import { t } from "visual/utils/i18n";
-import { toolbarCustomCSSClass } from "visual/utils/toolbar";
-import { getDynamicContentChoices } from "visual/utils/options";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { t } from "visual/utils/i18n";
+import { getDynamicContentOption } from "visual/utils/options";
 
-export function getItems({ v, device, context }) {
-  const cssIDDynamicContentChoices = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+export function getItems({ context }) {
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
 
   return [
     {
@@ -28,13 +27,23 @@ export function getItems({ v, device, context }) {
           label: t("Advanced"),
           icon: "nc-cog",
           options: [
-            toolbarCustomCSSClass({
-              v,
-              device,
+            {
+              id: "cssClass",
+              label: t("CSS Class"),
+              type: "population-dev",
+              position: 40,
               devices: "desktop",
-              state: "normal",
-              population: cssIDDynamicContentChoices
-            })
+              display: "block",
+              helper: {
+                content:
+                  "Add your custom class without the .dot, example: my-class"
+              },
+              config: richTextDC,
+              option: {
+                id: "customClassName",
+                type: "inputText-dev"
+              }
+            }
           ]
         }
       ]

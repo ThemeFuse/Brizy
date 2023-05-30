@@ -24,4 +24,5 @@ export interface Value extends ElementModel {
   showRegistration: Switch;
   showDescription: Switch;
   recentEvents: string;
+  showPreviousPage: Switch;
 }

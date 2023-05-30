@@ -4,7 +4,6 @@
     "startPopulation": "",
     "startPopulationFallback2": null,
 
-
     "end": 100,
     "endPopulation": "",
     "endPopulationFallback2": null,
@@ -82,14 +81,6 @@
     "strokeBottomWidth": 7,
     "strokeLeftWidth": 7,
 
-    "hoverStrokeStyle": null,
-    "hoverStrokeWidthType": null,
-    "hoverStrokeWidth": null,
-    "hoverStrokeTopWidth": null,
-    "hoverStrokeRightWidth": null,
-    "hoverStrokeBottomWidth": null,
-    "hoverStrokeLeftWidth": null,
-
     "tempStrokeStyle": "solid",
     "tempStrokeWidth": "grouped",
     "tempStrokeTopWidth": 7,
@@ -97,7 +88,6 @@
     "tempStrokeBottomWidth": 7,
     "tempStrokeLeftWidth": 7,
 
-    "tempHoverStrokeStyle": null,
     "tempHoverStrokeWidth": 7,
     "tempHoverStrokeTopWidth": 7,
     "tempHoverStrokeRightWidth": 7,

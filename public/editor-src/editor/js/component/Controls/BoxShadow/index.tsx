@@ -12,8 +12,8 @@ import {
   Value as CValue
 } from "visual/component/Controls/ColorPickerSelect/entities";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
+import MultiInputOptionType from "visual/component/Controls/MultiInput";
 import { Item } from "visual/component/Controls/MultiSelect/Item";
-import MultiInputOptionType from "visual/component/Options/types/MultiInput";
 import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
 import {
   WithClassName,

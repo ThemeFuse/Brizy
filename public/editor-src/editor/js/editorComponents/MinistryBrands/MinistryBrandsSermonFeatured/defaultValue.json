@@ -222,6 +222,6 @@
     "parentBoxShadowHorizontal": 2,
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null
+    "hoverTransitionSuffix": ""
   }
 }

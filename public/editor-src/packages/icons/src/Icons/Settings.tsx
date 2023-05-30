@@ -1,0 +1,32 @@
+import React, { ReactElement } from "react";
+import { Props } from "../types";
+
+export const Settings = ({
+  className,
+  onClick,
+  style
+}: Props): ReactElement => (
+  <svg
+    className={className}
+    style={style}
+    onClick={onClick}
+    width="1em"
+    height="1em"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+  >
+    <g stroke="none" fill="currentColor">
+      <g transform="translate(-273.000000, -132.000000)" fill="currentColor">
+        <g transform="translate(47.000000, 0.000000)">
+          <g transform="translate(0.000000, 78.000000)">
+            <g transform="translate(0.000000, 40.000000)">
+              <g transform="translate(229.000000, 14.000000)">
+                <path d="M10.3,5.2 L11.4,3.1 L10,1.7 L7.9,2.8 C7.6,2.6 7.2,2.5 6.8,2.4 L6,0 L4,0 L3.2,2.3 C2.9,2.4 2.5,2.5 2.2,2.7 L0.1,1.6 L-1.4,3.1 L-0.3,5.2 C-0.5,5.5 -0.6,5.9 -0.7,6.2 L-3,7 L-3,9 L-0.7,9.8 C-0.6,10.2 -0.4,10.5 -0.3,10.9 L-1.4,13 L0,14.4 L2.1,13.3 C2.4,13.5 2.8,13.6 3.2,13.7 L4,16 L6,16 L6.8,13.7 C7.2,13.6 7.5,13.4 7.9,13.3 L10,14.4 L11.4,13 L10.3,10.9 C10.5,10.6 10.6,10.2 10.7,9.8 L13,9 L13,7 L10.7,6.2 C10.6,5.9 10.5,5.5 10.3,5.2 Z M5,11 C3.3,11 2,9.7 2,8 C2,6.3 3.3,5 5,5 C6.7,5 8,6.3 8,8 C8,9.7 6.7,11 5,11 Z" />
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
+);

@@ -1,7 +1,6 @@
 @import "../../variables";
 
 // --- Fonts
-$scroll-pane-margin: 6px;
 $toolbar-fonts-height: 200px; //235px;
 $font-item-offset: 10px;
 
@@ -21,12 +20,6 @@ $font-item-offset: 10px;
     overflow: hidden; // FIXME
     padding: 7px 3px 45px 0;
     position: relative;
-
-    // scrollPane need height for first render
-    .brz-ed-scroll-pane {
-      height: 165px;
-      overflow: hidden;
-    }
   }
 
   &__typography-adder {

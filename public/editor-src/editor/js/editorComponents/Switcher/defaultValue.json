@@ -253,31 +253,6 @@
     "tempTabletPaddingBottomSuffix": "px",
     "tempTabletPaddingLeftSuffix": "px",
 
-    "tabletBorderRadiusType": null,
-    "tabletBorderRadius": null,
-    "tabletBorderTopLeftRadius": null,
-    "tabletBorderTopRightRadius": null,
-    "tabletBorderBottomLeftRadius": null,
-    "tabletBorderBottomRightRadius": null,
-
-    "tempTabletBorderRadius": null,
-    "tempTabletBorderTopLeftRadius": null,
-    "tempTabletBorderTopRightRadius": null,
-    "tempTabletBorderBottomLeftRadius": null,
-    "tempTabletBorderBottomRightRadius": null,
-
-    "tabletBorderRadiusSuffix": null,
-    "tabletBorderTopLeftRadiusSuffix": null,
-    "tabletBorderTopRightRadiusSuffix": null,
-    "tabletBorderBottomLeftRadiusSuffix": null,
-    "tabletBorderBottomRightRadiusSuffix": null,
-
-    "tempTabletBorderRadiusSuffix": null,
-    "tempTabletBorderTopLeftRadiusSuffix": null,
-    "tempTabletBorderTopRightRadiusSuffix": null,
-    "tempTabletBorderBottomLeftRadiusSuffix": null,
-    "tempTabletBorderBottomRightRadiusSuffix": null,
-
     "mobileNavStyle1Width": null,
     "mobileNavStyle1WidthSuffix": null,
 
@@ -314,32 +289,7 @@
     "tempMobilePaddingTopSuffix": "px",
     "tempMobilePaddingRightSuffix": "px",
     "tempMobilePaddingBottomSuffix": "px",
-    "tempMobilePaddingLeftSuffix": "px",
-
-    "mobileBorderRadiusType": null,
-    "mobileBorderRadius": null,
-    "mobileBorderTopLeftRadius": null,
-    "mobileBorderTopRightRadius": null,
-    "mobileBorderBottomLeftRadius": null,
-    "mobileBorderBottomRightRadius": null,
-
-    "tempMobileBorderRadius": null,
-    "tempMobileBorderTopLeftRadius": null,
-    "tempMobileBorderTopRightRadius": null,
-    "tempMobileBorderBottomLeftRadius": null,
-    "tempMobileBorderBottomRightRadius": null,
-
-    "mobileBorderRadiusSuffix": null,
-    "mobileBorderTopLeftRadiusSuffix": null,
-    "mobileBorderTopRightRadiusSuffix": null,
-    "mobileBorderBottomLeftRadiusSuffix": null,
-    "mobileBorderBottomRightRadiusSuffix": null,
-
-    "tempMobileBorderRadiusSuffix": null,
-    "tempMobileBorderTopLeftRadiusSuffix": null,
-    "tempMobileBorderTopRightRadiusSuffix": null,
-    "tempMobileBorderBottomLeftRadiusSuffix": null,
-    "tempMobileBorderBottomRightRadiusSuffix": null
+    "tempMobilePaddingLeftSuffix": "px"
   },
 
   "animation": {

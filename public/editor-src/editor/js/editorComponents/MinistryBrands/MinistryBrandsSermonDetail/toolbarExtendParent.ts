@@ -165,6 +165,12 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "switch-dev",
                   label: t("Preview"),
                   devices: "desktop"
+                },
+                {
+                  id: "showPreviousPage",
+                  type: "switch-dev",
+                  devices: "desktop",
+                  label: t("Previous Page")
                 }
               ]
             }

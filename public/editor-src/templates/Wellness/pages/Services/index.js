@@ -1112,7 +1112,7 @@ module.exports = {
                                                 tempHoverBgColorOpacity: 1,
                                                 text: "REQUEST ONLINE APPOINTMENT",
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/wellness/?page_id=2223"
+                                                linkExternal: ""
                                             }
                                         }
                                     ]
@@ -1762,7 +1762,7 @@ module.exports = {
                                                 tempHoverBgColorOpacity: 1,
                                                 text: "VIEW ALL STAFF MEMBERS",
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/wellness/?page_id=2194"
+                                                linkExternal: ""
                                             }
                                         }
                                     ]

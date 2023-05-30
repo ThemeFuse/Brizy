@@ -18,7 +18,8 @@ export const getPlaceholder = (v: Value): string => {
     showWebsite,
     showRegistration,
     showDescription,
-    recentEvents
+    recentEvents,
+    showPreviousPage
   } = v;
 
   const _showImage = getAttr(showImage, "show_image");
@@ -42,7 +43,7 @@ export const getPlaceholder = (v: Value): string => {
   const _showWebsite = getAttr(showWebsite, "show_website");
   const _showRegistration = getAttr(showRegistration, "show_registration");
   const _showDescription = getAttr(showDescription, "show_description");
-
+  const _showPreviousPage = getAttr(showPreviousPage, "previous_page");
   return `{{ekk_event_detail 
               ${_showImage}
               ${_showTitle}
@@ -59,6 +60,7 @@ export const getPlaceholder = (v: Value): string => {
               ${_showWebsite}
               ${_showRegistration}
               ${_showDescription}
+              ${_showPreviousPage}
               events_recent='${recentEvents}'
            }}`;
 };

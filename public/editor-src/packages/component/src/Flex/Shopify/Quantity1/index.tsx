@@ -7,7 +7,8 @@ export const Quantity1 = ({
   min = 1,
   max,
   className,
-  onChange
+  onChange,
+  attr
 }: Props): ReactElement => {
   return (
     <div className="brz-shopify-quantity-style1">
@@ -17,7 +18,8 @@ export const Quantity1 = ({
         max={max}
         min={min}
         step={step}
-        value={value}
+        {...attr}
+        defaultValue={value}
         onChange={onChange}
       />
     </div>
