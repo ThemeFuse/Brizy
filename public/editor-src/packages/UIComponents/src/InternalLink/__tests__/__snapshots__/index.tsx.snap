@@ -1,0 +1,992 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test InternalLink Snapshots and Props Items should be rendered as list of selectItem 1`] = `
+<div
+  class="brz-ed-control__internalLink"
+>
+  <div
+    class="brz-ed-control__internalLink__value brz-ed-control__internalLink__value--placeholder className"
+    style="position: relative;"
+  >
+    <span
+      class="brz-span"
+    >
+      Type name
+    </span>
+  </div>
+  <div
+    style="position: relative;"
+  >
+    <div
+      class="brz-ed-control__internalLink__dropdown brz-ed-control__internalLink__dropdown--with-search"
+      style="position: absolute; left: 0px; top: 0px;"
+    >
+      <div
+        class="brz-ed-control__internalLink__search"
+      >
+        <input
+          class="brz-input"
+          placeholder="Type to Search ..."
+          spellcheck="false"
+        />
+      </div>
+      <div
+        style="position: relative; overflow: hidden; width: 100%; height: auto; min-height: 0; max-height: 150px;"
+      >
+        <div
+          style="position: relative; overflow: scroll; margin-right: 0px; margin-bottom: 0px; min-height: 0; max-height: 150px;"
+        >
+          <ul
+            class="brz-ul"
+          >
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="first"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                first
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="second"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                second
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="third"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                third
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fourth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fourth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fifth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fifth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="sixth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                sixth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="seventh"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                seventh
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="eighth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                eighth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="ninth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                ninth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="tenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                tenth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="eleventh"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                eleventh
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="twelfth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                twelfth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="thirteenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                thirteenth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fourteenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fourteenth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fifteenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fifteenth
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div
+          style="position: absolute; height: 6px; display: none; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;"
+        >
+          <div
+            style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2);"
+          />
+        </div>
+        <div
+          style="position: absolute; width: 6px; display: none; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;"
+        >
+          <div
+            class="brz-ed-control__multiSelect__scroll-thumb"
+            style="position: relative; display: block; width: 100%;"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test InternalLink Snapshots and Props className should be className 1`] = `
+<div
+  class="brz-ed-control__internalLink"
+>
+  <div
+    class="brz-ed-control__internalLink__value brz-ed-control__internalLink__value--placeholder className"
+    style="position: relative;"
+  >
+    <span
+      class="brz-span"
+    >
+      Type name
+    </span>
+  </div>
+  <div
+    style="position: relative;"
+  />
+</div>
+`;
+
+exports[`Test InternalLink Snapshots and Props default Placeholder should be Type name 1`] = `
+<div
+  class="brz-ed-control__internalLink"
+>
+  <div
+    class="brz-ed-control__internalLink__value brz-ed-control__internalLink__value--placeholder className"
+    style="position: relative;"
+  >
+    <span
+      class="brz-span"
+    >
+      Type name
+    </span>
+  </div>
+  <div
+    style="position: relative;"
+  />
+</div>
+`;
+
+exports[`Test InternalLink Snapshots and Props if Status is no_result should be rendered selectItemNoResults 1`] = `
+<div
+  class="brz-ed-control__internalLink"
+>
+  <div
+    class="brz-ed-control__internalLink__value brz-ed-control__internalLink__value--placeholder className"
+    style="position: relative;"
+  >
+    <span
+      class="brz-span"
+    >
+      Type name
+    </span>
+  </div>
+  <div
+    style="position: relative;"
+  >
+    <div
+      class="brz-ed-control__internalLink__dropdown brz-ed-control__internalLink__dropdown--with-search"
+      style="position: absolute; left: 0px; top: 0px;"
+    >
+      <div
+        class="brz-ed-control__internalLink__search"
+      >
+        <input
+          class="brz-input"
+          placeholder="Type to Search ..."
+          spellcheck="false"
+        />
+      </div>
+      <div
+        style="position: relative; overflow: hidden; width: 100%; height: auto; min-height: 0; max-height: 150px;"
+      >
+        <div
+          style="position: relative; overflow: scroll; margin-right: 0px; margin-bottom: 0px; min-height: 0; max-height: 150px;"
+        >
+          <li
+            class="brz-ed-control__multiSelect2__option brz-ed-control__multiSelect2__option--disabled"
+          >
+            No results
+          </li>
+        </div>
+        <div
+          style="position: absolute; height: 6px; display: none; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;"
+        >
+          <div
+            style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2);"
+          />
+        </div>
+        <div
+          style="position: absolute; width: 6px; display: none; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;"
+        >
+          <div
+            class="brz-ed-control__multiSelect__scroll-thumb"
+            style="position: relative; display: block; width: 100%;"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test InternalLink Snapshots and Props if Status isn't no_result should be rendered selectItem 1`] = `
+<div
+  class="brz-ed-control__internalLink"
+>
+  <div
+    class="brz-ed-control__internalLink__value brz-ed-control__internalLink__value--placeholder className"
+    style="position: relative;"
+  >
+    <span
+      class="brz-span"
+    >
+      Type name
+    </span>
+  </div>
+  <div
+    style="position: relative;"
+  >
+    <div
+      class="brz-ed-control__internalLink__dropdown brz-ed-control__internalLink__dropdown--with-search"
+      style="position: absolute; left: 0px; top: 0px;"
+    >
+      <div
+        class="brz-ed-control__internalLink__search"
+      >
+        <input
+          class="brz-input"
+          placeholder="Type to Search ..."
+          spellcheck="false"
+        />
+      </div>
+      <div
+        style="position: relative; overflow: hidden; width: 100%; height: auto; min-height: 0; max-height: 150px;"
+      >
+        <div
+          style="position: relative; overflow: scroll; margin-right: 0px; margin-bottom: 0px; min-height: 0; max-height: 150px;"
+        >
+          <ul
+            class="brz-ul"
+          >
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="first"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                first
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="second"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                second
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="third"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                third
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fourth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fourth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fifth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fifth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="sixth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                sixth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="seventh"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                seventh
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="eighth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                eighth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="ninth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                ninth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="tenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                tenth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="eleventh"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                eleventh
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="twelfth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                twelfth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="thirteenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                thirteenth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fourteenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fourteenth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fifteenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fifteenth
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div
+          style="position: absolute; height: 6px; display: none; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;"
+        >
+          <div
+            style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2);"
+          />
+        </div>
+        <div
+          style="position: absolute; width: 6px; display: none; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;"
+        >
+          <div
+            class="brz-ed-control__multiSelect__scroll-thumb"
+            style="position: relative; display: block; width: 100%;"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test InternalLink Snapshots and Props if is Loading we should have brz-ed-control__internalLink__dropdown--search-loading className on dropdown 1`] = `
+<div
+  class="brz-ed-control__internalLink"
+>
+  <div
+    class="brz-ed-control__internalLink__value brz-ed-control__internalLink__value--placeholder className"
+    style="position: relative;"
+  >
+    <span
+      class="brz-span"
+    >
+      Type name
+    </span>
+  </div>
+  <div
+    style="position: relative;"
+  >
+    <div
+      class="brz-ed-control__internalLink__dropdown brz-ed-control__internalLink__dropdown--with-search brz-ed-control__internalLink__dropdown--search-loading"
+      style="position: absolute; left: 0px; top: 0px;"
+    >
+      <div
+        class="brz-ed-control__internalLink__search"
+      >
+        <input
+          class="brz-input"
+          placeholder="Type to Search ..."
+          spellcheck="false"
+        />
+      </div>
+      <div
+        style="position: relative; overflow: hidden; width: 100%; height: auto; min-height: 0; max-height: 150px;"
+      >
+        <div
+          style="position: relative; overflow: scroll; margin-right: 0px; margin-bottom: 0px; min-height: 0; max-height: 150px;"
+        >
+          <ul
+            class="brz-ul"
+          >
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="first"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                first
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="second"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                second
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="third"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                third
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fourth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fourth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fifth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fifth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="sixth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                sixth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="seventh"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                seventh
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="eighth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                eighth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="ninth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                ninth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="tenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                tenth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="eleventh"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                eleventh
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="twelfth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                twelfth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="thirteenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                thirteenth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fourteenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fourteenth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fifteenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fifteenth
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div
+          style="position: absolute; height: 6px; display: none; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;"
+        >
+          <div
+            style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2);"
+          />
+        </div>
+        <div
+          style="position: absolute; width: 6px; display: none; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;"
+        >
+          <div
+            class="brz-ed-control__multiSelect__scroll-thumb"
+            style="position: relative; display: block; width: 100%;"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test InternalLink Snapshots and Props if isn't Loading we shouldn't have brz-ed-control__internalLink__dropdown--search-loading className on dropdown 1`] = `
+<div
+  class="brz-ed-control__internalLink"
+>
+  <div
+    class="brz-ed-control__internalLink__value brz-ed-control__internalLink__value--placeholder className"
+    style="position: relative;"
+  >
+    <span
+      class="brz-span"
+    >
+      Type name
+    </span>
+  </div>
+  <div
+    style="position: relative;"
+  >
+    <div
+      class="brz-ed-control__internalLink__dropdown brz-ed-control__internalLink__dropdown--with-search"
+      style="position: absolute; left: 0px; top: 0px;"
+    >
+      <div
+        class="brz-ed-control__internalLink__search"
+      >
+        <input
+          class="brz-input"
+          placeholder="Type to Search ..."
+          spellcheck="false"
+        />
+      </div>
+      <div
+        style="position: relative; overflow: hidden; width: 100%; height: auto; min-height: 0; max-height: 150px;"
+      >
+        <div
+          style="position: relative; overflow: scroll; margin-right: 0px; margin-bottom: 0px; min-height: 0; max-height: 150px;"
+        >
+          <ul
+            class="brz-ul"
+          >
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="first"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                first
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="second"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                second
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="third"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                third
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fourth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fourth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fifth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fifth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="sixth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                sixth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="seventh"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                seventh
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="eighth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                eighth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="ninth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                ninth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="tenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                tenth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="eleventh"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                eleventh
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="twelfth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                twelfth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="thirteenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                thirteenth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fourteenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fourteenth
+              </span>
+            </li>
+            <li
+              class="brz-ed-control__internalLink__option"
+              title="fifteenth"
+            >
+              <span
+                class="brz-ed-control__internalLink__option-text"
+              >
+                fifteenth
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div
+          style="position: absolute; height: 6px; display: none; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;"
+        >
+          <div
+            style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2);"
+          />
+        </div>
+        <div
+          style="position: absolute; width: 6px; display: none; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;"
+        >
+          <div
+            class="brz-ed-control__multiSelect__scroll-thumb"
+            style="position: relative; display: block; width: 100%;"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test InternalLink Snapshots and Props placeholder Should be Type value 1`] = `
+<div
+  class="brz-ed-control__internalLink"
+>
+  <div
+    class="brz-ed-control__internalLink__value brz-ed-control__internalLink__value--placeholder className"
+    style="position: relative;"
+  >
+    <span
+      class="brz-span"
+    >
+      Type value
+    </span>
+  </div>
+  <div
+    style="position: relative;"
+  />
+</div>
+`;
+
+exports[`Test InternalLink Snapshots and Props value should be [object Object] 1`] = `
+<div
+  class="brz-ed-control__internalLink"
+>
+  <div
+    class="brz-ed-control__internalLink__value className"
+    style="position: relative;"
+  >
+    <span
+      class="brz-span"
+    >
+      first
+    </span>
+  </div>
+  <div
+    style="position: relative;"
+  />
+</div>
+`;

@@ -1,5 +1,3 @@
-import { Meta } from "visual/component/Controls/ImageSetter/index.cloud";
-
 export interface MouseCoordinates {
   x: number;
   y: number;
@@ -24,8 +22,11 @@ export interface DraggableProps {
     y: number;
   };
 }
+export type Meta = {
+  isChanged: "image" | "pointer";
+};
 
-export interface ImageProps {
+export interface Props {
   src: string;
   x: number;
   y: number;
@@ -34,5 +35,6 @@ export interface ImageProps {
   height: number;
   customUrl?: boolean;
   showPointer: boolean;
+  fileName: string;
   onChange: (value: MouseCoordinates, meta: Meta) => void;
 }

@@ -10,13 +10,15 @@
     "customCSS": "",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
+    "hoverTransitionSuffix": "",
 
     "families": {
       "fontFamily": "lato",
       "tabletFontFamily": null,
       "mobileFontFamily": null
     },
+
+    "selectHorizontalAlign": "center",
 
     "fontStyle": "button",
     "fontFamilyType": "google",
@@ -57,23 +59,11 @@
     "tempColorOpacity": 1,
     "tempColorPalette": "color2",
 
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
-
     "bgColorHex": "#ffffff",
     "bgColorOpacity": 1,
     "bgColorPalette": "color8",
     "tempBgColorOpacity": 1,
     "tempBgColorPalette": "color8",
-
-    "hoverBgColorHex": null,
-    "hoverBgColorOpacity": null,
-    "hoverBgColorPalette": null,
-    "tempHoverBgColorOpacity": null,
-    "tempHoverBgColorPalette": null,
 
     "borderColorHex": "#000000",
     "borderColorOpacity": 0,
@@ -81,17 +71,8 @@
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "color2",
 
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-    "tempHoverBorderColorOpacity": null,
-    "tempHoverBorderColorPalette": null,
-
     "borderStyle": "",
     "tempBorderStyle": "solid",
-
-    "hoverBorderStyle": null,
-    "tempHoverBorderStyle": null,
 
     "borderWidthType": "grouped",
     "borderWidth": 2,
@@ -105,19 +86,6 @@
     "tempBorderRightWidth": 2,
     "tempBorderBottomWidth": 2,
     "tempBorderLeftWidth": 2,
-
-    "hoverBorderWidthType": null,
-    "hoverBorderWidth": null,
-    "hoverBorderTopWidth": null,
-    "hoverBorderRightWidth": null,
-    "hoverBorderBottomWidth": null,
-    "hoverBorderLeftWidth": null,
-
-    "tempHoverBorderWidth": null,
-    "tempHoverBorderTopWidth": null,
-    "tempHoverBorderRightWidth": null,
-    "tempHoverBorderBottomWidth": null,
-    "tempHoverBorderLeftWidth": null,
 
     "boxShadow": "none",
     "tempBoxShadow": "on",
@@ -139,48 +107,17 @@
     "tempBoxShadowVertical": 2,
     "tempBoxShadowHorizontal": 1,
 
-    "hoverBoxShadow": null,
-    "tempHoverBoxShadow": null,
-
-    "hoverBoxShadowColorHex": null,
-    "hoverBoxShadowColorOpacity": null,
-    "hoverBoxShadowColorPalette": null,
-    "tempHoverBoxShadowColorPalette": null,
-    "tempHoverBoxShadowColorOpacity": null,
-
-    "hoverBoxShadowBlur": null,
-    "hoverBoxShadowSpread": null,
-    "hoverBoxShadowVertical": null,
-    "hoverBoxShadowHorizontal": null,
-
-    "tempHoverBoxShadowBlur": null,
-    "tempHoverBoxShadowSpread": null,
-    "tempHoverBoxShadowVertical": null,
-    "tempHoverBoxShadowHorizontal": null,
-
     "selectColorHex": "#000000",
     "selectColorOpacity": 1,
     "selectColorPalette": "color2",
     "tempSelectColorOpacity": 1,
     "tempSelectColorPalette": "color2",
 
-    "hoverSelectColorHex": null,
-    "hoverSelectColorOpacity": null,
-    "hoverSelectColorPalette": null,
-    "tempHoverSelectColorOpacity": null,
-    "tempHoverSelectColorPalette": null,
-
     "selectBgColorHex": "#ffffff",
     "selectBgColorOpacity": 1,
     "selectBgColorPalette": "color8",
     "tempSelectBgColorOpacity": 1,
     "tempSelectBgColorPalette": "color8",
-
-    "hoverSelectBgColorHex": null,
-    "hoverSelectBgColorOpacity": null,
-    "hoverSelectBgColorPalette": null,
-    "tempHoverSelectBgColorOpacity": null,
-    "tempHoverSelectBgColorPalette": null,
 
     "selectBorderStyle": "solid",
     "tempSelectBorderStyle": "solid",
@@ -204,29 +141,6 @@
     "tempSelectBorderColorOpacity": 1,
     "tempSelectBorderColorPalette": "color6",
 
-    "hoverSelectBorderStyle": null,
-    "tempHoverSelectBorderStyle": null,
-
-    "hoverSelectBorderColorHex": null,
-    "hoverSelectBorderColorOpacity": null,
-    "hoverSelectBorderColorPalette": null,
-    "tempHoverSelectBorderColorOpacity": null,
-    "tempHoverSelectBorderColorPalette": null,
-
-    "hoverSelectBorderWidthType": null,
-    "hoverSelectBorderWidth": null,
-
-    "hoverSelectBorderTopWidth": null,
-    "hoverSelectBorderRightWidth": null,
-    "hoverSelectBorderBottomWidth": null,
-    "hoverSelectBorderLeftWidth": null,
-
-    "tempHoverSelectBorderWidth": null,
-    "tempHoverSelectBorderTopWidth": null,
-    "tempHoverSelectBorderRightWidth": null,
-    "tempHoverSelectBorderBottomWidth": null,
-    "tempHoverSelectBorderLeftWidth": null,
-
     "selectBoxShadow": "on",
     "tempSelectBoxShadow": "on",
 
@@ -245,25 +159,6 @@
     "tempSelectBoxShadowSpread": 0,
     "tempSelectBoxShadowVertical": 0,
     "tempSelectBoxShadowHorizontal": 0,
-
-    "hoverSelectBoxShadow": null,
-    "tempHoverSelectBoxShadow": null,
-
-    "hoverSelectBoxShadowColorHex": null,
-    "hoverSelectBoxShadowColorPalette": null,
-    "hoverSelectBoxShadowColorOpacity": null,
-    "tempHoverSelectBoxShadowColorPalette": null,
-    "tempHoverSelectBoxShadowColorOpacity": null,
-
-    "hoverSelectBoxShadowBlur": null,
-    "hoverSelectBoxShadowSpread": null,
-    "hoverSelectBoxShadowVertical": null,
-    "hoverSelectBoxShadowHorizontal": null,
-
-    "tempHoverSelectBoxShadowBlur": null,
-    "tempHoverSelectBoxShadowSpread": null,
-    "tempHoverSelectBoxShadowVertical": null,
-    "tempHoverSelectBoxShadowHorizontal": null,
 
     "borderRadiusType": "grouped",
     "borderRadius": 0,

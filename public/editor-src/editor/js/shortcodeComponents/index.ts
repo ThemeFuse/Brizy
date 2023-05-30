@@ -97,6 +97,7 @@ const shop: Shortcode[] = match(
     (v): Shortcode[] => {
       switch (v.modules?.shop?.type) {
         case undefined:
+        case "shopify":
           return [];
         case "ecwid":
           return Ecwid;

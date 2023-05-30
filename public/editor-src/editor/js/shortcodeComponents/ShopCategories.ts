@@ -1,5 +1,6 @@
 import Config, { Config as Cnf, isCMS, isWp } from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types";
+import { isEcwidShop } from "visual/global/Config/types/configs/Base";
 import { IS_CLOUD } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { MValue } from "visual/utils/value";
@@ -12,7 +13,7 @@ const getSource = (config: Cnf): MValue<string> => {
   if (isCMS(config)) {
     const { modules } = config;
 
-    if (modules?.shop) {
+    if (modules && isEcwidShop(modules.shop)) {
       return modules.shop.ecwidCategoryTypeId;
     }
 
@@ -26,7 +27,7 @@ const getQuerySource = (config: Cnf): MValue<string> => {
   if (isCloud(config) && isCMS(config)) {
     const { modules } = config;
 
-    if (modules?.shop) {
+    if (modules && isEcwidShop(modules.shop)) {
       return modules.shop.ecwidCategoryTypeId;
     }
 

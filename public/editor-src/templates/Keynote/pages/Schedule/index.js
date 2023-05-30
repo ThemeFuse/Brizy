@@ -1811,7 +1811,7 @@ module.exports = {
                                                 tempHoverBgColorPalette: "color3",
                                                 hoverBorderColorOpacity: 1,
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/keynote/?page_id=1235"
+                                                linkExternal: ""
                                             }
                                         }
                                     ],
@@ -2180,7 +2180,7 @@ module.exports = {
                                                                                                 tempHoverBgColorPalette: "color3",
                                                                                                 hoverBorderColorOpacity: 1,
                                                                                                 linkExternalBlank: "off",
-                                                                                                linkExternal: "https://demo.themefuse.com/keynote/?page_id=1275"
+                                                                                                linkExternal: ""
                                                                                             }
                                                                                         }
                                                                                     ],

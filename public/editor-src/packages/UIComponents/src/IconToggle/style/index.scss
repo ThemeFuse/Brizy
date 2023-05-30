@@ -1,0 +1,8 @@
+.brz-ed-option__toggle {
+  @apply p-toolbar__item-padding;
+  @apply transition-[color] duration-200 ease-linear;
+  @apply cursor-pointer;
+  &:hover {
+    @apply transition-[color] duration-200 ease-linear;
+  }
+}

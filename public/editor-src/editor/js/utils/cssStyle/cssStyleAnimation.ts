@@ -1,10 +1,22 @@
 import * as Num from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
+import { isNullish } from "visual/utils/value";
+import { capByPrefix } from "../string";
 import { CSSValue } from "../style2/types";
 
-export function cssStyleAnimation({ v, device, state }: CSSValue): string {
-  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const name = dvv("animationName");
+export function cssStyleAnimation({
+  v,
+  device,
+  state,
+  prefix = "animation"
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const name = dvv(capByPrefix(prefix, "name"));
+
+  if (isNullish(name)) {
+    return "";
+  }
 
   return name ? `animation-name:${name};` : "";
 }
@@ -12,19 +24,35 @@ export function cssStyleAnimation({ v, device, state }: CSSValue): string {
 export function cssStyleAnimationDuration({
   v,
   device,
-  state
+  state,
+  prefix = "animation"
 }: CSSValue): string {
-  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const duration = dvv("animationDuration");
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const duration = dvv(capByPrefix(prefix, "duration"));
+
+  if (isNullish(duration)) {
+    return "";
+  }
 
   return Num.read(duration) !== undefined
     ? `animation-duration:${duration}ms;`
     : "";
 }
 
-export function cssStyleAnimationDelay({ v, device, state }: CSSValue): string {
-  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const delay = dvv("animationDelay");
+export function cssStyleAnimationDelay({
+  v,
+  device,
+  state,
+  prefix = "animation"
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const delay = dvv(capByPrefix(prefix, "delay"));
+
+  if (isNullish(delay)) {
+    return "";
+  }
 
   return Num.read(delay) !== undefined ? `animation-delay:${delay}ms;` : "";
 }
@@ -32,10 +60,15 @@ export function cssStyleAnimationDelay({ v, device, state }: CSSValue): string {
 export function cssStyleAnimationIterationCount({
   v,
   device,
-  state
+  state,
+  prefix = "animation"
 }: CSSValue): string {
-  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const animationInfiniteAnimation = dvv("animationInfiniteAnimation");
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const animationInfiniteAnimation = dvv(
+    capByPrefix(prefix, "infiniteAnimation")
+  );
   const animation = animationInfiniteAnimation ? "infinite" : "unset";
 
   return `animation-iteration-count : ${animation};`;

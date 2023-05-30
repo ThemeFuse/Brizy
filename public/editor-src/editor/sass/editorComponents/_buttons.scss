@@ -48,6 +48,10 @@ $btn-default-color: #fff;
   }
 }
 
+.brz-btn-hover__unset-height.brz-hover-animation__container {
+  height: unset;
+}
+
 // Buttons when is in list
 .buttons {
   margin: -10px;

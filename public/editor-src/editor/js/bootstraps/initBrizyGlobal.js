@@ -31,6 +31,7 @@ import {
 import {
   getDynamicContentByPlaceholder,
   getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette,
   getShapes
 } from "visual/utils/options";
@@ -38,7 +39,6 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarColor2,
   toolbarColorHexField2,
-  toolbarElementAudioUpload,
   toolbarFilterBrightness,
   toolbarFilterContrast,
   toolbarFilterHue,
@@ -62,6 +62,7 @@ global.Brizy = {
     isStory,
 
     getDynamicContentChoices,
+    getDynamicContentOption,
     getDynamicContentByPlaceholder,
     getShapes,
 
@@ -98,7 +99,6 @@ global.Brizy = {
     toolbarFilterSaturation,
     toolbarFilterBrightness,
     toolbarFilterContrast,
-    toolbarLinkPopup,
-    toolbarElementAudioUpload
+    toolbarLinkPopup
   }
 };

@@ -3,7 +3,10 @@ import React, { Fragment } from "react";
 import ResizeAware from "react-resize-aware";
 import _ from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
+import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
+import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import { fromElementModel } from "visual/component/Options/types/dev/ImageUpload/converters";
+import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -26,7 +29,10 @@ import {
   mobileSyncOnChange,
   tabletSyncOnChange
 } from "visual/utils/onChange";
+import { read as readBoolean } from "visual/utils/reader/bool";
+import { read as readNumber } from "visual/utils/reader/number";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { read as readString } from "visual/utils/string/specs";
 import { Wrapper } from "../tools/Wrapper";
 import ImageContent from "./Image";
 import ImageWrapper from "./Wrapper";
@@ -39,7 +45,7 @@ import {
   pathOnUnitChange
 } from "./imageChange";
 import * as sidebarConfig from "./sidebar";
-import { style, styleContent } from "./styles";
+import { style, styleContent, styleHover } from "./styles";
 import toolbarConfigFn from "./toolbar";
 import * as ImagePatch from "./types/ImagePatch";
 import {
@@ -134,8 +140,15 @@ class Image extends EditorComponent {
     if (imageDC !== undefined) {
       const wrapperSize = this.getWrapperSizes(v)[device];
       const containerWidth = this.getContainerSize()[device];
+      const useCustomPlaceholder =
+        Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
 
-      return patchOnDCChange(containerWidth, patch, wrapperSize);
+      return patchOnDCChange(
+        containerWidth,
+        patch,
+        wrapperSize,
+        useCustomPlaceholder
+      );
     }
 
     if (imageUnit !== undefined) {
@@ -246,13 +259,19 @@ class Image extends EditorComponent {
     cH = Math.round(cH);
 
     if (v.imagePopulation) {
+      const useCustomPlaceholder =
+        Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
       const src = v.imageSrc;
       const options = { cW: Math.round(cW), cH: Math.round(cH) };
-      const url = imagePopulationUrl(src, options);
+      const options2X = multiplier(options, 2);
+      const url = imagePopulationUrl(src, { ...options, useCustomPlaceholder });
 
       return {
         source: url,
-        url: `${url} 1x, ${imagePopulationUrl(src, multiplier(options, 2))} 2x`
+        url: `${url} 1x, ${imagePopulationUrl(src, {
+          ...options2X,
+          useCustomPlaceholder
+        })} 2x`
       };
     }
 
@@ -431,19 +450,28 @@ class Image extends EditorComponent {
     }
 
     if (dbValue.imagePopulation) {
-      const placeholderData = placeholderObjFromStr(dbValue.imagePopulation);
+      const { imageSizes, dynamicContent } = Config.getAll();
+      const useCustomPlaceholder =
+        dynamicContent?.useCustomPlaceholder ?? false;
+      const placeholderData = placeholderObjFromStr(
+        dbValue.imagePopulation,
+        useCustomPlaceholder
+      );
       const attr = placeholderData?.attr;
       const name = placeholderData?.name;
 
       if (name !== undefined && attr?.size !== undefined) {
-        const { imageSizes } = Config.getAll();
         const imageData = imageSizes?.find(({ name }) => name === attr.size);
 
         if (imageSizes !== undefined && imageData === undefined) {
           const _attr = { ...attr, size: "original" };
+
           value = {
             ...value,
-            imagePopulation: placeholderObjToStr({ name, attr: _attr })
+            imagePopulation: placeholderObjToStr(
+              { name, attr: _attr },
+              useCustomPlaceholder
+            )
           };
         }
       }
@@ -561,6 +589,41 @@ class Image extends EditorComponent {
     return <EditorArrayComponent {...popupsProps} />;
   }
 
+  getHoverAnimationData(v) {
+    const { wrapperAnimationId, gallery = {} } = this.props.meta;
+    const {
+      hoverName: galleryHoverName,
+      hoverDuration: galleryHoverDuration,
+      hoverInfiniteAnimation: galleryHoverInfiniteAnimation,
+      inGallery
+    } = gallery;
+
+    const animationId = readString(wrapperAnimationId) ?? this.getId();
+
+    if (inGallery) {
+      const hoverName = readString(galleryHoverName) ?? "none";
+      const optionsFromGallery = {
+        duration: readNumber(galleryHoverDuration) ?? 1000,
+        infiniteAnimation: galleryHoverInfiniteAnimation ?? false
+      };
+
+      return {
+        hoverName,
+        animationId,
+        options: getHoverAnimationOptions(optionsFromGallery, hoverName)
+      };
+    }
+    const { hoverName } = v;
+    const _hoverName = readString(hoverName) ?? "none";
+    const options = makeOptionValueToAnimation(v);
+
+    return {
+      hoverName: _hoverName,
+      animationId,
+      options: getHoverAnimationOptions(options, _hoverName)
+    };
+  }
+
   renderForEdit(v, vs, vd) {
     const { className } = v;
     const IS_STORY = isStory(Config.getAll());
@@ -614,6 +677,9 @@ class Image extends EditorComponent {
       _dc: this._dc
     };
 
+    const { animationId, hoverName, options } = this.getHoverAnimationData(v);
+    const { wrapperAnimationActive } = this.props.meta;
+    const isDisabledHover = readBoolean(wrapperAnimationActive);
     return (
       <Fragment>
         <Wrapper
@@ -626,19 +692,14 @@ class Image extends EditorComponent {
             {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
           >
             <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-              <ImageWrapper
-                v={v}
-                vs={vs}
-                vd={vd}
-                _id={this.getId()}
-                componentId={this.constructor.componentId}
-                wrapperSizes={wrapperSizes}
-                meta={meta}
-                onChange={this.handleBoxResizerChange}
-                onStart={this.onDragStart}
-                onEnd={this.onDragEnd}
+              <HoverAnimation
+                animationId={animationId}
+                cssKeyframe={hoverName}
+                options={options}
+                isDisabledHover={isDisabledHover}
+                isHidden={IS_STORY}
               >
-                <ImageContent
+                <ImageWrapper
                   v={v}
                   vs={vs}
                   vd={vd}
@@ -646,8 +707,21 @@ class Image extends EditorComponent {
                   componentId={this.constructor.componentId}
                   wrapperSizes={wrapperSizes}
                   meta={meta}
-                />
-              </ImageWrapper>
+                  onChange={this.handleBoxResizerChange}
+                  onStart={this.onDragStart}
+                  onEnd={this.onDragEnd}
+                >
+                  <ImageContent
+                    v={v}
+                    vs={vs}
+                    vd={vd}
+                    _id={this.getId()}
+                    componentId={this.constructor.componentId}
+                    wrapperSizes={wrapperSizes}
+                    meta={meta}
+                  />
+                </ImageWrapper>
+              </HoverAnimation>
             </CustomCSS>
           </Toolbar>
         </Wrapper>
@@ -689,31 +763,49 @@ class Image extends EditorComponent {
       )
     );
 
+    const hoverAnimationClassName = classnames(
+      css(
+        `${this.constructor.componentId}-${this.getId()}-parent`,
+        `${this.getId()}-parent`,
+        styleHover(v, vs, vd, styleProps)
+      )
+    );
+
+    const { animationId, hoverName, options } = this.getHoverAnimationData(v);
+
     return (
       <Fragment>
-        <Wrapper
-          {...this.makeWrapperProps({
-            className: parentClassName,
-            ref: this.container
-          })}
-        >
-          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <ImageContent
-              v={v}
-              vs={vs}
-              vd={vd}
-              _id={this.getId()}
-              componentId={this.constructor.componentId}
-              wrapperSizes={wrapperSizes}
-              meta={this.props.meta}
-              extraAttributes={extraAttributes}
-              getResponsiveUrls={(imageSizes) =>
-                this.getResponsiveUrls(wrapperSizes, imageSizes)
-              }
-              onChange={this.handleChange}
-            />
-          </CustomCSS>
-        </Wrapper>
+        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <HoverAnimation
+            animationId={animationId}
+            className={hoverAnimationClassName}
+            cssKeyframe={hoverName}
+            options={options}
+            isHidden={hoverName === "none" || IS_STORY}
+          >
+            <Wrapper
+              {...this.makeWrapperProps({
+                className: parentClassName,
+                ref: this.container
+              })}
+            >
+              <ImageContent
+                v={v}
+                vs={vs}
+                vd={vd}
+                _id={this.getId()}
+                componentId={this.constructor.componentId}
+                wrapperSizes={wrapperSizes}
+                meta={this.props.meta}
+                extraAttributes={extraAttributes}
+                getResponsiveUrls={(imageSizes) =>
+                  this.getResponsiveUrls(wrapperSizes, imageSizes)
+                }
+                onChange={this.handleChange}
+              />
+            </Wrapper>
+          </HoverAnimation>
+        </CustomCSS>
         {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
           this.renderPopups()}
       </Fragment>

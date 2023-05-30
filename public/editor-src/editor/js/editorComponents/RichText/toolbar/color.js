@@ -9,7 +9,7 @@ import {
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { NORMAL } from "visual/utils/stateMode";
@@ -194,10 +194,11 @@ function getSimpleColorOptions(v, { context }, onChange) {
   } = v.backgroundImage || {};
   const config = Config.getAll();
 
-  const imageDynamicContentChoices = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.image
-  );
+  const imageDynamicContentChoices = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.image,
+    config: { show: true }
+  });
 
   return [
     {
@@ -289,10 +290,7 @@ function getSimpleColorOptions(v, { context }, onChange) {
               id: "image",
               label: t("Image"),
               type: "imageSetter",
-              population: {
-                show: imageDynamicContentChoices.length > 0,
-                choices: imageDynamicContentChoices
-              },
+              population: imageDynamicContentChoices,
               value: {
                 src,
                 population,

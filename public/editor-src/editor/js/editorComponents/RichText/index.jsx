@@ -32,7 +32,7 @@ import * as Num from "visual/utils/reader/number";
 import * as ResponsiveMode from "visual/utils/responsiveMode";
 import { isNullish } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
-import Quill from "./Quill";
+import Quill, { triggerCodes } from "./Quill";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleDC } from "./styles";
@@ -71,10 +71,15 @@ class RichText extends EditorComponent {
 
   toolbarOpen = false;
 
+  // Can be enabled by Config
+  renderDC = !Config.getAll().dynamicContent?.liveInBuilder || IS_PREVIEW;
+
   componentDidMount() {
     // TODO NEED review and exclude ReactDOM.findDOMNode
     // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
+    const useCustomPlaceholder =
+      Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
 
     node.addEventListener(
       "click",
@@ -85,12 +90,16 @@ class RichText extends EditorComponent {
     itemId && node.setAttribute("data-item_id", itemId);
     const populations = node.querySelectorAll("[data-image_population]");
 
-    if (populations.length > 0) {
+    if (populations.length > 0 && this.renderDC) {
       populations.forEach(async (element) => {
         const placeholder = element.getAttribute("data-image_population");
 
         if (placeholder) {
-          const newUrl = await getImagePopulation(placeholder, itemId);
+          const newUrl = await getImagePopulation(
+            placeholder,
+            itemId,
+            useCustomPlaceholder
+          );
           if (newUrl) {
             element.classList.add("brz-population-mask__style");
             element.style.backgroundImage = `url("${newUrl}")`;
@@ -113,8 +122,12 @@ class RichText extends EditorComponent {
       formats
     };
     const config = Config.getAll();
+    const dynamicContentGroups = config.dynamicContent?.groups;
 
-    if (typeof config.dynamicContentOption?.richText?.handler === "function") {
+    if (
+      !Array.isArray(dynamicContentGroups) &&
+      typeof dynamicContentGroups?.richText?.handler === "function"
+    ) {
       if (selectionCoords && this.state.selectionCoords !== selectionCoords) {
         Object.assign(newState, { selectionCoords });
 
@@ -143,14 +156,10 @@ class RichText extends EditorComponent {
           };
 
           const keyCode = formats.prepopulation?.at(-1);
-          if (!keyCode) return;
-          // ignoring characters typed after # or @
-          const triggerCodes = ["#", "@"];
-          const isTargetKey = triggerCodes.some((key) => key === keyCode);
 
-          if (!isTargetKey) return;
-
-          config.dynamicContentOption.richText.handler(res, rej, { keyCode });
+          if (keyCode && triggerCodes.some((k) => k === keyCode)) {
+            dynamicContentGroups.richText.handler(res, rej, { keyCode });
+          }
         }
 
         this.setState(newState, () => this.toolbarRef.current.show());
@@ -387,7 +396,11 @@ class RichText extends EditorComponent {
       return { v, vs, vd };
     }
     return {
-      v: { ...v, ...this.state.formats },
+      v: {
+        ...v,
+        ...this.state.formats,
+        tag: this.state.formats?.tagName
+      },
       vs,
       vd
     };
@@ -517,7 +530,7 @@ class RichText extends EditorComponent {
       </div>
     );
 
-    if (this._dc?.lastCache?.text || IS_PREVIEW) {
+    if (this._dc?.lastCache?.text || this.renderDC) {
       if (IS_PREVIEW) {
         content = text;
       } else {

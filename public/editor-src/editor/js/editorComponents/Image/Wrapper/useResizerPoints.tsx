@@ -1,7 +1,8 @@
+import { useMemo } from "react";
 import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import Config from "visual/global/Config";
 import { ImageProps } from "../types";
-
-import { isSVG, isGIF, showOriginalImage } from "../utils";
+import { isGIF, isSVG, showOriginalImage } from "../utils";
 import { SizeRestriction, WidthHeightRestriction } from "./type";
 import { getSizeRestriction, getWidthRestriction } from "./utils";
 
@@ -46,7 +47,15 @@ type UseResizerPoints = (
 
 const useResizerPoints: UseResizerPoints = ({ v, meta }) => {
   const { sizeType, imagePopulation } = v;
-  const placeholderData = placeholderObjFromStr(imagePopulation);
+
+  const useCustomPlaceholder = useMemo(() => {
+    return Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
+  }, []);
+
+  const placeholderData = placeholderObjFromStr(
+    imagePopulation,
+    useCustomPlaceholder
+  );
 
   if (placeholderData) {
     if (
@@ -78,8 +87,8 @@ const useResizerPoints: UseResizerPoints = ({ v, meta }) => {
     } else if (isGIF(imageExtension)) {
       points = POINTS.gif;
     } else if (showOriginalImage(v)) {
-    points = POINTS.originalImage;
-  }
+      points = POINTS.originalImage;
+    }
 
     return {
       points: points,

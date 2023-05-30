@@ -400,7 +400,7 @@ class FontStyle extends React.Component {
             className="brz-ed-option__font-style-editor--delete"
             onClick={this.handleDelete}
           >
-            <EditorIcon icon="nc-remove" />
+            <EditorIcon icon="nc-trash" />
           </div>
         ) : null}
         <Toolbar
@@ -471,9 +471,7 @@ class FontStyleEditor extends React.Component {
 
     return (
       <div className="brz-ed-option__font-styles">
-        <div className="brz-ed-option__font-styles--scroll-pane">
-          <Scrollbar theme="dark">{items}</Scrollbar>
-        </div>
+        <Scrollbar theme="dark">{items}</Scrollbar>
         <div
           className="brz-ed-option__font-styles--add"
           onClick={this.handleAddNew}

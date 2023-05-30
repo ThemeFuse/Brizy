@@ -1,28 +1,31 @@
-import { isPlaceholderStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import Config, { Cloud } from "visual/global/Config";
-import * as Str from "visual/utils/string/specs";
+import Config from "visual/global/Config";
+import { defaultCrop } from "visual/global/Config/types/configs/common";
+import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
 import { isAbsoluteUrl } from "visual/utils/url";
+import { MValue } from "visual/utils/value";
 import { getImageFormat } from "./imageFormat";
-import { FilterOption, ImageSpecificSize, ImageUrl, SvgUrl } from "./types";
-import { getFilter } from "./utils";
+import { Data } from "./types";
+import { getFilter, isCropSize } from "./utils";
 
-const defaultOptions: FilterOption = {
-  iW: 5000,
-  iH: "any"
-};
-
-const imageUrl: ImageUrl = (src, options = defaultOptions) => {
-  if (isAbsoluteUrl(src) || isPlaceholderStr(src)) {
-    return src;
+export const getImageUrl = (data: Data): MValue<string> => {
+  if (!isNoEmptyString(data.uid)) {
+    return undefined;
   }
 
-  if (src) {
-    const config = Config.getAll();
-    const { fileName, ..._filterOptions } = options;
+  if (isAbsoluteUrl(data.uid)) {
+    return data.uid;
+  }
 
-    const filter = getFilter({ ...defaultOptions, ..._filterOptions });
+  const config = Config.getAll();
+  const { api = {} } = config ?? {};
+  const { media = {} } = api;
 
+  if (media.mediaResizeUrl) {
+    const { fileName, uid: src, sizeType } = data;
     const extension = getImageFormat(src);
+    const filter = isCropSize(data)
+      ? getFilter({ ...defaultCrop, ...data.crop })
+      : sizeType;
 
     if (extension) {
       // remove extension
@@ -35,75 +38,19 @@ const imageUrl: ImageUrl = (src, options = defaultOptions) => {
         const fileNameExt = getImageFormat(fileName) ?? "";
         const _fileName = fileName.replace(`.${fileNameExt}`, "");
         const name = `${_fileName}.${extension}`;
-        return [config.urls.image, filter, uid, name].join("/");
+        return [media.mediaResizeUrl, filter, uid, name].join("/");
       }
 
       const name = `image.${extension}`;
-      return [config.urls.image, filter, uid, name].join("/");
+      return [media.mediaResizeUrl, filter, uid, name].join("/");
     }
-
-    return [config.urls.image, filter, src].join("/");
-  }
-
-  return null;
-};
-
-export default imageUrl;
-
-export const svgUrl: SvgUrl = (_src, options = {}) => {
-  const src = Str.read(_src);
-
-  if (src) {
-    const { fileName } = options;
-    const config = Config.getAll() as Cloud;
-    const extension = getImageFormat(src);
-
-    if (extension) {
-      // remove extension
-      const uid = src.replace(`.${extension}`, "");
-
-      if (fileName) {
-        // remove extension for fileName
-        // add extension from UID to fileName
-        // the API is doesn't work with original .ext of file
-        const fileNameExt = getImageFormat(fileName) ?? "";
-        const _fileName = fileName.replace(`.${fileNameExt}`, "");
-        const name = `${_fileName}.${extension}`;
-        return [config.urls.image, "original", uid, name].join("/");
-      }
-
-      const name = `image.${extension}`;
-      return [config.urls.image, "original", uid, name].join("/");
-    }
-
-    return [config.urls.image, "original", src].join("/");
-  }
-
-  return null;
-};
-
-export const imageSpecificSize: ImageSpecificSize = (src, options) => {
-  const config = Config.getAll() as Cloud;
-  const { size, fileName } = options;
-  const extension = getImageFormat(src);
-
-  if (extension) {
-    // remove extension
-    const uid = src.replace(`.${extension}`, "");
 
     if (fileName) {
-      // remove extension for fileName
-      // add extension from UID to fileName
-      // the API is doesn't work with original .ext of file
-      const fileNameExt = getImageFormat(fileName) ?? "";
-      const _fileName = fileName.replace(`.${fileNameExt}`, "");
-      const name = `${_fileName}.${extension}`;
-      return [config.urls.image, size, uid, name].join("/");
+      return [media.mediaResizeUrl, filter, src, fileName].join("/");
     }
 
-    const name = `image.${extension}`;
-    return [config.urls.image, size, uid, name].join("/");
+    return [media.mediaResizeUrl, filter, src].join("/");
   }
 
-  return [config.urls.image, size, src].join("/");
+  return undefined;
 };

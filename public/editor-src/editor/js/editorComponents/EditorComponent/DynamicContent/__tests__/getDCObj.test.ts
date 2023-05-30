@@ -341,7 +341,7 @@ describe("Testing 'getDCObjPreview' function", () => {
     ]
     //#endregion
   ])("no. %#", (keys, expected) => {
-    expect(getDCObjPreview(keys)).toStrictEqual(expected);
+    expect(getDCObjPreview(keys, false)).toStrictEqual(expected);
   });
 });
 
@@ -360,7 +360,9 @@ describe("Testing 'getDCObjEditor_' function", () => {
       }
     }
   });
-  const makeConfig = (postId: string): DCApiProxyConfig => ({ postId });
+  const makeConfig = (postId: string): DCApiProxyConfig => ({
+    postId
+  });
 
   test.each<[ECKeyDCInfo[], DCObjComplete]>([
     //#region cache+, value+
@@ -556,7 +558,9 @@ describe("Testing 'getDCObjEditor_' function", () => {
       apiProxy.setInCache(`{{ ${l} }}`, "", config);
     }
 
-    expect(getDCObjEditor_(apiProxy)(dcKeys, context)).toStrictEqual(expected);
+    expect(getDCObjEditor_(apiProxy)(dcKeys, context, false)).toStrictEqual(
+      expected
+    );
     expect(fetcher.mock.calls.length).toEqual(0);
   });
 
@@ -871,7 +875,7 @@ describe("Testing 'getDCObjEditor_' function", () => {
     const postId = "123";
     const context = makeEditorComponentContext(postId);
 
-    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context);
+    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context, false);
     if (incomplete.type !== "incomplete") {
       throw new Error("obj should be incomplete");
     }
@@ -986,7 +990,7 @@ describe("Testing 'getDCObjEditor_' function", () => {
       apiProxy.setInCache(`{{ ${l} }}`, "", config);
     }
 
-    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context);
+    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context, false);
     if (incomplete.type !== "incomplete") {
       throw new Error("obj should be incomplete");
     }
@@ -1218,7 +1222,7 @@ describe("Testing 'getDCObjEditor_' function", () => {
     const postId = "123";
     const context = makeEditorComponentContext(postId);
 
-    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context);
+    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context, false);
     if (incomplete.type !== "incomplete") {
       throw new Error("obj should be incomplete");
     }

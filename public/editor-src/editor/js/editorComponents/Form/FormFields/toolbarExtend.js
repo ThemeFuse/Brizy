@@ -2,7 +2,6 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { toolbarElementForm2SpacingPx } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ v, key, device });
@@ -26,11 +25,16 @@ export function getItems({ v, device }) {
       },
       position: 60,
       options: [
-        toolbarElementForm2SpacingPx({
-          v,
-          device,
-          state: "normal"
-        })
+        {
+          id: "padding",
+          type: "slider-dev",
+          label: t("Spacing"),
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ title: "px", value: "px" }]
+          }
+        }
       ]
     },
     {

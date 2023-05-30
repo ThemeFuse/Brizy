@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import _ from "underscore";
+import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
 import { Button } from "../../../common/Button";
-import ScrollPane from "visual/component/ScrollPane";
-import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 
 class ViewFields extends Component {
   static defaultProps = {
@@ -20,11 +20,11 @@ class ViewFields extends Component {
     onPrev: _.noop
   };
 
-  handleConfirmation = e => {
+  handleConfirmation = (e) => {
     this.props.onChangeConfirmation(e.target.checked);
   };
 
-  handleKeyDown = e => {
+  handleKeyDown = (e) => {
     const { confirmed, onNext } = this.props;
 
     // prevent enter
@@ -73,7 +73,7 @@ class ViewFields extends Component {
           title={title}
           value={value}
           required={true}
-          onChange={e => {
+          onChange={(e) => {
             onChange(e.target.value, name);
           }}
         />
@@ -118,10 +118,7 @@ class ViewFields extends Component {
     } = this.props;
 
     return (
-      <ScrollPane
-        className="brz-ed-popup-integrations-apps__scroll-pane"
-        style={{ height: "100%" }}
-      >
+      <Scrollbar theme="light">
         <div className="brz-ed-popup-recaptcha__connect">
           <div className="brz-ed-popup-recaptcha__container">
             <div className="brz-ed-popup-integrations__connect-head">
@@ -153,7 +150,7 @@ class ViewFields extends Component {
             </div>
           </div>
         </div>
-      </ScrollPane>
+      </Scrollbar>
     );
   }
 }

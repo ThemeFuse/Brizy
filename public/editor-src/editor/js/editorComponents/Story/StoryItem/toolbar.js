@@ -1,27 +1,24 @@
-import { t } from "visual/utils/i18n";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
-import {
-  getOptionColorHexByPalette,
-  getDynamicContentChoices
-} from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  toolbarBgVideoUrl,
-  toolbarElementSectionSaved
-} from "visual/utils/toolbar";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+  getDynamicContentOption,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
+import { toolbarBgVideoUrl } from "visual/utils/toolbar";
 
 export function getItems({ v, component, device, context }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
-  const imageDynamicContentChoices = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.image
-  );
+  const imageDynamicContentChoices = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.image
+  });
 
   return [
     {
@@ -155,13 +152,21 @@ export function getItems({ v, component, device, context }) {
         }
       ]
     },
-    toolbarElementSectionSaved({
-      device,
-      component,
+    {
+      id: "makeItSaved",
+      type: "savedBlock-dev",
       devices: "desktop",
+      position: 90,
       disabled: true,
-      state: "normal"
-    }),
+      config: {
+        icon: "nc-save-section",
+        blockType: "normal",
+        title: t("Save"),
+        tooltipContent: t("Saved"),
+        blockId: component.getId()
+      }
+    },
+
     {
       id: "advancedSettings",
       type: "advancedSettings",

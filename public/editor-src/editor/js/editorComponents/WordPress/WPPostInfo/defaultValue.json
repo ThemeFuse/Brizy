@@ -1,13 +1,7 @@
 {
   "toolbar": {
     "tabsState": "",
-    "tabsColor": "",
-
-    "tabletTabsState": null,
-    "tabletTabsColor": null,
-
-    "mobileTabsState": null,
-    "mobileTabsColor": null
+    "tabsColor": ""
   },
 
   "style": {

@@ -126,7 +126,8 @@ export default class Cloneable extends EditorComponent {
       horizontalAlign,
       tabletHorizontalAlign,
       mobileHorizontalAlign,
-      inCloneable: true
+      inCloneable: true,
+      cloneableAnimationId: this.getId()
     });
   }
 
@@ -267,6 +268,7 @@ export default class Cloneable extends EditorComponent {
                       id: cssIDPopulation === "" ? customID : cssIDPopulation,
                       className: classnames(className, draggableClassName)
                     }}
+                    animationId={this.getId()}
                     animationClass={animationClassName}
                   >
                     {this.renderContent(v, vs, vd)}
@@ -303,6 +305,7 @@ export default class Cloneable extends EditorComponent {
                 id: cssIDPopulation ?? customID,
                 className: classnames(className, draggableClassName)
               }}
+              animationId={this.getId()}
               animationClass={animationClassName}
             >
               {showBorder ? (
@@ -354,6 +357,7 @@ export default class Cloneable extends EditorComponent {
           id: cssIDPopulation ?? customID,
           className
         }}
+        animationId={this.getId()}
         animationClass={animationClassName}
       >
         {this.renderContent(v, vs, vd)}

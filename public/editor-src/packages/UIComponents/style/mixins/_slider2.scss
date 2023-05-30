@@ -1,0 +1,29 @@
+@mixin thumb {
+  @apply appearance-none;
+  @apply w-[18px];
+  @apply h-[18px];
+  @apply rounded-[50%];
+  @apply border-none;
+  @apply shadow-slider__control__handle-box-shadow;
+  @apply bg-slider__control__handle-bg;
+  @apply bg-slider__control__background-image;
+  @apply bg-no-repeat;
+  @apply mt-[-7px];
+  @apply cursor-pointer;
+  @apply transition-[border-color,_box-shadow] duration-[.2s] ease-[ease];
+
+  &:active {
+    @apply border-slider__control__handle-border--active;
+    @apply shadow-slider__control__handle-box-shadow--active;
+    @apply cursor-grabbing;
+  }
+}
+
+@mixin track {
+  @apply h-options__control-radius;
+  @apply bg-slider__control-bg;
+  @apply rounded-options__control-radius;
+  @apply shadow-none;
+  @apply flex;
+  @apply items-center;
+}

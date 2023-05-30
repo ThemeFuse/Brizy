@@ -32,7 +32,7 @@ export function style(
     },
     ".brz && .brz-shopify-icon-cart": {
       standart: [
-        "cssStyleElementButtonIconFontSize",
+        "cssStyleSizeFontSizeIcon",
         "cssStyleElementButtonIconMargin",
         "cssStyleElementButtonIconStrokeWidth"
       ]

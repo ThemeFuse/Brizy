@@ -20,7 +20,8 @@ export function style(
         // "cssStyleBorderRadius",
         "cssStyleBoxShadow",
         "cssStyleSizeWidth",
-        "cssStyleSizeHeight"
+        "cssStyleSizeHeight",
+        "cssStyleElementTranslationAlign"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -54,7 +55,8 @@ export function style(
         "cssStyleColor",
         "cssStyleBgColor",
         "cssStyleBorder",
-        "cssStyleBoxShadow"
+        "cssStyleBoxShadow",
+        "cssStyleElementTranslationAlign"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -68,7 +70,7 @@ export function style(
       {
         standart: ["cssStyleElementTranslationTextSpacing"]
       },
-    ".brz && .select2-selection .brz-translation__select-item": {
+    ".brz && .select2-selection": {
       standart: ["cssStyleSizeHeight"]
     },
     ".brz && .select2-selection .select2-selection__rendered .brz-translation__select-item .brz-translation__flag":
@@ -116,6 +118,9 @@ export function style(
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz && .select2-dropdown .select2-results__option ": {
+      standart: ["cssStyleElementTranslationAlign"]
     }
     // #endregion
   };
@@ -152,7 +157,8 @@ export function styleDropdown(
           "cssStyleElementTranslationColor",
           "cssStyleElementTranslationBgColor",
           "cssStyleElementTranslationBorder",
-          "cssStyleSizeHeight"
+          "cssStyleSizeHeight",
+          "cssStyleElementTranslationAlign"
         ],
         interval: [
           "cssStyleHoverTransition",

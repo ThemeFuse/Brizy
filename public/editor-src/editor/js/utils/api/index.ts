@@ -2,7 +2,12 @@ import { isT, mPipe, pass } from "fp-utilities";
 import { UploadData } from "visual/component/Options/types/dev/FileUpload/types/Value";
 import { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
 import Config from "visual/global/Config";
-import { Cloud, Shopify } from "visual/global/Config/types/configs/Cloud";
+import { isShopifyShop } from "visual/global/Config/types/configs/Base";
+import {
+  Cloud,
+  Shopify,
+  isCloud
+} from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { ReduxState } from "visual/redux/types";
@@ -367,37 +372,6 @@ export function updateGlobalBlocks(
     .then((r) => r.data)
     .catch(() => {
       throw new GlobalBlocksError("Failed to update Global Blocks");
-    });
-}
-
-//#endregion
-
-//#region Image
-
-export async function uploadImage(data: {
-  base64: string;
-  filename: string;
-}): Promise<{ name: string; uid: string; fileName: string }> {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
-
-  const body = new URLSearchParams({
-    attachment: data.base64,
-    filename: data.filename
-  });
-
-  return request(`${api}/media`, {
-    method: "POST",
-    body
-  })
-    .then((r) => r.json())
-    .then((r) => {
-      return {
-        name: r.name,
-        uid: r.uid,
-        fileName: r.filename
-      };
     });
 }
 
@@ -1094,4 +1068,43 @@ export const getSourceIds = (
       }
     });
   };
-}
+};
+
+export const getMetafields = (
+  sourceType: string,
+  config: ConfigCommon
+): ChoicesAsync["load"] => {
+  const metafields =
+    isCloud(config) && isShopifyShop(config.modules?.shop)
+      ? config?.modules?.shop?.api?.metafieldsLoad?.handler
+      : undefined;
+  return () => {
+    return new Promise((res, rej) => {
+      if (typeof metafields === "function") {
+        metafields(res, rej, { sourceType });
+      } else {
+        rej("Missing api handler in config");
+      }
+    });
+  };
+};
+
+export const getBlogPostMeta = (
+  sourceType: string,
+  config: ConfigCommon
+): ChoicesAsync["load"] => {
+  const blogPostsMeta =
+    isCloud(config) && isShopifyShop(config.modules?.shop)
+      ? config?.modules?.shop?.api?.blogPostMetaLoad?.handler
+      : undefined;
+
+  return () => {
+    return new Promise((res, rej) => {
+      if (typeof blogPostsMeta === "function") {
+        blogPostsMeta(res, rej, { sourceType });
+      } else {
+        rej("Missing api handler in config");
+      }
+    });
+  };
+};

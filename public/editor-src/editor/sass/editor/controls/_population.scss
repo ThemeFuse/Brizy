@@ -16,7 +16,7 @@
     font-weight: 400;
     letter-spacing: 0;
     background: $control-bg none;
-    color: #fff;
+    color: $control__variant-color;
     min-width: $control__lg-width;
     height: $control-height;
     padding: 0 5px 0 10px;
@@ -57,4 +57,9 @@
   .brz-ed-option.brz-ed-option-type__population-dev {
     padding: 10px 15px 15px 8px;
   }
+}
+
+.brz-ed-control__population--handler {
+  color: $toolbar__item-color;
+  cursor: pointer;
 }

@@ -13,7 +13,7 @@ export const getTaxonomies = (
     return [{ title: "-", value: "" }];
   }
 
-  return taxonomies.map(taxonomy => {
+  return taxonomies.map((taxonomy) => {
     const { id = "", label = "", name = "", terms = [] } = taxonomy;
 
     if (!id && !label && !name) {
@@ -26,7 +26,7 @@ export const getTaxonomies = (
     if (terms && terms.length) {
       return {
         title: label,
-        optgroup: terms.map(term => ({
+        optgroup: terms.map((term) => ({
           title: term.name,
           value: `${name}|${term.id}`
         }))
@@ -40,22 +40,6 @@ export const getTaxonomies = (
   });
 };
 
-export const getTaxonomiesFilter = (type = ""): SelectChoices[] => {
-  const taxonomies = Config.getAll().taxonomies.filter(item => {
-    const { name } = item;
-
-    if (type === "products") {
-      return name.indexOf("product") > -1;
-    }
-    if (type === "posts") {
-      return name.indexOf("product") < 0;
-    }
-    return item;
-  });
-
-  return getTaxonomies(taxonomies);
-};
-
 export const getTaxonomiesMultiOptions = (): SelectChoices[] => {
   const postTypesTaxs = Config.getAll().postTypesTaxs;
 
@@ -63,7 +47,7 @@ export const getTaxonomiesMultiOptions = (): SelectChoices[] => {
     return [{ title: "-", value: "" }];
   }
 
-  return postTypesTaxs.map(i => ({
+  return postTypesTaxs.map((i) => ({
     value: i.name,
     title: i.label
   }));
@@ -80,12 +64,12 @@ export const getTaxonomiesMultiOptionsSub = (
 
   return postTypesTaxs
     .filter(
-      item =>
+      (item) =>
         item.taxonomies && item.taxonomies.length && item.name === taxonomies
     )
     .reduce((acc, curr) => {
       if (curr.taxonomies) {
-        const taxonomies = curr.taxonomies.map(item => ({
+        const taxonomies = curr.taxonomies.map((item) => ({
           value: item.id,
           title: item.name
         }));

@@ -1,25 +1,24 @@
 import React, { useState } from "react";
 import {
-  ImageProps,
-  MouseCoordinates
+  MouseCoordinates,
+  Props
 } from "visual/component/Controls/ImageSetter/types";
-import { imageUrl, imageWrapperSize, svgUrl } from "visual/utils/image";
+import { SizeType } from "visual/global/Config/types/configs/common";
+import { getImageUrl, imageWrapperSize } from "visual/utils/image";
 import Draggable from "./Draggable";
 
 const MAX_IMAGE_SETTER_WIDTH = 140;
 
-const isSVG = (extension: string) => extension === "svg";
-
-function Image(props: ImageProps) {
+function Image(props: Props) {
   const {
     src = "",
     x: _x = 50,
     y: _y = 50,
-    extension,
     width: _width = 0,
     height: _height = 0,
     customUrl = false,
     showPointer = true,
+    fileName = "",
     onChange
   } = props;
 
@@ -48,11 +47,11 @@ function Image(props: ImageProps) {
 
   const imgUrl = customUrl
     ? src
-    : isSVG(extension)
-    ? svgUrl(src)
-    : imageUrl(src, {
-        iW: MAX_IMAGE_SETTER_WIDTH,
-        iH: "any"
+    : getImageUrl({
+        fileName,
+        uid: src,
+        sizeType: SizeType.custom,
+        crop: { iW: MAX_IMAGE_SETTER_WIDTH, iH: "any" }
       });
 
   const { width, height } = imageWrapperSize(

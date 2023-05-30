@@ -9,4 +9,5 @@ export interface Props {
   onIncrease?: VoidFunction;
   step?: number;
   value?: number;
+  attr?: Record<string, string>;
 }

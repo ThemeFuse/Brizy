@@ -3,10 +3,14 @@ import { Value } from "./index";
 
 export function style(v: Value, vs: Value, vd: Value): string[] {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&:hover.brz-map": {
       standart: ["cssStyleSizeSize", "cssStyleSizeHeightPxOnly"]
     },
-    ".brz &&:hover:before": {
+    ".brz &&:hover.brz-map_styles:before": {
+      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+    },
+    ".brz &&:hover .brz-hover-animation:before": {
       standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },

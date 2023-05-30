@@ -34,7 +34,6 @@
 
     "tabletZIndex": null,
     "tabletZIndexSuffix": null,
-
     "mobileAnchorName": null,
     "mobileFullHeight": null,
 
@@ -153,13 +152,6 @@
     "tabletSliderDots": null,
     "tabletSliderArrows": null,
 
-    "tabletSliderDotsColorHex": null,
-    "tabletSliderDotsColorOpacity": null,
-    "tabletSliderDotsColorPalette": null,
-
-    "tempTabletSliderDotsColorOpacity": null,
-    "tempTabletSliderDotsColorPalette": null,
-
     "tabletSectionHeightStyle": null,
     "tabletSectionHeight": null,
     "tabletSectionHeightSuffix": null,
@@ -179,17 +171,6 @@
 
     "mobileSliderDots": null,
     "mobileSliderArrows": null,
-
-    "mobileSliderDotsColorHex": null,
-    "mobileSliderDotsColorOpacity": null,
-    "mobileSliderDotsColorPalette": null,
-
-    "tempMobileSliderDotsColorOpacity": null,
-    "tempMobileSliderDotsColorPalette": null,
-
-    "mobileSectionHeightStyle": null,
-    "mobileSectionHeight": null,
-    "mobileSectionHeightSuffix": null,
 
     "mobileMarginType": "ungrouped",
     "mobileMargin": 0,

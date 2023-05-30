@@ -1,6 +1,7 @@
 import _ from "underscore";
+import { SizeType } from "visual/global/Config/types/configs/common";
 import { objectToQueryString } from "visual/utils/url";
-import { FilterOption } from "./types";
+import { CustomSize, Data, FilterOption } from "./types";
 
 export const getFilter = (options: FilterOption): string => {
   const roundedOptions = _.mapObject(options, (val) =>
@@ -9,3 +10,6 @@ export const getFilter = (options: FilterOption): string => {
 
   return objectToQueryString(roundedOptions);
 };
+
+export const isCropSize = (d: Data): d is CustomSize =>
+  d.sizeType === SizeType.custom;

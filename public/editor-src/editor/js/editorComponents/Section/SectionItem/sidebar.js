@@ -1,18 +1,17 @@
+import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { hexToRgba } from "visual/utils/color";
+import { getShapes } from "visual/utils/options";
 import {
-  toolbarShapeTopType,
-  toolbarShapeTopFlip,
-  toolbarShapeBottomType,
-  toolbarShapeBottomFlip
+  toolbarShapeBottomFlip,
+  toolbarShapeTopFlip
 } from "visual/utils/toolbar";
 
 export const title = t("Block");
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const { hex: shapeTopColorHex } = getOptionColorHexByPalette(
     dvv("shapeTopColorHex"),
@@ -102,11 +101,12 @@ export function getItems({ v, device }) {
                           type: "group-dev",
                           disabled: dvv("shape") !== "top",
                           options: [
-                            toolbarShapeTopType({
-                              v,
-                              device,
-                              state: "normal"
-                            }),
+                            {
+                              id: "shapeTopType",
+                              label: t("Type"),
+                              type: "select-dev",
+                              choices: getShapes()
+                            },
                             {
                               id: "shapeTopColors",
                               type: "popover-dev",
@@ -168,11 +168,13 @@ export function getItems({ v, device }) {
                           type: "group-dev",
                           disabled: dvv("shape") !== "bottom",
                           options: [
-                            toolbarShapeBottomType({
-                              v,
-                              device,
-                              state: "normal"
-                            }),
+                            {
+                              id: "shapeBottomType",
+                              label: t("Type"),
+                              type: "select-dev",
+                              choices: getShapes(),
+                              className: "brz-ed-shape icon--bottom"
+                            },
                             {
                               id: "shapeBottomColors",
                               type: "popover-dev",

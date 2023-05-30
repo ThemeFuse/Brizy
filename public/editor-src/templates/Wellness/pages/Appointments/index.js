@@ -1050,7 +1050,7 @@ module.exports = {
                                                 tempHoverBgColorOpacity: 1,
                                                 text: "VIEW ALL STAFF MEMBERS",
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/wellness/?page_id=2194"
+                                                linkExternal: ""
                                             }
                                         }
                                     ]

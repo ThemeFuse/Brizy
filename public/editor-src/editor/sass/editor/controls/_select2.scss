@@ -93,17 +93,6 @@
       color: $brand__primary;
     }
   }
-
-  // ScrollPane
-  &-scroll-pane {
-
-    // Set default height
-    // uses for first render
-    .brz-ed-scroll-inner {
-      height: 120px;
-      overflow: hidden;
-    }
-  }
 }
 
 // Light
@@ -126,14 +115,5 @@
 
   .brz-control__select2-option {
     border-bottom: 1px solid #e6e6e6;
-  }
-
-  .brz-control__select2-scroll-pane {
-
-    .brz-ed-wide-thumb,
-    .brz-ed-tall-thumb {
-      background-color: #7b7b7b;
-      border-radius: 2px;
-    }
   }
 }

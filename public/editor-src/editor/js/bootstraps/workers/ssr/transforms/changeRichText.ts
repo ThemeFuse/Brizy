@@ -1,9 +1,10 @@
 import { Type as LinkType } from "visual/component/Link/types/Type";
 import Config, { Config as Conf, isWp } from "visual/global/Config";
+import { SizeType } from "visual/global/Config/types/configs/common";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { Block } from "visual/types";
-import { imagePopulationUrl, imageUrl, svgUrl } from "visual/utils/image";
+import { getImageUrl, imagePopulationUrl, defaultImagePopulation } from "visual/utils/image";
 
 const linkClassNames = [
   "link--anchor",
@@ -12,11 +13,11 @@ const linkClassNames = [
   "is-empty"
 ];
 
-const isSVG = (extension: string): boolean => extension === "svg";
-
 export const changeRichText = ($: cheerio.Root): void => {
   const config = Config.getAll();
   const $richText = $(".brz-rich-text");
+  const dynamicContent = Config.getAll()?.dynamicContent;
+  const useCustomPlaceholder = dynamicContent?.useCustomPlaceholder ?? false;
 
   // Change Links
   $richText
@@ -46,37 +47,31 @@ export const changeRichText = ($: cheerio.Root): void => {
           : externalLink.external
       };
 
-      const target =
-        newData.type === "external" && newData.externalBlank === "on"
-          ? "target='_blank'"
-          : "";
-      const rel =
-        newData.type === "external" && newData.externalRel === "on"
-          ? "rel='nofollow'"
-          : "";
-
       const url = newData[data.type];
+      const link = $(`<a>${html}</a>`);
+
+      link.attr("class", className);
+
+      if (style) {
+        link.attr("style", style);
+      }
 
       if (data.type === "linkToSlide") {
-        $this.replaceWith(
-          `<a
-          href="#"
-          style="${style}"
-          class="${className}"
-          data-brz-link-story="${newData.linkToSlide}"
-          >${html}</a>`
-        );
+        link.attr("href", "#");
+        link.attr("data-brz-link-story", newData.linkToSlide);
+
+        $this.replaceWith(link);
       } else if (url) {
-        $this.replaceWith(
-          `<a
-            href='${getLinkContentByType(data.type, url, config)}'
-            ${target}
-            ${rel}
-            style="${style}"
-            class="${className}"
-            data-brz-link-type="${data.type}"
-          >${html}</a>`
-        );
+        link.attr("href", getLinkContentByType(data.type, url, config));
+        link.attr("data-brz-link-type", data.type);
+
+        if (newData.type === "external" && newData.externalBlank === "on") {
+          link.attr("target", "_blank");
+        }
+        if (newData.type === "external" && newData.externalRel === "on") {
+          link.attr("rel", "nofollow");
+        }
+        $this.replaceWith(link);
       } else {
         const newClassNames = className
           .split(" ")
@@ -116,10 +111,6 @@ export const changeRichText = ($: cheerio.Root): void => {
       $elem = $this;
     }
 
-    const dynamicContentOption = Config.getAll()?.dynamicContentOption;
-    const useCustomPlaceholder =
-      dynamicContentOption?.richText?.useCustomPlaceholder;
-
     let _population;
 
     if (useCustomPlaceholder) {
@@ -143,12 +134,13 @@ export const changeRichText = ($: cheerio.Root): void => {
       const $this = $(this);
       const src = $this.attr("data-image_src") ?? "";
       const population = $this.attr("data-image_population");
-      const extension = $this.attr("data-image_extension") ?? "";
       const fileName = $this.attr("data-image_file_name") ?? "image";
 
-      const imgUrl = isSVG(extension)
-        ? svgUrl(src, { fileName })
-        : imageUrl(src, { fileName });
+      const imgUrl = getImageUrl({
+        fileName,
+        uid: src,
+        sizeType: SizeType.custom
+      });
 
       // required some property
       // @ts-expect-error: need to be without params
@@ -168,7 +160,10 @@ export const changeRichText = ($: cheerio.Root): void => {
       if (population) {
         $this.css({
           ...newCSS,
-          "background-image": `url('${imagePopulationUrl(population)}')`
+          "background-image": `url('${imagePopulationUrl(population, {
+            ...defaultImagePopulation,
+            useCustomPlaceholder
+          })}')`
         });
       } else if (imgUrl)
         $this.css({

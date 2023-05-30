@@ -1,8 +1,8 @@
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
-import { DCApiProxy, DCApiProxyInstance } from "./DCApiProxy";
-import { placeholderObjFromECKeyDCInfo, placeholderObjToStr } from "./utils";
 import { Dictionary } from "visual/types/utils";
 import { ECKeyDCInfo } from "../types";
+import { DCApiProxy, DCApiProxyInstance } from "./DCApiProxy";
+import { placeholderObjFromECKeyDCInfo, placeholderObjToStr } from "./utils";
 
 export interface DCObjResult {
   [k: string]: unknown;
@@ -28,15 +28,24 @@ export interface DCObjIncomplete {
   details: DCObjDetails;
 }
 
-export const getDCObjPreview = (keys: ECKeyDCInfo[]): DCObjComplete => {
+export const getDCObjPreview = (
+  keys: ECKeyDCInfo[],
+  useCustomPlaceholder: boolean
+): DCObjComplete => {
   const value: DCObjResult = {};
   const details: DCObjDetails = {};
 
   for (const keyDcInfo of keys) {
-    const placeholderObj = placeholderObjFromECKeyDCInfo(keyDcInfo);
+    const placeholderObj = placeholderObjFromECKeyDCInfo(
+      keyDcInfo,
+      useCustomPlaceholder
+    );
 
     if (placeholderObj) {
-      value[keyDcInfo.key] = placeholderObjToStr(placeholderObj);
+      value[keyDcInfo.key] = placeholderObjToStr(
+        placeholderObj,
+        useCustomPlaceholder
+      );
       details[keyDcInfo.key] = {
         loaded: true,
         staticValue: keyDcInfo.staticValue,
@@ -53,85 +62,97 @@ export const getDCObjPreview = (keys: ECKeyDCInfo[]): DCObjComplete => {
 };
 
 // exported for testing purposes
-export const getDCObjEditor_ = (apiProxy: DCApiProxy) => (
-  keys: ECKeyDCInfo[],
-  context: EditorComponentContextValue
-): DCObjComplete | DCObjIncomplete => {
-  const toFetchK: string[] = [];
-  const toFetchV: string[] = [];
-  const partialValue: DCObjResult = {};
-  const details: DCObjDetails = {};
-  const apiProxyConfig = { postId: context.dynamicContent.itemId };
+export const getDCObjEditor_ =
+  (apiProxy: DCApiProxy) =>
+  (
+    keys: ECKeyDCInfo[],
+    context: EditorComponentContextValue,
+    useCustomPlaceholder: boolean
+  ): DCObjComplete | DCObjIncomplete => {
+    const toFetchK: string[] = [];
+    const toFetchV: string[] = [];
+    const partialValue: DCObjResult = {};
+    const details: DCObjDetails = {};
+    const apiProxyConfig = {
+      postId: context.dynamicContent.itemId,
+      useCustomPlaceholder
+    };
 
-  for (const keyDCInfo of keys) {
-    const placeholderObj = placeholderObjFromECKeyDCInfo(keyDCInfo);
+    for (const keyDCInfo of keys) {
+      const placeholderObj = placeholderObjFromECKeyDCInfo(
+        keyDCInfo,
+        useCustomPlaceholder
+      );
 
-    if (!placeholderObj) {
-      continue;
+      if (!placeholderObj) {
+        continue;
+      }
+
+      const placeholderStr = placeholderObjToStr(
+        placeholderObj,
+        useCustomPlaceholder
+      );
+      const cached = apiProxy.getFromCache(placeholderStr, apiProxyConfig);
+
+      if (cached === undefined) {
+        toFetchK.push(keyDCInfo.key);
+        toFetchV.push(placeholderStr);
+        details[keyDCInfo.key] = {
+          loaded: false,
+          staticValue: keyDCInfo.staticValue,
+          dcValue: undefined
+        };
+      } else {
+        partialValue[keyDCInfo.key] = cached;
+        details[keyDCInfo.key] = {
+          loaded: true,
+          staticValue: keyDCInfo.staticValue,
+          dcValue: cached
+        };
+      }
     }
 
-    const placeholderStr = placeholderObjToStr(placeholderObj);
-    const cached = apiProxy.getFromCache(placeholderStr, apiProxyConfig);
-
-    if (cached === undefined) {
-      toFetchK.push(keyDCInfo.key);
-      toFetchV.push(placeholderStr);
-      details[keyDCInfo.key] = {
-        loaded: false,
-        staticValue: keyDCInfo.staticValue,
-        dcValue: undefined
+    if (toFetchK.length === 0) {
+      return {
+        type: "complete",
+        value: partialValue, // partial is complete here
+        details
       };
     } else {
-      partialValue[keyDCInfo.key] = cached;
-      details[keyDCInfo.key] = {
-        loaded: true,
-        staticValue: keyDCInfo.staticValue,
-        dcValue: cached
+      return {
+        type: "incomplete",
+        _getCompleteAborted: false,
+        partialValue,
+        async getComplete(): Promise<DCObjComplete> {
+          const r = await apiProxy.getDC(toFetchV, apiProxyConfig);
+
+          if (this._getCompleteAborted) {
+            throw new Error("getComplete aborted");
+          }
+
+          const value_: DCObjResult = { ...partialValue };
+          const details_: DCObjDetails = { ...details };
+          for (let i = 0; i < r.length; i++) {
+            value_[toFetchK[i]] = r[i];
+            details_[toFetchK[i]] = {
+              loaded: true,
+              staticValue: details[toFetchK[i]]?.staticValue,
+              dcValue: r[i]
+            };
+          }
+
+          return {
+            type: "complete",
+            value: value_,
+            details: details_
+          };
+        },
+        abortGetComplete(): void {
+          this._getCompleteAborted = true;
+        },
+        details
       };
     }
-  }
-
-  if (toFetchK.length === 0) {
-    return {
-      type: "complete",
-      value: partialValue, // partial is complete here
-      details
-    };
-  } else {
-    return {
-      type: "incomplete",
-      _getCompleteAborted: false,
-      partialValue,
-      async getComplete(): Promise<DCObjComplete> {
-        const r = await apiProxy.getDC(toFetchV, apiProxyConfig);
-
-        if (this._getCompleteAborted) {
-          throw new Error("getComplete aborted");
-        }
-
-        const value_: DCObjResult = { ...partialValue };
-        const details_: DCObjDetails = { ...details };
-        for (let i = 0; i < r.length; i++) {
-          value_[toFetchK[i]] = r[i];
-          details_[toFetchK[i]] = {
-            loaded: true,
-            staticValue: details[toFetchK[i]]?.staticValue,
-            dcValue: r[i]
-          };
-        }
-
-        return {
-          type: "complete",
-          value: value_,
-          details: details_
-        };
-      },
-      abortGetComplete(): void {
-        this._getCompleteAborted = true;
-      },
-      details
-    };
-  }
-};
+  };
 
 export const getDCObjEditor = getDCObjEditor_(DCApiProxyInstance);

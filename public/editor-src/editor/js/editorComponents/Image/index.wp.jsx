@@ -1,5 +1,6 @@
-import Image from "./index.jsx";
 import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import Config from "visual/global/Config";
+import Image from "./index.jsx";
 
 export default class WPImage extends Image {
   getExtraImageProps(v) {
@@ -10,7 +11,12 @@ export default class WPImage extends Image {
     }
 
     if (imagePopulation) {
-      const placeholderData = placeholderObjFromStr(imagePopulation);
+      const useCustomPlaceholder =
+        Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
+      const placeholderData = placeholderObjFromStr(
+        imagePopulation,
+        useCustomPlaceholder
+      );
 
       if (placeholderData) {
         return {

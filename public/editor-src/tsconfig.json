@@ -19,8 +19,8 @@
     "paths": {
       "visual/*": ["editor/js/*"],
       "ui/*": ["packages/ui/src/*"],
-      "optionControls/*" : ["packages/optionControls/src/*"],
-      "icons/*" : ["packages/icons/src/*"],
+      "UIComponents/*": ["packages/UIComponents/src/*"],
+      "icons/*": ["packages/icons/src/*"],
       "core/*": ["packages/core/src/*"],
       "component/*": ["packages/component/src/*"],
       "widget/*": ["packages/widget/src/*"],
@@ -30,8 +30,17 @@
   "include": [
     "editor/**/*.ts",
     "editor/**/*.tsx",
-    "packages/**/*.ts",
-    "packages/**/*.tsx"
+
+    "packages/component/**/*.ts",
+    "packages/component/**/*.tsx",
+    "packages/core/**/*.ts",
+    "packages/core/**/*.tsx",
+    "packages/ui/**/*.ts",
+    "packages/ui/**/*.tsx",
+    "packages/widgetTemp/**/*.ts",
+    "packages/widgetTemp/**/*.tsx",
+    "packages/widget/**/*.ts",
+    "packages/widget/**/*.tsx"
   ],
   "exclude": [
     "node_modules",
@@ -39,6 +48,7 @@
     "kits",
     "popups",
     "templates",
-    "**/libs/**"
+    "**/libs/**",
+    "packages/api/**"
   ]
 }

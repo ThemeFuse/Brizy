@@ -233,6 +233,6 @@
     "bgPaddingLeftSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null
+    "hoverTransitionSuffix": ""
   }
 }

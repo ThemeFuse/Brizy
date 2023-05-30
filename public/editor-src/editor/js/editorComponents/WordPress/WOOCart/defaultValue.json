@@ -40,13 +40,6 @@
     "tempBgColorOpacity": 1,
     "tempBgColorPalette": "color8",
 
-    "hoverBgColorHex": null,
-    "hoverBgColorOpacity": null,
-    "hoverBgColorPalette": null,
-
-    "tempHoverBgColorOpacity": null,
-    "tempHoverBgColorPalette": null,
-
     "sidebarBgColorHex": "#ffffff",
     "sidebarBgColorOpacity": 1,
     "sidebarBgColorPalette": "",
@@ -61,13 +54,6 @@
     "tempBubbleBgColorOpacity": 1,
     "tempBubbleBgColorPalette": "",
 
-    "hoverBubbleBgColorHex": null,
-    "hoverBubbleBgColorOpacity": null,
-    "hoverBubbleBgColorPalette": null,
-
-    "tempHoverBubbleBgColorOpacity": null,
-    "tempHoverBubbleBgColorPalette": null,
-
     "buttonBgColorType": "solid",
 
     "buttonBgColorHex": "#1c1c1c",
@@ -77,28 +63,12 @@
     "tempButtonBgColorOpacity": 1,
     "tempButtonBgColorPalette": "color2",
 
-    "hoverButtonBgColorType": null,
-
-    "hoverButtonBgColorHex": null,
-    "hoverButtonBgColorOpacity": null,
-    "hoverButtonBgColorPalette": null,
-
-    "tempHoverButtonBgColorOpacity": null,
-    "tempHoverButtonBgColorPalette": null,
-
     "colorHex": "#1c1c1c",
     "colorOpacity": 1,
     "colorPalette": "color2",
 
     "tempColorOpacity": 1,
     "tempColorPalette": "color2",
-
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
 
     "iconColorHex": "#1c1c1c",
     "iconColorOpacity": 1,
@@ -107,26 +77,12 @@
     "tempIconColorOpacity": 1,
     "tempIconColorPalette": "color2",
 
-    "hoverIconColorHex": null,
-    "hoverIconColorOpacity": null,
-    "hoverIconColorPalette": null,
-
-    "tempHoverIconColorOpacity": null,
-    "tempHoverIconColorPalette": null,
-
     "purchasesColorHex": "#1c1c1c",
     "purchasesColorOpacity": 0.5,
     "purchasesColorPalette": "color2",
 
     "tempPurchasesColorOpacity": 0.5,
     "tempPurchasesColorPalette": "color2",
-
-    "hoverPurchasesColorHex": null,
-    "hoverPurchasesColorOpacity": null,
-    "hoverPurchasesColorPalette": null,
-
-    "tempHoverPurchasesColorOpacity": null,
-    "tempHoverPurchasesColorPalette": null,
 
     "bubbleColorHex": "#ffffff",
     "bubbleColorOpacity": 1,
@@ -135,26 +91,12 @@
     "tempBubbleColorOpacity": 1,
     "tempBubbleColorPalette": "color8",
 
-    "hoverBubbleColorHex": null,
-    "hoverBubbleColorOpacity": null,
-    "hoverBubbleColorPalette": null,
-
-    "tempHoverBubbleColorOpacity": null,
-    "tempHoverBubbleColorPalette": null,
-
     "titleColorHex": "#1c1c1c",
     "titleColorOpacity": 1,
     "titleColorPalette": "color2",
 
     "tempTitleColorOpacity": 1,
     "tempTitleColorPalette": "color2",
-
-    "hoverTitleColorHex": null,
-    "hoverTitleColorOpacity": null,
-    "hoverTitleColorPalette": null,
-
-    "tempHoverTitleColorOpacity": null,
-    "tempHoverTitleColorPalette": null,
 
     "costColorHex": "#1c1c1c",
     "costColorOpacity": 1,
@@ -163,13 +105,6 @@
     "tempCostColorOpacity": 1,
     "tempCostColorPalette": "color2",
 
-    "hoverCostColorHex": null,
-    "hoverCostColorOpacity": null,
-    "hoverCostColorPalette": null,
-
-    "tempHoverCostColorOpacity": null,
-    "tempHoverCostColorPalette": null,
-
     "subtotalColorHex": "#1c1c1c",
     "subtotalColorOpacity": 1,
     "subtotalColorPalette": "color2",
@@ -177,26 +112,12 @@
     "tempSubtotalColorOpacity": 1,
     "tempSubtotalColorPalette": "color2",
 
-    "hoverSubtotalColorHex": null,
-    "hoverSubtotalColorOpacity": null,
-    "hoverSubtotalColorPalette": null,
-
-    "tempHoverSubtotalColorOpacity": null,
-    "tempHoverSubtotalColorPalette": null,
-
     "buttonColorHex": "#FFFFFF",
     "buttonColorOpacity": 1,
     "buttonColorPalette": "color8",
 
     "tempButtonColorOpacity": 1,
     "tempButtonColorPalette": "color8",
-
-    "hoverButtonColorHex": null,
-    "hoverButtonColorOpacity": null,
-    "hoverButtonColorPalette": null,
-
-    "tempHoverButtonColorOpacity": null,
-    "tempHoverButtonColorPalette": null,
 
     "borderStyle": "solid",
 
@@ -215,36 +136,12 @@
     "tempBorderBottomWidth": 1,
     "tempBorderLeftWidth": 1,
 
-    "hoverBorderStyle": null,
-
-    "tempHoverBorderStyle": null,
-
-    "hoverBorderWidthType": null,
-    "hoverBorderWidth": null,
-    "hoverBorderTopWidth": null,
-    "hoverBorderRightWidth": null,
-    "hoverBorderBottomWidth": null,
-    "hoverBorderLeftWidth": null,
-
-    "tempHoverBorderWidth": null,
-    "tempHoverBorderTopWidth": null,
-    "tempHoverBorderRightWidth": null,
-    "tempHoverBorderBottomWidth": null,
-    "tempHoverBorderLeftWidth": null,
-
     "borderColorHex": "#1c1c1c",
     "borderColorOpacity": 1,
     "borderColorPalette": "color2",
 
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "color2",
-
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-
-    "tempHoverBorderColorOpacity": null,
-    "tempHoverBorderColorPalette": null,
 
     "families": {
       "typographyFontFamily": "lato",
@@ -351,7 +248,7 @@
     "tempButtonBorderBottomRightRadiusSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
+    "hoverTransitionSuffix": "",
 
     "tabletSidebar": null,
 

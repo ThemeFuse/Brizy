@@ -1,23 +1,24 @@
 import classnames from "classnames";
 import React, { ReactNode } from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import { ElementModel } from "visual/component/Elements/Types";
-import PortalToolbar from "visual/component/Toolbar";
+import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
+import { ElementModel } from "visual/component/Elements/Types";
+import { ThemeIcon } from "visual/component/ThemeIcon";
+import PortalToolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
+import * as Str from "visual/utils/reader/string";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
-import * as toolbar from "./toolbar";
 import * as sidebar from "./sidebar";
 import { style } from "./styles";
-import { Text } from "visual/component/ContentOptions/types";
-import { ThemeIcon } from "visual/component/ThemeIcon";
+import * as toolbar from "./toolbar";
 
 export interface Value extends ElementModel {
   iconName: string;
   iconType: string;
   itemId: string;
-  text: string;
+  variantId?: number;
 }
 
 export class AddToCart extends EditorComponent<Value> {
@@ -44,6 +45,8 @@ export class AddToCart extends EditorComponent<Value> {
     }
   }
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
+    const { itemId, variantId } = v;
+
     const className = classnames(
       "brz-shopify-add-to-cart",
       css(this.getComponentId(), this.getId(), style(v, vs, vd))
@@ -56,7 +59,8 @@ export class AddToCart extends EditorComponent<Value> {
             {...this.makeWrapperProps({
               className,
               attributes: {
-                "data-product-handle": String(v.itemId)
+                "data-product-handle": itemId,
+                "data-default-variant-id": Str.read(variantId) ?? ""
               }
             })}
             component={"button"}

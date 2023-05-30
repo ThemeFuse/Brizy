@@ -1025,7 +1025,7 @@ module.exports = {
                                                                         tempPaddingBottom: 10,
                                                                         linkType: "external",
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/creed/?page_id=1522"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -1758,7 +1758,7 @@ module.exports = {
                                                 hoverBgColorOpacity: 1,
                                                 tempHoverBgColorOpacity: 1,
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/creed/?page_id=1530"
+                                                linkExternal: ""
                                             }
                                         }
                                     ],
@@ -2600,7 +2600,7 @@ module.exports = {
                                                                         tempHoverBgColorOpacity: 1,
                                                                         hoverBgColorPalette: "color4",
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/creed/?page_id=1501"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -2747,7 +2747,7 @@ module.exports = {
                                                                         tempBgColorPalette: "color1",
                                                                         bgColorHex: "#08402e",
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/creed/?page_id=1530",
+                                                                        linkExternal: "",
                                                                         linkType: "external",
                                                                         bgColorOpacity: 1,
                                                                         fillType: "filled"

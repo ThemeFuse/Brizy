@@ -67,9 +67,6 @@
 // Saving Feedback
 @import "editor/saving-feedback"; // ??? review
 
-// ScrollPanel
-@import "editor/scrollpane";
-
 // Containers
 @import "editor/containers";
 
@@ -157,6 +154,9 @@
 // Section
 @import "editor/section";
 
+// Scrollbar
+@import "editor/scrollbar";
+
 // Login
 @import "editor/login";
 
@@ -175,8 +175,14 @@
 // Eye Dropper
 @import "eye-dopper";
 
-// // Ministry Brands
+// Ministry Brands
 @import "editor/ministry-brands";
 
-// // Ministry Brands Event Layout
+// Ministry Brands Event Layout
 @import "editor/ministry-eventLayout";
+
+// BlogPostMeta
+@import "editor/controls/blogpostmeta";
+
+// Wordpress Shortcodes
+@import "editor/wp/shortcodes"

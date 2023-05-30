@@ -1,6 +1,6 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
 import { ImageSetter } from "visual/component/Controls/ImageSetter";
 import EditorIcon from "visual/component/EditorIcon";
 import Population from "./common/Population";
@@ -23,7 +23,7 @@ class FocalPointOptionType extends React.Component {
     onChange: _.noop
   };
 
-  handlePopulationChange = population => {
+  handlePopulationChange = (population) => {
     const { value, onChange } = this.props;
     onChange({ ...value, population }, { isChanged: "population" });
   };
@@ -68,7 +68,11 @@ class FocalPointOptionType extends React.Component {
       attr,
       display,
       helper,
-      population: { choices: populationChoices, show: populationShow },
+      population: {
+        choices: populationChoices,
+        show: populationShow,
+        handlerChoices: populationHandlerChoices
+      },
       value: { population: populationValue }
     } = this.props;
     const className = classnames(
@@ -81,6 +85,7 @@ class FocalPointOptionType extends React.Component {
     const content = populationShow ? (
       <Population
         choices={populationChoices}
+        handlerChoices={populationHandlerChoices}
         value={populationValue}
         renderUnset={this.renderImageSetter}
         onChange={this.handlePopulationChange}

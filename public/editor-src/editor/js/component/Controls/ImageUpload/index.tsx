@@ -1,36 +1,16 @@
 import classNames from "classnames";
-import React, { ChangeEvent, FC, useCallback } from "react";
-import { map } from "visual/utils/array";
-import { mPipe } from "visual/utils/fp";
-import { uploadImagePromise } from "visual/utils/image/uploadImage";
+import React, { FC } from "react";
 import { Props } from "./types/Props";
 
 export * from "./types/Props";
 
-export const ImageUpload: FC<Props> = ({
-  allowedExtensions,
-  children,
-  onChange,
-  className
-}) => {
-  const upload = useCallback(
-    (image: File) => uploadImagePromise(allowedExtensions, image),
-    [allowedExtensions]
-  );
-  const _onChange = useCallback(
-    mPipe(
-      (e: ChangeEvent<HTMLInputElement>) => e.target?.files,
-      Array.from,
-      map(upload),
-      onChange
-    ),
-    [onChange, upload]
-  );
-
+export const ImageUpload: FC<Props> = ({ children, onChange, className }) => {
   return (
-    <label className={classNames("brz-ed-control__imageUpload", className)}>
+    <label
+      className={classNames("brz-ed-control__imageUpload", className)}
+      onClick={onChange}
+    >
       {children}
-      <input type={"file"} multiple onChange={_onChange} hidden />
     </label>
   );
 };

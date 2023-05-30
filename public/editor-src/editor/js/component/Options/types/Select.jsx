@@ -1,10 +1,10 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
-import Tooltip from "visual/component/Controls/Tooltip";
 import Select from "visual/component/Controls/Select";
-import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
+import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 
 class SelectOptionType extends React.Component {
@@ -58,7 +58,7 @@ class SelectOptionType extends React.Component {
           "brz-control__select-option__bg",
           _icon.className
         );
-        icon = <div {..._icon} className={iconClassName} />;
+        icon = <div className={iconClassName} />;
       } else if (_icon) {
         icon = <EditorIcon icon={_icon} />;
       }

@@ -339,6 +339,6 @@
     "detailButtonBorderLeftWidth": 1,
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null
+    "hoverTransitionSuffix": ""
   }
 }

@@ -27,10 +27,6 @@
 
     "tempBorderStyle": "solid",
 
-    "hoverBorderStyle": null,
-
-    "tempHoverBorderStyle": null,
-
     "borderWidthType": "grouped",
     "borderWidth": 0,
     "borderTopWidth": 0,
@@ -44,32 +40,12 @@
     "tempBorderBottomWidth": 4,
     "tempBorderLeftWidth": 4,
 
-    "hoverBorderWidthType": null,
-    "hoverBorderWidth": null,
-    "hoverBorderTopWidth": null,
-    "hoverBorderRightWidth": null,
-    "hoverBorderBottomWidth": null,
-    "hoverBorderLeftWidth": null,
-
-    "tempHoverBorderWidth": null,
-    "tempHoverBorderTopWidth": null,
-    "tempHoverBorderRightWidth": null,
-    "tempHoverBorderBottomWidth": null,
-    "tempHoverBorderLeftWidth": null,
-
     "borderColorHex": "#66738d",
     "borderColorOpacity": 0,
     "borderColorPalette": "",
 
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "",
-
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-
-    "tempHoverBorderColorOpacity": null,
-    "tempHoverBorderColorPalette": null,
 
     "boxShadow": "none",
 
@@ -92,65 +68,6 @@
     "tempBoxShadowVertical": 2,
     "tempBoxShadowHorizontal": 1,
 
-    "hoverBoxShadow": null,
-
-    "tempHoverBoxShadow": null,
-
-    "hoverBoxShadowColorHex": null,
-    "hoverBoxShadowColorOpacity": null,
-    "hoverBoxShadowColorPalette": null,
-
-    "tempHoverBoxShadowColorPalette": null,
-    "tempHoverBoxShadowColorOpacity": null,
-
-    "hoverBoxShadowBlur": null,
-    "hoverBoxShadowSpread": null,
-    "hoverBoxShadowVertical": null,
-    "hoverBoxShadowHorizontal": null,
-
-    "tempHoverBoxShadowBlur": null,
-    "tempHoverBoxShadowSpread": null,
-    "tempHoverBoxShadowVertical": null,
-    "tempHoverBoxShadowHorizontal": null,
-
-    "hoverTransition": 50,
-
-    "tabletBoxShadow": null,
-
-    "tabletBoxShadowColorHex": null,
-    "tabletBoxShadowColorOpacity": null,
-    "tabletBoxShadowColorPalette": null,
-
-    "tempTabletBoxShadowColorPalette": null,
-    "tempTabletBoxShadowColorOpacity": null,
-
-    "tabletBoxShadowBlur": null,
-    "tabletBoxShadowSpread": null,
-    "tabletBoxShadowVertical": null,
-    "tabletBoxShadowHorizontal": null,
-
-    "tempTabletBoxShadowBlur": null,
-    "tempTabletBoxShadowSpread": null,
-    "tempTabletBoxShadowVertical": null,
-    "tempTabletBoxShadowHorizontal": null,
-
-    "mobileBoxShadow": null,
-
-    "mobileBoxShadowColorHex": null,
-    "mobileBoxShadowColorOpacity": null,
-    "mobileBoxShadowColorPalette": null,
-
-    "tempMobileBoxShadowColorPalette": null,
-    "tempMobileBoxShadowColorOpacity": null,
-
-    "mobileBoxShadowBlur": null,
-    "mobileBoxShadowSpread": null,
-    "mobileBoxShadowVertical": null,
-    "mobileBoxShadowHorizontal": null,
-
-    "tempMobileBoxShadowBlur": null,
-    "tempMobileBoxShadowSpread": null,
-    "tempMobileBoxShadowVertical": null,
-    "tempMobileBoxShadowHorizontal": null
+    "hoverTransition": 50
   }
 }

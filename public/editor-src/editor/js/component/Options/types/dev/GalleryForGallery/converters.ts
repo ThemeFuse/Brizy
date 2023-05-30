@@ -15,7 +15,7 @@ import { Value } from "./index";
 
 const fromRecord = parse<Record<string, unknown>, Value>({
   id: mPipe(prop("_id"), Str.read),
-  name: mPipe(prop("imageSrc"), Str.read),
+  uid: mPipe(prop("imageSrc"), Str.read),
   fileName: mPipe(prop("fileName"), Str.read),
   width: mPipe(prop("imageWidth"), Num.read),
   height: mPipe(prop("imageHeight"), Num.read)

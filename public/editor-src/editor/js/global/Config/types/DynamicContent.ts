@@ -19,46 +19,40 @@ export interface ConfigDCItem extends BaseDCItem {
   optgroup?: ConfigDCItem[];
 }
 
+interface DCItemHandler {
+  handler: (
+    res: Response<BaseDCItem>,
+    rej: Response<string>,
+    extra?: { keyCode: string }
+  ) => void;
+}
+
+interface DCGroups {
+  [DCTypes.image]: Array<ConfigDCItem> | DCItemHandler;
+  [DCTypes.link]: Array<ConfigDCItem> | DCItemHandler;
+  [DCTypes.richText]: Array<ConfigDCItem> | DCItemHandler;
+}
+
 export interface ConfigDCReference {
   title: string;
   slug: string;
-  dynamicContent: {
-    [DCTypes.image]: ConfigDCItem[];
-    [DCTypes.link]: ConfigDCItem[];
-    [DCTypes.richText]: ConfigDCItem[];
-  };
+  dynamicContent: DCGroups;
 }
 
-// TODO: not complete. add types to other keys when needed
-export interface DynamicContentCommon {
-  [DCTypes.image]: ConfigDCItem[];
-  [DCTypes.link]: ConfigDCItem[];
-  [DCTypes.richText]: ConfigDCItem[];
-}
-
-export interface DynamicContentCloud extends DynamicContentCommon {
+export interface DCGroupCloud extends DCGroups {
   [DCTypes.reference]: ConfigDCReference[];
   [DCTypes.multiReference]: ConfigDCReference[];
 }
 
 type Cnf = {
-  cloud: DynamicContentCloud;
-  wp: DynamicContentCommon;
+  cloud: DCGroupCloud;
+  wp: DCGroups;
 };
 
-export type DynamicContent<T extends "wp" | "cloud"> = Cnf[T];
+export type DCGroup<T extends "wp" | "cloud"> = Cnf[T];
 
-interface DynamicContentOptionExtra {
-  keyCode: string;
-}
-
-export interface DynamicContentOption {
-  [DCTypes.richText]: {
-    useCustomPlaceholder?: boolean;
-    handler: (
-      res: Response<BaseDCItem>,
-      rej: Response<string>,
-      extra: DynamicContentOptionExtra
-    ) => void;
-  };
+export interface DynamicContent<T extends "wp" | "cloud"> {
+  liveInBuilder?: boolean;
+  useCustomPlaceholder?: boolean;
+  groups?: DCGroup<T>;
 }

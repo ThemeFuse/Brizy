@@ -29,20 +29,6 @@
     "tempColorOpacity": 1,
     "tempColorPalette": "",
 
-    "activeColorHex": null,
-    "activeColorOpacity": null,
-    "activeColorPalette": null,
-
-    "tempActiveColorOpacity": null,
-    "tempActiveColorPalette": null,
-
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
-
     "tabletWidth": null,
     "tabletItemPadding": null,
     "tabletItemPaddingSuffix": null,

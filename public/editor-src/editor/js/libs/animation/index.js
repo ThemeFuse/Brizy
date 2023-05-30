@@ -1,14 +1,17 @@
+"use strict";
+
 import "../common/intersectionObserver";
 
-const Animation = (function() {
-  "use strict";
+const Animation = (function () {
   let defaultSettings = {
     root: null,
     rootMargin: "0px",
-    threshold: [0]
+    threshold: [0],
+    onFinish: () => {},
+    onStart: () => {}
   };
 
-  const Constructor = function(selector, settings = {}) {
+  const Constructor = function (selector, settings = {}) {
     if (typeof selector === "string") {
       this.nodes = document.querySelectorAll(selector);
     } else {
@@ -16,11 +19,12 @@ const Animation = (function() {
     }
 
     this.settings = { ...defaultSettings, ...settings };
-
-    const handleIntersection = function(entries) {
-      entries.map(function(entry) {
+    const handleIntersection = (entries) => {
+      entries.map((entry) => {
         if (entry.intersectionRatio > 0) {
           let target = entry.target;
+
+          this.settings.onStart();
 
           const iterationCount =
             Number(target.getAttribute("data-iteration-count")) || 1;
@@ -54,13 +58,16 @@ const Animation = (function() {
       observerOptions
     );
 
-    this.nodes.forEach(function(el) {
+    const { onFinish } = this.settings;
+
+    this.nodes.forEach(function (el) {
       el.classList.add("brz-initialized");
 
       observer.observe(el);
 
       el.addEventListener("animationend", ({ target }) => {
         target.classList.remove("brz-animate");
+        onFinish();
       });
     });
   };

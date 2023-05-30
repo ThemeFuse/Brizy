@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import EditorGlobal from "visual/global/Editor";
 import Config from "visual/global/Config";
-import { pageBlocksSelector } from "visual/redux/selectors";
+import EditorGlobal from "visual/global/Editor";
 import { updateBlocks } from "visual/redux/actions2";
+import { pageBlocksSelector } from "visual/redux/selectors";
 import { areStatesEqual } from "./utils";
 
 class EditorPopup extends Component {
@@ -16,16 +16,18 @@ class EditorPopup extends Component {
   };
 
   render() {
+    const config = Config.getAll();
+    const { backgroundPreviewUrl } = config.ui.popupSettings;
+
     const { PagePopup } = EditorGlobal.getComponents();
     const { reduxState, reduxDispatch } = this.props;
-    const { pagePreview } = Config.get("urls");
 
     const items = pageBlocksSelector(reduxState);
 
     return (
       <Fragment>
         {Boolean(items.length) && (
-          <iframe id="brz-ed-home-page" src={pagePreview} />
+          <iframe id="brz-ed-home-page" src={backgroundPreviewUrl} />
         )}
         <PagePopup
           dbValue={{ items }}
@@ -38,10 +40,10 @@ class EditorPopup extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   reduxState: state
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   reduxDispatch: dispatch
 });
 

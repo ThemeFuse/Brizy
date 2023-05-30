@@ -1,5 +1,6 @@
 import {
   PopulationMethod,
+  PopulationMethodHandler,
   PopulationOptgroupMethod
 } from "visual/component/Options/types/common/Population/types/PopulationMethod";
 
@@ -53,7 +54,10 @@ export interface WithConfig<T> {
 }
 
 export interface WithPopulation {
-  population?: (PopulationMethod | PopulationOptgroupMethod)[];
+  population?: {
+    choices?: Array<PopulationMethod | PopulationOptgroupMethod>;
+    handlerChoices?: PopulationMethodHandler["handlerChoices"];
+  };
 }
 
 export interface WithOnChange<T> {

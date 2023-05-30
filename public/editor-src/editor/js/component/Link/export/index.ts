@@ -116,6 +116,18 @@ export default function ($node: JQuery): void {
     }
   };
 
+  const getLastPosition = (): void => {
+    const position = window.location.hash;
+
+    if (position) {
+      const target = document.querySelector(position);
+      if (target) {
+        handleHashChange(new Event("hashchange"));
+      }
+    }
+  };
+
+  window.addEventListener("load", getLastPosition);
   window.addEventListener("hashchange", handleHashChange);
   root.addEventListener("click", handleRootClick);
 }

@@ -9,10 +9,6 @@
   "style": {
     "horizontalAlign": "left",
 
-    "customCSS": "",
-
-    "tabletHorizontalAlign": null,
-
-    "mobileHorizontalAlign": null
+    "customCSS": ""
   }
 }

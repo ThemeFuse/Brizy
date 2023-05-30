@@ -2169,7 +2169,7 @@ module.exports = {
                                                                         hoverBorderColorOpacity: 0.8,
                                                                         hoverBgColorOpacity: 1,
                                                                         tempHoverBgColorOpacity: 1,
-                                                                        linkExternal: "https://demo.themefuse.com/sport-wordpress-theme/?page_id=483",
+                                                                        linkExternal: "",
                                                                         linkExternalBlank: "off"
                                                                     }
                                                                 }

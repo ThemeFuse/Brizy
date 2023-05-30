@@ -81,7 +81,7 @@
     "customCSS": "",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
+    "hoverTransitionSuffix": "",
 
     "iconPositionLeft": 20,
     "iconPositionLeftSuffix": "px",

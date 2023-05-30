@@ -1,7 +1,6 @@
 import {
   cssStyleColor,
-  cssStyleFlexHorizontalAlign,
-  cssStylePadding
+  cssStyleFlexHorizontalAlign
 } from "visual/utils/cssStyle";
 import {
   cssStyleTypography2FontFamily,
@@ -10,42 +9,30 @@ import {
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle/cssStyleTypography2";
+import { defaultValueValue } from "../onChange";
 import { cssStyleTextAlign } from "./cssStyleAlign";
 
 export function cssStyleElementLoginFormMargin({ v, device, state }) {
-  const { paddingTop, paddingRight, paddingBottom, paddingLeft } =
-    cssStylePadding({ v, device, state, prefix: "field" });
-
-  return paddingTop === undefined ||
-    paddingRight === undefined ||
-    paddingBottom === undefined ||
-    paddingLeft === undefined
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const padding = dvv("fieldPadding");
+  const paddingSuffix = dvv("fieldPaddingSuffix");
+  return padding === undefined
     ? ""
-    : `margin:-${paddingTop}px -${paddingRight / 2}px
-       -${paddingBottom}px -${paddingLeft / 2}px;`;
+    : `margin:-${padding}${paddingSuffix} -${padding / 2}${paddingSuffix}
+       -${padding}${paddingSuffix} -${padding / 2}${paddingSuffix};`;
 }
 
 export function cssStyleElementLoginFieldPadding({ v, device, state }) {
-  const {
-    paddingTop,
-    paddingRight,
-    paddingBottom,
-    paddingLeft,
-    paddingTopSuffix,
-    paddingRightSuffix,
-    paddingBottomSuffix,
-    paddingLeftSuffix
-  } = cssStylePadding({ v, device, state, prefix: "field" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const padding = dvv("fieldPadding");
+  const paddingSuffix = dvv("fieldPaddingSuffix");
 
-  return paddingTop === undefined ||
-    paddingRight === undefined ||
-    paddingBottom === undefined ||
-    paddingLeft === undefined
+  return padding === undefined
     ? ""
-    : `padding:${paddingTop}${paddingTopSuffix}
-      ${paddingRight / 2}${paddingRightSuffix}
-      ${paddingBottom}${paddingBottomSuffix}
-      ${paddingLeft / 2}${paddingLeftSuffix};`;
+    : `padding:0
+      ${padding / 2}${paddingSuffix}
+      ${padding}${paddingSuffix}
+      ${padding / 2}${paddingSuffix};`;
 }
 
 // Style Typography Lost Password

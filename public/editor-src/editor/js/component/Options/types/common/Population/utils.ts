@@ -26,9 +26,7 @@ export const bindPopulation = (option: ToolbarItemType): ToolbarItemType => {
     position,
     className: o.className,
     type: "population-dev",
-    config: {
-      choices: population
-    },
+    config: population,
     option: o,
     fallback: {
       ...o,
