@@ -2,10 +2,9 @@ import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getDynamicContentChoices } from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { State } from "visual/utils/stateMode";
-import { toolbarElementTwitter } from "visual/utils/toolbar";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
 import { Value } from "./index";
 
@@ -26,10 +25,10 @@ export function getItems({
   const twitterType = dvv("twitterType");
   const embedTwitterType = twitterType === "embed";
 
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
 
   const choicesTwitterType =
     twitter === "embed"
@@ -178,13 +177,23 @@ export function getItems({
                   placeholder: "username",
                   population: richTextDC
                 },
-                // @ts-expect-error: Old option
-                toolbarElementTwitter({
-                  v,
-                  device,
+                {
+                  id: "twitter",
+                  label: t("Twitter"),
+                  type: "select-dev",
                   devices: "desktop",
-                  state
-                }),
+                  choices: [
+                    {
+                      title: t("Embed"),
+                      value: "embed"
+                    },
+                    {
+                      title: t("Button"),
+                      value: "button"
+                    }
+                  ]
+                },
+
                 {
                   id: "twitterType",
                   label: t("Type"),
@@ -199,7 +208,7 @@ export function getItems({
                   label: t("Theme"),
                   type: "select-dev",
                   devices: "desktop",
-                  disabled: twitterType !== "embed",
+                  disabled: twitter !== "embed",
                   choices: [
                     { title: t("Light"), value: "light" },
                     { title: t("Dark"), value: "dark" }

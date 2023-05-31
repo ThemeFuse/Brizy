@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test SelectItem Snapshots and Props title should be title and children should be span with title 1`] = `
+<li
+  class="brz-ed-control__internalLink__option"
+  title="title"
+>
+  <span
+    class="brz-ed-control__internalLink__option-text"
+  >
+    title
+  </span>
+</li>
+`;
+
+exports[`Test SelectItemNoResults Snapshots WithoutProps 1`] = `
+<li
+  class="brz-ed-control__multiSelect2__option brz-ed-control__multiSelect2__option--disabled"
+>
+  No results
+</li>
+`;

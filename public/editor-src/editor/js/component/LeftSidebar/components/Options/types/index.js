@@ -15,5 +15,6 @@ export default {
   custom: Custom,
   membership: Roles,
   template: Template,
-  language: Languages
+  language: Languages,
+  shortcuts: Link
 };

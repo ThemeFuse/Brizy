@@ -5,7 +5,7 @@ import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -15,10 +15,10 @@ export function getItems({ v, device, context }) {
 
   const type = dvv("type");
 
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
   const { hex: colorHex } = getOptionColorHexByPalette(
     dvv("colorHex"),
     dvv("colorPalette")

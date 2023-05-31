@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test TooltipItem Snapshots Should have children 1`] = `
+<div
+  class="brz-ed-tooltip__item"
+>
+  <p
+    class="children"
+  >
+    children
+  </p>
+</div>
+`;
+
+exports[`Test TooltipItem Snapshots className should be className 1`] = `
+<div
+  class="brz-ed-tooltip__item className"
+>
+  Children
+</div>
+`;

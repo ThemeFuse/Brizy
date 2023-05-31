@@ -2,6 +2,8 @@
 
 class Brizy_Editor_Editor_Editor {
 
+	use Brizy_Editor_Editor_ModuleGroups_ContextUtils;
+
 	const COMPILE_CONTEXT = 'compile';
 	const EDITOR_CONTEXT = 'editor';
 
@@ -74,6 +76,20 @@ class Brizy_Editor_Editor_Editor {
 		}
 	}
 
+	public function getClientConfig( $context ) {
+		$config = [
+			'hash'          => wp_create_nonce( Brizy_Editor_API::nonce ),
+			'editorVersion' => BRIZY_EDITOR_VERSION,
+			'url'           => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+			'actions'       => $this->getApiActions(),
+			'pageId'        => $this->post->getWpPostId()
+		];
+
+		$config = $this->getApiConfigFields( $config, $context );
+
+		return $config;
+	}
+
 	/**
 	 * @throws Exception
 	 */
@@ -101,7 +117,7 @@ class Brizy_Editor_Editor_Editor {
 			'user'            => array(
 				'role'         => 'admin',
 				'isAuthorized' => $this->project->getMetaValue( 'brizy-cloud-token' ) !== null,
-				'allowScripts' => $this->isUserAllowedToAddScripts( $context )
+				'allowScripts' => $this->isUserAllowedToAddScripts( $context ),
 			),
 			'project'         => array(
 				'id'                => $this->project->getId(),
@@ -167,6 +183,7 @@ class Brizy_Editor_Editor_Editor {
 						),
 				),
 			),
+			'ui'              => [],
 			'server'          => array(
 				'maxUploadFileSize' => $this->fileUploadMaxSize(),
 			),
@@ -174,25 +191,109 @@ class Brizy_Editor_Editor_Editor {
 			'prefix'          => Brizy_Editor::prefix(),
 			'cloud'           => $this->getCloudInfo(),
 			'editorVersion'   => BRIZY_EDITOR_VERSION,
-			'imageSizes'      => $this->getImgSizes()
+			'imageSizes'      => $this->getImgSizes(),
+			'moduleGroups'    => []
 		);
 		$manager           = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 
-		$config = $this->addRecaptchaAccounts( $manager, $config, $context );
-		$config = $this->addSocialAccounts( $manager, $config, $context );
-		$config = $this->addWpPostTypes( $config, $context );
-		$config = $this->addTemplateFields( $config, $mode === 'template', $wp_post_id, $context );
-		$config = $this->getApiActions( $config, $context );
-		$config = $this->addGlobalBlocksData( $config );
-		$config = $this->addGlobalBlocksData( $config );
-		$config = $this->getPostLoopSources( $config, $mode === 'template', $wp_post_id, $context );
-		$config = $this->addContentDefaults( $config, $context );
+		$config              = $this->addRecaptchaAccounts( $manager, $config, $context );
+		$config              = $this->addSocialAccounts( $manager, $config, $context );
+		$config              = $this->addWpPostTypes( $config, $context );
+		$config              = $this->addTemplateFields( $config, $mode === 'template', $wp_post_id, $context );
+		$config['wp']['api'] = $this->getApiActions( $config, $context );
+		$config              = $this->addGlobalBlocksData( $config );
+		$config              = $this->addGlobalBlocksData( $config );
+		$config              = $this->getPostLoopSources( $config, $mode === 'template', $wp_post_id, $context );
+		$config              = $this->getApiConfigFields( $config, $context );
+		$config              = $this->addContentDefaults( $config, $context );
+		$config              = $this->addModuleGroups( $config, $context );
+		$config              = $this->addUIConfig( $config, $context );
 
 		self::$config[ $cachePostId ] = apply_filters( 'brizy_editor_config', $config, $context );
 
 		do_action( 'brizy_create_editor_config_after' );
 
 		return self::$config[ $cachePostId ];
+	}
+
+	private function addUIConfig( $config, $context ) {
+
+		$is_popup    = $this->isPopup( $config );
+		$is_story    = $this->isStory( $config );
+		$is_template = $this->isTemplate( $config );
+
+		$options                     = [
+			! Brizy_Compatibilities_BrizyProCompatibility::isPro() ?
+				[
+					"type"       => "link",
+					"icon"       => "nc-unlock",
+					"label"      => __bt( "Upgrade to Pro", "Upgrade to Pro", 'brizy' ),
+					"link"       => $config['urls']['upgradeToPro'],
+					"linkTarget" => "_blank",
+				] : null,
+			[
+				"type"       => "link",
+				"icon"       => "nc-info",
+				"label"      => __bt( "About us", "About us", 'brizy' ),
+				"link"       => $config['urls']['about'],
+				"linkTarget" => "_blank"
+			],
+			[
+				"type"       => "link",
+				"icon"       => "nc-help-docs",
+				"label"      => __bt( "Support", "Support", 'brizy' ),
+				"link"       => $config['urls']['support'],
+				"linkTarget" => "_blank",
+				"roles"      => [ "admin" ]
+			],
+			[
+				"type"  => "shortcuts",
+				"icon"  => "nc-alert-circle-que",
+				"label" => __bt( "Shortcuts", "Shortcuts", 'brizy' ),
+				"link"  => "#"
+			],
+			[
+				"type"       => "link",
+				"icon"       => "nc-cog",
+				"label"      => __bt( "Plugin Settings", "Plugin Settings", 'brizy' ),
+				"link"       => $config['urls']['pluginSettings'],
+				"linkTarget" => "_blank",
+				"roles"      => [ "admin" ]
+			],
+			[
+				"type"  => "link",
+				"icon"  => "nc-back",
+				"label" => __bt( "Go to Dashboard", "Go to Dashboard", 'brizy' ),
+				"link"  => $config['urls']['backToDashboard']
+			]
+		];
+		$config['ui']['leftSidebar'] = [
+			"topTabsOrder"    => [ "addElements", "reorderBlock", "globalStyle" ],
+			"bottomTabsOrder" => [ "deviceMode", "pageSettings", "more" ],
+			"pageSettings"    => [
+				"options" => [
+					"template"      => ! ( $is_popup || $is_story ),
+					"membership"    => ! ( $is_popup || $is_story ),
+					"featuredImage" => ! ( $is_popup || $is_story ) && ! $is_template
+				]
+			],
+			"more"            => [
+				"options" => array_values( array_filter( $options ) )
+			]
+		];
+
+		$config['ui']['popupSettings'] = [
+			"horizontalAlign"      => true,
+			"verticalAlign"        => true,
+			"embedded"             => false,
+			"displayCondition"     => $is_popup,
+			"scrollPageBehind"     => true,
+			"clickOutsideToClose"  => true,
+			"deletePopup"          => $is_popup,
+			"backgroundPreviewUrl" => $config['urls']['pagePreview']
+		];
+
+		return $config;
 	}
 
 	/**
@@ -223,18 +324,41 @@ class Brizy_Editor_Editor_Editor {
 		return $config;
 	}
 
+	private function addModuleGroups( $config, $context ) {
+
+		$moduleGroupCollector = new Brizy_Editor_Editor_ModuleGroups_Manager();
+
+		$config['ui']  ['leftSidebar'] = [ 'moduleGroups' => $moduleGroupCollector->getAll( $config ) ];
+
+		return $config;
+	}
+
+
+	private function getApiConfigFields( $config, $context ) {
+		$config['api'] = [
+			'media'      => [
+				'mediaResizeUrl' => home_url()
+			],
+			'customFile' => [
+				'customFileUrl' => home_url()
+			]
+		];
+
+		return $config;
+	}
+
 	private function addContentDefaults( $config, $context ) {
 		$config['contentDefaults'] = [
-			'Button'           => [ 'linkSource' => 'page' ],
-			'RichText'         => [ 'linkSource' => 'page' ],
-			'Column'           => [ 'linkSource' => 'page' ],
-			'Row'              => [ 'linkSource' => 'page' ],
-			'Icon'             => [ 'linkSource' => 'page' ],
-			'Image'            => [ 'linkSource' => 'page' ],
-			'Lottie'           => [ 'linkSource' => 'page' ],
-			'PostExcerpt'      => [ 'linkSource' => 'page' ],
-			'PostTitle'        => [ 'linkSource' => 'page' ],
-			'ProductMetafield' => [ 'linkSource' => 'page' ],
+			'Button'           => [ 'linkSource' => 'page' ,'linkType'=>'page'],
+			'RichText'         => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'Column'           => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'Row'              => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'Icon'             => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'Image'            => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'Lottie'           => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'PostExcerpt'      => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'PostTitle'        => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
+			'ProductMetafield' => [ 'linkSource' => 'page' ,'linkType'=>'page','sourceType'=>'page'],
 			'Posts'            => [ 'source' => 'post', 'orderBy' => 'ID', 'order' => 'ASC' ]
 		];
 
@@ -258,7 +382,7 @@ class Brizy_Editor_Editor_Editor {
 		if ( $templateTypeArchive ) {
 			$result[] = [
 				"name"  => "brz_current_context",
-				"label" => "Current Query"
+				"label" => "Current Query",
 			];
 		}
 
@@ -276,7 +400,6 @@ class Brizy_Editor_Editor_Editor {
 		}
 
 		$config['wp']['postLoopSources'] = $result;
-
 
 		# as stated in this issue: https://github.com/bagrinsergiu/blox-editor/issues/21795
 		# we have to add in config the post sources
@@ -690,6 +813,7 @@ class Brizy_Editor_Editor_Editor {
 	 * @return array
 	 */
 	private function getMegaMenuItems() {
+
 		return array(
 			(object) ( array(
 				'type'  => "SectionMegaMenu",
@@ -989,11 +1113,11 @@ class Brizy_Editor_Editor_Editor {
 				Brizy_Admin_Rule::MONTH_ARCHIVE,
 				Brizy_Admin_Rule::YEAR_ARCHIVE,
 				Brizy_Admin_Rule::TAXONOMY,
-				Brizy_Admin_Rule::WOO_SHOP_PAGE
+				Brizy_Admin_Rule::WOO_SHOP_PAGE,
 			] ) ) {
 				if ( $rule->getAppliedFor() == Brizy_Admin_Rule::WOO_SHOP_PAGE && in_array( $rule->getEntityType(), [
 						'product',
-						'shop_page'
+						'shop_page',
 					] ) ) {
 					return 'product_archive';
 				} else {
@@ -1025,14 +1149,13 @@ class Brizy_Editor_Editor_Editor {
 	/**
 	 * @return array
 	 */
-	public function getApiActions( $config, $context ) {
+	public function getApiActions( $config = [], $context = null ) {
 
 		$pref = Brizy_Editor::prefix();
 
-		$config['wp']['api'] = array(
-			'hash' => wp_create_nonce( Brizy_Editor_API::nonce ),
-			'url'  => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
-
+		$actions = array(
+			'hash'                       => wp_create_nonce( Brizy_Editor_API::nonce ),
+			'url'                        => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
 			'heartBeat'                  => $pref . Brizy_Editor_API::AJAX_HEARTBEAT,
 			'takeOver'                   => $pref . Brizy_Editor_API::AJAX_TAKE_OVER,
 			'lockProject'                => $pref . Brizy_Editor_API::AJAX_LOCK_PROJECT,
@@ -1115,9 +1238,13 @@ class Brizy_Editor_Editor_Editor {
 			'rulePostsGroupList'         => $pref . Brizy_Admin_Rules_Api::RULE_POSTS_GROUP_LIST,
 			'ruleArchiveGroupList'       => $pref . Brizy_Admin_Rules_Api::RULE_ARCHIVE_GROUP_LIST,
 			'ruleTemplateGroupList'      => $pref . Brizy_Admin_Rules_Api::RULE_TEMPLATE_GROUP_LIST,
+			'symbolCreate'               => $pref . Brizy_Admin_Symbols_Api::CREATE_ACTION,
+			'symbolUpdate'               => $pref . Brizy_Admin_Symbols_Api::UPDATE_ACTION,
+			'symbolDelete'               => $pref . Brizy_Admin_Symbols_Api::DELETE_ACTION,
+			'symbolList'                 => $pref . Brizy_Admin_Symbols_Api::LIST_ACTION,
 		);
 
-		return $config;
+		return $actions;
 	}
 
 	/**
@@ -1139,7 +1266,10 @@ class Brizy_Editor_Editor_Editor {
 
 		if ( $this->project->getMetaValue( 'brizy-cloud-token' ) !== null ) {
 			try {
-				$cloudClient               = Brizy_Admin_Cloud_Client::instance( Brizy_Editor_Project::get(), new WP_Http() );
+				$cloudClient               = Brizy_Admin_Cloud_Client::instance(
+					Brizy_Editor_Project::get(),
+					new WP_Http()
+				);
 				$versions                  = $cloudClient->getCloudEditorVersions();
 				$response['isSyncAllowed'] = $versions['sync'] == BRIZY_SYNC_VERSION;
 			} catch ( Exception $e ) {
@@ -1178,6 +1308,7 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	private function getImgSizes() {
+
 		$sizes = [];
 
 		foreach ( Brizy_Editor::get_all_image_sizes() as $name => $size ) {

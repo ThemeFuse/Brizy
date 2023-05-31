@@ -18,10 +18,11 @@ export const withFile = (file: WithValue): WithFile => ({
 
 export interface Loading {
   type: "Loading";
-  file: File;
 }
 
-export const loading = (file: File): Loading => ({ type: "Loading", file });
+export const loading = (): Loading => ({
+  type: "Loading"
+});
 
 export interface Err {
   type: "Err";

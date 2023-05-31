@@ -544,7 +544,7 @@ module.exports = {
                                                 hoverColorPalette: "color8",
                                                 hoverColorOpacity: 1,
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/hope/?page_id=1956"
+                                                linkExternal: ""
                                             }
                                         }
                                     ],
@@ -1604,7 +1604,7 @@ module.exports = {
                                                                         tempBgColorPalette: "color3",
                                                                         tempBorderColorPalette: "color3",
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/hope/?page_id=1956"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -1875,7 +1875,7 @@ module.exports = {
                                                                         tempBgColorPalette: "color3",
                                                                         tempBorderColorPalette: "color3",
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/hope/?page_id=1925"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],
@@ -2146,7 +2146,7 @@ module.exports = {
                                                                         tempBgColorPalette: "color3",
                                                                         tempBorderColorPalette: "color3",
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/hope/?page_id=1909"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],

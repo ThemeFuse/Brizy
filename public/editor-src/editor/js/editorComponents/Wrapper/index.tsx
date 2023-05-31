@@ -1,18 +1,24 @@
 import classNames from "classnames";
 import React, {
   ComponentType,
-  createRef,
   HTMLAttributes,
   ReactElement,
   ReactNode,
-  Ref
+  Ref,
+  createRef
 } from "react";
 import Animation from "visual/component/Animation";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
 import { ElementModel } from "visual/component/Elements/Types";
+import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
+import {
+  disableHoverForElements,
+  getHoverAnimationOptions
+} from "visual/component/HoverAnimation/utils";
+import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { ProBlocked } from "visual/component/ProBlocked";
-import { currentUserRole, Roles } from "visual/component/Roles";
+import { Roles, currentUserRole } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
 import {
@@ -29,11 +35,13 @@ import EditorComponent, {
   Props as EDProps,
   ToolbarExtend
 } from "visual/editorComponents/EditorComponent";
+import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
 import { getProTitle } from "visual/editorComponents/EditorComponent/utils";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
 import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
+import { ElementTypes } from "visual/global/Config/types/configs/ConfigCommon";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
@@ -46,6 +54,7 @@ import {
 import { WithClassName } from "visual/utils/options/attributes";
 import * as Position from "visual/utils/position/element";
 import { attachRef } from "visual/utils/react";
+import { read as readBoolean } from "visual/utils/reader/bool";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
@@ -53,6 +62,7 @@ import * as Attr from "visual/utils/string/parseCustomAttributes";
 import * as Str from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
+import { getAnimations } from "../../component/HoverAnimation/animations";
 import contextMenuConfig from "./contextMenu";
 import contextMenuConfigPro from "./contextMenuPro";
 import defaultValue from "./defaultValue.json";
@@ -61,7 +71,6 @@ import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
 
 export type Value = ElementModel & {
   items: ElementModel[];
@@ -77,6 +86,8 @@ type Props = {
     mobileWNoSpacing: number;
     sectionPopup?: boolean;
     sectionPopup2?: boolean;
+    wrapperAnimationId: string;
+    wrapperAnimationActive: boolean;
   };
 };
 
@@ -162,6 +173,10 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       device: MOBILE
     });
 
+    const animationName = Str.read(this.dvv("animationName")) ?? "none";
+    const animationInfiniteAnimation =
+      this.dvv("animationInfiniteAnimation") ?? false;
+
     return {
       ...meta,
       desktopW,
@@ -172,7 +187,10 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       mobileWNoSpacing,
       horizontalAlign,
       tabletHorizontalAlign,
-      mobileHorizontalAlign
+      mobileHorizontalAlign,
+      wrapperAnimationId: this.getId(),
+      wrapperAnimationActive:
+        animationName !== "none" && animationInfiniteAnimation
     };
   }
 
@@ -208,6 +226,23 @@ export default class Wrapper extends EditorComponent<Value, Props> {
        * @ts-expect-error */
       <EditorArrayComponent {...itemsProps} />
     );
+  }
+
+  getHoverData(v: Value) {
+    const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
+    const element = this.getInnerElement()?.type;
+    const options = makeOptionValueToAnimation(v);
+    const isHidden =
+      !element ||
+      disableHoverForElements.includes(element as ElementTypes) ||
+      !this.hoverAnimationOptionActive(hoverName);
+
+    return {
+      animationId: this.getId(),
+      cssKeyframe: hoverName,
+      options: getHoverAnimationOptions(options, hoverName),
+      isHidden
+    };
   }
 
   renderStatic({ v, vs, vd, extraAttr, className, ref }: Static): ReactElement {
@@ -246,6 +281,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
                 this.getWrapperClassName(v, vs, vd),
                 className
               )}
+              animationId={this.getId()}
               animationClass={this.getAnimationClassName(v, vs, vd)}
               componentProps={{
                 ...Attr.mRead(customAttributes),
@@ -284,9 +320,21 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       );
     }
 
+    const { cssKeyframe, animationId, options, isHidden } =
+      this.getHoverData(v);
+    const { wrapperAnimationActive = false } = this.getMeta(v);
+    const isDisabledHover = readBoolean(wrapperAnimationActive);
     const content = (
       <ScrollMotion options={makeOptionValueToMotion(v)}>
-        {this.renderContent(v)}
+        <HoverAnimation
+          animationId={animationId}
+          cssKeyframe={cssKeyframe}
+          options={options}
+          isDisabledHover={isDisabledHover}
+          isHidden={isHidden}
+        >
+          {this.renderContent(v)}
+        </HoverAnimation>
       </ScrollMotion>
     );
 
@@ -314,6 +362,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
               attachRef(v, containerBorderRef);
               attachRef(v, ref || null);
             }}
+            animationId={this.getId()}
             component="div"
             className={classNames(
               this.getWrapperClassName(v, vs, vd),
@@ -419,10 +468,27 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const customID = Str.mRead(v.customID) || undefined;
     const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
 
+    const { cssKeyframe, animationId, options, isHidden } =
+      this.getHoverData(v);
+
+    const content = (
+      <ScrollMotion options={makeOptionValueToMotion(v)}>
+        <HoverAnimation
+          animationId={animationId}
+          cssKeyframe={cssKeyframe}
+          options={options}
+          isHidden={isHidden}
+        >
+          {this.renderContent(v)}
+        </HoverAnimation>
+      </ScrollMotion>
+    );
+
     return (
       <Animation<"div">
         iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
         component={"div"}
+        animationId={this.getId()}
         className={classNames(this.getWrapperClassName(v, vs, vd))}
         animationClass={this.getAnimationClassName(v, vs, vd)}
         componentProps={{
@@ -430,9 +496,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
           id: cssIDPopulation ?? customID
         }}
       >
-        <ScrollMotion options={makeOptionValueToMotion(v)}>
-          {this.renderContent(v)}
-        </ScrollMotion>
+        {content}
       </Animation>
     );
   }
@@ -475,6 +539,10 @@ export default class Wrapper extends EditorComponent<Value, Props> {
         styleAnimation(v, vs, vd)
       )
     );
+  };
+
+  hoverAnimationOptionActive = (hoverName: string): boolean => {
+    return Boolean(getAnimations(hoverName));
   };
 
   handleDraggable = ({ x, y }: DraggableV): void => {

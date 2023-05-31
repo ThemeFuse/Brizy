@@ -134,52 +134,52 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 == Changelog ==
 
 = 2.4.18 - 2023-04-03 =
-* Fixed: onclick Custom Attribute RightSidebar 
-* Fixed: Responsive brackground map 
-* Fixed: Reorder column - option 
-* Fixed: Background overflow && z-index auto 
-* Fixed: Tabs text on responsiveMode 
-* Fixed: Opacity for language switcher drop-down 
-* Fixed: Form input length validation 
-* Fixed: Flash on hover transition bg gradient 
-* Fixed: Text link 
-* Fixed: Global Style Colorpicker 
-* Fixed: Element Tabs icon 
-* Fixed: Form Email input length 
-* Fixed: Text with Mask 
-* Fixed: Option file upload remove 
-* Fixed: Resolve CSS conflicts with woo commerce products 
-* Fixed: Added dom encoding to utf-8 
-* Improved: ImageUpload canceling 
-* Improved: Countdown new timezone 
-* Improved: LeftSidebar Bottom panel 
-* Improved: Video Element options 
-* Improved: Text font size option increased to 200 
-* Improved: Multiline for Custom Attribute 
-* Updated: Slick Slider 
+* Fixed: onclick Custom Attribute RightSidebar
+* Fixed: Responsive brackground map
+* Fixed: Reorder column - option
+* Fixed: Background overflow && z-index auto
+* Fixed: Tabs text on responsiveMode
+* Fixed: Opacity for language switcher drop-down
+* Fixed: Form input length validation
+* Fixed: Flash on hover transition bg gradient
+* Fixed: Text link
+* Fixed: Global Style Colorpicker
+* Fixed: Element Tabs icon
+* Fixed: Form Email input length
+* Fixed: Text with Mask
+* Fixed: Option file upload remove
+* Fixed: Resolve CSS conflicts with woo commerce products
+* Fixed: Added dom encoding to utf-8
+* Improved: ImageUpload canceling
+* Improved: Countdown new timezone
+* Improved: LeftSidebar Bottom panel
+* Improved: Video Element options
+* Improved: Text font size option increased to 200
+* Improved: Multiline for Custom Attribute
+* Updated: Slick Slider
 
 = 2.4.17 - 2023-03-10 =
 * Fixed: Screenshots
 * Fixed: Section Background Image
 
 = 2.4.16 - 2023-03-07 =
-* New: New eye dropper feature for colors 
+* New: New eye dropper feature for colors
 * New: Preparations for future UI color themes
-* Improved: Minified CSS in HTML 
-* Improved: Editor strings improvements 
+* Improved: Minified CSS in HTML
+* Improved: Editor strings improvements
 * Improved: Added Pro visual cues for PRO options inside the builder
-* Fixed: Value for Form checkbox was sent in lead even if empty 
+* Fixed: Value for Form checkbox was sent in lead even if empty
 * Fixed: Background Vimeo video is getting zoomed in preview mode
-* Fixed: Right Sidebar advanced settings for icons and buttons 
+* Fixed: Right Sidebar advanced settings for icons and buttons
 * Fixed: Losing global styling in Text element after refresh
 * Fixed: Text on top of custom video is pushed under the video in preview
 * Fixed: Made it more clear what video formats can be added for custom video URLs
-* Fixed: Removed black strip on the top of the custom video 
-* Fixed: Broken Links checker is reporting incorrect image URLs  
-* Fixed: Compatibility with php 8.1 
-* Fixed: Conflicts with SiteGround Optimizer 
+* Fixed: Removed black strip on the top of the custom video
+* Fixed: Broken Links checker is reporting incorrect image URLs
+* Fixed: Compatibility with php 8.1
+* Fixed: Conflicts with SiteGround Optimizer
 * Fixed: The possibility to disable our meta tag viewport, viewport meta tag was duplicated in some cases
-* Fixed: The disappearance of texts in the editor when TranslatePress is enabled 
+* Fixed: The disappearance of texts in the editor when TranslatePress is enabled
 
 = 2.4.15 - 2023-01-31 =
 * Fixed: Menu hamburger - items link on responsive mode

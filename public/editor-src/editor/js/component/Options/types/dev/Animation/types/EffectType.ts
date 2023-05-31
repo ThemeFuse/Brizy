@@ -1,5 +1,5 @@
-import { LegacyEffectType } from "./LegacyEffectType";
 import { t } from "visual/utils/i18n";
+import { LegacyEffectType } from "./LegacyEffectType";
 
 export enum EffectType {
   None = "none",
@@ -11,7 +11,14 @@ export enum EffectType {
   Zoom = "zoom",
   Zoom2 = "zoom2",
   Attention = "attention",
-  Attention2 = "attention2"
+  Attention2 = "attention2",
+  Pulse = "pulse",
+  Wobble = "wobble",
+  Buzz = "buzz",
+  Scale = "scale",
+  Skew = "skew",
+  Move = "move",
+  Rotate2 = "rotate2"
 }
 
 export const fromLegacyEffectType = (v: LegacyEffectType): EffectType => {
@@ -71,12 +78,56 @@ export const fromLegacyEffectType = (v: LegacyEffectType): EffectType => {
     case LegacyEffectType.wobble: {
       return EffectType.Attention;
     }
+    case LegacyEffectType.brzPulse:
+    case LegacyEffectType.brzPulseGrow:
+    case LegacyEffectType.brzPulseShrink: {
+      return EffectType.Pulse;
+    }
+    case LegacyEffectType.brzWobbleHorizontal:
+    case LegacyEffectType.brzWobbleVertical:
+    case LegacyEffectType.brzWobbleToBottomRight:
+    case LegacyEffectType.brzWobbleToTopRight:
+    case LegacyEffectType.brzWobbleTop:
+    case LegacyEffectType.brzWobbleBottom:
+    case LegacyEffectType.brzWobbleSkew: {
+      return EffectType.Wobble;
+    }
+    case LegacyEffectType.brzBuzz:
+    case LegacyEffectType.brzBuzzOut: {
+      return EffectType.Buzz;
+    }
+    case LegacyEffectType.brzPop:
+    case LegacyEffectType.brzPush:
+    case LegacyEffectType.brzBounceIn:
+    case LegacyEffectType.brzBounceOut:
+    case LegacyEffectType.brzGrow:
+    case LegacyEffectType.brzShrink: {
+      return EffectType.Scale;
+    }
+    case LegacyEffectType.brzSkew:
+    case LegacyEffectType.brzSkewForward:
+    case LegacyEffectType.brzSkewBackward: {
+      return EffectType.Skew;
+    }
+    case LegacyEffectType.brzMoveDown:
+    case LegacyEffectType.brzMoveUp:
+    case LegacyEffectType.brzMoveRight:
+    case LegacyEffectType.brzMoveLeft:
+    case LegacyEffectType.brzBob:
+    case LegacyEffectType.brzHang: {
+      return EffectType.Move;
+    }
+    case LegacyEffectType.brzRotate:
+    case LegacyEffectType.brzGrowRotate: {
+      return EffectType.Rotate2;
+    }
   }
 };
 
-export const isEffect = <T extends EffectType>(v: T) => (
-  e: EffectType
-): e is T => e === v;
+export const isEffect =
+  <T extends EffectType>(v: T) =>
+  (e: EffectType): e is T =>
+    e === v;
 
 export const effectTypeIcon = (t: EffectType): string => {
   switch (t) {
@@ -103,6 +154,27 @@ export const effectTypeIcon = (t: EffectType): string => {
     case EffectType.Zoom:
     case EffectType.Zoom2: {
       return "nc-search";
+    }
+    case EffectType.Pulse: {
+      return "nc-hover-pulse";
+    }
+    case EffectType.Wobble: {
+      return "nc-hover-wobble";
+    }
+    case EffectType.Buzz: {
+      return "nc-hover-buzz";
+    }
+    case EffectType.Scale: {
+      return "nc-scroll-scale";
+    }
+    case EffectType.Skew: {
+      return "nc-hover-skew";
+    }
+    case EffectType.Move: {
+      return "nc-hover-move";
+    }
+    case EffectType.Rotate2: {
+      return "nc-hover-rotate";
     }
   }
 };
@@ -132,6 +204,27 @@ export function effectTypeTitle(type: EffectType): string {
     case EffectType.Zoom:
     case EffectType.Zoom2: {
       return t("Zoom");
+    }
+    case EffectType.Pulse: {
+      return t("Pulse");
+    }
+    case EffectType.Wobble: {
+      return t("Wobble");
+    }
+    case EffectType.Buzz: {
+      return t("Buzz");
+    }
+    case EffectType.Scale: {
+      return t("Scale");
+    }
+    case EffectType.Skew: {
+      return t("Skew");
+    }
+    case EffectType.Move: {
+      return t("Move");
+    }
+    case EffectType.Rotate2: {
+      return t("Rotate");
     }
   }
 }

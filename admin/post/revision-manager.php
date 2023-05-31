@@ -203,6 +203,8 @@ class Brizy_Admin_Post_RevisionManager {
 				}
 			}
 
+			wp_cache_delete( $post, 'post_meta');
+
 			Brizy_Editor_Post::cleanClassCache();
 			$brizyPost = Brizy_Editor_Post::get( $post );
 
@@ -212,6 +214,7 @@ class Brizy_Admin_Post_RevisionManager {
 			}
 
 			$wpdb->query( 'COMMIT' );
+
 		} catch ( Exception $e ) {
 			$wpdb->query( 'ROLLBACK' );
 		}

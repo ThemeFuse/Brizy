@@ -1,6 +1,6 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
-import { getDynamicContentChoices } from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 
 export function getItems({ context }) {
   const toolbarTagsChoices = [
@@ -14,7 +14,7 @@ export function getItems({ context }) {
     { title: t("Nav"), value: "nav" }
   ];
 
-  const richTextDC = getDynamicContentChoices(
+  const richTextDC = getDynamicContentOption(
     context.dynamicContent.config,
     DCTypes.richText
   );
@@ -60,9 +60,7 @@ export function getItems({ context }) {
                       helper: {
                         content: "Add your custom block name, example: my-block"
                       },
-                      config: {
-                        choices: richTextDC
-                      },
+                      config: richTextDC,
                       option: {
                         id: "anchorName",
                         type: "inputText-dev"
@@ -79,9 +77,7 @@ export function getItems({ context }) {
                         content:
                           "Add your custom class without the .dot, example: my-class"
                       },
-                      config: {
-                        choices: richTextDC
-                      },
+                      config: richTextDC,
                       option: {
                         id: "customClassName",
                         type: "inputText-dev"

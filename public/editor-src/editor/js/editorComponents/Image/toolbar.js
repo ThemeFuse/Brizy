@@ -9,7 +9,7 @@ import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -20,14 +20,6 @@ import {
   toolbarStoryAnchor
 } from "visual/utils/toolbar";
 import { isGIF, isSVG } from "./utils";
-
-export const getMaxHeight = (cW, v) => {
-  const { imageWidth: iW, imageHeight: iH } = v;
-  const originalContainerWidth = iH / (iW / cW);
-  const maxHeight = ((cW * 2) / originalContainerWidth) * 100;
-
-  return maxHeight >= 100 ? Math.round(maxHeight) : 100;
-};
 
 export default ({
   desktopContainerWidth,
@@ -56,8 +48,11 @@ export default ({
 export const getItems =
   ({ property }) =>
   ({ v, device, component, context }) => {
+    const config = Config.getAll();
     const inPopup = Boolean(component.props.meta.sectionPopup);
     const inPopup2 = Boolean(component.props.meta.sectionPopup2);
+    const useCustomPlaceholder =
+      config.dynamicContent?.useCustomPlaceholder ?? false;
     const { cW, gallery } = property[device];
 
     const { inGallery = false, enableTags } = gallery || {};
@@ -82,16 +77,19 @@ export const getItems =
     const heightSuffixValue = dvv("heightSuffix");
     const sizeType = dvv("sizeType");
 
-    const imageDynamicContentChoices = getDynamicContentChoices(
-      context.dynamicContent.config,
-      DCTypes.image
-    );
+    const imageDynamicContentChoices = getDynamicContentOption({
+      options: context.dynamicContent.config,
+      type: DCTypes.image
+    });
 
     const imageExtension = dvv("imageExtension");
     const imagePopulation = dvv("imagePopulation");
     const linkPopup = dvv("linkPopup");
 
-    const placeholderData = placeholderObjFromStr(imagePopulation);
+    const placeholderData = placeholderObjFromStr(
+      imagePopulation,
+      useCustomPlaceholder
+    );
     const isCustomSizeType =
       (sizeType === "custom" && !placeholderData) ||
       !!(
@@ -131,14 +129,12 @@ export const getItems =
                         isGIF(imageExtension) ||
                         imagePopulation) &&
                       device !== "desktop",
-                    config: {
-                      choices:
-                        device === "desktop" &&
-                        !gallery.inGallery &&
-                        imageDynamicContentChoices.length
-                          ? imageDynamicContentChoices
-                          : undefined
-                    },
+                    config:
+                      device === "desktop" &&
+                      !gallery.inGallery &&
+                      imageDynamicContentChoices
+                        ? imageDynamicContentChoices
+                        : undefined,
                     fallback: {
                       id: keyToDCFallback2Key("image"),
                       type: "imageUpload-dev"
@@ -192,24 +188,51 @@ export const getItems =
                     type: "select-dev",
                     choices: [
                       { title: t("None"), value: "none" },
-                      { value: "circle", icon: "nc-mask-shape-circle" },
-                      { value: "rhombus", icon: "nc-mask-shape-rhombus" },
-                      { value: "star", icon: "nc-mask-shape-star" },
-                      { value: "flower", icon: "nc-mask-shape-flower" },
-                      { value: "square", icon: "nc-mask-shape-square" },
-                      { value: "triangle", icon: "nc-mask-shape-triangle" },
-                      { value: "blob1", icon: "nc-mask-shape-blob1" },
-                      { value: "blob2", icon: "nc-mask-shape-blob2" },
-                      { value: "blob3", icon: "nc-mask-shape-blob3" },
-                      { value: "blob4", icon: "nc-mask-shape-blob4" },
-                      { value: "brush1", icon: "nc-mask-shape-brush1" },
-                      { value: "brush2", icon: "nc-mask-shape-brush2" },
-                      { value: "brush3", icon: "nc-mask-shape-brush3" },
-                      { value: "brush4", icon: "nc-mask-shape-brush4" },
-                      { value: "poly1", icon: "nc-mask-shape-poly1" },
-                      { value: "poly2", icon: "nc-mask-shape-poly2" },
-                      { value: "poly3", icon: "nc-mask-shape-poly3" },
-                      { value: "poly4", icon: "nc-mask-shape-poly4" },
+                      {
+                        value: "circle",
+                        icon: { name: "nc-mask-shape-circle" }
+                      },
+                      {
+                        value: "rhombus",
+                        icon: { name: "nc-mask-shape-rhombus" }
+                      },
+                      { value: "star", icon: { name: "nc-mask-shape-star" } },
+                      {
+                        value: "flower",
+                        icon: { name: "nc-mask-shape-flower" }
+                      },
+                      {
+                        value: "square",
+                        icon: { name: "nc-mask-shape-square" }
+                      },
+                      {
+                        value: "triangle",
+                        icon: { name: "nc-mask-shape-triangle" }
+                      },
+                      { value: "blob1", icon: { name: "nc-mask-shape-blob1" } },
+                      { value: "blob2", icon: { name: "nc-mask-shape-blob2" } },
+                      { value: "blob3", icon: { name: "nc-mask-shape-blob3" } },
+                      { value: "blob4", icon: { name: "nc-mask-shape-blob4" } },
+                      {
+                        value: "brush1",
+                        icon: { name: "nc-mask-shape-brush1" }
+                      },
+                      {
+                        value: "brush2",
+                        icon: { name: "nc-mask-shape-brush2" }
+                      },
+                      {
+                        value: "brush3",
+                        icon: { name: "nc-mask-shape-brush3" }
+                      },
+                      {
+                        value: "brush4",
+                        icon: { name: "nc-mask-shape-brush4" }
+                      },
+                      { value: "poly1", icon: { name: "nc-mask-shape-poly1" } },
+                      { value: "poly2", icon: { name: "nc-mask-shape-poly2" } },
+                      { value: "poly3", icon: { name: "nc-mask-shape-poly3" } },
+                      { value: "poly4", icon: { name: "nc-mask-shape-poly4" } },
                       { value: "custom", title: "Custom" }
                     ]
                   },

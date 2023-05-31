@@ -43,7 +43,6 @@ class Brizy_Admin_Templates {
 			add_action( 'transition_post_status', array( $this, 'actionTransitionPostStatus' ), 10, 3 );
 			add_action( 'wp_ajax_' . self::RULE_LIST_VEIW, array( $this, 'getTemplateRuleBox' ) );
 			add_filter( 'post_row_actions', array( $this, 'removeRowActions' ), 10, 1 );
-			add_action( 'admin_init', array( $this, 'addTemplateRoleCaps' ), 10000 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'action_register_static' ) );
 			add_filter( 'save_post', array( $this, 'saveTemplateRules' ), 10, 2 );
 			add_filter( 'pre_post_update', array( $this, 'validate_template_rules' ), 10, 2 );
@@ -193,38 +192,6 @@ class Brizy_Admin_Templates {
 		}
 
 		return $messages;
-	}
-
-	public function addTemplateRoleCaps() {
-		$roles = wp_roles()->roles;
-		foreach ( $roles as $name => $role ) {
-			$roleObject = get_role( $name );
-
-			/*if ( $roleObject->has_cap( 'brizy_edit_whole_page' ) || $roleObject->has_cap( 'brizy_edit_content_only' ) ) {
-				$roleObject->add_cap( 'read_' . self::CP_TEMPLATE );
-				$roleObject->add_cap( 'read_private_' . self::CP_TEMPLATES );
-				$roleObject->add_cap( 'edit_' . self::CP_TEMPLATE );
-				$roleObject->add_cap( 'edit_' . self::CP_TEMPLATES );
-				$roleObject->add_cap( 'edit_others_' . self::CP_TEMPLATES );
-				$roleObject->add_cap( 'edit_published_' . self::CP_TEMPLATES );
-				$roleObject->add_cap( 'publish_' . self::CP_TEMPLATES );
-				$roleObject->add_cap( 'delete_others_' . self::CP_TEMPLATES );
-				$roleObject->add_cap( 'delete_private_' . self::CP_TEMPLATES );
-				$roleObject->add_cap( 'delete_published_' . self::CP_TEMPLATES );
-			} else */
-			{
-				$roleObject->remove_cap( 'read_' . self::CP_TEMPLATE );
-				$roleObject->remove_cap( 'read_private_' . self::CP_TEMPLATES );
-				$roleObject->remove_cap( 'edit_' . self::CP_TEMPLATE );
-				$roleObject->remove_cap( 'edit_' . self::CP_TEMPLATES );
-				$roleObject->remove_cap( 'edit_others_' . self::CP_TEMPLATES );
-				$roleObject->remove_cap( 'edit_published_' . self::CP_TEMPLATES );
-				$roleObject->remove_cap( 'publish_' . self::CP_TEMPLATES );
-				$roleObject->remove_cap( 'delete_others_' . self::CP_TEMPLATES );
-				$roleObject->remove_cap( 'delete_private_' . self::CP_TEMPLATES );
-				$roleObject->remove_cap( 'delete_published_' . self::CP_TEMPLATES );
-			}
-		}
 	}
 
 	static public function registerCustomPostTemplate() {

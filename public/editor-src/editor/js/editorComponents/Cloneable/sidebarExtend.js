@@ -1,16 +1,16 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getDynamicContentChoices } from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 
 export function getItems({ v, device, context }) {
   const dvv = (key) => defaultValueValue({ v, key, device });
 
   const isRelative = dvv("elementPosition") === "relative";
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
 
   return [
     {
@@ -278,6 +278,7 @@ export function getItems({ v, device, context }) {
               tabs: [
                 {
                   id: "entrance",
+                  position: 90,
                   label: t("Entrance"),
                   options: [
                     {

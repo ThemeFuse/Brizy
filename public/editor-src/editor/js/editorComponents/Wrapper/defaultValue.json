@@ -492,6 +492,11 @@
     "mobileAnimationDelay": 1000,
     "mobileAnimationInfiniteAnimation": null,
 
-    "tempMobileAnimationName": "none"
+    "tempMobileAnimationName": "none",
+
+    "hoverName": "none",
+    "hoverDuration": 600,
+    "hoverDelay": 0,
+    "hoverInfiniteAnimation": true
   }
 }

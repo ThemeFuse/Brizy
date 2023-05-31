@@ -7,7 +7,7 @@ import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -29,10 +29,10 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
   const percentageOff = showPercentage === "off";
   const textOff = showText === "off";
 
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
 
   const IS_STORY = isStory(Config.getAll());
 
@@ -132,11 +132,12 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                           id: "text",
                           type: "population-dev",
                           config: {
-                            iconOnly: true,
-                            choices: richTextDC
+                            ...richTextDC,
+                            iconOnly: true
                           },
                           devices: "desktop",
-                          disabled: textOff || style2
+                          disabled:
+                            textOff || style2 || richTextDC === undefined
                         }
                       ]
                     }
@@ -178,9 +179,10 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                           id: "percentage",
                           type: "population-dev",
                           config: {
-                            iconOnly: true,
-                            choices: richTextDC
+                            ...richTextDC,
+                            iconOnly: true
                           },
+                          disabled: richTextDC === undefined,
                           devices: "desktop"
                         }
                       ]

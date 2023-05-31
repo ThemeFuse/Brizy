@@ -7,4 +7,5 @@ export interface Props {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   step?: number;
   value?: number;
+  attr?: Record<string, string>;
 }

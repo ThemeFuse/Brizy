@@ -144,7 +144,7 @@ class Brizy_Admin_FormEntries {
 				$class = 'disableFormLogs';
 				$val   = 0;
 			} else {
-				$label = __( 'Enable ', 'brizy' );
+				$label = __( 'Enable', 'brizy' );
 				$class = 'enableFormLogs';
 				$val   = 1;
 			}
@@ -306,13 +306,19 @@ class Brizy_Admin_FormEntries {
 			$fieldsCopy[ $i ]->value = htmlentities( $value, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
 		}
 
+        /*
+         * The issue happens when we have in the json something stripped for example a double quote: "label":"Paragraph \"My\""}]}
+         * By default wp_insert_post() doesn't add slashes to the post data because it expects the data already to be slashed.
+         * Before the data gets stored into the database wp_unslash() is called. That's why the slash from our input is removed.
+         * We could use wp_slash before wp_insert_post() but this could create big trouble.
+         */
+        $content = str_replace("\\", '\\\\\\', json_encode( [ 'formId' => $form->getId(), 'formData' => $fieldsCopy ], JSON_UNESCAPED_UNICODE ));
+
 		$params = array(
 			'post_title'   => $title,
 			'post_type'    => self::CP_FORM_ENTRY,
 			'post_status'  => 'publish',
-			'post_content' => json_encode( array( 'formId'   => $form->getId(),
-			                                      'formData' => $fieldsCopy
-			), JSON_UNESCAPED_UNICODE )
+			'post_content' => $content
 		);
 
 		wp_insert_post( $params );

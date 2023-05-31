@@ -15,6 +15,7 @@
     "showPreacher": "on",
     "showPassage": "on",
     "showMetaHeadings": "on",
+    "showPreviousPage": "on",
     "showPreview": "on",
     "recentSermons": "all-in-all"
   },
@@ -261,6 +262,6 @@
     "bgPaddingLeftSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null
+    "hoverTransitionSuffix": ""
   }
 }

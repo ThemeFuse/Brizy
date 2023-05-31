@@ -44,6 +44,7 @@ export interface Cloud extends Base {
   taxesMainCategoryId: string;
   notificationApi: Authorize;
   customersEditorUrl: string;
+  isAvailablePreviewBadge: boolean;
   modules: {
     shop: Shop;
     users: {

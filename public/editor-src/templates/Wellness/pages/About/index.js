@@ -1695,7 +1695,7 @@ module.exports = {
                                                 tempHoverBgColorOpacity: 1,
                                                 text: "VIEW ALL OUR SERVICES",
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/wellness/?page_id=2211"
+                                                linkExternal: ""
                                             }
                                         }
                                     ]

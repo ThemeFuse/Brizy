@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Portal className should be classname,children should be children and all should be children of node 1`] = `
+<div
+  class="className"
+>
+  Children
+</div>
+`;

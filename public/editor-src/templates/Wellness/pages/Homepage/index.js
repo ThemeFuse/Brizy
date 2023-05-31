@@ -165,7 +165,7 @@ module.exports = {
                                                                         tempHoverBgColorOpacity: 1,
                                                                         hoverBgColorPalette: "color1",
                                                                         text: "LEARN MORE",
-                                                                        linkExternal: "https://demo.themefuse.com/wellness/?page_id=2194",
+                                                                        linkExternal: "",
                                                                         linkExternalBlank: "off"
                                                                     }
                                                                 }
@@ -375,7 +375,7 @@ module.exports = {
                                                                         tempHoverBgColorOpacity: 1,
                                                                         hoverBgColorPalette: "color1",
                                                                         text: "LEARN MORE",
-                                                                        linkExternal: "https://demo.themefuse.com/wellness/?page_id=2194",
+                                                                        linkExternal: "",
                                                                         linkExternalBlank: "off"
                                                                     }
                                                                 }
@@ -2401,7 +2401,7 @@ module.exports = {
                                                 tempHoverBgColorOpacity: 1,
                                                 text: "VIEW ALL STAFF MEMBERS",
                                                 linkExternalBlank: "off",
-                                                linkExternal: "https://demo.themefuse.com/wellness/?page_id=2194"
+                                                linkExternal: ""
                                             }
                                         }
                                     ]
@@ -2957,7 +2957,7 @@ module.exports = {
                                                                         tempHoverBgColorOpacity: 1,
                                                                         text: "LEARN MORE ABOUT US",
                                                                         linkExternalBlank: "off",
-                                                                        linkExternal: "https://demo.themefuse.com/wellness/?page_id=2194"
+                                                                        linkExternal: ""
                                                                     }
                                                                 }
                                                             ],

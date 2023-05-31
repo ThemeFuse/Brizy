@@ -64,6 +64,17 @@ onsubmit: "
   function() {};
 `
     }
+  ],
+
+  // escape \" and \'
+  [
+    `onclick: "console.log(\\"test\\")"`,
+    { "data-brz-onclick-event": 'console.log(\\"test\\")' }
+  ],
+
+  [
+    `onclick: 'console.log(\\'test\\')'`,
+    { "data-brz-onclick-event": "console.log(\\'test\\')" }
   ]
 ])("Testing 'parseCustomAttributes' function", (s, expected) => {
   expect(parseCustomAttributes(s)).toEqual(expected);

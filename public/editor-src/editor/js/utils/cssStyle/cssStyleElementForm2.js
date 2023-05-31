@@ -60,42 +60,26 @@ export function cssStyleElementForm2FieldsLabelAlign({ v, device, state }) {
 }
 
 export function cssStyleElementForm2Margin({ v, device, state }) {
-  const { paddingTop, paddingRight, paddingBottom, paddingLeft } =
-    cssStylePadding({ v, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const padding = dvv("padding");
 
-  return paddingTop === undefined ||
-    paddingRight === undefined ||
-    paddingBottom === undefined ||
-    paddingLeft === undefined ||
-    isStory(Config.getAll())
+  return padding === undefined || isStory(Config.getAll())
     ? ""
-    : `margin:-${paddingTop}px -${paddingRight / 2}px
-       -${paddingBottom}px -${paddingLeft / 2}px;`;
+    : `margin: 0 -${padding / 2}px -${padding}px -${padding / 2}px;`;
 }
 
 export function cssStyleElementForm2Padding({ v, device, state }) {
-  const {
-    paddingTop,
-    paddingRight,
-    paddingBottom,
-    paddingLeft,
-    paddingTopSuffix,
-    paddingRightSuffix,
-    paddingBottomSuffix,
-    paddingLeftSuffix
-  } = cssStylePadding({ v, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const padding = dvv("padding");
+  const suffix = dvv("paddingSuffix");
 
-  return paddingTop === undefined ||
-    paddingRight === undefined ||
-    paddingBottom === undefined ||
-    paddingLeft === undefined
+  return padding === undefined
     ? ""
     : isStory(Config.getAll())
-    ? `padding:0 0 ${paddingBottom}${paddingBottomSuffix} 0;`
-    : `padding:${paddingTop}${paddingTopSuffix}
-      ${paddingRight / 2}${paddingRightSuffix}
-      ${paddingBottom}${paddingBottomSuffix}
-      ${paddingLeft / 2}${paddingLeftSuffix};`;
+    ? `padding:0 0 ${padding}${suffix} 0;`
+    : `padding: 0 ${padding / 2}${suffix} ${padding}${suffix} ${
+        padding / 2
+      }${suffix};`;
 }
 
 export function cssStyleElementForm2FieldsLineHeight({ v, device, state }) {

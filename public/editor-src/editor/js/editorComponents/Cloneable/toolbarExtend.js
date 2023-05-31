@@ -1,8 +1,5 @@
 import { t } from "visual/utils/i18n";
-import {
-  toolbarElementCloneableSpacing,
-  toolbarShowOnResponsive
-} from "visual/utils/toolbar";
+import { toolbarShowOnResponsive } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
   return [
@@ -33,11 +30,24 @@ export function getItems({ v, device }) {
             {
               id: "currentShortcodeTab",
               options: [
-                toolbarElementCloneableSpacing({
-                  v,
-                  device,
-                  state: "normal"
-                })
+                {
+                  id: "itemPadding",
+                  type: "slider-dev",
+                  label: t("Spacing"),
+                  roles: ["admin"],
+                  position: 350,
+                  config: {
+                    min: 0,
+                    max: 100,
+                    units: [
+                      {
+                        title: "px",
+                        value: "px"
+                      }
+                    ]
+                  },
+                  disabled: v.items.length === 1
+                }
               ]
             }
           ]

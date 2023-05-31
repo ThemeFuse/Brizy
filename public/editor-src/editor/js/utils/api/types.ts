@@ -19,6 +19,7 @@ export interface ResponseWithBody<T> {
 export type GetDynamicContent = (args: {
   placeholders: Dictionary<string[]>;
   signal?: AbortSignal;
+  useCustomPlaceholder: boolean;
 }) => Promise<Dictionary<string[]>>;
 
 //#endregion

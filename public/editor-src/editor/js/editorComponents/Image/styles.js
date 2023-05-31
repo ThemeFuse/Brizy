@@ -1,5 +1,15 @@
 import { renderStyles } from "visual/utils/cssStyle";
 
+export function styleHover(v, vs, vd, props) {
+  const styles = {
+    ".brz &&.brz-hover-animation__container": {
+      standart: ["cssStyleElementImageMaxWidthPreview"]
+    }
+  };
+
+  return renderStyles({ v, vs, vd, styles, props });
+}
+
 export function style(v, vs, vd, props) {
   const styles = {
     ".brz &&:hover": {

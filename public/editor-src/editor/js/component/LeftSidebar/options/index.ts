@@ -12,14 +12,15 @@ import { Cms } from "../components/Cms";
 import { DeviceModes } from "../components/DeviceModes";
 import { Settings } from "../components/Settings";
 import { Styling } from "../components/Styling";
+import { getMoreOptions } from "./moreOptions";
 import { getPageSettings } from "./pageSettings";
 
-interface Option {
+export interface Option {
   id: string;
   type: string;
   icon?: string;
   title?: string;
-  onClick?: VoidFunction;
+  onClick?: (e: MouseEvent) => void;
   drawerTitle?: string;
   disabled?: boolean;
   showInDeviceModes?: Array<string>;
@@ -35,9 +36,10 @@ interface Options {
 }
 
 const getItems = (config: Config): Record<LeftSidebarOptionsIds, Option> => {
-  const { urls, ui = {} } = config;
-  const moreOptions = ui.leftSidebar?.more?.options ?? [];
+  const { urls } = config;
+
   const pageSettingsOptions = getPageSettings(config);
+  const moreOptions = getMoreOptions(config);
 
   const onClick = (): void => {
     const { collaborationToolUrl: url } = urls;

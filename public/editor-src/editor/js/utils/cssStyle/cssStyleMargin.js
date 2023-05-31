@@ -1,16 +1,16 @@
 import {
-  styleMarginType,
-  styleMarginGrouped,
-  styleMarginUngrouped,
-  styleMarginGroupedSuffix,
-  styleMarginUngroupedSuffix,
-  styleItemMarginTop,
-  styleItemMarginRight,
   styleItemMarginBottom,
-  styleItemMarginLeft
+  styleItemMarginLeft,
+  styleItemMarginRight,
+  styleItemMarginTop,
+  styleMarginGrouped,
+  styleMarginGroupedSuffix,
+  styleMarginType,
+  styleMarginUngrouped,
+  styleMarginUngroupedSuffix
 } from "visual/utils/style2";
 
-export function cssStyleMargin({ v, device, state }) {
+export function cssStyleMargin({ v, device, state, prefix = "" }) {
   let r = "";
   let marginType = "";
   let marginTop = 0;
@@ -22,88 +22,106 @@ export function cssStyleMargin({ v, device, state }) {
   let marginBottomSuffix = "";
   let marginLeftSuffix = "";
 
-  marginType = styleMarginType({ v, device, state });
+  marginType = styleMarginType({ v, device, state, prefix });
 
   if (marginType === "grouped") {
     marginLeft = styleMarginUngrouped({
       v,
       device,
       state,
-      current: "marginLeft"
+      current: "marginLeft",
+      prefix
     });
 
     if (marginLeft === "auto") {
       marginTop = marginBottom = styleMarginGrouped({
         v,
         device,
-        state
+        state,
+        prefix
       });
       marginLeft = marginRight = "auto";
 
       marginTopSuffix = marginBottomSuffix = styleMarginGroupedSuffix({
         v,
         device,
-        state
+        state,
+        prefix
       });
     } else {
-      marginTop = marginRight = marginBottom = marginLeft = styleMarginGrouped({
-        v,
-        device,
-        state
-      });
-      marginTopSuffix = marginRightSuffix = marginBottomSuffix = marginLeftSuffix = styleMarginGroupedSuffix(
-        { v, device, state }
-      );
+      marginTop =
+        marginRight =
+        marginBottom =
+        marginLeft =
+          styleMarginGrouped({
+            v,
+            device,
+            state,
+            prefix
+          });
+      marginTopSuffix =
+        marginRightSuffix =
+        marginBottomSuffix =
+        marginLeftSuffix =
+          styleMarginGroupedSuffix({ v, device, state, prefix });
     }
   } else {
     marginTop = styleMarginUngrouped({
       v,
       device,
       state,
-      current: "marginTop"
+      current: "marginTop",
+      prefix
     });
     marginRight = styleMarginUngrouped({
       v,
       device,
       state,
-      current: "marginRight"
+      current: "marginRight",
+      prefix
     });
     marginBottom = styleMarginUngrouped({
       v,
       device,
       state,
-      current: "marginBottom"
+      current: "marginBottom",
+      prefix
     });
     marginLeft = styleMarginUngrouped({
       v,
       device,
       state,
-      current: "marginLeft"
+      current: "marginLeft",
+      prefix
     });
 
     marginTopSuffix = styleMarginUngroupedSuffix({
       v,
       device,
       state,
-      current: "marginTopSuffix"
+      current: "marginTopSuffix",
+      prefix
     });
     marginRightSuffix = styleMarginUngroupedSuffix({
       v,
       device,
       state,
-      current: "marginRightSuffix"
+      current: "marginRightSuffix",
+      prefix
     });
     marginBottomSuffix = styleMarginUngroupedSuffix({
       v,
       device,
       state,
-      current: "marginBottomSuffix"
+      current: "marginBottomSuffix",
+      prefix
     });
     marginLeftSuffix = styleMarginUngroupedSuffix({
       v,
       device,
       state,
-      current: "marginLeftSuffix"
+      current: "marginLeftSuffix",
+      prefix
     });
   }
 

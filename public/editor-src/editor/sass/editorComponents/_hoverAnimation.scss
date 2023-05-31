@@ -1,0 +1,13 @@
+.brz-hover-animation {
+  svg {
+    backface-visibility: hidden;
+  }
+
+  &,
+  &__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}

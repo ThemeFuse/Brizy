@@ -5,8 +5,8 @@ import {
   ColorPickerSelect
 } from "visual/component/Controls/ColorPickerSelect";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
+import MultiInputOptionType from "visual/component/Controls/MultiInput";
 import { Item } from "visual/component/Controls/MultiSelect/Item";
-import MultiInputOptionType from "visual/component/Options/types/MultiInput";
 import { Hex } from "visual/utils/color/Hex";
 import {
   WithClassName,

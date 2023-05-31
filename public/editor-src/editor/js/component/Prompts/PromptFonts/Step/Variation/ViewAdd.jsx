@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from "react";
 import _ from "underscore";
-import ScrollPane from "visual/component/ScrollPane";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import Tooltip from "visual/component/Controls/Tooltip";
-import { Button } from "visual/component/Prompts/common/Button";
 import EditorIcon from "visual/component/EditorIcon";
+import { Button } from "visual/component/Prompts/common/Button";
 import { t } from "visual/utils/i18n";
 
 class ViewAdd extends Component {
@@ -48,7 +47,7 @@ class ViewAdd extends Component {
           itemHeight="30"
           inPortal={true}
           defaultValue={value}
-          onChange={v => {
+          onChange={(v) => {
             this.props.onActive(name, v);
           }}
         >
@@ -127,14 +126,7 @@ class ViewAdd extends Component {
       );
     });
 
-    return (
-      <ScrollPane
-        style={{ maxHeight: 255 }}
-        className="brz-ed-popup-integrations__scroll-pane"
-      >
-        {options}
-      </ScrollPane>
-    );
+    return options;
   }
 
   render() {

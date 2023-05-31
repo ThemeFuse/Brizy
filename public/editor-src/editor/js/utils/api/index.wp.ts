@@ -1611,9 +1611,6 @@ export const getPostsSourceRefs: GetPostsSourceRefs = () => {
 //#endregion
 
 // is needed to pass webpack warnings
-export const uploadImage = (): Promise<string> => {
-  return Promise.reject("Not implemented");
-};
 export const uploadFile = (): Promise<string> => {
   return Promise.reject("Not implemented");
 };

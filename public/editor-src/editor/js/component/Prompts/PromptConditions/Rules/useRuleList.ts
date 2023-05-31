@@ -4,7 +4,8 @@ import { from, of } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 import { setIn } from "timm";
 import Config from "visual/global/Config";
-import { isCloud, isCMS } from "visual/global/Config/types/configs/Cloud";
+import { isEcwidShop } from "visual/global/Config/types/configs/Base";
+import { isCMS, isCloud } from "visual/global/Config/types/configs/Cloud";
 import { Categories } from "visual/libs/EcwidSdk/categories";
 import { Products } from "visual/libs/EcwidSdk/products";
 import { CollectionItemRule, CollectionTypeRule, Rule } from "visual/types";
@@ -14,11 +15,11 @@ import {
   isCollectionTypeRule
 } from "visual/utils/blocks";
 import {
-  createEntityValue,
-  createEntityValueAll,
   CUSTOMER_TYPE,
   ECWID_PRODUCT_CATEGORY_TYPE,
-  ECWID_PRODUCT_TYPE
+  ECWID_PRODUCT_TYPE,
+  createEntityValue,
+  createEntityValueAll
 } from "visual/utils/blocks/blocksConditions";
 import { isOneOf } from "visual/utils/fp/isOneOf";
 import { t } from "visual/utils/i18n";
@@ -28,7 +29,7 @@ import {
   getRulesListIndexByRule,
   getUniqRules
 } from "./utils";
-import { getCustomerAndCollectionTypes, Refs as RefsById } from "./utils/api";
+import { Refs as RefsById, getCustomerAndCollectionTypes } from "./utils/api";
 
 export default function useRuleList(
   rules: Rule[],
@@ -55,7 +56,12 @@ export default function useRuleList(
   const ecwidProductsClient = useMemo((): Products | undefined => {
     const config = Config.getAll();
 
-    if (isCloud(config) && isCMS(config) && config.modules?.shop) {
+    if (
+      isCloud(config) &&
+      isCMS(config) &&
+      config.modules?.shop &&
+      isEcwidShop(config.modules.shop)
+    ) {
       return new Products(config.modules.shop.apiUrl);
     }
 
@@ -64,7 +70,12 @@ export default function useRuleList(
   const ecwidCategoriesClient = useMemo((): Categories | undefined => {
     const config = Config.getAll();
 
-    if (isCloud(config) && isCMS(config) && config.modules?.shop) {
+    if (
+      isCloud(config) &&
+      isCMS(config) &&
+      config.modules?.shop &&
+      isEcwidShop(config.modules.shop)
+    ) {
       return new Categories(config.modules.shop.apiUrl);
     }
 

@@ -2,11 +2,10 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
+import { getShapes } from "visual/utils/options";
 import {
   toolbarShapeBottomFlip,
-  toolbarShapeBottomType,
-  toolbarShapeTopFlip,
-  toolbarShapeTopType
+  toolbarShapeTopFlip
 } from "visual/utils/toolbar";
 
 export const title = t("Header");
@@ -85,11 +84,12 @@ export function getItems({ v, device }) {
                           type: "group-dev",
                           disabled: dvv("shape") !== "top",
                           options: [
-                            toolbarShapeTopType({
-                              v,
-                              device,
-                              state: "normal"
-                            }),
+                            {
+                              id: "shapeTopType",
+                              label: t("Type"),
+                              type: "select-dev",
+                              choices: getShapes()
+                            },
                             {
                               id: "shapeTopColors",
                               type: "popover-dev",
@@ -151,11 +151,13 @@ export function getItems({ v, device }) {
                           type: "group-dev",
                           disabled: dvv("shape") !== "bottom",
                           options: [
-                            toolbarShapeBottomType({
-                              v,
-                              device,
-                              state: "normal"
-                            }),
+                            {
+                              id: "shapeBottomType",
+                              label: t("Type"),
+                              type: "select-dev",
+                              choices: getShapes(),
+                              className: "brz-ed-shape icon--bottom"
+                            },
                             {
                               id: "shapeBottomColors",
                               type: "popover-dev",

@@ -25,4 +25,5 @@ export interface Value extends ElementModel {
   showMetaHeadings: Switch;
   showPreview: Switch;
   recentSermons: string;
+  showPreviousPage: Switch;
 }

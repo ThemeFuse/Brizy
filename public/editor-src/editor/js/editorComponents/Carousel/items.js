@@ -39,7 +39,9 @@ class Items extends EditorArrayComponent {
   };
 
   slider = null;
-
+  reopenOnIndex = null;
+  toolbarRef = React.createRef();
+  openSlideId = null;
   componentDidMount() {
     setDataSortable(this.slider);
   }
@@ -53,6 +55,18 @@ class Items extends EditorArrayComponent {
     ) {
       setDataSortable(this.slider);
     }
+
+    if (this.toolbarRef.current) {
+      this.openSlideId = setTimeout(() => {
+        this.toolbarRef.current.show();
+        this.reopenOnIndex = null;
+        this.toolbarRef.current = null;
+      }, 250);
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.openSlideId);
   }
 
   handleRefSlider = (node) => {
@@ -107,6 +121,14 @@ class Items extends EditorArrayComponent {
     this.insertItem(itemIndex, emptyItemData);
   };
 
+  getParentRef = (node) => {
+    const visibleSlide = node?.closest(".slick-active");
+    if (visibleSlide) {
+      return this.toolbarRef;
+    }
+    return undefined;
+  };
+
   getItemProps(itemData, itemIndex, items) {
     let { meta, slidesToShow, dynamic, toolbarExtend } = this.props;
 
@@ -150,10 +172,12 @@ class Items extends EditorArrayComponent {
               onChange: (v) => {
                 switch (v) {
                   case "prev":
+                    this.reopenOnIndex = itemIndex - 1;
                     this.reorderItem(itemIndex, itemIndex - 1);
                     break;
                   case "next":
                     this.reorderItem(itemIndex, itemIndex + 1);
+                    this.reopenOnIndex = itemIndex + 1;
                     break;
                 }
               }
@@ -184,7 +208,10 @@ class Items extends EditorArrayComponent {
 
     return {
       meta,
-      toolbarExtend
+      toolbarExtend,
+      ...(this.reopenOnIndex === itemIndex && {
+        getParentRef: this.getParentRef
+      })
     };
   }
 

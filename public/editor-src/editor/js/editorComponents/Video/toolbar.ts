@@ -6,12 +6,11 @@ import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarElementVideoPlaySize } from "visual/utils/toolbar";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
 import { ToolbarItemType } from "../ToolbarItemType";
 
@@ -56,10 +55,10 @@ export function getItems({
     dvv("borderColorPalette")
   );
 
-  const videoDynamicContentChoices = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.link
-  );
+  const videoDynamicContentChoices = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.link
+  });
 
   const type = dvv("type");
   const noCover = !dvv("coverImageSrc");
@@ -240,14 +239,20 @@ export function getItems({
                     units: [{ value: "%", title: "%" }]
                   }
                 },
-                // @ts-expect-error: Old option
-                toolbarElementVideoPlaySize({
-                  v,
-                  device,
-                  state: "normal",
+                {
+                  id: "iconSize",
+                  label: t("Play"),
+                  type: "slider-dev",
                   devices: "desktop",
-                  disabled: noCover
-                }),
+                  disabled: noCover,
+                  config: {
+                    min: 50,
+                    max: 200,
+                    inputMin: 50,
+                    inputMax: 200,
+                    units: [{ value: "px", title: "px" }]
+                  }
+                },
                 {
                   id: "groupSettings",
                   type: "group-dev",

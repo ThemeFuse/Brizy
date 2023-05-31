@@ -1,7 +1,7 @@
-import { Reader, Type } from "visual/utils/types/Type";
-import { String } from "visual/utils/string/specs";
 import { get } from "visual/utils/object/get";
+import { String } from "visual/utils/string/specs";
 import { Eq, IsEqual } from "visual/utils/types/Eq";
+import { Reader, Type } from "visual/utils/types/Type";
 
 export interface PopulationMethod {
   title: string;
@@ -15,7 +15,14 @@ export interface PopulationOptgroupMethod {
   icon?: string;
 }
 
-export const read: Reader<PopulationMethod> = v => {
+export interface PopulationMethodHandler {
+  handlerChoices: (
+    response: (r: string) => void,
+    reject: (r: string) => void
+  ) => void;
+}
+
+export const read: Reader<PopulationMethod> = (v) => {
   if (typeof v === "object") {
     const title = String.read(get("title", v as PopulationMethod));
     const value = String.read(get("value", v as PopulationMethod));

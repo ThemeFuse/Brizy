@@ -99,7 +99,8 @@ export class Posts extends EditorComponent {
           return from(
             DCApiProxyInstance.getDC(loops, {
               postId: getCurrentPageId(),
-              cache: false
+              cache: false,
+              useCustomPlaceholder: false
             }).then((r) => {
               const [loop, pagination, tags] = r || [];
               return {
@@ -118,7 +119,7 @@ export class Posts extends EditorComponent {
           const context = collection.map((item) => ({
             dynamicContent: {
               itemId: item,
-              config: (config[item] || config["*"])?.dynamicContent || {
+              config: (config[item] || config["*"])?.dynamicContent?.groups || {
                 image: [],
                 link: [],
                 richText: []

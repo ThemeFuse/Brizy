@@ -94,6 +94,7 @@ const translationsMap = {
   // Shopify
   AddToCart: t("Add To Cart"),
   Quantity: t("Quantity"),
+  Price: t("Price"),
   KlavyioMarketing: t("Email Marketing by Klaviyo"),
   PreProduct: t("PreProduct"),
   TrustProductReview: t("Trust Product Review"),
@@ -157,6 +158,8 @@ const translationsMap = {
   WiserUpsell: t("Upsell by Wiser"),
   BoldBundles: t("Bundles by Bold"),
   CrossSell: t("Cross Sell"),
+  ProductMetafield: t("Product Metafield"),
+  BlogPostMeta: t("BlogPostMeta"),
 
   // Ministry Brands
   MinistryBrandsGroupLayout: t("Group Layout"),

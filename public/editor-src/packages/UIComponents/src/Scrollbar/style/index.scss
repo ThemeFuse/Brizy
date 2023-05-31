@@ -1,0 +1,9 @@
+.brz-scrollColor {
+  &__dark {
+    @apply bg-scrollbar__sidebar-color;
+  }
+
+  &__light {
+    @apply bg-scrollbar__popup__apps-color;
+  }
+}

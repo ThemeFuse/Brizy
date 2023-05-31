@@ -122,6 +122,15 @@
     line-height: 16px;
   }
 
+  &__body .brz-scrollbar__wrapper {
+    & > div:nth-child(2) {
+      bottom: -15px !important;
+    }
+    & > div:last-child {
+      right: -15px!important;
+    }
+  }
+
   &__trigger-once {
     display: flex;
     align-items: center;
@@ -260,13 +269,5 @@
     font-family: $default-font-family;
     font-size: 13px;
     outline: none;
-  }
-
-  .brz-ed-scroll-inner {
-    border-right-width: 0 !important;
-  }
-
-  .brz-ed-tall-track {
-    right: 0 !important;
   }
 }

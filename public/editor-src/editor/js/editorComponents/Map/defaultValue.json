@@ -126,6 +126,11 @@
     "tempBoxShadowVertical": 2,
     "tempBoxShadowHorizontal": 1,
 
+    "hoverName": "none",
+    "hoverDuration": 600,
+    "hoverDelay": 0,
+    "hoverInfiniteAnimation": true,
+
     "customCSS": "",
 
     "bgPaddingType": "grouped",

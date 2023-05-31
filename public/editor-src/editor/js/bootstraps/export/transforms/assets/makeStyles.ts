@@ -195,7 +195,7 @@ const makeDynamicStyle = ($doc: cheerio.Root): Asset => {
   return otherStyles;
 };
 
-// main => preview.css | preview.pro.css only one added in the page
+// main => preview.min.css | preview.pro.min.css only one added in the page
 // generic => contain [dynamic css style]
 // libsMap => contain all groups[libs] css
 // libsSelectors = contain all libs selector found in page
@@ -208,7 +208,7 @@ export const makeStyles = ($doc: cheerio.Root, fonts: Fonts): MakeStyles => {
     score: MAIN_SCORE,
     content: {
       type: "file",
-      url: assetUrl("editor/css/preview.css"),
+      url: assetUrl("editor/css/preview.min.css"),
       attr: withRel({
         class: "brz-link brz-link-preview"
       })
@@ -253,7 +253,7 @@ export const makeStyles = ($doc: cheerio.Root, fonts: Fonts): MakeStyles => {
       score: LIBS_SCORE,
       content: {
         type: "file",
-        url: assetUrl(`editor/css/${name}.css`),
+        url: assetUrl(`editor/css/${name}.min.css`),
         attr: withRel({
           class: "brz-link brz-link-preview-lib",
           "data-group": name
@@ -295,7 +295,7 @@ export const makeStyles = ($doc: cheerio.Root, fonts: Fonts): MakeStyles => {
       score: MAIN_SCORE,
       content: {
         type: "file",
-        url: `${proUrls.assets}/css/preview.pro.css`,
+        url: `${proUrls.assets}/css/preview.pro.min.css`,
         attr: withRel({
           class: "brz-link brz-link-preview-pro"
         })
@@ -314,7 +314,7 @@ export const makeStyles = ($doc: cheerio.Root, fonts: Fonts): MakeStyles => {
         score: LIBS_SCORE + 1,
         content: {
           type: "file",
-          url: `${proUrls.assets}/css/${name}-pro.css`,
+          url: `${proUrls.assets}/css/${name}-pro.min.css`,
           attr: withRel({
             class: "brz-link brz-link-preview-lib-pro",
             "data-group": name

@@ -1,11 +1,11 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
-import ScrollPane from "visual/component/ScrollPane";
-import EditorIcon from "visual/component/EditorIcon";
-import { ThemeIcon } from "visual/component/ThemeIcon";
 import ClickOutside from "visual/component/ClickOutside";
+import EditorIcon from "visual/component/EditorIcon";
 import Portal from "visual/component/Portal";
+import { Scrollbar } from "visual/component/Scrollbar";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 
 function getDropdownHeight(itemsCount, itemHeight, minItems, maxItems) {
   const minHeight = itemHeight * minItems;
@@ -68,7 +68,7 @@ class Select extends React.Component {
     const childrenCount = React.Children.count(children);
     let childrenOptgroupCount = 0;
 
-    React.Children.forEach(children, child => {
+    React.Children.forEach(children, (child) => {
       const { items } = child.props;
 
       if (items && items.length) {
@@ -78,14 +78,12 @@ class Select extends React.Component {
 
     const maxChildrenCount = childrenCount + childrenOptgroupCount;
 
-    return {
-      height: getDropdownHeight(
-        maxChildrenCount,
-        this.props.itemHeight,
-        this.props.minItems,
-        this.props.maxItems
-      )
-    };
+    return getDropdownHeight(
+      maxChildrenCount,
+      this.props.itemHeight,
+      this.props.minItems,
+      this.props.maxItems
+    );
   }
 
   onClickOutside = () => {
@@ -96,7 +94,7 @@ class Select extends React.Component {
     }
   };
 
-  handleItemClick = value => {
+  handleItemClick = (value) => {
     this.setState({
       isOpen: false,
       currentValue: value
@@ -104,11 +102,11 @@ class Select extends React.Component {
     this.props.onChange(value);
   };
 
-  handleContentRef = node => {
+  handleContentRef = (node) => {
     this.content = node;
   };
 
-  handleDropdownNode = node => {
+  handleDropdownNode = (node) => {
     this.dropdown = node;
   };
 
@@ -159,7 +157,7 @@ class Select extends React.Component {
     const { currentValue } = this.state;
     let selectedItem;
 
-    React.Children.forEach(children, child => {
+    React.Children.forEach(children, (child) => {
       const { items } = child.props;
 
       if (selectedItem) {
@@ -170,7 +168,7 @@ class Select extends React.Component {
         const children = React.Children.toArray(child.props.items);
 
         selectedItem = children.find(
-          child => child.props.value === currentValue
+          (child) => child.props.value === currentValue
         );
       } else if (child.props.value === currentValue) {
         selectedItem = child;
@@ -227,12 +225,9 @@ class Select extends React.Component {
     if (IS_PREVIEW) {
       return (
         <div className="brz-control__select-options">
-          <ScrollPane
-            className="brz-ed-scroll-pane"
-            style={this.getScrollPaneStyle()}
-          >
+          <Scrollbar autoHeightMax={this.getScrollPaneStyle()} theme="light">
             {this.renderItems()}
-          </ScrollPane>
+          </Scrollbar>
         </div>
       );
     }
@@ -244,12 +239,9 @@ class Select extends React.Component {
           style={{ opacity: 0 }}
           ref={this.handleDropdownNode}
         >
-          <ScrollPane
-            className="brz-ed-scroll-pane"
-            style={this.getScrollPaneStyle()}
-          >
+          <Scrollbar autoHeightMax={this.getScrollPaneStyle()} theme="light">
             {this.renderItems()}
-          </ScrollPane>
+          </Scrollbar>
         </div>
       );
     } else if (this.state.isOpen && inPortal) {
@@ -268,12 +260,9 @@ class Select extends React.Component {
       return (
         <Portal node={this.content.ownerDocument.body} className={className}>
           <div className="brz-control__select-options" style={dropDownStyle}>
-            <ScrollPane
-              className="brz-ed-scroll-pane"
-              style={this.getScrollPaneStyle()}
-            >
+            <Scrollbar autoHeightMax={this.getScrollPaneStyle()} theme="light">
               {this.renderItems()}
-            </ScrollPane>
+            </Scrollbar>
           </div>
         </Portal>
       );
@@ -322,7 +311,7 @@ class Select extends React.Component {
   findFirstItem(items = this.props.children) {
     let selectedItem;
 
-    React.Children.forEach(items, item => {
+    React.Children.forEach(items, (item) => {
       const { items } = item.props;
 
       if (selectedItem) {

@@ -5,11 +5,8 @@ import { t } from "visual/utils/i18n";
 import { getAllMembershipChoices } from "visual/utils/membership";
 import { getLanguagesChoices } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  toolbarElementSectionGlobal,
-  toolbarElementSectionSaved,
-  toolbarShowOnResponsive
-} from "visual/utils/toolbar";
+import { toolbarShowOnResponsive } from "visual/utils/toolbar";
+import { getInstanceParentId } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component }) {
   const config = Config.getAll();
@@ -51,12 +48,18 @@ export function getItems({ v, device, component }) {
           id: "groupSettings",
           type: "group-dev",
           options: [
-            toolbarElementSectionGlobal({
-              device,
-              component,
-              state: "normal",
-              devices: "desktop"
-            }),
+            {
+              id: "makeItGlobal",
+              label: t("Make it Global"),
+              type: "globalBlock-dev",
+              devices: "desktop",
+              disabled: isCloud(config) && isShopify(config),
+              config: {
+                _id: component.getId(),
+                parentId: getInstanceParentId(component.props.instanceKey),
+                blockType: "normal"
+              }
+            },
             {
               id: "gbConditions",
               disabled: !component.props.meta.globalBlockId,
@@ -109,12 +112,18 @@ export function getItems({ v, device, component }) {
         }
       ]
     },
-    toolbarElementSectionSaved({
-      device,
-      component,
-      state: "normal",
+    {
+      id: "makeItSaved",
+      type: "savedBlock-dev",
       devices: "desktop",
-      blockType: "normal"
-    })
+      position: 90,
+      config: {
+        icon: "nc-save-section",
+        blockType: "normal",
+        title: t("Save"),
+        tooltipContent: t("Saved"),
+        blockId: component.getId()
+      }
+    }
   ];
 }

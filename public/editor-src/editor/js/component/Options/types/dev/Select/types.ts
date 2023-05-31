@@ -6,7 +6,10 @@ import { Literal } from "visual/utils/types/Literal";
 export type ElementModelValue = SimpleValue<Literal>;
 
 export type Choice = {
-  icon?: string;
+  icon?: {
+    name?: string;
+    className?: string;
+  };
   title: string;
   value: Literal;
 };
@@ -30,4 +33,5 @@ export type Props = OptionProps<ElementModelValue> &
   WithConfig<Config> & {
     choices: ChoicesSync | ChoicesAsync;
     placeholder?: string;
+    className?: string;
   };

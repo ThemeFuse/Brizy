@@ -13,7 +13,11 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { State } from "visual/utils/stateMode";
 import { capByPrefix } from "visual/utils/string";
-import { styleBgImage, styleExportBgImage } from "visual/utils/style2";
+import {
+  styleBgImage,
+  styleExportBgImage,
+  styleTypography2FontSizeSuffix
+} from "visual/utils/style2";
 import {
   styleElementRichTextBGImagePositionX,
   styleElementRichTextBGImagePositionY,
@@ -78,8 +82,14 @@ export function cssStyleElementRichTextFontSize(d: CSSValue): string {
         ...d,
         prefix: "typography"
       });
+      const suffix = styleTypography2FontSizeSuffix({
+        ...d,
+        prefix: "typography"
+      });
 
-      return `font-size:${fontSize * 0.23}%;`;
+      const pixelSuffix = suffix === "px" ? 1 : 0.23;
+
+      return `font-size:${fontSize * pixelSuffix}${suffix};`;
     }
   }
 

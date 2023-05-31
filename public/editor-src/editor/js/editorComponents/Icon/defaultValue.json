@@ -96,6 +96,11 @@
     "tempBgColorOpacity": 1,
     "tempBgColorPalette": "color5",
 
+    "hoverName": "none",
+    "hoverDuration": 600,
+    "hoverDelay": 0,
+    "hoverInfiniteAnimation": true,
+
     "hoverBgColorHex": "#bde1f4",
     "hoverBgColorOpacity": 0,
     "hoverBgColorPalette": "",
@@ -123,10 +128,6 @@
 
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "color3",
-
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
 
     "tempHoverBorderColorOpacity": 1,
     "tempHoverBorderColorPalette": "color3",

@@ -65,13 +65,6 @@
     "tempColorOpacity": 1,
     "tempColorPalette": "color8",
 
-    "activeColorHex": null,
-    "activeColorOpacity": null,
-    "activeColorPalette": null,
-
-    "tempActiveColorOpacity": null,
-    "tempActiveColorPalette": null,
-
     "bgColorType": "solid",
 
     "bgColorHex": "#2B3039",
@@ -80,13 +73,6 @@
 
     "tempBgColorOpacity": 1,
     "tempBgColorPalette": "",
-
-    "activeBgColorHex": null,
-    "activeBgColorOpacity": null,
-    "activeBgColorPalette": null,
-
-    "tempActiveBgColorOpacity": null,
-    "tempActiveBgColorPalette": null,
 
     "borderColorHex": "#dcdee1",
     "borderColorOpacity": 0.1,

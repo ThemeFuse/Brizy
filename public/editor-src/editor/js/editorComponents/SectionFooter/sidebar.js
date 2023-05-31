@@ -3,14 +3,13 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { getShapes } from "visual/utils/options";
 import {
   toolbarShapeBottomFlip,
-  toolbarShapeBottomType,
-  toolbarShapeTopFlip,
-  toolbarShapeTopType
+  toolbarShapeTopFlip
 } from "visual/utils/toolbar";
 
 export const title = t("Footer");
@@ -37,10 +36,10 @@ export function getItems({ v, device, context }) {
     { title: t("Aside"), value: "aside" },
     { title: t("Nav"), value: "nav" }
   ];
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
 
   return [
     {
@@ -103,11 +102,12 @@ export function getItems({ v, device, context }) {
                           type: "group-dev",
                           disabled: dvv("shape") !== "top",
                           options: [
-                            toolbarShapeTopType({
-                              v,
-                              device,
-                              state: "normal"
-                            }),
+                            {
+                              id: "shapeTopType",
+                              label: t("Type"),
+                              type: "select-dev",
+                              choices: getShapes()
+                            },
                             {
                               id: "shapeTopColors",
                               type: "popover-dev",
@@ -169,11 +169,13 @@ export function getItems({ v, device, context }) {
                           type: "group-dev",
                           disabled: dvv("shape") !== "bottom",
                           options: [
-                            toolbarShapeBottomType({
-                              v,
-                              device,
-                              state: "normal"
-                            }),
+                            {
+                              id: "shapeBottomType",
+                              label: t("Type"),
+                              type: "select-dev",
+                              choices: getShapes(),
+                              className: "brz-ed-shape icon--bottom"
+                            },
                             {
                               id: "shapeBottomColors",
                               type: "popover-dev",
@@ -272,9 +274,7 @@ export function getItems({ v, device, context }) {
                       helper: {
                         content: "Add your custom block name, example: my-block"
                       },
-                      config: {
-                        choices: richTextDC
-                      },
+                      config: richTextDC,
                       option: {
                         id: "anchorName",
                         type: "inputText-dev"
@@ -291,9 +291,7 @@ export function getItems({ v, device, context }) {
                         content:
                           "Add your custom class without the .dot, example: my-class"
                       },
-                      config: {
-                        choices: richTextDC
-                      },
+                      config: richTextDC,
                       option: {
                         id: "customClassName",
                         type: "inputText-dev"

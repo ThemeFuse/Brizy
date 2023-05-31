@@ -9,17 +9,19 @@ import { OptionLabel } from "visual/component/OptionLabel";
 export interface Props<T extends number | string> {
   directions: Array<[T, string]>;
   value: T;
+  label?: string;
   onChange: OnChange<T>;
 }
 
 export function Direction<T extends number | string>({
   value,
   onChange,
-  directions
+  directions,
+  label
 }: Props<T>): ReactElement | null {
   return directions.length > 1 ? (
     <OptionWrapper display={"inline"} className={"brz-ed-option"}>
-      <OptionLabel label={t("Direction")} />
+      <OptionLabel label={label ?? t("Direction")} />
       <Select2<T> value={value} onChange={onChange} editable={false}>
         {directions.map(([k, t]) => {
           return (

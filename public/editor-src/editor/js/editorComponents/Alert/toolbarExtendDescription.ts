@@ -3,7 +3,7 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -28,10 +28,11 @@ export function getItems({
     dvv("descriptionColorPalette")
   );
 
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText,
+    config: { iconOnly: true }
+  });
 
   return [
     {
@@ -73,10 +74,7 @@ export function getItems({
                 {
                   id: "description",
                   type: "population-dev",
-                  config: {
-                    iconOnly: true,
-                    choices: richTextDC
-                  },
+                  config: richTextDC,
                   devices: "desktop"
                 }
               ]

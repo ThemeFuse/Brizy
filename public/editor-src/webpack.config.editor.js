@@ -40,7 +40,7 @@ module.exports = (options = {}) => {
     },
     output: {
       path: path.resolve(BUILD_PATH, "editor/js"),
-      filename: "[name].js"
+      filename: "[name].min.js"
     },
     resolve: {
       alias: {
@@ -49,7 +49,8 @@ module.exports = (options = {}) => {
         core: path.resolve(__dirname, "packages/core/src"),
         component: path.resolve(__dirname, "packages/component/src"),
         widget: path.resolve(__dirname, "packages/widget/src"),
-        widgetTemp: path.resolve(__dirname, "packages/widgetTemp/src")
+        widgetTemp: path.resolve(__dirname, "packages/widgetTemp/src"),
+        icons: path.resolve(__dirname, "packages/icons/src")
       },
       extensions: getExtensions(options.TARGET),
       fallback: {
@@ -66,13 +67,6 @@ module.exports = (options = {}) => {
           ],
           loader: "swc-loader",
           options: swcrc.editor(options)
-        },
-
-        // It's only for CodeMirror
-        {
-          test: /\.(html|css)$/,
-          include: [path.resolve(__dirname, "node_modules/codemirror")],
-          loader: "null-loader"
         }
       ]
     },

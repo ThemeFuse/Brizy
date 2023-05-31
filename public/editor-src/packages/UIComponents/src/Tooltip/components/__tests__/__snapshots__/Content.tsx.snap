@@ -1,0 +1,363 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test TooltipContent Snapshots Simple render Should have children and by default shouldn't have arrow 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <p
+    class="children"
+  >
+    children
+  </p>
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:auto 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--auto"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:auto-end 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--auto-end"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:auto-start 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--auto-start"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:bottom 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--bottom"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:bottom-end 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--bottom-end"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:bottom-start 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--bottom-start"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:left 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--left"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:left-end 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--left-end"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:left-start 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--left-start"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:right 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--right"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:right-end 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--right-end"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:right-start 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--right-start"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:top 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--top"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:top-end 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--top-end"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have placement:top-start 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--top-start"
+    style="position: absolute; margin: 0px;"
+  />
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have size:auto 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-ed-tooltip--auto"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have size:large 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-ed-tooltip--large"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have size:medium 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-ed-tooltip--medium"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have size:small 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-ed-tooltip--small"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render Should have size:xlarge 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-ed-tooltip--xlarge"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render className should be className 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay className"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  Children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots Simple render when show Arrow should have children with className:brz-ed-arrow 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+  style="position: absolute; left: 0px; top: 0px;"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--top"
+    style="position: absolute; margin: 0px;"
+  />
+  Children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots render in Toolbar Should have children and by default should be closed 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-invisible"
+>
+  <p
+    class="children"
+  >
+    children
+  </p>
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots render in Toolbar Should have size:auto 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-ed-tooltip--auto brz-invisible"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots render in Toolbar Should have size:large 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-ed-tooltip--large brz-invisible"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots render in Toolbar Should have size:medium 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-ed-tooltip--medium brz-invisible"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots render in Toolbar Should have size:small 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-ed-tooltip--small brz-invisible"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots render in Toolbar Should have size:xlarge 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-ed-tooltip--xlarge brz-invisible"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots render in Toolbar className should be className 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-invisible className"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots render in Toolbar when isOpen shouldn't have className:brz-invisible 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots render in Toolbar when isn't show Arrow shouldn't have children with className:brz-ed-arrow 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-invisible"
+>
+  children
+</div>
+`;
+
+exports[`Test TooltipContent Snapshots render in Toolbar when show Arrow should have children with className:brz-ed-arrow 1`] = `
+<div
+  class="brz-ed-animated brz-ed-animated--fadeInUp brz-ed-tooltip__overlay brz-invisible"
+>
+  <div
+    class="brz-ed-arrow brz-ed-arrow--top"
+  />
+  children
+</div>
+`;

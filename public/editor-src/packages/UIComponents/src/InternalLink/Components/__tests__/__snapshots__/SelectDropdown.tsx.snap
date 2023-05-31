@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test SelectDropdown Snapshots and Props children should be children and loading className shouldn't be 1`] = `
+<div
+  class="brz-ed-control__internalLink__dropdown brz-ed-control__internalLink__dropdown--with-search"
+>
+  <div
+    class="brz-ed-control__internalLink__search"
+  >
+    <input
+      class="brz-input"
+      placeholder="Type to Search ..."
+      spellcheck="false"
+    />
+  </div>
+  <div
+    style="position: relative; overflow: hidden; width: 100%; height: auto; min-height: 0; max-height: 150px;"
+  >
+    <div
+      style="position: relative; overflow: scroll; margin-right: 0px; margin-bottom: 0px; min-height: 0; max-height: 150px;"
+    >
+      <p
+        class="children"
+      >
+        children
+      </p>
+    </div>
+    <div
+      style="position: absolute; height: 6px; display: none; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;"
+    >
+      <div
+        style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2);"
+      />
+    </div>
+    <div
+      style="position: absolute; width: 6px; display: none; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;"
+    >
+      <div
+        class="brz-ed-control__multiSelect__scroll-thumb"
+        style="position: relative; display: block; width: 100%;"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test SelectDropdown Snapshots and Props style should contain "backgroundColor: red" 1`] = `
+<div
+  class="brz-ed-control__internalLink__dropdown brz-ed-control__internalLink__dropdown--with-search"
+  style="background-color: red;"
+>
+  <div
+    class="brz-ed-control__internalLink__search"
+  >
+    <input
+      class="brz-input"
+      placeholder="Type to Search ..."
+      spellcheck="false"
+    />
+  </div>
+  <div
+    style="position: relative; overflow: hidden; width: 100%; height: auto; min-height: 0; max-height: 150px;"
+  >
+    <div
+      style="position: relative; overflow: scroll; margin-right: 0px; margin-bottom: 0px; min-height: 0; max-height: 150px;"
+    >
+      children
+    </div>
+    <div
+      style="position: absolute; height: 6px; display: none; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;"
+    >
+      <div
+        style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2);"
+      />
+    </div>
+    <div
+      style="position: absolute; width: 6px; display: none; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;"
+    >
+      <div
+        class="brz-ed-control__multiSelect__scroll-thumb"
+        style="position: relative; display: block; width: 100%;"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test SelectDropdown Snapshots and Props when is Search Loading className for loading should be 1`] = `
+<div
+  class="brz-ed-control__internalLink__dropdown brz-ed-control__internalLink__dropdown--with-search brz-ed-control__internalLink__dropdown--search-loading"
+>
+  <div
+    class="brz-ed-control__internalLink__search"
+  >
+    <input
+      class="brz-input"
+      placeholder="Type to Search ..."
+      spellcheck="false"
+    />
+  </div>
+  <div
+    style="position: relative; overflow: hidden; width: 100%; height: auto; min-height: 0; max-height: 150px;"
+  >
+    <div
+      style="position: relative; overflow: scroll; margin-right: 0px; margin-bottom: 0px; min-height: 0; max-height: 150px;"
+    >
+      children
+    </div>
+    <div
+      style="position: absolute; height: 6px; display: none; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;"
+    >
+      <div
+        style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2);"
+      />
+    </div>
+    <div
+      style="position: absolute; width: 6px; display: none; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;"
+    >
+      <div
+        class="brz-ed-control__multiSelect__scroll-thumb"
+        style="position: relative; display: block; width: 100%;"
+      />
+    </div>
+  </div>
+</div>
+`;

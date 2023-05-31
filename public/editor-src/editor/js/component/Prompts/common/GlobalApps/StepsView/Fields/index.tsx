@@ -4,6 +4,7 @@ import Scrollbars from "react-custom-scrollbars";
 import _ from "underscore";
 import { Alert } from "visual/component/Alert";
 import ReactSelect from "visual/component/Controls/ReactSelect";
+import { SingleValue } from "visual/component/Controls/ReactSelect/types";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { Switch } from "visual/component/Controls/Switch";
@@ -124,19 +125,30 @@ export class Fields extends Component<Props> {
     value,
     choices
   }: SearchData): ReactElement => {
-    const nValue = Boolean(value) && multiple ? value?.split(",") : value;
+    const nValue: string[] | string | undefined | null =
+      Boolean(value) && multiple ? value?.split(",") : value;
+
+    // because of this Select is using for one/multiple items at the same time, I need to check
+    // if the value is an array of strings (in case of multiple items) or object (single item)
+    const onChange = (value: string[] | SingleValue): void => {
+      this.props.onActive(
+        name,
+        multiple && Array.isArray(value)
+          ? value.join(",")
+          : !Array.isArray(value) && typeof value === "object"
+          ? value.value
+          : ""
+      );
+    };
 
     return (
       <div className="brz-ed-popup-integrations-step__fields-select">
         <ReactSelect
           className="brz-control__select2--light"
-          multiple={multiple}
+          isMultiple={multiple}
           value={nValue}
           options={choices}
-          onChange={(value: unknown): void => {
-            // @ts-expect-error: need transform ReactSelect to ts
-            this.props.onActive(name, multiple ? value.join(",") : value.value);
-          }}
+          onChange={onChange}
         />
       </div>
     );

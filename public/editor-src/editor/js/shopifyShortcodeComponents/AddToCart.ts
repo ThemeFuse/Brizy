@@ -12,7 +12,8 @@ export default {
         {
           type: "AddToCart",
           value: {
-            _styles: ["addToCart"]
+            _styles: ["addToCart"],
+            sourceType: "shopify-product"
           }
         }
       ]

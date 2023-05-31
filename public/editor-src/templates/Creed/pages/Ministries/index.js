@@ -288,7 +288,7 @@ module.exports = {
                                                                                                 iconSize: "custom",
                                                                                                 iconCustomSize: 12,
                                                                                                 linkExternalBlank: "off",
-                                                                                                linkExternal: "https://demo.themefuse.com/creed/?page_id=1752"
+                                                                                                linkExternal: ""
                                                                                             }
                                                                                         }
                                                                                     ],
@@ -503,7 +503,7 @@ module.exports = {
                                                                                                 iconSize: "custom",
                                                                                                 iconCustomSize: 12,
                                                                                                 linkExternalBlank: "off",
-                                                                                                linkExternal: "https://demo.themefuse.com/creed/?page_id=1752"
+                                                                                                linkExternal: ""
                                                                                             }
                                                                                         }
                                                                                     ],
@@ -718,7 +718,7 @@ module.exports = {
                                                                                                 iconSize: "custom",
                                                                                                 iconCustomSize: 12,
                                                                                                 linkExternalBlank: "off",
-                                                                                                linkExternal: "https://demo.themefuse.com/creed/?page_id=1752"
+                                                                                                linkExternal: ""
                                                                                             }
                                                                                         }
                                                                                     ],
@@ -947,7 +947,7 @@ module.exports = {
                                                                                                 iconSize: "custom",
                                                                                                 iconCustomSize: 12,
                                                                                                 linkExternalBlank: "off",
-                                                                                                linkExternal: "https://demo.themefuse.com/creed/?page_id=1752"
+                                                                                                linkExternal: ""
                                                                                             }
                                                                                         }
                                                                                     ],
@@ -1164,7 +1164,7 @@ module.exports = {
                                                                                                 iconSize: "custom",
                                                                                                 iconCustomSize: 12,
                                                                                                 linkExternalBlank: "off",
-                                                                                                linkExternal: "https://demo.themefuse.com/creed/?page_id=1752"
+                                                                                                linkExternal: ""
                                                                                             }
                                                                                         }
                                                                                     ],
@@ -1380,7 +1380,7 @@ module.exports = {
                                                                                                 iconPosition: "left",
                                                                                                 iconSize: "custom",
                                                                                                 iconCustomSize: 12,
-                                                                                                linkExternal: "https://demo.themefuse.com/creed/?page_id=1752",
+                                                                                                linkExternal: "",
                                                                                                 linkExternalBlank: "off"
                                                                                             }
                                                                                         }
@@ -1610,7 +1610,7 @@ module.exports = {
                                                                                                 iconSize: "custom",
                                                                                                 iconCustomSize: 12,
                                                                                                 linkExternalBlank: "off",
-                                                                                                linkExternal: "https://demo.themefuse.com/creed/?page_id=1752"
+                                                                                                linkExternal: ""
                                                                                             }
                                                                                         }
                                                                                     ],
@@ -1827,7 +1827,7 @@ module.exports = {
                                                                                                 iconSize: "custom",
                                                                                                 iconCustomSize: 12,
                                                                                                 linkExternalBlank: "off",
-                                                                                                linkExternal: "https://demo.themefuse.com/creed/?page_id=1752"
+                                                                                                linkExternal: ""
                                                                                             }
                                                                                         }
                                                                                     ],

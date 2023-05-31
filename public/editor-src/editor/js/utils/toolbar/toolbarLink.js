@@ -1,7 +1,7 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import { getDynamicContentChoices } from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 
 export function toolbarLinkAnchor({
   v,
@@ -38,10 +38,11 @@ export function toolbarStoryAnchor({ disabled = false, devices = "all" }) {
 }
 
 export function toolbarLinkExternal({ v, config, devices = "all" }) {
-  const linkDynamicContentChoices = getDynamicContentChoices(
-    config,
-    DCTypes.link
-  );
+  const population = getDynamicContentOption({
+    options: config,
+    type: DCTypes.link,
+    config: { show: true }
+  });
 
   return {
     id: "linkExternal",
@@ -49,10 +50,7 @@ export function toolbarLinkExternal({ v, config, devices = "all" }) {
     devices,
     label: t("Link to"),
     placeholder: "http://",
-    population: {
-      show: linkDynamicContentChoices.length > 0,
-      choices: linkDynamicContentChoices
-    },
+    population: population,
     value: {
       value: v.linkExternal,
 

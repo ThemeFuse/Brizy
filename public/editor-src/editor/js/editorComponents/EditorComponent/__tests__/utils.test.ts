@@ -29,7 +29,6 @@ jest.mock("visual/component/Options/types/Grid.jsx", () => {});
 jest.mock("visual/component/Options/types/ImageSetter.jsx", () => {});
 jest.mock("visual/component/Options/types/Input.jsx", () => {});
 jest.mock("visual/component/Options/types/IntegrationsApps.js", () => {});
-jest.mock("visual/component/Options/types/MultiInput.js", () => {});
 jest.mock(
   "visual/component/Options/types/MultiInputPickerOptionType.js",
   () => {}

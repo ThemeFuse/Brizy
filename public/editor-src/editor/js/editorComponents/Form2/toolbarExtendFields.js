@@ -1,7 +1,6 @@
 import { t } from "visual/utils/i18n";
-import { toolbarElementForm2SpacingPx } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+export function getItems() {
   return [
     {
       id: "toolbarCurrentElement",
@@ -14,7 +13,16 @@ export function getItems({ v, device }) {
             {
               id: "field",
               options: [
-                toolbarElementForm2SpacingPx({ v, device, state: "normal" })
+                {
+                  id: "padding",
+                  type: "slider-dev",
+                  label: t("Spacing"),
+                  config: {
+                    min: 0,
+                    max: 100,
+                    units: [{ title: "px", value: "px" }]
+                  }
+                }
               ]
             },
             {

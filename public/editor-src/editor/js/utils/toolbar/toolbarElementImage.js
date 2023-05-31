@@ -1,7 +1,7 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import { getDynamicContentChoices } from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 
 export function toolbarImageLinkExternal({
   v,
@@ -14,10 +14,11 @@ export function toolbarImageLinkExternal({
   const dvk = (key) => defaultValueKey({ key, device, state });
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
-  const linkDynamicContentChoices = getDynamicContentChoices(
-    config,
-    DCTypes.link
-  );
+  const linkDynamicContentChoices = getDynamicContentOption({
+    options: config,
+    type: DCTypes.link,
+    config: { show: !inGallery }
+  });
 
   return {
     id: dvk("linkExternal"),
@@ -25,10 +26,7 @@ export function toolbarImageLinkExternal({
     label: t("Link to"),
     placeholder: "http://",
     devices,
-    population: {
-      show: linkDynamicContentChoices.length > 0 && !inGallery,
-      choices: linkDynamicContentChoices
-    },
+    population: linkDynamicContentChoices,
     value: {
       population: dvv("linkPopulation"),
       value: dvv("linkExternal")

@@ -4,7 +4,7 @@ import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
-import { getDynamicContentChoices } from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 
 export const title = t("Popup Close Icon");
 const helperHTML = `
@@ -21,10 +21,10 @@ export function getItems({
   context: EditorComponentContextValue;
 }): ToolbarItemType[] {
   const IS_STORY = isStory(Config.getAll());
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
 
   return [
     {
@@ -58,9 +58,7 @@ export function getItems({
                         content:
                           "Add your custom ID without the #pound, example: my-id"
                       },
-                      config: {
-                        choices: richTextDC
-                      },
+                      config: richTextDC,
                       option: {
                         id: "closeCustomID",
                         type: "inputText-dev"
@@ -77,9 +75,7 @@ export function getItems({
                         content:
                           "Add your custom class without the .dot, example: my-class"
                       },
-                      config: {
-                        choices: richTextDC
-                      },
+                      config: richTextDC,
                       option: {
                         id: "closeCustomClassName",
                         type: "inputText-dev"

@@ -1,6 +1,6 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
-import { getDynamicContentChoices } from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 
 export const title = t("Mega Menu");
 
@@ -15,10 +15,10 @@ export function getItems({ context }) {
     { title: t("Aside"), value: "aside" },
     { title: t("Nav"), value: "nav" }
   ];
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
 
   return [
     {
@@ -83,9 +83,7 @@ export function getItems({ context }) {
                       helper: {
                         content: "Add your custom block name, example: my-block"
                       },
-                      config: {
-                        choices: richTextDC
-                      },
+                      config: richTextDC,
                       option: {
                         id: "anchorName",
                         type: "inputText-dev"
@@ -102,9 +100,7 @@ export function getItems({ context }) {
                         content:
                           "Add your custom class without the .dot, example: my-class"
                       },
-                      config: {
-                        choices: richTextDC
-                      },
+                      config: richTextDC,
                       option: {
                         id: "customClassName",
                         type: "inputText-dev"

@@ -375,5 +375,3 @@ jQuery(document).ready(function ($) {
         DemoImport.registerEvents();
     } );
 });
-
-

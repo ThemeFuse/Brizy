@@ -41,7 +41,6 @@ jest.mock(
   "visual/component/Options/types/IntegrationsApps.js",
   () => undefined
 );
-jest.mock("visual/component/Options/types/MultiInput.js", () => undefined);
 jest.mock("visual/component/Options/types/MultiPicker.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Popover.jsx", () => undefined);
 jest.mock(

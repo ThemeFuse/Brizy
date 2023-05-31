@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { createRef, ReactNode } from "react";
+import React, { ReactNode, createRef } from "react";
 import { uniqueId } from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
@@ -7,6 +7,7 @@ import { valueToEciwdConfig } from "visual/editorComponents/Ecwid/EcwidProduct/u
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import Config, { Cloud } from "visual/global/Config";
+import { isEcwidShop } from "visual/global/Config/types/configs/Base";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
@@ -28,8 +29,8 @@ import * as sidebarGallery from "./sidebarGallery";
 import * as sidebarQty from "./sidebarQty";
 import * as sidebarSelect from "./sidebarSelect";
 import * as sidebarShareButtons from "./sidebarShareButtons";
-import * as sidebarTextarea from "./sidebarTextarea";
 import * as sidebarTextField from "./sidebarTextField";
+import * as sidebarTextarea from "./sidebarTextarea";
 import * as sidebarThumbs from "./sidebarThumbs";
 import * as sidebarViewFavorites from "./sidebarViewFavorites";
 import { style } from "./styles";
@@ -54,15 +55,15 @@ import * as toolbarInStock from "./toolbarInStock";
 import * as toolbarPrice from "./toolbarPrice";
 import * as toolbarQty from "./toolbarQty";
 import * as toolbarRadio from "./toolbarRadio";
+import * as toolbarSKU from "./toolbarSKU";
 import * as toolbarSelect from "./toolbarSelect";
 import * as toolbarShareButtons from "./toolbarShareButtons";
 import * as toolbarShareTitle from "./toolbarShareTitle";
 import * as toolbarShowMore from "./toolbarShowMore";
 import * as toolbarSize from "./toolbarSize";
-import * as toolbarSKU from "./toolbarSKU";
 import * as toolbarSubtitles from "./toolbarSubtitles";
-import * as toolbarTextarea from "./toolbarTextarea";
 import * as toolbarTextField from "./toolbarTextField";
+import * as toolbarTextarea from "./toolbarTextarea";
 import * as toolbarThumbnail from "./toolbarThumbnail";
 import * as toolbarTitle from "./toolbarTitle";
 import * as toolbarTitle2 from "./toolbarTitle2";
@@ -1175,7 +1176,8 @@ export class EcwidProduct extends EditorComponent<Value> {
 
   renderForView(v: Value, vs: Value, vd: Value): ReactNode {
     const config = Config.getAll() as Cloud;
-    const defaultProductId = config.modules?.shop?.defaultProductId;
+    const shop = config.modules?.shop;
+    const defaultProductId = isEcwidShop(shop) ? shop.defaultProductId : "";
 
     const className = classnames(
       "brz-ecwid-wrapper",
