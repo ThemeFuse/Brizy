@@ -20,11 +20,9 @@ class Brizy_Editor_Editor_ModuleGroups_SingleProvider implements Brizy_Editor_Ed
                 $this->isTemplateType($context, 'single') ? "WPPostContent" : null, // if is singleTemplate
                 "WPPostInfo",
                 "WPBreadcrumbs",
-                "WPPostNavigation",
-                "Posts"
-            ], 100 ),
+	            $this->isTemplateType($context, 'single') || $this->isPostType($context, 'post') ? "WPPostNavigation" : null, // if it is singleTemplate or postType
+	            "Posts"
+            ], $this->isMode($context, 'page') ? 475 : 100 ),
         ];
     }
 }
-
-
