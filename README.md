@@ -136,6 +136,31 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 2.4.19 - 2023-05-31
+* New: Advanced Hover animation 
+* Improved: Button old options to new options  
+* Improved: Removed title attribute from HTML for the block slider .svg arrows 
+* Improved: Remove icon on global style in the left sidebar
+* Improved: Added IST timezone in the Countdown element
+* Improved: Youtube video in the Video element 
+* Improved: Made all UI scrollbars custom
+* Improved: Added .min suffix for all css and js minified files 
+* Updated: Codemirror plugins 
+* Updated: Core-js library
+* Fixed: Added support to escaping singe and double quotes
+* Fixed: Link anchor is not working on the correct block if you scroll
+* Fixed: Screenshots browser compatibility on Safari when saving blocks
+* Fixed: Link option in a Row element 
+* Fixed: Escape backslashes in the form data json before inserting in the post content 
+* New: Added a Getting Started Page for easier onboarding
+* New: Added left sidebar config (module groups in config)
+* Fixed: Append text via parser by CSS class only  
+* Fixed: Click twice or more to close a pop-up
+* Fixed: Starter template import 
+* Fixed: Remove the sufix from version compare when importing from archives 
+* Fixed: Restore WP revisions
+
+
 ### 2.4.18 - 2023-04-03
 * Fixed: onclick Custom Attribute RightSidebar 
 * Fixed: Responsive brackground map 
