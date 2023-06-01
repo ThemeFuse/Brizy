@@ -367,8 +367,8 @@ class Brizy_Editor_Editor_Editor {
 
 	private function addContentDefaults( $config, $context ) {
 		$config['contentDefaults'] = [
-			'Row'              => ['linkSource' => 'page'],
 			'ProductMetafield' => ['linkSource' => 'page'],
+			'Row'              => ['linkSource' => 'page', 'linkType' => 'page'],
 			'Button'           => ['linkSource' => 'page', 'linkType' => 'page'],
 			'RichText'         => ['linkSource' => 'page', 'linkType' => 'page'],
 			'Icon'             => ['linkSource' => 'page', 'linkType' => 'page'],
