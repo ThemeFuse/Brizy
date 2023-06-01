@@ -136,6 +136,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 2.4.19 - 2023-06-01
+* Fixed: Image resize on preview
+* Fixed: Uploaded webp Image
+
 ### 2.4.19 - 2023-05-31
 * New: Advanced Hover animation 
 * Improved: Button old options to new options  
