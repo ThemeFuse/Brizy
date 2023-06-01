@@ -204,10 +204,11 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 		$p_id = (int) $this->getWpPostId();
 
-		$data = array(
+		$json_decode = json_decode( $this->get_editor_data() );
+		$data        = array(
 			'_kind'       => "wp",
 			'id'          => $p_id,
-			'data'        => json_decode( $this->get_editor_data() ),
+			'data'        => $json_decode?:"",
 			'dataVersion' => $this->getCurrentDataVersion(),
 			'title'       => $the_title = $this->getTitle(),
 			'slug'        => sanitize_title( $the_title ),
