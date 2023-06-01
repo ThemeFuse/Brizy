@@ -737,6 +737,7 @@ class Image extends EditorComponent {
     const IS_STORY = isStory(Config.getAll());
     const isAbsoluteOrFixed =
       v.elementPosition === "absolute" || v.elementPosition === "fixed";
+    const { animationId, hoverName, options } = this.getHoverAnimationData(v);
 
     const wrapperSizes = this.getWrapperSizes(v);
 
@@ -753,11 +754,12 @@ class Image extends EditorComponent {
     const parentClassName = classnames(
       "brz-image",
       { "brz-story-linked": IS_STORY && linked },
+      { "brz-image--hovered": hoverName !== "none" },
       isAbsoluteOrFixed && "brz-image--story",
       this.getLightboxClassName(),
       className,
       css(
-        `${this.constructor.componentId}-${this.getId()}-parent`,
+        `${this.getComponentId()}-${this.getId()}-parent`,
         `${this.getId()}-parent`,
         style(v, vs, vd, styleProps)
       )
@@ -765,13 +767,11 @@ class Image extends EditorComponent {
 
     const hoverAnimationClassName = classnames(
       css(
-        `${this.constructor.componentId}-${this.getId()}-parent`,
-        `${this.getId()}-parent`,
+        `${this.getComponentId()}-${this.getId()}-parent-hover`,
+        `${this.getId()}-parent-hover`,
         styleHover(v, vs, vd, styleProps)
       )
     );
-
-    const { animationId, hoverName, options } = this.getHoverAnimationData(v);
 
     return (
       <Fragment>
