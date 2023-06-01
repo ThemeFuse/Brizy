@@ -3,6 +3,7 @@ import { AddMediaData } from "../types/Media";
 import { getExtension } from "../utils/getExtension";
 import { t } from "../utils/i18n";
 import { isValidExtension } from "../utils/isValidExtension";
+import { internalAcceptedExtensions } from "./utils";
 
 export const addMedia: AddMediaData = {
   label: "Image",
@@ -42,8 +43,12 @@ export const addMedia: AddMediaData = {
       const attachment = wpMediaFrame.state().get("selection").first();
       const { url, filename } = attachment.toJSON();
       const extension = getExtension(url);
+      const allExtensions = [
+        ...acceptedExtensions,
+        ...internalAcceptedExtensions
+      ];
 
-      if (!extension || !isValidExtension(extension, acceptedExtensions)) {
+      if (!extension || !isValidExtension(extension, allExtensions)) {
         rej(
           `Failed to upload file. Please upload a valid ${acceptedExtensions.join()}.`
         );

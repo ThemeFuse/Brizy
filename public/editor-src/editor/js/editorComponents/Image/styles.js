@@ -12,9 +12,11 @@ export function styleHover(v, vs, vd, props) {
 
 export function style(v, vs, vd, props) {
   const styles = {
+    ".brz &&:hover:not(.brz-image--hovered)": {
+      standart: ["cssStyleElementImageMaxWidthPreview"]
+    },
     ".brz &&:hover": {
       standart: [
-        "cssStyleElementImageMaxWidthPreview",
         "cssStyleElementImageHeightPreview",
         "cssStyleElementImageBoxShadow|||preview",
         "cssStyleBorder|||preview",
