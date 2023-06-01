@@ -6,3 +6,5 @@ export const uploadImage = ({
   fileName
 }: ImageUpload): Promise<AddImageData> =>
   getImageUid(String(id)).then(({ uid }) => ({ uid, fileName }));
+
+export const internalAcceptedExtensions = ["webp"];
