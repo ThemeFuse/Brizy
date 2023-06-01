@@ -135,7 +135,7 @@ class Brizy_Public_Main
 		    'brizy-client-editor',
 		    "${client_asset_url}/editor-client/build/index.js",
 		    ['brizy-editor-vendor'],
-		    null,
+		    BRIZY_VERSION,
 		    true
 	    );
 	    wp_enqueue_script(
