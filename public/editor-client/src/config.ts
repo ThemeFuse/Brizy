@@ -7,6 +7,13 @@ import * as Str from "./utils/reader/string";
 import { throwOnNullish } from "./utils/throwOnNullish";
 import { MValue } from "./utils/types";
 
+interface DefaultTemplates {
+  kitsUrl: string;
+  popupsUrl: string;
+  storiesUrl: string;
+  layoutsUrl: string;
+}
+
 interface Actions {
   getMediaUid: string;
   getAttachmentUid: string;
@@ -29,8 +36,9 @@ interface Actions {
 interface API {
   mediaResizeUrl: string;
   customFileUrl: string;
+  templates: DefaultTemplates;
 }
-interface Config {
+export interface Config {
   hash: string;
   editorVersion: string;
   url: string;
@@ -39,6 +47,25 @@ interface Config {
   api: API;
   l10n?: Record<string, string>;
 }
+
+const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
+  kitsUrl: pipe(
+    mPipe(Obj.readKey("kitsUrl"), Str.read),
+    throwOnNullish("Invalid API Config: kits")
+  ),
+  layoutsUrl: pipe(
+    mPipe(Obj.readKey("layoutsUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  popupsUrl: pipe(
+    mPipe(Obj.readKey("popupsUrl"), Str.read),
+    throwOnNullish("Invalid API Config: popups")
+  ),
+  storiesUrl: pipe(
+    mPipe(Obj.readKey("storiesUrl"), Str.read),
+    throwOnNullish("Invalid API Config: stories")
+  )
+});
 
 const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
   mediaResizeUrl: pipe(
@@ -58,6 +85,10 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
       Str.read
     ),
     throwOnNullish("Invalid actions: customFileUrl")
+  ),
+  templates: pipe(
+    mPipe(Obj.readKey("templates"), Obj.read, templatesReader),
+    throwOnNullish("Invalid API: templates")
   )
 });
 
