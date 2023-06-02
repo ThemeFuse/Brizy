@@ -1,4 +1,5 @@
 import { Config } from "../config";
+import { Page } from "../types/Page";
 import { Project } from "../types/Project";
 import {
   CreatedSavedBlock,
@@ -174,6 +175,7 @@ export const stringifyProject = (project: Project): APIProject => ({
 //#endregion
 
 //#region Collections
+
 export type GetCollections = (
   data: {
     search?: string;
@@ -182,5 +184,20 @@ export type GetCollections = (
   },
   config: Config
 ) => Promise<{ ID: number; title: string; permalink: string }[]>;
+
+//#endregion
+
+//#region Page
+
+type APIPage = Omit<Page, "data" | "dataVersion"> & {
+  data: string;
+  dataVersion: string;
+};
+
+export const stringifyPage = (page: Page): APIPage => ({
+  ...page,
+  data: JSON.stringify(page.data),
+  dataVersion: `${page.dataVersion}`
+});
 
 //#endregion

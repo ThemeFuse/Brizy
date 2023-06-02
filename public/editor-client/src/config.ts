@@ -20,6 +20,8 @@ interface Actions {
   getMediaUid: string;
   getAttachmentUid: string;
   setProject: string;
+  updatePage: string;
+  updateRules: string;
 
   getSavedBlockList: string;
   getSavedBlockByUid: string;
@@ -115,6 +117,14 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   setProject: pipe(
     mPipe(Obj.readKey("setProject"), Str.read),
     throwOnNullish("Invalid actions: setProject")
+  ),
+  updatePage: pipe(
+    mPipe(Obj.readKey("updatePage"), Str.read),
+    throwOnNullish("Invalid actions: updatePage")
+  ),
+  updateRules: pipe(
+    mPipe(Obj.readKey("updateRules"), Str.read),
+    throwOnNullish("Invalid actions: updateRules")
   ),
   createSavedBlock: pipe(
     mPipe(Obj.readKey("createSavedBlock"), Str.read),

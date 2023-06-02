@@ -49,6 +49,8 @@ export interface __BRZ_PLUGIN_ENV__ {
     getMediaUid: string;
     getAttachmentUid: string;
     setProject: string;
+    updatePage: string;
+    updateRules: string;
   
     getSavedBlockList: string;
     getSavedBlockByUid: string;

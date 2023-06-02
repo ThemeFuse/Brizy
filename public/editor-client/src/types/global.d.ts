@@ -10,9 +10,12 @@ import {
   PopupsWithThumbs,
   StoriesWithThumbs
 } from "./DefaultTemplate";
-import { AddMediaData, AddMediaExtra } from "./Media";
+import { AddFileData } from "./File";
+import { AddMediaData, AddMediaGallery } from "./Media";
 import { OnChange } from "./OnChange";
+import { PopupConditions } from "./PopupConditions";
 import { PublishData } from "./Project";
+import { SavedBlocks, SavedLayouts, SavedPopups } from "./SavedBlocks";
 
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
@@ -71,37 +74,29 @@ export interface VISUAL_CONFIG {
     media?: {
       mediaResizeUrl?: string;
 
-      addMedia?: {
-        label?: string;
-        handler: (
-          res: Response<AddMediaData>,
-          rej: Response<string>,
-          extra: AddMediaExtra
-        ) => void;
-      };
+      addMedia?: AddMediaData;
 
-      addMediaGallery?: {
-        label?: string;
-        handler: (
-          res: Response<Array<AddImageData>>,
-          rej: Response<string>,
-          extra: AddMediaExtra
-        ) => void;
-      };
+      addMediaGallery?: AddMediaGallery;
     };
+
     // File
     customFile?: {
       customFileUrl?: string;
 
-      addFile?: {
-        label?: string;
-        handler: (
-          res: Response<AddFileData>,
-          rej: Response<string>,
-          extra: AddFileExtra
-        ) => void;
-      };
+      addFile?: AddFileData;
     };
+
+    // SavedBlocks
+    savedBlocks?: SavedBlocks;
+
+    // SavedLayouts
+    savedLayouts?: SavedLayouts;
+
+    // SavedPopups
+    savedPopups?: SavedPopups;
+
+    // PopupConditions
+    popupConditions?: PopupConditions;
 
     defaultKits?: DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock>;
     defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
