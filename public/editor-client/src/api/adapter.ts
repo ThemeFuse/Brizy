@@ -1,3 +1,4 @@
+import { Config } from "../config";
 import { Project } from "../types/Project";
 import {
   CreatedSavedBlock,
@@ -169,5 +170,17 @@ export const stringifyProject = (project: Project): APIProject => ({
   data: JSON.stringify(project.data),
   dataVersion: `${project.dataVersion}`
 });
+
+//#endregion
+
+//#region Collections
+export type GetCollections = (
+  data: {
+    search?: string;
+    postType?: string[];
+    abortSignal?: AbortSignal;
+  },
+  config: Config
+) => Promise<{ ID: number; title: string; permalink: string }[]>;
 
 //#endregion

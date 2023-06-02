@@ -1,4 +1,6 @@
 import { autoSave } from "./autoSave";
+import { searchCollectionItems } from "./collectionItems/searchCollectionItems";
+import { loadCollectionTypes } from "./collectionTypes/loadCollectionTypes";
 import { getConfig } from "./config";
 import { addFile } from "./customFile/addFile";
 import {
@@ -37,7 +39,13 @@ const api = {
   defaultKits: defaultKits(config),
   defaultPopups: defaultPopups(config),
   defaultStories: defaultStories(config),
-  defaultLayouts: defaultLayouts(config)
+  defaultLayouts: defaultLayouts(config),
+  collectionTypes: {
+    loadCollectionTypes: loadCollectionTypes
+  },
+  collectionItems: {
+    searchCollectionItems: searchCollectionItems
+  }
 };
 
 if (window.__VISUAL_CONFIG__) {

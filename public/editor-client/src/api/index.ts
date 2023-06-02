@@ -11,13 +11,14 @@ import {
 } from "../types/SavedBlocks";
 import { t } from "../utils/i18n";
 import {
+  GetCollections,
   parseMetaSavedBlock,
   parseSavedBlock,
   parseSavedLayout,
+  stringifyProject,
   stringifySavedBlock
 } from "./adapter";
 import { makeFormEncode } from "./utils";
-import { stringifyProject } from "./adapter";
 
 //#region Common Utils Request & PersistentRequest
 
@@ -600,4 +601,46 @@ export const uploadSaveLayouts = async (
   throw rj;
 };
 
+//#endregion
+
+//#region Collections
+export const getCollections: GetCollections = async (
+  { search = "", postType, abortSignal },
+  config
+) => {
+  const {
+    url,
+    hash,
+    actions: { searchPosts }
+  } = config;
+
+  const version = config.editorVersion;
+  const body = new URLSearchParams({
+    hash,
+    version,
+    action: searchPosts
+  });
+
+  if (search !== "") {
+    body.append("search", search);
+  }
+  if (postType !== undefined) {
+    for (const p of postType) {
+      body.append("post_type[]", p);
+    }
+  }
+
+  const r = await request(url, {
+    method: "POST",
+    body,
+    signal: abortSignal
+  });
+  const rj = await r.json();
+
+  if (rj.success) {
+    return rj.data;
+  } else {
+    throw rj;
+  }
+};
 //#endregion
