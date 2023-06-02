@@ -28,7 +28,7 @@ export const addFile: AddFileData = {
         library: wp.media.query({ type: "image" }),
         multiple: false,
         title: t("Upload file"),
-        filterable: "uploaded",
+        filterable: "all",
         priority: 20
       })
     });

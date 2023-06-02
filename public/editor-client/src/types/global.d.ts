@@ -112,7 +112,7 @@ declare global {
           library: WPMediaLibrary;
           multiple: boolean;
           title: string;
-          filterable: "uploaded";
+          filterable: "uploaded" | "all";
           priority: number;
         }): WPMediaLibrary;
       };
