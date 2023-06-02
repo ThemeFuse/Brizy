@@ -5,7 +5,7 @@ class Brizy_Editor_Editor_ModuleGroups_ProductProvider implements Brizy_Editor_E
 	use Brizy_Editor_Editor_ModuleGroups_ContextUtils;
 
 	public function supportContext( $context ) {
-		return $this->isWoocomerceEnabled() && ( $this->isTemplate($context) );
+		return $this->isWoocomerceEnabled();
 	}
 
 	public function collect( $context ) {
@@ -31,9 +31,9 @@ class Brizy_Editor_Editor_ModuleGroups_ProductProvider implements Brizy_Editor_E
 			"WOOPages",
 			"Products",
 			"WOOCart"
-		], $this->isTemplateType( $context, 'single') ? 500 : ($this->isTemplateType( $context, 'archive') ? 550 : 250) );
+        ], $this->isTemplateType( $context, 'single' ) ? 500 : ( $this->isTemplateType( $context, 'archive' ) ? 550 : ( $this->isMode( $context, 'page' ) ? 550 : 250 ) ) );
 
-		if ( $this->isTemplateType( $context, 'product') ) {
+        if ( $this->isTemplateType( $context, 'product' ) || $this->isMode( $context, 'product' ) ) {
 			return [
 				$brizy_Editor_Editor_ModuleGroups_ModuleGroup_Product,
 				$brizy_Editor_Editor_ModuleGroups_ModuleGroup_Woocomerce
