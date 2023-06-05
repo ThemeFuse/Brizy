@@ -118,7 +118,6 @@ class Brizy_Editor
         if (!defined('WP_POST_REVISIONS') || (defined('WP_POST_REVISIONS') && WP_POST_REVISIONS !== false)) {
             add_filter("wp_revisions_to_keep", array($this, 'revisionsToKeep'), 10, 2);
         }
-
     }
 
     public function runMigrations()
@@ -158,7 +157,7 @@ class Brizy_Editor
         Brizy_Admin_Fonts_Main::_init();
         Brizy_Admin_Blocks_Main::_init();
         Brizy_Admin_Stories_Main::_init();
-		Brizy_Admin_Symbols_Main::_init();
+        Brizy_Admin_Symbols_Main::_init();
 
         if (Brizy_Editor_User::is_user_allowed()) {
             Brizy_Admin_Svg_Main::_init();
@@ -309,10 +308,12 @@ class Brizy_Editor
      */
     function registerPageTemplates($templates)
     {
-        return array_merge($templates,
+        return array_merge(
+            $templates,
             array(
                 Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME => __bt('brizy', 'Brizy') . __(' Template', 'brizy')
-            ));
+            )
+        );
     }
 
     public function registerCustomPostTemplates()
@@ -419,22 +420,17 @@ class Brizy_Editor
 
         if (isset($_REQUEST['post'])) {
             $pid = (int)$_REQUEST['post'];
-        } elseif
-        (isset($_REQUEST['page_id'])) {
+        } elseif (isset($_REQUEST['page_id'])) {
             $pid = (int)$_REQUEST['page_id'];
-        } elseif
-        (isset($_REQUEST['post_ID'])) {
+        } elseif (isset($_REQUEST['post_ID'])) {
             $pid = (int)$_POST['post_ID'];
-        } elseif
-        (isset($_REQUEST['id'])) {
+        } elseif (isset($_REQUEST['id'])) {
             $pid = (int)$_REQUEST['id'];
-        } elseif
-        (isset($_REQUEST[Brizy_Editor::prefix('_post')])) {
+        } elseif (isset($_REQUEST[Brizy_Editor::prefix('_post')])) {
             $pid = (int)$_REQUEST[Brizy_Editor::prefix('_post')];
         } elseif ($wp_query && $wp_query->is_posts_page) {
             $pid = (int)get_queried_object_id();
-        } elseif
-        ($wp_query && ($apid = get_queried_object_id()) && (is_single() || is_page()) && $wp_query->queried_object instanceof WP_Post) {
+        } elseif ($wp_query && ($apid = get_queried_object_id()) && (is_single() || is_page()) && $wp_query->queried_object instanceof WP_Post) {
             $pid = (int)$apid;
         } elseif (function_exists('is_shop') && is_shop()) {
             $pid = wc_get_page_id('shop');
@@ -577,8 +573,7 @@ class Brizy_Editor
         }
 
         if (is_null(self::$is_allowed_for_current_user)) {
-            self::$is_allowed_for_current_user = (
-                current_user_can(Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE)
+            self::$is_allowed_for_current_user = (current_user_can(Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE)
                 ||
                 current_user_can(Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY)
             );
