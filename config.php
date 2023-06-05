@@ -96,6 +96,6 @@ class Brizy_Config {
 	}
 
     static public function getEditorTemplatesUrl( $directories ) {
-        return apply_filters( 'brizy_editor_templates_url', self::EDITOR_TEMPLEATES_URL . $directories );
+        return apply_filters( 'brizy_editor_config_templates_url', self::EDITOR_TEMPLEATES_URL . $directories );
     }
 }
