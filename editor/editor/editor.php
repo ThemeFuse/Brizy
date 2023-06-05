@@ -358,8 +358,14 @@ class Brizy_Editor_Editor_Editor {
 				'mediaResizeUrl' => home_url()
 			],
 			'customFile' => [
-				'customFileUrl' => home_url()
-			]
+				'customFileUrl'  => home_url()
+			],
+            'templates'  => [
+                'kitsUrl'    => Brizy_Config::getEditorTemplatesUrl('kits'),
+                'layoutsUrl' => Brizy_Config::getEditorTemplatesUrl('layouts'),
+                'popupsUrl'  => Brizy_Config::getEditorTemplatesUrl('popups'),
+                'storiesUrl' => Brizy_Config::getEditorTemplatesUrl('stories')
+            ]
 		];
 
 		return $config;
@@ -377,8 +383,8 @@ class Brizy_Editor_Editor_Editor {
 			'PostExcerpt'      => ['linkSource' => 'page', 'linkType' => 'page'],
 			'FeaturedImage'    => ['linkSource' => 'page', 'linkType' => 'page'],
 			'Column'           => [
-				[ 'type' => "Column", 'value'   => [ 'linkSource' => 'page', 'linkType' => 'page', 'items' => []]],
-				[ 'type' => "Column", 'value'   => [ 'linkSource' => 'page', 'linkType' => 'page', 'items' => []]]
+				[ 'type' => 'Column', 'value'   => [ 'linkSource' => 'page', 'linkType' => 'page', 'items' => []]],
+				[ 'type' => 'Column', 'value'   => [ 'linkSource' => 'page', 'linkType' => 'page', 'items' => []]]
 			],
 			'PostContent'      => ['linkSource' => 'page', '_population' => ['name' => 'brizy_dc_post_content', 'placeholder' => '{{brizy_dc_post_content}}']],
 			'PostTitle'        => ['linkSource' => 'page', 'linkType' => 'page', '_population' => ['name' => 'brizy_dc_post_title', 'placeholder' => '{{brizy_dc_post_title}}']],
