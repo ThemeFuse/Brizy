@@ -5,7 +5,6 @@ use BrizyPlaceholders\ContextInterface;
 
 class Brizy_Content_Placeholders_Simple extends Brizy_Content_Placeholders_Abstract
 {
-
     /**
      * @return string|callable
      */
@@ -19,13 +18,13 @@ class Brizy_Content_Placeholders_Simple extends Brizy_Content_Placeholders_Abstr
      * @param $value
      * @param string $display
      */
-    public function __construct($label, $placeholder, $value, $group = null, $display = Brizy_Content_Placeholders_Abstract::DISPLAY_INLINE)
+    public function __construct($label, $placeholder, $value, $group = null, $display = Brizy_Content_Placeholders_Abstract::DISPLAY_INLINE, $attrs = [])
     {
         $this->setLabel($label);
         $this->setPlaceholder($placeholder);
         $this->setDisplay($display);
         $this->setGroup($group);
-
+        $this->setAttributes($attrs);
         $this->value = $value;
     }
 
@@ -40,7 +39,7 @@ class Brizy_Content_Placeholders_Simple extends Brizy_Content_Placeholders_Abstr
         $method = $this->value;
 
         if (is_object($method) && ($method instanceof Closure)) {
-            return call_user_func($method, $context, $placeholder);
+            return call_user_func($method, $context, $placeholder, $this->getEntity($placeholder));
         }
 
         return $this->value;

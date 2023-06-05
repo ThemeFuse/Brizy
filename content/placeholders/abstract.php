@@ -6,6 +6,7 @@ use BrizyPlaceholders\PlaceholderInterface;
 
 abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializable implements PlaceholderInterface
 {
+    use \BrizyPlaceholders\AbstractPlaceholderTrait;
 
     const DISPLAY_INLINE = 'inline';
     const DISPLAY_BLOCK = 'block';
@@ -19,6 +20,11 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
      * @return string
      */
     protected $placeholder;
+
+    /**
+     * @var array
+     */
+    protected $attributes = [];
 
     /**
      * @var string
@@ -40,7 +46,7 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 
     public function getUniqueId()
     {
-        return md5(self::class);
+        return md5(get_class($this));
     }
 
     public function getConfigStructure()
@@ -154,20 +160,24 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 
     public function getAttributes()
     {
-        return [];
+        return $this->attributes;
+    }
+
+    public function setAttributes($attributes)
+    {
+        return $this->attributes = (array)$attributes;
     }
 
     public function getEntity(ContentPlaceholder $placeholder)
     {
-        if ($entityType = $placeholder->getAttribute('entityType') && $entityId = $placeholder->getAttribute('entityId')) {
-            $object = get_queried_object();
+        if (($entityType = $placeholder->getAttribute('type')) && ($entityId = $placeholder->getAttribute('id'))) {
+
+            if ($this->is_post_type($entityType)) {
+                return get_post((int)$entityId);
+            }
 
             if ($entityType == "WP_User") {
                 return get_user_by('ID', $entityId);
-            }
-
-            if ($entityType == "WP_Post") {
-                return get_post((int)$entityId);
             }
 
             if ($entityType == "WP_Term") {
@@ -205,5 +215,19 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
     public function getReplacePlaceholder($attributes = [])
     {
         return $this->buildPlaceholder($attributes);
+    }
+
+    private function is_post_type($post = null)
+    {
+        $all_custom_post_types = get_post_types(array('_builtin' => true));
+
+        // there are no custom post types
+        if (empty ($all_custom_post_types)) {
+            return false;
+        }
+
+        $custom_types = array_keys($all_custom_post_types);
+
+        return in_array($post, $custom_types);
     }
 }
