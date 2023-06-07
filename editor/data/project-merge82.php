@@ -81,7 +81,7 @@ class Brizy_Editor_Data_ProjectMerge82 implements Brizy_Editor_Data_ProjectMerge
 		// fonts -> upload
 		if ( isset( $projectData2->fonts->upload ) ) {
 			if ( ! isset( $result->fonts->upload ) ) {
-				$result->fonts->uploud = $projectData2->fonts->upload;
+				$result->fonts->upload = $projectData2->fonts->upload;
 			} else {
 				$result->fonts->upload = $this->mergeFonts( $projectData2->fonts->upload, $projectData2->fonts->upload, "id" );
 			}
