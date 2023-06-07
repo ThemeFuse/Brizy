@@ -291,6 +291,7 @@ class Icon extends EditorComponent<Value, Props> {
     const options = makeOptionValueToAnimation(v);
     const { cloneableAnimationId } = this.props.meta;
     const animationId = Str.read(cloneableAnimationId) ?? this.getId();
+    const isHidden = IS_STORY || (IS_PREVIEW && hoverName === "none");
 
     return (
       <Fragment>
@@ -316,7 +317,7 @@ class Icon extends EditorComponent<Value, Props> {
                   animationId={animationId}
                   cssKeyframe={hoverName}
                   options={getHoverAnimationOptions(options, hoverName)}
-                  isHidden={IS_STORY}
+                  isHidden={isHidden}
                 >
                   {content}
                 </HoverAnimation>
