@@ -28,6 +28,12 @@ export const createUpload = <T extends boolean = false>(
 
     const handleChange = function () {
       lock = true;
+      const elInDom = document.getElementById(el.id);
+
+      if (elInDom) {
+        document.body.removeChild(elInDom);
+      }
+
       const files = el.files;
 
       if (files) {
@@ -39,11 +45,6 @@ export const createUpload = <T extends boolean = false>(
       } else {
         reject("File not Selected");
       }
-      const elInDom = document.getElementById(el.id);
-
-      if (elInDom) {
-        document.body.removeChild(elInDom);
-      }
     };
     const handleFocus = function () {
       setTimeout(() => {
@@ -53,7 +54,7 @@ export const createUpload = <T extends boolean = false>(
           reject("cancel");
           document.body.removeChild(elInDom);
         }
-      }, 300);
+      }, 450);
     };
 
     el.addEventListener("change", handleChange, { once: true });

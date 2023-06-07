@@ -10,7 +10,6 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import * as Num from "visual/utils/reader/number";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { toolbarLinkAnchor, toolbarLinkExternal } from "visual/utils/toolbar";
 import { Props, Value } from "./types";
@@ -50,6 +49,9 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const type = dvv("type");
   const linkPopup = dvv("linkPopup");
   const fillType = dvv("fillType");
+
+  const colorOpacity = dvv("colorOpacity");
+  const bgColorOpacity = dvv("bgColorOpacity");
 
   const submitType = type === "submit";
   const searchType = type === "search";
@@ -295,9 +297,9 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
         icon: {
           style: {
             backgroundColor:
-              Num.read(dvv("bgColorOpacity")) ?? 0 > 0
-                ? hexToRgba(bgColorHex, dvv("bgColorOpacity"))
-                : hexToRgba(colorHex, dvv("colorOpacity"))
+              fillType === "filled"
+                ? hexToRgba(bgColorHex, bgColorOpacity)
+                : hexToRgba(colorHex, colorOpacity)
           }
         }
       },

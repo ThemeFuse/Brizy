@@ -65,7 +65,7 @@ export function style(
     },
     ".brz &&:hover .brz-btn--story-container": {
       standart: [
-        "cssStyleBorder",
+        "cssStyleElementButtonBorderStory",
         "cssStyleElementButtonIconPosition",
         "cssStyleBorderRadiusType"
       ],
