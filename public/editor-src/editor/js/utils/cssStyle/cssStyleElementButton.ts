@@ -2,6 +2,7 @@ import Config from "visual/global/Config";
 import {
   cssStyleBgColor,
   cssStyleBgGradient,
+  cssStyleBorder,
   cssStyleIconMargin,
   cssStyleIconPosition,
   cssStyleStrokeWidth,
@@ -83,16 +84,18 @@ export function cssStyleElementButtonBgColor({
   device,
   state
 }: CSSValue): string {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
   const fillType = getFillType(dvv("fillType"));
 
   switch (fillType) {
     case "filled":
       return cssStyleBgColor({ v, device, state });
     case "outline":
-      return "background: transparent;";
-    case "default":
-      return "border: 0; background: transparent; box-shadow: none!important;";
+      return "background-color: transparent!important;";
+    case "default": {
+      return "border: 0!important; background-color: transparent!important; box-shadow: none!important;";
+    }
     case undefined:
       return "";
   }
@@ -113,6 +116,27 @@ export function cssStyleElementButtonBgGradient({
     case "outline":
     case "default":
       return "background: transparent;";
+    case undefined:
+      return "";
+  }
+}
+
+export function cssStyleElementButtonBorderStory({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const fillType = getFillType(dvv("fillType"));
+
+  switch (fillType) {
+    case "filled":
+    case "outline":
+      return cssStyleBorder({ v, device, state });
+    case "default": {
+      return "border: 0; border-radius: 0!important;";
+    }
     case undefined:
       return "";
   }

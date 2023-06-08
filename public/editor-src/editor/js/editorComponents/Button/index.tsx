@@ -291,7 +291,7 @@ export default class Button extends EditorComponent<Value, Props> {
 
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const { type, iconName, iconType, customCSS, tabsState } = v;
-
+    const IS_STORY = isStory(Config.getAll());
     const state = State.mRead(tabsState);
     const device = deviceModeSelector(this.getReduxState());
 
@@ -319,6 +319,7 @@ export default class Button extends EditorComponent<Value, Props> {
 
     const { cloneableAnimationId } = this.props.meta;
     const animationId = Str.read(cloneableAnimationId) ?? this.getId();
+    const isHidden = IS_STORY || (IS_PREVIEW && hoverName === "none");
 
     return (
       <>
@@ -331,7 +332,7 @@ export default class Button extends EditorComponent<Value, Props> {
               className="brz-btn-hover__unset-height"
               cssKeyframe={hoverName}
               options={getHoverAnimationOptions(options, hoverName)}
-              isHidden={isStory(Config.getAll())}
+              isHidden={isHidden}
             >
               {renderButton}
             </HoverAnimation>
