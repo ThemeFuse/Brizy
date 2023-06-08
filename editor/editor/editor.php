@@ -490,6 +490,8 @@ class Brizy_Editor_Editor_Editor {
 		$excludePostTypes = [ 'attachment' ];
 
 		$types  = get_post_types( [ 'public' => true ] );
+        array_splice( $types, 0, 0, array_splice( $types, 1, 1 ) );
+
 		$result = [];
 
 		$templateTypeArchive = false;
