@@ -1,4 +1,5 @@
 import { AutoSave } from "./AutoSave";
+import { ExplodePlaceholder, MakePlaceholder } from "./DynamicContent";
 import { AddMediaData, AddMediaExtra } from "./Media";
 import { OnChange } from "./OnChange";
 import { PublishData } from "./Project";
@@ -90,6 +91,41 @@ export interface VISUAL_CONFIG {
         ) => void;
       };
     };
+
+    //Collection Items
+    collectionItems?: {
+      getCollectionItemsIds: {
+        handler: (
+          res: Response<ChoicesSync>,
+          rej: Response<string>,
+          extra: { id: string }
+        ) => void;
+      };
+    };
+
+    //Collection Types
+    collectionTypes?: {
+      loadCollectionTypes: {
+        handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
+      };
+    };
+  };
+
+  //#endregion
+
+  //#region WordPress
+
+  wp?: {
+    postLoopSources?: Array<{ name: string; label: string }>;
+  };
+
+  //#endregion
+
+  //#region Dynamic Content
+
+  dynamicContent?: {
+    makePlaceholder: MakePlaceholder;
+    explodePlaceholder: ExplodePlaceholder;
   };
 
   //#endregion
