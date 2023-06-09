@@ -388,8 +388,8 @@ class Brizy_Editor_Editor_Editor {
 				[ 'type' => 'Column', 'value'   => [ 'linkSource' => 'page', 'linkType' => 'page', 'items' => []]],
 				[ 'type' => 'Column', 'value'   => [ 'linkSource' => 'page', 'linkType' => 'page', 'items' => []]]
 			],
-			'PostContent'      => ['linkSource' => 'page', '_population' => ['name' => 'brizy_dc_post_content', 'placeholder' => '{{brizy_dc_post_content}}']],
-			'PostTitle'        => ['linkSource' => 'page', 'linkType' => 'page', '_population' => ['name' => 'brizy_dc_post_title', 'placeholder' => '{{brizy_dc_post_title}}']],
+            'PostContent'      => ['linkSource' => 'page', 'textPopulation' => '{{brizy_dc_post_content}}', 'textPopulationEntityType' => '', 'textPopulationEntityId' => '', '_population' => ['name' => 'brizy_dc_post_content', 'placeholder' => '{{brizy_dc_post_content}}']],
+            'PostTitle'        => ['linkSource' => 'page', 'linkType' => 'page', 'textPopulation' => '{{brizy_dc_post_title}}', 'textPopulationEntityType' => '', 'textPopulationEntityId' => '', '_population' => ['name' => 'brizy_dc_post_title', 'placeholder' => '{{brizy_dc_post_title}}']],
 			'Posts'            => [
 				'_styles'  => [ 'posts', 'posts-posts' ],
 				'_version' => 3,
