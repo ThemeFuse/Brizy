@@ -27,7 +27,8 @@ class Brizy_Config {
     const EDITOR_TEMPLEATES_URL = "https://brizy-editor-templates.s3.amazonaws.com/1.0.0/";
 	const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://www.brizy.io";
-	const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . BRIZY_EDITOR_VERSION;
+    const TERMS_OF_SERVICE_URL = "https://www.brizy.io/";
+    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . BRIZY_EDITOR_VERSION;
 	const EDITOR_BUILD_RELATIVE_PATH = 'public/editor-build/' . BRIZY_EDITOR_VERSION;
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
@@ -97,5 +98,9 @@ class Brizy_Config {
 
     static public function getEditorTemplatesUrl( $directories ) {
         return apply_filters( 'brizy_editor_config_templates_url', self::EDITOR_TEMPLEATES_URL . $directories );
+    }
+
+    static public function getTermsOfServiceUrl( $directories ) {
+        return apply_filters( 'brizy_editor_config_templates_url', self::TERMS_OF_SERVICE_URL . $directories );
     }
 }

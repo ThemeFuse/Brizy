@@ -138,16 +138,16 @@ class Brizy_Editor_Editor_Editor {
 				'about'              => __bt( 'about-url', apply_filters( 'brizy_about_url', Brizy_Config::ABOUT_URL ) ),
 				'backToDashboard'    => get_edit_post_link( $wp_post_id, null ),
 				'assetsExternal'     => $this->urlBuilder->external_asset_url() . "",
+                'termsOfService'     => Brizy_Config::getTermsOfServiceUrl('terms-and-conditions'),
 
 				// wp specific
 				'changeTemplate'     => $change_template_url,
 				'upgradeToPro'       => Brizy_Config::getUpgradeUrl(),
 
-				'support'          =>
-					Brizy_Config::getSupportUrl(),
-				'pluginSettings'   => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
-				'dashboardNavMenu' => admin_url( 'nav-menus.php' ),
-				'customFile'       => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
+				'support'            => Brizy_Config::getSupportUrl(),
+				'pluginSettings'     => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
+				'dashboardNavMenu'   => admin_url( 'nav-menus.php' ),
+				'customFile'         => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
 			),
 			'form'            => array(
 				'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
