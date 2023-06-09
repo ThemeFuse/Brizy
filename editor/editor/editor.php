@@ -138,7 +138,7 @@ class Brizy_Editor_Editor_Editor {
 				'about'              => __bt( 'about-url', apply_filters( 'brizy_about_url', Brizy_Config::ABOUT_URL ) ),
 				'backToDashboard'    => get_edit_post_link( $wp_post_id, null ),
 				'assetsExternal'     => $this->urlBuilder->external_asset_url() . "",
-                'termsOfService'     => Brizy_Config::getTermsOfServiceUrl('terms-and-conditions'),
+                'termsOfService'     => Brizy_Config::getTermsOfServiceUrl(),
 
 				// wp specific
 				'changeTemplate'     => $change_template_url,
