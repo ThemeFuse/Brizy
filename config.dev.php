@@ -107,6 +107,6 @@ class Brizy_Config {
     }
 
     static public function getTermsOfServiceUrl() {
-        return apply_filters( 'brizy_editor_config_templates_url', self::TERMS_OF_SERVICE_URL );
+        return apply_filters( 'brizy_terms_of_service_url', self::TERMS_OF_SERVICE_URL );
     }
 }
