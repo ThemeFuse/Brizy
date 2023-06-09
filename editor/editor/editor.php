@@ -489,7 +489,14 @@ class Brizy_Editor_Editor_Editor {
 	private function getPostLoopSources( $config, $isTemplate, $wp_post_id, $context ) {
 		$excludePostTypes = [ 'attachment' ];
 
-        $types = array_merge(array_flip(['page', 'post', 'editor-story']), get_post_types(['public' => true]));
+        $types = get_post_types(['public' => true]);
+
+        $typesSort = ['page', 'post', 'editor-story'];
+
+        $types = array_merge($typesSort, array_filter($types, function ($type) use ($typesSort) {
+            return !in_array($type, $typesSort);
+        }));
+
         $result = [];
 
 		$templateTypeArchive = false;
