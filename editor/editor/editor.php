@@ -487,14 +487,13 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	private function getPostLoopSources( $config, $isTemplate, $wp_post_id, $context ) {
-		$excludePostTypes = [ 'attachment' ];
-
         $types = get_post_types(['public' => true]);
 
         $typesSort = ['page', 'post', 'editor-story'];
+        $excludePostTypes = ['page', 'post', 'editor-story', 'attachment'];
 
-        $types = array_merge($typesSort, array_filter($types, function ($type) use ($typesSort) {
-            return !in_array($type, $typesSort);
+        $types = array_merge($typesSort, array_filter($types, function ($type) use ($excludePostTypes) {
+            return !in_array($type, $excludePostTypes);
         }));
 
         $result = [];
@@ -515,9 +514,6 @@ class Brizy_Editor_Editor_Editor {
 		}
 
 		foreach ( $types as $type ) {
-			if ( in_array( $type, $excludePostTypes ) ) {
-				continue;
-			}
 			$typeObj  = get_post_type_object( $type );
 			$typeDto  = [
 				'name'  => $typeObj->name,
