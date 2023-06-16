@@ -157,5 +157,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable
         );
     }
 
-
+	public function jsonSerialize() {
+		return $this->convertToOptionValue();
+	}
 }
