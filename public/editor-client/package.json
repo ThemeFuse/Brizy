@@ -37,6 +37,7 @@
     "prettier-plugin-organize-imports": "^3.2.1",
     "recursive-readdir": "^2.2.3",
     "rimraf": "^4.1.2",
+    "timm": "^1.7.1",
     "ts-jest": "^29.1.0",
     "typescript": "^4.9.5"
   }

@@ -1,3 +1,4 @@
+import timm from "timm";
 import { autoSave } from "./autoSave";
 import { getCollectionItemsIds } from "./collectionItems/getCollectionItemsIds";
 import { searchCollectionItems } from "./collectionItems/searchCollectionItems";
@@ -12,6 +13,7 @@ import {
 } from "./defaultTemplates";
 import { explodePlaceholder } from "./dynamicContent/explodePlaceholder";
 import { makePlaceholder } from "./dynamicContent/makePlaceholder";
+import { handler as posts } from "./Elements/Posts";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
@@ -21,6 +23,7 @@ import { savedBlocks } from "./savedBlocks/savedBlocks";
 import { savedLayouts } from "./savedBlocks/savedLayouts";
 import { savedPopups } from "./savedBlocks/savedPopups";
 import { screenshots } from "./screenshots";
+import { VISUAL_CONFIG } from "./types/global";
 
 const config = getConfig();
 
@@ -76,5 +79,19 @@ if (window.__VISUAL_CONFIG__) {
     window.__VISUAL_CONFIG__.dynamicContent.makePlaceholder = makePlaceholder;
     window.__VISUAL_CONFIG__.dynamicContent.explodePlaceholder =
       explodePlaceholder;
+  }
+
+  if (window.__VISUAL_CONFIG__.elements) {
+    window.__VISUAL_CONFIG__.elements = timm.setIn(
+      window.__VISUAL_CONFIG__.elements,
+      ["posts", "handler"],
+      posts
+    ) as VISUAL_CONFIG["elements"];
+  } else {
+    window.__VISUAL_CONFIG__.elements = timm.set(
+      window.__VISUAL_CONFIG__.elements,
+      "posts",
+      { handler: posts }
+    );
   }
 }

@@ -18,6 +18,7 @@ import { PopupConditions } from "./PopupConditions";
 import { PublishData } from "./Project";
 import { SavedBlocks, SavedLayouts, SavedPopups } from "./SavedBlocks";
 import { Screenshots } from "./Screenshots";
+import { Posts } from "./Posts";
 
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
@@ -147,6 +148,11 @@ export interface VISUAL_CONFIG {
   dynamicContent?: {
     makePlaceholder: MakePlaceholder;
     explodePlaceholder: ExplodePlaceholder;
+  };
+
+  // region Elements
+  elements?: {
+    posts: Posts;
   };
 
   //#endregion
