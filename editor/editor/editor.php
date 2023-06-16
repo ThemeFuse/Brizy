@@ -32,7 +32,7 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	private $urlBuilder;
 
-	/**
+    /**
 	 * @param Brizy_Editor_Project $project
 	 * @param Brizy_Editor_Post $post
 	 *
@@ -76,14 +76,19 @@ class Brizy_Editor_Editor_Editor {
 		}
 	}
 
-	public function getClientConfig( $context ) {
+	public function getClientConfig( $editorConfig, $context ) {
+        if ( !isset($editorConfig['wp']['postLoopSources']) ) {
+            throw new \Exception("Unable to locate the \$config['wp']['postLoopSources']");
+        }
+
 		$config = [
-			'hash'          => wp_create_nonce( Brizy_Editor_API::nonce ),
-			'editorVersion' => BRIZY_EDITOR_VERSION,
-			'url'           => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
-			'actions'       => $this->getApiActions(),
-			'pageId'        => $this->post->getWpPostId()
-		];
+			'hash'            => wp_create_nonce( Brizy_Editor_API::nonce ),
+			'editorVersion'   => BRIZY_EDITOR_VERSION,
+			'url'             => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+			'actions'         => $this->getApiActions(),
+			'pageId'          => $this->post->getWpPostId(),
+            'collectionTypes' => $editorConfig['wp']['postLoopSources']
+        ];
 
 		$config = $this->getApiConfigFields( $config, $context );
 
@@ -559,7 +564,7 @@ class Brizy_Editor_Editor_Editor {
 			];
 		}, $result );
 
-		return $config;
+        return $config;
 	}
 
 	private function addGlobalBlocksData( $config ) {
