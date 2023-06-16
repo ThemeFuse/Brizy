@@ -890,6 +890,13 @@ class Brizy_Editor_Editor_Editor {
 			[ 'field'=>'comment_count', 'label'=> __( 'Comment Count', 'brizy' )]
 		];
 
+		$orderBy = [
+			[ 'title' => __( 'Title', 'brizy' ) ],
+			[ 'date' => __( 'Date', 'brizy' ) ],
+			[ 'rand' => __( 'Random', 'brizy' ) ],
+			[ 'comment_count' => __( 'Comment Count', 'brizy' ) ]
+		];
+
 		if ( $templateTypeArchive ) {
 			$orderByCustom = $orderBy;
 			if ( $isSearchTemplate ) {
@@ -913,7 +920,7 @@ class Brizy_Editor_Editor_Editor {
 			$result[] = $typeDto;
 		}
 
-		return $result;
+	return $result;
 	}
 
 	private function addLoopSourcesConfig( $config, $isTemplate, $wp_post_id, $context ) {
