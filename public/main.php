@@ -417,8 +417,10 @@ class Brizy_Public_Main
 
     private function getClientConfigObject($context = Brizy_Editor_Editor_Editor::EDITOR_CONTEXT)
     {
-        $editor        = Brizy_Editor_Editor_Editor::get(Brizy_Editor_Project::get(), $this->post);
-        $config_json   = json_encode($editor->getClientConfig($context));
+        $editor = Brizy_Editor_Editor_Editor::get(Brizy_Editor_Project::get(), $this->post);
+        $editorConfig = $editor->config($context);
+
+        $config_json   = json_encode($editor->getClientConfig($editorConfig,$context));
         $config_object = json_decode($config_json);
 
         return $config_object;
