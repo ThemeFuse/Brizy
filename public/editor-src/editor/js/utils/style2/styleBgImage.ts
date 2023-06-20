@@ -1,9 +1,4 @@
-import Config from "visual/global/Config";
-import {
-  defaultImagePopulation,
-  getImageUrl,
-  imagePopulationUrl
-} from "visual/utils/image";
+import { getImageUrl } from "visual/utils/image";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleState } from "visual/utils/style";
 import { CSSValue } from "./types";
@@ -27,30 +22,32 @@ export function styleBgImage({ v, device, state }: CSSValue): string {
   const hoverBgImageFileName = dvvHover("bgImageFileName");
 
   const hover =
-    hoverMedia === "image" && hoverBgImageSrc !== "" && !hoverBgPopulation
-      ? `url("${getImageUrl({
-          uid: hoverBgImageSrc,
-          fileName: hoverBgImageFileName,
-          sizeType: bgSizeType
-        })}")`
+    hoverMedia === "image" && (hoverBgImageSrc !== "" || hoverBgPopulation)
+      ? hoverBgPopulation
+        ? `var(--brz-background-image)`
+        : `url("${getImageUrl({
+            uid: hoverBgImageSrc,
+            fileName: hoverBgImageFileName,
+            sizeType: bgSizeType
+          })}")`
       : "none";
 
   const normal =
-    media === "image" && bgImageSrc !== "" && !bgPopulation
-      ? `url("${getImageUrl({
-          uid: bgImageSrc,
-          fileName: bgImageFileName,
-          sizeType: bgSizeType
-        })}")`
+    media === "image" && (bgImageSrc !== "" || bgPopulation)
+      ? bgPopulation
+        ? `var(--brz-background-image)`
+        : `url("${getImageUrl({
+            uid: bgImageSrc,
+            fileName: bgImageFileName,
+            sizeType: bgSizeType
+          })}")`
       : "none";
+
   return isHover === "hover" ? hover : normal;
 }
 
 export function styleExportBgImage({ v, device, state }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = Config.getAll();
-  const useCustomPlaceholder =
-    config.dynamicContent?.useCustomPlaceholder ?? false;
 
   const media = dvv("media");
   const bgImageSrc = dvv("bgImageSrc");
@@ -58,19 +55,14 @@ export function styleExportBgImage({ v, device, state }: CSSValue): string {
   const bgPopulation = dvv("bgPopulation");
   const bgImageFileName = dvv("bgImageFileName");
 
-  const bgImage = bgPopulation
-    ? imagePopulationUrl(bgPopulation, {
-        ...defaultImagePopulation,
-        useCustomPlaceholder
-      })
-    : getImageUrl({
-        sizeType: bgSizeType,
-        uid: bgImageSrc,
-        fileName: bgImageFileName
-      });
-
   return media === "image" && (bgImageSrc !== "" || bgPopulation)
-    ? `url("${bgImage}")`
+    ? bgPopulation
+      ? `var(--brz-background-image)`
+      : `url("${getImageUrl({
+          sizeType: bgSizeType,
+          uid: bgImageSrc,
+          fileName: bgImageFileName
+        })}")`
     : "none";
 }
 

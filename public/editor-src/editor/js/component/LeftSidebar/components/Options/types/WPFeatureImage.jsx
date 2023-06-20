@@ -87,7 +87,10 @@ export default class WPFeatureImage extends React.Component {
       this.props.meta.popover.hide();
     }
 
+    const iframe = parent.document.querySelector("#brz-ed-iframe");
+
     const frame = wp.media.featuredImage.frame();
+
     frame.on("select", () => {
       const attachment = frame.state().get("selection").first();
       const { url, id } = attachment.attributes;
@@ -102,10 +105,14 @@ export default class WPFeatureImage extends React.Component {
       });
     });
     frame.on("close", () => {
+      iframe?.classList.remove("media-modal-open");
+
       if (this.props.meta && this.props.meta.popover) {
         this.props.meta.popover.show();
       }
     });
+
+    iframe?.classList.add("media-modal-open");
     frame.open();
   };
 

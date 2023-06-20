@@ -11,7 +11,9 @@
     "offset": 0,
     "orderBy": "id",
     "order": "ASC",
-    "allTag": "All"
+    "allTag": "All",
+
+    "excludeCurrentProduct": "off"
   },
 
   "style": {
@@ -32,12 +34,6 @@
 
     "padding": 0,
     "paddingSuffix": "px",
-
-    "tabletPadding": null,
-    "tabletPaddingSuffix": null,
-
-    "mobilePadding": null,
-    "mobilePaddingSuffix": null,
 
     "families": {
       "paginationFontFamily": "noto_serif",
@@ -329,59 +325,9 @@
     "hoverTransitionSuffix": "",
 
     "tabletFilterPaddingType": "grouped",
-
-    "tabletFilterPadding": null,
-    "tabletFilterPaddingTop": null,
-    "tabletFilterPaddingRight": null,
-    "tabletFilterPaddingBottom": null,
-    "tabletFilterPaddingLeft": null,
-
-    "tabletFilterPaddingSuffix": null,
-    "tabletFilterPaddingTopSuffix": null,
-    "tabletFilterPaddingRightSuffix": null,
-    "tabletFilterPaddingBottomSuffix": null,
-    "tabletFilterPaddingLeftSuffix": null,
-
     "tempTabletFilterPaddingType": "grouped",
 
-    "tempTabletFilterPadding": null,
-    "tempTabletFilterPaddingTop": null,
-    "tempTabletFilterPaddingRight": null,
-    "tempTabletFilterPaddingBottom": null,
-    "tempTabletFilterPaddingLeft": null,
-
-    "tempTabletFilterPaddingSuffix": null,
-    "tempTabletFilterPaddingTopSuffix": null,
-    "tempTabletFilterPaddingRightSuffix": null,
-    "tempTabletFilterPaddingBottomSuffix": null,
-    "tempTabletFilterPaddingLeftSuffix": null,
-
     "mobileFilterPaddingType": "grouped",
-
-    "mobileFilterPadding": null,
-    "mobileFilterPaddingTop": null,
-    "mobileFilterPaddingRight": null,
-    "mobileFilterPaddingBottom": null,
-    "mobileFilterPaddingLeft": null,
-
-    "mobileFilterPaddingSuffix": null,
-    "mobileFilterPaddingTopSuffix": null,
-    "mobileFilterPaddingRightSuffix": null,
-    "mobileFilterPaddingBottomSuffix": null,
-    "mobileFilterPaddingLeftSuffix": null,
-
-    "tempMobileFilterPaddingType": "grouped",
-
-    "tempMobileFilterPadding": null,
-    "tempMobileFilterPaddingTop": null,
-    "tempMobileFilterPaddingRight": null,
-    "tempMobileFilterPaddingBottom": null,
-    "tempMobileFilterPaddingLeft": null,
-
-    "tempMobileFilterPaddingSuffix": null,
-    "tempMobileFilterPaddingTopSuffix": null,
-    "tempMobileFilterPaddingRightSuffix": null,
-    "tempMobileFilterPaddingBottomSuffix": null,
-    "tempMobileFilterPaddingLeftSuffix": null
+    "tempMobileFilterPaddingType": "grouped"
   }
 }

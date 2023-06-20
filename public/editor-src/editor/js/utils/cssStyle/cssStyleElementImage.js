@@ -8,10 +8,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { isNullish } from "visual/utils/value";
 import { capByPrefix } from "../string";
 import { cssStyleFilter } from "./cssStyleFilter";
-import {
-  cssStylePositionAbsolute,
-  cssStylePositionStatic
-} from "./cssStylePosition";
+import { cssStylePositionAbsolute } from "./cssStylePosition";
 
 const isAbsoluteOrFixed = (v) =>
   v.elementPosition === "absolute" || v.elementPosition === "fixed";
@@ -121,7 +118,7 @@ export function cssStyleElementImagePosition({ v, device }) {
     return cssStylePositionAbsolute();
   }
 
-  return cssStylePositionStatic();
+  return "position: inherit;";
 }
 
 export function cssStyleElementImageMarginLeft({ v, device, props = {} }) {

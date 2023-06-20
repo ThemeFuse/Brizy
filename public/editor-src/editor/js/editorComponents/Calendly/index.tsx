@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { Calendly as CalendlyComponent } from "component/Flex/Calendly";
+import { Calendly as CalendlyComponent } from "@brizy/component";
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import { Patch } from "visual/component/BoxResizer/types";

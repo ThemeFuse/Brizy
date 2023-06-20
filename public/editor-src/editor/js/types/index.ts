@@ -102,6 +102,8 @@ export type GlobalBlock = {
 export type SavedBlock = {
   data: Block;
   dataVersion: number;
+  title?: string;
+  tags?: string;
   meta: {
     type: BlockMetaType;
     extraFontStyles: ExtraFontStyle[];
@@ -115,6 +117,8 @@ export type SavedBlock = {
 export type SavedLayout = {
   data: PageCommon["data"];
   dataVersion: number;
+  title?: string;
+  tags?: string;
   meta: {
     type: BlockMetaType;
     extraFontStyles: ExtraFontStyle[];
@@ -293,6 +297,25 @@ export type Authorized = "pending" | "connected" | "disconnect";
 // syncAllowed
 
 export type SyncAllowed = boolean;
+
+/// TODO: review later when breakpoints will be on fixes
+export enum DeviceMode2 {
+  Widescreen = "widescreen",
+  Desktop = "desktop",
+  Laptop = "laptop",
+  TabletHorizontal = "tabletHorizontal",
+  Tablet = "tablet",
+  MobileHorizontal = "mobileHorizontal",
+  Mobile = "mobile"
+}
+
+export interface Breakpoint {
+  value: DeviceMode2;
+  title: string;
+  enabled: boolean;
+  breakpoint: number;
+  content: number;
+}
 
 // deviceMode
 

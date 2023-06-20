@@ -1,17 +1,8 @@
 import classNames from "classnames";
-import React, {
-  ChangeEventHandler,
-  FC,
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import Number from "visual/component/Controls/AutoCorrectingInput";
 import EditorIcon from "visual/component/EditorIcon";
-import { pipe } from "visual/utils/fp";
-import * as Num from "visual/utils/math/number";
 import { WithClassName, WithSize } from "visual/utils/options/attributes";
-import { inputValue } from "visual/utils/react";
 
 type Action = "increase" | "decrease" | "none";
 
@@ -45,9 +36,13 @@ export const NumberComponent: FC<Props> = ({
     (): void => setAction("decrease"),
     [setAction]
   );
-  const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
-    pipe(inputValue, Num.read, onChange),
-    [onChange]
+  const handleOnChange = useCallback(
+    (n: number): void => {
+      if (n !== value) {
+        onChange(n);
+      }
+    },
+    [onChange, value]
   );
 
   useEffect((): undefined => {
@@ -65,17 +60,17 @@ export const NumberComponent: FC<Props> = ({
         return undefined;
       }
     }
-  }, [action, value, onChange]);
+  }, [action, onDecrease, onIncrease]);
 
   return (
     <div className={_className}>
-      <input
+      <Number
         className="brz-input"
-        type="number"
-        value={value ?? ""}
+        value={value}
+        onChange={handleOnChange}
         min={-999999}
         max={999999}
-        onChange={handleOnChange}
+        step={1}
       />
       {spinner ? (
         <div className={`${baseClass}--arrows`}>

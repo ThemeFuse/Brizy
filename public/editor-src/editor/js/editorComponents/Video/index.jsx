@@ -196,6 +196,7 @@ class Video extends EditorComponent {
           allowFullScreen={true}
           className="intrinsic-ignore brz-iframe"
           src={videoSrc}
+          title="video"
         />
       ];
     }

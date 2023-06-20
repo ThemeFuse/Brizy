@@ -9,7 +9,8 @@ import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
-import { PageCommon, Project } from "visual/types";
+import { PageCommon, Project, SavedBlock, SavedLayout } from "visual/types";
+import { Literal } from "visual/utils/types/Literal";
 import {
   AddFileData,
   AddFileExtra,
@@ -97,6 +98,31 @@ export interface UpdateRes {
   projectData: Project;
 }
 
+export interface PublishData {
+  // TODO  Currently only projectData is used
+  //  Need to add pageData and globalBlocks
+  projectData?: Project;
+  is_autosave: 1 | 0;
+  // pageData: PageCommon;
+  // globalBlocks: Array<GlobalBlock>;
+}
+
+export interface AutoSave {
+  // TODO  Currently only projectData is used
+  //  Need to add pageData and globalBlocks
+  projectData: Project;
+  // pageData: PageCommon;
+  // globalBlocks: Array<GlobalBlock>;
+}
+
+export interface OnChange {
+  // TODO  Currently only projectData is used
+  //  Need to add pageData and globalBlocks
+  projectData: Project;
+  // pageData: PageCommon;
+  // globalBlocks: Array<GlobalBlock>;
+}
+
 export interface Theme {
   colors: {
     "--primary-dark"?: string;
@@ -109,6 +135,7 @@ export interface Theme {
     "--secondary-gray"?: string;
     "--tertiary-gray"?: string;
     "--active-color"?: string;
+    "--light-gray"?: string;
   };
 }
 
@@ -117,15 +144,98 @@ export const isElementTypes = (type: string): type is ElementTypes => {
 };
 
 export enum ElementTypes {
+  Image = "Image",
+  Map = "Map",
+  Video = "Video",
+  ImageGallery = "ImageGallery",
   Quantity = "Quantity",
   ProductMetafield = "ProductMetafield",
   BlogPostMeta = "BlogPostMeta",
   Price = "Price",
-  Image = "Image",
-  Map = "Map",
-  Video = "Video",
-  ImageGallery = "ImageGallery"
+  Posts = "Posts",
+  ProductList = "ProductList",
+  CollectionList = "CollectionList",
+  BlogPostList = "BlogPostList"
 }
+
+//#region Base Saved Block
+
+type SyncBlock<T> = T & {
+  synchronizable: boolean;
+  synchronized: boolean;
+  isCloudEntity: boolean;
+};
+type WithUid<T> = T & { uid: string };
+type Filters = Array<{ id: string; label: string }>;
+
+//#endregion
+
+//#region Saved Block
+
+export type SavedBlockAPI = SyncBlock<WithUid<SavedBlock>>;
+export type SavedBlockAPIMeta = Omit<SavedBlockAPI, "data">;
+interface SavedBlockExtra {
+  uid: string;
+}
+export type UpdateSavedBlock = WithUid<
+  Pick<SavedBlock, "dataVersion" | "tags" | "title">
+>;
+export type DeleteSavedBlock = WithUid<Pick<SavedBlock, "dataVersion">>;
+
+export interface SavedBlockImport {
+  success: Array<WithUid<SavedBlock>>;
+  errors: Array<{ uid: string; message: string }>;
+}
+
+export interface CreatedSavedBlock extends SavedBlock {
+  uid: string;
+  media: {
+    images: Array<string>;
+    uploads: Array<string>;
+    fonts: Array<string>;
+  };
+}
+
+export interface CreateSavedBlock {
+  block: CreatedSavedBlock;
+  is_autosave: 1 | 0;
+}
+
+export type SavedBlockFilter = Filters;
+
+//#endregion
+
+//#region Saved Layout
+
+export type SavedLayoutAPI = SyncBlock<WithUid<SavedLayout>>;
+export type SavedLayoutAPIMeta = Omit<SavedLayoutAPI, "data">;
+export type UpdateSavedLayout = WithUid<
+  Pick<SavedLayout, "dataVersion" | "tags" | "title">
+>;
+export type DeleteSavedLayout = WithUid<Pick<SavedLayout, "dataVersion">>;
+
+export interface SavedLayoutImport {
+  success: Array<WithUid<SavedLayout>>;
+  errors: Array<{ uid: string; message: string }>;
+}
+
+export interface CreatedSavedLayout extends SavedLayout {
+  uid: string;
+  media: {
+    images: Array<string>;
+    uploads: Array<string>;
+    fonts: Array<string>;
+  };
+}
+
+export interface CreateSavedLayout {
+  block: CreatedSavedLayout;
+  is_autosave: 1 | 0;
+}
+
+export type SavedLayoutFilter = Filters;
+
+//#endregion
 
 interface _ConfigCommon<Mode> {
   tokenV1?: string;
@@ -150,10 +260,13 @@ interface _ConfigCommon<Mode> {
     maxUploadFileSize: number;
   };
 
-  menusConfig?: {
+  menuData?: {
     id: string;
+    name: string;
     items: MenuItem[];
   }[];
+
+  projectData?: Project;
 
   //#region UI
 
@@ -184,7 +297,29 @@ interface _ConfigCommon<Mode> {
     };
 
     //#endregion
+
     theme?: Theme;
+
+    //#region Help
+
+    help?: {
+      showIcon?: boolean;
+    };
+
+    //#endregion
+
+    //#region Publish
+
+    publish: {
+      label?: string;
+      handler: (
+        res: Response<PublishData>,
+        rej: Response<string>,
+        extra: PublishData
+      ) => void;
+    };
+
+    //#endregion
   };
 
   //#endregion
@@ -199,7 +334,15 @@ interface _ConfigCommon<Mode> {
 
   onLoad?: VoidFunction;
 
-  onUpdate: (res: UpdateRes, config?: ConfigCommon) => void;
+  onAutoSave?: (res: AutoSave) => void;
+
+  // Triggered when the user change the
+  // pageData, globalBlocks or projectData
+  onChange?: (res: OnChange) => void;
+
+  // OnUpdate are triggered outside the editor when
+  // the thirty party app want to update the page
+  onUpdate: (res: Response<UpdateRes>, config?: ConfigCommon) => void;
 
   //#endregion
 
@@ -272,7 +415,145 @@ interface _ConfigCommon<Mode> {
         }
       ) => void;
     };
+
+    // Collection Items
+    collectionItems?: {
+      loadCollectionItems: {
+        handler: (
+          res: Response<ChoicesSync>,
+          rej: Response<string>,
+          extra: { collectionId: string; value: Literal[]; fieldId?: string }
+        ) => void;
+      };
+
+      searchCollectionItems: {
+        handler: (
+          res: Response<ChoicesSync>,
+          rej: Response<string>,
+          extra: { collectionId: string; search: string; fieldId?: string }
+        ) => void;
+      };
+    };
+
+    // SavedBlocks
+    savedBlocks?: {
+      get?: (
+        res: Response<Array<SavedBlockAPIMeta>>,
+        rej: Response<string>,
+        extra?: { filterBy: string }
+      ) => void;
+      getByUid?: (
+        res: Response<SavedBlock>,
+        rej: Response<string>,
+        extra: SavedBlockExtra
+      ) => void;
+      create?: (
+        res: Response<SavedBlock>,
+        rej: Response<string>,
+        extra: CreateSavedBlock
+      ) => void;
+      update?: (
+        res: Response<UpdateSavedBlock>,
+        rej: Response<string>,
+        extra: UpdateSavedBlock
+      ) => void;
+      delete?: (
+        res: Response<DeleteSavedBlock>,
+        rej: Response<string>,
+        extra: DeleteSavedBlock
+      ) => void;
+      import?: (res: Response<SavedBlockImport>, rej: Response<string>) => void;
+      filter?: {
+        label?: string;
+        defaultSelected?: string;
+        handler: (
+          res: Response<SavedBlockFilter>,
+          ref: Response<string>
+        ) => void;
+      };
+    };
+
+    // SavedLayouts
+    savedLayouts?: {
+      get?: (
+        res: Response<Array<SavedLayoutAPIMeta>>,
+        rej: Response<string>,
+        extra?: { filterBy: string }
+      ) => void;
+      getByUid?: (
+        res: Response<SavedLayout>,
+        rej: Response<string>,
+        extra: SavedBlockExtra
+      ) => void;
+      create?: (
+        res: Response<SavedLayout>,
+        rej: Response<string>,
+        extra: CreateSavedLayout
+      ) => void;
+      update?: (
+        res: Response<UpdateSavedLayout>,
+        rej: Response<string>,
+        extra: UpdateSavedLayout
+      ) => void;
+      delete?: (
+        res: Response<DeleteSavedLayout>,
+        rej: Response<string>,
+        extra: DeleteSavedLayout
+      ) => void;
+      import?: (
+        res: Response<SavedLayoutImport>,
+        rej: Response<string>
+      ) => void;
+      filter?: {
+        label?: string;
+        defaultSelected?: string;
+        handler: (
+          res: Response<SavedLayoutFilter>,
+          ref: Response<string>
+        ) => void;
+      };
+    };
+
+    // SavedPopups
+    savedPopups?: {
+      get?: (
+        res: Response<Array<SavedBlockAPIMeta>>,
+        rej: Response<string>,
+        extra?: { filterBy: string }
+      ) => void;
+      getByUid?: (
+        res: Response<SavedBlock>,
+        rej: Response<string>,
+        extra: SavedBlockExtra
+      ) => void;
+      create?: (
+        res: Response<SavedBlock>,
+        rej: Response<string>,
+        extra: CreateSavedBlock
+      ) => void;
+      update?: (
+        res: Response<UpdateSavedBlock>,
+        rej: Response<string>,
+        extra: UpdateSavedBlock
+      ) => void;
+      delete?: (
+        res: Response<DeleteSavedBlock>,
+        rej: Response<string>,
+        extra: DeleteSavedBlock
+      ) => void;
+      import?: (res: Response<SavedBlockImport>, rej: Response<string>) => void;
+      filter?: {
+        label?: string;
+        defaultSelected?: string;
+        handler: (
+          res: Response<SavedBlockFilter>,
+          ref: Response<string>
+        ) => void;
+      };
+    };
   };
+
+  //#endregion
 
   //#region contentDefaults
 
@@ -289,6 +570,28 @@ interface _ConfigCommon<Mode> {
     BlogPostMeta?: {
       linkSource?: string;
     };
+    ProductList?: {
+      type?: string;
+      source?: ShopifyTemplate.Product;
+      showSource?: boolean;
+      orderBy?: string;
+      order?: string;
+      excludeCurrentProductOption?: boolean;
+    };
+    CollectionList?: {
+      type?: string;
+      source?: ShopifyTemplate.Collection;
+      showSource?: boolean;
+      orderBy?: string;
+      order?: string;
+    };
+    BlogPostList?: {
+      type?: string;
+      source?: ShopifyTemplate.Article;
+      showSource?: boolean;
+      orderBy?: string;
+      order?: string;
+    };
   };
 
   //#endregion
@@ -299,11 +602,21 @@ interface _ConfigCommon<Mode> {
     section?: {
       multilanguage: boolean;
     };
+
     footer?: {
       multilanguage: boolean;
     };
+
     header?: {
       multilanguage: boolean;
+    };
+
+    posts?: {
+      includeQueryMultiOptions?: boolean;
+      exclude?: boolean;
+      offset?: boolean;
+      orderBy?: boolean;
+      order?: boolean;
     };
   };
 

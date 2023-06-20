@@ -76,6 +76,7 @@ $gray-26: #555;
 $gray-27: #999;
 $gray-28: #616569;
 $gray-29: #5c6065;
+$gray-30: #2a2e37;
 $pink: #ed2164;
 $pink-1: #fd7e7e;
 $pink-2: #f88b8b;
@@ -150,7 +151,7 @@ $border__width__type__icon-color--active: var(--active-color, $blue-22);
 
 // Bottom Multi Inputs (shadow TAB)
 $multi_input-color: var(--multi_input-color, $gray-2);
-$multi_input-color--active: var(--multi_input-color--active, $white);
+$multi_input-color--active: var(--primary-white, $white);
 $multi_input-border: var(--multi_input-border, rgba($white, 0.1));
 $multi_input-border--active: var(--active-color, $blue-21);
 $multi_input-border--hover: var(--multi_input-border--hover, $gray-2);
@@ -617,8 +618,8 @@ $popup__select-border-radius: 4px;
 $popup__header__tabs-bg: var(--popup__header__tabs-bg, $gray-4);
 $popup__header__tabs__item-bg: var(--popup__header__tabs__item-bg, $gray-4);
 $popup__header__tabs__item-bg--hover: var(--popup__header__tabs__item-bg--hover, $black-1);
-$popup__header__tabs__btn__close-color: var(--popup__header__tabs__btn__close-color, $gray-22);
-$popup__header__tabs__btn__close-color--hover: var(--popup__header__tabs__btn__close-color--hover, $white);
+$popup__header__tabs__btn-color: var(--popup__header__tabs__btn__close-color, $gray-22);
+$popup__header__tabs__btn-color--hover: var(--popup__header__tabs__btn__close-color--hover, $white);
 $popup__header__tabs__item-color: var(--popup__header__tabs__item-color, rgba($white, 0.5));
 $popup__header__tabs__item-color--hover: var(--popup__header__tabs__item-color--hover, $white);
 $popup__header__tabs__item-border-right-color: var(--popup__header__tabs__item-border-right-color, rgba($black, 0.7));
@@ -637,6 +638,10 @@ $popup__apps__loading-bg: var(--popup__apps__loading-bg, $blue-21);
 // Popup loading
 $form__email__popup__loading-color: var(--form__email__popup__loading-color, $white);
 $form__email__popup__loading-bg: var(--form__email__popup__loading-bg, rgba($black, 0.5));
+
+// Popup Blocks Layouts
+$block_layout__btn-color: var(--block_layout__btn-color, $gray-22);
+$block_layout__btn-color-hover: var(--block_layout__btn-color-hover, $gray-30);
 
 // Popup Fonts
 $popup__fonts__content-bg: var(--popup__fonts__content-bg, $white-6);

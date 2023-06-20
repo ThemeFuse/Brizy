@@ -386,7 +386,7 @@ class Image extends EditorComponent {
 
   getLightboxClassName() {
     const v = this.getValue();
-    const inGallery = Boolean(this.props.meta?.gallery?.inGallery);
+    const inGallery = Boolean(this.props.renderer?.gallery?.inGallery);
 
     return {
       "brz-image__lightbox":
@@ -590,7 +590,10 @@ class Image extends EditorComponent {
   }
 
   getHoverAnimationData(v) {
-    const { wrapperAnimationId, gallery = {} } = this.props.meta;
+    const { gallery = {} } = this.props.renderer
+      ? this.props.renderer
+      : { gallery: {} };
+    const { wrapperAnimationId } = this.props.meta;
     const {
       hoverName: galleryHoverName,
       hoverDuration: galleryHoverDuration,
@@ -627,7 +630,9 @@ class Image extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { className } = v;
     const IS_STORY = isStory(Config.getAll());
-    const { gallery = {} } = this.props.meta;
+    const { gallery = {} } = this.props.renderer
+      ? this.props.renderer
+      : { gallery: {} };
     const { containerWidth, tabletContainerWidth, mobileContainerWidth } =
       this.state;
 
@@ -710,6 +715,7 @@ class Image extends EditorComponent {
                   onChange={this.handleBoxResizerChange}
                   onStart={this.onDragStart}
                   onEnd={this.onDragEnd}
+                  gallery={gallery}
                 >
                   <ImageContent
                     v={v}
@@ -719,6 +725,7 @@ class Image extends EditorComponent {
                     componentId={this.constructor.componentId}
                     wrapperSizes={wrapperSizes}
                     meta={meta}
+                    gallery={gallery}
                   />
                 </ImageWrapper>
               </HoverAnimation>

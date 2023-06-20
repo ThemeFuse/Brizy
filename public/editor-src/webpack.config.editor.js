@@ -44,13 +44,7 @@ module.exports = (options = {}) => {
     },
     resolve: {
       alias: {
-        visual: path.resolve(__dirname, "editor/js"),
-        ui: path.resolve(__dirname, "packages/ui/src"),
-        core: path.resolve(__dirname, "packages/core/src"),
-        component: path.resolve(__dirname, "packages/component/src"),
-        widget: path.resolve(__dirname, "packages/widget/src"),
-        widgetTemp: path.resolve(__dirname, "packages/widgetTemp/src"),
-        icons: path.resolve(__dirname, "packages/icons/src")
+        visual: path.resolve(__dirname, "editor/js")
       },
       extensions: getExtensions(options.TARGET),
       fallback: {
@@ -63,10 +57,9 @@ module.exports = (options = {}) => {
           test: /\.(ts|js)x?$/,
           include: [
             path.resolve(__dirname, "editor"),
-            path.resolve(__dirname, "packages")
+            path.resolve(__dirname, "../packages")
           ],
-          loader: "swc-loader",
-          options: swcrc.editor(options)
+          use: { loader: "swc-loader", options: swcrc.editor(options) }
         }
       ]
     },

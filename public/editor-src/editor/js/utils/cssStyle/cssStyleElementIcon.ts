@@ -80,7 +80,7 @@ export function cssStyleElementIconBgColor({
     case "outline":
       return "background: transparent;";
     case "default":
-      return "border: 0; background: transparent; box-shadow: initial;";
+      return "border: 0!important; background: transparent; box-shadow: none!important;";
     case undefined:
       return "";
   }

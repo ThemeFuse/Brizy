@@ -28,6 +28,7 @@ class Select extends React.Component {
     arrowIcon: "nc-arrow-down",
     inPortal: false,
     clickOutsideExceptions: [],
+    fullWidth: false,
     onChange: _.noop
   };
 
@@ -69,10 +70,12 @@ class Select extends React.Component {
     let childrenOptgroupCount = 0;
 
     React.Children.forEach(children, (child) => {
-      const { items } = child.props;
+      if (child?.props) {
+        const { items } = child.props;
 
-      if (items && items.length) {
-        childrenOptgroupCount += items.length;
+        if (items && items.length) {
+          childrenOptgroupCount += items.length;
+        }
       }
     });
 
@@ -158,11 +161,11 @@ class Select extends React.Component {
     let selectedItem;
 
     React.Children.forEach(children, (child) => {
-      const { items } = child.props;
-
-      if (selectedItem) {
+      if (!child || selectedItem) {
         return;
       }
+
+      const { items } = child.props;
 
       if (items && items.length) {
         const children = React.Children.toArray(child.props.items);
@@ -189,10 +192,11 @@ class Select extends React.Component {
         className="brz-control__select--arrow"
       />
     );
+    const currentItem = selectedItem || this.findFirstItem();
 
     return (
       <React.Fragment>
-        {selectedItem || this.findFirstItem()}
+        {React.cloneElement(currentItem, { selected: true })}
         {arrowIcon}
       </React.Fragment>
     );
@@ -202,6 +206,10 @@ class Select extends React.Component {
     const { currentValue } = this.state;
 
     return React.Children.map(children, (child, index) => {
+      if (!child) {
+        return null;
+      }
+
       const { value, disabled, items } = child.props;
 
       if (items && items.length) {
@@ -275,6 +283,7 @@ class Select extends React.Component {
       labelType,
       currentValue,
       inputAttributes,
+      fullWidth,
       clickOutsideExceptions: _clickOutsideExceptions
     } = this.props;
     const { position, isOpen } = this.state;
@@ -282,7 +291,7 @@ class Select extends React.Component {
       "brz-control__select",
       `brz-control__select--${position}`,
       _className,
-      { opened: isOpen }
+      { opened: isOpen, "brz-control__select--full-width": fullWidth }
     );
     const clickOutsideExceptions = [
       ..._clickOutsideExceptions,
@@ -312,11 +321,12 @@ class Select extends React.Component {
     let selectedItem;
 
     React.Children.forEach(items, (item) => {
-      const { items } = item.props;
-
-      if (selectedItem) {
+      if (!item || selectedItem) {
         return;
       }
+
+      const { items } = item.props;
+
       if (items && items.length) {
         selectedItem = this.findFirstItem(items);
       } else {

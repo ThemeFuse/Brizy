@@ -1,32 +1,31 @@
-import React from "react";
 import classnames from "classnames";
-import _ from "underscore";
+import React from "react";
 import { mergeDeep } from "timm";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import SectionHeaderStickyItemItems from "./Items";
+import _ from "underscore";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
+import CustomCSS from "visual/component/CustomCSS";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { Roles } from "visual/component/Roles";
+import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import {
   wInBoxedPage,
-  wInTabletPage,
+  wInFullPage,
   wInMobilePage,
-  wInFullPage
+  wInTabletPage
 } from "visual/config/columns";
-import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import { styleSection, styleContainer } from "./styles";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { deviceModeSelector } from "visual/redux/selectors";
 import { css } from "visual/utils/cssStyle";
-import defaultValue from "./defaultValue.json";
-import {
-  styleElementSectionContainerType,
-  styleSizeContainerSize
-} from "visual/utils/style2";
 import { hasMembership } from "visual/utils/membership";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
+import { defaultValueValue } from "visual/utils/onChange";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import SectionHeaderStickyItemItems from "./Items";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { styleContainer, styleSection } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 export default class SectionHeaderStickyItem extends EditorComponent {
   static get componentId() {
@@ -98,7 +97,7 @@ export default class SectionHeaderStickyItem extends EditorComponent {
     this.setState({ isDragging: true });
   };
 
-  handlePaddingResizerChange = patch => {
+  handlePaddingResizerChange = (patch) => {
     if (this.state.isDragging) {
       this.setState({ paddingPatch: patch });
     } else {
@@ -113,17 +112,39 @@ export default class SectionHeaderStickyItem extends EditorComponent {
     );
   };
 
-  getMeta(v) {
+  dvv = (key, device) => {
+    const v = this.getValue();
+    return defaultValueValue({ v, key, device });
+  };
+
+  getMeta() {
     const { meta } = this.props;
-    const containerType = styleElementSectionContainerType({ v });
-    const size = styleSizeContainerSize({ v, device: "desktop" });
-    const tabletSize = styleSizeContainerSize({ v, device: "tablet" });
-    const mobileSize = styleSizeContainerSize({ v, device: "mobile" });
+    const device = deviceModeSelector(this.getReduxState());
+
+    const size = this.dvv("containerSize", DESKTOP);
+    const tabletSize = this.dvv("containerSize", TABLET);
+    const mobileSize = this.dvv("containerSize", MOBILE);
+
+    const desktopSuffix = this.dvv("containerSizeSuffix", DESKTOP);
+    const tabletSuffix = this.dvv("containerSizeSuffix", TABLET);
+    const mobileSuffix = this.dvv("containerSizeSuffix", MOBILE);
+
+    const containerType = this.dvv("containerType", device);
 
     const wInPage = containerType === "fullWidth" ? wInFullPage : wInBoxedPage;
-    const desktopW = Math.round(wInPage * (size / 100) * 10) / 10;
-    const tabletW = Math.round(wInTabletPage * (tabletSize / 100) * 10) / 10;
-    const mobileW = Math.round(wInMobilePage * (mobileSize / 100) * 10) / 10;
+
+    const desktopW =
+      desktopSuffix === "%"
+        ? Math.round(wInPage * (size / 100) * 10) / 10
+        : size;
+    const tabletW =
+      tabletSuffix === "%"
+        ? Math.round(wInTabletPage * (tabletSize / 100) * 10) / 10
+        : tabletSize;
+    const mobileW =
+      mobileSuffix === "%"
+        ? Math.round(wInMobilePage * (mobileSize / 100) * 10) / 10
+        : mobileSize;
 
     return {
       ...meta,
@@ -149,12 +170,8 @@ export default class SectionHeaderStickyItem extends EditorComponent {
 
   renderToolbar() {
     const { globalBlockId } = this.props.meta;
-    const {
-      membership,
-      membershipRoles,
-      translations,
-      translationsLangs
-    } = this.props.rerender;
+    const { membership, membershipRoles, translations, translationsLangs } =
+      this.props.rerender;
 
     return (
       <CollapsibleToolbar

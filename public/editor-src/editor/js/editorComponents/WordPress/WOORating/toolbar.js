@@ -56,7 +56,6 @@ export function getItems({ v, device }) {
         title: t("Typography")
       },
       position: 70,
-      devices: "desktop",
       options: [
         {
           id: "typography",

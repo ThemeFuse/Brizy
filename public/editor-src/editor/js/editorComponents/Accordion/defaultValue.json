@@ -18,6 +18,8 @@
 
     "navIcon": "none",
 
+    "sortTags": false,
+
     "enableTags": "on",
     "allTag": "All",
 

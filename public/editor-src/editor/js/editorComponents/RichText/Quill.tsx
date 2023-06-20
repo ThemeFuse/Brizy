@@ -301,7 +301,7 @@ class QuillComponent extends React.Component<Props> {
         );
 
         const extraClassNames = this.getExtraClassNames($elem);
-        $elem.attr("class", [className, ...extraClassNames].join(" "));
+        $elem.addClass([className, ...extraClassNames].join(" "));
       });
     }
   }

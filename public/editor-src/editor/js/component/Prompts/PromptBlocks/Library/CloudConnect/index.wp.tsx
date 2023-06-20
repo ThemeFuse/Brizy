@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { connect, ConnectedProps } from "react-redux";
+import { ConnectedProps, connect } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
+import Prompts, { PromptsProps } from "visual/component/Prompts";
 import { Button } from "visual/component/Prompts/common/Button";
 import { updateAuthorization } from "visual/redux/actions2";
 import {
@@ -8,11 +9,10 @@ import {
   syncAllowedSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import Prompts, { PromptsProps } from "visual/component/Prompts";
-import { t } from "visual/utils/i18n";
 import { SyncAllowed } from "visual/types";
-import { useDisconnect, useSync } from "./common";
+import { t } from "visual/utils/i18n";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
+import { useDisconnect, useSync } from "./common";
 
 const handleConnect = (): void => {
   const data: PromptsProps = {
@@ -39,12 +39,8 @@ type CloudConnectProps = ConnectedProps<typeof cloudConnector> & {
 export const CloudConnectWP: React.FC<CloudConnectProps> = (
   props: CloudConnectProps
 ): React.ReactElement => {
-  const {
-    isAuthorized,
-    syncAllowed,
-    onSuccessSync,
-    updateAuthorization
-  } = props;
+  const { isAuthorized, syncAllowed, onSuccessSync, updateAuthorization } =
+    props;
   const { isSync, setSync, loading: syncLoading } = useSync();
   const { isDisconnect, setDisconnect, loading } = useDisconnect();
 
@@ -52,14 +48,14 @@ export const CloudConnectWP: React.FC<CloudConnectProps> = (
     if (isSync) {
       onSuccessSync && onSuccessSync();
     }
-  }, [isSync]);
+  }, [isSync, onSuccessSync]);
 
   useEffect(() => {
     if (isDisconnect) {
       updateAuthorization("disconnect");
       setAuthorized("disconnect");
     }
-  }, [isDisconnect]);
+  }, [isDisconnect, updateAuthorization]);
 
   return (
     <div className="brz-ed-popup-two__cloud">

@@ -158,8 +158,9 @@ const translationsMap = {
   WiserUpsell: t("Upsell by Wiser"),
   BoldBundles: t("Bundles by Bold"),
   CrossSell: t("Cross Sell"),
-  ProductMetafield: t("Product Metafield"),
-  BlogPostMeta: t("BlogPostMeta"),
+  ProductMetafield: t("Metafield"),
+  BlogPostMeta: t("Meta"),
+  Vendor: t("Vendor"),
 
   // Ministry Brands
   MinistryBrandsGroupLayout: t("Group Layout"),

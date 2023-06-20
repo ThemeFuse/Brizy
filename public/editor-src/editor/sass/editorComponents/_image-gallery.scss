@@ -5,10 +5,105 @@
   &-wrapper .brz-image {
     display: block;
   }
+
+  &-wrapper.brz-image__gallery-bigImage {
+    .brz-image__gallery-item {
+      position: relative;
+    }
+  }
+
   &-item {
     transition: none !important;
   }
+
+  &-justified {
+    // after destroy isotopes, library save height
+    height: auto !important;
+    position: relative;
+
+    .brz-image__gallery-item {
+      position: absolute;
+
+      // after destroy isotopes, library save transform
+      transform: none !important;
+      overflow: hidden;
+
+      .brz-image,
+      .brz-ed-image__wrapper,
+      .brz-image img,
+      .brz-image picture {
+        // we set all this to height: 100%; because gallery lib calculate images sizes
+        // and set to .brz-image__gallery-item
+        height: 100%;
+      }
+    }
+
+    .brz-image__gallery-item-empty {
+      .brz-image {
+        height: 100%;
+      }
+    }
+  }
+
+  &-grid,
+  &-bigImage {
+    // after destroy isotopes, library save height
+    height: auto !important;
+    position: relative;
+
+    .brz-image__gallery-item {
+      // after destroy isotopes, library save transform
+      transform: none !important;
+    }
+  }
+
+  &-big-image {
+    position: relative;
+
+    &-content {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        pointer-events: none;
+      }
+    }
+  }
+
+  &-left,
+  &-right {
+    .brz-image__gallery-item {
+      width: 100% !important;
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  &-top,
+  &-left,
+  &-right,
+  &-bottom {
+    & > .brz-ed-box__resizer {
+      height: auto;
+    }
+
+    .brz-image__gallery-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
+
 .brz-image__gallery--filter-wrapper {
   width: 100%;
   display: flex;
@@ -41,4 +136,8 @@
 .mfp-close:hover {
   background-color: transparent;
   border: 0;
+}
+
+&.brz:not(.brz-ed) .brz-image__gallery-big-image-content .brz-image .brz-img {
+  object-fit: cover;
 }

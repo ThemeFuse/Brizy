@@ -1,16 +1,7 @@
+import { TwitterEmbedEditor, TwitterEmbedPreview } from "@brizy/component";
+import { TwitterFollowEditor, TwitterFollowPreview } from "@brizy/component";
+import { TwitterMentionEditor, TwitterMentionPreview } from "@brizy/component";
 import classnames from "classnames";
-import {
-  TwitterEmbedEditor,
-  TwitterEmbedPreview
-} from "component/Flex/TwitterEmbed";
-import {
-  TwitterFollowEditor,
-  TwitterFollowPreview
-} from "component/Flex/TwitterFollowButton";
-import {
-  TwitterMentionEditor,
-  TwitterMentionPreview
-} from "component/Flex/TwitterMentionButton";
 import React, { ReactNode } from "react";
 import ResizeAware from "react-resize-aware";
 import CustomCSS from "visual/component/CustomCSS";

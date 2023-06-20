@@ -6,7 +6,7 @@ export default function (config: ConfigCommon) {
   return {
     id: "BlogPostMeta",
     title: t("Meta"),
-    icon: "nc-wp-post-title",
+    icon: "t2-shopify-meta",
     resolve: {
       type: "Wrapper",
       value: {

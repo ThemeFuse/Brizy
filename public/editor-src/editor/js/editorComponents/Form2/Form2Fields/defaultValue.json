@@ -50,33 +50,6 @@
     "tempPaddingBottomSuffix": "px",
     "tempPaddingLeftSuffix": "px",
 
-    "hoverPaddingType": null,
-    "tempHoverPaddingType": null,
-
-    "hoverPadding": null,
-    "hoverPaddingTop": null,
-    "hoverPaddingRight": null,
-    "hoverPaddingBottom": null,
-    "hoverPaddingLeft": null,
-
-    "tempHoverPadding": null,
-    "tempHoverPaddingTop": null,
-    "tempHoverPaddingRight": null,
-    "tempHoverPaddingBottom": null,
-    "tempHoverPaddingLeft": null,
-
-    "hoverPaddingSuffix": null,
-    "hoverPaddingTopSuffix": null,
-    "hoverPaddingRightSuffix": null,
-    "hoverPaddingBottomSuffix": null,
-    "hoverPaddingLeftSuffix": null,
-
-    "tempHoverPaddingSuffix": null,
-    "tempHoverPaddingTopSuffix": null,
-    "tempHoverPaddingRightSuffix": null,
-    "tempHoverPaddingBottomSuffix": null,
-    "tempHoverPaddingLeftSuffix": null,
-
     "labelFontStyle": "",
     "labelFontFamilyType": "google",
     "labelFontSize": 16,
@@ -120,33 +93,6 @@
     "tempLabelPaddingRightSuffix": "px",
     "tempLabelPaddingBottomSuffix": "px",
     "tempLabelPaddingLeftSuffix": "px",
-
-    "hoverLabelPaddingType": null,
-    "tempHoverLabelPaddingType": null,
-
-    "hoverLabelPadding": null,
-    "hoverLabelPaddingTop": null,
-    "hoverLabelPaddingRight": null,
-    "hoverLabelPaddingBottom": null,
-    "hoverLabelPaddingLeft": null,
-
-    "tempHoverLabelPadding": null,
-    "tempHoverLabelPaddingTop": null,
-    "tempHoverLabelPaddingRight": null,
-    "tempHoverLabelPaddingBottom": null,
-    "tempHoverLabelPaddingLeft": null,
-
-    "hoverLabelPaddingSuffix": null,
-    "hoverLabelPaddingTopSuffix": null,
-    "hoverLabelPaddingRightSuffix": null,
-    "hoverLabelPaddingBottomSuffix": null,
-    "hoverLabelPaddingLeftSuffix": null,
-
-    "tempHoverLabelPaddingSuffix": null,
-    "tempHoverLabelPaddingTopSuffix": null,
-    "tempHoverLabelPaddingRightSuffix": null,
-    "tempHoverLabelPaddingBottomSuffix": null,
-    "tempHoverLabelPaddingLeftSuffix": null,
 
     "fontStyle": "",
     "fontFamilyType": "google",
@@ -387,33 +333,6 @@
     "tempTabletPaddingBottomSuffix": "px",
     "tempTabletPaddingLeftSuffix": "px",
 
-    "tabletHoverPaddingType": null,
-    "tempTabletHoverPaddingType": null,
-
-    "tabletHoverPadding": null,
-    "tabletHoverPaddingTop": null,
-    "tabletHoverPaddingRight": null,
-    "tabletHoverPaddingBottom": null,
-    "tabletHoverPaddingLeft": null,
-
-    "tempTabletHoverPadding": null,
-    "tempTabletHoverPaddingTop": null,
-    "tempTabletHoverPaddingRight": null,
-    "tempTabletHoverPaddingBottom": null,
-    "tempTabletHoverPaddingLeft": null,
-
-    "tabletHoverPaddingSuffix": null,
-    "tabletHoverPaddingTopSuffix": null,
-    "tabletHoverPaddingRightSuffix": null,
-    "tabletHoverPaddingBottomSuffix": null,
-    "tabletHoverPaddingLeftSuffix": null,
-
-    "tempTabletHoverPaddingSuffix": null,
-    "tempTabletHoverPaddingTopSuffix": null,
-    "tempTabletHoverPaddingRightSuffix": null,
-    "tempTabletHoverPaddingBottomSuffix": null,
-    "tempTabletHoverPaddingLeftSuffix": null,
-
     "tabletLabelPaddingType": "ungrouped",
     "tempTabletLabelPaddingType": "ungrouped",
 
@@ -441,34 +360,8 @@
     "tempTabletLabelPaddingBottomSuffix": "px",
     "tempTabletLabelPaddingLeftSuffix": "px",
 
-    "tabletHoverLabelPaddingType": null,
-    "tempTabletHoverLabelPaddingType": null,
-
-    "tabletHoverLabelPadding": null,
-    "tabletHoverLabelPaddingTop": null,
-    "tabletHoverLabelPaddingRight": null,
-    "tabletHoverLabelPaddingBottom": null,
-    "tabletHoverLabelPaddingLeft": null,
-
-    "tempTabletHoverLabelPadding": null,
-    "tempTabletHoverLabelPaddingTop": null,
-    "tempTabletHoverLabelPaddingRight": null,
-    "tempTabletHoverLabelPaddingBottom": null,
-    "tempTabletHoverLabelPaddingLeft": null,
-
-    "tabletHoverLabelPaddingSuffix": null,
-    "tabletHoverLabelPaddingTopSuffix": null,
-    "tabletHoverLabelPaddingRightSuffix": null,
-    "tabletHoverLabelPaddingBottomSuffix": null,
-    "tabletHoverLabelPaddingLeftSuffix": null,
-
-    "tempTabletHoverLabelPaddingSuffix": null,
-    "tempTabletHoverLabelPaddingTopSuffix": null,
-    "tempTabletHoverLabelPaddingRightSuffix": null,
-    "tempTabletHoverLabelPaddingBottomSuffix": null,
-    "tempTabletHoverLabelPaddingLeftSuffix": null,
-
     "mobileSize": "small",
+
     "mobileSizeLargePadding": 20,
     "mobileSizeMediumPadding": 14,
     "mobileSizeSmallPadding": 10,
@@ -497,32 +390,17 @@
     "mobilePaddingType": "ungrouped",
     "tempMobilePaddingType": "ungrouped",
 
-    "mobileHoverPaddingType": null,
-    "tempMobileHoverPaddingType": null,
-
     "mobilePadding": 10,
     "mobilePaddingTop": 10,
     "mobilePaddingRight": 20,
     "mobilePaddingBottom": 10,
     "mobilePaddingLeft": 20,
 
-    "mobileHoverPadding": null,
-    "mobileHoverPaddingTop": null,
-    "mobileHoverPaddingRight": null,
-    "mobileHoverPaddingBottom": null,
-    "mobileHoverPaddingLeft": null,
-
     "tempMobilePadding": 10,
     "tempMobilePaddingTop": 10,
     "tempMobilePaddingRight": 20,
     "tempMobilePaddingBottom": 10,
     "tempMobilePaddingLeft": 20,
-
-    "tempHoverMobilePadding": null,
-    "tempHoverMobilePaddingTop": null,
-    "tempHoverMobilePaddingRight": null,
-    "tempHoverMobilePaddingBottom": null,
-    "tempHoverMobilePaddingLeft": null,
 
     "mobilePaddingSuffix": "px",
     "mobilePaddingTopSuffix": "px",
@@ -535,18 +413,6 @@
     "tempMobilePaddingRightSuffix": "px",
     "tempMobilePaddingBottomSuffix": "px",
     "tempMobilePaddingLeftSuffix": "px",
-
-    "mobileHoverPaddingSuffix": null,
-    "mobileHoverPaddingTopSuffix": null,
-    "mobileHoverPaddingRightSuffix": null,
-    "mobileHoverPaddingBottomSuffix": null,
-    "mobileHoverPaddingLeftSuffix": null,
-
-    "tempMobileHoverPaddingSuffix": null,
-    "tempMobileHoverPaddingTopSuffix": null,
-    "tempMobileHoverPaddingRightSuffix": null,
-    "tempMobileHoverPaddingBottomSuffix": null,
-    "tempMobileHoverPaddingLeftSuffix": null,
 
     "mobileLabelPaddingType": "ungrouped",
     "tempMobileLabelPaddingType": "ungrouped",
@@ -573,33 +439,6 @@
     "tempMobileLabelPaddingTopSuffix": "px",
     "tempMobileLabelPaddingRightSuffix": "px",
     "tempMobileLabelPaddingBottomSuffix": "px",
-    "tempMobileLabelPaddingLeftSuffix": "px",
-
-    "mobileHoverLabelPaddingType": null,
-    "tempMobileHoverLabelPaddingType": null,
-
-    "mobileHoverLabelPadding": null,
-    "mobileHoverLabelPaddingTop": null,
-    "mobileHoverLabelPaddingRight": null,
-    "mobileHoverLabelPaddingBottom": null,
-    "mobileHoverLabelPaddingLeft": null,
-
-    "tempMobileHoverLabelPadding": null,
-    "tempMobileHoverLabelPaddingTop": null,
-    "tempMobileHoverLabelPaddingRight": null,
-    "tempMobileHoverLabelPaddingBottom": null,
-    "tempMobileHoverLabelPaddingLeft": null,
-
-    "mobileHoverLabelPaddingSuffix": null,
-    "mobileHoverLabelPaddingTopSuffix": null,
-    "mobileHoverLabelPaddingRightSuffix": null,
-    "mobileHoverLabelPaddingBottomSuffix": null,
-    "mobileHoverLabelPaddingLeftSuffix": null,
-
-    "tempMobileHoverLabelPaddingSuffix": null,
-    "tempMobileHoverLabelPaddingTopSuffix": null,
-    "tempMobileHoverLabelPaddingRightSuffix": null,
-    "tempMobileHoverLabelPaddingBottomSuffix": null,
-    "tempMobileHoverLabelPaddingLeftSuffix": null
+    "tempMobileLabelPaddingLeftSuffix": "px"
   }
 }

@@ -6,7 +6,7 @@ export default function (config: ConfigCommon) {
   return {
     id: "ProductMetafield",
     title: t("Metafield"),
-    icon: "nc-wp-post-title",
+    icon: "t2-shopify-metafield",
     resolve: {
       type: "Wrapper",
       value: {

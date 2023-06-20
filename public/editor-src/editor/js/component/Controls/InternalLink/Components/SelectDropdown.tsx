@@ -12,7 +12,7 @@ const _SelectDropdown = (
     return (): void => {
       onSearchChange?.("");
     };
-  }, []);
+  }, [onSearchChange]);
 
   const className = classNames(
     "brz-ed-control__internalLink__dropdown",

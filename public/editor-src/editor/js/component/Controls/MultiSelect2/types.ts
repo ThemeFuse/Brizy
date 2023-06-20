@@ -9,8 +9,10 @@ export type MultiSelectProps<T> = {
   search?: boolean;
   searchIsEmpty?: boolean;
   searchIsLoading?: boolean;
+  showArrow?: boolean;
   onChange: (value: T[]) => void;
   onSearchChange?: (search: string) => void;
+  useAsSimpleSelect?: boolean;
 };
 
 export type MultiSelectItemProps<T> = {

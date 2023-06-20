@@ -18,7 +18,6 @@ export { toolbarColor2, toolbarColorHexField2 } from "./toolbarColor";
 
 // Gradient
 export {
-  toolbarGradientType,
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree
 } from "./toolbarGradient";
@@ -111,9 +110,4 @@ export {
 } from "./toolbarElementForm2";
 
 // Shape
-export {
-  toolbarShapeTopType,
-  toolbarShapeTopFlip,
-  toolbarShapeBottomType,
-  toolbarShapeBottomFlip
-} from "./toolbarShape";
+export { toolbarShapeTopFlip, toolbarShapeBottomFlip } from "./toolbarShape";

@@ -67,6 +67,13 @@ export class AddToCart extends EditorComponent<Value> {
           >
             {this.renderIcon(v)}
             <Text id="text" v={v} onChange={this.handleTextChange} />
+            {IS_PREVIEW && (
+              <ThemeIcon
+                className="brz-shopify-add-to-cart--spinner brz-invisible"
+                name="circle-02"
+                type="glyph"
+              />
+            )}
           </Wrapper>
         </CustomCSS>
       </PortalToolbar>

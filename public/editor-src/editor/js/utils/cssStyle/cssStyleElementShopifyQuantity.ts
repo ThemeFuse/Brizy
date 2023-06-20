@@ -5,6 +5,7 @@ import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius
 import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
 import { cssStyleSpacing } from "visual/utils/cssStyle/cssStyleSpacing";
 import { defaultValueValue } from "visual/utils/onChange";
+import * as Num from "visual/utils/reader/number";
 import { capByPrefix } from "visual/utils/string";
 import * as Str from "visual/utils/string/specs";
 import { styleBgColor, styleBgGradient } from "visual/utils/style2";
@@ -18,7 +19,14 @@ export function cssStyleElementShopifyQuantityButtonSize({
   state,
   prefix = "button"
 }: CSSValue): string {
-  return cssStyleElementShopifyQuantitySize({ v, device, state, prefix });
+  const { width, height } = cssStyleElementShopifyQuantitySize({
+    v,
+    device,
+    state,
+    prefix
+  });
+
+  return `min-width:${width}px; min-height:${height}px;`;
 }
 
 export function cssStyleElementShopifyQuantityInputSize({
@@ -27,14 +35,21 @@ export function cssStyleElementShopifyQuantityInputSize({
   state,
   prefix = "input"
 }: CSSValue): string {
-  return cssStyleElementShopifyQuantitySize({ v, device, state, prefix });
+  const { width, height } = cssStyleElementShopifyQuantitySize({
+    v,
+    device,
+    state,
+    prefix
+  });
+
+  return `width:${width}px; height:${height}px;`;
 }
 
 function cssStyleElementShopifyQuantitySize({
   v,
   device,
   prefix = ""
-}: CSSValue): string {
+}: CSSValue): { width: number; height: number } {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
   const paddingWidth = Str.read(dvv(capByPrefix(prefix, "width")));
@@ -54,13 +69,13 @@ function cssStyleElementShopifyQuantitySize({
     custom: paddingHeight
   };
 
-  const _width = size ? widths[size] : 0;
-  const _height = size ? heights[size] : 0;
+  const _width = size ? Num.read(widths[size]) ?? 0 : 0;
+  const _height = size ? Num.read(heights[size]) ?? 0 : 0;
 
-  return `width: ${_width}px; height: ${_height}px;`;
+  return { width: _width, height: _height };
 }
 
-export function cssStyleElementShopifyQuantityButtonSpacingLeft({
+export function cssStyleElementShopifyQuantityButtonSpacing({
   v,
   device,
   state
@@ -70,22 +85,7 @@ export function cssStyleElementShopifyQuantityButtonSpacingLeft({
     device,
     state,
     prefix: "button",
-    direction: "left"
-  });
-}
-
-export function cssStyleElementShopifyQuantityButtonSpacingRight({
-  v,
-  device,
-  state,
-  prefix = "button"
-}: CSSValue): string {
-  return cssStyleSpacing({
-    v,
-    device,
-    state,
-    prefix,
-    direction: "right"
+    direction: "horizontal"
   });
 }
 

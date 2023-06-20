@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import React, { ReactElement, ReactNode, ReactText } from "react";
 import { noop } from "rxjs";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
 import { Select2 } from "visual/component/Controls/Select2";
+import { Item } from "visual/component/Controls/Select2/Item";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { Extensions } from "visual/component/Options/types/dev/ImageUpload/Types";

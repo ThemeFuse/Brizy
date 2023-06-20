@@ -1,10 +1,10 @@
 import { IS_WP } from "visual/utils/env";
-import { ProjectError, GlobalBlocksError } from "visual/utils/errors";
+import { GlobalBlocksError, ProjectError } from "visual/utils/errors";
 import { apiRuleToEditorRule, editorRuleToApiRule } from "./adapter";
 
 // project
 
-export const parseProject = project => {
+export const parseProject = (project) => {
   let data;
 
   if (!project.data) {
@@ -20,15 +20,9 @@ export const parseProject = project => {
   return { ...project, data };
 };
 
-export const stringifyProject = project => {
-  let data = JSON.stringify(project.data);
-
-  return { ...project, data };
-};
-
 //#region Global Blocks
 
-export const parseGlobalBlock = globalBlock => {
+export const parseGlobalBlock = (globalBlock) => {
   let data;
   let meta;
   let rules;
@@ -96,7 +90,7 @@ export const parseGlobalBlock = globalBlock => {
   };
 };
 
-export const stringifyGlobalBlock = globalBlock => {
+export const stringifyGlobalBlock = (globalBlock) => {
   const data = JSON.stringify(globalBlock.data);
   const meta = JSON.stringify(globalBlock.meta);
   const rules = JSON.stringify(globalBlock.rules.map(editorRuleToApiRule));

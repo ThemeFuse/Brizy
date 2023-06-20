@@ -14,5 +14,6 @@ export const add = (body: FormData): Promise<Item[]> => {
   })
     .then(pass((r) => r.ok))
     .then(throwOnNullish("Unable to fetch product data"))
-    .then((r) => r.json());
+    .then((r) => r.json())
+    .catch((r) => r);
 };

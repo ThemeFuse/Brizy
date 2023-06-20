@@ -1,12 +1,12 @@
+import classnames from "classnames";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import classnames from "classnames";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import Config from "visual/global/Config";
 import { updateUI } from "visual/redux/actions2";
 import { currentRoleSelector } from "visual/redux/selectors";
 import { getMembershipRoles } from "visual/utils/membership";
-import Config from "visual/global/Config";
 
 export interface Props {
   label: string;
@@ -23,9 +23,9 @@ export const Roles = (props: Props): ReactElement => {
     _className
   );
 
-  const config = Config.getAll();
-
   const renderOptions = useMemo(() => {
+    const config = Config.getAll();
+
     const membershipRoles = [
       { role: "default", name: "Default" },
       { role: "not_logged", name: "Not logged" },

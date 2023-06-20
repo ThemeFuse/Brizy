@@ -74,6 +74,16 @@ export function getItems({
                     step: 0.1,
                     units: [{ value: "s", title: "s" }]
                   }
+                },
+                {
+                  id: "spacing",
+                  type: "slider-dev",
+                  label: t("Spacing"),
+                  config: {
+                    min: 0,
+                    max: 100,
+                    units: [{ title: "px", value: "px" }]
+                  }
                 }
               ]
             },
@@ -159,16 +169,6 @@ export function getItems({
                       }
                     }
                   ]
-                },
-                {
-                  id: "spacing",
-                  type: "slider-dev",
-                  label: t("Spacing"),
-                  config: {
-                    min: 0,
-                    max: 100,
-                    units: [{ value: "px", title: "px" }]
-                  }
                 }
               ]
             },

@@ -1,5 +1,5 @@
-import { Reader } from "./types";
 import { Dictionary } from "visual/types/utils";
+import { Reader } from "./types";
 
 type ObjWithUnknowns<K extends string> = {
   [k in K]: unknown;
@@ -16,9 +16,9 @@ export const hasKey = <T extends string>(
 export const hasKeys = <T extends string>(
   keys: T[],
   obj: Record<string, unknown>
-): obj is ObjWithUnknowns<T> => keys.every(k => hasKey(k, obj));
+): obj is ObjWithUnknowns<T> => keys.every((k) => hasKey(k, obj));
 
-export const read: Reader<Record<string, unknown>> = v => {
+export const read: Reader<Record<string, unknown>> = (v) => {
   if (isObject(v)) {
     return v;
   }
@@ -26,7 +26,7 @@ export const read: Reader<Record<string, unknown>> = v => {
   return undefined;
 };
 
-export const readAsUnknownDict: Reader<Dictionary<unknown>> = v => {
+export const readAsUnknownDict: Reader<Dictionary<unknown>> = (v) => {
   if (isObject(v)) {
     return v as Dictionary<unknown>;
   }
@@ -34,31 +34,38 @@ export const readAsUnknownDict: Reader<Dictionary<unknown>> = v => {
   return undefined;
 };
 
-export const readWithValueReader = <T>(
-  valueReader: Reader<T>
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-): Reader<Dictionary<T>> => v => {
-  const obj = readAsUnknownDict(v);
+export const readWithValueReader =
+  <T>(
+    valueReader: Reader<T>
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  ): Reader<Dictionary<T>> =>
+  (v) => {
+    const obj = readAsUnknownDict(v);
 
-  if (obj !== undefined) {
-    const r: Dictionary<T> = {};
+    if (obj !== undefined) {
+      const r: Dictionary<T> = {};
 
-    for (const [k, v] of Object.entries(obj)) {
-      const vParsed = valueReader(v);
+      for (const [k, v] of Object.entries(obj)) {
+        const vParsed = valueReader(v);
 
-      if (vParsed !== undefined) {
-        r[k] = vParsed;
-      } else {
-        return undefined;
+        if (vParsed !== undefined) {
+          r[k] = vParsed;
+        } else {
+          return undefined;
+        }
       }
+
+      return r;
     }
 
-    return r;
-  }
+    return undefined;
+  };
 
-  return undefined;
-};
+export const readKey =
+  (key: string) =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (obj: Record<string, any>): unknown =>
+    hasKey(key, obj) ? obj[key] : undefined;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const readKey = (key: string) => (obj: Record<string, any>): unknown =>
-  hasKey(key, obj) ? obj[key] : undefined;
+export const length = (obj: Record<string, unknown>): number =>
+  Object.keys(obj).length;

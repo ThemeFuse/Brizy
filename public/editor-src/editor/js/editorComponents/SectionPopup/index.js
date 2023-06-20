@@ -18,14 +18,13 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Config from "visual/global/Config";
 import { triggersSelector } from "visual/redux/selectors";
+import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
 import { isPopup } from "visual/utils/models";
-import {
-  styleElementSectionContainerType,
-  styleSizeContainerSize
-} from "visual/utils/style2";
+import { defaultValueValue } from "visual/utils/onChange";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import defaultValue from "./defaultValue.json";
 import { SectionPopupInstances as Instances } from "./instances";
 import * as sidebar from "./sidebar";
@@ -105,12 +104,21 @@ class SectionPopup extends EditorComponent {
     this.close();
   };
 
+  dvv = (key, device) => {
+    const v = this.getValue();
+    return defaultValueValue({ v, key, device });
+  };
+
   getMeta(v) {
     const { meta } = this.props;
-    const containerType = styleElementSectionContainerType({ v });
-    const size = styleSizeContainerSize({ v, device: "desktop" });
-    const tabletSize = styleSizeContainerSize({ v, device: "tablet" });
-    const mobileSize = styleSizeContainerSize({ v, device: "mobile" });
+
+    const device = deviceModeSelector(this.getReduxState());
+    const containerType = this.dvv("containerType", device);
+
+    const size = this.dvv("containerSize", DESKTOP);
+    const tabletSize = this.dvv("containerSize", TABLET);
+    const mobileSize = this.dvv("containerSize", MOBILE);
+
     const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,
       w: containerType === "fullWidth" ? wInFullPage : wInBoxedPage,

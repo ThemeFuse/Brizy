@@ -13,7 +13,7 @@ import {
 } from "visual/component/Controls/ColorPickerSelect/entities";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
 import MultiInputOptionType from "visual/component/Controls/MultiInput";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
+import { Item } from "visual/component/Controls/Select2/Item";
 import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
 import {
   WithClassName,
@@ -36,7 +36,7 @@ export const BoxShadow: FC<Props> = ({ value, types, onChange, ...props }) => {
   const className = classNames("brz-ed-control__boxShadow", props.className);
   const onHex = useCallback(
     (hex) => onChange({ ...value, hex }, { isChanged: "hex" }),
-    [onChange]
+    [onChange, value]
   );
   const fieldChange = useCallback(
     (fields) => {
@@ -55,7 +55,7 @@ export const BoxShadow: FC<Props> = ({ value, types, onChange, ...props }) => {
         );
       }
     },
-    [onChange]
+    [onChange, value]
   );
   const _onChange = (
     { select, ...v }: CValue<Value["type"]>,

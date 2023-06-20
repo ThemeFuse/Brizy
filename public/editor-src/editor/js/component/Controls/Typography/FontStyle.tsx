@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { FC, useMemo } from "react";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
+import { Item } from "visual/component/Controls/Select2/Item";
 import { Select2 } from "visual/component/Controls/Select2";
 import EditorIcon from "visual/component/EditorIcon";
 import Config from "visual/global/Config";
@@ -16,11 +16,11 @@ export const FontStyle: FC<Props> = ({
 }) => {
   const _className = classNames("brz-ed-control__font-style", className);
 
-  const config = useMemo(() => Config.getAll(), []);
-  const disableSettings = useMemo(
-    () => isCloud(config) && isShopify(config),
-    []
-  );
+  const disableSettings = useMemo(() => {
+    const config = Config.getAll();
+
+    return isCloud(config) && isShopify(config);
+  }, []);
 
   return (
     <div className={_className}>

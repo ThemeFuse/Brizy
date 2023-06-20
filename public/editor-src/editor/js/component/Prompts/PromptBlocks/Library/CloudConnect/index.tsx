@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { connect, ConnectedProps } from "react-redux";
+import { ConnectedProps, connect } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import { updateAuthorization } from "visual/redux/actions2";
 import { authorizedSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
-import { useDisconnect } from "./common";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
+import { useDisconnect } from "./common";
 
 const mapState = (state: ReduxState): { isAuthorized: boolean } => ({
   isAuthorized: authorizedSelector(state) === "connected"
@@ -29,7 +29,7 @@ export const CloudConnect: React.FC<CloudConnectProps> = (
       updateAuthorization("disconnect");
       setAuthorized("disconnect");
     }
-  }, [isDisconnect]);
+  }, [isDisconnect, updateAuthorization]);
 
   return (
     <div className="brz-ed-popup-two__cloud">

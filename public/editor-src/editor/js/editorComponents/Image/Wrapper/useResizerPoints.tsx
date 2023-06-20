@@ -45,7 +45,7 @@ type UseResizerPoints = (
   props: ImageProps
 ) => ResizerCustomSize | ResizerPredefinedSize;
 
-const useResizerPoints: UseResizerPoints = ({ v, meta }) => {
+const useResizerPoints: UseResizerPoints = ({ v, meta, gallery }) => {
   const { sizeType, imagePopulation } = v;
 
   const useCustomPlaceholder = useMemo(() => {
@@ -75,13 +75,18 @@ const useResizerPoints: UseResizerPoints = ({ v, meta }) => {
 
   if (sizeType === "custom") {
     const { imageExtension, elementPosition } = v;
-    const { gallery } = meta;
     const isAbsoluteOrFixed =
       elementPosition === "absolute" || elementPosition === "fixed";
     let points = POINTS.default;
 
     if (gallery && gallery.inGallery) {
-      points = POINTS.gallery;
+      if (gallery.layout && gallery.layout === "masonry") {
+        points = POINTS.gallery;
+      } else if (v?.clonedFromGallery) {
+        points = POINTS.default;
+      } else {
+        points = [];
+      }
     } else if (isSVG(imageExtension)) {
       points = POINTS.svg;
     } else if (isGIF(imageExtension)) {
@@ -93,6 +98,13 @@ const useResizerPoints: UseResizerPoints = ({ v, meta }) => {
     return {
       points: points,
       restrictions: getWidthRestriction(meta, isAbsoluteOrFixed)
+    };
+  }
+
+  if (gallery?.layout === "justified") {
+    return {
+      points: [],
+      restrictions: getSizeRestriction()
     };
   }
 

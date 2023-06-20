@@ -1,10 +1,12 @@
 import { mPipe, parse, pass } from "fp-utilities";
-import * as Str from "visual/utils/string/specs";
 import * as Obj from "visual/utils/reader/object";
+import * as Str from "visual/utils/string/specs";
 
 export enum ActiveItemTypes {
   Customer = "customer",
-  CollectionItem = "collectionItem"
+  CollectionItem = "collectionItem",
+  EcwidProduct = "ecwidProduct",
+  EcwidCategory = "ecwidCategory"
 }
 
 export type ActiveItem = {

@@ -143,7 +143,6 @@ export const changeRichText = ($: cheerio.Root): void => {
       });
 
       // required some property
-      // @ts-expect-error: need to be without params
       const css = $this.css();
       const newCSS = Object.entries(css).reduce((acc, [property, value]) => {
         // cheeriojs have bug for background-image: url("someurl")

@@ -1,17 +1,14 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/no-use-before-define */
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
-import { connect, ConnectedProps } from "react-redux";
+import { ConnectedProps, connect } from "react-redux";
 import { Dispatch } from "redux";
-import { updateUI, ActionUpdateUI } from "visual/redux/actions2";
 import { currentUserRole } from "visual/component/Roles";
+import { ActionUpdateUI, updateUI } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
-import Icon from "../../Icon";
-import DrawerComponent from "../../Drawer";
-import DrawerAnimation from "../../Animation";
-
 import { DeviceMode } from "visual/types";
+import DrawerAnimation from "../../Animation";
+import DrawerComponent from "../../Drawer";
+import Icon from "../../Icon";
 
 type DrawerContentType = ReduxState["ui"]["leftSidebar"]["drawerContentType"];
 
@@ -21,6 +18,7 @@ type DrawerProps = {
   drawerComponent?: React.ElementType;
   wrapperHeaderComponent: React.ElementType;
   id: string;
+  withHelpIcon?: boolean;
 };
 
 type DrawerWrapperProps = DrawerProps &
@@ -33,8 +31,8 @@ type DrawerWrapperProps = DrawerProps &
 
 const Drawer: React.FC<DrawerProps> = ({
   drawerContentType,
-
   drawerTitle = "",
+  withHelpIcon,
   drawerComponent: DrawerContent,
   wrapperHeaderComponent: WrapperHeaderComponent = ({ children }) => children,
   id,
@@ -53,7 +51,7 @@ const Drawer: React.FC<DrawerProps> = ({
   let content = (
     <DrawerAnimation in={!!drawerContentType} appear={isOpened}>
       <WrapperHeaderComponent>
-        <DrawerComponent headerText={drawerTitle}>
+        <DrawerComponent headerText={drawerTitle} withHelpIcon={withHelpIcon}>
           {DrawerContent && <DrawerContent extraProps={extraProps} />}
         </DrawerComponent>
       </WrapperHeaderComponent>
@@ -74,41 +72,50 @@ const Drawer: React.FC<DrawerProps> = ({
 };
 
 const DrawerWrapper: React.FC<DrawerWrapperProps> = ({ ...props }) => {
+  const {
+    id,
+    deviceMode,
+    showInDeviceModes,
+    disabled,
+    drawerContentType,
+    iconProps,
+    icon,
+    drawerTitle,
+    onDrawerContentTypeChange
+  } = props;
+
   const show =
     currentUserRole() === "admin" &&
-    (!props.showInDeviceModes ||
-      props.showInDeviceModes.includes(props.deviceMode)) &&
-    !props.disabled;
-
-  if (!show) return null;
+    (!showInDeviceModes || showInDeviceModes.includes(deviceMode)) &&
+    !disabled;
 
   const className =
-    props.drawerContentType === props.id
-      ? "brz-ed-sidebar__control__item--active"
-      : "";
-  const iconProps =
-    typeof props.iconProps === "object"
-      ? props.iconProps
-      : typeof props.iconProps === "function"
-      ? props.iconProps({
+    drawerContentType === id ? "brz-ed-sidebar__control__item--active" : "";
+  const iconPropsClass =
+    typeof iconProps === "object"
+      ? iconProps
+      : typeof iconProps === "function"
+      ? iconProps({
           activeClass: "brz-ed-sidebar__control__item--active"
         })
       : {};
 
   const handleDrawerContentTypeChange = useCallback(() => {
-    props.onDrawerContentTypeChange(props.id, true);
-  }, [props.id]);
+    onDrawerContentTypeChange(id, true);
+  }, [onDrawerContentTypeChange, id]);
+
+  if (!show) return null;
 
   return (
     <>
       <Icon
-        key={props.id}
+        key={id}
         tagName="div"
         className={className}
-        icon={props.icon}
-        title={props.drawerTitle}
+        icon={icon}
+        title={drawerTitle}
         onClick={handleDrawerContentTypeChange}
-        {...iconProps}
+        {...iconPropsClass}
       />
       <Drawer {...props} />
     </>

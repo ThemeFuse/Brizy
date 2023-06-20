@@ -11,6 +11,8 @@ import { getInstanceParentId } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component }) {
   const config = Config.getAll();
+  const disabledSavedBlock =
+    typeof config.api?.savedBlocks?.create !== "function";
 
   const isMultiLanguageDisabled =
     config.elements?.section?.multilanguage === false;
@@ -248,6 +250,7 @@ export function getItems({ v, device, component }) {
       type: "savedBlock-dev",
       devices: "desktop",
       position: 90,
+      disabled: disabledSavedBlock,
       config: {
         icon: "nc-save-section",
         blockType: "normal",

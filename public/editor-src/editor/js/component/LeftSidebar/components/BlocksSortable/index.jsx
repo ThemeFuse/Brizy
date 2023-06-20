@@ -257,10 +257,14 @@ const mapStateToProps = (state) => ({
   page: pageSelector(state)
 });
 
+const _config = Config.getAll();
+const helpIcon = _config?.ui?.help?.showIcon;
+
 export const BlocksSortable = {
   id: LeftSidebarOptionsIds.reorderBlock,
   type: "drawer",
   icon: "nc-reorder",
+  withHelpIcon: helpIcon,
   disabled: isPopup(Config.getAll()) || isStory(Config.getAll()),
   drawerTitle: t("Reorder Blocks"),
   drawerComponent: connect(mapStateToProps)(DrawerComponent)

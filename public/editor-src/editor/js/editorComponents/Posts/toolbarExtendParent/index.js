@@ -2,6 +2,7 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { tabFilter } from "./tabFilter";
 import { tagsFilter } from "./tagsFilter";
+import { disableNavigation } from "./utils.common";
 
 const getItems =
   (context) =>
@@ -146,7 +147,8 @@ function tabNavigation(v) {
           {
             id: "pagination",
             label: t("Pagination"),
-            type: "switch-dev"
+            type: "switch-dev",
+            disabled: disableNavigation(v)
           },
           {
             id: "paginationSpacing",

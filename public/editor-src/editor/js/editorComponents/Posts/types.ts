@@ -2,6 +2,8 @@ import { Dictionary } from "visual/types/utils";
 
 //#region common
 
+type Switch = "on" | "off";
+
 export type PostsTypes =
   | "posts"
   | "archives"
@@ -41,6 +43,8 @@ type V_ = {
   orderBy: string;
   order: string;
   symbols: Dictionary<string>;
+  excludeCurrentProduct: Switch;
+  excludeCurrentProductOption?: boolean;
   [k: string]: unknown; // this is done to cover when symbols are being added to v
 };
 export type V = { [K in keyof V_]?: V_[K] | null };
@@ -55,13 +59,20 @@ export type VDecoded = {
   orderBy: string;
   order: string;
   symbols: Dictionary<string[]>;
+  excludeCurrentProduct?: Switch;
+  excludeCurrentProductOption?: boolean;
 };
 
 export interface Context {
   collectionTypesInfo: {
     collectionTypes: { id: string; slug?: string | null; title: string }[];
     refsById: Dictionary<
-      { type: "single" | "multi"; id: string; fieldId: string; title: string }[]
+      {
+        type: "single" | "multi" | "manual";
+        id: string;
+        fieldId: string;
+        title: string;
+      }[]
     >;
   };
 }
@@ -82,6 +93,7 @@ export type CloudPostsQuery = {
   order_by: "id" | "title" | "random";
   order: "ASC" | "DESC";
   offset: number;
+  excludeCurrentProduct?: 1;
 };
 
 export type CloudArchiveQuery = {
@@ -146,7 +158,7 @@ export type WPQueryArgs = {
 };
 
 export type WPTaxQuery = {
-  relation: "OR" | "AND";
+  relation?: "OR" | "AND";
   [k: number]: WPTaxQueryItem | WPTaxQuery;
 };
 

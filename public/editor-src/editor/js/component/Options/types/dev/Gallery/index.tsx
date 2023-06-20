@@ -32,12 +32,17 @@ import { allowedExtensions, toUploadData } from "./utils";
 export type Value<I extends Image.Image> = Array<Image.Image | I>;
 type Items = Item.Item<number>[];
 
-export type Props<I extends Image.Image> = Option.Props<Value<I>>;
+export type Props<I extends Image.Image> = Option.Props<Value<I>> & {
+  config?: {
+    canDeleteLast?: boolean;
+  };
+};
 
 export function Gallery<I extends Image.Image>({
   label,
   value,
-  onChange
+  onChange,
+  config
 }: Props<I>): ReactElement<Props<I>> {
   const [items, dispatch] = useReducer<Reducer<Items, Actions.Actions>>(
     reducer,
@@ -52,7 +57,11 @@ export function Gallery<I extends Image.Image>({
   const handleOnChange = useRef({ fn: onChange });
   handleOnChange.current.fn = onChange;
 
-  const onRemove = useCallback(pipe(Actions.remove, dispatch), []);
+  const onRemove = useCallback(
+    (payload) => dispatch(Actions.remove(payload)),
+    []
+  );
+
   const onSort = useCallback(
     pipe((from: number, to: number) => Actions.sort({ from, to }), dispatch),
     []
@@ -112,12 +121,14 @@ export function Gallery<I extends Image.Image>({
         map(([v]) => v)
       )
       .subscribe(handleOnChange.current.fn);
-
     return () => {
       onChange$.unsubscribe();
       onUpload$.unsubscribe();
     };
   }, []);
+
+  const canDeleteLast = config?.canDeleteLast ?? true;
+  const _onRemove = canDeleteLast || items.length > 1 ? onRemove : undefined;
 
   return (
     <>
@@ -126,7 +137,7 @@ export function Gallery<I extends Image.Image>({
         onSort={onSort}
         onAdd={onAdd}
         items={items.map(Item.toGalleryItem)}
-        onRemove={onRemove}
+        onRemove={_onRemove}
       />
     </>
   );

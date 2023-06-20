@@ -1,22 +1,14 @@
-import { distinctUntilChanged } from "rxjs/operators";
 import { add as addToCart } from "visual/libs/shopify/AjaxApi/Cart";
-import { getStore } from "visual/libs/shopify/Stores/AddToCart";
-import {
-  CartApiMock,
-  ProductApiMock
-} from "visual/libs/shopify/Stores/types/Api.mock";
 import { ProductHandle } from "visual/libs/shopify/types/Product";
-import { getAddToCartData } from "./utils";
+import { getAddToCartData, useSpinner } from "./utils";
 
 export default function ($node: JQuery): void {
   const node = $node.get(0);
+
   if (!node) return;
 
-  const cartClient = new CartApiMock();
-  const productClient = new ProductApiMock();
-
   node
-    .querySelectorAll<HTMLDivElement>(".brz-shopify-add-to-cart")
+    .querySelectorAll<HTMLButtonElement>(".brz-shopify-add-to-cart")
     .forEach((item) => {
       const productId = item.getAttribute("data-product-handle") as
         | ProductHandle
@@ -27,36 +19,12 @@ export default function ($node: JQuery): void {
         return;
       }
 
-      const children = Array.from(item.children);
+      item.addEventListener("click", async () => {
+        useSpinner({ cartNode: item, loading: true });
 
-      productClient.get(productId).then((p) => {
-        const store = getStore(p, cartClient);
+        await addToCart(getAddToCartData({ productId, defaultVarintId }));
 
-        store.observable
-          .pipe(
-            distinctUntilChanged(
-              (a, b) => a.type === b.type && a.quantity === b.quantity
-            )
-          )
-          .subscribe((s): Element => {
-            switch (s.type) {
-              case "Submitting": {
-                item.innerHTML = "Loading...";
-
-                return item;
-              }
-              case "Ready": {
-                item.innerHTML = "";
-                item.append(...children);
-
-                return item;
-              }
-            }
-          });
-
-        item.addEventListener("click", () => {
-          addToCart(getAddToCartData({ productId, defaultVarintId }));
-        });
+        useSpinner({ cartNode: item, loading: false });
       });
     });
 }

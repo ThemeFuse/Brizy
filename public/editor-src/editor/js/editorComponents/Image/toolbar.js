@@ -55,13 +55,20 @@ export const getItems =
       config.dynamicContent?.useCustomPlaceholder ?? false;
     const { cW, gallery } = property[device];
 
-    const { inGallery = false, enableTags } = gallery || {};
+    const isBigImageFromGallery = Boolean(v?.clonedFromGallery);
+
+    const {
+      inGallery = false,
+      withBigImage = false,
+      enableTags
+    } = gallery || {};
     const dvv = (key) => defaultValueValue({ v, key, device });
     const { hex: borderColorHex } = getOptionColorHexByPalette(
       dvv("borderColorHex"),
       dvv("borderColorPalette")
     );
 
+    const _enableTags = enableTags && !isBigImageFromGallery;
     const borderColorOpacity = dvv("borderColorOpacity");
 
     const maskShape = dvv("maskShape");
@@ -125,10 +132,11 @@ export const getItems =
                     type: "population-dev",
                     label: t("Image"),
                     disabled:
-                      (isSVG(imageExtension) ||
+                      ((isSVG(imageExtension) ||
                         isGIF(imageExtension) ||
                         imagePopulation) &&
-                      device !== "desktop",
+                        device !== "desktop") ||
+                      isBigImageFromGallery,
                     config:
                       device === "desktop" &&
                       !gallery.inGallery &&
@@ -155,7 +163,8 @@ export const getItems =
                       Boolean(imagePopulation) ||
                       isSVG(imageExtension) ||
                       isGIF(imageExtension) ||
-                      sizeType !== "custom",
+                      sizeType !== "custom" ||
+                      isBigImageFromGallery,
                     config: {
                       min: 100,
                       max: 200,
@@ -171,6 +180,7 @@ export const getItems =
                       inGallery ||
                       isSVG(imageExtension) ||
                       isGIF(imageExtension) ||
+                      isBigImageFromGallery ||
                       isStory(Config.getAll()),
                     devices: "desktop"
                   }
@@ -181,174 +191,265 @@ export const getItems =
                 label: t("Mask"),
                 position: 110,
                 options: [
-                  {
-                    id: "maskShape",
-                    label: t("Shape"),
-                    devices: "desktop",
-                    type: "select-dev",
-                    choices: [
-                      { title: t("None"), value: "none" },
-                      {
-                        value: "circle",
-                        icon: { name: "nc-mask-shape-circle" }
-                      },
-                      {
-                        value: "rhombus",
-                        icon: { name: "nc-mask-shape-rhombus" }
-                      },
-                      { value: "star", icon: { name: "nc-mask-shape-star" } },
-                      {
-                        value: "flower",
-                        icon: { name: "nc-mask-shape-flower" }
-                      },
-                      {
-                        value: "square",
-                        icon: { name: "nc-mask-shape-square" }
-                      },
-                      {
-                        value: "triangle",
-                        icon: { name: "nc-mask-shape-triangle" }
-                      },
-                      { value: "blob1", icon: { name: "nc-mask-shape-blob1" } },
-                      { value: "blob2", icon: { name: "nc-mask-shape-blob2" } },
-                      { value: "blob3", icon: { name: "nc-mask-shape-blob3" } },
-                      { value: "blob4", icon: { name: "nc-mask-shape-blob4" } },
-                      {
-                        value: "brush1",
-                        icon: { name: "nc-mask-shape-brush1" }
-                      },
-                      {
-                        value: "brush2",
-                        icon: { name: "nc-mask-shape-brush2" }
-                      },
-                      {
-                        value: "brush3",
-                        icon: { name: "nc-mask-shape-brush3" }
-                      },
-                      {
-                        value: "brush4",
-                        icon: { name: "nc-mask-shape-brush4" }
-                      },
-                      { value: "poly1", icon: { name: "nc-mask-shape-poly1" } },
-                      { value: "poly2", icon: { name: "nc-mask-shape-poly2" } },
-                      { value: "poly3", icon: { name: "nc-mask-shape-poly3" } },
-                      { value: "poly4", icon: { name: "nc-mask-shape-poly4" } },
-                      { value: "custom", title: "Custom" }
-                    ]
-                  },
-                  {
-                    id: "maskCustomUpload",
-                    type: "imageUpload-dev",
-                    devices: "desktop",
-                    label: t("Image"),
-                    config: {
-                      pointer: false,
-                      disableSizes: true,
-                      acceptedExtensions: ["png", "svg"]
-                    },
-                    helper: {
-                      enabled: true,
-                      content: t("Upload only [ .png or .svg ]")
-                    },
-                    disabled: maskShape !== "custom"
-                  },
-                  {
-                    id: "groupSize",
-                    type: "group-dev",
-                    disabled: maskShapeIsDisabled,
-                    options: [
-                      {
-                        id: "maskSize",
-                        label: t("Size"),
-                        type: "select-dev",
-                        choices: [
-                          { title: t("Fit"), value: "contain" },
-                          { title: t("Fill"), value: "cover" },
-                          { title: t("Custom"), value: "custom" }
-                        ]
-                      },
-                      {
-                        id: "maskScale",
-                        type: "slider-dev",
-                        disabled: maskSize !== "custom",
-                        config: {
-                          min: 1,
-                          max: maskScaleSuffix === "px" ? 500 : 100,
-                          units: [
-                            { value: "%", title: "%" },
-                            { value: "px", title: "px" }
+                  ...(inGallery && !isBigImageFromGallery
+                    ? []
+                    : [
+                        {
+                          id: "maskShape",
+                          label: t("Shape"),
+                          devices: "desktop",
+                          type: "select-dev",
+                          choices: [
+                            { title: t("None"), value: "none" },
+                            {
+                              value: "circle",
+                              icon: {
+                                name: "nc-mask-shape-circle"
+                              },
+                              title: ""
+                            },
+                            {
+                              value: "rhombus",
+                              icon: {
+                                name: "nc-mask-shape-rhombus"
+                              },
+                              title: ""
+                            },
+                            {
+                              value: "star",
+                              icon: {
+                                name: "nc-mask-shape-star"
+                              },
+                              title: ""
+                            },
+                            {
+                              value: "flower",
+                              icon: {
+                                name: "nc-mask-shape-flower"
+                              },
+                              title: ""
+                            },
+                            {
+                              value: "square",
+                              icon: {
+                                name: "nc-mask-shape-square"
+                              },
+                              title: ""
+                            },
+                            {
+                              value: "triangle",
+                              icon: {
+                                name: "nc-mask-shape-triangle"
+                              },
+                              title: ""
+                            },
+                            {
+                              value: "blob1",
+                              icon: { name: "nc-mask-shape-blob1" },
+                              title: ""
+                            },
+                            {
+                              value: "blob2",
+                              icon: { name: "nc-mask-shape-blob2" },
+                              title: ""
+                            },
+                            {
+                              value: "blob3",
+                              icon: { name: "nc-mask-shape-blob3" },
+                              title: ""
+                            },
+                            {
+                              value: "blob4",
+                              icon: { name: "nc-mask-shape-blob4" },
+                              title: ""
+                            },
+                            {
+                              value: "brush1",
+                              icon: {
+                                name: "nc-mask-shape-brush1"
+                              },
+                              title: ""
+                            },
+                            {
+                              value: "brush2",
+                              icon: {
+                                name: "nc-mask-shape-brush2"
+                              },
+                              title: ""
+                            },
+                            {
+                              value: "brush3",
+                              icon: {
+                                name: "nc-mask-shape-brush3"
+                              },
+                              title: ""
+                            },
+                            {
+                              value: "brush4",
+                              icon: {
+                                name: "nc-mask-shape-brush4"
+                              },
+                              title: ""
+                            },
+                            {
+                              value: "poly1",
+                              icon: { name: "nc-mask-shape-poly1" },
+                              title: ""
+                            },
+                            {
+                              value: "poly2",
+                              icon: { name: "nc-mask-shape-poly2" },
+                              title: ""
+                            },
+                            {
+                              value: "poly3",
+                              icon: { name: "nc-mask-shape-poly3" },
+                              title: ""
+                            },
+                            {
+                              value: "poly4",
+                              icon: { name: "nc-mask-shape-poly4" },
+                              title: ""
+                            },
+                            { value: "custom", title: t("Custom") }
+                          ]
+                        },
+                        {
+                          id: "maskCustomUpload",
+                          type: "imageUpload-dev",
+                          devices: "desktop",
+                          label: t("Image"),
+                          config: {
+                            pointer: false,
+                            disableSizes: true,
+                            acceptedExtensions: ["png", "svg"]
+                          },
+                          helper: {
+                            enabled: true,
+                            content: t("Upload only [ .png or .svg ]")
+                          },
+                          disabled: maskShape !== "custom"
+                        },
+                        {
+                          id: "groupSize",
+                          type: "group-dev",
+                          disabled: maskShapeIsDisabled,
+                          options: [
+                            {
+                              id: "maskSize",
+                              label: t("Size"),
+                              type: "select-dev",
+                              choices: [
+                                { title: t("Fit"), value: "contain" },
+                                { title: t("Fill"), value: "cover" },
+                                { title: t("Custom"), value: "custom" }
+                              ]
+                            },
+                            {
+                              id: "maskScale",
+                              type: "slider-dev",
+                              disabled: maskSize !== "custom",
+                              config: {
+                                min: 1,
+                                max: maskScaleSuffix === "px" ? 500 : 100,
+                                units: [
+                                  { value: "%", title: "%" },
+                                  { value: "px", title: "px" }
+                                ]
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          id: "groupPosition",
+                          type: "group-dev",
+                          disabled: maskShapeIsDisabled,
+                          options: [
+                            {
+                              id: "maskPosition",
+                              type: "select-dev",
+                              label: t("Position"),
+                              choices: [
+                                {
+                                  title: t("Center Center"),
+                                  value: "center center"
+                                },
+                                {
+                                  title: t("Center Left"),
+                                  value: "center left"
+                                },
+                                {
+                                  title: t("Center Right"),
+                                  value: "center right"
+                                },
+                                { title: t("Top Center"), value: "top center" },
+                                { title: t("Top Right"), value: "top right" },
+                                { title: t("Top Left"), value: "top left" },
+                                {
+                                  title: t("Bottom Center"),
+                                  value: "bottom center"
+                                },
+                                {
+                                  title: t("Bottom Left"),
+                                  value: "bottom left"
+                                },
+                                {
+                                  title: t("Bottom Right"),
+                                  value: "bottom right"
+                                },
+                                { title: t("Custom"), value: "custom" }
+                              ]
+                            },
+                            {
+                              id: "maskPositionx",
+                              label: t("X"),
+                              type: "slider-dev",
+                              disabled: maskPosition !== "custom",
+                              config: {
+                                min: 1,
+                                max: 100,
+                                units: [{ value: "%", title: "%" }]
+                              }
+                            },
+                            {
+                              id: "maskPositiony",
+                              label: t("Y"),
+                              type: "slider-dev",
+                              disabled: maskPosition !== "custom",
+                              config: {
+                                min: 1,
+                                max: 100,
+                                units: [{ value: "%", title: "%" }]
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          id: "maskRepeat",
+                          label: t("Repeat"),
+                          type: "select-dev",
+                          disabled: maskShapeIsDisabled || maskSize === "cover",
+                          choices: [
+                            { title: t("No Repeat"), value: "no-repeat" },
+                            { title: t("Repeat"), value: "repeat" },
+                            { title: t("Repeat-X"), value: "repeat-x" },
+                            { title: t("Repeat-Y"), value: "repeat-y" },
+                            { title: t("Space"), value: "space" },
+                            { title: t("Round"), value: "round" }
                           ]
                         }
-                      }
-                    ]
-                  },
-                  {
-                    id: "groupPosition",
-                    type: "group-dev",
-                    disabled: maskShapeIsDisabled,
-                    options: [
-                      {
-                        id: "maskPosition",
-                        type: "select-dev",
-                        label: t("Position"),
-                        choices: [
-                          { title: t("Center Center"), value: "center center" },
-                          { title: t("Center Left"), value: "center left" },
-                          { title: t("Center Right"), value: "center right" },
-                          { title: t("Top Center"), value: "top center" },
-                          { title: t("Top Right"), value: "top right" },
-                          { title: t("Top Left"), value: "top left" },
-                          { title: t("Bottom Center"), value: "bottom center" },
-                          { title: t("Bottom Left"), value: "bottom left" },
-                          { title: t("Bottom Right"), value: "bottom right" },
-                          { title: t("Custom"), value: "custom" }
-                        ]
-                      },
-                      {
-                        id: "maskPositionx",
-                        label: t("X"),
-                        type: "slider-dev",
-                        disabled: maskPosition !== "custom",
-                        config: {
-                          min: 1,
-                          max: 100,
-                          units: [{ value: "%", title: "%" }]
-                        }
-                      },
-                      {
-                        id: "maskPositiony",
-                        label: t("Y"),
-                        type: "slider-dev",
-                        disabled: maskPosition !== "custom",
-                        config: {
-                          min: 1,
-                          max: 100,
-                          units: [{ value: "%", title: "%" }]
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    id: "maskRepeat",
-                    label: t("Repeat"),
-                    type: "select-dev",
-                    disabled: maskShapeIsDisabled || maskSize === "cover",
-                    choices: [
-                      { title: t("No Repeat"), value: "no-repeat" },
-                      { title: t("Repeat"), value: "repeat" },
-                      { title: t("Repeat-X"), value: "repeat-x" },
-                      { title: t("Repeat-Y"), value: "repeat-y" },
-                      { title: t("Space"), value: "space" },
-                      { title: t("Round"), value: "round" }
-                    ]
-                  }
+                      ])
                 ]
               },
               {
                 id: "tabTags",
                 label: t("Tags"),
                 options: [
-                  toolbarImageTags({ devices: "desktop", gallery, enableTags })
+                  toolbarImageTags({
+                    devices: "desktop",
+                    gallery,
+                    enableTags: _enableTags
+                  })
                 ]
               }
             ]
@@ -434,7 +535,7 @@ export const getItems =
           title: t("Link")
         },
         position: 90,
-        disabled: inGallery && dvv("linkLightBox") === "on",
+        disabled: (inGallery && dvv("linkLightBox") === "on") || withBigImage,
         options: [
           {
             id: "linkType",
@@ -525,7 +626,8 @@ export const getItems =
         },
         roles: ["admin"],
         position: 110,
-        disabled: inGallery || isStory(Config.getAll()),
+        disabled:
+          (inGallery && !isBigImageFromGallery) || isStory(Config.getAll()),
         options: [
           {
             id: "width",

@@ -209,7 +209,7 @@
 
     "tempBgColorType": "solid",
 
-    "fillType": "default",
+    "fillType": "filled",
     "tempFillType": "filled",
 
     "borderWidth": 0,
@@ -249,13 +249,10 @@
     "tabletCustomSize": null,
     "tabletCustomSizeSuffix": null,
 
-    "tabletPadding": null,
-
     "mobileSize": null,
     "mobileCustomSize": null,
     "mobileCustomSizeSuffix": null,
 
-    "mobilePadding": null,
     "tempMobilePadding": 20,
 
     "tempMobileBorderRadius": 4

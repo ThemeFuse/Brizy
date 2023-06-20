@@ -2,8 +2,8 @@ import { t } from "visual/utils/i18n";
 
 export default {
   id: "CollectionDescription",
-  title: t("Collection Description"),
-  icon: "nc-wp-post-excerpt",
+  title: t("Description"),
+  icon: "nc-wp-post-content",
   resolve: {
     type: "Wrapper",
     value: {

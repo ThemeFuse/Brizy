@@ -39,3 +39,10 @@ $containers-width: map-get($container-max-widths, "lg");
   min-width: $tablet-width;
   max-width: $tablet-width;
 }
+
+.media-modal-open {
+  max-width: calc(100% - #{$desktop-paddings}) !important;
+  margin-left: $desktop-paddings !important;
+  z-index: calc(z("sidebar") + 1);
+  position: relative;
+}

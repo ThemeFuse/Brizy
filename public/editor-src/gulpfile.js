@@ -28,7 +28,7 @@ const autoprefixer = require("autoprefixer");
 const tailwindcss = require("tailwindcss");
 const postsCssProcessors = [
   sass({
-    includePaths: ["node_modules"],
+    includePaths: ["node_modules", "../node_modules"],
     errLogToConsole: true
   }),
   autoprefixer({

@@ -80,6 +80,7 @@ class Background extends Component<Props> {
       opacity,
       shapeTop,
       shapeBottom,
+      style,
       children
     } = this.props;
     const needsResizeDetection = IS_EDITOR && (video || parallax);
@@ -87,7 +88,7 @@ class Background extends Component<Props> {
     return (
       <>
         {needRenderMedia(this.props) && (
-          <div className="brz-bg overflow-hidden !z-auto absolute top-0 left-0 w-full h-full">
+          <div style={style} className="brz-bg overflow-hidden !z-auto absolute top-0 left-0 w-full h-full">
             {image && (
               <Image showParallax={parallax}>
                 {({ innerRef, attr }): ReactElement => (

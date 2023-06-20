@@ -6,17 +6,47 @@
   height: 30px;
 }
 .cm-editor {
-  padding: 3px;
+  padding: 3px 0 3px 8px;
   height: inherit;
   overflow: hidden;
 }
+
 .cm-scroller {
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  padding-right: 25px;
   box-sizing: content-box;
+
+  &::-webkit-scrollbar {
+    width: 24px; /* Total width including `border-width` of scrollbar thumb */
+    height: 24px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 100vw;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 9px solid rgba(0, 0, 0, 0); /* Transparent border together with `background-clip: padding-box` does the trick with margin for scroll*/
+    background-clip: padding-box;
+    -webkit-border-radius: 1em;
+    background-color: var(--tertiary-white, #4a5058);
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+}
+
+.cm-editor:not(.cm-focused):not(:active):not(:focus-within) {
+  padding: 3px 8px 3px 8px;
+
+  .cm-scroller {
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: transparent;
+    }
+  }
 }
 
 .cm-line span::selection,

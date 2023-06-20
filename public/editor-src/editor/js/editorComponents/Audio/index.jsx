@@ -1,6 +1,6 @@
+import { Audio as AudioComponent } from "@brizy/component";
+import { SoundCloud } from "@brizy/component";
 import classnames from "classnames";
-import { Audio as AudioComponent } from "component/Flex/Audio";
-import { SoundCloud } from "component/Flex/SoundCloud";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
@@ -227,7 +227,11 @@ class Audio extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Wrapper {...this.makeWrapperProps({ className: classNameContent })}>
+        <Wrapper
+          {...this.makeWrapperProps({
+            className: classNameContent
+          })}
+        >
           {type === "custom"
             ? this.renderAudio(v, vs, vd)
             : this.renderSoundCloud(v)}
@@ -254,7 +258,11 @@ class Audio extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className: classNameContent })}>
+          <Wrapper
+            {...this.makeWrapperProps({
+              className: classNameContent
+            })}
+          >
             <BoxResizer
               points={resizerPoints}
               restrictions={this.getResizerRestrictions(v)}

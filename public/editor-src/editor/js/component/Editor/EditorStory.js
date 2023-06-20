@@ -20,7 +20,7 @@ class EditorStory extends Component {
     return (
       <Fragment>
         {Boolean(items.length) && (
-          <iframe id="brz-ed-home-page" src={pagePreview} />
+          <iframe id="brz-ed-home-page" src={pagePreview} title="story" />
         )}
         <PageStory
           dbValue={{ items }}

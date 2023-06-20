@@ -37,7 +37,11 @@ export class LaiReviews extends EditorComponent<Value> {
             {`{% render "reviews-importer",product : product %}`}
             <div className="scm-container custom" style={{ display: "none" }}>
               <div id="scm-reviews-importer" className="scm-reviews-importer">
-                <iframe id="scm-reviews-importer-iframe" width="100%" />
+                <iframe
+                  id="scm-reviews-importer-iframe"
+                  width="100%"
+                  title="reviews"
+                />
               </div>
             </div>
           </>

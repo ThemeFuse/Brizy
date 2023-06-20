@@ -84,23 +84,11 @@
     "tabletFontWeight": 400,
     "tabletBorderRadius": null,
 
-    "tabletPadding": null,
-    "tabletPaddingTop": null,
-    "tabletPaddingRight": null,
-    "tabletPaddingBottom": null,
-    "tabletPaddingLeft": null,
-
     "mobileFontStyle": "",
     "mobileFontSize": 14,
     "mobileLineHeight": 1.5,
     "mobileFontWeight": 400,
     "mobileLetterSpacing": 0,
-    "mobileBorderRadius": null,
-
-    "mobilePadding": null,
-    "mobilePaddingTop": null,
-    "mobilePaddingRight": null,
-    "mobilePaddingBottom": null,
-    "mobilePaddingLeft": null
+    "mobileBorderRadius": null
   }
 }

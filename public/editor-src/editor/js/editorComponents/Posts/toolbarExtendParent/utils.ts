@@ -1,13 +1,7 @@
-import {
-  Choice,
-  Value
-} from "visual/component/Options/types/dev/MultiSelect2/types";
-import {
-  getCollectionItems,
-  getCollectionTypesWithFields
-} from "visual/utils/api/cms";
+import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
+import { getCollectionTypesWithFields } from "visual/utils/api/cms";
 import { isT } from "visual/utils/value";
-import { Context } from "../types";
+import { Context, VDecoded } from "../types";
 
 type GetCollectionTypesInfoResult = Context["collectionTypesInfo"];
 
@@ -67,43 +61,13 @@ export const getFieldIdCollectionId = (
   return fieldId ? { collectionId, fieldId } : { collectionId };
 };
 
-export const lvl2MultiSelectLoad =
-  (collectionId: string, fieldId?: string) =>
-  async (value: Value): Promise<Choice[]> => {
-    try {
-      const include = value.map(
-        (v) => getFieldIdCollectionId(`${v}`).collectionId
-      );
-      const items = await getCollectionItems(collectionId, { include });
+export const useAsSimpleSelectConditions = (vd: VDecoded): boolean => {
+  const { source, symbols } = vd;
+  const lvl1SymbolId = `${source}_incBy`;
 
-      return items.map(({ title, id }) => ({
-        title,
-        value: createFieldCollectionId(id, fieldId)
-      }));
-    } catch (e) {
-      if (process.env.NODE_ENV === "development") {
-        console.log(e);
-      }
-
-      return [];
-    }
-  };
-
-export const lvl2MultiSelectSearch =
-  (collectionId: string, fieldId?: string) =>
-  async (search: string): Promise<Choice[]> => {
-    try {
-      const items = await getCollectionItems(collectionId, { search });
-
-      return items.map(({ id, title }) => ({
-        title,
-        value: createFieldCollectionId(id, fieldId)
-      }));
-    } catch (e) {
-      if (process.env.NODE_ENV === "development") {
-        console.log(e);
-      }
-
-      return [];
-    }
-  };
+  return (
+    (source === ShopifyTemplate.Product &&
+      !symbols[lvl1SymbolId]?.includes("manual")) ||
+    source === ShopifyTemplate.Article
+  );
+};

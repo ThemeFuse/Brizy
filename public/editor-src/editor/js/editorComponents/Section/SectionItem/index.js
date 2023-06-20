@@ -1,27 +1,25 @@
-import React from "react";
 import classnames from "classnames";
-import _ from "underscore";
+import React from "react";
 import { mergeDeep } from "timm";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import Items from "./items";
+import _ from "underscore";
 import Background from "visual/component/Background";
-import PaddingResizer from "visual/component/PaddingResizer";
 import ContainerBorder from "visual/component/ContainerBorder";
+import CustomCSS from "visual/component/CustomCSS";
+import PaddingResizer from "visual/component/PaddingResizer";
 import { Roles } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import { style, styleContainer } from "./styles";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { deviceModeSelector } from "visual/redux/selectors";
 import { css } from "visual/utils/cssStyle";
-import defaultValue from "./defaultValue.json";
-import {
-  styleElementSectionContainerType,
-  styleSizeContainerSize
-} from "visual/utils/style2";
 import { hasMembership } from "visual/utils/membership";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
+import { defaultValueValue } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import defaultValue from "./defaultValue.json";
+import Items from "./items";
+import * as sidebarConfig from "./sidebar";
+import { style, styleContainer } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class SectionItem extends EditorComponent {
   static get componentId() {
@@ -82,7 +80,7 @@ class SectionItem extends EditorComponent {
     this.setState({ isDragging: true });
   };
 
-  handlePaddingResizerChange = patch => {
+  handlePaddingResizerChange = (patch) => {
     if (this.state.isDragging) {
       this.setState({ paddingPatch: patch });
     } else {
@@ -97,48 +95,75 @@ class SectionItem extends EditorComponent {
     );
   };
 
-  getMeta(v) {
+  dvv = (key, device) => {
+    const v = this.getValue();
+    return defaultValueValue({ v, key, device });
+  };
+
+  getMeta() {
     const { meta } = this.props;
-    const containerType = styleElementSectionContainerType({ v });
-    const size = styleSizeContainerSize({ v, device: DESKTOP });
-    const tabletSize = styleSizeContainerSize({ v, device: TABLET });
-    const mobileSize = styleSizeContainerSize({ v, device: MOBILE });
+    const device = deviceModeSelector(this.getReduxState());
+
+    const size = this.dvv("containerSize", DESKTOP);
+    const tabletSize = this.dvv("containerSize", TABLET);
+    const mobileSize = this.dvv("containerSize", MOBILE);
+
+    const desktopSuffix = this.dvv("containerSizeSuffix", DESKTOP);
+    const tabletSuffix = this.dvv("containerSizeSuffix", TABLET);
+    const mobileSuffix = this.dvv("containerSizeSuffix", MOBILE);
+
+    const containerType = this.dvv("containerType", device);
 
     const _desktopW =
       containerType === "fullWidth" ? meta.desktopFullW : meta.desktopBoxedW;
+
     const _desktopWNoSpacing =
       containerType === "fullWidth"
         ? meta.desktopFullWNoSpacing
         : meta.desktopBoxedWNoSpacing;
 
-    const desktopW = _desktopW * (size / 100);
-    const desktopWNoSpacing = _desktopWNoSpacing * (size / 100);
+    const desktopW =
+      desktopSuffix === "%"
+        ? Math.round(_desktopW * (size / 100) * 10) / 10
+        : size;
+    const desktopWNoSpacing =
+      desktopSuffix === "%"
+        ? Math.round(_desktopWNoSpacing * (size / 100) * 10) / 10
+        : size;
 
-    const tabletW = meta.tabletW * (tabletSize / 100);
-    const tabletWNoSpacing = meta.tabletWNoSpacing * (tabletSize / 100);
+    const tabletW =
+      tabletSuffix === "%"
+        ? Math.round(meta.tabletW * (tabletSize / 100) * 10) / 10
+        : tabletSize;
+    const tabletWNoSpacing =
+      tabletSuffix === "%"
+        ? Math.round(meta.tabletWNoSpacing * (tabletSize / 100) * 10) / 10
+        : tabletSize;
 
-    const mobileW = meta.mobileW * (mobileSize / 100);
-    const mobileWNoSpacing = meta.mobileWNoSpacing * (mobileSize / 100);
+    const mobileW =
+      mobileSuffix === "%"
+        ? Math.round(meta.mobileW * (mobileSize / 100) * 10) / 10
+        : mobileSize;
+    const mobileWNoSpacing =
+      mobileSuffix === "%"
+        ? Math.round(meta.mobileWNoSpacing * (mobileSize / 100) * 10) / 10
+        : mobileSize;
 
     return {
       ...meta,
-      desktopW: Math.round(desktopW * 10) / 10,
-      desktopWNoSpacing: Math.round(desktopWNoSpacing * 10) / 10,
-      tabletW: Math.round(tabletW * 10) / 10,
-      tabletWNoSpacing: Math.round(tabletWNoSpacing * 10) / 10,
-      mobileW: Math.round(mobileW * 10) / 10,
-      mobileWNoSpacing: Math.round(mobileWNoSpacing * 10) / 10
+      desktopW,
+      desktopWNoSpacing,
+      tabletW,
+      tabletWNoSpacing,
+      mobileW,
+      mobileWNoSpacing
     };
   }
 
   renderToolbar() {
     const { globalBlockId } = this.props.meta;
-    const {
-      membership,
-      membershipRoles,
-      translations,
-      translationsLangs
-    } = this.props.rerender;
+    const { membership, membershipRoles, translations, translationsLangs } =
+      this.props.rerender;
 
     return (
       <CollapsibleToolbar

@@ -2,8 +2,12 @@ import { match } from "fp-utilities";
 import React, { ReactElement, useCallback, useRef, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
-import { SavedBlock, SavedLayout } from "visual/types";
-import { getSavedBlockById, getSavedLayoutById } from "visual/utils/api";
+import Config from "visual/global/Config";
+import {
+  getSavedBlockById,
+  getSavedLayoutById,
+  getSavedPopupById
+} from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { blockIsPro } from "visual/utils/traverse/blockIsPro";
 import {
@@ -37,11 +41,11 @@ export const DownloadBlock = (props: Props): ReactElement => {
   const handleDownload = useCallback(async () => {
     setLoading(true);
     setSrc(undefined);
-
+    const config = Config.getAll();
     const getBlock = match(
-      [isBlock, (): Promise<SavedBlock> => getSavedBlockById(id)],
-      [isLayout, (): Promise<SavedLayout> => getSavedLayoutById(id)],
-      [isPopup, (): Promise<SavedBlock> => getSavedBlockById(id)]
+      [isBlock, () => getSavedBlockById(id, config)],
+      [isLayout, () => getSavedLayoutById(id, config)],
+      [isPopup, () => getSavedPopupById(id, config)]
     );
 
     try {
@@ -69,7 +73,7 @@ export const DownloadBlock = (props: Props): ReactElement => {
   const handleCheck = useCallback(() => {
     showNotification(type);
     setSrc(undefined);
-  }, [type, src]);
+  }, [type]);
 
   return (
     <div
@@ -78,11 +82,13 @@ export const DownloadBlock = (props: Props): ReactElement => {
       className="brz-ed-popup-two-block-download"
       onClick={loading ? undefined : handleDownload}
     >
-      {src && <iframe src={src} hidden onLoad={handleCheck} />}
+      {src && (
+        <iframe src={src} hidden onLoad={handleCheck} title="download-block" />
+      )}
       {loading ? (
         <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
       ) : (
-        <EditorIcon icon="nc-down" />
+        <EditorIcon icon="nc-download-saved-block" />
       )}
     </div>
   );

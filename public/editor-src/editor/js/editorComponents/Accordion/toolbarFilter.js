@@ -28,6 +28,12 @@ export function getItems({ v, device, state }) {
       position: 60,
       options: [
         {
+          id: "sortTags",
+          label: t("Sort alphabetically"),
+          type: "switch-dev",
+          devices: "desktop"
+        },
+        {
           id: "filterStyle",
           label: t("Style"),
           type: "radioGroup-dev",

@@ -7,13 +7,15 @@
 
   &-style1 {
     display: flex;
+    height: fit-content;
 
     .brz-shortcode__placeholder:nth-child(2) {
-      display: none
+      display: none;
     }
   }
 
   &-style2 {
+    height: fit-content;
     text-decoration: line-through;
   }
 
@@ -21,4 +23,3 @@
     flex: 1;
   }
 }
-

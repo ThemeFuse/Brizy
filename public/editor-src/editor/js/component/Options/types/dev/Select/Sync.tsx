@@ -3,7 +3,7 @@ import React, { FC, ReactElement } from "react";
 import {
   Item,
   Props as ItemProps
-} from "visual/component/Controls/MultiSelect/Item";
+} from "visual/component/Controls/Select2/Item";
 import { Select2 } from "visual/component/Controls/Select2";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { Literal } from "visual/utils/types/Literal";
@@ -18,13 +18,15 @@ export const Sync: FC<Omit<Props, "choices"> & { choices: ChoicesSync }> = ({
   placeholder,
   choices,
   onChange,
-  className
+  className,
+  iconClassName: _iconClassName
 }) => {
   return (
     <Select2<Literal>
       placeholder={placeholder}
       size={config?.size}
       value={value}
+      className={className}
       editable={config?.search ?? false}
       onChange={(value): void => {
         onChange(toElement(value));
@@ -37,7 +39,7 @@ export const Sync: FC<Omit<Props, "choices"> & { choices: ChoicesSync }> = ({
           const iconClassName = classnames(
             "brz--space-right",
             icon.className,
-            className
+            _iconClassName
           );
           if (icon.name) {
             icon_ = <EditorIcon icon={icon.name} className={iconClassName} />;

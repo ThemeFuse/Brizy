@@ -2,7 +2,7 @@ import Config from "visual/global/Config";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { MValue } from "visual/utils/value";
-import { Target } from "./types/Target";
+import { Target, TargetTypes } from "./types/Target";
 import { Type } from "./types/Type";
 
 type Data = { items: Array<{ value: { _id: string; anchorName: string } }> };
@@ -22,10 +22,10 @@ export const getAttr = (
     }, {});
 };
 
-export const getTarget = (type: Type, target: Target): MValue<"_blank"> => {
+export const getTarget = (type: Type, target: Target): TargetTypes => {
   return (type === "external" && target === "on") || type === "upload"
     ? "_blank"
-    : undefined;
+    : "_self";
 };
 
 export const getHref = (type: Type, _href: string): string => {
@@ -78,21 +78,12 @@ export const getHref = (type: Type, _href: string): string => {
   return href;
 };
 
-export const getRel = (
-  _rel: string,
-  target: MValue<"_blank">
-): MValue<string> => {
-  const rel = [];
+export const getRel = (_rel: string): string => {
+  const rel = ["noopener"];
 
   if (_rel === "on") {
     rel.push("nofollow");
   }
 
-  if (target === "_blank") {
-    rel.push("noopener");
-  }
-
-  if (rel.length) {
-    return rel.join(" ");
-  }
+  return rel.join(" ");
 };

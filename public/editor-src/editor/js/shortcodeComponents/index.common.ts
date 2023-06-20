@@ -17,6 +17,12 @@ import Image from "./Image";
 import Line from "./Line";
 import Map from "./Map";
 import MenuSimple from "./MenuSimple";
+import ProgressBar from "./ProgressBar";
+import Row from "./Row";
+import Spacer from "./Spacer";
+import Tabs from "./Tabs";
+import Text from "./Text";
+import Video from "./Video";
 import Calendly from "./pro/Calendly";
 import Carousel from "./pro/Carousel";
 import Facebook from "./pro/Facebook";
@@ -26,16 +32,13 @@ import Login from "./pro/Login";
 import Lottie from "./pro/Lottie";
 import Menu from "./pro/Menu";
 import StarRating from "./pro/StarRating";
-import StoryLottie from "./pro/story/StoryLottie";
-import StoryStarRating from "./pro/story/StoryStarRating";
 import Switcher from "./pro/Switcher";
 import Table from "./pro/Table";
 import Timeline from "./pro/Timeline";
 import Twitter from "./pro/Twitter";
 import VideoPlaylist from "./pro/VideoPlaylist";
-import ProgressBar from "./ProgressBar";
-import Row from "./Row";
-import Spacer from "./Spacer";
+import StoryLottie from "./pro/story/StoryLottie";
+import StoryStarRating from "./pro/story/StoryStarRating";
 import StoryButton from "./story/StoryButton";
 import StoryCountdown2 from "./story/StoryCountdown2";
 import StoryCounter from "./story/StoryCounter";
@@ -49,9 +52,6 @@ import StoryProgressBar from "./story/StoryProgressBar";
 import StoryShape from "./story/StoryShape";
 import StoryText from "./story/StoryText";
 import StoryVideo from "./story/StoryVideo";
-import Tabs from "./Tabs";
-import Text from "./Text";
-import Video from "./Video";
 
 //#endregion
 const config = Config.getAll();
@@ -70,11 +70,7 @@ export const essentialsCommon = [
     : [
         { component: MenuSimple, pro: false },
         { component: Menu, pro: true }
-      ]),
-
-  ...(isCloud(config) && isShopify(config)
-    ? []
-    : [{ component: Login, pro: true }])
+      ])
 ];
 
 export const media = [
@@ -99,7 +95,10 @@ export const content = [
   { component: Accordion, pro: false },
   { component: Switcher, pro: true },
   { component: Table, pro: true },
-  { component: Timeline, pro: true }
+  { component: Timeline, pro: true },
+  ...(isCloud(config) && isShopify(config)
+    ? []
+    : [{ component: Login, pro: true }])
 ];
 
 export const essentialsStory = [

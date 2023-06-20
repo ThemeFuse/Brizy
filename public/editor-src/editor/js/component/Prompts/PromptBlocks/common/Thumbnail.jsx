@@ -14,6 +14,9 @@ import { t } from "visual/utils/i18n";
 import { imageWrapperSize } from "visual/utils/image";
 import { isStory } from "visual/utils/models";
 import { DownloadBlock } from "./DownloadBlock";
+import { TagEditable } from "./TagEditable";
+import { TagLists } from "./TagLists";
+import { Title } from "./Title";
 
 const { upgradeToPro } = Config.get("urls");
 
@@ -29,34 +32,71 @@ const animationStyle = {
 class Thumbnail extends Component {
   static defaultProps = {
     showRemoveIcon: false,
+    showTitle: false,
     data: {},
     animation: false,
     isLayout: false,
     isAuthorized: false,
+    tags: undefined,
+    showSync: false,
+    showDownload: false,
     onAdd: _.noop,
     onRemove: _.noop,
-    onImageLoaded: _.noop
+    onImageLoaded: _.noop,
+    onSync: _.noop,
+    onUpdate: _.noop
   };
 
   static propTypes = {
     showRemoveIcon: PropTypes.bool,
+    showTitle: PropTypes.bool,
     blockData: PropTypes.object,
     animation: PropTypes.bool,
     isLayout: PropTypes.bool,
     isAuthorized: PropTypes.bool,
+    tags: PropTypes.array,
     showSync: PropTypes.bool,
     showDownload: PropTypes.bool,
     onAdd: PropTypes.func,
     onRemove: PropTypes.func,
     onImageLoaded: PropTypes.func,
-    onSync: PropTypes.func
+    onSync: PropTypes.func,
+    onUpdate: PropTypes.func
   };
 
   state = {
-    tooltipOpen: false
+    tooltipOpen: false,
+    blockTooltipOpen: false,
+    category: ""
   };
 
   iconRef = React.createRef();
+
+  getTags() {
+    const { tags, data } = this.props;
+
+    if (!tags) {
+      return undefined;
+    }
+
+    const dataTags = data.tags?.split(",") ?? [];
+
+    return tags.reduce(
+      (acc, curr) => ({
+        ...acc,
+        [curr]: dataTags.includes(curr)
+      }),
+      {}
+    );
+  }
+
+  handleTagsTooltipOpen = () => {
+    this.setState({ blockTooltipOpen: true });
+  };
+
+  handleTagsTooltipClose = () => {
+    this.setState({ blockTooltipOpen: false });
+  };
 
   handleTooltipOpen = () => {
     this.setState({ tooltipOpen: true });
@@ -86,6 +126,50 @@ class Thumbnail extends Component {
     onSync(data);
   };
 
+  handleTitleChange = _.debounce((value) => {
+    const { data, onUpdate } = this.props;
+
+    onUpdate({
+      ...data,
+      title: value,
+      dataVersion: data.dataVersion + 1
+    });
+  }, 1000);
+
+  handleChangeCategory = (value) => {
+    this.setState({ category: value });
+  };
+
+  handleAddCategory = () => {
+    const { data, onUpdate } = this.props;
+    const { category } = this.state;
+    const dataTags = data.tags?.split(",").filter((t) => !!t) ?? [];
+
+    if (category.trim().length > 0) {
+      onUpdate({
+        ...data,
+        tags: [...dataTags, category].join(","),
+        dataVersion: data.dataVersion + 1
+      });
+
+      this.setState({ category: "" });
+    }
+  };
+
+  updateCategory = (tag, checked) => {
+    const { data, onUpdate } = this.props;
+    const dataTags = data.tags?.split(",").filter((t) => !!t) ?? [];
+    const newTags = checked
+      ? [...dataTags, tag]
+      : dataTags.filter((_tag) => _tag !== tag);
+
+    onUpdate({
+      ...data,
+      tags: newTags.join(","),
+      dataVersion: data.dataVersion + 1
+    });
+  };
+
   renderBlank() {
     const {
       data: { pro }
@@ -104,7 +188,7 @@ class Thumbnail extends Component {
         <Tooltip
           overlayClassName="brz-ed-tooltip--delay-1"
           size="small"
-          offset="5"
+          offset={5}
           openOnClick={false}
           nodeRef={this.iconRef}
           overlay={
@@ -175,7 +259,7 @@ class Thumbnail extends Component {
       <Tooltip
         overlayClassName="brz-ed-tooltip--delay-1"
         size="small"
-        offset="5"
+        offset={5}
         openOnClick={false}
         nodeRef={this.iconRef}
         overlay={
@@ -198,6 +282,62 @@ class Thumbnail extends Component {
         </figure>
       </Tooltip>
     );
+  }
+
+  renderTagsOverlay(_tags) {
+    const tags = Object.entries(_tags);
+
+    return (
+      <>
+        {tags.map(([name, checked], index) => {
+          return (
+            <TagLists
+              key={index}
+              name={name}
+              checked={checked}
+              onChange={(v) => this.updateCategory(name, v)}
+            />
+          );
+        })}
+
+        <TagEditable
+          value={this.state.category}
+          onAdd={this.handleAddCategory}
+          onChange={this.handleChangeCategory}
+        />
+      </>
+    );
+  }
+
+  renderTags() {
+    const tags = this.getTags();
+
+    if (!tags) {
+      return undefined;
+    }
+
+    return (
+      <Tooltip
+        arrow={false}
+        size="small"
+        placement="bottom-start"
+        offset={5}
+        overlay={this.renderTagsOverlay(tags)}
+        openOnClick={true}
+        onOpen={this.handleTagsTooltipOpen}
+        onClose={this.handleTagsTooltipClose}
+      >
+        <EditorIcon icon="nc-saved-block-tags" />
+      </Tooltip>
+    );
+  }
+
+  renderTitle() {
+    const {
+      data: { title }
+    } = this.props;
+
+    return <Title value={title} onChange={this.handleTitleChange} />;
   }
 
   renderFree() {
@@ -281,9 +421,13 @@ class Thumbnail extends Component {
     const {
       isLayout,
       showSync,
+      showTitle,
       showDownload,
+      tags,
       data: { blank, showRemoveIcon, pro, loading, inactive, renderWrapper }
     } = this.props;
+    const { blockTooltipOpen } = this.state;
+    const showDownLine = showTitle || showDownload || tags;
     const blockIsPro = !IS_PRO && pro;
     const isBlank = blank && blank === "blank";
     const className = classnames(
@@ -291,7 +435,8 @@ class Thumbnail extends Component {
       isStory(Config.getAll()) && "brz-ed-popup-two-block-stories",
       blockIsPro && "brz-ed-popup-two-block--pro",
       isLayout && "brz-ed-popup-two-block--layout",
-      inactive && "inactive"
+      inactive && "inactive",
+      blockTooltipOpen && "brz-ed-popup-two-block-tags-opened"
     );
 
     let content;
@@ -310,10 +455,16 @@ class Thumbnail extends Component {
         {content}
         {showRemoveIcon && this.renderRemoveIcon()}
         {loading && this.renderLoading()}
-        {(showSync || showDownload) && !isBlank && (
+        {(showSync || showDownLine) && !isBlank && (
           <div className="brz-ed-popup-two-block__bottom-control">
-            {showDownload && this.renderDownloadIcon()}
             {showSync && this.renderSyncIcon()}
+            {showDownLine && (
+              <div className="brz-ed-popup-two-block__bottom-control-downline">
+                {showTitle && this.renderTitle()}
+                {showDownload && this.renderDownloadIcon()}
+                {tags && this.renderTags()}
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -28,12 +28,9 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import {
-  styleElementSectionContainerType,
-  styleSizeContainerSize
-} from "visual/utils/style2";
 import SectionFooterItems from "./Items";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -121,17 +118,41 @@ class SectionFooter extends EditorComponent {
     this.selfDestruct();
   };
 
-  getMeta(v) {
+  dvv = (key, device) => {
+    const v = this.getValue();
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
+  };
+
+  getMeta() {
     const { meta } = this.props;
-    const containerType = styleElementSectionContainerType({ v });
-    const size = styleSizeContainerSize({ v, device: "desktop" });
-    const tabletSize = styleSizeContainerSize({ v, device: "tablet" });
-    const mobileSize = styleSizeContainerSize({ v, device: "mobile" });
+    const device = deviceModeSelector(this.getReduxState());
+
+    const size = this.dvv("containerSize", DESKTOP);
+    const tabletSize = this.dvv("containerSize", TABLET);
+    const mobileSize = this.dvv("containerSize", MOBILE);
+
+    const desktopSuffix = this.dvv("containerSizeSuffix", DESKTOP);
+    const tabletSuffix = this.dvv("containerSizeSuffix", TABLET);
+    const mobileSuffix = this.dvv("containerSizeSuffix", MOBILE);
+
+    const containerType = this.dvv("containerType", device);
 
     const wInPage = containerType === "fullWidth" ? wInFullPage : wInBoxedPage;
-    const desktopW = Math.round(wInPage * (size / 100) * 10) / 10;
-    const tabletW = Math.round(wInTabletPage * (tabletSize / 100) * 10) / 10;
-    const mobileW = Math.round(wInMobilePage * (mobileSize / 100) * 10) / 10;
+
+    const desktopW =
+      desktopSuffix === "%"
+        ? Math.round(wInPage * (size / 100) * 10) / 10
+        : size;
+    const tabletW =
+      tabletSuffix === "%"
+        ? Math.round(wInTabletPage * (tabletSize / 100) * 10) / 10
+        : tabletSize;
+    const mobileW =
+      mobileSuffix === "%"
+        ? Math.round(wInMobilePage * (mobileSize / 100) * 10) / 10
+        : mobileSize;
 
     return {
       ...meta,
@@ -144,23 +165,19 @@ class SectionFooter extends EditorComponent {
     };
   }
 
-  dvv = (key) => {
-    const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
-    const state = State.mRead(v.tabsState);
-
-    return defaultValueValue({ v, key, device, state });
-  };
-
   getAnimationClassName = (v, vs, vd) => {
     if (!validateKeyByProperty(v, "animationName", "none")) {
       return undefined;
     }
+    const device = deviceModeSelector(getStore().getState());
 
-    const animationName = this.dvv("animationName");
-    const animationDuration = this.dvv("animationDuration");
-    const animationDelay = this.dvv("animationDelay");
-    const animationInfiniteAnimation = this.dvv("animationInfiniteAnimation");
+    const animationName = this.dvv("animationName", device);
+    const animationDuration = this.dvv("animationDuration", device);
+    const animationDelay = this.dvv("animationDelay", device);
+    const animationInfiniteAnimation = this.dvv(
+      "animationInfiniteAnimation",
+      device
+    );
 
     const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 

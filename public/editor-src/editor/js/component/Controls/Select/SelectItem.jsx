@@ -1,11 +1,12 @@
-import React from "react";
-import T from "prop-types";
-import _ from "underscore";
 import classnames from "classnames";
+import T from "prop-types";
+import React from "react";
+import _ from "underscore";
 
 class SelectItem extends React.Component {
   static propTypes = {
     active: T.bool,
+    selected: T.bool,
     title: T.string,
     disabled: T.bool,
     value: T.oneOfType([T.string, T.number]),
@@ -14,6 +15,7 @@ class SelectItem extends React.Component {
 
   static defaultProps = {
     active: false,
+    selected: false,
     title: "",
     disabled: false,
     value: "",

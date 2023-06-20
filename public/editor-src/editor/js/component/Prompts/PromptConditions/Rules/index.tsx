@@ -86,7 +86,7 @@ const Rules = (props: Props): ReactElement => {
     }
 
     asyncGetValue && fetchData(asyncGetValue);
-  }, []);
+  }, [asyncGetValue]);
 
   function handleAdd(): void {
     if (IS_PRO) {

@@ -238,7 +238,9 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
       opacity: !isNaN(opacity) ? opacity : 1
     },
     colorPalette: palette,
-
+    bgColorPalette: palette,
+    bgColorOpacity: !isNaN(opacity) ? Number(opacity) : 1,
+    bgColorHex: hex,
     ...parseShadow(format.shadow),
     textShadowColorPalette: format.shadowColorPalette || null,
 

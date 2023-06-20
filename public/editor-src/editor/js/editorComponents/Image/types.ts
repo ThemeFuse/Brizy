@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { ECDC } from "visual/editorComponents/EditorComponent/types";
+
 type sizes = {
   width: number;
   height: number;
@@ -104,6 +105,10 @@ export type ImageProps = {
   onChange: (arg0: Patch) => void;
   onStart?: VoidFunction;
   onEnd?: VoidFunction;
+  gallery?: {
+    inGallery: boolean;
+    layout: string;
+  };
 };
 
 export type Styles = [string, string, string];

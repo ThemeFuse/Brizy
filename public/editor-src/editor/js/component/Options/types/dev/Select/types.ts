@@ -34,4 +34,5 @@ export type Props = OptionProps<ElementModelValue> &
     choices: ChoicesSync | ChoicesAsync;
     placeholder?: string;
     className?: string;
+    iconClassName?: string;
   };

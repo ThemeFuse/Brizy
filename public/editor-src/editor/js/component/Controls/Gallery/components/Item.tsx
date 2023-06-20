@@ -1,41 +1,47 @@
+import classNames from "classnames";
 import React, {
   MouseEvent,
   PropsWithChildren,
   ReactElement,
   useCallback
 } from "react";
-import classNames from "classnames";
-import { WithClassName, WithId } from "visual/utils/options/attributes";
+import { noop } from "underscore";
 import { EditorIcon } from "visual/component/EditorIcon";
+import { WithClassName, WithId } from "visual/utils/options/attributes";
 
 export interface Props<T> extends WithClassName, WithId<T> {
-  onRemove: (id: T) => void;
+  onRemove?: (id: T) => void;
 }
 
 const stopPropagation = (e: MouseEvent<HTMLElement>): void => {
   e.stopPropagation();
 };
-
 export function Item<T>({
   id,
   onRemove,
   children,
   className
 }: PropsWithChildren<Props<T>>): ReactElement {
-  const remove = useCallback(() => onRemove(id), [id, onRemove]);
+  const remove = useCallback(
+    () => (onRemove ? onRemove(id) : noop),
+    [id, onRemove]
+  );
+
   return (
     <div className={classNames("brz-ed-control__gallery__item", className)}>
-      <button
-        onMouseDown={stopPropagation}
-        onClick={remove}
-        className={"brz-ed-control__gallery__item__remove"}
-      >
-        <EditorIcon
-          icon={"nc-circle-remove"}
-          className={"brz-ed-control__gallery__item__remove__icon"}
+      {onRemove && (
+        <button
+          onMouseDown={stopPropagation}
           onClick={remove}
-        />
-      </button>
+          className={"brz-ed-control__gallery__item__remove"}
+        >
+          <EditorIcon
+            icon={"nc-circle-remove"}
+            className={"brz-ed-control__gallery__item__remove__icon"}
+            onClick={remove}
+          />
+        </button>
+      )}
       {children}
     </div>
   );

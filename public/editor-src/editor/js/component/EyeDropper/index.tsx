@@ -31,7 +31,7 @@ export interface Props {
   onPick: (hex: Hex) => void;
 }
 
-export const EyeDropper = (props: Props): ReactElement | null => {
+export const EyeDropper = ({ onPick }: Props): ReactElement | null => {
   const [state, setState] = useState<State.State>(State.idle());
   const pointerRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<Coords>({ x: 0, y: 0 });
@@ -73,11 +73,14 @@ export const EyeDropper = (props: Props): ReactElement | null => {
   );
   const [, updateColor] = useThrottleOnChange(coordsRef.current, f, 50);
 
-  const setCoords = useCallback<React.MouseEventHandler>((e) => {
-    coordsRef.current = { x: e.clientX, y: e.clientY };
-    updatePointer();
-    updateColor(coordsRef.current);
-  }, []);
+  const setCoords = useCallback<React.MouseEventHandler>(
+    (e) => {
+      coordsRef.current = { x: e.clientX, y: e.clientY };
+      updatePointer();
+      updateColor(coordsRef.current);
+    },
+    [updateColor]
+  );
   const setScroll = (c: Coords) => (scrollRef.current = c);
 
   useEffect(() => {
@@ -99,9 +102,9 @@ export const EyeDropper = (props: Props): ReactElement | null => {
     (e) => {
       e.stopPropagation();
 
-      colorRef.current && props.onPick(colorRef.current);
+      colorRef.current && onPick(colorRef.current);
     },
-    [props.onPick]
+    [onPick]
   );
 
   useEffect(() => {
@@ -113,7 +116,7 @@ export const EyeDropper = (props: Props): ReactElement | null => {
         const cb = (e: Event) => {
           e.stopPropagation();
 
-          colorRef.current && props.onPick(colorRef.current);
+          colorRef.current && onPick(colorRef.current);
         };
 
         state.context.node.addEventListener("click", cb);
@@ -123,7 +126,7 @@ export const EyeDropper = (props: Props): ReactElement | null => {
         };
       }
     }
-  }, [[Type.Loading, Type.Active].includes(state.type), props.onPick]);
+  }, [onPick, state]);
 
   useEffect(() => {
     switch (state.type) {
@@ -179,7 +182,7 @@ export const EyeDropper = (props: Props): ReactElement | null => {
         };
       }
     }
-  }, [state.type === Type.Idle]);
+  }, [state]);
 
   switch (state.type) {
     case Type.Idle:

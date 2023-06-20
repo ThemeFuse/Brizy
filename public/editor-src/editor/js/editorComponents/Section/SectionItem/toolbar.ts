@@ -13,6 +13,7 @@ import {
   toolbarBgVideoUrl,
   toolbarElementContainerTypeImageMap
 } from "visual/utils/toolbar";
+import { getMaxContainerSuffix, getMinContainerSuffix } from "../utils";
 
 // @ts-expect-error old options
 export const getItems: GetItems<ElementModel> = ({
@@ -231,11 +232,11 @@ export const getItems: GetItems<ElementModel> = ({
           id: "containerTypeGroup",
           type: "group-dev",
           position: 10,
-          devices: "desktop",
           options: [
             {
               id: "containerType",
               label: t("Width"),
+              devices: "desktop",
               type: "select-dev",
               choices: [
                 { title: t("Boxed"), value: "boxed" },
@@ -244,27 +245,19 @@ export const getItems: GetItems<ElementModel> = ({
             },
             {
               id: "containerSize",
+              label: device === "desktop" ? "" : t("Width"),
               type: "slider-dev",
               disabled: dvv("containerType") !== "boxed",
               config: {
-                min: 35,
-                max: 100,
-                units: [{ title: "%", value: "%" }]
+                min: getMinContainerSuffix({ v, device }),
+                max: getMaxContainerSuffix({ v, device }),
+                units: [
+                  { title: "px", value: "px" },
+                  { title: "%", value: "%" }
+                ]
               }
             }
           ]
-        },
-        {
-          id: "containerSize",
-          type: "slider-dev",
-          label: t("Width"),
-          position: 10,
-          devices: "responsive",
-          config: {
-            min: 35,
-            max: 100,
-            units: [{ title: "%", value: "%" }]
-          }
         },
         {
           id: "grid",

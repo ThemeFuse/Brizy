@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { Gap } from "component/Flex/Gap/view";
+import { Gap } from "@brizy/component";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import Toolbar from "visual/component/Toolbar";

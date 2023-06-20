@@ -37,9 +37,9 @@ export function getItems({ v, device, component }) {
       id: "posts",
       type: "popover-dev",
       config: {
-        icon: "nc-wp-posts",
+        icon: "nc-wp-post-title",
         size: "auto",
-        title: t("Posts")
+        title: t("Title")
       },
       roles: ["admin"],
       position: 70,
@@ -61,7 +61,7 @@ export function getItems({ v, device, component }) {
         {
           id: "sourceID",
           type: "select-dev",
-          label: t("Source ID"),
+          label: t("Source"),
           disabled: !sourceItemsHandler || sourceType === "",
           device: "desktop",
           placeholder: "Select",

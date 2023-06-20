@@ -1,40 +1,88 @@
 {
   "content": {
     "items": [],
+    "itemsOption": [],
 
     "lightBox": "off",
     "enableTags": "on",
     "allTag": "All",
+    "sortTags": "off",
+
+    "layout": "masonry",
+
+    "rowHeight": 350,
+    "rowHeightSuffix": "px",
 
     "gridColumn": 2,
-    "gridColumnSuffix": null,
+    "gridColumnSuffix": "",
 
     "tabletGridColumn": 2,
-    "tabletGridColumnSuffix": null,
+    "tabletGridColumnSuffix": "",
 
     "mobileGridColumn": 1,
-    "mobileGridColumnSuffix": null
+    "mobileGridColumnSuffix": "",
+
+    "gridAspectRatio": "4/3"
   },
 
   "style": {
     "className": "",
 
+    "width": 100,
+    "widthSuffix": "%",
+
+    "bigImage": "off",
+    "bigImageSpacing": 10,
+    "bigImageSpacingSuffix": "px",
+
     "spacing": 5,
-    "spacingSuffix": null,
+    "spacingSuffix": "px",
+    "thumbStyle": "bottom",
 
     "filterSpacing": 10,
-    "filterSpacingSuffix": null,
+    "filterSpacingSuffix": "",
 
     "afterFilterSpacing": 20,
-    "afterFilterSpacingSuffix": null,
+    "afterFilterSpacingSuffix": "",
 
     "filterStyle": "style-1",
     "filterHorizontalAlign": "left",
+
+    "bigImageWidth": 100,
+    "bigImageWidthSuffix": "%",
+
+    "bigImageImagesHeight": null,
+    "bigImageImagesHeightSuffix": "px",
+
+    "thumbWidth": 100,
+    "thumbWidthSuffix": "px",
 
     "customCSS": "",
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
+
+    "imagesMaskShape": "none",
+    "imagesMaskRepeat": "no-repeat",
+    "imagesMaskSize": "cover",
+    "imagesMaskPosition": "center center",
+    "imagesMaskScale": 50,
+    "imagesMaskScaleSuffix": "%",
+    "imagesMaskPositiony": 3,
+    "imagesMaskPositionySuffix": "%",
+    "imagesMaskPositionx": 3,
+    "imagesMaskPositionxSuffix": "%",
+
+    "maskShape": "none",
+    "maskSize": "cover",
+    "maskPosition": "center center",
+    "maskRepeat": "no-repeat",
+    "maskScale": 50,
+    "maskScaleSuffix": "%",
+    "maskPositiony": 3,
+    "maskPositionySuffix": "%",
+    "maskPositionx": 3,
+    "maskPositionxSuffix": "%",
 
     "hoverName": "none",
     "hoverDuration": 600,
@@ -42,9 +90,7 @@
     "hoverInfiniteAnimation": true,
 
     "families": {
-      "filterFontFamily": "lato",
-      "tabletFilterFontFamily": null,
-      "mobileFilterFontFamily": null
+      "filterFontFamily": "lato"
     },
 
     "filterFontStyle": "",
@@ -84,6 +130,157 @@
     "tempBorderTopRightRadius": 0,
     "tempBorderBottomRightRadius": 0,
     "tempBorderBottomLeftRadius": 0,
+
+    "bigImageBorderStyle": "none",
+    "tempBigImageBorderStyle": "solid",
+
+    "bigImageBorderColorHex": "#000000",
+
+    "bigImageBorderColorOpacity": 0,
+    "tempBigImageBorderColorOpacity": 1,
+
+    "bigImageBorderColorPalette": "",
+    "tempBigImageBorderColorPalette": "color3",
+
+    "bigImageBorderWidthType": "grouped",
+    "bigImageBorderWidth": 4,
+    "tempBigImageBorderWidth": 4,
+
+    "bigImageBorderTopWidth": 4,
+    "tempBigImageBorderTopWidth": 4,
+
+    "bigImageBorderRightWidth": 4,
+    "tempBigImageBorderRightWidth": 4,
+
+    "bigImageBorderBottomWidth": 4,
+    "tempBigImageBorderBottomWidth": 4,
+
+    "bigImageBorderLeftWidth": 4,
+    "tempBigImageBorderLeftWidth": 4,
+
+    "bigImageBoxShadow": "",
+    "tempBigImageBoxShadow": "on",
+
+    "bigImageBoxShadowColorHex": "#000000",
+    "bigImageBoxShadowColorPalette": "",
+    "tempBigImageBoxShadowColorPalette": "color3",
+
+    "bigImageBoxShadowColorOpacity": 0,
+    "tempBigImageBoxShadowColorOpacity": 1,
+
+    "bigImageBoxShadowBlur": 0,
+    "tempBigImageBoxShadowBlur": 4,
+
+    "bigImageBoxShadowSpread": 0,
+    "tempBigImageBoxShadowSpread": 0,
+
+    "bigImageBoxShadowVertical": 0,
+    "tempBigImageBoxShadowVertical": 2,
+
+    "bigImageBoxShadowHorizontal": 0,
+    "tempBigImageBoxShadowHorizontal": 1,
+
+    "galleryImageBorderStyle": "none",
+    "tempGalleryImageBorderStyle": "solid",
+
+    "galleryImageBorderColorHex": "#000000",
+
+    "galleryImageBorderColorOpacity": 0,
+    "tempGalleryImageBorderColorOpacity": 1,
+
+    "galleryImageBorderColorPalette": "",
+    "tempGalleryImageBorderColorPalette": "",
+
+    "galleryImageBorderWidthType": "grouped",
+    "galleryImageBorderWidth": 4,
+    "tempGalleryImageBorderWidth": 4,
+
+    "galleryImageBorderTopWidth": 4,
+    "tempGalleryImageBorderTopWidth": 4,
+
+    "galleryImageBorderRightWidth": 4,
+    "tempGalleryImageBorderRightWidth": 4,
+
+    "galleryImageBorderBottomWidth": 4,
+    "tempGalleryImageBorderBottomWidth": 4,
+
+    "galleryImageBorderLeftWidth": 4,
+    "tempGalleryImageBorderLeftWidth": 4,
+
+    "galleryImageBoxShadow": "",
+    "tempGalleryImageBoxShadow": "on",
+
+    "galleryImageBoxShadowColorHex": "#000000",
+
+    "galleryImageBoxShadowColorPalette": "",
+    "tempGalleryImageBoxShadowColorPalette": "",
+
+    "galleryImageBoxShadowColorOpacity": 0,
+    "tempGalleryImageBoxShadowColorOpacity": 1,
+
+    "galleryImageBoxShadowBlur": 0,
+    "tempGalleryImageBoxShadowBlur": 4,
+
+    "galleryImageBoxShadowSpread": 0,
+    "tempGalleryImageBoxShadowSpread": 0,
+
+    "galleryImageBoxShadowVertical": 0,
+    "tempGalleryImageBoxShadowVertical": 2,
+
+    "galleryImageBoxShadowHorizontal": 0,
+    "tempGalleryImageBoxShadowHorizontal": 1,
+
+    "thumbnailBorderRadiusType": "grouped",
+
+    "thumbnailBorderRadius": 0,
+    "thumbnailBorderRadiusSuffix": "px",
+
+    "thumbnailBorderTopLeftRadius": 0,
+    "tempThumbnailBorderTopLeftRadius": 1,
+    "thumbnailBorderTopLeftRadiusSuffix": "px",
+    "tempThumbnailBorderTopLeftRadiusSuffix": "px",
+
+    "thumbnailBorderTopRightRadius": 0,
+    "tempThumbnailBorderTopRightRadius": 1,
+    "thumbnailBorderTopRightRadiusSuffix": "px",
+    "tempThumbnailBorderTopRightRadiusSuffix": "px",
+
+    "thumbnailBorderBottomRightRadius": 0,
+    "tempThumbnailBorderBottomRightRadius": 1,
+    "thumbnailBorderBottomRightRadiusSuffix": "px",
+    "tempThumbnailBorderBottomRightRadiusSuffix": "px",
+
+    "thumbnailBorderBottomLeftRadius": 0,
+    "tempThumbnailBorderBottomLeftRadius": 1,
+    "thumbnailBorderBottomLeftRadiusSuffix": "px",
+    "tempThumbnailBorderBottomLeftRadiusSuffix": "px",
+
+    "galleryImageOverlayBgColorType": "none",
+    "tempGalleryImageOverlayBgColorType": "solid",
+
+    "galleryImageOverlayBgColorHex": "#009900",
+
+    "galleryImageOverlayBgColorOpacity": 0,
+    "tempGalleryImageOverlayBgColorOpacity": 1,
+
+    "galleryImageOverlayBgColorPalette": "",
+    "tempGalleryImageOverlayBgColorPalette": "",
+
+    "galleryImageOverlayGradientColorHex": "",
+
+    "galleryImageOverlayGradientColorOpacity": 1,
+    "tempGalleryImageOverlayGradientColorOpacity": 1,
+
+    "galleryImageOverlayGradientColorPalette": "color3",
+    "tempGalleryImageOverlayGradientColorPalette": "",
+
+    "galleryImageOverlayGradientType": "linear",
+
+    "galleryImageOverlayGradientStartPointer": 0,
+    "galleryImageOverlayGradientFinishPointer": 100,
+    "galleryImageOverlayGradientActivePointer": "startPointer",
+    "galleryImageOverlayGradientLinearDegree": 90,
+    "galleryImageOverlayGradientRadialDegree": 90,
 
     "filterColorHex": "#73777f",
     "filterColorOpacity": 0.7,
@@ -199,7 +396,6 @@
     "tempFilterBorderBottomLeftRadiusSuffix": "px",
 
     "tabletFilterFontStyle": "",
-    "tabletFilterFontFamilyType": null,
     "tabletFilterFontSize": 14,
     "tabletFilterFontSizeSuffix": "px",
     "tabletFilterLineHeight": 1.5,
@@ -216,32 +412,7 @@
     "tabletFilterPaddingType": "grouped",
     "tempTabletFilterPaddingType": "grouped",
 
-    "tabletFilterPadding": null,
-    "tabletFilterPaddingTop": null,
-    "tabletFilterPaddingRight": null,
-    "tabletFilterPaddingBottom": null,
-    "tabletFilterPaddingLeft": null,
-
-    "tempTabletFilterPadding": null,
-    "tempTabletFilterPaddingTop": null,
-    "tempTabletFilterPaddingRight": null,
-    "tempTabletFilterPaddingBottom": null,
-    "tempTabletFilterPaddingLeft": null,
-
-    "tabletFilterPaddingSuffix": null,
-    "tabletFilterPaddingTopSuffix": null,
-    "tabletFilterPaddingRightSuffix": null,
-    "tabletFilterPaddingBottomSuffix": null,
-    "tabletFilterPaddingLeftSuffix": null,
-
-    "tempTabletFilterPaddingSuffix": null,
-    "tempTabletFilterPaddingTopSuffix": null,
-    "tempTabletFilterPaddingRightSuffix": null,
-    "tempTabletFilterPaddingBottomSuffix": null,
-    "tempTabletFilterPaddingLeftSuffix": null,
-
     "mobileFilterFontStyle": "",
-    "mobileFilterFontFamilyType": null,
     "mobileFilterFontSize": 14,
     "mobileFilterFontSizeSuffix": "px",
     "mobileFilterLineHeight": 1.5,
@@ -259,28 +430,37 @@
     "mobileFilterPaddingType": "grouped",
     "tempMobileFilterPaddingType": "grouped",
 
-    "mobileFilterPadding": null,
-    "mobileFilterPaddingTop": null,
-    "mobileFilterPaddingRight": null,
-    "mobileFilterPaddingBottom": null,
-    "mobileFilterPaddingLeft": null,
+    "bigImageOverlayBgColorType": "none",
+    "tempBigImageOverlayBgColorType": "solid",
 
-    "tempMobileFilterPadding": null,
-    "tempMobileFilterPaddingTop": null,
-    "tempMobileFilterPaddingRight": null,
-    "tempMobileFilterPaddingBottom": null,
-    "tempMobileFilterPaddingLeft": null,
+    "bigImageOverlayBgColorHex": "#000000",
 
-    "mobileFilterPaddingSuffix": null,
-    "mobileFilterPaddingTopSuffix": null,
-    "mobileFilterPaddingRightSuffix": null,
-    "mobileFilterPaddingBottomSuffix": null,
-    "mobileFilterPaddingLeftSuffix": null,
+    "bigImageOverlayBgColorOpacity": 0,
+    "tempBigImageOverlayBgColorOpacity": 1,
 
-    "tempMobileFilterPaddingSuffix": null,
-    "tempMobileFilterPaddingTopSuffix": null,
-    "tempMobileFilterPaddingRightSuffix": null,
-    "tempMobileFilterPaddingBottomSuffix": null,
-    "tempMobileFilterPaddingLeftSuffix": null
+    "bigImageOverlayBgColorPalette": "",
+    "tempBigImageOverlayBgColorPalette": "",
+
+    "bigImageOverlayGradientColorHex": "#000000",
+
+    "bigImageOverlayGradientColorOpacity": 0,
+    "tempBigImageOverlayGradientColorOpacity": 1,
+
+    "bigImageOverlayGradientColorPalette": "",
+    "tempBigImageOverlayGradientColorPalette": "",
+
+    "bigImageOverlayGradientType": "radial",
+
+    "bigImageOverlayGradientStartPointer": 10,
+    "bigImageOverlayGradientFinishPointer": 69,
+    "bigImageOverlayGradientActivePointer": "finishPointer",
+    "bigImageOverlayGradientLinearDegree": 0,
+    "bigImageOverlayGradientRadialDegree": 2,
+
+    "imagesMaskCustomUploadImageSrc": "",
+    "imagesMaskCustomUploadImageFileName": "",
+    "imagesMaskCustomUploadImageExtension": "",
+    "imagesMaskCustomUploadImageWidth": 600,
+    "imagesMaskCustomUploadImageHeight": 450
   }
 }
