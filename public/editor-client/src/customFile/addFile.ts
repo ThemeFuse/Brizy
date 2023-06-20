@@ -25,7 +25,9 @@ export const addFile: AddFileData = {
         type: "image"
       },
       states: new wp.media.controller.Library({
-        library: wp.media.query({ type: "image" }),
+        library: wp.media.query({
+          type: "image, audio, video, application, text, pdf"
+        }),
         multiple: false,
         title: t("Upload file"),
         filterable: "all",
