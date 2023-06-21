@@ -30,8 +30,6 @@
     "tempColorPalette": "",
 
     "tabletWidth": null,
-    "tabletItemPadding": null,
-    "tabletItemPaddingSuffix": null,
     "tabletToggleMenu": "off",
 
     "tabletFontStyle": "",
@@ -42,8 +40,6 @@
     "tabletLetterSpacing": 0,
 
     "mobileWidth": null,
-    "mobileItemPadding": null,
-    "mobileItemPaddingSuffix": null,
     "mobileToggleMenu": "off",
 
     "mobileFontStyle": "",

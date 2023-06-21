@@ -18,7 +18,6 @@ export const project: RProject = (state, action, fullState) => {
       const oldState = fromJS(state);
       const newState = fromJS(projectAssembled(fullState));
 
-      // @ts-expect-error -- Object is of type 'unknown'.
       if (oldState.equals(newState)) {
         return state;
       }

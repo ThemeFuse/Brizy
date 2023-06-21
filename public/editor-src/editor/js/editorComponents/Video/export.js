@@ -426,6 +426,7 @@ function insertVideoIframe($elem, isIos) {
     class: "brz-iframe intrinsic-ignore",
     allowfullscreen: true,
     allow: "autoplay",
+    title: "video-export",
     src
   });
 

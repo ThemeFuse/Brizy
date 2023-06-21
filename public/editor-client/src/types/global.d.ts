@@ -138,7 +138,9 @@ declare global {
         }): WPMediaLibrary;
       };
     };
-    query: (query: { type: "image" }) => WPMediaLibrary;
+    query: (query: {
+      type: "image, audio, video, application, text, pdf";
+    }) => WPMediaLibrary;
     state: () => WPMediaLibrary;
   }
 

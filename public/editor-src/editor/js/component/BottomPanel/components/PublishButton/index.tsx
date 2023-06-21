@@ -333,12 +333,14 @@ class PublishButton extends Component<Props, State> {
       }
     }
 
-    await createSavedLayout({
+    const data = {
       meta,
       data: pageData,
       dataVersion: 1,
       uid: uuid()
-    }).catch((e) => {
+    };
+    const config = Config.getAll();
+    await createSavedLayout(data, config).catch((e) => {
       ToastNotification.error(t("Could not save layout"));
       console.error(e);
     });
@@ -359,31 +361,35 @@ class PublishButton extends Component<Props, State> {
 
   getTooltipItems(): ControlsProps["addonAfter"] {
     const config = Config.getAll();
+    const enabledSavedLayout =
+      typeof config.api?.savedLayouts?.create === "function";
     const { page } = this.props;
-    const layoutItems =
-      isStory(config) || isPopup(config)
-        ? []
-        : [
-            {
-              title: t("Clear Layout"),
-              icon: "nc-trash",
-              roles: ["admin"],
-              onClick: (): void => {
-                this.handleClearPage();
-              }
-            },
-            {
-              title: t("Save Layout"),
-              icon: "nc-save-section",
-              loading: this.state.layoutLoading,
-              onClick: (): void => {
-                this.handleSavePage();
-              }
-            }
-          ];
+    const items = [];
+
+    if (!isPopup(config) && !isStory(config)) {
+      items.push({
+        title: t("Clear Layout"),
+        icon: "nc-trash",
+        roles: ["admin"],
+        onClick: (): void => {
+          this.handleClearPage();
+        }
+      });
+
+      if (enabledSavedLayout) {
+        items.push({
+          title: t("Save Layout"),
+          icon: "nc-save-section",
+          loading: this.state.layoutLoading,
+          onClick: (): void => {
+            this.handleSavePage();
+          }
+        });
+      }
+    }
 
     return [
-      ...layoutItems,
+      ...items,
       {
         title: getTooltipPageTitle(page.status),
         icon: getTooltipPageIcon(page.status),

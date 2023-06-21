@@ -19,22 +19,28 @@ export interface Data {
 
 export interface Props<T extends Data> {
   data: T[];
+  tags?: string[];
   columns: number;
   showSync?: boolean;
   showDownload?: boolean;
+  showTitle?: boolean;
   responsive?: Responsive[];
   ThumbnailComponent: ComponentType<ThumbnailProps<T>>;
   onThumbnailAdd: (b: T) => void;
   onThumbnailRemove?: (b: T) => void;
+  onUpdate?: (b: T) => void;
 }
 
 export interface ThumbnailProps<T extends Data> {
   animation: boolean;
   showSync: Props<T>["showSync"];
+  showTitle: Props<T>["showTitle"];
   showDownload: Props<T>["showDownload"];
   data: ArrayType<Props<T>["data"]>;
+  tags: Props<T>["tags"];
   onAdd: Props<T>["onThumbnailAdd"];
   onRemove: Props<T>["onThumbnailRemove"];
+  onUpdate: Props<T>["onUpdate"];
 }
 
 interface State {
@@ -100,11 +106,14 @@ export default class ThumbnailGrid<T extends Data> extends Component<
   render(): ReactElement {
     const {
       data,
+      tags,
       showSync,
+      showTitle,
       showDownload,
       onThumbnailAdd,
       onThumbnailRemove,
-      ThumbnailComponent
+      ThumbnailComponent,
+      onUpdate
     } = this.props;
     const { currentColumns } = this.state;
     const arr: Array<Array<ReactElement>> = [];
@@ -122,15 +131,20 @@ export default class ThumbnailGrid<T extends Data> extends Component<
     const columns = data
       .reduce((acc, thumbnailData, index) => {
         const thumbnailType = thumbnailData.type ?? "block";
+        const uid = thumbnailData.uid ?? "";
+        const key = `${index}-${thumbnailType}-${uid}`;
         const element: ReactElement = (
           <ThumbnailComponent
-            key={`${index}-${thumbnailType}`}
+            key={key}
             animation={true}
             showSync={showSync}
             showDownload={showDownload}
+            tags={tags}
+            showTitle={showTitle}
             data={thumbnailData}
             onAdd={onThumbnailAdd}
             onRemove={onThumbnailRemove}
+            onUpdate={onUpdate}
           />
         );
         const columnIndex = index % currentColumns;

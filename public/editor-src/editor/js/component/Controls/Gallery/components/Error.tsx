@@ -1,12 +1,12 @@
 import React, { ReactElement } from "react";
-import { Item } from "./Item";
+import Tooltip from "visual/component/Controls/Tooltip";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { WithId } from "visual/utils/options/attributes";
-import Tooltip from "visual/component/Controls/Tooltip";
+import { Item } from "./Item";
 
 export interface Props<T> extends WithId<T> {
   message: string;
-  onRemove: (id: T) => void;
+  onRemove?: (id: T) => void;
 }
 
 export function Error<T>({
@@ -15,7 +15,11 @@ export function Error<T>({
   message
 }: Props<T>): ReactElement<Props<T>> {
   return (
-    <Tooltip overlay={<div>{message}</div>} openOnClick={true}>
+    <Tooltip
+      overlay={<div>{message}</div>}
+      openOnClick={false}
+      className="brz-ed-control__gallery-tooltip--error"
+    >
       <Item<T>
         className="brz-ed-control__gallery__item--error"
         id={id}

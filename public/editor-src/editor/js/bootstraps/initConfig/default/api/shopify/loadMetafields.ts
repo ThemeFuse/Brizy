@@ -24,7 +24,7 @@ export const getMetafields = <C extends ConfigCommon>(config: C): C => {
         );
         const items = [
           { title: "None", value: "" },
-          ...data?.map(({ key, name }: { key: string; name: string }) => ({
+          ...data.map(({ key, name }: { key: string; name: string }) => ({
             value: key,
             title: name
           }))

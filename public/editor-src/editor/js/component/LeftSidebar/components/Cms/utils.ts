@@ -6,6 +6,10 @@ import { fromNumber } from "visual/component/LeftSidebar/components/Cms/types/Pr
 import { getWhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
 import {
   ShopModules,
+  isCollectionPage,
+  isCustomerPage,
+  isEcwidCategory,
+  isEcwidProduct,
   isEcwidShop,
   isShopifyShop
 } from "visual/global/Config/types/configs/Base";
@@ -58,7 +62,12 @@ const cloud = (config: CMS): Cloud => {
     customerPreviewUrl: config.cms.customerPreviewUrl,
     activeItem: {
       id: config.page.id,
-      __type: ActiveItemTypes.CollectionItem
+      __type: match(
+        [isCollectionPage, () => ActiveItemTypes.CollectionItem],
+        [isCustomerPage, () => ActiveItemTypes.Customer],
+        [isEcwidProduct, () => ActiveItemTypes.EcwidProduct],
+        [isEcwidCategory, () => ActiveItemTypes.EcwidCategory]
+      )(config.page)
     },
     shopify: token
       ? { __type: "withToken", token, uri: config.cms.apiUrl }

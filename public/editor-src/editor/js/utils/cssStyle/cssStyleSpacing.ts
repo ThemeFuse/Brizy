@@ -3,8 +3,21 @@ import { checkValue } from "../checkValue";
 import { capByPrefix } from "../string";
 import { CSSValue } from "../style2/types";
 
-type Direction = "top" | "right" | "bottom" | "left";
-const getDirection = checkValue<Direction>(["top", "right", "bottom", "left"]);
+type Direction =
+  | "top"
+  | "right"
+  | "bottom"
+  | "left"
+  | "horizontal"
+  | "vertical";
+const getDirection = checkValue<Direction>([
+  "top",
+  "right",
+  "bottom",
+  "left",
+  "horizontal",
+  "vertical"
+]);
 
 export function cssStyleSpacing({
   v,
@@ -20,13 +33,17 @@ export function cssStyleSpacing({
 
   switch (getDirection(direction)) {
     case "top":
-      return `margin-top:${spacing}${spacingSuffix};`;
+      return `margin:${spacing}${spacingSuffix} 0 0 0;`;
     case "right":
-      return `margin-right:${spacing}${spacingSuffix};`;
+      return `margin: 0 ${spacing}${spacingSuffix} 0 0;`;
     case "bottom":
-      return `margin-bottom:${spacing}${spacingSuffix};`;
+      return `margin:0 0 ${spacing}${spacingSuffix} 0;`;
     case "left":
-      return `margin-left:${spacing}${spacingSuffix};`;
+      return `margin: 0 0 0 ${spacing}${spacingSuffix};`;
+    case "horizontal":
+      return `margin: 0 ${spacing}${spacingSuffix};`;
+    case "vertical":
+      return `margin: ${spacing}${spacingSuffix} 0;`;
     case undefined:
       return "";
   }

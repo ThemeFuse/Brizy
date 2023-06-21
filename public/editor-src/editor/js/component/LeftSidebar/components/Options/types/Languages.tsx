@@ -1,11 +1,11 @@
+import classnames from "classnames";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import classnames from "classnames";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import Config from "visual/global/Config";
 import { updateUI } from "visual/redux/actions2";
 import { currentLanguageSelector } from "visual/redux/selectors";
-import Config from "visual/global/Config";
 import { getLanguagesChoices } from "visual/utils/multilanguages";
 
 export interface Props {
@@ -24,9 +24,9 @@ export const Languages = (props: Props): ReactElement => {
     _className
   );
 
-  const config = Config.getAll();
-
   const renderOptions = useMemo(() => {
+    const config = Config.getAll();
+
     const languageOptions = [
       { value: "default", title: "Default" },
       ...getLanguagesChoices(config)

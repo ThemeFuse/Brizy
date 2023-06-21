@@ -1,6 +1,6 @@
 import classnames from "classnames";
-import { StarRating1 } from "component/Flex/StarRating1";
-import { StarRating2 } from "component/Flex/StarRating2";
+import { StarRating1 } from "@brizy/component";
+import { StarRating2 } from "@brizy/component";
 import React from "react";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";

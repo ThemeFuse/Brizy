@@ -101,6 +101,7 @@ const Video: React.FC<Props> = ({ video, videoLoop, videoStart, children }) => {
       className="brz-iframe intrinsic-ignore brz-bg-video__cover absolute top-0 left-0 w-full h-full border-none !max-w-none bg-no-repeat bg-cover"
       loading="lazy"
       style={iframeStyle}
+      title="background-video"
     />
   );
 

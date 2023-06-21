@@ -7,7 +7,7 @@ import { clamp, roundTo } from "visual/utils/math";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import * as Str from "visual/utils/string/specs";
-import { isNullish } from "visual/utils/value";
+import { MValue, isNullish } from "visual/utils/value";
 import { ImageSize, Unit, V } from "./types";
 
 export interface ImageValue {
@@ -359,3 +359,17 @@ export function multiplier<
     return acc;
   }, data);
 }
+
+export const readUnit = (v: unknown): MValue<Unit> => {
+  if (v === "px" || v === "%") {
+    return v;
+  }
+};
+
+export const readSizeType = (sizeType: unknown): MValue<SizeType> => {
+  switch (sizeType) {
+    case SizeType.custom:
+    case SizeType.original:
+      return sizeType;
+  }
+};

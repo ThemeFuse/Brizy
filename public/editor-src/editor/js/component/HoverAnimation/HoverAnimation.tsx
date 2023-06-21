@@ -80,7 +80,7 @@ export const HoverAnimation: FC<Props> = ({
       UIEvents.off(AnimationEvents.entranceOff, _setAnimationIsRunning);
       UIEvents.off("deviceMode.change", setDevice);
     };
-  }, []);
+  }, [animationId]);
 
   useEffect(() => {
     if (child.current) {
@@ -125,6 +125,7 @@ export const HoverAnimation: FC<Props> = ({
 
   const _onMouseOut = (e: MouseEvent<Element>): void => {
     const { options } = animationOptions;
+
     if (controller.current && elementIsHovered.current) {
       if (
         e.relatedTarget instanceof Element &&

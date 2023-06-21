@@ -6,7 +6,7 @@ import {
 } from "visual/component/Controls/ColorPickerSelect";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
 import MultiInputOptionType from "visual/component/Controls/MultiInput";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
+import { Item } from "visual/component/Controls/Select2/Item";
 import { Hex } from "visual/utils/color/Hex";
 import {
   WithClassName,
@@ -55,7 +55,7 @@ export function TextShadow<P extends string, O extends string>({
   );
   const onHex = useCallback(
     (hex) => onChange({ ...value, hex }, { isChanged: "hex" }),
-    [onChange]
+    [onChange, value]
   );
   const fieldChange = useCallback(
     (fields) => {
@@ -75,7 +75,7 @@ export function TextShadow<P extends string, O extends string>({
       select: value.select,
       palette: value.palette ?? "" //TODO: Remove ""
     }),
-    [value.hex, value.opacity, value.palette]
+    [value]
   );
   const multiInputValue = useMemo(
     () => [value.blur, value.vertical, value.horizontal],

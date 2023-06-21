@@ -1,3 +1,7 @@
+import {
+  getMaxContainerSuffix,
+  getMinContainerSuffix
+} from "visual/editorComponents/Section/utils";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
@@ -227,11 +231,11 @@ export function getItems({ v, device, component, context }) {
           id: "containerTypeGroup",
           type: "group-dev",
           position: 10,
-          devices: "desktop",
           options: [
             {
               id: "containerType",
               label: t("Width"),
+              devices: "desktop",
               type: "select-dev",
               choices: [
                 { title: t("Boxed"), value: "boxed" },
@@ -240,12 +244,16 @@ export function getItems({ v, device, component, context }) {
             },
             {
               id: "containerSize",
+              label: device === "desktop" ? "" : t("Width"),
               type: "slider-dev",
               disabled: dvv("containerType") !== "boxed",
               config: {
-                min: 35,
-                max: 100,
-                units: [{ title: "%", value: "%" }]
+                min: getMinContainerSuffix({ v, device }),
+                max: getMaxContainerSuffix({ v, device }),
+                units: [
+                  { title: "px", value: "px" },
+                  { title: "%", value: "%" }
+                ]
               }
             }
           ]
@@ -280,18 +288,6 @@ export function getItems({ v, device, component, context }) {
               }
             }
           ]
-        },
-        {
-          id: "containerSize",
-          type: "slider-dev",
-          label: t("Width"),
-          devices: "responsive",
-          position: 10,
-          config: {
-            min: 35,
-            max: 100,
-            units: [{ title: "%", value: "%" }]
-          }
         },
         {
           id: "verticalAlign",

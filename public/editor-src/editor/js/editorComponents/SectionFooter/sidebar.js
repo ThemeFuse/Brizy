@@ -174,7 +174,7 @@ export function getItems({ v, device, context }) {
                               label: t("Type"),
                               type: "select-dev",
                               choices: getShapes(),
-                              className: "brz-ed-shape icon--bottom"
+                              iconClassName: "brz-ed-shape icon--bottom"
                             },
                             {
                               id: "shapeBottomColors",

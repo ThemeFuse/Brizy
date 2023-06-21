@@ -1,1 +1,0 @@
-export { useScrollbar } from "./useScrollbar";

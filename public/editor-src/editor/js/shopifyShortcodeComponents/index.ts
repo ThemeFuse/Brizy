@@ -2,12 +2,15 @@ import Config from "visual/global/Config";
 import { Shortcodes } from "visual/types";
 import AddToCart from "./AddToCart";
 import BlogPostContent from "./BlogPostContent";
+import getBlogPostList from "./BlogPostList";
 import getBlogPostMeta from "./BlogPostMeta";
 import BlogTitle from "./BlogTitle";
 import CollectionDescription from "./CollectionDescription";
+import getCollectionList from "./CollectionList";
 import CollectionTitle from "./CollectionTitle";
 import getPrice from "./Price";
 import ProductDescription from "./ProductDescription";
+import getProductList from "./ProductList";
 import getProductMetafield from "./ProductMetafield";
 import ProductTitle from "./ProductTitle";
 import getQuantity from "./Quantity";
@@ -84,13 +87,13 @@ const config = ((): Shortcodes => {
   const config = Config.getAll();
   return {
     base: [
-      { component: ProductDescription, pro: false },
       { component: ProductTitle, pro: false },
+      { component: ProductDescription, pro: false },
+      { component: getProductList(config), pro: false },
       { component: AddToCart, pro: false },
       { component: getPrice(config), pro: false },
       { component: getQuantity(config), pro: false },
       { component: getProductMetafield(config), pro: false },
-      { component: getBlogPostMeta(config), pro: false },
       // { component: Quantity, pro: false },
       // { component: ProductReview, pro: false },
       // { component: KlavyioMarketing, pro: false },
@@ -162,11 +165,14 @@ const config = ((): Shortcodes => {
     ],
     blog: [
       { component: BlogTitle, pro: false },
-      { component: BlogPostContent, pro: false }
+      { component: BlogPostContent, pro: false },
+      { component: getBlogPostMeta(config), pro: false },
+      { component: getBlogPostList(config), pro: false }
     ],
     collection: [
       { component: CollectionTitle, pro: false },
-      { component: CollectionDescription, pro: false }
+      { component: CollectionDescription, pro: false },
+      { component: getCollectionList(config), pro: false }
     ]
   };
 })();

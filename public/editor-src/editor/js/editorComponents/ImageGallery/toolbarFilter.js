@@ -28,6 +28,12 @@ export function getItems({ v, device }) {
       position: 80,
       options: [
         {
+          id: "sortTags",
+          label: t("Sort alphabetically"),
+          type: "switch-dev",
+          devices: "desktop"
+        },
+        {
           id: "filterStyle",
           label: t("Style"),
           type: "radioGroup-dev",
@@ -64,7 +70,7 @@ export function getItems({ v, device }) {
       type: "popover-dev",
       config: {
         icon: "nc-font",
-        size: device === "desktop" ? "large" : "auto",
+        size: "auto",
         title: t("Typography")
       },
       position: 70,

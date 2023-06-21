@@ -61,6 +61,13 @@
     padding-bottom: 0;
   }
 
+  &--globalStyles-col1 > div > .brz-ed-option-type__select-dev {
+    padding: 15px 10px 0;
+  }
+  &--globalStyles-col2 > div > .brz-ed-option-type__select-dev {
+    padding: 15px 10px 6px;
+  }
+
   .brz-ed-grid__typography {
     padding: 0;
 
@@ -109,6 +116,7 @@
         min-height: auto;
         height: initial;
         width: auto;
+        padding: 0;
         background-color: transparent;
         color: $options__label-color;
         cursor: pointer;

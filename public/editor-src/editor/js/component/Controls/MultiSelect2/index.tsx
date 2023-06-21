@@ -1,21 +1,21 @@
+import classNames from "classnames";
 import React, {
-  useState,
+  CSSProperties,
   ReactElement,
   Ref,
-  CSSProperties,
-  useEffect
+  useEffect,
+  useState
 } from "react";
-import { Manager, Reference, Popper } from "react-popper";
 import { Scrollbars } from "react-custom-scrollbars";
-import classNames from "classnames";
+import { Manager, Popper, Reference } from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
 import EditorIcon from "visual/component/EditorIcon";
-import { toggleItemValue, valueTitle } from "./utils";
-import {
-  MultiSelectProps as Props,
-  MultiSelectItemProps as ItemProps
-} from "./types";
 import { t } from "visual/utils/i18n";
+import {
+  MultiSelectItemProps as ItemProps,
+  MultiSelectProps as Props
+} from "./types";
+import { toggleItemValue, valueTitle } from "./utils";
 
 export { MultiSelectItem } from "./Item";
 
@@ -28,6 +28,8 @@ export function MultiSelect<T>({
   search,
   searchIsEmpty,
   searchIsLoading,
+  useAsSimpleSelect,
+  showArrow,
   onChange,
   onSearchChange
 }: Props<T>): ReactElement {
@@ -50,6 +52,7 @@ export function MultiSelect<T>({
                 items={items}
                 value={value}
                 valueIsLoading={valueIsLoading}
+                showArrow={showArrow}
                 placeholder={placeholder}
                 onClick={(): void => setIsOpen(!isOpen)}
               />
@@ -71,9 +74,14 @@ export function MultiSelect<T>({
                     search={search}
                     searchIsEmpty={searchIsEmpty}
                     searchIsLoading={searchIsLoading}
-                    onItemClick={(item): void =>
-                      onChange(toggleItemValue(item, value))
-                    }
+                    useAsSimpleSelect={useAsSimpleSelect}
+                    onItemClick={(item): void => {
+                      onChange(toggleItemValue(item, value, useAsSimpleSelect));
+
+                      if (useAsSimpleSelect) {
+                        setIsOpen(false);
+                      }
+                    }}
                     onSearchChange={
                       onSearchChange && ((s): void => onSearchChange(s))
                     }
@@ -94,6 +102,7 @@ type SelectValueProps<T> = {
   value: T[];
   valueIsLoading?: boolean;
   placeholder?: string;
+  showArrow?: boolean;
   onClick: () => void;
 };
 function SelectValue<T>({
@@ -102,6 +111,7 @@ function SelectValue<T>({
   value,
   valueIsLoading,
   placeholder,
+  showArrow,
   onClick
 }: SelectValueProps<T>): ReactElement {
   const isLoading = valueIsLoading ?? false;
@@ -129,6 +139,12 @@ function SelectValue<T>({
   return (
     <div ref={customRef} className={className} onClick={onClick}>
       <span className="brz-span">{title ?? placeholder}</span>
+      {showArrow && (
+        <EditorIcon
+          icon="nc-stre-down"
+          className="brz-control__select--arrow"
+        />
+      )}
     </div>
   );
 }
@@ -141,6 +157,7 @@ type SelectDropdownProps<T> = {
   search?: boolean;
   searchIsEmpty?: boolean;
   searchIsLoading?: boolean;
+  useAsSimpleSelect?: boolean;
   onItemClick: (item: ItemProps<T>) => void;
   onSearchChange?: (s: string) => void;
 };
@@ -152,6 +169,7 @@ function SelectDropdown<T>({
   search,
   searchIsEmpty,
   searchIsLoading,
+  useAsSimpleSelect,
   onItemClick,
   onSearchChange
 }: SelectDropdownProps<T>): ReactElement {
@@ -199,11 +217,12 @@ function SelectDropdown<T>({
         }}
       >
         <ul className="brz-ul">
-          {items.map(item => (
+          {items.map((item) => (
             <SelectItem
               key={String(item.value)}
               title={item.title}
               value={item.value}
+              icon={!useAsSimpleSelect}
               active={value.includes(item.value)}
               onClick={(): void => onItemClick(item)}
             />
@@ -220,11 +239,13 @@ type SelectItemProps<T> = {
   value: T;
   active?: boolean;
   onClick: () => void;
+  icon?: boolean;
 };
 function SelectItem<T>({
   title,
   active = false,
-  onClick
+  onClick,
+  icon = true
 }: SelectItemProps<T>): ReactElement {
   const className = classNames("brz-ed-control__multiSelect2__option", {
     "brz-ed-control__multiSelect2__option--active": active
@@ -233,10 +254,12 @@ function SelectItem<T>({
 
   return (
     <li className={className} title={title} onClick={onClick}>
-      <EditorIcon
-        icon={checkboxIcon}
-        className="brz-ed-control__multiSelect2__option-checkbox"
-      />
+      {icon && (
+        <EditorIcon
+          icon={checkboxIcon}
+          className="brz-ed-control__multiSelect2__option-checkbox"
+        />
+      )}
       <span className="brz-ed-control__multiSelect2__option-text">{title}</span>
     </li>
   );

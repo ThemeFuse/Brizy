@@ -12,6 +12,7 @@ import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import classNames from "classnames";
 import React, { ReactElement, useCallback } from "react";
+import { noop } from "underscore";
 import { Item } from "visual/component/Controls/Gallery/types/Item";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { WithClassName } from "visual/utils/options/attributes";
@@ -21,7 +22,7 @@ import { Loading } from "./components/Loading";
 import { Thumbnail } from "./components/Thumbnail";
 
 interface SortableItemProps<T> {
-  onRemove: (id: T) => void;
+  onRemove?: (id: T) => void;
   item: Item<T>;
 }
 
@@ -40,12 +41,21 @@ const SortableItem = function <T extends UniqueIdentifier>({
     zIndex: isActive ? 1 : 0
   };
 
-  const remove = useCallback(() => onRemove(item.id), [item.id, onRemove]);
+  const remove = useCallback(
+    () => (onRemove ? onRemove(item.id) : noop),
+    [item.id, onRemove]
+  );
 
   const renderItem = (item: Item<T>) => {
     switch (item.__type) {
       case "thumbnail":
-        return <Thumbnail onRemove={remove} id={item.id} src={item.payload} />;
+        return (
+          <Thumbnail
+            onRemove={onRemove ? remove : undefined}
+            id={item.id}
+            src={item.payload}
+          />
+        );
       case "error":
         return <Error onRemove={remove} id={item.id} message={item.payload} />;
       case "loading":
@@ -69,7 +79,7 @@ interface SortableProps<T> extends WithClassName {
   axis?: string;
   items: Item<T>[];
   onAdd: UploadProps["onChange"];
-  onRemove: (id: T) => void;
+  onRemove?: (id: T) => void;
   onSortEnd: (active: UniqueIdentifier, over: UniqueIdentifier) => void;
 }
 
@@ -133,7 +143,7 @@ export interface Props<T extends number | string> extends WithClassName {
   onSort: (from: number, to: number) => void;
   items: Item<T>[];
   onAdd: UploadProps["onChange"];
-  onRemove: (id: T) => void;
+  onRemove?: (id: T) => void;
 }
 
 export function Gallery<T extends number | string>({

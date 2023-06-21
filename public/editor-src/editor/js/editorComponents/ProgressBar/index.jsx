@@ -1,6 +1,5 @@
 import classnames from "classnames";
-import { ProgressBar1 } from "component/Flex/ProgressBar1";
-import { ProgressBar2 } from "component/Flex/ProgressBar2";
+import { ProgressBar1, ProgressBar2} from "@brizy/component";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import { Text } from "visual/component/ContentOptions/types";

@@ -77,7 +77,7 @@ export const createReducer = <
                 return State.canceling(s.payload);
             }
           }
-          // eslint disable-next-line no-fallthrough, this is handled by type script
+          // eslint-disable-next-line no-fallthrough -- this is handled by type script
           case ActionTypes.Canceled:
             return s.type === "Canceling" ? State.canceled(s.payload) : s;
         }

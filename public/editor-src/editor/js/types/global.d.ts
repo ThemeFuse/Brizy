@@ -10,6 +10,12 @@ import Lottie from "lottie-web";
 import Scrollbars from "perfect-scrollbar";
 import { Dropdown } from "visual/libs/dropdown";
 import { initEkklesiaPopups } from "visual/libs/group-7";
+import Gallery from "../libs/gallery";
+
+export type GalleryIsotope = Isotope;
+export type GalleryJustified = Gallery;
+export type GalleryIsotopeType = typeof Isotope;
+export type GalleryJustifiedType = typeof Gallery;
 
 // Our own jquery plugins
 
@@ -37,6 +43,7 @@ interface BrizyProLibs {
   Isotope?: typeof Isotope;
   MMenu?: unknown;
   Lottie?: typeof Lottie;
+  Gallery?: typeof Gallery;
 }
 
 declare global {

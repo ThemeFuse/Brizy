@@ -60,39 +60,43 @@ export const Animation: React.FC<Props> = ({
   const type = valueToType(types, value);
   const delay = config?.delay ?? true;
   const infiniteAnimation = config?.infiniteAnimation ?? true;
+
   const _changeType = useCallback<OnChange<EffectType>>(
     (v) => onChange(Value.setType(v, value)),
-    [value]
+    [value, onChange]
   );
   const _changeDuration = useCallback<OnChange<number>>(
-    mPipe(
-      fromNumber,
-      (v) => Value.isEffect(value) && onChange(setDuration(v, value))
-    ),
-    [value]
+    (v) =>
+      mPipe(
+        fromNumber,
+        (v) => Value.isEffect(value) && onChange(setDuration(v, value))
+      )(v),
+    [value, onChange]
   );
   const _changeDelay = useCallback<OnChange<number>>(
-    mPipe(
-      fromNumber,
-      (v) => Value.isEffect(value) && onChange(setDelay(v, value))
-    ),
-    [value]
+    (v) =>
+      mPipe(
+        fromNumber,
+        (v) => Value.isEffect(value) && onChange(setDelay(v, value))
+      )(v),
+    [value, onChange]
   );
 
   const _changeInfiniteAnimation = useCallback<OnChange<boolean>>(
     () => Value.isEffect(value) && onChange(setInfiniteAnimation(value)),
-    [value]
+    [value, onChange]
   );
 
   const _onReplay = useCallback<VoidFunction>(
-    mPipe(
-      always(value.duration),
-      pass(() => replay),
-      (v) => v + 0.00001,
-      fromNumber,
-      (v) => Value.isEffect(value) && onChange(setDuration(v, value))
-    ),
-    [value, replay]
+    () =>
+      mPipe(
+        always(value.duration),
+        pass(() => replay),
+        (v) => v + 0.00001,
+        fromNumber,
+        (v) => Value.isEffect(value) && onChange(setDuration(v, value))
+      )(),
+    [value, replay, onChange]
   );
 
   const valueOptions = useMemo(() => {
@@ -181,7 +185,7 @@ export const Animation: React.FC<Props> = ({
         }
       }
     }
-  }, [value, type]);
+  }, [value, type, onChange]);
 
   return (
     <div className={className}>

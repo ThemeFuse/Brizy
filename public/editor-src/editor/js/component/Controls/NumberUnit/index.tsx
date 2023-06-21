@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { ReactElement, useCallback } from "react";
 import Number from "visual/component/Controls/AutoCorrectingInput";
 import { Literal } from "visual/utils/types/Literal";
-import { Item } from "../MultiSelect/Item";
+import { Item } from "../Select2/Item";
 import { Select2 } from "../Select2";
 import { Props } from "./types";
 

@@ -1,7 +1,7 @@
-import React, { useEffect, ReactElement } from "react";
 import classnames from "classnames";
-import { useDC } from "visual/editorComponents/EditorComponent/DynamicContent/useDC";
+import React, { ReactElement, useEffect } from "react";
 import Placeholder from "visual/component/Placeholder";
+import { useDC } from "visual/editorComponents/EditorComponent/DynamicContent/useDC";
 
 type Props<T extends keyof JSX.IntrinsicElements> = {
   placeholder: string;
@@ -36,7 +36,7 @@ export function DynamicContentHelper<T extends keyof JSX.IntrinsicElements>({
     if (status === "success" && onSuccess) {
       onSuccess(innerHtml);
     }
-  }, [status]);
+  }, [status, innerHtml, onSuccess]);
 
   if (IS_PREVIEW || (status === "success" && !dataIsEmpty(innerHtml))) {
     const className = classnames(props?.className, { "brz-blocked": blocked });

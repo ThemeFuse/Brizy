@@ -30,10 +30,12 @@ exports.preview = (options) => {
           test: /\.(ts|js)$/,
           include: [
             path.resolve(__dirname, "editor"),
-            path.resolve(__dirname, "packages")
+            path.resolve(__dirname, "../packages")
           ],
-          loader: "swc-loader",
-          options: swcrc.preview(options)
+          use: {
+            loader: "swc-loader",
+            options: swcrc.preview(options)
+          }
         }
       ]
     },

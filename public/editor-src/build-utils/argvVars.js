@@ -29,7 +29,7 @@ module.exports = function (argv) {
     templates: path.resolve(__dirname, "../templates"),
     stories: path.resolve(__dirname, "../stories"),
     popups: path.resolve(__dirname, "../popups"),
-    packages: path.resolve(__dirname, "../packages"),
+    packages: path.resolve(__dirname, "../../packages"),
     build: getBuildPath(),
     buildPro: getBuildProPath(),
     buildLocal: path.resolve(__dirname, "../build")

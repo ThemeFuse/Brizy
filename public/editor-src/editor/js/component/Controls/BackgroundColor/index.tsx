@@ -7,7 +7,7 @@ import {
   ColorPickerSelect
 } from "visual/component/Controls/ColorPickerSelect";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
+import { Item } from "visual/component/Controls/Select2/Item";
 import { Select2 } from "visual/component/Controls/Select2";
 import { t } from "visual/utils/i18n";
 import { WithClassName, WithValue } from "visual/utils/options/attributes";

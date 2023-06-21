@@ -12,9 +12,12 @@ export type Value = ValueItem[];
 export type ElementModelValue = SimpleValue<Literal[]>;
 
 export type Config = WithSize & {
-  search: boolean;
-  items: number;
-  scroll: number;
+  search?: boolean;
+  items?: number;
+  scroll?: number;
+  showArrow?: boolean;
+  // DO NOT USE THIS KEY, this key is used only in Posts element because we can't normally change form "multiSelect-dev" to "select-dev" because of dynamically id and different data structure
+  useAsSimpleSelect?: boolean;
 };
 
 export type Choice = {

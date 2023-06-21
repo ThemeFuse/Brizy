@@ -11,15 +11,22 @@
   -webkit-font-smoothing: antialiased;
   user-select: none;
 
-  &__edit-button {
-    color: $left_sidebar__elements-color;
-    font-family: $default-font-family;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
+  &__edit-elements {
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
 
-    &:hover {
-      color: $left_sidebar__elements-color--active;
+    .brz-ed-sidebar__elements--icon {
+      color: $left_sidebar__elements-color;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 12px;
+      cursor: pointer;
+      transition: color 0.2s ease-out;
+
+      &:hover {
+        color: $left_sidebar__elements-color--active;
+      }
     }
   }
 
@@ -237,6 +244,19 @@
     font-size: $sidebar__header-font-size !important;
     font-family: $default-font-family !important;
     font-weight: 600 !important;
+  }
+
+  &__header__help {
+    position: absolute;
+    top: 18px;
+    right: 30px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $left_sidebar__elements-color--active;
+    }
   }
 
   &__main {
@@ -660,7 +680,6 @@
         .brz-ed-sidebar__add-elements__icon {
           border-color: $left_sidebar__elements-border;
           color: $left_sidebar__elements-color;
-
         }
 
         .brz-ed-sidebar__add-elements__text {

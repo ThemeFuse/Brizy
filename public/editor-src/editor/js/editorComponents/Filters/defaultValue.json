@@ -363,33 +363,6 @@
     "tempOptionsPaddingBottomSuffix": "px",
     "tempOptionsPaddingLeftSuffix": "px",
 
-    "hoverOptionsPaddingType": null,
-    "tempHoverOptionsPaddingType": null,
-
-    "hoverOptionsPadding": null,
-    "hoverOptionsPaddingTop": null,
-    "hoverOptionsPaddingRight": null,
-    "hoverOptionsPaddingBottom": null,
-    "hoverOptionsPaddingLeft": null,
-
-    "tempHoverOptionsPadding": null,
-    "tempHoverOptionsPaddingTop": null,
-    "tempHoverOptionsPaddingRight": null,
-    "tempHoverOptionsPaddingBottom": null,
-    "tempHoverOptionsPaddingLeft": null,
-
-    "hoverOptionsPaddingSuffix": null,
-    "hoverOptionsPaddingTopSuffix": null,
-    "hoverOptionsPaddingRightSuffix": null,
-    "hoverOptionsPaddingBottomSuffix": null,
-    "hoverOptionsPaddingLeftSuffix": null,
-
-    "tempHoverOptionsPaddingSuffix": null,
-    "tempHoverOptionsPaddingTopSuffix": null,
-    "tempHoverOptionsPaddingRightSuffix": null,
-    "tempHoverOptionsPaddingBottomSuffix": null,
-    "tempHoverOptionsPaddingLeftSuffix": null,
-
     "selectItemPaddingType": "ungrouped",
     "tempSelectItemPaddingType": "ungrouped",
 
@@ -416,33 +389,6 @@
     "tempSelectItemPaddingRightSuffix": "px",
     "tempSelectItemPaddingBottomSuffix": "px",
     "tempSelectItemPaddingLeftSuffix": "px",
-
-    "hoverSelectItemPaddingType": null,
-    "tempHoverSelectItemPaddingType": null,
-
-    "hoverSelectItemPadding": null,
-    "hoverSelectItemPaddingTop": null,
-    "hoverSelectItemPaddingRight": null,
-    "hoverSelectItemPaddingBottom": null,
-    "hoverSelectItemPaddingLeft": null,
-
-    "tempHoverSelectItemPadding": null,
-    "tempHoverSelectItemPaddingTop": null,
-    "tempHoverSelectItemPaddingRight": null,
-    "tempHoverSelectItemPaddingBottom": null,
-    "tempHoverSelectItemPaddingLeft": null,
-
-    "hoverSelectItemPaddingSuffix": null,
-    "hoverSelectItemPaddingTopSuffix": null,
-    "hoverSelectItemPaddingRightSuffix": null,
-    "hoverSelectItemPaddingBottomSuffix": null,
-    "hoverSelectItemPaddingLeftSuffix": null,
-
-    "tempHoverSelectItemPaddingSuffix": null,
-    "tempHoverSelectItemPaddingTopSuffix": null,
-    "tempHoverSelectItemPaddingRightSuffix": null,
-    "tempHoverSelectItemPaddingBottomSuffix": null,
-    "tempHoverSelectItemPaddingLeftSuffix": null,
 
     "checkboxBgColorType": "solid",
 
@@ -632,33 +578,6 @@
     "tempCheckboxPaddingBottomSuffix": "px",
     "tempCheckboxPaddingLeftSuffix": "px",
 
-    "hoverCheckboxPaddingType": null,
-    "tempHoverCheckboxPaddingType": null,
-
-    "hoverCheckboxPadding": null,
-    "hoverCheckboxPaddingTop": null,
-    "hoverCheckboxPaddingRight": null,
-    "hoverCheckboxPaddingBottom": null,
-    "hoverCheckboxPaddingLeft": null,
-
-    "tempHoverCheckboxPadding": null,
-    "tempHoverCheckboxPaddingTop": null,
-    "tempHoverCheckboxPaddingRight": null,
-    "tempHoverCheckboxPaddingBottom": null,
-    "tempHoverCheckboxPaddingLeft": null,
-
-    "hoverCheckboxPaddingSuffix": null,
-    "hoverCheckboxPaddingTopSuffix": null,
-    "hoverCheckboxPaddingRightSuffix": null,
-    "hoverCheckboxPaddingBottomSuffix": null,
-    "hoverCheckboxPaddingLeftSuffix": null,
-
-    "tempHoverCheckboxPaddingSuffix": null,
-    "tempHoverCheckboxPaddingTopSuffix": null,
-    "tempHoverCheckboxPaddingRightSuffix": null,
-    "tempHoverCheckboxPaddingBottomSuffix": null,
-    "tempHoverCheckboxPaddingLeftSuffix": null,
-
     "checkboxCustomStylesPaddingType": "grouped",
     "tempCheckboxCustomStylesPaddingType": "grouped",
 
@@ -685,33 +604,6 @@
     "tempCheckboxCustomStylesPaddingRightSuffix": "px",
     "tempCheckboxCustomStylesPaddingBottomSuffix": "px",
     "tempCheckboxCustomStylesPaddingLeftSuffix": "px",
-
-    "hoverCheckboxCustomStylesPaddingType": null,
-    "tempHoverCheckboxCustomStylesPaddingType": null,
-
-    "hoverCheckboxCustomStylesPadding": null,
-    "hoverCheckboxCustomStylesPaddingTop": null,
-    "hoverCheckboxCustomStylesPaddingRight": null,
-    "hoverCheckboxCustomStylesPaddingBottom": null,
-    "hoverCheckboxCustomStylesPaddingLeft": null,
-
-    "tempHoverCheckboxCustomStylesPadding": null,
-    "tempHoverCheckboxCustomStylesPaddingTop": null,
-    "tempHoverCheckboxCustomStylesPaddingRight": null,
-    "tempHoverCheckboxCustomStylesPaddingBottom": null,
-    "tempHoverCheckboxCustomStylesPaddingLeft": null,
-
-    "hoverCheckboxCustomStylesPaddingSuffix": null,
-    "hoverCheckboxCustomStylesPaddingTopSuffix": null,
-    "hoverCheckboxCustomStylesPaddingRightSuffix": null,
-    "hoverCheckboxCustomStylesPaddingBottomSuffix": null,
-    "hoverCheckboxCustomStylesPaddingLeftSuffix": null,
-
-    "tempHoverCheckboxCustomStylesPaddingSuffix": null,
-    "tempHoverCheckboxCustomStylesPaddingTopSuffix": null,
-    "tempHoverCheckboxCustomStylesPaddingRightSuffix": null,
-    "tempHoverCheckboxCustomStylesPaddingBottomSuffix": null,
-    "tempHoverCheckboxCustomStylesPaddingLeftSuffix": null,
 
     "selectOptionBgColorType": "solid",
 

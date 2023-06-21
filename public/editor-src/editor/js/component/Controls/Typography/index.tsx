@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { PureComponent } from "react";
 import { FontFamily } from "visual/component/Controls/FontFamily";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
+import { Item } from "visual/component/Controls/Select2/Item";
 import { Select2 } from "visual/component/Controls/Select2";
 import Stepper from "visual/component/Controls/Stepper";
 import { Label } from "visual/component/Label";

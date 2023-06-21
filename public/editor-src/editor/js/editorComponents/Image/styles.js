@@ -37,11 +37,11 @@ export function style(v, vs, vd, props) {
     ".brz &&:hover .brz-picture": {
       standart: [
         "cssStyleElementImageFilter|||preview",
-        "cssStyleElementImageMaskShape",
-        "cssStyleElementImageCustomImage",
-        "cssStyleElementImageMaskSize",
-        "cssStyleElementImageMaskPosition",
-        "cssStyleElementImageMaskRepeat"
+        "cssStyleImageMask",
+        "cssStyleImageMaskSize",
+        "cssStyleImageMaskPosition",
+        "cssStyleImageMaskRepeat",
+        "cssStyleElementImageCustomImage"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     }
@@ -78,11 +78,11 @@ export function styleWrapper(v, vs, vd, props) {
               "cssStyleElementImageBoxShadow|||editor"
             ]
           : []),
-        "cssStyleElementImageMaskShape",
-        "cssStyleElementImageCustomImage",
-        "cssStyleElementImageMaskSize",
-        "cssStyleElementImageMaskPosition",
-        "cssStyleElementImageMaskRepeat"
+        "cssStyleImageMask",
+        "cssStyleImageMaskSize",
+        "cssStyleImageMaskPosition",
+        "cssStyleImageMaskRepeat",
+        "cssStyleElementImageCustomImage"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },

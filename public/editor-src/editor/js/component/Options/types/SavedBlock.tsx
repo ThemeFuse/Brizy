@@ -10,13 +10,18 @@ import {
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { Block, SavedBlock } from "visual/types";
-import { createBlockScreenshot, createSavedBlock } from "visual/utils/api";
+import {
+  createBlockScreenshot,
+  createSavedBlock,
+  createSavedPopup
+} from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { isNumber } from "visual/utils/math";
 import { findDeep } from "visual/utils/object";
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import { uuid } from "visual/utils/uuid";
 import { getWhiteLabel } from "visual/utils/whiteLabel";
+import Config from "visual/global/Config";
 
 type SavedBlockMapStateToProps = {
   isAuthorized: boolean;
@@ -160,20 +165,38 @@ class OptionTypeSavedBlock extends Component<SavedBlockProps, SavedBlockState> {
       }
     }
 
-    await createSavedBlock({
+    const config = Config.getAll();
+    const block = {
       data,
       meta,
       uid: uuid(),
       dataVersion: 1
-    }).catch((err) => {
-      if (blockType === "normal") {
-        ToastNotification.error(t("Could not Create Saved Block"));
-      } else {
-        ToastNotification.error(t("Could not Create Saved Popup"));
-      }
+    };
 
-      console.error(err);
-    });
+    switch (blockType) {
+      case "normal": {
+        try {
+          await createSavedBlock(block, config);
+        } catch (e) {
+          if (process.env.NODE_ENV === "development") {
+            console.error(e);
+          }
+          ToastNotification.error(t("Could not Create Saved Block"));
+        }
+        break;
+      }
+      case "popup": {
+        try {
+          await createSavedPopup(block, config);
+        } catch (e) {
+          if (process.env.NODE_ENV === "development") {
+            console.error(e);
+          }
+          ToastNotification.error(t("Could not Create Saved Popup"));
+        }
+        break;
+      }
+    }
 
     if (!screenshotsSupported) {
       ToastNotification.warn(

@@ -8,7 +8,7 @@ export default function (config: ConfigCommon) {
   return {
     id: "ProductQuantity",
     title: t("Quantity"),
-    icon: "nc-cog",
+    icon: "t2-shopify-quantity",
     resolve: {
       type: "Wrapper",
       value: {

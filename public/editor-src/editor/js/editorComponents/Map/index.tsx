@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { MapEditor, MapPreview } from "component/Flex/Map/view";
+import { MapEditor, MapPreview } from "@brizy/component";
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";

@@ -1,12 +1,4 @@
-import { SavedBlock, SavedLayout } from "visual/types";
 import { Dictionary } from "visual/types/utils";
-
-interface Pagination {
-  count: number;
-  page: number;
-  order?: "DESC" | "ASC";
-  orderBy?: string;
-}
 
 export interface ResponseWithBody<T> {
   status: number;
@@ -36,76 +28,6 @@ type ScreenshotData = {
   base64: string;
   blockType: "normal" | "global" | "saved" | "layout";
 };
-
-//#endregion
-
-type SyncBlock<T> = T & {
-  synchronizable: boolean;
-  synchronized: boolean;
-  isCloudEntity: boolean;
-};
-type WithUid<T> = T & { uid: string };
-
-export type SavedBlockAPI = SyncBlock<WithUid<SavedBlock>>;
-
-//#region Saved blocks
-
-type SavedBlockWithoutData = Omit<SavedBlock, "data">;
-export type SavedBlockMeta = SyncBlock<WithUid<SavedBlockWithoutData>>;
-
-export type GetSavedBlocksMeta = (
-  pagination?: Pagination
-) => Promise<SavedBlockMeta[]>;
-export type GetSavedBlockById = (id: string) => Promise<SavedBlock>;
-export type CreateSavedBlock = (
-  block: WithUid<SavedBlock>,
-  meta?: { is_autosave?: 0 | 1 }
-) => Promise<unknown>;
-export type DeleteSavedBlockById = (id: string) => Promise<unknown>;
-
-export interface UploadSavedBlocksData {
-  errors: { uid: string; message: string }[];
-  success: SavedBlockAPI[];
-}
-export type UploadSavedBlocks = (
-  file: FileList
-) => Promise<UploadSavedBlocksData>;
-
-//#endregion
-
-//#region Saved popups
-
-export type UploadSavedPopups = (file: FileList) => Promise<{
-  errors: { uid: string; message: string }[];
-  success: SavedBlockAPI[];
-}>;
-
-//#endregion
-
-//#region Saved layouts
-
-type SavedLayoutWithoutData = Omit<SavedLayout, "data">;
-export type SavedLayoutMeta = SyncBlock<WithUid<SavedLayoutWithoutData>>;
-export type SavedLayoutAPI = SyncBlock<WithUid<SavedLayout>>;
-
-export type GetSavedLayoutsMeta = (
-  pagination?: Pagination
-) => Promise<SavedLayoutMeta[]>;
-export type GetSavedLayoutById = (id: string) => Promise<SavedLayout>;
-export type CreateSavedLayout = (
-  layout: WithUid<SavedLayout>,
-  meta?: { is_autosave?: 0 | 1 }
-) => Promise<unknown>;
-export type DeleteSavedLayoutById = (id: string) => Promise<unknown>;
-
-export interface UploadSavedLayoutsData {
-  errors: { uid: string; message: string }[];
-  success: SavedLayoutAPI[];
-}
-
-export type UploadSavedLayouts = (
-  file: FileList
-) => Promise<UploadSavedLayoutsData>;
 
 //#endregion
 
@@ -222,7 +144,7 @@ export type GetRulePostsGroupList = (p: string) => Promise<
 
 //#region Posts
 export type GetPostsSourceRefId = Dictionary<
-  Array<{ id: string; type: "single" | "multi"; title: string }>
+  Array<{ id: string; type: "single" | "multi" | "manual"; title: string }>
 >;
 export type GetPostsSourceRefs = (t: string) => Promise<{
   collectionTypes: Array<{ id: string; slug?: string | null; title: string }>;

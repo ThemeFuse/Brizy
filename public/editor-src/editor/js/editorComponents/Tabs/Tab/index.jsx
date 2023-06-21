@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { DangerouslySetHtmlContent } from "component/common/components/DangerouslySetHtmlContent";
+import { DangerouslySetHtmlContent } from "@brizy/component/src/common/components/DangerouslySetHtmlContent";
 import React from "react";
 import Animation from "visual/component/Animation";
 import { TextEditor } from "visual/component/Controls/TextEditor";

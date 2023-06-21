@@ -4,6 +4,7 @@ import { Manager, Reference } from "react-popper";
 import _ from "underscore";
 import ClickOutside from "visual/component/ClickOutside";
 import Portal from "visual/component/Portal";
+import { TimerType } from "visual/types/TimerType";
 import { WithClassName } from "visual/utils/options/attributes";
 import { TooltipContent as Content, Props as ContentProps } from "./Content";
 
@@ -70,7 +71,7 @@ export class Tooltip extends React.Component<Props> {
 
   contentRef: RefObject<HTMLDivElement> = React.createRef();
 
-  private timeout?: number;
+  private timeout?: TimerType;
 
   componentWillUnmount(): void {
     const index = stack.indexOf(this);
@@ -122,7 +123,7 @@ export class Tooltip extends React.Component<Props> {
       if (this.state.needClose) {
         this.close();
       }
-    }, this.props.closeDelay);
+    }, this.props.closeDelay) as unknown as TimerType;
   };
 
   open(): void {

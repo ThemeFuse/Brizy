@@ -35,6 +35,7 @@ export class MarselloMarketing extends EditorComponent<ElementModel> {
                 loading="lazy"
                 style={{ position: "absolute", border: "none" }}
                 src={pageLink}
+                title="marsello"
                 width="100%"
                 height="100%"
               />

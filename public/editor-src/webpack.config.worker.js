@@ -69,7 +69,7 @@ exports.ssr = (options) => {
           test: /\.(ts|js)x?$/,
           include: [
             path.resolve(__dirname, "editor"),
-            path.resolve(__dirname, "packages")
+            path.resolve(__dirname, "../packages")
           ],
           loader: "swc-loader",
           options: swcrc.editor(options)

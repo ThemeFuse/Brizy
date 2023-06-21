@@ -14,7 +14,7 @@ describe("Testing 'bindPopulation' function", function () {
     id: "test",
     type: "imageUpload-dev"
   };
-  const withPopulation = { ...option, population: [method] };
+  const withPopulation = { ...option, population: { choices: [method] } };
   const choices: (Choices<string | number> | OptGroup<string | number>)[] = [
     {
       value: "1",

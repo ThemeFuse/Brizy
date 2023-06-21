@@ -96,6 +96,7 @@ class SoundCloud extends EditorComponent {
       <div className="brz-soundCloud-content">
         <iframe
           className={wrapperClassName}
+          title="sound-cloud"
           scrolling="no"
           frameBorder="no"
           src={src}

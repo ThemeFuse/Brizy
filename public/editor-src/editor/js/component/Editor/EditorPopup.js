@@ -27,7 +27,11 @@ class EditorPopup extends Component {
     return (
       <Fragment>
         {Boolean(items.length) && (
-          <iframe id="brz-ed-home-page" src={backgroundPreviewUrl} />
+          <iframe
+            id="brz-ed-home-page"
+            src={backgroundPreviewUrl}
+            title="popup"
+          />
         )}
         <PagePopup
           dbValue={{ items }}

@@ -37,13 +37,15 @@ export function onNullish<T>(
     : args[1];
 }
 
-export const throwOnNullish = <T>(msg: string) => (t: MValue<T>): T => {
-  if (isNullish(t)) {
-    throw new Error(msg);
-  }
+export const throwOnNullish =
+  <T>(msg: string) =>
+  (t: MValue<T>): T => {
+    if (isNullish(t)) {
+      throw new Error(msg);
+    }
 
-  return t;
-};
+    return t;
+  };
 
 /**
  * Check if value is not an empty value
@@ -113,6 +115,15 @@ export function mCompose<T1, T2, T3, T4, T5, T6, T7>(
   f2: MFn<T2, T3>,
   f1: MFn<T1, T2>
 ): MR<T1, T7>;
+export function mCompose<T1, T2, T3, T4, T5, T6, T7, T8>(
+  f7: MFn<T7, T8>,
+  f6: MFn<T6, T7>,
+  f5: MFn<T5, T6>,
+  f4: MFn<T4, T5>,
+  f3: MFn<T3, T4>,
+  f2: MFn<T2, T3>,
+  f1: MFn<T1, T2>
+): MR<T1, T7>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function mCompose<R>(...fns: Array<MFn<any, any>>): MFn<any, R> {
@@ -135,4 +146,7 @@ export const isT = <T>(t: MNullish<T>): t is T => !isNullish(t);
  */
 export const isTs = <T>(ts: MNullish<T>[]): ts is T[] => ts.every(isT);
 
-export const is = <B, A extends B>(a: A) => (b: B): b is A => a === b;
+export const is =
+  <B, A extends B>(a: A) =>
+  (b: B): b is A =>
+    a === b;

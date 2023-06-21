@@ -115,6 +115,8 @@ export default class Button extends EditorComponent<Value, Props> {
     );
 
     const componentType = IS_EDITOR ? "a" : "button";
+    const id: string =
+      cssIDPopulation === "" ? customID : (cssIDPopulation as string);
 
     return (
       <Wrapper
@@ -122,7 +124,7 @@ export default class Button extends EditorComponent<Value, Props> {
         component={componentType}
         attributes={{
           ...this.props.attributes,
-          id: cssIDPopulation === "" ? customID : cssIDPopulation
+          ...(id && { id })
         }}
       >
         {hasSizing(v, device, state) && type !== "submit" ? (

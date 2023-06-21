@@ -3,7 +3,7 @@ import { t } from "visual/utils/i18n";
 export default {
   id: "Product Vendor",
   title: t("Vendor"),
-  icon: "nc-cog",
+  icon: "t2-shopify-vendor",
   resolve: {
     type: "Wrapper",
     value: {

@@ -1,4 +1,3 @@
-import { ElementModel } from "visual/component/Elements/Types";
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
 import { hoverEffects } from "visual/component/Options/types/dev/Animation/utils";
 import Config from "visual/global/Config";
@@ -6,7 +5,8 @@ import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { read as readString } from "visual/utils/string/specs";
-import { GetItems } from "../EditorComponent/types";
+import type { GetItems } from "../EditorComponent/types";
+import type { Props, Value } from "./index";
 
 export const title = t("Gallery");
 
@@ -18,7 +18,7 @@ const helperHTML = `
   <span class="brz-span brz-ed-tooltip__overlay-code">element .child-element</span> {...}
 </p>`;
 
-export const getItems: GetItems<ElementModel> = ({ v, device, state }) => {
+export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
   const hoverName = readString(dvv("hoverName")) ?? "none";

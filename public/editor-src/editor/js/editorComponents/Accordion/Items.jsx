@@ -1,11 +1,11 @@
-import React from "react";
 import classnames from "classnames";
-import Toolbar from "visual/component/Toolbar";
+import React from "react";
 import { removeAt } from "timm";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { hideToolbar } from "visual/component/Toolbar";
-import { t } from "visual/utils/i18n";
 import { TextEditor } from "visual/component/Controls/TextEditor";
+import Toolbar from "visual/component/Toolbar";
+import { hideToolbar } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { t } from "visual/utils/i18n";
 
 class AccordionItems extends EditorArrayComponent {
   static get componentId() {
@@ -63,7 +63,7 @@ class AccordionItems extends EditorArrayComponent {
                 : itemIndex === items.length - 1
                 ? "next"
                 : undefined,
-            onChange: v => {
+            onChange: (v) => {
               switch (v) {
                 case "prev":
                   this.reorderItem(itemIndex, itemIndex - 1);
@@ -121,7 +121,7 @@ class AccordionItems extends EditorArrayComponent {
     };
   }
 
-  handleAccordionActive = key => {
+  handleAccordionActive = (key) => {
     const { activeAccordionItem, handleNav: onChange } = this.props;
 
     if (activeAccordionItem !== key) {
@@ -144,7 +144,7 @@ class AccordionItems extends EditorArrayComponent {
     const tags = this.getTags(_tags);
 
     if (tags.length) {
-      tags.forEach(t => {
+      tags.forEach((t) => {
         this.tags.add(t);
       });
     }
@@ -158,22 +158,20 @@ class AccordionItems extends EditorArrayComponent {
     this.updateTags(itemValue.tag);
   }
 
-  handleMainTagChange = allTag => {
-    const {
-      handleAllTagChange,
-    } = this.props;
+  handleMainTagChange = (allTag) => {
+    const { handleAllTagChange } = this.props;
 
     handleAllTagChange(allTag);
     this.setState({ visibleTag: allTag });
   };
 
   renderTags() {
-    const {
-      allTag,
-      toolbarExtendFilter,
-      filterStyle
-    } = this.props;
-    const tags = [allTag, ...this.tags];
+    const { allTag, toolbarExtendFilter, filterStyle, sortTags } = this.props;
+    const _tags =
+      sortTags === "on"
+        ? [...this.tags].sort((a, b) => a.localeCompare(b))
+        : this.tags;
+    const tags = [allTag, ..._tags];
     const filterClassName = classnames(
       "brz-accordion__filter",
       `brz-accordion__filter--${filterStyle}`
@@ -204,7 +202,10 @@ class AccordionItems extends EditorArrayComponent {
                   }}
                 >
                   {tag === allTag ? (
-                    <TextEditor value={allTag} onChange={this.handleMainTagChange} />
+                    <TextEditor
+                      value={allTag}
+                      onChange={this.handleMainTagChange}
+                    />
                   ) : (
                     tag
                   )}

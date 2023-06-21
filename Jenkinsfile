@@ -65,9 +65,14 @@ pipeline {
             }
         }
 
+        stage('Build editor client') {
+            steps {
+               sh "./jenkins/build-editor-client.sh ./public/editor-client"
+            }
+        }
+
         stage('Prepare the build') {
             steps {
-                sh "./jenkins/build-client.sh"
                 sh "./jenkins/version-update.sh ${params.buildVersion} ${params.minProVersion} ${params.editorVersion} ${params.syncVersion}"
                 sh "./jenkins/update-tested-version.sh README.md readme.txt"
             }
@@ -85,11 +90,7 @@ pipeline {
             }
         }
 
-        stage('Build editor client') {
-            steps {
-               sh "./jenkins/build-editor-client.sh ./public/editor-client"
-            }
-        }
+
         stage('Make a copy and clean the plugin') {
             steps {
                sh "./jenkins/clean-files.sh ${BUILD_FOLDER_PATH}"

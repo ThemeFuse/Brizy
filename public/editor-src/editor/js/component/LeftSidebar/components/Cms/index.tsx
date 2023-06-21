@@ -55,37 +55,39 @@ const Component = ({ config }: Props): ReactElement => {
     [opened, update]
   );
   const onIframeMessage = useCallback(
-    mPipe(
-      pass((e: MessageEvent) => iframeSrc.startsWith(e.origin)),
-      Obj.readKey("data"),
-      Obj.read,
-      Base.fromObject,
-      Messages.readInputMessage,
-      (m) => {
-        switch (m.type) {
-          case "close":
-            return update(false);
-          case "redirect": {
-            console.log("redirect", m.payload);
-            if (TARGET === "Cloud") {
-              window.parent.location.href = m.payload;
-            } else if (TARGET === "Cloud-localhost") {
-              const r = /editor\/(\w+)\/(\d+)$/;
-              const [, mode, id] = r.exec(m.payload) ?? [];
+    (e) => {
+      mPipe(
+        pass((e: MessageEvent) => iframeSrc.startsWith(e.origin)),
+        Obj.readKey("data"),
+        Obj.read,
+        Base.fromObject,
+        Messages.readInputMessage,
+        (m) => {
+          switch (m.type) {
+            case "close":
+              return update(false);
+            case "redirect": {
+              console.log("redirect", m.payload);
+              if (TARGET === "Cloud") {
+                window.parent.location.href = m.payload;
+              } else if (TARGET === "Cloud-localhost") {
+                const r = /editor\/(\w+)\/(\d+)$/;
+                const [, mode, id] = r.exec(m.payload) ?? [];
 
-              if (mode && id) {
-                const suffix = IS_PRO ? "?pro=true" : "";
-                window.parent.location.href = `/editor/${mode}/${id}${suffix}`;
-              } else {
-                console.warn("could not parse url: ", m.payload);
+                if (mode && id) {
+                  const suffix = IS_PRO ? "?pro=true" : "";
+                  window.parent.location.href = `/editor/${mode}/${id}${suffix}`;
+                } else {
+                  console.warn("could not parse url: ", m.payload);
+                }
               }
+              return;
             }
-            return;
           }
         }
-      }
-    ),
-    [iframeSrc]
+      )(e);
+    },
+    [iframeSrc, update]
   );
 
   useEffect(() => {
@@ -94,7 +96,8 @@ const Component = ({ config }: Props): ReactElement => {
 
       ref.current?.contentWindow?.postMessage(list, iframeSrc);
     }
-  }, [opened, iframeLoaded]);
+  }, [opened, iframeLoaded, config, iframeSrc]);
+
   useEffect(() => {
     if (opened) {
       window.parent.addEventListener("message", onIframeMessage);
@@ -127,6 +130,7 @@ const Component = ({ config }: Props): ReactElement => {
               "brz-loading": !iframeLoaded
             })}
             onLoad={(): void => setIframeLoaded(true)}
+            title="cms"
           />
           {!iframeLoaded && (
             <div className="brz-cms--loading">

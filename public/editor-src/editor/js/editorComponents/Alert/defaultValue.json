@@ -159,12 +159,13 @@
     "tempCloseBgColorOpacity": 1,
     "tempCloseBgColorPalette": "",
 
+    "titleTextShadow": "",
+    "titleTextShadowBlur": 4,
+    "titleTextShadowColorHex": "#ff0000",
+    "titleTextShadowColorOpacity": 0,
+    "titleTextShadowColorPalette": "",
     "titleTextShadowHorizontal": 2,
     "titleTextShadowVertical": 2,
-    "titleTextShadowBlur": 4,
-    "titleTextShadowColorOpacity": 0,
-    "titleTextShadowColorHex": "#ff0000",
-    "titleTextShadow": "",
 
     "hoverTitleTextShadowHorizontal": 2,
     "hoverTitleTextShadowVertical": 2,
@@ -176,11 +177,12 @@
     "tempHoverTitleTextShadowHorizontal": 2,
     "tempHoverTitleTextShadowVertical": 2,
 
+    "descriptionTextShadowBlur": 4,
+    "descriptionTextShadowColorHex": "#ff0000",
+    "descriptionTextShadowColorOpacity": 0,
+    "descriptionTextShadowColorPalette": "",
     "descriptionTextShadowHorizontal": 2,
     "descriptionTextShadowVertical": 2,
-    "descriptionTextShadowBlur": 4,
-    "descriptionTextShadowColorOpacity": 0,
-    "descriptionTextShadowColorHex": "#ff0000",
 
     "hoverDescriptionTextShadowHorizontal": 2,
     "hoverDescriptionTextShadowVertical": 2,

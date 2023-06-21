@@ -13,9 +13,9 @@ import {
   validateKeyByProperty
 } from "visual/utils/onChange";
 import * as State from "visual/utils/stateMode";
+import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
-import Items from "./Items";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import * as sidebarExtendParentConfig from "./sidebarExtendParent";
 import * as sidebarFilterConfig from "./sidebarFilter";
@@ -107,7 +107,8 @@ class Accordion extends EditorComponent {
       animDuration,
       enableTags,
       tagName,
-      allTag
+      allTag,
+      sortTags
     } = v;
 
     const className = classNames(
@@ -119,6 +120,7 @@ class Accordion extends EditorComponent {
 
     const itemProps = this.makeSubcomponentProps({
       allTag,
+      sortTags,
       className,
       filterStyle,
       activeAccordionItem,

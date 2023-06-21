@@ -42,28 +42,25 @@ import {
   mediaStory,
   social
 } from "./index.common";
-import Login from "./pro/Login";
 import Menu from "./pro/Menu";
 import ResetPassword from "./pro/ResetPassword";
 
 const _config = Config.getAll() as Cloud;
 
-const essentialsCloud = [
-  ...essentialsCommon,
+const contentCloud = [
+  ...content,
   ...(!isShopify(_config) ? [{ component: Translation, pro: false }] : [])
 ];
 
 const essentialsWithPosts = [
-  ...essentialsCloud,
+  ...essentialsCommon,
   { component: Posts, pro: false }
 ];
 
-// Without Login and Menu
+// Without Menu
 const essentialsExternalPopup = essentialsCommon.reduce(
   (acc: Shortcode[], curr: Shortcode) =>
-    curr.component !== Login &&
-    curr.component !== Menu &&
-    curr.component !== MenuSimple
+    curr.component !== Menu && curr.component !== MenuSimple
       ? [...acc, curr]
       : acc,
   []
@@ -147,9 +144,9 @@ const config = ((): Shortcodes => {
     return {
       grid,
       user: user,
-      essentials: essentialsCloud,
+      essentials: essentialsCommon,
       media,
-      content,
+      content: contentCloud,
       social,
       blog: cmsSingle,
       shop,
@@ -164,7 +161,7 @@ const config = ((): Shortcodes => {
       systemPages: protectedPage,
       essentials: essentialsWithPosts,
       media,
-      content,
+      content: contentCloud,
       social,
       shop,
       ...ministryContent
@@ -177,7 +174,7 @@ const config = ((): Shortcodes => {
       systemPages: resetPassword,
       essentials: essentialsWithPosts,
       media,
-      content,
+      content: contentCloud,
       social,
       shop,
       ...ministryContent
@@ -189,7 +186,7 @@ const config = ((): Shortcodes => {
       grid,
       essentials: essentialsExternalPopup,
       media,
-      content,
+      content: contentCloud,
       social
     };
   }
@@ -198,9 +195,9 @@ const config = ((): Shortcodes => {
     return {
       grid,
       blog: cmsSingle,
-      essentials: essentialsCloud,
+      essentials: essentialsCommon,
       media,
-      content,
+      content: contentCloud,
       social,
       product: productPageSpecificItems,
       shop: productPageShopItems,
@@ -221,9 +218,9 @@ const config = ((): Shortcodes => {
       productPageSpecificItems,
       shop: productPageShopItems,
       ...ministryContent,
-      essentials: essentialsCloud,
+      essentials: essentialsCommon,
       media,
-      content,
+      content: contentCloud,
       social,
       blog: cmsSingle,
       cms: cmsAssets
@@ -233,9 +230,9 @@ const config = ((): Shortcodes => {
   if (_config.modules?.ekklesia) {
     return {
       grid,
-      essentials: essentialsCloud,
+      essentials: essentialsCommon,
       media,
-      content,
+      content: contentCloud,
       social,
       blog: cmsSingle,
       cms: cmsAssets,
@@ -245,9 +242,9 @@ const config = ((): Shortcodes => {
 
   return {
     grid,
-    essentials: essentialsCloud,
+    essentials: essentialsCommon,
     media,
-    content,
+    content: contentCloud,
     social,
     blog: cmsSingle,
     cms: cmsAssets

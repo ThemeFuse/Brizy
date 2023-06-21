@@ -118,13 +118,17 @@ export const Population: FC<Props> = ({
   label
 }) => {
   let input;
+
+  const { iconOnly, handlerChoices } = config ?? {};
+  const { population } = value;
+
   const choices = useMemo(() => {
-    if (typeof config?.handlerChoices === "function") {
+    if (typeof handlerChoices === "function") {
       return [];
     }
 
     return [
-      ...(config?.iconOnly
+      ...(iconOnly
         ? [
             {
               title: t("Custom Text"),
@@ -134,7 +138,7 @@ export const Population: FC<Props> = ({
         : []),
       ...(config?.choices || [])
     ];
-  }, [config?.choices, config?.handlerChoices]);
+  }, [config?.choices, handlerChoices, iconOnly]);
 
   const handlePopulationChange = useCallback<OnChange<string>>(
     (v: string) => onChange({ population: v }),
@@ -151,18 +155,18 @@ export const Population: FC<Props> = ({
   // [fallback]
   // );
   const _className = classNames(className, "brz-ed-option-population", {
-    "brz-control__select-population--only-icon": !!config?.iconOnly
+    "brz-control__select-population--only-icon": !!iconOnly
   });
 
   const activeItem = useMemo(() => {
-    if (typeof config?.handlerChoices === "function" && value.population) {
-      return { title: value.population };
+    if (typeof handlerChoices === "function" && population) {
+      return { title: population };
     }
 
     const active: PopulationMethod | null = findDeep(
       choices,
       (option: PopulationMethod | PopulationOptgroupMethod): boolean => {
-        return !isOptgroup(option) && option.value === value.population;
+        return !isOptgroup(option) && option.value === population;
       }
     ).obj;
 
@@ -171,11 +175,11 @@ export const Population: FC<Props> = ({
     }
 
     return null;
-  }, [config?.handlerChoices, choices]);
+  }, [handlerChoices, choices, population]);
 
-  if (value.population !== undefined) {
+  if (population !== undefined) {
     // fallback removed temporary, will be added with new design later
-    if (!config?.iconOnly) {
+    if (!iconOnly) {
       input = (
         <Input
           value={activeItem ? activeItem.title : t("N/A")}
@@ -186,7 +190,7 @@ export const Population: FC<Props> = ({
       if (!activeItem) {
         choices.push({
           title: t("N/A"),
-          value: value.population ?? ""
+          value: population ?? ""
         });
       }
     }
@@ -209,16 +213,16 @@ export const Population: FC<Props> = ({
           <_Select
             className={_className}
             choices={choices}
-            value={value.population ?? ""}
+            value={population ?? ""}
             onChange={handlePopulationChange}
           />
         ) : null}
-        {typeof config?.handlerChoices === "function" ? (
+        {typeof handlerChoices === "function" ? (
           <_Icon
-            iconOnly={config.iconOnly}
+            iconOnly={iconOnly}
             className={_className}
-            handlerChoices={config.handlerChoices}
-            value={value.population ?? ""}
+            handlerChoices={handlerChoices}
+            value={population ?? ""}
             onChange={handlePopulationChange}
           />
         ) : null}

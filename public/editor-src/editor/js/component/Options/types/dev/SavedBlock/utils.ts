@@ -1,5 +1,10 @@
+import Config from "visual/global/Config";
 import { Block, SavedBlock } from "visual/types";
-import { createBlockScreenshot, createSavedBlock } from "visual/utils/api";
+import {
+  createBlockScreenshot,
+  createSavedBlock,
+  createSavedPopup
+} from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { isNumber } from "visual/utils/math";
 import { findDeep } from "visual/utils/object";
@@ -84,27 +89,44 @@ export const handleCreateSaveBlock = async ({
     }
   }
 
-  await createSavedBlock({
+  const config = Config.getAll();
+  const data = {
     data: block,
     meta,
     uid: uuid(),
     dataVersion: 1
-  }).catch((err) => {
-    if (process.env.NODE_ENV === "development") {
-      console.error(err);
+  };
+
+  switch (blockType) {
+    case "normal": {
+      try {
+        await createSavedBlock(data, config);
+      } catch (err) {
+        if (process.env.NODE_ENV === "development") {
+          console.error(err);
+        }
+        throw {
+          message: t("Could not Create Saved Block"),
+          type: "error"
+        };
+      }
+      break;
     }
-    if (blockType === "normal") {
-      throw {
-        message: t("Could not Create Saved Block"),
-        type: "error"
-      };
-    } else {
-      throw {
-        message: t("Could not Create Saved Popup"),
-        type: "error"
-      };
+    case "popup": {
+      try {
+        await createSavedPopup(data, config);
+      } catch (e) {
+        if (process.env.NODE_ENV === "development") {
+          console.error(e);
+        }
+        throw {
+          message: t("Could not Create Saved Popup"),
+          type: "error"
+        };
+      }
+      break;
     }
-  });
+  }
 
   if (!screenshotsSupported) {
     throw {

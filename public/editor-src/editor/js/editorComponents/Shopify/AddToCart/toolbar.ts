@@ -55,9 +55,6 @@ export const getItems = ({
               label: t("Product"),
               type: "select-dev",
               disabled: !sourceItemsHandler || sourceType === "",
-              config: {
-                search: true
-              },
               choices: {
                 load: getSourceIds(sourceType, config),
                 emptyLoad: {

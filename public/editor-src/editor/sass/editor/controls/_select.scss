@@ -1,3 +1,5 @@
+@import "../../variables";
+
 // ---
 .brz-control__select {
   font-family: $default-font-family;
@@ -8,6 +10,13 @@
     .brz-control__select-options {
       visibility: visible;
       opacity: 1;
+    }
+  }
+  &--full-width {
+    width: 100%;
+
+    .brz-control__select-options {
+      max-width: 100%;
     }
   }
 

@@ -133,6 +133,24 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 
 == Changelog ==
 
+= 2.4.26 - 2023-06-21 =
+* New: Added option to sort tags alphabetically in the Accordion element
+* New: Added vertical space option for Accordion element
+* New: Add width in px for the boxed option on Blocks
+* New: Tags and Titles for saved blocks and saved layouts
+* Fixed: Builder UI Themes
+* Fixed: W3C Accessibility issues: AA, AAA, W3C
+* Fixed: Countdown timezone offset
+* Fixed: Numbering unordered list in Text element
+* Fixed: Image Alt Title option in Right Sidebar
+* Fixed: Scroll for code Mirror in Right Sidebar
+* Improved: Full width for WordPress Media gallery in tablet and mobile mode
+* Improved: Codebase migrate to node 18
+* Improved: Changed some elements positions and order in the elements panel
+* Improved: Builder select option
+* Improved: Added a helper icon for YouTube links in the Video element
+* Improved: Omit 1 request for get project
+
 = 2.4.21 - 2023-06-07 =
 * Fixed: Button style fill
 * Fixed: IconBox with hover effect

@@ -1,9 +1,9 @@
-import React, { FC, useCallback } from "react";
 import classNames from "classnames";
-import { WithClassName } from "visual/utils/options/attributes";
+import React, { FC, useCallback } from "react";
 import { read } from "visual/utils/math/number";
-import { mCompose } from "visual/utils/value";
+import { WithClassName } from "visual/utils/options/attributes";
 import { inputValue } from "visual/utils/react";
+import { mCompose } from "visual/utils/value";
 
 export type Props = WithClassName & {
   value: number;
@@ -22,11 +22,12 @@ export const Slider2: FC<Props> = ({
   step
 }) => {
   const _onChange = useCallback(
-    mCompose(v => onChange(v, { editing: true }), read, inputValue),
+    (v) => mCompose((v) => onChange(v, { editing: true }), read, inputValue)(v),
     [onChange]
   );
   const _onMouseUp = useCallback(
-    mCompose(v => onChange(v, { editing: false }), read, inputValue),
+    (v) =>
+      mCompose((v) => onChange(v, { editing: false }), read, inputValue)(v),
     [onChange]
   );
 

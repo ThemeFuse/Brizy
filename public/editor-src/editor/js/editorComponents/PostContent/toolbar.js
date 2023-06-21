@@ -23,9 +23,9 @@ export function getItems({ v, device }) {
       id: "posts",
       type: "popover-dev",
       config: {
-        icon: "nc-wp-post-excerpt",
+        icon: "nc-wp-post-content",
         size: "auto",
-        title: t("Context")
+        title: t("Description")
       },
       position: 70,
       options: [
@@ -33,7 +33,7 @@ export function getItems({ v, device }) {
           id: "sourceID",
           type: "select-dev",
           label: t("Source"),
-          disabled: !sourceItemsHandler,
+          disabled: !sourceItemsHandler || !sourceType,
           devices: "desktop",
           placeholder: "Select",
           choices: {

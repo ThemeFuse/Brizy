@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { LottieEditor, LottieView } from "component/Flex/Lottie";
+import { LottieEditor, LottieView } from "@brizy/component";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import Link from "visual/component/Link";

@@ -1,10 +1,10 @@
 import React, { ReactElement, useMemo } from "react";
-import { Item } from "./Item";
 import { WithId } from "visual/utils/options/attributes";
+import { Item } from "./Item";
 
 export interface Props<T> extends WithId<T> {
   src: string;
-  onRemove: (id: T) => void;
+  onRemove?: (id: T) => void;
 }
 
 export function Thumbnail<T>({
@@ -12,7 +12,7 @@ export function Thumbnail<T>({
   onRemove,
   src
 }: Props<T>): ReactElement<Props<T>> {
-  const style = useMemo(() => ({ backgroundImage: `url(${src})` }), [src]);
+  const style = useMemo(() => ({ backgroundImage: `url("${src}")` }), [src]);
   return (
     <Item<T>
       id={id}

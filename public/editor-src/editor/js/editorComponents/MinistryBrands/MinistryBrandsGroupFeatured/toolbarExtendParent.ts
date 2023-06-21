@@ -18,7 +18,9 @@ export const getItems: GetItems<Value, Props> = ({
   const { apiUrl } = _config.modules?.ekklesia ?? {};
   const { getSourceChoices } = _config.api?.sourceTypes ?? {};
 
-  const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+
+  const groupLatestActive = dvv("groupLatest") === "on";
 
   return [
     {
@@ -39,18 +41,28 @@ export const getItems: GetItems<Value, Props> = ({
               label: t("Settings"),
               options: [
                 {
+                  id: "groupLatest",
+                  type: "switch-dev",
+                  devices: "desktop",
+                  label: t("Show Latest"),
+                  helper: {
+                    content: t(
+                      "This option automatically shows the latest group and overrides the 'Recent Groups' and 'Group Slug' options."
+                    )
+                  }
+                },
+                {
                   id: "category",
                   devices: "desktop",
                   label: t("Category"),
                   type: "select-dev",
+                  disabled: !groupLatestActive,
                   choices: getEkklesiaChoiches({
                     key: "smallgroup",
                     url: apiUrl
                   }),
                   helper: {
-                    content: t(
-                      "This option only applies to 'Always Show Latest'."
-                    )
+                    content: t("This option only applies to 'Show Latest'.")
                   }
                 },
                 {
@@ -58,11 +70,10 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   label: t("Group"),
                   type: "select-dev",
+                  disabled: !groupLatestActive,
                   choices: getEkklesiaChoiches({ key: "groups", url: apiUrl }),
                   helper: {
-                    content: t(
-                      "This option only applies to 'Always Show Latest'."
-                    )
+                    content: t("This option only applies to 'Show Latest'.")
                   }
                 },
                 {
@@ -70,13 +81,14 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   label: t("Recent Groups"),
                   type: "select-dev",
+                  disabled: groupLatestActive || dvv("groupSlug") !== "",
                   choices: getEkklesiaChoiches({
                     key: "smallgroups",
                     url: apiUrl
                   }),
                   helper: {
                     content: t(
-                      "Select a recent group. Use only if you are not using 'Group Slug' below and 'Always Show Latest' is set to 'No'."
+                      "Select a recent group. Use only if you are not using 'Group Slug' below and 'Show Latest' is set to 'Off'."
                     )
                   }
                 }
@@ -87,17 +99,6 @@ export const getItems: GetItems<Value, Props> = ({
               id: "tabGroupFeatured",
               label: t("Display"),
               options: [
-                {
-                  id: "groupLatest",
-                  type: "switch-dev",
-                  devices: "desktop",
-                  label: t("Latest"),
-                  helper: {
-                    content: t(
-                      "This option automatically shows the latest group and overrides the 'Recent Groups' and 'Group Slug' options."
-                    )
-                  }
-                },
                 {
                   id: "showImage",
                   type: "switch-dev",
@@ -201,10 +202,11 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "inputText-dev",
                   devices: "desktop",
                   label: t("Slug"),
+                  disabled: groupLatestActive || dvv("groupRecentList") !== "",
                   placeholder: t("Slug..."),
                   helper: {
                     content: t(
-                      "Slug of group. Use only if you are not selecting from the 'Recent Groups' above and 'Always Show Latest' is set to 'No'."
+                      "Slug of group. Use only if you are not selecting from the 'Recent Groups' above and 'Show Latest' is set to 'Off'."
                     )
                   }
                 }

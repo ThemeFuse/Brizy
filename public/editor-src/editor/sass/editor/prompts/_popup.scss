@@ -294,7 +294,7 @@
     content: "";
     display: block;
     width: 17px;
-    border-top: 2px solid $popup__header__tabs__btn__close-color;
+    border-top: 2px solid $popup__header__tabs__btn-color;
     top: 45%;
     left: 50%;
     margin-left: -8px;
@@ -311,7 +311,20 @@
 
   &:hover:before,
   &:hover:after {
-    border-color: $popup__header__tabs__btn__close-color--hover;
+    border-color: $popup__header__tabs__btn-color--hover;
+  }
+}
+
+.brz-ed-popup-btn-help {
+  position: absolute;
+  top: 13px;
+  right: 36px;
+  color: $popup__header__tabs__btn-color;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: $popup__header__tabs__btn-color--hover;
   }
 }
 

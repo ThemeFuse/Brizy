@@ -20,6 +20,7 @@ export const getItems: GetItems<Value, Props> = ({
 
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
+  const showLatestEvents = dvv("showLatestEvents") === "on";
   return [
     {
       id: "toolbarEventFeatured",
@@ -39,10 +40,22 @@ export const getItems: GetItems<Value, Props> = ({
               label: t("Settings"),
               options: [
                 {
+                  id: "showLatestEvents",
+                  type: "switch-dev",
+                  devices: "desktop",
+                  label: t("Show Latest"),
+                  helper: {
+                    content: t(
+                      "This option automatically shows the latest event and overrides the 'Recent Events' and 'Event Slug' options."
+                    )
+                  }
+                },
+                {
                   id: "category",
                   devices: "desktop",
                   label: t("Category"),
                   type: "select-dev",
+                  disabled: !showLatestEvents,
                   choices: getEkklesiaChoiches({ key: "event", url: apiUrl }),
                   helper: {
                     content: t("This option only applies to 'Show Latest'.")
@@ -53,6 +66,7 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   label: t("Group"),
                   type: "select-dev",
+                  disabled: !showLatestEvents,
                   choices: getEkklesiaChoiches({ key: "groups", url: apiUrl }),
                   helper: {
                     content: t("This option only applies to 'Show Latest'.")
@@ -63,10 +77,48 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   label: t("Recent Events"),
                   type: "select-dev",
+                  disabled: showLatestEvents || dvv("eventSlug") !== "",
                   choices: getEkklesiaChoiches({ key: "events", url: apiUrl }),
                   helper: {
                     content: t(
-                      'Select a recent event. Use only if you are not using "Event Slug" below and "Always Show Latest" is set to "No".'
+                      'Select a recent event. Use only if you are not using "Event Slug" below and "Show Latest" is set to "Off".'
+                    )
+                  }
+                },
+                {
+                  id: "features",
+                  type: "switch-dev",
+                  devices: "desktop",
+                  label: t("Features"),
+                  disabled: !showLatestEvents || dvv("nonfeatures") === "on",
+                  helper: {
+                    content: t(
+                      "This option only applies to 'Show Latest' and if this is selected the 'No featured' option does not apply."
+                    )
+                  }
+                },
+                {
+                  id: "nonfeatures",
+                  type: "switch-dev",
+                  devices: "desktop",
+                  label: t("No featured"),
+                  disabled: !showLatestEvents || dvv("features") === "on",
+                  helper: {
+                    content: t(
+                      "This option only applies to 'Show Latest' and if this is selected the 'Featured' option does not apply."
+                    )
+                  }
+                },
+                {
+                  id: "eventSlug",
+                  type: "inputText-dev",
+                  devices: "desktop",
+                  placeholder: t("Slug..."),
+                  disabled: showLatestEvents,
+                  label: t("Slug"),
+                  helper: {
+                    content: t(
+                      'Slug of event (my-event-name). Use only if you are not selecting from the "Recent Events" above and "Show Latest" is set to "Off".'
                     )
                   }
                 }
@@ -167,39 +219,6 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Description")
                 },
                 {
-                  id: "showLatestEvents",
-                  type: "switch-dev",
-                  devices: "desktop",
-                  label: t("Latest Events"),
-                  helper: {
-                    content: t(
-                      "This option automatically shows the latest event and overrides the 'Recent Events' and 'Event Slug' options."
-                    )
-                  }
-                },
-                {
-                  id: "features",
-                  type: "switch-dev",
-                  devices: "desktop",
-                  label: t("Features"),
-                  helper: {
-                    content: t(
-                      'This option only applies to "Always Show Latest".'
-                    )
-                  }
-                },
-                {
-                  id: "nonfeatures",
-                  type: "switch-dev",
-                  devices: "desktop",
-                  label: t("No featured"),
-                  helper: {
-                    content: t(
-                      'This option only applies to "Always Show Latest" and if this is selected the Featured Only option does not apply.'
-                    )
-                  }
-                },
-                {
                   id: "showPreview",
                   type: "switch-dev",
                   devices: "desktop",
@@ -246,18 +265,6 @@ export const getItems: GetItems<Value, Props> = ({
                   helper: {
                     content: t(
                       "Button will display if text is entered and a detail page selected."
-                    )
-                  }
-                },
-                {
-                  id: "eventSlug",
-                  type: "inputText-dev",
-                  devices: "desktop",
-                  placeholder: t("Slug..."),
-                  label: t("Slug"),
-                  helper: {
-                    content: t(
-                      'Slug of event (my-event-name). Use only if you are not selecting from the "Recent Events" above and "Show Latest" is set to "No".'
                     )
                   }
                 }

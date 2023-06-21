@@ -1,5 +1,9 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import {
+  getMaxContainerSuffix,
+  getMinContainerSuffix
+} from "visual/editorComponents/Section/utils";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
@@ -139,11 +143,11 @@ export function getItems({
           id: "containerTypeGroup",
           type: "group-dev",
           position: 10,
-          devices: "desktop",
           options: [
             {
               id: "containerType",
               label: t("Width"),
+              devices: "desktop",
               type: "select-dev",
               choices: [
                 { title: t("Boxed"), value: "boxed" },
@@ -152,27 +156,19 @@ export function getItems({
             },
             {
               id: "containerSize",
+              label: device === "desktop" ? "" : t("Width"),
               type: "slider-dev",
               disabled: dvv("containerType") !== "boxed",
               config: {
-                min: 35,
-                max: 100,
-                units: [{ title: "%", value: "%" }]
+                min: getMinContainerSuffix({ v, device }),
+                max: getMaxContainerSuffix({ v, device }),
+                units: [
+                  { title: "px", value: "px" },
+                  { title: "%", value: "%" }
+                ]
               }
             }
           ]
-        },
-        {
-          id: "containerSize",
-          type: "slider-dev",
-          label: t("Width"),
-          devices: "responsive",
-          position: 10,
-          config: {
-            min: 35,
-            max: 100,
-            units: [{ title: "%", value: "%" }]
-          }
         },
         {
           id: "grid",

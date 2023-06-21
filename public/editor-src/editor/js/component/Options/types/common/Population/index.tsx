@@ -79,7 +79,7 @@ const _Icon = <T extends string | number>(
       };
       handlerChoices(res, rej);
     }
-  }, [handlerChoices]);
+  }, [handlerChoices, onChange]);
 
   if (value) {
     input = <Input value={`${value}`} onRemove={handleRemove} />;

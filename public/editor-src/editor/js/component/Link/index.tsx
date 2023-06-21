@@ -53,7 +53,7 @@ const _Link = (
   const _href = getHref(type, Str.mRead(href));
   const _target = getTarget(type, target);
   const attrs = getAttr(attr);
-  const _rel = getRel(Str.mRead(rel), _target);
+  const _rel = getRel(Str.mRead(rel));
 
   useEffect(() => {
     const node = innerRef.current;

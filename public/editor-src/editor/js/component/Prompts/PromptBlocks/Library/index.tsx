@@ -1,6 +1,6 @@
 import { match } from "fp-utilities";
 import produce from "immer";
-import React, { Component, ComponentType } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
 import { ToastNotification } from "visual/component/Notifications";
@@ -14,37 +14,29 @@ import {
   fontsSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import {
-  BlockMetaType,
-  ExtraFontStyle,
-  SavedBlock,
-  SavedLayout
-} from "visual/types";
+import { SavedBlock, SavedLayout } from "visual/types";
 import { isSavedBlock, isSavedLayout, isSavedPopup } from "visual/types/utils";
 import {
   deleteSavedBlock,
   deleteSavedLayout,
+  deleteSavedPopup,
   getSavedBlockById,
   getSavedBlocks,
   getSavedLayoutById,
   getSavedLayouts,
-  uploadSaveBlocks,
-  uploadSaveLayouts,
-  uploadSavePopups
+  getSavedPopupById,
+  getSavedPopups,
+  importSaveBlocks,
+  importSavePopups,
+  importSavedLayout,
+  updateSavedBlock,
+  updateSavedLayout,
+  updateSavedPopup
 } from "visual/utils/api";
-import {
-  SavedBlockAPI,
-  SavedBlockMeta,
-  SavedLayoutAPI,
-  SavedLayoutMeta,
-  UploadSavedBlocks,
-  UploadSavedLayouts
-} from "visual/utils/api/types";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { IS_WP } from "visual/utils/env";
 import { normalizeFontStyles, normalizeFonts } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
-import { BlockScreenshots } from "visual/utils/screenshots/types";
 import {
   getBlocksStylesFonts,
   getUsedModelsFonts,
@@ -52,89 +44,24 @@ import {
 } from "visual/utils/traverse";
 import { getWhiteLabel } from "visual/utils/whiteLabel";
 import { getError, isBlock, isLayout, isPopup } from "../common/utils";
-import {
-  BlockCategory,
-  BlockTypes,
-  PromptBlock,
-  PromptBlockTemplate
-} from "../types";
+import { BlockTypes } from "../types";
 import Blocks from "./Blocks";
 import { ShowSuccessError } from "./Notification";
-
-export interface Thumbs extends BlockScreenshots {
-  showRemoveIcon: boolean;
-  loading: boolean;
-  keywords?: string;
-}
-
-type LayoutData = Omit<
-  SavedLayoutMeta,
-  "dataVersion" | "isCloudEntity" | "meta"
->;
-type SavedData = Omit<
-  SavedLayoutMeta,
-  "dataVersion" | "isCloudEntity" | "meta"
->;
-
-interface SavedLayoutWithThumbs extends LayoutData, Thumbs {
-  type: "LAYOUT";
-}
-
-interface SavedBlockWithThumbs extends SavedData, Thumbs {
-  type: "BLOCK" | "POPUP";
-}
-
-export type BlockData = SavedLayoutWithThumbs | SavedBlockWithThumbs;
-
-export interface Pagination {
-  page: number;
-  done: boolean;
-}
-
-type LibraryProps = {
-  type: BlockMetaType;
-  showSearch: boolean;
-  onAddBlocks: (b: PromptBlock | PromptBlockTemplate) => void;
-  onClose: () => void;
-  HeaderSlotLeft: ComponentType;
-  getParentNode?: () => HTMLElement | null;
-};
-
-type LibraryStateProps = {
-  projectFonts: ReduxState["fonts"];
-  projectExtraFontStyles: ReduxState["extraFontStyles"];
-  isAuthorized: boolean;
-};
-
-type LibraryState = {
-  search: string;
-  loading: boolean;
-  data: Partial<Record<BlockTypes, BlockData[]>>;
-  types: BlockCategory[];
-  importLoading: boolean;
-  exportLoading: boolean;
-};
-
-type GetAssets = {
-  fonts: FontsPayload;
-  extraFontStyles?: ExtraFontStyle[];
-};
-
-const BLOCK: BlockTypes = "BLOCK";
-const LAYOUT: BlockTypes = "LAYOUT";
-const POPUP: BlockTypes = "POPUP";
-
-const getBlocksType = (type: LibraryProps["type"]): BlockCategory[] => {
-  return type === "normal"
-    ? [
-        { id: BLOCK, title: t("Blocks"), icon: "nc-blocks" },
-        { id: LAYOUT, title: t("Layouts"), icon: "nc-pages" }
-      ]
-    : [{ id: POPUP, title: t("Popups"), icon: "nc-blocks" }];
-};
-
-// Limitation API for getBlocks
-const TOTAL_COUNT = 200;
+import {
+  BLOCK,
+  BlockData,
+  GetAssets,
+  LAYOUT,
+  LibraryProps,
+  LibraryState,
+  LibraryStateProps,
+  POPUP,
+  Pagination,
+  SavedBlockAPIMetaWithoutSync,
+  SavedLayoutAPIMetaWithoutSync,
+  Thumbs
+} from "./types";
+import { getBlocksType } from "./utils/getBlocksType";
 
 class Library extends Component<
   LibraryProps & LibraryStateProps,
@@ -143,6 +70,7 @@ class Library extends Component<
   static defaultProps: LibraryProps & LibraryStateProps = {
     type: "normal",
     showSearch: true,
+    showTitle: true,
     projectFonts: {},
     projectExtraFontStyles: [],
     isAuthorized: false,
@@ -154,6 +82,7 @@ class Library extends Component<
 
   state: LibraryState = {
     search: "",
+    filter: undefined,
     data: {
       BLOCK: undefined,
       LAYOUT: undefined,
@@ -162,7 +91,8 @@ class Library extends Component<
     loading: true,
     importLoading: false,
     exportLoading: false,
-    types: getBlocksType(this.props.type)
+    updateLoading: false,
+    types: getBlocksType(this.props.type, Config.getAll())
   };
 
   pagination: Partial<Record<BlockTypes, Pagination>> = {
@@ -180,12 +110,12 @@ class Library extends Component<
     if (isCloud(config)) {
       this.withImportExport = !config.user.isGuest;
     }
-    this.updateBlocks(1);
+    this.updateBlocks();
   }
 
   componentDidUpdate(nextProps: LibraryProps & LibraryStateProps): void {
     if (nextProps.isAuthorized !== this.props.isAuthorized) {
-      this.updateBlocks(1);
+      this.updateBlocks();
     }
   }
 
@@ -193,134 +123,92 @@ class Library extends Component<
     this.unMount = true;
   }
 
-  updateBlocks = async (page: number): Promise<void> => {
+  updateBlocks = async (): Promise<void> => {
+    if (this.state.types.length === 0) {
+      return;
+    }
+
     if (this.props.type === "normal") {
-      const BLOCK = await this.getBlocks(page);
-      const LAYOUT = await this.getLayout(page);
+      const BLOCK = await this.getBlocks();
+      const LAYOUT = await this.getLayout();
 
       if (!this.unMount) {
-        this.setState({ data: { BLOCK, LAYOUT }, loading: false }, () => {
-          const { BLOCK, LAYOUT } = this.pagination;
-
-          if (BLOCK && !BLOCK.done) {
-            this.handleGetMoreBlocks(BLOCK.page + 1, "BLOCK");
-          }
-          if (LAYOUT && !LAYOUT.done) {
-            this.handleGetMoreBlocks(LAYOUT.page + 1, "LAYOUT");
-          }
-        });
+        this.setState({ data: { BLOCK, LAYOUT }, loading: false });
       }
     } else {
-      const POPUP = await this.getPopups(page);
+      const POPUP = await this.getPopups();
 
       if (!this.unMount) {
-        this.setState({ data: { POPUP }, loading: false }, () => {
-          const { POPUP } = this.pagination;
-
-          if (POPUP && !POPUP.done) {
-            this.handleGetMoreBlocks(POPUP.page + 1, "POPUP");
-          }
-        });
+        this.setState({ data: { POPUP }, loading: false });
       }
     }
   };
 
-  async getBlocks(page: number): Promise<BlockData[]> {
-    const blocks = await getSavedBlocks({
-      page,
-      count: TOTAL_COUNT
-      // order: "DESC"
-    });
+  async getBlocks(filter?: string): Promise<BlockData[]> {
+    try {
+      const byFilter = filter ? { filterBy: filter } : undefined;
+      const blocks = await getSavedBlocks(Config.getAll(), byFilter);
 
-    this.pagination.BLOCK = {
-      page,
-      done: blocks.length < TOTAL_COUNT
-    };
-
-    return blocks
-      .filter(({ meta }) => meta?.type === "normal")
-      .map((block) => ({
+      return blocks.map((block) => ({
         ...this.makeThumbsData(block),
         uid: block.uid,
         type: BLOCK,
+        title: block.title,
+        tags: block.tags,
+        dataVersion: block.dataVersion,
         synchronized: block.synchronized || false,
         synchronizable: block.synchronizable || false
       }));
+    } catch (e) {
+      console.error(e);
+      ToastNotification.error(t("Something went wrong on getting blocks."));
+      return [];
+    }
   }
 
-  async getLayout(page: number): Promise<BlockData[]> {
-    const layouts = await getSavedLayouts({
-      page,
-      count: TOTAL_COUNT
-      // order: "DESC"
-    });
+  async getLayout(filter?: string): Promise<BlockData[]> {
+    try {
+      const byFilter = filter ? { filterBy: filter } : undefined;
+      const blocks = await getSavedLayouts(Config.getAll(), byFilter);
 
-    this.pagination.LAYOUT = {
-      page,
-      done: layouts.length < TOTAL_COUNT
-    };
-
-    return layouts.map((layout) => ({
-      ...this.makeThumbsData(layout),
-      uid: layout.uid,
-      type: LAYOUT,
-      synchronized: layout.synchronized || false,
-      synchronizable: layout.synchronizable || false
-    }));
-  }
-
-  async getPopups(page: number): Promise<BlockData[]> {
-    const popups = await getSavedBlocks({
-      page,
-      count: TOTAL_COUNT
-      // order: "DESC"
-    });
-
-    this.pagination.POPUP = {
-      page,
-      done: popups.length < TOTAL_COUNT
-    };
-
-    return popups
-      .filter(({ meta }) => meta?.type === "popup")
-      .map((popup) => ({
-        ...this.makeThumbsData(popup),
-        uid: popup.uid,
-        type: POPUP,
-        synchronized: popup.synchronized || false,
-        synchronizable: popup.synchronizable || false
+      return blocks.map((block) => ({
+        ...this.makeThumbsData(block),
+        uid: block.uid,
+        type: LAYOUT,
+        title: block.title,
+        tags: block.tags,
+        dataVersion: block.dataVersion,
+        synchronized: block.synchronized || false,
+        synchronizable: block.synchronizable || false
       }));
+    } catch (e) {
+      console.error(e);
+      ToastNotification.error(t("Something went wrong on getting layouts."));
+      return [];
+    }
   }
 
-  handleGetMoreBlocks = async (
-    page: number,
-    type: BlockTypes
-  ): Promise<void> => {
-    const get = match(
-      [isBlock, this.getBlocks.bind(this, page)],
-      [isPopup, this.getPopups.bind(this, page)],
-      [isLayout, this.getLayout.bind(this, page)]
-    );
+  async getPopups(filter?: string): Promise<BlockData[]> {
+    try {
+      const byFilter = filter ? { filterBy: filter } : undefined;
+      const blocks = await getSavedPopups(Config.getAll(), byFilter);
 
-    const data = await get(type);
-
-    this.setState(
-      produce((state: LibraryState) => {
-        state.data[type]?.push(...data);
-        this.pagination[type] = {
-          page,
-          done: data.length < TOTAL_COUNT
-        };
-      }),
-      (): void => {
-        const d = this.pagination[type];
-
-        if (d && !d.done) {
-          this.handleGetMoreBlocks(page + 1, type);
-        }
-      }
-    );
-  };
+      return blocks.map((block) => ({
+        ...this.makeThumbsData(block),
+        uid: block.uid,
+        type: POPUP,
+        title: block.title,
+        tags: block.tags,
+        dataVersion: block.dataVersion,
+        synchronized: block.synchronized || false,
+        synchronizable: block.synchronizable || false
+      }));
+    } catch (e) {
+      console.error(e);
+      ToastNotification.error(t("Something went wrong on getting popups."));
+      return [];
+    }
+  }
 
   async getAssets(
     block: Partial<SavedLayout | SavedBlock>
@@ -347,34 +235,52 @@ class Library extends Component<
 
   async handleAddLayout(uid: string): Promise<void> {
     const { onAddBlocks, onClose } = this.props;
-    const { data, meta } = await getSavedLayoutById(uid);
-    const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
 
-    if (!this.unMount) {
-      onAddBlocks({ fonts, extraFontStyles, blocks: data.items });
-      onClose();
+    try {
+      const { data, meta } = await getSavedLayoutById(uid, Config.getAll());
+      const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
+
+      if (!this.unMount) {
+        onAddBlocks({ fonts, extraFontStyles, blocks: data.items });
+        onClose();
+      }
+    } catch (e) {
+      console.error(e);
+      ToastNotification.error(t("Failed to get savedLayout"));
     }
   }
 
   async handleAddBlock(uid: string): Promise<void> {
     const { onAddBlocks, onClose } = this.props;
-    const { data, meta } = await getSavedBlockById(uid);
-    const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
 
-    if (!this.unMount) {
-      onAddBlocks({ fonts, extraFontStyles, blocks: [data] });
-      onClose();
+    try {
+      const { data, meta } = await getSavedBlockById(uid, Config.getAll());
+      const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
+
+      if (!this.unMount) {
+        onAddBlocks({ fonts, extraFontStyles, blocks: [data] });
+        onClose();
+      }
+    } catch (e) {
+      console.error(e);
+      ToastNotification.error(t("Something went wrong"));
     }
   }
 
   async handleAddPopup(uid: string): Promise<void> {
     const { onAddBlocks, onClose } = this.props;
-    const { data, meta } = await getSavedBlockById(uid);
-    const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
 
-    if (!this.unMount) {
-      onAddBlocks({ fonts, extraFontStyles, blocks: [data] });
-      onClose();
+    try {
+      const { data, meta } = await getSavedPopupById(uid, Config.getAll());
+      const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
+
+      if (!this.unMount) {
+        onAddBlocks({ fonts, extraFontStyles, blocks: [data] });
+        onClose();
+      }
+    } catch (e) {
+      console.error(e);
+      ToastNotification.error(t("Something went wrong"));
     }
   }
 
@@ -385,7 +291,7 @@ class Library extends Component<
 
         //@ts-expect-error: Object is possibly 'undefined'.
         state.data[type].forEach((block, index: number) => {
-          if (block.uid == uid) {
+          if (block.uid === uid) {
             //@ts-expect-error: Object is possibly 'undefined'.
             state.data[type][index].loading = loading;
           }
@@ -431,15 +337,77 @@ class Library extends Component<
     }
   };
 
-  handleDeleteItem = ({ type, uid }: BlockData): void => {
+  handleItemUpdate = async (data: BlockData): Promise<void> => {
+    this.setState({ updateLoading: true });
+    const { data: rollbackData } = this.state;
+    const { type } = data;
+    const requestData = {
+      uid: data.uid,
+      title: data.title || "",
+      tags: data.tags || "",
+      dataVersion: data.dataVersion
+    };
+    const config = Config.getAll();
+
+    const update = match(
+      [isBlock, () => updateSavedBlock(requestData, config)],
+      [isPopup, () => updateSavedPopup(requestData, config)],
+      [isLayout, () => updateSavedLayout(requestData, config)]
+    );
+
+    this.setState(
+      produce((state: LibraryState) => {
+        state.data[type] = state.data[type]?.map((block) => {
+          if (block.uid === data.uid) {
+            return {
+              ...block,
+              title: data.title,
+              tags: data.tags,
+              dataVersion: data.dataVersion
+            };
+          }
+          return block;
+        });
+      })
+    );
+
+    try {
+      await update(type);
+
+      if (!this.unMount) {
+        this.setState({ updateLoading: false });
+      }
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.error(e);
+      }
+
+      if (!this.unMount) {
+        this.setState({ updateLoading: false, data: rollbackData }, () => {
+          const blockType = type.toLowerCase();
+
+          ToastNotification.error(
+            `Unable to update ${blockType}. Please try again or contact support`
+          );
+        });
+      }
+    }
+  };
+
+  handleDeleteItem = (data: BlockData): void => {
+    const { type, uid } = data;
+
     switch (type) {
-      case BLOCK:
+      case BLOCK: {
+        deleteSavedBlock(data, Config.getAll());
+        break;
+      }
       case POPUP: {
-        deleteSavedBlock(uid);
+        deleteSavedPopup(data, Config.getAll());
         break;
       }
       case LAYOUT: {
-        deleteSavedLayout(uid);
+        deleteSavedLayout(data, Config.getAll());
         break;
       }
     }
@@ -452,30 +420,45 @@ class Library extends Component<
     }));
   };
 
-  handleImport = async (files: FileList, type: BlockTypes): Promise<void> => {
+  handleImport = async (type: BlockTypes): Promise<void> => {
     this.setState({ importLoading: true });
+    const config = Config.getAll();
+
     const fetch = match(
-      [isBlock, (): ReturnType<UploadSavedBlocks> => uploadSaveBlocks(files)],
-      [isPopup, (): ReturnType<UploadSavedBlocks> => uploadSavePopups(files)],
-      [isLayout, (): ReturnType<UploadSavedLayouts> => uploadSaveLayouts(files)]
+      [isBlock, () => importSaveBlocks(config)],
+      [isPopup, () => importSavePopups(config)],
+      [isLayout, () => importSavedLayout(config)]
     );
 
     try {
       const data = await fetch(type);
+
+      if (!data) {
+        ToastNotification.error(t("Import failed"));
+        return;
+      }
 
       if (data.success.length) {
         const blocks: BlockData[] = [];
         const layouts: BlockData[] = [];
         const popups: BlockData[] = [];
 
-        data.success.forEach((block: SavedBlockAPI | SavedLayoutAPI) => {
+        data.success.forEach((_block) => {
+          const block = {
+            ..._block,
+            isCloudEntity: false
+          };
+
           if (isSavedLayout(block)) {
             layouts.push({
               ...this.makeThumbsData(block),
               uid: block.uid,
               type: LAYOUT,
-              synchronized: block.synchronized || false,
-              synchronizable: block.synchronizable || false
+              title: block.title,
+              tags: block.tags,
+              dataVersion: block.dataVersion,
+              synchronized: false,
+              synchronizable: false
             });
           }
           if (isSavedBlock(block)) {
@@ -483,8 +466,11 @@ class Library extends Component<
               ...this.makeThumbsData(block),
               uid: block.uid,
               type: BLOCK,
-              synchronized: block.synchronized || false,
-              synchronizable: block.synchronizable || false
+              title: block.title,
+              tags: block.tags,
+              dataVersion: block.dataVersion,
+              synchronized: false,
+              synchronizable: false
             });
           }
           if (isSavedPopup(block)) {
@@ -492,8 +478,11 @@ class Library extends Component<
               ...this.makeThumbsData(block),
               uid: block.uid,
               type: POPUP,
-              synchronized: block.synchronized || false,
-              synchronizable: block.synchronizable || false
+              title: block.title,
+              tags: block.tags,
+              dataVersion: block.dataVersion,
+              synchronized: false,
+              synchronizable: false
             });
           }
         });
@@ -538,10 +527,74 @@ class Library extends Component<
   };
 
   handleSuccessSync = (): void => {
-    this.updateBlocks(1);
+    this.updateBlocks();
   };
 
-  makeThumbsData(block: SavedBlockMeta | SavedLayoutMeta): Thumbs {
+  handleFilterChange = async (
+    value: string,
+    type: BlockTypes
+  ): Promise<void> => {
+    switch (type) {
+      case BLOCK: {
+        try {
+          const BLOCK = await this.getBlocks(value);
+          if (!this.unMount) {
+            this.setState(
+              produce((state: LibraryState) => {
+                state.data.BLOCK = BLOCK;
+              })
+            );
+          }
+        } catch (e) {
+          if (process.env.NODE_ENV === "development") {
+            console.error(e);
+          }
+          ToastNotification.error(t("Unable to fetch blocks by filter"));
+        }
+        break;
+      }
+      case LAYOUT: {
+        try {
+          const LAYOUT = await this.getLayout(value);
+          if (!this.unMount) {
+            this.setState(
+              produce((state: LibraryState) => {
+                state.data.LAYOUT = LAYOUT;
+              })
+            );
+          }
+        } catch (e) {
+          if (process.env.NODE_ENV === "development") {
+            console.error(e);
+          }
+          ToastNotification.error(t("Unable to fetch layouts by filter"));
+        }
+        break;
+      }
+      case POPUP: {
+        try {
+          const POPUP = await this.getPopups(value);
+          if (!this.unMount) {
+            this.setState(
+              produce((state: LibraryState) => {
+                state.data.POPUP = POPUP;
+              })
+            );
+          }
+        } catch (e) {
+          if (process.env.NODE_ENV === "development") {
+            console.error(e);
+          }
+          ToastNotification.error(t("Unable to fetch popups by filter"));
+        }
+        break;
+      }
+    }
+  };
+
+  makeThumbsData(
+    block: SavedBlockAPIMetaWithoutSync | SavedLayoutAPIMetaWithoutSync
+  ): Thumbs {
     const { url, width, height } = blockThumbnailData(block);
     const isAdminRole = currentUserRole() === "admin";
 
@@ -557,7 +610,7 @@ class Library extends Component<
   render(): React.ReactElement {
     const { loading, data, types, search, importLoading, exportLoading } =
       this.state;
-    const { type, HeaderSlotLeft, showSearch } = this.props;
+    const { type, HeaderSlotLeft, showSearch, showTitle } = this.props;
     const hasWhiteLabel = getWhiteLabel();
 
     return (
@@ -567,10 +620,12 @@ class Library extends Component<
         items={data}
         types={types}
         showSearch={showSearch}
+        showTitle={showTitle}
         sidebarSync={!hasWhiteLabel}
         thumbnailSync={IS_WP}
         thumbnailDownload={this.withImportExport}
         search={search}
+        filter={this.state.filter}
         importLoading={importLoading}
         exportLoading={exportLoading}
         HeaderSlotLeft={HeaderSlotLeft}
@@ -578,6 +633,8 @@ class Library extends Component<
         onChange={this.handleAddItems}
         onDelete={this.handleDeleteItem}
         onImport={this.withImportExport ? this.handleImport : undefined}
+        onUpdate={this.handleItemUpdate}
+        onFilterChange={this.handleFilterChange}
       />
     );
   }

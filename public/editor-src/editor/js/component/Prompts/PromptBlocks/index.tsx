@@ -25,6 +25,7 @@ import {
   PromptBlocksState,
   PromptTabsId
 } from "./types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 type Tab = {
   id: PromptTabsId;
@@ -43,45 +44,80 @@ type TabComponentProps = {
   getParentNode?: () => HTMLElement | null;
 };
 
-const TABS: Tab[] = [
-  {
-    id: "template",
-    title: isStory(Config.getAll()) ? t("Stories") : t("Layouts"),
-    icon: "nc-pages",
-    renderTab(props): ReactElement {
-      return (
-        <Layouts
-          {...props}
-          type={isStory(Config.getAll()) ? "stories" : "templates"}
-        />
-      );
+const getTabs = (config: ConfigCommon): Array<Tab> => {
+  const tabs: Array<Tab> = [
+    {
+      id: "template",
+      title: isStory(Config.getAll()) ? t("Stories") : t("Layouts"),
+      icon: "nc-pages",
+      renderTab(props): ReactElement {
+        return (
+          <Layouts
+            {...props}
+            type={isStory(Config.getAll()) ? "stories" : "templates"}
+          />
+        );
+      }
+    },
+    {
+      id: "blocks",
+      title: isPopup(Config.getAll()) ? t("Popups") : t("Blocks"),
+      icon: "nc-blocks",
+      renderTab(props): ReactElement {
+        return <Blocks {...props} />;
+      }
     }
-  },
-  {
-    id: "blocks",
-    title: isPopup(Config.getAll()) ? t("Popups") : t("Blocks"),
-    icon: "nc-blocks",
-    renderTab(props): ReactElement {
-      return <Blocks {...props} />;
-    }
-  },
-  {
-    id: "saved",
-    title: isPopup(Config.getAll()) ? t("Saved Popups") : t("Saved"),
-    icon: "nc-save-section",
-    renderTab(props): ReactElement {
-      return <Library {...props} />;
-    }
-  },
-  {
+  ];
+  const globalBlockTab: Tab = {
     id: "global",
-    title: isPopup(Config.getAll()) ? t("Global Popups") : t("Global Blocks"),
+    title: isPopup(config) ? t("Global Popups") : t("Global Blocks"),
     icon: "nc-global",
     renderTab(props): ReactElement {
+      // @ts-expect-error -- Need to rewrite to TSX
       return <Global {...props} />;
     }
+  };
+  const { savedLayouts, savedBlocks, savedPopups } = config.api ?? {};
+  const hasLayout = savedLayouts?.get && savedLayouts?.getByUid;
+  const hasBlock = savedBlocks?.get && savedBlocks?.getByUid;
+  const hasPopup = savedPopups?.get && savedPopups?.getByUid;
+
+  if (!hasBlock && !hasLayout && !hasPopup) {
+    return [...tabs, globalBlockTab];
   }
-];
+
+  if (isPopup(config) && hasPopup) {
+    return [
+      ...tabs,
+      {
+        id: "saved",
+        title: t("Saved Popups"),
+        icon: "nc-save-section",
+        renderTab(props): ReactElement {
+          return <Library {...props} />;
+        }
+      },
+      globalBlockTab
+    ];
+  }
+
+  if (hasLayout || hasBlock) {
+    return [
+      ...tabs,
+      {
+        id: "saved",
+        title: t("Saved"),
+        icon: "nc-save-section",
+        renderTab(props): ReactElement {
+          return <Library {...props} />;
+        }
+      },
+      globalBlockTab
+    ];
+  }
+
+  return tabs;
+};
 
 class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
   static defaultProps: PromptBlocksProps = {
@@ -118,6 +154,8 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
   wrapper = React.createRef<HTMLDivElement>();
 
   mounted = false;
+
+  tabs = getTabs(Config.getAll());
 
   componentDidMount(): void {
     this.mounted = true;
@@ -183,7 +221,7 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
       const key = `show${capitalize(id)}`;
       return !!get(key as keyof PromptBlocksProps, this.props);
     };
-    const headerTabs = TABS.filter(filterTabs).map((tab) => {
+    const headerTabs = this.tabs.filter(filterTabs).map((tab) => {
       const className = classnames("brz-ed-popup-two-tab-item", {
         "brz-ed-popup-two-tab-item-active": tab.id === currentTab
       });
@@ -204,6 +242,9 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
       );
     });
 
+    const _config = Config.getAll();
+    const helpIcon = _config?.ui?.help?.showIcon;
+
     return (
       <div className="brz-ed-popup-two-header">
         <div id="brz-ed-popup-header-left-slot" />
@@ -213,13 +254,21 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
           className="brz-ed-popup-two-btn-close"
           onClick={this.props.onClose}
         />
+        {helpIcon && (
+          <div className="brz-ed-popup-two-btn-help">
+            <span title={t("Help")}>
+              <EditorIcon icon={"nc-help"} />
+            </span>
+          </div>
+        )}
       </div>
     );
   }
 
   renderContent(): ReactElement {
     const { currentTab } = this.state;
-    const { renderTab } = TABS.find(({ id }) => id === currentTab) || TABS[0];
+    const { renderTab } =
+      this.tabs.find(({ id }) => id === currentTab) || this.tabs[0];
     const HeaderSlotLeft = (props: Record<string, unknown>): ReactElement => (
       <HeaderSlot {...props} slot="left" />
     );

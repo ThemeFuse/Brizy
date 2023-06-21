@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { ComponentProps, ReactElement } from "react";
 import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import { ColorPicker3 } from "visual/component/Controls/ColorPicker3";
-import { Props as ItemProps } from "visual/component/Controls/MultiSelect/Item";
+import { Props as ItemProps } from "visual/component/Controls/Select2/Item";
 import { Select2 } from "visual/component/Controls/Select2";
 import { WithClassName } from "visual/utils/options/attributes";
 import { Literal } from "visual/utils/types/Literal";

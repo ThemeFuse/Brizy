@@ -51,17 +51,7 @@ export interface Prop {
     updateGlobalBlock: string;
     updateGlobalBlocks: string;
 
-    createSavedBlock: string;
-    deleteSavedBlock: string;
-    getSavedBlockList: string;
-    getSavedBlockByUid: string;
     downloadBlocks: string;
-
-    createLayout: string;
-    getLayoutList: string;
-    getLayoutByUid: string;
-    deleteLayout: string;
-    uploadBlocks: string;
     downloadLayouts: string;
 
     getPostObjects: string;

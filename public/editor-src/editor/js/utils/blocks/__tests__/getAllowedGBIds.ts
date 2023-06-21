@@ -92,17 +92,7 @@ export const configWp: WPPropConfig = {
     updateGlobalBlock: "",
     updateGlobalBlocks: "",
 
-    createSavedBlock: "",
-    deleteSavedBlock: "",
-    getSavedBlockList: "",
-    getSavedBlockByUid: "",
     downloadBlocks: "",
-
-    createLayout: "",
-    getLayoutList: "",
-    getLayoutByUid: "",
-    deleteLayout: "",
-    uploadBlocks: "",
     downloadLayouts: "",
 
     getPostObjects: "",

@@ -1,8 +1,8 @@
 import { t } from "visual/utils/i18n";
 
 export default {
-  id: "PostTitle",
-  title: t("Blog Title"),
+  id: "BlogTitle",
+  title: t("Title"),
   icon: "nc-wp-post-title",
   resolve: {
     type: "Wrapper",
