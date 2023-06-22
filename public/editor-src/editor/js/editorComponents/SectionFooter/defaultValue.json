@@ -332,10 +332,6 @@
 
     "tabletBgSizeType": null,
 
-    "tabletContainerType": null,
-    "tabletContainerSize": null,
-    "tabletContainerSizeSuffix": null,
-
     "tabletMarginType": "grouped",
     "tabletMargin": 0,
     "tabletMarginTop": 0,

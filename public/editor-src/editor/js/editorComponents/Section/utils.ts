@@ -25,9 +25,15 @@ export function getMinContainerSuffix({
   const dvv = (key: string, device: ResponsiveMode): unknown =>
     defaultValueValue({ v, key, device });
 
-  const desktopSuffix = dvv("containerSizeSuffix", DESKTOP);
-  const tabletSuffix = dvv("containerSizeSuffix", TABLET);
-  const mobileSuffix = dvv("containerSizeSuffix", MOBILE);
+  const containerSizeSuffix = dvv("containerSizeSuffix", DESKTOP);
+  const tabletContainerSizeSuffix = dvv("containerSizeSuffix", TABLET);
+  const mobileContainerSizeSuffix = dvv("containerSizeSuffix", MOBILE);
+
+  const desktopSuffix = containerSizeSuffix === "" ? "%" : containerSizeSuffix;
+  const tabletSuffix =
+    tabletContainerSizeSuffix === "" ? "%" : tabletContainerSizeSuffix;
+  const mobileSuffix =
+    mobileContainerSizeSuffix === "" ? "%" : mobileContainerSizeSuffix;
 
   switch (device) {
     case "desktop": {
@@ -52,9 +58,15 @@ export function getMaxContainerSuffix({
   const dvv = (key: string, device: ResponsiveMode): unknown =>
     defaultValueValue({ v, key, device });
 
-  const desktopSuffix = dvv("containerSizeSuffix", DESKTOP);
-  const tabletSuffix = dvv("containerSizeSuffix", TABLET);
-  const mobileSuffix = dvv("containerSizeSuffix", MOBILE);
+  const containerSizeSuffix = dvv("containerSizeSuffix", DESKTOP);
+  const tabletContainerSizeSuffix = dvv("containerSizeSuffix", TABLET);
+  const mobileContainerSizeSuffix = dvv("containerSizeSuffix", MOBILE);
+
+  const desktopSuffix = containerSizeSuffix === "" ? "%" : containerSizeSuffix;
+  const tabletSuffix =
+    tabletContainerSizeSuffix === "" ? "%" : tabletContainerSizeSuffix;
+  const mobileSuffix =
+    mobileContainerSizeSuffix === "" ? "%" : mobileContainerSizeSuffix;
 
   switch (device) {
     case "desktop": {
