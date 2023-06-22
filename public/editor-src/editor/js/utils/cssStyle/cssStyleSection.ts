@@ -28,7 +28,8 @@ export function cssStyleSectionMaxWidth({
 
   const containerType = getContainerTypes(dvv("containerType"));
   const containerSize = dvv("containerSize");
-  const containerSizeSuffix = dvv("containerSizeSuffix");
+  const containerSizeSuffix =
+    dvv("containerSizeSuffix") === "" ? "%" : dvv("containerSizeSuffix");
 
   const percentSuffix = containerSizeSuffix === "%";
   const pixelSuffix = containerSizeSuffix === "px";
@@ -51,7 +52,7 @@ export function cssStyleSectionMaxWidth({
       } else return "";
     }
     case ContainerTypes.FullWidth: {
-      return "max-width: 100%";
+      return "max-width: 100%;";
     }
 
     case undefined:

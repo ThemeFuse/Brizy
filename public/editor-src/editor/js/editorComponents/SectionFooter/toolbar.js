@@ -251,8 +251,8 @@ export function getItems({ v, device, component, context }) {
                 min: getMinContainerSuffix({ v, device }),
                 max: getMaxContainerSuffix({ v, device }),
                 units: [
-                  { title: "px", value: "px" },
-                  { title: "%", value: "%" }
+                  { title: "%", value: "%" },
+                  { title: "px", value: "px" }
                 ]
               }
             }

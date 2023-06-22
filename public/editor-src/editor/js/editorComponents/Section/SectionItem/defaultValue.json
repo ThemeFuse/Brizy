@@ -197,9 +197,6 @@
     "containerSize": 100,
     "containerSizeSuffix": "%",
 
-    "hoverContainerType": null,
-    "hoverContainerSize": null,
-
     "paddingType": "ungrouped",
     "tempPaddingType": "ungrouped",
 
@@ -258,10 +255,6 @@
     "shapeBottomHorizontal": "off",
 
     "customCSS": "",
-
-    "tabletContainerType": null,
-    "tabletContainerSize": null,
-    "tabletContainerSizeSuffix": null,
 
     "tabletPaddingType": "ungrouped",
     "tempTabletPaddingType": "ungrouped",
