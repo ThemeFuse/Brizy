@@ -1,4 +1,5 @@
 import { AutoSave } from "./AutoSave";
+import { CollectionExtra, CollectionType } from "./Collections";
 import {
   BlocksArray,
   DefaultBlock,
@@ -30,6 +31,7 @@ export interface PLUGIN_ENV {
     customFileUrl?: string;
   };
   l10n?: Record<string, string>;
+  collectionTypes?: CollectionType[];
 }
 
 export interface VISUAL_CONFIG {
@@ -111,6 +113,24 @@ export interface VISUAL_CONFIG {
       StoriesWithThumbs,
       BlocksArray<DefaultBlock> | DefaultBlock
     >;
+  };
+
+  //Collection Types
+  collectionTypes?: {
+    loadCollectionTypes: {
+      handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
+    };
+  };
+
+  //CollectionItems
+  collectionItems?: {
+    searchCollectionItems: {
+      handler: (
+        res: Response<Post[]>,
+        rej: Response<string>,
+        extra: CollectionExtra
+      ) => void;
+    };
   };
 
   //#endregion
