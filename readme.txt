@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.2.2
 Requires PHP: 5.6.20
-Stable tag: 2.4.23
+Stable tag: 2.4.24-zeta1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
