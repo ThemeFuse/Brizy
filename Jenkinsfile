@@ -44,14 +44,14 @@ pipeline {
                     sh("""
                         if git rev-parse --git-dir > /dev/null 2>&1; then
                           echo "The repo is already cloned"
-                          git reset --hard HEAD
-                          git checkout .;
-                          git fetch;
-                          git clean -fd;
-                          git reset --hard origin/${params.releaseBranch};
+                          git fetch origin
+                          git checkout master
+                          git reset --hard origin/master
+                          ./jenkins/reset-repo.sh ./
+                          git checkout -t origin/${params.releaseBranch}
                         else
                           git config --global user.email "jenkins@brizy.io
-                          git config --global user.name "Jenkins jenkinovici
+                          git config --global user.name "Jenkins Jenkinovici
                           git clone git@github.com:ThemeFuse/Brizy.git ./
                         fi
                      """)
@@ -147,12 +147,20 @@ pipeline {
             sh "rm '${zipFilePath}'"
             sh "rm *.zip"
          }
+
          failure{
             discordSend title: JOB_NAME, footer: discordFooter, link: env.BUILD_URL, result: currentBuild.currentResult, description: "Changelog: \n ${changelog}", webhookURL: env.DISCORD_WEBHOOK_URL
          }
 
          aborted{
             discordSend title: JOB_NAME, footer: discordFooter, link: env.BUILD_URL, result: currentBuild.currentResult, description: "Changelog: \n ${changelog}", webhookURL: env.DISCORD_WEBHOOK_URL
+         }
+
+         always {
+
+            sshagent (credentials: ['ssh_with_passphrase_provided']) {
+                    sh "./jenkins/reset-repo.sh ./"
+                }
          }
      }
 }
