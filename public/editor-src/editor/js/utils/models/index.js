@@ -1,9 +1,9 @@
-import { hasProps } from "visual/utils/object";
 import { mapWithStructuralSharing } from "../object/mapWithStructuralSharing";
 import { cloneItem } from "./cloneItem";
 import { getBlockData } from "./getBlockData";
 import { insertItem } from "./insertItem";
 import { insertItemsBatch } from "./insertItemsBatch";
+import { isModel } from "./model";
 import {
   isExternalPopup,
   isExternalStory,
@@ -25,8 +25,6 @@ import {
   getStyles,
   setStyles
 } from "./styles";
-
-const isModel = (obj) => hasProps(["type", "value"], obj);
 
 const mapModels = (fn, model) =>
   mapWithStructuralSharing(model, (obj) => (isModel(obj) ? fn(obj) : obj));

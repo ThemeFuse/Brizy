@@ -35,6 +35,8 @@
   &__inner {
     position: relative;
     height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     & > .brz-container__wrap {
       max-height: 100%;
@@ -44,20 +46,6 @@
   }
   &__vertical-align {
     transform: rotate(270deg);
-  }
-}
-
-.brz-popup2__auto,
-.brz-popup2__fullHeight {
-  .brz-popup2__inner
-    .brz-container__wrap
-    > .brz-container
-    > .brz-row__container {
-    > .brz-row {
-      max-height: 100vh;
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
   }
 }
 
