@@ -11,6 +11,7 @@ git fetch origin
 
 # unstage all files
 git reset
+git checkout .
 git clean -fd
 
 # reset all local branches to original state
