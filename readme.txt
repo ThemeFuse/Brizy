@@ -160,7 +160,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Button style fill
 * Fixed: IconBox with hover effect
 
-= 2.4.19 - 2023-06-01 =
+= 2.4.20 - 2023-06-01 =
 * Fixed: Image resize on preview
 * Fixed: Uploaded webp Image
 

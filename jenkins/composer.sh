@@ -9,3 +9,8 @@ echo -e "-----------------------------------------------------------------------
 echo -e "\Clear composer cache"
 echo -e "-----------------------------------------------------------------------------"
 /usr/bin/composer clearcache
+
+echo -e "\Install composer dependencies"
+echo -e "-----------------------------------------------------------------------------"
+rm -rf vendor
+/usr/bin/composer install --no-dev || { exit 1; }
