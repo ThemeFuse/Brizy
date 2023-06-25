@@ -44,9 +44,6 @@ pipeline {
                     sh("""
                         if git rev-parse --git-dir > /dev/null 2>&1; then
                           echo "The repo is already cloned"
-                          git fetch origin
-                          git checkout master
-                          git reset --hard origin/master
                           ./jenkins/reset-repo.sh ./
                           git checkout -t origin/${params.releaseBranch}
                         else
