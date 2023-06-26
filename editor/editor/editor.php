@@ -920,7 +920,7 @@ class Brizy_Editor_Editor_Editor {
 			$result[] = $typeDto;
 		}
 
-	return $result;
+		return $result;
 	}
 
 	private function addLoopSourcesConfig( $config, $isTemplate, $wp_post_id, $context ) {
