@@ -13,6 +13,7 @@ import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
 import { publish } from "./publish";
+import { popupConditions } from "./popupConditions";
 import { savedBlocks } from "./savedBlocks/savedBlocks";
 import { savedLayouts } from "./savedBlocks/savedLayouts";
 import { savedPopups } from "./savedBlocks/savedPopups";
@@ -36,6 +37,7 @@ const api = {
   savedBlocks,
   savedPopups,
   savedLayouts,
+  popupConditions,
   defaultKits: defaultKits(config),
   defaultPopups: defaultPopups(config),
   defaultStories: defaultStories(config),

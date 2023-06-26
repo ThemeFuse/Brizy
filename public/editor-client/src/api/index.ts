@@ -1,4 +1,6 @@
 import { getConfig } from "../config";
+import { Page } from "../types/Page";
+import { Rule } from "../types/PopupConditions";
 import { Project } from "../types/Project";
 import { ResponseWithBody } from "../types/Response";
 import {
@@ -15,6 +17,7 @@ import {
   parseMetaSavedBlock,
   parseSavedBlock,
   parseSavedLayout,
+  stringifyPage,
   stringifyProject,
   stringifySavedBlock
 } from "./adapter";
@@ -604,6 +607,7 @@ export const uploadSaveLayouts = async (
 //#endregion
 
 //#region Collections
+
 export const getCollections: GetCollections = async (
   { search = "", postType, abortSignal },
   config
@@ -643,4 +647,82 @@ export const getCollections: GetCollections = async (
     throw rj;
   }
 };
+
+//#endregion
+
+//#region Page
+
+export const updatePage = (
+  page: Page,
+  meta: { is_autosave?: 0 | 1 } = {}
+): Promise<unknown> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+  const url = makeUrl(_url, {
+    action: actions.updatePage,
+    version: editorVersion,
+    hash
+  });
+  const { is_autosave = 1 } = meta;
+  const { id, status, data, dataVersion } = stringifyPage(page);
+  const body = new URLSearchParams({
+    id,
+    status,
+    data,
+    dataVersion: `${dataVersion}`,
+    is_autosave: `${is_autosave}`
+  });
+
+  return persistentRequest<Page>(url, { method: "POST", body }).then((d) => {
+    if (!d.ok) {
+      throw new Error(t("Fail to update page"));
+    }
+
+    return d.data;
+  });
+};
+
+//#endregion
+
+//#region PopupRules
+
+interface PopupData {
+  dataVersion: number;
+  rules: Array<Rule>;
+}
+
+export const updatePopupRules = async (
+  data: PopupData
+): Promise<Array<Rule>> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+  const { pageId, url, hash, editorVersion, actions } = config;
+  const { rules, dataVersion } = data;
+  const body = new URLSearchParams({
+    hash,
+    dataVersion: `${dataVersion}`,
+    version: editorVersion,
+    action: actions.updateRules,
+    post: pageId,
+    rules: JSON.stringify(rules)
+  });
+
+  try {
+    const r = await request(url, { method: "POST", body: body });
+    const data = await r.json();
+
+    return data.data;
+  } catch (e) {
+    throw new Error(t("Fail to update popup rules"));
+  }
+};
+
 //#endregion

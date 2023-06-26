@@ -1,9 +1,10 @@
+import { Page } from "./Page";
 import { Project } from "./Project";
 
 export interface AutoSave {
-  // TODO  Currently only projectData is used
-  //  Need to add pageData and globalBlocks
+  // TODO  Currently only projectData and pageData is used
+  //  Need to add globalBlocks
   projectData: Project;
-  // pageData: PageCommon;
+  pageData: Page;
   // globalBlocks: Array<GlobalBlock>;
 }
