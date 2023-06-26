@@ -442,6 +442,7 @@ class Blocks extends Component<Props> {
                       value={currentFilter.filter}
                       onChange={(value) => {
                         setFilter({ filter: value });
+                        this.currentFilter.filter = value;
                         onFilterChange(value, currentFilter.type);
                       }}
                     />

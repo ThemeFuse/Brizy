@@ -166,9 +166,6 @@
     "containerSize": 100,
     "containerSizeSuffix": "%",
 
-    "hoverContainerType": null,
-    "hoverContainerSize": null,
-
     "marginType": "grouped",
     "margin": 0,
     "marginTop": 0,
@@ -263,9 +260,6 @@
 
     "customCSS": "",
 
-    "tabletContainerType": null,
-    "tabletContainerSize": null,
-
     "tabletMarginType": "grouped",
     "tabletMargin": 0,
     "tabletMarginTop": 0,
@@ -305,9 +299,6 @@
     "tempTabletPaddingRightSuffix": "px",
     "tempTabletPaddingBottomSuffix": "px",
     "tempTabletPaddingLeftSuffix": "px",
-
-    "mobileContainerType": null,
-    "mobileContainerSize": null,
 
     "mobileMarginType": "grouped",
     "mobileMargin": 0,

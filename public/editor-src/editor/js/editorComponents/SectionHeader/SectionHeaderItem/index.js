@@ -123,9 +123,16 @@ export default class SectionHeaderItem extends EditorComponent {
     const tabletSize = this.dvv("containerSize", TABLET);
     const mobileSize = this.dvv("containerSize", MOBILE);
 
-    const desktopSuffix = this.dvv("containerSizeSuffix", DESKTOP);
-    const tabletSuffix = this.dvv("containerSizeSuffix", TABLET);
-    const mobileSuffix = this.dvv("containerSizeSuffix", MOBILE);
+    const containerSizeSuffix = this.dvv("containerSizeSuffix", DESKTOP);
+    const tabletContainerSizeSuffix = this.dvv("containerSizeSuffix", TABLET);
+    const mobileContainerSizeSuffix = this.dvv("containerSizeSuffix", MOBILE);
+
+    const desktopSuffix =
+      containerSizeSuffix === "" ? "%" : containerSizeSuffix;
+    const tabletSuffix =
+      tabletContainerSizeSuffix === "" ? "%" : tabletContainerSizeSuffix;
+    const mobileSuffix =
+      mobileContainerSizeSuffix === "" ? "%" : mobileContainerSizeSuffix;
 
     const containerType = this.dvv("containerType", device);
 

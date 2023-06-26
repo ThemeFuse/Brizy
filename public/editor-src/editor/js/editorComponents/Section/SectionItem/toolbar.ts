@@ -252,8 +252,8 @@ export const getItems: GetItems<ElementModel> = ({
                 min: getMinContainerSuffix({ v, device }),
                 max: getMaxContainerSuffix({ v, device }),
                 units: [
-                  { title: "px", value: "px" },
-                  { title: "%", value: "%" }
+                  { title: "%", value: "%" },
+                  { title: "px", value: "px" }
                 ]
               }
             }

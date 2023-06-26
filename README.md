@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.2.2<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.4.21<br>
+Stable tag: 2.4.24<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,14 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 2.4.24 - 2023-06-26
+* Fixed: Scrollbar inside Popup
+
+### 2.4.23 - 2023-06-22
+* Fixed: Image sizes on the preview
+* Fixed: Section Parallax
+* Fixed: Section containers
+
 ### 2.4.22 - 2023-06-21
 * New: Added option to sort tags alphabetically in the Accordion element
 * New: Added vertical space option for Accordion element
@@ -158,7 +166,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Button style fill
 * Fixed: IconBox with hover effect
 
-### 2.4.19 - 2023-06-01
+### 2.4.20 - 2023-06-01
 * Fixed: Image resize on preview
 * Fixed: Uploaded webp Image
 

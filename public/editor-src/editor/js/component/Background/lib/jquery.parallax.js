@@ -3,7 +3,7 @@ import { attachResize, detachResize } from "./attachResize";
 import { attachWheel, detachWheel } from "./attachWheel";
 
 const parallaxInitClassName =
-  "brz-bg-image-parallax--init brz-ed-preserve-3d absolute w-full !bg-cover left-0 -top-[50vh] h-[100vh] !transition-[all] !duration-[0s] !ease-[ease] !delay-[0s] origin-[center_center_0]";
+  "brz-bg-image-parallax--init brz-ed-preserve-3d absolute !transition-[all] !duration-[0s] !ease-[ease] !delay-[0s] origin-[center_center_0]";
 
 // Parallax
 (function ($, window, document) {

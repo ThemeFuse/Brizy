@@ -11,9 +11,6 @@ cd $1
 echo -e "\nInstall composer dependencies"
 echo -e "-----------------------------------------------------------------------------"
 
-rm -rf vendor
-/usr/bin/composer install --no-dev || { exit 1; }
-
 # delete all files that are not needed in the final build
 echo -e "\nDelete all dev files"
 echo -e "-----------------------------------------------------------------------------"
