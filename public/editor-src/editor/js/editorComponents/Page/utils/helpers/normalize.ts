@@ -6,7 +6,7 @@ import {
   normalizeMenuItems,
   symbolsToItems
 } from "visual/editorComponents/Menu/utils";
-import { Config } from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ReduxAction, updateGlobalBlock } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
 import { Block } from "visual/types";
@@ -117,11 +117,18 @@ export function gbTransform(
 
 //#region Menu
 
-export function attachMenu(value: ElementModel, config: Config): ElementModel {
-  const { menuData } = config;
+interface AttachMenu {
+  model: ElementModel;
+  config: ConfigCommon;
+  omitSymbols?: boolean;
+}
+
+export function attachMenu(data: AttachMenu): ElementModel {
+  const { config, model, omitSymbols = false } = data;
+  const menuData = config.menuData;
 
   if (menuData === undefined) {
-    return value;
+    return model;
   }
 
   return mapModels((block: ElementModel) => {
@@ -138,14 +145,19 @@ export function attachMenu(value: ElementModel, config: Config): ElementModel {
       };
       const items = normalizeMenuItems(menuConfig.items);
 
-      return produce(block, (draft) => {
-        //@ts-expect-error: Object is of type 'unknown'
+      return produce<ElementModel>(block, (draft) => {
+        // @ts-expect-error: Object is of type 'unknown'
         draft.value.items = symbolsToItems(items, symbols);
+
+        // @ts-expect-error: Draft.value is 'unknown'
+        if (omitSymbols && "symbols" in draft.value) {
+          delete draft.value.symbols;
+        }
       });
     }
 
     return block;
-  }, value);
+  }, model);
 }
 
 export function detachMenu(value: ElementModel): ElementModel {
