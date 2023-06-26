@@ -1,19 +1,12 @@
-import { setIn, getIn } from "timm";
+import { getIn, setIn } from "timm";
 import _ from "underscore";
-import Config from "visual/global/Config";
-import { setIds } from "visual/utils/models";
-import { getStore } from "visual/redux/store";
-import { globalBlocksAssembledSelector } from "visual/redux/selectors";
 import { ElementModel } from "visual/component/Elements/Types";
+import Config from "visual/global/Config";
+import { globalBlocksAssembledSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { setIds } from "visual/utils/models";
 import { MValue } from "visual/utils/value";
 import { addIn } from "./helpers/addRemove";
-import {
-  gbTransform,
-  attachGlobalBlocks,
-  attachMenu,
-  detachGlobalBlocks,
-  detachMenu
-} from "./helpers/normalize";
 import {
   moveAddableToColumn,
   moveAddableToRow,
@@ -24,6 +17,13 @@ import {
   moveShortcodeToSection,
   simpleMove
 } from "./helpers/move";
+import {
+  attachGlobalBlocks,
+  attachMenu,
+  detachGlobalBlocks,
+  detachMenu,
+  gbTransform
+} from "./helpers/normalize";
 import { normalizeFromTo } from "./helpers/path";
 import { FromTo, isAddable, isColumn, isRow, isShortcode } from "./types";
 
@@ -93,9 +93,10 @@ function getValue(value: ElementModel, fromTo: FromTo): MValue<ElementModel> {
   if (isColumn(fromTo)) {
     const { from, to } = fromTo;
 
-    const parentElement = getIn(oldValue, from.itemPath.slice(0, -3)) as MValue<
-      ElementModel
-    >;
+    const parentElement = getIn(
+      oldValue,
+      from.itemPath.slice(0, -3)
+    ) as MValue<ElementModel>;
 
     if (parentElement === undefined) {
       return undefined;
@@ -172,12 +173,16 @@ export default function changeValueAfterDND(
   const config = Config.getAll();
   const { getState, dispatch } = getStore();
   const globalBlocks = globalBlocksAssembledSelector(getState());
-  const oldValueWithoutGB = gbTransform(oldValue, globalBlocks);
+  const oldValueWithoutGB = attachMenu({
+    config,
+    model: gbTransform(oldValue, globalBlocks),
+    omitSymbols: true
+  });
   const fromTo = normalizeFromTo(oldValueWithoutGB, _fromTo);
 
   let value = attachGlobalBlocks(oldValue, fromTo.from, globalBlocks);
   value = attachGlobalBlocks(value, fromTo.to, globalBlocks);
-  value = attachMenu(value, config);
+  value = attachMenu({ model: value, config });
 
   const _value = getValue(value, fromTo);
 
