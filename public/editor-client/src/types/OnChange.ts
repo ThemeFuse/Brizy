@@ -1,5 +1,6 @@
 import { Page } from "./Page";
 import { Project } from "./Project";
+import { SymbolAction } from "./Symbols";
 
 export interface OnChange {
   // TODO  Currently only projectData and pageData is used
@@ -7,4 +8,5 @@ export interface OnChange {
   projectData: Project;
   pageData: Page;
   // globalBlocks: Array<GlobalBlock>;
+  symbols: SymbolAction;
 }
