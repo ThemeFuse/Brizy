@@ -84,16 +84,17 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 		$data = file_get_contents( "php://input" );
 
 		try {
+
 			$asymbols = $this->manager->createFromJson( $data );
 			foreach ( $asymbols as $asymbol ) {
-				$symbol = null;
-				if ( $asymbol->getUid() ) {
-					$symbol = $this->manager->get( $asymbol->getUid() );
+				$symbol = $this->manager->get( $asymbol->getUid() );
+				if ( $symbol ) {
 					$symbol->patchFrom( $asymbol );
+					$symbol->incrementVersion();
 				} else {
 					$symbol = $asymbol;
 				}
-				$symbol->incrementVersion();
+
 				$this->manager->validateSymbol( $symbol );
 				$this->manager->saveSymbol( $symbol );
 			}
@@ -101,7 +102,7 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 			$this->error( 400, "Error" . $e->getMessage() );
 		}
 
-		wp_send_json_success( $symbol, 200 );
+		wp_send_json_success( $asymbols, 200 );
 	}
 
 	public function actionDelete() {
