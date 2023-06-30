@@ -12,8 +12,17 @@ class Brizy_Admin_Symbols_Manager {
 	 */
 	public function createFromJson( $jsonString ) {
 		$jsonObj = json_decode( $jsonString );
+		$result  = [];
+		if ( is_array( $jsonObj ) ) {
+			foreach ( $jsonObj as $obj ) {
+				$result[] = Brizy_Admin_Symbols_Symbol::createFromJsonObject( $obj );
+			}
 
-		return Brizy_Admin_Symbols_Symbol::createFromJsonObject( $jsonObj );
+		} else {
+			$result[] = Brizy_Admin_Symbols_Symbol::createFromJsonObject( $jsonObj );
+		}
+
+		return $result;
 	}
 
 	/**
@@ -53,7 +62,7 @@ class Brizy_Admin_Symbols_Manager {
 	 */
 	public function deleteSymbol( $aSymbol ) {
 		if ( ! $aSymbol ) {
-			throw new Exception("Unable to delete NULL symbol");
+			throw new Exception( "Unable to delete NULL symbol" );
 		}
 
 		$symbols = $this->getList();
@@ -74,7 +83,7 @@ class Brizy_Admin_Symbols_Manager {
 	 */
 	public function saveSymbol( $aSymbol ) {
 		if ( ! $aSymbol ) {
-			throw new Exception("Unable to save NULL symbol");
+			throw new Exception( "Unable to save NULL symbol" );
 		}
 		$symbols = $this->getList();
 
