@@ -18,7 +18,7 @@ class Brizy_Admin_Symbols_Manager {
 				$result[] = Brizy_Admin_Symbols_Symbol::createFromJsonObject( $obj );
 			}
 
-		} else {
+		} elseif(!is_null($jsonObj)) {
 			$result[] = Brizy_Admin_Symbols_Symbol::createFromJsonObject( $jsonObj );
 		}
 
