@@ -59,6 +59,10 @@ class Brizy_Admin_GettingStarted {
 
 	public static function redirectAfterActivation( $plugin ) {
 
+		if ( ! is_admin() && ! is_network_admin() ) {
+			return;
+		}
+
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			return;
 		}
