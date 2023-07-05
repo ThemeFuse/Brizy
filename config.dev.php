@@ -23,7 +23,7 @@ class Brizy_Config {
 	const PLATFORM_EMAIL = "admin@admin.com";
 
 	const UPGRADE_TO_PRO_URL = "https://www.brizy.io/pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
-    const EDITOR_TEMPLEATES_URL = "https://brizy-editor-templates.s3.amazonaws.com/1.0.0/";
+    const EDITOR_TEMPLEATES_URL = "https://e-t-cloud.b-cdn.net/1.1.0/";
     const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://brizy.io";
     const TERMS_OF_SERVICE_URL = "https://www.brizy.io/terms-and-conditions";
