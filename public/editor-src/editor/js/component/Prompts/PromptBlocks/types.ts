@@ -1,5 +1,5 @@
-import { Block, BlockMetaType, ExtraFontStyle, Style } from "visual/types";
 import { FontsPayload } from "visual/redux/actions2";
+import { Block, BlockMetaType, ExtraFontStyle, Style } from "visual/types";
 
 export type PromptTabsId = "template" | "blocks" | "saved" | "global";
 

@@ -13,11 +13,7 @@ exports.wpTranslations = async function wpTranslations({
   let translationsArr = [];
 
   if (IS_PRODUCTION) {
-    const translationSets = [
-      await extractFromEditor(paths),
-      extractFromKits(paths),
-      extractFromTemplates(paths)
-    ];
+    const translationSets = [await extractFromEditor(paths)];
 
     const translations = new Set();
     for (const set of translationSets) {
@@ -67,34 +63,6 @@ async function extractFromEditor(paths) {
   }
 
   return translations;
-}
-
-function extractFromKits(paths) {
-  const kitsIndexFilePath = path.resolve(paths.kits, "./index.js");
-  const kits = require(kitsIndexFilePath);
-
-  return kits.reduce((acc, kit) => {
-    for (const type of kit.types) {
-      acc.add(type.title);
-    }
-
-    for (const category of kit.categories) {
-      acc.add(category.title);
-    }
-
-    return acc;
-  }, new Set());
-}
-
-function extractFromTemplates(paths) {
-  const templateIndexFilePath = path.resolve(paths.templates, "./index.js");
-  const templates = require(templateIndexFilePath);
-
-  return templates.categories.reduce((acc, category) => {
-    acc.add(category.title);
-
-    return acc;
-  }, new Set());
 }
 
 function extractTranslationsFromT(code) {

@@ -8,9 +8,19 @@ import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
-import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
+import {
+  BlocksArray,
+  DefaultBlock,
+  DefaultBlockWithID,
+  DefaultTemplate,
+  KitsWithThumbs,
+  LayoutsWithThumbs,
+  PopupsWithThumbs,
+  StoriesWithThumbs
+} from "visual/global/Config/types/configs/templates";
 import { PageCommon, Project, SavedBlock, SavedLayout } from "visual/types";
 import { Literal } from "visual/utils/types/Literal";
+import { ElementTypes } from "./ElementTypes";
 import {
   AddFileData,
   AddFileExtra,
@@ -142,21 +152,6 @@ export interface Theme {
 export const isElementTypes = (type: string): type is ElementTypes => {
   return Object.values(ElementTypes).includes(type as ElementTypes);
 };
-
-export enum ElementTypes {
-  Image = "Image",
-  Map = "Map",
-  Video = "Video",
-  ImageGallery = "ImageGallery",
-  Quantity = "Quantity",
-  ProductMetafield = "ProductMetafield",
-  BlogPostMeta = "BlogPostMeta",
-  Price = "Price",
-  Posts = "Posts",
-  ProductList = "ProductList",
-  CollectionList = "CollectionList",
-  BlogPostList = "BlogPostList"
-}
 
 //#region Base Saved Block
 
@@ -294,6 +289,11 @@ interface _ConfigCommon<Mode> {
       [LeftSidebarOptionsIds.more]?: {
         options?: Array<LeftSidebarMoreOptions>;
       };
+
+      moduleGroups?: Array<{
+        label: string;
+        moduleNames: Array<ElementTypes>;
+      }>;
     };
 
     //#endregion
@@ -551,6 +551,17 @@ interface _ConfigCommon<Mode> {
         ) => void;
       };
     };
+
+    defaultKits?: DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock>;
+    defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
+    defaultLayouts?: DefaultTemplate<
+      LayoutsWithThumbs,
+      BlocksArray<DefaultBlockWithID>
+    >;
+    defaultStories?: DefaultTemplate<
+      StoriesWithThumbs,
+      BlocksArray<DefaultBlock> | DefaultBlock
+    >;
   };
 
   //#endregion
@@ -562,17 +573,54 @@ interface _ConfigCommon<Mode> {
       linkSource?: string;
     };
     Price?: {
-      sourceType?: ShopifyTemplate.Product;
+      sourceType?: string;
     };
     ProductMetafield?: {
       linkSource: string;
     };
     BlogPostMeta?: {
       linkSource?: string;
+      sourceType?: string;
+    };
+    AddToCart?: {
+      sourceType?: string;
+    };
+    Vendor?: {
+      sourceType?: string;
+    };
+    BlogTitle?: {
+      textPopulationEntityType?: string;
+      textPopulation?: string;
+      textPopulationEntityId?: string;
+    };
+    BlogDescription?: {
+      textPopulationEntityType?: string;
+      textPopulation?: string;
+      textPopulationEntityId?: string;
+    };
+    CollectionDescription?: {
+      textPopulationEntityType?: string;
+      textPopulation?: string;
+      textPopulationEntityId?: string;
+    };
+    CollectionTitle?: {
+      textPopulationEntityType?: string;
+      textPopulation?: string;
+      textPopulationEntityId?: string;
+    };
+    ProductDescription?: {
+      textPopulationEntityType?: string;
+      textPopulation?: string;
+      textPopulationEntityId?: string;
+    };
+    ProductTitle?: {
+      textPopulationEntityType?: string;
+      textPopulation?: string;
+      textPopulationEntityId?: string;
     };
     ProductList?: {
       type?: string;
-      source?: ShopifyTemplate.Product;
+      source?: string;
       showSource?: boolean;
       orderBy?: string;
       order?: string;
@@ -580,14 +628,14 @@ interface _ConfigCommon<Mode> {
     };
     CollectionList?: {
       type?: string;
-      source?: ShopifyTemplate.Collection;
+      source?: string;
       showSource?: boolean;
       orderBy?: string;
       order?: string;
     };
     BlogPostList?: {
       type?: string;
-      source?: ShopifyTemplate.Article;
+      source?: string;
       showSource?: boolean;
       orderBy?: string;
       order?: string;

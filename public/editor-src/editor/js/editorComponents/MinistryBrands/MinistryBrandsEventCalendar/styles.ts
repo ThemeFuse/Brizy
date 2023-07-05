@@ -6,6 +6,7 @@ export function style(
   vs: Value,
   vd: Value
 ): [string, string, string] {
+  const { visibleMonth = 1 } = v;
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -28,20 +29,211 @@ export function style(
       standart: ["cssStyleElementMinistryEventCalendarTableSpacing"],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && .brz-eventCalendar-row:nth-child(even) td:hover": {
-      standart: [
-        "cssStyleElementMinistryEventCalendarEvenBgColor",
-        "cssStyleElementMinistryEventCalendarEvenBgGradient"
-      ],
-      interval: ["cssStyleHoverTransition"]
-    },
-    ".brz && .brz-eventCalendar-row:nth-child(odd):hover": {
-      standart: [
-        "cssStyleElementMinistryEventCalendarOddBgColor",
-        "cssStyleElementMinistryEventCalendarOddBgGradient"
-      ],
-      interval: ["cssStyleHoverTransition"]
-    },
+    [`.brz && .brz-eventCalendar .brz-eventCalendar_wrap .brz-eventCalendar-layout .brz-eventCalendar-month.brz-eventCalendar-month${visibleMonth}`]:
+      {
+        standart: IS_EDITOR ? ["cssStyleDisplayBlock"] : []
+      },
+    ".brz && .brz-eventCalendar-month1 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarEvenBgColor",
+          "cssStyleElementMinistryEventCalendarEvenBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month1 .brz-eventCalendar-row:nth-child(odd):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarOddBgColor",
+          "cssStyleElementMinistryEventCalendarOddBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month2 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth2EvenBgColor",
+          "cssStyleElementMinistryEventCalendarMonth2EvenBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month2 .brz-eventCalendar-row:nth-child(odd):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth2OddBgColor",
+          "cssStyleElementMinistryEventCalendarMonth2OddBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month3 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth3EvenBgColor",
+          "cssStyleElementMinistryEventCalendarMonth3EvenBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month3 .brz-eventCalendar-row:nth-child(odd):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth3OddBgColor",
+          "cssStyleElementMinistryEventCalendarMonth3OddBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month4 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth4EvenBgColor",
+          "cssStyleElementMinistryEventCalendarMonth4EvenBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month4 .brz-eventCalendar-row:nth-child(odd):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth4OddBgColor",
+          "cssStyleElementMinistryEventCalendarMonth4OddBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+
+    ".brz && .brz-eventCalendar-month5 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth5EvenBgColor",
+          "cssStyleElementMinistryEventCalendarMonth5EvenBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month5 .brz-eventCalendar-row:nth-child(odd):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth5OddBgColor",
+          "cssStyleElementMinistryEventCalendarMonth5OddBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+
+    ".brz && .brz-eventCalendar-month6 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth6EvenBgColor",
+          "cssStyleElementMinistryEventCalendarMonth6EvenBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month6 .brz-eventCalendar-row:nth-child(odd):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth6OddBgColor",
+          "cssStyleElementMinistryEventCalendarMonth6OddBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+
+    ".brz && .brz-eventCalendar-month7 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth7EvenBgColor",
+          "cssStyleElementMinistryEventCalendarMonth7EvenBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month7 .brz-eventCalendar-row:nth-child(odd):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth7OddBgColor",
+          "cssStyleElementMinistryEventCalendarMonth7OddBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+
+    ".brz && .brz-eventCalendar-month8 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth8EvenBgColor",
+          "cssStyleElementMinistryEventCalendarMonth8EvenBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month8 .brz-eventCalendar-row:nth-child(odd):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth8OddBgColor",
+          "cssStyleElementMinistryEventCalendarMonth8OddBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+
+    ".brz && .brz-eventCalendar-month9 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth9EvenBgColor",
+          "cssStyleElementMinistryEventCalendarMonth9EvenBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month9 .brz-eventCalendar-row:nth-child(odd):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth9OddBgColor",
+          "cssStyleElementMinistryEventCalendarMonth9OddBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+
+    ".brz && .brz-eventCalendar-month10 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth10EvenBgColor",
+          "cssStyleElementMinistryEventCalendarMonth10EvenBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month10 .brz-eventCalendar-row:nth-child(odd):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth10OddBgColor",
+          "cssStyleElementMinistryEventCalendarMonth10OddBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+
+    ".brz && .brz-eventCalendar-month11 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth11EvenBgColor",
+          "cssStyleElementMinistryEventCalendarMonth11EvenBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month11 .brz-eventCalendar-row:nth-child(odd):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth11OddBgColor",
+          "cssStyleElementMinistryEventCalendarMonth11OddBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+
+    ".brz && .brz-eventCalendar-month12 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth12EvenBgColor",
+          "cssStyleElementMinistryEventCalendarMonth12EvenBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventCalendar-month12 .brz-eventCalendar-row:nth-child(odd):hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarMonth12OddBgColor",
+          "cssStyleElementMinistryEventCalendarMonth12OddBgGradient"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+
     ".brz &&:hover .brz-eventCalendar-row-weekdays th": {
       standart: ["cssStyleElementMinistryEventCalendarWeekdaysAlign"],
       interval: ["cssStyleHoverTransition"]
@@ -104,6 +296,14 @@ export function style(
       ],
       interval: ["cssStyleHoverTransition"]
     },
+    ".brz && .brz-eventCalendar-links .brz-eventCalendar__event-start-time:hover":
+      {
+        standart: [
+          "cssStyleElementMinistryEventCalendarEventStartTimeTypography",
+          "cssStyleElementMinistryEventCalendarEventStartTimeColor"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
     ".brz &&:hover .brz-eventCalendar-day-np": {
       standart: [
         "cssStyleElementMinistryEventCalendarTableBorder",

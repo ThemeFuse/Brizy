@@ -1,4 +1,8 @@
 import { Style } from "visual/types";
+import {
+  LayoutsWithThumbs,
+  StoriesWithThumbs
+} from "visual/global/Config/types/configs/templates";
 
 export interface Filter {
   category: string;
@@ -11,6 +15,7 @@ export interface Page {
   title: string;
   keywords: string;
   cat: number[];
+  thumbnailSrc: string;
 }
 
 export interface LayoutData {
@@ -45,5 +50,5 @@ export type ThumbnailData<T extends TemplatesData | StoriesData> = T & {
 };
 
 export const isStoryData = (
-  data: StoriesData | TemplatesData
-): data is StoriesData => "stories" in data;
+  data: StoriesWithThumbs | LayoutsWithThumbs
+): data is StoriesWithThumbs => "stories" in data;

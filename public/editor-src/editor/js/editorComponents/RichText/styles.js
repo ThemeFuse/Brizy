@@ -1,7 +1,5 @@
 import { renderStyles } from "visual/utils/cssStyle";
 
-// TODO: cssStyleContentAlign - check this function
-
 export function style(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
@@ -19,7 +17,7 @@ export function styleDC(v, vs, vd) {
         "cssStyleElementRichTextDCColor",
         "cssStyleElementRichTextDCGradient",
         "cssStyleElementTitleTextShadow",
-        "cssStyleContentAlign",
+        "cssStyleElementRichTextAlign",
         "cssStyleElementRichTextFontFamily",
         "cssStyleElementRichTextFontSize",
         "cssStyleTypography3LineHeight",
@@ -124,7 +122,7 @@ export function styleHeading(v, vs, vd) {
         ...(IS_EDITOR ? [] : ["cssStyleElementRichTextColor"]),
         "cssStyleElementRichTextMartinTop",
         "cssStyleElementRichTextMartinBottom",
-        "cssStyleContentAlign",
+        "cssStyleElementRichTextAlign",
         "cssStyleElementRichTextFontFamily",
         "cssStyleElementRichTextFontSize",
         "cssStyleTypography3LineHeight",

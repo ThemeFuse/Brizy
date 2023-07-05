@@ -1,11 +1,11 @@
 import React, { FC, useCallback } from "react";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import * as L from "visual/utils/types/Literal";
-import { Literal } from "visual/utils/types/Literal";
-import { SimpleValue } from "visual/component/Options/Type";
-import { WithClassName } from "visual/utils/options/attributes";
 import { RadioGroup2 } from "visual/component/Controls/RadioGroup2";
 import { Item } from "visual/component/Controls/RadioGroup2/Item";
+import { Props as OptionProps } from "visual/component/Options/Type";
+import { SimpleValue } from "visual/component/Options/Type";
+import { WithClassName } from "visual/utils/options/attributes";
+import * as L from "visual/utils/types/Literal";
+import { Literal } from "visual/utils/types/Literal";
 import { Choice } from "./Choice";
 
 export type Props = OptionProps<SimpleValue<Literal>> &
@@ -19,10 +19,7 @@ export const RadioGroup: FC<Props> = ({
   onChange,
   label
 }) => {
-  const _onChange = useCallback(value => onChange({ value }), [
-    onChange,
-    value
-  ]);
+  const _onChange = useCallback((value) => onChange({ value }), [onChange]);
 
   return (
     <>

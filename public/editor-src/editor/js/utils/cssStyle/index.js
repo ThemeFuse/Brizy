@@ -197,5 +197,5 @@ export * from "./cssStyleVisible2";
 export * from "./cssStyleZIndex";
 // Bg Video
 export * from "./styleBgVideo";
-// Mask Image
-export * from "./cssStyleImageMask";
+// Mask
+export * from "./cssStyleMask";

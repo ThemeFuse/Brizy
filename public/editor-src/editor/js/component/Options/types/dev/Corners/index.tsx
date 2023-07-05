@@ -1,23 +1,23 @@
 import React, { FC, useCallback, useMemo } from "react";
-import { Value } from "./types/Value";
-import * as V from "./types/Value";
-import * as Option from "visual/component/Options/Type";
-import { getIcon, unitSetter, unitTitle, valueSetter } from "./utils";
-import { mPipe, pipe } from "visual/utils/fp";
-import { Spacing, Props as SP } from "visual/component/Controls/Spacing";
+import { Props as SP, Spacing } from "visual/component/Controls/Spacing";
 import { Edge } from "visual/component/Controls/Spacing/types";
-import { Type } from "visual/component/Options/utils/Type";
-import { Unit } from "./types/Unit";
+import * as Option from "visual/component/Options/Type";
 import { SpacingUnit } from "visual/component/Options/utils/SpacingUnit";
+import { Type } from "visual/component/Options/utils/Type";
+import { mPipe, pipe } from "visual/utils/fp";
 import * as Positive from "visual/utils/math/Positive";
 import { WithConfig } from "visual/utils/options/attributes";
 import { Config } from "./types/Config";
+import { Unit } from "./types/Unit";
+import { Value } from "./types/Value";
+import * as V from "./types/Value";
+import { getIcon, unitSetter, unitTitle, valueSetter } from "./utils";
 
 export interface Props extends Option.Props<Value>, WithConfig<Config> {}
 
 export const Corners: FC<Props> = ({ value, onChange, label, config }) => {
   const onType = useCallback(
-    pipe((v: Type): Value => V.setType(v, value), onChange),
+    (x0: Type) => pipe((v: Type): Value => V.setType(v, value), onChange)(x0),
     [value, onChange]
   );
 
@@ -57,7 +57,6 @@ export const Corners: FC<Props> = ({ value, onChange, label, config }) => {
       }
     }),
     [
-      value,
       topLeft,
       topRight,
       bottomRight,
@@ -66,27 +65,29 @@ export const Corners: FC<Props> = ({ value, onChange, label, config }) => {
       topLeftUnit,
       topRightUnit,
       bottomRightUnit,
-      bottomLeftUnit
+      bottomLeftUnit,
+      corners
     ]
   );
 
   const onValue = useCallback<SP<SpacingUnit, Edge>["onValue"]>(
-    mPipe(
-      (e: Edge, v: number) =>
-        mPipe(Positive.fromNumber, v => valueSetter(e)(v, value))(v),
-      onChange
-    ),
+    (edge: Edge, v: number) =>
+      mPipe(
+        (e: Edge, v: number) =>
+          mPipe(Positive.fromNumber, (v) => valueSetter(e)(v, value))(v),
+        onChange
+      )(edge, v),
     [onChange, value]
   );
 
   const onUnit = useCallback<SP<Unit, Edge>["onUnit"]>(
-    pipe((e: Edge, v: Unit) => unitSetter(e)(v, value), onChange),
+    (e: Edge, v: Unit) => onChange(unitSetter(e)(v, value)),
     [onChange, value]
   );
 
   const units = useMemo(
     (): SP<Unit, Edge>["units"] =>
-      (config?.units ?? ["px", "%"]).map(value => ({
+      (config?.units ?? ["px", "%"]).map((value) => ({
         value,
         title: unitTitle(value)
       })),

@@ -90,7 +90,7 @@ export function currentStyle(state = {}, action, fullState) {
       const { project } = action.payload;
 
       return project.data.styles.find(
-        style => style.id === project.data.selectedStyle
+        (style) => style.id === project.data.selectedStyle
       );
     }
     case UPDATE_CURRENT_STYLE: {
@@ -107,20 +107,9 @@ export function currentStyle(state = {}, action, fullState) {
       const allStyles = [...(styles ?? []), ...fullState.styles];
 
       return currentStyleId
-        ? allStyles.find(style => style.id === currentStyleId)
+        ? allStyles.find((style) => style.id === currentStyleId)
         : state;
     }
-    default:
-      return state;
-  }
-}
-
-// page
-
-export function blocksThumbnailSizes(state = {}, action) {
-  switch (action.type) {
-    case HYDRATE:
-      return action.payload.blocksThumbnailSizes;
     default:
       return state;
   }
@@ -146,13 +135,13 @@ export function copiedElement(state = copiedElementDefault, action) {
 
 // screenshots
 
-const validateScreenshots = obj =>
+const validateScreenshots = (obj) =>
   obj.type && obj.value && obj.value._id && obj.value._thumbnailSrc;
 
 function parseScreenshots(data) {
   const acc = {};
 
-  objectTraverse2(data, obj => {
+  objectTraverse2(data, (obj) => {
     if (validateScreenshots(obj)) {
       const v = obj.value;
 
@@ -215,7 +204,7 @@ export function screenshots(
         payload: { blockId, data }
       } = action;
 
-      return produce(state, draft => {
+      return produce(state, (draft) => {
         draft[blockId] = data;
       });
     }
@@ -233,7 +222,7 @@ export function screenshots(
         _thumbnailTime: meta._thumbnailTime
       };
 
-      return produce(state, draft => {
+      return produce(state, (draft) => {
         draft[_id] = screenshot;
         draft._published[_id] = screenshot;
       });
@@ -275,7 +264,6 @@ export default historyReducerEnhancer(
       authorized,
       syncAllowed,
       blocksData,
-      blocksThumbnailSizes,
       copiedElement,
       currentStyle,
       currentStyleId,
@@ -317,15 +305,15 @@ export default historyReducerEnhancer(
         const ids =
           action.type === REMOVE_BLOCKS ? blocksOrder : [action.payload.id];
 
-        ids.forEach(id => {
+        ids.forEach((id) => {
           if (blocksOrder.includes(id) && globalBlocks[id]) {
             const snapshots = history.getSnapshots();
 
             history.replaceSnapshots(
-              snapshots.map(snapshot => {
+              snapshots.map((snapshot) => {
                 if (snapshot?.blocksOrder) {
                   snapshot.blocksOrder = snapshot.blocksOrder.filter(
-                    _id => _id !== id
+                    (_id) => _id !== id
                   );
                 }
 

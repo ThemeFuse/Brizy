@@ -6,6 +6,7 @@ export function styleSection(
   vs: Value,
   vd: Value
 ): [string, string, string] {
+  const { maskShape = "none" } = v;
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -23,20 +24,39 @@ export function styleSection(
       standart: [
         "cssStyleBorder",
         "cssStyleBorderRadius",
-        "cssStyleBoxShadowSectionOutset"
+        ...(maskShape === "none"
+          ? ["cssStyleBoxShadowSectionOutset"]
+          : ["cssStyleMaskDropShadow"])
       ]
     },
     ".brz &&:hover > .brz-bg:after": {
       standart: ["cssStyleBoxShadowSection"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
-      standart: ["cssStyleBgImage", "cssStyleFilter", "cssStyleBgImagePosition"]
+      standart: [
+        "cssStyleBgImage",
+        "cssStyleFilter",
+        "cssStyleBgImagePosition",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
       standart: ["cssStyleBgImageHover"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
+      standart: [
+        "cssStyleBgColor",
+        "cssStyleBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-shape__top": {
       standart: [

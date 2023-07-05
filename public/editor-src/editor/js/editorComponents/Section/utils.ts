@@ -2,6 +2,8 @@ import { ElementModel } from "visual/component/Elements/Types";
 import {
   maxWidthPercentage,
   minWInBoxedPage,
+  minWInMobilePage,
+  minWInTabletPage,
   minWidthPercentage,
   wInBoxedPage,
   wInMobilePage,
@@ -40,10 +42,10 @@ export function getMinContainerSuffix({
       return desktopSuffix === "px" ? minWInBoxedPage : minWidthPercentage;
     }
     case "tablet": {
-      return tabletSuffix === "px" ? wInMobilePage : minWidthPercentage;
+      return tabletSuffix === "px" ? minWInTabletPage : minWidthPercentage;
     }
     case "mobile": {
-      return mobileSuffix === "px" ? maxWidthPercentage : minWidthPercentage;
+      return mobileSuffix === "px" ? minWInMobilePage : minWidthPercentage;
     }
   }
 }

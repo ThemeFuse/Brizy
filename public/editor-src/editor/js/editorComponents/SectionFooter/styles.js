@@ -1,6 +1,8 @@
 import { renderStyles } from "visual/utils/cssStyle";
 
 export function styleSection(v, vs, vd) {
+  const { maskShape = "none" } = v;
+
   const styles = {
     ".brz &&:hover": {
       interval: ["cssStyleVisibleMode|||preview"],
@@ -17,25 +19,39 @@ export function styleSection(v, vs, vd) {
       standart: [
         "cssStyleBorder",
         "cssStyleBorderRadius",
-        "cssStyleBoxShadowSectionOutset"
+        "cssStyleBoxShadowSectionOutset",
+        "cssStyleMaskDropShadow"
       ]
     },
     ".brz &&:hover > .brz-bg:after": {
-      standart: ["cssStyleBoxShadowSection"]
+      standart: maskShape === "none" ? ["cssStyleBoxShadowSection"] : []
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
       standart: [
         "cssStyleBgImage",
         "cssStyleFilter",
         "cssStyleBgImagePosition",
-        "cssStyleBgMediaImage"
+        "cssStyleBgMediaImage",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
       ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
       standart: ["cssStyleBgImageHover"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
+      standart: [
+        "cssStyleBgColor",
+        "cssStyleBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-shape__top": {
       standart: [

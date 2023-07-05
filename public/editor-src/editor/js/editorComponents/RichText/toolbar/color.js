@@ -378,17 +378,27 @@ function getTextPopulationOptions() {
 }
 
 const getColorToolbar = (v, { device, context }, onChange) => {
-  const { isPopulationBlock, populationColor } = v;
+  const {
+    isPopulationBlock,
+    populationColor,
+    colorOpacity,
+    textPopulation,
+    color
+  } = v;
 
   let backgroundColor;
-  if (v.textPopulation) {
+
+  const dvv = (key) => defaultValueValue({ v, key, device });
+
+  if (textPopulation) {
     const { hex: colorHex } = getOptionColorHexByPalette(
-      defaultValueValue({ v, key: "colorHex", device }),
-      defaultValueValue({ v, key: "colorPalette", device })
+      dvv("bgColorHex"),
+      dvv("bgColorPalette")
     );
-    backgroundColor = hexToRgba(colorHex, v.colorOpacity);
+    backgroundColor = hexToRgba(colorHex, colorOpacity);
   } else {
-    backgroundColor = getColorValue(v.color);
+    // something the color is not defined
+    backgroundColor = getColorValue(color ?? {});
   }
 
   return {

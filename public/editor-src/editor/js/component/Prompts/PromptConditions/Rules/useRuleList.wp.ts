@@ -42,7 +42,7 @@ export default function useRuleList(
     }
 
     fetchData();
-  }, []);
+  }, [type]);
 
   useEffect(() => {
     async function updateRuleList(): Promise<void> {

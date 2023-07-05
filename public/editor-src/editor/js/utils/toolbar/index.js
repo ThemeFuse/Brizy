@@ -10,9 +10,6 @@ export function makeEmptySidebarConfig({ title }) {
 // BG Image
 export { toolbarBgImage } from "./toolbarBgImage";
 
-// BG Video
-export { toolbarBgVideoUrl } from "./toolbarBgVideo";
-
 // Color
 export { toolbarColor2, toolbarColorHexField2 } from "./toolbarColor";
 

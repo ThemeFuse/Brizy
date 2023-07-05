@@ -54,7 +54,7 @@ const createTimedCallback =
   <T extends any[]>(
     callback: (...args: T) => void,
     timeout: number,
-    deps: DependencyList
+    deps?: DependencyList
   ): ((...args: T) => void) => {
     const subject = useMemo(() => {
       const subject = new Subject<T>();
@@ -66,10 +66,10 @@ const createTimedCallback =
       () => () => {
         subject.complete();
       },
-      [subject]
+      [subject, deps]
     );
 
-    return useCallback((...args: T) => subject.next(args), [subject, ...deps]);
+    return useCallback((...args: T) => subject.next(args), [subject]);
   };
 
 export const createTimedOnchange = (
@@ -91,7 +91,8 @@ export const createTimedOnchange = (
     const ref = useRef<T>(value);
     const [v, setV] = useState<T>(value);
 
-    const _onChange = fn(onChange, timeout, [onChange]);
+    const _onChange = fn(onChange, timeout);
+
     useEffect(() => {
       if (!compare(v, ref.current)) {
         _onChange(v);

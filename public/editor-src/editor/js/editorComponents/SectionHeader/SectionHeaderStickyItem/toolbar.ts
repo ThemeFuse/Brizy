@@ -8,11 +8,18 @@ import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import {
+  MaskPositions,
+  MaskRepeat,
+  MaskShapes,
+  MaskSizes
+} from "visual/utils/mask/Mask";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { read as readString } from "visual/utils/reader/string";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
@@ -45,6 +52,15 @@ export function getItems({
     type: DCTypes.image
   });
 
+  const maskShape = readString(dvv("maskShape")) ?? "none";
+  const maskPosition = readString(dvv("maskPosition")) ?? "center center";
+  const maskSize = readString(dvv("maskSize")) ?? "cover";
+  const maskScaleSuffix = readString(dvv("maskScaleSuffix")) ?? "%";
+  const maskCustomUploadImageSrc = readString(dvv("maskCustomUploadImageSrc"));
+  const maskShapeIsDisabled =
+    maskShape === "none" ||
+    (maskShape === "custom" && !maskCustomUploadImageSrc);
+
   return [
     {
       id: "toolbarCurrentElement",
@@ -69,6 +85,103 @@ export function getItems({
                   type: "imageUpload-dev",
                   states: [NORMAL, HOVER],
                   population: imageDynamicContentChoices
+                }
+              ]
+            },
+            {
+              id: "tabMask",
+              label: t("Mask"),
+              position: 110,
+              options: [
+                {
+                  id: "maskShape",
+                  label: t("Shape"),
+                  devices: "desktop",
+                  type: "select-dev",
+                  choices: MaskShapes
+                },
+                {
+                  id: "maskCustomUpload",
+                  type: "imageUpload-dev",
+                  devices: "desktop",
+                  label: t("Image"),
+                  config: {
+                    pointer: false,
+                    disableSizes: true,
+                    acceptedExtensions: ["png", "svg"]
+                  },
+                  helper: {
+                    content: t("Upload only [ .png or .svg ]")
+                  },
+                  disabled: maskShape !== "custom"
+                },
+                {
+                  id: "groupSize",
+                  type: "group-dev",
+                  disabled: maskShapeIsDisabled,
+                  options: [
+                    {
+                      id: "maskSize",
+                      label: t("Size"),
+                      type: "select-dev",
+                      choices: MaskSizes
+                    },
+                    {
+                      id: "maskScale",
+                      type: "slider-dev",
+                      disabled: maskSize !== "custom",
+                      config: {
+                        min: 1,
+                        max: maskScaleSuffix === "px" ? 500 : 100,
+                        units: [
+                          { value: "%", title: "%" },
+                          { value: "px", title: "px" }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "groupPosition",
+                  type: "group-dev",
+                  disabled: maskShapeIsDisabled,
+                  options: [
+                    {
+                      id: "maskPosition",
+                      type: "select-dev",
+                      label: t("Position"),
+                      choices: MaskPositions
+                    },
+                    {
+                      id: "maskPositionx",
+                      label: t("X"),
+                      type: "slider-dev",
+                      disabled: maskPosition !== "custom",
+                      config: {
+                        min: 1,
+                        max: 100,
+                        units: [{ value: "%", title: "%" }]
+                      }
+                    },
+                    {
+                      id: "maskPositiony",
+                      label: t("Y"),
+                      type: "slider-dev",
+                      disabled: maskPosition !== "custom",
+                      config: {
+                        min: 1,
+                        max: 100,
+                        units: [{ value: "%", title: "%" }]
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "maskRepeat",
+                  label: t("Repeat"),
+                  type: "select-dev",
+                  disabled: maskShapeIsDisabled || maskSize === "cover",
+                  choices: MaskRepeat
                 }
               ]
             }
@@ -123,7 +236,20 @@ export function getItems({
                 {
                   id: "boxShadow",
                   type: "boxShadow-dev",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: !maskShapeIsDisabled
+                }
+              ]
+            },
+            {
+              id: "tabDropShadow",
+              label: t("Shadow"),
+              options: [
+                {
+                  id: "maskShadow",
+                  type: "textShadow-dev",
+                  states: [NORMAL, HOVER],
+                  disabled: maskShapeIsDisabled
                 }
               ]
             }

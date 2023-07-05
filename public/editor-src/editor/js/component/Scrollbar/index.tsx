@@ -1,13 +1,18 @@
-import React, { CSSProperties, ReactElement, useCallback } from "react";
+import React, {
+  CSSProperties,
+  ForwardRefRenderFunction,
+  ReactElement,
+  forwardRef,
+  useCallback
+} from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import { Props } from "./types";
 import { getThumbStyles, getViewStyles, wrapperStyles } from "./utils";
 
-export const Scrollbar: React.FC<Props> = ({
-  children,
-  theme,
-  autoHeightMax
-}) => {
+const _Scrollbar: ForwardRefRenderFunction<Scrollbars, Props> = (
+  { children, theme, autoHeightMax },
+  ref
+) => {
   const renderThumbs = useCallback(
     (props: { style: CSSProperties }): ReactElement => (
       <div
@@ -35,6 +40,7 @@ export const Scrollbar: React.FC<Props> = ({
 
   return (
     <Scrollbars
+      ref={ref}
       className="brz-scrollbar__wrapper"
       style={wrapperStyles}
       renderThumbHorizontal={renderThumbs}
@@ -47,3 +53,5 @@ export const Scrollbar: React.FC<Props> = ({
     </Scrollbars>
   );
 };
+
+export const Scrollbar = forwardRef<Scrollbars, Props>(_Scrollbar);
