@@ -135,7 +135,7 @@ class Brizy_Compatibilities_Init {
 			new Brizy_Compatibilities_WpOptimize();
 		}
 
-		if ( defined('JETPACK__PLUGIN_FILE') ) {
+		if ( defined( 'JETPACK__PLUGIN_FILE' ) ) {
 			new Brizy_Compatibilities_Jetpack();
 		}
     }
