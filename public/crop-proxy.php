@@ -30,6 +30,8 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 			return;
 		}
 
+		do_action( 'brizy_before_extract_img' );
+
 		session_write_close();
 
 		try {
