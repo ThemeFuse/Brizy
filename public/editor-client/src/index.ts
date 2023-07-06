@@ -1,5 +1,5 @@
 import { autoSave } from "./autoSave";
-import { searchCollectionItems } from "./collectionItems/searchCollectionItems";
+import { getCollectionItemsIds } from "./collectionItems/getCollectionItemsIds";
 import { loadCollectionTypes } from "./collectionTypes/loadCollectionTypes";
 import { getConfig } from "./config";
 import { addFile } from "./customFile/addFile";
@@ -9,6 +9,8 @@ import {
   defaultPopups,
   defaultStories
 } from "./defaultTemplates";
+import { explodePlaceholder } from "./dynamicContent/explodePlaceholder";
+import { makePlaceholder } from "./dynamicContent/makePlaceholder";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
@@ -42,11 +44,12 @@ const api = {
   defaultPopups: defaultPopups(config),
   defaultStories: defaultStories(config),
   defaultLayouts: defaultLayouts(config),
-  collectionTypes: {
-    loadCollectionTypes: loadCollectionTypes
-  },
   collectionItems: {
-    searchCollectionItems: searchCollectionItems
+    searchCollectionItems: searchCollectionItems,
+    getCollectionItemsIds
+  },
+  collectionTypes: {
+    loadCollectionTypes
   }
 };
 
@@ -63,5 +66,12 @@ if (window.__VISUAL_CONFIG__) {
   // UI
   if (window.__VISUAL_CONFIG__.ui) {
     window.__VISUAL_CONFIG__.ui.publish = publish;
+  }
+
+  // Dynamic Content
+  if (window.__VISUAL_CONFIG__.dynamicContent) {
+    window.__VISUAL_CONFIG__.dynamicContent.makePlaceholder = makePlaceholder;
+    window.__VISUAL_CONFIG__.dynamicContent.explodePlaceholder =
+      explodePlaceholder;
   }
 }

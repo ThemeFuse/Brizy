@@ -36,6 +36,8 @@ interface Actions {
   updateLayout: string;
   deleteLayout: string;
 
+  getPostObjects: string;
+
   searchPosts: string;
 }
 
@@ -169,6 +171,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   deleteLayout: pipe(
     mPipe(Obj.readKey("deleteLayout"), Str.read),
     throwOnNullish("Invalid actions: deleteLayout")
+  ),
+  getPostObjects: pipe(
+    mPipe(Obj.readKey("getPostObjects"), Str.read),
+    throwOnNullish("Invalid actions: getPostObjects")
   ),
   searchPosts: pipe(
     mPipe(Obj.readKey("searchPosts"), Str.read),

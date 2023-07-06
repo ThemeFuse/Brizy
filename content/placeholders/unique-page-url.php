@@ -39,7 +39,10 @@ class Brizy_Content_Placeholders_UniquePageUrl extends Brizy_Content_Placeholder
 
 		add_filter( 'pre_term_link', $closure );
 
-		$object = get_queried_object();
+		if(!($object = $this->getEntity($contentPlaceholder)))
+		{
+			$object = get_queried_object();
+		}
 
 		if(is_archive()) {
 			$url =  add_query_arg($wp->query_vars, home_url() );

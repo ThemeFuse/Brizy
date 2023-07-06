@@ -10,3 +10,10 @@ interface Choice {
 }
 
 export type ChoicesSync = Choice[];
+
+export interface ChoicesAsync {
+  load: (abortSignal?: AbortSignal) => Promise<Choice[]>;
+  emptyLoad?: {
+    title?: string;
+  };
+}
