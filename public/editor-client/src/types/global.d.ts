@@ -10,10 +10,9 @@ import {
   PopupsWithThumbs,
   StoriesWithThumbs
 } from "./DefaultTemplate";
+import { ExplodePlaceholder, MakePlaceholder } from "./DynamicContent";
 import { AddFileData } from "./File";
 import { AddMediaData, AddMediaGallery } from "./Media";
-import { ExplodePlaceholder, MakePlaceholder } from "./DynamicContent";
-import { AddMediaData, AddMediaExtra } from "./Media";
 import { OnChange } from "./OnChange";
 import { PopupConditions } from "./PopupConditions";
 import { PublishData } from "./Project";

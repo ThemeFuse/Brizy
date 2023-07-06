@@ -1,5 +1,6 @@
 import { autoSave } from "./autoSave";
 import { getCollectionItemsIds } from "./collectionItems/getCollectionItemsIds";
+import { searchCollectionItems } from "./collectionItems/searchCollectionItems";
 import { loadCollectionTypes } from "./collectionTypes/loadCollectionTypes";
 import { getConfig } from "./config";
 import { addFile } from "./customFile/addFile";
@@ -14,8 +15,8 @@ import { makePlaceholder } from "./dynamicContent/makePlaceholder";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
-import { publish } from "./publish";
 import { popupConditions } from "./popupConditions";
+import { publish } from "./publish";
 import { savedBlocks } from "./savedBlocks/savedBlocks";
 import { savedLayouts } from "./savedBlocks/savedLayouts";
 import { savedPopups } from "./savedBlocks/savedPopups";
@@ -45,7 +46,7 @@ const api = {
   defaultStories: defaultStories(config),
   defaultLayouts: defaultLayouts(config),
   collectionItems: {
-    searchCollectionItems: searchCollectionItems,
+    searchCollectionItems,
     getCollectionItemsIds
   },
   collectionTypes: {
