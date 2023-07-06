@@ -5,7 +5,7 @@
 
 class Brizy_Compatibilities_Jetpack {
 	public function __construct() {
-		add_action( 'brizy_before_extract_img', [ $this, 'remove_image_cdn_filter' ] );
+		add_action( 'init', [ $this, 'remove_image_cdn_filter' ] );
 	}
 
 	public function remove_image_cdn_filter() {
@@ -14,6 +14,4 @@ class Brizy_Compatibilities_Jetpack {
 		}
 	}
 }
-
-
 
