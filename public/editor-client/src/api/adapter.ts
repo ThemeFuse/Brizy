@@ -78,7 +78,7 @@ export const parseMetaSavedBlock = (
 ): SavedBlockMeta => {
   let meta;
   const title = savedBlock.title ?? "";
-  const tags = savedBlock.tags ?? "";
+  let tags = savedBlock.tags ?? "";
 
   if (!savedBlock.meta) {
     meta = {};
@@ -88,6 +88,10 @@ export const parseMetaSavedBlock = (
     } catch (e) {
       meta = {};
     }
+  }
+
+  if (tags === ",") {
+    tags = "";
   }
 
   return { ...savedBlock, meta, title, tags };
