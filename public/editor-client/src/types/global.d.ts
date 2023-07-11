@@ -190,7 +190,7 @@ declare global {
       };
     };
     query: (query: {
-      type: "image, audio, video, application, text, pdf";
+      type: "image, audio, video, application, text, pdf" | "image";
     }) => WPMediaLibrary;
     state: () => WPMediaLibrary;
   }
