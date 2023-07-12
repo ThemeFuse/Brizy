@@ -119,7 +119,7 @@ export const getCollectionSourceItemsByType = (
   );
 
   const url = makeUrl(`${urls.api}/pages/${project.id}/type`, {
-    searchCriteria: "slug",
+    searchCriteria: "id",
     searchValue: data.slug
   });
 

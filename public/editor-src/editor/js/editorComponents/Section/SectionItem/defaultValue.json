@@ -7,6 +7,7 @@
 
     "bgSizeType": "custom",
     "bgImageFileName": null,
+    "maskCustomUploadImageFileName": "",
     "hoverBgImageFileName": null,
     "tabletBgImageFileName": null,
     "mobileBgImageFileName": null,
@@ -14,6 +15,7 @@
 
     "images": {
       "bgImageSrc": "",
+      "maskCustomUploadImageSrc": "",
       "hoverBgImageSrc": null,
       "tabletBgImageSrc": null,
       "mobileBgImageSrc": null
@@ -32,6 +34,8 @@
     "bgAttachment": "none",
 
     "bgVideo": "",
+    "bgVideoType": "youtube",
+    "bgVideoCustom": "",
     "bgVideoLoop": "off",
     "bgVideoStart": 0,
 
@@ -199,6 +203,31 @@
 
     "paddingType": "ungrouped",
     "tempPaddingType": "ungrouped",
+
+    "maskShape": "none",
+    "maskSize": "cover",
+    "maskPosition": "center center",
+    "maskRepeat": "no-repeat",
+    "maskScale": 50,
+    "maskScaleSuffix": "%",
+    "maskPositiony": 3,
+    "maskPositionySuffix": "%",
+    "maskPositionx": 3,
+    "maskPositionxSuffix": "%",
+
+    "maskCustomUploadImageExtension": "",
+    "maskCustomUploadImageWidth": 600,
+    "maskCustomUploadImageHeight": 450,
+    "maskCustomUploadPositionX": 50,
+    "maskCustomUploadPositionY": 50,
+
+    "maskShadowColorHex": "#000000",
+    "maskShadowColorOpacity": 0,
+    "maskShadowColorPalette": "",
+
+    "maskShadowBlur": 0,
+    "maskShadowVertical": 0,
+    "maskShadowHorizontal": 0,
 
     "padding": 75,
     "paddingTop": 75,

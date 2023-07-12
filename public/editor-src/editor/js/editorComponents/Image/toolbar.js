@@ -6,12 +6,19 @@ import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import {
+  MaskPositions,
+  MaskRepeat,
+  MaskShapes,
+  MaskSizes
+} from "visual/utils/mask/Mask";
 import { isPopup, isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarImageLinkExternal,
@@ -71,11 +78,13 @@ export const getItems =
     const _enableTags = enableTags && !isBigImageFromGallery;
     const borderColorOpacity = dvv("borderColorOpacity");
 
-    const maskShape = dvv("maskShape");
-    const maskPosition = dvv("maskPosition");
-    const maskSize = dvv("maskSize");
-    const maskScaleSuffix = dvv("maskScaleSuffix");
-    const maskCustomUploadImageSrc = dvv("maskCustomUploadImageSrc");
+    const maskShape = readString(dvv("maskShape")) ?? "none";
+    const maskPosition = readString(dvv("maskPosition")) ?? "center center";
+    const maskSize = readString(dvv("maskSize")) ?? "cover";
+    const maskScaleSuffix = readString(dvv("maskScaleSuffix")) ?? "%";
+    const maskCustomUploadImageSrc = readString(
+      dvv("maskCustomUploadImageSrc")
+    );
     const maskShapeIsDisabled =
       maskShape === "none" ||
       (maskShape === "custom" && !maskCustomUploadImageSrc);
@@ -199,120 +208,7 @@ export const getItems =
                           label: t("Shape"),
                           devices: "desktop",
                           type: "select-dev",
-                          choices: [
-                            { title: t("None"), value: "none" },
-                            {
-                              value: "circle",
-                              icon: {
-                                name: "nc-mask-shape-circle"
-                              },
-                              title: ""
-                            },
-                            {
-                              value: "rhombus",
-                              icon: {
-                                name: "nc-mask-shape-rhombus"
-                              },
-                              title: ""
-                            },
-                            {
-                              value: "star",
-                              icon: {
-                                name: "nc-mask-shape-star"
-                              },
-                              title: ""
-                            },
-                            {
-                              value: "flower",
-                              icon: {
-                                name: "nc-mask-shape-flower"
-                              },
-                              title: ""
-                            },
-                            {
-                              value: "square",
-                              icon: {
-                                name: "nc-mask-shape-square"
-                              },
-                              title: ""
-                            },
-                            {
-                              value: "triangle",
-                              icon: {
-                                name: "nc-mask-shape-triangle"
-                              },
-                              title: ""
-                            },
-                            {
-                              value: "blob1",
-                              icon: { name: "nc-mask-shape-blob1" },
-                              title: ""
-                            },
-                            {
-                              value: "blob2",
-                              icon: { name: "nc-mask-shape-blob2" },
-                              title: ""
-                            },
-                            {
-                              value: "blob3",
-                              icon: { name: "nc-mask-shape-blob3" },
-                              title: ""
-                            },
-                            {
-                              value: "blob4",
-                              icon: { name: "nc-mask-shape-blob4" },
-                              title: ""
-                            },
-                            {
-                              value: "brush1",
-                              icon: {
-                                name: "nc-mask-shape-brush1"
-                              },
-                              title: ""
-                            },
-                            {
-                              value: "brush2",
-                              icon: {
-                                name: "nc-mask-shape-brush2"
-                              },
-                              title: ""
-                            },
-                            {
-                              value: "brush3",
-                              icon: {
-                                name: "nc-mask-shape-brush3"
-                              },
-                              title: ""
-                            },
-                            {
-                              value: "brush4",
-                              icon: {
-                                name: "nc-mask-shape-brush4"
-                              },
-                              title: ""
-                            },
-                            {
-                              value: "poly1",
-                              icon: { name: "nc-mask-shape-poly1" },
-                              title: ""
-                            },
-                            {
-                              value: "poly2",
-                              icon: { name: "nc-mask-shape-poly2" },
-                              title: ""
-                            },
-                            {
-                              value: "poly3",
-                              icon: { name: "nc-mask-shape-poly3" },
-                              title: ""
-                            },
-                            {
-                              value: "poly4",
-                              icon: { name: "nc-mask-shape-poly4" },
-                              title: ""
-                            },
-                            { value: "custom", title: t("Custom") }
-                          ]
+                          choices: MaskShapes
                         },
                         {
                           id: "maskCustomUpload",
@@ -339,11 +235,7 @@ export const getItems =
                               id: "maskSize",
                               label: t("Size"),
                               type: "select-dev",
-                              choices: [
-                                { title: t("Fit"), value: "contain" },
-                                { title: t("Fill"), value: "cover" },
-                                { title: t("Custom"), value: "custom" }
-                              ]
+                              choices: MaskSizes
                             },
                             {
                               id: "maskScale",
@@ -369,36 +261,7 @@ export const getItems =
                               id: "maskPosition",
                               type: "select-dev",
                               label: t("Position"),
-                              choices: [
-                                {
-                                  title: t("Center Center"),
-                                  value: "center center"
-                                },
-                                {
-                                  title: t("Center Left"),
-                                  value: "center left"
-                                },
-                                {
-                                  title: t("Center Right"),
-                                  value: "center right"
-                                },
-                                { title: t("Top Center"), value: "top center" },
-                                { title: t("Top Right"), value: "top right" },
-                                { title: t("Top Left"), value: "top left" },
-                                {
-                                  title: t("Bottom Center"),
-                                  value: "bottom center"
-                                },
-                                {
-                                  title: t("Bottom Left"),
-                                  value: "bottom left"
-                                },
-                                {
-                                  title: t("Bottom Right"),
-                                  value: "bottom right"
-                                },
-                                { title: t("Custom"), value: "custom" }
-                              ]
+                              choices: MaskPositions
                             },
                             {
                               id: "maskPositionx",
@@ -429,14 +292,7 @@ export const getItems =
                           label: t("Repeat"),
                           type: "select-dev",
                           disabled: maskShapeIsDisabled || maskSize === "cover",
-                          choices: [
-                            { title: t("No Repeat"), value: "no-repeat" },
-                            { title: t("Repeat"), value: "repeat" },
-                            { title: t("Repeat-X"), value: "repeat-x" },
-                            { title: t("Repeat-Y"), value: "repeat-y" },
-                            { title: t("Space"), value: "space" },
-                            { title: t("Round"), value: "round" }
-                          ]
+                          choices: MaskRepeat
                         }
                       ])
                 ]

@@ -10,6 +10,8 @@ import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import Fixed from "visual/component/Prompts/Fixed";
 import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { BlockMetaType } from "visual/types";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
 import { get } from "visual/utils/object/get";
@@ -25,7 +27,6 @@ import {
   PromptBlocksState,
   PromptTabsId
 } from "./types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 type Tab = {
   id: PromptTabsId;
@@ -44,30 +45,67 @@ type TabComponentProps = {
   getParentNode?: () => HTMLElement | null;
 };
 
-const getTabs = (config: ConfigCommon): Array<Tab> => {
-  const tabs: Array<Tab> = [
-    {
+const getTabs = (config: ConfigCommon, type: BlockMetaType): Array<Tab> => {
+  const { defaultLayouts, defaultStories, defaultKits, defaultPopups } =
+    config.api ?? {};
+
+  const hasDefaultLayouts =
+    !!defaultLayouts?.getMeta && !!defaultLayouts?.getData;
+
+  const hasDefaultStories =
+    !!defaultStories?.getMeta && !!defaultStories?.getData;
+
+  const hasDefaultKits = !!defaultKits?.getMeta && !!defaultKits?.getData;
+  const hasDefaultPopups = !!defaultPopups?.getMeta && !!defaultPopups?.getData;
+
+  const _isStory = isStory(Config.getAll());
+  const _isPopup = type === "popup";
+  const tabs: Array<Tab> = [];
+
+  if (hasDefaultStories && _isStory) {
+    tabs.push({
       id: "template",
-      title: isStory(Config.getAll()) ? t("Stories") : t("Layouts"),
+      title: defaultStories?.label ?? t("Stories"),
       icon: "nc-pages",
-      renderTab(props): ReactElement {
-        return (
-          <Layouts
-            {...props}
-            type={isStory(Config.getAll()) ? "stories" : "templates"}
-          />
-        );
+      renderTab(props: TabComponentProps): ReactElement {
+        return <Layouts {...props} type="stories" />;
       }
-    },
-    {
+    });
+  }
+
+  if (hasDefaultLayouts && !_isStory) {
+    tabs.push({
+      id: "template",
+      title: defaultLayouts?.label ?? t("Layouts"),
+      icon: "nc-pages",
+      renderTab(props: TabComponentProps): ReactElement {
+        return <Layouts {...props} type="layouts" />;
+      }
+    });
+  }
+
+  if (hasDefaultKits && !_isPopup) {
+    tabs.push({
       id: "blocks",
-      title: isPopup(Config.getAll()) ? t("Popups") : t("Blocks"),
+      title: defaultKits?.label ?? t("Blocks"),
       icon: "nc-blocks",
-      renderTab(props): ReactElement {
+      renderTab(props: TabComponentProps): ReactElement {
         return <Blocks {...props} />;
       }
-    }
-  ];
+    });
+  }
+
+  if (hasDefaultPopups && _isPopup) {
+    tabs.push({
+      id: "blocks",
+      title: defaultPopups?.label ?? t("Popups"),
+      icon: "nc-blocks",
+      renderTab(props: TabComponentProps): ReactElement {
+        return <Blocks {...props} />;
+      }
+    });
+  }
+
   const globalBlockTab: Tab = {
     id: "global",
     title: isPopup(config) ? t("Global Popups") : t("Global Blocks"),
@@ -147,15 +185,15 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
     onClose: _.noop
   };
 
-  state: PromptBlocksState = {
-    currentTab: this.props.activeTab || "blocks"
-  };
-
   wrapper = React.createRef<HTMLDivElement>();
 
   mounted = false;
 
-  tabs = getTabs(Config.getAll());
+  tabs = getTabs(Config.getAll(), this.props.type);
+
+  state: PromptBlocksState = {
+    currentTab: this.props.activeTab || "blocks"
+  };
 
   componentDidMount(): void {
     this.mounted = true;
@@ -217,10 +255,12 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
 
   renderTabs(): ReactElement {
     const { currentTab } = this.state;
+
     const filterTabs = ({ id }: Tab): boolean => {
       const key = `show${capitalize(id)}`;
       return !!get(key as keyof PromptBlocksProps, this.props);
     };
+
     const headerTabs = this.tabs.filter(filterTabs).map((tab) => {
       const className = classnames("brz-ed-popup-two-tab-item", {
         "brz-ed-popup-two-tab-item-active": tab.id === currentTab

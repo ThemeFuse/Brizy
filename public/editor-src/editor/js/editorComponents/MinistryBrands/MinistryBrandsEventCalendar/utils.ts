@@ -1,18 +1,26 @@
 import {
   changeContentVisibility,
+  getAttr,
   getDetail,
   getFeatures
 } from "../utils/helpers";
 import { Value } from "./types";
 
 export const getPlaceholder = (v: Value): string => {
-  const { category, group, numberOfMonths, features, nonfeatures, detailPage } =
-    v;
+  const {
+    category,
+    group,
+    showEventTime,
+    numberOfMonths,
+    features,
+    nonfeatures,
+    detailPage
+  } = v;
 
   const _features = getFeatures(features, "features");
   const _nonfeatures = getFeatures(nonfeatures, "nonfeatures");
   const _detailPage = getDetail(detailPage);
-
+  const _showEventTime = getAttr(showEventTime, "time");
   return `{{ekk_event_calendar
             category='${category}'
             group='${group}'
@@ -20,6 +28,7 @@ export const getPlaceholder = (v: Value): string => {
             ${_nonfeatures}
             howmanymonths='${numberOfMonths}'
             detail_page='${_detailPage}'
+            ${_showEventTime}
  }}`;
 };
 

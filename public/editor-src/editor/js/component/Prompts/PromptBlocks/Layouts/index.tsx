@@ -4,38 +4,38 @@ import React, {
   ReactElement,
   ReactNode
 } from "react";
-import _ from "underscore";
 import Scrollbars from "react-custom-scrollbars";
-import { Block } from "visual/types";
+import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
-import DataFilter from "../common/DataFilter";
-import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
-import SearchInput from "../common/SearchInput";
-import ThumbnailGrid, {
-  ThumbnailProps,
-  Data as ThumbnailData
-} from "../common/ThumbnailGrid";
-import Thumbnail, { LayoutThumbnail } from "../common/Thumbnail";
-import { templateThumbnailUrl } from "visual/utils/templates";
-import { assetUrl } from "visual/utils/asset";
-import { t } from "visual/utils/i18n";
-import Details from "./Details";
-import { getBlockDataUrl } from "visual/utils/blocks";
-import { PromptBlockTemplate } from "../types";
+import { ToastNotification } from "visual/component/Notifications";
+import Config from "visual/global/Config";
 import {
-  isStoryData,
-  Page,
-  LayoutData,
-  StoriesData,
-  TemplatesData,
-  Filter,
-  Category
-} from "./types";
+  LayoutsWithThumbs,
+  StoriesWithThumbs,
+  TemplateWithPageProps,
+  TemplateWithThumbs
+} from "visual/global/Config/types/configs/templates";
+import {
+  defaultLayoutsMeta,
+  defaultStoriesData,
+  defaultStoriesMeta
+} from "visual/utils/api";
+import { t } from "visual/utils/i18n";
+import DataFilter from "../common/DataFilter";
+import SearchInput from "../common/SearchInput";
+import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
+import Thumbnail, { LayoutThumbnail } from "../common/Thumbnail";
+import ThumbnailGrid, { ThumbnailProps } from "../common/ThumbnailGrid";
+import { Data as ThumbnailData } from "../common/ThumbnailGrid";
+import { PromptBlockTemplate } from "../types";
+import Details from "./Details";
+import { Category, Filter, Page, isStoryData } from "./types";
+import { isBlock } from "visual/utils/api/common";
 
-interface Data extends ThumbnailData, LayoutData {}
+interface Data extends ThumbnailData, TemplateWithPageProps {}
 
 export interface Props {
-  type: "stories" | "templates";
+  type: "stories" | "layouts";
   showSidebar: boolean;
   showSearch: boolean;
   HeaderSlotLeft?: ComponentType;
@@ -45,8 +45,8 @@ export interface Props {
 }
 
 interface State {
-  data: undefined | StoriesData | TemplatesData;
-  detailsData: undefined | LayoutData;
+  data: StoriesWithThumbs | LayoutsWithThumbs | undefined;
+  detailsData: undefined | TemplateWithPageProps;
 }
 
 const defaultFilter: Filter = {
@@ -56,7 +56,7 @@ const defaultFilter: Filter = {
 
 export default class List extends Component<Props, State> {
   static defaultProps: Props = {
-    type: "templates",
+    type: "layouts",
     showSidebar: true,
     showSearch: true,
     onAddBlocks: _.noop,
@@ -75,14 +75,18 @@ export default class List extends Component<Props, State> {
     this.setState({ data });
   }
 
-  async getData(): Promise<StoriesData | TemplatesData> {
-    const url = assetUrl(`${this.props.type}/meta.json`);
-    const data = await fetch(url);
-
-    return await data.json();
+  async getData(): Promise<StoriesWithThumbs | LayoutsWithThumbs | undefined> {
+    try {
+      return this.props.type === "layouts"
+        ? await defaultLayoutsMeta(Config.getAll())
+        : await defaultStoriesMeta(Config.getAll());
+    } catch (e) {
+      console.error(e);
+      ToastNotification.error(t("Something went wrong on getting meta"));
+    }
   }
 
-  filterFn = (item: LayoutData, cf: Filter): boolean => {
+  filterFn = (item: TemplateWithPageProps, cf: Filter): boolean => {
     const searchRegex = new RegExp(
       cf.search?.replace(/[.*+?^${}()|[\]\\]/g, ""),
       "i"
@@ -98,7 +102,9 @@ export default class List extends Component<Props, State> {
     return categoryMatch && searchMatch;
   };
 
-  getLayoutData(data: StoriesData | TemplatesData): LayoutData[] {
+  getLayoutData(
+    data: StoriesWithThumbs | LayoutsWithThumbs
+  ): Array<TemplateWithThumbs> {
     if (isStoryData(data)) {
       return data.stories;
     } else {
@@ -110,21 +116,18 @@ export default class List extends Component<Props, State> {
     this.setState({ detailsData: thumbnailData });
   };
 
-  async getBlockResolve(id: string): Promise<Block> {
-    const url = getBlockDataUrl(this.props.type, id);
-    const r = await fetch(url);
-    return await r.json();
-  }
-
   handleBlankThumbnailAdd = async (data: Page): Promise<void> => {
     const { onAddBlocks, onClose } = this.props;
-    const blockData = await this.getBlockResolve(data.id);
-    const resolve = { ...blockData, blockId: data.id };
+    const blockData = await defaultStoriesData(Config.getAll(), data.id);
+    const resolve = isBlock(blockData)
+      ? { ...blockData, blockId: data.id }
+      : { ...blockData.blocks[0], blockId: data.id };
 
     onAddBlocks({
       blocks: [resolve],
       fonts: []
     });
+
     onClose();
   };
 
@@ -178,13 +181,13 @@ export default class List extends Component<Props, State> {
     return <LayoutThumbnail data={data} {...props} />;
   };
 
-  renderList(data: StoriesData | TemplatesData): ReactElement {
+  renderList(data: StoriesWithThumbs | LayoutsWithThumbs): ReactElement {
     const { showSidebar, showSearch } = this.props;
     const blocks = this.getLayoutData(data);
-    const thumbnails = blocks.map(el => ({
+
+    const thumbnails = blocks.map((el) => ({
       ...el,
-      ...el.pages[0],
-      thumbnailSrc: templateThumbnailUrl(el.pages[0])
+      ...el.pages[0]
     }));
 
     const countersSectionBlocks: { [k: string]: number } = {};
@@ -203,12 +206,14 @@ export default class List extends Component<Props, State> {
         }
       }
     }
-    const categories = ([
-      {
-        id: "*",
-        title: t("All Categories")
-      }
-    ] as Category[])
+    const categories = (
+      [
+        {
+          id: "*",
+          title: t("All Categories")
+        }
+      ] as Category[]
+    )
       .concat(data.categories)
       .filter(({ hidden }) => hidden !== true);
 

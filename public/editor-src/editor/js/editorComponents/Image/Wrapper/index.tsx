@@ -26,7 +26,7 @@ const Image: React.FC<ImageProps> = (props) => {
     onEnd
   } = props;
 
-  const { maskShape } = v;
+  const { maskShape = "none" } = v;
   const { points, restrictions } = useResizerPoints(props);
 
   const classNameWrapper = classnames(

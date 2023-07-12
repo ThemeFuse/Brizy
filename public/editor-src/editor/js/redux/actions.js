@@ -29,7 +29,6 @@ export function hydrate({
   fonts,
   page,
   globalBlocks,
-  blocksThumbnailSizes,
   authorized,
   syncAllowed
 }) {
@@ -41,7 +40,6 @@ export function hydrate({
       fonts,
       page,
       globalBlocks,
-      blocksThumbnailSizes,
       authorized,
       syncAllowed
     }

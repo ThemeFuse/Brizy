@@ -36,7 +36,8 @@ export const urlsCommon = {
   templateFonts: "",
   upgradeToPro: "",
   editorIcons: "",
-  worker: ""
+  worker: "",
+  projectCloneLink: ""
 };
 
 export const projectCommon = {

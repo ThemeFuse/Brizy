@@ -1,5 +1,5 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { ElementTypes } from "visual/global/Config/types/configs/ConfigCommon";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { t } from "visual/utils/i18n";
 
 export default function (config: ConfigCommon) {
@@ -15,7 +15,6 @@ export default function (config: ConfigCommon) {
           {
             type: ElementTypes.ProductMetafield,
             value: {
-              sourceType: "shopify-product",
               ...config?.contentDefaults?.[ElementTypes.ProductMetafield]
             }
           }

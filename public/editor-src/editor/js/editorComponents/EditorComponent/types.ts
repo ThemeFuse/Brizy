@@ -46,7 +46,7 @@ export interface ContextMenuItemButton {
   title: string;
   inactive?: boolean;
   helperText: (d: { isInSubMenu: boolean }) => string;
-  onChange: () => void;
+  onChange?: () => void;
 }
 
 export interface ContextMenuItemGroup {

@@ -9,6 +9,7 @@ import { Scrollbar } from "visual/component/Scrollbar";
 import { projectSelector } from "visual/redux/selectors";
 import { unDeletedFontsSelector } from "visual/redux/selectors-new";
 import { fontTransform } from "visual/utils/fonts";
+import { scrollToActiveFont } from "visual/utils/fonts/scrollHelpers";
 import { t } from "visual/utils/i18n";
 
 const fontSizeMap = {
@@ -26,6 +27,15 @@ class FontFamily extends Component {
     fonts: {},
     onChange: _.noop
   };
+
+  constructor(props) {
+    super(props);
+    this.scrollbarRef = React.createRef();
+  }
+
+  componentDidMount() {
+    scrollToActiveFont(this.scrollbarRef);
+  }
 
   checkCurrentFont() {
     const { fonts, value } = this.props;
@@ -87,7 +97,7 @@ class FontFamily extends Component {
 
     return (
       <div className="brz-ed-font__typography">
-        <Scrollbar theme="dark">
+        <Scrollbar theme="dark" ref={this.scrollbarRef}>
           {uploadFonts.data &&
             uploadFonts.data.length > 0 &&
             this.renderFontList(uploadFonts.data, "upload", existedFonts)}

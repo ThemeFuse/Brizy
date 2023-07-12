@@ -56,6 +56,16 @@ export const getItems: GetItems<Value, Props> = ({
                     max: 12,
                     spinner: true
                   }
+                },
+                {
+                  id: "visibleMonth",
+                  label: t("Visible Month"),
+                  type: "number-dev",
+                  config: {
+                    min: 1,
+                    max: 12,
+                    spinner: true
+                  }
                 }
               ]
             },
@@ -91,7 +101,7 @@ export const getItems: GetItems<Value, Props> = ({
               ]
             },
             {
-              id: "tabEventDetail",
+              id: "tabEventCalendarDisplay",
               label: t("Display"),
               options: [
                 {
@@ -113,6 +123,12 @@ export const getItems: GetItems<Value, Props> = ({
                       "If this is selected the Features option does not apply."
                     )
                   }
+                },
+                {
+                  id: "showEventTime",
+                  type: "switch-dev",
+                  label: t("Event Start Time"),
+                  devices: "desktop"
                 }
               ]
             },

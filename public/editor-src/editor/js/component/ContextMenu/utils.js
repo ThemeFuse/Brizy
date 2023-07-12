@@ -3,19 +3,15 @@ export function mergeItems(a, b) {
 
   for (var i = 0; i < b.length; i++) {
     let foundMergeTarget = false;
-
     for (var j = 0; j < a.length; j++) {
-      if (
-        b[i].id === a[j].id &&
-        b[i].type === a[j].type &&
-        b[i].items &&
-        a[j].items
-      ) {
+      if (b[i].id === a[j].id && b[i].type === a[j].type) {
         foundMergeTarget = true;
+        const hasItems = b[i].items && a[j].items;
+
         mergedItems[j] = {
           ...b[i],
           ...a[j],
-          items: mergeItems(a[j].items, b[i].items)
+          ...(hasItems && { items: mergeItems(a[j].items, b[i].items) })
         };
       }
     }

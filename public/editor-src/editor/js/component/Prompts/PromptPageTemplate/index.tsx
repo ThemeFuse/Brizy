@@ -1,42 +1,38 @@
 import React, { ReactElement, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import Fixed from "visual/component/Prompts/Fixed";
-import { t } from "visual/utils/i18n";
-import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
-import { shopifySyncPage } from "visual/utils/api";
-import { Button } from "../common/Button";
-import { Content } from "../common/Content";
-import { Header } from "../common/Header";
-import { Props } from "./types";
-import { SettingsTab } from "../common/PromptPage/SettingsTab";
-import { Input } from "../common/PromptPage/Input";
-import { tabs, Tabs } from "../common/PromptPage/types";
-import { Valid } from "./types";
-import Config from "visual/global/Config";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
-import { getChoices } from "visual/component/Prompts/utils";
-import { isNonEmptyArray } from "visual/utils/array/types";
-import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
-import { reducer } from "./reducer";
+import {
+  setLayout,
+  setTitle
+} from "visual/component/Prompts/PromptPageTemplate/types/Setters";
 import {
   cancel,
   save,
   switchTab
 } from "visual/component/Prompts/common/states/Classic/types/Actions";
-import {
-  setLayout,
-  setTitle
-} from "visual/component/Prompts/PromptPageTemplate/types/Setters";
+import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
+import { getChoices } from "visual/component/Prompts/utils";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
+import { shopifySyncPage } from "visual/utils/api";
+import { isNonEmptyArray } from "visual/utils/array/types";
+import { t } from "visual/utils/i18n";
+import { Button } from "../common/Button";
+import { Content } from "../common/Content";
+import { Header } from "../common/Header";
+import { Input } from "../common/PromptPage/Input";
+import { SettingsTab } from "../common/PromptPage/SettingsTab";
+import { Tabs, tabs } from "../common/PromptPage/types";
+import { reducer } from "./reducer";
+import { Props } from "./types";
+import { Valid } from "./types";
 
 export const PromptPageTemplate = (props: Props): ReactElement => {
-  const {
-    headTitle,
-    pageTitle,
-    selectedLayout,
-    opened,
-    onClose,
-    onSave
-  } = props;
+  const { headTitle, pageTitle, selectedLayout, opened, onClose, onSave } =
+    props;
+
+  const { value } = selectedLayout || { value: undefined };
 
   const dispatch = useDispatch();
 
@@ -49,7 +45,7 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
         .then(() => shopifySyncPage(title))
         .then(() => undefined);
     },
-    [dispatch]
+    [dispatch, onSave]
   );
   const getData = useCallback(async () => {
     const config = Config.getAll();
@@ -60,14 +56,14 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
         return {
           layouts,
           title: pageTitle,
-          layout: selectedLayout?.value ?? layouts[0].id,
+          layout: value ?? layouts[0].id,
           error: undefined
         };
       }
     }
 
     return Promise.reject();
-  }, []);
+  }, [pageTitle, value]);
 
   const [state, dispatchS] = useStateReducer(
     reducer,
@@ -143,7 +139,7 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
     <Fixed opened={opened} onClose={onClose}>
       <div className="brz-ed-popup-wrapper">
         <Header
-          tabs={tabs.map(tab => ({
+          tabs={tabs.map((tab) => ({
             ...tab,
             active: tab.id === state.payload.activeTab,
             onClick: (): void => dispatchS(switchTab(tab.id))

@@ -8,23 +8,31 @@ import { Model } from "./Type";
 
 export type Props = OptionProps<Model>;
 
-export const PayPal = ({ onChange, value, label }: Props): ReactElement => {
-  const [v, setV] = useState<string>(value.value ?? "");
+export const PayPal = ({
+  onChange,
+  value: _value,
+  label
+}: Props): ReactElement => {
+  const { value } = _value;
+
+  const [v, setV] = useState<string>(value ?? "");
   const handleOnChange = useCallback(
-    pipe(
-      always(v),
-      pass(is),
-      (value) => onChange({ value }),
-      () => Promise.resolve()
-    ),
+    () =>
+      pipe(
+        always(v),
+        pass(is),
+        (value) => onChange({ value }),
+        () => Promise.resolve()
+      )(),
     [onChange, v]
   );
   const handleCancel = useCallback(
-    pipe(
-      () => setV(value.value ?? ""),
-      () => Promise.resolve()
-    ),
-    [value.value]
+    () =>
+      pipe(
+        () => setV(value ?? ""),
+        () => Promise.resolve()
+      )(),
+    [value]
   );
 
   return (

@@ -41,7 +41,7 @@ export const Header = (props: Props): ReactElement => {
         )}
       </div>
     );
-  }, [isEdit, handleChange]);
+  }, [isEdit, handleChange, helpIcon]);
 
   return React.cloneElement(children, {
     renderExtraHeader: renderHeader,

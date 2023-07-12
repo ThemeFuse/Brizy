@@ -1,34 +1,34 @@
 import React, { ReactElement, useCallback, useMemo } from "react";
+import { useDispatch } from "react-redux";
+import CheckGroup, {
+  CheckGroupIcon,
+  CheckGroupItem
+} from "visual/component/Controls/CheckGroup";
 import Fixed from "visual/component/Prompts/Fixed";
+import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
+import { getChoices } from "visual/component/Prompts/utils";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
 import {
   getCollectionSourceItemsById,
   getPageRelations,
   shopifySyncRules
 } from "visual/utils/api";
+import { SelectedItem } from "visual/utils/api/types";
+import { isNonEmptyArray } from "visual/utils/array/types";
 import { t } from "visual/utils/i18n";
 import { Button } from "../common/Button";
 import { Content } from "../common/Content";
 import { Header } from "../common/Header";
-import CheckGroup, {
-  CheckGroupIcon,
-  CheckGroupItem
-} from "visual/component/Controls/CheckGroup";
-import { Props, RulesState, Valid } from "./types";
-import { Tabs, tabs } from "../common/PromptPage/types";
-import { SettingsTab } from "../common/PromptPage/SettingsTab";
 import { Input } from "../common/PromptPage/Input";
-import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
-import { useDispatch } from "react-redux";
-import Config from "visual/global/Config";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
-import * as Setters from "./types/Setters";
+import { SettingsTab } from "../common/PromptPage/SettingsTab";
+import { Tabs, tabs } from "../common/PromptPage/types";
 import * as Actions from "../common/states/Classic/types/Actions";
-import { isNonEmptyArray } from "visual/utils/array/types";
-import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
-import { Item } from "./types";
 import { reducer } from "./reducer";
-import { SelectedItem } from "visual/utils/api/types";
-import { getChoices } from "visual/component/Prompts/utils";
+import { Props, RulesState, Valid } from "./types";
+import { Item } from "./types";
+import * as Setters from "./types/Setters";
 
 const getErrors = (s: RulesState): string | undefined => {
   switch (s.type) {
@@ -44,14 +44,11 @@ const getErrors = (s: RulesState): string | undefined => {
 };
 
 export const PromptPageRules = (props: Props): ReactElement => {
-  const {
-    headTitle,
-    pageTitle,
-    opened,
-    selectedLayout,
-    onClose,
-    onSave
-  } = props;
+  const { headTitle, pageTitle, opened, selectedLayout, onClose, onSave } =
+    props;
+
+  const { value } = selectedLayout || { value: undefined };
+
   const dispatch = useDispatch();
   const handleSave = useCallback(
     ({ items, title, layout }: Valid): Promise<void> => {
@@ -67,19 +64,19 @@ export const PromptPageRules = (props: Props): ReactElement => {
         )
         .then(() => undefined);
     },
-    [dispatch]
+    [dispatch, onSave]
   );
   const getData = useCallback(async () => {
     const config = Config.getAll();
     if (isCloud(config) && isShopify(config)) {
-      const selectedP = getPageRelations(config).then(is => is.map(i => i.id));
+      const selectedP = getPageRelations(config).then((is) =>
+        is.map((i) => i.id)
+      );
       const itemsP = getCollectionSourceItemsById(config.templateType.id);
 
-      const items = await Promise.all([
-        itemsP,
-        selectedP
-      ]).then(([items, selected]): Item[] =>
-        items.map(i => ({ ...i, selected: selected.includes(i.id) }))
+      const items = await Promise.all([itemsP, selectedP]).then(
+        ([items, selected]): Item[] =>
+          items.map((i) => ({ ...i, selected: selected.includes(i.id) }))
       );
       const layouts = getChoices(config);
 
@@ -88,14 +85,14 @@ export const PromptPageRules = (props: Props): ReactElement => {
           items,
           layouts,
           title: pageTitle,
-          layout: selectedLayout?.value ?? layouts[0].id,
+          layout: value ?? layouts[0].id,
           error: undefined
         };
       }
     }
 
     return Promise.reject();
-  }, []);
+  }, [pageTitle, value]);
 
   const [state, dispatchS] = useStateReducer(
     reducer,
@@ -139,7 +136,7 @@ export const PromptPageRules = (props: Props): ReactElement => {
       case "Canceled": {
         const { items, title } = state.payload;
         const checked = items
-          .filter(i => i.selected)
+          .filter((i) => i.selected)
           .reduce((acc: Record<string, boolean>, i) => {
             acc[i.id] = true;
             return acc;
@@ -173,7 +170,7 @@ export const PromptPageRules = (props: Props): ReactElement => {
                     )
                   }
                 >
-                  {items.map(rule => (
+                  {items.map((rule) => (
                     <CheckGroupItem
                       key={rule.id}
                       divider={true}
@@ -208,7 +205,7 @@ export const PromptPageRules = (props: Props): ReactElement => {
     <Fixed opened={opened} onClose={onClose}>
       <div className="brz-ed-popup-wrapper">
         <Header
-          tabs={tabs.map(tab => ({
+          tabs={tabs.map((tab) => ({
             ...tab,
             active: tab.id === state.payload.activeTab,
             onClick: (v): void => dispatchS(Actions.switchTab(v))

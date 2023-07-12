@@ -228,13 +228,38 @@
     "tempBorderBottomLeftRadius": 0,
 
     "containerClassName": "",
-    "closeCustomClassName":"",
+    "closeCustomClassName": "",
 
     "customCSS": "",
     "closeCustomCSS": "",
     "closeCustomID": "",
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
+
+    "maskShape": "none",
+    "maskSize": "cover",
+    "maskPosition": "center center",
+    "maskRepeat": "no-repeat",
+    "maskScale": 50,
+    "maskScaleSuffix": "%",
+    "maskPositiony": 3,
+    "maskPositionySuffix": "%",
+    "maskPositionx": 3,
+    "maskPositionxSuffix": "%",
+
+    "maskCustomUploadImageExtension": "",
+    "maskCustomUploadImageWidth": 600,
+    "maskCustomUploadImageHeight": 450,
+    "maskCustomUploadPositionX": 50,
+    "maskCustomUploadPositionY": 50,
+
+    "maskShadowColorHex": "#000000",
+    "maskShadowColorOpacity": 0,
+    "maskShadowColorPalette": "",
+
+    "maskShadowBlur": 0,
+    "maskShadowVertical": 0,
+    "maskShadowHorizontal": 0,
 
     "tabletClosePosition": null,
     "tabletPopupRowVerticalAlign": null,

@@ -1,13 +1,13 @@
-import { SizeType } from "visual/global/Config/types/configs/common";
 import {
   cssStyleBgColor,
   cssStyleBorder,
   cssStyleBoxShadow,
   cssStyleColor,
-  cssStyleImageMask,
-  cssStyleImageMaskPosition,
-  cssStyleImageMaskRepeat,
-  cssStyleImageMaskSize,
+  cssStyleMaskCustomShape,
+  cssStyleMaskPosition,
+  cssStyleMaskRepeat,
+  cssStyleMaskShape,
+  cssStyleMaskSize,
   cssStylePaddingFourFields,
   cssStyleSizeMinWidth,
   cssStyleSizeWidth,
@@ -23,8 +23,6 @@ import { cssStyleSpacing } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Num from "visual/utils/reader/number";
 import * as Str from "visual/utils/reader/string";
-import { getImageUrl } from "../image";
-import { capByPrefix } from "../string";
 import { CSSValue } from "../style2/types";
 
 export function cssStyleElementImageGalleryWidth({
@@ -474,7 +472,7 @@ export function cssStyleElementImageGalleryBigImageImagesMaskShape({
   device,
   state
 }: CSSValue): string {
-  return cssStyleImageMask({ v, device, state, prefix: "images" });
+  return cssStyleMaskShape({ v, device, state, prefix: "images" });
 }
 
 export function cssStyleElementImageGalleryBigImageImagesMaskSize({
@@ -482,7 +480,7 @@ export function cssStyleElementImageGalleryBigImageImagesMaskSize({
   device,
   state
 }: CSSValue): string {
-  return cssStyleImageMaskSize({ v, device, state, prefix: "images" });
+  return cssStyleMaskSize({ v, device, state, prefix: "images" });
 }
 
 export function cssStyleElementImageGalleryBigImageImagesMaskRepeat({
@@ -490,7 +488,7 @@ export function cssStyleElementImageGalleryBigImageImagesMaskRepeat({
   device,
   state
 }: CSSValue): string {
-  return cssStyleImageMaskRepeat({ v, device, state, prefix: "images" });
+  return cssStyleMaskRepeat({ v, device, state, prefix: "images" });
 }
 
 export function cssStyleElementImageGalleryBigImageImagesMaskPosition({
@@ -498,7 +496,7 @@ export function cssStyleElementImageGalleryBigImageImagesMaskPosition({
   device,
   state
 }: CSSValue): string {
-  return cssStyleImageMaskPosition({ v, device, state, prefix: "images" });
+  return cssStyleMaskPosition({ v, device, state, prefix: "images" });
 }
 
 export function cssStyleElementImageGalleryBigImageOverlay({
@@ -512,26 +510,7 @@ export function cssStyleElementImageGalleryBigImageOverlay({
 export function cssStyleElementImageGalleryBigImageImagesCustomMask({
   v,
   device,
-  state,
-  prefix = "imagesMaskCustomUpload"
+  state
 }: CSSValue) {
-  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const extension = dvv(capByPrefix(prefix, "imageExtension"));
-  const src = dvv(capByPrefix(prefix, "imageSrc"));
-  const maskShape = dvv("imagesMaskShape");
-
-  const fileName = dvv(capByPrefix(prefix, "imageFileName"));
-
-  if ((extension === "png" || extension === "svg") && src) {
-    const url = getImageUrl({
-      fileName,
-      uid: src,
-      sizeType: SizeType.custom
-    });
-
-    const image = `-webkit-mask-image:  url("${url}");`;
-    return maskShape === "custom" ? image : "";
-  }
-
-  return "";
+  return cssStyleMaskCustomShape({ v, device, state, prefix: "images" });
 }

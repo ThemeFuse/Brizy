@@ -4,12 +4,20 @@ import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import {
+  MaskPositions,
+  MaskRepeat,
+  MaskShapes,
+  MaskSizes
+} from "visual/utils/mask/Mask";
 import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { read as readString } from "visual/utils/reader/string";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { getInstanceParentId } from "visual/utils/toolbar";
 import { Value } from "./toolbarClose";
 
@@ -63,6 +71,15 @@ export const getItems: GetItems<Value> = ({
           { title: t("Custom"), value: "custom2" },
           { title: t("Full Height"), value: "fullHeight" }
         ];
+
+  const maskShape = readString(dvv("maskShape")) ?? "none";
+  const maskPosition = readString(dvv("maskPosition")) ?? "center center";
+  const maskSize = readString(dvv("maskSize")) ?? "cover";
+  const maskScaleSuffix = readString(dvv("maskScaleSuffix")) ?? "%";
+  const maskCustomUploadImageSrc = readString(dvv("maskCustomUploadImageSrc"));
+  const maskShapeIsDisabled =
+    maskShape === "none" ||
+    (maskShape === "custom" && !maskCustomUploadImageSrc);
 
   return [
     {
@@ -176,6 +193,103 @@ export const getItems: GetItems<Value> = ({
                   population: imageDynamicContentChoices
                 }
               ]
+            },
+            {
+              id: "tabMask",
+              label: t("Mask"),
+              position: 110,
+              options: [
+                {
+                  id: "maskShape",
+                  label: t("Shape"),
+                  devices: "desktop",
+                  type: "select-dev",
+                  choices: MaskShapes
+                },
+                {
+                  id: "maskCustomUpload",
+                  type: "imageUpload-dev",
+                  devices: "desktop",
+                  label: t("Image"),
+                  config: {
+                    pointer: false,
+                    disableSizes: true,
+                    acceptedExtensions: ["png", "svg"]
+                  },
+                  helper: {
+                    content: t("Upload only [ .png or .svg ]")
+                  },
+                  disabled: maskShape !== "custom"
+                },
+                {
+                  id: "groupSize",
+                  type: "group-dev",
+                  disabled: maskShapeIsDisabled,
+                  options: [
+                    {
+                      id: "maskSize",
+                      label: t("Size"),
+                      type: "select-dev",
+                      choices: MaskSizes
+                    },
+                    {
+                      id: "maskScale",
+                      type: "slider-dev",
+                      disabled: maskSize !== "custom",
+                      config: {
+                        min: 1,
+                        max: maskScaleSuffix === "px" ? 500 : 100,
+                        units: [
+                          { value: "%", title: "%" },
+                          { value: "px", title: "px" }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "groupPosition",
+                  type: "group-dev",
+                  disabled: maskShapeIsDisabled,
+                  options: [
+                    {
+                      id: "maskPosition",
+                      type: "select-dev",
+                      label: t("Position"),
+                      choices: MaskPositions
+                    },
+                    {
+                      id: "maskPositionx",
+                      label: t("X"),
+                      type: "slider-dev",
+                      disabled: maskPosition !== "custom",
+                      config: {
+                        min: 1,
+                        max: 100,
+                        units: [{ value: "%", title: "%" }]
+                      }
+                    },
+                    {
+                      id: "maskPositiony",
+                      label: t("Y"),
+                      type: "slider-dev",
+                      disabled: maskPosition !== "custom",
+                      config: {
+                        min: 1,
+                        max: 100,
+                        units: [{ value: "%", title: "%" }]
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "maskRepeat",
+                  label: t("Repeat"),
+                  type: "select-dev",
+                  disabled: maskShapeIsDisabled || maskSize === "cover",
+                  choices: MaskRepeat
+                }
+              ]
             }
           ]
         }
@@ -196,8 +310,32 @@ export const getItems: GetItems<Value> = ({
       position: 90,
       options: [
         {
-          id: "",
-          type: "backgroundColor-dev"
+          id: "tabsColor",
+          type: "tabs-dev",
+          tabs: [
+            {
+              id: "tabBgColor",
+              label: t("Background"),
+              options: [
+                {
+                  id: "",
+                  type: "backgroundColor-dev"
+                }
+              ]
+            },
+            {
+              id: "tabDropShadow",
+              label: t("Shadow"),
+              options: [
+                {
+                  id: "maskShadow",
+                  type: "textShadow-dev",
+                  states: [NORMAL, HOVER],
+                  disabled: maskShapeIsDisabled
+                }
+              ]
+            }
+          ]
         }
       ]
     },

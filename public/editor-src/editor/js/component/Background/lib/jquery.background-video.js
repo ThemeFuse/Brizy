@@ -202,6 +202,42 @@ function Vimeo($iframe, settings) {
   };
 }
 
+function CustomVideo(video, settings) {
+  const loop = settings.loop;
+  const start = settings.start || 0;
+  const _video = video.find("video")[0];
+
+  const handleCustomVideoEnded = () => {
+    _video.currentTime = start;
+    _video.play();
+  };
+
+  if (_video) {
+    if (loop) {
+      _video.addEventListener("ended", handleCustomVideoEnded);
+    }
+
+    _video.setAttribute("muted", "true");
+    _video.currentTime = start;
+    _video.play();
+  }
+
+  return {
+    setLoop: () => {
+      if (_video) {
+        _video.removeEventListener("ended", handleCustomVideoEnded);
+      }
+    },
+    destroy: () => {
+      if (_video) {
+        _video.removeEventListener("ended", handleCustomVideoEnded);
+        _video.currentTime = 0;
+      }
+    },
+    seekTo: () => {}
+  };
+}
+
 (function ($, window) {
   var pluginName = "backgroundVideo";
   var dataKey = "plugin_" + pluginName;
@@ -209,7 +245,6 @@ function Vimeo($iframe, settings) {
   function Plugin(elem, settings) {
     this.$elem = $(elem);
     this.$iframe = this.$elem.find("iframe");
-
     this._setSizes = this._setSizes.bind(this);
 
     this._setSizes();
@@ -219,19 +254,25 @@ function Vimeo($iframe, settings) {
 
   $.extend(Plugin.prototype, {
     _init: function (settings) {
+      if (!this.$iframe) {
+        this.$iframe = this.$elem.find("iframe");
+      }
       if (settings.type === "youtube") {
         this._player = new Youtube(this.$iframe, settings);
       } else if (settings.type === "vimeo") {
         this._player = new Vimeo(this.$iframe, settings);
+      } else {
+        this._player = new CustomVideo(this.$elem, settings);
       }
     },
     _setSizes: function () {
       var size = getSize.call(this);
-
-      this.$iframe
-        .width(size.width)
-        .height(size.height)
-        .css({ left: size.left, top: size.top });
+      if (this.$iframe) {
+        this.$iframe
+          .width(size.width)
+          .height(size.height)
+          .css({ left: size.left, top: size.top });
+      }
 
       function getSize() {
         const adminBar = document.getElementById("wpadminbar");
@@ -285,6 +326,9 @@ function Vimeo($iframe, settings) {
         this._setSizes();
       } else if (type === "resize") {
         this._setSizes();
+      } else if (type === "reinit") {
+        this.destroy();
+        this._init(value);
       } else {
         this._player[type](value);
       }

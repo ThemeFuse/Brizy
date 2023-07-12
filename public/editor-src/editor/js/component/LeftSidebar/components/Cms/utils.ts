@@ -22,6 +22,8 @@ import {
 } from "visual/global/Config/types/configs/Cloud";
 import { Cloud, Context, Shopify } from "./types/List";
 
+const createCloneLinkApiUri = (uri: string) => uri.slice(0, uri.length - 3);
+
 const cloud = (config: CMS): Cloud => {
   const token = config.tokenV2?.access_token;
   const xAuthUserToken = config.x_auth_user_token;
@@ -37,6 +39,17 @@ const cloud = (config: CMS): Cloud => {
     settingsUrl: config.urls.projectSettings,
     protectedPagePassword: config.project.protectedPagePassword,
     whiteLabel: getWhiteLabel(config),
+    cloneLink: `${config.urls.projectCloneLink}/`,
+    cloneLinkApi: xAuthUserToken
+      ? {
+          __type: "withToken",
+          token: xAuthUserToken,
+          uri: createCloneLinkApiUri(config.urls.api)
+        }
+      : {
+          __type: "withOutToken",
+          uri: createCloneLinkApiUri(config.urls.api)
+        },
     userApi: token
       ? { __type: "withToken", token, uri: config.cms.apiUrl }
       : { __type: "withOutToken", uri: config.cms.apiUrl },

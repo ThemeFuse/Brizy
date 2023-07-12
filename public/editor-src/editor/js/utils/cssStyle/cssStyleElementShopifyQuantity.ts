@@ -10,6 +10,7 @@ import { capByPrefix } from "visual/utils/string";
 import * as Str from "visual/utils/string/specs";
 import { styleBgColor, styleBgGradient } from "visual/utils/style2";
 import { CSSValue } from "../style2/types";
+import { cssStyleColor } from "./cssStyleColor";
 
 type Size = "small" | "medium" | "large" | "custom";
 const getSize = checkValue<Size>(["small", "medium", "large", "custom"]);
@@ -169,3 +170,11 @@ export function cssStyleElementShopifyQuantityInputRadius({
 }: CSSValue): string {
   return cssStyleBorderRadius({ v, device, state, prefix });
 }
+
+export const cssStyleElementShopifyQuantityIconColor = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleColor({ v, device, state, prefix: "buttonIconColor" });
+};

@@ -45,6 +45,8 @@ export interface Cloud extends Base {
   notificationApi: Authorize;
   customersEditorUrl: string;
   isAvailablePreviewBadge: boolean;
+  cloneLink: string;
+  cloneLinkApi: Authorize;
   modules: {
     shop: Shop;
     users: {
