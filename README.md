@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.2.2<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.4.24<br>
+Stable tag: 2.4.26<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,21 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.26 - 2023-07-12
+* New: Added custom video URL for Block background 
+* New: Added copy/paste styles for Text element 
+* New: Added mask option for all containers: Rows, Columns, Blocks
+* Improved: Display selected font at top of font list in the Typography options
+* Improved: Hexagon Shape in the Mask options
+* Improved: Updated icons library Font Awesome to version 6 
+* Fixed: Text crashed after population change
+* Fixed: Block Slider on preview 
+* Fixed: Element with rotate motion effect moves when hovering on toolbar 
+* Fixed: Text alignment in the preview
+* Fixed: Remove saved block tag
+* Fixed: Label text pushing the options out of the UI
+* Fixed: Container width in PX shows 1400px max slider value instead of 1170px
 
 ### 2.4.24 - 2023-06-26
 * Fixed: Scrollbar inside Popup
