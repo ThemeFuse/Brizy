@@ -1,48 +1,45 @@
 import React, { ReactElement, useCallback } from "react";
-import Fixed from "visual/component/Prompts/Fixed";
-import {
-  getPageRelations,
-  shopifyBlogItems,
-  shopifySyncArticle
-} from "visual/utils/api";
-import { t } from "visual/utils/i18n";
-import { Button } from "../common/Button";
-import { Content } from "../common/Content";
-import { Header } from "../common/Header";
-import { Props } from "./types";
-import { Tabs, tabs } from "../common/PromptPage/types";
-import { SettingsTab } from "../common/PromptPage/SettingsTab";
-import { Input } from "../common/PromptPage/Input";
-import Radio, { RadioItem } from "visual/component/Controls/Radio";
 import { useDispatch } from "react-redux";
-import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
-import Config from "visual/global/Config";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
-import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
+import Radio, { RadioItem } from "visual/component/Controls/Radio";
+import Fixed from "visual/component/Prompts/Fixed";
 import { reducer } from "visual/component/Prompts/PromptPageArticle/reducer";
-import { Valid } from "./types";
-import { isNonEmptyArray } from "visual/utils/array/types";
-import { getChoices } from "visual/component/Prompts/utils";
-import {
-  cancel,
-  save,
-  switchTab
-} from "visual/component/Prompts/common/states/Classic/types/Actions";
 import {
   setBlog,
   setLayout,
   setTitle
 } from "visual/component/Prompts/PromptPageArticle/types/Setters";
+import {
+  cancel,
+  save,
+  switchTab
+} from "visual/component/Prompts/common/states/Classic/types/Actions";
+import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
+import { getChoices } from "visual/component/Prompts/utils";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
+import {
+  getPageRelations,
+  shopifyBlogItems,
+  shopifySyncArticle
+} from "visual/utils/api";
+import { isNonEmptyArray } from "visual/utils/array/types";
+import { t } from "visual/utils/i18n";
+import { Button } from "../common/Button";
+import { Content } from "../common/Content";
+import { Header } from "../common/Header";
+import { Input } from "../common/PromptPage/Input";
+import { SettingsTab } from "../common/PromptPage/SettingsTab";
+import { Tabs, tabs } from "../common/PromptPage/types";
+import { Props } from "./types";
+import { Valid } from "./types";
 
 export const PromptPageArticle = (props: Props): ReactElement => {
-  const {
-    headTitle,
-    pageTitle,
-    opened,
-    selectedLayout,
-    onClose,
-    onSave
-  } = props;
+  const { headTitle, pageTitle, opened, selectedLayout, onClose, onSave } =
+    props;
+
+  const { value } = selectedLayout || { value: undefined };
+
   const dispatch = useDispatch();
 
   const handleSave = useCallback(
@@ -54,12 +51,14 @@ export const PromptPageArticle = (props: Props): ReactElement => {
         .then(() => shopifySyncArticle(selected.id, selected.title, title))
         .then(() => undefined);
     },
-    [dispatch]
+    [dispatch, onSave]
   );
   const getData = useCallback(async () => {
     const config = Config.getAll();
     if (isCloud(config) && isShopify(config)) {
-      const selectedP = getPageRelations(config).then(is => is.map(i => i.id));
+      const selectedP = getPageRelations(config).then((is) =>
+        is.map((i) => i.id)
+      );
       const itemsP = shopifyBlogItems();
 
       const [items, selected] = await Promise.all([itemsP, selectedP]);
@@ -69,16 +68,16 @@ export const PromptPageArticle = (props: Props): ReactElement => {
         return {
           items,
           layouts,
-          selected: items.find(i => i.id === selected[0]),
+          selected: items.find((i) => i.id === selected[0]),
           title: pageTitle,
-          layout: selectedLayout?.value ?? layouts[0].id,
+          layout: value ?? layouts[0].id,
           error: undefined
         };
       }
     }
 
     return Promise.reject();
-  }, []);
+  }, [pageTitle, value]);
 
   const [state, dispatchS] = useStateReducer(
     reducer,
@@ -167,7 +166,7 @@ export const PromptPageArticle = (props: Props): ReactElement => {
     <Fixed opened={opened} onClose={onClose}>
       <div className="brz-ed-popup-wrapper">
         <Header
-          tabs={tabs.map(tab => ({
+          tabs={tabs.map((tab) => ({
             ...tab,
             active: tab.id === state.payload.activeTab,
             onClick: (): void => dispatchS(switchTab(tab.id))

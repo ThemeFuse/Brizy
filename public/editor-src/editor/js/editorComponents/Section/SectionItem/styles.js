@@ -6,9 +6,15 @@ export function style(v, vs, vd, props) {
       standart: ["cssStylePaddingPreview", "cssStylePaddingRightLeftForEditor"]
     },
     ".brz &&:hover > .brz-bg": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBlendMode"],
+      standart: [
+        "cssStyleBorder",
+        "cssStyleBorderRadius",
+        "cssStyleBlendMode",
+        "cssStyleMaskDropShadow"
+      ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
+
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
       standart: [
         "cssStyleBgImage",
@@ -16,7 +22,12 @@ export function style(v, vs, vd, props) {
         "cssStyleBgImagePosition",
         "cssStyleBgMediaImage",
         "cssStyleSectionBgSize",
-        "cssStyleSectionBgRepeat"
+        "cssStyleSectionBgRepeat",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
       ],
       interval: [
         "cssStyleBgImageAttachment",
@@ -28,7 +39,15 @@ export function style(v, vs, vd, props) {
       standart: ["cssStyleBgImageHover"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient"],
+      standart: [
+        "cssStyleBgColor",
+        "cssStyleBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ],
       interval: [
         "cssStyleHoverTransitionFlash",
         "cssStylePropertyHoverTransition"

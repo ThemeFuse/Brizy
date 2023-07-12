@@ -22,7 +22,6 @@ export default function importState([myProject, myPage], state) {
   const project = state.project;
   const currentPage = state.page;
   const globalBlocks = state.globalBlocks;
-  const blocksThumbnailSizes = state.blocksThumbnailSizes;
 
   const userProjectId = project.id;
   const userProjectVersion = project.dataVersion;
@@ -50,5 +49,5 @@ export default function importState([myProject, myPage], state) {
   objectTraverse(currentPage, traverseCb);
   objectTraverse(globalBlocks, traverseCb);
 
-  return [project, currentPage, globalBlocks, blocksThumbnailSizes];
+  return [project, currentPage, globalBlocks];
 }

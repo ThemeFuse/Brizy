@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import BoxResizer from "visual/component/BoxResizer";
 import ClickOutside from "visual/component/ClickOutside";
+import ContextMenu from "visual/component/ContextMenu";
 import ListBox from "visual/component/Controls/ListBox";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import CustomCSS from "visual/component/CustomCSS";
@@ -33,12 +34,14 @@ import * as ResponsiveMode from "visual/utils/responsiveMode";
 import { isNullish } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
 import Quill, { triggerCodes } from "./Quill";
+import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleDC } from "./styles";
 import toolbarConfigFn from "./toolbar";
 import { TypographyTags, tagId } from "./toolbar/utils";
 import { dcItemOptionParser, parseShadow } from "./utils";
+import { getInnerElement, getStyles } from "./utils/ContextMenu";
 import { getImagePopulation } from "./utils/requests/ImagePopulation";
 import { classNamesToV } from "./utils/transforms";
 
@@ -276,7 +279,35 @@ class RichText extends EditorComponent {
     this.quillRef.current.formatMultiple(values);
   };
 
-  handleKeyDown = () => {};
+  handleKeyDown = (e, { keyName }) => {
+    e.preventDefault();
+
+    const handlePaste = () => {
+      const innerElement = getInnerElement();
+      if (!innerElement) return;
+
+      const prefixes = ["typography", "color"];
+      const values = getStyles(innerElement.value, prefixes);
+      if (values) {
+        this.handleChange(values);
+      }
+    };
+
+    switch (keyName) {
+      case "alt+shift+V":
+      case "ctrl+shift+V":
+      case "cmd+shift+V":
+      case "right_cmd+shift+V":
+      case "shift+alt+V":
+      case "shift+ctrl+V":
+      case "shift+cmd+V":
+      case "shift+right_cmd+V":
+        handlePaste();
+        return;
+      default:
+        break;
+    }
+  };
   handleKeyUp = () => {};
 
   getClassName(v, vs, vd) {
@@ -550,7 +581,7 @@ class RichText extends EditorComponent {
 
       return (
         <Link
-          className="brz-ed-content-dc-link"
+          className="brz-ed-content-dc-link !text-inherit"
           type={linkType}
           href={hrefs[linkType]}
           target={linkExternalBlank}
@@ -570,7 +601,7 @@ class RichText extends EditorComponent {
     const { meta = {} } = this.props;
     const inPopup = Boolean(meta.sectionPopup);
     const inPopup2 = Boolean(meta.sectionPopup2);
-    const shortcutsTypes = ["copy", "paste", "delete"];
+    const shortcutsTypes = ["copy", "paste", "pasteStyles", "delete"];
     const config = Config.getAll();
 
     const newV = {
@@ -636,22 +667,24 @@ class RichText extends EditorComponent {
                   className: this.getClassName(v, vs, vd)
                 })}
               >
-                {isStory(config) ? (
-                  <BoxResizer
-                    points={resizerPoints}
-                    meta={{
-                      ...meta,
-                      horizontalAlign: "left"
-                    }}
-                    value={v}
-                    onChange={this.handleResizerChange}
-                    restrictions={restrictions}
-                  >
-                    {content}
-                  </BoxResizer>
-                ) : (
-                  content
-                )}
+                <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+                  {isStory(config) ? (
+                    <BoxResizer
+                      points={resizerPoints}
+                      meta={{
+                        ...meta,
+                        horizontalAlign: "left"
+                      }}
+                      value={v}
+                      onChange={this.handleResizerChange}
+                      restrictions={restrictions}
+                    >
+                      {content}
+                    </BoxResizer>
+                  ) : (
+                    content
+                  )}
+                </ContextMenu>
               </Wrapper>
             </Toolbar>
           </CustomCSS>

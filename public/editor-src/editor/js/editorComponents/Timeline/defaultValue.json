@@ -26,6 +26,12 @@
     "spacing": 20,
     "spacingSuffix": "px",
 
+    "verticalSpacing": 100,
+    "verticalSpacingSuffix": "px",
+
+    "horizontalSpacing": 0,
+    "horizontalSpacingSuffix": "px",
+
     "textSpacing": 0,
     "textSpacingSuffix": "px",
 

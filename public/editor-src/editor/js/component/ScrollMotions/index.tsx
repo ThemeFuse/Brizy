@@ -1,6 +1,7 @@
-import React, { ReactElement, useEffect, useRef } from "react";
-import classnames from "classnames";
 import { Motions } from "@brizy/motion";
+import classnames from "classnames";
+import React, { ReactElement, useEffect, useRef } from "react";
+import { applyFilter } from "visual/utils/filters";
 import { ScrollMotionsAttr, ScrollMotionsProps } from "./types";
 import { makeOptionToAttr } from "./utils";
 
@@ -16,7 +17,15 @@ export const ScrollMotion = (props: ScrollMotionsProps): ReactElement => {
 
     // init Motions
     if (!instance && node && options) {
-      motion.current = new Motions(node, options);
+      const ImagesLoaded = applyFilter("getLibs", {}).ImagesLoaded;
+
+      if (!ImagesLoaded) {
+        motion.current = new Motions(node, options);
+      } else {
+        ImagesLoaded(node, () => {
+          motion.current = new Motions(node, options);
+        });
+      }
     }
 
     // update instance of Motions

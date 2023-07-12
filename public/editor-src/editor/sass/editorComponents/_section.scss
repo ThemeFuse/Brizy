@@ -32,6 +32,13 @@
     }
   }
 
+  .brz-slick-slider {
+    display: none;
+  }
+  .brz-slick-slider.slick-initialized {
+    display: block;
+  }
+
   // sometime have problems with paddings per slide
   > .brz-slick-slider {
     > .slick-list > .slick-track > .slick-slide {

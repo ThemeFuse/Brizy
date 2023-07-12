@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.2.2
 Requires PHP: 5.6.20
-Stable tag: 2.4.25
+Stable tag: 2.4.26
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,21 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.26 - 2023-07-12 =
+* New: Added custom video URL for Block background
+* New: Added copy/paste styles for Text element
+* New: Added mask option for all containers: Rows, Columns, Blocks
+* Improved: Display selected font at top of font list in the Typography options
+* Improved: Hexagon Shape in the Mask options
+* Improved: Updated icons library Font Awesome to version 6
+* Fixed: Text crashed after population change
+* Fixed: Block Slider on preview
+* Fixed: Element with rotate motion effect moves when hovering on toolbar
+* Fixed: Text alignment in the preview
+* Fixed: Remove saved block tag
+* Fixed: Label text pushing the options out of the UI
+* Fixed: Container width in PX shows 1400px max slider value instead of 1170px
 
 = 2.4.25 - 2023-07-03 =
 * Fixed: Hot Fix - Redirect only in admin after activation of the plugin

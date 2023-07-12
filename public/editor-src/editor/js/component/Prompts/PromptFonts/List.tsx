@@ -1,26 +1,26 @@
+import classNames from "classnames";
 import React, {
+  MouseEvent,
+  ReactElement,
   useCallback,
   useMemo,
-  useState,
-  ReactElement,
-  MouseEvent
+  useState
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Scrollbars from "react-custom-scrollbars";
-import classNames from "classnames";
+import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
-import { pendingRequest } from "visual/utils/api";
-import { fontTransform } from "visual/utils/fonts";
+import { deleteFont, updateDefaultFont } from "visual/redux/actions2";
 import {
   defaultFontSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
-import { deleteFont, updateDefaultFont } from "visual/redux/actions2";
-import { deleteFont as apiDeleteFont } from "./api";
-import { sortFonts } from "./utils";
-import { FontTypes } from "./types";
 import { Font, UploadedFont } from "visual/types";
+import { pendingRequest } from "visual/utils/api";
+import { fontTransform } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
+import { deleteFont as apiDeleteFont } from "./api";
+import { FontTypes } from "./types";
+import { sortFonts } from "./utils";
 
 export const List = (): ReactElement => {
   const [loading, setLoading] = useState("");
@@ -28,30 +28,34 @@ export const List = (): ReactElement => {
   const defaultFont = useSelector(defaultFontSelector);
   const dispatch = useDispatch();
 
-  const handleUpdate = useCallback((fontId: string): void => {
-    dispatch(updateDefaultFont(fontId));
-  }, []);
+  const handleUpdate = useCallback(
+    (fontId: string): void => {
+      dispatch(updateDefaultFont(fontId));
+    },
+    [dispatch]
+  );
 
-  const handleDelete = useCallback(async (type: FontTypes, font: Font): Promise<
-    void
-  > => {
-    setLoading(font.brizyId);
+  const handleDelete = useCallback(
+    async (type: FontTypes, font: Font): Promise<void> => {
+      setLoading(font.brizyId);
 
-    if (type === "upload") {
-      await apiDeleteFont((font as UploadedFont).id);
-    } else {
-      await pendingRequest();
-    }
+      if (type === "upload") {
+        await apiDeleteFont((font as UploadedFont).id);
+      } else {
+        await pendingRequest();
+      }
 
-    setLoading("");
+      setLoading("");
 
-    dispatch(
-      deleteFont({
-        type,
-        fonts: [font]
-      })
-    );
-  }, []);
+      dispatch(
+        deleteFont({
+          type,
+          fonts: [font]
+        })
+      );
+    },
+    [dispatch]
+  );
 
   const sorted = useMemo(() => {
     return sortFonts(fonts);
@@ -61,9 +65,8 @@ export const List = (): ReactElement => {
     <Scrollbars>
       <div className="brz-ed-popup-fonts__lists brz-d-xs-flex brz-flex-xs-wrap">
         {sorted.map(({ fontGroupType, ...font }) => {
-          const { id, brizyId, title, family } = fontTransform[fontGroupType](
-            font
-          );
+          const { id, brizyId, title, family } =
+            fontTransform[fontGroupType](font);
           const isDefaultFont = defaultFont === id;
           const isLoading = loading === brizyId;
           const className = classNames(

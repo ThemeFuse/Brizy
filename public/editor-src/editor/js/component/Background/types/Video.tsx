@@ -1,9 +1,16 @@
 import jQuery from "jquery";
-import React, { ReactElement, RefObject, useRef } from "react";
+import React, { ReactElement, RefObject, useMemo, useRef } from "react";
+import { customFileUrl } from "visual/utils/customFile/customFileUrl.js";
 import { videoUrl } from "visual/utils/video";
 import "../lib/jquery.background-video.js";
 import { useLayoutEffect } from "../utils";
 
+enum VideoType {
+  Youtube = "youtube",
+  Vimeo = "vimeo",
+  BgVideoCustom = "bgVideoCustom",
+  URL = "url"
+}
 type Props = {
   video?: {
     type: string;
@@ -11,6 +18,8 @@ type Props = {
   };
   videoLoop?: boolean;
   videoStart?: string;
+  videoType?: string;
+  customVideo?: string;
   children: (data: {
     innerRef?: RefObject<HTMLElement>;
     attr: {
@@ -24,9 +33,18 @@ type Props = {
   }) => ReactElement;
 };
 
-const Video: React.FC<Props> = ({ video, videoLoop, videoStart, children }) => {
+const Video: React.FC<Props> = ({
+  video,
+  videoLoop,
+  videoStart,
+  children,
+  videoType,
+  customVideo
+}) => {
+  const videoMedia = video || customVideo;
+
   const iframeStyle = {
-    display: video ? "block" : "none"
+    display: videoMedia ? "block" : "none"
   };
 
   const settings = {
@@ -37,10 +55,15 @@ const Video: React.FC<Props> = ({ video, videoLoop, videoStart, children }) => {
     loop: videoLoop
   };
 
-  const dataType = video ? video.type : undefined;
-  const src = video ? videoUrl(video, settings) : undefined;
+  const dataType = videoType ? videoType : "undefined";
+
+  const isCustomVideo = useMemo(
+    () => videoType === VideoType.BgVideoCustom || videoType === VideoType.URL,
+    [videoType]
+  );
 
   const videoRef = useRef<HTMLElement>(null);
+  const customVideoRef = useRef<HTMLVideoElement>(null);
   const isInitialMount = useRef(true);
 
   useLayoutEffect(() => {
@@ -91,19 +114,62 @@ const Video: React.FC<Props> = ({ video, videoLoop, videoStart, children }) => {
     }
   }, [video?.type]);
 
-  // intrinsic-ignore - this class is needed for WP theme twentytwenty(themes/twentytwenty/assets/js/index.js?ver=1.1)
-  // intrinsicRatioVideos - property contain function - makeFit which changes iframes width
-  // and breaks our code(video, map inside megamenu isn't showing as example)
-  const content = (
-    <iframe
-      src={src}
-      data-src={src}
-      className="brz-iframe intrinsic-ignore brz-bg-video__cover absolute top-0 left-0 w-full h-full border-none !max-w-none bg-no-repeat bg-cover"
-      loading="lazy"
-      style={iframeStyle}
-      title="background-video"
-    />
-  );
+  useLayoutEffect(() => {
+    if (videoRef.current && isCustomVideo) {
+      jQuery(videoRef.current).backgroundVideo("reinit", {
+        type: "custom",
+        loop: videoLoop,
+        start: videoStart
+      });
+    }
+  }, [videoLoop, videoStart, isCustomVideo]);
+
+  const src =
+    video && !isCustomVideo
+      ? videoUrl(video, settings)
+      : dataType === VideoType.BgVideoCustom
+      ? customFileUrl(customVideo)
+      : customVideo;
+
+  const getContent = useMemo((): ReactElement => {
+    if (video && !isCustomVideo) {
+      return (
+        <>
+          {src && (
+            // intrinsic-ignore - this class is needed for WP theme twentytwenty(themes/twentytwenty/assets/js/index.js?ver=1.1)
+            // intrinsicRatioVideos - property contain function - makeFit which changes iframes width
+            // and breaks our code(video, map inside megamenu isn't showing as example)
+            <iframe
+              src={src}
+              data-src={src}
+              className="brz-iframe intrinsic-ignore brz-bg-video__cover absolute top-0 left-0 w-full h-full border-none !max-w-none bg-no-repeat bg-cover"
+              loading="lazy"
+              style={iframeStyle}
+              title="background-video"
+            />
+          )}
+        </>
+      );
+    } else if (customVideo) {
+      return (
+        <>
+          {src && (
+            <video
+              className="brz-bg-video-custom brz-bg-video__cover absolute top-0 left-0 w-full h-full border-none !max-w-none bg-no-repeat bg-cover"
+              muted
+              autoPlay
+              playsInline
+              src={src}
+              data-src={src}
+              ref={customVideoRef}
+              style={iframeStyle}
+            />
+          )}
+        </>
+      );
+    }
+    return <></>;
+  }, [video, customVideo, isCustomVideo, src, iframeStyle]);
 
   return (
     <>
@@ -115,7 +181,7 @@ const Video: React.FC<Props> = ({ video, videoLoop, videoStart, children }) => {
           "data-loop": videoLoop,
           "data-start": videoStart
         },
-        children: content
+        children: getContent
       })}
     </>
   );

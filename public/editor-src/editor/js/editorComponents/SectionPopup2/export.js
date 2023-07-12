@@ -16,7 +16,9 @@ $.fn.popup = function () {
 
       if (!clickedOutSideToClose) {
         $this.addClass("brz-pointer-events-none");
-        $this.find(".brz-popup2__inner").addClass("brz-pointer-events-auto");
+        $this
+          .find(".brz-popup2__inner > .brz-container__wrap")
+          .addClass("brz-pointer-events-auto");
       }
 
       if (showAfter) {

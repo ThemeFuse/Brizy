@@ -1,35 +1,35 @@
+import classnames from "classnames";
 import React, {
   Component,
   ComponentType,
   ReactElement,
   ReactNode
 } from "react";
-import _ from "underscore";
-import classnames from "classnames";
-import { connect, ConnectedProps } from "react-redux";
-import Config from "visual/global/Config";
-import EditorIcon from "visual/component/EditorIcon";
 import Scrollbars from "react-custom-scrollbars";
-import { stylesSelector, fontsSelector } from "visual/redux/selectors";
-import ImageLoad from "../common/ImageLoad";
-import { Button } from "../../common/Button";
-import { templateThumbnailUrl } from "visual/utils/templates";
-import {
-  getUsedModelsFonts,
-  getUsedStylesFonts,
-  getBlocksStylesFonts
-} from "visual/utils/traverse";
-import { t } from "visual/utils/i18n";
-import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
-import { flatMap } from "visual/utils/array";
-import * as Num from "visual/utils/math/number";
-import { getBlockDataUrl } from "visual/utils/blocks";
-import { IS_PRO } from "visual/utils/env";
-import { ReduxState } from "visual/redux/types";
-import { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types";
+import { ConnectedProps, connect } from "react-redux";
+import _ from "underscore";
+import EditorIcon from "visual/component/EditorIcon";
 import { LayoutData } from "visual/component/Prompts/PromptBlocks/Layouts/types";
-import { ArrayType } from "visual/utils/array/types";
+import { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types";
+import Config from "visual/global/Config";
+import { fontsSelector, stylesSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { Block, Style } from "visual/types";
+import { defaultLayoutsData, defaultStoriesData } from "visual/utils/api";
+import { flatMap } from "visual/utils/array";
+import { ArrayType } from "visual/utils/array/types";
+import { placeholderBlockThumbnailUrl } from "visual/utils/blocks";
+import { IS_PRO } from "visual/utils/env";
+import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
+import { t } from "visual/utils/i18n";
+import * as Num from "visual/utils/math/number";
+import {
+  getBlocksStylesFonts,
+  getUsedModelsFonts,
+  getUsedStylesFonts
+} from "visual/utils/traverse";
+import { Button } from "../../common/Button";
+import ImageLoad from "../common/ImageLoad";
 
 const urls = Config.get("urls");
 const TRANSITION_DELAY = 500;
@@ -54,7 +54,7 @@ const mapState = (
 const connector = connect(mapState);
 
 export interface Props {
-  type: "stories" | "templates";
+  type: "stories" | "layouts";
   data: LayoutData;
   HeaderSlotLeft?: ComponentType;
   onClose: VoidFunction;
@@ -75,7 +75,7 @@ interface State {
 
 class Details extends Component<AllProps, State> {
   static defaultProps: Props = {
-    type: "templates",
+    type: "layouts",
     data: {
       name: "",
       color: "",
@@ -145,13 +145,7 @@ class Details extends Component<AllProps, State> {
   };
 
   handleThumbnailAdd = async (): Promise<void> => {
-    const {
-      type,
-      data,
-      projectFonts: usedFonts,
-      onAddBlocks,
-      onClose
-    } = this.props;
+    const { data, projectFonts: usedFonts, onAddBlocks, onClose } = this.props;
     const { active: pageId, replaceStyle, loading } = this.state;
 
     if (loading) {
@@ -162,13 +156,18 @@ class Details extends Component<AllProps, State> {
       loading: true
     });
 
-    const page = await fetch(getBlockDataUrl(type, pageId));
-    const { blocks }: { blocks: Block[] } = await page.json();
+    const page =
+      this.props.type === "layouts"
+        ? await defaultLayoutsData(Config.getAll(), pageId)
+        : await defaultStoriesData(Config.getAll(), pageId);
+
+    const { blocks } = page as { blocks: Block[] };
     const modelFonts = getUsedModelsFonts({ models: blocks });
+
     let styles: undefined | Style[];
 
     if (!this.hasStyleInProject()) {
-      styles = (normalizeStyles(data.styles) as unknown) as Style[];
+      styles = normalizeStyles(data.styles) as unknown as Style[];
 
       // Check fonts
       const fontStyles = flatMap(styles, ({ fontStyles }) => fontStyles);
@@ -213,17 +212,17 @@ class Details extends Component<AllProps, State> {
       type,
       data: { name: title, pages, styles = [], pro }
     } = this.props;
-    const {
-      active,
-      thumbnailHeight,
-      previewPointer,
-      replaceStyle,
-      loading
-    } = this.state;
+
+    const { active, thumbnailHeight, previewPointer, replaceStyle, loading } =
+      this.state;
     const isStory = type === "stories";
     const currentPage = pages.find(({ id }) => id === active);
-    const activeSrc = templateThumbnailUrl(currentPage);
+    const activePageSrc =
+      currentPage?.thumbnailSrc ?? placeholderBlockThumbnailUrl();
+
     const renderSectionPage = pages.map((el, index) => {
+      const pageSrc = el.thumbnailSrc ?? placeholderBlockThumbnailUrl();
+
       const className = classnames(
         "brz-ed-popup-two-details-page-select",
         isStory && "brz-ed-popup-two-details-page-select-stories",
@@ -231,7 +230,6 @@ class Details extends Component<AllProps, State> {
           "brz-ed-popup-two-details-page-select-active-block": el.id === active
         }
       );
-      const pageSrc = templateThumbnailUrl(el);
 
       return (
         <div
@@ -294,12 +292,12 @@ class Details extends Component<AllProps, State> {
               {isStory ? (
                 <ImageLoad
                   className="brz-ed-popup-two-details-preview-img brz-ed-popup-two-details-preview-img-stories"
-                  src={activeSrc}
+                  src={activePageSrc}
                 />
               ) : (
                 <ImageLoad
                   className="brz-ed-popup-two-details-preview-img"
-                  src={activeSrc}
+                  src={activePageSrc}
                   style={{
                     ...animationStyle,
                     "--transitionPreview": `transform ${this.getTransition(

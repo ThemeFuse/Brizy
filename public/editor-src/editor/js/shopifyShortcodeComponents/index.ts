@@ -1,20 +1,20 @@
 import Config from "visual/global/Config";
 import { Shortcodes } from "visual/types";
-import AddToCart from "./AddToCart";
-import BlogPostContent from "./BlogPostContent";
+import getAddToCart from "./AddToCart";
+import getBlogPostContent from "./BlogPostContent";
 import getBlogPostList from "./BlogPostList";
 import getBlogPostMeta from "./BlogPostMeta";
-import BlogTitle from "./BlogTitle";
-import CollectionDescription from "./CollectionDescription";
+import getBlogTitle from "./BlogTitle";
+import getCollectionDescription from "./CollectionDescription";
 import getCollectionList from "./CollectionList";
-import CollectionTitle from "./CollectionTitle";
+import getCollectionTitle from "./CollectionTitle";
 import getPrice from "./Price";
-import ProductDescription from "./ProductDescription";
+import getProductDescription from "./ProductDescription";
 import getProductList from "./ProductList";
 import getProductMetafield from "./ProductMetafield";
-import ProductTitle from "./ProductTitle";
+import getProductTitle from "./ProductTitle";
 import getQuantity from "./Quantity";
-import Vendor from "./Vendor";
+import getVendor from "./Vendor";
 
 // import AliExpressReview from "./AliExpressReview";
 // import AppstleSubscription from "./AppstleSubscription";
@@ -87,10 +87,10 @@ const config = ((): Shortcodes => {
   const config = Config.getAll();
   return {
     base: [
-      { component: ProductTitle, pro: false },
-      { component: ProductDescription, pro: false },
+      { component: getProductTitle(config), pro: false },
+      { component: getProductDescription(config), pro: false },
       { component: getProductList(config), pro: false },
-      { component: AddToCart, pro: false },
+      { component: getAddToCart(config), pro: false },
       { component: getPrice(config), pro: false },
       { component: getQuantity(config), pro: false },
       { component: getProductMetafield(config), pro: false },
@@ -161,17 +161,17 @@ const config = ((): Shortcodes => {
       // { component: Variations, pro: false },
       // { component: WiserUpsell, pro: false },
       // { component: CrossSell, pro: false },
-      { component: Vendor, pro: false }
+      { component: getVendor(config), pro: false }
     ],
     blog: [
-      { component: BlogTitle, pro: false },
-      { component: BlogPostContent, pro: false },
+      { component: getBlogTitle(config), pro: false },
+      { component: getBlogPostContent(config), pro: false },
       { component: getBlogPostMeta(config), pro: false },
       { component: getBlogPostList(config), pro: false }
     ],
     collection: [
-      { component: CollectionTitle, pro: false },
-      { component: CollectionDescription, pro: false },
+      { component: getCollectionTitle(config), pro: false },
+      { component: getCollectionDescription(config), pro: false },
       { component: getCollectionList(config), pro: false }
     ]
   };

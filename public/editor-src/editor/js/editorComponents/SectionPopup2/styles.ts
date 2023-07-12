@@ -6,20 +6,42 @@ export function style(
   vs: Value,
   vd: Value
 ): [string, string, string] {
+  const { maskShape = "none" } = v;
+
   const styles: {
     [k: string]: {
       interval?: string[];
       standart?: string[];
     };
   } = {
+    ".brz &&:hover > .brz-bg": {
+      standart: [...(maskShape === "none" ? [] : ["cssStyleMaskDropShadow"])]
+    },
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
-      standart: ["cssStyleBgImage", "cssStyleFilter", "cssStyleBgImagePosition"]
+      standart: [
+        "cssStyleBgImage",
+        "cssStyleFilter",
+        "cssStyleBgImagePosition",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
       standart: ["cssStyleBgImageHover"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
+      standart: [
+        "cssStyleBgColor",
+        "cssStyleBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ]
     }
   };
   return renderStyles({ v, vs, vd, styles });

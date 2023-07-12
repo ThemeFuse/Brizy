@@ -97,10 +97,20 @@ const BackgroundContainer = ({ value, meta, children }) => {
   const currentMedia = media && getMedia(value);
 
   if (media && currentMedia.includes("video")) {
-    const { bgVideo, bgVideoLoop, bgVideoStart } = value;
+    const { bgVideo, bgVideoLoop, bgVideoStart, bgVideoCustom, bgVideoType } =
+      value;
+
+    const isCustomVideo = bgVideoType === "bgVideoCustom";
+    const isCustomUrl = bgVideoType === "url";
+
+    const customVideo =
+      (isCustomVideo && bgVideoCustom) || (isCustomUrl && bgVideo);
+
     props.video = videoData(bgVideo);
     props.videoStart = bgVideoStart;
     props.videoLoop = bgVideoLoop === "on";
+    props.customVideo = customVideo;
+    props.videoType = bgVideoType;
   }
 
   if (media && currentMedia.includes("map")) {

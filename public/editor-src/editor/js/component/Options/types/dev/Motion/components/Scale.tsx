@@ -54,7 +54,8 @@ export const Scale: JSXElementConstructor<EffectProps<V>> = ({
   );
 
   const onSpeedChange = useCallback(
-    mPipe(Speed.fromNumber, (speed) => onChange({ ...value, speed })),
+    (x0) =>
+      mPipe(Speed.fromNumber, (speed) => onChange({ ...value, speed }))(x0),
     [value, onChange]
   );
 

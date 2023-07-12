@@ -14,6 +14,7 @@ import { getOptionColorHexByPalette } from "visual/utils/options";
 import { State } from "visual/utils/stateMode";
 import { capByPrefix } from "visual/utils/string";
 import {
+  styleAlignHorizontal,
   styleBgImage,
   styleExportBgImage,
   styleTypography2FontSizeSuffix
@@ -427,4 +428,15 @@ export function cssStyleElementRichTextDCUppercase({
   const capitalize = dvv("dynamicTextCapitalize");
 
   return capitalize === "on" ? `text-transform : uppercase !important;` : "";
+}
+
+export function cssStyleElementRichTextAlign({
+  v,
+  device,
+  state,
+  prefix = "content"
+}: CSSValue): string {
+  const align = styleAlignHorizontal({ v, device, state, prefix });
+
+  return align ? `text-align:${align}!important;` : "";
 }
