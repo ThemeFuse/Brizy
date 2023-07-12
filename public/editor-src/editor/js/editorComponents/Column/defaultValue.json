@@ -10,12 +10,14 @@
     "hoverBgSizeType": null,
 
     "bgImageFileName": null,
+    "maskCustomUploadImageFileName": "",
     "hoverBgImageFileName": null,
     "tabletBgImageFileName": null,
     "mobileBgImageFileName": null,
 
     "images": {
       "bgImageSrc": "",
+      "maskCustomUploadImageSrc": "",
       "hoverBgImageSrc": null,
       "tabletBgImageSrc": null,
       "mobileBgImageSrc": null
@@ -34,6 +36,8 @@
     "bgImageExtension": "",
 
     "bgVideo": "",
+    "bgVideoCustom": "",
+    "bgVideoType": "youtube",
     "bgVideoLoop": "off",
 
     "bgMapAddress": "Wall Street",
@@ -637,7 +641,32 @@
     "tempMobileMarginTopSuffix": "px",
     "tempMobileMarginRightSuffix": "px",
     "tempMobileMarginBottomSuffix": "px",
-    "tempMobileMarginLeftSuffix": "px"
+    "tempMobileMarginLeftSuffix": "px",
+
+    "maskShape": "none",
+    "maskSize": "cover",
+    "maskPosition": "center center",
+    "maskRepeat": "no-repeat",
+    "maskScale": 50,
+    "maskScaleSuffix": "%",
+    "maskPositiony": 3,
+    "maskPositionySuffix": "%",
+    "maskPositionx": 3,
+    "maskPositionxSuffix": "%",
+
+    "maskCustomUploadImageExtension": "",
+    "maskCustomUploadImageWidth": 600,
+    "maskCustomUploadImageHeight": 450,
+    "maskCustomUploadPositionX": 50,
+    "maskCustomUploadPositionY": 50,
+
+    "maskShadowColorHex": "#000000",
+    "maskShadowColorOpacity": 0,
+    "maskShadowColorPalette": "",
+
+    "maskShadowBlur": 0,
+    "maskShadowVertical": 0,
+    "maskShadowHorizontal": 0
   },
 
   "animation": {

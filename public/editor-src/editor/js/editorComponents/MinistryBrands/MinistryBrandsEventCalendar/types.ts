@@ -15,7 +15,10 @@ export interface Value extends ElementModel {
   detailPageTitle: string;
 
   numberOfMonths: number;
+  visibleMonth: number;
 
   features: Switch;
   nonfeatures: Switch;
+
+  showEventTime: Switch;
 }

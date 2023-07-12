@@ -67,13 +67,13 @@ class Blocks extends Component {
     let allCategoriesCount = blocks.length;
 
     if (showType && types.length) {
-      blocks = blocks.filter(block => block.type === type);
+      blocks = blocks.filter((block) => block.type === type);
       allCategoriesCount = blocks.length;
     }
 
     return blocks.reduce(
       (acc, { cat }) => {
-        cat.forEach(cat => {
+        cat.forEach((cat) => {
           if (acc[cat]) {
             Object.assign(acc, { [cat]: ++acc[cat] });
           } else {
@@ -149,7 +149,7 @@ class Blocks extends Component {
                   <SearchInput
                     className="brz-ed-popup-two-header__search"
                     value={currentFilter.search}
-                    onChange={value => setFilter({ search: value })}
+                    onChange={(value) => setFilter({ search: value })}
                   />
                 </HeaderSlotLeft>
               )}
@@ -179,7 +179,7 @@ class Blocks extends Component {
                         lists={types}
                         counters={this.getTypesCounters()}
                         value={currentFilter.type}
-                        onChange={value => setFilter({ type: value })}
+                        onChange={(value) => setFilter({ type: value })}
                       />
                     </SidebarOption>
                   )}
@@ -189,7 +189,7 @@ class Blocks extends Component {
                         lists={categories}
                         counters={this.getCategoriesCounter(currentFilter.type)}
                         value={currentFilter.category}
-                        onChange={value => setFilter({ category: value })}
+                        onChange={(value) => setFilter({ category: value })}
                       />
                     </SidebarOption>
                   )}

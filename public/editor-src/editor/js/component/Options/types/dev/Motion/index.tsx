@@ -5,7 +5,6 @@ import { FatIconsGrid } from "visual/component/FatIconsGrid";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 import * as Option from "visual/component/Options/Type";
 import { OnChange } from "visual/component/Options/Type";
-import { pipe } from "visual/utils/fp";
 import { WithClassName } from "visual/utils/options/attributes";
 import { DisabledIcon } from "./components/DisabledIcon";
 import { Icon } from "./components/Icon";
@@ -31,12 +30,13 @@ export const Motion: FC<Props> = ({
   const EffectComponent = active && effectOptions(active);
   const onCheck = useCallback<OnChange<Effect>>(
     (e) => onChange(Patch.enable(e, !value[e], active === e)),
-    [value, onChange]
+    [value, onChange, active]
   );
 
-  const onClick = useCallback<OnChange<Effect>>(pipe(Patch.active, onChange), [
-    onChange
-  ]);
+  const onClick = useCallback<OnChange<Effect>>(
+    (x0: Effect) => onChange(Patch.active(x0)),
+    [onChange]
+  );
 
   const onOptionChange = useMemo((): OnChange<EffectValue<Effect>> => {
     return active

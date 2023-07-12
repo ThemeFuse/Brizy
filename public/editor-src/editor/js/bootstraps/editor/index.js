@@ -14,7 +14,6 @@ import {
 } from "visual/utils/api";
 import { AuthProvider } from "visual/utils/api/providers/Auth";
 import { flatMap } from "visual/utils/array";
-import { assetUrl } from "visual/utils/asset";
 import { getBlocksInPage } from "visual/utils/blocks";
 import { PageError, ProjectError } from "visual/utils/errors";
 import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
@@ -55,15 +54,10 @@ const pageCurtain = window.parent.document.querySelector(
       await addProjectLockedBeacon();
     }
 
-    const [currentPage, globalBlocks, blocksThumbnailSizes] = await Promise.all(
-      [
-        getCurrentPage(config),
-        getGlobalBlocks(),
-        fetch(assetUrl("thumbs/blocksThumbnailSizes.json")).then((r) =>
-          r.json()
-        )
-      ]
-    );
+    const [currentPage, globalBlocks] = await Promise.all([
+      getCurrentPage(config),
+      getGlobalBlocks()
+    ]);
 
     /* eslint-disable no-console */
     if (process.env.NODE_ENV === "development") {
@@ -113,7 +107,6 @@ const pageCurtain = window.parent.document.querySelector(
         project: normalizedProject,
         projectStatus,
         globalBlocks,
-        blocksThumbnailSizes,
         authorized: getAuthorized(),
         syncAllowed: isSyncAllowed,
         fonts: deepMerge(fonts, newFonts),

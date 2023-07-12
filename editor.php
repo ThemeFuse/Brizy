@@ -150,6 +150,7 @@ class Brizy_Editor {
 		Brizy_Admin_Fonts_Main::_init();
 		Brizy_Admin_Blocks_Main::_init();
 		Brizy_Admin_Stories_Main::_init();
+		Brizy_Admin_Symbols_Main::_init();
 
 		if ( Brizy_Editor_User::is_user_allowed() ) {
 			Brizy_Admin_Svg_Main::_init();

@@ -41,7 +41,7 @@ import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
 import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
-import { ElementTypes } from "visual/global/Config/types/configs/ConfigCommon";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
@@ -325,7 +325,10 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const { wrapperAnimationActive = false } = this.getMeta(v);
     const isDisabledHover = readBoolean(wrapperAnimationActive);
     const content = (
-      <ScrollMotion options={makeOptionValueToMotion(v)}>
+      <ScrollMotion
+        className="brz-wrapper__scrollmotion"
+        options={makeOptionValueToMotion(v)}
+      >
         <HoverAnimation
           animationId={animationId}
           cssKeyframe={cssKeyframe}
@@ -472,7 +475,10 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       this.getHoverData(v);
 
     const content = (
-      <ScrollMotion options={makeOptionValueToMotion(v)}>
+      <ScrollMotion
+        options={makeOptionValueToMotion(v)}
+        className="brz-wrapper__scrollmotion"
+      >
         <HoverAnimation
           animationId={animationId}
           cssKeyframe={cssKeyframe}

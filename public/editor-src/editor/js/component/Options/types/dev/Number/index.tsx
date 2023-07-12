@@ -3,9 +3,7 @@ import React, { useCallback } from "react";
 import { NumberComponent as Control } from "visual/component/Controls/Number";
 import { OnChange } from "visual/component/Options/Type";
 import { useDebouncedOnChange } from "visual/component/hooks";
-import { pipe } from "visual/utils/fp";
 import { add, clamp, subtractR } from "visual/utils/math";
-import { wrap } from "visual/utils/object/get";
 import { Component } from "./Type";
 
 export const Number: Component = ({
@@ -22,7 +20,7 @@ export const Number: Component = ({
   const size = config?.size ?? "short";
   const spinner = config?.spinner ?? true;
   const wrapValue: OnChange<number> = useCallback(
-    pipe(wrap("value"), onChange),
+    (value) => onChange({ value }),
     [onChange]
   );
   const validateChange = useCallback(
@@ -30,22 +28,23 @@ export const Number: Component = ({
     [min, max]
   );
 
-  const t = useCallback(mPipe(validateChange, wrapValue), [
-    validateChange,
-    wrapValue
-  ]);
+  const t = useCallback(
+    (x0) => mPipe(validateChange, wrapValue)(x0),
+    [validateChange, wrapValue]
+  );
   const [_value, handleOnChange] = useDebouncedOnChange<number | undefined>(
     value,
     t,
     updateRate
   );
   const handleOnIncrease = useCallback(
-    mPipe(() => _value, add(step), validateChange, handleOnChange),
-    [_value, step]
+    () => mPipe(() => _value, add(step), validateChange, handleOnChange)(),
+    [_value, step, handleOnChange, validateChange]
   );
   const handleOnDecrease = useCallback(
-    mPipe(() => _value, subtractR(step), validateChange, handleOnChange),
-    [_value, step]
+    () =>
+      mPipe(() => _value, subtractR(step), validateChange, handleOnChange)(),
+    [_value, step, validateChange, handleOnChange]
   );
 
   return (

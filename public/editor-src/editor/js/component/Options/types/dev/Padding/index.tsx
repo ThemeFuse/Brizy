@@ -1,22 +1,22 @@
 import React, { FC, useCallback, useMemo } from "react";
+import { Props as SP, Spacing } from "visual/component/Controls/Spacing";
+import { Edge } from "visual/component/Controls/Spacing/types";
+import { Props as OptionProps } from "visual/component/Options/Type";
+import { Config } from "visual/component/Options/types/dev/Padding/types/Config";
+import { SpacingUnit } from "visual/component/Options/utils/SpacingUnit";
+import { Type } from "visual/component/Options/utils/Type";
+import { mPipe, pipe } from "visual/utils/fp";
+import * as Positive from "visual/utils/math/Positive";
+import { WithConfig } from "visual/utils/options/attributes";
 import { Value } from "./types/Value";
 import * as V from "./types/Value";
-import { Props as OptionProps } from "visual/component/Options/Type";
 import { getIcon, unitSetter, valueSetter } from "./utils";
-import { mPipe, pipe } from "visual/utils/fp";
-import { Spacing, Props as SP } from "visual/component/Controls/Spacing";
-import { SpacingUnit } from "visual/component/Options/utils/SpacingUnit";
-import * as Positive from "visual/utils/math/Positive";
-import { Edge } from "visual/component/Controls/Spacing/types";
-import { Type } from "visual/component/Options/utils/Type";
-import { WithConfig } from "visual/utils/options/attributes";
-import { Config } from "visual/component/Options/types/dev/Padding/types/Config";
 
 export interface Props extends OptionProps<Value>, WithConfig<Config> {}
 
 export const Padding: FC<Props> = ({ value, onChange, label, config }) => {
   const onType = useCallback(
-    pipe((v: Type): Value => V.setType(v, value), onChange),
+    (v: Type) => onChange(V.setType(v, value)),
     [value, onChange]
   );
 
@@ -56,7 +56,6 @@ export const Padding: FC<Props> = ({ value, onChange, label, config }) => {
       }
     }),
     [
-      value,
       top,
       right,
       bottom,
@@ -65,27 +64,33 @@ export const Padding: FC<Props> = ({ value, onChange, label, config }) => {
       topUnit,
       rightUnit,
       bottomUnit,
-      leftUnit
+      leftUnit,
+      padding
     ]
   );
 
   const onValue = useCallback<SP<SpacingUnit, Edge>["onValue"]>(
-    mPipe(
-      (e: Edge, v: number) =>
-        mPipe(Positive.fromNumber, v => valueSetter(e)(v, value))(v),
-      onChange
-    ),
+    (edge: Edge, v: number) =>
+      mPipe(
+        (e: Edge, v: number) =>
+          mPipe(Positive.fromNumber, (v) => valueSetter(e)(v, value))(v),
+        onChange
+      )(edge, v),
     [onChange, value]
   );
 
   const units = useMemo<SP<SpacingUnit, Edge>["units"]>(
     () =>
-      (config?.units ?? ["px", "%"]).map(value => ({ value, title: value })),
+      (config?.units ?? ["px", "%"]).map((value) => ({ value, title: value })),
     [config]
   );
 
   const onUnit = useCallback<SP<SpacingUnit, Edge>["onUnit"]>(
-    pipe((e: Edge, v: SpacingUnit) => unitSetter(e)(v, value), onChange),
+    (edge: Edge, v: SpacingUnit) =>
+      pipe((e: Edge, v: SpacingUnit) => unitSetter(e)(v, value), onChange)(
+        edge,
+        v
+      ),
     [onChange, value]
   );
 

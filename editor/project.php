@@ -283,6 +283,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
 
     protected function loadProjectData($data)
     {
+
         $this->id = isset($data['id']) ? $data['id'] : null;
         $this->title = isset($data['title']) ? $data['title'] : null;
         $this->name = isset($data['name']) ? $data['name'] : null;

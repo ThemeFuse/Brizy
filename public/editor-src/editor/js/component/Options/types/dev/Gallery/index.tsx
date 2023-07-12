@@ -63,7 +63,11 @@ export function Gallery<I extends Image.Image>({
   );
 
   const onSort = useCallback(
-    pipe((from: number, to: number) => Actions.sort({ from, to }), dispatch),
+    (x0: number, x1: number) =>
+      pipe((from: number, to: number) => Actions.sort({ from, to }), dispatch)(
+        x0,
+        x1
+      ),
     []
   );
 

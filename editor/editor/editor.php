@@ -32,7 +32,7 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	private $urlBuilder;
 
-	/**
+    /**
 	 * @param Brizy_Editor_Project $project
 	 * @param Brizy_Editor_Post $post
 	 *
@@ -76,14 +76,19 @@ class Brizy_Editor_Editor_Editor {
 		}
 	}
 
-	public function getClientConfig( $context ) {
+	public function getClientConfig( $editorConfig, $context ) {
+        if ( !isset($editorConfig['wp']['postLoopSources']) ) {
+            throw new \Exception("Unable to locate the \$config['wp']['postLoopSources']");
+        }
+
 		$config = [
-			'hash'          => wp_create_nonce( Brizy_Editor_API::nonce ),
-			'editorVersion' => BRIZY_EDITOR_VERSION,
-			'url'           => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
-			'actions'       => $this->getApiActions(),
-			'pageId'        => $this->post->getWpPostId()
-		];
+			'hash'            => wp_create_nonce( Brizy_Editor_API::nonce ),
+			'editorVersion'   => BRIZY_EDITOR_VERSION,
+			'url'             => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+			'actions'         => $this->getApiActions(),
+			'pageId'          => $this->post->getWpPostId(),
+            'collectionTypes' => $editorConfig['wp']['postLoopSources']
+        ];
 
 		$config = $this->getApiConfigFields( $config, $context );
 
@@ -138,16 +143,16 @@ class Brizy_Editor_Editor_Editor {
 				'about'              => __bt( 'about-url', apply_filters( 'brizy_about_url', Brizy_Config::ABOUT_URL ) ),
 				'backToDashboard'    => get_edit_post_link( $wp_post_id, null ),
 				'assetsExternal'     => $this->urlBuilder->external_asset_url() . "",
+                'termsOfService'     => Brizy_Config::getTermsOfServiceUrl(),
 
 				// wp specific
 				'changeTemplate'     => $change_template_url,
 				'upgradeToPro'       => Brizy_Config::getUpgradeUrl(),
 
-				'support'          =>
-					Brizy_Config::getSupportUrl(),
-				'pluginSettings'   => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
-				'dashboardNavMenu' => admin_url( 'nav-menus.php' ),
-				'customFile'       => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
+				'support'            => Brizy_Config::getSupportUrl(),
+				'pluginSettings'     => admin_url( 'admin.php?page=' . Brizy_Admin_Settings::menu_slug() ),
+				'dashboardNavMenu'   => admin_url( 'nav-menus.php' ),
+				'customFile'         => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
 			),
 			'form'            => array(
 				'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
@@ -358,8 +363,14 @@ class Brizy_Editor_Editor_Editor {
 				'mediaResizeUrl' => home_url()
 			],
 			'customFile' => [
-				'customFileUrl' => home_url()
-			]
+				'customFileUrl'  => home_url()
+			],
+            'templates'  => [
+                'kitsUrl'    => Brizy_Config::getEditorTemplatesUrl('kits'),
+                'layoutsUrl' => Brizy_Config::getEditorTemplatesUrl('layouts'),
+                'popupsUrl'  => Brizy_Config::getEditorTemplatesUrl('popups'),
+                'storiesUrl' => Brizy_Config::getEditorTemplatesUrl('stories')
+            ]
 		];
 
 		return $config;
@@ -368,20 +379,45 @@ class Brizy_Editor_Editor_Editor {
 	private function addContentDefaults( $config, $context ) {
 		$config['contentDefaults'] = [
 			'ProductMetafield' => ['linkSource' => 'page'],
-			'Row'              => ['linkSource' => 'page', 'linkType' => 'page'],
+			'Row'              => [
+                                'linkSource' => 'page',
+                                'linkType'   => 'page',
+                                'items'      => [
+                                    [
+                                        'type'  => 'Column',
+                                        'value' => [
+                                            '_styles'    => ['column'],
+                                            'linkSource' => 'page',
+                                            'linkType'   => 'page',
+                                            'items'      => []
+                                        ]
+                                    ],
+                                    [
+                                        'type'  => 'Column',
+                                        'value' => [
+                                            '_styles'    => ['column'],
+                                            'linkSource' => 'page',
+                                            'linkType'   => 'page',
+                                            'items'      => []
+                                        ]
+                                    ]
+                                ]
+            ],
 			'Button'           => ['linkSource' => 'page', 'linkType' => 'page'],
 			'RichText'         => ['linkSource' => 'page', 'linkType' => 'page'],
 			'Icon'             => ['linkSource' => 'page', 'linkType' => 'page'],
 			'Image'            => ['linkSource' => 'page', 'linkType' => 'page'],
 			'Lottie'           => ['linkSource' => 'page', 'linkType' => 'page'],
-			'PostExcerpt'      => ['linkSource' => 'page', 'linkType' => 'page'],
 			'FeaturedImage'    => ['linkSource' => 'page', 'linkType' => 'page'],
+            'PostExcerpt'      => ['linkSource' => 'page', 'linkType' => 'page', 'textPopulation' => '{{brizy_dc_post_excerpt}}', 'textPopulationEntityType' => '', 'textPopulationEntityId' => '', '_population'  => [
+                'name' => 'brizy_dc_post_excerpt', 'placeholder' => '{{brizy_dc_post_excerpt}}']
+            ],
 			'Column'           => [
-				[ 'type' => "Column", 'value'   => [ 'linkSource' => 'page', 'linkType' => 'page', 'items' => []]],
-				[ 'type' => "Column", 'value'   => [ 'linkSource' => 'page', 'linkType' => 'page', 'items' => []]]
+				[ 'type' => 'Column', 'value'   => [ 'linkSource' => 'page', 'linkType' => 'page', 'items' => []]],
+				[ 'type' => 'Column', 'value'   => [ 'linkSource' => 'page', 'linkType' => 'page', 'items' => []]]
 			],
-			'PostContent'      => ['linkSource' => 'page', '_population' => ['name' => 'brizy_dc_post_content', 'placeholder' => '{{brizy_dc_post_content}}']],
-			'PostTitle'        => ['linkSource' => 'page', 'linkType' => 'page', '_population' => ['name' => 'brizy_dc_post_title', 'placeholder' => '{{brizy_dc_post_title}}']],
+            'PostContent'      => ['linkSource' => 'page', 'textPopulation' => '{{brizy_dc_post_content}}', 'textPopulationEntityType' => '', 'textPopulationEntityId' => '', '_population' => ['name' => 'brizy_dc_post_content', 'placeholder' => '{{brizy_dc_post_content}}']],
+            'PostTitle'        => ['linkSource' => 'page', 'linkType' => 'page', 'textPopulation' => '{{brizy_dc_post_title}}', 'textPopulationEntityType' => '', 'textPopulationEntityId' => '', '_population' => ['name' => 'brizy_dc_post_title', 'placeholder' => '{{brizy_dc_post_title}}']],
 			'Posts'            => [
 				'_styles'  => [ 'posts', 'posts-posts' ],
 				'_version' => 3,
@@ -481,10 +517,16 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	private function getPostLoopSources( $config, $isTemplate, $wp_post_id, $context ) {
-		$excludePostTypes = [ 'attachment' ];
+        $types = get_post_types(['public' => true]);
 
-		$types  = get_post_types( [ 'public' => true ] );
-		$result = [];
+        $typesSort = ['page', 'post', 'editor-story'];
+        $excludePostTypes = ['page', 'post', 'editor-story', 'attachment'];
+
+        $types = array_merge($typesSort, array_filter($types, function ($type) use ($excludePostTypes) {
+            return !in_array($type, $excludePostTypes);
+        }));
+
+        $result = [];
 
 		$templateTypeArchive = false;
 		if ( $isTemplate ) {
@@ -502,9 +544,6 @@ class Brizy_Editor_Editor_Editor {
 		}
 
 		foreach ( $types as $type ) {
-			if ( in_array( $type, $excludePostTypes ) ) {
-				continue;
-			}
 			$typeObj  = get_post_type_object( $type );
 			$typeDto  = [
 				'name'  => $typeObj->name,
@@ -525,7 +564,7 @@ class Brizy_Editor_Editor_Editor {
 			];
 		}, $result );
 
-		return $config;
+        return $config;
 	}
 
 	private function addGlobalBlocksData( $config ) {

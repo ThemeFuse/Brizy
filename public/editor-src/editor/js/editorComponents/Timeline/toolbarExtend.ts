@@ -65,7 +65,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                   id: "tabsCount",
                   label: t("Columns"),
                   type: "slider-dev",
-                  disabled: dvv("verticalMode") === "on",
+                  disabled: !vertical,
                   config: {
                     min: 1,
                     max: 6
@@ -73,11 +73,31 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                 },
                 {
                   id: "spacing",
-                  label: t("Spacing"),
+                  label: vertical ? t("V. Space") : t("H. Space"),
                   type: "slider-dev",
                   config: {
                     min: 0,
                     max: 100
+                  }
+                },
+                {
+                  id: "verticalSpacing",
+                  label: t("V. Space"),
+                  disabled: vertical,
+                  type: "slider-dev",
+                  config: {
+                    min: 0,
+                    max: 200
+                  }
+                },
+                {
+                  id: "horizontalSpacing",
+                  disabled: !vertical,
+                  label: t("H. Space"),
+                  type: "slider-dev",
+                  config: {
+                    min: 0,
+                    max: 200
                   }
                 }
               ]

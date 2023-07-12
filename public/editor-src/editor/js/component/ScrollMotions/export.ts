@@ -11,7 +11,7 @@ import {
   ScrollTransparency,
   ScrollVertical
 } from "@brizy/motion/es/types";
-import { getFreeLibs } from "visual/libs";
+import { getFreeLibs, getProLibs } from "visual/libs";
 import { decodeFromString } from "visual/utils/string";
 
 interface MotionData {
@@ -144,6 +144,7 @@ const parseDecodeData = <T>(data?: string): T | undefined => {
 
 export default function ($node: JQuery): void {
   const { Motions } = getFreeLibs();
+  const { ImagesLoaded } = getProLibs();
 
   const root = $node.get(0);
   if (!Motions || !root) {
@@ -178,11 +179,22 @@ export default function ($node: JQuery): void {
       mouseFit: parseDecodeData<Mouse3DFit>(motionMouseFit)
     });
 
-    new Motions(node, {
-      scroll,
-      mouse,
-      responsive:
-        parseDecodeData<MotionSettings["responsive"]>(motionResponsive)
-    });
+    if (!ImagesLoaded) {
+      new Motions(node, {
+        scroll,
+        mouse,
+        responsive:
+          parseDecodeData<MotionSettings["responsive"]>(motionResponsive)
+      });
+    } else {
+      ImagesLoaded(node, () => {
+        new Motions(node, {
+          scroll,
+          mouse,
+          responsive:
+            parseDecodeData<MotionSettings["responsive"]>(motionResponsive)
+        });
+      });
+    }
   });
 }

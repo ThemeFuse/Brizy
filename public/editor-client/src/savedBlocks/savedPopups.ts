@@ -25,7 +25,7 @@ export const savedPopups: SavedPopups = {
 
         blocks = [...blocks, ...popupBlocks];
 
-        if (data.length < TOTAL_COUNT) {
+        if (data.length >= TOTAL_COUNT) {
           await get(page + 1);
         }
       };

@@ -63,6 +63,17 @@ import {
 } from "./types";
 import { makeFormEncode, makeUrl } from "./utils";
 
+export {
+  defaultKitsMeta,
+  defaultKitsData,
+  defaultPopupsMeta,
+  defaultPopupsData,
+  defaultLayoutsMeta,
+  defaultLayoutsData,
+  defaultStoriesMeta,
+  defaultStoriesData
+} from "./common";
+
 export * from "./cms";
 export * from "./cms/page";
 export * from "./cms/popup";

@@ -318,7 +318,13 @@ export const updateSavedBlock = (
 
   const { editorVersion, url: _url, hash, actions } = config;
 
-  const { uid, title, tags, dataVersion } = savedBlock;
+  const { uid, title, dataVersion } = savedBlock;
+  let { tags } = savedBlock;
+  // if empty string is passed backend doesn't remove tag
+  // https://github.com/bagrinsergiu/blox-editor/issues/23277#issuecomment-1610911099
+  if (tags === "") {
+    tags = ",";
+  }
   const body = new URLSearchParams({
     uid,
     ...(title && { title }),
@@ -519,7 +525,14 @@ export const updateSavedLayout = (
 
   const { editorVersion, url: _url, hash, actions } = config;
 
-  const { uid, title, tags, dataVersion } = savedLayout;
+  const { uid, title, dataVersion } = savedLayout;
+  let { tags } = savedLayout;
+  // if empty string is passed backend doesn't remove tag
+  // https://github.com/bagrinsergiu/blox-editor/issues/23277#issuecomment-1610911099
+  if (tags === "") {
+    tags = ",";
+  }
+
   const body = new URLSearchParams({
     uid,
     ...(title && { title }),

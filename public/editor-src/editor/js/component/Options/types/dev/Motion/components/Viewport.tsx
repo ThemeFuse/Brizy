@@ -1,11 +1,11 @@
-import React, { ReactElement, useCallback } from "react";
 import { mPipe, pass } from "fp-utilities";
-import { OnChange } from "visual/component/Options/Type";
-import { OptionWrapper } from "visual/component/OptionWrapper";
+import React, { ReactElement, useCallback } from "react";
 import { RangeSlider } from "visual/component/Controls/RangeSlider";
+import { OptionWrapper } from "visual/component/OptionWrapper";
+import { OnChange } from "visual/component/Options/Type";
 import { useDebouncedOnChange } from "visual/component/hooks";
-import * as Unit from "visual/utils/math/Unit";
 import { t } from "visual/utils/i18n";
+import * as Unit from "visual/utils/math/Unit";
 import { Viewport as ViewportType, construct } from "../types/Viewport";
 
 const divide = (v: number): number => v / 100;
@@ -20,11 +20,23 @@ export function Viewport({
   onChange
 }: Props): ReactElement {
   const _onChangeStart = useCallback(
-    mPipe(divide, pass(Unit.is), top => construct(top, bottom), onChange),
+    (x) =>
+      mPipe(
+        divide,
+        pass(Unit.is),
+        (top) => construct(top, bottom),
+        onChange
+      )(x),
     [onChange, bottom]
   );
   const _onChangeEnd = useCallback(
-    mPipe(divide, pass(Unit.is), bottom => construct(top, bottom), onChange),
+    (x) =>
+      mPipe(
+        divide,
+        pass(Unit.is),
+        (bottom) => construct(top, bottom),
+        onChange
+      )(x),
     [onChange, top]
   );
   const [start, handleStart] = useDebouncedOnChange<number>(

@@ -1,4 +1,14 @@
 import { AutoSave } from "./AutoSave";
+import {
+  BlocksArray,
+  DefaultBlock,
+  DefaultBlockWithID,
+  DefaultTemplate,
+  KitsWithThumbs,
+  LayoutsWithThumbs,
+  PopupsWithThumbs,
+  StoriesWithThumbs
+} from "./DefaultTemplate";
 import { AddMediaData, AddMediaExtra } from "./Media";
 import { OnChange } from "./OnChange";
 import { PublishData } from "./Project";
@@ -90,6 +100,17 @@ export interface VISUAL_CONFIG {
         ) => void;
       };
     };
+
+    defaultKits?: DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock>;
+    defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
+    defaultLayouts?: DefaultTemplate<
+      LayoutsWithThumbs,
+      BlocksArray<DefaultBlockWithID>
+    >;
+    defaultStories?: DefaultTemplate<
+      StoriesWithThumbs,
+      BlocksArray<DefaultBlock> | DefaultBlock
+    >;
   };
 
   //#endregion

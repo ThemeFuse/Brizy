@@ -192,7 +192,13 @@ class Global extends Component {
     }
 
     const thumbnails = blocks.map((block) => {
-      const { url, width, height } = blockThumbnailData(block.data);
+      const blockMeta = block.meta;
+      const blockWithMeta = {
+        ...block.data,
+        ...(blockMeta ? { meta: blockMeta } : {})
+      };
+
+      const { url, width, height } = blockThumbnailData(blockWithMeta);
       const {
         type,
         value: { _id }

@@ -1,13 +1,19 @@
 import { autoSave } from "./autoSave";
 import { getConfig } from "./config";
 import { addFile } from "./customFile/addFile";
+import {
+  defaultKits,
+  defaultLayouts,
+  defaultPopups,
+  defaultStories
+} from "./defaultTemplates";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
+import { onChange } from "./onChange";
+import { publish } from "./publish";
 import { savedBlocks } from "./savedBlocks/savedBlocks";
 import { savedLayouts } from "./savedBlocks/savedLayouts";
 import { savedPopups } from "./savedBlocks/savedPopups";
-import { onChange } from "./onChange";
-import { publish } from "./publish";
 
 const config = getConfig();
 
@@ -27,7 +33,11 @@ const api = {
   },
   savedBlocks,
   savedPopups,
-  savedLayouts
+  savedLayouts,
+  defaultKits: defaultKits(config),
+  defaultPopups: defaultPopups(config),
+  defaultStories: defaultStories(config),
+  defaultLayouts: defaultLayouts(config)
 };
 
 if (window.__VISUAL_CONFIG__) {

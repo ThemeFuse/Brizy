@@ -1,8 +1,8 @@
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isNullish } from "visual/utils/value";
 import { Value } from "../Options/types/dev/Animation/types/Value";
 import { getAnimations } from "./animations";
 import { MultiAnimation } from "./types";
-import { ElementTypes } from "visual/global/Config/types/configs/ConfigCommon";
 
 export const setHoverOptions = <T>(data: T) => {
   return encodeURI(
