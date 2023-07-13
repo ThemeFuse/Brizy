@@ -219,7 +219,7 @@ abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializa
 
     private function is_post_type($post = null)
     {
-        $all_custom_post_types = get_post_types(array('_builtin' => true));
+        $all_custom_post_types = get_post_types();
 
         // there are no custom post types
         if (empty ($all_custom_post_types)) {
