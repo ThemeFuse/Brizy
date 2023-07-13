@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: Brizy
  * Description: A free drag & drop front-end page builder to help you create WordPress pages lightning fast. It's easy with Brizy.
@@ -17,11 +18,11 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && stripos($_SERVER['HTTP_X_FORWAR
     $_SERVER['HTTPS'] = 'on';
 }
 
-define('BRIZY_DEVELOPMENT', false );
-define('BRIZY_LOG', false );
+define('BRIZY_DEVELOPMENT', 1);
+define('BRIZY_LOG', false);
 define('BRIZY_VERSION', '2.4.26');
 define('BRIZY_MINIMUM_PRO_VERSION', '2.4.15');
-define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '264-wp' );
+define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '264-wp');
 define('BRIZY_SYNC_VERSION', '264');
 define('BRIZY_FILE', __FILE__);
 define('BRIZY_PLUGIN_BASE', plugin_basename(BRIZY_FILE));
@@ -63,7 +64,7 @@ function brizy_load()
 
 function brizy_notices()
 {
-    ?>
+?>
     <div class="notice notice-error is-dismissible">
         <p>
             <?php
@@ -79,12 +80,12 @@ function brizy_notices()
             ?>
         </p>
     </div>
-    <?php
+<?php
 }
 
 function brizy_fail_notices()
 {
-    ?>
+?>
     <div class="notice notice-error is-dismissible">
         <p>
             <?php
@@ -97,7 +98,7 @@ function brizy_fail_notices()
             ?>
         </p>
     </div>
-    <?php
+<?php
 }
 
 

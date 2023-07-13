@@ -39,6 +39,11 @@ interface Actions {
   getPostObjects: string;
 
   searchPosts: string;
+
+  symbolCreate: string;
+  symbolList: string;
+  symbolUpdate: string;
+  symbolDelete: string;
 }
 
 interface API {
@@ -179,6 +184,22 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   searchPosts: pipe(
     mPipe(Obj.readKey("searchPosts"), Str.read),
     throwOnNullish("INvalid actions: searchPosts")
+  ),
+  symbolList: pipe(
+    mPipe(Obj.readKey("symbolList"), Str.read),
+    throwOnNullish("Invalid actions: symbolList")
+  ),
+  symbolCreate: pipe(
+    mPipe(Obj.readKey("symbolCreate"), Str.read),
+    throwOnNullish("Invalid actions: symbolCreate")
+  ),
+  symbolUpdate: pipe(
+    mPipe(Obj.readKey("symbolUpdate"), Str.read),
+    throwOnNullish("Invalid actions: symbolUpdate")
+  ),
+  symbolDelete: pipe(
+    mPipe(Obj.readKey("symbolDelete"), Str.read),
+    throwOnNullish("Invalid actions: symbolDelete")
   )
 });
 

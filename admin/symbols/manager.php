@@ -1,6 +1,7 @@
 <?php
 
-class Brizy_Admin_Symbols_Manager {
+class Brizy_Admin_Symbols_Manager
+{
 	const BRIZY_SYMBOLS_KEY = 'brizy-symbols';
 
 	/**
@@ -10,22 +11,32 @@ class Brizy_Admin_Symbols_Manager {
 	 * @return Brizy_Admin_Symbols_Symbol
 	 * @throws Exception
 	 */
-	public function createFromJson( $jsonString ) {
-		$jsonObj = json_decode( $jsonString );
+	public function createFromJson($jsonString)
+	{
+		$jsonObj = json_decode($jsonString);
+		$result  = [];
+		if (is_array($jsonObj)) {
+			foreach ($jsonObj as $obj) {
+				$result[] = Brizy_Admin_Symbols_Symbol::createFromJsonObject($obj);
+			}
+		} elseif (!is_null($jsonObj)) {
+			$result[] = Brizy_Admin_Symbols_Symbol::createFromJsonObject($jsonObj);
+		}
 
-		return Brizy_Admin_Symbols_Symbol::createFromJsonObject( $jsonObj );
+		return $result;
 	}
 
 	/**
 	 * @return Brizy_Admin_Symbols_Symbol[]
 	 */
-	public function getList() {
-		$symbolsEncoded = get_option( self::BRIZY_SYMBOLS_KEY, base64_encode( "[]" ) );
-		$jsonSymbols    = json_decode( base64_decode( $symbolsEncoded ) );
+	public function getList()
+	{
+		$symbolsEncoded = get_option(self::BRIZY_SYMBOLS_KEY, base64_encode("[]"));
+		$jsonSymbols    = json_decode(base64_decode($symbolsEncoded));
 
 		$symbols = [];
-		foreach ( $jsonSymbols as $symbol ) {
-			$symbols[] = Brizy_Admin_Symbols_Symbol::createFromJsonObject( $symbol );
+		foreach ($jsonSymbols as $symbol) {
+			$symbols[] = Brizy_Admin_Symbols_Symbol::createFromJsonObject($symbol);
 		}
 
 		return $symbols;
@@ -34,12 +45,13 @@ class Brizy_Admin_Symbols_Manager {
 	/**
 	 * @return Brizy_Admin_Symbols_Symbol
 	 */
-	public function get( $uid ) {
+	public function get($uid)
+	{
 
 		$symbols = $this->getList();
 
-		foreach ( $symbols as $symbol ) {
-			if ( $symbol->getUid() == $uid ) {
+		foreach ($symbols as $symbol) {
+			if ($symbol->getUid() == $uid) {
 				return $symbol;
 			}
 		}
@@ -51,20 +63,21 @@ class Brizy_Admin_Symbols_Manager {
 	/**
 	 * @param Brizy_Admin_Symbols_Symbol $aSymbol
 	 */
-	public function deleteSymbol( $aSymbol ) {
-		if ( ! $aSymbol ) {
+	public function deleteSymbol($aSymbol)
+	{
+		if (!$aSymbol) {
 			throw new Exception("Unable to delete NULL symbol");
 		}
 
 		$symbols = $this->getList();
 
-		foreach ( $symbols as $i => $symbol ) {
-			if ( $symbol->getUid() == $aSymbol->getUid() ) {
-				unset( $symbols[ $i ] );
+		foreach ($symbols as $i => $symbol) {
+			if ($symbol->getUid() == $aSymbol->getUid()) {
+				unset($symbols[$i]);
 			}
 		}
 
-		$this->saveAllSymbols( $symbols );
+		$this->saveAllSymbols($symbols);
 	}
 
 	/**
@@ -72,26 +85,28 @@ class Brizy_Admin_Symbols_Manager {
 	 *
 	 * @return Brizy_Admin_Symbols_Symbol
 	 */
-	public function saveSymbol( $aSymbol ) {
-		if ( ! $aSymbol ) {
+	public function saveSymbol($aSymbol)
+	{
+		if (!$aSymbol) {
 			throw new Exception("Unable to save NULL symbol");
 		}
 		$symbols = $this->getList();
 
-		foreach ( $symbols as $i => $symbol ) {
-			if ( $symbol->getUid() == $aSymbol->getUid() ) {
-				$symbols[ $i ] = $aSymbol;
-				$this->saveAllSymbols( $symbols );
+		foreach ($symbols as $i => $symbol) {
+			if ($symbol->getUid() == $aSymbol->getUid()) {
+				$symbols[$i] = $aSymbol;
+				$this->saveAllSymbols($symbols);
 
 				return;
 			}
 		}
 		$symbols[] = $aSymbol;
-		$this->saveAllSymbols( $symbols );
+		$this->saveAllSymbols($symbols);
 	}
 
-	private function saveAllSymbols( $symbols ) {
-		update_option( self::BRIZY_SYMBOLS_KEY, base64_encode( json_encode( $symbols ) ) );
+	private function saveAllSymbols($symbols)
+	{
+		update_option(self::BRIZY_SYMBOLS_KEY, base64_encode(json_encode($symbols)));
 	}
 
 	/**
@@ -99,29 +114,28 @@ class Brizy_Admin_Symbols_Manager {
 	 *
 	 * @return void
 	 */
-	public function validateSymbol( $symbol ) {
-		if ( is_null( $symbol->getUid() ) || empty( $symbol->getUid() ) ) {
-			throw new Exception( 'Please provide the symbol uid' );
+	public function validateSymbol($symbol)
+	{
+		if (is_null($symbol->getUid()) || empty($symbol->getUid())) {
+			throw new Exception('Please provide the symbol uid');
 		}
 
-		if ( is_null( $symbol->getVersion() ) || empty( $symbol->getVersion() ) ) {
-			throw new Exception( 'Please provide the symbol version' );
+		if (is_null($symbol->getVersion()) || empty($symbol->getVersion())) {
+			throw new Exception('Please provide the symbol version');
 		}
 
-		$currentSymbol = $this->get( $symbol->getUid() );
+		$currentSymbol = $this->get($symbol->getUid());
 
-		if ( $currentSymbol && ( $currentSymbol->getVersion() + 1 != $symbol->getVersion() ) ) {
-			throw new Exception( 'Invalid symbol version. Please refresh and try again.' );
+		if ($currentSymbol && ($currentSymbol->getVersion() + 1 != $symbol->getVersion())) {
+			throw new Exception('Invalid symbol version. Please refresh and try again.');
 		}
 
-		if ( is_null( $symbol->getLabel() ) || empty( $symbol->getLabel() ) ) {
-			throw new Exception( 'Please provide the symbol label' );
+		if (is_null($symbol->getLabel()) || empty($symbol->getLabel())) {
+			throw new Exception('Please provide the symbol label');
 		}
 
-		if ( is_null( $symbol->getData() ) || empty( $symbol->getData() ) ) {
-			throw new Exception( 'Please provide the symbol data' );
+		if (is_null($symbol->getData()) || empty($symbol->getData())) {
+			throw new Exception('Please provide the symbol data');
 		}
-
 	}
-
 }

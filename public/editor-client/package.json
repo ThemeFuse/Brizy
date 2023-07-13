@@ -18,7 +18,8 @@
   "author": "brizy",
   "license": "MIT",
   "dependencies": {
-    "fp-utilities": "^1.1.4"
+    "fp-utilities": "^1.1.4",
+    "valtio": "^1.10.6"
   },
   "devDependencies": {
     "@babel/parser": "^7.21.8",

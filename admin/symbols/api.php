@@ -1,7 +1,8 @@
 <?php
 
 
-class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
+class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi
+{
 	const nonce = Brizy_Editor_API::nonce;
 	const CREATE_ACTION = '_add_symbol';
 	const UPDATE_ACTION = '_update_symbol';
@@ -20,7 +21,8 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 	 *
 	 * @param Brizy_Admin_Symbols_Manager $manager
 	 */
-	public function __construct( $manager ) {
+	public function __construct($manager)
+	{
 		$this->manager = $manager;
 
 		parent::__construct();
@@ -29,31 +31,35 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 	/**
 	 * @return Brizy_Admin_Rules_Api
 	 */
-	public static function _init() {
+	public static function _init()
+	{
 		static $instance;
 
-		if ( ! $instance ) {
-			$instance = new self( new Brizy_Admin_Symbols_Manager() );
+		if (!$instance) {
+			$instance = new self(new Brizy_Admin_Symbols_Manager());
 		}
 
 		return $instance;
 	}
 
-	protected function getRequestNonce() {
-		return $this->param( 'hash' );
+	protected function getRequestNonce()
+	{
+		return $this->param('hash');
 	}
 
-	protected function initializeApiActions() {
+	protected function initializeApiActions()
+	{
 		$pref = 'wp_ajax_' . Brizy_Editor::prefix();
 
-		add_action( $pref . self::CREATE_ACTION, array( $this, 'actionCreateOrUpdate' ) );
-		add_action( $pref . self::UPDATE_ACTION, array( $this, 'actionCreateOrUpdate' ) );
-		add_action( $pref . self::DELETE_ACTION, array( $this, 'actionDelete' ) );
-		add_action( $pref . self::LIST_ACTION, array( $this, 'actionGetList' ) );
-		add_filter( 'brizy_editor_config', array( $this, 'editorConfig' ), 10, 2 );
+		add_action($pref . self::CREATE_ACTION, array($this, 'actionCreateOrUpdate'));
+		add_action($pref . self::UPDATE_ACTION, array($this, 'actionCreateOrUpdate'));
+		add_action($pref . self::DELETE_ACTION, array($this, 'actionDelete'));
+		add_action($pref . self::LIST_ACTION, array($this, 'actionGetList'));
+		add_filter('brizy_editor_config', array($this, 'editorConfig'), 10, 2);
 	}
 
-	public function editorConfig( $config, $context = null ) {
+	public function editorConfig($config, $context = null)
+	{
 		$config['symbols'] = $this->manager->getList();
 
 		return $config;
@@ -62,64 +68,65 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 	/**
 	 * @return null|void
 	 */
-	public function actionGetList() {
-		$this->verifyNonce( self::nonce );
+	public function actionGetList()
+	{
+		$this->verifyNonce(self::nonce);
 
 		try {
 			$symbols = $this->manager->getList();
 
-			$this->success( $symbols );
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
-			$this->error( 400, $e->getMessage() );
+			$this->success($symbols);
+		} catch (Exception $e) {
+			Brizy_Logger::instance()->error($e->getMessage(), [$e]);
+			$this->error(400, $e->getMessage());
 		}
 
 		return null;
 	}
 
-	public function actionCreateOrUpdate() {
+	public function actionCreateOrUpdate()
+	{
 
-		$this->verifyNonce( self::nonce );
+		$this->verifyNonce(self::nonce);
 
-		$data = file_get_contents( "php://input" );
+		$data = file_get_contents("php://input");
 
 		try {
-			$asymbol = $this->manager->createFromJson( $data );
-			$symbol  = null;
-			if ( $asymbol->getUid() ) {
-				$symbol = $this->manager->get( $asymbol->getUid() );
-				$symbol->patchFrom( $asymbol );
-			} else {
-				$symbol = $asymbol;
+
+			$asymbols = $this->manager->createFromJson($data);
+			foreach ($asymbols as $asymbol) {
+				$symbol = $this->manager->get($asymbol->getUid());
+				if ($symbol) {
+					$symbol->patchFrom($asymbol);
+					$symbol->incrementVersion();
+				} else {
+					$symbol = $asymbol;
+				}
+
+				$this->manager->validateSymbol($symbol);
+				$this->manager->saveSymbol($symbol);
 			}
-			$symbol->incrementVersion();
-			$this->manager->validateSymbol( $symbol );
-			$this->manager->saveSymbol( $symbol );
-		} catch ( Exception $e ) {
-			$this->error( 400, "Error" . $e->getMessage() );
+		} catch (Exception $e) {
+			$this->error(400, "Error" . $e->getMessage());
 		}
 
-		wp_send_json_success( $symbol, 200 );
+		wp_send_json_success($asymbols, 200);
 	}
 
-	public function actionDelete() {
+	public function actionDelete()
+	{
 
-		$this->verifyNonce( self::nonce );
-
-		$uid = $this->param( 'uid' );
-
-		if ( ! $uid ) {
-			$this->error( 400, "Error: Please provide the symbol uid" );
-		}
-
+		$this->verifyNonce(self::nonce);
+		$data = file_get_contents("php://input");
 		try {
-			$symbol = $this->manager->get( $uid );
-			$this->manager->deleteSymbol( $symbol );
-		} catch ( Exception $e ) {
-			$this->error( 400, 'Unable to delete symbol' );
+			$asymbols = $this->manager->createFromJson($data);
+			foreach ($asymbols as $asymbol) {
+				$this->manager->deleteSymbol($asymbol);
+			}
+		} catch (Exception $e) {
+			$this->error(400, "Error" . $e->getMessage());
 		}
 
-		$this->success( null );
+		$this->success(null);
 	}
-
 }

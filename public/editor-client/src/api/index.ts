@@ -1,3 +1,5 @@
+import { ClassSymbol } from "src/types/Symbols";
+import { State } from "src/valtio/types";
 import { getConfig } from "../config";
 import { Page } from "../types/Page";
 import { Rule } from "../types/PopupConditions";
@@ -736,6 +738,99 @@ export const updatePopupRules = async (
   } catch (e) {
     throw new Error(t("Fail to update popup rules"));
   }
+};
+
+//#endregion
+
+//#region Symbols
+
+export const createSymbol = async (data: ClassSymbol[]): Promise<unknown> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__ at createSymbols"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    action: actions.symbolCreate,
+    version: editorVersion,
+    hash
+  });
+
+  return request(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    body: JSON.stringify(data)
+  });
+};
+
+export const updateSymbol = async (data: ClassSymbol[]): Promise<unknown> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__ at update symbol"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    action: actions.symbolUpdate,
+    version: editorVersion,
+    hash
+  });
+
+  return request(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    body: JSON.stringify(data)
+  });
+};
+
+export const deleteSymbol = async (data: ClassSymbol[]): Promise<unknown> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__ at delete symbol"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    action: actions.symbolDelete,
+    version: editorVersion,
+    hash
+  });
+
+  return request(url, {
+    method: "DELETE",
+    body: JSON.stringify(data)
+  });
+};
+
+export const updateSymbols = async (snap: Readonly<State>) => {
+  const { toCreate, toUpdate, toDelete } = snap.symbols;
+
+  const promises = [];
+
+  if (toCreate.length) {
+    promises.push(createSymbol(toCreate));
+  }
+
+  if (toUpdate.length) {
+    promises.push(updateSymbol(toUpdate));
+  }
+
+  if (toDelete.length) {
+    promises.push(deleteSymbol(toDelete));
+  }
+
+  await Promise.all(promises);
 };
 
 //#endregion
