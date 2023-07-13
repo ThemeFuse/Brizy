@@ -18,7 +18,7 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && stripos($_SERVER['HTTP_X_FORWAR
     $_SERVER['HTTPS'] = 'on';
 }
 
-define('BRIZY_DEVELOPMENT', false);
+define('BRIZY_DEVELOPMENT', 1);
 define('BRIZY_LOG', false);
 define('BRIZY_VERSION', '2.4.26');
 define('BRIZY_MINIMUM_PRO_VERSION', '2.4.15');

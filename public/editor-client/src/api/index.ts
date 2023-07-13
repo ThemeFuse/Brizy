@@ -813,14 +813,24 @@ export const deleteSymbol = async (data: ClassSymbol[]): Promise<unknown> => {
   });
 };
 
-export const updateSymbols = async (store: Readonly<State>) => {
-  const { toCreate, toUpdate, toDelete } = store.symbols;
+export const updateSymbols = async (snap: Readonly<State>) => {
+  const { toCreate, toUpdate, toDelete } = snap.symbols;
 
-  const createPromise = createSymbol(toCreate);
-  const updatePromise = updateSymbol(toUpdate);
-  const deletePromise = deleteSymbol(toDelete);
+  const promises = [];
 
-  await Promise.all([createPromise, updatePromise, deletePromise]);
+  if (toCreate.length) {
+    promises.push(createSymbol(toCreate));
+  }
+
+  if (toUpdate.length) {
+    promises.push(updateSymbol(toUpdate));
+  }
+
+  if (toDelete.length) {
+    promises.push(deleteSymbol(toDelete));
+  }
+
+  await Promise.all(promises);
 };
 
 //#endregion

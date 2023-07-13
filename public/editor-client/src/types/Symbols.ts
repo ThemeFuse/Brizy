@@ -36,6 +36,8 @@ interface SymbolDelete {
   payload: string;
 }
 
+export type SymbolRequestType = "create" | "update" | "delete";
+
 export type SymbolAction = SymbolCreate | SymbolUpdate | SymbolDelete;
 
 export interface Symbols {
