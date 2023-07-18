@@ -17,7 +17,7 @@ class Brizy_Content_ContextFactory
      *
      * @return Brizy_Content_Context
      */
-    static public function createContext($project= null, $wp_post = null, $parentContext = false)
+    static public function createContext($project = null, $wp_post = null, $parentContext = false)
     {
         $context = new Brizy_Content_Context($project, null, $wp_post, null, $parentContext);
 
@@ -58,7 +58,7 @@ class Brizy_Content_ContextFactory
     {
         $context = new Brizy_Content_Context($project, $wp_post);
 
-        if ($wp_postinstanceof WP_Post) {
+        if ($wp_post instanceof WP_Post) {
             $context->setAuthor($wp_post->post_author);
         }
 
