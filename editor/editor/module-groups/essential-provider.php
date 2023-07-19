@@ -21,7 +21,8 @@ class Brizy_Editor_Editor_ModuleGroups_EssentialProvider implements Brizy_Editor
 				"Line",
                 "MenuSimple",
                 "Menu",
-				"Search"
+				"Search",
+				"Filters"
 			], 300 ),
 		];
 	}
