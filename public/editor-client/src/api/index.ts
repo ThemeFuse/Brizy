@@ -21,7 +21,7 @@ import {
   stringifyProject,
   stringifySavedBlock
 } from "./adapter";
-import { makeFormEncode } from "./utils";
+import { makeFormEncode, makeUrl } from "./utils";
 
 //#region Common Utils Request & PersistentRequest
 
@@ -49,19 +49,6 @@ export function request(
   const { fetch } = window.parent || window;
   return fetch(url, config);
 }
-
-export const makeUrl = (
-  baseUrl: string,
-  params: Record<string, string> = {}
-): string => {
-  const url = new URL(baseUrl);
-
-  Object.entries(params).forEach(([key, value]) => {
-    url.searchParams.append(key, value);
-  });
-
-  return url.toString();
-};
 
 export function persistentRequest<T>(
   url: string,
@@ -719,17 +706,20 @@ export const updatePopupRules = async (
   }
   const { pageId, url, hash, editorVersion, actions } = config;
   const { rules, dataVersion } = data;
-  const body = new URLSearchParams({
-    hash,
-    dataVersion: `${dataVersion}`,
-    version: editorVersion,
+
+  const _url = makeUrl(url, {
     action: actions.updateRules,
+    hash,
     post: pageId,
-    rules: JSON.stringify(rules)
+    version: editorVersion,
+    dataVersion: `${dataVersion}`
   });
 
   try {
-    const r = await request(url, { method: "POST", body: body });
+    const r = await request(_url, {
+      method: "POST",
+      body: JSON.stringify(rules)
+    });
     const data = await r.json();
 
     return data.data;
