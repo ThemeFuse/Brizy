@@ -109,27 +109,16 @@ export interface VISUAL_CONFIG {
       StoriesWithThumbs,
       BlocksArray<DefaultBlock> | DefaultBlock
     >;
-  };
-
-  //Collection Types
-  collectionTypes?: {
-    loadCollectionTypes: {
-      handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
-    };
-  };
-
-  //CollectionItems
-  collectionItems?: {
-    searchCollectionItems: {
-      handler: (
-        res: Response<Post[]>,
-        rej: Response<string>,
-        extra: CollectionExtra
-      ) => void;
-    };
 
     //Collection Items
     collectionItems?: {
+      searchCollectionItems: {
+        handler: (
+          res: Response<Post[]>,
+          rej: Response<string>,
+          extra: CollectionExtra
+        ) => void;
+      };
       getCollectionItemsIds: {
         handler: (
           res: Response<ChoicesSync>,
@@ -145,14 +134,6 @@ export interface VISUAL_CONFIG {
         handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
       };
     };
-  };
-
-  //#endregion
-
-  //#region WordPress
-
-  wp?: {
-    postLoopSources?: Array<{ name: string; label: string }>;
   };
 
   //#endregion

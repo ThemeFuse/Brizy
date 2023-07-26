@@ -1,7 +1,7 @@
 import { mPipe } from "fp-utilities";
-import { MValue } from "src/utils/types";
 import { DCPlaceholderObj, Dictionary } from "../types/DynamicContent";
 import * as Str from "../utils/reader/string";
+import { MValue } from "../utils/types";
 
 const _escape = mPipe(Str.read, encodeURI);
 export const getPlaceholder = (placeholderObj: DCPlaceholderObj): string => {
