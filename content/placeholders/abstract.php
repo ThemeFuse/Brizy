@@ -4,7 +4,7 @@ use BrizyPlaceholders\ContentPlaceholder;
 use BrizyPlaceholders\ContextInterface;
 use BrizyPlaceholders\PlaceholderInterface;
 
-abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializable implements PlaceholderInterface
+abstract class Brizy_Content_Placeholders_Abstract extends \BrizyPlaceholders\AbstractPlaceholder implements PlaceholderInterface
 {
 
     const DISPLAY_INLINE = 'inline';
