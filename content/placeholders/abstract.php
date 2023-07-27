@@ -6,7 +6,6 @@ use BrizyPlaceholders\PlaceholderInterface;
 
 abstract class Brizy_Content_Placeholders_Abstract extends Brizy_Admin_Serializable implements PlaceholderInterface
 {
-    use \BrizyPlaceholders\AbstractPlaceholderTrait;
 
     const DISPLAY_INLINE = 'inline';
     const DISPLAY_BLOCK = 'block';
