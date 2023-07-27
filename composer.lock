@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a07ba8380276a34137fc85582f657c8",
+    "content-hash": "396f55004f56c13112b3cc191037766b",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
@@ -81,16 +81,16 @@
         },
         {
             "name": "bagrinsergiu/content-placeholder",
-            "version": "dev-dynamic-refactor",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
-                "url": "git@github.com:bagrinsergiu/brizy-content-placeholder.git",
-                "reference": "94fe5644e3bc77e7d5ba39f9fae8a51fc5813203"
+                "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
+                "reference": "b83a386223b21c2e38c4f38798c6426e45fdd3c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/94fe5644e3bc77e7d5ba39f9fae8a51fc5813203",
-                "reference": "94fe5644e3bc77e7d5ba39f9fae8a51fc5813203",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/b83a386223b21c2e38c4f38798c6426e45fdd3c0",
+                "reference": "b83a386223b21c2e38c4f38798c6426e45fdd3c0",
                 "shasum": ""
             },
             "require": {
@@ -114,7 +114,11 @@
                 "content",
                 "placeholders"
             ],
-            "time": "2023-05-15T12:11:15+00:00"
+            "support": {
+                "source": "https://github.com/bagrinsergiu/brizy-content-placeholder/tree/2.0.9",
+                "issues": "https://github.com/bagrinsergiu/brizy-content-placeholder/issues"
+            },
+            "time": "2023-07-05T10:53:28+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",
@@ -424,7 +428,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "bagrinsergiu/brizy-merge-page-assets": 20,
-        "bagrinsergiu/content-placeholder": 20,
         "tburry/pquery": 20
     },
     "prefer-stable": false,
@@ -433,5 +436,5 @@
         "php": ">=5.6"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
