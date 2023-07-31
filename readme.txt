@@ -159,7 +159,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Section Parallax
 * Fixed: Section containers
 
-= 2.4.26 - 2023-06-21 =
+= 2.4.22 - 2023-06-21 =
 * New: Added option to sort tags alphabetically in the Accordion element
 * New: Added vertical space option for Accordion element
 * New: Add width in px for the boxed option on Blocks
