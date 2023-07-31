@@ -64,9 +64,14 @@ export const addMedia: AddMediaData = {
           console.error(r);
         });
     });
+
     wpMediaFrame.on("close", () => {
       iframe?.classList.remove("media-modal-open");
       html?.classList.remove("brz-ow-hidden");
+    });
+
+    wpMediaFrame.on("escape", () => {
+      rej(t("File upload cancelled"));
     });
 
     iframe?.classList.add("media-modal-open");
