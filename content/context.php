@@ -23,7 +23,7 @@ class Brizy_Content_Context implements ContextInterface
     public function __call($name, $arguments)
     {
         $method = substr($name, 0, 3);
-        $key    = substr($name, 3);
+        $key = substr($name, 3);
 
         switch ($method) {
             case 'set':
@@ -57,7 +57,7 @@ class Brizy_Content_Context implements ContextInterface
 
     public function afterExtract($contentPlaceholders, $instancePlaceholders, $contentAfterExtractor)
     {
-        $this->setPlaceholders(array_merge( $this->getPlaceholders(),$contentPlaceholders ));
+        $this->setPlaceholders(array_merge($this->getPlaceholders(), $contentPlaceholders));
     }
 
 
@@ -87,8 +87,8 @@ class Brizy_Content_Context implements ContextInterface
         $this->setProject($project);
         $this->setWpPost($wp_post);
         $this->setParentContext($parentContext);
-    $this->setEntity($wp_post);
-	}
+        $this->setEntity($wp_post);
+    }
 
     /**
      * @return array
@@ -117,10 +117,21 @@ class Brizy_Content_Context implements ContextInterface
      */
     public function getPlaceholderById($id)
     {
-
         $results = $this->getPlaceholdersByAttrValue('id', $id);
 
         return isset($results[0]) ? $results[0] : null;
+    }
+
+    public function getPlaceholderByNameAndId($name, $id)
+    {
+        if (isset($this->placeholders)) {
+            foreach ($this->placeholders as $placeholder) {
+                if ($placeholder->getName() == $name && $placeholder->getAttribute('id') == $id) {
+                    return $placeholder;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -131,7 +142,6 @@ class Brizy_Content_Context implements ContextInterface
      */
     public function getPlaceholdersByAttrValue($key, $value)
     {
-
         if (is_null($value)) {
             return null;
         }
