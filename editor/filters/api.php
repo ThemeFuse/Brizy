@@ -48,14 +48,7 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi
                 /**
                  * @var \BrizyPlaceholders\ContentPlaceholder $placeholder ;
                  */
-                $cleanId = str_replace(['-tag', '-pag'], '', $placeholderId);
-                if (strpos($placeholderId, "-tag") !== false) {
-                    $placeholder = $context->getPlaceholderByNameAndId("brizy_dc_post_loop_tags", $cleanId);
-                } elseif (strpos($placeholderId, "-pag") !== false) {
-                    $placeholder = $context->getPlaceholderByNameAndId("brizy_dc_post_loop_pagination", $cleanId);
-                } else {
-                    $placeholder = $context->getPlaceholderById($placeholderId);
-                }
+                $placeholder = $context->getPlaceholderById($placeholderId);
 
                 if (!$placeholder) {
                     $placeholderContents[$placeholderId] = '';
