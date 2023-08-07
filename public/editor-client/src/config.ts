@@ -39,6 +39,9 @@ interface Actions {
   getPostObjects: string;
 
   searchPosts: string;
+
+  createBlockScreenshot: string;
+  updateBlockScreenshot: string;
 }
 
 interface API {
@@ -178,7 +181,15 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   ),
   searchPosts: pipe(
     mPipe(Obj.readKey("searchPosts"), Str.read),
-    throwOnNullish("INvalid actions: searchPosts")
+    throwOnNullish("Invalid actions: searchPosts")
+  ),
+  createBlockScreenshot: pipe(
+    mPipe(Obj.readKey("createBlockScreenshot"), Str.read),
+    throwOnNullish("Invalid actions: createBlockScreenshot")
+  ),
+  updateBlockScreenshot: pipe(
+    mPipe(Obj.readKey("updateBlockScreenshot"), Str.read),
+    throwOnNullish("Invalid actions: updateBlockScreenshot")
   )
 });
 

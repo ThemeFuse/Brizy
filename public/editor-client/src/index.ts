@@ -20,6 +20,7 @@ import { publish } from "./publish";
 import { savedBlocks } from "./savedBlocks/savedBlocks";
 import { savedLayouts } from "./savedBlocks/savedLayouts";
 import { savedPopups } from "./savedBlocks/savedPopups";
+import { screenshots } from "./screenshots";
 
 const config = getConfig();
 
@@ -51,7 +52,8 @@ const api = {
   },
   collectionTypes: {
     loadCollectionTypes
-  }
+  },
+  screenshots: screenshots()
 };
 
 if (window.__VISUAL_CONFIG__) {
