@@ -11,6 +11,7 @@ import {
   SavedLayout,
   SavedLayoutMeta
 } from "../types/SavedBlocks";
+import { ScreenshotData } from "../types/Screenshots";
 import { t } from "../utils/i18n";
 import {
   GetCollections,
@@ -759,6 +760,90 @@ export const updatePopupRules = async (
     return data.data;
   } catch (e) {
     throw new Error(t("Fail to update popup rules"));
+  }
+};
+
+//#endregion
+
+//#region Screenshots
+
+export const createBlockScreenshot = async ({
+  base64,
+  blockType
+}: ScreenshotData): Promise<{ id: string }> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { pageId, url, hash, editorVersion, actions } = config;
+  const attachment = base64.replace(/data:image\/.+;base64,/, "");
+  const _url = makeUrl(url, {
+    hash,
+    action: actions.createBlockScreenshot,
+    post: pageId,
+    version: editorVersion
+  });
+  const body = new URLSearchParams({
+    block_type: blockType,
+    ibsf: attachment // ibsf - image base64
+  });
+
+  try {
+    const r = await request(_url, { method: "POST", body });
+    const d = await r.json();
+
+    if (d?.data?.id) {
+      return { id: d.data.id };
+    }
+
+    throw new Error(t("Failed to create Screenshot"));
+  } catch (e) {
+    throw new Error(t("Failed to create Screenshot"));
+  }
+};
+
+interface UpdateScreenshot extends ScreenshotData {
+  id: string;
+}
+
+export const updateBlockScreenshot = async ({
+  id,
+  base64,
+  blockType
+}: UpdateScreenshot): Promise<{ id: string }> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { pageId, url, hash, editorVersion, actions } = config;
+  const attachment = base64.replace(/data:image\/.+;base64,/, "");
+  const _url = makeUrl(url, {
+    hash,
+    action: actions.updateBlockScreenshot,
+    post: pageId,
+    version: editorVersion
+  });
+  const body = new URLSearchParams({
+    id,
+    block_type: blockType,
+    ibsf: attachment
+  });
+
+  try {
+    const r = await request(_url, { method: "POST", body });
+    const d = await r.json();
+
+    if (d?.data?.id) {
+      return { id: d.data.id };
+    }
+
+    throw new Error(t("Failed to update Screenshot"));
+  } catch (e) {
+    throw new Error(t("Failed to update Screenshot"));
   }
 };
 

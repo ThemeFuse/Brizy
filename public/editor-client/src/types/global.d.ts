@@ -17,6 +17,7 @@ import { OnChange } from "./OnChange";
 import { PopupConditions } from "./PopupConditions";
 import { PublishData } from "./Project";
 import { SavedBlocks, SavedLayouts, SavedPopups } from "./SavedBlocks";
+import { Screenshots } from "./Screenshots";
 
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
@@ -98,6 +99,9 @@ export interface VISUAL_CONFIG {
 
     // PopupConditions
     popupConditions?: PopupConditions;
+
+    // Screenshots
+    screenshots?: Screenshots;
 
     defaultKits?: DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock>;
     defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
