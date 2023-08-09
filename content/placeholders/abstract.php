@@ -4,229 +4,218 @@ use BrizyPlaceholders\ContentPlaceholder;
 use BrizyPlaceholders\ContextInterface;
 use BrizyPlaceholders\PlaceholderInterface;
 
-abstract class Brizy_Content_Placeholders_Abstract extends \BrizyPlaceholders\AbstractPlaceholder implements PlaceholderInterface
-{
+abstract class Brizy_Content_Placeholders_Abstract extends \BrizyPlaceholders\AbstractPlaceholder implements PlaceholderInterface {
 
-    const DISPLAY_INLINE = 'inline';
-    const DISPLAY_BLOCK = 'block';
+	const DISPLAY_INLINE = 'inline';
+	const DISPLAY_BLOCK = 'block';
 
-    /**
-     * @return string
-     */
-    protected $label;
+	/**
+	 * @return string
+	 */
+	protected $label;
 
-    /**
-     * @return string
-     */
-    protected $placeholder;
+	/**
+	 * @return string
+	 */
+	protected $placeholder;
 
-    /**
-     * @var array
-     */
-    protected $attributes = [];
+	/**
+	 * @var array
+	 */
+	protected $attributes = [];
 
-    /**
-     * @var string
-     */
-    protected $display = self::DISPLAY_INLINE;
+	protected $varyAttributes = ['type','id'];
 
-    protected $group = '';
+	/**
+	 * @var string
+	 */
+	protected $display = self::DISPLAY_INLINE;
 
-    /**
-     * It should return a unique identifier of the placeholder used for replacer.
-     * Do not use this where you need a constant value.
-     *
-     * @return mixed
-     */
-    public function getUid()
-    {
-        return md5(microtime());
-    }
+	protected $group = '';
 
-    public function getUniqueId()
-    {
-        return md5(get_class($this));
-    }
+	/**
+	 * It should return a unique identifier of the placeholder used for replacer.
+	 * Do not use this where you need a constant value.
+	 *
+	 * @return mixed
+	 */
+	public function getUid() {
+		return md5( microtime() );
+	}
 
-    public function getConfigStructure()
-    {
-        return [
-            'id' => $this->getUniqueId(),
-            'label' => $this->getLabel(),
-            'name' => $this->getPlaceholder(),
-            'placeholder' => $this->buildPlaceholder(),
-            'display' => $this->getDisplay(),
-            'attr' => (object)$this->getAttributes()
-        ];
-    }
+	public function getUniqueId() {
+		return md5( get_class( $this ) );
+	}
 
-    public function support($placeholderName)
-    {
-        return $this->getPlaceholder() == $placeholderName;
-    }
+	public function getConfigStructure() {
+		return [
+			'id'          => $this->getUniqueId(),
+			'label'       => $this->getLabel(),
+			'name'        => $this->getPlaceholder(),
+			'placeholder' => $this->buildPlaceholder(),
+			'display'     => $this->getDisplay(),
+			'attr'        => (object) $this->getAttributes(),
+			'varyAttr'    => (object) $this->getVaryAttributes()
+		];
+	}
 
-    public function shouldFallbackValue($value, ContextInterface $context, ContentPlaceholder $placeholder)
-    {
-        return empty($value);
-    }
+	public function support( $placeholderName ) {
+		return $this->getPlaceholder() == $placeholderName;
+	}
 
-    public function getFallbackValue(ContextInterface $context, ContentPlaceholder $placeholder)
-    {
-        $attributes = $placeholder->getAttributes();
+	public function shouldFallbackValue( $value, ContextInterface $context, ContentPlaceholder $placeholder ) {
+		return empty( $value );
+	}
 
-        return isset($attributes[PlaceholderInterface::FALLBACK_KEY]) ? $attributes[PlaceholderInterface::FALLBACK_KEY] : '';
-    }
+	public function getFallbackValue( ContextInterface $context, ContentPlaceholder $placeholder ) {
+		$attributes = $placeholder->getAttributes();
 
-    /**
-     * @return mixed
-     */
-    public function getLabel()
-    {
-        return $this->label;
-    }
+		return isset( $attributes[ PlaceholderInterface::FALLBACK_KEY ] ) ? $attributes[ PlaceholderInterface::FALLBACK_KEY ] : '';
+	}
 
-    /**
-     * @param mixed $label
-     *
-     * @return Brizy_Content_Placeholders_Abstract
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
+	/**
+	 * @return mixed
+	 */
+	public function getLabel() {
+		return $this->label;
+	}
 
-        return $this;
-    }
+	/**
+	 * @param mixed $label
+	 *
+	 * @return Brizy_Content_Placeholders_Abstract
+	 */
+	public function setLabel( $label ) {
+		$this->label = $label;
 
-    /**
-     * @return string
-     */
-    public function getDisplay()
-    {
-        return $this->display;
-    }
+		return $this;
+	}
 
-    /**
-     * @param string $display
-     *
-     * @return Brizy_Content_Placeholders_Abstract
-     */
-    public function setDisplay($display)
-    {
-        $this->display = $display;
+	/**
+	 * @return string
+	 */
+	public function getDisplay() {
+		return $this->display;
+	}
 
-        return $this;
-    }
+	/**
+	 * @param string $display
+	 *
+	 * @return Brizy_Content_Placeholders_Abstract
+	 */
+	public function setDisplay( $display ) {
+		$this->display = $display;
 
-    /**
-     * @return string
-     */
-    public function getGroup()
-    {
-        return $this->group;
-    }
+		return $this;
+	}
 
-    /**
-     * @param string $group
-     *
-     * @return Brizy_Content_Placeholders_Abstract
-     */
-    public function setGroup($group)
-    {
-        $this->group = $group;
+	/**
+	 * @return string
+	 */
+	public function getGroup() {
+		return $this->group;
+	}
 
-        return $this;
-    }
+	/**
+	 * @param string $group
+	 *
+	 * @return Brizy_Content_Placeholders_Abstract
+	 */
+	public function setGroup( $group ) {
+		$this->group = $group;
 
-    /**
-     * @return mixed
-     */
-    public function getPlaceholder()
-    {
-        return $this->placeholder;
-    }
+		return $this;
+	}
 
-    /**
-     * @param mixed $placeholder
-     *
-     * @return Brizy_Content_Placeholders_Abstract
-     */
-    public function setPlaceholder($placeholder)
-    {
-        $this->placeholder = $placeholder;
+	/**
+	 * @return mixed
+	 */
+	public function getPlaceholder() {
+		return $this->placeholder;
+	}
 
-        return $this;
-    }
+	/**
+	 * @param mixed $placeholder
+	 *
+	 * @return Brizy_Content_Placeholders_Abstract
+	 */
+	public function setPlaceholder( $placeholder ) {
+		$this->placeholder = $placeholder;
 
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
+		return $this;
+	}
 
-    public function setAttributes($attributes)
-    {
-        return $this->attributes = (array)$attributes;
-    }
+	public function getAttributes() {
+		return $this->attributes;
+	}
 
-    public function getEntity(ContentPlaceholder $placeholder)
-    {
-        if (($entityType = $placeholder->getAttribute('type')) && ($entityId = $placeholder->getAttribute('id'))) {
+	public function setAttributes( $attributes ) {
+		return $this->attributes = (array) $attributes;
+	}
 
-            if ($this->is_post_type($entityType)) {
-                return get_post((int)$entityId);
-            }
+	public function getVaryAttributes() {
+		return $this->varyAttributes;
+	}
 
-            if ($entityType == "WP_User") {
-                return get_user_by('ID', $entityId);
-            }
+	public function setVaryAttributes( $attributes ) {
+		return $this->varyAttributes = (array) $attributes;
+	}
 
-            if ($entityType == "WP_Term") {
-                return get_term((int)$entityId);
-            }
-        }
+	public function getEntity( ContentPlaceholder $placeholder ) {
+		if ( ( $entityType = $placeholder->getAttribute( 'type' ) ) && ( $entityId = $placeholder->getAttribute( 'id' ) ) ) {
 
-        return null;
-    }
+			if ( $this->is_post_type( $entityType ) ) {
+				return get_post( (int) $entityId );
+			}
 
-    /**
-     * @return array
-     */
-    public function convertToOptionValue()
-    {
-        return array(
-            'label' => $this->getLabel(),
-            'placeholder' => $this->getPlaceholder(),
-            'display' => $this->getDisplay(),
-        );
-    }
+			if ( $entityType == "WP_User" ) {
+				return get_user_by( 'ID', $entityId );
+			}
 
-    public function jsonSerialize()
-    {
-        return array(
-            'label' => $this->getLabel(),
-            'placeholder' => $this->getReplacePlaceholder(),
-            'display' => $this->getDisplay(),
-        );
-    }
+			if ( $entityType == "WP_Term" ) {
+				return get_term( (int) $entityId );
+			}
+		}
 
-    /**
-     * @return string
-     */
-    public function getReplacePlaceholder($attributes = [])
-    {
-        return $this->buildPlaceholder($attributes);
-    }
+		return null;
+	}
 
-    private function is_post_type($post = null)
-    {
-        $all_custom_post_types = get_post_types();
+	/**
+	 * @return array
+	 */
+	public function convertToOptionValue() {
+		return array(
+			'label'       => $this->getLabel(),
+			'placeholder' => $this->getPlaceholder(),
+			'display'     => $this->getDisplay(),
+		);
+	}
 
-        // there are no custom post types
-        if (empty ($all_custom_post_types)) {
-            return false;
-        }
+	public function jsonSerialize() {
+		return array(
+			'label'       => $this->getLabel(),
+			'placeholder' => $this->getReplacePlaceholder(),
+			'display'     => $this->getDisplay(),
+		);
+	}
 
-        $custom_types = array_keys($all_custom_post_types);
+	/**
+	 * @return string
+	 */
+	public function getReplacePlaceholder( $attributes = [] ) {
+		return $this->buildPlaceholder( $attributes );
+	}
 
-        return in_array($post, $custom_types);
-    }
+	private function is_post_type( $post = null ) {
+		$all_custom_post_types = get_post_types();
+
+		// there are no custom post types
+		if ( empty ( $all_custom_post_types ) ) {
+			return false;
+		}
+
+		$custom_types = array_keys( $all_custom_post_types );
+
+		return in_array( $post, $custom_types );
+	}
 }
