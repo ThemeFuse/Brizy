@@ -74,8 +74,15 @@ export const addMediaGallery: AddMediaGallery = {
         });
     });
 
-    frame.on("close", () => html?.classList.add("brz-ow-hidden"));
-    frame.on("close", () => html?.classList.remove("brz-ow-hidden"));
+    frame.on("close", () => {
+      html?.classList.add("brz-ow-hidden");
+      html?.classList.remove("brz-ow-hidden");
+    });
+
+    frame.on("escape", () => {
+      rej(t("Media Gallery upload cancelled"));
+    });
+
     frame.open();
   }
 };
