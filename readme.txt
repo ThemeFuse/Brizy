@@ -134,7 +134,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 == Changelog ==
 
 = 2.4.27 - 2023-08-08 =
-* New: Added new  blocks
+* New: Added 26 new premade design templates
 
 = 2.4.26 - 2023-07-12 =
 * New: Added custom video URL for Block background
