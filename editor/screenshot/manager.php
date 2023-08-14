@@ -31,7 +31,7 @@ class Brizy_Editor_Screenshot_Manager {
 	 * @return bool
 	 */
 	public function saveScreenshot( $screenUid, $blockType, $imageContent, $postId ) {
-		$path = $this->getScreenshotPath( $screenUid, $blockType, $postId );
+		$path = $this->getScreenshotPath( $blockType, $postId );
 
 		if(!$this->validateImageContent( $imageContent )) {
 			throw new Exception('Invalid image content');
@@ -51,7 +51,7 @@ class Brizy_Editor_Screenshot_Manager {
 		$types = array( self::BLOCK_TYPE_NORMAL, self::BLOCK_TYPE_GLOBAL, self::BLOCK_TYPE_SAVED, self::BLOCK_TYPE_LAYOUT );
 
 		foreach ( $types as $type ) {
-			$filePath = $this->getScreenshotPath( $screenUid, $type, $postId );
+			$filePath = $this->getScreenshotPath( $type, $postId );
 
 			$filePath = $filePath . DIRECTORY_SEPARATOR . "{$screenUid}.jpeg";
 
@@ -80,6 +80,29 @@ class Brizy_Editor_Screenshot_Manager {
 				break;
 			case self::BLOCK_TYPE_LAYOUT:
 				$folderPath = $this->urlBuilder->brizy_upload_path( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'layout' );
+				break;
+			default:
+				return null;
+		}
+
+		return $folderPath;
+	}
+
+	public function getScreenshotBaseUrl( $blockType, $postID ) {
+
+		switch ( $blockType ) {
+			case self::BLOCK_TYPE_NORMAL:
+				$this->urlBuilder->set_post_id( $postID );
+				$folderPath = $this->urlBuilder->page_upload_url( 'blockThumbnails' );
+				break;
+			case self::BLOCK_TYPE_GLOBAL:
+				$folderPath = $this->urlBuilder->brizy_upload_url( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'global' );
+				break;
+			case self::BLOCK_TYPE_SAVED:
+				$folderPath = $this->urlBuilder->brizy_upload_url( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'saved' );
+				break;
+			case self::BLOCK_TYPE_LAYOUT:
+				$folderPath = $this->urlBuilder->brizy_upload_url( 'blockThumbnails' . DIRECTORY_SEPARATOR . 'layout' );
 				break;
 			default:
 				return null;
