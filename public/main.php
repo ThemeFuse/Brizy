@@ -77,6 +77,8 @@ class Brizy_Public_Main
 
         add_action('template_include', array($this, 'templateIncludeForEditor'), 10000);
         remove_filter('the_content', 'wpautop');
+	    remove_filter('the_content', 'wptexturize');
+	    remove_filter('the_content', 'shortcode_unautop');
         // insert the compiled head and content
         add_filter('body_class', array($this, 'body_class_frontend'));
         add_action('wp_head', array($this, 'insert_page_head'));
