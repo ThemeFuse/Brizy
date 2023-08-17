@@ -82,13 +82,14 @@ class Brizy_Editor_Editor_Editor {
         }
 
 		$config = [
-			'hash'            => wp_create_nonce( Brizy_Editor_API::nonce ),
-			'editorVersion'   => BRIZY_EDITOR_VERSION,
-			'url'             => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
-			'actions'         => $this->getApiActions(),
-			'pageId'          => $this->post->getWpPostId(),
-            'collectionTypes' => $editorConfig['wp']['postLoopSources']
-        ];
+			'prefix'            => Brizy_Editor::prefix(),
+			'hash'               => wp_create_nonce( Brizy_Editor_API::nonce ),
+			'editorVersion'      => BRIZY_EDITOR_VERSION,
+			'url'                => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+			'actions'            => $this->getApiActions(),
+			'pageId'             => $this->post->getWpPostId(),
+			'collectionTypes'    => $editorConfig['wp']['postLoopSources']
+		];
 
 		$config = $this->getApiConfigFields( $config, $context );
 
