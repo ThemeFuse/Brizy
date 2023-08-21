@@ -9,9 +9,7 @@ import {
 import { SavedBlockMeta, SavedPopups } from "../types/SavedBlocks";
 import { createUpload } from "../utils/createUpload";
 import { t } from "../utils/i18n";
-
-// Limitation API for getBlocks
-const TOTAL_COUNT = 200;
+import { TOTAL_COUNT } from "./common";
 
 export const savedPopups: SavedPopups = {
   async get(res, rej) {

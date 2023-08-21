@@ -14,6 +14,12 @@ interface DefaultTemplates {
   layoutsUrl: string;
 }
 
+interface ScreenshotUrl {
+  globalScreenshotUrl: string;
+  layoutScreenshotUrl: string;
+  normalScreenshotUrl: string;
+  savedScreenshotUrl: string;
+}
 interface Actions {
   getMediaUid: string;
   getAttachmentUid: string;
@@ -37,6 +43,7 @@ interface API {
   mediaResizeUrl: string;
   customFileUrl: string;
   templates: DefaultTemplates;
+  screenshots: ScreenshotUrl;
 }
 export interface Config {
   hash: string;
@@ -47,6 +54,27 @@ export interface Config {
   api: API;
   l10n?: Record<string, string>;
 }
+
+const screenshotUrlReader = parseStrict<Record<string, unknown>, ScreenshotUrl>(
+  {
+    globalScreenshotUrl: pipe(
+      mPipe(Obj.readKey("globalScreenshotUrl"), Str.read),
+      throwOnNullish("Invalid API Config: globalScreenshotUrl")
+    ),
+    layoutScreenshotUrl: pipe(
+      mPipe(Obj.readKey("layoutScreenshotUrl"), Str.read),
+      throwOnNullish("Invalid API Config: layoutScreenshotUrl")
+    ),
+    normalScreenshotUrl: pipe(
+      mPipe(Obj.readKey("normalScreenshotUrl"), Str.read),
+      throwOnNullish("Invalid API Config: normalScreenshotUrl")
+    ),
+    savedScreenshotUrl: pipe(
+      mPipe(Obj.readKey("savedScreenshotUrl"), Str.read),
+      throwOnNullish("Invalid API Config: savedScreenshotUrl")
+    )
+  }
+);
 
 const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
   kitsUrl: pipe(
@@ -89,6 +117,10 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
   templates: pipe(
     mPipe(Obj.readKey("templates"), Obj.read, templatesReader),
     throwOnNullish("Invalid API: templates")
+  ),
+  screenshots: pipe(
+    mPipe(Obj.readKey("screenshots"), Obj.read, screenshotUrlReader),
+    throwOnNullish("Invalid API: screenshots")
   )
 });
 
