@@ -380,28 +380,28 @@ class Brizy_Editor_Editor_Editor {
 		$config['contentDefaults'] = [
 			'ProductMetafield' => ['linkSource' => 'page'],
 			'Row'              => [
-                                'linkSource' => 'page',
-                                'linkType'   => 'page',
-                                'items'      => [
-                                    [
-                                        'type'  => 'Column',
-                                        'value' => [
-                                            '_styles'    => ['column'],
-                                            'linkSource' => 'page',
-                                            'linkType'   => 'page',
-                                            'items'      => []
-                                        ]
-                                    ],
-                                    [
-                                        'type'  => 'Column',
-                                        'value' => [
-                                            '_styles'    => ['column'],
-                                            'linkSource' => 'page',
-                                            'linkType'   => 'page',
-                                            'items'      => []
-                                        ]
-                                    ]
-                                ]
+                'linkSource' => 'page',
+                'linkType'   => 'page',
+                'items'      => [
+                    [
+                        'type'  => 'Column',
+                        'value' => [
+                            '_styles'    => ['column'],
+                            'linkSource' => 'page',
+                            'linkType'   => 'page',
+                            'items'      => []
+                        ]
+                    ],
+                    [
+                        'type'  => 'Column',
+                        'value' => [
+                            '_styles'    => ['column'],
+                            'linkSource' => 'page',
+                            'linkType'   => 'page',
+                            'items'      => []
+                        ]
+                    ]
+                ]
             ],
 			'Button'           => ['linkSource' => 'page', 'linkType' => 'page'],
 			'RichText'         => ['linkSource' => 'page', 'linkType' => 'page'],
@@ -511,6 +511,324 @@ class Brizy_Editor_Editor_Editor {
 					],
 				],
 			],
+			'AssetsPost'       => [
+				'_version' => 3,
+				'type'     => 'posts',
+				'source'   => 'post',
+				'orderBy'  => 'id',
+				'order'    => 'DESC',
+				'items'    => [
+					[
+						'type'  => 'Column',
+						'value' => [
+							'_styles' => [
+								'posts--column',
+							],
+							'items'   => [
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper--image',
+										],
+										'items'   => [
+											[
+												'type'  => 'Image',
+												'value' => [
+													'_styles'         => [
+														'image',
+														'image--dynamic',
+													],
+													'imagePopulation' => '{{brizy_dc_img_featured_image}}',
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postTitle',
+											'wrapper-postTitle-posts',
+											'wrapper-postTitle-posts-posts',
+										],
+										'items'   => [
+											[
+												'type'  => 'WPPostsTitle',
+												'value' => [
+													'_styles' => [
+														'postTitle',
+														'postTitle-posts',
+														'postTitle-posts-posts',
+													],
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postExcerpt',
+											'wrapper-postExcerpt-posts',
+											'wrapper-postExcerpt-posts-posts',
+										],
+										'items'   => [
+											[
+												'type'  => 'WPPostExcerpt',
+												'value' => [
+													'_styles' => [
+														'postExcerpt',
+														'postExcerpt-posts',
+														'postExcerpt-posts-posts',
+													],
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Cloneable',
+									'value' => [
+										'_styles' => [
+											'wrapper-clone',
+											'wrapper-clone--button',
+										],
+										'items'   => [
+											[
+												'type'  => 'Button',
+												'value' => [
+													'_styles' => [
+														'button',
+														'button--dynamic',
+													],
+												],
+											],
+										],
+									],
+								],
+							],
+						],
+					],
+				],
+			],
+			'ShopCategories' => [
+				"_version" => 3,
+				"type" => "posts",
+				"source" => "post",
+				"orderBy" => "id",
+				"order" => "DESC",
+				"items" => [
+					[
+						'type' => 'Column',
+						'value' => [
+							'_styles' => [
+								'posts--column'
+							],
+							'items' => [
+								[
+									'type' => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper--image'
+										],
+										'items' => [
+											[
+												'type' => 'Image',
+												'value' => [
+													'_styles' => [
+														'image',
+														'image--dynamic'
+													],
+													'imagePopulation' => '{{brizy_dc_img_featured_image}}'
+												]
+											]
+										]
+									]
+								],
+								[
+									'type' => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postTitle',
+											'wrapper-postTitle-posts',
+											'wrapper-postTitle-posts-posts'
+										],
+										'items' => [
+											[
+												'type' => 'WPPostsTitle',
+												'value' => [
+													'_styles' => [
+														'postTitle',
+														'postTitle-posts',
+														'postTitle-posts-posts'
+													]
+												]
+											]
+										]
+									]
+								],
+								[
+									'type' => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postExcerpt',
+											'wrapper-postExcerpt-posts',
+											'wrapper-postExcerpt-posts-posts'
+										],
+										'items' => [
+											[
+												'type' => 'WPPostExcerpt',
+												'value' => [
+													'_styles' => [
+														'postExcerpt',
+														'postExcerpt-posts',
+														'postExcerpt-posts-posts'
+													]
+												]
+											]
+										]
+									]
+								],
+								[
+									'type' => 'Cloneable',
+									'value' => [
+										'_styles' => [
+											'wrapper-clone',
+											'wrapper-clone--button'
+										],
+										'items' => [
+											[
+												'type' => 'Button',
+												'value' => [
+													'_styles' => [
+														'button',
+														'button--dynamic'
+													]
+												]
+											]
+										]
+									]
+								]
+							]
+						]
+					]
+				]
+			],
+			'ShopPosts' => [
+				'_version' => 3,
+				'type'     => 'posts',
+				'source'   => 'post',
+				'orderBy'  => 'id',
+				'order'    => 'DESC',
+				'items'    => [
+					[
+						'type'  => 'Column',
+						'value' => [
+							'_styles' => [
+								'posts--column',
+							],
+							'items'   => [
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper--image',
+										],
+										'items'   => [
+											[
+												'type'  => 'Image',
+												'value' => [
+													'_styles'         => [
+														'image',
+														'image--dynamic',
+													],
+													'imagePopulation' => '{{brizy_dc_img_featured_image}}',
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postTitle',
+											'wrapper-postTitle-posts',
+											'wrapper-postTitle-posts-posts',
+										],
+										'items'   => [
+											[
+												'type'  => 'WPPostsTitle',
+												'value' => [
+													'_styles' => [
+														'postTitle',
+														'postTitle-posts',
+														'postTitle-posts-posts',
+													],
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postExcerpt',
+											'wrapper-postExcerpt-posts',
+											'wrapper-postExcerpt-posts-posts',
+										],
+										'items'   => [
+											[
+												'type'  => 'WPPostExcerpt',
+												'value' => [
+													'_styles' => [
+														'postExcerpt',
+														'postExcerpt-posts',
+														'postExcerpt-posts-posts',
+													],
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Cloneable',
+									'value' => [
+										'_styles' => [
+											'wrapper-clone',
+											'wrapper-clone--button',
+										],
+										'items'   => [
+											[
+												'type'  => 'Button',
+												'value' => [
+													'_styles' => [
+														'button',
+														'button--dynamic',
+													],
+												],
+											],
+										],
+									],
+								],
+							],
+						],
+					],
+				],
+			]
 		];
 
 		return $config;
