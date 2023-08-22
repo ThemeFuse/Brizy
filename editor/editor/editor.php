@@ -511,7 +511,7 @@ class Brizy_Editor_Editor_Editor {
 					],
 				],
 			],
-			'AssetsPost'       => [
+			'AssetsPosts'       => [
 				'_version' => 3,
 				'type'     => 'posts',
 				'source'   => 'post',
