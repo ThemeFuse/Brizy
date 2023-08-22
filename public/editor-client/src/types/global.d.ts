@@ -33,7 +33,7 @@ export interface PLUGIN_ENV {
   };
   api?: {
     mediaResizeUrl?: string;
-    customFileUrl?: string;
+    fileUrl?: string;
   };
   l10n?: Record<string, string>;
   collectionTypes?: CollectionType[];
@@ -83,7 +83,7 @@ export interface VISUAL_CONFIG {
 
     // File
     customFile?: {
-      customFileUrl?: string;
+      fileUrl?: string;
 
       addFile?: AddFileData;
     };

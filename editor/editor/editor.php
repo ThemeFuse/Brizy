@@ -363,7 +363,7 @@ class Brizy_Editor_Editor_Editor {
 				'mediaResizeUrl' => home_url()
 			],
 			'customFile' => [
-				'customFileUrl'  => home_url()
+				'fileUrl'  => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
 			],
             'templates'  => [
                 'kitsUrl'    => Brizy_Config::getEditorTemplatesUrl('kits'),

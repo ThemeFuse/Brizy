@@ -46,7 +46,7 @@ interface Actions {
 
 interface API {
   mediaResizeUrl: string;
-  customFileUrl: string;
+  fileUrl: string;
   templates: DefaultTemplates;
 }
 export interface Config {
@@ -95,14 +95,14 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
     ),
     throwOnNullish("Invalid actions: mediaResizeUrl")
   ),
-  customFileUrl: pipe(
+  fileUrl: pipe(
     mPipe(
       Obj.readKey("customFile"),
       Obj.read,
-      Obj.readKey("customFileUrl"),
+      Obj.readKey("fileUrl"),
       Str.read
     ),
-    throwOnNullish("Invalid actions: customFileUrl")
+    throwOnNullish("Invalid actions: fileUrl")
   ),
   templates: pipe(
     mPipe(Obj.readKey("templates"), Obj.read, templatesReader),

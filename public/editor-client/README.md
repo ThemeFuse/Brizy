@@ -69,7 +69,7 @@ export interface __BRZ_PLUGIN_ENV__ {
   };
   api: {
     mediaResizeUrl: string;
-    customFileUrl: string;
+    fileUrl: string;
   };
 }
 ```
