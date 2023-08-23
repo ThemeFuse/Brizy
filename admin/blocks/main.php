@@ -289,7 +289,7 @@ class Brizy_Admin_Blocks_Main
         $resultBlocks = array();
         $allBlocks = get_posts(
             array(
-                'post_type' => self::CP_GLOBAL,
+                'post_type' => [self::CP_GLOBAL,Brizy_Admin_Popups_Main::CP_POPUP],
                 'numberposts' => -1,
                 'post_status' => 'publish',
             )
