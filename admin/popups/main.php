@@ -50,6 +50,8 @@ class Brizy_Admin_Popups_Main
 			        Brizy_Config::getCompilerDownloadUrl()
 		        );
 
+
+
 		        if ( $compiler->needsCompile( $popup ) ) {
 			        $editgorConfig = Brizy_Editor_Editor_Editor::get( Brizy_Editor_Project::get(), $popup )
 			                                                   ->config( Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
@@ -245,29 +247,10 @@ class Brizy_Admin_Popups_Main
              * @var Brizy_Editor_Post $brizyPopup ;
              */
 
-            if ($brizyPopup->get_compiled_html()) {
+            if (!$brizyPopup->get_compiled_html()) {
                 continue;
             }
 
-
-	        try {
-		        $compiler = new Brizy_Editor_Compiler(
-			        Brizy_Editor_Project::get(),
-			        new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL ),
-			        new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $brizyPopup ),
-			        Brizy_Config::getCompilerUrls(),
-			        Brizy_Config::getCompilerDownloadUrl()
-		        );
-
-		        if ( $compiler->needsCompile( $brizyPopup ) ) {
-			        $editgorConfig = Brizy_Editor_Editor_Editor::get( Brizy_Editor_Project::get(), $brizyPopup )
-			                                                   ->config( Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
-			        $compiler->compilePost( $brizyPopup, $editgorConfig );
-		        }
-
-	        } catch ( Exception $e ) {
-		        Brizy_Logger::instance()->exception( $e );
-	        }
             $content .= "\n\n<!-- POPUP BODY -->\n{$brizyPopup->get_compiled_html()}\n<!-- POPUP BODY END-->\n\n";
         }
 
