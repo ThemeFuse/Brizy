@@ -1281,7 +1281,7 @@ export const getFields = async (data: {
     const body = new URLSearchParams({
       hash,
       version: editorVersion,
-      action: actions.filterFields,
+      action: actions.filterFields ?? "brizy_filter_fields",
       ...data
     });
 
