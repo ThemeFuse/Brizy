@@ -12,6 +12,7 @@ import {
 } from "./defaultTemplates";
 import { explodePlaceholder } from "./dynamicContent/explodePlaceholder";
 import { makePlaceholder } from "./dynamicContent/makePlaceholder";
+import { handler as filters, possibleValues } from "./Elements/filters";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
@@ -74,5 +75,18 @@ if (window.__VISUAL_CONFIG__) {
     window.__VISUAL_CONFIG__.dynamicContent.makePlaceholder = makePlaceholder;
     window.__VISUAL_CONFIG__.dynamicContent.explodePlaceholder =
       explodePlaceholder;
+  }
+
+  // Elements
+  if (
+    window.__VISUAL_CONFIG__.elements &&
+    window.__VISUAL_CONFIG__.elements.filters
+  ) {
+    window.__VISUAL_CONFIG__.elements.filters.handler = filters;
+    window.__VISUAL_CONFIG__.elements.filters.possibleValues = possibleValues;
+  } else {
+    window.__VISUAL_CONFIG__.elements = {
+      filters: { handler: filters, possibleValues: possibleValues }
+    };
   }
 }
