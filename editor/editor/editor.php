@@ -159,6 +159,7 @@ class Brizy_Editor_Editor_Editor
                 'pluginSettings' => admin_url('admin.php?page=' . Brizy_Admin_Settings::menu_slug()),
                 'dashboardNavMenu' => admin_url('nav-menus.php'),
                 'customFile' => home_url('?' . Brizy_Editor::prefix('_attachment') . '='),
+                'filterPlaceholders'=> home_url("/wp-admin/admin-ajax.php?action=".Brizy_Editor::prefix('_filter_placeholders_content'))
             ),
             'form' => array(
                 'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
