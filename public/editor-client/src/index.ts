@@ -36,7 +36,7 @@ const api = {
   },
   customFile: {
     addFile,
-    customFileUrl: config.api.customFileUrl
+    fileUrl: config.api.fileUrl
   },
   savedBlocks,
   savedPopups,
