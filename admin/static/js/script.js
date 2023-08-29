@@ -211,18 +211,25 @@ jQuery(document).ready(function ($) {
                     guten.find('.edit-post-visual-editor .block-editor-writing-flow').append(html);
                     guten.find('.editor-post-text-editor').after(html);
                 } else {
-                    var iframe = $('iframe[name="editor-canvas"]');
+                    var gutenbergIframe = $('iframe[name="editor-canvas"]');
+                    if (gutenbergIframe.length > 0) {
+                        gutenbergIframe.on('load', function () {
 
-                    if (iframe.length > 0) {
-                        iframe.on('load', function () {
-                            var elementToHide = iframe.contents().find('.is-root-container.is-layout-flow.wp-block-post-content-is-layout-flow.wp-block-post-content.block-editor-block-list__layout');
+                            var gutenbergContentHide = gutenbergIframe.contents().find('.is-root-container.is-layout-flow.wp-block-post-content-is-layout-flow.wp-block-post-content.block-editor-block-list__layout');
+                            if (gutenbergContentHide.length > 0) {
+                                gutenbergContentHide.hide();
 
-                            if (elementToHide.length > 0) {
-                                elementToHide.hide();
-                                guten.find('.edit-post-visual-editor').append(html);
+                                if ( ! $('div.brizy-buttons.brizy-buttons-gutenberg').length > 0) {
+                                    guten.find('.edit-post-visual-editor').append(html);
+                                }
 
-                                $(".brizy-buttons-gutenberg").css({'margin-bottom': '0', 'position': 'absolute'});
-                                $(window).on('resize', () => $(".brizy-buttons-gutenberg").css("padding", $(window).width() > 1080 ? "15% 0" : "40% 0")).trigger('resize');
+                                var buttons = $(".brizy-buttons-gutenberg").css({
+                                    'margin-bottom': '0',
+                                    'position': 'absolute'
+                                });
+                                var updatePadding = () => buttons.css("padding", ($(window).width() > 1080) ? "15% 0" : "40% 0");
+                                updatePadding();
+                                $(window).resize(updatePadding);
                             }
                         });
                     }
