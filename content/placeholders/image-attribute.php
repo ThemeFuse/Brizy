@@ -1,5 +1,7 @@
 <?php
 
+use BrizyPlaceholders\Extractor;
+
 abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_Placeholders_Simple {
 
 	/**
@@ -26,10 +28,10 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 			$attributes = $contentPlaceholder->getAttributes();
 
 			$attachmentId = null;
-			if ( isset( $attributes['uid'] ) ) {
-				$attachmentId = $this->getAttachmentIdByByUid( $attributes['uid'], $context );
-			} elseif ( isset( $attributes['placeholder'] ) ) {
-				$attachmentId = $this->getAttachmentIdByPlaceholderName( $attributes['placeholder'], $context, $contentPlaceholder );
+			if ( isset( $attributes['imageSrc'] ) ) {
+				$attachmentId = $this->getAttachmentIdByByUid( $attributes['imageSrc'], $context );
+			} elseif ( isset( $attributes['imagePlaceholder'] ) ) {
+				$attachmentId = $this->getAttachmentIdByPlaceholderName( $attributes['imagePlaceholder'], $context, $contentPlaceholder );
 			}
 
 			if ( $attachmentId ) {
@@ -56,9 +58,12 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 			return 0;
 		}
 
-		$placeholder = $provider->getPlaceholderSupportingName( $placeholderName );
+		$extractor = new Extractor( $provider );
+		$context->setProvider( $provider );
 
-		if ( ! $placeholder ) {
+		list( $contentPlaceholders, $placeholderInstances, $content ) = $extractor->extract( $placeholderName );
+
+		if ( ! $placeholder = $contentPlaceholders[0] ) {
 			return 0;
 		}
 
