@@ -42,10 +42,10 @@ class Brizy_Content_Placeholders_EditorPlaceholderWrapper extends Brizy_Content_
      */
     public function getValue(ContextInterface $context, ContentPlaceholder $placeholder)
     {
-        $content = base64_decode($placeholder->getAttribute('placeholder'));
+        $content = base64_decode($placeholder->getAttribute('content'));
         $attributes = $placeholder->getAttributes();
 
-        unset($attributes['placeholder']);
+        unset($attributes['content']);
 
         $placeholderProvider = new Brizy_Content_PlaceholderProvider($context);
         $extractor = new Extractor($placeholderProvider);
@@ -56,7 +56,7 @@ class Brizy_Content_Placeholders_EditorPlaceholderWrapper extends Brizy_Content_
          * @var ContentPlaceholder $placeholder ;
          */
         foreach ($contentPlaceholders as $placeholder) {
-            $placeholder->setAttributes(array_merge($placeholder->getAttribute(), $attributes));
+            $placeholder->setAttributes(array_merge($placeholder->getAttributes(), $attributes));
         }
 
         $replacer = new Replacer($placeholderProvider);
