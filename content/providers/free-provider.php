@@ -73,7 +73,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
             $attrs = $contentPlaceholder->getAttributes();
 
-            $id = isset($attrs['id']) ? $attrs['id'] : null;
+            $id = isset($attrs['sidebarId']) ? $attrs['sidebarId'] : null;
 
             if ($id) {
                 ob_start();
@@ -89,7 +89,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
             $attrs = $contentPlaceholder->getAttributes();
 
-            return $attrs['name'] ? wp_nav_menu(array('menu' => $attrs['name'], 'echo' => false)) : '';
+            return $attrs['menuId'] ? wp_nav_menu(array('menu' => $attrs['menuId'], 'echo' => false)) : '';
         }));
         $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('', 'editor_post_field', function ($context, $contentPlaceholder) {
 
@@ -148,7 +148,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 //		            $product = ! empty( $product_data ) && in_array( $product_data->post_type, [ 'product', 'product_variation' ] ) ? wc_setup_product_data( $product_data ) : false;
 //	            }
 
-            if (empty($atts['id']) && current_user_can('manage_options')) {
+            if (empty($atts['itemId']) && current_user_can('manage_options')) {
                 return __('Please set a valid product', 'brizy');
             }
 
@@ -157,7 +157,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             // Avoid infinite loop. There's a call of the function the_content() in the woocommerce/single-product/tabs/description.php
             remove_filter('the_content', [Brizy_Admin_Templates::instance(), 'filterPageContent'], -12000);
 
-            $html = do_shortcode('[product_page id="' . $atts['id'] . '"]');
+            $html = do_shortcode('[product_page id="' . $atts['itemId'] . '"]');
 
             add_filter('the_content', [Brizy_Admin_Templates::instance(), 'filterPageContent'], -12000);
 

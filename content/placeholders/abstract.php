@@ -25,7 +25,7 @@ abstract class Brizy_Content_Placeholders_Abstract extends \BrizyPlaceholders\Ab
      */
     protected $attributes = [];
 
-    protected $varyAttributes = ['type', 'id'];
+    protected $varyAttributes = ['entityType', 'entityId'];
 
     /**
      * @var string
@@ -182,7 +182,7 @@ abstract class Brizy_Content_Placeholders_Abstract extends \BrizyPlaceholders\Ab
 
     public function getEntity(ContentPlaceholder $placeholder)
     {
-        if (($entityType = $placeholder->getAttribute('type')) && ($entityId = $placeholder->getAttribute('id'))) {
+        if (($entityType = $placeholder->getAttribute('entityType')) && ($entityId = $placeholder->getAttribute('entityId'))) {
 
             if ($this->is_post_type($entityType)) {
                 return get_post((int)$entityId);
