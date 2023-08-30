@@ -63,7 +63,7 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 
 		list( $contentPlaceholders, $placeholderInstances, $content ) = $extractor->extract( $placeholderName );
 
-		if ( ! $placeholder = $contentPlaceholders[0] ) {
+		if ( ! $placeholder = $placeholderInstances[0] ) {
 			return 0;
 		}
 
