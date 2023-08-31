@@ -57,6 +57,7 @@ class Brizy_Content_Placeholders_EditorPlaceholderWrapper extends Brizy_Content_
          */
         foreach ($contentPlaceholders as $placeholder) {
             $placeholder->setAttributes(array_merge($placeholder->getAttributes(), $attributes));
+			$placeholder->setContent($placeholder->getContent());
         }
 
         $replacer = new Replacer($placeholderProvider);
