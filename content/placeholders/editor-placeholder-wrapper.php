@@ -53,11 +53,11 @@ class Brizy_Content_Placeholders_EditorPlaceholderWrapper extends Brizy_Content_
 
         list($contentPlaceholders, $placeholderInstances, $content) = $extractor->extract($content);
         /**
-         * @var ContentPlaceholder $placeholder ;
+         * @var ContentPlaceholder $contentPlaceholder;
          */
-        foreach ($contentPlaceholders as $placeholder) {
-            $placeholder->setAttributes(array_merge($placeholder->getAttributes(), $attributes));
-			$placeholder->setContent($placeholder->getContent());
+        foreach ($contentPlaceholders as $contentPlaceholder) {
+	        $contentPlaceholder->setAttributes(array_merge($contentPlaceholder->getAttributes(), $attributes));
+	        $contentPlaceholder->setContent($placeholder->getContent());
         }
 
         $replacer = new Replacer($placeholderProvider);
