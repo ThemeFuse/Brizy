@@ -82,13 +82,14 @@ class Brizy_Editor_Editor_Editor {
         }
 
 		$config = [
-			'hash'            => wp_create_nonce( Brizy_Editor_API::nonce ),
-			'editorVersion'   => BRIZY_EDITOR_VERSION,
-			'url'             => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
-			'actions'         => $this->getApiActions(),
-			'pageId'          => $this->post->getWpPostId(),
-            'collectionTypes' => $editorConfig['wp']['postLoopSources']
-        ];
+			'prefix'            => Brizy_Editor::prefix(),
+			'hash'               => wp_create_nonce( Brizy_Editor_API::nonce ),
+			'editorVersion'      => BRIZY_EDITOR_VERSION,
+			'url'                => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+			'actions'            => $this->getApiActions(),
+			'pageId'             => $this->post->getWpPostId(),
+			'collectionTypes'    => $editorConfig['wp']['postLoopSources']
+		];
 
 		$config = $this->getApiConfigFields( $config, $context );
 
@@ -358,19 +359,27 @@ class Brizy_Editor_Editor_Editor {
 
 
 	private function getApiConfigFields( $config, $context ) {
-		$config['api'] = [
-			'media'      => [
+
+		$screenshotManager = new Brizy_Editor_Screenshot_Manager( $this->urlBuilder );
+		$config['api']     = [
+			'media'       => [
 				'mediaResizeUrl' => home_url()
 			],
 			'customFile' => [
 				'fileUrl'  => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
 			],
-            'templates'  => [
-                'kitsUrl'    => Brizy_Config::getEditorTemplatesUrl('kits'),
-                'layoutsUrl' => Brizy_Config::getEditorTemplatesUrl('layouts'),
-                'popupsUrl'  => Brizy_Config::getEditorTemplatesUrl('popups'),
-                'storiesUrl' => Brizy_Config::getEditorTemplatesUrl('stories')
-            ]
+			'screenshots' => [
+				'normalScreenshotUrl' => $screenshotManager->getScreenshotBaseUrl( Brizy_Editor_Screenshot_Manager::BLOCK_TYPE_NORMAL, $this->post->getWpPostId() ),
+				'globalScreenshotUrl' => $screenshotManager->getScreenshotBaseUrl( Brizy_Editor_Screenshot_Manager::BLOCK_TYPE_GLOBAL, $this->post->getWpPostId() ),
+				'layoutScreenshotUrl' => $screenshotManager->getScreenshotBaseUrl( Brizy_Editor_Screenshot_Manager::BLOCK_TYPE_LAYOUT, $this->post->getWpPostId() ),
+				'savedScreenshotUrl'  => $screenshotManager->getScreenshotBaseUrl( Brizy_Editor_Screenshot_Manager::BLOCK_TYPE_SAVED, $this->post->getWpPostId() ),
+			],
+			'templates'   => [
+				'kitsUrl'    => Brizy_Config::getEditorTemplatesUrl( 'kits' ),
+				'layoutsUrl' => Brizy_Config::getEditorTemplatesUrl( 'layouts' ),
+				'popupsUrl'  => Brizy_Config::getEditorTemplatesUrl( 'popups' ),
+				'storiesUrl' => Brizy_Config::getEditorTemplatesUrl( 'stories' )
+			]
 		];
 
 		return $config;
