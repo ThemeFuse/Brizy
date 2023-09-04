@@ -212,11 +212,12 @@ class Brizy_Public_Main
     {
         $post = $this->post->getWpPost();
 
+		$parentPostId = $post->ID;
 	    if ( wp_is_post_autosave( $post->ID ) ) {
-		    $post->ID = wp_get_post_parent_id( $post->ID );
+		    $parentPostId = wp_get_post_parent_id( $post->ID );
 	    }
 
-        $template_path = get_post_meta($post->ID, '_wp_page_template', true);
+        $template_path = get_post_meta($parentPostId, '_wp_page_template', true);
         $template_path = !$template_path && $post->post_type == Brizy_Admin_Templates::CP_TEMPLATE ? Brizy_Config::BRIZY_TEMPLATE_FILE_NAME : $template_path;
 
         if (in_array(
