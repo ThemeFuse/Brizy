@@ -10,8 +10,6 @@ import {
   defaultPopups,
   defaultStories
 } from "./defaultTemplates";
-import { explodePlaceholder } from "./dynamicContent/explodePlaceholder";
-import { makePlaceholder } from "./dynamicContent/makePlaceholder";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
@@ -69,12 +67,5 @@ if (window.__VISUAL_CONFIG__) {
   // UI
   if (window.__VISUAL_CONFIG__.ui) {
     window.__VISUAL_CONFIG__.ui.publish = publish;
-  }
-
-  // Dynamic Content
-  if (window.__VISUAL_CONFIG__.dynamicContent) {
-    window.__VISUAL_CONFIG__.dynamicContent.makePlaceholder = makePlaceholder;
-    window.__VISUAL_CONFIG__.dynamicContent.explodePlaceholder =
-      explodePlaceholder;
   }
 }
