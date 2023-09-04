@@ -21,6 +21,7 @@ class Brizy_Content_MainProcessor {
 
 		$this->context = $context;
 
+		$this->processors[] = new Brizy_Content_WrapperToPlaceholderProcessor();
 		$this->processors[] = new Brizy_Content_ShortcodeToPlaceholderProcessor();
 		$this->processors[] = new Brizy_Editor_Asset_DomainProcessor();
 		$this->processors[] = new Brizy_Content_DynamicContentProcessor();

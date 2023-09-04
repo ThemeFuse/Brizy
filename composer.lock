@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc00b28f001f3e324eb20682f67acc47",
+    "content-hash": "9c6d965d115a34b99877d43810734584",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
@@ -81,16 +81,16 @@
         },
         {
             "name": "bagrinsergiu/content-placeholder",
-            "version": "v2.0.10",
+            "version": "v2.0.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
-                "reference": "f27284044391dec9e9b69dc0867d0a54ca6d484c"
+                "url": "git@github.com:bagrinsergiu/brizy-content-placeholder.git",
+                "reference": "bc40b6d741435f3585ea807484977d8c4f243509"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/f27284044391dec9e9b69dc0867d0a54ca6d484c",
-                "reference": "f27284044391dec9e9b69dc0867d0a54ca6d484c",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/bc40b6d741435f3585ea807484977d8c4f243509",
+                "reference": "bc40b6d741435f3585ea807484977d8c4f243509",
                 "shasum": ""
             },
             "require": {
@@ -114,11 +114,7 @@
                 "content",
                 "placeholders"
             ],
-            "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-content-placeholder/tree/v2.0.10",
-                "issues": "https://github.com/bagrinsergiu/brizy-content-placeholder/issues"
-            },
-            "time": "2023-08-09T11:49:48+00:00"
+            "time": "2023-09-04T09:47:27+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",
@@ -436,5 +432,5 @@
         "php": ">=5.6"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

@@ -68,7 +68,6 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
         $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('WP Language', 'brizy_dc_page_language', get_locale()));
         $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('Ajax Url', 'brizy_dc_ajax_url', admin_url('admin-ajax.php')));
         $this->registerPlaceholder(new Brizy_Content_Placeholders_Permalink());
-        $this->registerPlaceholder(new Brizy_Content_Placeholders_EditorPlaceholderWrapper("Placeholder wrapper", 'placeholder', null));
         $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('', 'editor_sidebar', function ($context, $contentPlaceholder) {
 
             $attrs = $contentPlaceholder->getAttributes();
