@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "728c1dd48dd8b5d6f805071930afa718",
+    "content-hash": "7fd920b8bd7cfbfb6e95be9a36b1d359",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
@@ -81,16 +81,16 @@
         },
         {
             "name": "bagrinsergiu/content-placeholder",
-            "version": "v2.0.13",
+            "version": "v2.0.14",
             "source": {
                 "type": "git",
                 "url": "git@github.com:bagrinsergiu/brizy-content-placeholder.git",
-                "reference": "d3470c45e62135382497dc83f9c82aa1ceda881c"
+                "reference": "abf505df5e54ef325bac5894b1e0adacb2bcb488"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/d3470c45e62135382497dc83f9c82aa1ceda881c",
-                "reference": "d3470c45e62135382497dc83f9c82aa1ceda881c",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/abf505df5e54ef325bac5894b1e0adacb2bcb488",
+                "reference": "abf505df5e54ef325bac5894b1e0adacb2bcb488",
                 "shasum": ""
             },
             "require": {
@@ -114,7 +114,7 @@
                 "content",
                 "placeholders"
             ],
-            "time": "2023-09-04T12:02:26+00:00"
+            "time": "2023-09-04T12:36:10+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",

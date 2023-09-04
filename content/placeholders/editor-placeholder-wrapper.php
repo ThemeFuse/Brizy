@@ -3,7 +3,6 @@
 use BrizyPlaceholders\ContentPlaceholder;
 use BrizyPlaceholders\ContextInterface;
 use BrizyPlaceholders\Extractor;
-use BrizyPlaceholders\Replacer;
 
 
 class Brizy_Content_Placeholders_EditorPlaceholderWrapper extends Brizy_Content_Placeholders_Abstract
@@ -53,11 +52,13 @@ class Brizy_Content_Placeholders_EditorPlaceholderWrapper extends Brizy_Content_
 
         list($contentPlaceholders, $placeholderInstances, $content) = $extractor->extract($content);
 
-        if(isset($contentPlaceholders[0])) {
+        if (isset($contentPlaceholders[0])) {
+            $contentPlaceholders[0]->setAttributes(array_merge($contentPlaceholders[0]->getAttributes(), $placeholder->getAttributes()));
             $contentPlaceholders[0]->setContent($placeholder->getContent());
+            $build_placeholder = $contentPlaceholders[0]->buildPlaceholder();
+            return $build_placeholder;
         }
 
-	    $build_placeholder = $contentPlaceholders[0]->buildPlaceholder();
-	    return $build_placeholder;
+        return "";
     }
 }
