@@ -55,7 +55,6 @@ abstract class Brizy_Content_Placeholders_Abstract extends \BrizyPlaceholders\Ab
         return [
             'id' => $this->getUniqueId(),
             'label' => $this->getLabel(),
-            'name' => $this->getPlaceholder(),
             'placeholder' => $this->buildPlaceholder(),
             'display' => $this->getDisplay(),
             'attr' => (object)$this->getAttributes(),
