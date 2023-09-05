@@ -188,6 +188,11 @@
 
 <script>
     jQuery(document).ready(function ($) {
+        if ( window.location.hash === '#add-page' ) {
+            $(".brz-container .brz-nav-menu .brz-menu-tab").toggleClass("brz-menu-tab-active");
+            $(".brz-container .brz-content-tab").toggleClass("brz-content-tab-active");
+        }
+
         $('.brz-container .brz-nav-menu .brz-menu-tab').on('click', function () {
             $(this).closest('.brz-container').find('.brz-content-tab, .brz-menu-tab').removeClass('brz-content-tab-active brz-menu-tab-active');
             $(this).addClass('brz-menu-tab-active').closest('.brz-container').find('.brz-content-tab').eq($(this).index()).addClass('brz-content-tab-active');
