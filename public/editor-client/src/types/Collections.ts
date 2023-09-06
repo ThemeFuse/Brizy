@@ -6,4 +6,5 @@ export interface CollectionExtra {
 export interface CollectionType {
   name: string;
   label: string;
+  orderBy: { field: string; label: string }[];
 }
