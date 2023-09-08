@@ -43,7 +43,9 @@ class Brizy_Content_Placeholders_Simple extends Brizy_Content_Placeholders_Abstr
         $method = $this->value;
 
         if (is_object($method) && ($method instanceof Closure)) {
-            return call_user_func($method, $context, $placeholder, $this->getEntity($placeholder));
+	        $entity = $this->getEntity( $placeholder );
+
+	        return call_user_func($method, $context, $placeholder, $entity );
         }
 
         return $this->value;

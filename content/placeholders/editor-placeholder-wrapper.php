@@ -50,10 +50,10 @@ class Brizy_Content_Placeholders_EditorPlaceholderWrapper extends Brizy_Content_
         $extractor = new Extractor($placeholderProvider);
         $context->setProvider($placeholderProvider);
 
-        list($contentPlaceholders, $placeholderInstances, $content) = $extractor->extract($content);
+        list($contentPlaceholders,  $content) = $extractor->extractIgnoringRegistry($content);
 
         if (isset($contentPlaceholders[0])) {
-            $contentPlaceholders[0]->setAttributes(array_merge($contentPlaceholders[0]->getAttributes(), $placeholder->getAttributes()));
+            $contentPlaceholders[0]->setAttributes(array_merge($contentPlaceholders[0]->getAttributes(), $attributes));
             $contentPlaceholders[0]->setContent($placeholder->getContent());
             $build_placeholder = $contentPlaceholders[0]->buildPlaceholder();
             return $build_placeholder;
