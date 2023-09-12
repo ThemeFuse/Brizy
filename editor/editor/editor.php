@@ -890,6 +890,13 @@ class Brizy_Editor_Editor_Editor {
 			[ 'field'=>'comment_count', 'label'=> __( 'Comment Count', 'brizy' )]
 		];
 
+		$orderBy = [
+			[ 'title' => __( 'Title', 'brizy' ) ],
+			[ 'date' => __( 'Date', 'brizy' ) ],
+			[ 'rand' => __( 'Random', 'brizy' ) ],
+			[ 'comment_count' => __( 'Comment Count', 'brizy' ) ]
+		];
+
 		if ( $templateTypeArchive ) {
 			$orderByCustom = $orderBy;
 			if ( $isSearchTemplate ) {
