@@ -208,16 +208,14 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         return $global;
     }
 
-    public function createConfigData()
+    public function createConfigData($context)
     {
-
         $p_id = (int)$this->getWpPostId();
 
-        $json_decode = json_decode($this->get_editor_data());
         $data = array(
             '_kind' => "wp",
             'id' => $p_id,
-            'data' => $json_decode ?: "",
+            'data' => $this->get_editor_data( ! ( $context == Brizy_Editor_Editor_Editor::EDITOR_CONTEXT ) ),
             'dataVersion' => $this->getCurrentDataVersion(),
             'title' => $the_title = $this->getTitle(),
             'slug' => sanitize_title($the_title),
@@ -514,12 +512,11 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
     /**
      * @return string
      */
-    public function get_editor_data()
+    public function get_editor_data($decode = true)
     {
-
-        if (($decodedData = base64_decode($this->editor_data, true)) !== false) {
-            return $decodedData;
-        }
+	    if ( $decode && ( $decodedData = base64_decode( $this->editor_data, true ) ) !== false ) {
+		    return $decodedData;
+	    }
 
         return $this->editor_data;
     }

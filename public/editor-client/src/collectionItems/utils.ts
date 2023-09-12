@@ -1,6 +1,6 @@
-import { request } from "src/api";
-import { t } from "src/utils/i18n";
+import { request } from "../api";
 import { getConfig } from "../config";
+import { t } from "../utils/i18n";
 
 export const getCollectionSourceItems = async (id: string) => {
   const config = getConfig();

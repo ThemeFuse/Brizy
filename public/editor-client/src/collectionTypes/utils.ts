@@ -1,6 +1,6 @@
-import { getConfig } from "src/config";
-import { ChoicesSync } from "src/types/Choices";
-import { MValue } from "src/utils/types";
+import { getConfig } from "../config";
+import { ChoicesSync } from "../types/Choices";
+import { MValue } from "../utils/types";
 
 export const getCollectionTypes = (): MValue<ChoicesSync> => {
   const config = getConfig();
