@@ -1,4 +1,5 @@
 import { AutoSave } from "./AutoSave";
+import { ChoicesSync } from "./Choices";
 import { CollectionExtra, CollectionType } from "./Collections";
 import {
   BlocksArray,
@@ -10,13 +11,13 @@ import {
   PopupsWithThumbs,
   StoriesWithThumbs
 } from "./DefaultTemplate";
-import { ExplodePlaceholder, MakePlaceholder } from "./DynamicContent";
 import { AddFileData } from "./File";
 import { AddMediaData, AddMediaGallery } from "./Media";
 import { OnChange } from "./OnChange";
 import { PopupConditions } from "./PopupConditions";
-import { PublishData } from "./Project";
+import { Data } from "./Publish";
 import { SavedBlocks, SavedLayouts, SavedPopups } from "./SavedBlocks";
+import { Screenshots } from "./Screenshots";
 
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
@@ -47,9 +48,9 @@ export interface VISUAL_CONFIG {
     publish?: {
       label?: string;
       handler: (
-        res: Response<PublishData>,
+        res: Response<Data>,
         rej: Response<string>,
-        extra: PublishData
+        extra: Data
       ) => void;
     };
 
@@ -99,6 +100,9 @@ export interface VISUAL_CONFIG {
     // PopupConditions
     popupConditions?: PopupConditions;
 
+    // Screenshots
+    screenshots?: Screenshots;
+
     defaultKits?: DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock>;
     defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
     defaultLayouts?: DefaultTemplate<
@@ -134,15 +138,6 @@ export interface VISUAL_CONFIG {
         handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
       };
     };
-  };
-
-  //#endregion
-
-  //#region Dynamic Content
-
-  dynamicContent?: {
-    makePlaceholder: MakePlaceholder;
-    explodePlaceholder: ExplodePlaceholder;
   };
 
   //#endregion
