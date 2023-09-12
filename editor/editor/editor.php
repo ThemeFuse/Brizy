@@ -332,7 +332,7 @@ class Brizy_Editor_Editor_Editor {
 
 	private function addPageData( $config, $context ) {
 
-		$config['pageData'] = $this->post->createConfigData();
+		$config['pageData'] = $this->post->createConfigData($context);
 
 		return $config;
 	}
