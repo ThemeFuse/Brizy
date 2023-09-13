@@ -245,8 +245,18 @@ jQuery(document).ready(function ($) {
 			        setTimeout( function () {
 				        self.insertBrizyBtn();
 			        }, 1 );
-		        });
-	        }
+
+                    // if we are on wordpress.com
+                    if ( window.location.href.includes("wordpress.com") ) {
+                        $("#editor .is-desktop-preview div.brizy-buttons.brizy-buttons-gutenberg a:first").on("click", function (e) {
+                            e.preventDefault();
+
+                            window.top.location.href = $(this).attr("href");
+                        });
+                    }
+
+                });
+            }
         }
     };
 
