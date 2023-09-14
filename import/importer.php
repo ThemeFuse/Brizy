@@ -68,7 +68,8 @@ class Brizy_Import_Importer extends WP_Importer {
 		set_time_limit(0);
 
 		add_filter( 'import_post_meta_key', array( $this, 'is_valid_meta_key' ) );
-		add_filter( 'http_request_timeout', array( &$this, 'bump_request_timeout' ) );
+		add_filter( 'http_request_timeout', array( $this, 'bump_request_timeout' ) );
+		add_filter( 'upload_mimes', function ( $mimes ) { $mimes['svg'] = 'image/svg+xml'; return $mimes; } );
 
 		wp_suspend_cache_invalidation( true );
 		$this->process_categories();

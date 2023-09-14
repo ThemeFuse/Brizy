@@ -25,12 +25,6 @@ class Brizy_Import_Import {
 			new Brizy_Compatibilities_WordpressImporter();
 		}
 
-		add_filter( 'upload_mimes', function ( $mimes ) {
-			$mimes['svg'] = 'image/svg+xml';
-
-			return $mimes;
-		} );
-
 		try {
 
 			if ( $rmContent ) {
