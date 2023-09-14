@@ -12,8 +12,9 @@ import {
   defaultPopups,
   defaultStories
 } from "./defaultTemplates";
-import { placeholders } from "./dynamicContent";
 import { handler as posts } from "./Elements/Posts";
+import { adobeFont } from "./fonts";
+import { placeholders } from "./dynamicContent";
 import { heartBeat } from "./heartBeat";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
@@ -60,6 +61,9 @@ const api = {
     loadCollectionTypes
   },
   screenshots: screenshots(),
+  fonts: {
+    adobeFont: adobeFont()
+  },
   heartBeat: heartBeat(config)
 };
 
