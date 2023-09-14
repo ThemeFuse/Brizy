@@ -6,6 +6,7 @@ abstract class Brizy_Editor_Accounts_AbstractAccount extends Brizy_Admin_Seriali
 	const INTEGRATIONS_GROUP = 'form-integration';
 	const RECAPTCHA_GROUP = 'recaptcha';
 	const SOCIAL_GROUP = 'social';
+	const ADOBE_GROUP = 'adobe';
 
 
 	use Brizy_Editor_Forms_DynamicPropsAware;
@@ -140,6 +141,8 @@ abstract class Brizy_Editor_Accounts_AbstractAccount extends Brizy_Admin_Seriali
 					return new Brizy_Editor_Accounts_SocialAccount( $data );
 				case self::RECAPTCHA_GROUP:
 					return new Brizy_Editor_Accounts_RecaptchaAccount( $data );
+				case self::ADOBE_GROUP:
+					return new Brizy_Editor_Accounts_AdobeAccount( $data );
 			}
 
 		throw new Exception( 'Invalid account group.' );
