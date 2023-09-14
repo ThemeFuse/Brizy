@@ -907,6 +907,73 @@ export const updateBlockScreenshot = async ({
 
 //#endregion
 
+//#region AdobeFonts
+interface AddAccount {
+  group: string;
+  key: string;
+}
+
+export const getAdobeFont = async () => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.adobeFontsUrl,
+    version: editorVersion
+  });
+
+  const r = await request(url, {
+    method: "GET"
+  });
+
+  if (r.ok) {
+    const d = await r.json();
+
+    if (d) {
+      return d.data;
+    }
+  } else {
+    throw new Error(t("Failed to get adobe fonts"));
+  }
+};
+
+export const addAdobeAccount = async (body: AddAccount) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { url: _url, hash, editorVersion, actions } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.addAccount,
+    version: editorVersion
+  });
+
+  try {
+    const res = await request(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(body)
+    });
+    return res;
+  } catch (error) {
+    throw new Error(`Failed to add Adobe account: ${error.message}`);
+  }
+};
+
+//#endregion
+
 //#region Dynamic Content
 
 export const getPlaceholders = (extraData: {

@@ -16,6 +16,7 @@ import {
 } from "./defaultTemplates";
 import { placeholderData, placeholders } from "./dynamicContent";
 import { handler as posts } from "./Elements/Posts";
+import { adobeFont } from "./fonts";
 import { uploadedFonts } from "./fonts";
 import { globalBlocks } from "./globalBlocks/blocks";
 import { globalPopups } from "./globalBlocks/popups";
@@ -71,6 +72,9 @@ const api = {
     loadCollectionTypes
   },
   screenshots: screenshots(),
+  fonts: {
+    adobeFont: adobeFont()
+  },
   heartBeat: heartBeat(config)
 };
 
