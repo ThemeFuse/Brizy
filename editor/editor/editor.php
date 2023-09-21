@@ -96,12 +96,13 @@ class Brizy_Editor_Editor_Editor
         ];
 
         $config = $this->getApiConfigFields($config, $context);
-        $config = $this->addLoopSourcesClientConfig(
+	    $config = $this->addLoopSourcesClientConfig(
             $config,
             $mode === 'template',
             $this->post->getWpPostId(),
             $context
         );
+	    $config = apply_filters('brizy_client_config', $config, $context);
 
         return $config;
     }
@@ -1735,7 +1736,6 @@ class Brizy_Editor_Editor_Editor
      */
     public function getApiActions($config = [], $context = null)
     {
-
         $pref = Brizy_Editor::prefix();
 
         $actions = array(
