@@ -96,7 +96,7 @@ class Brizy_Editor_Editor_Editor
         ];
 
         $config = $this->getApiConfigFields($config, $context);
-
+		$config = apply_filters('brizy_client_config', $config, $context);
         return $config;
     }
 
@@ -1341,7 +1341,6 @@ class Brizy_Editor_Editor_Editor
      */
     public function getApiActions($config = [], $context = null)
     {
-
         $pref = Brizy_Editor::prefix();
 
         $actions = array(
