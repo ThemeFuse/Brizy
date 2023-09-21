@@ -17,6 +17,7 @@ import { OnChange } from "./OnChange";
 import { PopupConditions } from "./PopupConditions";
 import { PublishData } from "./Project";
 import { SavedBlocks, SavedLayouts, SavedPopups } from "./SavedBlocks";
+import { Filters } from "./Filters";
 
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
@@ -143,6 +144,14 @@ export interface VISUAL_CONFIG {
   dynamicContent?: {
     makePlaceholder: MakePlaceholder;
     explodePlaceholder: ExplodePlaceholder;
+  };
+
+  //#endregion
+
+  // #region Elements
+
+  elements?: {
+    filters: Filters;
   };
 
   //#endregion
