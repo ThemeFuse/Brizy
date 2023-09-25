@@ -2,10 +2,17 @@
 
 class Brizy_Import_Provider {
 
+    const DEMO_URL = 'https://websitebuilder-demo.net/wp-json/demos/v1/';
+
 	private $mainSite;
 
 	public function __construct() {
-		$this->mainSite = 'https://websitebuilder-demo.net/wp-json/demos/v1/';
+
+		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
+			$this->mainSite = __bt( 'starter-templates-url', self::DEMO_URL );
+		} else {
+			$this->mainSite = self::DEMO_URL;
+		}
 	}
 
 	/**
