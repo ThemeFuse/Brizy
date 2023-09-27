@@ -84,39 +84,38 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 		$data = file_get_contents( "php://input" );
 
 		try {
-			$asymbol = $this->manager->createFromJson( $data );
-			$symbol  = null;
-			if ( $asymbol->getUid() ) {
+
+			$asymbols = $this->manager->createFromJson( $data );
+			foreach ( $asymbols as $asymbol ) {
 				$symbol = $this->manager->get( $asymbol->getUid() );
-				$symbol->patchFrom( $asymbol );
-			} else {
-				$symbol = $asymbol;
+				if ( $symbol ) {
+					$symbol->patchFrom( $asymbol );
+					$symbol->incrementVersion();
+				} else {
+					$symbol = $asymbol;
+				}
+
+				$this->manager->validateSymbol( $symbol );
+				$this->manager->saveSymbol( $symbol );
 			}
-			$symbol->incrementVersion();
-			$this->manager->validateSymbol( $symbol );
-			$this->manager->saveSymbol( $symbol );
 		} catch ( Exception $e ) {
 			$this->error( 400, "Error" . $e->getMessage() );
 		}
 
-		wp_send_json_success( $symbol, 200 );
+		wp_send_json_success( $asymbols, 200 );
 	}
 
 	public function actionDelete() {
 
 		$this->verifyNonce( self::nonce );
-
-		$uid = $this->param( 'uid' );
-
-		if ( ! $uid ) {
-			$this->error( 400, "Error: Please provide the symbol uid" );
-		}
-
+		$data = file_get_contents( "php://input" );
 		try {
-			$symbol = $this->manager->get( $uid );
-			$this->manager->deleteSymbol( $symbol );
+			$asymbols = $this->manager->createFromJson( $data );
+			foreach ( $asymbols as $asymbol ) {
+				$this->manager->deleteSymbol( $asymbol );
+			}
 		} catch ( Exception $e ) {
-			$this->error( 400, 'Unable to delete symbol' );
+			$this->error( 400, "Error" . $e->getMessage() );
 		}
 
 		$this->success( null );
