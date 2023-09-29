@@ -15,7 +15,7 @@ export const getCollectionItemsIds = {
       const items = [
         { title: t("None"), value: "" },
         ...data.posts.map(({ ID, title }: { ID: string; title: string }) => ({
-          value: ID,
+          value: `${ID}`,
           title
         }))
       ];
