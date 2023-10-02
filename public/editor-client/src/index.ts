@@ -13,6 +13,8 @@ import {
   defaultPopups,
   defaultStories
 } from "./defaultTemplates";
+import { handler as posts } from "./Elements/Posts";
+import { getAdobeFonts } from "./fonts";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
@@ -44,6 +46,9 @@ const api = {
   savedPopups,
   savedLayouts,
   popupConditions,
+  fonts: {
+    getAdobeFonts
+  },
   defaultKits: defaultKits(config),
   defaultPopups: defaultPopups(config),
   defaultStories: defaultStories(config),
