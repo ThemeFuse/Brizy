@@ -371,7 +371,7 @@ class Brizy_Editor_Editor_Editor {
 			]
 		];
 
-		return $config;
+		return apply_filters( 'brizy_api_config_fields', $config, $context );
 	}
 
 	private function addContentDefaults( $config, $context ) {
