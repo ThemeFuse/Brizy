@@ -1,4 +1,6 @@
 import set from "lodash/set";
+import { handler as posts } from "./Elements/Posts";
+import { doAiRequest } from "./aiText";
 import { autoSave } from "./autoSave";
 import { getCollectionItemsIds } from "./collectionItems/getCollectionItemsIds";
 import { searchCollectionItems } from "./collectionItems/searchCollectionItems";
@@ -11,7 +13,6 @@ import {
   defaultPopups,
   defaultStories
 } from "./defaultTemplates";
-import { handler as posts } from "./Elements/Posts";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
@@ -29,6 +30,9 @@ if (!config) {
 }
 
 const api = {
+  textAI: {
+    handler: doAiRequest
+  },
   media: {
     addMedia,
     addMediaGallery,

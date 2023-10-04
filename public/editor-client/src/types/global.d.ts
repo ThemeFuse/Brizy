@@ -73,6 +73,15 @@ export interface VISUAL_CONFIG {
   //#region API
 
   api?: {
+    //AI
+    textAI?: {
+      handler: (
+        res: Response<string>,
+        rej: Response<string>,
+        data: { prompt: string; action?: string }
+      ) => void;
+    };
+
     // Media
     media?: {
       mediaResizeUrl?: string;
