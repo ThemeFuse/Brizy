@@ -1877,149 +1877,127 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	private function getEditorHelpVideos( $sourceUrl ) {
-		$getEditorHelpVideos = [];
-
-		$idTitleKey     = 'id';
-		$categoryImg    = 'src';
-		$videosTitleKey = 'title';
-		$videosUrlKey   = 'url';
-
-		$headerArray = [
-			$categoryImg  => $sourceUrl,
-			$videosUrlKey => $sourceUrl
-		];
-
-		$pathFolderVideoGetStarted          = $sourceUrl . '/1.+GET+STARTED/';
-		$pathFolderVideoTheBasics           = $sourceUrl . '/2.+THE+BASICS/';
-		$pathFolderVideoDynamicContent      = $sourceUrl . '/3.+DYNAMIC+CONTENT/';
-		$pathFolderVideoUsersMembership     = $sourceUrl . '/4.+USERS+&+MEMBERSHIP+BLOCKS/';
-		$pathFolderVideoMarketingTools      = $sourceUrl . '/5.+MARKETING+TOOLS/';
-		$pathFolderVideoCoolFeatures        = $sourceUrl . '/6.+COOL+FEATURES/';
-		$pathFolderVideoTheElements         = $sourceUrl . '/7.+THE+ELEMENTS/';
-		$pathFolderVideoWoocommerceElements = $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/';
 
 		$categoryVideos = [
 			__('Get Started', 'brizy') => [
-				[ $videosTitleKey => __( 'Builder Overview',       'brizy' ), $videosUrlKey => $pathFolderVideoGetStarted . '1.+Builder+Overview.mp4' ],
-				[ $videosTitleKey => __( 'How to Build a Page',    'brizy' ), $videosUrlKey => $pathFolderVideoGetStarted . '2.+How+to+Build+a+Page.mp4' ],
-				[ $videosTitleKey => __( 'Preview Publish Update', 'brizy' ), $videosUrlKey => $pathFolderVideoGetStarted . '3.+Preview,+publish+&+update.mp4' ],
-				[ $videosTitleKey => __( 'Free vs PRO',            'brizy' ), $videosUrlKey => $pathFolderVideoGetStarted . '4.+Fress+vs+PRO.mp4' ]
+				[ 'title' => __( 'Builder Overview',       'brizy' ), 'url' => $sourceUrl . '/1.+GET+STARTED/' . '1.+Builder+Overview.mp4' ],
+				[ 'title' => __( 'How to Build a Page',    'brizy' ), 'url' => $sourceUrl . '/1.+GET+STARTED/' . '2.+How+to+Build+a+Page.mp4' ],
+				[ 'title' => __( 'Preview Publish Update', 'brizy' ), 'url' => $sourceUrl . '/1.+GET+STARTED/' . '3.+Preview,+publish+&+update.mp4' ],
+				[ 'title' => __( 'Free vs PRO',            'brizy' ), 'url' => $sourceUrl . '/1.+GET+STARTED/' . '4.+Fress+vs+PRO.mp4' ]
 			],
 			__('The Basics', 'brizy') => [
-				[ $videosTitleKey => __( 'Blocks',                     'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '1.+Blocks.mp4' ],
-				[ $videosTitleKey => __( 'Saved Blocks & Layouts',     'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '2.+Save+Blocks+&+Layouts.mp4' ],
-				[ $videosTitleKey => __( 'Premade Layouts',            'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '3.+Premade+Layouts.mp4' ],
-				[ $videosTitleKey => __( 'The Elements',               'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '4.+The+Elements.mp4' ],
-				[ $videosTitleKey => __( 'Reorder Blocks',             'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '5.+Reorder+Blocks.mp4' ],
-				[ $videosTitleKey => __( 'Global Styling',             'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '6.+Global+Styling.mp4' ],
-				[ $videosTitleKey => __( 'Links',                      'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '7.+Links.mp4' ],
-				[ $videosTitleKey => __( 'Fonts',                      'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '8.+Fonts.mp4' ],
-				[ $videosTitleKey => __( 'Paddings & Margins',         'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '9.+Paddings+&+Margins.mp4' ],
-				[ $videosTitleKey => __( 'Responsive Design',          'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '10.+Responsive+Design.mp4' ],
-				[ $videosTitleKey => __( 'Headers & Footers',          'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '11.+Headers+&+Footers.mp4' ],
-				[ $videosTitleKey => __( 'Menus & Navigation',         'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '12.+Menus+&+Navigation.mp4' ],
-				[ $videosTitleKey => __( 'Global Blocks & Conditions', 'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '13.+Global+Blocks+&+Conditions.mp4' ],
-				[ $videosTitleKey => __( 'Effects & Animations',       'brizy' ), $videosUrlKey => $pathFolderVideoTheBasics . '14.+Effects+&+Animations.mp4' ],
+				[ 'title' => __( 'Blocks',                     'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '1.+Blocks.mp4' ],
+				[ 'title' => __( 'Saved Blocks & Layouts',     'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '2.+Save+Blocks+&+Layouts.mp4' ],
+				[ 'title' => __( 'Premade Layouts',            'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '3.+Premade+Layouts.mp4' ],
+				[ 'title' => __( 'The Elements',               'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '4.+The+Elements.mp4' ],
+				[ 'title' => __( 'Reorder Blocks',             'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '5.+Reorder+Blocks.mp4' ],
+				[ 'title' => __( 'Global Styling',             'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '6.+Global+Styling.mp4' ],
+				[ 'title' => __( 'Links',                      'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '7.+Links.mp4' ],
+				[ 'title' => __( 'Fonts',                      'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '8.+Fonts.mp4' ],
+				[ 'title' => __( 'Paddings & Margins',         'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '9.+Paddings+&+Margins.mp4' ],
+				[ 'title' => __( 'Responsive Design',          'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '10.+Responsive+Design.mp4' ],
+				[ 'title' => __( 'Headers & Footers',          'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '11.+Headers+&+Footers.mp4' ],
+				[ 'title' => __( 'Menus & Navigation',         'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '12.+Menus+&+Navigation.mp4' ],
+				[ 'title' => __( 'Global Blocks & Conditions', 'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '13.+Global+Blocks+&+Conditions.mp4' ],
+				[ 'title' => __( 'Effects & Animations',       'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '14.+Effects+&+Animations.mp4' ]
 			],
 			__('Dynamic Content', 'brizy') => [
-				[ $videosTitleKey => __( 'Dynamic Elements', 'brizy' ), $videosUrlKey => $pathFolderVideoDynamicContent . '1.+Dynamic+Elements.mp4' ]
+				[ 'title' => __( 'Dynamic Elements', 'brizy' ), 'url' => $sourceUrl . '/3.+DYNAMIC+CONTENT/' . '1.+Dynamic+Elements.mp4' ]
 			],
 			__('Users & Membership', 'brizy') => [
-				[ $videosTitleKey => __('Membership Blocks', 'brizy'), $videosUrlKey => $pathFolderVideoUsersMembership . '1.+Membership+Blocks.mp4' ]
+				[ 'title' => __('Membership Blocks', 'brizy'), 'url' => $sourceUrl . '/4.+USERS+&+MEMBERSHIP+BLOCKS/' . '1.+Membership+Blocks.mp4' ]
 			],
 			__('Marketing Tools', 'brizy') => [
-				[ $videosTitleKey => __('The Popup Builder',           'brizy'), $videosUrlKey => $pathFolderVideoMarketingTools . '1.+The+Popup+Builder.mp4' ],
-				[ $videosTitleKey => __('Contact Form & Integrations', 'brizy'), $videosUrlKey => $pathFolderVideoMarketingTools . '3.+Contact+Form+&+Integrations.mp4' ]
+				[ 'title' => __('The Popup Builder',           'brizy'), 'url' => $sourceUrl . '/5.+MARKETING+TOOLS/' . '1.+The+Popup+Builder.mp4' ],
+				[ 'title' => __('Contact Form & Integrations', 'brizy'), 'url' => $sourceUrl . '/5.+MARKETING+TOOLS/' . '3.+Contact+Form+&+Integrations.mp4' ]
 			],
 			__('Cool Features', 'brizy') => [
-				[ $videosTitleKey => __('Shortcuts',       'brizy'), $videosUrlKey => $pathFolderVideoCoolFeatures . '1.+Shortcuts.mp4' ],
-				[ $videosTitleKey => __('Import & Export', 'brizy'), $videosUrlKey => $pathFolderVideoCoolFeatures . '2.+Import+&+Export.mp4' ]
+				[ 'title' => __('Shortcuts',       'brizy'), 'url' => $sourceUrl . '/6.+COOL+FEATURES/' . '1.+Shortcuts.mp4' ],
+				[ 'title' => __('Import & Export', 'brizy'), 'url' => $sourceUrl . '/6.+COOL+FEATURES/' . '2.+Import+&+Export.mp4' ]
 			],
 			__('The Elements', 'brizy') => [
-				[ $videosTitleKey => __('Rows & Columns', 'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '1.+Rows+&+Columns.mp4' ],
-				[ $videosTitleKey => __('Text',           'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '2.+Text.mp4' ],
-				[ $videosTitleKey => __('Button',         'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '3.+Button.mp4' ],
-				[ $videosTitleKey => __('Icon',           'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '4.+Icon.mp4' ],
-				[ $videosTitleKey => __('Image',          'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '5.+Image.mp4' ],
-				[ $videosTitleKey => __('Audio',          'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '6.+Audio.mp4' ],
-				[ $videosTitleKey => __('Video',          'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '7.+Video.mp4' ],
-				[ $videosTitleKey => __('Spacer',         'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '8.+Spacer.mp4' ],
-				[ $videosTitleKey => __('Line',           'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '9.+Line.mp4' ],
-				[ $videosTitleKey => __('Map',            'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '10.+Map.mp4' ],
-				[ $videosTitleKey => __('Embed',          'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '11.+Embed.mp4' ],
-				[ $videosTitleKey => __('Icon Box',       'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '12.+Icon+Box.mp4' ],
-				[ $videosTitleKey => __('Counter',        'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '13.+Counter.mp4' ],
-				[ $videosTitleKey => __('Countdown',      'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '14.+Countdown.mp4' ],
-				[ $videosTitleKey => __('Tabs',           'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '15.+Tabs.mp4' ],
-				[ $videosTitleKey => __('Progress',       'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '16.+Progress.mp4' ],
-				[ $videosTitleKey => __('Accordion',      'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '17.+Accordion.mp4' ],
-				[ $videosTitleKey => __('Menu',           'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '18.+Menu.mp4' ],
-				[ $videosTitleKey => __('Gallery',        'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '19.+Gallery.mp4' ],
-				[ $videosTitleKey => __('Carousel',       'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '20.+Carousel.mp4' ],
-				[ $videosTitleKey => __('Rating',         'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '21.+Rating.mp4' ],
-				[ $videosTitleKey => __('Playlist',       'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '22.+Playlist.mp4' ],
-				[ $videosTitleKey => __('Table',          'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '23.+Table.mp4' ],
-				[ $videosTitleKey => __('Timeline',       'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '24.+Timeline.mp4' ],
-				[ $videosTitleKey => __('Switcher',       'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '25.+Switcher.mp4' ],
-				[ $videosTitleKey => __('Lottie',         'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '26.+Lottie.mp4' ],
-				[ $videosTitleKey => __('Login/register', 'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '27.+Login+&+Register.mp4' ],
-				[ $videosTitleKey => __('Facebook',       'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '28.+Facebook.mp4' ],
-				[ $videosTitleKey => __('Twitter',        'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '29.+Twitter.mp4' ],
-				[ $videosTitleKey => __('Comments',       'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '30.+Comments.mp4' ],
-				[ $videosTitleKey => __('Alert',          'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '31.+Alert.mp4' ],
-				[ $videosTitleKey => __('Calendly',       'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '32.+Calendly.mp4' ],
-				[ $videosTitleKey => __('Search',         'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '33.+Search.mp4' ],
-				[ $videosTitleKey => __('Featured Image', 'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '34.+Featured+Image.mp4' ],
-				[ $videosTitleKey => __('Title',          'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '35.+Title.mp4' ],
-				[ $videosTitleKey => __('Excerpt',        'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '36.+Excerpt.mp4' ],
-				[ $videosTitleKey => __('Info',           'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '37.+Info.mp4' ],
-				[ $videosTitleKey => __('Breadcrumbs',    'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '38.+Breadcrumbs.mp4' ],
-				[ $videosTitleKey => __('Posts',          'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '39.+Posts.mp4' ],
-				[ $videosTitleKey => __('Sidebar',        'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '40.+Sidebar.mp4' ],
-				[ $videosTitleKey => __('Shortcode',      'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '41.+Shortcode.mp4' ],
-				[ $videosTitleKey => __('Archive',        'brizy'), $videosUrlKey => $pathFolderVideoTheElements . '42.+Archive.mp4' ]
+				[ 'title' => __('Rows & Columns', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '1.+Rows+&+Columns.mp4' ],
+				[ 'title' => __('Text',           'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '2.+Text.mp4' ],
+				[ 'title' => __('Button',         'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '3.+Button.mp4' ],
+				[ 'title' => __('Icon',           'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '4.+Icon.mp4' ],
+				[ 'title' => __('Image',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '5.+Image.mp4' ],
+				[ 'title' => __('Audio',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '6.+Audio.mp4' ],
+				[ 'title' => __('Video',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '7.+Video.mp4' ],
+				[ 'title' => __('Spacer',         'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '8.+Spacer.mp4' ],
+				[ 'title' => __('Line',           'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '9.+Line.mp4' ],
+				[ 'title' => __('Map',            'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '10.+Map.mp4' ],
+				[ 'title' => __('Embed',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '11.+Embed.mp4' ],
+				[ 'title' => __('Icon Box',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '12.+Icon+Box.mp4' ],
+				[ 'title' => __('Counter',        'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '13.+Counter.mp4' ],
+				[ 'title' => __('Countdown',      'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '14.+Countdown.mp4' ],
+				[ 'title' => __('Tabs',           'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '15.+Tabs.mp4' ],
+				[ 'title' => __('Progress',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '16.+Progress.mp4' ],
+				[ 'title' => __('Accordion',      'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '17.+Accordion.mp4' ],
+				[ 'title' => __('Menu',           'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '18.+Menu.mp4' ],
+				[ 'title' => __('Gallery',        'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '19.+Gallery.mp4' ],
+				[ 'title' => __('Carousel',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '20.+Carousel.mp4' ],
+				[ 'title' => __('Rating',         'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '21.+Rating.mp4' ],
+				[ 'title' => __('Playlist',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '22.+Playlist.mp4' ],
+				[ 'title' => __('Table',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '23.+Table.mp4' ],
+				[ 'title' => __('Timeline',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '24.+Timeline.mp4' ],
+				[ 'title' => __('Switcher',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '25.+Switcher.mp4' ],
+				[ 'title' => __('Lottie',         'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '26.+Lottie.mp4' ],
+				[ 'title' => __('Login/register', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '27.+Login+&+Register.mp4' ],
+				[ 'title' => __('Facebook',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '28.+Facebook.mp4' ],
+				[ 'title' => __('Twitter',        'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '29.+Twitter.mp4' ],
+				[ 'title' => __('Comments',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '30.+Comments.mp4' ],
+				[ 'title' => __('Alert',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '31.+Alert.mp4' ],
+				[ 'title' => __('Calendly',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '32.+Calendly.mp4' ],
+				[ 'title' => __('Search',         'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '33.+Search.mp4' ],
+				[ 'title' => __('Featured Image', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '34.+Featured+Image.mp4' ],
+				[ 'title' => __('Title',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '35.+Title.mp4' ],
+				[ 'title' => __('Excerpt',        'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '36.+Excerpt.mp4' ],
+				[ 'title' => __('Info',           'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '37.+Info.mp4' ],
+				[ 'title' => __('Breadcrumbs',    'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '38.+Breadcrumbs.mp4' ],
+				[ 'title' => __('Posts',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '39.+Posts.mp4' ],
+				[ 'title' => __('Sidebar',        'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '40.+Sidebar.mp4' ],
+				[ 'title' => __('Shortcode',      'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '41.+Shortcode.mp4' ],
+				[ 'title' => __('Archive',        'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '42.+Archive.mp4' ]
 			],
 			__('Woocommerce Elements', 'brizy') => [
-				[ $videosTitleKey => __('Products',    'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '1.+Products.mp4' ],
-				[ $videosTitleKey => __('Cart',        'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '2.+Cart.mp4' ],
-				[ $videosTitleKey => __('Categories',  'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '3.+Categories.mp4' ],
-				[ $videosTitleKey => __('Pages',       'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '4.+Pages.mp4' ],
-				[ $videosTitleKey => __('Content',     'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '5.+Content.mp4' ],
-				[ $videosTitleKey => __('Price',       'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '6.+Price.mp4' ],
-				[ $videosTitleKey => __('Gallery',     'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '7.+Gallery.mp4' ],
-				[ $videosTitleKey => __('Add to cart', 'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '8.+Add+to+Cart.mp4' ],
-				[ $videosTitleKey => __('Stock',       'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '9.+Stock.mp4' ],
-				[ $videosTitleKey => __('SKU',         'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '10.+SKU.mp4' ],
-				[ $videosTitleKey => __('Meta',        'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '11.+Meta.mp4' ],
-				[ $videosTitleKey => __('Rating',      'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '12.+Rating.mp4' ],
-				[ $videosTitleKey => __('Attributes',  'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '13.+Attributes.mp4' ],
-				[ $videosTitleKey => __('Upsell',      'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '14.+Upsell.mp4' ],
-				[ $videosTitleKey => __('Reviews',     'brizy'), $videosUrlKey => $pathFolderVideoWoocommerceElements . '15.+Reviews.mp4' ]
+				[ 'title' => __('Products',    'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '1.+Products.mp4' ],
+				[ 'title' => __('Cart',        'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '2.+Cart.mp4' ],
+				[ 'title' => __('Categories',  'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '3.+Categories.mp4' ],
+				[ 'title' => __('Pages',       'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '4.+Pages.mp4' ],
+				[ 'title' => __('Content',     'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '5.+Content.mp4' ],
+				[ 'title' => __('Price',       'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '6.+Price.mp4' ],
+				[ 'title' => __('Gallery',     'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '7.+Gallery.mp4' ],
+				[ 'title' => __('Add to cart', 'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '8.+Add+to+Cart.mp4' ],
+				[ 'title' => __('Stock',       'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '9.+Stock.mp4' ],
+				[ 'title' => __('SKU',         'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '10.+SKU.mp4' ],
+				[ 'title' => __('Meta',        'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '11.+Meta.mp4' ],
+				[ 'title' => __('Rating',      'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '12.+Rating.mp4' ],
+				[ 'title' => __('Attributes',  'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '13.+Attributes.mp4' ],
+				[ 'title' => __('Upsell',      'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '14.+Upsell.mp4' ],
+				[ 'title' => __('Reviews',     'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '15.+Reviews.mp4' ]
 			]
 		];
 
-		$categoriesArray = [];
+		$editorHelpVideos = [ 'video' => [] ];
+
 		foreach ( $categoryVideos as $title => $videos ) {
 
-			$categoryId    = 1;
-			$categoryItems = [];
-
-			foreach ( $videos as $video ) {
-				$video[ $idTitleKey ] = $categoryId++;
-				$categoryItems[]      = $video;
+			foreach ( $videos as $index => &$video ) {
+				$video['id'] = $index;
 			}
 
-			$category = [
-				$idTitleKey => count( $categoriesArray ) + 1,
-				'category' => $title,
-				'items'    => $categoryItems
+			$editorHelpVideos['video'][] = [
+				'id'        => count( $editorHelpVideos['video'] ),
+				'category'  => $title,
+				'items'     => $videos
 			];
-			$categoriesArray[] = $category;
 		}
 
-		$getEditorHelpVideos[ 'header' ] = $headerArray;
-		$getEditorHelpVideos[ 'video' ]  = $categoriesArray;
+		$editorHelpVideos['header'] = [
+			'src' => $sourceUrl . '/Getting-started-video-thumb.jpg',
+			'url' => $sourceUrl
+		];
 
-		return $getEditorHelpVideos;
+		return $editorHelpVideos;
 	}
 }
