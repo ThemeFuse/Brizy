@@ -235,6 +235,11 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
                 $this->error(400, "Invalid status");
             }
 
+	        $decodedData = json_decode($editorData);
+	        if ($decodedData === null && json_last_error() !== JSON_ERROR_NONE) {
+		        $this->error(400, "Invalid JSON data");
+	        }
+
             $bockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
 
 	        /**
@@ -242,11 +247,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 	         */
             $block = $bockManager->createEntity($this->param('uid'), $status);
             $block->setMeta(stripslashes($this->param('meta')));
-
-	        if ( json_decode( $editorData ) && ! json_last_error() ) {
-		        $block->set_editor_data( $editorData );
-	        }
-
+	        $block->set_editor_data( $editorData );
 			$block->set_needs_compile(true);
 
 	        if($this->param('title'))
