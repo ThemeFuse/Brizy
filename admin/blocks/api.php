@@ -235,9 +235,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
                 $this->error(400, "Invalid status");
             }
 
-	        $decodedData = json_decode($editorData);
-	        if ($decodedData === null && json_last_error() !== JSON_ERROR_NONE) {
-		        $this->error(400, "Invalid JSON data");
+	        if ( json_decode( $editorData ) === null && json_last_error() !== JSON_ERROR_NONE ) {
+		        $this->error( 400, "Invalid JSON data" );
 	        }
 
             $bockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
@@ -313,10 +312,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
                 $block->setMeta(stripslashes($this->param('meta')));
             }
             if ($this->param('data')) {
-
-	            $decodedData = json_decode( stripslashes( $this->param( 'data' ) ) );
-	            if ( $decodedData && ! json_last_error() ) {
-		            $block->set_editor_data( stripslashes( $this->param( 'data' ) ) );
+				$data = stripslashes( $this->param( 'data' ) );
+	            if ( json_decode( $data ) !== null && ! json_last_error() ) {
+		            $block->set_editor_data( $data );
 	            }
             }
 
@@ -368,7 +366,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 
     public function actionUpdateGlobalBlocks()
     {
-        //$this->verifyNonce( self::nonce );
+        $this->verifyNonce( self::nonce );
+
         try {
 
             if (!$this->param('uid')) {
@@ -419,9 +418,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
                 }
 
                 if (isset($this->param('data')[$i]) && !empty($this->param('data')[$i])) {
+	                $data = stripslashes( $this->param( 'data' )[ $i ] );
 
-	                $decodedData = json_decode( stripslashes( $this->param( 'data' )[ $i ] ) );
-	                if ( $decodedData && ! json_last_error() ) {
+	                if ( json_decode( $data ) !== null && ! json_last_error() ) {
 		                $block->set_editor_data( stripslashes( $this->param( 'data' )[ $i ] ) );
 	                }
                 }
