@@ -1995,7 +1995,7 @@ class Brizy_Editor_Editor_Editor {
 
 		$editorHelpVideos['header'] = [
 			'src' => $sourceUrl . '/Getting-started-video-thumb.jpg',
-			'url' => $sourceUrl
+			'url' => $sourceUrl . '/1.+GET+STARTED/' . '1.+Builder+Overview.mp4'
 		];
 
 		return $editorHelpVideos;
