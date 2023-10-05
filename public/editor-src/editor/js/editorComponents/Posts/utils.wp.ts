@@ -78,8 +78,8 @@ function postsQuery(v: V): WPPostsQuery {
   const hasIncTerms = incBy.includes("term") && incTerm.length > 0;
   const hasExcTerms = excBy.includes("term") && excTerm.length > 0;
   if (hasIncTerms || hasExcTerms) {
-    let includeQuery: WPTaxQuery | undefined;
-    let excludeQuery: WPTaxQuery | undefined;
+    let includeQuery: WPTaxQuery | undefined = undefined;
+    let excludeQuery: WPTaxQuery | undefined = undefined;
 
     if (hasIncTerms) {
       includeQuery = {
@@ -119,9 +119,9 @@ function postsQuery(v: V): WPPostsQuery {
         1: excludeQuery
       };
     } else if (includeQuery && !excludeQuery) {
-      query.tax_query = includeQuery;
+      query.tax_query = [includeQuery];
     } else if (!includeQuery && excludeQuery) {
-      query.tax_query = excludeQuery;
+      query.tax_query = [excludeQuery];
     }
   }
 

@@ -15,8 +15,6 @@ export function style(
     ".brz &&:hover": {
       standart: [
         "cssStyleColor",
-        "cssStyleBgColor",
-        "cssStyleBgGradient",
         "cssStyleBorder",
         "cssStyleBoxShadow",
         "cssStyleFontSizeIconOldOption",

@@ -1,4 +1,4 @@
-import React, { useMemo, ComponentType, ReactElement } from "react";
+import React, { ComponentType, ReactElement, useMemo } from "react";
 import items from "./items";
 
 const objectIsReactClassObject = (o: unknown): o is { displayName: string } => {
@@ -13,13 +13,11 @@ const isComponentType = (c: unknown): c is ComponentType =>
 
 export default function BottomPanel(): ReactElement {
   const panelItems = useMemo(() => {
-    return items.filter(isComponentType).map(
-      (Item, index): ReactElement => {
-        // @ts-expect-error: Type 'undefined' is not assignable to type 'Element | null'.
-        return <Item key={index} />;
-      }
-    );
-  }, [items]);
+    return items.filter(isComponentType).map((Item, index): ReactElement => {
+      // @ts-expect-error: Type 'undefined' is not assignable to type 'Element | null'.
+      return <Item key={index} />;
+    });
+  }, []);
 
   return (
     <div className="brz-ed-fixed-bottom-panel">

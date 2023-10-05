@@ -66,9 +66,8 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
 
             foreach ($provider->getPlaceholders() as $placeholder) {
 
-                if($placeholder->getGroup())
-                {
-                    $result[ $placeholder->getGroup() ][]  = $placeholder;
+                if ($placeholder->getGroup()) {
+                    $result[$placeholder->getGroup()][] = $placeholder;
                 }
             }
         }
@@ -76,28 +75,22 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
         return apply_filters('brizy_placeholders', self::$cache_grouped_placeholders = $result);
     }
 
-	public function getGroupedPlaceholdersForApiResponse() {
-		$groups = $this->getGroupedPlaceholders();
-		$result = [];
-		foreach ( $groups as $group => $entries ) {
+    public function getGroupedPlaceholdersForApiResponse()
+    {
+        $groups = $this->getGroupedPlaceholders();
+        $result = [];
+        foreach ($groups as $group => $entries) {
+            $result[$group] = array_map(function (PlaceholderInterface $entry) {
+                return apply_filters('editor_placeholder_data', $entry->getConfigStructure(), $entry);
+            }, $entries);
+        }
 
-			$result[ $group ] = array_map( function ( $entry ) {
-
-				$placeholder = [
-					'placeholder' => '{{' . $entry->getPlaceholder() . '}}',
-					'label'       => $entry->getLabel(),
-					'display'     => $entry->getDisplay()
-				];
-
-				return apply_filters( 'editor_placeholder_data', $placeholder, $entry );
-			}, $entries );
-		}
-
-		return $result;
-	}
+        return $result;
+    }
 
     /**
      * @param $name
+     *
      * @return \BrizyPlaceholders\PlaceholderInterface
      */
 //    public function getPlaceholder($name)
@@ -123,7 +116,7 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
     public function getPlaceholderSupportingName($name)
     {
         foreach ($this->providers as $provider) {
-            if($instance = $provider->getPlaceholderSupportingName($name)) {
+            if ($instance = $provider->getPlaceholderSupportingName($name)) {
                 return $instance;
             }
         }

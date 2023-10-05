@@ -1,8 +1,9 @@
-import { Positive } from "visual/utils/math/Positive";
+import { Weight } from "visual/utils/fonts/Weight";
 
 export interface FontObject {
-  id: string;
+  brizyId?: string;
   family: string;
+  id: string;
   title: string;
-  size: Positive;
+  weights: Weight[];
 }

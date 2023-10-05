@@ -3,7 +3,7 @@ import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
-import { getOption } from "../utils/helpers";
+import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
@@ -15,15 +15,12 @@ export const getItems: GetItems<Value, Props> = ({
   state
 }) => {
   const _config = Config.getAll();
-  const ekklesia = _config.modules?.ekklesia;
+  const { apiUrl } = _config.modules?.ekklesia ?? {};
   const { getSourceChoices } = _config.api?.sourceTypes ?? {};
 
-  const recentSermons = getOption(ekklesia?.recentSermons);
-  const group = getOption(ekklesia?.groups);
-  const series = getOption(ekklesia?.series);
-  const categories = getOption(ekklesia?.terms?.sermon);
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
-  const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const sermonLatestActive = dvv("sermonLatest") === "on";
 
   return [
     {
@@ -44,31 +41,106 @@ export const getItems: GetItems<Value, Props> = ({
               label: t("Settings"),
               options: [
                 {
+                  id: "sermonLatest",
+                  type: "switch-dev",
+                  devices: "desktop",
+                  label: t("Show Latest"),
+                  helper: {
+                    content: t(
+                      "This option automatically shows the latest sermon and overrides the 'Recent Sermons' and 'Sermon Slug' options."
+                    )
+                  }
+                },
+                {
                   id: "category",
                   devices: "desktop",
                   label: t("Category"),
                   type: "select-dev",
-                  choices: categories
+                  disabled: !sermonLatestActive,
+                  choices: getEkklesiaChoiches({ key: "sermon", url: apiUrl }),
+                  helper: {
+                    content: t("This option only applies to 'Show Latest'.")
+                  }
                 },
                 {
                   id: "group",
                   devices: "desktop",
                   label: t("Group"),
                   type: "select-dev",
-                  choices: group
+                  disabled: !sermonLatestActive,
+                  choices: getEkklesiaChoiches({ key: "groups", url: apiUrl }),
+                  helper: {
+                    content: t("This option only applies to 'Show Latest'.")
+                  }
                 },
                 {
                   id: "series",
                   devices: "desktop",
                   label: t("Series"),
                   type: "select-dev",
-                  choices: series
+                  disabled: !sermonLatestActive,
+                  choices: getEkklesiaChoiches({ key: "series", url: apiUrl }),
+                  helper: {
+                    content: t("This option only applies to 'Show Latest'.")
+                  }
+                },
+                {
+                  id: "sermonRecentList",
+                  label: t("Recent Sermons"),
+                  type: "select-dev",
+                  devices: "desktop",
+                  disabled: sermonLatestActive,
+                  choices: getEkklesiaChoiches({
+                    key: "recentSermons",
+                    url: apiUrl
+                  }),
+                  helper: {
+                    content: t(
+                      "Select a recent sermon. Use only if you are not using 'Sermon Slug' below and 'Show Latest' is set to 'Off'."
+                    )
+                  }
+                },
+                {
+                  id: "sermonSlug",
+                  type: "inputText-dev",
+                  devices: "desktop",
+                  disabled: sermonLatestActive,
+                  label: t("Slug"),
+                  placeholder: t("Sermon Slug..."),
+                  helper: {
+                    content: t(
+                      "Slug of sermon (my-sermon-name). Use only if you are not selecting from the 'Recent Sermons' above and 'Show Latest' is set to 'Off'."
+                    )
+                  }
+                },
+                {
+                  id: "features",
+                  type: "switch-dev",
+                  devices: "desktop",
+                  label: t("Featured"),
+                  disabled: !sermonLatestActive || dvv("nonfeatures") === "on",
+                  helper: {
+                    content: t(
+                      "This option only applies to 'Show Latest' and if this is selected the 'Non featured' option does not apply."
+                    )
+                  }
+                },
+                {
+                  id: "nonfeatures",
+                  type: "switch-dev",
+                  devices: "desktop",
+                  label: t("No featured"),
+                  disabled: !sermonLatestActive || dvv("features") === "on",
+                  helper: {
+                    content: t(
+                      "This option only applies to 'Show Latest' and if this is selected the 'Featured' option does not apply."
+                    )
+                  }
                 }
               ]
             },
-
             {
-              id: "tabSermonFeatured",
+              id: "tabSermonDisplay",
               label: t("Display"),
               options: [
                 {
@@ -154,39 +226,6 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Content")
                 },
                 {
-                  id: "sermonLatest",
-                  type: "switch-dev",
-                  devices: "desktop",
-                  label: t("Sermon Latest"),
-                  helper: {
-                    content: t(
-                      "This option automatically shows the latest sermon and overrides the 'Recent Sermons' and 'Sermon Slug' options."
-                    )
-                  }
-                },
-                {
-                  id: "features",
-                  type: "switch-dev",
-                  devices: "desktop",
-                  label: t("Featured"),
-                  helper: {
-                    content: t(
-                      "This option only applies to 'Always Display Latest' and if this is selected the Non featured Only option does not apply."
-                    )
-                  }
-                },
-                {
-                  id: "nonfeatures",
-                  type: "switch-dev",
-                  devices: "desktop",
-                  label: t("No featured"),
-                  helper: {
-                    content: t(
-                      "This option only applies to 'Always Display Latest' and if this is selected the Featured Only option does not apply."
-                    )
-                  }
-                },
-                {
                   id: "showMediaLinks",
                   type: "switch-dev",
                   devices: "desktop",
@@ -197,36 +236,6 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "switch-dev",
                   devices: "desktop",
                   label: t("Preview")
-                }
-              ]
-            },
-            {
-              id: "tabSermonFeaturedText",
-              label: t("Text"),
-              options: [
-                {
-                  id: "sermonRecentList",
-                  label: t("Recent Sermons"),
-                  type: "select-dev",
-                  devices: "desktop",
-                  choices: recentSermons,
-                  helper: {
-                    content: t(
-                      "Select a recent sermon. Use only if you are not using 'Sermon Slug' below and 'Display Latest' is set to 'No'."
-                    )
-                  }
-                },
-                {
-                  id: "sermonSlug",
-                  type: "inputText-dev",
-                  devices: "desktop",
-                  label: t("Slug"),
-                  placeholder: t("Sermon Slug..."),
-                  helper: {
-                    content: t(
-                      "Slug of sermon (my-sermon-name). Use only if you are not selecting from the 'Recent Sermons' above and 'Always Latest' is set to 'No'."
-                    )
-                  }
                 }
               ]
             },

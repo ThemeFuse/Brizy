@@ -1,6 +1,25 @@
-import React, { Component } from "react";
 import classnames from "classnames";
+import React, { Component } from "react";
 
+function isExistingType(value) {
+  const types = [
+    "button",
+    "checkbox",
+    "color",
+    "date",
+    "email",
+    "file",
+    "hidden",
+    "number",
+    "password",
+    "radio",
+    "tel",
+    "text",
+    "time",
+    "url"
+  ];
+  return types.includes(String(value.toLowerCase()));
+}
 export default class TextField extends Component {
   static get componentTitle() {
     return "Text";
@@ -30,7 +49,7 @@ export default class TextField extends Component {
             type="text"
             value={label}
             placeholder={_placeholder === null ? label : _placeholder}
-            onChange={e => {
+            onChange={(e) => {
               onChange({ label: e.target.value });
             }}
           />
@@ -79,11 +98,11 @@ export default class TextField extends Component {
     return {};
   }
 
-  handleChange = value => {
+  handleChange = (value) => {
     this.props.onChange(value);
   };
 
-  handleClick = e => {
+  handleClick = (e) => {
     e.preventDefault();
     const node = this.input.current;
     node && node.classList.add("brz-ed-dd-cancel");
@@ -103,7 +122,7 @@ export default class TextField extends Component {
         ref={this.input}
         className={this.getClassName(v)}
         value={attr.placeholder}
-        onChange={e => {
+        onChange={(e) => {
           this.handleChange({ placeholder: e.target.value });
         }}
       />
@@ -112,7 +131,7 @@ export default class TextField extends Component {
         {...attr}
         ref={this.input}
         className={this.getClassName(v)}
-        onChange={e => {
+        onChange={(e) => {
           this.handleChange({
             label: e.target.value,
             placeholder: e.target.value
@@ -142,6 +161,7 @@ export default class TextField extends Component {
       mobileColumns,
       labelId
     } = this.props;
+
     if (IS_EDITOR) {
       const props = {
         options,
@@ -159,7 +179,6 @@ export default class TextField extends Component {
           onBlur: this.handleBlur
         }
       };
-
       return this.renderForEdit(props);
     } else {
       const props = {
@@ -171,7 +190,7 @@ export default class TextField extends Component {
         tabletColumns,
         mobileColumns,
         attr: {
-          type: type.toLocaleLowerCase(),
+          ...(isExistingType(type) ? { type: type.toLocaleLowerCase() } : ""),
           id: labelId,
           name: _id,
           placeholder: this.getPlaceholder(),

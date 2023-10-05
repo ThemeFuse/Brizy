@@ -1,11 +1,10 @@
+import { mPipe, parseStrict, pass } from "fp-utilities";
 import { Rule } from "visual/global/Config/types/Rule";
 import { WP } from "visual/global/Config/types/configs/WP";
-import { pass, pipe } from "visual/utils/fp";
-import { mPipe } from "visual/utils/fp/mPipe";
+import { pipe } from "visual/utils/fp";
 import * as Arr from "visual/utils/reader/array";
 import * as Num from "visual/utils/reader/number";
 import * as Obj from "visual/utils/reader/object";
-import { parseStrict } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/reader/string";
 import { throwOnNullish } from "visual/utils/value";
 import { withDefaultConfig } from "./default";

@@ -20,7 +20,8 @@ import Config from "visual/global/Config";
 import {
   isCloud,
   isCollectionPage,
-  isCustomerPage
+  isCustomerPage,
+  isShopifyPage
 } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { pageSelector } from "visual/redux/selectors";
@@ -99,7 +100,8 @@ export class Posts extends EditorComponent {
           return from(
             DCApiProxyInstance.getDC(loops, {
               postId: getCurrentPageId(),
-              cache: false
+              cache: false,
+              useCustomPlaceholder: false
             }).then((r) => {
               const [loop, pagination, tags] = r || [];
               return {
@@ -118,7 +120,7 @@ export class Posts extends EditorComponent {
           const context = collection.map((item) => ({
             dynamicContent: {
               itemId: item,
-              config: (config[item] || config["*"])?.dynamicContent || {
+              config: (config[item] || config["*"])?.dynamicContent?.groups || {
                 image: [],
                 link: [],
                 richText: []
@@ -155,7 +157,7 @@ export class Posts extends EditorComponent {
           };
         }
 
-        if (isCustomerPage(page)) {
+        if (isCustomerPage(page) || isShopifyPage(page)) {
           return {
             collectionTypesInfo: await getPostsSourceRefs(page.id)
           };

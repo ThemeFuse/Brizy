@@ -88,12 +88,6 @@ export {
 // Z Index
 export { styleZIndex } from "./styleZIndex";
 
-// Element Section
-export {
-  styleElementSectionContainerSize,
-  styleElementSectionBoxShadow
-} from "./styleElementSection";
-
 // Element Line
 export { styleElementLineBorderWidth } from "./styleElementLine";
 

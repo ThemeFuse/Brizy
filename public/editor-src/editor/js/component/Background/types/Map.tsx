@@ -22,6 +22,7 @@ const Map: React.FC<Props> = ({ map, mapZoom }) => {
       className="brz-iframe intrinsic-ignore brz-bg-map__cover absolute top-0 left-0 w-full h-full border-none max-w-none bg-no-repeat bg-cover"
       src={src}
       style={iframeStyle}
+      title="background-map"
     />
   );
 };

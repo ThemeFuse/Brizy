@@ -34,6 +34,7 @@ export class OmnisendMarketing extends EditorComponent<Value> {
                 loading="lazy"
                 style={{ position: "absolute", border: "none" }}
                 src={pageLink}
+                title="omnisend"
                 width="100%"
                 height="100%"
               />

@@ -1,13 +1,14 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import Toolbar from "visual/component/Toolbar";
-import { ThemeIcon } from "visual/component/ThemeIcon";
-import { TextEditor } from "visual/component/Controls/TextEditor";
-import Items from "./Items";
-import * as toolbarConfig from "./toolbar";
-import defaultValue from "./defaultValue.json";
+import { DangerouslySetHtmlContent } from "@brizy/component/src/common/components/DangerouslySetHtmlContent";
+import React from "react";
 import Animation from "visual/component/Animation";
+import { TextEditor } from "visual/component/Controls/TextEditor";
+import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import Items from "./Items";
+import defaultValue from "./defaultValue.json";
+import * as toolbarConfig from "./toolbar";
 
 class Tab extends EditorComponent {
   static get componentId() {
@@ -20,7 +21,7 @@ class Tab extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleLabelChange = labelText => {
+  handleLabelChange = (labelText) => {
     this.patchValue({ labelText });
   };
 
@@ -77,7 +78,11 @@ class Tab extends EditorComponent {
               {iconName && iconType && (
                 <ThemeIcon name={iconName} type={iconType} />
               )}
-              {labelText}
+              <DangerouslySetHtmlContent
+                tagName={"span"}
+                html={labelText}
+                ssr={IS_PREVIEW}
+              />
             </div>
           </Toolbar>
         </div>

@@ -1,13 +1,20 @@
 import classnames from "classnames";
-import { MapEditor, MapPreview } from "component/Flex/Map/view";
+import { MapEditor, MapPreview } from "@brizy/component";
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
+import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
+import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
+import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import Config from "visual/global/Config";
 import { css } from "visual/utils/cssStyle";
 import { IS_WP } from "visual/utils/env";
+import { isStory } from "visual/utils/models";
+import { read as readBoolean } from "visual/utils/reader/bool";
+import { read as readString } from "visual/utils/string/specs";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -87,9 +94,13 @@ class Map extends EditorComponent<Value> {
     this.patchValue(resizerTransformPatch(patch));
 
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
-    const { address, zoom } = v;
+    const IS_STORY = isStory(Config.getAll());
+    const { address, zoom, hoverName } = v;
     const wrapperClassName = classnames(
       "brz-map",
+      {
+        "brz-map_styles": IS_STORY
+      },
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
 
@@ -120,6 +131,12 @@ class Map extends EditorComponent<Value> {
       }
     };
 
+    const _hoverName = readString(hoverName) ?? "none";
+    const options = makeOptionValueToAnimation(v);
+    const { wrapperAnimationId } = this.props.meta;
+    const animationId = readString(wrapperAnimationId) ?? this.getId();
+    const { wrapperAnimationActive } = this.props.meta;
+    const isDisabledHover = readBoolean(wrapperAnimationActive);
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
@@ -137,11 +154,19 @@ class Map extends EditorComponent<Value> {
               value={resizerTransformValue(v)}
               onChange={this.handleResizerChange}
             >
-              <MapEditor
-                address={address}
-                zoom={zoom}
-                platform={IS_WP ? "WP" : "CLOUD"}
-              />
+              <HoverAnimation
+                animationId={animationId}
+                cssKeyframe={_hoverName}
+                options={getHoverAnimationOptions(options, _hoverName)}
+                isDisabledHover={isDisabledHover}
+                isHidden={IS_STORY}
+              >
+                <MapEditor
+                  address={address}
+                  zoom={zoom}
+                  platform={IS_WP ? "WP" : "CLOUD"}
+                />
+              </HoverAnimation>
             </BoxResizer>
           </Wrapper>
         </CustomCSS>
@@ -150,11 +175,23 @@ class Map extends EditorComponent<Value> {
   }
 
   renderForView(v: Value, vs: Value, vd: Value): ReactNode {
-    const { address, zoom } = v;
+    const { address, zoom, hoverName } = v;
+
+    const IS_STORY = isStory(Config.getAll());
+    const _hoverName = readString(hoverName) ?? "none";
+    const hoverIsHidden = _hoverName === "none" || IS_STORY;
+
     const wrapperClassName = classnames(
       "brz-map",
+      {
+        "brz-map_styles": hoverIsHidden
+      },
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
+
+    const options = makeOptionValueToAnimation(v);
+    const { wrapperAnimationId } = this.props.meta;
+    const animationId = readString(wrapperAnimationId) ?? this.getId();
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
@@ -163,11 +200,18 @@ class Map extends EditorComponent<Value> {
             className: wrapperClassName
           })}
         >
-          <MapPreview
-            address={address}
-            zoom={zoom}
-            platform={IS_WP ? "WP" : "CLOUD"}
-          />
+          <HoverAnimation
+            animationId={animationId}
+            cssKeyframe={_hoverName}
+            options={getHoverAnimationOptions(options, _hoverName)}
+            isHidden={hoverIsHidden}
+          >
+            <MapPreview
+              address={address}
+              zoom={zoom}
+              platform={IS_WP ? "WP" : "CLOUD"}
+            />
+          </HoverAnimation>
         </Wrapper>
       </CustomCSS>
     );

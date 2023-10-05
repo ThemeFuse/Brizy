@@ -15,6 +15,7 @@ class Brizy_Compatibilities_Autoptimize {
 		if ( Brizy_Public_Main::is_editing() ) {
 			add_filter( 'autoptimize_filter_js_noptimize', '__return_true' );
 			add_filter( 'autoptimize_filter_css_noptimize', '__return_true' );
+			add_filter( 'autoptimize_filter_noptimize', '__return_true');
 		}
 	}
 }

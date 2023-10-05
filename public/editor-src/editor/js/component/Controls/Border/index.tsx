@@ -7,7 +7,7 @@ import {
   Value
 } from "visual/component/Controls/ColorPickerSelect/entities";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
+import { Item } from "visual/component/Controls/Select2/Item";
 import EditorIcon from "visual/component/EditorIcon";
 import { OnChange } from "visual/component/Options/Type";
 import * as BorderStyle from "visual/component/Options/types/dev/Border/entities/style";
@@ -99,16 +99,7 @@ export const Border: FC<Props> = ({
           break;
       }
     },
-    [
-      hex,
-      onChangeHex,
-      palette,
-      onChangePalette,
-      opacity,
-      onChangeOpacity,
-      style,
-      onChangeStyle
-    ]
+    [onChangeHex, onChangePalette, onChangeOpacity, onChangeStyle]
   );
   const onTypeChange = useCallback(
     () => onChangeWidthType(toggleType(widthType)),

@@ -51,7 +51,8 @@ export function tabFilter(v: V): TabOptionType | undefined {
       {
         id: "offset",
         label: t("Offset"),
-        type: "number-dev"
+        type: "number-dev",
+        devices: "desktop"
       },
       {
         id: "orderBy",
@@ -137,7 +138,7 @@ function getIncludeExclude(
   const lvl1Option: ToolbarItemType = {
     id: `symbol_${source}_${prefix}By`,
     type: "multiSelect-dev",
-    label: include ? t("Include By") : t("Exclude By"),
+    label: include ? t("Include by") : t("Exclude by"),
     devices: "desktop",
     placeholder: multiSelectPlaceholder,
     choices: refs.map((ref) => ({ value: ref.id, title: ref.title }))

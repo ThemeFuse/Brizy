@@ -41,10 +41,11 @@ const Image: React.FC<Props> = ({ showParallax, children }) => {
   showParallax = showParallax && currentDeviceMode === "desktop";
 
   const className = classnames(
-    "brz-bg-image absolute top-0 left-0 w-full h-full bg-no-repeat bg-cover",
+    "brz-bg-image absolute left-0 w-full bg-no-repeat",
+    showParallax ? "-top-[50vh] h-[100vh] !bg-cover" : "top-0 h-full bg-cover",
     {
       "brz-bg-image-parallax": showParallax,
-      "brz-bg-image-parallax--init brz-ed-preserve-3d w-full !bg-cover left-0 -top-[50vh] h-[100vh] !transition-[all] !duration-[0s] !ease-[ease] !delay-[0s] origin-[center_center_0]":
+      "brz-bg-image-parallax--init brz-ed-preserve-3d !transition-[all] !duration-[0s] !ease-[ease] !delay-[0s] origin-[center_center_0]":
         showParallax && IS_EDITOR
     }
   );

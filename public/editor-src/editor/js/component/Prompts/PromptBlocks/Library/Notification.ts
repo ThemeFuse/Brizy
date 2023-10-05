@@ -1,13 +1,13 @@
 import { ToastNotification } from "visual/component/Notifications";
+import {
+  SavedBlockImport,
+  SavedLayoutImport
+} from "visual/global/Config/types/configs/ConfigCommon";
 import { SavedBlock, SavedLayout } from "visual/types";
 import { isSavedBlock, isSavedLayout, isSavedPopup } from "visual/types/utils";
-import {
-  UploadSavedBlocksData,
-  UploadSavedLayoutsData
-} from "visual/utils/api/types";
 import { BlockTypes } from "../types";
 
-type Data = UploadSavedLayoutsData | UploadSavedBlocksData;
+type Data = SavedBlockImport | SavedLayoutImport;
 
 export const ShowSuccessError = (data: Data, type: BlockTypes): void => {
   data.success.forEach((block: SavedBlock | SavedLayout) => {

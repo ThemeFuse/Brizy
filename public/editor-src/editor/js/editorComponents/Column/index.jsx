@@ -1,41 +1,42 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
+import Animation from "visual/component/Animation";
+import Background from "visual/component/Background";
+import ContainerBorder from "visual/component/ContainerBorder";
+import ContextMenu from "visual/component/ContextMenu";
+import CustomCSS from "visual/component/CustomCSS";
+import Link from "visual/component/Link";
+import { Roles } from "visual/component/Roles";
+import { ScrollMotion } from "visual/component/ScrollMotions";
+import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
+import { SortableElement } from "visual/component/Sortable/SortableElement";
+import SortableHandle from "visual/component/Sortable/SortableHandle";
+import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { blocksDataSelector } from "visual/redux/selectors";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
+import { getContainerW } from "visual/utils/meta";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import * as Str from "visual/utils/string/specs";
-import CustomCSS from "visual/component/CustomCSS";
-import { SortableElement } from "visual/component/Sortable/SortableElement";
-import Background from "visual/component/Background";
-import ContainerBorder from "visual/component/ContainerBorder";
-import SortableHandle from "visual/component/Sortable/SortableHandle";
-import Animation from "visual/component/Animation";
-import { Roles } from "visual/component/Roles";
-import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
-import { ScrollMotion } from "visual/component/ScrollMotions";
-import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
-import { blocksDataSelector } from "visual/redux/selectors";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import ContextMenu from "visual/component/ContextMenu";
-import contextMenuConfig from "./contextMenu";
-import ColumnResizer from "./components/ColumnResizer";
-import Link from "visual/component/Link";
-import { getContainerW } from "visual/utils/meta";
-import Items from "./Items";
-import { styleItems, styleColumn, styleAnimation } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import defaultValue from "./defaultValue.json";
-import { styleSizeWidth } from "visual/utils/style2";
-import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
-import { getStore } from "visual/redux/store";
+import { attachRef } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
-import { deviceModeSelector } from "visual/redux/selectors";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import * as Str from "visual/utils/string/specs";
+import { styleSizeWidth } from "visual/utils/style2";
+import Items from "./Items";
+import ColumnResizer from "./components/ColumnResizer";
+import contextMenuConfig from "./contextMenu";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { styleAnimation, styleColumn, styleItems } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class Column extends EditorComponent {
   static get componentId() {
@@ -64,12 +65,21 @@ class Column extends EditorComponent {
       nextProps.mobileReversed !== mobileReversed ||
       nextProps.tabletReversed !== tabletReversed;
 
+    const { index: previousIndex } = this.props.meta.row?.item ?? {};
+    const { index: currentIndex } = nextProps.meta.row?.item ?? {};
+
+    const indexWasChanged = previousIndex !== currentIndex;
+
     return (
-      meta.posts || meta.inCarousel || reversed || this.optionalSCU(nextProps)
+      meta.posts ||
+      meta.inCarousel ||
+      reversed ||
+      this.optionalSCU(nextProps) ||
+      indexWasChanged
     );
   }
 
-  handleResizeStart = position => {
+  handleResizeStart = (position) => {
     if (this.containerBorderRef.current) {
       this.containerBorderRef.current.setActive(true);
     }
@@ -81,7 +91,7 @@ class Column extends EditorComponent {
     this.props.onResize(deltaX, position);
   };
 
-  handleResizeEnd = position => {
+  handleResizeEnd = (position) => {
     if (this.containerBorderRef.current) {
       this.containerBorderRef.current.setActive(false);
     }
@@ -145,7 +155,7 @@ class Column extends EditorComponent {
     return meta.row && meta.row.isInner;
   }
 
-  dvv = key => {
+  dvv = (key) => {
     const v = this.getValue();
     const device = deviceModeSelector(getStore().getState());
     const state = State.mRead(v.tabsState);
@@ -174,11 +184,20 @@ class Column extends EditorComponent {
     );
   };
 
-  renderToolbar = ContainerBorderButton => {
+  getRef = (portalToolbar) => {
+    if (this.props.getParentRef) {
+      return this.props.getParentRef(portalToolbar?.node) ?? this.toolbarRef;
+    }
+    return this.toolbarRef;
+  };
+
+  renderToolbar = (ContainerBorderButton) => {
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
-        ref={this.toolbarRef}
+        ref={(el) => {
+          attachRef(el, this.getRef(el));
+        }}
       >
         <SortableHandle>
           <ContainerBorderButton />
@@ -242,7 +261,7 @@ class Column extends EditorComponent {
   renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
-      itemProps: itemData => {
+      itemProps: (itemData) => {
         let {
           blockId,
           value: { popupId }
@@ -301,7 +320,7 @@ class Column extends EditorComponent {
     return (
       <>
         <SortableElement type="column" useHandle={true}>
-          {sortableElementAttr => (
+          {(sortableElementAttr) => (
             <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
               <ContainerBorder
                 type={posts ? "column__posts" : "column"}

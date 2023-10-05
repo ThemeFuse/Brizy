@@ -9,7 +9,7 @@ exports[`Snapshots Default view 1`] = `
     class="brz-ed--fat-icon__wrapper relative border-2 border-solid rounded-[3px] flex items-center justify-center w-[60px] h-[60px] transition-[border-color] duration-200 ease-linear	delay-[0s] border-right-sidebar-item-border hover:border-right-sidebar-item-border--hover"
   >
     <span
-      class="brz-ed--check-mark w-[16px] h-[16px] text-[16px] rounded-[50%] top-[4px] left-[8px] bg-black border-solid border-topaz brz-ed--fat-check-icon__check absolute -top-[5px] -left-[5px] border-[1px]"
+      class="brz-ed--check-mark w-[16px] h-[16px] text-[16px] rounded-[50%] bg-black border-solid border-topaz brz-ed--fat-check-icon__check absolute -top-[5px] -left-[5px] border-[1px]"
     >
       <svg
         class="brz-icon-svg brz-ed-icon-svg align-[initial] !text-brand-primary opacity-0"

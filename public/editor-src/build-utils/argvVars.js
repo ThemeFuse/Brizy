@@ -25,11 +25,7 @@ module.exports = function (argv) {
 
   const paths = {
     editor: path.resolve(__dirname, "../editor"),
-    kits: path.resolve(__dirname, "../kits"),
-    templates: path.resolve(__dirname, "../templates"),
-    stories: path.resolve(__dirname, "../stories"),
-    popups: path.resolve(__dirname, "../popups"),
-    packages: path.resolve(__dirname, "../packages"),
+    packages: path.resolve(__dirname, "../../packages"),
     build: getBuildPath(),
     buildPro: getBuildProPath(),
     buildLocal: path.resolve(__dirname, "../build")

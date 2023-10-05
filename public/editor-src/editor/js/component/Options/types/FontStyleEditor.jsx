@@ -147,17 +147,19 @@ class FontStyle extends React.Component {
                             columns: [
                               {
                                 width: 50,
+                                className:
+                                  "brz-ed-grid__typography--globalStyles-col1",
                                 options: [
                                   {
                                     id: "fontSizeSuffix",
-                                    type: "select",
+                                    type: "select-dev",
                                     label: "Size",
                                     className: "brz-control__typography-suffix",
                                     disabled: IS_STORY,
                                     choices: getSuffixChoices,
-                                    value: fontSizeSuffix,
-                                    onChange: (fontSizeSuffix) =>
-                                      onChange({ fontSizeSuffix })
+                                    value: { value: fontSizeSuffix },
+                                    onChange: ({ value }) =>
+                                      onChange({ fontSizeSuffix: value })
                                   },
                                   {
                                     id: "fontSize",
@@ -177,7 +179,7 @@ class FontStyle extends React.Component {
                                     type: "stepper",
                                     display: "block",
                                     min: 1,
-                                    max: 10,
+                                    max: 20,
                                     step: 0.1,
                                     value: lineHeight,
                                     onChange: (lineHeight) =>
@@ -187,19 +189,21 @@ class FontStyle extends React.Component {
                               },
                               {
                                 width: 50,
+                                className:
+                                  "brz-ed-grid__typography--globalStyles-col2",
                                 options: [
                                   {
                                     id: "fontWeight",
                                     label: "Weight",
-                                    type: "select",
+                                    type: "select-dev",
                                     display: "block",
                                     choices: getWeightChoices({
                                       family: fontFamily,
                                       type: fontFamilyType
                                     }),
-                                    value: fontWeight,
-                                    onChange: (fontWeight) =>
-                                      onChange({ fontWeight })
+                                    value: { value: fontWeight },
+                                    onChange: ({ value }) =>
+                                      onChange({ fontWeight: value })
                                   },
                                   {
                                     id: "letterSpacing",
@@ -230,23 +234,25 @@ class FontStyle extends React.Component {
                             columns: [
                               {
                                 width: 50,
+                                className:
+                                  "brz-ed-grid__typography--globalStyles-col1",
                                 options: [
                                   {
                                     id: "tabletFontSizeSuffix",
-                                    type: "select",
+                                    type: "select-dev",
                                     label: "Size",
                                     className: "brz-control__typography-suffix",
                                     choices: getSuffixChoices,
-                                    value: tabletFontSizeSuffix,
-                                    onChange: (tabletFontSizeSuffix) =>
-                                      onChange({ tabletFontSizeSuffix })
+                                    value: { value: tabletFontSizeSuffix },
+                                    onChange: ({ value }) =>
+                                      onChange({ tabletFontSizeSuffix: value })
                                   },
                                   {
                                     id: "tabletFontSize",
                                     type: "stepper",
                                     display: "block",
                                     min: 1,
-                                    max: 100,
+                                    max: 300,
                                     step: 1,
                                     value: tabletFontSize,
                                     onChange: (tabletFontSize) =>
@@ -258,7 +264,7 @@ class FontStyle extends React.Component {
                                     type: "stepper",
                                     display: "block",
                                     min: 1,
-                                    max: 10,
+                                    max: 20,
                                     step: 0.1,
                                     value: tabletLineHeight,
                                     onChange: (tabletLineHeight) =>
@@ -268,19 +274,21 @@ class FontStyle extends React.Component {
                               },
                               {
                                 width: 50,
+                                className:
+                                  "brz-ed-grid__typography--globalStyles-col2",
                                 options: [
                                   {
                                     id: "tabletFontWeight",
                                     label: "Weight",
-                                    type: "select",
+                                    type: "select-dev",
                                     display: "block",
                                     choices: getWeightChoices({
                                       family: fontFamily,
                                       type: fontFamilyType
                                     }),
-                                    value: tabletFontWeight,
-                                    onChange: (tabletFontWeight) =>
-                                      onChange({ tabletFontWeight })
+                                    value: { value: tabletFontWeight },
+                                    onChange: ({ value }) =>
+                                      onChange({ tabletFontWeight: value })
                                   },
                                   {
                                     id: "tabletLetterSpacing",
@@ -311,23 +319,25 @@ class FontStyle extends React.Component {
                             columns: [
                               {
                                 width: 50,
+                                className:
+                                  "brz-ed-grid__typography--globalStyles-col1",
                                 options: [
                                   {
                                     id: "mobileFontSizeSuffix",
-                                    type: "select",
+                                    type: "select-dev",
                                     label: "Size",
                                     className: "brz-control__typography-suffix",
                                     choices: getSuffixChoices,
-                                    value: mobileFontSizeSuffix,
-                                    onChange: (mobileFontSizeSuffix) =>
-                                      onChange({ mobileFontSizeSuffix })
+                                    value: { value: mobileFontSizeSuffix },
+                                    onChange: ({ value }) =>
+                                      onChange({ mobileFontSizeSuffix: value })
                                   },
                                   {
                                     id: "mobileFontSize",
                                     type: "stepper",
                                     display: "block",
                                     min: 1,
-                                    max: 100,
+                                    max: 300,
                                     step: 1,
                                     value: mobileFontSize,
                                     onChange: (mobileFontSize) =>
@@ -339,7 +349,7 @@ class FontStyle extends React.Component {
                                     type: "stepper",
                                     display: "block",
                                     min: 1,
-                                    max: 10,
+                                    max: 20,
                                     step: 0.1,
                                     value: mobileLineHeight,
                                     onChange: (mobileLineHeight) =>
@@ -349,19 +359,23 @@ class FontStyle extends React.Component {
                               },
                               {
                                 width: 50,
+                                className:
+                                  "brz-ed-grid__typography--globalStyles-col2",
                                 options: [
                                   {
                                     id: "mobileFontWeight",
                                     label: "Weight",
-                                    type: "select",
+                                    type: "select-dev",
                                     display: "block",
                                     choices: getWeightChoices({
                                       family: fontFamily,
                                       type: fontFamilyType
                                     }),
-                                    value: mobileFontWeight,
-                                    onChange: (mobileFontWeight) =>
-                                      onChange({ mobileFontWeight })
+                                    value: { value: mobileFontWeight },
+                                    onChange: (data) =>
+                                      onChange({
+                                        mobileFontWeight: data.value
+                                      })
                                   },
                                   {
                                     id: "mobileLetterSpacing",
@@ -400,7 +414,7 @@ class FontStyle extends React.Component {
             className="brz-ed-option__font-style-editor--delete"
             onClick={this.handleDelete}
           >
-            <EditorIcon icon="nc-remove" />
+            <EditorIcon icon="nc-trash" />
           </div>
         ) : null}
         <Toolbar
@@ -471,9 +485,7 @@ class FontStyleEditor extends React.Component {
 
     return (
       <div className="brz-ed-option__font-styles">
-        <div className="brz-ed-option__font-styles--scroll-pane">
-          <Scrollbar theme="dark">{items}</Scrollbar>
-        </div>
+        <Scrollbar theme="dark">{items}</Scrollbar>
         <div
           className="brz-ed-option__font-styles--add"
           onClick={this.handleAddNew}

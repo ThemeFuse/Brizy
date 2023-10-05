@@ -16,6 +16,7 @@ export function styleRow(v, vs, vd) {
       });
     });
   };
+  const { maskShape = "none" } = v;
   const motion = fromElementModel(get);
 
   const enabledMotion =
@@ -42,7 +43,9 @@ export function styleRow(v, vs, vd) {
       standart: [
         "cssStyleBorder",
         "cssStyleBorderRadius",
-        "cssStyleBoxShadow",
+        ...(maskShape === "none"
+          ? ["cssStyleBoxShadow"]
+          : ["cssStyleMaskDropShadow"]),
         "cssStyleSizeMaxWidthPercentOnly",
         "cssStyleBlendMode"
       ],
@@ -53,7 +56,12 @@ export function styleRow(v, vs, vd) {
         "cssStyleBgImage",
         "cssStyleFilter",
         "cssStyleBgImagePosition",
-        "cssStyleBgMediaImage"
+        "cssStyleBgMediaImage",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
@@ -61,7 +69,15 @@ export function styleRow(v, vs, vd) {
       standart: ["cssStyleBgImageHover"]
     },
     [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-color`]: {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient"],
+      standart: [
+        "cssStyleBgColor",
+        "cssStyleBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-map`]: {

@@ -1,3 +1,5 @@
+import { FormField } from "visual/component/Prompts/common/GlobalApps/type";
+
 export type PromptIconProps = {
   name: string;
   type: string;
@@ -16,7 +18,7 @@ export type PromptAppsProps = {
 
 export type PromptFormProps = {
   formId: string;
-  formFields: [];
+  formFields: FormField[];
   onClose?: () => void;
 };
 

@@ -1,10 +1,12 @@
+import { TwitterEmbedEditor, TwitterEmbedPreview } from "@brizy/component";
+import { TwitterFollowEditor, TwitterFollowPreview } from "@brizy/component";
+import { TwitterMentionEditor, TwitterMentionPreview } from "@brizy/component";
 import classnames from "classnames";
 import React, { ReactNode } from "react";
 import ResizeAware from "react-resize-aware";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
-import TwitterPlugin from "visual/component/Twitter";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
@@ -27,8 +29,26 @@ export interface Value extends ElementModel {
   buttonShowScreenName: string;
   customCSS: string;
   height: number;
+  tweet: string;
   mobileHeight: number;
   tabletHeight: number;
+}
+
+type Theme = "light" | "dark";
+type ButtonSize = "small" | "large";
+
+interface TwitterOptions {
+  type: "embed" | "followButton" | "mentionButton";
+  name: string;
+  height: number;
+  theme: Theme;
+  buttonSize: ButtonSize;
+  buttonShowCount: boolean;
+  buttonShowScreenName: boolean;
+}
+
+interface PreviewTwitterOptions extends TwitterOptions {
+  tweet: string;
 }
 
 class Twitter extends EditorComponent<Value> {
@@ -66,50 +86,104 @@ class Twitter extends EditorComponent<Value> {
     }
   };
 
-  renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
+  renderEditorByType(props: TwitterOptions) {
     const {
-      twitterType,
-      twitterUsername,
-      twitterTheme,
-      buttonLarge,
+      type,
+      name,
+      height,
+      theme,
+      buttonSize,
+      buttonShowCount,
+      buttonShowScreenName
+    } = props;
+
+    const _name = name.replace(/^@/, "");
+
+    switch (type) {
+      case "embed":
+        return (
+          <TwitterEmbedEditor name={_name} height={height} theme={theme} />
+        );
+      case "followButton":
+        return (
+          <TwitterFollowEditor
+            name={_name}
+            size={buttonSize}
+            showCount={buttonShowCount}
+            showScreenName={buttonShowScreenName}
+          />
+        );
+      case "mentionButton":
+        return <TwitterMentionEditor name={_name} size={buttonSize} />;
+    }
+  }
+
+  renderPreviewByType(props: PreviewTwitterOptions) {
+    const {
+      type,
+      name,
+      height,
+      theme,
+      buttonSize,
       buttonShowCount,
       buttonShowScreenName,
-      customCSS
-    } = v;
-    const name = twitterUsername.trim() || "NatGeo";
+      tweet
+    } = props;
 
-    const height = this.dvv("height");
+    const _name = name.replace(/^@/, "");
+
+    switch (type) {
+      case "embed":
+        return (
+          <TwitterEmbedPreview name={_name} height={height} theme={theme} />
+        );
+      case "followButton":
+        return (
+          <TwitterFollowPreview
+            name={_name}
+            size={buttonSize}
+            showCount={buttonShowCount}
+            showScreenName={buttonShowScreenName}
+          />
+        );
+      case "mentionButton":
+        return (
+          <TwitterMentionPreview name={_name} size={buttonSize} tweet={tweet} />
+        );
+    }
+  }
+
+  renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
+    const { twitterType, customCSS, twitter } = v;
+
+    const twitterEmbedType = "embed";
+    const twitterFollowButtonType = "followButton";
+
+    let type: typeof twitterType;
+
+    if (twitter === twitterEmbedType) {
+      type = twitterEmbedType;
+    } else {
+      type =
+        twitterType !== twitterEmbedType
+          ? twitterType
+          : twitterFollowButtonType;
+    }
 
     const className = classnames(
       "brz-twitter",
-      { "brz-twitter__embed": twitterType === "embed" },
+      { "brz-twitter__embed": twitter === "embed" },
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
 
-    const data = {
-      embed: {
-        sourceType: "profile",
-        screenName: name,
-        theme: twitterTheme,
-        url: `https://twitter.com/${name}`,
-        options: { height: `${height}` }
-      },
-      followButton: {
-        screenName: name,
-        url: `https://twitter.com/${name}`,
-        options: {
-          size: buttonLarge === "large" ? "large" : "small",
-          showCount: buttonShowCount === "on",
-          showScreenName: buttonShowScreenName === "on"
-        }
-      },
-      mentionButton: {
-        screenName: name,
-        url: `https://twitter.com/${name}`,
-        options: {
-          size: buttonLarge === "large" ? "large" : "small"
-        }
-      }
+    const props: TwitterOptions = {
+      name: v.twitterUsername.trim(),
+      type,
+      height: Number(this.dvv("height")),
+      theme: v.twitterTheme === "dark" ? "dark" : "light",
+      buttonSize: v.buttonLarge === "large" ? "large" : "small",
+      buttonShowCount: v.buttonShowCount === "on",
+      buttonShowScreenName: v.buttonShowScreenName === "on"
     };
 
     return (
@@ -118,7 +192,7 @@ class Twitter extends EditorComponent<Value> {
       >
         <CustomCSS selectorName={this.getId()} css={customCSS}>
           <Wrapper {...this.makeWrapperProps({ className })}>
-            <TwitterPlugin type={twitterType} data={data[twitterType]} />
+            {this.renderEditorByType(props)}
             <ResizeAware onResize={this.handleChange} />
           </Wrapper>
         </CustomCSS>
@@ -129,46 +203,42 @@ class Twitter extends EditorComponent<Value> {
   renderForView(v: Value, vd: Value, vs: Value): ReactNode {
     const {
       twitterType,
-      twitterUsername,
-      twitterTheme,
-      buttonLarge,
-      buttonShowCount,
-      buttonShowScreenName,
-      tweet,
       customCSS,
       height,
       tabletHeight,
-      mobileHeight
+      mobileHeight,
+      twitter
     } = v;
-    const name = twitterUsername.trim() || "NatGeo";
+
+    const twitterEmbedType = "embed";
+    const twitterFollowButtonType = "followButton";
+
+    let type: typeof twitterType;
+
+    if (twitter === twitterEmbedType) {
+      type = twitterEmbedType;
+    } else {
+      type =
+        twitterType !== twitterEmbedType
+          ? twitterType
+          : twitterFollowButtonType;
+    }
 
     const className = classnames(
       "brz-twitter",
-      `brz-twitter__${twitterType}`,
+      `brz-twitter__${type}`,
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
 
-    const data = {
-      embed: {
-        "data-height": `${height}`,
-        className: "twitter-timeline",
-        "data-theme": twitterTheme,
-        href: `https://twitter.com/${name}`
-      },
-      followButton: {
-        className: "twitter-follow-button",
-        "data-related": name,
-        href: `https://twitter.com/${name}`,
-        "data-show-screen-name": buttonShowScreenName === "on",
-        "data-size": buttonLarge === "large" ? "large" : "small",
-        "data-show-count": buttonShowCount === "on"
-      },
-      mentionButton: {
-        className: "twitter-mention-button",
-        href: `https://twitter.com/${name}?screen_name=${name}`,
-        "data-text": tweet,
-        "data-size": buttonLarge === "large" ? "large" : "small"
-      }
+    const props: PreviewTwitterOptions = {
+      name: v.twitterUsername.trim(),
+      type,
+      height: Number(this.dvv("height")),
+      theme: v.twitterTheme === "dark" ? "dark" : "light",
+      buttonSize: v.buttonLarge === "large" ? "large" : "small",
+      buttonShowCount: v.buttonShowCount === "on",
+      buttonShowScreenName: v.buttonShowScreenName === "on",
+      tweet: v.tweet
     };
 
     const attributes = {
@@ -186,7 +256,7 @@ class Twitter extends EditorComponent<Value> {
           {...this.makeWrapperProps({ className })}
           attributes={attributes}
         >
-          <TwitterPlugin data={data[twitterType]} />
+          {this.renderPreviewByType(props)}
         </Wrapper>
       </CustomCSS>
     );

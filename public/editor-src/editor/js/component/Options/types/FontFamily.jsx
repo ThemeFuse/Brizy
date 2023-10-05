@@ -1,14 +1,15 @@
+import classnames from "classnames";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
-import classnames from "classnames";
-import Prompts from "visual/component/Prompts";
-import ScrollPane from "visual/component/ScrollPane";
 import EditorIcon from "visual/component/EditorIcon";
+import Prompts from "visual/component/Prompts";
 import { Roles } from "visual/component/Roles";
-import { fontTransform } from "visual/utils/fonts";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { projectSelector } from "visual/redux/selectors";
 import { unDeletedFontsSelector } from "visual/redux/selectors-new";
+import { fontTransform } from "visual/utils/fonts";
+import { scrollToActiveFont } from "visual/utils/fonts/scrollHelpers";
 import { t } from "visual/utils/i18n";
 
 const fontSizeMap = {
@@ -27,17 +28,26 @@ class FontFamily extends Component {
     onChange: _.noop
   };
 
+  constructor(props) {
+    super(props);
+    this.scrollbarRef = React.createRef();
+  }
+
+  componentDidMount() {
+    scrollToActiveFont(this.scrollbarRef);
+  }
+
   checkCurrentFont() {
     const { fonts, value } = this.props;
 
-    return Object.entries(fonts).some(item => {
+    return Object.entries(fonts).some((item) => {
       const [type, fonts] = item;
 
-      return fonts.data.some(font => fontTransform[type](font).id === value);
+      return fonts.data.some((font) => fontTransform[type](font).id === value);
     });
   }
 
-  handleOpenFonts = event => {
+  handleOpenFonts = (event) => {
     event.preventDefault();
 
     Prompts.open({
@@ -49,7 +59,7 @@ class FontFamily extends Component {
   renderFontList(fonts, type, existedFonts) {
     const { value, defaultFont, onChange } = this.props;
 
-    return fonts.map(font => {
+    return fonts.map((font) => {
       const normalizeFont = fontTransform[type](font);
       const { id, family, title } = normalizeFont;
       const className = classnames("brz-ed-font__name", {
@@ -87,10 +97,7 @@ class FontFamily extends Component {
 
     return (
       <div className="brz-ed-font__typography">
-        <ScrollPane
-          className="brz-ed-scroll--dark brz-ed-scroll--small"
-          style={{ height: "100%" }}
-        >
+        <Scrollbar theme="dark" ref={this.scrollbarRef}>
           {uploadFonts.data &&
             uploadFonts.data.length > 0 &&
             this.renderFontList(uploadFonts.data, "upload", existedFonts)}
@@ -104,7 +111,7 @@ class FontFamily extends Component {
           {blocksFonts.data &&
             this.renderFontList(blocksFonts.data, "google", existedFonts)}
           {this.renderFontList(configFonts.data, "google", existedFonts)}
-        </ScrollPane>
+        </Scrollbar>
         <Roles allow={["admin"]}>
           <div
             className="brz-ed-font__typography-adder"
@@ -119,7 +126,7 @@ class FontFamily extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   fonts: unDeletedFontsSelector(state),
   defaultFont: projectSelector(state).data.font
 });

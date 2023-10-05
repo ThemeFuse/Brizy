@@ -8,7 +8,7 @@ export type Config = {
   allowedExtensions?: string[];
 };
 
-export type Props = Option.Props<Value> & WithConfig<Config>;
+export type Props = Option.Props<Value | undefined> & WithConfig<Config>;
 
 export const FileUpload: React.FC<Props> = ({
   config,

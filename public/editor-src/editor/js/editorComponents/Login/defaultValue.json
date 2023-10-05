@@ -143,33 +143,12 @@
     "tempColorOpacity": 0.7,
     "tempColorPalette": "",
 
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
-
-    "hoverBgColorHex": null,
-    "hoverBgColorOpacity": null,
-    "hoverBgColorPalette": null,
-
-    "tempHoverBgColorPalette": null,
-    "tempHoverBgColorOpacity": null,
-
     "textColorHex": "#000000",
     "textColorOpacity": 0.7,
     "textColorPalette": "",
 
     "tempTextColorOpacity": 0.7,
     "tempTextColorPalette": "",
-
-    "hoverTextColorHex": null,
-    "hoverTextColorOpacity": null,
-    "hoverTextColorPalette": null,
-
-    "tempHoverTextColorOpacity": null,
-    "tempHoverTextColorPalette": null,
 
     "linkColorHex": "#0085ba",
     "linkColorOpacity": 0.7,
@@ -178,26 +157,12 @@
     "tempLinkColorOpacity": 0.7,
     "tempLinkColorPalette": "",
 
-    "hoverLinkColorHex": null,
-    "hoverLinkColorOpacity": null,
-    "hoverLinkColorPalette": null,
-
-    "tempHoverLinkColorOpacity": null,
-    "tempHoverLinkColorPalette": null,
-
     "lostColorHex": "#73777f",
     "lostColorOpacity": 0.7,
     "lostColorPalette": "",
 
     "tempLostColorOpacity": 0.7,
     "tempLostColorPalette": "",
-
-    "hoverLostColorHex": null,
-    "hoverLostColorOpacity": null,
-    "hoverLostColorPalette": null,
-
-    "tempHoverLostColorOpacity": null,
-    "tempHoverLostColorPalette": null,
 
     "registerInfoColorHex": "#73777f",
     "registerInfoColorOpacity": 0.7,
@@ -206,26 +171,12 @@
     "tempRegisterInfoColorOpacity": 0.7,
     "tempRegisterInfoColorPalette": "",
 
-    "hoverRegisterInfoColorHex": null,
-    "hoverRegisterInfoColorOpacity": null,
-    "hoverRegisterInfoColorPalette": null,
-
-    "tempHoverRegisterInfoColorOpacity": null,
-    "tempHoverRegisterInfoColorPalette": null,
-
     "registerLinkColorHex": "#73777f",
     "registerLinkColorOpacity": 0.7,
     "registerLinkColorPalette": "",
 
     "tempRegisterLinkColorOpacity": 0.7,
     "tempRegisterLinkColorPalette": "",
-
-    "hoverRegisterLinkColorHex": null,
-    "hoverRegisterLinkColorOpacity": null,
-    "hoverRegisterLinkColorPalette": null,
-
-    "tempHoverRegisterLinkColorOpacity": null,
-    "tempHoverRegisterLinkColorPalette": null,
 
     "loginLinkColorHex": "#73777f",
     "loginLinkColorOpacity": 0.7,
@@ -234,20 +185,9 @@
     "tempLoginLinkColorOpacity": 0.7,
     "tempLoginLinkColorPalette": "",
 
-    "hoverLoginLinkColorHex": null,
-    "hoverLoginLinkColorOpacity": null,
-    "hoverLoginLinkColorPalette": null,
-
-    "tempHoverLoginLinkColorOpacity": null,
-    "tempHoverLoginLinkColorPalette": null,
-
     "borderStyle": "solid",
 
     "tempBorderStyle": "solid",
-
-    "hoverBorderStyle": null,
-
-    "tempHoverBorderStyle": null,
 
     "borderWidthType": "grouped",
     "borderWidth": 1,
@@ -261,19 +201,6 @@
     "tempBorderRightWidth": 1,
     "tempBorderBottomWidth": 1,
     "tempBorderLeftWidth": 1,
-
-    "hoverBorderWidthType": null,
-    "hoverBorderWidth": null,
-    "hoverBorderTopWidth": null,
-    "hoverBorderRightWidth": null,
-    "hoverBorderBottomWidth": null,
-    "hoverBorderLeftWidth": null,
-
-    "tempHoverBorderWidth": null,
-    "tempHoverBorderTopWidth": null,
-    "tempHoverBorderRightWidth": null,
-    "tempHoverBorderBottomWidth": null,
-    "tempHoverBorderLeftWidth": null,
 
     "borderRadiusType": "grouped",
     "borderRadius": 0,
@@ -300,32 +227,12 @@
     "tempBorderBottomRightRadiusSuffix": "px",
     "tempBorderBottomLeftRadiusSuffix": "px",
 
-    "hoverBorderRadiusType": null,
-    "hoverBorderRadius": null,
-    "hoverBorderTopLeftRadius": null,
-    "hoverBorderTopRightRadius": null,
-    "hoverBorderBottomRightRadius": null,
-    "hoverBorderBottomLeftRadius": null,
-
-    "tempHoverBorderRadius": null,
-    "tempHoverBorderTopLeftRadius": null,
-    "tempHoverBorderTopRightRadius": null,
-    "tempHoverBorderBottomRightRadius": null,
-    "tempHoverBorderBottomLeftRadius": null,
-
     "borderColorHex": "#dcdee1",
     "borderColorOpacity": 1,
     "borderColorPalette": "",
 
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "",
-
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-
-    "tempHoverBorderColorOpacity": null,
-    "tempHoverBorderColorPalette": null,
 
     "paddingType": "ungrouped",
     "tempPaddingType": "ungrouped",
@@ -353,33 +260,6 @@
     "tempPaddingRightSuffix": "px",
     "tempPaddingBottomSuffix": "px",
     "tempPaddingLeftSuffix": "px",
-
-    "hoverPaddingType": null,
-    "tempHoverPaddingType": null,
-
-    "hoverPadding": null,
-    "hoverPaddingTop": null,
-    "hoverPaddingRight": null,
-    "hoverPaddingBottom": null,
-    "hoverPaddingLeft": null,
-
-    "tempHoverPadding": null,
-    "tempHoverPaddingTop": null,
-    "tempHoverPaddingRight": null,
-    "tempHoverPaddingBottom": null,
-    "tempHoverPaddingLeft": null,
-
-    "hoverPaddingSuffix": null,
-    "hoverPaddingTopSuffix": null,
-    "hoverPaddingRightSuffix": null,
-    "hoverPaddingBottomSuffix": null,
-    "hoverPaddingLeftSuffix": null,
-
-    "tempHoverPaddingSuffix": null,
-    "tempHoverPaddingTopSuffix": null,
-    "tempHoverPaddingRightSuffix": null,
-    "tempHoverPaddingBottomSuffix": null,
-    "tempHoverPaddingLeftSuffix": null,
 
     "labelFontStyle": "",
     "labelFontFamilyType": "google",
@@ -423,33 +303,6 @@
     "tempLabelPaddingBottomSuffix": "px",
     "tempLabelPaddingLeftSuffix": "px",
 
-    "hoverLabelPaddingType": null,
-    "tempHoverLabelPaddingType": null,
-
-    "hoverLabelPadding": null,
-    "hoverLabelPaddingTop": null,
-    "hoverLabelPaddingRight": null,
-    "hoverLabelPaddingBottom": null,
-    "hoverLabelPaddingLeft": null,
-
-    "tempHoverLabelPadding": null,
-    "tempHoverLabelPaddingTop": null,
-    "tempHoverLabelPaddingRight": null,
-    "tempHoverLabelPaddingBottom": null,
-    "tempHoverLabelPaddingLeft": null,
-
-    "hoverLabelPaddingSuffix": null,
-    "hoverLabelPaddingTopSuffix": null,
-    "hoverLabelPaddingRightSuffix": null,
-    "hoverLabelPaddingBottomSuffix": null,
-    "hoverLabelPaddingLeftSuffix": null,
-
-    "tempHoverLabelPaddingSuffix": null,
-    "tempHoverLabelPaddingTopSuffix": null,
-    "tempHoverLabelPaddingRightSuffix": null,
-    "tempHoverLabelPaddingBottomSuffix": null,
-    "tempHoverLabelPaddingLeftSuffix": null,
-
     "fieldPaddingType": "grouped",
     "tempFieldPaddingType": "grouped",
 
@@ -477,42 +330,9 @@
     "tempFieldPaddingBottomSuffix": "px",
     "tempFieldPaddingLeftSuffix": "px",
 
-    "hoverFieldPaddingType": null,
-    "tempHoverFieldPaddingType": null,
-
-    "hoverFieldPadding": null,
-    "hoverFieldPaddingTop": null,
-    "hoverFieldPaddingRight": null,
-    "hoverFieldPaddingBottom": null,
-    "hoverFieldPaddingLeft": null,
-
-    "tempHoverFieldPadding": null,
-    "tempHoverFieldPaddingTop": null,
-    "tempHoverFieldPaddingRight": null,
-    "tempHoverFieldPaddingBottom": null,
-    "tempHoverFieldPaddingLeft": null,
-
-    "hoverFieldPaddingSuffix": null,
-    "hoverFieldPaddingTopSuffix": null,
-    "hoverFieldPaddingRightSuffix": null,
-    "hoverFieldPaddingBottomSuffix": null,
-    "hoverFieldPaddingLeftSuffix": null,
-
-    "tempHoverFieldPaddingSuffix": null,
-    "tempHoverFieldPaddingTopSuffix": null,
-    "tempHoverFieldPaddingRightSuffix": null,
-    "tempHoverFieldPaddingBottomSuffix": null,
-    "tempHoverFieldPaddingLeftSuffix": null,
-
     "checkboxColorHex": "#73777f",
     "checkboxColorOpacity": 0.7,
     "checkboxColorPalette": "",
-
-    "hoverCheckboxColorHex": null,
-    "hoverCheckboxColorOpacity": null,
-    "tempHoverCheckboxColorOpacity": null,
-    "hoverCheckboxColorPalette": null,
-    "tempHoverCheckboxColorPalette": null,
 
     "tempCheckboxColorOpacity": 0.7,
     "tempCheckboxColorPalette": "",
@@ -553,31 +373,6 @@
     "tempBoxShadowSpread": 0,
     "tempBoxShadowVertical": 2,
     "tempBoxShadowHorizontal": 1,
-
-    "hoverBoxShadow": null,
-
-    "tempHoverBoxShadow": null,
-
-    "hoverBoxShadowColorHex": null,
-    "hoverBoxShadowColorOpacity": null,
-    "hoverBoxShadowColorPalette": null,
-
-    "tempHoverBoxShadowColorPalette": null,
-    "tempHoverBoxShadowColorOpacity": null,
-
-    "hoverBoxShadowBlur": null,
-    "hoverBoxShadowSpread": null,
-    "hoverBoxShadowVertical": null,
-    "hoverBoxShadowHorizontal": null,
-
-    "tempHoverBoxShadowBlur": null,
-    "tempHoverBoxShadowSpread": null,
-    "tempHoverBoxShadowVertical": null,
-    "tempHoverBoxShadowHorizontal": null,
-
-    "tabletHorizontalAlign": null,
-
-    "tabletRememberMeHorizontalAlign": null,
 
     "tabletSubmitWidth": null,
     "tabletSubmitWidthSuffix": null,
@@ -685,33 +480,6 @@
     "tempTabletPaddingBottomSuffix": "px",
     "tempTabletPaddingLeftSuffix": "px",
 
-    "tabletHoverPaddingType": null,
-    "tempTabletHoverPaddingType": null,
-
-    "tabletHoverPadding": null,
-    "tabletHoverPaddingTop": null,
-    "tabletHoverPaddingRight": null,
-    "tabletHoverPaddingBottom": null,
-    "tabletHoverPaddingLeft": null,
-
-    "tempTabletHoverPadding": null,
-    "tempTabletHoverPaddingTop": null,
-    "tempTabletHoverPaddingRight": null,
-    "tempTabletHoverPaddingBottom": null,
-    "tempTabletHoverPaddingLeft": null,
-
-    "tabletHoverPaddingSuffix": null,
-    "tabletHoverPaddingTopSuffix": null,
-    "tabletHoverPaddingRightSuffix": null,
-    "tabletHoverPaddingBottomSuffix": null,
-    "tabletHoverPaddingLeftSuffix": null,
-
-    "tempTabletHoverPaddingSuffix": null,
-    "tempTabletHoverPaddingTopSuffix": null,
-    "tempTabletHoverPaddingRightSuffix": null,
-    "tempTabletHoverPaddingBottomSuffix": null,
-    "tempTabletHoverPaddingLeftSuffix": null,
-
     "tabletLabelPaddingType": "ungrouped",
     "tempTabletLabelPaddingType": "ungrouped",
 
@@ -738,33 +506,6 @@
     "tempTabletLabelPaddingRightSuffix": "px",
     "tempTabletLabelPaddingBottomSuffix": "px",
     "tempTabletLabelPaddingLeftSuffix": "px",
-
-    "tabletHoverLabelPaddingType": null,
-    "tempTabletHoverLabelPaddingType": null,
-
-    "tabletHoverLabelPadding": null,
-    "tabletHoverLabelPaddingTop": null,
-    "tabletHoverLabelPaddingRight": null,
-    "tabletHoverLabelPaddingBottom": null,
-    "tabletHoverLabelPaddingLeft": null,
-
-    "tempTabletHoverLabelPadding": null,
-    "tempTabletHoverLabelPaddingTop": null,
-    "tempTabletHoverLabelPaddingRight": null,
-    "tempTabletHoverLabelPaddingBottom": null,
-    "tempTabletHoverLabelPaddingLeft": null,
-
-    "tabletHoverLabelPaddingSuffix": null,
-    "tabletHoverLabelPaddingTopSuffix": null,
-    "tabletHoverLabelPaddingRightSuffix": null,
-    "tabletHoverLabelPaddingBottomSuffix": null,
-    "tabletHoverLabelPaddingLeftSuffix": null,
-
-    "tempTabletHoverLabelPaddingSuffix": null,
-    "tempTabletHoverLabelPaddingTopSuffix": null,
-    "tempTabletHoverLabelPaddingRightSuffix": null,
-    "tempTabletHoverLabelPaddingBottomSuffix": null,
-    "tempTabletHoverLabelPaddingLeftSuffix": null,
 
     "tabletFieldPaddingType": "grouped",
     "tempTabletFieldPaddingType": "grouped",
@@ -798,33 +539,6 @@
     "tempTabletFieldPaddingRightSuffix": "px",
     "tempTabletFieldPaddingBottomSuffix": "px",
     "tempTabletFieldPaddingLeftSuffix": "px",
-
-    "hoverTabletFieldPaddingType": null,
-    "tempHoverTabletFieldPaddingType": null,
-
-    "hoverTabletFieldPadding": null,
-    "hoverTabletFieldPaddingTop": null,
-    "hoverTabletFieldPaddingRight": null,
-    "hoverTabletFieldPaddingBottom": null,
-    "hoverTabletFieldPaddingLeft": null,
-
-    "tempHoverTabletFieldPadding": null,
-    "tempHoverTabletFieldPaddingTop": null,
-    "tempHoverTabletFieldPaddingRight": null,
-    "tempHoverTabletFieldPaddingBottom": null,
-    "tempHoverTabletFieldPaddingLeft": null,
-
-    "hoverTabletFieldPaddingSuffix": null,
-    "hoverTabletFieldPaddingTopSuffix": null,
-    "hoverTabletFieldPaddingRightSuffix": null,
-    "hoverTabletFieldPaddingBottomSuffix": null,
-    "hoverTabletFieldPaddingLeftSuffix": null,
-
-    "tempHoverTabletFieldPaddingSuffix": null,
-    "tempHoverTabletFieldPaddingTopSuffix": null,
-    "tempHoverTabletFieldPaddingRightSuffix": null,
-    "tempHoverTabletFieldPaddingBottomSuffix": null,
-    "tempHoverTabletFieldPaddingLeftSuffix": null,
 
     "mobileHorizontalAlign": null,
 
@@ -935,33 +649,6 @@
     "tempMobilePaddingBottomSuffix": "px",
     "tempMobilePaddingLeftSuffix": "px",
 
-    "mobileHoverPaddingType": null,
-    "tempMobileHoverPaddingType": null,
-
-    "mobileHoverPadding": null,
-    "mobileHoverPaddingTop": null,
-    "mobileHoverPaddingRight": null,
-    "mobileHoverPaddingBottom": null,
-    "mobileHoverPaddingLeft": null,
-
-    "tempMobileHoverPadding": null,
-    "tempMobileHoverPaddingTop": null,
-    "tempMobileHoverPaddingRight": null,
-    "tempMobileHoverPaddingBottom": null,
-    "tempMobileHoverPaddingLeft": null,
-
-    "mobileHoverPaddingSuffix": null,
-    "mobileHoverPaddingTopSuffix": null,
-    "mobileHoverPaddingRightSuffix": null,
-    "mobileHoverPaddingBottomSuffix": null,
-    "mobileHoverPaddingLeftSuffix": null,
-
-    "tempMobileHoverPaddingSuffix": null,
-    "tempMobileHoverPaddingTopSuffix": null,
-    "tempMobileHoverPaddingRightSuffix": null,
-    "tempMobileHoverPaddingBottomSuffix": null,
-    "tempMobileHoverPaddingLeftSuffix": null,
-
     "mobileLabelPaddingType": "ungrouped",
     "tempMobileLabelPaddingType": "ungrouped",
 
@@ -988,33 +675,6 @@
     "tempMobileLabelPaddingRightSuffix": "px",
     "tempMobileLabelPaddingBottomSuffix": "px",
     "tempMobileLabelPaddingLeftSuffix": "px",
-
-    "mobileHoverLabelPaddingType": null,
-    "tempMobileHoverLabelPaddingType": null,
-
-    "mobileHoverLabelPadding": null,
-    "mobileHoverLabelPaddingTop": null,
-    "mobileHoverLabelPaddingRight": null,
-    "mobileHoverLabelPaddingBottom": null,
-    "mobileHoverLabelPaddingLeft": null,
-
-    "tempMobileHoverLabelPadding": null,
-    "tempMobileHoverLabelPaddingTop": null,
-    "tempMobileHoverLabelPaddingRight": null,
-    "tempMobileHoverLabelPaddingBottom": null,
-    "tempMobileHoverLabelPaddingLeft": null,
-
-    "mobileHoverLabelPaddingSuffix": null,
-    "mobileHoverLabelPaddingTopSuffix": null,
-    "mobileHoverLabelPaddingRightSuffix": null,
-    "mobileHoverLabelPaddingBottomSuffix": null,
-    "mobileHoverLabelPaddingLeftSuffix": null,
-
-    "tempMobileHoverLabelPaddingSuffix": null,
-    "tempMobileHoverLabelPaddingTopSuffix": null,
-    "tempMobileHoverLabelPaddingRightSuffix": null,
-    "tempMobileHoverLabelPaddingBottomSuffix": null,
-    "tempMobileHoverLabelPaddingLeftSuffix": null,
 
     "mobileFieldPaddingType": "grouped",
     "tempMobileFieldPaddingType": "grouped",
@@ -1047,33 +707,6 @@
     "tempMobileFieldPaddingTopSuffix": "px",
     "tempMobileFieldPaddingRightSuffix": "px",
     "tempMobileFieldPaddingBottomSuffix": "px",
-    "tempMobileFieldPaddingLeftSuffix": "px",
-
-    "hoverMobileFieldPaddingType": null,
-    "tempHoverMobileFieldPaddingType": null,
-
-    "hoverMobileFieldPadding": null,
-    "hoverMobileFieldPaddingTop": null,
-    "hoverMobileFieldPaddingRight": null,
-    "hoverMobileFieldPaddingBottom": null,
-    "hoverMobileFieldPaddingLeft": null,
-
-    "tempHoverMobileFieldPadding": null,
-    "tempHoverMobileFieldPaddingTop": null,
-    "tempHoverMobileFieldPaddingRight": null,
-    "tempHoverMobileFieldPaddingBottom": null,
-    "tempHoverMobileFieldPaddingLeft": null,
-
-    "hoverMobileFieldPaddingSuffix": null,
-    "hoverMobileFieldPaddingTopSuffix": null,
-    "hoverMobileFieldPaddingRightSuffix": null,
-    "hoverMobileFieldPaddingBottomSuffix": null,
-    "hoverMobileFieldPaddingLeftSuffix": null,
-
-    "tempHoverMobileFieldPaddingSuffix": null,
-    "tempHoverMobileFieldPaddingTopSuffix": null,
-    "tempHoverMobileFieldPaddingRightSuffix": null,
-    "tempHoverMobileFieldPaddingBottomSuffix": null,
-    "tempHoverMobileFieldPaddingLeftSuffix": null
+    "tempMobileFieldPaddingLeftSuffix": "px"
   }
 }

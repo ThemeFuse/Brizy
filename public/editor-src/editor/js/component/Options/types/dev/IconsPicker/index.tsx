@@ -1,10 +1,10 @@
+import classNames from "classnames";
 import React, { useMemo } from "react";
+import { FatCheckIcon } from "visual/component/Controls/FatCheckIcon";
+import { FatIconsGrid } from "visual/component/FatIconsGrid";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { WithClassName } from "visual/utils/options/attributes";
-import classNames from "classnames";
-import { Value, Choice } from "./types";
-import { FatIconsGrid } from "visual/component/FatIconsGrid";
-import { FatCheckIcon } from "visual/component/Controls/FatCheckIcon";
+import { Choice, Value } from "./types";
 
 export interface Props extends OptionProps<Value>, WithClassName {
   choices?: Choice[];
@@ -39,7 +39,7 @@ export const IconsPicker: React.FC<Props> = ({
             onCheck={(): void => {
               onChange({
                 value: checked
-                  ? value.value.filter(i => i !== id)
+                  ? value.value.filter((i) => i !== id)
                   : [...value.value, id],
                 active: checked ? undefined : value.active
               });
@@ -47,7 +47,7 @@ export const IconsPicker: React.FC<Props> = ({
           />
         );
       }),
-    [choices, value]
+    [choices, value, onChange]
   );
 
   return (

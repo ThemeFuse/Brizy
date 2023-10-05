@@ -10,15 +10,14 @@ import { createStore } from "visual/redux/store";
 import {
   addProjectLockedBeacon,
   getGlobalBlocks,
-  getProject,
   removeProjectLockedSendBeacon
 } from "visual/utils/api";
 import { AuthProvider } from "visual/utils/api/providers/Auth";
 import { flatMap } from "visual/utils/array";
-import { assetUrl } from "visual/utils/asset";
 import { getBlocksInPage } from "visual/utils/blocks";
-import { PageError } from "visual/utils/errors";
+import { PageError, ProjectError } from "visual/utils/errors";
 import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
+import { t } from "visual/utils/i18n";
 import {
   getBlocksStylesFonts,
   getUsedModelsFonts,
@@ -39,24 +38,26 @@ const pageCurtain = window.parent.document.querySelector(
   try {
     if (!appDiv) {
       pageCurtain?.classList.add("has-load-error");
-      throw new PageError("could not find #brz-ed-root");
+      throw new PageError(t("could not find #brz-ed-root"));
     }
+
     const config = Config.getAll();
     const projectStatus = config.project.status || {};
+    const project = config.projectData;
     const { isSyncAllowed = false } = config.cloud || {};
+
+    if (!project || !project.data) {
+      throw new ProjectError(t("missing project"));
+    }
+
     if (projectStatus && !projectStatus.locked) {
       await addProjectLockedBeacon();
     }
 
-    const [project, currentPage, globalBlocks, blocksThumbnailSizes] =
-      await Promise.all([
-        getProject(),
-        getCurrentPage(config),
-        getGlobalBlocks(),
-        fetch(assetUrl("thumbs/blocksThumbnailSizes.json")).then((r) =>
-          r.json()
-        )
-      ]);
+    const [currentPage, globalBlocks] = await Promise.all([
+      getCurrentPage(config),
+      getGlobalBlocks()
+    ]);
 
     /* eslint-disable no-console */
     if (process.env.NODE_ENV === "development") {
@@ -106,7 +107,6 @@ const pageCurtain = window.parent.document.querySelector(
         project: normalizedProject,
         projectStatus,
         globalBlocks,
-        blocksThumbnailSizes,
         authorized: getAuthorized(),
         syncAllowed: isSyncAllowed,
         fonts: deepMerge(fonts, newFonts),

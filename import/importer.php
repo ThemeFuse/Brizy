@@ -24,6 +24,8 @@ class Brizy_Import_Importer extends WP_Importer {
 	private $post_orphans = [];
 	private $extractor;
 
+	private $url_remap = [];
+
 	/**
 	 * @param $data
 	 * @param Brizy_Import_Extractor $extractor
@@ -67,6 +69,7 @@ class Brizy_Import_Importer extends WP_Importer {
 
 		add_filter( 'import_post_meta_key', array( $this, 'is_valid_meta_key' ) );
 		add_filter( 'http_request_timeout', array( &$this, 'bump_request_timeout' ) );
+		add_filter( 'upload_mimes',         array( $this, 'upload_svg_file' ) );
 
 		wp_suspend_cache_invalidation( true );
 		$this->process_categories();
@@ -840,6 +843,12 @@ class Brizy_Import_Importer extends WP_Importer {
 	 */
 	function bump_request_timeout( $val ) {
 		return 60;
+	}
+
+	function upload_svg_file( $mimes ) {
+		$mimes['svg'] = 'image/svg+xml';
+
+		return $mimes;
 	}
 
 	// return the difference in length between two strings

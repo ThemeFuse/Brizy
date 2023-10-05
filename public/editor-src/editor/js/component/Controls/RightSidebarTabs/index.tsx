@@ -1,11 +1,11 @@
-import React, { ReactElement, useMemo } from "react";
 import classNames from "classnames";
+import React, { ReactElement, useMemo } from "react";
+import { WithValue } from "visual/utils/options/attributes";
 import { Props as TabProps } from "../Tabs2/Tab";
 import { TabList, Props as TabListProps } from "../Tabs2/TabList";
-import { WithValue } from "visual/utils/options/attributes";
-import { alignIcon, alignTitle, lockedIcon, lockedTitle } from "./utils";
-import { Align, Locked } from "./types";
 import { Icon } from "./Icon";
+import { Align, Locked } from "./types";
+import { alignIcon, alignTitle, lockedIcon, lockedTitle } from "./utils";
 
 type Child<T> = ReactElement<TabProps<T>>;
 
@@ -28,8 +28,8 @@ export function RightSidebarTabs<T>({
   onLock
 }: Props<T>): ReactElement {
   const active: Child<T> | undefined = useMemo(
-    () => children.find(t => t.props.value === value) ?? children[0],
-    [children]
+    () => children.find((t) => t.props.value === value) ?? children[0],
+    [children, value]
   );
   const activeTab = useMemo(
     () =>

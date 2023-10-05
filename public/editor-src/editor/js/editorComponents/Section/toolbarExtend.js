@@ -6,32 +6,53 @@ import { getAllMembershipChoices } from "visual/utils/membership";
 import { getLanguagesChoices } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import {
-  toolbarElementSectionGlobal,
-  toolbarElementSectionSaved,
-  toolbarShowOnResponsive
-} from "visual/utils/toolbar";
+import { toolbarShowOnResponsive } from "visual/utils/toolbar";
+import { getInstanceParentId } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component }) {
   const config = Config.getAll();
+  const disabledSavedBlock =
+    typeof config.api?.savedBlocks?.create !== "function";
 
+  const isMultiLanguageDisabled =
+    config.elements?.section?.multilanguage === false;
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
   const slider = dvv("slider");
 
   const sliderDotsChoices = [
-    { title: t("None"), icon: "nc-none", value: "none" },
-    { title: t("Circle"), icon: "nc-circle-outline", value: "circle" },
-    { title: t("Diamond"), icon: "nc-diamond-outline", value: "diamond" },
-    { title: t("Square"), icon: "nc-square-outline", value: "square" }
+    { title: t("None"), icon: { name: "nc-none" }, value: "none" },
+    {
+      title: t("Circle"),
+      icon: { name: "nc-circle-outline" },
+      value: "circle"
+    },
+    {
+      title: t("Diamond"),
+      icon: { name: "nc-diamond-outline" },
+      value: "diamond"
+    },
+    { title: t("Square"), icon: { name: "nc-square-outline" }, value: "square" }
   ];
 
   const sliderArrowsChoices = [
-    { title: t("None"), icon: "nc-none", value: "none" },
-    { title: t("Thin"), icon: "nc-right-arrow-thin", value: "thin" },
-    { title: t("Heavy"), icon: "nc-right-arrow-heavy", value: "heavy" },
-    { title: t("Tail"), icon: "nc-right-arrow-tail", value: "tail" },
-    { title: t("Round"), icon: "nc-right-arrow-filled", value: "filled" },
-    { title: t("Outline"), icon: "nc-right-arrow-outline", value: "outline" }
+    { title: t("None"), icon: { name: "nc-none" }, value: "none" },
+    { title: t("Thin"), icon: { name: "nc-right-arrow-thin" }, value: "thin" },
+    {
+      title: t("Heavy"),
+      icon: { name: "nc-right-arrow-heavy" },
+      value: "heavy"
+    },
+    { title: t("Tail"), icon: { name: "nc-right-arrow-tail" }, value: "tail" },
+    {
+      title: t("Round"),
+      icon: { name: "nc-right-arrow-filled" },
+      value: "filled"
+    },
+    {
+      title: t("Outline"),
+      icon: { name: "nc-right-arrow-outline" },
+      value: "outline"
+    }
   ];
 
   return [
@@ -64,11 +85,19 @@ export function getItems({ v, device, component }) {
                   id: "groupSettings",
                   type: "group-dev",
                   options: [
-                    toolbarElementSectionGlobal({
-                      device,
-                      devices: "all",
-                      component
-                    }),
+                    {
+                      id: "makeItGlobal",
+                      label: t("Make it Global"),
+                      type: "globalBlock-dev",
+                      disabled: isCloud(config) && isShopify(config),
+                      config: {
+                        _id: component.getId(),
+                        parentId: getInstanceParentId(
+                          component.props.instanceKey
+                        ),
+                        blockType: "normal"
+                      }
+                    },
                     {
                       id: "gbConditions",
                       disabled: !component.props.meta.globalBlockId,
@@ -106,7 +135,8 @@ export function getItems({ v, device, component }) {
                     {
                       id: "translations",
                       label: t("Multi-Language"),
-                      type: "switch-dev"
+                      type: "switch-dev",
+                      disabled: isMultiLanguageDisabled
                     },
                     {
                       id: "translationsLangs",
@@ -215,13 +245,20 @@ export function getItems({ v, device, component }) {
         }
       ]
     },
-    toolbarElementSectionSaved({
-      device,
-      component,
+    {
+      id: "makeItSaved",
+      type: "savedBlock-dev",
       devices: "desktop",
-      state: "normal",
-      blockType: "normal"
-    }),
+      position: 90,
+      disabled: disabledSavedBlock,
+      config: {
+        icon: "nc-save-section",
+        blockType: "normal",
+        title: t("Save"),
+        tooltipContent: t("Saved"),
+        blockId: component.getId()
+      }
+    },
     {
       id: "toolbarSettings",
       type: "popover-dev",

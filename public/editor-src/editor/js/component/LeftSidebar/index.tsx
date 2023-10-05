@@ -25,7 +25,7 @@ export const LeftSidebar: FC = () => {
           isOpen: false
         })
       ),
-    [drawerContentType]
+    [drawerContentType, dispatch]
   );
 
   const opened = drawerContentType === "cmsUi" && isOpen;

@@ -32,7 +32,7 @@ export const Border: FC<Props> = ({ value, onChange, className, config }) => {
   const hasNone = styles.includes(BorderStyle.empty);
   const minWidth = useMemo(
     () => (hasNone ? id : (v: number): number => Math.max(1, v)),
-    [hasNone, id]
+    [hasNone]
   );
 
   const changeStyle = useCallback<ControlProps["onChangeStyle"]>(
@@ -66,35 +66,35 @@ export const Border: FC<Props> = ({ value, onChange, className, config }) => {
       const _v = Width.fromNumber(minWidth(v));
       _v !== undefined && onChange(BorderModel.setWidth(_v, value));
     },
-    [onChange, value]
+    [onChange, value, minWidth]
   );
   const changeTopWidth = useCallback(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
       _v !== undefined && onChange(BorderModel.setTopWidth(_v, value));
     },
-    [onChange, value]
+    [onChange, value, minWidth]
   );
   const changeRightWidth = useCallback(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
       _v !== undefined && onChange(BorderModel.setRightWidth(_v, value));
     },
-    [onChange, value]
+    [onChange, value, minWidth]
   );
   const changeBottomWidth = useCallback(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
       _v !== undefined && onChange(BorderModel.setBottomWidth(_v, value));
     },
-    [onChange, value]
+    [onChange, value, minWidth]
   );
   const changeLeftWidth = useCallback(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
       _v !== undefined && onChange(BorderModel.setLeftWidth(_v, value));
     },
-    [onChange, value]
+    [onChange, value, minWidth]
   );
   const openPaletteSidebar = useCallback(
     () =>

@@ -8,6 +8,7 @@ import {
 } from "react";
 import { MonoTypeOperatorFunction, Subject } from "rxjs";
 import { debounceTime, throttleTime } from "rxjs/operators";
+import { TimerType } from "visual/types/TimerType";
 
 const eq = <T>(a: T, b: T): boolean => a === b;
 
@@ -16,11 +17,11 @@ export function useDebouncedEffect(
   ms?: number,
   deps?: DependencyList
 ): void {
-  const ref = useRef<number>();
+  const ref = useRef<TimerType>();
 
   useEffect(() => {
     clearTimeout(ref.current);
-    ref.current = setTimeout(fn, ms);
+    ref.current = setTimeout(fn, ms) as unknown as TimerType;
     return (): void => clearTimeout(ref.current);
   }, [deps, fn, ms]);
 }
@@ -30,7 +31,7 @@ export function useThrottleEffect(
   ms?: number,
   deps?: DependencyList
 ): void {
-  const { current } = useRef<{ t?: number; f: VoidFunction }>({ f: fn });
+  const { current } = useRef<{ t?: TimerType; f: VoidFunction }>({ f: fn });
 
   useEffect(() => {
     current.f = fn;
@@ -39,7 +40,7 @@ export function useThrottleEffect(
       current.t = setTimeout(() => {
         current.f();
         current.t = undefined;
-      }, ms);
+      }, ms) as unknown as TimerType;
     }
   }, [deps, current, fn, ms]);
 }
@@ -53,7 +54,7 @@ const createTimedCallback =
   <T extends any[]>(
     callback: (...args: T) => void,
     timeout: number,
-    deps: DependencyList
+    deps?: DependencyList
   ): ((...args: T) => void) => {
     const subject = useMemo(() => {
       const subject = new Subject<T>();
@@ -65,10 +66,10 @@ const createTimedCallback =
       () => () => {
         subject.complete();
       },
-      [subject]
+      [subject, deps]
     );
 
-    return useCallback((...args: T) => subject.next(args), [subject, ...deps]);
+    return useCallback((...args: T) => subject.next(args), [subject]);
   };
 
 export const createTimedOnchange = (
@@ -90,7 +91,8 @@ export const createTimedOnchange = (
     const ref = useRef<T>(value);
     const [v, setV] = useState<T>(value);
 
-    const _onChange = fn(onChange, timeout, [onChange]);
+    const _onChange = fn(onChange, timeout);
+
     useEffect(() => {
       if (!compare(v, ref.current)) {
         _onChange(v);

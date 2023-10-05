@@ -1,15 +1,15 @@
 import { DeviceMode } from "visual/types";
-import { ImageDCPatch, SizeTypePatch, UnitPatch } from "../types/ImagePatch";
 import {
-  elementModelToValue,
-  patchOnSizeTypeChange,
-  patchOnDCChange,
-  pathOnUnitChange,
-  Value,
-  Size,
+  ElementModelToValue,
   PatchUnit,
-  ElementModelToValue
+  Size,
+  Value,
+  elementModelToValue,
+  patchOnDCChange,
+  patchOnSizeTypeChange,
+  pathOnUnitChange
 } from "../imageChange";
+import { ImageDCPatch, SizeTypePatch, UnitPatch } from "../types/ImagePatch";
 
 // init config before start the tests
 beforeEach(() => {
@@ -165,6 +165,7 @@ describe("Testing 'Patches for image' functions", () => {
 
   test("patchOnDCChange", () => {
     const cW = 400;
+    const useCustomPlaceholder = false;
     const patch: ImageDCPatch = {
       imagePopulation: "{{test}}"
     };
@@ -172,7 +173,9 @@ describe("Testing 'Patches for image' functions", () => {
       width: 200,
       height: 200
     };
-    expect(patchOnDCChange(cW, patch, wrapperSizes)).toStrictEqual({
+    expect(
+      patchOnDCChange(cW, patch, wrapperSizes, useCustomPlaceholder)
+    ).toStrictEqual({
       height: 200,
       heightSuffix: "px"
     });
@@ -180,7 +183,9 @@ describe("Testing 'Patches for image' functions", () => {
     const emptyPatch: ImageDCPatch = {
       imagePopulation: ""
     };
-    expect(patchOnDCChange(cW, emptyPatch, wrapperSizes)).toStrictEqual({
+    expect(
+      patchOnDCChange(cW, emptyPatch, wrapperSizes, useCustomPlaceholder)
+    ).toStrictEqual({
       width: 100,
       height: 100,
       heightSuffix: "%",
@@ -190,21 +195,27 @@ describe("Testing 'Patches for image' functions", () => {
     const patchOriginal: ImageDCPatch = {
       imagePopulation: "{{test size='original'}}"
     };
-    expect(patchOnDCChange(cW, patchOriginal, wrapperSizes)).toStrictEqual({
+    expect(
+      patchOnDCChange(cW, patchOriginal, wrapperSizes, useCustomPlaceholder)
+    ).toStrictEqual({
       size: 100
     });
 
     const patchOther: ImageDCPatch = {
       imagePopulation: "{{test size='others'}}"
     };
-    expect(patchOnDCChange(cW, patchOther, wrapperSizes)).toStrictEqual({
+    expect(
+      patchOnDCChange(cW, patchOther, wrapperSizes, useCustomPlaceholder)
+    ).toStrictEqual({
       size: 100
     });
 
     const patchEmpty: ImageDCPatch = {
       imagePopulation: "{{test size=''}}"
     };
-    expect(patchOnDCChange(cW, patchEmpty, wrapperSizes)).toStrictEqual({
+    expect(
+      patchOnDCChange(cW, patchEmpty, wrapperSizes, useCustomPlaceholder)
+    ).toStrictEqual({
       size: 100
     });
 
@@ -213,7 +224,9 @@ describe("Testing 'Patches for image' functions", () => {
     const patchThumbnail: ImageDCPatch = {
       imagePopulation: "{{test size='thumbnail'}}"
     };
-    expect(patchOnDCChange(cW, patchThumbnail, wrapperSizes)).toStrictEqual({
+    expect(
+      patchOnDCChange(cW, patchThumbnail, wrapperSizes, useCustomPlaceholder)
+    ).toStrictEqual({
       size: 37.5
     });
 
@@ -221,7 +234,9 @@ describe("Testing 'Patches for image' functions", () => {
     const patchMedium: ImageDCPatch = {
       imagePopulation: "{{test size='medium'}}"
     };
-    expect(patchOnDCChange(cW, patchMedium, wrapperSizes)).toStrictEqual({
+    expect(
+      patchOnDCChange(cW, patchMedium, wrapperSizes, useCustomPlaceholder)
+    ).toStrictEqual({
       size: 75
     });
 
@@ -229,7 +244,9 @@ describe("Testing 'Patches for image' functions", () => {
     const patchLarge: ImageDCPatch = {
       imagePopulation: "{{test size='large'}}"
     };
-    expect(patchOnDCChange(cW, patchLarge, wrapperSizes)).toStrictEqual({
+    expect(
+      patchOnDCChange(cW, patchLarge, wrapperSizes, useCustomPlaceholder)
+    ).toStrictEqual({
       size: 100
     });
 
@@ -237,8 +254,21 @@ describe("Testing 'Patches for image' functions", () => {
     const patch1536x1536: ImageDCPatch = {
       imagePopulation: "{{test size='1536x1536'}}"
     };
-    expect(patchOnDCChange(cW, patch1536x1536, wrapperSizes)).toStrictEqual({
+    expect(
+      patchOnDCChange(cW, patch1536x1536, wrapperSizes, useCustomPlaceholder)
+    ).toStrictEqual({
       size: 100
+    });
+
+    // Custom Placeholder
+    const patchCustomPlaceholder: ImageDCPatch = {
+      imagePopulation: "{{UserAttribute['test_12312'] default('abc')}}"
+    };
+    expect(
+      patchOnDCChange(cW, patchCustomPlaceholder, wrapperSizes, true)
+    ).toStrictEqual({
+      height: 200,
+      heightSuffix: "px"
     });
   });
 

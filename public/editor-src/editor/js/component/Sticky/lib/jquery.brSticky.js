@@ -35,7 +35,7 @@ import { observer } from "../utils";
           ? -refNodeRect.top >= refNodeRect.height
           : refNodeRect.top <= 0;
 
-      if (isSticky !== this.isSticky && scrollY > 0) {
+      if (isSticky !== this.isSticky && scrollY >= 0) {
         this.isSticky = isSticky;
         this.settings.onStickyChange.call(this.element, this.isSticky);
       }

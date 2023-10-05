@@ -20,6 +20,7 @@ import { toBgControlValue } from "./utils";
 export type Props = O.Props<Value> & {
   config?: {
     opacity?: boolean;
+    withNone?: boolean;
   };
 };
 
@@ -106,6 +107,7 @@ export const BackgroundColor: FC<Props> = ({ value, onChange, config }) => {
       paletteOpenSettings={enableGlobalStyle ? openSidebar : undefined}
       palette={paletteColors()}
       opacity={config?.opacity ?? true}
+      withNone={config?.withNone ?? true}
       gradientColors={[_value.hex, _value.gradientHex]}
     />
   );

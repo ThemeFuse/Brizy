@@ -1,12 +1,12 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
-import Config from "visual/global/Config";
 import { ImageSetter } from "visual/component/Controls/ImageSetter";
+import Config from "visual/global/Config";
 import {
+  removeFeaturedImage,
   updateFeaturedImage,
-  updateFeaturedImageFocalPoint,
-  removeFeaturedImage
+  updateFeaturedImageFocalPoint
 } from "visual/utils/api";
 import { getImageFormat } from "visual/utils/image";
 
@@ -43,7 +43,7 @@ export default class WPFeatureImage extends React.Component {
     this.mounted = false;
   }
 
-  handleImageChange = value => {
+  handleImageChange = (value) => {
     const { src: url, x: pointX, y: pointY } = value;
 
     if (url === "") {
@@ -87,12 +87,12 @@ export default class WPFeatureImage extends React.Component {
       this.props.meta.popover.hide();
     }
 
+    const iframe = parent.document.querySelector("#brz-ed-iframe");
+
     const frame = wp.media.featuredImage.frame();
+
     frame.on("select", () => {
-      const attachment = frame
-        .state()
-        .get("selection")
-        .first();
+      const attachment = frame.state().get("selection").first();
       const { url, id } = attachment.attributes;
 
       updateFeaturedImage(page, id).then(() => {
@@ -105,10 +105,14 @@ export default class WPFeatureImage extends React.Component {
       });
     });
     frame.on("close", () => {
+      iframe?.classList.remove("media-modal-open");
+
       if (this.props.meta && this.props.meta.popover) {
         this.props.meta.popover.show();
       }
     });
+
+    iframe?.classList.add("media-modal-open");
     frame.open();
   };
 

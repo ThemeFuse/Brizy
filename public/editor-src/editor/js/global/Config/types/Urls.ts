@@ -1,10 +1,10 @@
 interface UrlsCommon {
   about: string;
   api: string;
+  projectCloneLink: string;
   assets: string;
   customFile: string;
   editorFonts: string;
-  image: string;
   pagePreview: string;
   preview: string;
   site: string;

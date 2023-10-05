@@ -6,22 +6,26 @@ import {
 interface Options {
   cW: number;
   cH: number;
+  useCustomPlaceholder: boolean;
 }
+
+export const defaultImagePopulation: Options = {
+  cW: 5000,
+  cH: 0,
+  useCustomPlaceholder: false
+};
 
 export function imagePopulationUrl(
   population: string,
-  options: Options = {
-    cW: 5000,
-    cH: 0
-  }
+  options: Options = defaultImagePopulation
 ): string {
-  const { cW, cH } = options;
+  const { cW, cH, useCustomPlaceholder } = options;
 
   if (!population || typeof cW !== "number" || typeof cH !== "number") {
     throw new Error("Invalid arguments");
   }
 
-  const placeholder = placeholderObjFromStr(population);
+  const placeholder = placeholderObjFromStr(population, useCustomPlaceholder);
 
   if (!placeholder) {
     throw new Error("Invalid arguments");
@@ -33,7 +37,7 @@ export function imagePopulationUrl(
     cH
   };
 
-  return placeholderObjToStr(placeholder);
+  return placeholderObjToStr(placeholder, useCustomPlaceholder);
 }
 
 export default imagePopulationUrl;

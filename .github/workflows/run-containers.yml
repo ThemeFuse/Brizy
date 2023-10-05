@@ -221,6 +221,7 @@ jobs:
                       -e "WORDPRESS_DB_PASSWORD=nopassword" \
                       -e "WORDPRESS_DB_NAME=${{ steps.vars.outputs.DB_NAME }}" \
                       -e "WORDPRESS_DEBUG=1" \
+                      -e "UPLOAD_LIMIT=512M" \
                       -e "APP_ENV=dev" \
                       -e "EDITOR_HOST=${{ steps.vars.outputs.EDITOR_CONTAINER_NAME }}:3000" \
                       -e "COMPILER_HOST=${{ steps.vars.outputs.COMPILER_CONTAINER_NAME }}:5000" \

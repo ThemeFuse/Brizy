@@ -590,3 +590,96 @@ export const cssStyleElementMinistryBrandsRegisterButtonBorder = ({
     prefix: "registerButton"
   });
 };
+
+export function cssStyleElementOfMinistryBrandsParagraphTypography({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "paragraphTypography"
+  });
+}
+
+export function cssStyleElementOfMinistryBrandsParagraphColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "paragraphColor" });
+}
+
+export function cssStyleElementOfMinistryBrandsH4Typography({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "h4Typography"
+  });
+}
+
+export function cssStyleElementOfMinistryBrandsH4Color({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "h4Color" });
+}
+
+export function cssStyleElementOfMinistryBrandsListTypography({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "listTypography"
+  });
+}
+
+export function cssStyleElementOfMinistryBrandsListColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "listColor" });
+}
+
+export function cssStyleElementOfMinistryBrandsListTypes({
+  v,
+  device
+}: CSSValue): string {
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const type = dvv("listType");
+
+  switch (type) {
+    case "ordered":
+      return "list-style-type: decimal;";
+    case "bullet":
+      return "list-style-type: disc;";
+    case "default":
+      return "list-style-type: none;";
+  }
+
+  return "";
+}
+
+export function cssStyleElementOfMinistryBrandsListPaddingLeft({
+  v,
+  device
+}: CSSValue): string {
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const padding = dvv("listPadding");
+  const suffix = dvv("listPaddingSuffix");
+
+  return `padding-left: ${padding}${suffix};`;
+}

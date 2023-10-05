@@ -31,8 +31,6 @@ export const Draggable: FC<Props> = ({
   onChange,
   onStart,
   onEnd,
-  hAlign,
-  vAlign,
   xSuffix,
   ySuffix,
   getValue,
@@ -55,7 +53,7 @@ export const Draggable: FC<Props> = ({
         y: Math.round(v.y + offsetY)
       });
     },
-    [hAlign, vAlign, v.x, v.y]
+    [v, getContainerSizes, onChange, xSuffix, ySuffix]
   );
   const onDragStart = useCallback(() => {
     const { x, y } = getValue();
@@ -64,7 +62,7 @@ export const Draggable: FC<Props> = ({
       onStart && onStart({ x, y });
       setValue({ x, y });
     }
-  }, [x, y]);
+  }, [getValue, onStart, v]);
 
   const onDragEnd = useCallback(() => {
     const { x, y } = getValue();
@@ -72,7 +70,7 @@ export const Draggable: FC<Props> = ({
     if (v.x !== x || v.y !== y) {
       onEnd && onEnd({ x, y });
     }
-  }, [x, y]);
+  }, [getValue, onEnd, v]);
 
   return (
     <Drag

@@ -32,21 +32,19 @@ import {
   styleBorderStyle,
   styleBorderWidthGrouped,
   styleColor,
+  styleElementMMenu,
+  styleElementMMenuIconPosition,
+  styleElementMMenuIconSpacing,
   styleElementMenuIconPosition,
   styleElementMenuIconSpacing,
   styleElementMenuMode,
   styleElementMenuSubMenuIconPosition,
   styleElementMenuSubMenuIconSpacing,
-  styleElementMMenu,
-  styleElementMMenuIconPosition,
-  styleElementMMenuIconSpacing,
   styleItemMarginBottom,
   styleItemMarginLeft,
   styleItemMarginRight,
   styleItemMarginTop,
   styleItemPaddingBottom,
-  styleItemPaddingLeft,
-  styleItemPaddingRight,
   styleItemPaddingTop,
   styleTypography2FontSize,
   styleTypography2LineHeight
@@ -270,7 +268,7 @@ export function cssStyleElementMMenuDynamicImage({ v, device, state }) {
 
   const bg = defaultValueValue({ v, key: "bg", device, state });
 
-  return bgPopulation !== "" ? `background-image: url(${bg})` : "";
+  return bgPopulation !== "" ? `background-image: url("${bg}")` : "";
 }
 
 export function cssStyleElementMMenuImageFilter({ v, device, state }) {
@@ -394,16 +392,16 @@ export function cssStyleElementMMenuListViewMargin({ v, device }) {
 
 export function cssStyleElementMMenuItemPadding({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
+  const dvv = (key) => defaultValueValue({ key, v, device, state });
+  const itemPadding = `${parseFloat(dvv("itemPadding") / 2)}px`;
   const paddingTop = styleItemPaddingTop({ v, device });
-  const paddingRight = styleItemPaddingRight({ v, device });
   const paddingBottom = styleItemPaddingBottom({ v, device });
-  const paddingLeft = styleItemPaddingLeft({ v, device });
 
   if (mode === "horizontal") {
-    return `padding-top:${paddingTop}; padding-bottom:${paddingBottom}; margin-right:${paddingRight}; margin-left:${paddingLeft};`;
+    return `padding-top:${paddingTop}; padding-bottom:${paddingBottom}; margin-right:${itemPadding}; margin-left:${itemPadding};`;
   }
 
-  return `margin-top:${paddingRight}; margin-bottom:${paddingLeft}; margin-right:0; margin-left:0;`;
+  return `margin-top:${itemPadding}; margin-bottom:${itemPadding}; margin-right:0; margin-left:0;`;
 }
 
 export function cssStyleElementMMenuItemPaddingTopZero({ v, device, state }) {

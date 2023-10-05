@@ -11,9 +11,6 @@ cd $1
 echo -e "\nInstall composer dependencies"
 echo -e "-----------------------------------------------------------------------------"
 
-rm -rf vendor
-/usr/bin/composer install --no-dev || { exit 1; }
-
 # delete all files that are not needed in the final build
 echo -e "\nDelete all dev files"
 echo -e "-----------------------------------------------------------------------------"
@@ -44,6 +41,7 @@ echo -e "Clean vendor folder"
 
 echo -e "Clean plugin root folder"
 rm -rf ./public/editor-src \
+       ./public/editor-client/node_modules \
        ./.phpunit* \
        ./.env* \
        .idea \
@@ -62,7 +60,6 @@ rm -rf ./public/editor-src \
        ./*.dev.php \
        ./jenkins \
        ./*.zip
-
 
 (
    find ./vendor -type d -name "twig" -prune -o -type d -name tests -print &&

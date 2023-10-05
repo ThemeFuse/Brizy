@@ -43,8 +43,9 @@ class Brizy_Compatibilities_Woocommerce {
 
 		$parser = new Brizy_Parser_Parser( $content );
 		$parser = $parser->getParser();
+		$cssClass =  is_a($parser, 'Brizy_Parser_DomDocument') ? 'brz-section brz-section__header' : 'brz-section__header';
 
-		$parser->appendText( 'section', 'brz-section__header', '{{ editor_woo_notice }}' );
+		$parser->appendText( 'section', $cssClass, '{{ editor_woo_notice }}' );
 
 		return $parser->getHtml();
 	}

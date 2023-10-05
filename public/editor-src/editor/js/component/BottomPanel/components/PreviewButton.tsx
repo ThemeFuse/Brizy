@@ -1,30 +1,32 @@
-import React, { ReactElement, useRef } from "react";
-import { useSelector } from "react-redux";
+import React, { ReactElement, useCallback, useRef } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
 import Config from "visual/global/Config";
-import {
-  isCloud, isCMS, isCustomer
-} from "visual/global/Config/types/configs/Cloud";
-import { pageSlugSelector } from "visual/redux/selectors";
-import {
-  isExternalPopup,
-  isExternalStory,
-  isInternalPopup
-} from "visual/utils/models";
 import { BottomPanelItem } from "./Item";
-import { hotKeysForPreview, redirectToPreview } from "./utils";
+
+const hotKeysForPreview = [
+  "ctrl+shift+P",
+  "shift+ctrl+P",
+  "cmd+shift+P",
+  "shift+cmd+P",
+  "right_cmd+shift+P",
+  "shift+right_cmd+P"
+];
 
 export function PreviewButton(): ReactElement | null {
-  const pageSlug = useSelector(pageSlugSelector);
   const config = Config.getAll();
-  const refForAnchor = useRef<HTMLAnchorElement>(null);
+  const refAnchor = useRef<HTMLAnchorElement>(null);
+  const previewUrl = config.urls.pagePreview;
 
-  if (isExternalPopup(config)) {
+  const handleKeyDown = useCallback((): void => {
+    if (refAnchor.current) {
+      refAnchor.current.click();
+    }
+  }, []);
+
+  if (!previewUrl) {
     return null;
   }
-
-  const previewUrl = config.urls.pagePreview;
 
   let suffix = "";
   if (process.env.NODE_ENV === "development") {
@@ -32,17 +34,7 @@ export function PreviewButton(): ReactElement | null {
       ? "?pro=true"
       : "";
   }
-  let href = "";
-
-  if (
-    isInternalPopup(config) ||
-    isExternalStory(config) ||
-    (isCloud(config) && isCMS(config) && isCustomer(config))
-  ) {
-    href = `${previewUrl}${suffix}`;
-  } else {
-    href = `${previewUrl}/${pageSlug}${suffix}`;
-  }
+  const href = `${previewUrl}${suffix}`;
 
   return (
     <>
@@ -57,7 +49,7 @@ export function PreviewButton(): ReactElement | null {
           className="brz-a"
           target="_blank"
           rel="noopener noreferrer"
-          ref={refForAnchor}
+          ref={refAnchor}
         >
           <EditorIcon icon="nc-preview" />
         </a>
@@ -65,7 +57,7 @@ export function PreviewButton(): ReactElement | null {
       <HotKeys
         keyNames={hotKeysForPreview}
         id="key-helper-preview"
-        onKeyDown={() => redirectToPreview(refForAnchor)}
+        onKeyDown={handleKeyDown}
       />
     </>
   );

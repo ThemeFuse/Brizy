@@ -14,6 +14,16 @@
     pointer-events: all !important;
     z-index: 100000;
     opacity: 0.8;
+
+    .brz-ed-control__gallery-tooltip--error {
+      .brz-ed-tooltip__content {
+        width: 100%;
+      }
+
+      .brz-ed-tooltip__overlay {
+        width: max-content;
+      }
+    }
   }
 
   &__item {
@@ -38,6 +48,15 @@
 
     &--add {
       cursor: pointer;
+      min-height: 42px;
+      margin-bottom: 0;
+
+      /// now is 3-rd child because of new library dnd-kit
+      &:nth-child(3) {
+        width: 48px;
+        height: 48px;
+        justify-self: end;
+      }
     }
 
     &--thumbnail {
@@ -46,6 +65,7 @@
         width: 100%;
         padding-top: 100%;
         background-size: cover;
+        background-position: center;
       }
     }
 
@@ -82,7 +102,6 @@
   }
 
   .brz-ed-control__gallery__item {
-
     &--loading,
     &--thumbnail,
     &--error {
@@ -95,7 +114,7 @@
     color: #fff;
     border-radius: 4px;
     padding: 10px 20px;
-    width: 25px;
+    min-width: 25px;
 
     .brz-ed-arrow--top:after {
       border-top-color: $options__control-bg;

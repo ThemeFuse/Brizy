@@ -11,6 +11,12 @@ export default {
   "wrapper--reset--psw": {
     showToolbar: "on"
   },
+  "wrapper-quantity": {
+    showToolbar: "on"
+  },
+  "wrapper-price": {
+    showToolbar: "on"
+  },
   "wrapper--tabs": {
     showToolbar: "on"
   },

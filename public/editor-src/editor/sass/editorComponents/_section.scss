@@ -32,6 +32,13 @@
     }
   }
 
+  .brz-slick-slider {
+    display: none;
+  }
+  .brz-slick-slider.slick-initialized {
+    display: block;
+  }
+
   // sometime have problems with paddings per slide
   > .brz-slick-slider {
     > .slick-list > .slick-track > .slick-slide {
@@ -239,7 +246,7 @@
 &:not(.brz-ed) {
   .brz-story {
     .brz-container {
-      font-size: 37.5vh;
+      font-size: 436px;
     }
 
     .brz-wrapper {
@@ -273,15 +280,15 @@
       }
     }
     > .brz-slick-slider {
-      padding-top: 80px;
+      padding-top: 160px;
     }
     > .slick-slider {
       > .slick-list > .slick-track > .slick-slide {
         height: 75vh;
-        max-width: 37.5vh;
-        min-width: 320px;
+        max-width: 400px;
+        min-width: 400px;
         min-height: 533px;
-        max-height: 100%;
+        max-height: 800px;
       }
 
       > .brz-slick-slider__dots {
@@ -342,10 +349,6 @@
     .brz-story {
       min-height: auto;
 
-      .brz-container {
-        font-size: 100vw;
-      }
-
       // before initialized slider
       > .brz-slick-slider:not(.slick-initialized) {
         display: flex;
@@ -371,7 +374,7 @@
 
         > .slick-list > .slick-track > .slick-slide {
           height: 100vh;
-          min-width: 320px;
+          min-width: 400px;
           min-height: 533px;
           max-width: 100vw;
           max-height: 100%;
@@ -411,14 +414,6 @@
           height: 30px;
         }
       }
-    }
-  }
-}
-
-@media (max-height: 711px) and (min-width: 767px) {
-  &:not(.brz-ed) {
-    .brz-story .brz-container {
-      font-size: 320px;
     }
   }
 }

@@ -1,19 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 import Options from "visual/component/Options";
-import { updateCurrentStyleId, updateCurrentStyle } from "visual/redux/actions";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { updateCurrentStyle, updateCurrentStyleId } from "visual/redux/actions";
 import { updateExtraFontStyles } from "visual/redux/actions2";
 import {
   currentStyleSelector,
-  stylesSelector,
-  extraFontStylesSelector
+  extraFontStylesSelector,
+  stylesSelector
 } from "visual/redux/selectors";
-import { t } from "visual/utils/i18n";
 import { brizyToBranding } from "visual/utils/branding";
-import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { t } from "visual/utils/i18n";
 
 class DrawerComponent extends React.Component {
-  handleCurrentStyleIdChange = (value) => {
+  handleCurrentStyleIdChange = ({ value }) => {
     this.props.dispatch(updateCurrentStyleId(value));
   };
 
@@ -73,10 +73,10 @@ class DrawerComponent extends React.Component {
       {
         id: "currentStyle",
         label: "Current Style",
-        type: "select",
+        type: "select-dev",
         choices: stylesChoices,
         display: "block",
-        value: id,
+        value: { value: id },
         onChange: this.handleCurrentStyleIdChange
       },
       {

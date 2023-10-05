@@ -3,6 +3,8 @@
     "messageSuccess": "",
     "messageError": "",
     "messageRedirect": "",
+    "customAttributes": null,
+    "customCSS": "",
     "items": [],
 
     "offsetX": 0,
@@ -54,18 +56,6 @@
     "tabletPaddingType": "ungrouped",
     "tempTabletPaddingType": "ungrouped",
 
-    "tabletPadding": null,
-    "tabletPaddingTop": null,
-    "tabletPaddingRight": null,
-    "tabletPaddingBottom": null,
-    "tabletPaddingLeft": null,
-
-    "tempTabletPadding": null,
-    "tempTabletPaddingTop": null,
-    "tempTabletPaddingRight": null,
-    "tempTabletPaddingBottom": null,
-    "tempTabletPaddingLeft": null,
-
     "tabletPaddingSuffix": "px",
     "tabletPaddingTopSuffix": "px",
     "tabletPaddingRightSuffix": "px",
@@ -83,18 +73,6 @@
 
     "mobilePaddingType": "ungrouped",
     "tempMobilePaddingType": "ungrouped",
-
-    "mobilePadding": null,
-    "mobilePaddingTop": null,
-    "mobilePaddingRight": null,
-    "mobilePaddingBottom": null,
-    "mobilePaddingLeft": null,
-
-    "tempMobilePadding": null,
-    "tempMobilePaddingTop": null,
-    "tempMobilePaddingRight": null,
-    "tempMobilePaddingBottom": null,
-    "tempMobilePaddingLeft": null,
 
     "mobilePaddingSuffix": "px",
     "mobilePaddingTopSuffix": "px",

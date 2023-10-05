@@ -76,6 +76,7 @@ $gray-26: #555;
 $gray-27: #999;
 $gray-28: #616569;
 $gray-29: #5c6065;
+$gray-30: #2a2e37;
 $pink: #ed2164;
 $pink-1: #fd7e7e;
 $pink-2: #f88b8b;
@@ -93,6 +94,7 @@ $green-6: #16aa74;
 $green-7: #91cb8a;
 $green-8: #008000;
 $green-9: #122223;
+$green-10: #76a671;
 $orange: #f19117;
 $orange-1: #ea9e53;
 $orange-2: #f50;
@@ -102,6 +104,7 @@ $violet-2: #111129;
 $yellow: #997;
 $yellow-1: #808000;
 $yellow-2: #cc7;
+$yellow-3: #a59b08;
 $transparent: transparent;
 
 // Body
@@ -148,7 +151,7 @@ $border__width__type__icon-color--active: var(--active-color, $blue-22);
 
 // Bottom Multi Inputs (shadow TAB)
 $multi_input-color: var(--multi_input-color, $gray-2);
-$multi_input-color--active: var(--multi_input-color--active, $white);
+$multi_input-color--active: var(--primary-white, $white);
 $multi_input-border: var(--multi_input-border, rgba($white, 0.1));
 $multi_input-border--active: var(--active-color, $blue-21);
 $multi_input-border--hover: var(--multi_input-border--hover, $gray-2);
@@ -173,9 +176,9 @@ $popover__tabs_left-box-shadow: var(--popover__tabs_left-box-shadow, rgba($black
 $control-color--active: var(--active-color, $blue-21);
 $control-color: var(--primary-gray, rgba($white, 0.85));
 $control-bg: var(--secondary-dark, $gray-1);
+$control__input-text: var(--primary-gray, $white);
 $control__variant-color: var(--primary-gray, $white);
 $control-border: var(--tertiary-white, rgba($white, 0.07));
-$control__scroll_pane-bg: var(--control__scroll_pane-bg, $gray-9);
 $control_light-color: var(--control_light-color, $gray-10);
 $control_light-bg: var(--control_light-bg, $white-1);
 $control_light-border: var(--control_light-border, $white-2);
@@ -259,7 +262,7 @@ $sidebar-box-shadow: var(--sidebar-box-shadow, rgba($black, 0.4));
 $sidebar__content-box-shadow: var(--sidebar__content-box-shadow, rgba($black, 0.3));
 $sidebar__right_content-box-shadow: var(--sidebar__right_content-box-shadow, rgba($black, 0.3));
 $sidebar__header-bg: var(--tertiary-dark, $gray-12);
-$sidebar__content-bg: var(--secondary-dark, $gray-3);
+$sidebar__content-bg: var(--primary-dark, $gray-3);
 $sidebar__content__footer-bg: var(--sidebar__content__footer-bg, $gray-12);
 $sidebar-color: var(--secondary-gray, $white);
 $sidebar__btn-bg: var(--sidebar__btn-bg, $green-1);
@@ -357,10 +360,10 @@ $toolbar__badge-bg: var(--toolbar__badge-bg, $blue-21);
 $toolbar__popover_tooltip-color: var(--toolbar__popover_tooltip-color, $blue-21);
 
 //Toolbar Code Mirror
-$toolbar__code_mirror-color: var(--toolbar__code_mirror-color, $white);
+$toolbar__code_mirror-color: var(--toolbar__code_mirror-color, $gray);
 $toolbar__code_mirror-bg: var(--secondary-dark, $black-3);
 $toolbar__code_mirror-text-color: var(--secondary-white, $gray-16);
-$toolbar__code_mirror__cursor-color: var(--toolbar__code_mirror__cursor-color, $white);
+$toolbar__code_mirror__cursor-color: var(--toolbar__code_mirror__cursor-color, $gray);
 
 //Toolbar code mirror DEFAULT THEME
 $toolbar__code_mirror__header-color: var(--toolbar__code_mirror__header-color, $blue);
@@ -371,16 +374,17 @@ $toolbar__code_mirror__keyword-color: var(--toolbar__code_mirror__keyword-color,
 $toolbar__code_mirror__atom-color: var(--toolbar__code_mirror__atom-color, $violet-1);
 $toolbar__code_mirror__number-color: var(--toolbar__code_mirror__number-color, $green-5);
 $toolbar__code_mirror__def-color: var(--toolbar__code_mirror__def-color, $blue-13);
+$toolbar__code_mirror__variable: var(--toolbar__code_mirror__variable, $yellow-3);
 $toolbar__code_mirror__variable__2-color: var(--toolbar__code_mirror__variable__2-color, $blue-14);
 $toolbar__code_mirror__variable__3-color: var(--toolbar__code_mirror__variable__3-color, $green-6);
 $toolbar__code_mirror__comment-color: var(--toolbar__code_mirror__comment-color, $orange-1);
 $toolbar__code_mirror__string-color: var(--toolbar__code_mirror__string-color, $pink-1);
 $toolbar__code_mirror__string__2-color: var(--toolbar__code_mirror__string__2-color, $orange-2);
 $toolbar__code_mirror__meta-color: var(--toolbar__code_mirror__meta-color, $gray-26);
-$toolbar__code_mirror__qualifier-color: var(--toolbar__code_mirror__qualifier-color, $green-7);
+$toolbar__code_mirror__qualifier-color: var(--toolbar__code_mirror__qualifier-color, $green-10);
 $toolbar__code_mirror__builtin-color: var(--toolbar__code_mirror__builtin-color, $blue-15);
 $toolbar__code_mirror__bracket-color: var(--toolbar__code_mirror__bracket-color, $yellow);
-$toolbar__code_mirror__tag-color: var(--toolbar__code_mirror__tag-color, $green-7);
+$toolbar__code_mirror__tag-color: var(--toolbar__code_mirror__tag-color, $green-10);
 $toolbar__code_mirror__attribute-color: var(--toolbar__code_mirror__attribute-color, $blue-16);
 $toolbar__code_mirror__hr-color: var(--toolbar__code_mirror__hr-color, $gray-27);
 $toolbar__code_mirror__link-color: var(--toolbar__code_mirror__link-color, $blue-16);
@@ -420,7 +424,6 @@ $toolbar__fonts-color: var(--secondary-gray, $white);
 $toolbar__fonts-color--active: var(--active-color, $blue-2);
 $toolbar__fonts__add-color: var(--primary-gray, $gray-19);
 $toolbar__fonts__separator-bg: var(--toolbar__fonts__separator-bg, rgba($white, 0.3));
-$toolbar__fonts__scrollbar-bg: var(--toolbar__fonts__scrollbar-bg, rgba($gray-8, 0.5));
 
 // Popover
 //
@@ -480,16 +483,6 @@ $focal_point-height: 93px;
 $focal_point__upload-font-size: 24px;
 $focal_point__delete-font-size: 16px;
 $focal_point__img-size: $focal_point-width;
-
-// Scroll Panel
-//
-// Scroll pane in popover
-$scroll-border-radius: 4px;
-
-// Scroll pane in popup
-$scroll__popup-bg: var(--scroll__popup-bg, $white-7);
-$scroll__popup-width: 5px;
-$scroll__popup-border-radius: math.div($scroll__popup-width, 2);
 
 // Spinner Loading Content
 //
@@ -584,13 +577,11 @@ $thumbnail__block__item__after-border: var(--thumbnail__block__item__after-borde
 $thumbnail__block__item__anchor-color: var(--thumbnail__block__item__anchor-color, $white);
 $thumbnail__block__item__anchor-bg: var(--thumbnail__block__item__anchor-bg, $blue-21);
 $thumbnail__block__item__anchor__icon-color--hover: var(--thumbnail__block__item__anchor__icon-color--hover, $black-1);
-$thumbnail__block__scroll-bg: var(--thumbnail__block__scroll-bg, $gray-21);
-$thumbnail__block__scroll__pane-border: var(--thumbnail__block__scroll__pane-border, $transparent);
 $thumbnail__block__loader-bg: var(--thumbnail__block__loader-bg, rgba($gray-7, 0.6));
 
 // Input
-$input-bg: var(--primary-dark, $gray-1);
-$input-color: var(--primary-white, $white);
+$input-bg: var(--secondary-dark, $gray-1);
+$input-color: var(--primary-gray, $white);
 $input__placeholder-color: var(--input__placeholder-color, rgba($blue-23, 0.2));
 
 // Extract Popover tooltip colors
@@ -627,8 +618,8 @@ $popup__select-border-radius: 4px;
 $popup__header__tabs-bg: var(--popup__header__tabs-bg, $gray-4);
 $popup__header__tabs__item-bg: var(--popup__header__tabs__item-bg, $gray-4);
 $popup__header__tabs__item-bg--hover: var(--popup__header__tabs__item-bg--hover, $black-1);
-$popup__header__tabs__btn__close-color: var(--popup__header__tabs__btn__close-color, $gray-22);
-$popup__header__tabs__btn__close-color--hover: var(--popup__header__tabs__btn__close-color--hover, $white);
+$popup__header__tabs__btn-color: var(--popup__header__tabs__btn__close-color, $gray-22);
+$popup__header__tabs__btn-color--hover: var(--popup__header__tabs__btn__close-color--hover, $white);
 $popup__header__tabs__item-color: var(--popup__header__tabs__item-color, rgba($white, 0.5));
 $popup__header__tabs__item-color--hover: var(--popup__header__tabs__item-color--hover, $white);
 $popup__header__tabs__item-border-right-color: var(--popup__header__tabs__item-border-right-color, rgba($black, 0.7));
@@ -647,6 +638,10 @@ $popup__apps__loading-bg: var(--popup__apps__loading-bg, $blue-21);
 // Popup loading
 $form__email__popup__loading-color: var(--form__email__popup__loading-color, $white);
 $form__email__popup__loading-bg: var(--form__email__popup__loading-bg, rgba($black, 0.5));
+
+// Popup Blocks Layouts
+$block_layout__btn-color: var(--block_layout__btn-color, $gray-22);
+$block_layout__btn-color-hover: var(--block_layout__btn-color-hover, $gray-30);
 
 // Popup Fonts
 $popup__fonts__content-bg: var(--popup__fonts__content-bg, $white-6);

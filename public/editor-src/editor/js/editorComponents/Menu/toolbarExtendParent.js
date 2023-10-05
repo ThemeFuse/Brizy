@@ -2,31 +2,28 @@ import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import {
-  defaultValueKey,
   defaultValueValue,
   mobileSyncOnChange,
   tabletSyncOnChange
 } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 
-const configMenuValue = Config.get("menuData");
-const getMenuChoices = () => {
-  const menus = configMenuValue.map(({ id, name }) => ({
+const getMenuChoices = (menuSelected) => {
+  const { menuData } = Config.getAll();
+  if (menuData.length === 0) return [{ title: t("Missing Menus"), value: "" }];
+  const menus = menuData.map(({ id, name }) => ({
     title: name,
     value: id
   }));
 
-  return menus.length ? menus : [{ title: "-", value: "-" }];
+  const hasMenu = menus.some(({ value }) => value === menuSelected);
+  return hasMenu ? menus : [{ title: t("Select a Menu"), value: "" }, ...menus];
 };
 
 export function getItems({ v, device }) {
-  const dvk = (key) => defaultValueKey({ key, device });
   const dvv = (key) => defaultValueValue({ v, key, device });
 
-  const menuChoices = getMenuChoices();
-  const hasMenu = menuChoices.some(
-    ({ value }) => value === dvv("menuSelected")
-  );
+  const menuSelected = dvv("menuSelected");
 
   const { hex: mMenuIconColorHex } = getOptionColorHexByPalette(
     dvv("mMenuIconColorHex"),
@@ -54,21 +51,11 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "menuSelected",
-          type: "select",
+          type: "select-dev",
           devices: "desktop",
           position: 10,
           label: t("Menu"),
-          choices: hasMenu
-            ? menuChoices
-            : [{ title: t("Select a Menu"), value: "-" }, ...menuChoices],
-          value: hasMenu ? dvv("menuSelected") : "-",
-          onChange: (menuSelected) => {
-            if (menuSelected === "-") {
-              return;
-            }
-
-            return { menuSelected };
-          }
+          choices: getMenuChoices(menuSelected)
         },
         {
           id: "groupSettings",
@@ -116,32 +103,16 @@ export function getItems({ v, device }) {
           ]
         },
         {
-          id: dvk("itemPadding"),
-          type: "slider",
+          id: "itemPadding",
+          type: "slider-dev",
           label: t("Spacing"),
           roles: ["admin"],
           position: 50,
-          slider: {
-            min: 0,
-            max: 100
-          },
-          input: {
-            show: true
-          },
-          suffix: {
-            show: true,
-            choices: [{ title: "px", value: "px" }]
-          },
           disabled: v.items.length === 1 || dvv("mMenu") === "on",
-          value: {
-            value: dvv("itemPadding")
-          },
-          onChange: ({ value }) => {
-            return {
-              [dvk("itemPadding")]: value,
-              [dvk("itemPaddingRight")]: value,
-              [dvk("itemPaddingLeft")]: value
-            };
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
           }
         }
       ]

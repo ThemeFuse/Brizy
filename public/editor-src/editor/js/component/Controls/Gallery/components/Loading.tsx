@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
-import { Item } from "./Item";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { WithId } from "visual/utils/options/attributes";
+import { Item } from "./Item";
 
 export interface Props<T> extends WithId<T> {
-  onRemove: (id: T) => void;
+  onRemove?: (id: T) => void;
 }
 
 export function Loading<T>({ id, onRemove }: Props<T>): ReactElement<Props<T>> {

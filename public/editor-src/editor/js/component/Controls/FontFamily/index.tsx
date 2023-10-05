@@ -1,8 +1,10 @@
 import classNames from "classnames";
 import React, { Component, SyntheticEvent } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import ScrollPanel from "visual/component/ScrollPane";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
+import { ScrollbarType } from "visual/utils/fonts/scrollHelpers";
+import { scrollToActiveFont } from "visual/utils/fonts/scrollHelpers";
 import { FontList, FontObject, FontSizes, FontWithType, Props } from "./types";
 
 const fontSizeMap: FontSizes = {
@@ -14,12 +16,23 @@ const fontSizeMap: FontSizes = {
 };
 
 export class FontFamily extends Component<Props> {
+  scrollbarRef: React.RefObject<ScrollbarType>;
+
   handleOpenFonts = (event: SyntheticEvent<HTMLDivElement>) => {
     event.preventDefault();
     if (this.props.addFont) {
       this.props.addFont();
     }
   };
+
+  constructor(props: Props) {
+    super(props);
+    this.scrollbarRef = React.createRef();
+  }
+
+  componentDidMount(): void {
+    scrollToActiveFont(this.scrollbarRef);
+  }
 
   renderFontList({ fonts, type }: FontList) {
     const { value, onChange } = this.props;
@@ -67,10 +80,7 @@ export class FontFamily extends Component<Props> {
 
     return (
       <div className={className}>
-        <ScrollPanel
-          className="brz-ed-scroll--dark brz-ed-scroll--small"
-          style={{ height: "100%" }}
-        >
+        <Scrollbar theme="dark" ref={this.scrollbarRef}>
           {uploadFonts.length > 0 &&
             this.renderFontList({
               fonts: uploadFonts,
@@ -94,7 +104,7 @@ export class FontFamily extends Component<Props> {
             fonts: configFonts,
             type: FontFamilyType.google
           })}
-        </ScrollPanel>
+        </Scrollbar>
         {this.props.addFont && (
           <div
             className="brz-ed-font__typography-adder"

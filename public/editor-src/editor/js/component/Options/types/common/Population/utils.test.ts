@@ -14,7 +14,7 @@ describe("Testing 'bindPopulation' function", function () {
     id: "test",
     type: "imageUpload-dev"
   };
-  const withPopulation = { ...option, population: [method] };
+  const withPopulation = { ...option, population: { choices: [method] } };
   const choices: (Choices<string | number> | OptGroup<string | number>)[] = [
     {
       value: "1",
@@ -49,8 +49,7 @@ describe("Testing 'bindPopulation' function", function () {
       id: "test",
       // @ts-expect-error
       type: "imageSetter",
-      value: { src: "test.jpg", extension: "jpg" },
-      population: [method]
+      value: { src: "test.jpg", extension: "jpg" }
     };
 
     expect(bindPopulation(i)).toEqual(i);
@@ -61,7 +60,10 @@ describe("Testing 'bindPopulation' function", function () {
       id: "test",
       type: "imageUpload-dev"
     };
-    const withPopulation = { ...option, population: [method] };
+    const withPopulation = {
+      ...option,
+      population: { choices: [method] }
+    };
 
     const result: ToolbarItemType = {
       id: "test",

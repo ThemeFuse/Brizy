@@ -12,7 +12,11 @@ import { CSSValue } from "../style2/types";
 
 type FillType = "filled" | "outline" | "default";
 
-const getFillType = checkValue<FillType>(["filled", "outline", "default"]);
+export const getFillType = checkValue<FillType>([
+  "filled",
+  "outline",
+  "default"
+]);
 
 const config = Config.getAll();
 const IS_STORY = isStory(config);
@@ -76,7 +80,7 @@ export function cssStyleElementIconBgColor({
     case "outline":
       return "background: transparent;";
     case "default":
-      return "border: 0; background: transparent; box-shadow: initial;";
+      return "border: 0!important; background: transparent; box-shadow: none!important;";
     case undefined:
       return "";
   }
@@ -96,7 +100,7 @@ export function cssStyleElementIconBgGradient({
       return cssStyleBgGradient({ v, device, state, prefix });
     case "outline":
     case "default":
-      return "background-image: transparent;";
+      return "background-image: none;";
     case undefined:
       return "";
   }

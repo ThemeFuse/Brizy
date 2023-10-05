@@ -54,7 +54,7 @@ export const GlobalBlockOption: Component = ({
     const globalBlocksIds = Object.keys(globalBlocks);
 
     return globalBlocksIds.includes(_id);
-  }, [_id]);
+  }, [_id, globalBlocks]);
 
   const handleChange = async (checked: boolean): Promise<void> => {
     // if '_id' starts from number - document.getElementById(_id) will throw an error.

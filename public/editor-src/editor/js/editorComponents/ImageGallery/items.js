@@ -1,10 +1,10 @@
-import React from "react";
 import classnames from "classnames";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { hideToolbar } from "visual/component/Toolbar";
+import React from "react";
 import ContextMenu from "visual/component/ContextMenu";
-import contextMenuConfig from "./contextMenu";
+import { hideToolbar } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
+import contextMenuConfig from "./contextMenu";
 
 class Items extends EditorArrayComponent {
   static get componentId() {
@@ -17,6 +17,13 @@ class Items extends EditorArrayComponent {
   };
 
   getItemProps(itemData, itemIndex, items) {
+    const { layout, thumbStyle } = this.props.itemProps;
+
+    const align =
+      layout === "bigImage" && (thumbStyle === "left" || thumbStyle === "right")
+        ? "vertical"
+        : "horizontal";
+
     const cloneRemoveConfig = {
       getItems: () => {
         return [
@@ -28,13 +35,14 @@ class Items extends EditorArrayComponent {
             roles: ["admin"],
             disabled: items.length < 2,
             config: {
+              align,
               disable:
-                itemIndex === 0
+                itemIndex === 0 || (itemIndex === 1 && layout === "bigImage")
                   ? "prev"
                   : itemIndex === items.length - 1
                   ? "next"
                   : undefined,
-              onChange: v => {
+              onChange: (v) => {
                 switch (v) {
                   case "prev":
                     this.reorderItem(itemIndex, itemIndex - 1);
@@ -98,15 +106,27 @@ class Items extends EditorArrayComponent {
 
   renderItemWrapper(item, itemKey, itemIndex, itemData) {
     const tags = this.getTags(itemData.value.tags);
+    const { renderer } = this.props.itemProps;
+    const { imageSrc } = itemData.value;
+    const { layout } = renderer.gallery;
 
+    const isMasonry = layout === "masonry";
+    const isJustified = layout === "justified";
+
+    const className = classnames(
+      "brz-image__gallery-item",
+      { "brz-cursor-pointer": layout === "bigImage" && IS_PREVIEW },
+      {
+        "brz-image__gallery-item-empty": (isMasonry || isJustified) && !imageSrc
+      },
+      tags
+    );
     return (
       <ContextMenu
         key={itemKey}
         {...this.makeContextMenuProps(contextMenuConfig, { id: itemKey })}
       >
-        <div className={classnames("brz-image__gallery-item", tags)}>
-          {item}
-        </div>
+        <div className={className}>{item}</div>
       </ContextMenu>
     );
   }

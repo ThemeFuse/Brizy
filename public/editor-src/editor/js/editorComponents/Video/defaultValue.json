@@ -51,6 +51,7 @@
     "className": "",
 
     "iconSize": 80,
+    "iconSizeSuffix": "px",
 
     "iconSizeWidth": 80,
     "iconSizeWidthSuffix": "px",
@@ -232,6 +233,11 @@
     "bgPaddingRightSuffix": "px",
     "bgPaddingBottomSuffix": "px",
     "bgPaddingLeftSuffix": "px",
+
+    "hoverName": "none",
+    "hoverDuration": 600,
+    "hoverDelay": 0,
+    "hoverInfiniteAnimation": true,
 
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontSize": 16,

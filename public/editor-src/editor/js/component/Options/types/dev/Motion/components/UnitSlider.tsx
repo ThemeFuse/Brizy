@@ -1,14 +1,14 @@
 import React, { ReactElement, useCallback } from "react";
-import * as Unit from "visual/utils/math/Unit";
-import { OnChange } from "visual/component/Options/Type";
+import {
+  Props as NSProps,
+  NumberSlider
+} from "visual/component/Controls/NumberSlider";
 import { OptionLabel } from "visual/component/OptionLabel";
 import { OptionWrapper } from "visual/component/OptionWrapper";
-import { mPipe } from "visual/utils/fp";
-import {
-  NumberSlider,
-  Props as NSProps
-} from "visual/component/Controls/NumberSlider";
+import { OnChange } from "visual/component/Options/Type";
 import { useThrottleOnChange } from "visual/component/hooks";
+import { mPipe } from "visual/utils/fp";
+import * as Unit from "visual/utils/math/Unit";
 
 export type Props = {
   label: string;
@@ -25,7 +25,7 @@ export const UnitSlider = ({ label, value, onChange }: Props): ReactElement => {
     500
   );
   const handleNumberChange = useCallback<OnChange<V>>(
-    mPipe((v: V) => v.number / 10, Unit.fromNumber, _onChange),
+    (v) => mPipe((v: V) => v.number / 10, Unit.fromNumber, _onChange)(v),
     [_onChange]
   );
 

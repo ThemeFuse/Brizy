@@ -1,5 +1,6 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "visual/utils/style2/types";
+import { capByPrefix } from "../string";
 
 export function cssStyleHoverTransition({
   v,
@@ -31,4 +32,29 @@ export function cssStylePropertyHoverTransitionFill(): string {
 
 export function cssStylePropertyHoverTransitionBoxShadow(): string {
   return "transition-property: border, box-shadow;";
+}
+
+export function cssStyleHoverTransitionFlash({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const dvvHover = (key: string) =>
+    defaultValueValue({ v, key, device, state: "hover" });
+  const hoverTransition = dvv("hoverTransition");
+
+  const bgColorType = dvv(capByPrefix(prefix, "bgColorType"));
+  const bgColorTypeHover = dvvHover(capByPrefix(prefix, "bgColorType"));
+
+  const bgType =
+    (bgColorType === "solid" && bgColorTypeHover === "gradient") ||
+    (bgColorType === "gradient" && bgColorTypeHover === "solid");
+
+  return hoverTransition === undefined
+    ? ""
+    : bgType
+    ? "transition-duration:0s; transition-property:opacity;"
+    : `transition-duration:0.${hoverTransition}s;`;
 }

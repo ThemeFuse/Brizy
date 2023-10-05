@@ -15,22 +15,13 @@ import {
   SavedBlock,
   SavedLayout
 } from "visual/types";
-import {
-  BlogSourceItem,
-  CollectionSourceItem,
-  Rule,
-  SavedBlockMeta
-} from "visual/utils/api/types";
+import { BlogSourceItem, CollectionSourceItem, Rule } from "./types";
 import {
   isAllRule,
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks";
-import {
-  PageError,
-  SavedBlocksError,
-  SavedLayoutError
-} from "visual/utils/errors";
+import { PageError } from "visual/utils/errors";
 import { mPipe } from "visual/utils/fp/mPipe";
 import { pipe } from "visual/utils/fp/pipe";
 import * as Json from "visual/utils/reader/json";
@@ -49,153 +40,25 @@ import { onNullish } from "visual/utils/value";
 
 export * from "./adapter-legacy";
 
-export interface SavedBlockFromApi {
-  id: string;
-  data?: string;
-  dataVersion: number;
-  meta?: string;
-}
-export interface SavedBlockMetaFromApi {
-  id: string;
-  uid: string;
-  meta?: string;
-  dataVersion: number;
-  synchronizable: boolean;
-  synchronized: boolean;
-  isCloudEntity: boolean;
-}
-
-type SavedBlockToApi = Omit<SavedBlock, "data" | "meta"> & {
-  uid: string;
-  data: string;
-  meta: string;
-};
-
-export type ParsedSavedBlockApi = Omit<SavedBlockFromApi, "data" | "meta"> & {
-  data: SavedBlock["data"] & unknown;
-  meta: SavedBlock["meta"] & unknown;
-};
-
-export type ParsedSavedLayoutApi = Omit<SavedBlockFromApi, "data" | "meta"> & {
-  data: SavedLayout["data"] & unknown;
-  meta: SavedLayout["meta"] & unknown;
-};
-
-export type ParsedSavedBlockApiMeta = Omit<SavedBlockMetaFromApi, "meta"> & {
-  meta: SavedBlock["meta"];
-};
-
 // saved blocks | layout
-export const parseSavedBlock = (
-  savedBlock: SavedBlockFromApi
-): ParsedSavedBlockApi => {
-  let data;
-  let meta;
-
-  if (!savedBlock.data) {
-    throw new SavedBlocksError("savedBlock data should exist");
-  } else {
-    try {
-      data = JSON.parse(savedBlock.data);
-    } catch (e) {
-      throw new SavedBlocksError(
-        `Failed to parse savedBlock data ${savedBlock.data}`
-      );
-    }
-  }
-
-  if (!savedBlock.meta) {
-    meta = {};
-  } else {
-    try {
-      meta = JSON.parse(savedBlock.meta);
-    } catch (e) {
-      meta = {};
-    }
-  }
-
-  return { ...savedBlock, data, meta };
-};
-
-export const parseSavedLayout = (
-  savedLayout: SavedBlockFromApi
-): ParsedSavedLayoutApi => {
-  let data;
-  let meta;
-
-  if (!savedLayout.data) {
-    throw new SavedLayoutError("savedLayout data should exist");
-  } else {
-    try {
-      data = JSON.parse(savedLayout.data);
-    } catch (e) {
-      throw new SavedLayoutError(
-        `Failed to parse savedLayout data ${savedLayout.data}`
-      );
-    }
-  }
-
-  if (!savedLayout.meta) {
-    meta = {};
-  } else {
-    try {
-      meta = JSON.parse(savedLayout.meta);
-    } catch (e) {
-      meta = {};
-    }
-  }
-
-  return { ...savedLayout, data, meta };
-};
-
-export const stringifySavedBlock = (
-  savedBlock: (SavedBlock | SavedLayout) & { uid: string }
-): SavedBlockToApi => {
-  const data = JSON.stringify(savedBlock.data);
-  const meta = JSON.stringify(savedBlock.meta);
-
-  return { ...savedBlock, data, meta };
-};
-
-export const parseMetaSavedBlock = (
-  savedBlock: SavedBlockMetaFromApi
-): SavedBlockMeta => {
-  let meta;
-
-  if (!savedBlock.meta) {
-    meta = {};
-  } else {
-    try {
-      meta = JSON.parse(savedBlock.meta);
-    } catch (e) {
-      meta = {};
-    }
-  }
-
-  return { ...savedBlock, meta };
-};
 
 export const makeBlockMeta = (
   block: SavedBlock | SavedLayout | GlobalBlock
-): string => {
+): { images: Array<string>; uploads: Array<string>; fonts: Array<string> } => {
   const { data, meta } = block;
   const { extraFontStyles } = meta;
   const fonts = getUsedModelsFonts({ models: data });
   const images = getUsedModelsImages({ models: data });
   const fontsStyles = getUsedStylesFonts(extraFontStyles);
   const uploads = getUsedModelsUpload({ models: data });
-  const fontsSet = new Set();
+  const fontsSet = new Set<string>();
 
   // Added only font upload
   [...fonts, ...fontsStyles].forEach(({ family, type }) => {
     type === "upload" && fontsSet.add(family);
   });
 
-  return JSON.stringify({
-    images,
-    uploads,
-    fonts: [...fontsSet]
-  });
+  return { images, uploads, fonts: [...fontsSet] };
 };
 
 //#region Page

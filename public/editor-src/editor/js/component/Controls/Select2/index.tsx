@@ -1,13 +1,10 @@
+import classNames from "classnames";
 import React, { ReactElement, useCallback } from "react";
 import { last } from "underscore";
-import classNames from "classnames";
-import {
-  MultiSelect,
-  Props as MP
-} from "visual/component/Controls/MultiSelect";
 import { OnChange } from "visual/component/Options/Type";
 import { Literal } from "visual/utils/types/Literal";
 import { mCompose } from "visual/utils/value";
+import { Props as MP, Select } from "./Select";
 
 type Props<T extends Literal> = Omit<MP<T>, "value" | "onChange"> & {
   value: T;
@@ -22,9 +19,10 @@ export function Select2<T extends Literal>({
   ...props
 }: Props<T>): ReactElement {
   const _value = value !== undefined ? [value] : [];
-  const _onChange = useCallback(mCompose(onChange, last), [onChange]);
+  const _onChange = useCallback((v) => mCompose(onChange, last)(v), [onChange]);
+
   return (
-    <MultiSelect<T>
+    <Select<T>
       {...props}
       className={classNames(className, "brz-ed-control__select-single")}
       onChange={_onChange}
@@ -32,6 +30,6 @@ export function Select2<T extends Literal>({
       hideSelected={false}
     >
       {children}
-    </MultiSelect>
+    </Select>
   );
 }

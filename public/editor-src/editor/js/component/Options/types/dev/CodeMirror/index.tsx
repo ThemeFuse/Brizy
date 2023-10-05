@@ -10,7 +10,7 @@ import {
 } from "visual/utils/options/attributes";
 
 export type Config = WithSize & {
-  language: "html" | "css" | "javascript" | "markdown" | "xml";
+  language: "html" | "css" | "markdown" | "xml";
 };
 
 type Model = Option.SimpleValue<string>;
@@ -23,13 +23,12 @@ export const CodeMirror: FC<Props> = ({
   className,
   onChange,
   value: { value },
-  config = {},
+  config,
   placeholder,
   label
 }) => {
   const [_value, setValue] = useState(value);
   const ref = useRef<string>();
-  let language: Exclude<Config["language"], "html"> | "htmlmixed";
 
   useDebouncedEffect(
     () => {
@@ -48,12 +47,6 @@ export const CodeMirror: FC<Props> = ({
     }
   }, [value]);
 
-  if (config?.language === "html") {
-    language = "htmlmixed";
-  } else {
-    language = config?.language ?? "css";
-  }
-
   return (
     <>
       {label}
@@ -61,7 +54,7 @@ export const CodeMirror: FC<Props> = ({
         className={className}
         onChange={setValue}
         value={_value}
-        language={language}
+        language={config?.language ?? "css"}
         placeholder={placeholder}
         size={config?.size ?? "medium"}
       />

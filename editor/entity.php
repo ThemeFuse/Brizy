@@ -10,6 +10,12 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
      */
     protected $uid;
 
+
+    /**
+     * @var string
+     */
+    protected $title;
+
     /**
      * @var int
      */
@@ -30,7 +36,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
      */
     public function __construct($postId)
     {
-        if ( ! is_numeric($postId)) {
+        if (!is_numeric($postId)) {
             throw new Exception('Invalid post id provided');
         }
 
@@ -41,20 +47,23 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
         $this->loadInstanceData();
     }
 
-	/**
-	 * @return bool
-	 */
-	public function can_edit_posts() {
-		return current_user_can( 'edit_posts' );
-	}
-	/**
-	 * @return bool
-	 */
-	static public function canEditPosts() {
-		return current_user_can( 'edit_posts' );
-	}
+    /**
+     * @return bool
+     */
+    public function can_edit_posts()
+    {
+        return current_user_can('edit_posts');
+    }
 
-    static public function get($postId,$uid=null)
+    /**
+     * @return bool
+     */
+    static public function canEditPosts()
+    {
+        return current_user_can('edit_posts');
+    }
+
+    static public function get($postId, $uid = null)
     {
         $type = get_post_type($postId);
 
@@ -62,82 +71,90 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
 
             case Brizy_Admin_Blocks_Main::CP_GLOBAL:
             case Brizy_Admin_Blocks_Main::CP_SAVED:
-                return Brizy_Editor_Block::get($postId,$uid);
+                return Brizy_Editor_Block::get($postId, $uid);
 
             default:
             case 'page':
             case 'post':
             case Brizy_Admin_Popups_Main::CP_POPUP:
-                return Brizy_Editor_Post::get($postId,$uid);
+                return Brizy_Editor_Post::get($postId, $uid);
         }
     }
 
 
-	/**
-	 * @return bool
-	 */
-	public function uses_editor() {
-		return self::isBrizyEnabled($this->getWpPostId());
-	}
+    /**
+     * @return bool
+     */
+    public function uses_editor()
+    {
+        return self::isBrizyEnabled($this->getWpPostId());
+    }
 
-	/**
-	 * @return bool
-	 */
-	static public function isBrizyEnabled($post) {
+    /**
+     * @return bool
+     */
+    static public function isBrizyEnabled($post)
+    {
 
-		if($post instanceof WP_Post)
-			$post = $post->ID;
+        if ($post instanceof WP_Post) {
+            $post = $post->ID;
+        }
 
-		return (bool)get_post_meta($post, Brizy_Editor_Constants::BRIZY_ENABLED, true);
-	}
+        return (bool)get_post_meta($post, Brizy_Editor_Constants::BRIZY_ENABLED, true);
+    }
 
-	/**
-	 * @param $value
-	 *
-	 * @return $this
-	 * @throws Brizy_Editor_Exceptions_AccessDenied
-	 */
-	public function set_uses_editor( $value ) {
-		self::setBrizyEnabled($this->getWpPostId(), $value);
-		return $this;
-	}
+    /**
+     * @param $value
+     *
+     * @return $this
+     * @throws Brizy_Editor_Exceptions_AccessDenied
+     */
+    public function set_uses_editor($value)
+    {
+        self::setBrizyEnabled($this->getWpPostId(), $value);
 
-	/**
-	 * @return bool
-	 */
-	static public function setBrizyEnabled($post, $value) {
+        return $this;
+    }
 
-		if ( ! self::canEditPosts() ) {
-			throw new Brizy_Editor_Exceptions_AccessDenied( 'Current user cannot edit page' );
-		}
+    /**
+     * @return bool
+     */
+    static public function setBrizyEnabled($post, $value)
+    {
 
-		if($post instanceof WP_Post)
-			$post = $post->ID;
+        if (!self::canEditPosts()) {
+            throw new Brizy_Editor_Exceptions_AccessDenied('Current user cannot edit page');
+        }
 
-		update_post_meta($post, Brizy_Editor_Constants::BRIZY_ENABLED, (int)$value);
-	}
+        if ($post instanceof WP_Post) {
+            $post = $post->ID;
+        }
 
-	/**
-	 * @return string
-	 */
-	static public function getEditUrl( $post ) {
+        update_post_meta($post, Brizy_Editor_Constants::BRIZY_ENABLED, (int)$value);
+    }
 
-		if ( $post instanceof WP_Post ) {
-			$post = $post->ID;
-		}
+    /**
+     * @return string
+     */
+    static public function getEditUrl($post)
+    {
 
-		if ( $parent_post_id = wp_is_post_revision( $post ) ) {
-			$post = $parent_post_id;
-		}
+        if ($post instanceof WP_Post) {
+            $post = $post->ID;
+        }
 
-		return add_query_arg(
-			[
-				'action' => 'in-front-editor',
-				'post'   => $post
-			],
-			admin_url( 'post.php' )
-		);
-	}
+        if ($parent_post_id = wp_is_post_revision($post)) {
+            $post = $parent_post_id;
+        }
+
+        return add_query_arg(
+            [
+                'action' => 'in-front-editor',
+                'post' => $post
+            ],
+            admin_url('post.php')
+        );
+    }
 
     /**
      * @param $postId
@@ -152,7 +169,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
             throw new Exception('Cannot duplicate post. Invalid target post type');
         }
 
-        if ( ! $this->uses_editor()) {
+        if (!$this->uses_editor()) {
             throw new Exception('The source post is not using Brizy.');
         }
 
@@ -243,7 +260,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
             ), ARRAY_A
         );
 
-        return array_column($posts,'ID');
+        return array_column($posts, 'ID');
     }
 
     /**
@@ -296,8 +313,8 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
                 'Unable to save entity. The data version is wrong.',
                 [
                     'post_id' => $this->getWpPostId(),
-				'currentVersion' => $version,
-                    'newVersion'     => $this->dataVersion,
+                    'currentVersion' => $version,
+                    'newVersion' => $this->dataVersion,
                 ]
             );
             throw new Brizy_Editor_Exceptions_DataVersionMismatch('Unable to save entity. The data version is wrong.');
@@ -337,6 +354,18 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
         return $this->uid;
     }
 
+    public function getTitle()
+    {
+        return $this->getWpPost()->post_title;
+    }
+
+    public function setTitle($title)
+    {
+        $this->getWpPost()->post_title = $title;
+
+        return $this;
+    }
+
     /**
      * Return an instance of Brizy_Editor_Storage_Abstract that will store the object data
      *
@@ -352,12 +381,12 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
      */
     protected function createUid()
     {
-        $WPPost  = $this->getWpPost();
-        $post_id = $WPPost->post_type != 'revision'?$this->getWpPostId():$WPPost->post_parent;
+        $WPPost = $this->getWpPost();
+        $post_id = $WPPost->post_type != 'revision' ? $this->getWpPostId() : $WPPost->post_parent;
 
         if ($uid = $this->getUid()) {
             $uid = get_post_meta($post_id, 'brizy_post_uid', true);
-            if ( ! $uid) {
+            if (!$uid) {
                 update_post_meta($post_id, 'brizy_post_uid', $this->getUid());
             }
 
@@ -366,8 +395,8 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
 
         $uid = get_post_meta($post_id, 'brizy_post_uid', true);
 
-        if ( ! $uid) {
-            $uid = md5($post_id.time());
+        if (!$uid) {
+            $uid = md5($post_id . time());
             update_post_meta($post_id, 'brizy_post_uid', $uid);
         }
 

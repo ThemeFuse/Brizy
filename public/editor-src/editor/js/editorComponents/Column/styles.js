@@ -16,8 +16,8 @@ export function styleColumn(v, vs, vd) {
       });
     });
   };
+  const { maskShape = "none" } = v;
   const motion = fromElementModel(get);
-
   const enabledMotion =
     motion.vertical ||
     motion.horizontal ||
@@ -43,7 +43,9 @@ export function styleColumn(v, vs, vd) {
       standart: [
         "cssStyleBorder",
         "cssStyleBorderRadius",
-        "cssStyleBoxShadow",
+        ...(maskShape === "none"
+          ? ["cssStyleBoxShadow"]
+          : ["cssStyleMaskDropShadow"]),
         "cssStyleMargin",
         "cssStyleBlendMode"
       ],
@@ -54,7 +56,12 @@ export function styleColumn(v, vs, vd) {
         "cssStyleBgImage",
         "cssStyleFilter",
         "cssStyleBgImagePosition",
-        "cssStyleBgMediaImage"
+        "cssStyleBgMediaImage",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
@@ -62,7 +69,15 @@ export function styleColumn(v, vs, vd) {
       standart: ["cssStyleBgImageHover"]
     },
     [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-color`]: {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient"],
+      standart: [
+        "cssStyleBgColor",
+        "cssStyleBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-map`]: {

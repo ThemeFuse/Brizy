@@ -45,8 +45,6 @@ const _EditorIcon = (props: Props): ReactElement => {
   );
 };
 
-export const EditorIcon = IS_EDITOR
-  ? React.forwardRef(_EditorIcon)
-  : _PreviewIcon;
+export const EditorIcon = IS_EDITOR ? _EditorIcon : _PreviewIcon;
 
 export default EditorIcon;

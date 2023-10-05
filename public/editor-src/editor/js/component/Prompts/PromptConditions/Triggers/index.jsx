@@ -5,7 +5,7 @@ import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { Switch } from "visual/component/Controls/Switch";
 import EditorIcon from "visual/component/EditorIcon";
-import ScrollPane from "visual/component/ScrollPane";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { updateTriggers } from "visual/redux/actions";
 import { triggersSelector } from "visual/redux/selectors";
 import { IS_PRO } from "visual/utils/env";
@@ -235,13 +235,7 @@ class Triggers extends React.Component {
           <div>{t("Trigger Popup Only Once")}</div>
           <Switch value={triggerOnce} onChange={this.handleTriggerOnceChange} />
         </div>
-        <ScrollPane
-          style={{
-            overflow: "hidden",
-            height: "350px"
-          }}
-          className="brz-ed-scroll--medium brz-ed-scroll--new-dark"
-        >
+        <Scrollbar autoHeightMax="350px" theme="light">
           {content}
           <div
             className="brz-ed-popup-conditions__add-condition"
@@ -249,7 +243,7 @@ class Triggers extends React.Component {
           >
             <EditorIcon icon="nc-add" /> {t("Add new trigger condition")}
           </div>
-        </ScrollPane>
+        </Scrollbar>
         <Buttons
           loading={this.state.loading}
           onChange={this.handleChange}

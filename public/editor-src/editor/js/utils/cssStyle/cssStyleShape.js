@@ -17,7 +17,7 @@ import {
 import { defaultValueValue } from "../onChange";
 
 export function cssStyleShapeTopType({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const shapeTopType = styleShapeTopType({ v, device, state });
   const shapeTopSvg = styleShapeTopSvg({ v, device, state });
   const shapeTopColorPalette = dvv("shapeTopColorPalette");
@@ -29,7 +29,7 @@ export function cssStyleShapeTopType({ v, device, state }) {
         shapeTopColorPalette,
         config
       )}), ${shapeTopColorOpacity}); -webkit-mask-image: url("${shapeTopSvg}");-webkit-mask-size:100% 100%;`
-    : `background-image: url(${shapeTopSvg});background-repeat: no-repeat;`;
+    : `background-image: url("${shapeTopSvg}");background-repeat: no-repeat;`;
 
   return shapeTopType === undefined
     ? ""
@@ -61,7 +61,7 @@ export function cssStyleShapeTopIndex({ v, device, state }) {
 }
 
 export function cssStyleShapeBottomType({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const shapeBottomType = styleShapeBottomType({ v, device, state });
   const shapeBottomSvg = styleShapeBottomSvg({ v, device, state });
   const shapeBottomColorPalette = dvv("shapeBottomColorPalette");
@@ -72,7 +72,7 @@ export function cssStyleShapeBottomType({ v, device, state }) {
         shapeBottomColorPalette,
         config
       )}), ${shapeBottomColorOpacity}); -webkit-mask-image: url("${shapeBottomSvg}");-webkit-mask-size:100% 100%;`
-    : `background-image: url(${shapeBottomSvg});background-repeat: no-repeat;`;
+    : `background-image: url("${shapeBottomSvg}");background-repeat: no-repeat;`;
 
   return shapeBottomType === undefined
     ? ""

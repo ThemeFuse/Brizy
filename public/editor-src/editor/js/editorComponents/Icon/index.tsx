@@ -3,9 +3,12 @@ import React, { Fragment, ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
+import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
+import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Link from "visual/component/Link";
 import { Target } from "visual/component/Link/types/Target";
 import { Type } from "visual/component/Link/types/Type";
+import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
@@ -21,11 +24,13 @@ import { Block } from "visual/types";
 import { css } from "visual/utils/cssStyle";
 import { pipe } from "visual/utils/fp";
 import { isStory } from "visual/utils/models";
-import { defaultValueKey } from "visual/utils/onChange";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { WithClassName } from "visual/utils/options/attributes";
 import * as Num from "visual/utils/reader/number";
+import * as State from "visual/utils/stateMode";
 import * as Str from "visual/utils/string/specs";
-import { isNullish } from "visual/utils/value";
+import { Literal } from "visual/utils/types/Literal";
+import { MValue, isNullish } from "visual/utils/value";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleWrapper } from "./styles";
@@ -177,6 +182,14 @@ class Icon extends EditorComponent<Value, Props> {
     return <EditorArrayComponent {...popupsProps} />;
   }
 
+  dvv = (key: string): MValue<Literal> => {
+    const v = this.getValue();
+    const device = deviceModeSelector(this.getReduxState());
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
+  };
+
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const {
       type,
@@ -257,17 +270,28 @@ class Icon extends EditorComponent<Value, Props> {
         </Link>
       );
     }
+    const showId =
+      Str.mRead(customID).length === 0 &&
+      Str.mRead(cssIDPopulation).length === 0;
 
     const props = {
-      id:
-        cssIDPopulation === ""
-          ? Str.mRead(customID)
-          : Str.mRead(cssIDPopulation),
+      ...(!showId && {
+        id:
+          cssIDPopulation === ""
+            ? Str.mRead(customID)
+            : Str.mRead(cssIDPopulation)
+      }),
       className:
         cssClassPopulation === ""
           ? Str.mRead(customClassName)
           : Str.mRead(cssClassPopulation)
     };
+
+    const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
+    const options = makeOptionValueToAnimation(v);
+    const { cloneableAnimationId } = this.props.meta;
+    const animationId = Str.read(cloneableAnimationId) ?? this.getId();
+    const isHidden = IS_STORY || (IS_PREVIEW && hoverName === "none");
 
     return (
       <Fragment>
@@ -289,7 +313,14 @@ class Icon extends EditorComponent<Value, Props> {
                 value={resizerTransformValue(v)}
                 onChange={this.handleResizerChange}
               >
-                {content}
+                <HoverAnimation
+                  animationId={animationId}
+                  cssKeyframe={hoverName}
+                  options={getHoverAnimationOptions(options, hoverName)}
+                  isHidden={isHidden}
+                >
+                  {content}
+                </HoverAnimation>
               </BoxResizer>
             </Wrapper>
           </CustomCSS>

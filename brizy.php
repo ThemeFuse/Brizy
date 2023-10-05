@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 2.4.16
+ * Version: 2.4.27
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -19,27 +19,28 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && stripos($_SERVER['HTTP_X_FORWAR
 
 define('BRIZY_DEVELOPMENT', true );
 define('BRIZY_LOG', false );
-define('BRIZY_VERSION', '2.4.16');
+define('BRIZY_VERSION', '2.4.27');
 define('BRIZY_MINIMUM_PRO_VERSION', '2.4.15');
-define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '253-wp' );
-define('BRIZY_SYNC_VERSION', '253');
+define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '264-wp' );
+define('BRIZY_SYNC_VERSION', '264');
 define('BRIZY_FILE', __FILE__);
 define('BRIZY_PLUGIN_BASE', plugin_basename(BRIZY_FILE));
 define('BRIZY_PLUGIN_PATH', dirname(BRIZY_FILE));
 define('BRIZY_PLUGIN_URL', rtrim(plugin_dir_url(BRIZY_FILE), "/"));
 define('BRIZY_MAX_REVISIONS_TO_KEEP', 30);
 
-include_once rtrim(BRIZY_PLUGIN_PATH, "/").'/autoload.php';
-include_once rtrim(BRIZY_PLUGIN_PATH, "/").'/languages/main.php';
+include_once rtrim(BRIZY_PLUGIN_PATH, "/") . '/autoload.php';
+include_once rtrim(BRIZY_PLUGIN_PATH, "/") . '/languages/main.php';
 
 if (BRIZY_DEVELOPMENT) {
     $dotenv = new \Symfony\Component\Dotenv\Dotenv('APP_ENV');
-    $dotenv->load(__DIR__.'/.env');
+    $dotenv->load(__DIR__ . '/.env');
 }
 
 add_action('plugins_loaded', 'brizy_load');
 add_action('init', 'brizy_load_text_domain');
 add_action('upgrader_process_complete', 'brizy_upgrade_completed', 10, 2);
+add_action('activated_plugin', 'Brizy_Admin_GettingStarted::redirectAfterActivation');
 
 register_activation_hook(BRIZY_FILE, 'brizy_install');
 register_deactivation_hook(BRIZY_FILE, 'brizy_clean');
@@ -128,7 +129,7 @@ function brizy_clean()
 
 function brizy_load_text_domain()
 {
-    load_plugin_textdomain('brizy', false, dirname(plugin_basename(__FILE__)).'/languages');
+    load_plugin_textdomain('brizy', false, dirname(plugin_basename(__FILE__)) . '/languages');
 }
 
 new Brizy_Compatibilities_Init();

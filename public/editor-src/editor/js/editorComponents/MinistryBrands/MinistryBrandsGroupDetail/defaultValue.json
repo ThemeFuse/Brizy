@@ -11,15 +11,20 @@
     "showChildcare": "on",
     "showResourceLink": "on",
     "showContent": "on",
+    "showPreviousPage": "on",
     "groupsRecent": ""
   },
+
   "style": {
     "families": {
       "typographyFontFamily": "lato",
       "titleTypographyFontFamily": "lato",
       "dateTypographyFontFamily": "lato",
       "previewTypographyFontFamily": "lato",
-      "metaLinksTypographyFontFamily": "lato"
+      "metaLinksTypographyFontFamily": "lato",
+      "paragraphTypographyFontFamily": "lato",
+      "h4TypographyFontFamily": "roboto",
+      "listTypographyFontFamily": "lato"
     },
 
     "typographyFontStyle": "",
@@ -62,6 +67,30 @@
     "metaLinksTypographyLetterSpacing": 0,
     "metaLinksTypographyLineHeight": 1,
 
+    "paragraphTypographyFontStyle": "",
+    "paragraphTypographyFontFamilyType": "google",
+    "paragraphTypographyFontSize": 16,
+    "paragraphTypographyFontSizeSuffix": "px",
+    "paragraphTypographyFontWeight": 400,
+    "paragraphTypographyLetterSpacing": 0,
+    "paragraphTypographyLineHeight": 1,
+
+    "h4TypographyFontStyle": "",
+    "h4TypographyFontFamilyType": "google",
+    "h4TypographyFontSize": 16,
+    "h4TypographyFontSizeSuffix": "px",
+    "h4TypographyFontWeight": 700,
+    "h4TypographyLetterSpacing": 0,
+    "h4TypographyLineHeight": 2.8,
+
+    "listTypographyFontStyle": "",
+    "listTypographyFontFamilyType": "google",
+    "listTypographyFontSize": 16,
+    "listTypographyFontSizeSuffix": "px",
+    "listTypographyFontWeight": 400,
+    "listTypographyLetterSpacing": 0,
+    "listTypographyLineHeight": 1.3,
+
     "colorHex": "#707070",
     "colorOpacity": 1,
     "colorPalette": "",
@@ -82,10 +111,27 @@
     "metaLinksColorOpacity": 1,
     "metaLinksColorPalette": "",
 
+    "paragraphColorHex": "#000000",
+    "paragraphColorOpacity": 1,
+    "paragraphColorPalette": "",
+
+    "h4ColorHex": "#000000",
+    "h4ColorOpacity": 1,
+    "h4ColorPalette": "",
+
+    "listColorHex": "#000000",
+    "listColorOpacity": 1,
+    "listColorPalette": "",
+
     "itemHorizontalAlign": "left",
 
     "itemSpacing": 5,
     "itemSpacingSuffix": "px",
+
+    "listType": "ordered",
+
+    "listPadding": 50,
+    "listPaddingSuffix": "px",
 
     "borderRadiusType": "grouped",
     "borderRadius": 0,
@@ -183,6 +229,6 @@
     "bgPaddingLeftSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null
+    "hoverTransitionSuffix": ""
   }
 }

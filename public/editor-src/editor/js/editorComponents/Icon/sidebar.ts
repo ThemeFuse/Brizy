@@ -1,31 +1,25 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
+import { hoverEffects } from "visual/component/Options/types/dev/Animation/utils";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getDynamicContentChoices } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
+import { getDynamicContentOption } from "visual/utils/options";
+import { read as readString } from "visual/utils/string/specs";
+import { GetItems } from "../EditorComponent/types";
 import { Value } from "./index";
 
 export const title = t("Icon");
 
-export function getItems({
-  v,
-  device,
-  context
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  context: EditorComponentContextValue;
-}): ToolbarItemType[] {
-  const dvv = (key: string) => defaultValueValue({ v, key, device });
+export const getItems: GetItems<Value> = ({ v, device, context }) => {
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const hoverName = readString(dvv("hoverName")) ?? "none";
 
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
 
   const IS_STORY = isStory(Config.getAll());
 
@@ -67,7 +61,7 @@ export function getItems({
                         content:
                           "Add your custom ID without the #pound, example: my-id"
                       },
-                      config: { choices: richTextDC },
+                      config: richTextDC,
                       option: {
                         id: "customID",
                         type: "inputText-dev"
@@ -84,7 +78,7 @@ export function getItems({
                         content:
                           "Add your custom class without the .dot, example: my-class"
                       },
-                      config: { choices: richTextDC },
+                      config: richTextDC,
                       option: {
                         id: "customClassName",
                         type: "inputText-dev"
@@ -107,8 +101,42 @@ export function getItems({
               ]
             }
           ]
+        },
+        {
+          id: "effects",
+          title: t("Effects"),
+          label: t("Effects"),
+          options: [
+            {
+              id: "tabs",
+              type: "tabs-dev",
+              config: {
+                align: "start"
+              },
+              tabs: [
+                {
+                  id: "tabHover",
+                  label: t("Hover"),
+                  options: [
+                    {
+                      id: "hover",
+                      type: "animation-dev",
+                      disabled: IS_STORY,
+                      devices: "desktop",
+                      config: {
+                        types: hoverEffects,
+                        replay: false,
+                        infiniteAnimation: hasInfiniteAnimation(hoverName),
+                        delay: false
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }
   ];
-}
+};

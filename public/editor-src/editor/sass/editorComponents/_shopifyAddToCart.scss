@@ -1,4 +1,13 @@
 .brz-shopify-add-to-cart {
+  position: relative;
   display: flex;
   align-items: center;
+
+  &--spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: inherit;
+  }
 }

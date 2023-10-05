@@ -39,7 +39,46 @@ export enum LegacyEffectType {
   zoomInDown = "zoomInDown",
   zoomInLeft = "zoomInLeft",
   zoomInRight = "zoomInRight",
-  zoomInUp = "zoomInUp"
+  zoomInUp = "zoomInUp",
+
+  brzWobbleHorizontal = "brz-wobble-horizontal",
+  brzWobbleVertical = "brz-wobble-vertical",
+  brzWobbleToBottomRight = "brz-wobble-to-bottom-right",
+  brzWobbleToTopRight = "brz-wobble-to-top-right",
+  brzWobbleTop = "brz-wobble-top",
+  brzWobbleBottom = "brz-wobble-bottom",
+  brzWobbleSkew = "brz-wobble-skew",
+
+  brzPulse = "brz-pulse",
+  brzPulseGrow = "brz-pulse-grow",
+  brzPulseShrink = "brz-pulse-shrink",
+
+  brzPush = "brz-push",
+  brzPop = "brz-pop",
+
+  brzBounceIn = "brz-bounce-in",
+  brzBounceOut = "brz-bounce-out",
+
+  brzGrow = "brz-grow",
+  brzShrink = "brz-shrink",
+
+  brzBob = "brz-bob",
+  brzHang = "brz-hang",
+
+  brzMoveUp = "brz-float",
+  brzMoveDown = "brz-sink",
+  brzMoveRight = "brz-forward",
+  brzMoveLeft = "brz-backward",
+
+  brzSkew = "brz-skew",
+  brzSkewForward = "brz-skew-forward",
+  brzSkewBackward = "brz-skew-backward",
+
+  brzBuzz = "brz-buzz",
+  brzBuzzOut = "brz-buzz-out",
+
+  brzRotate = "brz-rotate",
+  brzGrowRotate = "brz-grow-rotate"
 }
 
 export const fromString = (v: string): LegacyEffectType | undefined =>

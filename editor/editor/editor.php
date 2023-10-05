@@ -3,7 +3,7 @@
 class Brizy_Editor_Editor_Editor
 {
 
-    const COMPILE_CONTEXT = 'compile';
+    use Brizy_Editor_Editor_ModuleGroups_ContextUtils;const COMPILE_CONTEXT = 'compile';
     const EDITOR_CONTEXT = 'editor';
 
     /**
@@ -78,24 +78,28 @@ class Brizy_Editor_Editor_Editor
         }
     }
 
-    public function getClientConfig($context)
-    {
-        $config = [
-            'hash'          => wp_create_nonce(Brizy_Editor_API::nonce),
-            'editorVersion' => BRIZY_EDITOR_VERSION,
-            'url'           => set_url_scheme(admin_url('admin-ajax.php')),
-            'actions'       => $this->getApiActions(),
-        ];
+	public function getClientConfig( $context ) {
+		$parent_post_type = get_post_type( $this->post->getWpPostId() );
+		$mode             = $this->getMode( $parent_post_type );
+		$config           = [
+			'hash'          => wp_create_nonce( Brizy_Editor_API::nonce ),
+			'editorVersion' => BRIZY_EDITOR_VERSION,
+			'url'           => set_url_scheme( admin_url( 'admin-ajax.php' ) ),
+			'actions'       => $this->getApiActions(),
+			'pageId'        => $this->post->getWpPostId(),
+		];
 
-        return $config;
-    }
+		$config = $this->getApiConfigFields( $config, $context );
+		$config = $this->addLoopSourcesClientConfig( $config, $mode === 'template', $this->post->getWpPostId(), $context );
 
-    /**
-     * @throws Exception
-     */
-    public function config($context = self::COMPILE_CONTEXT)
-    {
-        do_action('brizy_create_editor_config_before');
+		return $config;
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function config( $context = self::COMPILE_CONTEXT ) {
+		do_action( 'brizy_create_editor_config_before' );
 
         $cachePostId = ($this->post ? $this->post->getWpPostId() : 0).'_'.$context;
         if (isset(self::$config[$cachePostId])) {
@@ -140,11 +144,12 @@ class Brizy_Editor_Editor_Editor
                 'about'              => __bt('about-url', apply_filters('brizy_about_url', Brizy_Config::ABOUT_URL)),
                 'backToDashboard'    => get_edit_post_link($wp_post_id, null),
                 'assetsExternal'     => $this->urlBuilder->external_asset_url()."",
+				'termsOfService'     => Brizy_Config::getTermsOfServiceUrl(),
 
                 // wp specific
                 'changeTemplate'     => $change_template_url,
                 'upgradeToPro'       =>
-                    apply_filters('brizy_upgrade_to_pro_url', Brizy_Config::UPGRADE_TO_PRO_URL),
+                     Brizy_Config::getUpgradeUrl(),
 
                 'support'          =>
                     Brizy_Config::getSupportUrl(),
@@ -167,42 +172,51 @@ class Brizy_Editor_Editor_Editor
                 'featuredImage' => $this->getThumbnailData($wp_post_id),
                 'templates'     => $this->post->get_templates(),
 
-                'plugins'          => array(
-                    'dummy'       => true,
-                    'woocommerce' => self::get_woocomerce_plugin_info(),
-                ),
-                'hasSidebars'      => count($wp_registered_sidebars) > 0,
-                'l10n'             => $this->getTexts(),
-                'pageData'         => apply_filters('brizy_page_data', array()),
-                'availableRoles'   => Brizy_Admin_Membership_Membership::roleList(),
-                'usersCanRegister' => get_option('users_can_register'),
-            ),
-            'mode'            => $mode,
-            'applications'    => array(
-                'form' => array(
-                    'submitUrl' => '{{brizy_dc_ajax_url}}?action='.Brizy_Editor::prefix(
-                            Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
-                        ),
-                ),
-            ),
-            'server'          => array(
-                'maxUploadFileSize' => $this->fileUploadMaxSize(),
-            ),
-            'branding'        => array('name' => __bt('brizy', 'Brizy')),
-            'prefix'          => Brizy_Editor::prefix(),
-            'cloud'           => $this->getCloudInfo(),
-            'editorVersion'   => BRIZY_EDITOR_VERSION,
-            'imageSizes'      => $this->getImgSizes(),
-        );
-        $manager           = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
+				'plugins'          => array(
+					'dummy'       => true,
+					'woocommerce' => self::get_woocomerce_plugin_info(),
+				),
+				'hasSidebars'      => count( $wp_registered_sidebars ) > 0,
+				'l10n'             => $this->getTexts(),
+				'pageData'         => apply_filters( 'brizy_page_data', array() ),
+				'availableRoles'   => Brizy_Admin_Membership_Membership::roleList(),
+				'usersCanRegister' => get_option( 'users_can_register' ),
+			),
+			'mode'            => $mode,
+			'applications'    => array(
+				'form' => array(
+					'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
+							Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
+						),
+				),
+			),
+			'ui'              => [],
+			'server'          => array(
+				'maxUploadFileSize' => $this->fileUploadMaxSize(),
+			),
+			'branding'        => array( 'name' => __bt( 'brizy', 'Brizy' ) ),
+			'prefix'          => Brizy_Editor::prefix(),
+			'cloud'           => $this->getCloudInfo(),
+			'editorVersion'   => BRIZY_EDITOR_VERSION,
+			'imageSizes'      => $this->getImgSizes(),
+			'moduleGroups'    => [],
+			'help'            => $this->getEditorHelpVideos( Brizy_Config::EDITOR_HELP_VIDEOS_URL )
+		);
+		$manager           = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 
-        $config              = $this->addRecaptchaAccounts($manager, $config, $context);
-        $config              = $this->addSocialAccounts($manager, $config, $context);
-        $config              = $this->addWpPostTypes($config, $context);
-        $config              = $this->addTemplateFields($config, $mode === 'template', $wp_post_id, $context);
-        $config              = $this->addGlobalBlocksData($config);
-        $config              = $this->getPostLoopSources($config, $mode === 'template', $wp_post_id, $context);
-        $config['wp']['api'] = $this->getApiActions($config, $context);
+		$config              = $this->addRecaptchaAccounts( $manager, $config, $context );
+		$config              = $this->addSocialAccounts( $manager, $config, $context );
+		$config              = $this->addWpPostTypes( $config, $context );
+		$config              = $this->addTemplateFields( $config, $mode === 'template', $wp_post_id, $context );
+		$config['wp']['api'] = $this->getApiActions( $config, $context );
+		$config              = $this->addGlobalBlocksData( $config );
+		$config              = $this->addLoopSourcesConfig( $config, $mode === 'template', $wp_post_id, $context );
+		$config              = $this->getApiConfigFields( $config, $context );
+		$config              = $this->addContentDefaults( $config, $context );
+		$config              = $this->addUIConfig( $config, $context );
+		$config              = $this->addProjectData( $config, $context );
+		$config              = $this->addModuleGroups( $config, $context );
+		$config              = $this->addPageData( $config, $context );
 
         self::$config[$cachePostId] = apply_filters('brizy_editor_config', $config, $context);
 
@@ -211,7 +225,85 @@ class Brizy_Editor_Editor_Editor
         return self::$config[$cachePostId];
     }
 
-    /**
+    private function addUIConfig( $config, $context ) {
+
+		$is_popup    = $this->isPopup( $config );
+		$is_story    = $this->isStory( $config );
+		$is_template = $this->isTemplate( $config );
+
+		$options                     = [
+			! Brizy_Compatibilities_BrizyProCompatibility::isPro() ?
+				[
+					"type"       => "link",
+					"icon"       => "nc-unlock",
+					"label"      => __bt( "Upgrade to Pro", "Upgrade to Pro", 'brizy' ),
+					"link"       => $config['urls']['upgradeToPro'],
+					"linkTarget" => "_blank",
+				] : null,
+			[
+				"type"       => "link",
+				"icon"       => "nc-info",
+				"label"      => __bt( "About us", "About us", 'brizy' ),
+				"link"       => $config['urls']['about'],
+				"linkTarget" => "_blank"
+			],
+			[
+				"type"       => "link",
+				"icon"       => "nc-help-docs",
+				"label"      => __bt( "Support", "Support", 'brizy' ),
+				"link"       => $config['urls']['support'],
+				"linkTarget" => "_blank",
+				"roles"      => [ "admin" ]
+			],
+			[
+				"type"  => "shortcuts",
+				"icon"  => "nc-alert-circle-que",
+				"label" => __bt( "Shortcuts", "Shortcuts", 'brizy' ),
+				"link"  => "#"
+			],
+			[
+				"type"       => "link",
+				"icon"       => "nc-cog",
+				"label"      => __bt( "Plugin Settings", "Plugin Settings", 'brizy' ),
+				"link"       => $config['urls']['pluginSettings'],
+				"linkTarget" => "_blank",
+				"roles"      => [ "admin" ]
+			],
+			[
+				"type"  => "link",
+				"icon"  => "nc-back",
+				"label" => __bt( "Go to Dashboard", "Go to Dashboard", 'brizy' ),
+				"link"  => $config['urls']['backToDashboard']
+			]
+		];
+		$config['ui']['leftSidebar'] = [
+			"topTabsOrder"    => [ "addElements", "reorderBlock", "globalStyle" ],
+			"bottomTabsOrder" => [ "deviceMode", "pageSettings", "more" ],
+			"pageSettings"    => [
+				"options" => [
+					"template"      => ! ( $is_popup || $is_story ),
+					"membership"    => ! ( $is_popup || $is_story ),
+					"featuredImage" => ! ( $is_popup || $is_story ) && ! $is_template
+				]
+			],
+			"more"            => [
+				"options" => array_values( array_filter( $options ) )
+			]
+		];
+
+		$config['ui']['popupSettings'] = [
+			"horizontalAlign"      => true,
+			"verticalAlign"        => true,
+			"embedded"             => false,
+			"displayCondition"     => $is_popup,
+			"scrollPageBehind"     => true,
+			"clickOutsideToClose"  => true,
+			"deletePopup"          => $is_popup,
+			"backgroundPreviewUrl" => $config['urls']['pagePreview']
+		];
+
+		return $config;
+	}/**
      * @param $config
      *
      * @return string[]|WP_Post_Type[]
@@ -240,12 +332,544 @@ class Brizy_Editor_Editor_Editor
         return $config;
     }
 
+	private function addPageData( $config, $context ) {
 
-    private function getPostLoopSources($config, $isTemplate, $wp_post_id, $context)
+		$config['pageData'] = $this->post->createConfigData($context);
+
+		return $config;
+	}
+
+	private function addModuleGroups( $config, $context ) {
+
+		$moduleGroupCollector = new Brizy_Editor_Editor_ModuleGroups_Manager();
+
+		$config['ui']['leftSidebar'] = array_merge( $config['ui']['leftSidebar'], [ 'moduleGroups' => $moduleGroupCollector->getAll( $config ) ] );
+
+		return $config;
+	}
+
+
+	private function addProjectData( $config, $context ) {
+
+		$response              = Brizy_Editor_Project::get()->createResponse();
+		$response['data']      = json_decode( $response['data'] );
+		$config['projectData'] = $response;
+
+		return $config;
+	}
+
+
+    private function getApiConfigFields($config, $context)
     {
-        $excludePostTypes = ['attachment'];
+        $config['api'] = [
+			'media'      => [
+				'mediaResizeUrl' => home_url()
+			],
+			'customFile' => [
+				'fileUrl' => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
+			],
+			'templates'  => [
+				'kitsUrl'    => Brizy_Config::getEditorTemplatesUrl( 'kits' ),
+				'layoutsUrl' => Brizy_Config::getEditorTemplatesUrl( 'layouts' ),
+				'popupsUrl'  => Brizy_Config::getEditorTemplatesUrl( 'popups' ),
+				'storiesUrl' => Brizy_Config::getEditorTemplatesUrl( 'stories' )
+			]
+		];
 
-        $types  = get_post_types(['public' => true]);
+		return apply_filters( 'brizy_api_config_fields', $config, $context );
+	}
+
+        private function addContentDefaults( $config, $context ) {
+		$config['contentDefaults'] = [
+			'ProductMetafield' => [ 'linkSource' => 'page' ],
+			'Row'              => [
+				'linkSource' => 'page',
+				'linkType'   => 'page',
+				'items'      => [
+					[
+						'type'  => 'Column',
+						'value' => [
+							'_styles'    => [ 'column' ],
+							'linkSource' => 'page',
+							'linkType'   => 'page',
+							'items'      => []
+						]
+					],
+					[
+						'type'  => 'Column',
+						'value' => [
+							'_styles'    => [ 'column' ],
+							'linkSource' => 'page',
+							'linkType'   => 'page',
+							'items'      => []
+						]
+					]
+				]
+			],
+			'Button'           => [ 'linkSource' => 'page', 'linkType' => 'page' ],
+			'RichText'         => [ 'linkSource' => 'page', 'linkType' => 'page' ],
+			'Icon'             => [ 'linkSource' => 'page', 'linkType' => 'page' ],
+			'Image'            => [ 'linkSource' => 'page', 'linkType' => 'page' ],
+			'Lottie'           => [ 'linkSource' => 'page', 'linkType' => 'page' ],
+			'FeaturedImage'    => [ 'linkSource' => 'page', 'linkType' => 'page' ],
+			'PostExcerpt'      => [
+				'linkSource'               => 'page',
+				'linkType'                 => 'page',
+				'textPopulation'           => '{{brizy_dc_post_excerpt}}',
+				'textPopulationEntityType' => '',
+				'textPopulationEntityId'   => '',
+				'_population'              => [
+					'name'        => 'brizy_dc_post_excerpt',
+					'placeholder' => '{{brizy_dc_post_excerpt}}'
+				]
+			],
+			'Column'           => [
+				[ 'type' => 'Column', 'value' => [ 'linkSource' => 'page', 'linkType' => 'page', 'items' => [] ] ],
+				[ 'type' => 'Column', 'value' => [ 'linkSource' => 'page', 'linkType' => 'page', 'items' => [] ] ]
+			],
+			'PostContent'      => [
+				'linkSource'               => 'page',
+				'textPopulation'           => '{{brizy_dc_post_content}}',
+				'textPopulationEntityType' => '',
+				'textPopulationEntityId'   => '',
+				'_population'              => [
+					'name'        => 'brizy_dc_post_content',
+					'placeholder' => '{{brizy_dc_post_content}}'
+				]
+			],
+			'PostTitle'        => [
+				'linkSource'               => 'page',
+				'linkType'                 => 'page',
+				'textPopulation'           => '{{brizy_dc_post_title}}',
+				'textPopulationEntityType' => '',
+				'textPopulationEntityId'   => '',
+				'_population'              => [
+					'name'        => 'brizy_dc_post_title',
+					'placeholder' => '{{brizy_dc_post_title}}'
+				]
+			],
+			'Posts'            => [
+				'_styles'  => [ 'posts', 'posts-posts' ],
+				'_version' => 3,
+				'order'    => 'ASC',
+				'orderBy'  => 'ID',
+				'source'   => 'post',
+				'type'     => 'posts',
+				'items'    => [
+					[
+						'type'  => 'Column',
+						'value' => [
+							'_styles' => [ 'posts--column' ],
+							'items'   => [
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [ 'wrapper', 'wrapper--image' ],
+										'items'   => [
+											[
+												'type'  => 'Image',
+												'value' => [
+													'_styles'         => [ 'image', 'image--dynamic' ],
+													'imagePopulation' => '{{brizy_dc_img_featured_image}}',
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postTitle',
+											'wrapper-postTitle-posts',
+											'wrapper-postTitle-posts-posts'
+										],
+										'items'   => [
+											[
+												'type'  => 'WPPostsTitle',
+												'value' => [
+													'_styles' => [
+														'postTitle',
+														'postTitle-posts',
+														'postTitle-posts-posts'
+													],
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postExcerpt',
+											'wrapper-postExcerpt-posts',
+											'wrapper-postExcerpt-posts-posts'
+										],
+										'items'   => [
+											[
+												'type'  => 'WPPostExcerpt',
+												'value' => [
+													'_styles' => [
+														'postExcerpt',
+														'postExcerpt-posts',
+														'postExcerpt-posts-posts'
+													],
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Cloneable',
+									'value' => [
+										'_styles' => [ 'wrapper-clone', 'wrapper-clone--button' ],
+										'items'   => [
+											[
+												'type'  => 'Button',
+												'value' => [
+													'_styles' => [ 'button', 'button--dynamic' ],
+												],
+											],
+										],
+									],
+								],
+							],
+						],
+					],
+				],
+			],
+			'AssetsPosts'       => [
+				'_version' => 3,
+				'type'     => 'posts',
+				'source'   => 'post',
+				'orderBy'  => 'id',
+				'order'    => 'DESC',
+				'items'    => [
+					[
+						'type'  => 'Column',
+						'value' => [
+							'_styles' => [
+								'posts--column',
+							],
+							'items'   => [
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper--image',
+										],
+										'items'   => [
+											[
+												'type'  => 'Image',
+												'value' => [
+													'_styles'         => [
+														'image',
+														'image--dynamic',
+													],
+													'imagePopulation' => '{{brizy_dc_img_featured_image}}',
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postTitle',
+											'wrapper-postTitle-posts',
+											'wrapper-postTitle-posts-posts',
+										],
+										'items'   => [
+											[
+												'type'  => 'WPPostsTitle',
+												'value' => [
+													'_styles' => [
+														'postTitle',
+														'postTitle-posts',
+														'postTitle-posts-posts',
+													],
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postExcerpt',
+											'wrapper-postExcerpt-posts',
+											'wrapper-postExcerpt-posts-posts',
+										],
+										'items'   => [
+											[
+												'type'  => 'WPPostExcerpt',
+												'value' => [
+													'_styles' => [
+														'postExcerpt',
+														'postExcerpt-posts',
+														'postExcerpt-posts-posts',
+													],
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Cloneable',
+									'value' => [
+										'_styles' => [
+											'wrapper-clone',
+											'wrapper-clone--button',
+										],
+										'items'   => [
+											[
+												'type'  => 'Button',
+												'value' => [
+													'_styles' => [
+														'button',
+														'button--dynamic',
+													],
+												],
+											],
+										],
+									],
+								],
+							],
+						],
+					],
+				],
+			],
+			'ShopCategories' => [
+				"_version" => 3,
+				"type" => "posts",
+				"source" => "post",
+				"orderBy" => "id",
+				"order" => "DESC",
+				"items" => [
+					[
+						'type' => 'Column',
+						'value' => [
+							'_styles' => [
+								'posts--column'
+							],
+							'items' => [
+								[
+									'type' => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper--image'
+										],
+										'items' => [
+											[
+												'type' => 'Image',
+												'value' => [
+													'_styles' => [
+														'image',
+														'image--dynamic'
+													],
+													'imagePopulation' => '{{brizy_dc_img_featured_image}}'
+												]
+											]
+										]
+									]
+								],
+								[
+									'type' => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postTitle',
+											'wrapper-postTitle-posts',
+											'wrapper-postTitle-posts-posts'
+										],
+										'items' => [
+											[
+												'type' => 'WPPostsTitle',
+												'value' => [
+													'_styles' => [
+														'postTitle',
+														'postTitle-posts',
+														'postTitle-posts-posts'
+													]
+												]
+											]
+										]
+									]
+								],
+								[
+									'type' => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postExcerpt',
+											'wrapper-postExcerpt-posts',
+											'wrapper-postExcerpt-posts-posts'
+										],
+										'items' => [
+											[
+												'type' => 'WPPostExcerpt',
+												'value' => [
+													'_styles' => [
+														'postExcerpt',
+														'postExcerpt-posts',
+														'postExcerpt-posts-posts'
+													]
+												]
+											]
+										]
+									]
+								],
+								[
+									'type' => 'Cloneable',
+									'value' => [
+										'_styles' => [
+											'wrapper-clone',
+											'wrapper-clone--button'
+										],
+										'items' => [
+											[
+												'type' => 'Button',
+												'value' => [
+													'_styles' => [
+														'button',
+														'button--dynamic'
+													]
+												]
+											]
+										]
+									]
+								]
+							]
+						]
+					]
+				]
+			],
+			'ShopPosts' => [
+				'_version' => 3,
+				'type'     => 'posts',
+				'source'   => 'post',
+				'orderBy'  => 'id',
+				'order'    => 'DESC',
+				'items'    => [
+					[
+						'type'  => 'Column',
+						'value' => [
+							'_styles' => [
+								'posts--column',
+							],
+							'items'   => [
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper--image',
+										],
+										'items'   => [
+											[
+												'type'  => 'Image',
+												'value' => [
+													'_styles'         => [
+														'image',
+														'image--dynamic',
+													],
+													'imagePopulation' => '{{brizy_dc_img_featured_image}}',
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postTitle',
+											'wrapper-postTitle-posts',
+											'wrapper-postTitle-posts-posts',
+										],
+										'items'   => [
+											[
+												'type'  => 'WPPostsTitle',
+												'value' => [
+													'_styles' => [
+														'postTitle',
+														'postTitle-posts',
+														'postTitle-posts-posts',
+													],
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Wrapper',
+									'value' => [
+										'_styles' => [
+											'wrapper',
+											'wrapper-postExcerpt',
+											'wrapper-postExcerpt-posts',
+											'wrapper-postExcerpt-posts-posts',
+										],
+										'items'   => [
+											[
+												'type'  => 'WPPostExcerpt',
+												'value' => [
+													'_styles' => [
+														'postExcerpt',
+														'postExcerpt-posts',
+														'postExcerpt-posts-posts',
+													],
+												],
+											],
+										],
+									],
+								],
+								[
+									'type'  => 'Cloneable',
+									'value' => [
+										'_styles' => [
+											'wrapper-clone',
+											'wrapper-clone--button',
+										],
+										'items'   => [
+											[
+												'type'  => 'Button',
+												'value' => [
+													'_styles' => [
+														'button',
+														'button--dynamic',
+													],
+												],
+											],
+										],
+									],
+								],
+							],
+						],
+					],
+				],
+			]
+		];
+
+		return $config;
+	}
+
+	private function getPostLoopSources( $isTemplate, $wp_post_id, $context ) {$types  = get_post_types(['public' => true]);$typesSort        = [ 'page', 'post', 'editor-story' ];
+		$excludePostTypes = [ 'page', 'post', 'editor-story', 'attachment' ];
+
+		$types = array_merge( $typesSort, array_filter( $types, function ( $type ) use ( $excludePostTypes ) {
+			return ! in_array( $type, $excludePostTypes );
+		} ) );
         $result = [];
 
         $templateTypeArchive = false;
@@ -254,32 +878,72 @@ class Brizy_Editor_Editor_Editor
             if ($template_type == Brizy_Admin_Templates::TYPE_ARCHIVE || $template_type == Brizy_Admin_Templates::TYPE_PRODUCT_ARCHIVE) {
                 $templateTypeArchive = true;
             }
-        }
+        $rule_manager     = new Brizy_Admin_Rules_Manager();
+			$template_rules   = $rule_manager->getRules( $wp_post_id );
+			$isSearchTemplate = $this->isSearchTemplate( $template_rules );
+		}
 
-        if ($templateTypeArchive) {
-            $result[] = [
-                "name"  => "brz_current_context",
-                "label" => "Current Query",
-            ];
-        }
+		$orderBy = [
+			[ 'field'=>'title', 'label'=> __( 'Title', 'brizy' )],
+			[ 'field'=>'date', 'label'=> __( 'Date', 'brizy' )],
+			[ 'field'=>'rand', 'label'=> __( 'Random', 'brizy' )],
+			[ 'field'=>'comment_count', 'label'=> __( 'Comment Count', 'brizy' )]
+		];
+
+		$orderBy = [
+			[ 'title' => __( 'Title', 'brizy' ) ],
+			[ 'date' => __( 'Date', 'brizy' ) ],
+			[ 'rand' => __( 'Random', 'brizy' ) ],
+			[ 'comment_count' => __( 'Comment Count', 'brizy' ) ]
+		];
+
+		if ( $templateTypeArchive ) {
+			$orderByCustom = $orderBy;
+			if ( $isSearchTemplate ) {
+				$orderByCustom = array_merge( $orderBy, [ [ 'relevance' => __( 'Relevance', 'brizy' ) ] ] );
+			}
+			$result[] = [
+				"name"    => "brz_current_context",
+				"label"   => "Current Query",
+				'orderBy' => $orderByCustom
+			];
+		}
 
         foreach ($types as $type) {
-            if (in_array($type, $excludePostTypes)) {
-                continue;
-            }
+
             $typeObj  = get_post_type_object($type);
             $typeDto  = [
                 'name'  => $typeObj->name,
                 'label' => $typeObj->label,
-            ];
+            'orderBy' => $orderBy];
             $result[] = $typeDto;
 
         }
 
-        $config['wp']['postLoopSources'] = $result;
+        return $result;
+	}
 
-        return $config;
-    }
+	private function addLoopSourcesConfig( $config, $isTemplate, $wp_post_id, $context ) {
+		$sources = $this->getPostLoopSources( $isTemplate, $wp_post_id, $context );
+
+		# as stated in this issue: https://github.com/bagrinsergiu/blox-editor/issues/21795
+		# we have to add in config the post sources
+		$config['posts']['sources'] = array_map( function ( $source ) {
+			return [
+				'value' => $source['name'],
+				'title' => $source['label']
+			];
+		}, $sources );
+
+		return $config;
+	}
+
+	private function addLoopSourcesClientConfig( $config, $isTemplate, $wp_post_id, $context ) {
+		$sources                   = $this->getPostLoopSources( $isTemplate, $wp_post_id, $context );
+		$config['collectionTypes'] = $sources;
+
+		return $config;
+	}
 
     private function addGlobalBlocksData($config)
     {
@@ -296,7 +960,7 @@ class Brizy_Editor_Editor_Editor
         }
 
         $config['wp']['postTerms']       = $postTerms;
-        $config['wp']['postTermParents'] = array_diff_key($this->getAllParents($postTermsByKeys), $postTermsByKeys);
+        $config['wp']['postTermParents'] = array_values(array_diff_key($this->getAllParents($postTermsByKeys), $postTermsByKeys));
         $config['wp']['postAuthor']      = (int)$this->post->getWpPost()->post_author;
 
         return $config;
@@ -1017,7 +1681,25 @@ class Brizy_Editor_Editor_Editor
         return '';
     }
 
-    /**
+    private function isSearchTemplate( $template_rules ) {
+		foreach ( $template_rules as $rule ) {
+
+			if ( $rule->getType() != Brizy_Admin_Rule::TYPE_INCLUDE ) {
+				continue;
+			}
+
+
+			// single mode
+			if ( $rule->getAppliedFor() == Brizy_Admin_Rule::TEMPLATE ) {
+
+				if ( $rule->getEntityType() == 'search' ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}/**
      * @return array
      */
     public function getProjectStatus()
@@ -1216,4 +1898,128 @@ class Brizy_Editor_Editor_Editor
         return $sizes;
     }
 
+	private function getEditorHelpVideos( $sourceUrl ) {
+
+		$categoryVideos = [
+			__('Get Started', 'brizy') => [
+				[ 'title' => __( 'Builder Overview',       'brizy' ), 'url' => $sourceUrl . '/1.+GET+STARTED/' . '1.+Builder+Overview.mp4' ],
+				[ 'title' => __( 'How to Build a Page',    'brizy' ), 'url' => $sourceUrl . '/1.+GET+STARTED/' . '2.+How+to+Build+a+Page.mp4' ],
+				[ 'title' => __( 'Preview Publish Update', 'brizy' ), 'url' => $sourceUrl . '/1.+GET+STARTED/' . '3.+Preview,+publish+&+update.mp4' ],
+				[ 'title' => __( 'Free vs PRO',            'brizy' ), 'url' => $sourceUrl . '/1.+GET+STARTED/' . '4.+Fress+vs+PRO.mp4' ]
+			],
+			__('The Basics', 'brizy') => [
+				[ 'title' => __( 'Blocks',                     'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '1.+Blocks.mp4' ],
+				[ 'title' => __( 'Saved Blocks & Layouts',     'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '2.+Save+Blocks+&+Layouts.mp4' ],
+				[ 'title' => __( 'Premade Layouts',            'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '3.+Premade+Layouts.mp4' ],
+				[ 'title' => __( 'The Elements',               'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '4.+The+Elements.mp4' ],
+				[ 'title' => __( 'Reorder Blocks',             'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '5.+Reorder+Blocks.mp4' ],
+				[ 'title' => __( 'Global Styling',             'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '6.+Global+Styling.mp4' ],
+				[ 'title' => __( 'Links',                      'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '7.+Links.mp4' ],
+				[ 'title' => __( 'Fonts',                      'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '8.+Fonts.mp4' ],
+				[ 'title' => __( 'Paddings & Margins',         'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '9.+Paddings+&+Margins.mp4' ],
+				[ 'title' => __( 'Responsive Design',          'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '10.+Responsive+Design.mp4' ],
+				[ 'title' => __( 'Headers & Footers',          'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '11.+Headers+&+Footers.mp4' ],
+				[ 'title' => __( 'Menus & Navigation',         'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '12.+Menus+&+Navigation.mp4' ],
+				[ 'title' => __( 'Global Blocks & Conditions', 'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '13.+Global+Blocks+&+Conditions.mp4' ],
+				[ 'title' => __( 'Effects & Animations',       'brizy' ), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '14.+Effects+&+Animations.mp4' ]
+			],
+			__('Dynamic Content', 'brizy') => [
+				[ 'title' => __( 'Dynamic Elements', 'brizy' ), 'url' => $sourceUrl . '/3.+DYNAMIC+CONTENT/' . '1.+Dynamic+Elements.mp4' ]
+			],
+			__('Users & Membership', 'brizy') => [
+				[ 'title' => __('Membership Blocks', 'brizy'), 'url' => $sourceUrl . '/4.+USERS+&+MEMBERSHIP+BLOCKS/' . '1.+Membership+Blocks.mp4' ]
+			],
+			__('Marketing Tools', 'brizy') => [
+				[ 'title' => __('The Popup Builder',           'brizy'), 'url' => $sourceUrl . '/5.+MARKETING+TOOLS/' . '1.+The+Popup+Builder.mp4' ],
+				[ 'title' => __('Contact Form & Integrations', 'brizy'), 'url' => $sourceUrl . '/5.+MARKETING+TOOLS/' . '3.+Contact+Form+&+Integrations.mp4' ]
+			],
+			__('Cool Features', 'brizy') => [
+				[ 'title' => __('Shortcuts',       'brizy'), 'url' => $sourceUrl . '/6.+COOL+FEATURES/' . '1.+Shortcuts.mp4' ],
+				[ 'title' => __('Import & Export', 'brizy'), 'url' => $sourceUrl . '/6.+COOL+FEATURES/' . '2.+Import+&+Export.mp4' ]
+			],
+			__('The Elements', 'brizy') => [
+				[ 'title' => __('Rows & Columns', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '1.+Rows+&+Columns.mp4' ],
+				[ 'title' => __('Text',           'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '2.+Text.mp4' ],
+				[ 'title' => __('Button',         'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '3.+Button.mp4' ],
+				[ 'title' => __('Icon',           'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '4.+Icon.mp4' ],
+				[ 'title' => __('Image',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '5.+Image.mp4' ],
+				[ 'title' => __('Audio',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '6.+Audio.mp4' ],
+				[ 'title' => __('Video',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '7.+Video.mp4' ],
+				[ 'title' => __('Spacer',         'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '8.+Spacer.mp4' ],
+				[ 'title' => __('Line',           'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '9.+Line.mp4' ],
+				[ 'title' => __('Map',            'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '10.+Map.mp4' ],
+				[ 'title' => __('Embed',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '11.+Embed.mp4' ],
+				[ 'title' => __('Icon Box',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '12.+Icon+Box.mp4' ],
+				[ 'title' => __('Counter',        'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '13.+Counter.mp4' ],
+				[ 'title' => __('Countdown',      'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '14.+Countdown.mp4' ],
+				[ 'title' => __('Tabs',           'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '15.+Tabs.mp4' ],
+				[ 'title' => __('Progress',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '16.+Progress.mp4' ],
+				[ 'title' => __('Accordion',      'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '17.+Accordion.mp4' ],
+				[ 'title' => __('Menu',           'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '18.+Menu.mp4' ],
+				[ 'title' => __('Gallery',        'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '19.+Gallery.mp4' ],
+				[ 'title' => __('Carousel',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '20.+Carousel.mp4' ],
+				[ 'title' => __('Rating',         'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '21.+Rating.mp4' ],
+				[ 'title' => __('Playlist',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '22.+Playlist.mp4' ],
+				[ 'title' => __('Table',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '23.+Table.mp4' ],
+				[ 'title' => __('Timeline',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '24.+Timeline.mp4' ],
+				[ 'title' => __('Switcher',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '25.+Switcher.mp4' ],
+				[ 'title' => __('Lottie',         'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '26.+Lottie.mp4' ],
+				[ 'title' => __('Login/register', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '27.+Login+&+Register.mp4' ],
+				[ 'title' => __('Facebook',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '28.+Facebook.mp4' ],
+				[ 'title' => __('Twitter',        'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '29.+Twitter.mp4' ],
+				[ 'title' => __('Comments',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '30.+Comments.mp4' ],
+				[ 'title' => __('Alert',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '31.+Alert.mp4' ],
+				[ 'title' => __('Calendly',       'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '32.+Calendly.mp4' ],
+				[ 'title' => __('Search',         'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '33.+Search.mp4' ],
+				[ 'title' => __('Featured Image', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '34.+Featured+Image.mp4' ],
+				[ 'title' => __('Title',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '35.+Title.mp4' ],
+				[ 'title' => __('Excerpt',        'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '36.+Excerpt.mp4' ],
+				[ 'title' => __('Info',           'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '37.+Info.mp4' ],
+				[ 'title' => __('Breadcrumbs',    'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '38.+Breadcrumbs.mp4' ],
+				[ 'title' => __('Posts',          'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '39.+Posts.mp4' ],
+				[ 'title' => __('Sidebar',        'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '40.+Sidebar.mp4' ],
+				[ 'title' => __('Shortcode',      'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '41.+Shortcode.mp4' ],
+				[ 'title' => __('Archive',        'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '42.+Archive.mp4' ]
+			],
+			__('Woocommerce Elements', 'brizy') => [
+				[ 'title' => __('Products',    'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '1.+Products.mp4' ],
+				[ 'title' => __('Cart',        'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '2.+Cart.mp4' ],
+				[ 'title' => __('Categories',  'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '3.+Categories.mp4' ],
+				[ 'title' => __('Pages',       'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '4.+Pages.mp4' ],
+				[ 'title' => __('Content',     'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '5.+Content.mp4' ],
+				[ 'title' => __('Price',       'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '6.+Price.mp4' ],
+				[ 'title' => __('Gallery',     'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '7.+Gallery.mp4' ],
+				[ 'title' => __('Add to cart', 'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '8.+Add+to+Cart.mp4' ],
+				[ 'title' => __('Stock',       'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '9.+Stock.mp4' ],
+				[ 'title' => __('SKU',         'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '10.+SKU.mp4' ],
+				[ 'title' => __('Meta',        'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '11.+Meta.mp4' ],
+				[ 'title' => __('Rating',      'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '12.+Rating.mp4' ],
+				[ 'title' => __('Attributes',  'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '13.+Attributes.mp4' ],
+				[ 'title' => __('Upsell',      'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '14.+Upsell.mp4' ],
+				[ 'title' => __('Reviews',     'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '15.+Reviews.mp4' ]
+			]
+		];
+
+		$editorHelpVideos = [ 'video' => [] ];
+
+		foreach ( $categoryVideos as $title => $videos ) {
+
+			foreach ( $videos as $index => &$video ) {
+				$video['id'] = $index;
+			}
+
+			$editorHelpVideos['video'][] = [
+				'id'        => count( $editorHelpVideos['video'] ),
+				'category'  => $title,
+				'items'     => $videos
+			];
+		}
+
+		$editorHelpVideos['header'] = [
+			'src' => $sourceUrl . '/Getting-started-video-thumb.jpg',
+			'url' => $sourceUrl . '/1.+GET+STARTED/' . '1.+Builder+Overview.mp4'
+		];
+
+		return $editorHelpVideos;
+	}
 }

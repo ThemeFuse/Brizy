@@ -19,8 +19,16 @@ export default class DataFilter<T, F> extends React.Component<
     currentFilter: this.props.defaultFilter
   };
 
+  componentDidUpdate(props: Props<T, F>): void {
+    if (this.props.defaultFilter !== props.defaultFilter) {
+      this.setState({
+        currentFilter: this.props.defaultFilter
+      });
+    }
+  }
+
   setFilter = (patch: Partial<F>): void => {
-    this.setState(state => ({
+    this.setState((state) => ({
       currentFilter: { ...state.currentFilter, ...patch }
     }));
   };
@@ -28,7 +36,7 @@ export default class DataFilter<T, F> extends React.Component<
   render(): ReactElement {
     const { filterFn, data, children } = this.props;
     const { currentFilter } = this.state;
-    const filteredData = data.filter(item => filterFn(item, currentFilter));
+    const filteredData = data.filter((item) => filterFn(item, currentFilter));
 
     return children(filteredData, currentFilter, this.setFilter);
   }

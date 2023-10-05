@@ -407,12 +407,11 @@ const resize =
 
 export default function ($node: JQuery): void {
   const { MMenu, Dropdown } = getProLibs();
+  const root = $node.get(0);
 
-  if (!MMenu) {
+  if (!MMenu || !root) {
     return;
   }
-
-  const root = $node.get(0);
 
   // normalize current menu item
   root

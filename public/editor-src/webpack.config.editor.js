@@ -40,18 +40,16 @@ module.exports = (options = {}) => {
     },
     output: {
       path: path.resolve(BUILD_PATH, "editor/js"),
-      filename: "[name].js"
+      filename: "[name].min.js"
     },
     resolve: {
       alias: {
-        visual: path.resolve(__dirname, "editor/js"),
-        ui: path.resolve(__dirname, "packages/ui/src"),
-        core: path.resolve(__dirname, "packages/core/src"),
-        component: path.resolve(__dirname, "packages/component/src"),
-        widget: path.resolve(__dirname, "packages/widget/src"),
-        widgetTemp: path.resolve(__dirname, "packages/widgetTemp/src")
+        visual: path.resolve(__dirname, "editor/js")
       },
-      extensions: getExtensions(options.TARGET)
+      extensions: getExtensions(options.TARGET),
+      fallback: {
+        "process/browser": require.resolve("process/browser")
+      }
     },
     module: {
       rules: [
@@ -59,17 +57,9 @@ module.exports = (options = {}) => {
           test: /\.(ts|js)x?$/,
           include: [
             path.resolve(__dirname, "editor"),
-            path.resolve(__dirname, "packages")
+            path.resolve(__dirname, "../packages")
           ],
-          loader: "swc-loader",
-          options: swcrc.editor(options)
-        },
-
-        // It's only for CodeMirror
-        {
-          test: /\.(html|css)$/,
-          include: [path.resolve(__dirname, "node_modules/codemirror")],
-          loader: "null-loader"
+          use: { loader: "swc-loader", options: swcrc.editor(options) }
         }
       ]
     },

@@ -1,9 +1,9 @@
-import React, { ReactElement, useCallback } from "react";
 import classNames from "classnames";
-import { WithClassName } from "visual/utils/options/attributes";
+import React, { ReactElement, useCallback } from "react";
 import { Slider2 } from "visual/component/Controls/Slider2";
-import { clamp } from "visual/utils/math";
 import { Label } from "visual/component/Label";
+import { clamp } from "visual/utils/math";
+import { WithClassName } from "visual/utils/options/attributes";
 
 export interface Props extends WithClassName {
   start: number;
@@ -33,11 +33,11 @@ export function RangeSlider({
 }: Props): ReactElement {
   const handleFrom = useCallback(
     (start: number): void => onChangeStart(clamp(start, min, end)),
-    [onChangeStart, unit, end]
+    [onChangeStart, end, min]
   );
   const handleTo = useCallback(
     (end: number): void => onChangeEnd(clamp(end, start, max)),
-    [onChangeEnd, unit, end]
+    [onChangeEnd, max, start]
   );
 
   const leftOffset = (100 * start) / max;

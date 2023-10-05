@@ -2,6 +2,7 @@ import produce from "immer";
 import _ from "underscore";
 import Config from "visual/global/Config";
 import { StoreChanged } from "visual/redux/types";
+import { onChange } from "visual/utils/api";
 import {
   HEART_BEAT_ERROR,
   PROJECT_DATA_VERSION_ERROR,
@@ -57,14 +58,16 @@ import {
   stylesSelector
 } from "../../selectors";
 import {
+  apiOnChange,
+  apiPublish,
   apiUpdateGlobalBlock,
   apiUpdateGlobalBlocks,
   apiUpdatePage,
   apiUpdatePopupRules,
-  apiUpdateProject,
+  debouncedApiAutoSave,
+  debouncedApiPublish,
   debouncedApiUpdateGlobalBlock,
   debouncedApiUpdatePage,
-  debouncedApiUpdateProject,
   pollingSendHeartBeat
 } from "./utils";
 
@@ -100,15 +103,16 @@ function handlePublish({ action, state, oldState, apiHandler }) {
     const page = pageSelector(state);
 
     const allApi = [];
+    const config = Config.getAll();
 
-    if (!isStory(Config.getAll())) {
+    if (!isStory(config)) {
       const changedGBIds = changedGBIdsSelector(state);
       const globalBlocks = globalBlocksAssembledSelector(state);
 
       // cancel possible pending requests
       debouncedApiUpdatePage.cancel();
-      debouncedApiUpdateProject.cancel();
-
+      debouncedApiAutoSave.cancel();
+      debouncedApiPublish.cancel();
       const newGlobalBlocks = Object.entries(globalBlocks).reduce(
         (acc, [id, globalBlock]) => {
           debouncedApiUpdateGlobalBlock.cancel(id);
@@ -126,8 +130,13 @@ function handlePublish({ action, state, oldState, apiHandler }) {
       allApi.push(apiUpdateGlobalBlocks(newGlobalBlocks, meta));
     }
 
-    if (project !== oldProject) {
-      allApi.push(apiUpdateProject(project, meta));
+    if (project !== oldProject && config.ui?.publish?.handler) {
+      allApi.push(
+        apiPublish(
+          { projectData: project, is_autosave: meta.is_autosave },
+          config
+        )
+      );
     }
 
     if (page !== oldPage) {
@@ -139,13 +148,15 @@ function handlePublish({ action, state, oldState, apiHandler }) {
 }
 
 function handleProject({ action, state, oldState, apiHandler }) {
+  const config = Config.getAll();
+
   switch (action.type) {
     case UPDATE_CURRENT_STYLE_ID:
     case UPDATE_CURRENT_STYLE:
     case UPDATE_EXTRA_FONT_STYLES: {
       const project = projectAssembled(state);
 
-      debouncedApiUpdateProject(project);
+      debouncedApiAutoSave({ projectData: project }, config);
       break;
     }
 
@@ -153,15 +164,16 @@ function handleProject({ action, state, oldState, apiHandler }) {
     case UPDATE_CURRENT_KIT_ID:
     case UPDATE_DISABLED_ELEMENTS: {
       const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
-      const meta = {
-        is_autosave: 0
-      };
       const project = projectSelector(state);
 
       // cancel pending request
-      debouncedApiUpdateProject.cancel();
+      debouncedApiAutoSave.cancel();
 
-      apiHandler(apiUpdateProject(project, meta), onSuccess, onError);
+      apiHandler(
+        apiOnChange({ projectData: project }, config),
+        onSuccess,
+        onError
+      );
       break;
     }
 
@@ -178,14 +190,15 @@ function handleProject({ action, state, oldState, apiHandler }) {
           draft.data.fonts = fonts;
           draft.data.styles = styles;
         });
-        const meta = {
-          is_autosave: 0
-        };
 
         // cancel pending request
-        debouncedApiUpdateProject.cancel();
+        debouncedApiAutoSave.cancel();
 
-        apiHandler(apiUpdateProject(project, meta), onSuccess, onError);
+        apiHandler(
+          apiOnChange({ projectData: project }, config),
+          onSuccess,
+          onError
+        );
       }
       break;
     }
@@ -197,14 +210,15 @@ function handleProject({ action, state, oldState, apiHandler }) {
       const project = produce(projectSelector(state), (draft) => {
         draft.data.fonts = fonts;
       });
-      const meta = {
-        is_autosave: 0
-      };
 
       // cancel pending request
-      debouncedApiUpdateProject.cancel();
+      debouncedApiAutoSave.cancel();
 
-      apiHandler(apiUpdateProject(project, meta), onSuccess, onError);
+      apiHandler(
+        onChange({ projectData: project }, config),
+        onSuccess,
+        onError
+      );
       break;
     }
     case UPDATE_DEFAULT_FONT: {
@@ -213,14 +227,15 @@ function handleProject({ action, state, oldState, apiHandler }) {
       const project = produce(projectSelector(state), (draft) => {
         draft.data.font = font;
       });
-      const meta = {
-        is_autosave: 0
-      };
 
       // cancel pending request
-      debouncedApiUpdateProject.cancel();
+      debouncedApiAutoSave.cancel();
 
-      apiHandler(apiUpdateProject(project, meta), onSuccess, onError);
+      apiHandler(
+        apiOnChange({ projectData: project }, config),
+        onSuccess,
+        onError
+      );
       break;
     }
 
@@ -241,7 +256,7 @@ function handleProject({ action, state, oldState, apiHandler }) {
       ) {
         const project = projectAssembled(state);
 
-        debouncedApiUpdateProject(project);
+        debouncedApiAutoSave({ projectData: project }, config);
       }
     }
   }

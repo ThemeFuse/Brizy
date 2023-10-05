@@ -19,7 +19,8 @@ export const getPlaceholder = (v: Value): string => {
     showPassage,
     showMetaHeadings,
     showPreview,
-    recentSermons
+    recentSermons,
+    showPreviousPage
   } = v;
 
   const _showImage = getAttr(showImage, "show_image");
@@ -52,6 +53,7 @@ export const getPlaceholder = (v: Value): string => {
   const _showPassage = getAttr(showPassage, "show_passage");
   const _showMetaHeadings = getAttr(showMetaHeadings, "show_meta_headings");
   const _showPreview = getAttr(showPreview, "show_preview");
+  const _showPreviousPage = getAttr(showPreviousPage, "previous_page");
 
   return `{{ekk_sermon_detail
               sermons_recent='${recentSermons}'
@@ -71,5 +73,6 @@ export const getPlaceholder = (v: Value): string => {
               ${_showPassage}
               ${_showMetaHeadings}
               ${_showPreview}           
+              ${_showPreviousPage}           
           }}`;
 };

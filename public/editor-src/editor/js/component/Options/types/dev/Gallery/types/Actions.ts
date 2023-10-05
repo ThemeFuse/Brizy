@@ -1,4 +1,4 @@
-import { UploadData } from "visual/component/Controls/ImageUpload";
+import { UploadData } from "./UploadData";
 
 // region Add
 export interface Add {

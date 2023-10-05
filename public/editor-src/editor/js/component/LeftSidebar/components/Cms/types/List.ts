@@ -44,6 +44,9 @@ export interface Cloud extends Base {
   taxesMainCategoryId: string;
   notificationApi: Authorize;
   customersEditorUrl: string;
+  isAvailablePreviewBadge: boolean;
+  cloneLink: string;
+  cloneLinkApi: Authorize;
   modules: {
     shop: Shop;
     users: {

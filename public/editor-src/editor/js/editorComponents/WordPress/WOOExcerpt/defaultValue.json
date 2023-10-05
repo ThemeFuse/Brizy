@@ -93,26 +93,12 @@
     "tempParagraphColorOpacity": 1,
     "tempParagraphColorPalette": "",
 
-    "hoverParagraphColorHex": null,
-    "hoverParagraphColorOpacity": null,
-    "hoverParagraphColorPalette": null,
-
-    "tempHoverParagraphColorOpacity": null,
-    "tempHoverParagraphColorPalette": null,
-
     "h1ColorHex": "#000000",
     "h1ColorOpacity": 1,
     "h1ColorPalette": "",
 
     "tempH1ColorOpacity": 1,
     "tempH1ColorPalette": "",
-
-    "hoverH1ColorHex": null,
-    "hoverH1ColorOpacity": null,
-    "hoverH1ColorPalette": null,
-
-    "tempHoverH1ColorOpacity": null,
-    "tempHoverH1ColorPalette": null,
 
     "h2ColorHex": "#000000",
     "h2ColorOpacity": 1,
@@ -121,26 +107,12 @@
     "tempH2ColorOpacity": 1,
     "tempH2ColorPalette": "",
 
-    "hoverH2ColorHex": null,
-    "hoverH2ColorOpacity": null,
-    "hoverH2ColorPalette": null,
-
-    "tempHoverH2ColorOpacity": null,
-    "tempHoverH2ColorPalette": null,
-
     "h3ColorHex": "#000000",
     "h3ColorOpacity": 1,
     "h3ColorPalette": "",
 
     "tempH3ColorOpacity": 1,
     "tempH3ColorPalette": "",
-
-    "hoverH3ColorHex": null,
-    "hoverH3ColorOpacity": null,
-    "hoverH3ColorPalette": null,
-
-    "tempHoverH3ColorOpacity": null,
-    "tempHoverH3ColorPalette": null,
 
     "h4ColorHex": "#000000",
     "h4ColorOpacity": 1,
@@ -149,13 +121,6 @@
     "tempH4ColorOpacity": 1,
     "tempH4ColorPalette": "",
 
-    "hoverH4ColorHex": null,
-    "hoverH4ColorOpacity": null,
-    "hoverH4ColorPalette": null,
-
-    "tempHoverH4ColorOpacity": null,
-    "tempHoverH4ColorPalette": null,
-
     "h5ColorHex": "#000000",
     "h5ColorOpacity": 1,
     "h5ColorPalette": "",
@@ -163,26 +128,12 @@
     "tempH5ColorOpacity": 1,
     "tempH5ColorPalette": "",
 
-    "hoverH5ColorHex": null,
-    "hoverH5ColorOpacity": null,
-    "hoverH5ColorPalette": null,
-
-    "tempHoverH5ColorOpacity": null,
-    "tempHoverH5ColorPalette": null,
-
     "h6ColorHex": "#000000",
     "h6ColorOpacity": 1,
     "h6ColorPalette": "",
 
     "tempH6ColorOpacity": 1,
     "tempH6ColorPalette": "",
-
-    "hoverH6ColorHex": null,
-    "hoverH6ColorOpacity": null,
-    "hoverH6ColorPalette": null,
-
-    "tempHoverH6ColorOpacity": null,
-    "tempHoverH6ColorPalette": null,
 
     "hoverTransition": 50,
 

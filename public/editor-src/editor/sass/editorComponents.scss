@@ -148,7 +148,6 @@
 // wpPostNavigation
 @import "editorComponents/postNavigation";
 
-
 // Search
 @import "editorComponents/search";
 
@@ -176,8 +175,14 @@
 // ShopifyAddToCart
 @import "editorComponents/shopifyAddToCart";
 
+// ShopifyPrice
+@import "editorComponents/shopifyPrice";
+
 // ShopifyStampedReviews
 @import "editorComponents/stampedReviews";
+
+// ShopifyBlogPostMeta
+@import "editorComponents/shopifyBlogPostMeta";
 
 // Filters
 @import "editorComponents/filters";
@@ -283,3 +288,9 @@
 
 // Twitter
 @import "editorComponents/twitter";
+
+// Hover Animation
+@import "editorComponents/hoverAnimation";
+
+//Background
+@import "editorComponents/background";

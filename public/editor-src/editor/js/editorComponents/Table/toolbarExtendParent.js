@@ -74,23 +74,17 @@ export function getItems({ v, device }) {
         {
           id: "rows",
           label: t("Rows"),
-          type: "slider",
+          type: "slider-dev",
           devices: "desktop",
-          slider: {
-            min: 1,
-            max: 10
+          config:{
+            min:1,
+            max:10
           },
-          input: {
-            show: true
-          },
-          value: {
-            value: v.rows
-          },
-          onChange: ({ value }) => {
+          dependencies: ({rows})=>{
             const [tableHead, tableBody] = v.items;
             const rowBody = getIn(tableBody, ["value", "items"]);
 
-            if (rowBody && rowBody.length < value) {
+            if (rowBody && rowBody.length < rows) {
               const _colBody = Array(v.columns).fill(TableCol);
               const newRow = setIn(
                 TableRow,
@@ -98,7 +92,7 @@ export function getItems({ v, device }) {
                 [TableAside, ..._colBody]
               );
               const _rowBody = setIds(
-                Array(value - rowBody.length).fill(newRow)
+                Array(rows - rowBody.length).fill(newRow)
               );
               const newTableRows = addLast(
                 getIn(tableBody, ["value", "items"]),
@@ -109,44 +103,36 @@ export function getItems({ v, device }) {
                 ["value", "items"],
                 newTableRows
               );
-
               return {
                 items: [tableHead, newTable],
-                rows: value
+                rows
               };
             }
-
             return {
-              rows: value
+              rows
             };
-          }
+          },
         },
         {
           id: "columns",
           label: t("Columns"),
-          type: "slider",
+          type: "slider-dev",
           devices: "desktop",
-          slider: {
+          config: {
             min: 1,
             max: 10
           },
-          input: {
-            show: true
-          },
-          value: {
-            value: v.columns
-          },
-          onChange: ({ value }) => {
+          dependencies:({columns})=>{
             const [tableHead, tableBody] = v.items;
             const rowBody = getIn(tableBody, ["value", "items"]);
             const rowHead = getIn(tableHead, ["value", "items"]);
             const needAddNewCol = getIn(rowBody, [0, "value", "items"]);
             const needAddNewColHead = getIn(rowHead, [0, "value", "items"]);
 
-            if (needAddNewCol && needAddNewCol.length - 1 < value) {
+            if (needAddNewCol && needAddNewCol.length - 1 < columns) {
               const nRowBody = rowBody.reduce((acc, curr) => {
                 const colBody = setIds(
-                  Array(value - (needAddNewCol.length - 1)).fill(TableCol)
+                  Array(columns - (needAddNewCol.length - 1)).fill(TableCol)
                 );
                 const tableRow = setIn(
                   curr,
@@ -159,7 +145,7 @@ export function getItems({ v, device }) {
                 return acc;
               }, []);
               const nHeadCols = setIds(
-                Array(value - (needAddNewColHead.length - 1)).fill(TableColHead)
+                Array(columns - (needAddNewColHead.length - 1)).fill(TableColHead)
               );
               const nRowHead = setIn(
                 rowHead,
@@ -171,14 +157,14 @@ export function getItems({ v, device }) {
 
               return {
                 items: [nTableHead, nTableBody],
-                columns: value
+                columns
               };
             }
 
             return {
-              columns: value
+              columns
             };
-          }
+          },
         },
         {
           id: "width",

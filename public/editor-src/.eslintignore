@@ -5,4 +5,6 @@
 *.test.js
 *.test.ts
 **/libs/**
-/packages/optionControls/**
+/packages/UIComponents/**
+/packages/api/**
+/packages/icons/**

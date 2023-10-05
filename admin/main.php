@@ -248,7 +248,7 @@ class Brizy_Admin_Main {
 
 			$links['go_pro'] = sprintf(
 				'<a href="%1$s" target="_blank" style="color:#39b54a;font-weight:700;">%2$s</a>',
-				Brizy_Config::GO_PRO_DASHBOARD_URL,
+				Brizy_Config::getUpgradeUrl(),
 				__( 'Go Pro', 'brizy' )
 			);
 		}

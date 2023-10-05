@@ -28,7 +28,7 @@ const autoprefixer = require("autoprefixer");
 const tailwindcss = require("tailwindcss");
 const postsCssProcessors = [
   sass({
-    includePaths: ["node_modules"],
+    includePaths: ["node_modules", "../node_modules"],
     errLogToConsole: true
   }),
   autoprefixer({
@@ -188,7 +188,7 @@ function editorCSS() {
           console.log("Sass Syntax Error", err);
         })
     )
-    .pipe(gulpPlugins.concat("editor.css"))
+    .pipe(gulpPlugins.concat("editor.min.css"))
     .pipe(cleanCSS())
     .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.write()))
     .pipe(gulp.dest(dest));
@@ -306,7 +306,7 @@ function exportJS(done) {
       }
       if (ANALYZE_PREVIEW) {
         fs.writeFileSync(
-          path.resolve(paths.build, "editor/js/preview.js.webpack-stats.json"),
+          path.resolve(paths.build, "editor/js/preview.min.js.webpack-stats.json"),
           JSON.stringify(stats.toJson().children[0]),
           "utf8"
         );
@@ -340,7 +340,7 @@ function exportCSS() {
           console.log("Sass Syntax Error", err);
         })
     )
-    .pipe(gulpPlugins.concat("preview.css"))
+    .pipe(gulpPlugins.concat("preview.min.css"))
     .pipe(cleanCSS())
     .pipe(gulp.dest(dest));
 }
@@ -353,7 +353,7 @@ function exportLibsCSS() {
   const rename = (path) => {
     if (path.extname) {
       path.extname = ".css";
-      path.basename = path.dirname;
+      path.basename = `${path.dirname}.min`;
       path.dirname = "";
     }
   };
@@ -462,7 +462,7 @@ function proEditorCSS() {
           console.log("Sass Syntax Error", err);
         })
     )
-    .pipe(gulpPlugins.concat("editor.pro.css"))
+    .pipe(gulpPlugins.concat("editor.pro.min.css"))
     .pipe(cleanCSS())
     .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.write()))
     .pipe(gulp.dest(dest));
@@ -486,7 +486,7 @@ function proExportCSS() {
           console.log("Sass Syntax Error", err);
         })
     )
-    .pipe(gulpPlugins.concat("preview.pro.css"))
+    .pipe(gulpPlugins.concat("preview.pro.min.css"))
     .pipe(cleanCSS())
     .pipe(gulp.dest(dest));
 }
@@ -499,7 +499,7 @@ function proExportLibsCSS() {
   const rename = (path) => {
     if (path.extname) {
       path.extname = ".css";
-      path.basename = path.dirname;
+      path.basename = `${path.dirname}.min`;
       path.dirname = "";
     }
   };
@@ -524,254 +524,6 @@ function proExportLibsCSS() {
     .pipe(gulpPlugins.rename(rename))
     .pipe(cleanCSS())
     .pipe(gulp.dest(dest, { sourcemaps: !IS_PRODUCTION }));
-}
-
-function thumbsPreview() {
-  const src = [
-    paths.kits + "/*/blocks/*/Preview.jpg",
-    paths.templates + "/*/**/Preview.jpg",
-    paths.stories + "/*/**/Preview.jpg",
-    paths.popups + "/blocks/*/Preview.jpg"
-  ];
-  const dest = paths.build + "/thumbs";
-
-  return gulp
-    .src(src)
-    .pipe(
-      gulpPlugins.rename((path_) => {
-        const r = new RegExp(
-          `.+\\${path.sep}blocks\\${path.sep}|\\${path.sep}pages\\${path.sep}`
-        );
-
-        path_.basename = path_.dirname.replace(r, "");
-        path_.dirname = "";
-      })
-    )
-    .pipe(gulp.dest(dest));
-}
-function thumbsSizes() {
-  const kits = require(paths.kits + "/index.js");
-  const popups = require(paths.popups + "/index.js");
-  const dest = paths.build + "/thumbs";
-  const thumbsSizes = {};
-
-  for (let kit of kits) {
-    for (let block of kit.blocks) {
-      const { id, thumbnailWidth, thumbnailHeight } = block;
-
-      thumbsSizes[id] = [thumbnailWidth, thumbnailHeight];
-    }
-  }
-
-  for (let block of popups.blocks) {
-    const { id, thumbnailWidth, thumbnailHeight } = block;
-
-    thumbsSizes[id] = [thumbnailWidth, thumbnailHeight];
-  }
-
-  let rs = new Readable({
-    objectMode: true
-  });
-
-  rs.push(
-    new Vinyl({
-      path: "blocksThumbnailSizes.json",
-      contents: Buffer.from(JSON.stringify(thumbsSizes))
-    })
-  );
-  rs.push(null); // null signifies stream end
-
-  return rs.pipe(gulp.dest(dest));
-}
-
-function kitsData() {
-  const src = paths.kits + "/index.js";
-  const dest = paths.build + "/kits";
-  const kits = require(src);
-
-  let rs = new Readable({
-    objectMode: true
-  });
-
-  // meta
-  rs.push(
-    new Vinyl({
-      path: "meta.json",
-      contents: Buffer.from(
-        JSON.stringify(kits, (k, v) => {
-          return k === "resolve" ? undefined : v;
-        })
-      )
-    })
-  );
-
-  // resolves
-  for (let kit of kits) {
-    for (let block of kit.blocks) {
-      const { id, resolve } = block;
-
-      rs.push(
-        new Vinyl({
-          path: `resolves/${id}.json`,
-          contents: Buffer.from(JSON.stringify(resolve))
-        })
-      );
-    }
-  }
-
-  // null signifies stream end
-  rs.push(null);
-
-  return rs.pipe(gulp.dest(dest));
-}
-function kitsMedia() {
-  const src = paths.kits + "/*/img/*";
-  const dest = paths.build + "/media";
-
-  return gulp
-    .src(src)
-    .pipe(
-      gulpPlugins.rename((path_) => {
-        // {KIT_NAME}/img/{IMG} -> {IMG}
-        path_.dirname = "";
-      })
-    )
-    .pipe(gulp.dest(dest));
-}
-
-function templatesData() {
-  const src = paths.templates + "/index.js";
-  const dest = paths.build + "/templates";
-  const templates = require(src);
-
-  let rs = new Readable({
-    objectMode: true
-  });
-
-  // meta
-  rs.push(
-    new Vinyl({
-      path: "meta.json",
-      contents: Buffer.from(
-        JSON.stringify(templates, (k, v) => {
-          return k === "resolve" ? undefined : v;
-        })
-      )
-    })
-  );
-
-  // resolves
-  for (let template of templates.templates) {
-    for (let page of template.pages) {
-      const { id, resolve } = page;
-
-      rs.push(
-        new Vinyl({
-          path: `resolves/${id}.json`,
-          contents: Buffer.from(JSON.stringify(resolve))
-        })
-      );
-    }
-  }
-
-  // null signifies stream end
-  rs.push(null);
-
-  return rs.pipe(gulp.dest(dest));
-}
-
-function storiesData() {
-  const src = paths.stories + "/index.js";
-  const dest = paths.build + "/stories";
-  const stories = require(src);
-
-  let rs = new Readable({
-    objectMode: true
-  });
-
-  // meta
-  rs.push(
-    new Vinyl({
-      path: "meta.json",
-      contents: Buffer.from(
-        JSON.stringify(stories, (k, v) => {
-          return k === "resolve" ? undefined : v;
-        })
-      )
-    })
-  );
-
-  // resolves
-  for (let template of stories.stories) {
-    for (let page of template.pages) {
-      const { id, resolve } = page;
-
-      rs.push(
-        new Vinyl({
-          path: `resolves/${id}.json`,
-          contents: Buffer.from(JSON.stringify(resolve))
-        })
-      );
-    }
-  }
-
-  // null signifies stream end
-  rs.push(null);
-
-  return rs.pipe(gulp.dest(dest));
-}
-
-function popupsData() {
-  const src = paths.popups + "/index.js";
-  const dest = paths.build + "/popups";
-  const popups = require(src);
-
-  let rs = new Readable({
-    objectMode: true
-  });
-
-  // meta
-  rs.push(
-    new Vinyl({
-      path: "meta.json",
-      contents: Buffer.from(
-        JSON.stringify(popups, (k, v) => {
-          return k === "resolve" ? undefined : v;
-        })
-      )
-    })
-  );
-
-  // resolves
-  for (let block of popups.blocks) {
-    const { id, resolve } = block;
-
-    rs.push(
-      new Vinyl({
-        path: `resolves/${id}.json`,
-        contents: Buffer.from(JSON.stringify(resolve))
-      })
-    );
-  }
-
-  // null signifies stream end
-  rs.push(null);
-
-  return rs.pipe(gulp.dest(dest));
-}
-function popupsMedia() {
-  const src = paths.popups + "/img/*";
-  const dest = paths.build + "/media";
-
-  return gulp
-    .src(src)
-    .pipe(
-      gulpPlugins.rename((path_) => {
-        // {POPUP}/img/{IMG} -> {IMG}
-        path_.dirname = "";
-      })
-    )
-    .pipe(gulp.dest(dest));
 }
 
 function config() {
@@ -856,16 +608,16 @@ function buildVersions(done) {
 function buildStats(done) {
   const files = [
     // editor
-    ["editor.js", paths.build + "/editor/js/editor.js"],
-    ["editor.vendor.js", paths.build + "/editor/js/editor.vendor.js"],
-    ["editor.css", paths.build + "/editor/css/editor.css"],
+    ["editor.min.js", paths.build + "/editor/js/editor.min.js"],
+    ["editor.vendor.min.js", paths.build + "/editor/js/editor.vendor.min.js"],
+    ["editor.min.css", paths.build + "/editor/css/editor.min.css"],
 
     // export
-    ["preview.js", paths.build + "/editor/js/preview.js"],
-    ["preview.css", paths.build + "/editor/css/preview.css"],
+    ["preview.min.js", paths.build + "/editor/js/preview.min.js"],
+    ["preview.min.css", paths.build + "/editor/css/preview.min.css"],
 
     // polyfill
-    ["polyfill.js", paths.build + "/editor/js/polyfill.js"],
+    ["polyfill.min.js", paths.build + "/editor/js/polyfill.min.js"],
 
     // static
     ["export.js", paths.build + "/editor/js/export.js"]
@@ -879,7 +631,7 @@ function buildStats(done) {
   if (IS_PRO) {
     const files = [
       // editor
-      ["editor.pro.js", paths.buildPro + "/js/editor.pro.js"]
+      ["editor.pro.min.js", paths.buildPro + "/js/editor.pro.min.js"]
     ];
     fs.writeFileSync(
       paths.buildPro + "/stats.json",
@@ -905,14 +657,7 @@ function zipIcons() {
   const src = paths.editor + "/icons/**/*";
   const dest = paths.build + "/editor";
 
-  return gulp
-    .src(src)
-    .pipe(
-      gulpPlugins.archiver("icons.zip", {
-        zlib: { level: 9 }
-      })
-    )
-    .pipe(gulp.dest(dest));
+  return gulp.src(src).pipe(gulpPlugins.zip("icons.zip")).pipe(gulp.dest(dest));
 }
 
 function watch() {
@@ -931,27 +676,6 @@ function watch() {
 exports.build = gulp.series.apply(undefined, [
   ...(NO_VERIFICATION ? [] : [verifications]),
   clean,
-
-  // thumbs
-  gulp.parallel(thumbsPreview, thumbsSizes),
-
-  // kits
-  gulp.parallel.apply(undefined, [
-    kitsData,
-    ...(IS_PRODUCTION && IS_EXPORT ? [kitsMedia] : [])
-  ]),
-
-  // templates
-  templatesData,
-
-  // stories
-  storiesData,
-
-  // popups
-  gulp.parallel.apply(undefined, [
-    popupsData,
-    ...(IS_PRODUCTION && IS_EXPORT ? [popupsMedia] : [])
-  ]),
 
   // config
   config,

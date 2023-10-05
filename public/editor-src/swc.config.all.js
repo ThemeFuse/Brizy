@@ -53,11 +53,6 @@ exports.preview = (options) => {
   const clonedJsc = JSON.parse(JSON.stringify(jsc));
 
   clonedEnv.targets.browsers = ["> 0.5%", "last 2 versions"];
-  clonedJsc.minify = {
-    ...clonedJsc.minify,
-    // removed all comments & console
-    compress: options.IS_PRODUCTION ? { drop_console: true } : false
-  };
 
   return {
     module,

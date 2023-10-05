@@ -1,7 +1,10 @@
+import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
+import { hoverEffects } from "visual/component/Options/types/dev/Animation/utils";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getDynamicContentChoices } from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
+import { read as readString } from "visual/utils/string/specs";
 
 export function getItems({ v, device, context }) {
   const dvv = (key) => defaultValueValue({ v, key, device });
@@ -13,10 +16,11 @@ export function getItems({ v, device, context }) {
   }
 
   const isRelative = dvv("elementPosition") === "relative";
-  const richTextDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.richText
-  );
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
+  const hoverName = readString(dvv("hoverName")) ?? "none";
 
   return [
     {
@@ -163,9 +167,7 @@ export function getItems({ v, device, context }) {
                         content:
                           "Add your custom ID without the #pound, example: my-id"
                       },
-                      config: {
-                        choices: richTextDC
-                      },
+                      config: richTextDC,
                       option: {
                         id: "customID",
                         type: "inputText-dev"
@@ -182,9 +184,7 @@ export function getItems({ v, device, context }) {
                         content:
                           "Add your custom class without the .dot, example: my-class"
                       },
-                      config: {
-                        choices: richTextDC
-                      },
+                      config: richTextDC,
                       option: {
                         id: "customClassName",
                         type: "inputText-dev"
@@ -195,7 +195,8 @@ export function getItems({ v, device, context }) {
                       label: t("Custom Attributes"),
                       type: "codeMirror-dev",
                       position: 45,
-                      placeholder: "key1:value1\nkey2:value2",
+                      // eslint-disable-next-line
+                      placeholder: 'key1:"value1"\nkey2:"value2"',
                       display: "block",
                       helper: {
                         content:
@@ -316,6 +317,23 @@ export function getItems({ v, device, context }) {
                     {
                       id: "animation",
                       type: "animation-dev"
+                    }
+                  ]
+                },
+                {
+                  id: "tabHover",
+                  label: t("Hover"),
+                  options: [
+                    {
+                      id: "hover",
+                      type: "animation-dev",
+                      devices: "desktop",
+                      config: {
+                        types: hoverEffects,
+                        replay: false,
+                        infiniteAnimation: hasInfiniteAnimation(hoverName),
+                        delay: false
+                      }
                     }
                   ]
                 }

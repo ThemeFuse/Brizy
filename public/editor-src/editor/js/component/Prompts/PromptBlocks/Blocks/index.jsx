@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
+import { ToastNotification } from "visual/component/Notifications";
 import Config from "visual/global/Config";
 import { importKit, updateCurrentKitId } from "visual/redux/actions2";
 import {
@@ -8,9 +9,12 @@ import {
   projectSelector,
   stylesSelector
 } from "visual/redux/selectors";
-import { assetUrl } from "visual/utils/asset";
-import { blockTemplateThumbnailUrl } from "visual/utils/blocks";
-import { getBlockDataUrl } from "visual/utils/blocks";
+import {
+  defaultKitsData,
+  defaultKitsMeta,
+  defaultPopupsData,
+  defaultPopupsMeta
+} from "visual/utils/api";
 import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
 import { isExternalPopup } from "visual/utils/models";
@@ -43,28 +47,27 @@ class BlocksContainer extends Component {
   };
 
   mounted = false;
-
   async getMeta() {
-    const { type } = this.props;
-
-    if (type === "popup") {
-      const r = await fetch(assetUrl("popups/meta.json"));
-      return await r.json();
-    } else {
-      const r = await fetch(assetUrl("kits/meta.json"));
-      return await r.json();
+    try {
+      return this.props.type === "popup"
+        ? await defaultPopupsMeta(Config.getAll())
+        : await defaultKitsMeta(Config.getAll());
+    } catch (e) {
+      console.error(e);
+      ToastNotification.error(t("Something went wrong on getting meta"));
     }
   }
 
   async getBlockResolve(id) {
-    const { type } = this.props;
-
-    if (type === "popup") {
-      const r = await fetch(getBlockDataUrl("popups", id));
-      return await r.json();
-    } else {
-      const r = await fetch(getBlockDataUrl("kits", id));
-      return await r.json();
+    try {
+      return this.props.type === "popup"
+        ? await defaultPopupsData(Config.getAll(), id)
+        : await defaultKitsData(Config.getAll(), id);
+    } catch (e) {
+      console.error(e);
+      ToastNotification.error(
+        t("Something went wrong on getting blockResolve data")
+      );
     }
   }
 
@@ -78,11 +81,6 @@ class BlocksContainer extends Component {
       ...categories
     ];
 
-    // filter blocks
-    const blocksData = blocks.map((block) => ({
-      ...block,
-      thumbnailSrc: blockTemplateThumbnailUrl(block)
-    }));
     const categoriesData = allCategoriesData.filter(
       ({ hidden }) => hidden !== true
     );
@@ -92,7 +90,15 @@ class BlocksContainer extends Component {
       styles,
       types,
       categories: categoriesData,
-      blocks: blocksData
+      blocks
+    };
+  }
+
+  addPopupMeta({ thumbnailSrc, thumbnailWidth, thumbnailHeight }) {
+    return {
+      _thumbnailSrc: thumbnailSrc,
+      _thumbnailWidth: thumbnailWidth,
+      _thumbnailHeight: thumbnailHeight
     };
   }
 
@@ -107,8 +113,7 @@ class BlocksContainer extends Component {
       pro:
         isExternalPopup(Config.getAll()) && block.blank === "blank"
           ? false
-          : block.pro,
-      thumbnailSrc: blockTemplateThumbnailUrl(block)
+          : block.pro
     }));
     const categoriesData = allCategoriesData.filter(
       ({ hidden }) => hidden !== true
@@ -143,9 +148,14 @@ class BlocksContainer extends Component {
   }
 
   handleThumbnailAdd = async (thumbnailData) => {
-    const { projectFonts, onAddBlocks, onClose } = this.props;
+    const { projectFonts, onAddBlocks, onClose, type } = this.props;
     const blockData = await this.getBlockResolve(thumbnailData.id);
-    const resolve = { ...blockData, blockId: thumbnailData.id };
+
+    const resolve = {
+      ...blockData,
+      blockId: thumbnailData.id,
+      ...(type === "popup" && { meta: this.addPopupMeta(thumbnailData) })
+    };
     const fontsDiff = getBlocksStylesFonts(
       getUsedModelsFonts({ models: resolve }),
       projectFonts

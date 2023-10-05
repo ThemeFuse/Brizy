@@ -1,17 +1,17 @@
+import { mPipe, parseStrict } from "fp-utilities";
 import {
-  callGetter,
   FromElementModel,
   FromElementModelGetter,
-  ToElementModel
+  ToElementModel,
+  callGetter
 } from "visual/component/Options/Type";
 import { Value } from "visual/component/Options/types/dev/Margin/types/Value";
-import { parseStrict } from "visual/utils/reader/readWithParser";
-import { mPipe, pipe } from "visual/utils/fp";
-import * as Str from "visual/utils/string/specs";
-import * as Type from "visual/component/Options/utils/Type";
-import { onNullish } from "visual/utils/value";
-import * as Num from "visual/utils/math/number";
 import * as Unit from "visual/component/Options/utils/SpacingUnit";
+import * as Type from "visual/component/Options/utils/Type";
+import { pipe } from "visual/utils/fp";
+import * as Num from "visual/utils/math/number";
+import * as Str from "visual/utils/string/specs";
+import { onNullish } from "visual/utils/value";
 
 export const fromElementModel: FromElementModel<"margin-dev"> = parseStrict<
   FromElementModelGetter,
@@ -73,7 +73,7 @@ export const fromElementModel: FromElementModel<"margin-dev"> = parseStrict<
   )
 });
 
-export const toElementModel: ToElementModel<"margin-dev"> = v => {
+export const toElementModel: ToElementModel<"margin-dev"> = (v) => {
   return {
     type: v.type,
     value: v.value,

@@ -1,6 +1,5 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import Config from "visual/global/Config";
-import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
@@ -18,7 +17,6 @@ export function getItems({
   device: ResponsiveMode;
 }): ToolbarItemType[] {
   const config = Config.getAll();
-  const isApproved = isCloud(config) ? config.user.isApproved : true;
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
@@ -43,7 +41,6 @@ export function getItems({
         {
           id: "code",
           type: "codeMirror-dev",
-          disabled: !isApproved,
           placeholder: t("Paste your HTML code here..."),
           config: {
             language: "html"

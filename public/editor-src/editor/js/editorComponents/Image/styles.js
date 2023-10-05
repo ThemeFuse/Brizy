@@ -1,15 +1,27 @@
 import { renderStyles } from "visual/utils/cssStyle";
 
+export function styleHover(v, vs, vd, props) {
+  const styles = {
+    ".brz &&.brz-hover-animation__container": {
+      standart: ["cssStyleElementImageMaxWidthPreview"]
+    }
+  };
+
+  return renderStyles({ v, vs, vd, styles, props });
+}
+
 export function style(v, vs, vd, props) {
   const styles = {
+    ".brz &&:hover:not(.brz-image--hovered)": {
+      standart: ["cssStyleElementImageMaxWidthPreview"]
+    },
     ".brz &&:hover": {
       standart: [
-        "cssStyleElementImageMaxWidthPreview",
         "cssStyleElementImageHeightPreview",
         "cssStyleElementImageBoxShadow|||preview",
         "cssStyleBorder|||preview",
         "cssStyleBorderRadius|||preview",
-        "cssStyleElementImageMaskDropShadow"
+        "cssStyleMaskDropShadow"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
@@ -25,11 +37,11 @@ export function style(v, vs, vd, props) {
     ".brz &&:hover .brz-picture": {
       standart: [
         "cssStyleElementImageFilter|||preview",
-        "cssStyleElementImageMaskShape",
-        "cssStyleElementImageCustomImage",
-        "cssStyleElementImageMaskSize",
-        "cssStyleElementImageMaskPosition",
-        "cssStyleElementImageMaskRepeat"
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     }
@@ -52,6 +64,7 @@ export function styleContent(v, vs, vd, props) {
 }
 
 export function styleWrapper(v, vs, vd, props) {
+  const { maskShape = "none" } = v;
   const styles = {
     ".brz &&:hover": {
       standart: [
@@ -59,18 +72,18 @@ export function styleWrapper(v, vs, vd, props) {
         "cssStyleElementImageWidthWrapper",
         "cssStyleElementImageHeightWrapper|||editor",
         "cssStyleElementImagePosition",
-        ...(v.maskShape === "none"
+        ...(maskShape === "none"
           ? [
               "cssStyleBorder|||editor",
               "cssStyleBorderRadius|||editor",
               "cssStyleElementImageBoxShadow|||editor"
             ]
           : []),
-        "cssStyleElementImageMaskShape",
-        "cssStyleElementImageCustomImage",
-        "cssStyleElementImageMaskSize",
-        "cssStyleElementImageMaskPosition",
-        "cssStyleElementImageMaskRepeat"
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
@@ -94,7 +107,7 @@ export function styleWrapperContainer(v, vs, vd, props) {
         "cssStyleBorderRadius|||editor",
         "cssStyleBorder|||editor",
         "cssStyleElementImageBoxShadow|||editor",
-        "cssStyleElementImageMaskDropShadow"
+        "cssStyleMaskDropShadow"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     }

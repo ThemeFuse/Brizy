@@ -4,7 +4,7 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -39,10 +39,10 @@ export function getItems({
     dvv("borderColorHex"),
     dvv("borderColorPalette")
   );
-  const linkDC = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.link
-  );
+  const linkDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.link
+  });
 
   const type = dvv("type");
   const customType = type === "custom";
@@ -90,36 +90,12 @@ export function getItems({
               ]
             },
             {
-              id: "soundCloudAdvancedOptions",
-              label: t("Advanced"),
+              id: "soundCloudAppearenceOptions",
+              label: t("Appearence"),
               options: [
                 {
                   id: "artWork",
                   label: t("Artwork"),
-                  type: "switch-dev",
-                  disabled: customType
-                },
-                {
-                  id: "likeButton",
-                  label: t("Like Button"),
-                  type: "switch-dev",
-                  disabled: customType
-                },
-                {
-                  id: "buyButton",
-                  label: t("Buy Button"),
-                  type: "switch-dev",
-                  disabled: customType
-                },
-                {
-                  id: "downloadButton",
-                  label: t("Download Button"),
-                  type: "switch-dev",
-                  disabled: customType
-                },
-                {
-                  id: "shareButton",
-                  label: t("Share Button"),
                   type: "switch-dev",
                   disabled: customType
                 },
@@ -138,6 +114,36 @@ export function getItems({
                 {
                   id: "username",
                   label: t("Username"),
+                  type: "switch-dev",
+                  disabled: customType
+                }
+              ]
+            },
+            {
+              id: "soundCloudButtonsOptions",
+              label: t("Buttons"),
+              options: [
+                {
+                  id: "likeButton",
+                  label: t("Like"),
+                  type: "switch-dev",
+                  disabled: customType
+                },
+                {
+                  id: "buyButton",
+                  label: t("Buy"),
+                  type: "switch-dev",
+                  disabled: customType
+                },
+                {
+                  id: "downloadButton",
+                  label: t("Download"),
+                  type: "switch-dev",
+                  disabled: customType
+                },
+                {
+                  id: "shareButton",
+                  label: t("Share"),
                   type: "switch-dev",
                   disabled: customType
                 }

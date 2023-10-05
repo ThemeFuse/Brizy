@@ -4,16 +4,25 @@ import { Locale } from "visual/component/LeftSidebar/components/Cms/types/Locale
 import * as ShopModule from "visual/component/LeftSidebar/components/Cms/types/Modules/Shop";
 import { fromNumber } from "visual/component/LeftSidebar/components/Cms/types/ProjectId";
 import { getWhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
-import { ShopModules } from "visual/global/Config/types/configs/Base";
 import {
-  Cloud as CloudConfig,
+  ShopModules,
+  isCollectionPage,
+  isCustomerPage,
+  isEcwidCategory,
+  isEcwidProduct,
+  isEcwidShop,
+  isShopifyShop
+} from "visual/global/Config/types/configs/Base";
+import {
   CMS,
+  Cloud as CloudConfig,
+  Shopify as ShopifyConf,
   isCMS,
-  isShopify,
-  Shopify as ShopifyConf
+  isShopify
 } from "visual/global/Config/types/configs/Cloud";
-import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
 import { Cloud, Context, Shopify } from "./types/List";
+
+const createCloneLinkApiUri = (uri: string) => uri.slice(0, uri.length - 3);
 
 const cloud = (config: CMS): Cloud => {
   const token = config.tokenV2?.access_token;
@@ -26,10 +35,21 @@ const cloud = (config: CMS): Cloud => {
     user: { isPro: !!config.pro },
     previewUrl: config.cms.collectionPreviewUrl,
     domainUrl: config.urls.preview,
-    mediaUrl: config.urls.image,
+    mediaUrl: config.api?.media?.mediaResizeUrl ?? "",
     settingsUrl: config.urls.projectSettings,
     protectedPagePassword: config.project.protectedPagePassword,
     whiteLabel: getWhiteLabel(config),
+    cloneLink: `${config.urls.projectCloneLink}/`,
+    cloneLinkApi: xAuthUserToken
+      ? {
+          __type: "withToken",
+          token: xAuthUserToken,
+          uri: createCloneLinkApiUri(config.urls.api)
+        }
+      : {
+          __type: "withOutToken",
+          uri: createCloneLinkApiUri(config.urls.api)
+        },
     userApi: token
       ? { __type: "withToken", token, uri: config.cms.apiUrl }
       : { __type: "withOutToken", uri: config.cms.apiUrl },
@@ -55,7 +75,12 @@ const cloud = (config: CMS): Cloud => {
     customerPreviewUrl: config.cms.customerPreviewUrl,
     activeItem: {
       id: config.page.id,
-      __type: ActiveItemTypes.CollectionItem
+      __type: match(
+        [isCollectionPage, () => ActiveItemTypes.CollectionItem],
+        [isCustomerPage, () => ActiveItemTypes.Customer],
+        [isEcwidProduct, () => ActiveItemTypes.EcwidProduct],
+        [isEcwidCategory, () => ActiveItemTypes.EcwidCategory]
+      )(config.page)
     },
     shopify: token
       ? { __type: "withToken", token, uri: config.cms.apiUrl }
@@ -72,8 +97,9 @@ const cloud = (config: CMS): Cloud => {
           (v: ShopModules): v is undefined => v == undefined,
           (): ShopModule.Disabled => ({ disabled: true })
         ],
+        [isShopifyShop, (): ShopModule.Disabled => ({ disabled: true })],
         [
-          (v: ShopModules): v is Ecwid => v?.type === "ecwid",
+          isEcwidShop,
           (v): ShopModule.Ecwid => ({
             disabled: false,
             type: "ecwid",
@@ -97,7 +123,8 @@ const cloud = (config: CMS): Cloud => {
         disabled: config.cms.modules?.users?.disabled ?? false
       }
     },
-    locale: "default" as Locale
+    locale: "default" as Locale,
+    isAvailablePreviewBadge: config.cms.isAvailablePreviewBadge
   };
 };
 
@@ -107,7 +134,7 @@ const shopify = (config: ShopifyConf): Shopify => {
     __type: "shopify",
     development: process.env.NODE_ENV === "development",
     previewUrl: config.cms.collectionPreviewUrl,
-    mediaUrl: config.urls.image,
+    mediaUrl: config.api?.media?.mediaResizeUrl ?? "",
     customerPreviewUrl: config.cms.customerPreviewUrl,
     subscription: config.subscription,
     user: { isPro: !!config.pro },

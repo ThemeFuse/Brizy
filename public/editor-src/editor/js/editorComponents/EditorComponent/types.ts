@@ -1,16 +1,16 @@
+import { ElementModel } from "visual/component/Elements/Types";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { Dictionary } from "visual/types/utils";
 import * as Responsive from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
+import { MValue } from "visual/utils/value";
+import { Editor } from ".";
 import {
-  DCObjIncomplete,
   DCObjDetails,
+  DCObjIncomplete,
   DCObjResult
 } from "./DynamicContent/getDCObj";
-import { ElementModel } from "visual/component/Elements/Types";
-import { Editor } from ".";
 import { EditorComponentContextValue } from "./EditorComponentContext";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { MValue } from "visual/utils/value";
 
 export interface ECDC {
   pendingDCObjIncomplete?: DCObjIncomplete;
@@ -46,7 +46,7 @@ export interface ContextMenuItemButton {
   title: string;
   inactive?: boolean;
   helperText: (d: { isInSubMenu: boolean }) => string;
-  onChange: () => void;
+  onChange?: () => void;
 }
 
 export interface ContextMenuItemGroup {
@@ -80,7 +80,7 @@ export type Params<
 };
 
 export type GetItems<
-  M extends ElementModel,
+  M extends ElementModel = ElementModel,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   P extends Record<string, any> = Record<string, unknown>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

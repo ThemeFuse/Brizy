@@ -1,30 +1,19 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React from "react";
-
 import classnames from "classnames";
+import React from "react";
 import Placeholder from "visual/component/Placeholder";
 import { css } from "visual/utils/cssStyle";
 import { stylePicture } from "../styles";
-
-import SvgImage from "./SvgImage";
-import SimpleImage from "./SimpleImage";
-import Population from "./Population";
-
-import withLink from "./withLink";
 import { ImageProps, Styles } from "../types";
-import { isSVG, isGIF, showOriginalImage } from "../utils";
+import { isGIF, isSVG, showOriginalImage } from "../utils";
+import Population from "./Population";
+import SimpleImage from "./SimpleImage";
+import SvgImage from "./SvgImage";
+import withLink from "./withLink";
 
-const Content: React.FC<ImageProps> = props => {
-  const {
-    v,
-    vs,
-    vd,
-    _id,
-    componentId,
-    wrapperSizes,
-    extraAttributes,
-    meta
-  } = props;
+const Content: React.FC<ImageProps> = (props) => {
+  const { v, vs, vd, _id, componentId, wrapperSizes, extraAttributes, meta } =
+    props;
   const { imageSrc, imageExtension, imagePopulation } = v;
 
   const pictureClassName = IS_EDITOR
@@ -69,7 +58,11 @@ const Content: React.FC<ImageProps> = props => {
           imageSrc={imageSrc}
         />
       ) : (
-        <SimpleImage {...props} extraAttributes={extraAttributes} />
+        <SimpleImage
+          {...props}
+          extraAttributes={extraAttributes}
+          gallery={props?.gallery}
+        />
       );
 
     return <picture className={pictureClassName}>{content}</picture>;

@@ -1,30 +1,38 @@
+import classnames from "classnames";
+import { isT, match } from "fp-utilities";
 import React, {
-  ChangeEvent,
+  CSSProperties,
   Component,
   ComponentType,
-  CSSProperties,
   ReactElement
 } from "react";
-import _ from "underscore";
 import Scrollbars from "react-custom-scrollbars";
-import classnames from "classnames";
-import { isT } from "fp-utilities";
+import _ from "underscore";
+import EditorIcon from "visual/component/EditorIcon";
+import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
-import EditorIcon from "visual/component/EditorIcon";
-import SearchInput from "../common/SearchInput";
-import ThumbnailGrid from "../common/ThumbnailGrid";
-import DataFilter from "../common/DataFilter";
-import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
-import CloudConnect from "./CloudConnect";
-import { BlockCategory, BlockTypes } from "../types";
-import { BlockData } from "./index";
+import { MValue } from "visual/utils/value";
 import { Button } from "../../common/Button";
+import DataFilter from "../common/DataFilter";
 import { Footer } from "../common/Footer";
+import SearchInput from "../common/SearchInput";
+import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
+import ThumbnailGrid from "../common/ThumbnailGrid";
+import { isBlock, isLayout, isPopup } from "../common/utils";
+import { BlockCategory, BlockTypes } from "../types";
+import CloudConnect from "./CloudConnect";
+import { Filter } from "./Filter";
+import { Control as Select } from "./controls/Select";
+import { BlockData } from "./types";
+
+const ALL_CAT = "All";
+const UNCATEGORISED_CAT = "Uncategorised";
 
 export interface Props {
   type: "normal" | "popup";
   showSearch: boolean;
+  showTitle: boolean;
   sidebarSync: boolean;
   thumbnailSync?: boolean;
   thumbnailDownload?: boolean;
@@ -34,18 +42,23 @@ export interface Props {
   loading: boolean;
   items: Partial<Record<BlockTypes, BlockData[]>>;
   types: BlockCategory[];
+  filter?: string;
   HeaderSlotLeft: ComponentType;
   onChange: (b: BlockData) => void;
   onDelete: (b: BlockData) => void;
   onSync?: (b: BlockData) => void;
   onExport?: (i: string[], type: BlockTypes) => void;
-  onImport?: (f: FileList, type: BlockTypes) => void;
+  onImport?: (type: BlockTypes) => void;
   onSuccessSync: VoidFunction;
+  onUpdate?: (b: BlockData) => void;
+  onFilterChange?: (filter: string, type: BlockTypes) => void;
 }
 
 interface BlocksFilter {
   type: BlockTypes;
   search: string;
+  tags: string;
+  filter: string;
 }
 
 interface Counters {
@@ -61,6 +74,7 @@ class Blocks extends Component<Props> {
     type: "normal",
     showSearch: true,
     sidebarSync: true,
+    showTitle: true,
     search: "",
     loading: false,
     items: {},
@@ -68,32 +82,88 @@ class Blocks extends Component<Props> {
     HeaderSlotLeft: Component,
     onChange: _.noop,
     onDelete: _.noop,
-    onSuccessSync: _.noop
+    onSuccessSync: _.noop,
+    onUpdate: _.noop
   };
 
-  importRef = React.createRef<HTMLInputElement>();
+  currentFilter: BlocksFilter;
 
-  currentFilter: BlocksFilter = {
-    type: this.props.types[0]?.id ?? "BLOCK",
-    search: ""
+  constructor(props: Props) {
+    super(props);
+    const { types, filter: _filter } = this.props;
+    const type = types[0]?.id ?? "BLOCK";
+    const filter =
+      _filter ?? this.getSidebarFilter(type)?.defaultSelected ?? "";
+
+    this.currentFilter = {
+      type,
+      filter,
+      search: "",
+      tags: ALL_CAT
+    };
+  }
+
+  getSidebarFilter(type: BlockTypes) {
+    const config = Config.getAll();
+    const getFilter = match(
+      [isBlock, () => config.api?.savedBlocks?.filter],
+      [isPopup, () => config.api?.savedPopups?.filter],
+      [isLayout, () => config.api?.savedLayouts?.filter]
+    );
+
+    return getFilter(type);
+  }
+
+  hasFilter = (type: BlockTypes): boolean => {
+    const filterHandler = this.getSidebarFilter(type)?.handler;
+    return typeof filterHandler === "function";
   };
 
-  getDefaultFilter = _.memoize(
-    (types: BlockCategory[]): BlocksFilter => ({
-      type: types.length ? types[0].id : "BLOCK",
-      search: ""
-    })
-  );
+  getFilterLabel(type: BlockTypes): MValue<string> {
+    return this.getSidebarFilter(type)?.label;
+  }
+
+  getDefaultFilter = (items: BlockData[]): BlocksFilter => {
+    const itemsTags = this.getAllCategories(items);
+    const tags = itemsTags.some((t) => t.item === this.currentFilter.tags)
+      ? this.currentFilter.tags
+      : ALL_CAT;
+
+    return {
+      type: this.currentFilter.type,
+      search: "",
+      tags,
+      filter: this.currentFilter.filter
+    };
+  };
 
   getActiveType(types: BlockCategory[]): BlockCategory["id"] {
     return this.currentFilter.type || types[0].id;
   }
 
+  getAllCategories = (
+    filteredItems: BlockData[]
+  ): Array<{ item: string; deletable: boolean }> => {
+    const tags = new Set([ALL_CAT, UNCATEGORISED_CAT]);
+
+    filteredItems
+      .filter((item) => item.type === this.currentFilter.type)
+      .map((item) => item.tags?.split(","))
+      .flat()
+      .forEach((tag) => tag && tags.add(tag));
+
+    return [...tags].map((t) => ({
+      item: t,
+      deletable: t !== ALL_CAT && t !== UNCATEGORISED_CAT,
+      editable: t !== ALL_CAT && t !== UNCATEGORISED_CAT
+    }));
+  };
+
   getTypesCounters = (): Counters => {
     const { items, types } = this.props;
     const blocks = Object.values(items)
       .filter(isT)
-      .flatMap(i => i);
+      .flatMap((i) => i);
     const counters: Counters = types.reduce((acc, { id }) => {
       return { ...acc, [id]: 0 };
     }, {});
@@ -112,25 +182,24 @@ class Blocks extends Component<Props> {
       new RegExp(
         currentFilter.search.replace(/[.*+?^${}()|[\]\\]/g, ""),
         "i"
-      ).test(item.keywords || "");
+      ).test(item.keywords || item.title || "");
+    const itemTags = item.tags ?? "";
+    const isAll = currentFilter.tags === ALL_CAT;
+    const isUnCategorised =
+      currentFilter.tags === UNCATEGORISED_CAT && !itemTags.trim();
+    const persistTags = itemTags.split(",").includes(currentFilter.tags);
+    const tagMatch = isAll || isUnCategorised || persistTags;
 
-    return typeMatch && searchMatch;
+    return typeMatch && searchMatch && tagMatch;
   };
 
-  handleImport = (e: ChangeEvent<HTMLInputElement>): void => {
+  handleImport = (): void => {
     const { types, onImport } = this.props;
-    const files = e.target.files;
 
-    if (files?.length && typeof onImport === "function") {
+    if (typeof onImport === "function") {
       const type = this.getActiveType(types);
-      const node = this.importRef.current;
 
-      onImport(files, type);
-
-      // reset value after input have some files
-      if (node !== null) {
-        node.value = "";
-      }
+      onImport(type);
     }
   };
 
@@ -141,8 +210,8 @@ class Blocks extends Component<Props> {
 
     if (typeof onExport === "function" && blocks) {
       const blockIds = blocks
-        .filter(item => this.filterData(item, this.currentFilter))
-        .map(block => block.uid);
+        .filter((item) => this.filterData(item, this.currentFilter))
+        .map((block) => block.uid);
 
       onExport(blockIds, type);
     }
@@ -157,7 +226,8 @@ class Blocks extends Component<Props> {
   }
 
   renderEmpty(): ReactElement {
-    const { type, types, search, onImport } = this.props;
+    const { type, types, onImport } = this.props;
+    const { search } = this.currentFilter;
     const activeType = this.getActiveType(types);
     const style = {
       width: activeType === "LAYOUT" ? "524px" : "322px"
@@ -208,14 +278,16 @@ class Blocks extends Component<Props> {
     );
   }
 
-  renderItems(items: BlockData[]): ReactElement {
+  renderItems(items: BlockData[], tags: string[]): ReactElement {
     const {
+      showTitle,
       thumbnailSync,
       thumbnailDownload,
       onChange,
       onDelete,
       onExport,
-      onImport
+      onImport,
+      onUpdate
     } = this.props;
     const showImport = typeof onImport === "function";
     const showExport = typeof onExport === "function";
@@ -226,10 +298,13 @@ class Blocks extends Component<Props> {
         <Scrollbars style={scrollStyle}>
           <ThumbnailGrid<BlockData>
             showSync={thumbnailSync}
+            showTitle={showTitle}
             showDownload={thumbnailDownload}
             data={items}
+            tags={tags}
             onThumbnailAdd={onChange}
             onThumbnailRemove={onDelete}
+            onUpdate={onUpdate}
           />
         </Scrollbars>
         {showImportExport && (
@@ -245,10 +320,7 @@ class Blocks extends Component<Props> {
   renderImport(): ReactElement {
     const { importLoading, types } = this.props;
     const activeType = this.getActiveType(types);
-    const className = classnames(
-      "brz-label brz-ed-popup-two-body__content--import",
-      { "brz-pointer-events-none": importLoading }
-    );
+    const className = classnames({ "brz-pointer-events-none": importLoading });
     const text =
       activeType === "POPUP"
         ? t("Import New Popup")
@@ -257,19 +329,16 @@ class Blocks extends Component<Props> {
         : t("Import New Layout");
 
     return (
-      <label className={className}>
-        <Button type="link" color="teal" loading={importLoading} size={2}>
-          {text}
-        </Button>
-        <input
-          ref={this.importRef}
-          hidden
-          className="brz-input"
-          type="file"
-          accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
-          onChange={this.handleImport}
-        />
-      </label>
+      <Button
+        className={className}
+        type="link"
+        color="teal"
+        loading={importLoading}
+        size={2}
+        onClick={this.handleImport}
+      >
+        {text}
+      </Button>
     );
   }
 
@@ -303,19 +372,27 @@ class Blocks extends Component<Props> {
       showSearch,
       sidebarSync,
       HeaderSlotLeft,
+      onFilterChange,
       onSuccessSync
     } = this.props;
     const data = Object.values(items)
       .filter(isT)
-      .flatMap(i => i);
+      .flatMap((i) => i);
 
     return (
       <DataFilter<BlockData, BlocksFilter>
         data={data}
         filterFn={this.filterData}
-        defaultFilter={this.getDefaultFilter(types)}
+        defaultFilter={this.getDefaultFilter(data)}
       >
         {(filteredThumbnails, currentFilter, setFilter): ReactElement => {
+          const tags = this.getAllCategories(data);
+          const tagsWithoutAll = tags
+            .filter(
+              (tag) => tag.item !== ALL_CAT && tag.item !== UNCATEGORISED_CAT
+            )
+            .map((t) => t.item);
+
           return (
             <>
               {showSearch && (
@@ -332,17 +409,45 @@ class Blocks extends Component<Props> {
               )}
 
               <Sidebar>
-                <SidebarOption title="LIBRARY">
+                <SidebarOption title={t("LIBRARY")}>
                   <SidebarList
                     lists={types}
                     counters={this.getTypesCounters()}
                     value={currentFilter.type}
                     onChange={(value: BlocksFilter["type"]): void => {
-                      setFilter({ type: value });
+                      setFilter({ type: value, tags: ALL_CAT });
                       this.currentFilter.type = value;
+                      this.currentFilter.tags = ALL_CAT;
                     }}
                   />
                 </SidebarOption>
+
+                <SidebarOption title={t("FILTER BY TAG")}>
+                  <Select<string>
+                    value={currentFilter.tags}
+                    choices={tags}
+                    onChange={(value) => {
+                      setFilter({ tags: value });
+                      this.currentFilter.tags = value;
+                    }}
+                  />
+                </SidebarOption>
+
+                {onFilterChange && this.hasFilter(currentFilter.type) && (
+                  <SidebarOption
+                    title={this.getFilterLabel(currentFilter.type)}
+                  >
+                    <Filter
+                      type={currentFilter.type}
+                      value={currentFilter.filter}
+                      onChange={(value) => {
+                        setFilter({ filter: value });
+                        this.currentFilter.filter = value;
+                        onFilterChange(value, currentFilter.type);
+                      }}
+                    />
+                  </SidebarOption>
+                )}
 
                 {sidebarSync && (
                   <SidebarOption separator={true}>
@@ -355,7 +460,7 @@ class Blocks extends Component<Props> {
                 ? this.renderLoading()
                 : filteredThumbnails.length === 0
                 ? this.renderEmpty()
-                : this.renderItems(filteredThumbnails)}
+                : this.renderItems(filteredThumbnails, tagsWithoutAll)}
             </>
           );
         }}

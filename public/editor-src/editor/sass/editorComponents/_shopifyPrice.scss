@@ -1,0 +1,25 @@
+.brz-shopify-price {
+  &-container {
+    display: flex;
+    justify-content: inherit;
+    flex: 1;
+  }
+
+  &-style1 {
+    display: flex;
+    height: fit-content;
+
+    .brz-shortcode__placeholder:nth-child(2) {
+      display: none;
+    }
+  }
+
+  &-style2 {
+    height: fit-content;
+    text-decoration: line-through;
+  }
+
+  .brz-shortcode__placeholder.placeholder-is-empty {
+    flex: 1;
+  }
+}

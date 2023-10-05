@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { EmbedCode as EmbedCodeComponent } from "component/Flex/EmbedCode";
+import { EmbedCode as EmbedCodeComponent } from "@brizy/component";
 import React, { ReactElement } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";

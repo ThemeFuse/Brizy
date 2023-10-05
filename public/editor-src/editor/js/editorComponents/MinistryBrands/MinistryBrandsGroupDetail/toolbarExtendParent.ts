@@ -2,7 +2,7 @@ import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
-import { getOption } from "../utils/helpers";
+import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
@@ -13,8 +13,7 @@ export const getItems: GetItems<Value, Props> = ({
   context,
   state
 }) => {
-  const ekklesia = Config.getAll()?.modules?.ekklesia;
-  const groupsRecent = getOption(ekklesia?.smallgroups);
+  const { apiUrl } = Config.getAll()?.modules?.ekklesia ?? {};
 
   return [
     {
@@ -39,7 +38,10 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "groupsRecent",
                   label: t("Recent Groups"),
                   type: "select-dev",
-                  choices: groupsRecent
+                  choices: getEkklesiaChoiches({
+                    key: "smallgroups",
+                    url: apiUrl
+                  })
                 }
               ]
             },
@@ -101,6 +103,11 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "showContent",
                   type: "switch-dev",
                   label: t("Content")
+                },
+                {
+                  id: "showPreviousPage",
+                  type: "switch-dev",
+                  label: t("Previous Page")
                 }
               ]
             }

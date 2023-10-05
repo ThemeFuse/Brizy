@@ -2,7 +2,7 @@ import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
-import { getOption } from "../utils/helpers";
+import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
@@ -13,8 +13,7 @@ export const getItems: GetItems<Value, Props> = ({
   component,
   context
 }) => {
-  const ekklesia = Config.getAll()?.modules?.ekklesia;
-  const recentEvents = getOption(ekklesia?.events);
+  const { apiUrl } = Config.getAll()?.modules?.ekklesia ?? {};
   return [
     {
       id: "toolbarEventDetail",
@@ -38,7 +37,7 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   label: t("Recent Events"),
                   type: "select-dev",
-                  choices: recentEvents,
+                  choices: getEkklesiaChoiches({ key: "events", url: apiUrl }),
                   helper: {
                     content: t(
                       "Select a recent event as an example to style/setup. Since this is the events detail landing page this event will be replaced with the linked event."
@@ -140,6 +139,12 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "switch-dev",
                   devices: "desktop",
                   label: t("Description")
+                },
+                {
+                  id: "showPreviousPage",
+                  type: "switch-dev",
+                  devices: "desktop",
+                  label: t("Previous Page")
                 }
               ]
             }

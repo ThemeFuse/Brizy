@@ -1,7 +1,7 @@
 import Config from "visual/global/Config";
-import { isShopify } from "visual/global/Config/types/configs/Cloud";
+import { isCloud } from "visual/global/Config/types";
+import { getSourceIds } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
-import { IS_CLOUD } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -12,14 +12,12 @@ import {
   toolbarLinkExternal,
   toolbarLinkPopup
 } from "visual/utils/toolbar";
-import {
-  getShopifySourceIdChoices,
-  getShopifySourceTypeChoices,
-  getSourceIdChoices,
-  getSourceTypeChoices
-} from "./utils";
+import { getSourceTypeChoices } from "./utils";
 
 export function getItems({ v, device, component }) {
+  const config = Config.getAll();
+  const IS_GLOBAL_POPUP = isPopup(config);
+
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
@@ -32,18 +30,16 @@ export function getItems({ v, device, component }) {
 
   const sourceType = dvv("sourceType");
 
-  const config = Config.getAll();
-  const IS_SHOPIFY = isShopify(config);
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const sourceItemsHandler = config?.api?.sourceItems?.handler;
 
   return [
     {
       id: "posts",
       type: "popover-dev",
       config: {
-        icon: "nc-wp-posts",
+        icon: "nc-wp-post-title",
         size: "auto",
-        title: t("Posts")
+        title: t("Title")
       },
       roles: ["admin"],
       position: 70,
@@ -52,13 +48,11 @@ export function getItems({ v, device, component }) {
           id: "sourceType",
           type: "select-dev",
           label: t("Source Type"),
-          disabled: IS_SHOPIFY || IS_CLOUD,
+          disabled: isCloud(config),
           device: "desktop",
           placeholder: "Options",
           choices: {
-            load: IS_SHOPIFY
-              ? () => getShopifySourceTypeChoices()
-              : () => getSourceTypeChoices(),
+            load: () => getSourceTypeChoices(),
             emptyLoad: {
               title: t("There are no choices")
             }
@@ -67,14 +61,12 @@ export function getItems({ v, device, component }) {
         {
           id: "sourceID",
           type: "select-dev",
-          label: t("Source ID"),
-          disabled: sourceType === "",
+          label: t("Source"),
+          disabled: !sourceItemsHandler || sourceType === "",
           device: "desktop",
           placeholder: "Select",
           choices: {
-            load: IS_SHOPIFY
-              ? () => getShopifySourceIdChoices(sourceType)
-              : () => getSourceIdChoices(sourceType),
+            load: getSourceIds(sourceType, config),
             emptyLoad: {
               title: t("There are no choices")
             }

@@ -2,6 +2,7 @@ import { decodeFromString } from "visual/utils/string";
 
 export default function ($node: JQuery): void {
   const node = $node.get(0);
+  if (!node) return;
 
   const setScript = (str: string) => {
     const head = document.head;

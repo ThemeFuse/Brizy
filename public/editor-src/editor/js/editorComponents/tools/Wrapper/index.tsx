@@ -1,32 +1,34 @@
+import classNames from "classnames";
 import React, {
   ComponentType,
-  forwardRef,
+  MouseEventHandler,
   PropsWithChildren,
   ReactElement,
   ReactNode,
   Ref,
-  MouseEventHandler
+  forwardRef
 } from "react";
 import { identity } from "underscore";
-import classNames from "classnames";
 import Animation from "visual/component/Animation";
-import { WithClassName } from "visual/utils/options/attributes";
 import { ElementModel } from "visual/component/Elements/Types";
-import { Draggable } from "visual/editorComponents/tools/Draggable";
+import { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
 import { hideToolbar } from "visual/component/Toolbar";
-import { MValue } from "visual/utils/value";
-import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import * as Position from "visual/utils/position/element";
-import * as State from "visual/utils/stateMode";
+import { DH, DW } from "visual/editorComponents/Story/utils";
+import { Draggable } from "visual/editorComponents/tools/Draggable";
+import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
-import { Literal } from "visual/utils/types/Literal";
-import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
-import { style } from "./styles";
 import { css } from "visual/utils/cssStyle";
-import { uuid } from "visual/utils/uuid";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { WithClassName } from "visual/utils/options/attributes";
+import * as Position from "visual/utils/position/element";
 import { attachRef } from "visual/utils/react";
-import { DW, DH } from "visual/editorComponents/Story/utils";
+import * as Str from "visual/utils/reader/string";
+import * as State from "visual/utils/stateMode";
+import { Literal } from "visual/utils/types/Literal";
+import { uuid } from "visual/utils/uuid";
+import { MValue } from "visual/utils/value";
+import { style } from "./styles";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Plugin<P extends Record<string, unknown> = any> = [
@@ -35,9 +37,9 @@ export type Plugin<P extends Record<string, unknown> = any> = [
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Props<T extends Record<any, any>> = WithClassName & {
+export interface Props<T extends Record<any, any>> extends WithClassName {
   component?: ComponentType<T> | keyof JSX.IntrinsicElements;
-  attributes?: Record<string, string | number>;
+  attributes: Record<string, unknown | number> | undefined;
   animationClass?: string;
   ref?: Ref<Element>;
   meta: { sectionPopup?: boolean; sectionPopup2?: boolean };
@@ -49,7 +51,9 @@ export type Props<T extends Record<any, any>> = WithClassName & {
   id: string;
   onChange: (patch: Partial<ElementModel>) => void;
   onClick?: MouseEventHandler<HTMLDivElement>;
-};
+  onDragStart?: (e: Event) => void;
+  slide?: StoryAnchorAttribute;
+}
 
 const wrapperId = uuid(7);
 
@@ -69,7 +73,9 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
     id,
     onChange,
     meta: { sectionPopup, sectionPopup2 },
-    onClick
+    onClick,
+    onDragStart,
+    slide
   }: PropsWithChildren<Props<T>>,
   ref: Ref<Element>
 ): ReactElement {
@@ -78,7 +84,7 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
 
   const className = classNames(
     _className,
-    attributes?.className,
+    Str.read(attributes?.className),
     isAbsoluteOrFixed &&
       css(
         `${componentId}-${id}-${wrapperId}`,
@@ -174,7 +180,7 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
         IS_PREVIEW ?? (sectionPopup || sectionPopup2 ? Infinity : 1)
       }
       component={component ?? "div"}
-      componentProps={{ ...attributes, className, onClick }}
+      componentProps={{ ...attributes, className, onClick, onDragStart, slide }}
       animationClass={animationClass}
       ref={ref}
     >

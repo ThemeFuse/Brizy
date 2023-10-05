@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import BoxResizer from "visual/component/BoxResizer";
 import ClickOutside from "visual/component/ClickOutside";
+import ContextMenu from "visual/component/ContextMenu";
 import ListBox from "visual/component/Controls/ListBox";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import CustomCSS from "visual/component/CustomCSS";
@@ -32,13 +33,15 @@ import * as Num from "visual/utils/reader/number";
 import * as ResponsiveMode from "visual/utils/responsiveMode";
 import { isNullish } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
-import Quill from "./Quill";
+import Quill, { triggerCodes } from "./Quill";
+import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleDC } from "./styles";
 import toolbarConfigFn from "./toolbar";
 import { TypographyTags, tagId } from "./toolbar/utils";
 import { dcItemOptionParser, parseShadow } from "./utils";
+import { getInnerElement, getStyles } from "./utils/ContextMenu";
 import { getImagePopulation } from "./utils/requests/ImagePopulation";
 import { classNamesToV } from "./utils/transforms";
 
@@ -71,10 +74,15 @@ class RichText extends EditorComponent {
 
   toolbarOpen = false;
 
+  // Can be enabled by Config
+  renderDC = !Config.getAll().dynamicContent?.liveInBuilder || IS_PREVIEW;
+
   componentDidMount() {
     // TODO NEED review and exclude ReactDOM.findDOMNode
     // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
+    const useCustomPlaceholder =
+      Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
 
     node.addEventListener(
       "click",
@@ -85,15 +93,19 @@ class RichText extends EditorComponent {
     itemId && node.setAttribute("data-item_id", itemId);
     const populations = node.querySelectorAll("[data-image_population]");
 
-    if (populations.length > 0) {
+    if (populations.length > 0 && this.renderDC) {
       populations.forEach(async (element) => {
         const placeholder = element.getAttribute("data-image_population");
 
         if (placeholder) {
-          const newUrl = await getImagePopulation(placeholder, itemId);
+          const newUrl = await getImagePopulation(
+            placeholder,
+            itemId,
+            useCustomPlaceholder
+          );
           if (newUrl) {
             element.classList.add("brz-population-mask__style");
-            element.style.backgroundImage = `url(${newUrl})`;
+            element.style.backgroundImage = `url("${newUrl}")`;
           }
         }
       });
@@ -113,8 +125,12 @@ class RichText extends EditorComponent {
       formats
     };
     const config = Config.getAll();
+    const dynamicContentGroups = config.dynamicContent?.groups;
 
-    if (typeof config.dynamicContentOption?.richText?.handler === "function") {
+    if (
+      !Array.isArray(dynamicContentGroups) &&
+      typeof dynamicContentGroups?.richText?.handler === "function"
+    ) {
       if (selectionCoords && this.state.selectionCoords !== selectionCoords) {
         Object.assign(newState, { selectionCoords });
 
@@ -141,7 +157,12 @@ class RichText extends EditorComponent {
           const rej = (msg) => {
             ToastNotification.error(msg);
           };
-          config.dynamicContentOption.richText.handler(res, rej);
+
+          const keyCode = formats.prepopulation?.at(-1);
+
+          if (keyCode && triggerCodes.some((k) => k === keyCode)) {
+            dynamicContentGroups.richText.handler(res, rej, { keyCode });
+          }
         }
 
         this.setState(newState, () => this.toolbarRef.current.show());
@@ -234,6 +255,7 @@ class RichText extends EditorComponent {
       this.tmpPopups = values.popups;
     }
 
+    this.patchValue(values);
     // TODO NEED review and exclude ReactDOM.findDOMNode
     // eslint-disable-next-line react/no-find-dom-node
     if (!ReactDOM.findDOMNode(this).contains(prevActive)) {
@@ -257,7 +279,35 @@ class RichText extends EditorComponent {
     this.quillRef.current.formatMultiple(values);
   };
 
-  handleKeyDown = () => {};
+  handleKeyDown = (e, { keyName }) => {
+    e.preventDefault();
+
+    const handlePaste = () => {
+      const innerElement = getInnerElement();
+      if (!innerElement) return;
+
+      const prefixes = ["typography", "color"];
+      const values = getStyles(innerElement.value, prefixes);
+      if (values) {
+        this.handleChange(values);
+      }
+    };
+
+    switch (keyName) {
+      case "alt+shift+V":
+      case "ctrl+shift+V":
+      case "cmd+shift+V":
+      case "right_cmd+shift+V":
+      case "shift+alt+V":
+      case "shift+ctrl+V":
+      case "shift+cmd+V":
+      case "shift+right_cmd+V":
+        handlePaste();
+        return;
+      default:
+        break;
+    }
+  };
   handleKeyUp = () => {};
 
   getClassName(v, vs, vd) {
@@ -376,9 +426,12 @@ class RichText extends EditorComponent {
     if (v.textPopulation) {
       return { v, vs, vd };
     }
-
     return {
-      v: { ...v, ...this.state.formats },
+      v: {
+        ...v,
+        ...this.state.formats,
+        tag: this.state.formats?.tagName
+      },
       vs,
       vd
     };
@@ -508,7 +561,7 @@ class RichText extends EditorComponent {
       </div>
     );
 
-    if (this._dc?.lastCache?.text || IS_PREVIEW) {
+    if (this._dc?.lastCache?.text || this.renderDC) {
       if (IS_PREVIEW) {
         content = text;
       } else {
@@ -528,7 +581,7 @@ class RichText extends EditorComponent {
 
       return (
         <Link
-          className="brz-ed-content-dc-link"
+          className="brz-ed-content-dc-link !text-inherit"
           type={linkType}
           href={hrefs[linkType]}
           target={linkExternalBlank}
@@ -548,7 +601,7 @@ class RichText extends EditorComponent {
     const { meta = {} } = this.props;
     const inPopup = Boolean(meta.sectionPopup);
     const inPopup2 = Boolean(meta.sectionPopup2);
-    const shortcutsTypes = ["copy", "paste", "delete"];
+    const shortcutsTypes = ["copy", "paste", "pasteStyles", "delete"];
     const config = Config.getAll();
 
     const newV = {
@@ -614,22 +667,24 @@ class RichText extends EditorComponent {
                   className: this.getClassName(v, vs, vd)
                 })}
               >
-                {isStory(config) ? (
-                  <BoxResizer
-                    points={resizerPoints}
-                    meta={{
-                      ...meta,
-                      horizontalAlign: "left"
-                    }}
-                    value={v}
-                    onChange={this.handleResizerChange}
-                    restrictions={restrictions}
-                  >
-                    {content}
-                  </BoxResizer>
-                ) : (
-                  content
-                )}
+                <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+                  {isStory(config) ? (
+                    <BoxResizer
+                      points={resizerPoints}
+                      meta={{
+                        ...meta,
+                        horizontalAlign: "left"
+                      }}
+                      value={v}
+                      onChange={this.handleResizerChange}
+                      restrictions={restrictions}
+                    >
+                      {content}
+                    </BoxResizer>
+                  ) : (
+                    content
+                  )}
+                </ContextMenu>
               </Wrapper>
             </Toolbar>
           </CustomCSS>

@@ -1,11 +1,11 @@
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import {
   defaultValueKey,
   defaultValueValue,
   saveOnChanges
 } from "visual/utils/onChange";
-import { getDynamicContentChoices } from "visual/utils/options";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { getDynamicContentOption } from "visual/utils/options";
 
 export function toolbarBgImage({
   v,
@@ -17,13 +17,13 @@ export function toolbarBgImage({
   config,
   onChange
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
-  const imageDynamicContentChoices = getDynamicContentChoices(
-    config,
-    DCTypes.image
-  );
+  const imageDynamicContentChoices = getDynamicContentOption({
+    options: config,
+    type: DCTypes.image
+  });
 
   return {
     id: dvk("bgImage"),
@@ -32,10 +32,7 @@ export function toolbarBgImage({
     devices,
     states,
     disabled,
-    population: {
-      show: imageDynamicContentChoices.length > 0,
-      choices: imageDynamicContentChoices
-    },
+    population: imageDynamicContentChoices,
     value: {
       width: dvv("bgImageWidth"),
       height: dvv("bgImageHeight"),

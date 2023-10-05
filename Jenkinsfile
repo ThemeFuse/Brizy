@@ -44,14 +44,11 @@ pipeline {
                     sh("""
                         if git rev-parse --git-dir > /dev/null 2>&1; then
                           echo "The repo is already cloned"
-                          git checkout .;
-                          git fetch;
-                          git clean -fd;
-                          git checkout ${params.releaseBranch};
-                          git reset --hard origin/${params.releaseBranch};
+                          ./jenkins/reset-repo.sh ./
+                          git checkout -t origin/${params.releaseBranch}
                         else
                           git config --global user.email "jenkins@brizy.io
-                          git config --global user.name "Jenkins jenkinovici
+                          git config --global user.name "Jenkins Jenkinovici
                           git clone git@github.com:ThemeFuse/Brizy.git ./
                         fi
                      """)
@@ -62,6 +59,12 @@ pipeline {
         stage('Prepare Composer') {
             steps {
                     sh('./jenkins/composer.sh $GITHUB_TOKEN')
+            }
+        }
+
+        stage('Build editor client') {
+            steps {
+               sh "./jenkins/build-editor-client.sh ./public/editor-client"
             }
         }
 
@@ -84,6 +87,7 @@ pipeline {
                  sh "rm -rf changelog.txt changelog.md"
             }
         }
+
 
         stage('Make a copy and clean the plugin') {
             steps {
@@ -141,12 +145,20 @@ pipeline {
             sh "rm '${zipFilePath}'"
             sh "rm *.zip"
          }
+
          failure{
             discordSend title: JOB_NAME, footer: discordFooter, link: env.BUILD_URL, result: currentBuild.currentResult, description: "Changelog: \n ${changelog}", webhookURL: env.DISCORD_WEBHOOK_URL
          }
 
          aborted{
             discordSend title: JOB_NAME, footer: discordFooter, link: env.BUILD_URL, result: currentBuild.currentResult, description: "Changelog: \n ${changelog}", webhookURL: env.DISCORD_WEBHOOK_URL
+         }
+
+         always {
+
+            sshagent (credentials: ['ssh_with_passphrase_provided']) {
+                    sh "./jenkins/reset-repo.sh ./"
+                }
          }
      }
 }

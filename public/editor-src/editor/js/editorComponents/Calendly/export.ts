@@ -17,6 +17,8 @@ const initCalendly = (doc: Document, id: string): void => {
 
 const fn: ExportFunction = ($node) => {
   const node = $node.get(0);
+  if (!node) return;
+
   const callendlyes = node.querySelectorAll(".brz-calendly");
 
   if (callendlyes.length) {

@@ -59,7 +59,7 @@ const youtubeLoadScript = () => {
   if (!candidate) {
     const script = document.createElement("script");
     script.src = "https://www.youtube.com/iframe_api";
-    document.head.append(script);
+    document.body.append(script);
   }
 };
 
@@ -426,6 +426,7 @@ function insertVideoIframe($elem, isIos) {
     class: "brz-iframe intrinsic-ignore",
     allowfullscreen: true,
     allow: "autoplay",
+    title: "video-export",
     src
   });
 

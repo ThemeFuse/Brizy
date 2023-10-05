@@ -36,7 +36,8 @@ export const urlsCommon = {
   templateFonts: "",
   upgradeToPro: "",
   editorIcons: "",
-  worker: ""
+  worker: "",
+  projectCloneLink: ""
 };
 
 export const projectCommon = {
@@ -92,17 +93,7 @@ export const configWp: WPPropConfig = {
     updateGlobalBlock: "",
     updateGlobalBlocks: "",
 
-    createSavedBlock: "",
-    deleteSavedBlock: "",
-    getSavedBlockList: "",
-    getSavedBlockByUid: "",
     downloadBlocks: "",
-
-    createLayout: "",
-    getLayoutList: "",
-    getLayoutByUid: "",
-    deleteLayout: "",
-    uploadBlocks: "",
     downloadLayouts: "",
 
     getPostObjects: "",
@@ -221,9 +212,13 @@ describe("testing WP getAllowedGBIds", () => {
         id: ""
       },
       dynamicContent: {
-        [DCTypes.image]: [],
-        [DCTypes.link]: [],
-        [DCTypes.richText]: []
+        liveInBuilder: true,
+        useCustomPlaceholder: false,
+        groups: {
+          [DCTypes.image]: [],
+          [DCTypes.link]: [],
+          [DCTypes.richText]: []
+        }
       },
       wp: {
         ...configWp,
@@ -897,6 +892,7 @@ describe("testing Cloud getAllowedGBIds", () => {
         },
         customerEditorUrl: "",
         customerPreviewUrl: "",
+        isAvailablePreviewBadge: true,
         collectionPreviewUrl: "",
         translationsApiUrl: "",
         notificationsApiUrl: ""
@@ -919,9 +915,13 @@ describe("testing Cloud getAllowedGBIds", () => {
         protectedPagePassword: ""
       },
       dynamicContent: {
-        [DCTypes.image]: [],
-        [DCTypes.link]: [],
-        [DCTypes.richText]: []
+        liveInBuilder: true,
+        useCustomPlaceholder: false,
+        groups: {
+          [DCTypes.image]: [],
+          [DCTypes.link]: [],
+          [DCTypes.richText]: []
+        }
       }
     });
   });

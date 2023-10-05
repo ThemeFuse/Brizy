@@ -24,7 +24,7 @@ export const CheckMark = ({
   return (
     <span
       className={classNames(
-        "brz-ed--check-mark w-[16px] h-[16px] text-[16px] rounded-[50%] top-[4px] left-[8px] bg-black border-solid border-topaz",
+        "brz-ed--check-mark w-[16px] h-[16px] text-[16px] rounded-[50%] bg-black border-solid border-topaz",
         className,
         { checked },
         checkMarkClassName
@@ -35,4 +35,3 @@ export const CheckMark = ({
     </span>
   );
 };
-

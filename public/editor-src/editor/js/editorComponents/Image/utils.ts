@@ -1,12 +1,13 @@
 import { Value as ImageUploadValue } from "visual/component/Options/types/dev/ImageUpload/Types";
 import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import Config from "visual/global/Config";
-import { imageSpecificSize, imageUrl } from "visual/utils/image";
+import { SizeType } from "visual/global/Config/types/configs/common";
+import { getImageUrl } from "visual/utils/image";
 import { clamp, roundTo } from "visual/utils/math";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import * as Str from "visual/utils/string/specs";
-import { isNullish } from "visual/utils/value";
+import { MValue, isNullish } from "visual/utils/value";
 import { ImageSize, Unit, V } from "./types";
 
 export interface ImageValue {
@@ -53,9 +54,9 @@ export interface PredefinedCustomSize {
   heightSuffix: Unit;
 }
 
-type PredefinedOriginalSize = "original";
+type PredefinedOriginalSize = SizeType.original;
 
-type CustomSize = "custom";
+type CustomSize = SizeType.custom;
 
 type ALLSizes = PredefinedCustomSize | PredefinedOriginalSize | CustomSize;
 
@@ -235,7 +236,7 @@ export const isCustomSize = (size: ALLSizes): size is CustomSize => {
 
 export const getImageSize = (size: string): ALLSizes => {
   if (size === "custom") {
-    return "custom";
+    return SizeType.custom;
   }
 
   const config = Config.getAll();
@@ -257,12 +258,18 @@ export const getImageSize = (size: string): ALLSizes => {
     };
   }
 
-  return "original";
+  return SizeType.original;
 };
 
 export const getSizeType = (v: V, device: ResponsiveMode): string => {
   if (v.imagePopulation) {
-    const placeholderData = placeholderObjFromStr(v.imagePopulation);
+    const config = Config.getAll();
+    const useCustomPlaceholder =
+      config.dynamicContent?.useCustomPlaceholder ?? false;
+    const placeholderData = placeholderObjFromStr(
+      v.imagePopulation,
+      useCustomPlaceholder
+    );
 
     if (placeholderData?.attr?.size !== undefined) {
       const size = Str.read(placeholderData.attr.size) ?? "custom";
@@ -284,21 +291,27 @@ export const showOriginalImage = (v: V): boolean =>
   );
 
 export function getCustomImageUrl(
-  v: ImageUploadValue,
+  v: Partial<ImageUploadValue>,
   wrapperSize: WrapperSizes,
   imageSize: ImageSize
 ): { url: string; source: string | null } {
   const cW = Math.round(wrapperSize.width);
   const cH = Math.round(wrapperSize.height);
 
-  const sizeType = v.sizeType;
+  const src = v.src ?? "";
+  const sizeType = v.sizeType ?? "";
+  const fileName = v.fileName ?? "";
   const size = getImageSize(sizeType);
 
   if (isPredefinedSize(size) || isOriginalSize(size)) {
-    const url = imageSpecificSize(v.src, { size: sizeType });
+    const url = getImageUrl({
+      uid: src,
+      fileName: fileName,
+      sizeType: sizeType as SizeType
+    });
 
     return {
-      source: url,
+      source: `${url}`,
       url: `${url} 1x, ${url} 2x`
     };
   }
@@ -307,7 +320,7 @@ export function getCustomImageUrl(
 
   const oX = Math.abs(imageSize.marginLeft);
   const oY = Math.abs(imageSize.marginTop);
-  const src = v.src;
+
   const options = {
     iW: Math.round(iW),
     iH: Math.round(iH),
@@ -316,11 +329,22 @@ export function getCustomImageUrl(
     cW: Math.round(cW),
     cH: Math.round(cH)
   };
-  const url = imageUrl(src, options);
+  const url = getImageUrl({
+    uid: src,
+    crop: options,
+    fileName,
+    sizeType: SizeType.custom
+  });
+  const retinaUrl = getImageUrl({
+    uid: src,
+    crop: multiplier(options, 2),
+    fileName,
+    sizeType: SizeType.custom
+  });
 
   return {
-    source: url,
-    url: `${url} 1x, ${imageUrl(src, multiplier(options, 2))} 2x`
+    source: `${url}`,
+    url: `${url} 1x, ${retinaUrl} 2x`
   };
 }
 
@@ -335,3 +359,17 @@ export function multiplier<
     return acc;
   }, data);
 }
+
+export const readUnit = (v: unknown): MValue<Unit> => {
+  if (v === "px" || v === "%") {
+    return v;
+  }
+};
+
+export const readSizeType = (sizeType: unknown): MValue<SizeType> => {
+  switch (sizeType) {
+    case SizeType.custom:
+    case SizeType.original:
+      return sizeType;
+  }
+};

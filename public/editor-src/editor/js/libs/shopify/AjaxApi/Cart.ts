@@ -1,18 +1,19 @@
 import { pass } from "fp-utilities";
-import { VariationId } from "../types/Variation";
 import { throwOnNullish } from "visual/utils/value";
+import { VariationId } from "../types/Variation";
 
 export interface Item {
   quantity: number;
   id: VariationId;
 }
 
-export const add = (items: Item[]): Promise<Item[]> => {
+export const add = (body: FormData): Promise<Item[]> => {
   return fetch("/cart/add.js", {
     method: "POST",
-    body: JSON.stringify(items)
+    body
   })
-    .then(pass(r => r.ok))
+    .then(pass((r) => r.ok))
     .then(throwOnNullish("Unable to fetch product data"))
-    .then(r => r.json());
+    .then((r) => r.json())
+    .catch((r) => r);
 };

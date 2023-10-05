@@ -66,13 +66,6 @@
     "tempTitleColorOpacity": 1,
     "tempTitleColorPalette": "color2",
 
-    "hoverTitleColorHex": null,
-    "hoverTitleColorOpacity": null,
-    "hoverTitleColorPalette": null,
-
-    "tempHoverTitleColorOpacity": null,
-    "tempHoverTitleColorPalette": null,
-
     "attributesFontStyle": "",
     "attributesFontFamilyType": "google",
     "attributesFontSize": 20,
@@ -87,13 +80,6 @@
 
     "tempAttributeColorOpacity": 1,
     "tempAttributeColorPalette": "color2",
-
-    "hoverAttributeColorHex": null,
-    "hoverAttributeColorOpacity": null,
-    "hoverAttributeColorPalette": null,
-
-    "tempHoverAttributeColorOpacity": null,
-    "tempHoverAttributeColorPalette": null,
 
     "borderStyle": "solid",
 

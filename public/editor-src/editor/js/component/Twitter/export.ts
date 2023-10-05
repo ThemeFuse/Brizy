@@ -75,6 +75,8 @@ const resize = (nodes: Array<HTMLElement>): void => {
 
 const fn: ExportFunction = ($node) => {
   const node = $node.get(0);
+  if (!node) return;
+
   const twitterLaunch = [
     ...node.querySelectorAll<HTMLDivElement>(".brz-twitter")
   ];

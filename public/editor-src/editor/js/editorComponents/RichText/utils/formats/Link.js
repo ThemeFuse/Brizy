@@ -1,5 +1,6 @@
 import Quill from "quill";
 import { decodeFromString } from "visual/utils/string";
+
 const Link = Quill.import("formats/link");
 
 export default class linkType extends Link {
@@ -28,6 +29,7 @@ export default class linkType extends Link {
       "link--external",
       "link--popup",
       "link--story",
+      "link--upload",
       "is-empty"
     );
 
@@ -39,6 +41,9 @@ export default class linkType extends Link {
     }
     if (type === "popup") {
       node.classList.add("link--popup");
+    }
+    if (type === "upload") {
+      node.classList.add("link--upload");
     }
     if (type === "linkToSlide") {
       node.classList.add("link--story");

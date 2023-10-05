@@ -1,19 +1,18 @@
 import produce from "immer";
 import { Dispatch } from "redux";
-import { Config } from "visual/global/Config";
-import { ReduxState } from "visual/redux/types";
-import { ReduxAction, updateGlobalBlock } from "visual/redux/actions2";
-import { objectTraverse2 } from "visual/utils/object";
-import { mapModels } from "visual/utils/models";
+import { ElementModel } from "visual/component/Elements/Types";
 import {
   itemsToSymbols,
   normalizeMenuItems,
   symbolsToItems
 } from "visual/editorComponents/Menu/utils";
-import { ElementModel } from "visual/component/Elements/Types";
-
-import { FromTo } from "../types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { ReduxAction, updateGlobalBlock } from "visual/redux/actions2";
+import { ReduxState } from "visual/redux/types";
 import { Block } from "visual/types";
+import { mapModels } from "visual/utils/models";
+import { objectTraverse2 } from "visual/utils/object";
+import { FromTo } from "../types";
 
 type GlobalBlocks = ReduxState["globalBlocks"];
 
@@ -29,7 +28,7 @@ export function attachGlobalBlocks(
   if ("itemPath" in source) {
     const { itemPath = [] } = source;
 
-    return produce(value, draft => {
+    return produce(value, (draft) => {
       let cursor = draft;
       let i = 0;
 
@@ -66,7 +65,7 @@ export function detachGlobalBlocks(
 ): ElementModel {
   const globalBlockUpdates: Array<string[]> = [];
 
-  const ret = produce(value, draft => {
+  const ret = produce(value, (draft) => {
     objectTraverse2(draft, (obj: ElementModel) => {
       if (obj.__tmp_global_original__) {
         // restore replaced global block (1)
@@ -118,11 +117,18 @@ export function gbTransform(
 
 //#region Menu
 
-export function attachMenu(value: ElementModel, config: Config): ElementModel {
-  const { menusConfig } = config;
+interface AttachMenu {
+  model: ElementModel;
+  config: ConfigCommon;
+  omitSymbols?: boolean;
+}
 
-  if (menusConfig === undefined) {
-    return value;
+export function attachMenu(data: AttachMenu): ElementModel {
+  const { config, model, omitSymbols = false } = data;
+  const menuData = config.menuData;
+
+  if (menuData === undefined) {
+    return model;
   }
 
   return mapModels((block: ElementModel) => {
@@ -133,20 +139,25 @@ export function attachMenu(value: ElementModel, config: Config): ElementModel {
         menuSelected: string;
         symbols: Record<string, unknown>;
       };
-      const menuSelected = dbMenuSelected || menusConfig[0]?.id;
-      const menuConfig = menusConfig.find(menu => menu.id === menuSelected) || {
+      const menuSelected = dbMenuSelected || menuData[0]?.id;
+      const menuConfig = menuData.find((menu) => menu.id === menuSelected) || {
         items: []
       };
       const items = normalizeMenuItems(menuConfig.items);
 
-      return produce(block, draft => {
-        //@ts-expect-error: Object is of type 'unknown'
+      return produce<ElementModel>(block, (draft) => {
+        // @ts-expect-error: Object is of type 'unknown'
         draft.value.items = symbolsToItems(items, symbols);
+
+        // @ts-expect-error: Draft.value is 'unknown'
+        if (omitSymbols && "symbols" in draft.value) {
+          delete draft.value.symbols;
+        }
       });
     }
 
     return block;
-  }, value);
+  }, model);
 }
 
 export function detachMenu(value: ElementModel): ElementModel {
@@ -154,7 +165,7 @@ export function detachMenu(value: ElementModel): ElementModel {
     const { type, value } = block as { type: string; value: ElementModel };
 
     if (type === "Menu" && value.items) {
-      return produce(block, draft => {
+      return produce(block, (draft) => {
         Object.assign(
           //@ts-expect-error: Object is of type 'unknown'.
           draft.value.symbols || {},

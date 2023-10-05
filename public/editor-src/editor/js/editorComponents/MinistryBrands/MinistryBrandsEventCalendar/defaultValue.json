@@ -8,16 +8,20 @@
     "detailPageTitle": "",
 
     "numberOfMonths": 3,
+    "visibleMonth": 1,
 
     "features": "off",
-    "nonfeatures": "off"
+    "nonfeatures": "off",
+
+    "showEventTime": "off"
   },
   "style": {
     "families": {
       "paginationTypographyFontFamily": "lato",
       "weekdaysTypographyFontFamily": "lato",
       "dayTypographyFontFamily": "lato",
-      "titleTypographyFontFamily": "lato"
+      "titleTypographyFontFamily": "lato",
+      "eventStartTimeTypographyFontFamily": "lato"
     },
 
     "paginationTypographyFontStyle": "",
@@ -50,6 +54,18 @@
     "weekdaysColorPalette": "",
 
     "weekdaysHorizontalAlign": "center",
+
+    "eventStartTimeColorHex": "#757873",
+    "eventStartTimeColorOpacity": 1,
+    "eventStartTimeColorPalette": "",
+
+    "eventStartTimeTypographyFontStyle": "",
+    "eventStartTimeTypographyFontFamilyType": "google",
+    "eventStartTimeTypographyFontSize": 12,
+    "eventStartTimeTypographyFontSizeSuffix": "px",
+    "eventStartTimeTypographyFontWeight": 700,
+    "eventStartTimeTypographyLetterSpacing": 0,
+    "eventStartTimeTypographyLineHeight": 1,
 
     "dayTypographyFontStyle": "",
     "dayTypographyFontFamilyType": "google",
@@ -206,6 +222,226 @@
     "evenGradientLinearDegree": 90,
     "evenGradientRadialDegree": 90,
 
+    "month2EvenBgColorType": "solid",
+
+    "month2EvenBgColorHex": "#000000",
+    "month2EvenBgColorOpacity": 0,
+    "month2EvenBgColorPalette": "",
+
+    "month2EvenGradientType": "linear",
+
+    "month2EvenGradientColorHex": "#009900",
+    "month2EvenGradientColorOpacity": 1,
+    "month2EvenGradientColorPalette": "",
+
+    "month2EvenGradientStartPointer": 0,
+    "month2EvenGradientFinishPointer": 100,
+
+    "month2EvenGradientActivePointer": "startPointer",
+
+    "month2EvenGradientLinearDegree": 90,
+    "month2EvenGradientRadialDegree": 90,
+
+    "month3EvenBgColorType": "solid",
+
+    "month3EvenBgColorHex": "#000000",
+    "month3EvenBgColorOpacity": 0,
+    "month3EvenBgColorPalette": "",
+
+    "month3EvenGradientType": "linear",
+
+    "month3EvenGradientColorHex": "#009900",
+    "month3EvenGradientColorOpacity": 1,
+    "month3EvenGradientColorPalette": "",
+
+    "month3EvenGradientStartPointer": 0,
+    "month3EvenGradientFinishPointer": 100,
+
+    "month3EvenGradientActivePointer": "startPointer",
+
+    "month3EvenGradientLinearDegree": 90,
+    "month3EvenGradientRadialDegree": 90,
+
+    "month4EvenBgColorType": "solid",
+
+    "month4EvenBgColorHex": "#000000",
+    "month4EvenBgColorOpacity": 0,
+    "month4EvenBgColorPalette": "",
+
+    "month4EvenGradientType": "linear",
+
+    "month4EvenGradientColorHex": "#009900",
+    "month4EvenGradientColorOpacity": 1,
+    "month4EvenGradientColorPalette": "",
+
+    "month4EvenGradientStartPointer": 0,
+    "month4EvenGradientFinishPointer": 100,
+
+    "month4EvenGradientActivePointer": "startPointer",
+
+    "month4EvenGradientLinearDegree": 90,
+    "month4EvenGradientRadialDegree": 90,
+
+    "month5EvenBgColorType": "solid",
+
+    "month5EvenBgColorHex": "#000000",
+    "month5EvenBgColorOpacity": 0,
+    "month5EvenBgColorPalette": "",
+
+    "month5EvenGradientType": "linear",
+
+    "month5EvenGradientColorHex": "#009900",
+    "month5EvenGradientColorOpacity": 1,
+    "month5EvenGradientColorPalette": "",
+
+    "month5EvenGradientStartPointer": 0,
+    "month5EvenGradientFinishPointer": 100,
+
+    "month5EvenGradientActivePointer": "startPointer",
+
+    "month5EvenGradientLinearDegree": 90,
+    "month5EvenGradientRadialDegree": 90,
+
+    "month6EvenBgColorType": "solid",
+
+    "month6EvenBgColorHex": "#000000",
+    "month6EvenBgColorOpacity": 0,
+    "month6EvenBgColorPalette": "",
+
+    "month6EvenGradientType": "linear",
+
+    "month6EvenGradientColorHex": "#009900",
+    "month6EvenGradientColorOpacity": 1,
+    "month6EvenGradientColorPalette": "",
+
+    "month6EvenGradientStartPointer": 0,
+    "month6EvenGradientFinishPointer": 100,
+
+    "month6EvenGradientActivePointer": "startPointer",
+
+    "month6EvenGradientLinearDegree": 90,
+    "month6EvenGradientRadialDegree": 90,
+
+    "month7EvenBgColorType": "solid",
+
+    "month7EvenBgColorHex": "#000000",
+    "month7EvenBgColorOpacity": 0,
+    "month7EvenBgColorPalette": "",
+
+    "month7EvenGradientType": "linear",
+
+    "month7EvenGradientColorHex": "#009900",
+    "month7EvenGradientColorOpacity": 1,
+    "month7EvenGradientColorPalette": "",
+
+    "month7EvenGradientStartPointer": 0,
+    "month7EvenGradientFinishPointer": 100,
+
+    "month7EvenGradientActivePointer": "startPointer",
+
+    "month7EvenGradientLinearDegree": 90,
+    "month7EvenGradientRadialDegree": 90,
+
+    "month8EvenBgColorType": "solid",
+
+    "month8EvenBgColorHex": "#000000",
+    "month8EvenBgColorOpacity": 0,
+    "month8EvenBgColorPalette": "",
+
+    "month8EvenGradientType": "linear",
+
+    "month8EvenGradientColorHex": "#009900",
+    "month8EvenGradientColorOpacity": 1,
+    "month8EvenGradientColorPalette": "",
+
+    "month8EvenGradientStartPointer": 0,
+    "month8EvenGradientFinishPointer": 100,
+
+    "month8EvenGradientActivePointer": "startPointer",
+
+    "month8EvenGradientLinearDegree": 90,
+    "month8EvenGradientRadialDegree": 90,
+
+    "month9EvenBgColorType": "solid",
+
+    "month9EvenBgColorHex": "#000000",
+    "month9EvenBgColorOpacity": 0,
+    "month9EvenBgColorPalette": "",
+
+    "month9EvenGradientType": "linear",
+
+    "month9EvenGradientColorHex": "#009900",
+    "month9EvenGradientColorOpacity": 1,
+    "month9EvenGradientColorPalette": "",
+
+    "month9EvenGradientStartPointer": 0,
+    "month9EvenGradientFinishPointer": 100,
+
+    "month9EvenGradientActivePointer": "startPointer",
+
+    "month9EvenGradientLinearDegree": 90,
+    "month9EvenGradientRadialDegree": 90,
+
+    "month10EvenBgColorType": "solid",
+
+    "month10EvenBgColorHex": "#000000",
+    "month10EvenBgColorOpacity": 0,
+    "month10EvenBgColorPalette": "",
+
+    "month10EvenGradientType": "linear",
+
+    "month10EvenGradientColorHex": "#009900",
+    "month10EvenGradientColorOpacity": 1,
+    "month10EvenGradientColorPalette": "",
+
+    "month10EvenGradientStartPointer": 0,
+    "month10EvenGradientFinishPointer": 100,
+
+    "month10EvenGradientActivePointer": "startPointer",
+
+    "month10EvenGradientLinearDegree": 90,
+    "month10EvenGradientRadialDegree": 90,
+
+    "month11EvenBgColorType": "solid",
+
+    "month11EvenBgColorHex": "#000000",
+    "month11EvenBgColorOpacity": 0,
+    "month11EvenBgColorPalette": "",
+
+    "month11EvenGradientType": "linear",
+
+    "month11EvenGradientColorHex": "#009900",
+    "month11EvenGradientColorOpacity": 1,
+    "month11EvenGradientColorPalette": "",
+
+    "month11EvenGradientStartPointer": 0,
+    "month11EvenGradientFinishPointer": 100,
+
+    "month11EvenGradientActivePointer": "startPointer",
+
+    "month11EvenGradientLinearDegree": 90,
+    "month11EvenGradientRadialDegree": 90,
+
+    "month12EvenBgColorType": "solid",
+
+    "month12EvenBgColorHex": "#000000",
+    "month12EvenBgColorOpacity": 0,
+    "month12EvenBgColorPalette": "",
+
+    "month12EvenGradientType": "linear",
+
+    "month12EvenGradientColorHex": "#009900",
+    "month12EvenGradientColorOpacity": 1,
+    "month12EvenGradientColorPalette": "",
+
+    "month12EvenGradientStartPointer": 0,
+    "month12EvenGradientFinishPointer": 100,
+
+    "month12EvenGradientActivePointer": "startPointer",
+
+    "month12EvenGradientLinearDegree": 90,
+    "month12EvenGradientRadialDegree": 90,
+
     "oddBgColorType": "solid",
 
     "oddBgColorHex": "#000000",
@@ -225,6 +461,226 @@
 
     "oddGradientLinearDegree": 90,
     "oddGradientRadialDegree": 90,
+
+    "month2OddBgColorType": "solid",
+
+    "month2OddBgColorHex": "#000000",
+    "month2OddBgColorOpacity": 0,
+    "month2OddBgColorPalette": "",
+
+    "month2OddGradientType": "linear",
+
+    "month2OddGradientColorHex": "#009900",
+    "month2OddGradientColorOpacity": 1,
+    "month2OddGradientColorPalette": "",
+
+    "month2OddGradientStartPointer": 0,
+    "month2OddGradientFinishPointer": 100,
+
+    "month2OddGradientActivePointer": "startPointer",
+
+    "month2OddGradientLinearDegree": 90,
+    "month2OddGradientRadialDegree": 90,
+
+    "month3OddBgColorType": "solid",
+
+    "month3OddBgColorHex": "#000000",
+    "month3OddBgColorOpacity": 0,
+    "month3OddBgColorPalette": "",
+
+    "month3OddGradientType": "linear",
+
+    "month3OddGradientColorHex": "#009900",
+    "month3OddGradientColorOpacity": 1,
+    "month3OddGradientColorPalette": "",
+
+    "month3OddGradientStartPointer": 0,
+    "month3OddGradientFinishPointer": 100,
+
+    "month3OddGradientActivePointer": "startPointer",
+
+    "month3OddGradientLinearDegree": 90,
+    "month3OddGradientRadialDegree": 90,
+
+    "month4OddBgColorType": "solid",
+
+    "month4OddBgColorHex": "#000000",
+    "month4OddBgColorOpacity": 0,
+    "month4OddBgColorPalette": "",
+
+    "month4OddGradientType": "linear",
+
+    "month4OddGradientColorHex": "#009900",
+    "month4OddGradientColorOpacity": 1,
+    "month4OddGradientColorPalette": "",
+
+    "month4OddGradientStartPointer": 0,
+    "month4OddGradientFinishPointer": 100,
+
+    "month4OddGradientActivePointer": "startPointer",
+
+    "month4OddGradientLinearDegree": 90,
+    "month4OddGradientRadialDegree": 90,
+
+    "month5OddBgColorType": "solid",
+
+    "month5OddBgColorHex": "#000000",
+    "month5OddBgColorOpacity": 0,
+    "month5OddBgColorPalette": "",
+
+    "month5OddGradientType": "linear",
+
+    "month5OddGradientColorHex": "#009900",
+    "month5OddGradientColorOpacity": 1,
+    "month5OddGradientColorPalette": "",
+
+    "month5OddGradientStartPointer": 0,
+    "month5OddGradientFinishPointer": 100,
+
+    "month5OddGradientActivePointer": "startPointer",
+
+    "month5OddGradientLinearDegree": 90,
+    "month5OddGradientRadialDegree": 90,
+
+    "month6OddBgColorType": "solid",
+
+    "month6OddBgColorHex": "#000000",
+    "month6OddBgColorOpacity": 0,
+    "month6OddBgColorPalette": "",
+
+    "month6OddGradientType": "linear",
+
+    "month6OddGradientColorHex": "#009900",
+    "month6OddGradientColorOpacity": 1,
+    "month6OddGradientColorPalette": "",
+
+    "month6OddGradientStartPointer": 0,
+    "month6OddGradientFinishPointer": 100,
+
+    "month6OddGradientActivePointer": "startPointer",
+
+    "month6OddGradientLinearDegree": 90,
+    "month6OddGradientRadialDegree": 90,
+
+    "month7OddBgColorType": "solid",
+
+    "month7OddBgColorHex": "#000000",
+    "month7OddBgColorOpacity": 0,
+    "month7OddBgColorPalette": "",
+
+    "month7OddGradientType": "linear",
+
+    "month7OddGradientColorHex": "#009900",
+    "month7OddGradientColorOpacity": 1,
+    "month7OddGradientColorPalette": "",
+
+    "month7OddGradientStartPointer": 0,
+    "month7OddGradientFinishPointer": 100,
+
+    "month7OddGradientActivePointer": "startPointer",
+
+    "month7OddGradientLinearDegree": 90,
+    "month7OddGradientRadialDegree": 90,
+
+    "month8OddBgColorType": "solid",
+
+    "month8OddBgColorHex": "#000000",
+    "month8OddBgColorOpacity": 0,
+    "month8OddBgColorPalette": "",
+
+    "month8OddGradientType": "linear",
+
+    "month8OddGradientColorHex": "#009900",
+    "month8OddGradientColorOpacity": 1,
+    "month8OddGradientColorPalette": "",
+
+    "month8OddGradientStartPointer": 0,
+    "month8OddGradientFinishPointer": 100,
+
+    "month8OddGradientActivePointer": "startPointer",
+
+    "month8OddGradientLinearDegree": 90,
+    "month8OddGradientRadialDegree": 90,
+
+    "month9OddBgColorType": "solid",
+
+    "month9OddBgColorHex": "#000000",
+    "month9OddBgColorOpacity": 0,
+    "month9OddBgColorPalette": "",
+
+    "month9OddGradientType": "linear",
+
+    "month9OddGradientColorHex": "#009900",
+    "month9OddGradientColorOpacity": 1,
+    "month9OddGradientColorPalette": "",
+
+    "month9OddGradientStartPointer": 0,
+    "month9OddGradientFinishPointer": 100,
+
+    "month9OddGradientActivePointer": "startPointer",
+
+    "month9OddGradientLinearDegree": 90,
+    "month9OddGradientRadialDegree": 90,
+
+    "month10OddBgColorType": "solid",
+
+    "month10OddBgColorHex": "#000000",
+    "month10OddBgColorOpacity": 0,
+    "month10OddBgColorPalette": "",
+
+    "month10OddGradientType": "linear",
+
+    "month10OddGradientColorHex": "#009900",
+    "month10OddGradientColorOpacity": 1,
+    "month10OddGradientColorPalette": "",
+
+    "month10OddGradientStartPointer": 0,
+    "month10OddGradientFinishPointer": 100,
+
+    "month10OddGradientActivePointer": "startPointer",
+
+    "month10OddGradientLinearDegree": 90,
+    "month10OddGradientRadialDegree": 90,
+
+    "month11OddBgColorType": "solid",
+
+    "month11OddBgColorHex": "#000000",
+    "month11OddBgColorOpacity": 0,
+    "month11OddBgColorPalette": "",
+
+    "month11OddGradientType": "linear",
+
+    "month11OddGradientColorHex": "#009900",
+    "month11OddGradientColorOpacity": 1,
+    "month11OddGradientColorPalette": "",
+
+    "month11OddGradientStartPointer": 0,
+    "month11OddGradientFinishPointer": 100,
+
+    "month11OddGradientActivePointer": "startPointer",
+
+    "month11OddGradientLinearDegree": 90,
+    "month11OddGradientRadialDegree": 90,
+
+    "month12OddBgColorType": "solid",
+
+    "month12OddBgColorHex": "#000000",
+    "month12OddBgColorOpacity": 0,
+    "month12OddBgColorPalette": "",
+
+    "month12OddGradientType": "linear",
+
+    "month12OddGradientColorHex": "#009900",
+    "month12OddGradientColorOpacity": 1,
+    "month12OddGradientColorPalette": "",
+
+    "month12OddGradientStartPointer": 0,
+    "month12OddGradientFinishPointer": 100,
+
+    "month12OddGradientActivePointer": "startPointer",
+
+    "month12OddGradientLinearDegree": 90,
+    "month12OddGradientRadialDegree": 90,
 
     "parentBgColorType": "solid",
 

@@ -6,7 +6,7 @@ import * as Str from "visual/utils/string/specs";
 import { IsEqual } from "visual/utils/types/Eq";
 
 export interface Image {
-  name: string;
+  uid: string;
   fileName: string;
   width: number;
   height: number;
@@ -14,11 +14,11 @@ export interface Image {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fromRecord = readWithParser<Record<any, any>, Image>({
-  name: mPipe(prop("name"), Str.read),
+  uid: mPipe(prop("uid"), Str.read),
   fileName: mPipe(prop("fileName"), Str.read),
   width: mPipe(prop("width"), Num.read),
   height: mPipe(prop("height"), Num.read)
 });
 
 export const eq: IsEqual<Image> = (a, b) =>
-  a.name === b.name && a.width === a.width && a.height === a.height;
+  a.uid === b.uid && a.width === a.width && a.height === a.height;

@@ -1,13 +1,38 @@
 import { isT, mPipe, pass } from "fp-utilities";
 import { UploadData } from "visual/component/Options/types/dev/FileUpload/types/Value";
+import { ChoicesAsync } from "visual/component/Options/types/dev/MultiSelect2/types";
+import { ChoicesAsync as ChoicesAsyncSimpleSelect } from "visual/component/Options/types/dev/Select/types";
 import Config from "visual/global/Config";
-import { Cloud, Shopify } from "visual/global/Config/types/configs/Cloud";
+import { isShopifyShop } from "visual/global/Config/types/configs/Base";
+import {
+  Cloud,
+  Shopify,
+  isCloud
+} from "visual/global/Config/types/configs/Cloud";
+import {
+  AutoSave,
+  ConfigCommon,
+  CreateSavedBlock,
+  CreateSavedLayout,
+  DeleteSavedBlock,
+  DeleteSavedLayout,
+  OnChange,
+  PublishData,
+  SavedBlockAPIMeta,
+  SavedBlockFilter,
+  SavedBlockImport,
+  SavedLayoutAPIMeta,
+  SavedLayoutFilter,
+  SavedLayoutImport,
+  UpdateSavedBlock,
+  UpdateSavedLayout
+} from "visual/global/Config/types/configs/ConfigCommon";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
-import { ReduxState } from "visual/redux/types";
-import { GlobalBlock } from "visual/types";
+import { GlobalBlock, SavedBlock, SavedLayout } from "visual/types";
 import * as Arr from "visual/utils/array";
-import { GlobalBlocksError, ProjectError } from "visual/utils/errors";
+import { GlobalBlocksError } from "visual/utils/errors";
 import { pipe } from "visual/utils/fp";
+import { t } from "visual/utils/i18n";
 import * as ArrReader from "visual/utils/reader/array";
 import { read } from "visual/utils/reader/json";
 import * as Obj from "visual/utils/reader/object";
@@ -18,42 +43,36 @@ import {
   parseBlogSourceItem,
   parseCollectionSourceItem,
   parseGlobalBlock,
-  parseMetaSavedBlock,
   parsePageRules,
-  parseProject,
-  parseSavedBlock,
-  parseSavedLayout,
-  stringifyGlobalBlock,
-  stringifyProject,
-  stringifySavedBlock
+  stringifyGlobalBlock
 } from "./adapter";
 import { GetCollectionTypesWithFields } from "./cms/graphql/types/GetCollectionTypesWithFields";
 import { paginationData } from "./const";
 import {
   BlogSourceItem,
   CollectionSourceItem,
-  CreateSavedBlock,
-  CreateSavedLayout,
   CreateScreenshot,
-  DeleteSavedBlockById,
-  DeleteSavedLayoutById,
   GetCollectionSourceTypes,
   GetDynamicContent,
   GetPostsSourceRefId,
   GetPostsSourceRefs,
-  GetSavedBlockById,
-  GetSavedBlocksMeta,
-  GetSavedLayoutById,
-  GetSavedLayoutsMeta,
   ResponseWithBody,
   Rule,
   SelectedItem,
-  UpdateScreenshot,
-  UploadSavedBlocks,
-  UploadSavedLayouts,
-  UploadSavedPopups
+  UpdateScreenshot
 } from "./types";
 import { makeFormEncode, makeUrl } from "./utils";
+
+export {
+  defaultKitsMeta,
+  defaultKitsData,
+  defaultPopupsMeta,
+  defaultPopupsData,
+  defaultLayoutsMeta,
+  defaultLayoutsData,
+  defaultStoriesMeta,
+  defaultStoriesData
+} from "./common";
 
 export * from "./cms";
 export * from "./cms/page";
@@ -134,49 +153,48 @@ export function pendingRequest(time = 650): Promise<boolean> {
 
 //#endregion
 
-//#region Project
+//#region Publish
 
-export function getProject(): Promise<ReduxState["project"]> {
-  const {
-    project: { id },
-    urls: { api }
-  } = Config.getAll() as Cloud;
+export function publish(
+  data: PublishData,
+  config: ConfigCommon
+): Promise<PublishData> {
+  return new Promise((res, rej) => {
+    const { handler } = config.ui?.publish ?? {};
 
-  return persistentRequest(`${api}/projects/${id}`, {
-    method: "GET"
-  })
-    .then((r) => parseProject(r.data))
-    .catch(() => {
-      throw new ProjectError("Failed to get project");
-    });
-}
-
-export function updateProject(
-  project: ReduxState["project"],
-  meta: { is_autosave?: 0 | 1 } = {}
-): Promise<unknown> {
-  const {
-    project: { id },
-    urls: { api }
-  } = Config.getAll() as Cloud;
-
-  const { is_autosave = 1 } = meta;
-  const { data, dataVersion } = stringifyProject(project);
-  const body = new URLSearchParams({
-    data,
-    dataVersion: `${dataVersion}`,
-    is_autosave: `${is_autosave}`
+    if (!handler) {
+      rej(t("API: No publish handler found."));
+    } else {
+      handler(res, rej, data);
+    }
   });
-
-  return persistentRequest(`${api}/projects/${id}`, {
-    method: "PUT",
-    body
-  })
-    .then((r) => r.data)
-    .catch(() => {
-      throw new ProjectError("Failed to update project");
-    });
 }
+
+//#endregion
+
+//#region AutoSave
+
+export function autoSave(data: AutoSave, config: ConfigCommon): Promise<void> {
+  return new Promise((res) => {
+    config.onAutoSave?.(data);
+    res();
+  });
+}
+
+//#endregion
+
+//#region OnChange
+
+export function onChange(data: OnChange, config: ConfigCommon): Promise<void> {
+  return new Promise((res) => {
+    config.onChange?.(data);
+    res();
+  });
+}
+
+//#endregion
+
+//#region Project
 
 export function addProjectLockedBeacon(): Promise<unknown> {
   const {
@@ -370,37 +388,6 @@ export function updateGlobalBlocks(
 
 //#endregion
 
-//#region Image
-
-export async function uploadImage(data: {
-  base64: string;
-  filename: string;
-}): Promise<{ name: string; uid: string; fileName: string }> {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
-
-  const body = new URLSearchParams({
-    attachment: data.base64,
-    filename: data.filename
-  });
-
-  return request(`${api}/media`, {
-    method: "POST",
-    body
-  })
-    .then((r) => r.json())
-    .then((r) => {
-      return {
-        name: r.name,
-        uid: r.uid,
-        fileName: r.filename
-      };
-    });
-}
-
-//#endregion
-
 //#region Fonts
 
 export function getUploadedFonts(): Promise<unknown> {
@@ -562,249 +549,375 @@ export const updateBlockScreenshot: UpdateScreenshot = ({ id, base64 }) => {
 
 //#region Saved blocks
 
-export const getSavedBlocks: GetSavedBlocksMeta = async (pagination) => {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  const { page, count } = pagination || paginationData;
+export const getSavedBlocks = async (
+  config: ConfigCommon,
+  filter?: { filterBy: string }
+): Promise<Array<SavedBlockAPIMeta>> => {
+  return new Promise((res, rej) => {
+    const { savedBlocks } = config.api ?? {};
+    const get = savedBlocks?.get;
 
-  const url = makeUrl(
-    `${api}/saved_blocks`,
-    makeFormEncode({
-      page,
-      count,
-      fields: ["id", "meta"]
-    })
-  );
-
-  return request(url, {
-    method: "GET"
-  })
-    .then((r) => r.json())
-    .then((r) =>
-      // Old saved blocks don't have uid,
-      // @ts-expect-error we are used id(bd id) instead of them
-      r.map(parseMetaSavedBlock).map((b) => ({
-        ...b,
-        uid: b.id
-      }))
-    );
+    if (!get) {
+      rej(t("API: No savedBlocks get found."));
+    } else {
+      get(res, rej, filter);
+    }
+  });
 };
 
-export const getSavedBlockById: GetSavedBlockById = (id) => {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
+export const getSavedBlockById = (
+  uid: string,
+  config: ConfigCommon
+): Promise<SavedBlock> => {
+  return new Promise((res, rej) => {
+    const { savedBlocks } = config.api ?? {};
+    const getSavedBlockById = savedBlocks?.getByUid;
 
-  return request(`${api}/saved_blocks/${id}`, {
-    method: "GET"
-  })
-    .then((r) => r.json())
-    .then(parseSavedBlock);
+    if (!getSavedBlockById) {
+      rej(t("API: No savedBlocks getByUid found."));
+    } else {
+      getSavedBlockById(res, rej, { uid });
+    }
+  });
 };
 
-export const createSavedBlock: CreateSavedBlock = (
-  savedBlock,
-  extraMeta = {}
+interface _SavedBlock extends SavedBlock {
+  uid: string;
+}
+
+export const createSavedBlock = (
+  block: _SavedBlock,
+  config: ConfigCommon,
+  meta?: { is_autosave: 0 | 1 }
 ) => {
-  const {
-    container: { id },
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  const { data, dataVersion, uid, meta } = stringifySavedBlock(savedBlock);
-  const { is_autosave = 0 } = extraMeta;
-  const media = makeBlockMeta(savedBlock);
+  return new Promise((res, rej) => {
+    const { savedBlocks } = config.api ?? {};
+    const create = savedBlocks?.create;
 
-  const body = new URLSearchParams({
-    uid,
-    data,
-    meta,
-    media,
-    dataVersion: `${dataVersion}`,
-    is_autosave: `${is_autosave}`,
-    container: `${id}`
-  });
+    if (!create) {
+      rej(t("API: No savedBlocks create found."));
+    } else {
+      const { is_autosave = 0 } = meta ?? {};
+      const data: CreateSavedBlock = {
+        block: { ...block, media: makeBlockMeta(block) },
+        is_autosave
+      };
 
-  return persistentRequest(`${api}/saved_blocks`, {
-    method: "POST",
-    body
+      create(res, rej, data);
+    }
   });
 };
 
-export const deleteSavedBlock: DeleteSavedBlockById = (id) => {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  return request(`${api}/saved_blocks/${id}`, {
-    method: "DELETE"
+export const deleteSavedBlock = (
+  savedBlock: DeleteSavedBlock,
+  config: ConfigCommon
+) => {
+  return new Promise((res, rej) => {
+    const { savedBlocks } = config.api ?? {};
+    const deleteSavedBlock = savedBlocks?.delete;
+
+    if (!deleteSavedBlock) {
+      rej(t("API: No savedBlocks delete found."));
+    } else {
+      deleteSavedBlock(res, rej, savedBlock);
+    }
   });
 };
 
-export const uploadSaveBlocks: UploadSavedBlocks = async (files) => {
-  const config = Config.getAll() as Cloud;
-  const { project, urls } = config;
-  const version = config.editorVersion;
-  const formData = new FormData();
+export const updateSavedBlock = (
+  savedBlock: UpdateSavedBlock,
+  config: ConfigCommon
+) => {
+  return new Promise((res, rej) => {
+    const { savedBlocks } = config.api ?? {};
+    const updateSavedBlock = savedBlocks?.update;
 
-  for (const file of files) {
-    formData.append("importTemplate[]", file);
-  }
-
-  formData.append("version", version);
-  formData.append("type", "block");
-
-  const r = await request(`${urls.api}/zip_templates/${project.id}/imports`, {
-    method: "POST",
-    body: formData
+    if (!updateSavedBlock) {
+      rej(t("API: No savedBlocks update found."));
+    } else {
+      updateSavedBlock(res, rej, savedBlock);
+    }
   });
-  const rj = await r.json();
+};
 
-  if (rj.success && rj.errors && rj.success) {
-    return {
-      errors: rj.errors,
-      success: rj.success.map(parseSavedBlock)
-    };
-  }
+export const importSaveBlocks = async (
+  config: ConfigCommon
+): Promise<SavedBlockImport> => {
+  return new Promise((res, rej) => {
+    const { savedBlocks } = config.api ?? {};
+    const importSavedBlocks = savedBlocks?.import;
 
-  throw rj;
+    if (!importSavedBlocks) {
+      rej(t("API: No savedBlocks upload found."));
+    } else {
+      importSavedBlocks(res, rej);
+    }
+  });
+};
+
+export const filterSavedBlocks = (
+  config: ConfigCommon
+): Promise<SavedBlockFilter> => {
+  return new Promise((res, rej) => {
+    const { savedBlocks } = config.api ?? {};
+    const filterSavedBlocks = savedBlocks?.filter?.handler;
+
+    if (!filterSavedBlocks) {
+      rej(t("API: No savedBlocks filter found."));
+    } else {
+      filterSavedBlocks(res, rej);
+    }
+  });
 };
 
 //#endregion
 
 //#region Saved popups
 
-export const uploadSavePopups: UploadSavedPopups = async (files) => {
-  const config = Config.getAll() as Cloud;
-  const { project, urls } = config;
-  const version = config.editorVersion;
-  const formData = new FormData();
+export const getSavedPopups = async (
+  config: ConfigCommon,
+  filter?: { filterBy: string }
+): Promise<Array<SavedBlockAPIMeta>> => {
+  return new Promise((res, rej) => {
+    const { savedPopups } = config.api ?? {};
+    const get = savedPopups?.get;
 
-  for (const file of files) {
-    formData.append("importTemplate[]", file);
-  }
-
-  formData.append("version", version);
-  formData.append("type", "popup");
-
-  const r = await request(`${urls.api}/zip_templates/${project.id}/imports`, {
-    method: "POST",
-    body: formData
+    if (!get) {
+      rej(t("API: No savedPopups get found."));
+    } else {
+      get(res, rej, filter);
+    }
   });
-  const rj = await r.json();
+};
 
-  if (rj.success && rj.errors && rj.success) {
-    return {
-      errors: rj.errors,
-      success: rj.success.map(parseSavedBlock)
-    };
-  }
+export const getSavedPopupById = (
+  uid: string,
+  config: ConfigCommon
+): Promise<SavedBlock> => {
+  return new Promise((res, rej) => {
+    const { savedPopups } = config.api ?? {};
+    const getSavedPopupById = savedPopups?.getByUid;
 
-  throw rj;
+    if (!getSavedPopupById) {
+      rej(t("API: No savedPopups getByUid found."));
+    } else {
+      getSavedPopupById(res, rej, { uid });
+    }
+  });
+};
+
+interface _SavedPopup extends SavedBlock {
+  uid: string;
+}
+
+export const createSavedPopup = (
+  block: _SavedPopup,
+  config: ConfigCommon,
+  meta?: { is_autosave: 0 | 1 }
+) => {
+  return new Promise((res, rej) => {
+    const { savedPopups } = config.api ?? {};
+    const create = savedPopups?.create;
+
+    if (!create) {
+      rej(t("API: No savedPopups create found."));
+    } else {
+      const { is_autosave = 0 } = meta ?? {};
+      const data: CreateSavedBlock = {
+        block: { ...block, media: makeBlockMeta(block) },
+        is_autosave
+      };
+
+      create(res, rej, data);
+    }
+  });
+};
+
+export const deleteSavedPopup = (
+  savedBlock: DeleteSavedBlock,
+  config: ConfigCommon
+) => {
+  return new Promise((res, rej) => {
+    const { savedPopups } = config.api ?? {};
+    const deleteSavedPopup = savedPopups?.delete;
+
+    if (!deleteSavedPopup) {
+      rej(t("API: No savedPopup delete found."));
+    } else {
+      deleteSavedPopup(res, rej, savedBlock);
+    }
+  });
+};
+
+export const updateSavedPopup = (
+  savedBlock: UpdateSavedBlock,
+  config: ConfigCommon
+) => {
+  return new Promise((res, rej) => {
+    const { savedPopups } = config.api ?? {};
+    const updateSavedPopup = savedPopups?.update;
+
+    if (!updateSavedPopup) {
+      rej(t("API: No savedPopup update found."));
+    } else {
+      updateSavedPopup(res, rej, savedBlock);
+    }
+  });
+};
+
+export const importSavePopups = async (
+  config: ConfigCommon
+): Promise<SavedBlockImport> => {
+  return new Promise((res, rej) => {
+    const { savedPopups } = config.api ?? {};
+    const importSavedPopups = savedPopups?.import;
+
+    if (!importSavedPopups) {
+      rej(t("API: No savedPopups import found."));
+    } else {
+      importSavedPopups(res, rej);
+    }
+  });
+};
+
+export const filterSavedPopups = (
+  config: ConfigCommon
+): Promise<SavedBlockFilter> => {
+  return new Promise((res, rej) => {
+    const { savedPopups } = config.api ?? {};
+    const filterSavedPopups = savedPopups?.filter?.handler;
+
+    if (!filterSavedPopups) {
+      rej(t("API: No savedPopups filter found."));
+    } else {
+      filterSavedPopups(res, rej);
+    }
+  });
 };
 
 //#endregion
 
 //#region Saved layouts
 
-export const getSavedLayouts: GetSavedLayoutsMeta = (pagination) => {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  const { page, count } = pagination || paginationData;
-  const url = makeUrl(
-    `${api}/layouts`,
-    makeFormEncode({
-      page,
-      count,
-      fields: ["id", "meta"]
-    })
-  );
+export const getSavedLayouts = (
+  config: ConfigCommon,
+  filter?: { filterBy: string }
+): Promise<Array<SavedLayoutAPIMeta>> => {
+  return new Promise((res, rej) => {
+    const { savedLayouts } = config.api ?? {};
+    const get = savedLayouts?.get;
 
-  return (
-    request(url, {
-      method: "GET"
-    })
-      .then((r) => r.json())
-      // Old saved blocks don't have uid,
-      // @ts-expect-error we are used id(bd id) instead of them
-      .then((r) => r.map(parseMetaSavedBlock).map((b) => ({ ...b, uid: b.id })))
-  );
+    if (!get) {
+      rej(t("API: No savedLayouts get found."));
+    } else {
+      get(res, rej, filter);
+    }
+  });
 };
 
-export const getSavedLayoutById: GetSavedLayoutById = (id) => {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  return request(`${api}/layouts/${id}`, {
-    method: "GET"
-  })
-    .then((r) => r.json())
-    .then(parseSavedLayout);
+export const getSavedLayoutById = (
+  id: string,
+  config: ConfigCommon
+): Promise<SavedLayout> => {
+  return new Promise((res, rej) => {
+    const { savedLayouts } = config.api ?? {};
+    const getByUid = savedLayouts?.getByUid;
+
+    if (!getByUid) {
+      rej(t("API: No savedLayouts getByUid found."));
+    } else {
+      getByUid(res, rej, { uid: id });
+    }
+  });
 };
 
-export const createSavedLayout: CreateSavedLayout = (
-  savedLayout,
-  extraMeta = {}
+interface _Layout extends SavedLayout {
+  uid: string;
+}
+
+export const createSavedLayout = (
+  layout: _Layout,
+  config: ConfigCommon,
+  meta?: { is_autosave: 0 | 1 }
 ) => {
-  const {
-    container: { id },
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  const { data, dataVersion, uid, meta } = stringifySavedBlock(savedLayout);
-  const { is_autosave = 0 } = extraMeta;
-  const media = makeBlockMeta(savedLayout);
-  const requestData = new URLSearchParams({
-    data,
-    uid,
-    meta,
-    media,
-    dataVersion: `${dataVersion}`,
-    is_autosave: `${is_autosave}`,
-    container: `${id}`
-  });
+  return new Promise((res, rej) => {
+    const { savedLayouts } = config.api ?? {};
+    const create = savedLayouts?.create;
 
-  return persistentRequest(`${api}/layouts`, {
-    method: "POST",
-    body: requestData
+    if (!create) {
+      rej(t("API: No savedLayouts create found."));
+    } else {
+      const { is_autosave = 0 } = meta ?? {};
+      const data: CreateSavedLayout = {
+        block: { ...layout, media: makeBlockMeta(layout) },
+        is_autosave
+      };
+
+      create(res, rej, data);
+    }
   });
 };
 
-export const deleteSavedLayout: DeleteSavedLayoutById = (id) => {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  return request(`${api}/layouts/${id}`, {
-    method: "DELETE"
+export const deleteSavedLayout = (
+  savedLayout: DeleteSavedLayout,
+  config: ConfigCommon
+) => {
+  return new Promise((res, rej) => {
+    const { savedLayouts } = config.api ?? {};
+    const deleteSavedLayout = savedLayouts?.delete;
+
+    if (!deleteSavedLayout) {
+      rej(t("API: No savedLayout delete found."));
+    } else {
+      deleteSavedLayout(res, rej, savedLayout);
+    }
   });
 };
 
-export const uploadSaveLayouts: UploadSavedLayouts = async (files) => {
-  const config = Config.getAll() as Cloud;
-  const { project, urls } = config;
-  const version = config.editorVersion;
-  const formData = new FormData();
+export const updateSavedLayout = (
+  savedLayout: UpdateSavedLayout,
+  config: ConfigCommon
+) => {
+  return new Promise((res, rej) => {
+    const { savedLayouts } = config.api ?? {};
+    const updateSavedLayout = savedLayouts?.update;
 
-  for (const file of files) {
-    formData.append("importTemplate[]", file);
-  }
-
-  formData.append("version", version);
-  formData.append("type", "layout");
-
-  const r = await request(`${urls.api}/zip_templates/${project.id}/imports`, {
-    method: "POST",
-    body: formData
+    if (!updateSavedLayout) {
+      rej(t("API: No savedLayout update found."));
+    } else {
+      updateSavedLayout(res, rej, savedLayout);
+    }
   });
-  const rj = await r.json();
+};
 
-  if (rj.success && rj.errors && rj.success) {
-    return {
-      errors: rj.errors,
-      success: rj.success.map(parseSavedLayout)
-    };
-  }
+export const importSavedLayout = (
+  config: ConfigCommon
+): Promise<SavedLayoutImport> => {
+  return new Promise((res, rej) => {
+    const { savedLayouts } = config.api ?? {};
+    const importSavedLayout = savedLayouts?.import;
 
-  throw rj;
+    if (!importSavedLayout) {
+      rej(t("API: No savedLayout import found."));
+    } else {
+      importSavedLayout(res, rej);
+    }
+  });
+};
+
+export const filterSavedLayouts = (
+  config: ConfigCommon
+): Promise<SavedLayoutFilter> => {
+  return new Promise((res, rej) => {
+    const { savedLayouts } = config.api ?? {};
+    const filterSavedLayouts = savedLayouts?.filter?.handler;
+
+    if (!filterSavedLayouts) {
+      rej(t("API: No savedLayouts filter found."));
+    } else {
+      filterSavedLayouts(res, rej);
+    }
+  });
 };
 
 //#endregion
@@ -823,7 +936,7 @@ function getCollectionSourceItems(v: T): Promise<CollectionSourceItem[]> {
   );
 
   const url = makeUrl(`${urls.api}/pages/${project.id}/type`, {
-    earchCriteria: v.by,
+    searchCriteria: v.by,
     searchValue: v.value
   });
 
@@ -1076,3 +1189,111 @@ export const getPostsSourceRefs: GetPostsSourceRefs = (type) => {
 };
 
 //#endregion
+
+export const getSourceIds = (
+  type: string,
+  config: ConfigCommon
+): ChoicesAsyncSimpleSelect["load"] => {
+  const sourceItemsHandler = config?.api?.sourceItems?.handler;
+
+  return () => {
+    return new Promise((res, rej) => {
+      if (typeof sourceItemsHandler === "function") {
+        sourceItemsHandler(res, rej, { id: type });
+      } else {
+        rej("Missing api handler in config");
+      }
+    });
+  };
+};
+
+export const getMetafields = (
+  sourceType: string,
+  config: ConfigCommon
+): ChoicesAsync["load"] => {
+  const metafields =
+    isCloud(config) && isShopifyShop(config.modules?.shop)
+      ? config?.modules?.shop?.api?.metafieldsLoad?.handler
+      : undefined;
+  return () => {
+    return new Promise((res, rej) => {
+      if (typeof metafields === "function") {
+        metafields(res, rej, { sourceType });
+      } else {
+        rej("Missing api handler in config");
+      }
+    });
+  };
+};
+
+export const getBlogPostMeta = (
+  sourceType: string,
+  config: ConfigCommon
+): ChoicesAsync["load"] => {
+  const blogPostsMeta =
+    isCloud(config) && isShopifyShop(config.modules?.shop)
+      ? config?.modules?.shop?.api?.blogPostMetaLoad?.handler
+      : undefined;
+
+  return () => {
+    return new Promise((res, rej) => {
+      if (typeof blogPostsMeta === "function") {
+        blogPostsMeta(res, rej, { sourceType });
+      } else {
+        rej("Missing api handler in config");
+      }
+    });
+  };
+};
+
+export const loadCollectionItems = (
+  {
+    collectionId,
+    fieldId
+  }: {
+    collectionId: string;
+    fieldId?: string;
+  },
+  config: ConfigCommon
+): ChoicesAsync["load"] => {
+  const loadCollectionItems =
+    config?.api?.collectionItems?.loadCollectionItems?.handler;
+
+  return (value) => {
+    return new Promise((res, rej) => {
+      if (typeof loadCollectionItems === "function") {
+        loadCollectionItems(res, rej, { collectionId, fieldId, value });
+      } else {
+        rej("Missing api handler in config");
+      }
+    });
+  };
+};
+
+export const searchCollectionItems = (
+  {
+    collectionId,
+    fieldId
+  }: {
+    collectionId?: string;
+    fieldId?: string;
+  },
+  config: ConfigCommon
+): ChoicesAsync["search"] => {
+  const searchCollectionItems =
+    config?.api?.collectionItems?.searchCollectionItems?.handler;
+
+  return (search) => {
+    return new Promise((res, rej) => {
+      if (typeof searchCollectionItems === "function") {
+        searchCollectionItems(res, rej, {
+          collectionId: collectionId ?? "",
+          fieldId,
+          search
+        });
+      } else {
+        rej("Missing api handler in config");
+      }
+    });
+  };
+};

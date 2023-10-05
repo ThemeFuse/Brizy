@@ -6,20 +6,42 @@ export function style(
   vs: Value,
   vd: Value
 ): [string, string, string] {
+  const { maskShape = "none" } = v;
+
   const styles: {
     [k: string]: {
       interval?: string[];
       standart?: string[];
     };
   } = {
+    ".brz &&:hover > .brz-bg": {
+      standart: [...(maskShape === "none" ? [] : ["cssStyleMaskDropShadow"])]
+    },
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
-      standart: ["cssStyleBgImage", "cssStyleFilter", "cssStyleBgImagePosition"]
+      standart: [
+        "cssStyleBgImage",
+        "cssStyleFilter",
+        "cssStyleBgImagePosition",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
       standart: ["cssStyleBgImageHover"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
+      standart: [
+        "cssStyleBgColor",
+        "cssStyleBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ]
     }
   };
   return renderStyles({ v, vs, vd, styles });
@@ -47,7 +69,8 @@ export function styleInner(
         "cssStyleContainerPopup2CloseState",
         "cssStyleContainerPopup2ClosePosition",
         "cssStyleContainerPopup2CloseColor"
-      ]
+      ],
+      interval: ["cssStyleHoverTransition"]
     },
     ".brz && > .brz-container__wrap .brz-popup2__close:hover .brz-icon-svg": {
       standart: [

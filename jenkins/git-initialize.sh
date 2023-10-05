@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
+set -e
 
 # Deatached head fix.
 echo -e "\nGiT Cleanup"
 echo -e "-----------------------------------------------------------------------------"
-
 git checkout .;
 git fetch;
 git clean -fd;

@@ -1,3 +1,4 @@
+import { WP } from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export function request(
@@ -68,4 +69,36 @@ export const getPosts: GetPosts = async (
   } else {
     throw rj;
   }
+};
+
+export const getCollectionSourceItems = async (
+  id: string,
+  config: ConfigCommon
+) => {
+  const { wp, editorVersion } = config as WP;
+  const { url, hash, getPostObjects } = wp.api;
+
+  return await request(url, {
+    method: "POST",
+    body: new URLSearchParams({
+      hash,
+      version: editorVersion,
+      postType: id,
+      action: getPostObjects
+    })
+  })
+    .then((r) => r.json())
+    .then((result) => {
+      if (!result?.data) {
+        throw "Something went wrong";
+      }
+
+      return result.data;
+    })
+    .catch((e) => {
+      if (process.env.NODE_ENV === "development") {
+        console.error(e);
+      }
+      return [];
+    });
 };

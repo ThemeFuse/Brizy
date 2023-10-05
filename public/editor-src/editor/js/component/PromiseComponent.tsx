@@ -2,8 +2,7 @@
 // My guess is that the waiting mechanism could be done more elegantly
 // via Promise.race([fetchPromise, timeoutPromise]).
 // Also we should see if the renderProps api should be replaced with something other
-
-import React, { useEffect, useReducer, Reducer } from "react";
+import React, { Reducer, useEffect, useReducer } from "react";
 
 type TState<TResolve, TReject> =
   | {
@@ -105,7 +104,7 @@ export function PromiseComponent<TResolve, TReject>({
     }
 
     getPromise()
-      .then(r => {
+      .then((r) => {
         if (!unmounted) {
           clearTimeout(tid);
           dispatch({
@@ -114,7 +113,7 @@ export function PromiseComponent<TResolve, TReject>({
           });
         }
       })
-      .catch(e => {
+      .catch((e) => {
         if (!unmounted) {
           clearTimeout(tid);
           dispatch({
@@ -127,7 +126,7 @@ export function PromiseComponent<TResolve, TReject>({
     return (): void => {
       unmounted = true;
     };
-  }, []);
+  }, [delayMs, getPromise, hasDelay]);
 
   if (state.status === "waiting" && renderWaiting) {
     return renderWaiting();

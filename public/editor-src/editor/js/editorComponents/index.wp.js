@@ -1,29 +1,26 @@
-import nonWP from "./index.js";
-// import WPPosts from "./WordPress/WPPosts";
-import WPSidebar from "./WordPress/WPSidebar";
-import WPCustomShortcode from "./WordPress/WPCustomShortcode";
-import WPPostNavigation from "./WordPress/WPPostNavigation";
-import WOOProducts from "./WordPress/WOOProducts";
-import WOOProductPage from "./WordPress/WOOProductPage";
-import WOOCategories from "./WordPress/WOOCategories";
+import { hasSidebars, pluginActivated } from "visual/utils/wp";
+import Search from "./Search";
 import WOOAddToCart from "./WordPress/WOOAddToCart";
-import WOOPages from "./WordPress/WOOPages";
-import WPBreadcrumbs from "./WordPress/WPBreadcrumbs";
-import WPPostContent from "./WordPress/WPPostContent";
-import WPPostInfo from "./WordPress/WPPostInfo";
-import WOOSku from "./WordPress/WOOSku";
-import WOOStock from "./WordPress/WOOStock";
-import WOOPrice from "./WordPress/WOOPrice";
 import WOOAttributes from "./WordPress/WOOAttributes";
-import WOOProductMeta from "./WordPress/WOOProductMeta";
-import WOORating from "./WordPress/WOORating";
 import WOOCart from "./WordPress/WOOCart";
+import WOOCategories from "./WordPress/WOOCategories";
 import WOOExcerpt from "./WordPress/WOOExcerpt";
 import WOOGallery from "./WordPress/WOOGallery";
-
-import Search from "./Search";
-
-import { hasSidebars, pluginActivated } from "visual/utils/wp";
+import WOOPages from "./WordPress/WOOPages";
+import WOOPrice from "./WordPress/WOOPrice";
+import WOOProductMeta from "./WordPress/WOOProductMeta";
+import WOOProductPage from "./WordPress/WOOProductPage";
+import WOOProducts from "./WordPress/WOOProducts";
+import WOORating from "./WordPress/WOORating";
+import WOOSku from "./WordPress/WOOSku";
+import WOOStock from "./WordPress/WOOStock";
+import WPBreadcrumbs from "./WordPress/WPBreadcrumbs";
+import WPCustomShortcode from "./WordPress/WPCustomShortcode";
+import WPPostInfo from "./WordPress/WPPostInfo";
+import WPPostNavigation from "./WordPress/WPPostNavigation";
+// import WPPosts from "./WordPress/WPPosts";
+import WPSidebar from "./WordPress/WPSidebar";
+import nonWP from "./index.js";
 
 export default {
   ...nonWP,
@@ -31,7 +28,7 @@ export default {
   WPCustomShortcode,
   WPPostNavigation,
   WPBreadcrumbs,
-  WPPostContent,
+
   WPPostInfo,
   Search,
   ...(pluginActivated("woocommerce")

@@ -1,8 +1,8 @@
+import * as GalleryItem from "visual/component/Controls/Gallery/types/Item";
+import { SizeType } from "visual/global/Config/types/configs/common";
+import { getImageUrl } from "visual/utils/image";
 import { WithId } from "visual/utils/options/attributes";
 import { Image } from "./Image";
-import { UploadData } from "visual/utils/image/uploadImage";
-import * as GalleryItem from "visual/component/Controls/Gallery/types/Item";
-import { imageUrl } from "visual/utils/image";
 
 // region Thumbnail
 export interface Thumbnail<T> extends WithId<T> {
@@ -23,16 +23,13 @@ export const thumbnail = <T>(id: T, payload: Image): Thumbnail<T> => ({
 // region Loading
 export interface Loading<T> extends WithId<T> {
   __type: "loading";
-  payload: Promise<UploadData>;
+  payload: Promise<Image>;
 }
 
 export const isLoading = <T>(v: Item<T>): v is Loading<T> =>
   v.__type === "loading";
 
-export const loading = <T>(
-  id: T,
-  payload: Promise<UploadData>
-): Loading<T> => ({
+export const loading = <T>(id: T, payload: Promise<Image>): Loading<T> => ({
   id,
   payload,
   __type: "loading"
@@ -58,11 +55,17 @@ export type Item<T> = Thumbnail<T> | Loading<T> | Error<T>;
 
 export const toGalleryItem = <T>(item: Item<T>): GalleryItem.Item<T> => {
   switch (item.__type) {
-    case "thumbnail":
-      return GalleryItem.thumbnail(
-        item.id,
-        imageUrl(item.payload.name, { iW: 100, iH: 100 }) ?? ""
-      );
+    case "thumbnail": {
+      const url =
+        getImageUrl({
+          uid: item.payload.uid,
+          fileName: item.payload.fileName,
+          sizeType: SizeType.custom,
+          crop: { iW: 100, iH: 100 }
+        }) ?? "";
+
+      return GalleryItem.thumbnail(item.id, url);
+    }
     case "loading":
       return GalleryItem.loading(item.id);
     case "error":

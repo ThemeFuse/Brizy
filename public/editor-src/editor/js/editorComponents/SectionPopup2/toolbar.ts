@@ -1,18 +1,24 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import {
+  MaskPositions,
+  MaskRepeat,
+  MaskShapes,
+  MaskSizes
+} from "visual/utils/mask/Mask";
 import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import {
-  toolbarElementSectionGlobal,
-  toolbarElementSectionSaved
-} from "visual/utils/toolbar";
+import { read as readString } from "visual/utils/reader/string";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { getInstanceParentId } from "visual/utils/toolbar";
 import { Value } from "./toolbarClose";
 
 // @ts-expect-error need to change to new options
@@ -32,10 +38,10 @@ export const getItems: GetItems<Value> = ({
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
-  const imageDynamicContentChoices = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.image
-  );
+  const imageDynamicContentChoices = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.image
+  });
 
   const config = Config.getAll();
 
@@ -47,6 +53,8 @@ export const getItems: GetItems<Value> = ({
   const enabledEmbedded = popupSettings.embedded === true;
   const enabledHorizontalAlign = popupSettings.horizontalAlign === true;
   const enabledVerticalAlign = popupSettings.verticalAlign === true;
+  const enableScrollPageBehind = popupSettings.scrollPageBehind === true;
+  const enableclickOutsideToClose = popupSettings.clickOutsideToClose === true;
 
   const blockType = IS_GLOBAL_POPUP ? "externalPopup" : "popup";
 
@@ -63,6 +71,15 @@ export const getItems: GetItems<Value> = ({
           { title: t("Custom"), value: "custom2" },
           { title: t("Full Height"), value: "fullHeight" }
         ];
+
+  const maskShape = readString(dvv("maskShape")) ?? "none";
+  const maskPosition = readString(dvv("maskPosition")) ?? "center center";
+  const maskSize = readString(dvv("maskSize")) ?? "cover";
+  const maskScaleSuffix = readString(dvv("maskScaleSuffix")) ?? "%";
+  const maskCustomUploadImageSrc = readString(dvv("maskCustomUploadImageSrc"));
+  const maskShapeIsDisabled =
+    maskShape === "none" ||
+    (maskShape === "custom" && !maskCustomUploadImageSrc);
 
   return [
     {
@@ -84,17 +101,26 @@ export const getItems: GetItems<Value> = ({
               id: "tabPopup",
               label: t("Popup"),
               options: [
-                toolbarElementSectionGlobal({
-                  device,
-                  component,
-                  blockType,
+                {
+                  id: "makeItGlobal",
+                  label: t("Make it Global"),
+                  type: "globalBlock-dev",
                   devices: "desktop",
-                  state: "normal"
-                }),
+                  disabled: isCloud(config) && isShopify(config),
+                  config: {
+                    _id: component.getId(),
+                    parentId: getInstanceParentId(
+                      component.props.instanceKey,
+                      blockType
+                    ),
+                    blockType
+                  }
+                },
                 {
                   id: "scrollPage",
                   label: t("Scroll Page Behind"),
                   type: "switch-dev",
+                  disabled: !enableScrollPageBehind,
                   position: 100
                 },
                 {
@@ -112,7 +138,8 @@ export const getItems: GetItems<Value> = ({
                 {
                   id: "clickOutsideToClose",
                   label: t("Click Outside to Close"),
-                  type: "switch-dev"
+                  type: "switch-dev",
+                  disabled: !enableclickOutsideToClose
                 },
                 {
                   id: "groupShowCloseButton",
@@ -166,6 +193,103 @@ export const getItems: GetItems<Value> = ({
                   population: imageDynamicContentChoices
                 }
               ]
+            },
+            {
+              id: "tabMask",
+              label: t("Mask"),
+              position: 110,
+              options: [
+                {
+                  id: "maskShape",
+                  label: t("Shape"),
+                  devices: "desktop",
+                  type: "select-dev",
+                  choices: MaskShapes
+                },
+                {
+                  id: "maskCustomUpload",
+                  type: "imageUpload-dev",
+                  devices: "desktop",
+                  label: t("Image"),
+                  config: {
+                    pointer: false,
+                    disableSizes: true,
+                    acceptedExtensions: ["png", "svg"]
+                  },
+                  helper: {
+                    content: t("Upload only [ .png or .svg ]")
+                  },
+                  disabled: maskShape !== "custom"
+                },
+                {
+                  id: "groupSize",
+                  type: "group-dev",
+                  disabled: maskShapeIsDisabled,
+                  options: [
+                    {
+                      id: "maskSize",
+                      label: t("Size"),
+                      type: "select-dev",
+                      choices: MaskSizes
+                    },
+                    {
+                      id: "maskScale",
+                      type: "slider-dev",
+                      disabled: maskSize !== "custom",
+                      config: {
+                        min: 1,
+                        max: maskScaleSuffix === "px" ? 500 : 100,
+                        units: [
+                          { value: "%", title: "%" },
+                          { value: "px", title: "px" }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "groupPosition",
+                  type: "group-dev",
+                  disabled: maskShapeIsDisabled,
+                  options: [
+                    {
+                      id: "maskPosition",
+                      type: "select-dev",
+                      label: t("Position"),
+                      choices: MaskPositions
+                    },
+                    {
+                      id: "maskPositionx",
+                      label: t("X"),
+                      type: "slider-dev",
+                      disabled: maskPosition !== "custom",
+                      config: {
+                        min: 1,
+                        max: 100,
+                        units: [{ value: "%", title: "%" }]
+                      }
+                    },
+                    {
+                      id: "maskPositiony",
+                      label: t("Y"),
+                      type: "slider-dev",
+                      disabled: maskPosition !== "custom",
+                      config: {
+                        min: 1,
+                        max: 100,
+                        units: [{ value: "%", title: "%" }]
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "maskRepeat",
+                  label: t("Repeat"),
+                  type: "select-dev",
+                  disabled: maskShapeIsDisabled || maskSize === "cover",
+                  choices: MaskRepeat
+                }
+              ]
             }
           ]
         }
@@ -186,18 +310,48 @@ export const getItems: GetItems<Value> = ({
       position: 90,
       options: [
         {
-          id: "",
-          type: "backgroundColor-dev"
+          id: "tabsColor",
+          type: "tabs-dev",
+          tabs: [
+            {
+              id: "tabBgColor",
+              label: t("Background"),
+              options: [
+                {
+                  id: "",
+                  type: "backgroundColor-dev"
+                }
+              ]
+            },
+            {
+              id: "tabDropShadow",
+              label: t("Shadow"),
+              options: [
+                {
+                  id: "maskShadow",
+                  type: "textShadow-dev",
+                  states: [NORMAL, HOVER],
+                  disabled: maskShapeIsDisabled
+                }
+              ]
+            }
+          ]
         }
       ]
     },
-    toolbarElementSectionSaved({
-      device,
-      component,
-      blockType: "popup",
-      state: "normal",
-      devices: "desktop"
-    }),
+    {
+      id: "makeItSaved",
+      type: "savedBlock-dev",
+      devices: "desktop",
+      position: 90,
+      config: {
+        icon: "nc-save-section",
+        blockType: "popup",
+        title: t("Save"),
+        tooltipContent: t("Saved"),
+        blockId: component.getId()
+      }
+    },
     {
       id: "horizontalAlign",
       type: "toggle-dev",

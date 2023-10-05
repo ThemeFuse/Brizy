@@ -61,6 +61,13 @@
     padding-bottom: 0;
   }
 
+  &--globalStyles-col1 > div > .brz-ed-option-type__select-dev {
+    padding: 15px 10px 0;
+  }
+  &--globalStyles-col2 > div > .brz-ed-option-type__select-dev {
+    padding: 15px 10px 6px;
+  }
+
   .brz-ed-grid__typography {
     padding: 0;
 
@@ -77,11 +84,55 @@
 // Size suffix
 .brz-ed-control__typography,
 .brz-ed-grid__typography {
+  .brz-ed-control__multiSelect {
+    &--tag {
+      &--value {
+        display: inline-block;
+      }
+    }
+    &--value-container {
+      .brz-control__select {
+        &--arrow {
+          margin: 0;
+        }
+      }
+    }
+  }
   .brz-control__typography-suffix {
     display: flex;
     justify-content: space-between;
     padding-bottom: 0;
     min-height: auto;
+
+    .brz-ed-control__multiSelect {
+      flex: initial;
+      width: auto;
+      min-width: auto;
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+
+      &--value-container {
+        min-height: auto;
+        height: initial;
+        width: auto;
+        padding: 0;
+        background-color: transparent;
+        color: $options__label-color;
+        cursor: pointer;
+        &:hover {
+          color: $brand__primary;
+        }
+      }
+      &--tag {
+        height: auto;
+        color: inherit;
+      }
+    }
+
+    &--leftsidebar {
+      margin-bottom: 6px;
+    }
 
     .brz-control__select {
       flex: initial;

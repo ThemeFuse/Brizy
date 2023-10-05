@@ -1,7 +1,28 @@
 // mainly inspired by html2canvas
 let browsersSupports;
+let count = 0;
 
-export const browserSupports = () => {
+export const browserSupports = async () => {
+  while (count < 5) {
+    browsersSupports = undefined;
+    let isSupported = await _browserSupports();
+
+    if (isSupported) {
+      count = 0;
+      return isSupported;
+    } else {
+      count = count + 1;
+    }
+  }
+
+  if (count > 5) {
+    browsersSupports = false;
+  }
+
+  return Promise.reject(false);
+};
+
+export const _browserSupports = () => {
   if (browsersSupports) {
     return Promise.resolve(true);
   }
@@ -27,7 +48,7 @@ export const browserSupports = () => {
 
   const svg = createForeignObjectSVG(size, size, 0, 0, img);
   return loadSerializedSVG(svg)
-    .then(img => {
+    .then((img) => {
       ctx.drawImage(img, 0, 0);
       const data = ctx.getImageData(0, 0, size, size).data;
 
@@ -41,13 +62,13 @@ export const browserSupports = () => {
       ctx.fillRect(0, 0, size, size);
 
       const node = document.createElement("div");
-      node.style.backgroundImage = `url(${greenImageSrc})`;
+      node.style.backgroundImage = `url("${greenImageSrc}")`;
       node.style.height = `${size}px`;
 
       const svg = createForeignObjectSVG(size, size, 0, 0, node);
       return loadSerializedSVG(svg);
     })
-    .then(img => {
+    .then((img) => {
       ctx.drawImage(img, 0, 0);
       const data = ctx.getImageData(0, 0, size, size).data;
 
@@ -80,7 +101,7 @@ const createForeignObjectSVG = (width, height, x, y, node) => {
   return svg;
 };
 
-const loadSerializedSVG = svg => {
+const loadSerializedSVG = (svg) => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
@@ -92,5 +113,5 @@ const loadSerializedSVG = svg => {
   });
 };
 
-const isGreenPixel = data =>
+const isGreenPixel = (data) =>
   data[0] === 0 && data[1] === 255 && data[2] === 0 && data[3] === 255;

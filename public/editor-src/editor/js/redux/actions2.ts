@@ -44,7 +44,6 @@ export type ActionHydrate = {
       locked: boolean;
       lockedBy: boolean | string;
     };
-    blocksThumbnailSizes: [];
     globalBlocks: ReduxState["globalBlocks"];
     fonts: RFonts;
     page: ReduxState["page"];

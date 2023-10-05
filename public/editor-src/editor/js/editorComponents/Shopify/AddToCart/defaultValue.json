@@ -1,7 +1,7 @@
 {
   "content": {
     "text": "Add to Cart",
-    "itemId": null,
+    "itemId": "",
 
     "iconName": "cart-simple-in",
     "iconType": "outline"
@@ -162,78 +162,6 @@
     "tempBoxShadowHorizontal": 1,
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
-
-    "hoverBgColorType": null,
-    "tempHoverBgColorType": null,
-
-    "hoverBgColorHex": null,
-    "hoverBgColorOpacity": null,
-    "hoverBgColorPalette": null,
-
-    "hoverGradientType": null,
-
-    "hoverGradientColorHex": null,
-    "hoverGradientColorOpacity": null,
-    "hoverGradientColorPalette": null,
-
-    "hoverGradientActivePointer": null,
-    "hoverGradientStartPointer": null,
-    "hoverGradientFinishPointer": null,
-    "hoverGradientLinearDegree": null,
-    "hoverGradientRadialDegree": null,
-
-    "tempHoverBgColorOpacity": null,
-    "tempHoverBgColorPalette": null,
-    "tempHoverGradientColorOpacity": null,
-    "tempHoverGradientColorPalette": null,
-
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
-
-    "hoverBorderStyle": null,
-    "tempHoverBorderStyle": null,
-
-    "hoverBorderColorHex": null,
-    "hoverBorderColorOpacity": null,
-    "hoverBorderColorPalette": null,
-    "tempHoverBorderColorOpacity": null,
-    "tempHoverBorderColorPalette": null,
-
-    "hoverBorderWidthType": null,
-
-    "hoverBorderWidth": null,
-    "hoverBorderTopWidth": null,
-    "hoverBorderRightWidth": null,
-    "hoverBorderBottomWidth": null,
-    "hoverBorderLeftWidth": null,
-
-    "tempHoverBorderWidth": null,
-    "tempHoverBorderTopWidth": null,
-    "tempHoverBorderRightWidth": null,
-    "tempHoverBorderBottomWidth": null,
-    "tempHoverBorderLeftWidth": null,
-
-    "hoverBoxShadow": null,
-    "tempHoverBoxShadow": null,
-
-    "hoverBoxShadowColorHex": null,
-    "hoverBoxShadowColorOpacity": null,
-    "hoverBoxShadowColorPalette": null,
-    "tempHoverBoxShadowColorPalette": null,
-    "tempHoverBoxShadowColorOpacity": null,
-
-    "hoverBoxShadowBlur": null,
-    "hoverBoxShadowSpread": null,
-    "hoverBoxShadowVertical": null,
-    "hoverBoxShadowHorizontal": null,
-
-    "tempHoverBoxShadowBlur": null,
-    "tempHoverBoxShadowSpread": null,
-    "tempHoverBoxShadowVertical": null,
-    "tempHoverBoxShadowHorizontal": null
+    "hoverTransitionSuffix": ""
   }
 }

@@ -2,12 +2,12 @@ import classNames from "classnames";
 import React, { ReactElement, useCallback } from "react";
 import Number from "visual/component/Controls/AutoCorrectingInput";
 import { Literal } from "visual/utils/types/Literal";
-import { Item } from "../MultiSelect/Item";
+import { Item } from "../Select2/Item";
 import { Select2 } from "../Select2";
 import { Props } from "./types";
 
 const inputWidth = (v: number): number =>
-  Math.min(1, Math.max(1, String(v).length - 4)) * 24;
+  Math.min(1, Math.max(1, String(v).length - 4)) * 32;
 
 export function NumberUnit<U extends Literal>({
   value: { number, unit },

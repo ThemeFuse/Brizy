@@ -1,7 +1,12 @@
 import Config from "visual/global/Config";
+import { SizeType } from "visual/global/Config/types/configs/common";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
-import { imagePopulationUrl, imageUrl, svgUrl } from "visual/utils/image";
+import {
+  defaultImagePopulation,
+  getImageUrl,
+  imagePopulationUrl
+} from "visual/utils/image";
 
 const isWP = Config.get("wp");
 
@@ -12,9 +17,10 @@ const linkClassNames = [
   "is-empty"
 ];
 
-const isSVG = (extension) => extension === "svg";
-
 export default function changeRichText($) {
+  const dynamicContent = Config.getAll()?.dynamicContent;
+  const useCustomPlaceholder = dynamicContent?.useCustomPlaceholder ?? false;
+
   // Change Links
   $(".brz-rich-text")
     .find("a[data-href]")
@@ -27,7 +33,7 @@ export default function changeRichText($) {
       const html = $this.html();
       const className = $this.attr("class") || "";
       const style = $this.attr("style") || "";
-      const href = $this.attr("data-href");
+      const href = $this.attr("data-href") ?? "";
       const data = JSON.parse(decodeURIComponent(href));
       const externalLink = {
         external: data.external,
@@ -43,37 +49,31 @@ export default function changeRichText($) {
           : externalLink.external
       };
 
-      const target =
-        newData.type === "external" && newData.externalBlank === "on"
-          ? "target='_blank'"
-          : "";
-      const rel =
-        newData.type === "external" && newData.externalRel === "on"
-          ? "rel='nofollow'"
-          : "";
+      const url = newData[data.type];
+      const link = $(`<a>${html}</a>`);
 
-      let url = newData[data.type];
+      link.attr("class", className);
+
+      if (style) {
+        link.attr("style", style);
+      }
 
       if (data.type === "linkToSlide") {
-        $this.replaceWith(
-          `<a
-          href="#"
-          style="${style}"
-          class="${className}"
-          data-brz-link-story="${newData.linkToSlide}"
-          >${html}</a>`
-        );
+        link.attr("href", "#");
+        link.attr("data-brz-link-story", newData.linkToSlide);
+
+        $this.replaceWith(link);
       } else if (url) {
-        $this.replaceWith(
-          `<a
-            href='${getLinkContentByType(data.type, url)}'
-            ${target}
-            ${rel}
-            style="${style}"
-            class="${className}"
-            data-brz-link-type="${data.type}"
-          >${html}</a>`
-        );
+        link.attr("href", getLinkContentByType(data.type, url));
+        link.attr("data-brz-link-type", data.type);
+
+        if (newData.type === "external" && newData.externalBlank === "on") {
+          link.attr("target", "_blank");
+        }
+        if (newData.type === "external" && newData.externalRel === "on") {
+          link.attr("rel", "nofollow");
+        }
+        $this.replaceWith(link);
       } else {
         const newClassNames = className
           .split(" ")
@@ -112,10 +112,6 @@ export default function changeRichText($) {
         $elem = $this;
       }
 
-      const dynamicContentOption = Config.getAll()?.dynamicContentOption;
-      const useCustomPlaceholder =
-        dynamicContentOption?.richText?.useCustomPlaceholder;
-
       let _population;
 
       if (useCustomPlaceholder) {
@@ -137,12 +133,13 @@ export default function changeRichText($) {
       const $this = $(this);
       const src = $this.attr("data-image_src");
       const population = $this.attr("data-image_population");
-      const extension = $this.attr("data-image_extension");
       const fileName = $this.attr("data-image_file_name") ?? "image";
 
-      const imgUrl = isSVG(extension)
-        ? svgUrl(src, { fileName })
-        : imageUrl(src, { fileName });
+      const imgUrl = getImageUrl({
+        fileName,
+        uid: src,
+        sizeType: SizeType.custom
+      });
 
       const css = $this.css();
       const newCSS = Object.entries(css).reduce((acc, [property, value]) => {
@@ -160,12 +157,15 @@ export default function changeRichText($) {
       if (population) {
         $this.css({
           ...newCSS,
-          "background-image": `url(${imagePopulationUrl(population)})`
+          "background-image": `url('${imagePopulationUrl(population, {
+            ...defaultImagePopulation,
+            useCustomPlaceholder
+          })}')`
         });
       } else if (imgUrl)
         $this.css({
           ...newCSS,
-          "background-image": `url(${imgUrl})`
+          "background-image": `url('${imgUrl}')`
         });
 
       $this.removeAttr("data-image_src");

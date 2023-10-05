@@ -1,16 +1,13 @@
-import { mPipe } from "fp-utilities";
-import React, {
-  ChangeEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useReducer
-} from "react";
-import { from, of } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import React, { ReactElement, useCallback, useEffect, useReducer } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
-import { uploadFile } from "visual/utils/api";
+import { WithValue } from "visual/component/Options/types/dev/FileUpload/types/Value";
+import Config from "visual/global/Config";
+import {
+  FileUploadData,
+  Response
+} from "visual/global/Config/types/configs/common";
+import { t } from "visual/utils/i18n";
 import * as Ac from "../types/Actions";
 import * as St from "../types/State";
 import { Value, eq } from "../types/Value";
@@ -18,7 +15,7 @@ import { Value, eq } from "../types/Value";
 export interface Props {
   value: Value;
   extensions: string[];
-  onChange: (v: Value) => void;
+  onChange: (v: Value | undefined) => void;
 }
 
 const valueToState = (v: Value): St.State =>
@@ -29,12 +26,12 @@ export function Uploader({ value, extensions, onChange }: Props): ReactElement {
     (s: St.State, a: Ac.Actions): St.State => {
       switch (a.type) {
         case "Upload":
-          return s.type === "Empty" ? St.loading(a.payload) : s;
+          return s.type === "Empty" || s.type === "Err" ? St.loading() : s;
         case "Err":
           return s.type === "Loading" ? St.err(a.payload) : s;
         case "Success":
           return s.type === "Loading"
-            ? St.withFile({ id: a.payload.name, name: s.file.name })
+            ? St.withFile({ id: a.payload.id, name: a.payload.name })
             : s;
         case "Remove":
           return s.type === "WithFile" ? St.empty() : s;
@@ -46,26 +43,33 @@ export function Uploader({ value, extensions, onChange }: Props): ReactElement {
     valueToState
   );
 
-  const handleChange = useCallback(
-    mPipe(
-      (e: ChangeEvent<HTMLInputElement>) => e.target.files?.[0],
-      Ac.upload,
-      dispatch
-    ),
-    []
-  );
+  const handleChange = useCallback(() => {
+    dispatch(Ac.upload());
+  }, []);
+
   const handleRemove = useCallback(() => dispatch(Ac.remove()), []);
 
   useEffect(() => {
     if (state.type === "Loading") {
-      const s = from(uploadFile(state.file))
-        .pipe(
-          map(Ac.success),
-          catchError((e: Error) => of(Ac.err(e.message)))
-        )
-        .subscribe(dispatch);
+      const { api = {} } = Config.getAll();
+      const { customFile = {} } = api;
 
-      return () => s.unsubscribe();
+      if (!customFile.addFile) {
+        ToastNotification.error(t("Config : Missing addFile callback"));
+        return;
+      }
+
+      const response: Response<FileUploadData> = ({ uid, filename }) => {
+        const file: WithValue = { id: uid, name: filename };
+        dispatch(Ac.success(file));
+      };
+      const reject: Response<string> = (message) => {
+        dispatch(Ac.err(message));
+      };
+
+      customFile.addFile.handler(response, reject, {
+        acceptedExtensions: extensions
+      });
     }
   }, [state.type === "Loading"]);
 
@@ -76,10 +80,22 @@ export function Uploader({ value, extensions, onChange }: Props): ReactElement {
   }, [state.type === "WithFile"]);
 
   useEffect(() => {
+    if (state.type === "Empty") {
+      onChange(undefined);
+    }
+  }, [state.type === "Empty"]);
+
+  useEffect(() => {
     if (state.type === "Err") {
       ToastNotification.warn(state.message, 5);
     }
   }, [state.type === "Err"]);
+
+  useEffect(() => {
+    if (state.type === "Empty") {
+      onChange(undefined);
+    }
+  }, [state.type, onChange]);
 
   useEffect(() => {
     switch (state.type) {
@@ -100,13 +116,11 @@ export function Uploader({ value, extensions, onChange }: Props): ReactElement {
     case "Empty":
     case "Err":
       return (
-        <div className="brz-ed-control__file-upload__wrapper">
+        <div
+          className="brz-ed-control__file-upload__wrapper"
+          onClick={handleChange}
+        >
           <EditorIcon icon="nc-add" />
-          <input
-            type="file"
-            onChange={handleChange}
-            accept={extensions.join(",")}
-          />
         </div>
       );
     case "Loading":

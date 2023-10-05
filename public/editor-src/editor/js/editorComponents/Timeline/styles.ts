@@ -11,7 +11,8 @@ export function style(
       standart: [
         "cssStyleDisplayFlex",
         "cssStyleElementTimelineTabs",
-        "cssStyleElementTimelineTabsHorizontalStyle3"
+        "cssStyleElementTimelineTabsHorizontalStyle3",
+        "cssStyleElementTimelineHorizontalSpaceBetween"
       ],
       // Horizontal Style-3
       interval: [

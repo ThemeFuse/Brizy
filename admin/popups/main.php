@@ -287,14 +287,14 @@ class Brizy_Admin_Popups_Main {
 			foreach ( $allPopups as $aPopup ) {
 				try {
 					if ( $ruleSets[$aPopup->ID]->isMatching( $applyFor, $entityType, $entityValues ) ) {
-						$resultPopups[] = Brizy_Editor_Post::get( $aPopup );
+						$resultPopups[$aPopup->ID] = Brizy_Editor_Post::get( $aPopup );
 					}
 				} catch ( \Exception $e ) {
 					continue; // we catch here  the  exclusions
 				}
 			}
 		}
-		return $resultPopups;
+		return array_values($resultPopups);
 	}
 }
 

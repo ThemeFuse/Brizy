@@ -9,11 +9,14 @@ class Brizy_Compatibilities_TranslatePress {
 	public function __construct() {
 		add_action( 'brizy_toolbar_link',                [ $this, 'brizy_toolbar_link' ], 10, 2 );
 		add_action( 'trp_translated_html',               [ $this, 'trp_translated_html' ], 10 );
-		add_action( 'home_url',                          [ $this, 'home_url' ] );
 		add_action( 'brizy_create_editor_config_before', [ $this, 'rmLangPrefixFromHomeUrl' ] );
 		add_action( 'brizy_create_editor_config_after',  [ $this, 'rmFilterTrpHomeUrl' ] );
 		add_action( 'brizy_before_send_asset',           [ $this, 'clearBufferBeforeSendImg' ] );
 		add_filter( 'trp_enable_dynamic_translation',    [ $this, 'trp_enable_dynamic_translation' ] );
+
+		if ( empty( $_SERVER['REQUEST_URI'] ) || false === strpos( $_SERVER['REQUEST_URI'], 'sitemap.xml' ) ) {
+			add_action( 'home_url', [ $this, 'home_url' ] );
+		}
 	}
 
 	public function home_url( $url ) {
@@ -26,8 +29,8 @@ class Brizy_Compatibilities_TranslatePress {
 
 		$settings = new TRP_Settings();
 		$settings = $settings->get_settings();
+		if ( $TRP_LANGUAGE == $settings['default-language'] && ! trp_is_translation_editor() ) {
 
-		if ( $TRP_LANGUAGE == $settings['default-language'] && !trp_is_translation_editor() ) {
 			return $url;
 		}
 
@@ -66,6 +69,7 @@ class Brizy_Compatibilities_TranslatePress {
 	}
 
 	public function trp_enable_dynamic_translation( $enable ){
+
 		if ( isset( $_REQUEST['is-editor-iframe'] ) || isset( $_REQUEST['in-front-editor'] ) ){
 			return false;
 		}

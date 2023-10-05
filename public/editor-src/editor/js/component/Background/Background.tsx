@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import React, {
-  Component,
   CSSProperties,
+  Component,
   ReactElement,
   RefObject
 } from "react";
@@ -19,6 +19,8 @@ type Props = {
     type: string;
     key: string;
   };
+  customVideo: string;
+  videoType: string;
   videoStart?: string;
   videoLoop?: boolean;
   map?: string;
@@ -39,6 +41,7 @@ const needRenderMedia = (data: NeedMedia): boolean =>
   [
     "image",
     "video",
+    "customVideo",
     "map",
     "shapeTop",
     "shapeBottom",
@@ -71,6 +74,8 @@ class Background extends Component<Props> {
   render(): ReactElement {
     const {
       video,
+      customVideo,
+      videoType,
       videoLoop,
       videoStart,
       map,
@@ -80,14 +85,16 @@ class Background extends Component<Props> {
       opacity,
       shapeTop,
       shapeBottom,
+      style,
       children
     } = this.props;
     const needsResizeDetection = IS_EDITOR && (video || parallax);
 
+    const videoSource = video || customVideo;
     return (
       <>
         {needRenderMedia(this.props) && (
-          <div className="brz-bg overflow-hidden absolute top-0 left-0 w-full h-full">
+          <div style={style} className="brz-bg overflow-hidden !z-auto absolute top-0 left-0 w-full h-full">
             {image && (
               <Image showParallax={parallax}>
                 {({ innerRef, attr }): ReactElement => (
@@ -95,11 +102,13 @@ class Background extends Component<Props> {
                 )}
               </Image>
             )}
-            {video && (
+            {videoSource && (
               <Video
                 video={video}
                 videoLoop={videoLoop}
                 videoStart={videoStart}
+                videoType={videoType}
+                customVideo={customVideo}
               >
                 {({ innerRef, attr, children }): ReactElement => (
                   <div

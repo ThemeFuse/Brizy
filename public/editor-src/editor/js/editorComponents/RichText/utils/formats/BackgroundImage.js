@@ -1,8 +1,10 @@
 import Quill from "quill";
-import { imageUrl, svgUrl } from "visual/utils/image";
+import Config from "visual/global/Config";
+import { SizeType } from "visual/global/Config/types/configs/common";
+import { getImageUrl } from "visual/utils/image";
 import { getImagePopulation } from "../requests/ImagePopulation";
+
 let Inline = Quill.import("blots/inline");
-const isSVG = (extension) => extension === "svg";
 
 class BackgroundImage extends Inline {
   // static className = "text-mask";
@@ -58,21 +60,35 @@ class BackgroundImage extends Inline {
         const itemId = node
           .closest("[data-item_id]")
           .getAttribute("data-item_id");
-        getImagePopulation(population, itemId).then((url) => {
-          if (url) {
-            node.style.backgroundImage = `url(${url})`;
-            node.classList.add("brz-population-mask__style");
-          }
-        });
+        const dynamicContent = Config.getAll().dynamicContent;
+        const liveInBuilder = dynamicContent?.liveInBuilder ?? false;
+        const useCustomPlaceholder =
+          dynamicContent?.useCustomPlaceholder ?? false;
+
+        if (liveInBuilder) {
+          getImagePopulation(population, itemId, useCustomPlaceholder).then(
+            (url) => {
+              if (url) {
+                node.style.backgroundImage = `url("${url}")`;
+                node.classList.add("brz-population-mask__style");
+              }
+            }
+          );
+        } else {
+          node.style.backgroundImage = `url("${population}")`;
+          node.classList.add("brz-population-mask__style");
+        }
       });
     } else if (src) {
-      const imgUrl = isSVG(extension)
-        ? svgUrl(src, { fileName })
-        : imageUrl(src, { fileName });
+      const imgUrl = getImageUrl({
+        fileName,
+        uid: src,
+        sizeType: SizeType.custom
+      });
       node.classList.add("brz-text-mask");
       node.classList.remove("brz-population-mask");
       node.classList.remove("brz-population-mask__style");
-      node.style.backgroundImage = `url(${imgUrl})`;
+      node.style.backgroundImage = `url("${imgUrl}")`;
       node.style.backgroundPosition = `${x}% ${y}%`;
       node.removeAttribute("data-image_population");
       node.setAttribute("data-image_src", src);

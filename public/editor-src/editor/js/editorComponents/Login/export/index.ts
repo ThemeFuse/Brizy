@@ -1,11 +1,11 @@
-import { getData, validateInputs, getFetchUrl } from "./utils";
+import { getData, getFetchUrl, validateInputs } from "./utils";
 import {
   ElementType,
-  loginDisplay,
-  handleSubmit,
-  getErrorMessages,
+  addAlerts,
   getElementType,
-  addAlerts
+  getErrorMessages,
+  handleSubmit,
+  loginDisplay
 } from "./utils.common";
 
 const cloudHeaders = { "Content-Type": "application/json" };
@@ -13,10 +13,11 @@ const fetchHeaders = new Headers(cloudHeaders);
 
 let isSubmitEnabled = true;
 
-export default function($node: JQuery): void {
-  const node: Element = $node.get(0);
+export default function ($node: JQuery): void {
+  const node = $node.get(0);
+  if (!node) return;
 
-  node.querySelectorAll(".brz-login").forEach(element => {
+  node.querySelectorAll(".brz-login").forEach((element) => {
     loginDisplay(element);
 
     const errorMessages = getErrorMessages(element);
@@ -39,8 +40,8 @@ export default function($node: JQuery): void {
 
     element
       .querySelectorAll<HTMLFormElement>(".brz-login-form")
-      .forEach(form => {
-        form.addEventListener("submit", e => {
+      .forEach((form) => {
+        form.addEventListener("submit", (e) => {
           e.preventDefault();
 
           if (isSubmitEnabled) {

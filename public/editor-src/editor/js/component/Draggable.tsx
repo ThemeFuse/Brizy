@@ -1,5 +1,5 @@
 import $ from "jquery";
-import React, { createRef, ReactNode, RefObject } from "react";
+import React, { ReactNode, RefObject, createRef } from "react";
 
 type Position = Record<"x" | "y", number>;
 const getClientOffset = (event: MouseEvent): Position => ({

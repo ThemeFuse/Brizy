@@ -1,36 +1,14 @@
 {
+  "extends": "@brizy/tsconfig/react.json",
   "compilerOptions": {
-    "strict": true,
-    "allowUnreachableCode": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "skipLibCheck": true,
-    "allowJs": true,
-    "checkJs": false,
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
     "baseUrl": ".",
-    "jsx": "react",
     "paths": {
-      "visual/*": ["editor/js/*"], 
-      "ui/*": ["packages/ui/src/*"],
-      "optionControls/*" : ["packages/optionControls/src/*"],
-      "core/*": ["packages/core/src/*"],
-      "component/*": ["packages/component/src/*"],
-      "widget/*": ["packages/widget/src/*"],
-      "widgetTemp/*": ["packages/widgetTemp/src/*"]
+      "visual/*": ["editor/js/*"]
     }
   },
   "include": [
     "editor/**/*.ts",
-    "editor/**/*.tsx",
-    "packages/**/*.ts",
-    "packages/**/*.tsx"
+    "editor/**/*.tsx"
   ],
   "exclude": [
     "node_modules",

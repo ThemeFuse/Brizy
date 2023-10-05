@@ -86,6 +86,15 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
       ]
     },
     {
+      id: "selectHorizontalAlign",
+      type: "toggle-dev",
+      choices: [
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
+      ]
+    },
+    {
       id: "horizontalAlign",
       type: "toggle-dev",
       disabled: true,

@@ -30,7 +30,6 @@ import * as Attention from "./types/effects/Attention";
 import * as Fade from "./types/effects/Fade";
 import {
   defaultEffects,
-  getAttentionStyles,
   getDirections,
   onChangeDirection,
   valueToType
@@ -40,6 +39,8 @@ export interface Props extends Option.Props<Value.Value>, WithClassName {
   config?: {
     types?: EffectType[];
     replay?: boolean;
+    infiniteAnimation?: boolean;
+    delay?: boolean;
   };
 }
 
@@ -57,39 +58,45 @@ export const Animation: React.FC<Props> = ({
   );
   const replay = config?.replay ?? true;
   const type = valueToType(types, value);
+  const delay = config?.delay ?? true;
+  const infiniteAnimation = config?.infiniteAnimation ?? true;
+
   const _changeType = useCallback<OnChange<EffectType>>(
     (v) => onChange(Value.setType(v, value)),
-    [value]
+    [value, onChange]
   );
   const _changeDuration = useCallback<OnChange<number>>(
-    mPipe(
-      fromNumber,
-      (v) => Value.isEffect(value) && onChange(setDuration(v, value))
-    ),
-    [value]
+    (v) =>
+      mPipe(
+        fromNumber,
+        (v) => Value.isEffect(value) && onChange(setDuration(v, value))
+      )(v),
+    [value, onChange]
   );
   const _changeDelay = useCallback<OnChange<number>>(
-    mPipe(
-      fromNumber,
-      (v) => Value.isEffect(value) && onChange(setDelay(v, value))
-    ),
-    [value]
+    (v) =>
+      mPipe(
+        fromNumber,
+        (v) => Value.isEffect(value) && onChange(setDelay(v, value))
+      )(v),
+    [value, onChange]
   );
 
   const _changeInfiniteAnimation = useCallback<OnChange<boolean>>(
     () => Value.isEffect(value) && onChange(setInfiniteAnimation(value)),
-    [value]
+    [value, onChange]
   );
 
   const _onReplay = useCallback<VoidFunction>(
-    mPipe(
-      always(value.duration),
-      pass(() => replay),
-      (v) => v + 0.00001,
-      fromNumber,
-      (v) => Value.isEffect(value) && onChange(setDuration(v, value))
-    ),
-    [value, replay]
+    () =>
+      mPipe(
+        always(value.duration),
+        pass(() => replay),
+        (v) => v + 0.00001,
+        fromNumber,
+        (v) => Value.isEffect(value) && onChange(setDuration(v, value))
+      )(),
+    [value, replay, onChange]
   );
 
   const valueOptions = useMemo(() => {
@@ -103,9 +110,25 @@ export const Animation: React.FC<Props> = ({
           onChange(Attention.setStyle(v, value));
         return (
           <AttentionStyle
-            styles={getAttentionStyles(type)}
+            styles={Attention.styles}
             value={value.style}
             onChange={onChangeStyle}
+          />
+        );
+      }
+
+      case EffectType.Wobble:
+      case EffectType.Scale:
+      case EffectType.Pulse:
+      case EffectType.Rotate2:
+      case EffectType.Skew:
+      case EffectType.Buzz: {
+        return (
+          <Direction
+            directions={getDirections(type)}
+            value={value.direction}
+            label={t("Style")}
+            onChange={onChangeDirection(value, onChange)}
           />
         );
       }
@@ -113,6 +136,7 @@ export const Animation: React.FC<Props> = ({
       case EffectType.Bounce:
       case EffectType.Rotate:
       case EffectType.Slide:
+      case EffectType.Move:
       case EffectType.Zoom: {
         return (
           <Direction
@@ -122,6 +146,7 @@ export const Animation: React.FC<Props> = ({
           />
         );
       }
+
       case EffectType.Fade: {
         switch (value.direction) {
           case Fade.Direction.none:
@@ -160,7 +185,7 @@ export const Animation: React.FC<Props> = ({
         }
       }
     }
-  }, [value, type]);
+  }, [value, type, onChange]);
 
   return (
     <div className={className}>
@@ -185,21 +210,23 @@ export const Animation: React.FC<Props> = ({
             <Group>
               {valueOptions}
               <Duration value={value.duration} onChange={_changeDuration} />
-              <Delay value={value.delay} onChange={_changeDelay} />
-              <Switcher
-                value={value.infiniteAnimation}
-                onChange={_changeInfiniteAnimation}
-                label={t("Infinite Animation")}
-              />
+              {delay && <Delay value={value.delay} onChange={_changeDelay} />}
+              {infiniteAnimation && (
+                <Switcher
+                  value={value.infiniteAnimation}
+                  onChange={_changeInfiniteAnimation}
+                  label={t("Infinite Animation")}
+                />
+              )}
             </Group>
           </OptionWrapper>
-          {replay ? (
+          {replay && !value.infiniteAnimation && (
             <OptionWrapper
               className={"brz-ed-option brz-justify-content-xs-center"}
             >
               <ReloadButton onClick={_onReplay} />
             </OptionWrapper>
-          ) : null}
+          )}
         </>
       )}
     </div>

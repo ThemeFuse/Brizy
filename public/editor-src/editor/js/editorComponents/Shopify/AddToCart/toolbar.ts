@@ -1,9 +1,12 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import Config from "visual/global/Config";
 import { DeviceMode } from "visual/types";
+import { getSourceIds } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
+import * as Str from "visual/utils/reader/string";
 import { HOVER, NORMAL, State } from "visual/utils/stateMode";
 import { Value } from ".";
 
@@ -16,6 +19,8 @@ export const getItems = ({
   device: DeviceMode;
   state: State;
 }): ToolbarItemType[] => {
+  const config = Config.getAll();
+
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
 
@@ -25,7 +30,42 @@ export const getItems = ({
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
+
+  const sourceType = Str.read(dvv("sourceType")) ?? "";
+  const sourceItemsHandler = config?.api?.sourceItems?.handler;
+
   return [
+    {
+      id: "toolbarCart",
+      type: "popover-dev",
+      position: 50,
+      config: {
+        size: "auto",
+        title: t("Products"),
+        icon: "nc-woo-add-to-cart"
+      },
+      devices: "desktop",
+      options: [
+        {
+          id: "groupProduct",
+          type: "group-dev",
+          options: [
+            {
+              id: "itemId",
+              label: t("Product"),
+              type: "select-dev",
+              disabled: !sourceItemsHandler || sourceType === "",
+              choices: {
+                load: getSourceIds(sourceType, config),
+                emptyLoad: {
+                  title: t("There are no choices")
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
     {
       id: "toolbarCurrentShortcode",
       type: "popover-dev",
@@ -33,7 +73,7 @@ export const getItems = ({
         icon: "nc-star",
         title: t("Icon")
       },
-      position: 50,
+      position: 60,
       options: [
         {
           id: "currentShortcodeTabs",
@@ -82,33 +122,6 @@ export const getItems = ({
                   }
                 }
               ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: "toolbarCart",
-      type: "popover-dev",
-      position: 60,
-      config: {
-        size: "auto",
-        title: t("Products"),
-        icon: "nc-woo-add-to-cart"
-      },
-      devices: "desktop",
-      options: [
-        {
-          id: "itemId",
-          label: "Select product",
-          type: "select-dev",
-          config: {
-            search: true
-          },
-          choices: [
-            {
-              value: "841851",
-              title: "841851"
             }
           ]
         }

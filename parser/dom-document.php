@@ -4,6 +4,7 @@ class Brizy_Parser_DomDocument implements Brizy_Parser_DomInterface {
 
 	private $dom;
 
+	const ENCODING_TAG = '<?xml encoding="UTF-8">';
 	/**
 	 * @param string $html
 	 */
@@ -13,7 +14,9 @@ class Brizy_Parser_DomDocument implements Brizy_Parser_DomInterface {
 
 		libxml_use_internal_errors( true );
 
-		$dom->loadHTML( $html, LIBXML_NOERROR );
+		// $html = mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' );
+
+		$dom->loadHTML( self::ENCODING_TAG . $html, LIBXML_NOERROR );
 
 		$this->dom = $dom;
 	}
@@ -56,7 +59,7 @@ class Brizy_Parser_DomDocument implements Brizy_Parser_DomInterface {
 		$xpath      = new DOMXPath( $this->dom );
 
 		/** @var DOMElement $e */
-		foreach ( $xpath->query( '//' . $tag . '[contains(attribute::class, "' . $cssClass . '")]' ) as $e ) {
+		foreach ( $xpath->query( '//*[contains(attribute::class, "' . $cssClass . '")]' ) as $e ) {
 			$e->appendChild( $textNode );
 		}
 
@@ -69,6 +72,6 @@ class Brizy_Parser_DomDocument implements Brizy_Parser_DomInterface {
 	 * @inheritDoc
 	 */
 	public function getHtml() {
-		return $this->dom->saveHTML();
+		return str_replace( self::ENCODING_TAG, '', $this->dom->saveHTML() );
 	}
 }

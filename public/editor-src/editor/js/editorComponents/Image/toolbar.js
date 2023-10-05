@@ -6,12 +6,19 @@ import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import {
+  MaskPositions,
+  MaskRepeat,
+  MaskShapes,
+  MaskSizes
+} from "visual/utils/mask/Mask";
 import { isPopup, isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarImageLinkExternal,
@@ -20,14 +27,6 @@ import {
   toolbarStoryAnchor
 } from "visual/utils/toolbar";
 import { isGIF, isSVG } from "./utils";
-
-export const getMaxHeight = (cW, v) => {
-  const { imageWidth: iW, imageHeight: iH } = v;
-  const originalContainerWidth = iH / (iW / cW);
-  const maxHeight = ((cW * 2) / originalContainerWidth) * 100;
-
-  return maxHeight >= 100 ? Math.round(maxHeight) : 100;
-};
 
 export default ({
   desktopContainerWidth,
@@ -56,24 +55,36 @@ export default ({
 export const getItems =
   ({ property }) =>
   ({ v, device, component, context }) => {
+    const config = Config.getAll();
     const inPopup = Boolean(component.props.meta.sectionPopup);
     const inPopup2 = Boolean(component.props.meta.sectionPopup2);
+    const useCustomPlaceholder =
+      config.dynamicContent?.useCustomPlaceholder ?? false;
     const { cW, gallery } = property[device];
 
-    const { inGallery = false, enableTags } = gallery || {};
+    const isBigImageFromGallery = Boolean(v?.clonedFromGallery);
+
+    const {
+      inGallery = false,
+      withBigImage = false,
+      enableTags
+    } = gallery || {};
     const dvv = (key) => defaultValueValue({ v, key, device });
     const { hex: borderColorHex } = getOptionColorHexByPalette(
       dvv("borderColorHex"),
       dvv("borderColorPalette")
     );
 
+    const _enableTags = enableTags && !isBigImageFromGallery;
     const borderColorOpacity = dvv("borderColorOpacity");
 
-    const maskShape = dvv("maskShape");
-    const maskPosition = dvv("maskPosition");
-    const maskSize = dvv("maskSize");
-    const maskScaleSuffix = dvv("maskScaleSuffix");
-    const maskCustomUploadImageSrc = dvv("maskCustomUploadImageSrc");
+    const maskShape = readString(dvv("maskShape")) ?? "none";
+    const maskPosition = readString(dvv("maskPosition")) ?? "center center";
+    const maskSize = readString(dvv("maskSize")) ?? "cover";
+    const maskScaleSuffix = readString(dvv("maskScaleSuffix")) ?? "%";
+    const maskCustomUploadImageSrc = readString(
+      dvv("maskCustomUploadImageSrc")
+    );
     const maskShapeIsDisabled =
       maskShape === "none" ||
       (maskShape === "custom" && !maskCustomUploadImageSrc);
@@ -82,16 +93,19 @@ export const getItems =
     const heightSuffixValue = dvv("heightSuffix");
     const sizeType = dvv("sizeType");
 
-    const imageDynamicContentChoices = getDynamicContentChoices(
-      context.dynamicContent.config,
-      DCTypes.image
-    );
+    const imageDynamicContentChoices = getDynamicContentOption({
+      options: context.dynamicContent.config,
+      type: DCTypes.image
+    });
 
     const imageExtension = dvv("imageExtension");
     const imagePopulation = dvv("imagePopulation");
     const linkPopup = dvv("linkPopup");
 
-    const placeholderData = placeholderObjFromStr(imagePopulation);
+    const placeholderData = placeholderObjFromStr(
+      imagePopulation,
+      useCustomPlaceholder
+    );
     const isCustomSizeType =
       (sizeType === "custom" && !placeholderData) ||
       !!(
@@ -127,18 +141,17 @@ export const getItems =
                     type: "population-dev",
                     label: t("Image"),
                     disabled:
-                      (isSVG(imageExtension) ||
+                      ((isSVG(imageExtension) ||
                         isGIF(imageExtension) ||
                         imagePopulation) &&
-                      device !== "desktop",
-                    config: {
-                      choices:
-                        device === "desktop" &&
-                        !gallery.inGallery &&
-                        imageDynamicContentChoices.length
-                          ? imageDynamicContentChoices
-                          : undefined
-                    },
+                        device !== "desktop") ||
+                      isBigImageFromGallery,
+                    config:
+                      device === "desktop" &&
+                      !gallery.inGallery &&
+                      imageDynamicContentChoices
+                        ? imageDynamicContentChoices
+                        : undefined,
                     fallback: {
                       id: keyToDCFallback2Key("image"),
                       type: "imageUpload-dev"
@@ -159,7 +172,8 @@ export const getItems =
                       Boolean(imagePopulation) ||
                       isSVG(imageExtension) ||
                       isGIF(imageExtension) ||
-                      sizeType !== "custom",
+                      sizeType !== "custom" ||
+                      isBigImageFromGallery,
                     config: {
                       min: 100,
                       max: 200,
@@ -175,6 +189,7 @@ export const getItems =
                       inGallery ||
                       isSVG(imageExtension) ||
                       isGIF(imageExtension) ||
+                      isBigImageFromGallery ||
                       isStory(Config.getAll()),
                     devices: "desktop"
                   }
@@ -185,147 +200,112 @@ export const getItems =
                 label: t("Mask"),
                 position: 110,
                 options: [
-                  {
-                    id: "maskShape",
-                    label: t("Shape"),
-                    devices: "desktop",
-                    type: "select-dev",
-                    choices: [
-                      { title: t("None"), value: "none" },
-                      { value: "circle", icon: "nc-mask-shape-circle" },
-                      { value: "rhombus", icon: "nc-mask-shape-rhombus" },
-                      { value: "star", icon: "nc-mask-shape-star" },
-                      { value: "flower", icon: "nc-mask-shape-flower" },
-                      { value: "square", icon: "nc-mask-shape-square" },
-                      { value: "triangle", icon: "nc-mask-shape-triangle" },
-                      { value: "blob1", icon: "nc-mask-shape-blob1" },
-                      { value: "blob2", icon: "nc-mask-shape-blob2" },
-                      { value: "blob3", icon: "nc-mask-shape-blob3" },
-                      { value: "blob4", icon: "nc-mask-shape-blob4" },
-                      { value: "brush1", icon: "nc-mask-shape-brush1" },
-                      { value: "brush2", icon: "nc-mask-shape-brush2" },
-                      { value: "brush3", icon: "nc-mask-shape-brush3" },
-                      { value: "brush4", icon: "nc-mask-shape-brush4" },
-                      { value: "poly1", icon: "nc-mask-shape-poly1" },
-                      { value: "poly2", icon: "nc-mask-shape-poly2" },
-                      { value: "poly3", icon: "nc-mask-shape-poly3" },
-                      { value: "poly4", icon: "nc-mask-shape-poly4" },
-                      { value: "custom", title: "Custom" }
-                    ]
-                  },
-                  {
-                    id: "maskCustomUpload",
-                    type: "imageUpload-dev",
-                    devices: "desktop",
-                    label: t("Image"),
-                    config: {
-                      pointer: false,
-                      disableSizes: true,
-                      acceptedExtensions: ["png", "svg"]
-                    },
-                    helper: {
-                      enabled: true,
-                      content: t("Upload only [ .png or .svg ]")
-                    },
-                    disabled: maskShape !== "custom"
-                  },
-                  {
-                    id: "groupSize",
-                    type: "group-dev",
-                    disabled: maskShapeIsDisabled,
-                    options: [
-                      {
-                        id: "maskSize",
-                        label: t("Size"),
-                        type: "select-dev",
-                        choices: [
-                          { title: t("Fit"), value: "contain" },
-                          { title: t("Fill"), value: "cover" },
-                          { title: t("Custom"), value: "custom" }
-                        ]
-                      },
-                      {
-                        id: "maskScale",
-                        type: "slider-dev",
-                        disabled: maskSize !== "custom",
-                        config: {
-                          min: 1,
-                          max: maskScaleSuffix === "px" ? 500 : 100,
-                          units: [
-                            { value: "%", title: "%" },
-                            { value: "px", title: "px" }
+                  ...(inGallery && !isBigImageFromGallery
+                    ? []
+                    : [
+                        {
+                          id: "maskShape",
+                          label: t("Shape"),
+                          devices: "desktop",
+                          type: "select-dev",
+                          choices: MaskShapes
+                        },
+                        {
+                          id: "maskCustomUpload",
+                          type: "imageUpload-dev",
+                          devices: "desktop",
+                          label: t("Image"),
+                          config: {
+                            pointer: false,
+                            disableSizes: true,
+                            acceptedExtensions: ["png", "svg"]
+                          },
+                          helper: {
+                            enabled: true,
+                            content: t("Upload only [ .png or .svg ]")
+                          },
+                          disabled: maskShape !== "custom"
+                        },
+                        {
+                          id: "groupSize",
+                          type: "group-dev",
+                          disabled: maskShapeIsDisabled,
+                          options: [
+                            {
+                              id: "maskSize",
+                              label: t("Size"),
+                              type: "select-dev",
+                              choices: MaskSizes
+                            },
+                            {
+                              id: "maskScale",
+                              type: "slider-dev",
+                              disabled: maskSize !== "custom",
+                              config: {
+                                min: 1,
+                                max: maskScaleSuffix === "px" ? 500 : 100,
+                                units: [
+                                  { value: "%", title: "%" },
+                                  { value: "px", title: "px" }
+                                ]
+                              }
+                            }
                           ]
+                        },
+                        {
+                          id: "groupPosition",
+                          type: "group-dev",
+                          disabled: maskShapeIsDisabled,
+                          options: [
+                            {
+                              id: "maskPosition",
+                              type: "select-dev",
+                              label: t("Position"),
+                              choices: MaskPositions
+                            },
+                            {
+                              id: "maskPositionx",
+                              label: t("X"),
+                              type: "slider-dev",
+                              disabled: maskPosition !== "custom",
+                              config: {
+                                min: 1,
+                                max: 100,
+                                units: [{ value: "%", title: "%" }]
+                              }
+                            },
+                            {
+                              id: "maskPositiony",
+                              label: t("Y"),
+                              type: "slider-dev",
+                              disabled: maskPosition !== "custom",
+                              config: {
+                                min: 1,
+                                max: 100,
+                                units: [{ value: "%", title: "%" }]
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          id: "maskRepeat",
+                          label: t("Repeat"),
+                          type: "select-dev",
+                          disabled: maskShapeIsDisabled || maskSize === "cover",
+                          choices: MaskRepeat
                         }
-                      }
-                    ]
-                  },
-                  {
-                    id: "groupPosition",
-                    type: "group-dev",
-                    disabled: maskShapeIsDisabled,
-                    options: [
-                      {
-                        id: "maskPosition",
-                        type: "select-dev",
-                        label: t("Position"),
-                        choices: [
-                          { title: t("Center Center"), value: "center center" },
-                          { title: t("Center Left"), value: "center left" },
-                          { title: t("Center Right"), value: "center right" },
-                          { title: t("Top Center"), value: "top center" },
-                          { title: t("Top Right"), value: "top right" },
-                          { title: t("Top Left"), value: "top left" },
-                          { title: t("Bottom Center"), value: "bottom center" },
-                          { title: t("Bottom Left"), value: "bottom left" },
-                          { title: t("Bottom Right"), value: "bottom right" },
-                          { title: t("Custom"), value: "custom" }
-                        ]
-                      },
-                      {
-                        id: "maskPositionx",
-                        label: t("X"),
-                        type: "slider-dev",
-                        disabled: maskPosition !== "custom",
-                        config: {
-                          min: 1,
-                          max: 100,
-                          units: [{ value: "%", title: "%" }]
-                        }
-                      },
-                      {
-                        id: "maskPositiony",
-                        label: t("Y"),
-                        type: "slider-dev",
-                        disabled: maskPosition !== "custom",
-                        config: {
-                          min: 1,
-                          max: 100,
-                          units: [{ value: "%", title: "%" }]
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    id: "maskRepeat",
-                    label: t("Repeat"),
-                    type: "select-dev",
-                    disabled: maskShapeIsDisabled || maskSize === "cover",
-                    choices: [
-                      { title: t("No Repeat"), value: "no-repeat" },
-                      { title: t("Repeat"), value: "repeat" },
-                      { title: t("Repeat-X"), value: "repeat-x" },
-                      { title: t("Repeat-Y"), value: "repeat-y" },
-                      { title: t("Space"), value: "space" },
-                      { title: t("Round"), value: "round" }
-                    ]
-                  }
+                      ])
                 ]
               },
               {
                 id: "tabTags",
                 label: t("Tags"),
                 options: [
-                  toolbarImageTags({ devices: "desktop", gallery, enableTags })
+                  toolbarImageTags({
+                    devices: "desktop",
+                    gallery,
+                    enableTags: _enableTags
+                  })
                 ]
               }
             ]
@@ -411,7 +391,7 @@ export const getItems =
           title: t("Link")
         },
         position: 90,
-        disabled: inGallery && dvv("linkLightBox") === "on",
+        disabled: (inGallery && dvv("linkLightBox") === "on") || withBigImage,
         options: [
           {
             id: "linkType",
@@ -502,7 +482,8 @@ export const getItems =
         },
         roles: ["admin"],
         position: 110,
-        disabled: inGallery || isStory(Config.getAll()),
+        disabled:
+          (inGallery && !isBigImageFromGallery) || isStory(Config.getAll()),
         options: [
           {
             id: "width",

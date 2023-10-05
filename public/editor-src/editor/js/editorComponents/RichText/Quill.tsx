@@ -26,6 +26,8 @@ import {
 
 const instances: QuillComponent[] = [];
 
+export const triggerCodes = ["#", "@"];
+
 const classToDisableDnd = ["brz-ed-content-editable-focus", "brz-ed-dd-cancel"];
 
 type DefaultFont = ReduxState["project"]["data"]["font"];
@@ -242,7 +244,7 @@ class QuillComponent extends React.Component<Props> {
   };
 
   handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-    if (event.key === "#" || event.key === "@") {
+    if (triggerCodes.includes(event.key)) {
       (this.quill as Quill).format("prepopulation", "visible");
     }
   };
@@ -299,7 +301,7 @@ class QuillComponent extends React.Component<Props> {
         );
 
         const extraClassNames = this.getExtraClassNames($elem);
-        $elem.attr("class", [className, ...extraClassNames].join(" "));
+        $elem.addClass([className, ...extraClassNames].join(" "));
       });
     }
   }
@@ -409,15 +411,17 @@ class QuillComponent extends React.Component<Props> {
     display: ConfigDCItem["display"];
     placeholder: ConfigDCItem["placeholder"];
   }): void => {
-    const dynamicContentOption = Config.getAll()?.dynamicContentOption;
-    const dcOptionRichText = dynamicContentOption?.richText;
-    const useCustomPlaceholder = dcOptionRichText?.useCustomPlaceholder;
+    const config = Config.getAll();
+    const dcOptionRichText = config?.dynamicContent?.groups?.richText;
+    const useCustomPlaceholder = config?.dynamicContent?.useCustomPlaceholder;
 
     const { label: _label, display, placeholder } = data;
-    const label =
-      typeof dcOptionRichText?.handler === "function"
-        ? _label
-        : createLabel(_label);
+    let label = createLabel(_label);
+
+    if (!Array.isArray(dcOptionRichText) && dcOptionRichText?.handler) {
+      label = _label;
+    }
+
     const population = useCustomPlaceholder
       ? placeholder
       : placeholder.replace("{{", "").replace("}}", "");

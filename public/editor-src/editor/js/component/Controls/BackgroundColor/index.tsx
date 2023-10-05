@@ -7,7 +7,7 @@ import {
   ColorPickerSelect
 } from "visual/component/Controls/ColorPickerSelect";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
-import { Item } from "visual/component/Controls/MultiSelect/Item";
+import { Item } from "visual/component/Controls/Select2/Item";
 import { Select2 } from "visual/component/Controls/Select2";
 import { t } from "visual/utils/i18n";
 import { WithClassName, WithValue } from "visual/utils/options/attributes";
@@ -22,7 +22,29 @@ type Props = WithClassName &
     palette: PaletteObject[];
     opacity: boolean;
     gradientColors: [string, string];
+    withNone: boolean;
   };
+
+const renderColorPickerItems = (none: boolean) => {
+  const items = [];
+  none &&
+    items.push(
+      <Item<Type> key="none" value={"none"}>
+        {t("None")}
+      </Item>
+    );
+  items.push(
+    <Item<Type> key="solid" value={"solid"}>
+      {t("Solid")}
+    </Item>
+  );
+  items.push(
+    <Item<Type> key="gradient" value={"gradient"}>
+      {t("Gradient")}
+    </Item>
+  );
+  return items;
+};
 
 export const BackgroundColor: FC<Props> = ({
   className,
@@ -31,7 +53,8 @@ export const BackgroundColor: FC<Props> = ({
   paletteOpenSettings,
   palette,
   opacity,
-  gradientColors: [g1, g2]
+  gradientColors: [g1, g2],
+  withNone
 }) => {
   const onColorChange: CSProps<Type>["onChange"] = (v, m) => {
     onChange(
@@ -72,6 +95,7 @@ export const BackgroundColor: FC<Props> = ({
           }
         />
       ) : null}
+
       <ColorPickerSelect<Type>
         palette={palette}
         opacity={opacity}
@@ -84,10 +108,9 @@ export const BackgroundColor: FC<Props> = ({
         onChange={onColorChange}
         paletteOpenSettings={paletteOpenSettings}
       >
-        <Item<Type> value={"none"}>{t("None")}</Item>
-        <Item<Type> value={"solid"}>{t("Solid")}</Item>
-        <Item<Type> value={"gradient"}>{t("Gradient")}</Item>
+        {renderColorPickerItems(withNone)}
       </ColorPickerSelect>
+
       <ColorPickerInputs
         value={value.hex}
         onChange={(hex): void =>

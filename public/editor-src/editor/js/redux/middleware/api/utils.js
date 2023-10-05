@@ -2,16 +2,18 @@ import AwesomeDebouncePromise from "awesome-debounce-promise";
 import _ from "underscore";
 import Config from "visual/global/Config";
 import {
+  autoSave as apiAutoSave,
   createGlobalBlock as apiCreateGlobalBlock,
   createSavedBlock as apiCreateSavedBlock,
   deleteSavedBlock as apiDeleteSavedBlock,
+  onChange as apiOnChange,
+  publish as apiPublish,
   sendHeartBeat as apiSendHeartBeat,
   updateCustomerPage as apiUpdateCustomPage,
   updateGlobalBlock as apiUpdateGlobalBlock,
   updateGlobalBlocks as apiUpdateGlobalBlocks,
   updatePage as apiUpdatePage,
-  updatePopupRules as apiUpdatePopupRules,
-  updateProject as apiUpdateProject
+  updatePopupRules as apiUpdatePopupRules
 } from "visual/utils/api";
 import { isCustomerPage } from "visual/utils/env";
 
@@ -20,7 +22,9 @@ const updateFn = (() => {
 })();
 
 export {
-  apiUpdateProject,
+  apiPublish,
+  apiAutoSave,
+  apiOnChange,
   updateFn as apiUpdatePage,
   apiCreateGlobalBlock,
   apiUpdateGlobalBlock,
@@ -66,10 +70,9 @@ class debounceById {
   }
 }
 
-export const debouncedApiUpdateProject = _.debounce(
-  apiUpdateProject,
-  DEBOUNCE_WAIT
-);
+export const debouncedApiAutoSave = _.debounce(apiAutoSave, DEBOUNCE_WAIT);
+
+export const debouncedApiPublish = _.debounce(apiPublish, DEBOUNCE_WAIT);
 
 export const debouncedApiUpdatePage = _.debounce(updateFn, DEBOUNCE_WAIT);
 

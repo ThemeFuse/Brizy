@@ -1,8 +1,21 @@
+import Config from "visual/global/Config";
 import { Shortcodes } from "visual/types";
-import AddToCart from "./AddToCart";
-import BlogTitle from "./BlogTitle";
-import CollectionTitle from "./CollectionTitle";
-import ProductTitle from "./ProductTitle";
+import getAddToCart from "./AddToCart";
+import getBlogPostContent from "./BlogPostContent";
+import getBlogPostList from "./BlogPostList";
+import getBlogPostMeta from "./BlogPostMeta";
+import getBlogTitle from "./BlogTitle";
+import getCollectionDescription from "./CollectionDescription";
+import getCollectionList from "./CollectionList";
+import getCollectionTitle from "./CollectionTitle";
+import getPrice from "./Price";
+import getProductDescription from "./ProductDescription";
+import getProductList from "./ProductList";
+import getProductMetafield from "./ProductMetafield";
+import getProductTitle from "./ProductTitle";
+import getQuantity from "./Quantity";
+import getVendor from "./Vendor";
+
 // import AliExpressReview from "./AliExpressReview";
 // import AppstleSubscription from "./AppstleSubscription";
 // import AreviewReviews from "./AreviewReviews";
@@ -32,7 +45,6 @@ import ProductTitle from "./ProductTitle";
 // import PaywhirlSubscription from "./PaywhirlSubscription";
 // import PowrContactForm from "./PowrContactForm";
 // import PreProduct from "./PreProduct";
-// import Price from "./Price";
 // import ProductOptions from "./ProductOptions";
 // import ProductReview from "./ProductReview";
 // import PushOwlNotifications from "./PushOwlNotifications";
@@ -72,12 +84,17 @@ import ProductTitle from "./ProductTitle";
 // import CrossSell from "./CrossSell";
 
 const config = ((): Shortcodes => {
+  const config = Config.getAll();
   return {
     base: [
-      { component: ProductTitle, pro: false },
-      { component: AddToCart, pro: false },
+      { component: getProductTitle(config), pro: false },
+      { component: getProductDescription(config), pro: false },
+      { component: getProductList(config), pro: false },
+      { component: getAddToCart(config), pro: false },
+      { component: getPrice(config), pro: false },
+      { component: getQuantity(config), pro: false },
+      { component: getProductMetafield(config), pro: false },
       // { component: Quantity, pro: false },
-      // { component: Price, pro: false },
       // { component: ProductReview, pro: false },
       // { component: KlavyioMarketing, pro: false },
       // { component: PreProduct, pro: false },
@@ -143,10 +160,20 @@ const config = ((): Shortcodes => {
       // { component: BoldBundles, pro: false },
       // { component: Variations, pro: false },
       // { component: WiserUpsell, pro: false },
-      // { component: CrossSell, pro: false }
+      // { component: CrossSell, pro: false },
+      { component: getVendor(config), pro: false }
     ],
-    collection: [{ component: CollectionTitle, pro: false }],
-    blog: [{ component: BlogTitle, pro: false }]
+    blog: [
+      { component: getBlogTitle(config), pro: false },
+      { component: getBlogPostContent(config), pro: false },
+      { component: getBlogPostMeta(config), pro: false },
+      { component: getBlogPostList(config), pro: false }
+    ],
+    collection: [
+      { component: getCollectionTitle(config), pro: false },
+      { component: getCollectionDescription(config), pro: false },
+      { component: getCollectionList(config), pro: false }
+    ]
   };
 })();
 

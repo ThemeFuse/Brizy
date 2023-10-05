@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-
 import produce from "immer";
 import { mPipe } from "visual/utils/fp/mPipe";
 import { objectFromEntries } from "visual/utils/object";
@@ -10,9 +9,9 @@ import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { isT } from "visual/utils/value";
 import {
-  Attributes,
   AttributeValue,
   AttributeValueObjectValue,
+  Attributes,
   PostsTypes,
   V,
   VDecoded
@@ -79,7 +78,9 @@ export function decodeV(v: V): VDecoded {
     offset,
     orderBy,
     order,
-    symbols
+    symbols,
+    excludeCurrentProduct,
+    excludeCurrentProductOption
   } = v;
 
   return {
@@ -91,7 +92,9 @@ export function decodeV(v: V): VDecoded {
     offset: Num.read(offset) ?? 0,
     orderBy: Str.read(orderBy) ?? "",
     order: Str.read(order) ?? "",
-    symbols: Obj.readWithValueReader(readSymbol)(symbols) ?? {}
+    symbols: Obj.readWithValueReader(readSymbol)(symbols) ?? {},
+    ...(excludeCurrentProduct === "on" ? { excludeCurrentProduct } : {}),
+    ...(excludeCurrentProductOption ? { excludeCurrentProductOption } : {})
 
     // NOTE: left for until will work on single refs
     // symbols:

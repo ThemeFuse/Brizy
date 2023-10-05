@@ -342,7 +342,7 @@ export function cssStyleElementTimelineLineWidthHeightBefore({
 
   switch (orientation) {
     case Orientation.on: {
-      return `height: calc(50% - (${halfIconWidth}px)); width: ${borderWidth}px;`;
+      return `height: calc(50% + (${halfIconWidth}px)); width: ${borderWidth}px;`;
     }
     case Orientation.off: {
       return `width: calc(100% - ${iconWidth}px); height: ${borderWidth}px;`;
@@ -358,24 +358,20 @@ export function cssStyleElementTimelineLineWidthHeightAfter({
   state
 }: CSSValue): string {
   const halfIconWidth = styleElementTimelineIconHalf({ v, device, state });
-  const iconWidth = styleElementTimelineIconHeightWidth({ v, device, state });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const borderWidth = dvv("lineBorderWidth");
   const orientation = getOrientation(dvv("verticalMode"));
-  const borderStyle = dvv("lineBorderStyle");
 
-  const lineOffset =
-    borderStyle === "dashed" || borderStyle === "dotted"
-      ? 100 - borderWidth
-      : 100;
+  const verticalSpacing = dvv("verticalSpacing");
+  const horizontalSpacing = dvv("horizontalSpacing");
 
   switch (orientation) {
     case Orientation.off: {
-      return `width: calc(100% - ${iconWidth}px); height: ${borderWidth}px;`;
+      return `width: calc(100% + ${horizontalSpacing}px); height: ${borderWidth}px;`;
     }
     case Orientation.on: {
-      return `height: calc(${lineOffset}px + (50% - ${halfIconWidth}px)); width: ${borderWidth}px; left: ${borderWidth}px;`;
+      return `height: calc(${verticalSpacing}px + (50% + ${halfIconWidth}px)); width: ${borderWidth}px; left: ${borderWidth}px;`;
     }
     case undefined:
       return "";
@@ -865,6 +861,21 @@ export function cssStyleElementTimelineVerticalCustomContentSpacing({
     : "";
 }
 
+export function cssStyleElementTimelineHorizontalSpaceBetween({
+  v,
+  device
+}: CSSValue): string {
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const orientation = dvv("verticalMode");
+  const horizontalSpacing = dvv("horizontalSpacing");
+
+  if (orientation === "off") {
+    return `column-gap: ${horizontalSpacing}px;`;
+  }
+
+  return "";
+}
+
 export function cssStyleElementTimelineTabContentArrowColor({
   v,
   device
@@ -1234,9 +1245,10 @@ export function cssStyleElementTimelineVerticalTab({
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = dvv("verticalMode");
+  const verticalSpacing = dvv("verticalSpacing");
 
   return orientation === "on"
-    ? "margin-bottom: 100px;"
+    ? `margin-bottom: ${verticalSpacing}px;`
     : orientation === "off"
     ? "margin-bottom: 0;"
     : "";

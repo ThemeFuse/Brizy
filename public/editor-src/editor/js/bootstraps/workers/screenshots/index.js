@@ -1,25 +1,25 @@
 import QuickLRU from "quick-lru";
 import { DOMParser, XMLSerializer } from "xmldom";
 import {
+  children,
+  closestByClassName,
+  css,
+  getElementsByAttribute,
   getElementsByClassName,
   getElementsByTagName,
-  getElementsByAttribute,
-  removeNode,
-  children,
-  css,
-  closestByClassName,
-  hasClassName
+  hasClassName,
+  removeNode
 } from "./xmldom-utils";
 
 const cache = new QuickLRU({ maxSize: 100 });
 
-onerror = e => {
+onerror = (e) => {
   /* eslint-disable no-console */
   console.error(e);
   /* eslint-enabled no-console */
 };
 
-onmessage = async e => {
+onmessage = async (e) => {
   const { id, url: incomingUrl, options, assetUrl, siteUrl, proxyUrl } = e.data;
 
   const r = await fetch(incomingUrl);
@@ -73,7 +73,7 @@ function removeUnwantedNodes(node) {
     {
       type: "className",
       value: "brz-ed-draggable",
-      canDelete: node => !hasClassName(node, "brz-ed-draggable__padding")
+      canDelete: (node) => !hasClassName(node, "brz-ed-draggable__padding")
     },
     { type: "className", value: "brz-ed-border__inner" },
     { type: "className", value: "brz-ed-border__button" },
@@ -108,7 +108,7 @@ function removeUnwantedNodes(node) {
         throw new Error(`unsupported selector type ${type}`);
     }
 
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       if (canDelete === undefined || canDelete(node)) {
         removeNode(node);
       }
@@ -119,7 +119,7 @@ function removeUnwantedNodes(node) {
 function removeTextBackground(node) {
   let nodes = getElementsByClassName(node, "brz-text-mask");
 
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     css(node, {
       background: "transparent",
       color: "inherit !important",
@@ -134,10 +134,10 @@ function removeUnwantedAttributes(node) {
   // data-href makes the screenshot crash
   const attributes = ["id", "class", "data-block-id", "data-href"];
 
-  attributes.forEach(attribute => {
+  attributes.forEach((attribute) => {
     const nodes = getElementsByAttribute(node, attribute);
 
-    nodes.forEach(node => node.removeAttribute(attribute));
+    nodes.forEach((node) => node.removeAttribute(attribute));
   });
 }
 
@@ -147,10 +147,10 @@ function deactivatePaddingDraggable(node) {
     "brz-ed-draggable__padding"
   );
 
-  paddingDraggables.forEach(node => {
+  paddingDraggables.forEach((node) => {
     if (hasClassName(node, "brz-ed-draggable__padding--active")) {
       css(node, "background", "transparent");
-      children(node).forEach(node => removeNode(node));
+      children(node).forEach((node) => removeNode(node));
     }
   });
 }
@@ -165,7 +165,7 @@ function replaceIframesWithPlaceholders(node, config) {
     "bg-video"
   ];
 
-  getElementsByTagName(node, "iframe").forEach(node => {
+  getElementsByTagName(node, "iframe").forEach((node) => {
     const iframeStyle = css(node);
 
     if (iframeStyle.display === "none") {
@@ -197,7 +197,7 @@ function replaceIframesWithPlaceholders(node, config) {
             )
           )
         : Promise.resolve();
-      promise.then(base64 => {
+      promise.then((base64) => {
         const placeholderStyle = {
           width: node.getAttribute("width") || iframeStyle.width,
           height: node.getAttribute("height") || iframeStyle.height,
@@ -237,9 +237,9 @@ function replaceIframesWithPlaceholders(node, config) {
 }
 
 function transformPictureToImg(node) {
-  getElementsByTagName(node, "picture").forEach(node => {
+  getElementsByTagName(node, "picture").forEach((node) => {
     getElementsByTagName(node, "source").forEach(removeNode);
-    getElementsByTagName(node, "img").forEach(node =>
+    getElementsByTagName(node, "img").forEach((node) =>
       node.removeAttribute("srcset")
     );
   });
@@ -248,12 +248,12 @@ function transformPictureToImg(node) {
 async function inlineImages(node, config) {
   const promises = [];
 
-  getElementsByTagName(node, "img").forEach(async node => {
+  getElementsByTagName(node, "img").forEach(async (node) => {
     const src = node.getAttribute("src");
 
     if (src && !isBase64(src)) {
       promises.push(
-        fetchResource(getResourceDownloadUrl(src, config)).then(base64 => {
+        fetchResource(getResourceDownloadUrl(src, config)).then((base64) => {
           node.setAttribute("src", base64);
 
           return base64;
@@ -262,7 +262,7 @@ async function inlineImages(node, config) {
     }
   });
 
-  getElementsByAttribute(node, "style").forEach(async node => {
+  getElementsByAttribute(node, "style").forEach(async (node) => {
     const style = node.getAttribute("style");
     if (!style.includes("url")) {
       return;
@@ -274,7 +274,7 @@ async function inlineImages(node, config) {
 
     if (src && !isBase64(src)) {
       promises.push(
-        fetchResource(getResourceDownloadUrl(src, config)).then(base64 => {
+        fetchResource(getResourceDownloadUrl(src, config)).then((base64) => {
           node.setAttribute(
             "style",
             style.replace(urlRegex, `url("${base64}")`)
@@ -292,7 +292,7 @@ async function inlineImages(node, config) {
 function deactivateBackgroundParallax(node) {
   const bgWithParallax = getElementsByClassName(node, "brz-bg-image-parallax");
 
-  bgWithParallax.forEach(node =>
+  bgWithParallax.forEach((node) =>
     // make the image static (no parallax or fixed)
     css(node, {
       transform: "none",
@@ -328,7 +328,7 @@ function fetchResource(url) {
 
   /* eslint-disable no-console */
   return fetch(url, { credentials: "omit" })
-    .then(r => {
+    .then((r) => {
       if (r.ok) {
         return r.blob();
       } else {
@@ -336,24 +336,26 @@ function fetchResource(url) {
       }
     })
     .then(blobToDataUri)
-    .then(base64 => {
+    .then((base64) => {
       cache.set(url, base64);
       return base64;
     })
-    .catch(e => console.error("worker fetch:", e));
+    .catch((e) => console.error("worker fetch:", e));
   /* eslint-enabled no-console */
 }
 
 function getResourceDownloadUrl(src, { siteUrl, proxyUrl }) {
-  return src.indexOf(siteUrl) === 0 || src[0] === "/"
-    ? src
-    : proxyUrl + encodeURIComponent(src);
+  if (src.indexOf(siteUrl) === 0 || src[0] === "/" || !proxyUrl) {
+    return src;
+  }
+
+  return proxyUrl + encodeURIComponent(src);
 }
 
 function blobToDataUri(blob) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     var reader = new FileReader();
-    reader.onload = function() {
+    reader.onload = function () {
       resolve(this.result);
     };
     /* eslint-disable no-console */

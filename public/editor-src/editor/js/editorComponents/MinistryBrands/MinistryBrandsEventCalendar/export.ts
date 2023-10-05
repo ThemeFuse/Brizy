@@ -3,6 +3,7 @@ import { addContentEventListener } from "./utils";
 
 export const fn: ExportFunction = ($node) => {
   const root = $node.get(0);
+  if (!root) return;
 
   root
     .querySelectorAll<HTMLElement>(

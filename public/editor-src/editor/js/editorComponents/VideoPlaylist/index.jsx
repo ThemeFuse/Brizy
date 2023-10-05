@@ -161,6 +161,7 @@ class VideoPlaylist extends EditorComponent {
             allowFullScreen={true}
             className="brz-iframe intrinsic-ignore"
             src={videoSrc}
+            title="video-playlist"
           />
         </div>
       </div>

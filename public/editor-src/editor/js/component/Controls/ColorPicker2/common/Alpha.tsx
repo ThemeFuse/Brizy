@@ -4,6 +4,7 @@ import {
   HSLAwithSource
 } from "visual/component/Controls/ColorPicker2/types";
 import { calculateChange } from "../helpers/alpha";
+import { disableIframeEvents, enableIframeEvents, isInIframe } from "../utils";
 import Checkboard from "./Checkboard";
 
 import HSLA = tinycolor.ColorFormats.HSLA;
@@ -77,6 +78,10 @@ export class Alpha extends Component<Props, State> {
     const contentWindow = this.props.contentWindow();
 
     if (contentWindow) {
+      if (!isInIframe(contentWindow)) {
+        disableIframeEvents(contentWindow);
+      }
+
       contentWindow.addEventListener(
         "mousemove",
         this.handleChange as () => void
@@ -93,6 +98,11 @@ export class Alpha extends Component<Props, State> {
   };
 
   handleMouseUp = (e: MouseEvent) => {
+    const contentWindow = this.props.contentWindow();
+    if (contentWindow && !isInIframe(contentWindow)) {
+      enableIframeEvents(contentWindow);
+    }
+
     this.handleChange(e, true);
     this.unbindEventListeners();
 

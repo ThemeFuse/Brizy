@@ -1,10 +1,11 @@
-import * as State from "visual/utils/stateMode/index";
+import { filter } from "visual/component/Options/types/utils/filter";
+import { reduce } from "visual/component/Options/types/utils/reduce";
 import {
   GenericToolbarItemType,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
-import { filter } from "visual/component/Options/types/utils/filter";
-import { reduce } from "visual/component/Options/types/utils/reduce";
+import { DESKTOP, ResponsiveMode } from "visual/utils/responsiveMode";
+import * as State from "visual/utils/stateMode/index";
 
 /**
  * Check if the item or it's inner items supports 2 or more state modes.
@@ -12,7 +13,7 @@ import { reduce } from "visual/component/Options/types/utils/reduce";
  */
 const hasStates = (item: ToolbarItemType): boolean => {
   const _item = filter(
-    o => !["tabs", "tabs-dev", "popover", "popover-dev"].includes(o.type),
+    (o) => !["tabs", "tabs-dev", "popover", "popover-dev"].includes(o.type),
     item
   );
 
@@ -27,10 +28,16 @@ const hasStates = (item: ToolbarItemType): boolean => {
 
 export const bindStateToOption = <T extends ToolbarItemType>(
   states: State.State[],
-  option: T
+  option: T,
+  device: ResponsiveMode
 ): T => {
   if (option.id === "tabsState") {
     return option;
+  }
+
+  let statesList = states;
+  if (device !== DESKTOP) {
+    statesList = states.filter((it) => it !== "hover");
   }
 
   switch (option.type) {
@@ -45,7 +52,7 @@ export const bindStateToOption = <T extends ToolbarItemType>(
               {
                 id: "tabsState",
                 type: "stateMode-dev",
-                states,
+                states: statesList,
                 options: (option as GenericToolbarItemType<"popover-dev">)
                   .options
               }
@@ -58,19 +65,21 @@ export const bindStateToOption = <T extends ToolbarItemType>(
     case "tabs-dev":
       return {
         ...option,
-        tabs: (option as GenericToolbarItemType<"tabs-dev">).tabs?.map(tab => ({
-          ...tab,
-          options: tab.options?.some(hasStates)
-            ? [
-                {
-                  id: "tabsState",
-                  type: "stateMode-dev",
-                  states,
-                  options: tab.options
-                }
-              ]
-            : tab.options
-        }))
+        tabs: (option as GenericToolbarItemType<"tabs-dev">).tabs?.map(
+          (tab) => ({
+            ...tab,
+            options: tab.options?.some(hasStates)
+              ? [
+                  {
+                    id: "tabsState",
+                    type: "stateMode-dev",
+                    states: statesList,
+                    options: tab.options
+                  }
+                ]
+              : tab.options
+          })
+        )
       };
     default:
       return option;

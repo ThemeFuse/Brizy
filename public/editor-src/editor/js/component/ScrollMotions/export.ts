@@ -1,17 +1,17 @@
 import {
-  ScrollSettings,
+  Settings as MotionSettings,
+  Mouse3DFit,
+  MouseSettings,
+  MouseTrack,
   ScrollBlur,
   ScrollHorizontal,
   ScrollRotate,
   ScrollScale,
+  ScrollSettings,
   ScrollTransparency,
-  ScrollVertical,
-  MouseSettings,
-  MouseTrack,
-  Mouse3DFit,
-  Settings as MotionSettings
+  ScrollVertical
 } from "@brizy/motion/es/types";
-import { getFreeLibs } from "visual/libs";
+import { getFreeLibs, getProLibs } from "visual/libs";
 import { decodeFromString } from "visual/utils/string";
 
 interface MotionData {
@@ -142,16 +142,16 @@ const parseDecodeData = <T>(data?: string): T | undefined => {
   }
 };
 
-export default function($node: JQuery): void {
+export default function ($node: JQuery): void {
   const { Motions } = getFreeLibs();
+  const { ImagesLoaded } = getProLibs();
 
-  if (!Motions) {
+  const root = $node.get(0);
+  if (!Motions || !root) {
     return;
   }
 
-  const root = $node.get(0);
-
-  root.querySelectorAll<HTMLElement>(".brz-motion--effects").forEach(node => {
+  root.querySelectorAll<HTMLElement>(".brz-motion--effects").forEach((node) => {
     const {
       motionScrollVertical,
       motionScrollHorizontal,
@@ -179,12 +179,22 @@ export default function($node: JQuery): void {
       mouseFit: parseDecodeData<Mouse3DFit>(motionMouseFit)
     });
 
-    new Motions(node, {
-      scroll,
-      mouse,
-      responsive: parseDecodeData<MotionSettings["responsive"]>(
-        motionResponsive
-      )
-    });
+    if (!ImagesLoaded) {
+      new Motions(node, {
+        scroll,
+        mouse,
+        responsive:
+          parseDecodeData<MotionSettings["responsive"]>(motionResponsive)
+      });
+    } else {
+      ImagesLoaded(node, () => {
+        new Motions(node, {
+          scroll,
+          mouse,
+          responsive:
+            parseDecodeData<MotionSettings["responsive"]>(motionResponsive)
+        });
+      });
+    }
   });
 }

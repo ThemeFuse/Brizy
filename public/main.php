@@ -77,7 +77,8 @@ class Brizy_Public_Main
 
         add_action('template_include', array($this, 'templateIncludeForEditor'), 10000);
         remove_filter('the_content', 'wpautop');
-        // insert the compiled head and content
+        remove_filter('the_content', 'wptexturize');
+	    remove_filter('the_content', 'shortcode_unautop');// insert the compiled head and content
         add_filter('body_class', array($this, 'body_class_frontend'));
         add_action('wp_head', array($this, 'insert_page_head'));
         add_action('admin_bar_menu', array($this, 'toolbar_link'), 999);
@@ -109,9 +110,9 @@ class Brizy_Public_Main
             );
         }
 
-        wp_enqueue_media();
+	    wp_enqueue_media();
 
-        $urlBuilder           = new Brizy_Editor_UrlBuilder();
+	    $urlBuilder           = new Brizy_Editor_UrlBuilder();
         $config_object        = $this->getConfigObject();
         $client_config_object = $this->getClientConfigObject();
 
@@ -122,57 +123,57 @@ class Brizy_Public_Main
         $editor_js_config = json_encode($config_object);
         $client_js_config = json_encode($client_config_object);
 
-        if (class_exists('WooCommerce')) {
-            $editor_js_deps[] = 'zoom';
-            $editor_js_deps[] = 'photoswipe';
-            $editor_js_deps[] = 'flexslider';
-            $editor_js_deps[] = 'wc-single-product';
-        }
-        wp_enqueue_style('brizy-editor', "$assets_url/editor/css/editor.css", array(), null);
-        wp_register_script('brizy-editor-polyfill', "$assets_url/editor/js/polyfill.js", array(), null, true);
-        wp_register_script('brizy-editor-vendor', "$assets_url/editor/js/editor.vendor.js", array(), null, true);
-        wp_enqueue_script(
-            'brizy-client-editor',
-            "${client_asset_url}/editor-client/build/index.js",
-            ['brizy-editor-vendor'],
-            null,
-            true
-        );
-        wp_enqueue_script(
-            'brizy-editor',
-            "$assets_url/editor/js/editor.js",
-            apply_filters('brizy_editor_js_deps', $editor_js_deps),
-            null,
-            true
-        );
-        wp_add_inline_script('brizy-editor-vendor', "var __VISUAL_CONFIG__ = $editor_js_config; ", 'after');
-        wp_add_inline_script(
-            'brizy-client-editor',
-            "var __BRZ_PLUGIN_ENV__ = ${client_js_config}; ",
-            'before'
-        );
+	    if (class_exists('WooCommerce')) {
+		    $editor_js_deps[] = 'zoom';
+		    $editor_js_deps[] = 'photoswipe';
+		    $editor_js_deps[] = 'flexslider';
+		    $editor_js_deps[] = 'wc-single-product';
+	    }
+	    wp_enqueue_style('brizy-editor', "$assets_url/editor/css/editor.min.css", array(), null);
+	    wp_register_script('brizy-editor-polyfill', "$assets_url/editor/js/polyfill.min.js", array(), null, true);
+	    wp_register_script('brizy-editor-vendor', "$assets_url/editor/js/editor.vendor.min.js", array(), null, true);
+	    wp_enqueue_script(
+		    'brizy-client-editor',
+		    "${client_asset_url}/editor-client/build/index.js",
+		    ['brizy-editor-vendor'],
+		    BRIZY_VERSION,
+		    true
+	    );
+	    wp_enqueue_script(
+		    'brizy-editor',
+		    "$assets_url/editor/js/editor.min.js",
+		    apply_filters('brizy_editor_js_deps', $editor_js_deps),
+		    null,
+		    true
+	    );
+	    wp_add_inline_script('brizy-editor-vendor', "var __VISUAL_CONFIG__ = $editor_js_config; ", 'after');
+	    wp_add_inline_script(
+		    'brizy-client-editor',
+		    "var __BRZ_PLUGIN_ENV__ = ${client_js_config}; ",
+		    'before'
+	    );
 
-        do_action('brizy_editor_enqueue_scripts');
+	    do_action('brizy_editor_enqueue_scripts');
 
-        // include REST api authenticate nonce
-        wp_localize_script(
-            'wp-api',
-            'wpApiSettings',
-            array(
-                'root'          => esc_url_raw(rest_url()),
-                'nonce'         => wp_create_nonce('wp_rest'),
-                'editorVersion' => BRIZY_EDITOR_VERSION,
-                'pluginVersion' => BRIZY_VERSION,
-            )
-        );
+	    // include REST api authenticate nonce
+	    wp_localize_script(
+		    'wp-api',
+		    'wpApiSettings',
+		    array(
+			    'root'          => esc_url_raw(rest_url()),
+			    'nonce'         => wp_create_nonce('wp_rest'),
+			    'editorVersion' => BRIZY_EDITOR_VERSION,
+			    'pluginVersion' => BRIZY_VERSION,
+		    )
+	    );
 
-        if (BRIZY_DEVELOPMENT === true) {
-            wp_add_inline_script(
-                'brizy-editor',
-                "window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;",
-                'before'
-            );
-        }
+	    if (BRIZY_DEVELOPMENT === true) {
+		    wp_add_inline_script(
+			    'brizy-editor',
+			    "window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;",
+			    'before'
+		    );
+	    }
     }
 
     /**
@@ -210,7 +211,12 @@ class Brizy_Public_Main
     {
         $post = $this->post->getWpPost();
 
-        $template_path = get_post_meta($post->ID, '_wp_page_template', true);
+		$parentPostId = $post->ID;
+	    if ( wp_is_post_autosave( $post->ID ) ) {
+		    $parentPostId = wp_get_post_parent_id( $post->ID );
+	    }
+
+        $template_path = get_post_meta($parentPostId, '_wp_page_template', true);
         $template_path = ! $template_path && $post->post_type == Brizy_Admin_Templates::CP_TEMPLATE ? Brizy_Config::BRIZY_TEMPLATE_FILE_NAME : $template_path;
 
         if (in_array(
@@ -417,7 +423,7 @@ class Brizy_Public_Main
 
     private function getClientConfigObject($context = Brizy_Editor_Editor_Editor::EDITOR_CONTEXT)
     {
-        $editor        = Brizy_Editor_Editor_Editor::get(Brizy_Editor_Project::get(), $this->post);
+        $editor = Brizy_Editor_Editor_Editor::get(Brizy_Editor_Project::get(), $this->post);
         $config_json   = json_encode($editor->getClientConfig($context));
         $config_object = json_decode($config_json);
 
@@ -461,8 +467,8 @@ class Brizy_Public_Main
     /**
 	 * @return void
 	 * @throws Exception
-	 */
-	public function loadEditPage() {
+	 */public function loadEditPage()
+    {
 
         query_posts([
             'p'         => $this->post->getWpPostId(),
@@ -483,22 +489,23 @@ class Brizy_Public_Main
         }
 
         $context = [
-			'iframe_url' => add_query_arg(
-				[
-					'is-editor-iframe' => time(),
-					'post'             => $this->post->getWpPostId(),
-				],
-				get_permalink( $this->post->getWpPostId() )
-			),
-			'page_title' => apply_filters(
-				'the_title',
-				$this->post->getWpPost()->post_title,
-				$this->post->getWpPostId()
-			),
-			'favicon'    => $favicon,
-			'styles'     => [ $config_object->urls->assets . "/editor/css/editor.css" ],
-			'scripts'    => [ $config_object->urls->assets . "/editor/js/polyfill.js" ],
-		];
+            'iframe_url'    => add_query_arg(
+                [
+                    'is-editor-iframe' => time(),
+                    'post'             => $this->post->getWpPostId(),
+                ],
+                get_permalink($this->post->getWpPostId())
+            ),
+            'page_title'    => apply_filters(
+                'the_title',
+                $this->post->getWpPost()->post_title,
+                $this->post->getWpPostId()
+            ),
+            'favicon'       => $favicon,
+            'styles'        => [$config_object->urls->assets."/editor/css/editor.min.css"],
+            'scripts'       => [$config_object->urls->assets."/editor/js/polyfill.min.js"],
+        ];
+
 
         $context = apply_filters('brizy_editor_page_context', $context);
 

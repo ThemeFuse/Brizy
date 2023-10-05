@@ -38,6 +38,7 @@ import "../registerEditorParts";
 import { getAssets } from "./transforms/assets";
 import { changeMenuUid } from "./transforms/changeMenuUid";
 import changeRichText from "./transforms/changeRichText";
+import { customAttributes } from "./transforms/customAttributes";
 import dynamicContent from "./transforms/dynamicContent";
 import extractPopups from "./transforms/extractPopups";
 import replaceIcons from "./transforms/replaceIcons";
@@ -262,6 +263,7 @@ async function getPageBlocks({
   await replaceIcons($pageHTML, buildPath);
   changeRichText($pageHTML);
   changeMenuUid($pageHTML);
+  customAttributes($pageHTML);
 
   if (isWp(config) && !config.user.allowScripts) {
     XSS($pageHTML);

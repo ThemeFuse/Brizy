@@ -1,7 +1,5 @@
 import { t } from "visual/utils/i18n";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { toolbarElementCarouselPadding } from "visual/utils/toolbar";
-import { ToolbarItemType } from "../ToolbarItemType";
+import { GetItems } from "../EditorComponent/types";
 import { Value } from "./toolbarExtend";
 
 export const title = t("Carousel");
@@ -14,13 +12,7 @@ const helperHTML = `
   <span class="brz-span brz-ed-tooltip__overlay-code">element .child-element</span> {...}
 </p>`;
 
-export function getItems({
-  v,
-  device
-}: {
-  v: Value;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = () => {
   return [
     {
       id: "sidebarTabs",
@@ -36,13 +28,13 @@ export function getItems({
               type: "padding-dev",
               disabled: true
             },
-            // @ts-expect-error: Old function
-            toolbarElementCarouselPadding({
-              v,
-              device,
+            {
+              id: "sliderPadding",
+              type: "padding-dev",
+              label: t("Padding"),
               devices: "responsive",
-              state: "normal"
-            }),
+              position: 50
+            },
             {
               id: "settingsTabs",
               type: "tabs-dev",
@@ -54,7 +46,6 @@ export function getItems({
                 {
                   id: "settingsStyling",
                   label: t("Basic"),
-                  icon: "nc-styling",
                   position: 10,
                   options: [
                     {
@@ -62,13 +53,13 @@ export function getItems({
                       type: "padding-dev",
                       disabled: true
                     },
-                    // @ts-expect-error: Old function
-                    toolbarElementCarouselPadding({
-                      v,
-                      device,
+                    {
+                      id: "sliderPadding",
+                      type: "padding-dev",
+                      label: t("Padding"),
                       devices: "desktop",
-                      state: "normal"
-                    })
+                      position: 50
+                    }
                   ]
                 },
                 {
@@ -94,4 +85,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

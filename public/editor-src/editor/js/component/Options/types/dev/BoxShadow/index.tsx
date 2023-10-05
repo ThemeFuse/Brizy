@@ -43,15 +43,20 @@ export const BoxShadow: FC<Props> = ({
 }) => {
   const dispatch = useDispatch();
   const _className = classNames("brz-ed-option__boxShadow", className);
+
+  const { type, opacity } = config ?? {};
+
   const types: TypeObject[] = useMemo(
-    pipe(
-      () => config?.type,
-      Type.read,
-      (t): Type.Type[] => (t ? ["none", t] : Type.types),
-      getTypesItems
-    ),
-    [config?.type]
+    () =>
+      pipe(
+        () => type,
+        Type.read,
+        (t): Type.Type[] => (t ? ["none", t] : Type.types),
+        getTypesItems
+      )(),
+    [type]
   );
+
   const onValueChange = useCallback<ShadowProps["onChange"]>(
     (m, meta) => {
       switch (meta.isChanged) {
@@ -118,7 +123,7 @@ export const BoxShadow: FC<Props> = ({
 
   return (
     <ShadowControl
-      opacity={config?.opacity ?? true}
+      opacity={opacity ?? true}
       className={_className}
       value={value}
       onChange={onValueChange}

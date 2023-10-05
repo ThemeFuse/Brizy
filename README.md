@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.1.1<br>
+Tested up to: 6.2.2<br>
 Requires PHP: 5.6.20<br>
-Stable tag: 2.4.16<br>
+Stable tag: 2.4.27<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,115 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.27 - 2023-08-08
+* New: Added 26 new premade design templates
+
+### 2.4.26 - 2023-07-12
+* New: Added custom video URL for Block background 
+* New: Added copy/paste styles for Text element 
+* New: Added mask option for all containers: Rows, Columns, Blocks
+* Improved: Display selected font at top of font list in the Typography options
+* Improved: Hexagon Shape in the Mask options
+* Improved: Updated icons library Font Awesome to version 6 
+* Fixed: Text crashed after population change
+* Fixed: Block Slider on preview 
+* Fixed: Element with rotate motion effect moves when hovering on toolbar 
+* Fixed: Text alignment in the preview
+* Fixed: Remove saved block tag
+* Fixed: Label text pushing the options out of the UI
+* Fixed: Container width in PX shows 1400px max slider value instead of 1170px
+
+### 2.4.25 - 2023-07-03
+* Fixed: Hot Fix - Redirect only in admin after activation of the plugin
+
+### 2.4.24 - 2023-06-26
+* Fixed: Scrollbar inside Popup
+
+### 2.4.23 - 2023-06-22
+* Fixed: Image sizes on the preview
+* Fixed: Section Parallax
+* Fixed: Section containers
+
+### 2.4.22 - 2023-06-21
+* New: Added option to sort tags alphabetically in the Accordion element
+* New: Added vertical space option for Accordion element
+* New: Add width in px for the boxed option on Blocks
+* New: Tags and Titles for saved blocks and saved layouts
+* Fixed: Builder UI Themes
+* Fixed: W3C Accessibility issues: AA, AAA, W3C
+* Fixed: Countdown timezone offset
+* Fixed: Numbering unordered list in Text element
+* Fixed: Image Alt Title option in Right Sidebar
+* Fixed: Scroll for code Mirror in Right Sidebar
+* Improved: Full width for WordPress Media gallery in tablet and mobile mode
+* Improved: Codebase migrate to node 18
+* Improved: Changed some elements positions and order in the elements panel
+* Improved: Builder select option
+* Improved: Added a helper icon for YouTube links in the Video element
+* Improved: Omit 1 request for get project
+
+### 2.4.21 - 2023-06-07
+* Fixed: Button style fill
+* Fixed: IconBox with hover effect
+
+### 2.4.20 - 2023-06-01
+* Fixed: Image resize on preview
+* Fixed: Uploaded webp Image
+
+### 2.4.19 - 2023-05-31
+* New: Advanced Hover animation 
+* Improved: Button old options to new options  
+* Improved: Removed title attribute from HTML for the block slider .svg arrows 
+* Improved: Remove icon on global style in the left sidebar
+* Improved: Added IST timezone in the Countdown element
+* Improved: Youtube video in the Video element 
+* Improved: Made all UI scrollbars custom
+* Improved: Added .min suffix for all css and js minified files 
+* Updated: Codemirror plugins 
+* Updated: Core-js library
+* Fixed: Added support to escaping singe and double quotes
+* Fixed: Link anchor is not working on the correct block if you scroll
+* Fixed: Screenshots browser compatibility on Safari when saving blocks
+* Fixed: Link option in a Row element 
+* Fixed: Escape backslashes in the form data json before inserting in the post content 
+* New: Added a Getting Started Page for easier onboarding
+* New: Added left sidebar config (module groups in config)
+* Fixed: Append text via parser by CSS class only  
+* Fixed: Click twice or more to close a pop-up
+* Fixed: Starter template import 
+* Fixed: Remove the sufix from version compare when importing from archives 
+* Fixed: Restore WP revisions
+
+
+### 2.4.18 - 2023-04-03
+* Fixed: onclick Custom Attribute RightSidebar 
+* Fixed: Responsive brackground map 
+* Fixed: Reorder column - option 
+* Fixed: Background overflow && z-index auto 
+* Fixed: Tabs text on responsiveMode 
+* Fixed: Opacity for language switcher drop-down 
+* Fixed: Form input length validation 
+* Fixed: Flash on hover transition bg gradient 
+* Fixed: Text link 
+* Fixed: Global Style Colorpicker 
+* Fixed: Element Tabs icon 
+* Fixed: Form Email input length 
+* Fixed: Text with Mask 
+* Fixed: Option file upload remove 
+* Fixed: Resolve CSS conflicts with woo commerce products 
+* Fixed: Added dom encoding to utf-8 
+* Improved: ImageUpload canceling 
+* Improved: Countdown new timezone 
+* Improved: LeftSidebar Bottom panel 
+* Improved: Video Element options 
+* Improved: Text font size option increased to 200 
+* Improved: Multiline for Custom Attribute 
+* Updated: Slick Slider 
+
+### 2.4.17 - 2023-03-10
+* Fixed: Screenshots
+* Fixed: Section Background Image
 
 ### 2.4.16 - 2023-03-07
 * New: New eye dropper feature for colors 

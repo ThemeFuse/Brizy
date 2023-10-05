@@ -9,17 +9,11 @@ import {
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { NORMAL } from "visual/utils/stateMode";
 import { encodeToString } from "visual/utils/string";
-import {
-  toolbarBgColor2,
-  toolbarBgColorHexField2,
-  toolbarGradientLinearDegree,
-  toolbarGradientRadialDegree,
-  toolbarGradientType
-} from "visual/utils/toolbar";
 
 const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
 
@@ -58,7 +52,7 @@ const getPopulationColor = (populationColor, type, value) => {
   return encodeToString(setIn(newValue, [type, "hex"], null));
 };
 
-const changeColor = (backgroundGradient, value) => {
+const changeColor = (value) => {
   const DEFAULT_GRADIENT = {
     type: "linear-gradient",
     radialPosition: 90,
@@ -74,190 +68,43 @@ const changeColor = (backgroundGradient, value) => {
     finishPalette: ""
   };
 
-  const bgGradient = {
-    ...DEFAULT_GRADIENT,
-    ...backgroundGradient
-  };
-
-  switch (value.isChanged) {
-    case "select":
-      if (value.select === "gradient") {
-        return {
-          backgroundGradient: {
-            ...bgGradient,
-            startHex: value.hex,
-            startOpacity: value.opacity,
-            startPalette: value.palette
-          },
-          color: null,
-          opacity: null,
-          colorPalette: ""
-        };
-      } else {
-        return {
-          backgroundGradient: null,
-          color: value.hex,
-          opacity: value.opacity,
-          colorPalette: value.palette
-        };
-      }
-
-    case "hex":
-      if (value.select === "gradient") {
-        const newColor =
-          value.activePointer === "startPointer"
-            ? { startHex: value.hex }
-            : { finishHex: value.hex };
-
-        const newPalette =
-          value.activePointer === "startPointer"
-            ? { startPalette: "" }
-            : { finishPalette: "" };
-
-        return {
-          backgroundGradient: {
-            ...bgGradient,
-            ...newColor,
-            ...newPalette
-          }
-        };
-      } else {
-        return {
-          color: value.hex,
-          colorPalette: ""
-        };
-      }
-    case "opacity":
-      if (value.select === "gradient") {
-        const newPointer =
-          value.activePointer === "startPointer"
-            ? { startOpacity: String(value.opacity) }
-            : { finishOpacity: String(value.opacity) };
-
-        return {
-          backgroundGradient: {
-            ...bgGradient,
-            ...newPointer
-          }
-        };
-      } else {
-        return { opacity: String(value.opacity) };
-      }
-    case "activePointer":
-      return {
-        backgroundGradient: {
-          ...bgGradient,
-          activePointer: value.activePointer
-        }
-      };
-    case "startPointer":
-      return {
-        backgroundGradient: {
-          ...bgGradient,
-          startPointer: value.startPointer
-        }
-      };
-    case "finishPointer":
-      return {
-        backgroundGradient: {
-          ...bgGradient,
-          finishPointer: value.finishPointer
-        }
-      };
-    case "palette":
-      if (value.select === "gradient") {
-        const palette =
-          value.activePointer === "startPointer"
-            ? value.palette
-            : value.palette;
-
-        const { hex } = getColorPaletteColor(palette);
-
-        const newHex =
-          value.activePointer === "startPointer"
-            ? { startHex: hex }
-            : { finishHex: hex };
-
-        const newPalette =
-          value.activePointer === "startPointer"
-            ? { startPalette: value.palette }
-            : { finishPalette: value.palette };
-
-        return {
-          backgroundGradient: {
-            ...bgGradient,
-            ...newHex,
-            ...newPalette
-          }
-        };
-      } else {
-        return {
-          color: null,
-          colorPalette: value.palette
-        };
-      }
-  }
-};
-
-const changeColorFields = (backgroundGradient, value) => {
-  if (backgroundGradient && !backgroundGradient.startHex) {
+  const selectType =
+    value.bgColorType === "none" ? value.tempBgColorType : value.bgColorType;
+  if (selectType === "gradient") {
     return {
-      color: value.hex,
-      colorPalette: ""
-    };
-  } else if (
-    backgroundGradient &&
-    backgroundGradient.activePointer === "startPointer"
-  ) {
-    return {
+      ...value,
       backgroundGradient: {
-        ...backgroundGradient,
-        startHex: value.hex
-      }
+        ...DEFAULT_GRADIENT,
+        startHex: value.bgColorHex,
+        startOpacity: String(value.bgColorOpacity),
+        finishOpacity: String(value.gradientColorOpacity),
+        startPalette: value.bgColorPalette,
+        finishPalette: value.gradientColorPalette,
+        finishHex: value.gradientColorHex,
+        startPointer: value.gradientStartPointer,
+        finishPointer: value.gradientFinishPointer,
+        activePointer: value.gradientActivePointer,
+        type:
+          value.gradientType === "linear"
+            ? "linear-gradient"
+            : "radial-gradient",
+        linearAngle: value.gradientLinearDegree,
+        radialPosition: value.gradientRadialDegree
+      },
+      color: null,
+      opacity: null,
+      colorPalette: value.bgColorPalette,
+      bgColorType: "gradient"
     };
-  } else if (
-    backgroundGradient &&
-    backgroundGradient.activePointer === "finishPointer"
-  ) {
+  } else
     return {
-      backgroundGradient: {
-        ...backgroundGradient,
-        finishHex: value.hex
-      }
+      ...value,
+      bgColorType: "solid",
+      backgroundGradient: null,
+      color: !value.bgColorPalette ? value.bgColorHex : null,
+      opacity: String(value.bgColorOpacity),
+      colorPalette: value.bgColorPalette
     };
-  } else if (!backgroundGradient) {
-    return {
-      color: value.hex,
-      colorPalette: null
-    };
-  }
-};
-
-const changeGradientType = (backgroundGradient, value) => {
-  return {
-    backgroundGradient: {
-      ...backgroundGradient,
-      type: value === "linear" ? "linear-gradient" : "radial-gradient"
-    }
-  };
-};
-
-const changeLinearDegree = (backgroundGradient, value) => {
-  return {
-    backgroundGradient: {
-      ...backgroundGradient,
-      linearAngle: value
-    }
-  };
-};
-
-const changeRadialDegree = (backgroundGradient, value) => {
-  return {
-    backgroundGradient: {
-      ...backgroundGradient,
-      radialPosition: value
-    }
-  };
 };
 
 function getPopulationTabs({ populationColor }, onChange) {
@@ -334,7 +181,7 @@ function getPopulationColorOptions({ populationColor }, onChange) {
   ];
 }
 
-function getSimpleColorOptions(v, { device, context }, onChange) {
+function getSimpleColorOptions(v, { context }, onChange) {
   const {
     src = null,
     population = null,
@@ -347,76 +194,11 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
   } = v.backgroundImage || {};
   const config = Config.getAll();
 
-  const {
-    type,
-    radialPosition,
-    linearAngle,
-    startPointer,
-    finishPointer,
-    activePointer,
-    startHex,
-    finishHex,
-    startOpacity,
-    finishOpacity,
-    startPalette,
-    finishPalette
-  } = v.backgroundGradient || {};
-
-  let colorV = {};
-  let colorFieldsV = {};
-
-  if (startHex) {
-    const startIsActive = activePointer === "startPointer";
-
-    colorV = {
-      colorType: "gradient",
-      colorHex: startHex,
-      colorOpacity: startOpacity,
-      colorPalette: startPalette,
-
-      gradientStartPointer: startPointer,
-      gradientFinishPointer: finishPointer,
-      gradientActivePointer: activePointer,
-
-      gradientColorHex: finishHex,
-      gradientColorOpacity: finishOpacity,
-      gradientColorPalette: finishPalette
-    };
-
-    colorFieldsV = {
-      colorHex: startIsActive ? startHex : finishHex,
-      colorPalette: startIsActive ? startPalette : finishPalette
-    };
-  } else {
-    colorV = {
-      colorType: "solid",
-      colorHex: v.color.hex,
-      colorOpacity: v.color.opacity,
-      colorPalette: v.colorPalette
-    };
-
-    colorFieldsV = {
-      colorHex: v.color.hex,
-      colorPalette: v.colorPalette
-    };
-  }
-
-  const linearV = {
-    gradientLinearDegree: linearAngle
-  };
-
-  const radialV = {
-    gradientRadialDegree: radialPosition
-  };
-
-  const gradientType = {
-    gradientType: type === "linear-gradient" ? "linear" : "radial"
-  };
-
-  const imageDynamicContentChoices = getDynamicContentChoices(
-    context.dynamicContent.config,
-    DCTypes.image
-  );
+  const imageDynamicContentChoices = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.image,
+    config: { show: true }
+  });
 
   return [
     {
@@ -428,86 +210,35 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
           label: t("Color"),
           options: [
             {
-              ...toolbarBgColor2({
-                v: colorV,
-                prefix: "",
-                device,
-                state: "normal"
-              }),
-              onChange: (value) =>
-                onChange(changeColor(v.backgroundGradient, value))
-            },
-            {
-              type: "grid-dev",
-              className:
-                "brz-ed-grid__color-fileds brz-ed-grid__color--gradient-field__wrap brz-ed-option",
-              columns: [
-                {
-                  size: "auto",
-                  options: [
-                    {
-                      ...toolbarBgColorHexField2({
-                        v: colorFieldsV,
-                        device,
-                        state: "normal",
-                        prefix: ""
-                      }),
-                      onChange: (value) =>
-                        onChange(changeColorFields(v.backgroundGradient, value))
-                    }
-                  ]
-                },
-                {
-                  size: "auto",
-                  className: "brz-ed-grid__color--gradient-field",
-                  options: [
-                    {
-                      ...toolbarGradientType({
-                        v: gradientType,
-                        device,
-                        state: "normal",
-                        className:
-                          "brz-ed__select--transparent brz-ed__select--align-right",
-                        disabled: !startHex
-                      }),
-                      onChange: (value) =>
-                        onChange(
-                          changeGradientType(v.backgroundGradient, value)
-                        )
-                    }
-                  ]
-                },
-                {
-                  size: "auto",
-                  className: "brz-ed-grid__color--gradient-degree",
-                  options: [
-                    {
-                      ...toolbarGradientLinearDegree({
-                        v: linearV,
-                        device,
-                        state: "normal",
-                        disabled: !startHex || type === "radial-gradient"
-                      }),
-                      onChange: (value) =>
-                        onChange(
-                          changeLinearDegree(v.backgroundGradient, value)
-                        )
-                    },
-                    {
-                      ...toolbarGradientRadialDegree({
-                        v: radialV,
-                        device,
-                        state: "normal",
-                        disabled: !startHex || type === "linear-gradient"
-                      }),
-                      onChange: (value) =>
-                        onChange(
-                          changeRadialDegree(v.backgroundGradient, value)
-                        )
-                    }
-                  ]
-                }
-              ]
+              id: "",
+              type: "backgroundColor-dev",
+              states: [NORMAL],
+              config: {
+                withNone: false
+              },
+              dependencies: (value) => {
+                const bgColorPalette =
+                  value.bgColorPalette !== v.bgColorPalette
+                    ? value.bgColorPalette
+                    : "";
+                const bgColorHex =
+                  value.bgColorPalette !== v.bgColorPalette &&
+                  getColorPaletteColor(value.bgColorPalette)
+                    ? getColorPaletteColor(value.bgColorPalette).hex
+                    : value.bgColorHex;
+
+                const gradientColorHex = value.gradientColorPalette
+                  ? getColorPaletteColor(value.gradientColorPalette).hex
+                  : value.gradientColorHex;
+                onChange(
+                  changeColor({
+                    ...value,
+                    bgColorHex,
+                    gradientColorHex,
+                    bgColorPalette
+                  })
+                );
+              }
             }
           ]
         },
@@ -559,10 +290,7 @@ function getSimpleColorOptions(v, { device, context }, onChange) {
               id: "image",
               label: t("Image"),
               type: "imageSetter",
-              population: {
-                show: imageDynamicContentChoices.length > 0,
-                choices: imageDynamicContentChoices
-              },
+              population: imageDynamicContentChoices,
               value: {
                 src,
                 population,
@@ -650,17 +378,27 @@ function getTextPopulationOptions() {
 }
 
 const getColorToolbar = (v, { device, context }, onChange) => {
-  const { isPopulationBlock, populationColor } = v;
+  const {
+    isPopulationBlock,
+    populationColor,
+    colorOpacity,
+    textPopulation,
+    color
+  } = v;
 
   let backgroundColor;
-  if (v.textPopulation) {
+
+  const dvv = (key) => defaultValueValue({ v, key, device });
+
+  if (textPopulation) {
     const { hex: colorHex } = getOptionColorHexByPalette(
-      defaultValueValue({ v, key: "colorHex", device }),
-      defaultValueValue({ v, key: "colorPalette", device })
+      dvv("bgColorHex"),
+      dvv("bgColorPalette")
     );
-    backgroundColor = hexToRgba(colorHex, v.colorOpacity);
+    backgroundColor = hexToRgba(colorHex, colorOpacity);
   } else {
-    backgroundColor = getColorValue(v.color);
+    // something the color is not defined
+    backgroundColor = getColorValue(color ?? {});
   }
 
   return {

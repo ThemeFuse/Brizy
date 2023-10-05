@@ -40,6 +40,8 @@ export * from "./cssStyleElementButton";
 export * from "./cssStyleElementCalendly";
 // Element Carousel
 export * from "./cssStyleElementCarousel";
+//Element Cloneable
+export * from "./cssStyleElementCloneable";
 // Element Comments
 export * from "./cssStyleElementComments";
 // Element Countdown
@@ -112,6 +114,8 @@ export * from "./cssStyleElementSearch";
 export * from "./cssStyleElementShopifyAddToCart";
 // Quantity
 export * from "./cssStyleElementShopifyQuantity";
+// Price
+export * from "./cssStyleElementShopifyPrice";
 // Star Rating
 export * from "./cssStyleElementStarRating";
 //Switcher
@@ -193,3 +197,5 @@ export * from "./cssStyleVisible2";
 export * from "./cssStyleZIndex";
 // Bg Video
 export * from "./styleBgVideo";
+// Mask
+export * from "./cssStyleMask";

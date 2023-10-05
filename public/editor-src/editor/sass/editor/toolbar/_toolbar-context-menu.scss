@@ -61,7 +61,7 @@
     &:hover,
     &--active,
     &--selected {
-      &>.react-contexify__item__content {
+      & > .react-contexify__item__content {
         background-color: rgba(255, 255, 255, 0.12);
         color: $brand__primary;
       }
@@ -83,7 +83,7 @@
       padding: 6px 17px;
       text-align: left;
       font-weight: 600;
-      color: #fff;
+      color: $options__control-color;
       white-space: nowrap;
       position: relative;
       transition: all 0.2s linear;

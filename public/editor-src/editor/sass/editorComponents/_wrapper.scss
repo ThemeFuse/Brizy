@@ -4,7 +4,7 @@
   min-width: 0;
   min-height: 1px;
 
-  > div[data-scroll-motion] {
+  > div.brz-wrapper__scrollmotion {
     flex: 1 0 100%;
     min-width: 0;
     display: inherit;

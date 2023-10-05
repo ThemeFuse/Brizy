@@ -1,8 +1,10 @@
-import React, { Component } from "react";
 import classnames from "classnames";
+import React, { Component } from "react";
 import { noop } from "underscore";
-import Fixed from "visual/component/Prompts/Fixed";
 import EditorIcon from "visual/component/EditorIcon";
+import Fixed from "visual/component/Prompts/Fixed";
+import Config from "visual/global/Config";
+import { t } from "visual/utils/i18n";
 
 class Tabs extends Component {
   constructor(props) {
@@ -26,7 +28,7 @@ class Tabs extends Component {
     onClose: noop
   };
 
-  handleLoading = loading => {
+  handleLoading = (loading) => {
     this.setState({
       loading
     });
@@ -44,7 +46,7 @@ class Tabs extends Component {
 
   handleTabUpdate(tabId, tabData) {
     const { tabs: _tabs } = this.state;
-    const tabs = _tabs.map(tab =>
+    const tabs = _tabs.map((tab) =>
       tab.id === tabId ? { ...tab, ...tabData } : tab
     );
 
@@ -57,7 +59,7 @@ class Tabs extends Component {
     const { currentTab, tabs } = this.state;
     const { onClose } = this.props;
 
-    const headerTabs = tabs.map(tab => {
+    const headerTabs = tabs.map((tab) => {
       const { id, icon, img, title } = tab;
       const className = classnames("brz-ed-popup-tab-item", {
         active: id === currentTab
@@ -85,10 +87,20 @@ class Tabs extends Component {
       );
     });
 
+    const _config = Config.getAll();
+    const helpIcon = _config?.ui?.help?.showIcon;
+
     return (
       <div className="brz-ed-popup-header">
         <div className="brz-ed-popup-header__tabs">{headerTabs}</div>
         <div className="brz-ed-popup-btn-close" onClick={onClose} />
+        {helpIcon && (
+          <div className="brz-ed-popup-btn-help">
+            <span title={t("Help")}>
+              <EditorIcon className="icon_helper" icon={"nc-help"} />
+            </span>
+          </div>
+        )}
       </div>
     );
   }
@@ -104,7 +116,7 @@ class Tabs extends Component {
               key={id}
               loading={loading}
               onLoading={this.handleLoading}
-              onTabUpdate={tabData => {
+              onTabUpdate={(tabData) => {
                 this.handleTabUpdate(id, tabData);
               }}
             />
@@ -127,7 +139,7 @@ class Tabs extends Component {
           key={id}
           loading={loading}
           className={className}
-          onTabUpdate={tabData => {
+          onTabUpdate={(tabData) => {
             this.handleTabUpdate(id, tabData);
           }}
         />

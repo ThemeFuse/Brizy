@@ -6,7 +6,6 @@ import EditorIcon from "visual/component/EditorIcon";
 import { EyeDropper } from "visual/component/EyeDropper";
 import { OnChange } from "visual/component/Options/Type";
 import Config from "visual/global/Config";
-import { pipe } from "visual/utils/fp";
 import { isStory } from "visual/utils/models";
 
 export type Props = {
@@ -18,7 +17,10 @@ export type Props = {
 export const ColorPickerInputs: FC<Props> = ({ value, onChange, children }) => {
   const [eyeDropperStatus, setEyeDropperStatus] = useState(false);
   const handleDropper = useCallback(
-    pipe(onChange, () => setEyeDropperStatus(false)),
+    (hex) => {
+      onChange(hex);
+      setEyeDropperStatus(false);
+    },
     [onChange]
   );
   const onEyeDropClick = useCallback(

@@ -1,19 +1,18 @@
 import classNames from "classnames";
-import React from "react";
-import { ReactElement, useEffect } from "react";
+import React, { ForwardedRef, ReactElement, useEffect } from "react";
 import Scrollbars from "react-custom-scrollbars";
 import { Search } from "./Search";
 import { SelectDropdownProps } from "./types";
 
-export const SelectDropdown = React.forwardRef<
-  HTMLDivElement,
-  SelectDropdownProps
->(({ style, searchIsLoading, children, onSearchChange }, ref) => {
+const _SelectDropdown = (
+  { style, searchIsLoading, children, onSearchChange }: SelectDropdownProps,
+  ref: ForwardedRef<HTMLDivElement>
+): ReactElement => {
   useEffect(() => {
     return (): void => {
       onSearchChange?.("");
     };
-  }, []);
+  }, [onSearchChange]);
 
   const className = classNames(
     "brz-ed-control__internalLink__dropdown",
@@ -43,4 +42,9 @@ export const SelectDropdown = React.forwardRef<
       </Scrollbars>
     </div>
   );
-});
+};
+
+export const SelectDropdown = React.forwardRef<
+  HTMLDivElement,
+  SelectDropdownProps
+>(_SelectDropdown);

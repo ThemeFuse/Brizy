@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-
 import { Dictionary } from "visual/types/utils";
 import * as Union from "visual/utils/reader/union";
 import { getFieldIdCollectionId } from "./toolbarExtendParent/utils";
@@ -56,7 +55,8 @@ export function postsQuery(v: V): CloudPostsQuery {
     offset,
     orderBy,
     order,
-    symbols
+    symbols,
+    excludeCurrentProduct
   } = decodeV(v);
 
   const includeSymbols = symbols[`${source}_incBy`];
@@ -86,7 +86,8 @@ export function postsQuery(v: V): CloudPostsQuery {
     order:
       Union.readWithChoices<CloudPostsQuery["order"]>(["ASC", "DESC"])(order) ??
       "DESC",
-    offset
+    offset,
+    ...(excludeCurrentProduct === "on" ? { excludeCurrentProduct: 1 } : {})
   };
 }
 

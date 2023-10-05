@@ -1,11 +1,11 @@
 import React, {
-  useReducer,
-  useState,
-  useEffect,
-  useRef,
-  ReactElement,
   FC,
-  useCallback
+  ReactElement,
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useState
 } from "react";
 import _ from "underscore";
 import {
@@ -13,9 +13,9 @@ import {
   MultiSelectItem as ControlItem
 } from "visual/component/Controls/MultiSelect2";
 import { MultiSelectItemProps as ControlItemProps } from "visual/component/Controls/MultiSelect2/types";
-import { ValueItem, Value, Props, ChoicesSync, ChoicesAsync } from "./types";
-import { mergeChoices, missingChoices } from "./utils";
 import { OnChange } from "visual/component/Options/Type";
+import { ChoicesAsync, ChoicesSync, Props, Value, ValueItem } from "./types";
+import { mergeChoices, missingChoices } from "./utils";
 
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -261,6 +261,7 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
   placeholder,
   choices,
   value: { value },
+  config,
   onChange
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -268,14 +269,15 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
   const currentSearchController = useRef<AbortController>();
   const initialChoices = useRef<ChoicesSync>([]);
   const { vChoices, sChoices } = state;
+  const { useAsSimpleSelect = false, showArrow = false } = config ?? {};
 
   const _onChange = useCallback<OnChange<Value>>(
     (v): void => {
       const cachedChoices = initialChoices.current;
       const allChoices = [...vChoices, ...sChoices];
       const choices = v
-        .map(vv => allChoices.find(item => item.value === vv))
-        .filter(item => item !== undefined) as ChoicesSync;
+        .map((vv) => allChoices.find((item) => item.value === vv))
+        .filter((item) => item !== undefined) as ChoicesSync;
       const diffBySearch = _.difference(v, _.pluck(sChoices, "value"));
 
       if (
@@ -303,7 +305,7 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
       controller = new AbortController();
       choices
         .load(value, controller.signal)
-        .then(r => {
+        .then((r) => {
           if (!controller.signal.aborted) {
             initialChoices.current = r;
             dispatch({ type: "load_success", choices: r });
@@ -330,7 +332,7 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
 
       choices
         .search(debouncedSearch, controller.signal)
-        .then(r => {
+        .then((r) => {
           if (!controller.signal.aborted) {
             if (r.length > 0) {
               dispatch({ type: "fetch_found", choices: r });
@@ -375,6 +377,8 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
       searchIsLoading={state.state === "FETCHING"}
       searchIsEmpty={state.state === "FETCH_NOT_FOUND"}
       onChange={_onChange}
+      useAsSimpleSelect={useAsSimpleSelect}
+      showArrow={showArrow}
       onSearchChange={(s): void => {
         currentSearchController.current?.abort();
         dispatch(

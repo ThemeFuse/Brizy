@@ -11,14 +11,13 @@ const swcConfig = {
 };
 
 module.exports = {
+  testEnvironment: "jsdom",
   moduleNameMapper: {
     "^visual/(.*)$": "<rootDir>/editor/js/$1"
   },
   transform: {
     "\\.(tsx|ts|js|jsx)?$": ["@swc/jest", swcConfig]
   },
-
-  modulePathIgnorePatterns: ["packages/optionControls"],
   transformIgnorePatterns: ["/node_modules/(?!(nanoid)/)"],
   globals: {
     TARGET: "Jest",

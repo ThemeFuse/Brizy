@@ -1,13 +1,7 @@
 {
   "toolbar": {
     "tabsState": "",
-    "tabsColor": "",
-
-    "tabletTabsState": null,
-    "tabletTabsColor": null,
-
-    "mobileTabsState": null,
-    "mobileTabsColor": null
+    "tabsColor": ""
   },
 
   "content": {
@@ -82,13 +76,6 @@
     "tempColorOpacity": 1,
     "tempColorPalette": "",
 
-    "hoverColorHex": null,
-    "hoverColorOpacity": null,
-    "hoverColorPalette": null,
-
-    "tempHoverColorOpacity": null,
-    "tempHoverColorPalette": null,
-
     "ratingColorHex": "#d62c64",
     "ratingColorOpacity": 1,
     "ratingColorPalette": "",
@@ -103,20 +90,6 @@
     "tempRatingBackgroundColorOpacity": 1,
     "tempRatingBackgroundColorPalette": "",
 
-    "hoverRatingColorHex": null,
-    "hoverRatingColorOpacity": null,
-    "hoverRatingColorPalette": null,
-
-    "tempHoverRatingColorOpacity": null,
-    "tempHoverRatingColorPalette": null,
-
-    "hoverRatingBackgroundColorHex": null,
-    "hoverRatingBackgroundColorOpacity": null,
-    "hoverRatingBackgroundColorPalette": null,
-
-    "tempHoverRatingBackgroundColorOpacity": null,
-    "tempHoverRatingBackgroundColorPalette": null,
-
     "bgColorHex": "#4ecbff",
     "bgColorOpacity": 1,
     "bgColorPalette": "",
@@ -124,17 +97,10 @@
     "tempBgColorOpacity": 1,
     "tempBgColorPalette": "",
 
-    "hoverBgColorHex": null,
-    "hoverBgColorOpacity": null,
-    "hoverBgColorPalette": null,
-
-    "tempHoverBgColorOpacity": null,
-    "tempHoverBgColorPalette": null,
-
     "customCSS": "",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": null,
+    "hoverTransitionSuffix": "",
 
     "tabletSpacing": null,
     "tabletSpacingSuffix": null,

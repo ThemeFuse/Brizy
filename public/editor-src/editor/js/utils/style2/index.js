@@ -16,8 +16,6 @@ export * from "./styleBorderRadius";
 export * from "./styleBoxShadow";
 // Color
 export * from "./styleColor";
-// Element Button
-export * from "./styleElementButton";
 // Element Column
 export * from "./styleElementColumn";
 // Element Countdown
@@ -38,8 +36,6 @@ export * from "./styleElementMenu";
 export * from "./styleElementPostNavigation";
 // Element Row
 export * from "./styleElementRow";
-// Container Type
-export * from "./styleElementSection";
 // Element Switcher
 export * from "./styleElementSwitcher";
 // Element Table

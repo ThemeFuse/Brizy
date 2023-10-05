@@ -1,7 +1,5 @@
-import React, { FC, useCallback } from "react";
 import classNames from "classnames";
-import { mCompose } from "visual/utils/value";
-import { inputValue } from "visual/utils/react";
+import React, { FC, useCallback } from "react";
 import {
   WithClassName,
   WithOnChange,
@@ -9,6 +7,8 @@ import {
   WithSize,
   WithValue
 } from "visual/utils/options/attributes";
+import { inputValue } from "visual/utils/react";
+import { mCompose } from "visual/utils/value";
 
 export type Props = WithClassName &
   WithValue<string> &
@@ -28,7 +28,10 @@ export const Textarea: FC<Props> = ({
 }) => {
   const baseClass = "brz-ed-control__textarea2";
   const _className = classNames(baseClass, className, `${baseClass}--${size}`);
-  const _onChange = useCallback(mCompose(onChange, inputValue), [value]);
+  const _onChange = useCallback(
+    (v) => mCompose(onChange, inputValue)(v),
+    [onChange]
+  );
 
   return (
     <textarea

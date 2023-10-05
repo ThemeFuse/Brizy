@@ -12,11 +12,12 @@ import * as Str from "visual/utils/string/specs";
 import { isT, onNullish } from "visual/utils/value";
 import { Image } from "../Gallery/types/Image";
 import { Value } from "./index";
+import { isNotClonedFromGallery } from "./utils";
 
 const fromRecord = parse<Record<string, unknown>, Value>({
   id: mPipe(prop("_id"), Str.read),
-  name: mPipe(prop("imageSrc"), Str.read),
-  fileName: mPipe(prop("fileName"), Str.read),
+  uid: mPipe(prop("imageSrc"), Str.read),
+  fileName: mPipe(prop("imageFileName"), Str.read),
   width: mPipe(prop("imageWidth"), Num.read),
   height: mPipe(prop("imageHeight"), Num.read)
 });
@@ -27,6 +28,7 @@ export const fromElementModel: FromElementModel<"gallery-for-gallery-dev"> =
     mPipe(callGetter("value"), pass(Array.isArray), (vs): Value[] => {
       return vs
         .filter(isObject)
+        .filter(isNotClonedFromGallery)
         .map((v) => v.value)
         .filter(isObject)
         .map(fromRecord)

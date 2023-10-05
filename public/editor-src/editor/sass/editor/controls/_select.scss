@@ -1,8 +1,4 @@
-// Select Default
-// Scroll Pane
-$select-options-scrollpane-track-width: 8px;
-$select-options-scrollpane-track-thumb: 3px;
-$scroll-border-radius: 4px;
+@import "../../variables";
 
 // ---
 .brz-control__select {
@@ -10,47 +6,18 @@ $scroll-border-radius: 4px;
   position: relative;
   width: $control__md-width;
 
-  .brz-ed-scroll-pane {
-    .brz-ed-tall-thumb {
-      width: $select-options-scrollpane-track-width;
-      background-color: transparent;
-      border-radius: 4px;
-
-      &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        left: 3px;
-        top: 0;
-        bottom: 0;
-        width: $select-options-scrollpane-track-thumb;
-        min-height: $select-options-scrollpane-track-thumb;
-        background-color: $control__scroll_pane-bg;
-        border-radius: 2px;
-      }
-    }
-
-    .brz-ed-wide-thumb {
-      height: $select-options-scrollpane-track-thumb;
-      background-color: #7b7b7b;
-      border-radius: 2px;
-      top: 3px;
-    }
-
-    .brz-ed-tall-track {
-      border-radius: 0 4px 4px 0;
-    }
-  }
-
   &.opened {
     .brz-control__select-options {
       visibility: visible;
       opacity: 1;
     }
   }
+  &--full-width {
+    width: 100%;
 
-  .brz-ed-scroll-pane-content {
-    border-right: none !important;
+    .brz-control__select-options {
+      max-width: 100%;
+    }
   }
 
   // Position
@@ -439,23 +406,6 @@ $scroll-border-radius: 4px;
     &.active {
       background-color: $popup__select-bg--hover;
       color: rgba(41, 46, 55, 1);
-    }
-  }
-
-  .brz-ed-scroll-pane {
-    .brz-ed-tall-thumb {
-      width: $scroll__popup-width;
-      background-color: $scroll__popup-bg;
-      border-radius: $scroll__popup-border-radius;
-
-      &:after {
-        opacity: 0;
-      }
-    }
-
-    .brz-ed-tall-track {
-      width: $scroll__popup-width;
-      right: 4px;
     }
   }
 }

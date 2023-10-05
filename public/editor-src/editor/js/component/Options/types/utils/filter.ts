@@ -61,8 +61,13 @@ const fns: Filters = {
   "transform-dev": undefined,
   "savedBlock-dev": undefined,
   "globalBlock-dev": undefined,
+  "formApps-dev": undefined,
   // @ts-expect-error Old option, here should not be "tabs" option, it will be removed when all toolbars will work with "tabs-dev"
-  tabs: withTabs
+  tabs: withTabs,
+  // Old option, here should not be "grid" option, it will be removed when all toolbars will work with "grid-dev"
+  grid: withColumns,
+  // Old option, here should not be "popover" option, it will be removed when all toolbars will work with "popover-dev"
+  popover: withOptions,
 };
 
 const getFilter = <T extends OptionName>(

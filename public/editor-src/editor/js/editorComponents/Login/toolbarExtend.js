@@ -3,10 +3,7 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import {
-  toolbarElementForm2Size,
-  toolbarElementLoginSpacingPx
-} from "visual/utils/toolbar";
+import { toolbarElementForm2Size } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ v, key, device });
@@ -43,7 +40,16 @@ export function getItems({ v, device }) {
                   v,
                   device
                 }),
-                toolbarElementLoginSpacingPx({ v, device, state: "normal" })
+                {
+                  id: "fieldPadding",
+                  type: "slider-dev",
+                  label: t("Spacing"),
+                  config: {
+                    min: 0,
+                    max: 100,
+                    units: [{ title: "px", value: "px" }]
+                  }
+                }
               ]
             },
             {

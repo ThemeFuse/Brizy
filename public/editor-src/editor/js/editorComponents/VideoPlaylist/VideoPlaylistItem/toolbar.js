@@ -17,7 +17,7 @@ export function getItems({ v, device }) {
         },
         {
           id: "iconSize",
-          type: "slider",
+          type: "slider-dev",
           disabled: true
         }
       ];

@@ -10,6 +10,8 @@ import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import Fixed from "visual/component/Prompts/Fixed";
 import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { BlockMetaType } from "visual/types";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
 import { get } from "visual/utils/object/get";
@@ -43,45 +45,117 @@ type TabComponentProps = {
   getParentNode?: () => HTMLElement | null;
 };
 
-const TABS: Tab[] = [
-  {
-    id: "template",
-    title: isStory(Config.getAll()) ? t("Stories") : t("Layouts"),
-    icon: "nc-pages",
-    renderTab(props): ReactElement {
-      return (
-        <Layouts
-          {...props}
-          type={isStory(Config.getAll()) ? "stories" : "templates"}
-        />
-      );
-    }
-  },
-  {
-    id: "blocks",
-    title: isPopup(Config.getAll()) ? t("Popups") : t("Blocks"),
-    icon: "nc-blocks",
-    renderTab(props): ReactElement {
-      return <Blocks {...props} />;
-    }
-  },
-  {
-    id: "saved",
-    title: isPopup(Config.getAll()) ? t("Saved Popups") : t("Saved"),
-    icon: "nc-save-section",
-    renderTab(props): ReactElement {
-      return <Library {...props} />;
-    }
-  },
-  {
+const getTabs = (config: ConfigCommon, type: BlockMetaType): Array<Tab> => {
+  const { defaultLayouts, defaultStories, defaultKits, defaultPopups } =
+    config.api ?? {};
+
+  const hasDefaultLayouts =
+    !!defaultLayouts?.getMeta && !!defaultLayouts?.getData;
+
+  const hasDefaultStories =
+    !!defaultStories?.getMeta && !!defaultStories?.getData;
+
+  const hasDefaultKits = !!defaultKits?.getMeta && !!defaultKits?.getData;
+  const hasDefaultPopups = !!defaultPopups?.getMeta && !!defaultPopups?.getData;
+
+  const _isStory = isStory(Config.getAll());
+  const _isPopup = type === "popup";
+  const tabs: Array<Tab> = [];
+
+  if (hasDefaultStories && _isStory) {
+    tabs.push({
+      id: "template",
+      title: defaultStories?.label ?? t("Stories"),
+      icon: "nc-pages",
+      renderTab(props: TabComponentProps): ReactElement {
+        return <Layouts {...props} type="stories" />;
+      }
+    });
+  }
+
+  if (hasDefaultLayouts && !_isStory) {
+    tabs.push({
+      id: "template",
+      title: defaultLayouts?.label ?? t("Layouts"),
+      icon: "nc-pages",
+      renderTab(props: TabComponentProps): ReactElement {
+        return <Layouts {...props} type="layouts" />;
+      }
+    });
+  }
+
+  if (hasDefaultKits && !_isPopup) {
+    tabs.push({
+      id: "blocks",
+      title: defaultKits?.label ?? t("Blocks"),
+      icon: "nc-blocks",
+      renderTab(props: TabComponentProps): ReactElement {
+        return <Blocks {...props} />;
+      }
+    });
+  }
+
+  if (hasDefaultPopups && _isPopup) {
+    tabs.push({
+      id: "blocks",
+      title: defaultPopups?.label ?? t("Popups"),
+      icon: "nc-blocks",
+      renderTab(props: TabComponentProps): ReactElement {
+        return <Blocks {...props} />;
+      }
+    });
+  }
+
+  const globalBlockTab: Tab = {
     id: "global",
-    title: isPopup(Config.getAll()) ? t("Global Popups") : t("Global Blocks"),
+    title: isPopup(config) ? t("Global Popups") : t("Global Blocks"),
     icon: "nc-global",
     renderTab(props): ReactElement {
+      // @ts-expect-error -- Need to rewrite to TSX
       return <Global {...props} />;
     }
+  };
+  const { savedLayouts, savedBlocks, savedPopups } = config.api ?? {};
+  const hasLayout = savedLayouts?.get && savedLayouts?.getByUid;
+  const hasBlock = savedBlocks?.get && savedBlocks?.getByUid;
+  const hasPopup = savedPopups?.get && savedPopups?.getByUid;
+
+  if (!hasBlock && !hasLayout && !hasPopup) {
+    return [...tabs, globalBlockTab];
   }
-];
+
+  if (isPopup(config) && hasPopup) {
+    return [
+      ...tabs,
+      {
+        id: "saved",
+        title: t("Saved Popups"),
+        icon: "nc-save-section",
+        renderTab(props): ReactElement {
+          return <Library {...props} />;
+        }
+      },
+      globalBlockTab
+    ];
+  }
+
+  if (hasLayout || hasBlock) {
+    return [
+      ...tabs,
+      {
+        id: "saved",
+        title: t("Saved"),
+        icon: "nc-save-section",
+        renderTab(props): ReactElement {
+          return <Library {...props} />;
+        }
+      },
+      globalBlockTab
+    ];
+  }
+
+  return tabs;
+};
 
 class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
   static defaultProps: PromptBlocksProps = {
@@ -111,13 +185,15 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
     onClose: _.noop
   };
 
-  state: PromptBlocksState = {
-    currentTab: this.props.activeTab || "blocks"
-  };
-
   wrapper = React.createRef<HTMLDivElement>();
 
   mounted = false;
+
+  tabs = getTabs(Config.getAll(), this.props.type);
+
+  state: PromptBlocksState = {
+    currentTab: this.props.activeTab || "blocks"
+  };
 
   componentDidMount(): void {
     this.mounted = true;
@@ -179,11 +255,13 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
 
   renderTabs(): ReactElement {
     const { currentTab } = this.state;
+
     const filterTabs = ({ id }: Tab): boolean => {
       const key = `show${capitalize(id)}`;
       return !!get(key as keyof PromptBlocksProps, this.props);
     };
-    const headerTabs = TABS.filter(filterTabs).map((tab) => {
+
+    const headerTabs = this.tabs.filter(filterTabs).map((tab) => {
       const className = classnames("brz-ed-popup-two-tab-item", {
         "brz-ed-popup-two-tab-item-active": tab.id === currentTab
       });
@@ -204,6 +282,9 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
       );
     });
 
+    const _config = Config.getAll();
+    const helpIcon = _config?.ui?.help?.showIcon;
+
     return (
       <div className="brz-ed-popup-two-header">
         <div id="brz-ed-popup-header-left-slot" />
@@ -213,13 +294,21 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
           className="brz-ed-popup-two-btn-close"
           onClick={this.props.onClose}
         />
+        {helpIcon && (
+          <div className="brz-ed-popup-two-btn-help">
+            <span title={t("Help")}>
+              <EditorIcon icon={"nc-help"} />
+            </span>
+          </div>
+        )}
       </div>
     );
   }
 
   renderContent(): ReactElement {
     const { currentTab } = this.state;
-    const { renderTab } = TABS.find(({ id }) => id === currentTab) || TABS[0];
+    const { renderTab } =
+      this.tabs.find(({ id }) => id === currentTab) || this.tabs[0];
     const HeaderSlotLeft = (props: Record<string, unknown>): ReactElement => (
       <HeaderSlot {...props} slot="left" />
     );

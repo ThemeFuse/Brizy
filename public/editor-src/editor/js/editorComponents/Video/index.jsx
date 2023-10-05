@@ -3,12 +3,19 @@ import React from "react";
 import { mergeDeep } from "timm";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
+import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
+import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
+import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import Placeholder from "visual/component/Placeholder";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import Config from "visual/global/Config";
 import { css } from "visual/utils/cssStyle";
 import { customFileUrl } from "visual/utils/customFile";
+import { isStory } from "visual/utils/models";
+import { read as readBoolean } from "visual/utils/reader/bool";
+import { read as readString } from "visual/utils/string/specs";
 import {
   videoData as getVideoData,
   videoUrl as getVideoUrl
@@ -189,6 +196,7 @@ class Video extends EditorComponent {
           allowFullScreen={true}
           className="intrinsic-ignore brz-iframe"
           src={videoSrc}
+          title="video"
         />
       ];
     }
@@ -361,7 +369,7 @@ class Video extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { type, ratio, controls, loop, muted, customCSS } = v;
+    const { type, ratio, controls, loop, muted, customCSS, hoverName } = v;
 
     const restrictions = {
       size: {
@@ -425,30 +433,44 @@ class Video extends EditorComponent {
         <div className={classNameWrapper}>{this.renderExternalPlayer(v)}</div>
       );
 
+    const _hoverName = readString(hoverName) ?? "none";
+    const options = makeOptionValueToAnimation(v);
+    const { wrapperAnimationId } = this.props.meta;
+    const animationId = readString(wrapperAnimationId) ?? this.getId();
+    const { wrapperAnimationActive } = this.props.meta;
+    const isDisabledHover = readBoolean(wrapperAnimationActive);
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={customCSS}>
           <Wrapper {...this.makeWrapperProps({ className: classNameContent })}>
-            <BoxResizer
-              points={resizerPoints}
-              meta={this.props.meta}
-              value={v}
-              onChange={this.handleResizerChange}
-              onStart={this.onDragStart}
-              onEnd={this.onDragEnd}
-              restrictions={restrictions}
+            <HoverAnimation
+              animationId={animationId}
+              cssKeyframe={_hoverName}
+              options={getHoverAnimationOptions(options, _hoverName)}
+              isDisabledHover={isDisabledHover}
+              isHidden={isStory(Config.getAll())}
             >
-              <div
-                className="brz-video-content"
-                data-loop={loop === "on"}
-                data-muted={muted === "on"}
-                data-autoplay={this.getAutoplay(v)}
+              <BoxResizer
+                points={resizerPoints}
+                meta={this.props.meta}
+                value={v}
+                onChange={this.handleResizerChange}
+                onStart={this.onDragStart}
+                onEnd={this.onDragEnd}
+                restrictions={restrictions}
               >
-                {content}
-              </div>
-            </BoxResizer>
+                <div
+                  className="brz-video-content"
+                  data-loop={loop === "on"}
+                  data-muted={muted === "on"}
+                  data-autoplay={this.getAutoplay(v)}
+                >
+                  {content}
+                </div>
+              </BoxResizer>
+            </HoverAnimation>
           </Wrapper>
         </CustomCSS>
       </Toolbar>
