@@ -7,6 +7,7 @@ class Brizy_Config {
 	const SITE_URL_PLACEHOLDER_REGEX = '/{@brizy_SITE_URL_PLACEHOLDER@}/im';
 	const LOCAL_PAGE_ASSET_STATIC_URL = '/brizy/%s';
 	const MEDIA_IMAGE_URL = '/media';
+	const EDITOR_HELP_VIDEOS_URL = 'https://b-cloud.b-cdn.net/WordPress+Editor+Help+Videos';
 
 	// this seems like it's not used any more. Leaving untouched
 	const GATEWAY_URI = 'https://api.brizy.io';
