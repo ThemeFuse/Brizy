@@ -1,33 +1,113 @@
 import { Response } from "../types/Response";
 
-const fonts = {
+const mockTypeKitData = {
   kit: {
     id: "gvs0pdl",
     families: [
       {
-        id: "krcv",
-        family: "Utopia Std Headline",
-        category: "utopia-std-headline",
-        kind: "webfonts#webfont",
-        subsets: ["utopia-std-headline"],
-        variants: ["n4"]
-      },
-      {
-        id: "kfjie",
-        family: "Aloha style",
-        category: "aloha-style",
-        kind: "webfonts#webfont",
-        subsets: ["aloha-style"],
-        variants: ["n4"]
+        id: "gev",
+        name: "Utopia Std Headline",
+        slug: "utopia-std-headline",
+        css_names: ["utopia-std-headline"],
+        css_stack: '"utopia-std-headline",serif',
+        variations: ["n4"]
       }
     ]
   }
 };
 
+// const fonts = {
+//   kit: {
+//     id: "gvs4g55",
+//     families: [
+//       {
+//         id: "kfjie",
+//         family: "Aloha3 style",
+//         category: "aloha-style",
+//         kind: "webfonts#webfont",
+//         subsets: ["aloha-style"],
+//         variants: ["n4"]
+//       }
+//     ]
+//   }
+// };
+
+interface Family {
+  id: string;
+  name: string;
+  slug: string;
+  css_names: string[];
+  variations: string[];
+}
+
+interface KitData {
+  kit: {
+    id: string;
+    families: Family[];
+  };
+}
+
+interface Font {
+  id: string;
+  family: string;
+  category: string;
+  kind: string;
+  subsets: string[];
+  variants: string[];
+}
+
+interface Fonts {
+  kit: {
+    id: string;
+    families: Font[];
+  };
+}
+
+function convertDataToLocal(mockTypeKitData: KitData): Fonts {
+  const fonts: Fonts = {
+    kit: {
+      id: mockTypeKitData.kit.id,
+      families: []
+    }
+  };
+
+  mockTypeKitData.kit.families.forEach((family) => {
+    fonts.kit.families.push({
+      id: family.id,
+      family: family.name,
+      category: family.slug,
+      kind: "webfonts#webfont",
+      subsets: [family.css_names[0]],
+      variants: family.variations
+    });
+  });
+
+  return fonts;
+}
+
+// export const getAdobeFonts = {
+//   async handler(res: Response<any>, rej: Response<string>, extra: string) {
+//     const a = fetch("https://typekit.com/api/v1/json/kits/gvs0pdl/published", {
+//       mode: "no-cors",
+//       headers: {
+//         "User-Agent": "PostmanRuntime/7.33.0"
+//       }
+//     });
+//     console.log("a: ", a);
+//
+//     if (a.success) {
+//       return res(convertDataToLocal(a.data));
+//     } else {
+//       rej("Failed to get fonts");
+//     }
+//   }
+// };
+
 export const getAdobeFonts = {
-  async handler(res: Response<typeof fonts>, rej: Response<string>) {
+  async handler(res: Response<Fonts>, rej: Response<string>, extra: string) {
+    console.log("KITID: ", extra);
     if (true) {
-      res(fonts);
+      res(convertDataToLocal(mockTypeKitData));
     } else {
       rej("Failed to get fonts");
     }
