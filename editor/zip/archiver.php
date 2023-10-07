@@ -20,17 +20,17 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
     /**
      * @var string
      */
-    protected $editorVersion;
+    protected $syncVersion;
 
     public function __construct(
         Brizy_Editor_Project      $project,
         Brizy_Admin_Fonts_Manager $fontManager,
-                                  $editorVersion
+                                  $syncVersion
     )
     {
         $this->project = $project;
         $this->fontManager = $fontManager;
-        $this->editorVersion = $editorVersion;
+        $this->syncVersion = $syncVersion;
 
         if (!class_exists('ZipArchive')) {
             throw new InvalidArgumentException(__('Please install/enable php zip extension. Contact your hosting company for more info and help.'));
@@ -87,7 +87,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 			'meta' => $block->getMeta(),
             'media' => $block->getMedia(),
             'data' => $block->get_editor_data(),
-            'editorVersion' => $block->get_editor_version(),
+            'editorVersion' => $this->syncVersion,
             'files' => [
                 'images' => [],
                 'uploads' => [],
@@ -223,12 +223,11 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 
     public function getEditorVersion()
     {
-        return $this->editorVersion;
+        return $this->syncVersion;
     }
 
     public function isVersionSupported($version)
     {
-        $version = preg_replace("/-wp/i", "", $version);
         return version_compare($this->getEditorVersion(), $version, '>=');
     }
 
