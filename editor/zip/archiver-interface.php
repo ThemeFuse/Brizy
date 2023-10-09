@@ -6,8 +6,6 @@ interface Brizy_Editor_Zip_ArchiverInterface {
 
 	public function createFromZip( $zipPath );
 
-	public function getEditorVersion();
-
 	public function getSyncVersion();
 
 	public function isVersionSupported($version);

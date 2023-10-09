@@ -221,8 +221,6 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         return $block;
     }
 
-    public function getEditorVersion() {}
-
     public function getSyncVersion() {
 	    return $this->syncVersion;
     }
