@@ -8,6 +8,8 @@ interface Brizy_Editor_Zip_ArchiverInterface {
 
 	public function getEditorVersion();
 
+	public function getSyncVersion();
+
 	public function isVersionSupported($version);
 
 	public function getScreenshotType($archiveType);

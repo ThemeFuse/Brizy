@@ -221,14 +221,17 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         return $block;
     }
 
-    public function getEditorVersion()
-    {
-        return $this->syncVersion;
+    public function getEditorVersion() {}
+
+    public function getSyncVersion() {
+	    return $this->syncVersion;
     }
 
     public function isVersionSupported($version)
     {
-        return version_compare($this->getEditorVersion(), $version, '>=');
+	    $version = preg_replace("/-wp/i", "", $version);
+	    $version = preg_replace("/-cloud/i", "", $version);
+        return version_compare($this->getSyncVersion(), $version, '>=');
     }
 
     protected function prepareArchiveFilepath($fileName)
