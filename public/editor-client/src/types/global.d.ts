@@ -15,6 +15,7 @@ import {
   PopupsWithThumbs,
   StoriesWithThumbs
 } from "./DefaultTemplate";
+import { DCHandler } from "./DynamicContent";
 import { AddFileData } from "./File";
 import { AddMediaData, AddMediaGallery } from "./Media";
 import { OnChange } from "./OnChange";
@@ -166,6 +167,12 @@ export interface VISUAL_CONFIG {
     posts: Posts;
   };
 
+  //#endregion
+
+  //#region Dynamic Content
+  dynamicContent?: {
+    handler?: DCHandler;
+  };
   //#endregion
 }
 
