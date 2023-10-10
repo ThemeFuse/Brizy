@@ -177,11 +177,6 @@ export interface PageWP extends PageCommon {
   _kind: "wp";
   is_index: boolean; // TODO: would be nice if WP and cloud types would match
   template: string;
-  url: string; // TODO: find out what is this for
-}
-
-export interface ExternalStoryCloud extends DataCommon {
-  slug: string;
 }
 
 export interface InternalPopupCloud extends DataWithTitle {
@@ -195,13 +190,6 @@ export interface PageCollection extends PageCommon {
     title: string;
   };
   fields: CollectionItem["fields"] | null;
-}
-
-export interface PageCustomer extends DataWithTitle {
-  groups: {
-    id: string;
-    name: string;
-  }[];
 }
 
 export interface CloudPopup extends PageCollection {
@@ -238,7 +226,6 @@ export type Page =
   | ShopifyPage
   | EcwidProductPage
   | EcwidCategoryPage
-  | PageCustomer
   | InternalPopupCloud
   | ExternalPopupCloud
   | CloudPopup;

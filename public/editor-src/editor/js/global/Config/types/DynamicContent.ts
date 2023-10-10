@@ -1,3 +1,4 @@
+import { Literal } from "visual/utils/types/Literal";
 import { Response } from "./configs/common";
 
 export enum DCTypes {
@@ -13,6 +14,8 @@ interface BaseDCItem {
   placeholder: string;
   alias?: string;
   display?: "block" | "inline";
+  attr?: Record<string, Literal>;
+  varyAttr: Array<"type" | "id">;
 }
 
 export interface ConfigDCItem extends BaseDCItem {
@@ -53,6 +56,5 @@ export type DCGroup<T extends "wp" | "cloud"> = Cnf[T];
 
 export interface DynamicContent<T extends "wp" | "cloud"> {
   liveInBuilder?: boolean;
-  useCustomPlaceholder?: boolean;
   groups?: DCGroup<T>;
 }

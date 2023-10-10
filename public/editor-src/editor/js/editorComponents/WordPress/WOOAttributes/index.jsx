@@ -1,16 +1,17 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
-import { Wrapper } from "../../tools/Wrapper";
+import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { Wrapper } from "../../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -20,8 +21,8 @@ export default class WOOAttributes extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
-  handleResizerChange = patch => this.patchValue(patch);
-  handleTextChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
+  handleTextChange = (patch) => this.patchValue(patch);
 
   renderForEdit(v, vs, vd) {
     const { className: className_ } = v;
@@ -46,6 +47,9 @@ export default class WOOAttributes extends EditorComponent {
         "%": { min: 5, max: 100 }
       }
     };
+    const placeholder = makePlaceholder({
+      content: "{{editor_product_additional_info}}"
+    });
 
     return (
       <Toolbar
@@ -61,7 +65,7 @@ export default class WOOAttributes extends EditorComponent {
               restrictions={restrictions}
             >
               <DynamicContentHelper
-                placeholder="{{editor_product_additional_info}}"
+                placeholder={placeholder}
                 placeholderIcon="woo-attributes"
                 tagName="div"
               />

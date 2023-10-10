@@ -12,7 +12,6 @@ import { ShopifyVariantStyleImage } from "@brizy/builder-icons/src/Icons/Shopify
 import { ShopifyVariantStyleRadio } from "@brizy/builder-icons/src/Icons/ShopifyVariantStyleRadio";
 import { ShopifyVariantStyleSelect } from "@brizy/builder-icons/src/Icons/ShopifyVariantStyleSelect";
 import { ShopifyVendor } from "@brizy/builder-icons/src/Icons/ShopifyVendor";
-import { ShopifyViewDetails } from "@brizy/builder-icons/src/Icons/ShopifyViewDetails";
 import { MinistryBrandsEventCalendar } from "@brizy/ui-icons/es/icons/MinistryBrandsEventCalendar";
 import { MinistryBrandsEventDetail } from "@brizy/ui-icons/es/icons/MinistryBrandsEventDetail";
 import { MinistryBrandsEventFeatured } from "@brizy/ui-icons/es/icons/MinistryBrandsEventFeatured";
@@ -55,7 +54,6 @@ const Icons = {
   "t2-shopify-quantity-style2": ShopifyQuantityStyle2,
   "t2-shopify-variant": ShopifyVariant,
   "t2-shopify-vendor": ShopifyVendor,
-  "t2-shopify-view-details": ShopifyViewDetails,
   "t2-shopify-variant-style-select": ShopifyVariantStyleSelect,
   "t2-shopify-variant-style-radio": ShopifyVariantStyleRadio,
   "t2-shopify-variant-style-image": ShopifyVariantStyleImage

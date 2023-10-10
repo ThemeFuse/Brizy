@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -34,7 +35,7 @@ export class PushOwlNotifications extends EditorComponent<Value> {
         : "js-pushowl--pd";
 
     const attr: Record<string, string> = {
-      ["data-product-id"]: "{{ product.id }}"
+      ["data-product-id"]: makePlaceholder({ content: "{{ product.id }}" })
     };
 
     return (

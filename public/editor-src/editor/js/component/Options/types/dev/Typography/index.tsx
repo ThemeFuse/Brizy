@@ -42,6 +42,16 @@ export interface Props
     WithClassName {}
 
 export const Typography: FC<Props> = ({ value, onChange, config }) => {
+  const {
+    fontFamily = true,
+    letterSpacing: {
+      min: letterSpacingMin = -20,
+      max: letterSpacingMax = 20
+    } = {},
+    lineHeight: { min: lineHeightMin = 1, max: lineHeightMax = 20 } = {},
+    fontSize: { min: sizeMin = 0, max: sizeMax = 300 } = {}
+  } = config ?? {};
+
   const dispatch = useDispatch();
   const unDeletedFonts = useSelector<ReduxState, ReduxState["fonts"]>(
     unDeletedFontsSelector
@@ -60,7 +70,7 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
   const _value = getValue(device, fonts, defaultFont, value);
   const _onChange = useCallback(
     (v: Value[keyof Value] | Font, meta: { isChanged: keyof Value }): void => {
-      const withFontFamily = config?.fontFamily !== false;
+      const withFontFamily = fontFamily !== false;
 
       switch (meta.isChanged) {
         case "fontFamily": {
@@ -100,7 +110,7 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
         }
       }
     },
-    [onChange, _value]
+    [onChange, _value, fontFamily]
   );
 
   const handleOpenStyles = useCallback(() => {
@@ -110,7 +120,7 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
         drawerContentType: LeftSidebarOptionsIds.globalStyle
       })
     );
-  }, []);
+  }, [dispatch]);
 
   const enableGlobalStyle = useMemo((): boolean => {
     const config = GlobalConfig.getAll();
@@ -131,7 +141,7 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
   return (
     <Control
       onChange={_onChange}
-      showFontFamily={config?.fontFamily ?? true}
+      showFontFamily={fontFamily}
       fonts={fonts}
       font={_value.fontFamily}
       fontAdd={currentUserRole() === "admin" ? openFontsUploader : undefined}
@@ -146,14 +156,14 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
       weight={_value.fontWeight}
       lineHeight={_value.lineHeight}
       letterSpacing={_value.letterSpacing}
-      letterSpacingMin={config?.letterSpacing?.min ?? -20}
-      letterSpacingMax={config?.letterSpacing?.max ?? 20}
+      letterSpacingMin={letterSpacingMin}
+      letterSpacingMax={letterSpacingMax}
       letterSpacingStep={0.1}
-      lineHeightMin={config?.lineHeight?.min ?? 1}
-      lineHeightMax={config?.lineHeight?.max ?? 20}
+      lineHeightMin={lineHeightMin}
+      lineHeightMax={lineHeightMax}
       lineHeightStep={0.1}
-      sizeMin={config?.fontSize?.min ?? 0}
-      sizeMax={config?.fontSize?.max ?? 300}
+      sizeMin={sizeMin}
+      sizeMax={sizeMax}
       sizeStep={1}
       letterSpacingLabel={t("Letter Sp.")}
       lineHeightLabel={t("Line Hgt.")}

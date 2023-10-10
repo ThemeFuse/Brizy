@@ -76,7 +76,6 @@ const getMedia = (v) => {
 
 const BackgroundContainer = ({ value, meta, children }) => {
   const { media, opacity } = getMediaProps(value);
-  const population = value.bgPopulation || value.hoverBgPopulation;
   const bg = value.bg || value.hoverBg;
 
   let props = {
@@ -88,9 +87,9 @@ const BackgroundContainer = ({ value, meta, children }) => {
     shapeTop: validateKeyByProperty(value, "shapeTopType", "none"),
     shapeBottom: validateKeyByProperty(value, "shapeBottomType", "none"),
     ...(media &&
-      population && {
+      bg && {
         style: {
-          "--brz-background-image": `url("${IS_PREVIEW ? population : bg}")`
+          "--brz-background-image": `url("${bg}")`
         }
       })
   };

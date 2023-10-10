@@ -422,7 +422,7 @@ class Blocks extends Component<Props> {
                   />
                 </SidebarOption>
 
-                <SidebarOption title={t("FILTER BY TAG")}>
+                <SidebarOption title={t("TAG")}>
                   <Select<string>
                     value={currentFilter.tags}
                     choices={tags}

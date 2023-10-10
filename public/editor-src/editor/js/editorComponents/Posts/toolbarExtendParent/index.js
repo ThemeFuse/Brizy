@@ -90,6 +90,7 @@ const tabCurrentElement = (v, device) => {
         id: "gridColumn",
         type: "slider-dev",
         label: t("Columns"),
+        devices: "desktop",
         config: {
           min: 1,
           max,

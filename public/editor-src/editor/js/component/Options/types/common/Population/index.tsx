@@ -1,54 +1,91 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
-import { findDeep } from "visual/utils/object";
-import { Empty } from "visual/utils/string/specs";
+import { t } from "visual/utils/i18n";
+import * as Obj from "visual/utils/reader/object";
+import * as Str from "visual/utils/reader/string";
+import { empty } from "visual/utils/string/specs";
+import { Literal } from "visual/utils/types/Literal";
 import Input from "./Input";
 import Select from "./Select";
 import { Choices, OptGroup } from "./types/Choices";
 import { Handler } from "./types/Handler";
-import { isOptgroup } from "./utils";
+import { Value } from "./types/Value";
+import { findDCChoiceByPlaceholder } from "./utils";
 
-export interface Props<T extends string | number> {
+export interface Props<T extends Literal> {
   choices: Array<Choices<T> | OptGroup<T>>;
   handlerChoices?: Handler<T>;
   value: T;
-  onChange: (s: T | Empty) => void;
+  entityType: string;
+  entityId: string;
+  onChange: (s: Value) => void;
   renderUnset?: () => ReactElement;
 }
 
-interface SelectProps<T extends string | number> {
+interface SelectProps<T extends Literal> {
   choices: Props<T>["choices"];
   value: T;
-  onChange: (s: T | Empty) => void;
+  entityType: string;
+  entityId: string;
+  onChange: (s: Value) => void;
   renderUnset?: () => ReactElement;
 }
 
-interface IconProps<T extends string | number> {
+interface IconProps<T extends Literal> {
   handlerChoices: Handler<T>;
   value: T;
   renderUnset?: () => ReactElement;
-  onChange: (s: T | Empty) => void;
+  onChange: (s: Value) => void;
 }
 
-const _Select = <T extends string | number>(
-  props: SelectProps<T>
-): ReactElement => {
-  const { choices, value, renderUnset, onChange } = props;
+const _Select = <T extends Literal>(props: SelectProps<T>): ReactElement => {
+  const {
+    choices: _choices,
+    value,
+    entityType,
+    entityId,
+    renderUnset,
+    onChange
+  } = props;
+
+  const choices = useMemo(() => {
+    return [
+      {
+        title: t("None"),
+        value: empty as T,
+        name: empty as T,
+        attr: {}
+      },
+
+      ...(_choices || [])
+    ];
+  }, [_choices]);
+
   let input: ReactElement | undefined;
-  const handleRemove = useCallback(() => onChange(""), [onChange]);
+
+  const handleRemove = useCallback(() => {
+    onChange({
+      population: empty,
+      populationEntityType: empty,
+      populationEntityId: empty
+    });
+  }, [onChange]);
+
+  const selectedPlaceholder = findDCChoiceByPlaceholder({
+    placeholder: Str.read(value) ?? "",
+    choices
+  });
+
+  const activeItem =
+    selectedPlaceholder &&
+    Obj.isObject(selectedPlaceholder) &&
+    !Array.isArray(selectedPlaceholder)
+      ? Str.read(selectedPlaceholder.title)
+      : null;
 
   if (value) {
-    const activeItem: Choices<T> | null = findDeep(
-      choices,
-      (choice: Choices<T> | OptGroup<T>): boolean => {
-        return !isOptgroup(choice) && choice.value === value;
-      }
-    ).obj;
-
-    input = (
-      <Input value={activeItem?.title ?? `${value}`} onRemove={handleRemove} />
-    );
+    input = <Input value={activeItem ?? `${value}`} onRemove={handleRemove} />;
   } else {
     input = renderUnset?.();
   }
@@ -56,23 +93,39 @@ const _Select = <T extends string | number>(
   return (
     <>
       {input}
-      <Select choices={choices} value={value} onChange={onChange} />
+      <Select
+        choices={choices}
+        entityType={entityType}
+        entityId={entityId}
+        value={value}
+        onChange={onChange}
+      />
     </>
   );
 };
 
-const _Icon = <T extends string | number>(
-  props: IconProps<T>
-): ReactElement => {
+const _Icon = <T extends Literal>(props: IconProps<T>): ReactElement => {
   const { handlerChoices, value, onChange, renderUnset } = props;
   let input: ReactElement | undefined;
 
-  const handleRemove = useCallback(() => onChange(""), [onChange]);
+  const handleRemove = useCallback(
+    () =>
+      onChange({
+        population: empty,
+        populationEntityType: empty,
+        populationEntityId: empty
+      }),
+    [onChange]
+  );
 
   const handleClick = useCallback(() => {
     if (typeof handlerChoices === "function") {
       const res = (placeholder: T) => {
-        onChange(placeholder);
+        onChange({
+          population: Str.read(placeholder) ?? empty,
+          populationEntityType: empty,
+          populationEntityId: empty
+        });
       };
       const rej = (error: string) => {
         ToastNotification.error(error);
@@ -100,10 +153,12 @@ const _Icon = <T extends string | number>(
   );
 };
 
-export default function Population<T extends string | number>({
+export default function Population<T extends Literal>({
   choices,
   handlerChoices,
   value,
+  entityType,
+  entityId,
   renderUnset,
   onChange
 }: Props<T>): ReactElement | null {
@@ -112,6 +167,8 @@ export default function Population<T extends string | number>({
       <_Select
         value={value}
         choices={choices}
+        entityType={entityType ?? ""}
+        entityId={entityId ?? ""}
         onChange={onChange}
         renderUnset={renderUnset}
       />

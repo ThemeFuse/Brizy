@@ -42,10 +42,12 @@ const Video: React.FC<Props> = ({
   customVideo
 }) => {
   const videoMedia = video || customVideo;
+  const { type, key } = video ?? {};
 
-  const iframeStyle = {
-    display: videoMedia ? "block" : "none"
-  };
+  const iframeStyle = useMemo(
+    () => ({ display: videoMedia ? "block" : "none" }),
+    [videoMedia]
+  );
 
   const settings = {
     autoplay: true,
@@ -67,11 +69,9 @@ const Video: React.FC<Props> = ({
   const isInitialMount = useRef(true);
 
   useLayoutEffect(() => {
-    return (): void => {
-      if (videoRef.current) {
-        jQuery(videoRef.current).backgroundVideo("destroy");
-      }
-    };
+    if (videoRef.current) {
+      jQuery(videoRef.current).backgroundVideo("destroy");
+    }
   }, []);
 
   useLayoutEffect(() => {
@@ -97,22 +97,25 @@ const Video: React.FC<Props> = ({
       isInitialMount.current = false;
 
       jQuery(videoRef.current).backgroundVideo({
-        type: video?.type,
-        key: video?.key,
+        type: type,
+        key: key,
         loop: videoLoop,
         start: videoStart
       });
     } else {
       if (videoRef.current) {
         jQuery(videoRef.current).backgroundVideo("typeChange", {
-          type: video?.type,
-          key: video?.key,
+          type: type,
+          key: key,
           loop: videoLoop,
           start: videoStart
         });
       }
     }
-  }, [video?.type]);
+
+    // videoLoop and videoStart dependency are not nedded
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type, key]);
 
   useLayoutEffect(() => {
     if (videoRef.current && isCustomVideo) {
@@ -177,7 +180,7 @@ const Video: React.FC<Props> = ({
         innerRef: videoRef,
         attr: {
           "data-type": dataType,
-          "data-key": video?.key,
+          "data-key": key,
           "data-loop": videoLoop,
           "data-start": videoStart
         },

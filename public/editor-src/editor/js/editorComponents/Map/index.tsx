@@ -1,5 +1,5 @@
-import classnames from "classnames";
 import { MapEditor, MapPreview } from "@brizy/component";
+import classnames from "classnames";
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
@@ -10,11 +10,16 @@ import { makeOptionValueToAnimation } from "visual/component/Options/types/utils
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Config from "visual/global/Config";
+import { deviceModeSelector } from "visual/redux/selectors";
 import { css } from "visual/utils/cssStyle";
 import { IS_WP } from "visual/utils/env";
 import { isStory } from "visual/utils/models";
+import { defaultValueValue } from "visual/utils/onChange";
 import { read as readBoolean } from "visual/utils/reader/bool";
+import * as State from "visual/utils/stateMode";
 import { read as readString } from "visual/utils/string/specs";
+import { Literal } from "visual/utils/types/Literal";
+import { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -93,13 +98,42 @@ class Map extends EditorComponent<Value> {
   handleResizerChange = (patch: Patch): void =>
     this.patchValue(resizerTransformPatch(patch));
 
+  dvv = (key: string): MValue<Literal> => {
+    const v = this.getValue();
+    const device = deviceModeSelector(this.getReduxState());
+    const state = State.mRead(v.tabsState);
+
+    return defaultValueValue({ v, key, device, state });
+  };
+
+  getHoverData = (v: Value) => {
+    const { wrapperAnimationId, wrapperAnimationActive = "false" } =
+      this.props.meta;
+    const hoverName = readString(this.dvv("hoverName")) ?? "none";
+    const options = makeOptionValueToAnimation(v);
+    const animationId = readString(wrapperAnimationId) ?? this.getId();
+    const isDisabledHover = readBoolean(wrapperAnimationActive);
+
+    return {
+      animationId,
+      hoverName,
+      options: getHoverAnimationOptions(options, hoverName),
+      isDisabledHover,
+      isHidden: hoverName === "none"
+    };
+  };
+
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const IS_STORY = isStory(Config.getAll());
-    const { address, zoom, hoverName } = v;
+    const { address, zoom } = v;
+
+    const { animationId, hoverName, options, isDisabledHover, isHidden } =
+      this.getHoverData(v);
+
     const wrapperClassName = classnames(
       "brz-map",
       {
-        "brz-map_styles": IS_STORY
+        "brz-map_styles": isHidden
       },
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
@@ -131,12 +165,6 @@ class Map extends EditorComponent<Value> {
       }
     };
 
-    const _hoverName = readString(hoverName) ?? "none";
-    const options = makeOptionValueToAnimation(v);
-    const { wrapperAnimationId } = this.props.meta;
-    const animationId = readString(wrapperAnimationId) ?? this.getId();
-    const { wrapperAnimationActive } = this.props.meta;
-    const isDisabledHover = readBoolean(wrapperAnimationActive);
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
@@ -147,27 +175,27 @@ class Map extends EditorComponent<Value> {
               className: wrapperClassName
             })}
           >
-            <BoxResizer
-              points={resizerPoints}
-              restrictions={resizerRestrictions}
-              meta={this.props.meta}
-              value={resizerTransformValue(v)}
-              onChange={this.handleResizerChange}
+            <HoverAnimation
+              animationId={animationId}
+              cssKeyframe={hoverName}
+              options={options}
+              isDisabledHover={isDisabledHover}
+              isHidden={isHidden || IS_STORY}
             >
-              <HoverAnimation
-                animationId={animationId}
-                cssKeyframe={_hoverName}
-                options={getHoverAnimationOptions(options, _hoverName)}
-                isDisabledHover={isDisabledHover}
-                isHidden={IS_STORY}
+              <BoxResizer
+                points={resizerPoints}
+                restrictions={resizerRestrictions}
+                meta={this.props.meta}
+                value={resizerTransformValue(v)}
+                onChange={this.handleResizerChange}
               >
                 <MapEditor
                   address={address}
                   zoom={zoom}
                   platform={IS_WP ? "WP" : "CLOUD"}
                 />
-              </HoverAnimation>
-            </BoxResizer>
+              </BoxResizer>
+            </HoverAnimation>
           </Wrapper>
         </CustomCSS>
       </Toolbar>
@@ -175,23 +203,18 @@ class Map extends EditorComponent<Value> {
   }
 
   renderForView(v: Value, vs: Value, vd: Value): ReactNode {
-    const { address, zoom, hoverName } = v;
-
+    const { address, zoom } = v;
     const IS_STORY = isStory(Config.getAll());
-    const _hoverName = readString(hoverName) ?? "none";
-    const hoverIsHidden = _hoverName === "none" || IS_STORY;
+
+    const { animationId, options, isHidden, hoverName } = this.getHoverData(v);
 
     const wrapperClassName = classnames(
       "brz-map",
       {
-        "brz-map_styles": hoverIsHidden
+        "brz-map_styles": isHidden
       },
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
-
-    const options = makeOptionValueToAnimation(v);
-    const { wrapperAnimationId } = this.props.meta;
-    const animationId = readString(wrapperAnimationId) ?? this.getId();
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
@@ -202,9 +225,9 @@ class Map extends EditorComponent<Value> {
         >
           <HoverAnimation
             animationId={animationId}
-            cssKeyframe={_hoverName}
-            options={getHoverAnimationOptions(options, _hoverName)}
-            isHidden={hoverIsHidden}
+            cssKeyframe={hoverName}
+            options={options}
+            isHidden={isHidden || IS_STORY}
           >
             <MapPreview
               address={address}

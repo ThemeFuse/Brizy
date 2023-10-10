@@ -2,6 +2,7 @@ import Config from "visual/global/Config";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import {
   defaultImagePopulation,
   getImageUrl,
@@ -18,9 +19,6 @@ const linkClassNames = [
 ];
 
 export default function changeRichText($) {
-  const dynamicContent = Config.getAll()?.dynamicContent;
-  const useCustomPlaceholder = dynamicContent?.useCustomPlaceholder ?? false;
-
   // Change Links
   $(".brz-rich-text")
     .find("a[data-href]")
@@ -35,9 +33,28 @@ export default function changeRichText($) {
       const style = $this.attr("style") || "";
       const href = $this.attr("data-href") ?? "";
       const data = JSON.parse(decodeURIComponent(href));
+      const { population, populationEntityId, populationEntityType } =
+        data ?? {};
+      const populationAttr = {};
+
+      if (populationEntityId) {
+        populationAttr.entityId = populationEntityId;
+      }
+      if (populationEntityType) {
+        populationAttr.entityType = populationEntityType;
+      }
+
       const externalLink = {
         external: data.external,
-        population: data.population
+        population: population
+          ? makePlaceholder({
+              content: population,
+              attr: populationAttr
+            })
+          : ""
+      };
+      const internalLink = {
+        page: data.internal
       };
       const newData = {
         ...data,
@@ -46,7 +63,10 @@ export default function changeRichText($) {
         // so temporarily defaulted to external
         external: data.externalType
           ? externalLink[data.externalType]
-          : externalLink.external
+          : externalLink.external,
+        page: data.internalType
+          ? internalLink[data.internalType]
+          : internalLink.page
       };
 
       const url = newData[data.type];
@@ -96,34 +116,15 @@ export default function changeRichText($) {
       let $elem;
       if ($blockDynamicContentElem.length) {
         $elem = $blockDynamicContentElem;
-        const classNames = $elem
-          .attr("class")
-          .split(" ")
-          .filter(
-            (className) =>
-              className.startsWith("brz-tp__dc-block") ||
-              className.startsWith("brz-mt") ||
-              className.startsWith("dc-color") ||
-              className.startsWith("brz-mb")
-          )
-          .join(" ");
-        $elem.attr("class", classNames);
       } else {
         $elem = $this;
       }
 
-      let _population;
-
-      if (useCustomPlaceholder) {
-        _population = population;
-        // Removed extra attribute
+      if (population) {
+        // Override current html with placeholder
+        $elem.html(population);
         $elem.removeAttr("data-population");
-      } else {
-        _population = `{{${population}}}`;
       }
-
-      // Override current html with placeholder
-      $elem.html(_population);
     });
 
   // replace Image
@@ -131,7 +132,7 @@ export default function changeRichText($) {
     .find(".brz-text-mask, .brz-population-mask")
     .each(function () {
       const $this = $(this);
-      const src = $this.attr("data-image_src");
+      const src = $this.attr("data-image_src") ?? "";
       const population = $this.attr("data-image_population");
       const fileName = $this.attr("data-image_file_name") ?? "image";
 
@@ -158,8 +159,7 @@ export default function changeRichText($) {
         $this.css({
           ...newCSS,
           "background-image": `url('${imagePopulationUrl(population, {
-            ...defaultImagePopulation,
-            useCustomPlaceholder
+            ...defaultImagePopulation
           })}')`
         });
       } else if (imgUrl)

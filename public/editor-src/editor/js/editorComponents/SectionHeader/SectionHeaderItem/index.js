@@ -38,6 +38,8 @@ export default class SectionHeaderItem extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  static experimentalDynamicContent = true;
+
   mounted = false;
 
   collapsibleToolbarRef = React.createRef();

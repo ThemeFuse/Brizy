@@ -1,0 +1,20 @@
+// ShopifyAddToCart
+@import "shopifyAddToCart";
+
+// ShopifyPrice
+@import "shopifyPrice";
+
+// ShopifyStampedReviews
+@import "stampedReviews";
+
+// ShopifyBlogPostMeta
+@import "shopifyBlogPostMeta";
+
+// ShopifyVariant
+@import "shopifyVariant";
+
+.brz-shopify {
+  .brz-img {
+    object-fit: cover;
+  }
+}

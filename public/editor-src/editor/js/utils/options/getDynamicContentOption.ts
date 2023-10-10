@@ -30,6 +30,7 @@ interface Data {
   config?: {
     iconOnly?: boolean;
     show?: boolean;
+    mockValue?: boolean;
   };
 }
 

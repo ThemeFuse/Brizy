@@ -5,6 +5,8 @@
     "anchorName": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "membership": "off",
     "membershipRoles": "[]",
@@ -92,9 +94,13 @@
     "customClassName": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "customAttributes": "",
     "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
 
     "sliderDots": "circle",
 

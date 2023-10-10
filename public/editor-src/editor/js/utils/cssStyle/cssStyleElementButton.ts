@@ -71,9 +71,9 @@ export function cssStyleElementButtonSize({ v, device }: CSSValue): string {
   switch (fillType) {
     case "filled":
     case "outline":
-      return `padding: ${height}px ${width}px;`;
     case "default":
-      return `padding: ${paddingTB}px 0;`;
+      return `padding: ${height}px ${width}px;`;
+
     case undefined:
       return "";
   }

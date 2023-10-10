@@ -29,6 +29,6 @@ export interface Err {
   message: string;
 }
 
-export const err = (message: string): Err => ({ type: "Err", message });
+export const errMessage = (message: string): Err => ({ type: "Err", message });
 
 export type State = Empty | WithFile | Loading | Err;

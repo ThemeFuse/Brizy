@@ -38,6 +38,8 @@
 
     "customAttributes": "",
     "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
 
     "horizontalAlign": "center",
 
@@ -331,8 +333,12 @@
     "customID": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "tabletHorizontalAlign": null,
 

@@ -1,3 +1,4 @@
+import Base64 from "js-base64";
 import {
   BatchFetcher,
   DCApiProxyConfig,
@@ -22,18 +23,36 @@ describe("Testing 'DCApiProxy'", function () {
   });
 
   test("Should work with fake fetcher", async () => {
-    const p1 = DCApiProxy.getDC(["{{ a }}", "{{ c }}"], config("p1"));
+    const p1 = DCApiProxy.getDC(
+      [
+        `{{ placeholder content='${Base64.encode("aa")}' }}`,
+        `{{ placeholder content='${Base64.encode("cc")}' }}`
+      ],
+      config("p1")
+    );
 
     jest.runAllTimers();
 
     const dc = await p1;
 
-    expect(dc).toEqual(["p1_a", "p1_c"]);
+    expect(dc).toEqual(["p1_aa", "p1_cc"]);
   });
 
   test("Should work with multiple post ids", async () => {
-    const p1 = DCApiProxy.getDC(["{{ a }}", "{{ b }}"], config("p1"));
-    const p2 = DCApiProxy.getDC(["{{ a }}", "{{ c }}"], config("p2"));
+    const p1 = DCApiProxy.getDC(
+      [
+        `{{ placeholder content='${Base64.encode("a")}' }}`,
+        `{{ placeholder content='${Base64.encode("b")}' }}`
+      ],
+      config("p1")
+    );
+    const p2 = DCApiProxy.getDC(
+      [
+        `{{ placeholder content='${Base64.encode("a")}' }}`,
+        `{{ placeholder content='${Base64.encode("c")}' }}`
+      ],
+      config("p2")
+    );
 
     jest.runAllTimers();
 
@@ -45,20 +64,40 @@ describe("Testing 'DCApiProxy'", function () {
 
   test("Should cache responses", async () => {
     const config_ = config("p5");
-    const p1 = DCApiProxy.getDC(["{{ a }}", "{{ g }}"], config_);
+    const p1 = DCApiProxy.getDC(
+      [
+        `{{ placeholder content='${Base64.encode("a")}' }}`,
+        `{{ placeholder content='${Base64.encode("g")}' }}`
+      ],
+      config_
+    );
 
     jest.runAllTimers();
 
     const dc = await p1;
 
     expect(dc).toEqual(["p5_a", "p5_g"]);
-    expect(DCApiProxy.getFromCache("{{ a }}", config_)).toEqual("p5_a");
-    expect(DCApiProxy.getFromCache("{{ g }}", config_)).toEqual("p5_g");
+    expect(
+      DCApiProxy.getFromCache(
+        `{{ placeholder content='${Base64.encode("a")}' }}`,
+        config_
+      )
+    ).toEqual("p5_a");
+    expect(
+      DCApiProxy.getFromCache(
+        `{{ placeholder content='${Base64.encode("g")}' }}`,
+        config_
+      )
+    ).toEqual("p5_g");
   });
 
   test("Should cache responses with attributes and fallback", async () => {
     const config_ = config("p5");
-    const p1 = DCApiProxy.getDC(["{{ a x='1' _fallback='fb' }}"], config_);
+    const a = Base64.encode("a");
+    const p1 = DCApiProxy.getDC(
+      [`{{ placeholder content='${a}' x='1' _fallback='fb' }}`],
+      config_
+    );
 
     jest.runAllTimers();
 
@@ -66,20 +105,26 @@ describe("Testing 'DCApiProxy'", function () {
 
     expect(dc).toEqual(["p5_a_x='1'"]);
     expect(
-      DCApiProxy.getFromCache("{{ a x='1' _fallback='fb' }}", config_)
+      DCApiProxy.getFromCache(
+        `{{ placeholder content='${a}' x='1' _fallback='fb' }}`,
+        config_
+      )
     ).toEqual("p5_a_x='1'");
 
     // same placeholder but with different attributes should need refetch
     expect(
       DCApiProxy.getFromCache(
-        "{{ a x='11232323232323232' _fallback='fb' }}",
+        `{{ placeholder content='${a}' x='11232323232323232' _fallback='fb' }}`,
         config_
       )
     ).toEqual(undefined);
 
     // same placeholder but with different fallback should need refetch
     expect(
-      DCApiProxy.getFromCache("{{ a x='11' _fallback='fb121212121' }}", config_)
+      DCApiProxy.getFromCache(
+        `{{ placeholder content=${a} x='11' _fallback='fb121212121' }}`,
+        config_
+      )
     ).toEqual(undefined);
   });
 
@@ -88,39 +133,82 @@ describe("Testing 'DCApiProxy'", function () {
       postId: "p5",
       cache: false
     };
-    const p1 = DCApiProxy.getDC(["{{ a }}", "{{ g }}"], config);
+    const p1 = DCApiProxy.getDC(
+      [
+        `{{ placeholder content='${Base64.encode("a")}' }}`,
+        `{{ placeholder content='${Base64.encode("g")}' }}`
+      ],
+      config
+    );
 
     jest.runAllTimers();
 
     const dc = await p1;
 
     expect(dc).toEqual(["p5_a", "p5_g"]);
-    expect(DCApiProxy.getFromCache("{{ a }}", config)).toBe(undefined);
-    expect(DCApiProxy.getFromCache("{{ g }}", config)).toBe(undefined);
+    expect(
+      DCApiProxy.getFromCache(
+        `{{ placeholder content='${Base64.encode("a")}' }}`,
+        config
+      )
+    ).toBe(undefined);
+    expect(
+      DCApiProxy.getFromCache(
+        `{{ placeholder content='${Base64.encode("g")}' }}`,
+        config
+      )
+    ).toBe(undefined);
   });
 
   test("Should fetch only when needed", async () => {
-    const p1 = DCApiProxy.getDC(["{{ a }}", "{{ c }}"], config("p1"));
+    const p1 = DCApiProxy.getDC(
+      [
+        `{{ placeholder content='${Base64.encode("a")}' }}`,
+        `{{ placeholder content='${Base64.encode("c")}' }}`
+      ],
+      config("p1")
+    );
     jest.runAllTimers();
     await p1; // fetcherCalls++ (first time)
 
-    const p2 = DCApiProxy.getDC(["{{ c }}", "{{ a }}"], config("p1"));
+    const p2 = DCApiProxy.getDC(
+      [
+        `{{ placeholder content='${Base64.encode("c")}' }}`,
+        `{{ placeholder content='${Base64.encode("a")}' }}`
+      ],
+      config("p1")
+    );
     jest.runAllTimers();
     await p2; // should get from cache
 
-    const p3 = DCApiProxy.getDC(["{{ a }}"], config("p1"));
+    const p3 = DCApiProxy.getDC(
+      [`{{ placeholder content='${Base64.encode("a")}' }}`],
+      config("p1")
+    );
     jest.runAllTimers();
     await p3; // should get from cache
 
-    const p4 = DCApiProxy.getDC(["{{ c }}"], config("p1"));
+    const p4 = DCApiProxy.getDC(
+      [`{{ placeholder content='${Base64.encode("c")}' }}`],
+      config("p1")
+    );
     jest.runAllTimers();
     await p4; // should get from cache
 
-    const p5 = DCApiProxy.getDC(["{{ c }}", "{{ d }}"], config("p1"));
+    const p5 = DCApiProxy.getDC(
+      [
+        `{{ placeholder content='${Base64.encode("c")}' }}`,
+        `{{ placeholder content='${Base64.encode("d")}' }}`
+      ],
+      config("p1")
+    );
     jest.runAllTimers();
     await p5; // fetcherCalls++ (because of {{ d }})
 
-    const p6 = DCApiProxy.getDC(["{{ d }}"], config("p1"));
+    const p6 = DCApiProxy.getDC(
+      [`{{ placeholder content='${Base64.encode("d")}' }}`],
+      config("p1")
+    );
     jest.runAllTimers();
     await p6; // should get from cache
 
@@ -142,28 +230,58 @@ describe("Testing 'BatchFetcher'", () => {
     [
       {
         getDCArgs: [
-          [["{{ a }}"], config("p1")],
-          [["{{ b }}", "{{ c }}"], config("p1")],
-          [["{{ d }}"], config("p1")]
+          [[`{{ placeholder content='${Base64.encode("a")}' }}`], config("p1")],
+          [
+            [
+              `{{ placeholder content='${Base64.encode("b")}' }}`,
+              `{{ placeholder content='${Base64.encode("c")}' }}`
+            ],
+            config("p1")
+          ],
+          [[`{{ placeholder content='${Base64.encode("d")}' }}`], config("p1")]
         ],
         expectedResults: [["p1_a"], ["p1_b", "p1_c"], ["p1_d"]],
         expectedPlaceholders: {
-          p1: ["{{ a }}", "{{ b }}", "{{ c }}", "{{ d }}"]
+          p1: [
+            `{{ placeholder content='${Base64.encode("a")}' }}`,
+            `{{ placeholder content='${Base64.encode("b")}' }}`,
+            `{{ placeholder content='${Base64.encode("c")}' }}`,
+            `{{ placeholder content='${Base64.encode("d")}' }}`
+          ]
         }
       }
     ],
     [
       {
         getDCArgs: [
-          [["{{ c }}", "{{ f }}"], config("p1")],
-          [["{{ a }}", "{{ g }}", "{{ d }}"], config("p1")]
+          [
+            [
+              `{{ placeholder content='${Base64.encode("c")}' }}`,
+              `{{ placeholder content='${Base64.encode("f")}' }}`
+            ],
+            config("p1")
+          ],
+          [
+            [
+              `{{ placeholder content='${Base64.encode("a")}' }}`,
+              `{{ placeholder content='${Base64.encode("g")}' }}`,
+              `{{ placeholder content='${Base64.encode("d")}' }}`
+            ],
+            config("p1")
+          ]
         ],
         expectedResults: [
           ["p1_c", "p1_f"],
           ["p1_a", "p1_g", "p1_d"]
         ],
         expectedPlaceholders: {
-          p1: ["{{ c }}", "{{ f }}", "{{ a }}", "{{ g }}", "{{ d }}"]
+          p1: [
+            `{{ placeholder content='${Base64.encode("c")}' }}`,
+            `{{ placeholder content='${Base64.encode("f")}' }}`,
+            `{{ placeholder content='${Base64.encode("a")}' }}`,
+            `{{ placeholder content='${Base64.encode("g")}' }}`,
+            `{{ placeholder content='${Base64.encode("d")}' }}`
+          ]
         }
       }
     ],
@@ -173,29 +291,61 @@ describe("Testing 'BatchFetcher'", () => {
     [
       {
         getDCArgs: [
-          [["{{ a }}"], config("p1")],
-          [["{{ b }}", "{{ c }}"], config("p2")],
-          [["{{ d }}"], config("p1")]
+          [[`{{ placeholder content='${Base64.encode("a")}' }}`], config("p1")],
+          [
+            [
+              `{{ placeholder content='${Base64.encode("b")}' }}`,
+              `{{ placeholder content='${Base64.encode("c")}' }}`
+            ],
+            config("p2")
+          ],
+          [[`{{ placeholder content='${Base64.encode("d")}' }}`], config("p1")]
         ],
         expectedResults: [["p1_a"], ["p2_b", "p2_c"], ["p1_d"]],
         expectedPlaceholders: {
-          p1: ["{{ a }}", "{{ d }}"],
-          p2: ["{{ b }}", "{{ c }}"]
+          p1: [
+            `{{ placeholder content='${Base64.encode("a")}' }}`,
+            `{{ placeholder content='${Base64.encode("d")}' }}`
+          ],
+          p2: [
+            `{{ placeholder content='${Base64.encode("b")}' }}`,
+            `{{ placeholder content='${Base64.encode("c")}' }}`
+          ]
         }
       }
     ],
     [
       {
         getDCArgs: [
-          [["{{ c }}", "{{ f }}"], config("p3")],
-          [["{{ a }}"], config("p4")],
-          [["{{ g }}", "{{ e }}", "{{ h }}"], config("p5")]
+          [
+            [
+              `{{ placeholder content='${Base64.encode("c")}' }}`,
+              `{{ placeholder content='${Base64.encode("f")}' }}`
+            ],
+            config("p3")
+          ],
+          [[`{{ placeholder content='${Base64.encode("a")}' }}`], config("p4")],
+          [
+            [
+              `{{ placeholder content='${Base64.encode("g")}' }}`,
+              `{{ placeholder content='${Base64.encode("e")}' }}`,
+              `{{ placeholder content='${Base64.encode("h")}' }}`
+            ],
+            config("p5")
+          ]
         ],
         expectedResults: [["p3_c", "p3_f"], ["p4_a"], ["p5_g", "p5_e", "p5_h"]],
         expectedPlaceholders: {
-          p3: ["{{ c }}", "{{ f }}"],
-          p4: ["{{ a }}"],
-          p5: ["{{ g }}", "{{ e }}", "{{ h }}"]
+          p3: [
+            `{{ placeholder content='${Base64.encode("c")}' }}`,
+            `{{ placeholder content='${Base64.encode("f")}' }}`
+          ],
+          p4: [`{{ placeholder content='${Base64.encode("a")}' }}`],
+          p5: [
+            `{{ placeholder content='${Base64.encode("g")}' }}`,
+            `{{ placeholder content='${Base64.encode("e")}' }}`,
+            `{{ placeholder content='${Base64.encode("h")}' }}`
+          ]
         }
       }
     ],
@@ -205,65 +355,149 @@ describe("Testing 'BatchFetcher'", () => {
     [
       {
         getDCArgs: [
-          [["{{ a }}", "{{ a }}"], config("p1")],
-          [["{{ a }}", "{{ a }}", "{{ a }}"], config("p1")]
+          [
+            [
+              `{{ placeholder content='${Base64.encode("a")}' }}`,
+              `{{ placeholder content='${Base64.encode("a")}' }}`
+            ],
+            config("p1")
+          ],
+          [
+            [
+              `{{ placeholder content='${Base64.encode("a")}' }}`,
+              `{{ placeholder content='${Base64.encode("a")}' }}`,
+              `{{ placeholder content='${Base64.encode("a")}' }}`
+            ],
+            config("p1")
+          ]
         ],
         expectedResults: [
           ["p1_a", "p1_a"],
           ["p1_a", "p1_a", "p1_a"]
         ],
-        expectedPlaceholders: { p1: ["{{ a }}"] }
+        expectedPlaceholders: {
+          p1: [`{{ placeholder content='${Base64.encode("a")}' }}`]
+        }
       }
     ],
     [
       {
         getDCArgs: [
-          [["{{ a }}", "{{ b }}"], config("p1")],
-          [["{{ b }}", "{{ a }}"], config("p1")]
+          [
+            [
+              `{{ placeholder content='${Base64.encode("a")}' }}`,
+              `{{ placeholder content='${Base64.encode("b")}' }}`
+            ],
+            config("p1")
+          ],
+          [
+            [
+              `{{ placeholder content='${Base64.encode("b")}' }}`,
+              `{{ placeholder content='${Base64.encode("a")}' }}`
+            ],
+            config("p1")
+          ]
         ],
         expectedResults: [
           ["p1_a", "p1_b"],
           ["p1_b", "p1_a"]
         ],
-        expectedPlaceholders: { p1: ["{{ a }}", "{{ b }}"] }
+        expectedPlaceholders: {
+          p1: [
+            `{{ placeholder content='${Base64.encode("a")}' }}`,
+            `{{ placeholder content='${Base64.encode("b")}' }}`
+          ]
+        }
       }
     ],
     [
       {
         getDCArgs: [
-          [["{{ a }}", "{{ b }}"], config("p1")],
-          [["{{ a }}", "{{ a }}"], config("p1")]
+          [
+            [
+              `{{ placeholder content='${Base64.encode("a")}' }}`,
+              `{{ placeholder content='${Base64.encode("b")}' }}`
+            ],
+            config("p1")
+          ],
+          [
+            [
+              `{{ placeholder content='${Base64.encode("a")}' }}`,
+              `{{ placeholder content='${Base64.encode("a")}' }}`
+            ],
+            config("p1")
+          ]
         ],
         expectedResults: [
           ["p1_a", "p1_b"],
           ["p1_a", "p1_a"]
         ],
-        expectedPlaceholders: { p1: ["{{ a }}", "{{ b }}"] }
+        expectedPlaceholders: {
+          p1: [
+            `{{ placeholder content='${Base64.encode("a")}' }}`,
+            `{{ placeholder content='${Base64.encode("b")}' }}`
+          ]
+        }
       }
     ],
     [
       {
         getDCArgs: [
-          [["{{ b }}", "{{ b }}"], config("p1")],
-          [["{{ b }}", "{{ a }}"], config("p1")]
+          [
+            [
+              `{{ placeholder content='${Base64.encode("b")}' }}`,
+              `{{ placeholder content='${Base64.encode("b")}' }}`
+            ],
+            config("p1")
+          ],
+          [
+            [
+              `{{ placeholder content='${Base64.encode("b")}' }}`,
+              `{{ placeholder content='${Base64.encode("a")}' }}`
+            ],
+            config("p1")
+          ]
         ],
         expectedResults: [
           ["p1_b", "p1_b"],
           ["p1_b", "p1_a"]
         ],
-        expectedPlaceholders: { p1: ["{{ b }}", "{{ a }}"] }
+        expectedPlaceholders: {
+          p1: [
+            `{{ placeholder content='${Base64.encode("b")}' }}`,
+            `{{ placeholder content='${Base64.encode("a")}' }}`
+          ]
+        }
       }
     ],
     [
       {
         getDCArgs: [
-          [["{{ a }}", "{{ b }}", "{{ c }}"], config("p1")],
-          [["{{ c }}"], config("p1")],
-          [["{{ b }}", "{{ d }}"], config("p1")]
+          [
+            [
+              `{{ placeholder content='${Base64.encode("a")}' }}`,
+              `{{ placeholder content='${Base64.encode("b")}' }}`,
+              `{{ placeholder content='${Base64.encode("c")}' }}`
+            ],
+            config("p1")
+          ],
+          [[`{{ placeholder content='${Base64.encode("c")}' }}`], config("p1")],
+          [
+            [
+              `{{ placeholder content='${Base64.encode("b")}' }}`,
+              `{{ placeholder content='${Base64.encode("d")}' }}`
+            ],
+            config("p1")
+          ]
         ],
         expectedResults: [["p1_a", "p1_b", "p1_c"], ["p1_c"], ["p1_b", "p1_d"]],
         expectedPlaceholders: {
-          p1: ["{{ a }}", "{{ b }}", "{{ c }}", "{{ d }}"]
+          p1: [
+            `{{ placeholder content='${Base64.encode("a")}' }}`,
+            `{{ placeholder content='${Base64.encode("b")}' }}`,
+            `{{ placeholder content='${Base64.encode("c")}' }}`,
+            `{{ placeholder content='${Base64.encode("d")}' }}`
+          ]
         }
       }
     ]
@@ -273,49 +507,6 @@ describe("Testing 'BatchFetcher'", () => {
     async ({ getDCArgs, expectedResults, expectedPlaceholders }) => {
       const fetcher = mockFetcher();
       const batchFetcher = new BatchFetcher(fetcher);
-      const promises = getDCArgs.map(([args, config]) =>
-        batchFetcher.getDC(args, config)
-      );
-
-      jest.runAllTimers();
-
-      const getDCResponses = await Promise.all(promises);
-
-      expect(getDCResponses).toEqual(expectedResults);
-      expect(fetcher.mock.calls.length).toBe(1);
-      expect(fetcher.mock.calls[0][0].placeholders).toStrictEqual(
-        expectedPlaceholders
-      );
-    }
-  );
-
-  test.each<[BatchFetcherTestArgs]>([
-    //#region 1 postId
-    [
-      {
-        getDCArgs: [
-          [["[[ a ]]"], config("p1")],
-          [["[[ b ]]", "[ c ]"], config("p1")],
-          [["[ d ]"], config("p1")]
-        ],
-        expectedResults: [
-          ["p1_[[ a ]]"],
-          ["p1_[[ b ]]", "p1_[ c ]"],
-          ["p1_[ d ]"]
-        ],
-        expectedPlaceholders: {
-          p1: ["[[ a ]]", "[[ b ]]", "[ c ]", "[ d ]"]
-        }
-      }
-    ]
-    //#endregion
-  ])(
-    "Custom Placeholders",
-    async ({ getDCArgs, expectedResults, expectedPlaceholders }) => {
-      const fetcher = mockFetcher();
-      const batchFetcher = new BatchFetcher(fetcher, {
-        useCustomPlaceholder: true
-      });
       const promises = getDCArgs.map(([args, config]) =>
         batchFetcher.getDC(args, config)
       );

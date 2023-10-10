@@ -1,9 +1,9 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { Value } from "./index";
+import { Props, Value } from "./index";
 
-export const getItems: GetItems<Value> = ({ v, device, state }) => {
+export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const vertical = dvv("verticalMode") === "off";

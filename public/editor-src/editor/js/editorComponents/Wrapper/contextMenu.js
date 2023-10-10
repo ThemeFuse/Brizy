@@ -161,6 +161,7 @@ const translationsMap = {
   ProductMetafield: t("Metafield"),
   BlogPostMeta: t("Meta"),
   Vendor: t("Vendor"),
+  Variant: t("Variant"),
 
   // Ministry Brands
   MinistryBrandsGroupLayout: t("Group Layout"),
@@ -177,7 +178,10 @@ const translationsMap = {
   MinistryBrandsGroupFeatured: t("Group Featured"),
   MinistryBrandsEventList: t("Event List"),
   MinistryBrandsEventDetail: t("Event Detail"),
-  MinistryBrandsFormWidget: t("Form Widget")
+  MinistryBrandsFormWidget: t("Form Widget"),
+
+  // Leadific
+  Leadific: t("Leadific")
 };
 
 export default {

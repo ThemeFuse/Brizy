@@ -59,7 +59,7 @@ export const toGalleryItem = <T>(item: Item<T>): GalleryItem.Item<T> => {
       const url =
         getImageUrl({
           uid: item.payload.uid,
-          fileName: item.payload.fileName,
+          fileName: item.payload.fileName ?? "",
           sizeType: SizeType.custom,
           crop: { iW: 100, iH: 100 }
         }) ?? "";

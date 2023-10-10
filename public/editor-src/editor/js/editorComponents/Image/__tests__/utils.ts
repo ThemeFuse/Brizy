@@ -1,11 +1,11 @@
 import { V } from "../types";
 import {
+  ImageValue,
+  PredefinedCustomSize,
   calcWrapperOriginalSizes,
   calcWrapperPredefinedSizes,
   getImageSize,
-  getSizeType,
-  ImageValue,
-  PredefinedCustomSize
+  getSizeType
 } from "../utils";
 
 // init config before start the tests
@@ -154,6 +154,7 @@ describe("Testing 'Getters Image' functions", () => {
 
     const vPopulationSize: V = {
       ...v,
+      sizeType: "thumbnail",
       imagePopulation: "{{test size='thumbnail'}}"
     };
 

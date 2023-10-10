@@ -3,6 +3,11 @@ import { produce } from "immer";
 import React from "react";
 import { getIn, insert, removeAt, replaceAt, setIn } from "timm";
 import ErrorBoundary from "visual/component/ErrorBoundary";
+import { mergeOptions } from "visual/component/Options/utils";
+import {
+  flattenDefaultValue,
+  makeToolbarPropsFromConfigDefaults
+} from "visual/editorComponents/EditorComponent/utils";
 import { symbolsToItems } from "visual/editorComponents/Menu/utils";
 import Config from "visual/global/Config";
 import Editor from "visual/global/Editor";
@@ -10,11 +15,14 @@ import { updateCopiedElement } from "visual/redux/actions";
 import { updateUI } from "visual/redux/actions2";
 import {
   copiedElementNoRefsSelector,
+  deviceModeSelector,
   pageDataNoRefsSelector,
+  rulesSelector,
   uiSelector
 } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { move } from "visual/utils/array";
+import { applyFilter } from "visual/utils/filters";
 import {
   createFullModelPath,
   getClosestParent,
@@ -26,6 +34,9 @@ import {
   setStyles,
   stripSystemKeys
 } from "visual/utils/models";
+import { read as readNumber } from "visual/utils/reader/number";
+import * as State from "visual/utils/stateMode";
+import { getComponentDefaultValue } from "visual/utils/traverse/common";
 import EditorComponent from "./EditorComponent";
 
 const menusConfig = Config.get("menuData");
@@ -62,6 +73,7 @@ export default class EditorArrayComponent extends EditorComponent {
     const dbValue = this.getDBValue() || [];
     const updatedValue = insert(dbValue, itemIndex, itemDataWithIds);
 
+    this.revalidateItemValueProcessedCache(itemIndex);
     this.handleValueChange(updatedValue, {
       arrayOperation: "insert"
     });
@@ -72,8 +84,10 @@ export default class EditorArrayComponent extends EditorComponent {
     const updatedValue = itemsData.reduce((acc, itemData, index) => {
       const itemDataStripped = stripSystemKeys(itemData);
       const itemDataWithIds = setIds(itemDataStripped);
+      const to = itemIndex + index;
 
-      return insert(acc, itemIndex + index, itemDataWithIds);
+      this.revalidateItemValueProcessedCache(to);
+      return insert(acc, to, itemDataWithIds);
     }, dbValue);
 
     this.handleValueChange(updatedValue, {
@@ -95,9 +109,8 @@ export default class EditorArrayComponent extends EditorComponent {
     const dbValue = this.getDBValue() || [];
     const updatedValue = removeAt(dbValue, itemIndex);
 
-    this.handleValueChange(updatedValue, {
-      arrayOperation: "remove"
-    });
+    this.revalidateItemValueProcessedCache(itemIndex);
+    this.handleValueChange(updatedValue, { arrayOperation: "remove" });
   }
 
   replaceItem(itemIndex, itemData, meta) {
@@ -108,6 +121,7 @@ export default class EditorArrayComponent extends EditorComponent {
     const dbValue = this.getDBValue() || [];
     const updatedValue = replaceAt(dbValue, itemIndex, itemDataWithIds);
 
+    this.revalidateItemValueProcessedCache(itemIndex);
     this.handleValueChange(updatedValue, {
       arrayOperation: "replace",
       itemIndex,
@@ -122,12 +136,15 @@ export default class EditorArrayComponent extends EditorComponent {
       throw new Error(`Can't clone invalid item at index ${itemIndex}`);
     }
 
+    this.revalidateItemValueProcessedCache(toIndex);
     this.insertItem(toIndex, dbValue[itemIndex]); // the object will be cloned there
   }
 
   reorderItem(from, to) {
     const dbValue = this.getDBValue() || [];
 
+    this.revalidateItemValueProcessedCache(from);
+    this.revalidateItemValueProcessedCache(to);
     this.handleValueChange(move(from, to, dbValue), {
       arrayOperation: "moveItem"
     });
@@ -274,6 +291,54 @@ export default class EditorArrayComponent extends EditorComponent {
     };
   }
 
+  revalidateItemValueProcessedCache(itemIndex) {
+    if (!this._itemDefaultValueProcessedCache?.[itemIndex]) {
+      return;
+    }
+
+    delete this._itemDefaultValueProcessedCache[itemIndex];
+  }
+
+  getItemDefaultValue(itemIndex) {
+    if (this._itemDefaultValueProcessedCache?.[itemIndex]) {
+      return this._itemDefaultValueProcessedCache[itemIndex];
+    }
+
+    const v = this.getValue()[itemIndex];
+
+    const defaultValue = getComponentDefaultValue(v.type) || {};
+    const defaultValueFlat = flattenDefaultValue(defaultValue);
+
+    this._itemDefaultValueProcessedCache =
+      this._itemDefaultValueProcessedCache || {};
+    this._itemDefaultValueProcessedCache[itemIndex] = defaultValueFlat;
+
+    return defaultValueFlat;
+  }
+
+  getItemStylesValue(itemIndex) {
+    const dbValue = this.getDBValue()[itemIndex].value;
+    const currentStyleRules = rulesSelector(this.getReduxState());
+
+    if ("_styles" in dbValue && dbValue._styles && currentStyleRules) {
+      return dbValue._styles.reduce((acc, style) => {
+        const ruleStyle = currentStyleRules[style];
+
+        return ruleStyle ? Object.assign(acc, ruleStyle) : acc;
+      }, {});
+    }
+
+    return null;
+  }
+
+  getItemValue(itemIndex) {
+    const defaultValue = this.getItemDefaultValue(itemIndex);
+    const stylesValue = this.getItemStylesValue(itemIndex);
+    const dbValue = this.getDBValue()[itemIndex].value;
+
+    return { ...defaultValue, ...stylesValue, ...dbValue };
+  }
+
   validateValue() {
     // always valid
   }
@@ -285,6 +350,215 @@ export default class EditorArrayComponent extends EditorComponent {
     return typeof itemProps === "function"
       ? itemProps(itemData, itemIndex, items)
       : itemProps;
+  }
+
+  makeItemsToolbarPropsFromConfig2(config, sidebarConfig, options = {}) {
+    const { onToolbarOpen, onToolbarClose, onToolbarEnter, onToolbarLeave } =
+      this.props;
+
+    const {
+      itemIndex,
+      allowExtendFromParent,
+      parentItemsFilter,
+      parentExtendProp = "toolbarExtend",
+      allowExtendFromChild,
+      allowExtendFromThirdParty,
+      thirdPartyExtendId = this.getComponentId(),
+
+      // sidebar
+      allowSidebarExtendFromParent,
+      allowSidebarExtendFromChild,
+      allowSidebarExtendFromThirdParty,
+      sidebarThirdPartyExtendId = thirdPartyExtendId
+    } = makeToolbarPropsFromConfigDefaults(options);
+
+    if (readNumber(itemIndex) === undefined) {
+      throw new Error("Missing itemIndex in options");
+    }
+
+    // WARNING: we use getStore instead of this.getReduxState()
+    // because the page does not rerender when changing deviceMode
+    // and thus we might get false (outdated) results
+    const getItems = (
+      deviceMode = deviceModeSelector(getStore().getState())
+    ) => {
+      if (process.env.NODE_ENV === "development") {
+        if (!config.getItems) {
+          // eslint-disable-next-line no-console
+          console.warn(
+            `${this.getComponentId()}. getItems not found in toolbarConfig`
+          );
+        }
+      }
+      const v = this.getItemValue(itemIndex);
+      const stateMode = State.mRead(v.tabsState);
+
+      let items = this.bindToolbarItems(
+        v,
+        deviceMode,
+        stateMode,
+        config?.getItems({
+          v,
+          component: this,
+          device: deviceMode,
+          state: stateMode,
+          context: this.context
+        }) ?? []
+      );
+
+      // allow extend from parent
+      if (allowExtendFromParent && this.props[parentExtendProp]) {
+        const { getItems } = this.props[parentExtendProp];
+        let extendItems = getItems(deviceMode);
+
+        if (typeof parentItemsFilter === "function") {
+          extendItems = parentItemsFilter(extendItems);
+        }
+
+        items = mergeOptions(items, extendItems);
+      }
+
+      // allow extend from child
+      if (allowExtendFromChild && this.childToolbarExtend) {
+        const { getItems } = this.childToolbarExtend;
+        const extendItems = getItems(deviceMode);
+
+        items = mergeOptions(extendItems, items);
+      }
+
+      // allow extend from third party
+      if (allowExtendFromThirdParty) {
+        const thirdPartyConfig = applyFilter(
+          `toolbarItemsExtend_${thirdPartyExtendId}`,
+          null
+        );
+
+        if (thirdPartyConfig?.getItems) {
+          const thirdPartyItems = this.bindToolbarItems(
+            v,
+            deviceMode,
+            stateMode,
+            thirdPartyConfig.getItems({
+              v,
+              component: this,
+              device: deviceMode,
+              state: stateMode,
+              context: this.context
+            })
+          );
+
+          items = mergeOptions(items, thirdPartyItems);
+        }
+      }
+
+      return items;
+    };
+
+    const getSidebarItems = (
+      deviceMode = deviceModeSelector(getStore().getState())
+    ) => {
+      const v = this.getItemValue(itemIndex);
+      const stateMode = State.mRead(v.tabsState);
+      let items = this.bindToolbarItems(
+        v,
+        deviceMode,
+        stateMode,
+        sidebarConfig?.getItems?.({
+          v,
+          component: this,
+          device: deviceMode,
+          state: stateMode,
+          context: this.context
+        }) || []
+      );
+
+      // allow extend from parent
+      if (
+        allowSidebarExtendFromParent &&
+        this.props[parentExtendProp]?.getSidebarItems
+      ) {
+        const { getSidebarItems } = this.props[parentExtendProp];
+        const extendItems = getSidebarItems(deviceMode);
+
+        items = mergeOptions(items, extendItems);
+      }
+
+      // allow extend from child
+      if (allowSidebarExtendFromChild && this.childToolbarExtend) {
+        const { getSidebarItems } = this.childToolbarExtend;
+        const extendItems = getSidebarItems(deviceMode);
+
+        items = mergeOptions(extendItems, items);
+      }
+
+      // allow extend from third party
+      if (allowSidebarExtendFromThirdParty) {
+        const thirdPartyConfig = applyFilter(
+          `sidebarItemsExtend_${sidebarThirdPartyExtendId}`,
+          null
+        );
+
+        if (thirdPartyConfig?.getItems) {
+          const thirdPartyItems = this.bindToolbarItems(
+            v,
+            deviceMode,
+            stateMode,
+            thirdPartyConfig.getItems({
+              v,
+              component: this,
+              device: deviceMode,
+              state: stateMode,
+              context: this.context
+            })
+          );
+
+          items = mergeOptions(items, thirdPartyItems);
+        }
+      }
+
+      return items;
+    };
+
+    const getSidebarTitle = () => {
+      let title = sidebarConfig?.title;
+
+      if (typeof title === "function") {
+        const v = this.getItemValue(itemIndex);
+        title = title({ v });
+      }
+
+      // allow extend from parent
+      if (allowSidebarExtendFromParent && this.props.toolbarExtend) {
+        const { getSidebarTitle } = this.props.toolbarExtend;
+
+        title = getSidebarTitle() || title;
+      }
+
+      // allow extend from child
+      if (allowSidebarExtendFromChild && this.childToolbarExtend) {
+        const { getSidebarTitle } = this.childToolbarExtend;
+
+        title = getSidebarTitle() || title;
+      }
+
+      return title || "";
+    };
+
+    return {
+      getItems,
+      getSidebarItems,
+      getSidebarTitle,
+      onBeforeOpen: () => {
+        global.Brizy.activeEditorComponent = this;
+      },
+      onBeforeClose: () => {
+        global.Brizy.activeEditorComponent = null;
+      },
+      onOpen: onToolbarOpen,
+      onClose: onToolbarClose,
+      onMouseEnter: onToolbarEnter,
+      onMouseLeave: onToolbarLeave
+    };
   }
 
   renderItemData(itemData, itemKey, itemIndex, items) {

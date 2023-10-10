@@ -1,10 +1,10 @@
-import React, { useCallback, forwardRef, ReactElement, Ref } from "react";
+import React, { ReactElement, Ref, forwardRef, useCallback } from "react";
+import Scrollbars from "react-custom-scrollbars";
 import {
   FixedSizeGrid,
   GridChildComponentProps,
   ReactElementType
 } from "react-window";
-import Scrollbars from "react-custom-scrollbars";
 
 type RefType = (r: Ref<ReactElement>) => void;
 
@@ -34,13 +34,16 @@ const CustomScrollbars = ({
   style,
   children
 }: CustomScrollbars): ReactElement => {
-  const refSetter = useCallback(scrollbarsRef => {
-    if (scrollbarsRef) {
-      forwardedRef(scrollbarsRef.view);
-    } else {
-      forwardedRef(null);
-    }
-  }, []);
+  const refSetter = useCallback(
+    (scrollbarsRef) => {
+      if (scrollbarsRef) {
+        forwardedRef(scrollbarsRef.view);
+      } else {
+        forwardedRef(null);
+      }
+    },
+    [forwardedRef]
+  );
 
   return (
     <Scrollbars

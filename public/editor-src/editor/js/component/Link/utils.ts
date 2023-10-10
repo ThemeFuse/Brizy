@@ -4,8 +4,24 @@ import { getStore } from "visual/redux/store";
 import { MValue } from "visual/utils/value";
 import { Target, TargetTypes } from "./types/Target";
 import { Type } from "./types/Type";
+import {
+  getPopulatedEntityValues,
+  makePlaceholder
+} from "visual/utils/dynamicContent";
 
-type Data = { items: Array<{ value: { _id: string; anchorName: string } }> };
+interface SectionModel {
+  value: {
+    _id: string;
+    anchorName: string;
+    cssIDPopulation: string;
+    cssIDPopulationEntityId: string;
+    cssIDPopulationEntityType: string;
+  };
+}
+
+type Data = {
+  items: Array<SectionModel>;
+};
 
 const isWP = Config.get("wp");
 
@@ -28,6 +44,36 @@ export const getTarget = (type: Type, target: Target): TargetTypes => {
     : "_self";
 };
 
+const createAnchor = (data: {
+  href: string;
+  section?: SectionModel;
+}): string => {
+  const { href, section } = data;
+  const sectionValue = section?.value;
+
+  if (sectionValue?.cssIDPopulation || sectionValue?.anchorName) {
+    if (sectionValue.cssIDPopulation) {
+      const {
+        cssIDPopulation,
+        cssIDPopulationEntityId,
+        cssIDPopulationEntityType
+      } = sectionValue;
+
+      return makePlaceholder({
+        content: cssIDPopulation,
+        attr: getPopulatedEntityValues(
+          cssIDPopulationEntityId,
+          cssIDPopulationEntityType
+        )
+      });
+    }
+
+    return sectionValue.anchorName;
+  }
+
+  return href;
+};
+
 export const getHref = (type: Type, _href: string): string => {
   let href;
 
@@ -46,8 +92,7 @@ export const getHref = (type: Type, _href: string): string => {
         const blockByHref = pageBlocks.find(
           (block) => block.value._id === _href
         );
-        const anchorName =
-          (blockByHref && blockByHref.value.anchorName) || _href;
+        const anchorName = createAnchor({ href: _href, section: blockByHref });
 
         href = `#${anchorName}`;
       }

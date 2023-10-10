@@ -4,6 +4,7 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { hexToRgba } from "visual/utils/color";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -134,23 +135,52 @@ export class StampedReviews extends EditorComponent<Value> {
     if (productIDs !== "") {
       attr["data-product-ids"] = productIDs.trim().replace(/ /g, ",");
     }
+    const productId = makePlaceholder({
+      content: "{{ product.id }}"
+    });
+    const productHandle = makePlaceholder({
+      content: "{{ product.handle }}"
+    });
 
     switch (type) {
-      case "standard":
+      case "standard": {
+        const shopUrl = makePlaceholder({ content: "{{ shop.url }}" });
+        const productUrl = makePlaceholder({ content: "{{ product.url }}" });
+        const productTitle = makePlaceholder({
+          content: "{{ product.title | escape }}"
+        });
+        const productImage = makePlaceholder({
+          content:
+            "{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+        });
+        const productDesc = makePlaceholder({
+          content: "{{ product.description | escape }}"
+        });
+
+        const productType = makePlaceholder({
+          content: "{{ product.type }}"
+        });
+        const productReviews = makePlaceholder({
+          content: "{{ product.metafields.stamped.reviews }}"
+        });
+
         return (
           <div
             id="stamped-main-widget"
             className="stamped-main-widget"
             data-widget-style="standard"
-            data-product-id="{{ product.id }}"
-            data-name="{{ product.title | escape }}"
-            data-url="{{ shop.url }}{{ product.url }}"
-            data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
-            data-description="{{ product.description | escape }}"
-            data-product-sku="{{ product.handle }}"
-            data-product-type="{{ product.type }}"
-          >{`{{ product.metafields.stamped.reviews }}`}</div>
+            data-product-id={productId}
+            data-name={productTitle}
+            data-url={`${shopUrl}${productUrl}`}
+            data-image-url={productImage}
+            data-description={productDesc}
+            data-product-sku={productHandle}
+            data-product-type={productType}
+          >
+            {productReviews}
+          </div>
         );
+      }
 
       case "carousel": {
         return (
@@ -203,10 +233,14 @@ export class StampedReviews extends EditorComponent<Value> {
         return (
           <span
             className="stamped-product-reviews-badge stamped-main-badge"
-            data-id="{{ product.id }}"
-            data-product-sku="{{ product.handle }}"
+            data-id={productId}
+            data-product-sku={productHandle}
             style={{ display: "inline-block" }}
-          >{`{{ product.metafields.stamped.badge }}`}</span>
+          >
+            {makePlaceholder({
+              content: "{{ product.metafields.stamped.badge }}"
+            })}
+          </span>
         );
       }
 

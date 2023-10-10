@@ -3,7 +3,12 @@
     "messageSuccess": "",
     "messageError": "",
     "messageRedirect": "",
+
     "customAttributes": null,
+    "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
+
     "customCSS": "",
     "items": [],
 

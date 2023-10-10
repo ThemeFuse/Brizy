@@ -17,6 +17,7 @@ import UIEvents from "visual/global/UIEvents";
 import { pageSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
@@ -31,6 +32,7 @@ import { styleMenu, styleMenuContainer } from "./styles";
 import * as toolbarExtend from "./toolbarExtend";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import { itemsToSymbols, normalizeMenuItems, symbolsToItems } from "./utils";
+import { isClonedSlide } from "./utils.common";
 
 const IS_PRO = Config.get("pro");
 
@@ -279,7 +281,10 @@ export default class Menu extends EditorComponent {
       IS_PREVIEW && TARGET === "WP"
         ? {
             className: "brz-menu__ul",
-            "data-menu-items-active": `{{ editor_menu_active_item menu='${menuSelected}' }}`
+            "data-menu-items-active": makePlaceholder({
+              content: "{{ editor_menu_active_item }}",
+              attr: { menu: menuSelected }
+            })
           }
         : { className: "brz-menu__ul" };
 
@@ -413,13 +418,16 @@ export default class Menu extends EditorComponent {
     }
 
     const { mMenuTitle, mMenuPosition, stickyTitle } = v;
+    const isSlider = this.props.meta?.section?.isSlider;
+
     const hasMMenu = this.hasMMenu();
     const mMenuProps = hasMMenu
       ? {
           "data-mmenu-id": `#${this.getId()}`,
           "data-mmenu-position": `position-${mMenuPosition}`,
           "data-mmenu-title": mMenuTitle,
-          "data-mmenu-stickytitle": stickyTitle
+          "data-mmenu-stickytitle": stickyTitle,
+          "data-mmenu-isslider": isSlider
         }
       : {};
     const className = classnames(
@@ -456,6 +464,9 @@ export default class Menu extends EditorComponent {
   initMMenu() {
     const MMenu = this.getMMenu();
     const { items = [], mMenuPosition, stickyTitle } = this.getValue();
+    const isSlider = this.props.meta?.section?.isSlider;
+
+    if (isSlider && isClonedSlide(this.getNode())) return;
 
     if (this.mMenu || !MMenu || items.length === 0) {
       return;

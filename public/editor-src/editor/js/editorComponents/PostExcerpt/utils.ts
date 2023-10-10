@@ -1,3 +1,6 @@
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { DCPlaceholderStartObj } from "visual/utils/dynamicContent/types";
+
 type Types =
   | "userEmail"
   | "userFirstName"
@@ -5,24 +8,49 @@ type Types =
   | "userUsername"
   | "userPhoneNumber"
   | "userRoles"
-  | "wp";
+  | "wp"
+  | "blogPostExcerpt";
 
-export const getPlaceholder = (type: Types, sourceType: string): string => {
+export const getPlaceholder = (
+  type: Types,
+  sourceType: string,
+  textPopulation: string,
+  attr: DCPlaceholderStartObj["attr"]
+): string => {
   switch (type) {
     case "userEmail":
-      return `{{ brizy_customer_email context="${sourceType}" }}`;
+      return makePlaceholder({
+        content: "{{ brizy_customer_email }}",
+        attr: { context: sourceType }
+      });
     case "userFirstName":
-      return `{{ brizy_customer_fname context="${sourceType}" }}`;
+      return makePlaceholder({
+        content: "{{ brizy_customer_fname }}",
+        attr: { context: sourceType }
+      });
     case "userLastName":
-      return `{{ brizy_customer_lname context="${sourceType}" }}`;
+      return makePlaceholder({
+        content: "{{ brizy_customer_lname }}",
+        attr: { context: sourceType }
+      });
     case "userUsername":
-      return `{{ brizy_customer_username context="${sourceType}" }}`;
+      return makePlaceholder({
+        content: "{{ brizy_customer_username }}",
+        attr: { context: sourceType }
+      });
     case "userPhoneNumber":
-      return `{{ brizy_customer_phone context="${sourceType}" }}`;
+      return makePlaceholder({
+        content: "{{ brizy_customer_phone }}",
+        attr: { context: sourceType }
+      });
     case "userRoles":
-      return `{{ brizy_customer_roles context="${sourceType}" }}`;
+      return makePlaceholder({
+        content: "{{ brizy_customer_roles }}",
+        attr: { context: sourceType }
+      });
+    case "blogPostExcerpt":
     case "wp":
-      return "{{ brizy_dc_post_excerpt }}";
+      return makePlaceholder({ content: textPopulation, attr });
   }
 };
 
@@ -38,6 +66,7 @@ export const getPlaceholderIcon = (type: Types): string => {
       return "user-phone-number";
     case "userRoles":
       return "user-roles";
+    case "blogPostExcerpt":
     case "wp":
       return "wp-excerpt";
   }

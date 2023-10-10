@@ -1,11 +1,10 @@
-import {
-  keyToDCFallback2Key,
-  placeholderObjFromStr
-} from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import {
   MaskPositions,
   MaskRepeat,
@@ -26,7 +25,7 @@ import {
   toolbarLinkAnchor,
   toolbarStoryAnchor
 } from "visual/utils/toolbar";
-import { isGIF, isSVG } from "./utils";
+import { getImageDCSize } from "./utils";
 
 export default ({
   desktopContainerWidth,
@@ -56,10 +55,9 @@ export const getItems =
   ({ property }) =>
   ({ v, device, component, context }) => {
     const config = Config.getAll();
+
     const inPopup = Boolean(component.props.meta.sectionPopup);
     const inPopup2 = Boolean(component.props.meta.sectionPopup2);
-    const useCustomPlaceholder =
-      config.dynamicContent?.useCustomPlaceholder ?? false;
     const { cW, gallery } = property[device];
 
     const isBigImageFromGallery = Boolean(v?.clonedFromGallery);
@@ -76,6 +74,8 @@ export const getItems =
     );
 
     const _enableTags = enableTags && !isBigImageFromGallery;
+    const collectionTypesHandler =
+      config?.api?.collectionTypes?.loadCollectionTypes.handler;
     const borderColorOpacity = dvv("borderColorOpacity");
 
     const maskShape = readString(dvv("maskShape")) ?? "none";
@@ -98,23 +98,17 @@ export const getItems =
       type: DCTypes.image
     });
 
+    const linkSource = dvv("linkSource");
+
     const imageExtension = dvv("imageExtension");
     const imagePopulation = dvv("imagePopulation");
     const linkPopup = dvv("linkPopup");
 
-    const placeholderData = placeholderObjFromStr(
-      imagePopulation,
-      useCustomPlaceholder
-    );
-    const isCustomSizeType =
-      (sizeType === "custom" && !placeholderData) ||
-      !!(
-        placeholderData &&
-        (placeholderData.attr === undefined ||
-          placeholderData.attr?.size === undefined)
-      );
+    const dcSize = getImageDCSize(imagePopulation, context);
+    const isCustomSizeType = sizeType === "custom";
     const isSvgOrGif =
-      (isSVG(imageExtension) || isGIF(imageExtension)) && !placeholderData;
+      (isSVGExtension(imageExtension) || isGIFExtension(imageExtension)) &&
+      !dcSize;
 
     return [
       {
@@ -141,8 +135,8 @@ export const getItems =
                     type: "population-dev",
                     label: t("Image"),
                     disabled:
-                      ((isSVG(imageExtension) ||
-                        isGIF(imageExtension) ||
+                      ((isSVGExtension(imageExtension) ||
+                        isGIFExtension(imageExtension) ||
                         imagePopulation) &&
                         device !== "desktop") ||
                       isBigImageFromGallery,
@@ -170,8 +164,8 @@ export const getItems =
                     type: "slider-dev",
                     disabled:
                       Boolean(imagePopulation) ||
-                      isSVG(imageExtension) ||
-                      isGIF(imageExtension) ||
+                      isSVGExtension(imageExtension) ||
+                      isGIFExtension(imageExtension) ||
                       sizeType !== "custom" ||
                       isBigImageFromGallery,
                     config: {
@@ -187,10 +181,10 @@ export const getItems =
                     type: "switch-dev",
                     disabled:
                       inGallery ||
-                      isSVG(imageExtension) ||
-                      isGIF(imageExtension) ||
+                      isSVGExtension(imageExtension) ||
+                      isGIFExtension(imageExtension) ||
                       isBigImageFromGallery ||
-                      isStory(Config.getAll()),
+                      isStory(config),
                     devices: "desktop"
                   }
                 ]
@@ -402,6 +396,38 @@ export const getItems =
             },
             tabs: [
               {
+                id: "page",
+                label: t("Page"),
+                options: [
+                  {
+                    id: "linkSource",
+                    type: "select-dev",
+                    disabled: !collectionTypesHandler,
+                    label: t("Type"),
+                    devices: "desktop",
+                    choices: {
+                      load: () => getCollectionTypes(config),
+                      emptyLoad: {
+                        title: t("There are no choices")
+                      }
+                    },
+                    config: {
+                      size: "large"
+                    }
+                  },
+                  {
+                    id: "linkPage",
+                    type: "internalLink-dev",
+                    label: t("Find Page"),
+                    devices: "desktop",
+                    disabled: !linkSource,
+                    config: {
+                      postType: linkSource
+                    }
+                  }
+                ]
+              },
+              {
                 id: "external",
                 label: t("URL"),
                 options: [
@@ -432,7 +458,7 @@ export const getItems =
                   toolbarLinkAnchor({
                     v,
                     devices: "desktop",
-                    disabled: isStory(Config.getAll())
+                    disabled: isStory(config)
                   })
                 ]
               },
@@ -444,9 +470,9 @@ export const getItems =
                     id: "linkPopup",
                     type: "promptAddPopup",
                     disabled:
-                      isStory(Config.getAll()) ||
+                      isStory(config) ||
                       (device === "desktop"
-                        ? inPopup || inPopup2 || isPopup(Config.getAll())
+                        ? inPopup || inPopup2 || isPopup(config)
                         : dvv("linkType") !== "popup" || linkPopup === ""),
                     label: t("Popup"),
                     canDelete: device === "desktop",
@@ -465,9 +491,7 @@ export const getItems =
               {
                 id: "story",
                 label: t("Slides"),
-                options: [
-                  toolbarStoryAnchor({ disabled: !isStory(Config.getAll()) })
-                ]
+                options: [toolbarStoryAnchor({ disabled: !isStory(config) })]
               }
             ]
           }
@@ -482,8 +506,7 @@ export const getItems =
         },
         roles: ["admin"],
         position: 110,
-        disabled:
-          (inGallery && !isBigImageFromGallery) || isStory(Config.getAll()),
+        disabled: (inGallery && !isBigImageFromGallery) || isStory(config),
         options: [
           {
             id: "width",
@@ -570,7 +593,7 @@ export const getItems =
         id: "advancedSettings",
         type: "advancedSettings",
         icon: "nc-cog",
-        disabled: !isStory(Config.getAll()),
+        disabled: !isStory(config),
         position: 110
       }
     ];

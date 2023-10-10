@@ -3,6 +3,7 @@ import React from "react";
 import _ from "underscore";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
+import * as Obj from "visual/utils/reader/object";
 import Population from "./common/Population";
 
 const DEBOUNCE_WAIT = 1000;
@@ -169,8 +170,12 @@ class InputOptionType extends React.Component {
         show: populationShow,
         handlerChoices: populationHandlerChoices
       },
-      value: { population: populationValue }
+      value: { population }
     } = this.props;
+    const populationValue = Obj.isObject(population)
+      ? population.population
+      : population;
+
     const className = classnames(
       "brz-ed-option__input",
       `brz-ed-option__${display}`,
@@ -184,6 +189,8 @@ class InputOptionType extends React.Component {
           choices={populationChoices}
           handlerChoices={populationHandlerChoices}
           value={populationValue}
+          entityType={population?.populationEntityType}
+          entityId={population?.populationEntityId}
           renderUnset={this.renderInput}
           onChange={this.handlePopulationChange}
         />

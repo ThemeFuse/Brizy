@@ -68,11 +68,57 @@
   }
 }
 
+.brz-ed-option__font-styles.brz-ed-option__font-styles--new-item {
+  @keyframes brz-font-style-color {
+    0% {
+      border-color: $left_sidebar__styling__font-border;
+    }
+    50% {
+      border-color: $left_sidebar__styling__font-border--active;
+    }
+    100% {
+      border-color: $left_sidebar__styling__font-border;
+    }
+  }
+
+  @keyframes brz-slide-bottom {
+    0% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+    }
+    100% {
+      -webkit-transform: translateY(-5px);
+      transform: translateY(-5px);
+    }
+  }
+
+  .brz-ed-option__font-style-editor {
+    &.brz-ed-option__font-style-editor--animate {
+      animation: brz-slide-bottom 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045)
+        reverse both;
+    }
+
+    &:first-child {
+      .brz-ed-option__font-style-editor__container {
+        animation-name: brz-font-style-color;
+        animation-duration: 1s;
+        animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+        animation-direction: alternate;
+        animation-iteration-count: 3;
+      }
+    }
+  }
+}
+
 .brz-ed-option__font-styles {
   position: relative;
   height: calc(100% - 270px);
   margin-right: -30px;
   margin-left: -30px;
+
+  .brz-scrollbar__view {
+    scroll-behavior: smooth;
+  }
 
   &--add {
     font-size: 0;

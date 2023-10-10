@@ -1,20 +1,21 @@
+import classnames from "classnames";
 import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { Wrapper } from "../../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import * as sidebarInputConfig from "./sidebarInput";
+import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarInput from "./toolbarInput";
 import * as toolbarInputGrouped from "./toolbarInputGrouped";
-import * as toolbarTableVariations from "./toolbarTableVariations";
 import * as toolbarTableGrouped from "./toolbarTableGrouped";
-import * as sidebarConfig from "./sidebar";
-import * as sidebarInputConfig from "./sidebarInput";
-import defaultValue from "./defaultValue.json";
-import classnames from "classnames";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
-import { Wrapper } from "../../tools/Wrapper";
+import * as toolbarTableVariations from "./toolbarTableVariations";
 
 export default class WOOAddToCart extends EditorComponent {
   static get componentId() {
@@ -30,6 +31,9 @@ export default class WOOAddToCart extends EditorComponent {
       className_,
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
+    const placeholder = makePlaceholder({
+      content: "{{editor_product_add_to_cart_btn}}"
+    });
 
     return (
       <Toolbar
@@ -83,7 +87,7 @@ export default class WOOAddToCart extends EditorComponent {
                     })}
                   >
                     <DynamicContentHelper
-                      placeholder="{{editor_product_add_to_cart_btn}}"
+                      placeholder={placeholder}
                       placeholderIcon="woo-addToCart"
                       tagName="div"
                     />

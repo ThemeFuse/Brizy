@@ -10,6 +10,7 @@ import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { EcwidService } from "visual/libs/Ecwid";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import defaultValue from "./defaultValue.json";
 import * as sidebarParent from "./sidebar";
 import * as sidebarIcon from "./sidebarIcon";
@@ -110,12 +111,15 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
       "brz-ecwid-shopping-bag-wrapper",
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
+    const storeId = makePlaceholder({
+      content: "{{ecwid_store_id}}"
+    });
 
     return (
       <Wrapper {...this.makeWrapperProps({ className })}>
         <div
           className={classNames("ec-cart-widget", "brz-ecwid-shopping-bag")}
-          data-store-id="{{ecwid_store_id}}"
+          data-store-id={storeId}
         />
       </Wrapper>
     );

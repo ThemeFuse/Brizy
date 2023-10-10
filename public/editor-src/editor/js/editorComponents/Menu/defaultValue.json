@@ -31,8 +31,12 @@
     "bgImageExtension": "",
     "bgImageWidth": 0,
     "bgImageHeight": 0,
-    "bgPopulation": "",
     "bgSizeType": "custom",
+
+    "bgPopulation": "",
+    "bgPopulationEntityType": "",
+    "bgPopulationEntityId": "",
+
     "media": "image",
 
     "bgPositionX": 50,

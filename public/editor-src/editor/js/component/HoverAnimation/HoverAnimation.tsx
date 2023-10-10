@@ -8,19 +8,25 @@ import React, {
   useState
 } from "react";
 import UIEvents from "visual/global/UIEvents";
+import { AnimationEvents } from "visual/utils/animation";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { AnimationEvents } from "../Animation/utils";
 import { Hover } from "./Hover";
 import { getAnimations } from "./animations";
-import { AnimationEmmitterInfo } from "./types";
-import { isMultiAnimation, setAttribute, setHoverOptions } from "./utils";
+import { AnimationEmmitterInfo, HoverTarget } from "./types";
+import {
+  getHoverTarget,
+  isMultiAnimation,
+  setAttribute,
+  setHoverOptions
+} from "./utils";
 
 interface Props {
   cssKeyframe: string;
   animationId: string;
-  options?: KeyframeEffectOptions;
-  isHidden?: boolean;
+  options?: OptionalEffectTiming;
+  target?: HoverTarget;
   className?: string;
+  isHidden?: boolean;
   isDisabledHover?: boolean;
 }
 
@@ -31,11 +37,10 @@ export const HoverAnimation: FC<Props> = ({
   cssKeyframe,
   isHidden,
   className,
+  target = "firstChild",
   isDisabledHover = false
 }) => {
-  if (isHidden) return <>{children}</>;
   const [animationIsRunning, setAnimationIsRunning] = useState(false);
-  const child = useRef<HTMLDivElement | null>(null);
   const parent = useRef<HTMLDivElement | null>(null);
   const controller = useRef<Hover | null>(null);
   const elementIsHovered = useRef<boolean>(false);
@@ -83,18 +88,23 @@ export const HoverAnimation: FC<Props> = ({
   }, [animationId]);
 
   useEffect(() => {
-    if (child.current) {
-      controller.current = new Hover({
-        child: child.current,
-        keyframes: animationOptions.animation ?? [],
-        options: animationOptions.options
-      });
+    if (parent.current) {
+      const _target = getHoverTarget(parent.current, target);
+      if (_target) {
+        controller.current = new Hover({
+          target: _target,
+          keyframes: animationOptions.animation ?? [],
+          options: animationOptions.options
+        });
+      }
     }
 
     return () => {
       controller.current = null;
     };
-  }, [cssKeyframe, animationOptions]);
+  }, [animationOptions, target]);
+
+  if (isHidden) return <>{children}</>;
 
   const _onMouseEnter = (e: MouseEvent<Element>): void => {
     const { options } = animationOptions;
@@ -164,18 +174,17 @@ export const HoverAnimation: FC<Props> = ({
       className={_classNames}
       onMouseOut={_onMouseOut}
       onMouseEnter={_onMouseEnter}
-      data-hover-animationid={animationId}
-      data-hover-options={setHoverOptions(animationOptions.options)}
-      data-hover-reversible={animationOptions.reversibleAnimation}
-      {...setAttribute("data-hover-animation", animationOptions.animation)}
+      data-brz-hover-animationid={animationId}
+      data-brz-hover-options={setHoverOptions(animationOptions.options)}
+      data-brz-hover-reversible={animationOptions.reversibleAnimation}
+      {...setAttribute("data-brz-hover-target", target)}
+      {...setAttribute("data-brz-hover-animation", animationOptions.animation)}
       {...setAttribute(
-        "data-hover-multianimation",
+        "data-brz-hover-multianimation",
         animationOptions.multiAnimation
       )}
     >
-      <div className={"brz-hover-animation"} ref={child}>
-        {children}
-      </div>
+      {children}
     </div>
   );
 };

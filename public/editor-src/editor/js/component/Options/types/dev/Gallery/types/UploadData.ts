@@ -1,5 +1,5 @@
 export interface UploadData {
-  fileName: string;
+  fileName?: string;
   uid: string;
   width: number;
   height: number;

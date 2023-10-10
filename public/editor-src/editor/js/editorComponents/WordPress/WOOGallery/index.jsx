@@ -1,19 +1,20 @@
-import React from "react";
+import classnames from "classnames";
 import jQuery from "jquery";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import React from "react";
+import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbar from "./toolbar";
-import * as sidebar from "./sidebar";
-import * as toolbarThumbnail from "./toolbarThumbnail";
-import * as sidebarThumbnail from "./sidebarThumbnail";
-import defaultValue from "./defaultValue.json";
-import classnames from "classnames";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
-import BoxResizer from "visual/component/BoxResizer";
+import defaultValue from "./defaultValue.json";
+import * as sidebar from "./sidebar";
+import * as sidebarThumbnail from "./sidebarThumbnail";
+import { style } from "./styles";
+import * as toolbar from "./toolbar";
+import * as toolbarThumbnail from "./toolbarThumbnail";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -26,7 +27,7 @@ export default class WOOGallery extends EditorComponent {
 
   containerRef = React.createRef();
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   handleDynamicContentSuccess = () => {
     const gallery = this.containerRef.current?.querySelector(
@@ -94,6 +95,9 @@ export default class WOOGallery extends EditorComponent {
         "%": { min: 5, max: 100 }
       }
     };
+    const placeholder = makePlaceholder({
+      content: "{{editor_product_gallery}}"
+    });
 
     return (
       <Toolbar
@@ -120,7 +124,7 @@ export default class WOOGallery extends EditorComponent {
                 restrictions={restrictions}
               >
                 <DynamicContentHelper
-                  placeholder="{{editor_product_gallery}}"
+                  placeholder={placeholder}
                   placeholderIcon="woo-gallery"
                   placeholderHeight={250}
                   tagName="div"

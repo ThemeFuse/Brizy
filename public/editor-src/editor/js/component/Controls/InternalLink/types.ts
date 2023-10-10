@@ -1,4 +1,4 @@
-import { Post } from "visual/component/Options/types/dev/InternalLink/types/Post";
+import { ChoiceWithPermalink } from "visual/component/Options/types/dev/InternalLink/types";
 import { Choice } from "visual/component/Options/types/dev/Select/types";
 import { MValue } from "visual/utils/value";
 
@@ -11,7 +11,7 @@ export enum Status {
 
 export interface Props {
   className: string;
-  value: MValue<Post>;
+  value: MValue<ChoiceWithPermalink>;
   placeholder?: string;
   items: Choice[];
   status: Status;

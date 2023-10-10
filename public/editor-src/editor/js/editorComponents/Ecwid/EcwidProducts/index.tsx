@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { createRef, ReactNode } from "react";
+import React, { ReactNode, createRef } from "react";
 import { uniqueId } from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
@@ -10,6 +10,7 @@ import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendParent from "./sidebar";
 import * as sidebarButton from "./sidebarButton";
@@ -25,8 +26,8 @@ import * as toolbarFeaturedProducts from "./toolbarFeaturedProducts";
 import * as toolbarFooter from "./toolbarFooter";
 import * as toolbarGallery from "./toolbarGallery";
 import * as toolbarPagination from "./toolbarPagination";
-import * as toolbarShopTitle from "./toolbarShopTitle";
 import * as toolbarSKU from "./toolbarSKU";
+import * as toolbarShopTitle from "./toolbarShopTitle";
 import * as toolbarSortingOption from "./toolbarSortingOption";
 import * as toolbarSubtitle from "./toolbarSubtitle";
 import * as toolbarTitle from "./toolbarTitle";
@@ -414,12 +415,15 @@ export class EcwidProducts extends EditorComponent<Value> {
       "brz-ecwid-products-wrapper",
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
+    const storeId = makePlaceholder({
+      content: "{{ecwid_store_id}}"
+    });
 
     return (
       <Wrapper {...this.makeWrapperProps({ className })}>
         <div
           className="brz-ecwid-products"
-          data-store-id="{{ecwid_store_id}}"
+          data-store-id={storeId}
           data-storefront={encodeURIComponent(
             JSON.stringify(valueToEciwdConfigProducts(v))
           )}

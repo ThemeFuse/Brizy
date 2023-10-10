@@ -26,6 +26,14 @@ export const read: Reader<Record<string, unknown>> = (v) => {
   return undefined;
 };
 
+export const readNoArray: Reader<Record<string, unknown>> = (v) => {
+  if (isObject(v) && !Array.isArray(v)) {
+    return v;
+  }
+
+  return undefined;
+};
+
 export const readAsUnknownDict: Reader<Dictionary<unknown>> = (v) => {
   if (isObject(v)) {
     return v as Dictionary<unknown>;

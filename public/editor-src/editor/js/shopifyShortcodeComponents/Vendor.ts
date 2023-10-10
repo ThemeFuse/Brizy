@@ -13,7 +13,7 @@ export default function (config: ConfigCommon) {
         _styles: ["wrapper"],
         items: [
           {
-            type: "Vendor",
+            type: ElementTypes.Vendor,
             value: {
               ...config.contentDefaults?.[ElementTypes.Vendor]
             }

@@ -123,7 +123,7 @@ const Sortable = (props: Props): ReactElement => {
         drawerContentType: LeftSidebarOptionsIds.addElements
       })
     );
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const node = nodeRef.current;
@@ -161,7 +161,17 @@ const Sortable = (props: Props): ReactElement => {
     return (): void => {
       sortablePlugin?.destroy();
     };
-  }, [deviceMode]);
+  }, [
+    deviceMode,
+    acceptElements,
+    blindZone,
+    dragOffset,
+    isGrid,
+    onEnd,
+    onSort,
+    onStart,
+    showLines
+  ]);
 
   if (!children && IS_EDITOR) {
     return (

@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -44,13 +45,16 @@ export class AreviewReviews extends EditorComponent<Value> {
           >{`{% include 'aliexpress_reviews' %}`}</div>
         );
 
-      case "collectionRating":
+      case "collectionRating": {
+        const productId = makePlaceholder({ content: "{{ product.id }}" });
+
         return (
           <div
-            className="areviews_product_item areviews_stars{{ product.id }}"
-            data-product-id="{{ product.id }}"
+            className={`areviews_product_item areviews_stars ${productId}`}
+            data-product-id={productId}
           />
         );
+      }
     }
   }
 

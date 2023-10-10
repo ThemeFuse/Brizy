@@ -1,15 +1,25 @@
 import React from "react";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import Login from "./index.jsx";
 
 export default class WPLogin extends Login {
   getActions(type) {
+    const ajaxUrl = makePlaceholder({
+      content: "{{brizy_dc_ajax_url}}"
+    });
+    const hash = makePlaceholder({
+      content: "{{editor_nonce}}",
+      attr: { action: "brizy-login" }
+    });
+
     switch (type) {
-      case "register":
-        return "{{brizy_dc_ajax_url}}?action=editor_signup&hash={{editor_nonce action='brizy-login'}}";
+      case "register": {
+        return `${ajaxUrl}?action=editor_signup&hash=${hash}`;
+      }
       case "forgot":
-        return "{{brizy_dc_ajax_url}}?action=editor_lostpassword&hash={{editor_nonce action='brizy-login'}}";
+        return `${ajaxUrl}?action=editor_lostpassword&hash=${hash}`;
       default:
-        return "{{brizy_dc_ajax_url}}?action=editor_login&hash={{editor_nonce action='brizy-login'}}";
+        return `${ajaxUrl}?action=editor_login&hash=${hash}`;
     }
   }
 

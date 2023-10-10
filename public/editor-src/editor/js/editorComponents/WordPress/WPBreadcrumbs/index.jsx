@@ -1,15 +1,16 @@
+import classnames from "classnames";
 import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import classnames from "classnames";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class WPBreadcrumbs extends EditorComponent {
   static get componentId() {
@@ -30,6 +31,9 @@ class WPBreadcrumbs extends EditorComponent {
         style(v, vs, vd)
       )
     );
+    const placeholder = makePlaceholder({
+      content: "{{editor_breadcrumbs}}"
+    });
 
     return (
       <Toolbar
@@ -38,7 +42,7 @@ class WPBreadcrumbs extends EditorComponent {
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Wrapper {...this.makeWrapperProps({ className: classNameBC })}>
             <DynamicContentHelper
-              placeholder="{{editor_breadcrumbs}}"
+              placeholder={placeholder}
               placeholderIcon="wp-breadcrumbs"
               tagName="div"
               blocked={false}

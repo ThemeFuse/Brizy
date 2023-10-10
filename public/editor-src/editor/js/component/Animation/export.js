@@ -1,5 +1,5 @@
 import { getFreeLibs } from "visual/libs";
-import { AnimationEvents } from "./utils";
+import { AnimationEvents } from "visual/utils/animation";
 
 export default function ($node) {
   const { Animation } = getFreeLibs();

@@ -1,11 +1,17 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { DCGroup } from "visual/global/Config/types/DynamicContent";
+import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarLinkAnchor,
@@ -14,7 +20,12 @@ import {
 } from "visual/utils/toolbar";
 
 // @ts-expect-error "advancedSettings" old options
-export const getItems: GetItems<ElementModel> = ({ v, device, component }) => {
+export const getItems: GetItems<ElementModel> = ({
+  v,
+  device,
+  component,
+  context
+}) => {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state: "normal" });
 
@@ -27,7 +38,25 @@ export const getItems: GetItems<ElementModel> = ({ v, device, component }) => {
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
   const config = Config.getAll();
+
+  const collectionTypesHandler =
+    config?.api?.collectionTypes?.loadCollectionTypes.handler;
   const IS_GLOBAL_POPUP = isPopup(config);
+
+  const linkSource = dvv("linkSource");
+  const activeChoice = config?.contentDefaults?.PostExcerpt?.textPopulation;
+  const disablePredefinedPopulation =
+    config.elements?.postExcerpt?.predefinedPopulation === false;
+
+  const disableSourceTypeOption =
+    config?.elements?.postExcerpt?.sourceTypeOption === false;
+  const contextConfig =
+    context.dynamicContent.config ??
+    ([] as unknown as DCGroup<"wp"> | DCGroup<"cloud">);
+  const predefinedChoices = getDynamicContentChoices(
+    contextConfig,
+    DCTypes.richText
+  );
 
   return [
     {
@@ -39,7 +68,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, component }) => {
         title: t("Context")
       },
       position: 70,
-      disabled: dvv("type") === "wp",
+      disabled: dvv("type") === "wp" || disableSourceTypeOption,
       options: [
         {
           id: "sourceType",
@@ -58,18 +87,49 @@ export const getItems: GetItems<ElementModel> = ({ v, device, component }) => {
       type: "popover-dev",
       config: {
         icon: "nc-font",
-        size: device === "desktop" ? "large" : "auto",
+        size: device === "desktop" ? "xlarge" : "auto",
         title: t("Typography")
       },
       roles: ["admin"],
       position: 70,
       options: [
         {
-          id: "",
-          type: "typography-dev",
-          config: {
-            fontFamily: device === "desktop"
-          }
+          id: "gridTypography",
+          type: "grid-dev",
+          config: { separator: true },
+          columns: [
+            {
+              id: "col-1",
+              size: 1,
+              align: "center",
+              options: [
+                {
+                  id: "",
+                  type: "typography-dev",
+                  config: {
+                    fontFamily: device === "desktop"
+                  }
+                }
+              ]
+            },
+            {
+              id: "col-2",
+              size: "1",
+              align: "center",
+              options: [
+                {
+                  id: "text",
+                  devices: "desktop",
+                  type: "predefinedPopulation-dev",
+                  disabled: disablePredefinedPopulation || !activeChoice,
+                  config: {
+                    activeChoice,
+                    choices: predefinedChoices
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -114,6 +174,38 @@ export const getItems: GetItems<ElementModel> = ({ v, device, component }) => {
             showSingle: true
           },
           tabs: [
+            {
+              id: "page",
+              label: t("Page"),
+              options: [
+                {
+                  id: "linkSource",
+                  type: "select-dev",
+                  disabled: !collectionTypesHandler,
+                  label: t("Type"),
+                  devices: "desktop",
+                  choices: {
+                    load: () => getCollectionTypes(config),
+                    emptyLoad: {
+                      title: t("There are no choices")
+                    }
+                  },
+                  config: {
+                    size: "large"
+                  }
+                },
+                {
+                  id: "linkPage",
+                  type: "internalLink-dev",
+                  label: t("Find Page"),
+                  devices: "desktop",
+                  disabled: !linkSource,
+                  config: {
+                    postType: linkSource
+                  }
+                }
+              ]
+            },
             {
               id: "external",
               label: t("URL"),

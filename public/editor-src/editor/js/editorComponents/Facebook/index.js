@@ -7,6 +7,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { defaultValueValue } from "visual/utils/onChange";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -33,8 +34,12 @@ class Facebook extends EditorComponent {
   getAppData() {
     return {
       appId: 113869198637480,
-      href: "{{ brizy_dc_current_page_unique_url }}",
-      lang: "{{ brizy_dc_page_language }}"
+      href: makePlaceholder({
+        content: "{{ brizy_dc_current_page_unique_url }}"
+      }),
+      lang: makePlaceholder({
+        content: "{{ brizy_dc_page_language }}"
+      })
     };
   }
 

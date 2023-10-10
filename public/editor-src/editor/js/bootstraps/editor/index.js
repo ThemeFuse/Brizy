@@ -25,9 +25,9 @@ import {
 } from "visual/utils/traverse";
 import { getAuthorized } from "visual/utils/user/getAuthorized";
 import "../registerEditorParts";
-import { getCurrentPage } from "./getCurrentPage";
 import getMiddleware from "./middleware";
 import { showError } from "./utils/errors";
+import { readPageData } from "./utils/readPageData";
 
 const appDiv = document.querySelector("#brz-ed-root");
 const pageCurtain = window.parent.document.querySelector(
@@ -44,25 +44,27 @@ const pageCurtain = window.parent.document.querySelector(
     const config = Config.getAll();
     const projectStatus = config.project.status || {};
     const project = config.projectData;
+    const page = readPageData(config.pageData);
     const { isSyncAllowed = false } = config.cloud || {};
 
     if (!project || !project.data) {
-      throw new ProjectError(t("missing project"));
+      throw new ProjectError(t("Missing project data in config"));
+    }
+
+    if (!page || !page.data) {
+      throw new PageError(t("Missing page data in config"));
     }
 
     if (projectStatus && !projectStatus.locked) {
       await addProjectLockedBeacon();
     }
 
-    const [currentPage, globalBlocks] = await Promise.all([
-      getCurrentPage(config),
-      getGlobalBlocks()
-    ]);
+    const globalBlocks = await getGlobalBlocks();
 
     /* eslint-disable no-console */
     if (process.env.NODE_ENV === "development") {
       console.log("Project loaded", project);
-      console.log("currentPage loaded", currentPage);
+      console.log("Page loaded", page);
       console.log("Global blocks loaded", globalBlocks);
     }
     /* eslint-enabled no-console */
@@ -74,7 +76,7 @@ const pageCurtain = window.parent.document.querySelector(
     // and add them to the project
     const { styles, extraFontStyles = [], fonts } = project.data;
 
-    const blocks = getBlocksInPage(currentPage, globalBlocks);
+    const blocks = getBlocksInPage(page, globalBlocks);
 
     const pageFonts = getUsedModelsFonts({
       models: blocks,
@@ -106,11 +108,11 @@ const pageCurtain = window.parent.document.querySelector(
       hydrate({
         project: normalizedProject,
         projectStatus,
+        page,
         globalBlocks,
         authorized: getAuthorized(),
         syncAllowed: isSyncAllowed,
-        fonts: deepMerge(fonts, newFonts),
-        page: currentPage
+        fonts: deepMerge(fonts, newFonts)
       })
     );
 
@@ -155,7 +157,7 @@ const pageCurtain = window.parent.document.querySelector(
 
                 res({ ...pageHTML, pageData, projectData });
               } catch (e) {
-                showError(e);
+                showError({ e });
               }
             })();
           }
@@ -179,6 +181,6 @@ const pageCurtain = window.parent.document.querySelector(
       }
     );
   } catch (e) {
-    showError(e, 0);
+    showError({ e, inRoot: true, hideAfter: 0 });
   }
 })();

@@ -196,7 +196,7 @@ class SectionPopup2 extends EditorComponent {
       closeCustomAttributes,
       closeCustomCSS,
       closeCustomID,
-      cssIDPopulation
+      cssID
     } = v;
     const _closeCustomID = Str.mRead(closeCustomID) || undefined;
     const config = Config.getAll();
@@ -236,7 +236,7 @@ class SectionPopup2 extends EditorComponent {
 
     const props = {
       ...parseCustomAttributes(closeCustomAttributes),
-      id: cssIDPopulation ?? _closeCustomID,
+      id: cssID ?? _closeCustomID,
       className: className
     };
 
@@ -439,7 +439,7 @@ class SectionPopup2 extends EditorComponent {
     }
 
     const classNamePopup = classnames(
-      "brz-popup2",
+      "brz brz-popup2",
       "brz-popup2__preview",
       `brz-popup2__${columnsHeightStyle}`,
       {

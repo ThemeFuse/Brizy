@@ -1,5 +1,3 @@
-import { SupportLinks } from "visual/component/LeftSidebar/components/Cms/types/SupportLinks";
-import { WhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
 import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { Pro } from "visual/global/Config/types/Pro";
 import { Project } from "visual/global/Config/types/Project";
@@ -12,6 +10,7 @@ import { CollectionItemId, CustomerId } from "visual/types";
 import { Role } from "visual/utils/membership";
 import { WithId } from "visual/utils/options/attributes";
 import { Module } from "../Module";
+import { WhiteLabel } from "./WhiteLabel";
 import { Shopify } from "./modules/shop/Shopify";
 
 export type ShopModules = undefined | Ecwid | Shopify;
@@ -82,23 +81,6 @@ export interface Base<Platform> extends ConfigCommon, WithId<number> {
   user: User<"cloud">;
   urls: Urls<"cloud">;
   project: Project<"cloud">;
-  cms: {
-    adminUrl: string;
-    apiUrl: string;
-    blogId: string;
-    supportLinks: SupportLinks;
-    customerEditorUrl: string;
-    customerPreviewUrl: string;
-    isAvailablePreviewBadge: boolean;
-    collectionPreviewUrl: string;
-    notificationsApiUrl: string;
-    translationsApiUrl: string;
-    modules?: {
-      users?: {
-        disabled?: boolean;
-      };
-    };
-  };
   whiteLabel?: WhiteLabel;
   modules?: Module<"cloud">;
 }

@@ -13,7 +13,7 @@ import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
 import { ElementModel } from "visual/component/Elements/Types";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import {
-  disableHoverForElements,
+  disabledHoverForElements,
   getHoverAnimationOptions
 } from "visual/component/HoverAnimation/utils";
 import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
@@ -46,6 +46,7 @@ import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { getWrapperContainerW } from "visual/utils/meta";
+import { CssId, getCSSId } from "visual/utils/models/cssId";
 import {
   defaultValueKey,
   defaultValueValue,
@@ -72,9 +73,9 @@ import { styleAnimation, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
 
-export type Value = ElementModel & {
+export interface Value extends ElementModel, CssId {
   items: ElementModel[];
-};
+}
 type Component<P> = ComponentType<P> | keyof JSX.IntrinsicElements;
 type Props = {
   meta: {
@@ -234,7 +235,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const options = makeOptionValueToAnimation(v);
     const isHidden =
       !element ||
-      disableHoverForElements.includes(element as ElementTypes) ||
+      disabledHoverForElements.includes(element as ElementTypes) ||
       !this.hoverAnimationOptionActive(hoverName);
 
     return {
@@ -247,9 +248,8 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
   renderStatic({ v, vs, vd, extraAttr, className, ref }: Static): ReactElement {
     const { customAttributes } = v;
-    const customID = Str.mRead(v.customID) || undefined;
-    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
     const proTitleElement = this.getTitleIfPro();
+    const cssId = getCSSId<Value>(v);
 
     if (proTitleElement) {
       const content = (
@@ -287,7 +287,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
                 ...Attr.mRead(customAttributes),
                 ...containerBorderAttr,
                 ...extraAttr,
-                id: cssIDPopulation ?? customID
+                id: cssId
               }}
             >
               <ContextMenuExtend
@@ -376,7 +376,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
               ...Attr.mRead(customAttributes),
               ...containerBorderAttr,
               ...extraAttr,
-              id: cssIDPopulation ?? customID
+              id: cssId
             }}
           >
             <ContextMenu
@@ -468,8 +468,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
   renderForView(v: Value, vs: Value, vd: Value): ReactNode {
     const { customAttributes } = v;
     const { sectionPopup, sectionPopup2 } = this.props.meta;
-    const customID = Str.mRead(v.customID) || undefined;
-    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
+    const cssId = getCSSId(v);
 
     const { cssKeyframe, animationId, options, isHidden } =
       this.getHoverData(v);
@@ -499,7 +498,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
         animationClass={this.getAnimationClassName(v, vs, vd)}
         componentProps={{
           ...Attr.mRead(customAttributes),
-          id: cssIDPopulation ?? customID
+          id: cssId
         }}
       >
         {content}
@@ -508,12 +507,8 @@ export default class Wrapper extends EditorComponent<Value, Props> {
   }
 
   getWrapperClassName = (v: Value, vs: Value, vd: Value): string => {
-    const { customClassName, cssClassPopulation } = v;
-
-    const _className =
-      cssClassPopulation === ""
-        ? Str.mRead(customClassName)
-        : Str.mRead(cssClassPopulation);
+    const { customClassName, cssClass } = v;
+    const _className = Str.mRead(cssClass || customClassName);
 
     return classNames(
       css(this.getComponentId(), this.getId(), styleWrapper(v, vs, vd)),

@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import PointerEvents from "visual/component/PointerEvents";
@@ -27,11 +27,19 @@ export const LeftSidebar: FC = () => {
       ),
     [drawerContentType, dispatch]
   );
+  const config = useMemo(() => {
+    return Config.getAll();
+  }, []);
+
+  const { top, bottom } = useMemo(() => {
+    return getOptions(config);
+  }, [config]);
 
   const opened = drawerContentType === "cmsUi" && isOpen;
-  const config = Config.getAll();
-  const leftSidebarCssV2 = isCloud(config) && !isStory(config);
-  const { top, bottom } = getOptions(config);
+
+  const leftSidebarCssV2 = useMemo(() => {
+    return isCloud(config) && !isStory(config);
+  }, [config]);
 
   return (
     <ClickOutside

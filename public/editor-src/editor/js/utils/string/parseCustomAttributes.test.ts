@@ -75,7 +75,19 @@ onsubmit: "
   [
     `onclick: 'console.log(\\'test\\')'`,
     { "data-brz-onclick-event": "console.log(\\'test\\')" }
-  ]
+  ],
+
+  // Dynamic Content
+  [
+    "{{ placeholder content='{{asdasdasd}}' }}",
+    {
+      "data-brz-dcatts": "{{ placeholder content='{{asdasdasd}}' }}"
+    }
+  ],
+  ["{{ end_placeholder }}", {}],
+  ["{{ end_placeholderaaaaa }}", {}],
+  ["{{ placeholder }}", {}],
+  ["{{ placeholderaaa }}", {}]
 ])("Testing 'parseCustomAttributes' function", (s, expected) => {
   expect(parseCustomAttributes(s)).toEqual(expected);
 });

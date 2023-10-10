@@ -18,6 +18,7 @@ export type Config = WithSize & {
   search?: boolean;
   items?: number;
   scroll?: number;
+  autoClose?: boolean;
 };
 
 export type ChoicesSync = Choice[];

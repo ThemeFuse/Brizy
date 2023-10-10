@@ -26,7 +26,18 @@ export const Slider: FC<Props> = ({
   config = {},
   label
 }) => {
-  const onEdit = config.debounceUpdate ?? false;
+  const {
+    debounceUpdate,
+    updateRate = 16,
+    min = 0,
+    max = 100,
+    inputMin,
+    inputMax,
+    step = 1,
+    units = []
+  } = config ?? {};
+
+  const onEdit = debounceUpdate ?? false;
   const ref = useRef<Value>();
   const [_value, setValue] = useState<Value>(value);
   const [editing, setEdit] = useState<boolean>(false);
@@ -48,29 +59,29 @@ export const Slider: FC<Props> = ({
         ref.current = _value;
       }
     },
-    Math.max(0, config?.updateRate ?? 16),
-    [_value.value, _value.unit, onEdit, editing]
+    Math.max(0, updateRate),
+    [_value, onEdit, editing, updateRate]
   );
 
   useEffect(() => {
     if (!ref.current || !eq(value, ref.current)) {
       setValue(value);
     }
-  }, [value.value, value.unit]);
+  }, [value]);
 
   return (
     <>
       {label}
       <NumberSlider
         className={className}
-        min={config.min ?? 0}
-        max={config.max ?? 100}
-        inputMin={config?.inputMin}
-        inputMax={config?.inputMax}
-        step={config.step ?? 1}
+        min={min}
+        max={max}
+        inputMin={inputMin}
+        inputMax={inputMax}
+        step={step}
         value={{ number: _value.value, unit: _value.unit }}
         onChange={_onChange}
-        units={config.units ?? []}
+        units={units}
       />
     </>
   );

@@ -1,17 +1,25 @@
 import Config from "visual/global/Config";
-import { getSourceIds } from "visual/utils/api";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getDynamicContentChoices,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
 
-export function getItems({ v, device }) {
-  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
-
-  const sourceType = dvv("sourceType");
-
+export function getItems({ v, device, context }) {
   const config = Config.getAll();
-  const sourceItemsHandler = config?.api?.sourceItems?.handler;
+
+  const activeChoice = config.contentDefaults.PostContent.textPopulation;
+  const disablePredefinedPopulation =
+    config.elements?.postContent?.predefinedPopulation === false;
+  const predefinedChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
+
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
     dvv("paragraphColorHex"),
@@ -20,37 +28,11 @@ export function getItems({ v, device }) {
 
   return [
     {
-      id: "posts",
-      type: "popover-dev",
-      config: {
-        icon: "nc-wp-post-content",
-        size: "auto",
-        title: t("Description")
-      },
-      position: 70,
-      options: [
-        {
-          id: "sourceID",
-          type: "select-dev",
-          label: t("Source"),
-          disabled: !sourceItemsHandler || !sourceType,
-          devices: "desktop",
-          placeholder: "Select",
-          choices: {
-            load: getSourceIds(sourceType, config),
-            emptyLoad: {
-              title: t("There are no choices")
-            }
-          }
-        }
-      ]
-    },
-    {
       id: "toolbarTypography",
       type: "popover-dev",
       config: {
         icon: "nc-font",
-        size: device === "desktop" ? "large" : "auto",
+        size: device === "desktop" ? "xlarge" : "auto",
         title: t("Typography")
       },
       roles: ["admin"],
@@ -65,11 +47,43 @@ export function getItems({ v, device }) {
               label: "P",
               options: [
                 {
-                  id: "paragraph",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: device === "desktop"
-                  }
+                  id: "gridTypography",
+                  type: "grid-dev",
+                  config: { separator: true },
+                  columns: [
+                    {
+                      id: "col-1",
+                      size: 1,
+                      align: "center",
+                      options: [
+                        {
+                          id: "paragraph",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: device === "desktop"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      id: "col-2",
+                      size: "1",
+                      align: "center",
+                      options: [
+                        {
+                          id: "text",
+                          devices: "desktop",
+                          disabled:
+                            disablePredefinedPopulation || !activeChoice,
+                          type: "predefinedPopulation-dev",
+                          config: {
+                            activeChoice,
+                            choices: predefinedChoices
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -78,11 +92,43 @@ export function getItems({ v, device }) {
               label: "H1",
               options: [
                 {
-                  id: "h1",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: device === "desktop"
-                  }
+                  id: "gridTypography",
+                  type: "grid-dev",
+                  config: { separator: true },
+                  columns: [
+                    {
+                      id: "col-1",
+                      size: 1,
+                      align: "center",
+                      options: [
+                        {
+                          id: "h1",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: device === "desktop"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      id: "col-2",
+                      size: "1",
+                      align: "center",
+                      options: [
+                        {
+                          id: "text",
+                          devices: "desktop",
+                          type: "predefinedPopulation-dev",
+                          disabled:
+                            disablePredefinedPopulation || !activeChoice,
+                          config: {
+                            activeChoice,
+                            choices: predefinedChoices
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -91,11 +137,43 @@ export function getItems({ v, device }) {
               label: "H2",
               options: [
                 {
-                  id: "h2",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: device === "desktop"
-                  }
+                  id: "gridTypography",
+                  type: "grid-dev",
+                  config: { separator: true },
+                  columns: [
+                    {
+                      id: "col-1",
+                      size: 1,
+                      align: "center",
+                      options: [
+                        {
+                          id: "h2",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: device === "desktop"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      id: "col-2",
+                      size: "1",
+                      align: "center",
+                      options: [
+                        {
+                          id: "text",
+                          devices: "desktop",
+                          type: "predefinedPopulation-dev",
+                          disabled:
+                            disablePredefinedPopulation || !activeChoice,
+                          config: {
+                            activeChoice,
+                            choices: predefinedChoices
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -104,11 +182,43 @@ export function getItems({ v, device }) {
               label: "H3",
               options: [
                 {
-                  id: "h3",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: device === "desktop"
-                  }
+                  id: "gridTypography",
+                  type: "grid-dev",
+                  config: { separator: true },
+                  columns: [
+                    {
+                      id: "col-1",
+                      size: 1,
+                      align: "center",
+                      options: [
+                        {
+                          id: "h3",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: device === "desktop"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      id: "col-2",
+                      size: "1",
+                      align: "center",
+                      options: [
+                        {
+                          id: "text",
+                          devices: "desktop",
+                          type: "predefinedPopulation-dev",
+                          disabled:
+                            disablePredefinedPopulation || !activeChoice,
+                          config: {
+                            activeChoice,
+                            choices: predefinedChoices
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -117,11 +227,43 @@ export function getItems({ v, device }) {
               label: "H4",
               options: [
                 {
-                  id: "h4",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: device === "desktop"
-                  }
+                  id: "gridTypography",
+                  type: "grid-dev",
+                  config: { separator: true },
+                  columns: [
+                    {
+                      id: "col-1",
+                      size: 1,
+                      align: "center",
+                      options: [
+                        {
+                          id: "h4",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: device === "desktop"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      id: "col-2",
+                      size: "1",
+                      align: "center",
+                      options: [
+                        {
+                          id: "text",
+                          devices: "desktop",
+                          type: "predefinedPopulation-dev",
+                          disabled:
+                            disablePredefinedPopulation || !activeChoice,
+                          config: {
+                            activeChoice,
+                            choices: predefinedChoices
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -130,11 +272,43 @@ export function getItems({ v, device }) {
               label: "H5",
               options: [
                 {
-                  id: "h5",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: device === "desktop"
-                  }
+                  id: "gridTypography",
+                  type: "grid-dev",
+                  config: { separator: true },
+                  columns: [
+                    {
+                      id: "col-1",
+                      size: 1,
+                      align: "center",
+                      options: [
+                        {
+                          id: "h5",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: device === "desktop"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      id: "col-2",
+                      size: "1",
+                      align: "center",
+                      options: [
+                        {
+                          id: "text",
+                          devices: "desktop",
+                          type: "predefinedPopulation-dev",
+                          disabled:
+                            disablePredefinedPopulation || !activeChoice,
+                          config: {
+                            activeChoice,
+                            choices: predefinedChoices
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -143,11 +317,43 @@ export function getItems({ v, device }) {
               label: "H6",
               options: [
                 {
-                  id: "h6",
-                  type: "typography-dev",
-                  config: {
-                    fontFamily: device === "desktop"
-                  }
+                  id: "gridTypography",
+                  type: "grid-dev",
+                  config: { separator: true },
+                  columns: [
+                    {
+                      id: "col-1",
+                      size: 1,
+                      align: "center",
+                      options: [
+                        {
+                          id: "h6",
+                          type: "typography-dev",
+                          config: {
+                            fontFamily: device === "desktop"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      id: "col-2",
+                      size: "1",
+                      align: "center",
+                      options: [
+                        {
+                          id: "text",
+                          devices: "desktop",
+                          type: "predefinedPopulation-dev",
+                          disabled:
+                            disablePredefinedPopulation || !activeChoice,
+                          config: {
+                            activeChoice,
+                            choices: predefinedChoices
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }

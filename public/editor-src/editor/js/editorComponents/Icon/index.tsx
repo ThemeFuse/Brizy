@@ -22,15 +22,15 @@ import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { Block } from "visual/types";
 import { css } from "visual/utils/cssStyle";
-import { pipe } from "visual/utils/fp";
 import { isStory } from "visual/utils/models";
+import { CssId, getCSSId } from "visual/utils/models/cssId";
+import { getLinkData } from "visual/utils/models/link";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { WithClassName } from "visual/utils/options/attributes";
-import * as Num from "visual/utils/reader/number";
 import * as State from "visual/utils/stateMode";
 import * as Str from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
-import { MValue, isNullish } from "visual/utils/value";
+import { MValue } from "visual/utils/value";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleWrapper } from "./styles";
@@ -38,10 +38,11 @@ import * as toolbarConfig from "./toolbar";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
-export interface Value extends ElementModel {
+export interface Value extends ElementModel, CssId {
   name: string;
   type: string;
 
+  linkPage: string;
   popups: Block[];
   linkPopup: string;
   linkLightBox: string;
@@ -124,8 +125,6 @@ const resizerTransformPatch = (patch: Patch): Patch => {
   return newPatch;
 };
 
-const isNan = pipe(Num.read, isNullish);
-
 const config = Config.getAll();
 const IS_STORY = isStory(config);
 
@@ -135,6 +134,8 @@ class Icon extends EditorComponent<Value, Props> {
   }
 
   static defaultValue = defaultValue;
+
+  static experimentalDynamicContent = true;
 
   handleResizerChange = (patch: Patch): void => {
     const device = deviceModeSelector(getStore().getState());
@@ -194,32 +195,12 @@ class Icon extends EditorComponent<Value, Props> {
     const {
       type,
       name,
-      linkType,
-      linkAnchor,
-      linkToSlide,
-      linkExternalBlank,
-      linkExternalRel,
-      linkExternalType,
-      linkPopup,
-      linkUpload,
       actionClosePopup,
-      customID,
       customClassName,
       customCSS,
-      cssIDPopulation,
-      cssClassPopulation
+      cssClass
     } = v;
-
-    const hrefs = {
-      anchor: linkAnchor,
-      story: !isNan(linkToSlide) ? `slide-${linkToSlide}` : "",
-      external: v[linkExternalType],
-      popup: linkPopup,
-      upload: linkUpload,
-      action: "",
-      lightBox: "",
-      page: ""
-    };
+    const linkData = getLinkData(v);
 
     const classNameIcon = classnames(
       "brz-icon",
@@ -247,52 +228,37 @@ class Icon extends EditorComponent<Value, Props> {
       </span>
     );
 
-    if (hrefs[linkType]) {
+    if (linkData.href) {
       const className = classnames({
         "brz-popup2__action-close":
-          linkType === "action" && actionClosePopup === "on"
+          linkData.type === "action" && actionClosePopup === "on"
       });
-      const slideAnchor =
-        linkType === "story" && linkToSlide
-          ? { "data-brz-link-story": linkToSlide }
-          : {};
 
       content = (
         <Link
-          type={linkType}
-          href={hrefs[linkType]}
-          target={linkExternalBlank}
-          rel={linkExternalRel}
+          type={linkData.type}
+          href={linkData.href}
+          target={linkData.target}
+          rel={linkData.rel}
           className={className}
-          slide={slideAnchor}
+          slide={linkData.slide}
         >
           {content}
         </Link>
       );
     }
-    const showId =
-      Str.mRead(customID).length === 0 &&
-      Str.mRead(cssIDPopulation).length === 0;
+    const id = getCSSId(v);
 
     const props = {
-      ...(!showId && {
-        id:
-          cssIDPopulation === ""
-            ? Str.mRead(customID)
-            : Str.mRead(cssIDPopulation)
-      }),
-      className:
-        cssClassPopulation === ""
-          ? Str.mRead(customClassName)
-          : Str.mRead(cssClassPopulation)
+      ...(id && { id }),
+      className: cssClass || customClassName
     };
 
     const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
     const options = makeOptionValueToAnimation(v);
     const { cloneableAnimationId } = this.props.meta;
     const animationId = Str.read(cloneableAnimationId) ?? this.getId();
-    const isHidden = IS_STORY || (IS_PREVIEW && hoverName === "none");
-
+    const isHidden = IS_STORY || hoverName === "none";
     return (
       <Fragment>
         <Toolbar

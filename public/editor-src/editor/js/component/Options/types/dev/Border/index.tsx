@@ -6,6 +6,7 @@ import {
   Props as ControlProps
 } from "visual/component/Controls/Border";
 import * as Option from "visual/component/Options/Type";
+import { paletteHex } from "visual/component/Options/types/dev/ColorPicker/utils";
 import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
@@ -117,6 +118,9 @@ export const Border: FC<Props> = ({ value, onChange, className, config }) => {
     );
   }, []);
 
+  const palette = getColorPaletteColors();
+  const hex = paletteHex(value.palette, palette) ?? value.hex;
+
   return (
     <Control
       className={className}
@@ -127,7 +131,7 @@ export const Border: FC<Props> = ({ value, onChange, className, config }) => {
       widthTypes={config?.width ?? ["grouped", "ungrouped"]}
       style={value.style}
       onChangeStyle={changeStyle}
-      hex={value.hex}
+      hex={hex}
       onChangeHex={changeHex}
       opacity={value.opacity}
       onChangeOpacity={changeOpacity}

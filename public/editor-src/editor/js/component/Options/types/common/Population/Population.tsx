@@ -6,9 +6,13 @@ import Options from "visual/component/Options";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { OnChange } from "visual/component/Options/Type";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import Config from "visual/global/Config";
+import { pipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
-import { findDeep } from "visual/utils/object";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import * as Obj from "visual/utils/reader/object";
+import * as Str from "visual/utils/reader/string";
+import { Literal } from "visual/utils/types/Literal";
 import Input from "./Input";
 import Select from "./Select";
 import { Handler } from "./types/Handler";
@@ -17,10 +21,11 @@ import {
   PopulationOptgroupMethod
 } from "./types/PopulationMethod";
 import { Value } from "./types/Value";
-import { isOptgroup } from "./utils";
+import { findDCChoiceByPlaceholder, parsePopulation } from "./utils";
 
 interface Config {
   iconOnly?: boolean;
+  mockValue?: boolean;
   choices?: Array<PopulationMethod | PopulationOptgroupMethod>;
   handlerChoices?: Handler<string>;
 }
@@ -34,7 +39,10 @@ interface SelectProps {
   className?: string;
   choices: Required<Config>["choices"];
   value: string;
-  onChange: (s: string) => void;
+  entityType: string;
+  entityId: Literal;
+  currentDCChoice?: PopulationMethod;
+  onChange: (s: Value) => void;
 }
 
 interface IconProps {
@@ -42,16 +50,29 @@ interface IconProps {
   iconOnly?: boolean;
   handlerChoices: Required<Config>["handlerChoices"];
   value: string;
-  onChange: (s: string) => void;
+  entityType: string;
+  entityId: Literal;
+  onChange: (s: Value) => void;
 }
 
 const _Select = (props: SelectProps): ReactElement => {
-  const { className, choices, value, onChange } = props;
+  const {
+    className,
+    choices,
+    value,
+    entityType,
+    entityId,
+    currentDCChoice,
+    onChange
+  } = props;
   return (
     <Select<string>
       className={className}
       choices={choices}
       value={value}
+      currentDCChoice={currentDCChoice}
+      entityType={entityType}
+      entityId={entityId}
       onChange={onChange}
     />
   );
@@ -61,13 +82,21 @@ const CHOICE_HANDLER = "CHOICE_HANDLER";
 const EMPTY = "";
 
 const _Icon = (props: IconProps): ReactElement => {
-  const { className, value, handlerChoices, iconOnly, onChange } = props;
+  const {
+    className,
+    value,
+    entityType,
+    entityId,
+    handlerChoices,
+    iconOnly,
+    onChange
+  } = props;
 
   const choices = useMemo(() => {
     if (iconOnly) {
       return [
-        { title: t("Custom Text"), value: EMPTY },
-        { title: t("Others"), value: CHOICE_HANDLER }
+        { title: t("Custom Text"), value: EMPTY, name: EMPTY },
+        { title: t("Others"), value: CHOICE_HANDLER, name: EMPTY }
       ];
     }
 
@@ -75,18 +104,38 @@ const _Icon = (props: IconProps): ReactElement => {
   }, [iconOnly]);
 
   const handleChange = useCallback(
-    (value) => {
+    ({ population: value }) => {
       if (value === CHOICE_HANDLER) {
-        handlerChoices(onChange, ToastNotification.error);
+        handlerChoices(
+          (v) =>
+            onChange({
+              population: v,
+              populationEntityType: EMPTY,
+              populationEntityId: EMPTY
+            }),
+          ToastNotification.error
+        );
       } else {
-        onChange(value);
+        onChange({
+          population: value,
+          populationEntityType: EMPTY,
+          populationEntityId: EMPTY
+        });
       }
     },
     [onChange, handlerChoices]
   );
 
   const handleClick = useCallback(() => {
-    handlerChoices(onChange, ToastNotification.error);
+    handlerChoices(
+      (v) =>
+        onChange({
+          population: v,
+          populationEntityType: EMPTY,
+          populationEntityId: EMPTY
+        }),
+      ToastNotification.error
+    );
   }, [onChange, handlerChoices]);
 
   if (choices.length > 0) {
@@ -95,6 +144,8 @@ const _Icon = (props: IconProps): ReactElement => {
         className={className}
         value={value !== EMPTY ? CHOICE_HANDLER : EMPTY}
         choices={choices}
+        entityType={entityType}
+        entityId={entityId}
         onChange={handleChange}
       />
     );
@@ -118,35 +169,55 @@ export const Population: FC<Props> = ({
   label
 }) => {
   let input;
-
   const { iconOnly, handlerChoices } = config ?? {};
   const { population } = value;
 
   const choices = useMemo(() => {
-    if (typeof handlerChoices === "function") {
+    if (typeof handlerChoices === "function" || !config) {
       return [];
     }
 
+    const { mockValue = true, choices } = config;
+
     return [
+      ...(mockValue && !iconOnly
+        ? [
+            {
+              title: t("None"),
+              value: EMPTY,
+              name: EMPTY,
+              attr: {},
+              varyAttr: []
+            }
+          ]
+        : []),
       ...(iconOnly
         ? [
             {
               title: t("Custom Text"),
-              value: EMPTY
+              value: EMPTY,
+              name: EMPTY,
+              attr: {},
+              varyAttr: []
             }
           ]
         : []),
-      ...(config?.choices || [])
+      ...(choices || [])
     ];
-  }, [config?.choices, handlerChoices, iconOnly]);
+  }, [config, handlerChoices, iconOnly]);
 
-  const handlePopulationChange = useCallback<OnChange<string>>(
-    (v: string) => onChange({ population: v }),
+  const handlePopulationChange = useCallback<OnChange<Value>>(
+    (v) => pipe(parsePopulation, onChange)(v),
     [onChange]
   );
 
   const handleRemove = useCallback(
-    () => onChange({ population: "" }),
+    () =>
+      onChange({
+        population: EMPTY,
+        populationEntityType: EMPTY,
+        populationEntityId: EMPTY
+      }),
     [onChange]
   );
 
@@ -158,26 +229,31 @@ export const Population: FC<Props> = ({
     "brz-control__select-population--only-icon": !!iconOnly
   });
 
-  const activeItem = useMemo(() => {
-    if (typeof handlerChoices === "function" && population) {
-      return { title: population };
+  const selectedPlaceholder: PopulationMethod | undefined = useMemo(() => {
+    if (typeof config?.handlerChoices === "function" && population) {
+      return {
+        title: population,
+        value: EMPTY,
+        name: EMPTY,
+        attr: {},
+        varyAttr: []
+      };
     }
 
-    const active: PopulationMethod | null = findDeep(
-      choices,
-      (option: PopulationMethod | PopulationOptgroupMethod): boolean => {
-        return !isOptgroup(option) && option.value === population;
-      }
-    ).obj;
+    return findDCChoiceByPlaceholder({
+      placeholder: Str.read(population) ?? "",
+      choices
+    });
+  }, [config?.handlerChoices, choices, population]);
 
-    if (active) {
-      return { title: active.title };
-    }
+  const activeItem =
+    selectedPlaceholder &&
+    Obj.isObject(selectedPlaceholder) &&
+    !Array.isArray(selectedPlaceholder)
+      ? selectedPlaceholder
+      : undefined;
 
-    return null;
-  }, [handlerChoices, choices, population]);
-
-  if (population !== undefined) {
+  if (value.population !== undefined) {
     // fallback removed temporary, will be added with new design later
     if (!iconOnly) {
       input = (
@@ -190,7 +266,10 @@ export const Population: FC<Props> = ({
       if (!activeItem) {
         choices.push({
           title: t("N/A"),
-          value: population ?? ""
+          value: value.population ?? EMPTY,
+          name: EMPTY,
+          attr: {},
+          varyAttr: []
         });
       }
     }
@@ -213,7 +292,10 @@ export const Population: FC<Props> = ({
           <_Select
             className={_className}
             choices={choices}
-            value={population ?? ""}
+            value={value.population ?? ""}
+            entityType={value.populationEntityType ?? ""}
+            currentDCChoice={activeItem}
+            entityId={value.populationEntityId ?? ""}
             onChange={handlePopulationChange}
           />
         ) : null}
@@ -222,7 +304,9 @@ export const Population: FC<Props> = ({
             iconOnly={iconOnly}
             className={_className}
             handlerChoices={handlerChoices}
-            value={population ?? ""}
+            value={value.population ?? ""}
+            entityType={value.populationEntityType ?? ""}
+            entityId={value.populationEntityId ?? ""}
             onChange={handlePopulationChange}
           />
         ) : null}

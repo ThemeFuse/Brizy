@@ -1,19 +1,20 @@
-import React, { useState } from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import Config from "visual/global/Config";
-import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
-import { DynamicContent } from "visual/editorComponents/EditorComponent/DynamicContent/DynamicContent";
+import React, { useState } from "react";
 import Placeholder from "visual/component/Placeholder";
+import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
 import Toolbar from "visual/component/Toolbar";
-import toolbarConfigFn from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import { getStore } from "visual/redux/store";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { DynamicContent } from "visual/editorComponents/EditorComponent/DynamicContent/DynamicContent";
+import Config from "visual/global/Config";
 import { pageSelector } from "visual/redux/selectors";
-import defaultValue from "./defaultValue.json";
-import { style } from "./styles";
+import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import toolbarConfigFn from "./toolbar";
 
 export default class MenuSimple extends EditorComponent {
   static get componentId() {
@@ -48,7 +49,7 @@ export default class MenuSimple extends EditorComponent {
     }
 
     if (!errMsg) {
-      const selectedMenu = menusConfig.find(menu => menu.id === v.menuName);
+      const selectedMenu = menusConfig.find((menu) => menu.id === v.menuName);
 
       if (!selectedMenu) {
         errMsg = t("Select a menu from the element options");
@@ -76,15 +77,17 @@ export default class MenuSimple extends EditorComponent {
 
     const { menuName, tabletToggleMenu, mobileToggleMenu } = v;
     const toolbarConfig = toolbarConfigFn(Config.get("menuData"));
+    const placeholder = makePlaceholder({
+      content: "{{ brizy_dc_simple_menu }}",
+      attr: { menuId: menuName }
+    });
 
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <div className={className}>
-          <DynamicContent
-            placeholder={`{{brizy_dc_simple_menu id='${menuName}'}}`}
-          >
+          <DynamicContent placeholder={placeholder}>
             {({ status, data }) => {
               if (status === "success") {
                 let ret = (
@@ -165,7 +168,7 @@ function CloudCreateMenuButton({ children }) {
       <a
         className="brz-a"
         href="#"
-        onClick={e => {
+        onClick={(e) => {
           e.preventDefault();
           setOpened(true);
         }}

@@ -1,12 +1,15 @@
 import { mPipe, optional, parseStrict, pass } from "fp-utilities";
+import { findDCChoiceByPlaceholder } from "visual/component/Options/types/common/Population/utils";
 import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isHex } from "visual/utils/color";
+import { explodePlaceholder } from "visual/utils/dynamicContent";
 import { pipe } from "visual/utils/fp";
-import { getDynamicContentByPlaceholder } from "visual/utils/options";
+import { getDynamicContentChoices } from "visual/utils/options";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
-import { decodeFromString } from "visual/utils/string";
-import { onNullish, throwOnNullish } from "visual/utils/value";
+import { decodeFromString, encodeToString } from "visual/utils/string";
+import { isNullish, onNullish, throwOnNullish } from "visual/utils/value";
 import { classNamesToV } from "./transforms";
 
 // have problems with cheerio it declared _ as global variables
@@ -134,13 +137,17 @@ const getTagName = ({ header, pre }, $elem) => {
 // to think how to get rid of this function
 const getLink = (value = "{}") => {
   const {
-    type = "external",
+    type = "page",
     anchor = "",
     external = "",
+    internal = "",
+    pageTitle = "",
     externalBlank = "off",
     externalRel = "off",
     population = "",
-    externalType = "external",
+    populationEntityType = "",
+    populationEntityId = "",
+    externalType = "page",
     popup = "",
     upload = "",
     linkToSlide = 1
@@ -153,23 +160,77 @@ const getLink = (value = "{}") => {
     linkExternalBlank: externalBlank,
     linkExternalRel: externalRel,
     linkPopulation: population,
+    linkPopulationEntityId: populationEntityId,
+    linkPopulationEntityType: populationEntityType,
     linkExternalType: externalType,
     linkPopup: popup.replace("#", ""),
     linkUpload: upload,
-    linkToSlide
+    linkToSlide,
+    linkPage: internal,
+    linkPageTitle: pageTitle
   };
+};
+
+// background
+const getBackground = (value) => {
+  if (isNullish(value)) {
+    return {};
+  }
+
+  const { imagePopulation: _population } = value;
+  const populationObj = explodePlaceholder(_population ?? undefined);
+  const population = populationObj?.content
+    ? {
+        imagePopulation: populationObj.content,
+        imagePopulationEntityId: populationObj.attr?.entityId ?? "",
+        imagePopulationEntityType: populationObj.attr?.entityType ?? ""
+      }
+    : {};
+
+  return { ...value, ...population };
+};
+
+// population
+const getPopulation = (value, $elem) => {
+  if (isNullish(value)) {
+    return null;
+  }
+
+  const population = explodePlaceholder(value);
+
+  if (population?.content) {
+    const config = Config.getAll();
+
+    const richTextDCChoices = getDynamicContentChoices(
+      config.dynamicContent.groups,
+      DCTypes.richText
+    );
+
+    return {
+      population: population.content,
+      label: $elem.closest("[data-population]").text()?.trim(),
+      display:
+        findDCChoiceByPlaceholder({
+          choices: richTextDCChoices,
+          placeholder: population.content
+        })?.display ?? "inline"
+    };
+  }
+
+  return null;
 };
 
 export const getFormats = ($elem, format = {}, deviceMode) => {
   const v = classNamesToV(
-    $elem.closest("p, :header, pre, li").attr("class")?.split(" ") ?? []
+    $elem
+      .closest("p, :header, pre, li, div.brz-tp__dc-block")
+      .attr("class")
+      ?.split(" ") ?? []
   );
-  const dynamicContent = Config.get("dynamicContent") || {};
   format = flatFormats(format);
 
   const cssColor = $elem.css("color");
   const cssOpacity = $elem.css("opacity");
-  const cssShadow = $elem.css("text-shadow");
 
   const populationColor = format.populationColor
     ? { populationColor: decodeFromString(format.populationColor) }
@@ -220,9 +281,18 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
   }
 
   const opacity = format.opacity || cssOpacity;
+  const colorOpacity = !isNaN(opacity) ? opacity : 1;
 
   // it's only for situations when colorPalette contain this data - "color2, color3" (normally it should never happen)
   const palette = format.colorPalette ? format.colorPalette.split(",")[0] : "";
+
+  const bgColor = format.backgroundGradient
+    ? format.backgroundGradient.startHex
+    : hex;
+
+  const bgColorOpacity = format.backgroundGradient
+    ? format.backgroundGradient.startOpacity
+    : colorOpacity;
 
   return {
     ...v,
@@ -235,16 +305,16 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
 
     color: {
       hex,
-      opacity: !isNaN(opacity) ? opacity : 1
+      opacity: colorOpacity
     },
     colorPalette: palette,
     bgColorPalette: palette,
-    bgColorOpacity: !isNaN(opacity) ? Number(opacity) : 1,
-    bgColorHex: hex,
+    bgColorOpacity: bgColorOpacity,
+    bgColorHex: bgColor,
     ...parseShadow(format.shadow),
     textShadowColorPalette: format.shadowColorPalette || null,
 
-    backgroundImage: format.backgroundImage || null,
+    ...getBackground(format.backgroundImage),
     backgroundGradient: format.backgroundGradient || null,
 
     ...getLink(format.link),
@@ -252,17 +322,7 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
 
     list: format.list ?? "",
 
-    population: format.population
-      ? {
-          population: format.population,
-          label: $elem.closest("[data-population]").text(),
-          display:
-            getDynamicContentByPlaceholder(
-              dynamicContent,
-              `{{${format.population}}}`
-            )?.display ?? "inline"
-        }
-      : null,
+    population: getPopulation(format.population, $elem),
     prepopulation: format.prepopulation
       ? $elem.closest(".brz-pre-population-visible").text()
       : null,
@@ -288,4 +348,24 @@ export const dcItemOptionParser = parseStrict({
 
 export const createLabel = (label) => {
   return `#${label}`;
+};
+
+export const handleChangePage = (v, value) => {
+  const { linkPage, linkPageTitle } = value;
+  return encodeToString({
+    type: v.linkType,
+    anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
+    internal: linkPage,
+    pageTitle: linkPageTitle,
+    external: v.linkExternal,
+    externalBlank: v.linkExternalBlank,
+    externalRel: v.linkExternalRel,
+    externalType: v.linkExternalType,
+    population: v.linkPopulation,
+    populationEntityId: v.linkPopulationEntityId,
+    populationEntityType: v.linkPopulationEntityType,
+    popup: v.linkPopup ? `#${v.linkPopup}` : "",
+    upload: v.linkUpload,
+    linkToSlide: v.linkToSlide
+  });
 };

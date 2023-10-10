@@ -11,12 +11,6 @@ export default {
   "wrapper--reset--psw": {
     showToolbar: "on"
   },
-  "wrapper-quantity": {
-    showToolbar: "on"
-  },
-  "wrapper-price": {
-    showToolbar: "on"
-  },
   "wrapper--tabs": {
     showToolbar: "on"
   },
@@ -49,6 +43,19 @@ export default {
   },
   "wrapper-ministryBrands": {
     showToolbar: "on"
+  },
+  "story-leadific": {
+    width: 90,
+
+    elementPosition: "fixed",
+
+    offsetX: 5,
+    offsetXSuffix: "%",
+    offsetXAlignment: "left",
+
+    offsetY: 46,
+    offsetYSuffix: "%",
+    offsetYAlignment: "top"
   },
   "wrapper--spacer": {
     marginTop: 0,

@@ -4,7 +4,13 @@ import { SizeType } from "visual/global/Config/types/configs/common";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { Block } from "visual/types";
-import { getImageUrl, imagePopulationUrl, defaultImagePopulation } from "visual/utils/image";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import {
+  defaultImagePopulation,
+  getImageUrl,
+  imagePopulationUrl
+} from "visual/utils/image";
+import * as Str from "visual/utils/reader/string";
 
 const linkClassNames = [
   "link--anchor",
@@ -16,8 +22,6 @@ const linkClassNames = [
 export const changeRichText = ($: cheerio.Root): void => {
   const config = Config.getAll();
   const $richText = $(".brz-rich-text");
-  const dynamicContent = Config.getAll()?.dynamicContent;
-  const useCustomPlaceholder = dynamicContent?.useCustomPlaceholder ?? false;
 
   // Change Links
   $richText
@@ -33,9 +37,28 @@ export const changeRichText = ($: cheerio.Root): void => {
       const style = $this.attr("style") || "";
       const href = $this.attr("data-href") ?? "";
       const data = JSON.parse(decodeURIComponent(href));
+      const { population, populationEntityId, populationEntityType } =
+        data ?? {};
+      const populationAttr: { entityId?: string; entityType?: string } = {};
+
+      if (populationEntityId) {
+        populationAttr.entityId = populationEntityId;
+      }
+      if (populationEntityType) {
+        populationAttr.entityType = populationEntityType;
+      }
+
       const externalLink: Record<string, string> = {
         external: data.external,
-        population: data.population
+        population: population
+          ? makePlaceholder({
+              content: population,
+              attr: populationAttr
+            })
+          : ""
+      };
+      const internalLink: Record<string, string> = {
+        page: data.internal
       };
       const newData = {
         ...data,
@@ -44,7 +67,10 @@ export const changeRichText = ($: cheerio.Root): void => {
         // so temporarily defaulted to external
         external: data.externalType
           ? externalLink[data.externalType]
-          : externalLink.external
+          : externalLink.external,
+        page: data.internalType
+          ? internalLink[data.internalType]
+          : internalLink.page
       };
 
       const url = newData[data.type];
@@ -87,43 +113,20 @@ export const changeRichText = ($: cheerio.Root): void => {
   // replace DynamicContent
   $richText.find("[data-population]").each(function (this: cheerio.Cheerio) {
     const $this = $(this);
-    const population = $this.attr("data-population");
+    const population = Str.read($this.attr("data-population"));
     const $blockDynamicContentElem = $this.closest(".brz-tp__dc-block");
     let $elem: cheerio.Cheerio | undefined = undefined;
 
     if ($blockDynamicContentElem.length) {
       $elem = $blockDynamicContentElem;
-
-      const classNames =
-        $elem
-          ?.attr("class")
-          ?.split(" ")
-          .filter(
-            (className) =>
-              className.startsWith("brz-tp__dc-block") ||
-              className.startsWith("brz-mt") ||
-              className.startsWith("dc-color") ||
-              className.startsWith("brz-mb")
-          )
-          .join(" ") ?? "";
-      $elem.attr("class", classNames);
     } else {
       $elem = $this;
     }
 
-    let _population;
-
-    if (useCustomPlaceholder) {
-      _population = population;
-      // Removed extra attribute
+    if (population) {
+      // Override current html with placeholder
+      $elem.html(population);
       $elem.removeAttr("data-population");
-    } else {
-      _population = `{{${population}}}`;
-    }
-
-    // Override current html with placeholder
-    if (_population) {
-      $elem.html(_population);
     }
   });
 
@@ -160,8 +163,7 @@ export const changeRichText = ($: cheerio.Root): void => {
         $this.css({
           ...newCSS,
           "background-image": `url('${imagePopulationUrl(population, {
-            ...defaultImagePopulation,
-            useCustomPlaceholder
+            ...defaultImagePopulation
           })}')`
         });
       } else if (imgUrl)

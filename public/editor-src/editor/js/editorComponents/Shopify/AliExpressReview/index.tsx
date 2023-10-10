@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -27,19 +28,31 @@ export class AliExpressReview extends EditorComponent<Value> {
   static defaultValue = defaultValue;
 
   renderAliExpressWidget(type: WidgetType): ReactNode {
-    const starHtml =
-      "<ryviu-widget-total reviews_data='{{product.metafields.ryviu.product_reviews_info  | escape  }}' product_id='{{product.id}}' handle='{{product.handle}}'/>";
+    const reviewData = makePlaceholder({
+      content: "{{product.metafields.ryviu.product_reviews_info  | escape  }}"
+    });
+    const productId = makePlaceholder({
+      content: "{{product.id}}"
+    });
+    const productHandle = makePlaceholder({
+      content: "{{product.handle}}"
+    });
+    const productTitle = makePlaceholder({
+      content: "{{product.title}}"
+    });
+    const productImage = makePlaceholder({
+      content: '{{ product.featured_image.src | img_url: "100x" }}'
+    });
+    const starHtml = `<ryviu-widget-total reviews_data='${reviewData}' product_id='${productId}' handle='${productHandle}'/>`;
 
-    const widgetHtml =
-      '<ryviu-widget handle="{{product.handle}}" product_id="{{product.id}}" title_product="{{product.title}}" image_product="{{ product.featured_image.src | img_url: "100x" }}" />';
+    const widgetHtml = `<ryviu-widget handle="${productHandle}" product_id="${productId}" title_product="${productTitle}" image_product="${productImage}" />`;
 
     const masonryHtml = "<ryviu-widget feature='1'/>";
 
     const carouselHtml =
       "<ryviu-feature-extend carousel='1' id='r--ryviu-widget'/>";
 
-    const qAHtml =
-      '<questions-answers handle="{{product.handle}}" product_id="{{product.id}}"/>';
+    const qAHtml = `<questions-answers handle="${productHandle}" product_id="${productId}"/>`;
 
     switch (type) {
       case "star":

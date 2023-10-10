@@ -62,12 +62,10 @@ import {
   apiPublish,
   apiUpdateGlobalBlock,
   apiUpdateGlobalBlocks,
-  apiUpdatePage,
   apiUpdatePopupRules,
   debouncedApiAutoSave,
   debouncedApiPublish,
   debouncedApiUpdateGlobalBlock,
-  debouncedApiUpdatePage,
   pollingSendHeartBeat
 } from "./utils";
 
@@ -110,7 +108,6 @@ function handlePublish({ action, state, oldState, apiHandler }) {
       const globalBlocks = globalBlocksAssembledSelector(state);
 
       // cancel possible pending requests
-      debouncedApiUpdatePage.cancel();
       debouncedApiAutoSave.cancel();
       debouncedApiPublish.cancel();
       const newGlobalBlocks = Object.entries(globalBlocks).reduce(
@@ -130,17 +127,25 @@ function handlePublish({ action, state, oldState, apiHandler }) {
       allApi.push(apiUpdateGlobalBlocks(newGlobalBlocks, meta));
     }
 
-    if (project !== oldProject && config.ui?.publish?.handler) {
-      allApi.push(
-        apiPublish(
-          { projectData: project, is_autosave: meta.is_autosave },
-          config
-        )
-      );
-    }
+    if (config.ui?.publish?.handler) {
+      let data = undefined;
 
-    if (page !== oldPage) {
-      allApi.push(apiUpdatePage(page, meta));
+      if (project !== oldProject) {
+        data = {
+          projectData: project
+        };
+      }
+
+      if (page !== oldPage) {
+        data = data || {};
+        data.pageData = page;
+      }
+
+      if (data) {
+        allApi.push(
+          apiPublish({ ...data, is_autosave: meta.is_autosave }, config)
+        );
+      }
     }
 
     apiHandler(Promise.all(allApi), onSuccess, onError);
@@ -275,23 +280,28 @@ function handlePage({ action, state }) {
         draft.data.items = pageBlocksRawSelector(state);
       });
 
-      debouncedApiUpdatePage(page, action.meta);
+      debouncedApiAutoSave({ pageData: page }, Config.getAll());
       break;
     }
     case UPDATE_POPUP_RULES: {
       const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
-      const page = { ...state.page, rules: action.payload.rules };
-      apiUpdatePopupRules(page, action.meta).then(syncSuccess).catch(syncFail);
+      const data = {
+        rules: action.payload.rules,
+        dataVersion: state.page.dataVersion
+      };
+
+      apiUpdatePopupRules(data, Config.getAll())
+        .then(syncSuccess)
+        .catch(syncFail);
       break;
     }
     case UPDATE_TRIGGERS: {
       const { page } = state;
       const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
-      const meta = {
-        is_autosave: 0
-      };
 
-      apiUpdatePage(page, meta).then(syncSuccess).catch(syncFail);
+      apiOnChange({ pageData: page }, Config.getAll())
+        .then(syncSuccess)
+        .catch(syncFail);
       break;
     }
     case UNDO:

@@ -1,16 +1,17 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import { TextEditor } from "visual/component/Controls/TextEditor";
-import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
 import classnames from "classnames";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
+import React from "react";
+import { TextEditor } from "visual/component/Controls/TextEditor";
+import CustomCSS from "visual/component/CustomCSS";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class WPPostNavigation extends EditorComponent {
   static get componentId() {
@@ -19,11 +20,11 @@ class WPPostNavigation extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleChangeNext = next => {
+  handleChangeNext = (next) => {
     this.patchValue({ next });
   };
 
-  handleChangePrevious = previous => {
+  handleChangePrevious = (previous) => {
     this.patchValue({ previous });
   };
 
@@ -103,11 +104,10 @@ class WPPostNavigation extends EditorComponent {
       ...(showTitle === "on" && { titlePrevious: previous, titleNext: next })
     };
 
-    const attributesStr = Object.keys(attributes)
-      .map(k => String(attributes[k]) && `${k}="${attributes[k]}"`)
-      .join(" ");
-
-    const placeholder = `{{editor_post_navigation ${attributesStr}}}`;
+    const placeholder = makePlaceholder({
+      content: "{{editor_post_navigation}}",
+      attr: attributes
+    });
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>

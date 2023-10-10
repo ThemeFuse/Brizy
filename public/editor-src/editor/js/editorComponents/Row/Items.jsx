@@ -1,6 +1,6 @@
 import deepMerge from "deepmerge";
 import React from "react";
-import { mergeDeep, setIn } from "timm";
+import { getIn, mergeDeep, setIn } from "timm";
 import _ from "underscore";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
@@ -9,6 +9,7 @@ import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import { MIN_COL_WIDTH } from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import Config from "visual/global/Config";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
@@ -16,8 +17,11 @@ import { clamp, isNumeric } from "visual/utils/math";
 import * as N from "visual/utils/math/number";
 import { defaultValueKey } from "visual/utils/onChange";
 import { attachRef } from "visual/utils/react";
+import { capByPrefix } from "visual/utils/string";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { getElemWidthWithoutPaddings, normalizeRowColumns } from "./utils";
+
+const config = Config.getAll();
 
 const MAX_ITEMS_IN_ROW = 6;
 
@@ -241,133 +245,130 @@ class RowItems extends EditorArrayComponent {
       }
     });
 
-    const getConfig = (device) => {
-      const insidePopup = meta.sectionPopup2 || meta.sectionPopup;
-      const position = items.length - 1 === itemIndex ? "left" : "right";
-      const { min, max } = this.getColumnWidthLimitsPercent(
-        itemIndex,
-        position,
-        this.columnWidths
-      );
-      const columnWidthConfig = !isOnly
-        ? {
-            id: "toolbarSettings",
-            type: "popover-dev",
-            config: {
-              icon: "nc-cog",
-              title: t("Settings")
-            },
-            options: [
-              {
-                id: "width",
-                label: t("Width"),
-                type: "slider",
-                position: 105,
-                inputType: "number",
-                slider: {
-                  min,
-                  max,
-                  step: 0.1
-                },
-                input: {
-                  show: true,
-                  min,
-                  max,
-                  step: 0.1
-                },
-                value: {
-                  value: this.getColumnWidthByIndex(itemIndex)
-                },
-                suffix: {
-                  show: true,
-                  choices: [{ title: "%", value: "%" }]
-                },
-                onChange: ({ value }) =>
-                  this.changeColumnWidths(itemIndex, value, "right")
-              }
-            ]
-          }
-        : {};
+    const toolbarConfig = {
+      getItems: ({ device }) => {
+        const insidePopup = meta.sectionPopup2 || meta.sectionPopup;
+        const position = items.length - 1 === itemIndex ? "left" : "right";
+        const { min, max } = this.getColumnWidthLimitsPercent(
+          itemIndex,
+          position,
+          this.columnWidths
+        );
 
-      const cloneRemoveConfig = [
-        {
-          id: "order",
-          type: "order-dev",
-          devices: "desktop",
-          position: 105,
-          roles: ["admin"],
-          disabled: items.length < 2,
-          config: {
-            disable:
-              itemIndex === 0
-                ? "prev"
-                : itemIndex === items.length - 1
-                ? "next"
-                : undefined,
-            onChange: (v) => {
-              switch (v) {
-                case "prev":
-                  this.reorderItem(itemIndex, itemIndex - 1);
-                  break;
-                case "next":
-                  this.reorderItem(itemIndex, itemIndex + 1);
-                  break;
+        const columnWidthConfig = !isOnly
+          ? {
+              id: "toolbarSettings",
+              type: "popover-dev",
+              config: {
+                icon: "nc-cog",
+                title: t("Settings")
+              },
+              options: [
+                {
+                  id: "width",
+                  label: t("Width"),
+                  type: "slider-dev",
+                  config: {
+                    min,
+                    max,
+                    inputMin: min,
+                    inputMax: max,
+                    step: 0.1,
+                    units: [{ value: "%", title: "%" }]
+                  },
+                  position: 105,
+
+                  dependencies: (data) => {
+                    const width =
+                      device !== "desktop"
+                        ? capByPrefix(device, "width")
+                        : "width";
+                    this.changeColumnWidths(itemIndex, data[width], "right");
+                  }
+                }
+              ]
+            }
+          : {};
+
+        const cloneRemoveConfig = [
+          {
+            id: "order",
+            type: "order-dev",
+            devices: "desktop",
+            position: 105,
+            roles: ["admin"],
+            disabled: items.length < 2,
+            config: {
+              disable:
+                itemIndex === 0
+                  ? "prev"
+                  : itemIndex === items.length - 1
+                  ? "next"
+                  : undefined,
+              onChange: (v) => {
+                switch (v) {
+                  case "prev":
+                    this.reorderItem(itemIndex, itemIndex - 1);
+                    break;
+                  case "next":
+                    this.reorderItem(itemIndex, itemIndex + 1);
+                    break;
+                }
               }
             }
-          }
-        },
-        ...(this.canAddColumn()
-          ? [
-              {
-                id: "emptyItem",
-                type: "button",
-                icon: "nc-add",
-                title: t("Add New Column"),
-                position: 100,
-                onChange: () => {
-                  this.addColumn(itemIndex + 1);
+          },
+          ...(this.canAddColumn()
+            ? [
+                {
+                  id: "emptyItem",
+                  type: "button",
+                  icon: "nc-add",
+                  title: t("Add New Column"),
+                  position: 100,
+                  onChange: () => {
+                    this.addColumn(itemIndex + 1);
+                  }
+                },
+                {
+                  id: "duplicate",
+                  type: "button",
+                  icon: "nc-duplicate",
+                  title: t("Duplicate"),
+                  position: 200,
+                  onChange: () => {
+                    this.cloneItem(itemIndex);
+                  }
                 }
-              },
-              {
-                id: "duplicate",
-                type: "button",
-                icon: "nc-duplicate",
-                title: t("Duplicate"),
-                position: 200,
-                onChange: () => {
-                  this.cloneItem(itemIndex);
-                }
-              }
-            ]
-          : []),
-        {
-          id: "remove",
-          type: "button",
-          title: t("Delete"),
-          icon: "nc-trash",
-          disabled: isOnly && insidePopup && !isInner,
-          position: 250,
-          onChange: () => {
-            hideToolbar();
-            this.removeItem(itemIndex);
+              ]
+            : []),
+          {
+            id: "remove",
+            type: "button",
+            title: t("Delete"),
+            icon: "nc-trash",
+            disabled: isOnly && insidePopup && !isInner,
+            position: 250,
+            onChange: () => {
+              hideToolbar();
+              this.removeItem(itemIndex);
+            }
           }
+        ];
+
+        let config = [columnWidthConfig];
+        if (device === "desktop") {
+          config.push(...cloneRemoveConfig);
         }
-      ];
 
-      let config = [columnWidthConfig];
-      if (device === "desktop") {
-        config.push(...cloneRemoveConfig);
+        return config;
       }
-
-      return config;
     };
 
-    const toolbarConfig = {
-      getItemsForDesktop: () => getConfig("desktop"),
-      getItemsForTablet: () => getConfig("tablet"),
-      getItemsForMobile: () => getConfig("mobile")
-    };
-    const toolbarExtend = this.makeToolbarPropsFromConfig(toolbarConfig);
+    const toolbarExtend = this.makeItemsToolbarPropsFromConfig2(
+      toolbarConfig,
+      null,
+      { itemIndex }
+    );
 
     return {
       ...this.props.itemProps,
@@ -431,7 +432,8 @@ class RowItems extends EditorArrayComponent {
     const itemData = {
       ...v[0],
       value: {
-        items: []
+        items: [],
+        ...(getIn(config.contentDefaults.Row, ["items", 0, "value"]) ?? {})
       }
     };
 

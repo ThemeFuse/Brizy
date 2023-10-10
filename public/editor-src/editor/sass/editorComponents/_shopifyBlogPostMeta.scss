@@ -7,7 +7,7 @@
   margin: 0;
   word-break: break-all;
 
-  > span > span:first-child {
+  .brz-shopify-blogPostMeta__title > span:not(:last-child) {
     margin-right: 10px;
   }
 }

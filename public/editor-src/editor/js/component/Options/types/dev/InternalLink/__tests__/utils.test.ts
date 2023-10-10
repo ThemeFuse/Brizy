@@ -31,24 +31,24 @@ describe("Testing 'toPosts' function", function () {
 
   test("If at least one post is invalid, return undefined", () => {
     const posts = [
-      { ID: 1, title: "test1" },
-      { id: 2, title: [] },
-      { id: "test", title: "test 3" }
+      { value: 1, title: "test1" },
+      { value: 2, title: [] },
+      { value: "test", title: "test 3" }
     ];
     expect(toPosts({ posts })).toBe(undefined);
   });
 
   test("Return a list of posts", () => {
     const posts = [
-      { ID: "1", title: "test1" },
-      { ID: "2", title: "test 2" },
-      { ID: "3", title: "test 3" }
+      { title: "test1", value: "1" },
+      { title: "test 2", value: "2" },
+      { title: "test 3", value: "3" }
     ];
 
     const r = [
-      { id: "1", title: "test1" },
-      { id: "2", title: "test 2" },
-      { id: "3", title: "test 3" }
+      { title: "test1", value: "1" },
+      { title: "test 2", value: "2" },
+      { title: "test 3", value: "3" }
     ];
     expect(toPosts({ posts })).toEqual(r);
   });

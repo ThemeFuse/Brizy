@@ -26,6 +26,7 @@ type Props = PropsWithChildren<
     type?: Type;
     attr?: JSX.IntrinsicAttributes;
     id?: string;
+    draggable?: boolean;
   }
 >;
 
@@ -40,7 +41,8 @@ const _Link = (
     href,
     slide = {},
     attr = {},
-    id = ""
+    id = "",
+    draggable
   }: Props,
   ref: Ref<HTMLAnchorElement>
 ): ReactElement => {
@@ -76,6 +78,7 @@ const _Link = (
       rel={_rel}
       style={style}
       data-brz-link-type={type}
+      draggable={draggable}
       {...slide}
       {...attrs}
       ref={(v: HTMLAnchorElement | null): void => {

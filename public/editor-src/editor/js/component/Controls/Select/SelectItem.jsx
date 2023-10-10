@@ -1,7 +1,7 @@
-import classnames from "classnames";
-import T from "prop-types";
 import React from "react";
+import T from "prop-types";
 import _ from "underscore";
+import classnames from "classnames";
 
 class SelectItem extends React.Component {
   static propTypes = {

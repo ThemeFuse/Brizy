@@ -3,6 +3,7 @@ import {
   ConfigDCItem,
   DCGroup
 } from "visual/global/Config/types/DynamicContent";
+import { Literal } from "../types/Literal";
 import { TypeChoices } from "./types";
 
 type Options = DCGroup<"wp"> | DCGroup<"cloud">;
@@ -13,7 +14,11 @@ const isCloudDynamicContent = (options: Options): options is DCGroup<"cloud"> =>
 export interface Choice {
   title: string;
   value: string;
+  alias?: string;
+  attr: Record<string, Literal>;
   icon?: string;
+  varyAttr: Array<"type" | "id">;
+  display?: "block" | "inline";
 }
 
 export interface OptGroup {
@@ -41,7 +46,11 @@ const configDCItemToChoices = (option: ConfigDCItem): Choice | OptGroup => {
   // but PostExcerpt element sets it, and this kind of issues were solved with `alias` key
   return {
     title: option.label,
-    value: option.alias || option.placeholder
+    value: option.placeholder,
+    alias: option.alias,
+    attr: option.attr ?? {},
+    varyAttr: option.varyAttr,
+    display: option.display
   };
 };
 

@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -16,6 +17,8 @@ export class HulkOptions extends EditorComponent<ElementModel> {
   static defaultValue = defaultValue;
 
   renderForEdit(): ReactNode {
+    const placeholder = makePlaceholder({ content: "{{ product.id }}" });
+
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
         <Wrapper
@@ -25,7 +28,7 @@ export class HulkOptions extends EditorComponent<ElementModel> {
         >
           {IS_PREVIEW ? (
             <div data-pf-type="InfiniteProductOption">
-              <div id="hulkapps_custom_options_{{ product.id }}" />
+              <div id={`hulkapps_custom_options_${placeholder}`} />
             </div>
           ) : (
             <Placeholder icon="img" />

@@ -1,9 +1,10 @@
 import { isT } from "fp-utilities";
 import _ from "underscore";
 import Config, { isWp } from "visual/global/Config";
+import { isCustomerPage } from "visual/global/Config/types/configs/Base";
 import {
-  isCollectionPage,
-  isCustomerPage
+  isCloud,
+  isCollectionPage
 } from "visual/global/Config/types/configs/Cloud";
 import { ReduxState } from "visual/redux/types";
 import {
@@ -326,23 +327,26 @@ export function pageCMSSplitRules(
   return { referenceSingle, referenceAll };
 }
 
-function pageCustomerSplitRules(rules: Rule[], page: Page): Rule | undefined {
-  if (!isCustomerPage(page)) {
-    return undefined;
-  }
-  const { groups } = page;
+function pageCustomerSplitRules(rules: Rule[]): Rule | undefined {
+  const config = Config.getAll();
 
-  if (groups.length === 0) {
-    return undefined;
-  }
-  const groupIds = groups.map((group) => group.id);
+  if (isCloud(config) && isCustomerPage(config.page)) {
+    const groups = config.availableRoles;
 
-  return rules
-    .filter(
-      (rule): rule is CollectionItemRule =>
-        isCollectionItemRule(rule) && rule.entityType === CUSTOMER_TYPE
-    )
-    .find((rule) => _.intersection(groupIds, rule.entityValues).length > 0);
+    if (groups.length === 0) {
+      return undefined;
+    }
+    const groupIds = groups.map((group) => group.role);
+
+    return rules
+      .filter(
+        (rule): rule is CollectionItemRule =>
+          isCollectionItemRule(rule) && rule.entityType === CUSTOMER_TYPE
+      )
+      .find((rule) => _.intersection(groupIds, rule.entityValues).length > 0);
+  }
+
+  return undefined;
 }
 
 function pageWPSplitRules(rules: Rule[] = [], page: Page): ReferenceRule {
@@ -450,7 +454,7 @@ export function canUseConditionInPage(
 
   const wpReferenceRule = pageWPSplitRules(rules, page);
 
-  const referenceCustomerRule = pageCustomerSplitRules(rules, page);
+  const referenceCustomerRule = pageCustomerSplitRules(rules);
 
   if (level1Rule) {
     return isIncludeCondition(level1Rule);

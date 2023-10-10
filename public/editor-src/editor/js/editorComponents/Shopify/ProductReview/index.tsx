@@ -1,19 +1,20 @@
-import React, { ReactNode } from "react";
 import classnames from "classnames";
+import React, { ReactNode } from "react";
+import { Patch } from "visual/component/BoxResizer/types";
+import CustomCSS from "visual/component/CustomCSS";
+import { ElementModel } from "visual/component/Elements/Types";
+import Placeholder from "visual/component/Placeholder";
+import Toolbar from "visual/component/Toolbar";
 import EditorComponent, {
   ComponentsMeta
 } from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
 import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
-import { Wrapper } from "../../tools/Wrapper";
-import { ElementModel } from "visual/component/Elements/Types";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { WithClassName } from "visual/utils/options/attributes";
-import { Patch } from "visual/component/BoxResizer/types";
-import Placeholder from "visual/component/Placeholder";
+import { Wrapper } from "../../tools/Wrapper";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 export type Value = ElementModel;
 
@@ -53,11 +54,14 @@ export class ProductReview extends EditorComponent<Value, Props> {
       "brz-shopify-product-review",
       css(this.getComponentId(), this.getId(), style(v, vs, vd))
     );
-    const placeholder = "{{product.metafields.spr.reviews}}";
+    const placeholder = makePlaceholder({
+      content: "{{product.metafields.spr.reviews}}"
+    });
+    const productId = makePlaceholder({ content: "{{product.id}}" });
 
     return (
       <Wrapper {...this.makeWrapperProps({ className })}>
-        <div id="shopify-product-reviews" data-id="{{product.id}}">
+        <div id="shopify-product-reviews" data-id={productId}>
           {placeholder}
         </div>
       </Wrapper>
