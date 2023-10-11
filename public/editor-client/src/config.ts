@@ -42,6 +42,8 @@ interface Actions {
 
   createBlockScreenshot: string;
   updateBlockScreenshot: string;
+
+  filterFields: string;
 }
 
 interface API {
@@ -190,6 +192,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   updateBlockScreenshot: pipe(
     mPipe(Obj.readKey("updateBlockScreenshot"), Str.read),
     throwOnNullish("Invalid actions: updateBlockScreenshot")
+  ),
+  filterFields: pipe(
+    mPipe(Obj.readKey("filterFields"), Str.read),
+    throwOnNullish("Invalid actions: filterFields")
   )
 });
 

@@ -16,6 +16,7 @@ import { AddMediaData, AddMediaGallery } from "./Media";
 import { OnChange } from "./OnChange";
 import { PopupConditions } from "./PopupConditions";
 import { Posts } from "./Posts";
+import { Filters } from "./Filters";
 import { Data } from "./Publish";
 import { SavedBlocks, SavedLayouts, SavedPopups } from "./SavedBlocks";
 import { Screenshots } from "./Screenshots";
@@ -147,6 +148,7 @@ export interface VISUAL_CONFIG {
 
   elements?: {
     posts: Posts;
+    filters: Filters;
   };
 
   //#endregion

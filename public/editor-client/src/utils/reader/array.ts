@@ -1,3 +1,4 @@
+import { isT } from "fp-utilities";
 import { Reader } from "./types";
 
 export const read: Reader<Array<unknown>> = (v) => {
@@ -7,3 +8,5 @@ export const read: Reader<Array<unknown>> = (v) => {
 
   return undefined;
 };
+
+export const isAllValuesValid = (arr: Array<unknown>) => arr.every(isT);
