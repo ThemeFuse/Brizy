@@ -36,6 +36,12 @@ interface Actions {
   updateLayout: string;
   deleteLayout: string;
 
+  getGlobalBlockList: string;
+  getGlobalBlockListMatchingRules: string;
+  createGlobalBlock: string;
+  updateGlobalBlock: string;
+  updateGlobalBlocks: string;
+
   getPostObjects: string;
 
   searchPosts: string;
@@ -190,6 +196,26 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   updateBlockScreenshot: pipe(
     mPipe(Obj.readKey("updateBlockScreenshot"), Str.read),
     throwOnNullish("Invalid actions: updateBlockScreenshot")
+  ),
+  getGlobalBlockList: pipe(
+    mPipe(Obj.readKey("getGlobalBlockList"), Str.read),
+    throwOnNullish("Invalid actions: getGlobalBlockList")
+  ),
+  getGlobalBlockListMatchingRules: pipe(
+    mPipe(Obj.readKey("getGlobalBlockListMatchingRules"), Str.read),
+    throwOnNullish("Invalid actions: getGlobalBlockListMatchingRules")
+  ),
+  createGlobalBlock: pipe(
+    mPipe(Obj.readKey("createGlobalBlock"), Str.read),
+    throwOnNullish("Invalid actions: createGlobalBlock")
+  ),
+  updateGlobalBlock: pipe(
+    mPipe(Obj.readKey("updateGlobalBlock"), Str.read),
+    throwOnNullish("Invalid actions: updateGlobalBlock")
+  ),
+  updateGlobalBlocks: pipe(
+    mPipe(Obj.readKey("updateGlobalBlocks"), Str.read),
+    throwOnNullish("Invalid actions: updateGlobalBlocks")
   )
 });
 
@@ -227,6 +253,7 @@ const reader = parseStrict<PLUGIN_ENV, Config>({
 
 export const getConfig = (): MValue<Config> => {
   const __BRZ_PLUGIN_ENV__ = window.__BRZ_PLUGIN_ENV__ ?? {};
+  __BRZ_PLUGIN_ENV__.actions.getGlobalBlockListMatchingRules = "";
   const parsed = reader(__BRZ_PLUGIN_ENV__);
 
   if (parsed === undefined) {

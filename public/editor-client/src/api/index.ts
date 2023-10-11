@@ -14,15 +14,24 @@ import {
 import { ScreenshotData } from "../types/Screenshots";
 import { t } from "../utils/i18n";
 import {
+  editorRuleToApiRule,
   GetCollections,
+  parseGlobalBlock,
   parseMetaSavedBlock,
   parseSavedBlock,
   parseSavedLayout,
+  stringifyGlobalBlock,
   stringifyPage,
   stringifyProject,
   stringifySavedBlock
 } from "./adapter";
 import { makeFormEncode, makeUrl } from "./utils";
+import {
+  GlobalBlockNormal,
+  GlobalBlockPopup,
+  Rule as GBRule
+} from "../types/GlobalBlocks";
+import { MValue } from "../utils/types";
 
 //#region Common Utils Request & PersistentRequest
 
@@ -845,20 +854,304 @@ export const updateBlockScreenshot = async ({
   } catch (e) {
     throw new Error(t("Failed to update Screenshot"));
   }
-
 };
 
 //#endregion
 
-export function getClasses(): Promise<unknown> {
-  const { url: _url, hash, getSymbols, editorVersion } = getConfig();
-  const url = makeUrl(_url, {
-    action: getSymbols,
-    version: editorVersion,
-    hash,
-  });
+//#region Global Blocks
 
-  return request(url, { method: "GET" });
+export interface APIGlobalBlock {
+  uid: string;
+  data: string;
+  meta: string;
+  rules: string;
+  position: string;
+  dataVersion: number;
+  status: string;
+  dependencies: string;
+  title?: string;
+  tags?: string;
 }
 
+export const getGlobalBlocks = async (): Promise<Array<GlobalBlockNormal>> => {
+  const config = getConfig();
 
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(
+    _url,
+    makeFormEncode({
+      hash,
+      action: actions.getGlobalBlockList,
+      version: editorVersion
+    })
+  );
+
+  try {
+    const { data } = await persistentRequest<Array<Record<string, unknown>>>(
+      url,
+      { method: "GET" }
+    );
+
+    return data
+      .map((block) => parseGlobalBlock(block))
+      .filter((b): b is GlobalBlockNormal => b?.meta.type === "normal");
+  } catch (e) {
+    console.error(e);
+    throw new Error(t("Failed to get Global blocks"));
+  }
+};
+
+export const getGlobalBlocksByRules = async (
+  rules: GBRule[]
+): Promise<Array<GlobalBlockNormal>> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+  const toAPiRule = rules.map(editorRuleToApiRule);
+
+  const url = makeUrl(
+    _url,
+    makeFormEncode({
+      hash,
+      action: actions.getGlobalBlockListMatchingRules,
+      version: editorVersion,
+      rules: JSON.stringify(toAPiRule)
+    })
+  );
+
+  const r = await request(url, { method: "GET" });
+  const rj = await r.json();
+
+  if (rj.success) {
+    return rj.data
+      .map((b: Record<string, unknown>) => parseGlobalBlock(b))
+      .filter(
+        (
+          b: MValue<GlobalBlockNormal | GlobalBlockPopup>
+        ): b is GlobalBlockNormal => b?.meta.type === "normal"
+      );
+  } else {
+    throw rj;
+  }
+};
+
+export const createGlobalBlock = async (
+  globalBlock: GlobalBlockNormal
+): Promise<GlobalBlockNormal> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(
+    _url,
+    makeFormEncode({
+      hash,
+      action: actions.createGlobalBlock,
+      version: editorVersion
+    })
+  );
+
+  const uid = globalBlock.id;
+  const {
+    title = "",
+    tags = "",
+    data,
+    rules,
+    meta,
+    status,
+    dependencies
+  } = stringifyGlobalBlock(globalBlock);
+  // TODO: Need to be review
+  // const media = makeBlockMeta(globalBlock);
+  const body = new URLSearchParams({
+    uid,
+    data,
+    rules,
+    meta,
+    title,
+    tags,
+    // media: JSON.stringify(media),
+    status,
+    dependencies
+  });
+
+  try {
+    const r = await persistentRequest<APIGlobalBlock>(url, {
+      method: "POST",
+      body
+    });
+    return r.data;
+  } catch {
+    throw new Error(t("Failed to create Global block"));
+  }
+};
+
+export const updateGlobalBlock = async (
+  uid: string,
+  globalBlock: GlobalBlockNormal,
+  extraMeta: {
+    is_autosave?: 1 | 0;
+  } = {}
+) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(
+    _url,
+    makeFormEncode({
+      hash,
+      action: actions.updateGlobalBlock,
+      version: editorVersion
+    })
+  );
+
+  const { is_autosave = 1 } = extraMeta;
+  const {
+    title = "",
+    tags = "",
+    data,
+    rules,
+    meta,
+    status,
+    dependencies
+  } = stringifyGlobalBlock(globalBlock);
+  const body = new URLSearchParams({
+    uid,
+    status,
+    data,
+    rules,
+    meta,
+    dependencies,
+    title,
+    tags,
+    is_autosave: `${is_autosave}`
+  });
+
+  try {
+    return await persistentRequest(url, { method: "POST", body });
+  } catch {
+    throw new Error(t("Failed to update Global Block"));
+  }
+};
+
+export const updateGlobalBlocks = async (
+  globalBlocks: Record<string, GlobalBlockNormal>,
+  extraMeta: {
+    is_autosave?: 1 | 0;
+  } = {}
+) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(
+    _url,
+    makeFormEncode({
+      hash,
+      action: actions.updateGlobalBlocks,
+      version: editorVersion
+    })
+  );
+
+  const { is_autosave = 1 } = extraMeta;
+  const data = Object.entries(globalBlocks).reduce(
+    (acc, [uid, globalBlock]) => {
+      const {
+        data,
+        position,
+        rules,
+        meta,
+        status,
+        dependencies,
+        title = "",
+        tags = ""
+      } = stringifyGlobalBlock(globalBlock);
+
+      acc.uid.push(uid);
+      acc.status.push(status);
+      acc.data.push(data ?? "");
+      acc.position.push(position);
+      acc.rules.push(rules);
+      acc.meta.push(meta);
+      acc.title.push(title);
+      acc.tags.push(tags);
+      acc.dependencies.push(dependencies);
+
+      return acc;
+    },
+    {
+      uid: [],
+      status: [],
+      data: [],
+      position: [],
+      rules: [],
+      meta: [],
+      title: [],
+      tags: [],
+      dependencies: []
+    } as {
+      uid: string[];
+      status: string[];
+      data: string[];
+      position: string[];
+      rules: string[];
+      meta: string[];
+      title: string[];
+      tags: string[];
+      dependencies: string[];
+    }
+  );
+  const dataEncode = makeFormEncode({
+    uid: data.uid,
+    status: data.status,
+    data: data.data,
+    position: data.position,
+    rules: data.rules,
+    meta: data.meta,
+    title: data.title,
+    tags: data.tags,
+    is_autosave: `${is_autosave}`
+  });
+  const body = new URLSearchParams(dataEncode);
+
+  try {
+    return await persistentRequest(url, { method: "POST", body });
+  } catch {
+    throw new Error(t("Failed to update Global blocks"));
+  }
+};
+
+//#endregion
+
+// export function getClasses(): Promise<unknown> {
+//   const { url: _url, hash, getSymbols, editorVersion } = getConfig();
+//   const url = makeUrl(_url, {
+//     action: getSymbols,
+//     version: editorVersion,
+//     hash,
+//   });
+//
+//   return request(url, { method: "GET" });
+// }

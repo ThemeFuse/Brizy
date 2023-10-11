@@ -21,6 +21,8 @@ import { savedBlocks } from "./savedBlocks/savedBlocks";
 import { savedLayouts } from "./savedBlocks/savedLayouts";
 import { savedPopups } from "./savedBlocks/savedPopups";
 import { screenshots } from "./screenshots";
+import { globalBlocks } from "./globalBlocks/globalBlocks";
+import { globalPopups } from "./globalBlocks/globalPopups";
 
 const config = getConfig();
 
@@ -41,6 +43,8 @@ const api = {
   savedBlocks,
   savedPopups,
   savedLayouts,
+  globalBlocks,
+  globalPopups,
   popupConditions,
   defaultKits: defaultKits(config),
   defaultPopups: defaultPopups(config),
