@@ -1262,3 +1262,40 @@ export const updateGlobalBlocks = async (
 };
 
 //#endregion
+
+//#region FiltersFields
+
+export const getFields = async (data: {
+  postId: string;
+  loopAttributes: string;
+}) => {
+  try {
+    const config = getConfig();
+
+    if (!config) {
+      throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+    }
+
+    const { editorVersion, url, hash, actions } = config;
+
+    const body = new URLSearchParams({
+      hash,
+      version: editorVersion,
+      action: actions.filterFields,
+      ...data
+    });
+
+    const result = await request(url, {
+      method: "POST",
+      body
+    });
+
+    const r = await result.json();
+
+    return r.data;
+  } catch (e) {
+    throw new Error(t("Fail to load fields!"));
+  }
+};
+
+//#endregion
