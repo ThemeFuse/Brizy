@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -31,7 +32,7 @@ export class ReviewGrowave extends EditorComponent<Value> {
            {% render "socialshopwave-widget-recommends", product: product %}
            {% endcapture %}
            {% unless the_snippet_reviews contains "Liquid error" %}
-           {{ the_snippet_reviews }}
+           ${makePlaceholder({ content: "{{ the_snippet_reviews }}" })}
            {% endunless %}`}
           </div>
         );
@@ -42,7 +43,7 @@ export class ReviewGrowave extends EditorComponent<Value> {
           {% render "ssw-widget-avg-rate-profile", product: product, content_for_header: content_for_header %}
           {% endcapture %}
           {% unless the_snippet_review_avg contains "Liquid error" %}
-          {{ the_snippet_review_avg }}
+          ${makePlaceholder({ content: "{{ the_snippet_review_avg }}" })}
           {% endunless %}`}
           </div>
         );
@@ -53,7 +54,7 @@ export class ReviewGrowave extends EditorComponent<Value> {
           {% render "ssw-widget-avg-rate-listing", product: product, content_for_header: content_for_header %}
           {% endcapture %}
           {% unless the_snippet_review_avg contains "Liquid error" %}
-          {{ the_snippet_review_avg }}
+          ${makePlaceholder({ content: "{{ the_snippet_review_avg }}" })}
           {% endunless %}`}
           </div>
         );

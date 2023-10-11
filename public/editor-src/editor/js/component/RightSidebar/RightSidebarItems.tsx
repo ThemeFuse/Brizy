@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { instance } from "./index";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { instance } from "./index";
 
 type RightSidebarItemsProps = {
   getItems: () => OptionDefinition[];
@@ -11,13 +11,9 @@ export const RightSidebarItems: React.FC<RightSidebarItemsProps> = ({
   getItems,
   getTitle
 }) => {
-  if (!getItems) {
-    return null;
-  }
-
   // update the items on every render
   useEffect(() => {
-    instance && instance.setItems(getItems, getTitle);
+    getItems && instance && instance.setItems(getItems, getTitle);
   });
 
   // clear the items when component unmounts
@@ -26,6 +22,10 @@ export const RightSidebarItems: React.FC<RightSidebarItemsProps> = ({
       instance && instance.clearItems();
     };
   }, []);
+
+  if (!getItems) {
+    return null;
+  }
 
   return null;
 };

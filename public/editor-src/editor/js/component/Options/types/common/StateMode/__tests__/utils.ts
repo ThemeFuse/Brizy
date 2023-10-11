@@ -35,7 +35,6 @@ jest.mock(
 jest.mock("visual/component/Options/types/FormApps.js", () => undefined);
 jest.mock("visual/component/Options/types/GBConditions.tsx", () => undefined);
 jest.mock("visual/component/Options/types/Grid.jsx", () => undefined);
-jest.mock("visual/component/Options/types/ImageSetter.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Input.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/IntegrationsApps.js",

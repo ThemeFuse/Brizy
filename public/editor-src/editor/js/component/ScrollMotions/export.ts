@@ -179,21 +179,30 @@ export default function ($node: JQuery): void {
       mouseFit: parseDecodeData<Mouse3DFit>(motionMouseFit)
     });
 
-    if (!ImagesLoaded) {
-      new Motions(node, {
-        scroll,
-        mouse,
-        responsive:
-          parseDecodeData<MotionSettings["responsive"]>(motionResponsive)
+    const config = {
+      scroll,
+      mouse,
+      responsive:
+        parseDecodeData<MotionSettings["responsive"]>(motionResponsive)
+    };
+
+    if (ImagesLoaded) {
+      ImagesLoaded(node, () => {
+        const instance = new Motions(node, config);
+
+        window.Brz.on("elements.gallery.changed", (gallery: HTMLElement) => {
+          if (node.contains(gallery)) {
+            instance.arrange();
+          }
+        });
       });
     } else {
-      ImagesLoaded(node, () => {
-        new Motions(node, {
-          scroll,
-          mouse,
-          responsive:
-            parseDecodeData<MotionSettings["responsive"]>(motionResponsive)
-        });
+      const instance = new Motions(node, config);
+
+      window.Brz.on("elements.gallery.changed", (gallery: HTMLElement) => {
+        if (node.contains(gallery)) {
+          instance.arrange();
+        }
       });
     }
   });

@@ -22,6 +22,7 @@ export type Props<T extends Literal> = WithClassName &
     onInputChange?: (v: string) => void;
     scroll?: number;
     hideSelected?: boolean;
+    autoClose?: boolean;
     onOpen?: () => void;
   };
 
@@ -35,6 +36,7 @@ export function Select<T extends Literal>({
   size = "medium",
   placeholder = "",
   hideSelected = true,
+  autoClose,
   onOpen,
   inputValue,
   onInputChange
@@ -132,6 +134,7 @@ export function Select<T extends Literal>({
       tags={tags}
       editable={editable}
       scroll={scroll}
+      autoClose={autoClose}
       onSelect={onSelect}
       onKeyDown={onKeyDown}
       onType={onInputChange}

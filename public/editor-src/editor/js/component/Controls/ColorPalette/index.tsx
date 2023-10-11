@@ -1,7 +1,8 @@
 import classNames from "classnames";
-import React, { FC, useCallback } from "react";
+import React, { FC } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { WithClassName, WithOnChange } from "visual/utils/options/attributes";
+import { ColorPaletteItem } from "./entities/Item";
 import { PaletteObject } from "./entities/PaletteObject";
 
 type Props = WithClassName &
@@ -22,24 +23,18 @@ export const ColorPalette: FC<Props> = ({
     "brz-ed-control__color-palette",
     className
   );
+
   return (
     <div className={wrapperClassName}>
-      {palette.map(({ id, hex }) => {
-        const cb = useCallback(() => onChange(id), [onChange]);
-        const className = classNames({
-          "brz-ed-control__color-palette__item": true,
-          active: id === value
-        });
-
-        return (
-          <div
-            key={id}
-            className={className}
-            style={{ backgroundColor: hex }}
-            onClick={cb}
-          />
-        );
-      })}
+      {palette.map(({ id, hex }) => (
+        <ColorPaletteItem
+          key={id}
+          id={id}
+          hex={hex}
+          value={value}
+          onChange={onChange}
+        />
+      ))}
 
       {openSettings && (
         <div

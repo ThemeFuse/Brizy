@@ -1,3 +1,5 @@
+import Base64 from "js-base64";
+import { placeholderName } from "visual/utils/dynamicContent/types";
 import { EditorComponentContextValue } from "../../EditorComponentContext";
 import { ECKeyDCInfo } from "../../types";
 import { BatchFetcher, DCApiProxy, DCApiProxyConfig } from "../DCApiProxy";
@@ -48,13 +50,17 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{post_excerpt}}"
+          a: `{{${placeholderName} content='${Base64.encode(
+            "{{post_excerpt}}"
+          )}'}}`
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{post_excerpt}}"
+            dcValue: `{{${placeholderName} content='${Base64.encode(
+              "{{post_excerpt}}"
+            )}'}}`
           }
         }
       }
@@ -73,13 +79,17 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{post_title some_attr='1234'}}"
+          a: `{{${placeholderName} content='${Base64.encode(
+            "{{      post_title   some_attr='1234'     }}"
+          )}'}}`
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{post_title some_attr='1234'}}"
+            dcValue: `{{${placeholderName} content='${Base64.encode(
+              "{{      post_title   some_attr='1234'     }}"
+            )}'}}`
           }
         }
       }
@@ -101,13 +111,17 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{a a='abc' b='123'}}"
+          a: `{{${placeholderName} content='${Base64.encode(
+            "{{a}}"
+          )}' a='abc' b='123'}}`
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{a a='abc' b='123'}}"
+            dcValue: `{{${placeholderName} content='${Base64.encode(
+              "{{a}}"
+            )}' a='abc' b='123'}}`
           }
         }
       }
@@ -126,13 +140,17 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{a att='some%20attribute' x='xyz'}}"
+          a: `{{${placeholderName} content='${Base64.encode(
+            "{{a att='some attribute'}}"
+          )}' x='xyz'}}`
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{a att='some%20attribute' x='xyz'}}"
+            dcValue: `{{${placeholderName} content='${Base64.encode(
+              "{{a att='some attribute'}}"
+            )}' x='xyz'}}`
           }
         }
       }
@@ -151,13 +169,17 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{a att='changed' x='xyz'}}"
+          a: `{{${placeholderName} content='${Base64.encode(
+            "{{a att='original}}"
+          )}' att='changed' x='xyz'}}`
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{a att='changed' x='xyz'}}"
+            dcValue: `{{${placeholderName} content='${Base64.encode(
+              "{{a att='original}}"
+            )}' att='changed' x='xyz'}}`
           }
         }
       }
@@ -179,13 +201,17 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{post_author _fallback='King%20Arthur'}}"
+          a: `{{${placeholderName} content='${Base64.encode(
+            "{{post_author}}"
+          )}' _fallback='King%20Arthur'}}`
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{post_author _fallback='King%20Arthur'}}"
+            dcValue: `{{${placeholderName} content='${Base64.encode(
+              "{{post_author}}"
+            )}' _fallback='King%20Arthur'}}`
           }
         }
       }
@@ -204,13 +230,17 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{post_author _fallback='King%20Arthur' att='history'}}"
+          a: `{{${placeholderName} content='${Base64.encode(
+            "{{post_author att='history'}}"
+          )}' _fallback='King%20Arthur'}}`
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{post_author _fallback='King%20Arthur' att='history'}}"
+            dcValue: `{{${placeholderName} content='${Base64.encode(
+              "{{post_author att='history'}}"
+            )}' _fallback='King%20Arthur'}}`
           }
         }
       }
@@ -230,14 +260,17 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{post_author _fallback='King%20Arthur' att='history' att2='England'}}"
+          a: `{{${placeholderName} content='${Base64.encode(
+            "{{  post_author       att=\"history\"        att2='England'      }}"
+          )}' _fallback='King%20Arthur'}}`
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue:
-              "{{post_author _fallback='King%20Arthur' att='history' att2='England'}}"
+            dcValue: `{{${placeholderName} content='${Base64.encode(
+              "{{  post_author       att=\"history\"        att2='England'      }}"
+            )}' _fallback='King%20Arthur'}}`
           }
         }
       }
@@ -259,13 +292,17 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{post_author _fallback='King%20Arthur' a='qwerty'}}"
+          a: `{{${placeholderName} content='${Base64.encode(
+            "{{post_author}}"
+          )}' _fallback='King%20Arthur' a='qwerty'}}`
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{post_author _fallback='King%20Arthur' a='qwerty'}}"
+            dcValue: `{{${placeholderName} content='${Base64.encode(
+              "{{post_author}}"
+            )}' _fallback='King%20Arthur' a='qwerty'}}`
           }
         }
       }
@@ -284,14 +321,17 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{post_author _fallback='King%20Arthur' a='123' att='changed' b='abc'}}"
+          a: `{{${placeholderName} content='${Base64.encode(
+            "{{post_author att='history'}}"
+          )}' _fallback='King%20Arthur' a='123' att='changed' b='abc'}}`
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue:
-              "{{post_author _fallback='King%20Arthur' a='123' att='changed' b='abc'}}"
+            dcValue: `{{${placeholderName} content='${Base64.encode(
+              "{{post_author att='history'}}"
+            )}' _fallback='King%20Arthur' a='123' att='changed' b='abc'}}`
           }
         }
       }
@@ -321,27 +361,34 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: "{{post_title}}",
-          b: "{{post_author _fallback='King%20Arthur' att='history' y='tho'}}"
+          a: `{{${placeholderName} content='${Base64.encode(
+            "{{post_title}}"
+          )}'}}`,
+          b: `{{${placeholderName} content='${Base64.encode(
+            "{{post_author att='history'}}"
+          )}' _fallback='King%20Arthur' y='tho'}}`
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "{{post_title}}"
+            dcValue: `{{${placeholderName} content='${Base64.encode(
+              "{{post_title}}"
+            )}'}}`
           },
           b: {
             loaded: true,
             staticValue: "b static",
-            dcValue:
-              "{{post_author _fallback='King%20Arthur' att='history' y='tho'}}"
+            dcValue: `{{${placeholderName} content='${Base64.encode(
+              "{{post_author att='history'}}"
+            )}' _fallback='King%20Arthur' y='tho'}}`
           }
         }
       }
     ]
     //#endregion
   ])("no. %#", (keys, expected) => {
-    expect(getDCObjPreview(keys, false)).toStrictEqual(expected);
+    expect(getDCObjPreview(keys)).toStrictEqual(expected);
   });
 });
 
@@ -380,13 +427,13 @@ describe("Testing 'getDCObjEditor_' function", () => {
       {
         type: "complete",
         value: {
-          a: "a-cached"
+          a: "{{ a }}-cached"
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "a-cached"
+            dcValue: "{{ a }}-cached"
           }
         }
       }
@@ -413,19 +460,19 @@ describe("Testing 'getDCObjEditor_' function", () => {
       {
         type: "complete",
         value: {
-          a: "a-cached",
-          b: "b-cached"
+          a: "{{ a }}-cached",
+          b: "{{ b }}-cached"
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "a-cached"
+            dcValue: "{{ a }}-cached"
           },
           b: {
             loaded: true,
             staticValue: "b static",
-            dcValue: "b-cached"
+            dcValue: "{{ b }}-cached"
           }
         }
       }
@@ -522,14 +569,14 @@ describe("Testing 'getDCObjEditor_' function", () => {
       {
         type: "complete",
         value: {
-          a: "a-cached",
+          a: "{{ a }}-cached",
           x: ""
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: "a-cached"
+            dcValue: "{{ a }}-cached"
           },
           x: {
             loaded: true,
@@ -549,18 +596,30 @@ describe("Testing 'getDCObjEditor_' function", () => {
     const context = makeEditorComponentContext(postId);
     const config = makeConfig(context.dynamicContent.itemId);
 
-    for (const l of ["a", "b", "c", "d", "e", "f", "g"]) {
-      apiProxy.setInCache(`{{${l}}}`, `${l}-cached`, config);
-      apiProxy.setInCache(`{{ ${l} }}`, `${l}-cached`, config);
+    for (const l of [
+      "{{ a }}",
+      "{{ b }}",
+      "{{ c }}",
+      "{{ d }}",
+      "{{ e }}",
+      "{{ f }}",
+      "{{ g }}"
+    ]) {
+      apiProxy.setInCache(
+        `{{placeholder content='${Base64.encode(l)}'}}`,
+        `${l}-cached`,
+        config
+      );
     }
-    for (const l of ["x", "y", "z"]) {
-      apiProxy.setInCache(`{{${l}}}`, "", config);
-      apiProxy.setInCache(`{{ ${l} }}`, "", config);
+    for (const l of ["{{ x }}", "{{ y }}", "{{ z }}"]) {
+      apiProxy.setInCache(
+        `{{placeholder content='${Base64.encode(l)}'}}`,
+        "",
+        config
+      );
     }
 
-    expect(getDCObjEditor_(apiProxy)(dcKeys, context, false)).toStrictEqual(
-      expected
-    );
+    expect(getDCObjEditor_(apiProxy)(dcKeys, context)).toStrictEqual(expected);
     expect(fetcher.mock.calls.length).toEqual(0);
   });
 
@@ -607,19 +666,19 @@ describe("Testing 'getDCObjEditor_' function", () => {
         },
         complete: {
           value: {
-            a: "123_a",
-            b: "123_b_att='test'"
+            a: "123_{{ a }}",
+            b: "123_{{ b att='test' }}"
           },
           details: {
             a: {
               loaded: true,
               staticValue: "a static",
-              dcValue: "123_a"
+              dcValue: "123_{{ a }}"
             },
             b: {
               loaded: true,
               staticValue: "b static",
-              dcValue: "123_b_att='test'"
+              dcValue: "123_{{ b att='test' }}"
             }
           }
         }
@@ -652,13 +711,13 @@ describe("Testing 'getDCObjEditor_' function", () => {
         },
         complete: {
           value: {
-            a: "123_title_a='abc'_b='123'"
+            a: "123_{{ title }}_a='abc'_b='123'"
           },
           details: {
             a: {
               loaded: true,
               staticValue: "a static",
-              dcValue: "123_title_a='abc'_b='123'"
+              dcValue: "123_{{ title }}_a='abc'_b='123'"
             }
           }
         }
@@ -688,13 +747,13 @@ describe("Testing 'getDCObjEditor_' function", () => {
         },
         complete: {
           value: {
-            a: "123_book_about='peace'_author='Smith'_year='1986'"
+            a: "123_{{ book author='Smith' }}_about='peace'_year='1986'"
           },
           details: {
             a: {
               loaded: true,
               staticValue: "a static",
-              dcValue: "123_book_about='peace'_author='Smith'_year='1986'"
+              dcValue: "123_{{ book author='Smith' }}_about='peace'_year='1986'"
             }
           }
         }
@@ -724,13 +783,13 @@ describe("Testing 'getDCObjEditor_' function", () => {
         },
         complete: {
           value: {
-            a: "123_book_author='changed'"
+            a: "123_{{ book author='Smith' }}_author='changed'"
           },
           details: {
             a: {
               loaded: true,
               staticValue: "a static",
-              dcValue: "123_book_author='changed'"
+              dcValue: "123_{{ book author='Smith' }}_author='changed'"
             }
           }
         }
@@ -763,13 +822,13 @@ describe("Testing 'getDCObjEditor_' function", () => {
         },
         complete: {
           value: {
-            a: "123_post_author"
+            a: "123_{{post_author}}"
           },
           details: {
             a: {
               loaded: true,
               staticValue: "a static",
-              dcValue: "123_post_author"
+              dcValue: "123_{{post_author}}"
             }
           }
         }
@@ -781,8 +840,10 @@ describe("Testing 'getDCObjEditor_' function", () => {
           key: "a",
           hasDC: true,
           staticValue: "a static",
-          dcValue: "{{post_author _useFallback='true'}}",
-          attr: {},
+          dcValue: "{{post_author}}",
+          attr: {
+            _useFallback: "true"
+          },
           fallback: "Arthur"
         }
       ],
@@ -817,8 +878,10 @@ describe("Testing 'getDCObjEditor_' function", () => {
           key: "a",
           hasDC: true,
           staticValue: "a static",
-          dcValue: "{{post_author _useFallback='true'}}",
-          attr: {},
+          dcValue: "{{post_author}}",
+          attr: {
+            _useFallback: "true"
+          },
           fallback: "Arthur"
         },
         {
@@ -849,7 +912,7 @@ describe("Testing 'getDCObjEditor_' function", () => {
         complete: {
           value: {
             a: "123_Arthur",
-            b: "123_recommendation_goodRead='yes'"
+            b: "123_{{ recommendation }}_goodRead='yes'"
           },
           details: {
             a: {
@@ -860,7 +923,7 @@ describe("Testing 'getDCObjEditor_' function", () => {
             b: {
               loaded: true,
               staticValue: "b static",
-              dcValue: "123_recommendation_goodRead='yes'"
+              dcValue: "123_{{ recommendation }}_goodRead='yes'"
             }
           }
         }
@@ -875,7 +938,7 @@ describe("Testing 'getDCObjEditor_' function", () => {
     const postId = "123";
     const context = makeEditorComponentContext(postId);
 
-    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context, false);
+    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context);
     if (incomplete.type !== "incomplete") {
       throw new Error("obj should be incomplete");
     }
@@ -925,19 +988,19 @@ describe("Testing 'getDCObjEditor_' function", () => {
       {
         incomplete: {
           partialValue: {
-            a: "a-cached",
-            b: "b-cached"
+            a: "{{ a }}-cached",
+            b: "{{ b }}-cached"
           },
           details: {
             a: {
               loaded: true,
               staticValue: "a static",
-              dcValue: "a-cached"
+              dcValue: "{{ a }}-cached"
             },
             b: {
               loaded: true,
               staticValue: "b static",
-              dcValue: "b-cached"
+              dcValue: "{{ b }}-cached"
             },
             notCached: {
               loaded: false,
@@ -948,25 +1011,25 @@ describe("Testing 'getDCObjEditor_' function", () => {
         },
         complete: {
           value: {
-            a: "a-cached",
-            b: "b-cached",
-            notCached: "123_placeholder"
+            a: "{{ a }}-cached",
+            b: "{{ b }}-cached",
+            notCached: "123_{{ placeholder }}"
           },
           details: {
             a: {
               loaded: true,
               staticValue: "a static",
-              dcValue: "a-cached"
+              dcValue: "{{ a }}-cached"
             },
             b: {
               loaded: true,
               staticValue: "b static",
-              dcValue: "b-cached"
+              dcValue: "{{ b }}-cached"
             },
             notCached: {
               loaded: true,
               staticValue: "notCached static",
-              dcValue: "123_placeholder"
+              dcValue: "123_{{ placeholder }}"
             }
           }
         }
@@ -981,16 +1044,30 @@ describe("Testing 'getDCObjEditor_' function", () => {
     const context = makeEditorComponentContext(postId);
     const config = makeConfig(context.dynamicContent.itemId);
 
-    for (const l of ["a", "b", "c", "d", "e", "f", "g"]) {
-      apiProxy.setInCache(`{{${l}}}`, `${l}-cached`, config);
-      apiProxy.setInCache(`{{ ${l} }}`, `${l}-cached`, config);
+    for (const l of [
+      "{{ a }}",
+      "{{ b }}",
+      "{{ c }}",
+      "{{ d }}",
+      "{{ e }}",
+      "{{ f }}",
+      "{{ g }}"
+    ]) {
+      apiProxy.setInCache(
+        `{{placeholder content='${Base64.encode(l)}'}}`,
+        `${l}-cached`,
+        config
+      );
     }
     for (const l of ["x", "y", "z"]) {
-      apiProxy.setInCache(`{{${l}}}`, "", config);
-      apiProxy.setInCache(`{{ ${l} }}`, "", config);
+      apiProxy.setInCache(
+        `{{placeholder content='${Base64.encode(l)}'}}`,
+        "",
+        config
+      );
     }
 
-    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context, false);
+    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context);
     if (incomplete.type !== "incomplete") {
       throw new Error("obj should be incomplete");
     }
@@ -1222,7 +1299,7 @@ describe("Testing 'getDCObjEditor_' function", () => {
     const postId = "123";
     const context = makeEditorComponentContext(postId);
 
-    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context, false);
+    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context);
     if (incomplete.type !== "incomplete") {
       throw new Error("obj should be incomplete");
     }

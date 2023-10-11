@@ -2,14 +2,14 @@ import React, { ReactNode } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ElementModel } from "visual/component/Elements/Types";
 import { EditorInstance, Props } from "visual/editorComponents/EditorComponent";
+import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
 import {
   Deps,
+  Migration,
   findMigrations,
-  migrate,
-  Migration
+  migrate
 } from "visual/utils/migration";
 import { read as readNumber } from "visual/utils/reader/number";
-import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
 
 type DBMigration<M> = M & {
   _version: number;
@@ -33,10 +33,6 @@ export function withMigrations<
     dbValueMigrated: DBMigration<Props<M, P>>["dbValue"] | undefined =
       undefined;
 
-    state = {
-      loading: false
-    };
-
     constructor(props: Props<M, P>) {
       super(props);
 
@@ -46,6 +42,7 @@ export function withMigrations<
       if (foundMigrations.length > 0) {
         if (deps?.getValue) {
           this.state = {
+            ...this.state,
             loading: true
           };
 
@@ -58,7 +55,7 @@ export function withMigrations<
                 _version: foundMigrations[foundMigrations.length - 1].version
               };
 
-              this.setState(() => ({ loading: false }));
+              this.setState((state) => ({ ...state, loading: false }));
             })
             .catch((e) => {
               if (process.env.NODE_ENV === "development") {
@@ -77,7 +74,16 @@ export function withMigrations<
     }
 
     getDBValue() {
-      return this.dbValueMigrated ?? super.getDBValue();
+      if (this.dbValueMigrated) {
+        const dbValue = super.getDBValue();
+        return {
+          ...this.props.dbValue,
+          ...dbValue,
+          ...this.dbValueMigrated
+        };
+      }
+
+      return super.getDBValue();
     }
 
     handleValueChange(newValue: M, meta: OnChangeMeta<M>) {
@@ -88,7 +94,7 @@ export function withMigrations<
     }
 
     renderForEdit(v: M, vs: M, vd: M): ReactNode {
-      return this.state.loading ? (
+      return this.state?.loading ? (
         <div
           className="brz-ed-portal__loading"
           style={{ position: "relative", height: "80px" }}

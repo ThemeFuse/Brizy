@@ -1,5 +1,4 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { Post } from "visual/component/Options/types/dev/InternalLink/types/Post";
 import {
   ChoicesAsync,
   ChoicesSync
@@ -18,7 +17,13 @@ import {
   PopupsWithThumbs,
   StoriesWithThumbs
 } from "visual/global/Config/types/configs/templates";
-import { PageCommon, Project, SavedBlock, SavedLayout } from "visual/types";
+import {
+  PageCommon,
+  Project,
+  Rule,
+  SavedBlock,
+  SavedLayout
+} from "visual/types";
 import { Literal } from "visual/utils/types/Literal";
 import { ElementTypes } from "./ElementTypes";
 import {
@@ -109,27 +114,27 @@ export interface UpdateRes {
 }
 
 export interface PublishData {
-  // TODO  Currently only projectData is used
-  //  Need to add pageData and globalBlocks
-  projectData?: Project;
+  // TODO  Currently only projectData and pageData is used
+  //  Need to add globalBlocks
   is_autosave: 1 | 0;
-  // pageData: PageCommon;
+  projectData?: Project;
+  pageData?: PageCommon;
   // globalBlocks: Array<GlobalBlock>;
 }
 
 export interface AutoSave {
-  // TODO  Currently only projectData is used
-  //  Need to add pageData and globalBlocks
-  projectData: Project;
-  // pageData: PageCommon;
+  // TODO  Currently only projectData and pageData is used
+  //  Need to add globalBlocks
+  projectData?: Project;
+  pageData?: PageCommon;
   // globalBlocks: Array<GlobalBlock>;
 }
 
 export interface OnChange {
-  // TODO  Currently only projectData is used
-  //  Need to add pageData and globalBlocks
-  projectData: Project;
-  // pageData: PageCommon;
+  // TODO  Currently only projectData and pageData is used
+  //  Need to add globalBlocks
+  projectData?: Project;
+  pageData?: PageCommon;
   // globalBlocks: Array<GlobalBlock>;
 }
 
@@ -263,6 +268,8 @@ interface _ConfigCommon<Mode> {
 
   projectData?: Project;
 
+  pageData?: PageCommon;
+
   //#region UI
 
   ui?: {
@@ -289,6 +296,11 @@ interface _ConfigCommon<Mode> {
       [LeftSidebarOptionsIds.more]?: {
         options?: Array<LeftSidebarMoreOptions>;
       };
+      [LeftSidebarOptionsIds.cms]?: {
+        onOpen: (res: VoidFunction) => void;
+        onClose: VoidFunction;
+        icon?: string;
+      };
 
       moduleGroups?: Array<{
         label: string;
@@ -298,7 +310,11 @@ interface _ConfigCommon<Mode> {
 
     //#endregion
 
+    //#region Theme
+
     theme?: Theme;
+
+    //#endregion
 
     //#region Help
 
@@ -349,6 +365,10 @@ interface _ConfigCommon<Mode> {
   //#region API
 
   api?: {
+    // Used only in Posts(Migration) & GlobalBlocks PopupConditions
+    /** @deprecated */
+    brizyApiUrl?: string;
+
     // Media
     media?: {
       mediaResizeUrl?: string;
@@ -387,21 +407,6 @@ interface _ConfigCommon<Mode> {
       };
     };
 
-    // Link Pages
-    linkPages?: {
-      label?: string;
-      defaultSelected?: string;
-      handler: (res: Response<Post[]>, rej: Response<string>) => void;
-      handlerSearch: (
-        res: Response<Post[]>,
-        rej: Response<string>,
-        args: {
-          id: string;
-          search: string;
-        }
-      ) => void;
-    };
-
     sourceTypes?: {
       getSourceChoices: () => ChoicesAsync;
     };
@@ -432,6 +437,21 @@ interface _ConfigCommon<Mode> {
           rej: Response<string>,
           extra: { collectionId: string; search: string; fieldId?: string }
         ) => void;
+      };
+
+      getCollectionItemsIds: {
+        handler: (
+          res: Response<ChoicesSync>,
+          rej: Response<string>,
+          extra: { id: string }
+        ) => void;
+      };
+    };
+
+    // Collection Types
+    collectionTypes?: {
+      loadCollectionTypes: {
+        handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
       };
     };
 
@@ -562,6 +582,25 @@ interface _ConfigCommon<Mode> {
       StoriesWithThumbs,
       BlocksArray<DefaultBlock> | DefaultBlock
     >;
+
+    // Popup Conditions
+    popupConditions?: {
+      conditions?: {
+        save: (
+          res: Response<Array<Rule>>,
+          rej: Response<string>,
+          extra: { rules: Array<Rule>; dataVersion: number }
+        ) => void;
+      };
+    };
+
+    modules?: {
+      leadific?: {
+        getCustomFields?: {
+          handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
+        };
+      };
+    };
   };
 
   //#endregion
@@ -569,26 +608,72 @@ interface _ConfigCommon<Mode> {
   //#region contentDefaults
 
   contentDefaults?: {
+    PostTitle?: {
+      textPopulation?: string;
+      textPopulationEntityType?: string;
+      textPopulationEntityId?: string;
+      linkSource?: string;
+      linkType?: string;
+    };
+    ProductImage?: {
+      imagePopulation?: string;
+      imagePopulationEntityType?: string;
+    };
+    BlogPostImage?: {
+      imagePopulation?: string;
+      imagePopulationEntityType?: string;
+    };
+    CollectionImage?: {
+      imagePopulation?: string;
+      imagePopulationEntityType?: string;
+    };
+    PostContent?: {
+      textPopulation?: string;
+      textPopulationEntityType?: string;
+      textPopulationEntityId?: string;
+    };
     Quantity?: {
       linkSource?: string;
+      linkType?: string;
     };
     Price?: {
       sourceType?: string;
     };
     ProductMetafield?: {
       linkSource: string;
+      linkType?: string;
     };
     BlogPostMeta?: {
       linkSource?: string;
       sourceType?: string;
+      linkType?: string;
     };
     AddToCart?: {
       sourceType?: string;
     };
     Vendor?: {
       sourceType?: string;
+      linkSource?: string;
+      linkType?: string;
+    };
+    BlogPostExcerpt?: {
+      textPopulation?: string;
+      textPopulationEntityType?: string;
+      textPopulationEntityId?: string;
+    };
+    PostExcerpt?: {
+      textPopulationEntityType?: string;
+      textPopulation: string;
+      textPopulationEntityId: string;
+      linkSource?: string;
+      linkType?: string;
+    };
+    Variant?: {
+      sourceType?: string;
     };
     BlogTitle?: {
+      linkSource?: string;
+      linkType?: string;
       textPopulationEntityType?: string;
       textPopulation?: string;
       textPopulationEntityId?: string;
@@ -607,6 +692,8 @@ interface _ConfigCommon<Mode> {
       textPopulationEntityType?: string;
       textPopulation?: string;
       textPopulationEntityId?: string;
+      linkSource?: string;
+      linkType?: string;
     };
     ProductDescription?: {
       textPopulationEntityType?: string;
@@ -617,6 +704,8 @@ interface _ConfigCommon<Mode> {
       textPopulationEntityType?: string;
       textPopulation?: string;
       textPopulationEntityId?: string;
+      linkType?: string;
+      linkSource?: string;
     };
     ProductList?: {
       type?: string;
@@ -640,6 +729,55 @@ interface _ConfigCommon<Mode> {
       orderBy?: string;
       order?: string;
     };
+    Button?: {
+      linkSource?: string;
+      linkType?: string;
+    };
+    RichText?: {
+      linkSource?: string;
+      linkType?: string;
+    };
+    Column?: {
+      linkSource?: string;
+      linkType?: string;
+    };
+    Row?: {
+      linkSource?: string;
+      linkType?: string;
+    };
+    Icon?: {
+      linkSource?: string;
+      linkType?: string;
+    };
+    Image?: {
+      linkSource?: string;
+      linkType?: string;
+    };
+    Lottie?: {
+      linkSource?: string;
+      linkType?: string;
+    };
+    Posts?: {
+      order?: string;
+      orderBy?: string;
+      source?: string;
+    };
+    FeaturedImage?: {
+      linkSource?: string;
+      linkType?: string;
+    };
+    AssetsPosts?: {
+      source?: string;
+      querySource?: string;
+    };
+    ShopCategories?: {
+      source?: string;
+      querySource?: string;
+    };
+    ShopPosts?: {
+      source?: string;
+      querySource?: string;
+    };
   };
 
   //#endregion
@@ -655,6 +793,11 @@ interface _ConfigCommon<Mode> {
       multilanguage: boolean;
     };
 
+    postExcerpt?: {
+      predefinedPopulation?: boolean;
+      sourceTypeOption?: boolean;
+    };
+
     header?: {
       multilanguage: boolean;
     };
@@ -665,6 +808,14 @@ interface _ConfigCommon<Mode> {
       offset?: boolean;
       orderBy?: boolean;
       order?: boolean;
+    };
+
+    postTitle?: {
+      predefinedPopulation?: boolean;
+    };
+
+    postContent?: {
+      predefinedPopulation?: boolean;
     };
   };
 

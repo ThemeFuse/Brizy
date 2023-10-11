@@ -3,9 +3,9 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { Value } from "./index";
+import { Props, Value } from "./index";
 
-export const getItems: GetItems<Value> = ({ v, device }) => {
+export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ key, v, device });
 
   const { hex: labelBgColorHex } = getOptionColorHexByPalette(

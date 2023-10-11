@@ -169,24 +169,6 @@
 // Shape
 @import "editorComponents/shape";
 
-// ShopifyQuantity
-@import "editorComponents/shopify-quantity";
-
-// ShopifyAddToCart
-@import "editorComponents/shopifyAddToCart";
-
-// ShopifyPrice
-@import "editorComponents/shopifyPrice";
-
-// ShopifyStampedReviews
-@import "editorComponents/stampedReviews";
-
-// ShopifyBlogPostMeta
-@import "editorComponents/shopifyBlogPostMeta";
-
-// Filters
-@import "editorComponents/filters";
-
 // Reset Password
 @import "editorComponents/reset-password";
 
@@ -262,6 +244,9 @@
 // Ministry Brands Form Widget
 @import "editorComponents/ministry-formWidget";
 
+// Leadific
+@import "editorComponents/leadific";
+
 // wp
 @import "editorComponents/wp-post-content";
 @import "editorComponents/wp-post-excerpt";
@@ -294,3 +279,6 @@
 
 //Background
 @import "editorComponents/background";
+
+// Shopify
+@import "editorComponents/shopify";

@@ -1,7 +1,12 @@
 import { MultiAnimation } from "visual/component/HoverAnimation/types";
+import * as Str from "visual/utils/reader/string";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { Hover } from "../../component/HoverAnimation/Hover";
-import { getHoverOptions } from "../../component/HoverAnimation/utils";
+import {
+  getHoverOptions,
+  getHoverTarget,
+  isValidSelector
+} from "../../component/HoverAnimation/utils";
 import { getKeyframe, getMultiAnimationKeyframes } from "./utils";
 
 interface Settings {
@@ -31,19 +36,15 @@ export class HoverAnimation {
   private canHover: boolean = true;
   private animationId: string | null = null;
   private elementWasHovered: boolean = false;
-  private settings: KeyframeEffectOptions = {};
+  private settings: OptionalEffectTiming = {};
   private keyframes: Keyframe[] = [];
   private reversibleAnimation: boolean = true;
   private multiAnimationSettings: MultiAnimation | undefined = undefined;
-
   constructor({ node }: Settings) {
-    this.animationId = node.getAttribute("data-hover-animationid");
-    const options = node.getAttribute("data-hover-options");
-    this.reversibleAnimation =
-      node.getAttribute("data-hover-reversible") === "true";
-    const multiAnimationSettings = node.getAttribute(
-      "data-hover-multianimation"
-    );
+    this.animationId = this.getAttribute(node, "animationid");
+    this.reversibleAnimation = this.getAttribute(node, "reversible") === "true";
+    const options = this.getAttribute(node, "options");
+    const multiAnimationSettings = this.getAttribute(node, "multiAnimation");
 
     if (multiAnimationSettings) {
       this.multiAnimationSettings = this.getMultiAnimation(
@@ -54,15 +55,14 @@ export class HoverAnimation {
       this.settings = this.getOptions(options);
     }
 
-    const keyframeEncoded = node.getAttribute("data-hover-animation");
+    const keyframeEncoded = this.getAttribute(node, "animation");
     if (keyframeEncoded) {
       this.keyframes = this.getKeyframesInfo(keyframeEncoded);
     }
-
-    const child = node.querySelector<HTMLElement>(".brz-hover-animation");
-    if (child) {
+    const target = this.getTarget(node);
+    if (target) {
       const controller = new Hover({
-        child,
+        target,
         keyframes: this.keyframes,
         options: this.settings
       });
@@ -138,8 +138,8 @@ export class HoverAnimation {
     });
   };
 
-  private getOptions = (options: string): KeyframeEffectOptions => {
-    let settings: KeyframeEffectOptions = {};
+  private getOptions = (options: string): OptionalEffectTiming => {
+    let settings: OptionalEffectTiming = {};
 
     try {
       settings = getHoverOptions(decodeURI(options));
@@ -150,6 +150,28 @@ export class HoverAnimation {
     }
 
     return settings;
+  };
+
+  private getAttribute = (node: Element, attr: string): string | null => {
+    return node.getAttribute(`data-brz-hover-${attr}`);
+  };
+
+  private getTarget = (node: Element): Element | null => {
+    const _target = this.getAttribute(node, "target");
+    if (_target) {
+      try {
+        const target: unknown = JSON.parse(decodeURI(_target));
+        if (Str.is(target) && isValidSelector(target)) {
+          return getHoverTarget(node, target);
+        }
+      } catch (e) {
+        if (process.env.NODE_ENV === "development") {
+          console.error("ERROR: ", e);
+        }
+      }
+    }
+
+    return null;
   };
 
   private getKeyframesInfo = (keyframeEncoded: string): Keyframe[] => {

@@ -59,6 +59,10 @@ export default function ($node: JQuery): void {
                 // add isotope for data attr uses in tabs and accordion
                 // need to find alternative for "data" method, because dataset set [object Object]
                 $(wrapper).data("isotope", iso);
+
+                window.Brz.emit("elements.gallery.changed", wrapper, {
+                  type: "masonry"
+                });
               });
               break;
             case "justified":
@@ -67,6 +71,10 @@ export default function ($node: JQuery): void {
                   wrapper,
                   gallerySettings as Settings
                 );
+
+                window.Brz.emit("elements.gallery.changed", wrapper, {
+                  type: "justified"
+                });
               });
 
               window.addEventListener("resize", () => {
@@ -233,7 +241,8 @@ export default function ($node: JQuery): void {
       type: "image",
       gallery: {
         enabled: true
-      }
+      },
+      mainClass: "brz brz-lightbox"
     });
   });
 }

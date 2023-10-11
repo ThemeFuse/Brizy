@@ -5,6 +5,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { hexToRgba } from "visual/utils/color";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
 import * as toolbar from "./toolbar";
@@ -65,53 +66,76 @@ export class YotPoReview extends EditorComponent<Value> {
       bgColorOpacity
     } = v;
 
-    const prodFeatImg =
-      '{{ product.featured_image | product_img_url: "large" | replace: "?", "%3F" | replace: "&","%26" }}';
+    const prodFeatImg = makePlaceholder({
+      content:
+        '{{ product.featured_image | product_img_url: "large" | replace: "?", "%3F" | replace: "&","%26" }}'
+    });
+    const productTitle = makePlaceholder({
+      content: "{{ product.title | escape }}"
+    });
+    const productId = makePlaceholder({
+      content: "{{ product.id }}"
+    });
+    const shopUrl = makePlaceholder({
+      content: "{{ shop.url }}"
+    });
+    const productUrl = makePlaceholder({
+      content: "{{ product.url }}"
+    });
+    const productDesc = makePlaceholder({
+      content: "{{ product.description | escape }}"
+    });
 
     switch (reviewType) {
       case "yotpo-main-widget":
         return (
           <div
             className="yotpo yotpo-main-widget"
-            data-product-id="{{ product.id }}"
-            data-name="{{ product.title | escape }}"
-            data-url="{{ shop.url }}{{ product.url }}"
+            data-product-id={productId}
+            data-name={productTitle}
+            data-url={`${shopUrl}${productUrl}`}
             data-image-url={prodFeatImg}
-            data-description="{{ product.description | escape }}"
+            data-description={productDesc}
           />
         );
       case "brz yotpo-main-widget": // added brz only for making difference for attribute data-mode
         return (
           <div
             className="yotpo yotpo-main-widget"
-            data-product-id="{{ product.id }}"
-            data-name="{{ product.title | escape }}"
-            data-url="{{ shop.url }}{{ product.url }}"
+            data-product-id={productId}
+            data-name={productTitle}
+            data-url={`${shopUrl}${productUrl}`}
             data-image-url={prodFeatImg}
-            data-description="{{ product.description | escape }}"
+            data-description={productDesc}
             data-mode="questions"
           />
         );
-      case "bottomLine":
+      case "bottomLine": {
+        const domain = makePlaceholder({
+          content: "{{ shop.permanent_domain | escape }}"
+        });
+        const tag = makePlaceholder({ content: "{{ tag | escape }}}" });
+
         return (
           <div
             className="yotpo bottomLine"
             data-appkey={appKey}
-            data-domain="{{ shop.permanent_domain | escape }}"
-            data-product-id="{{ product.id }}"
-            data-product-models="{{ product.id }}"
-            data-name="{{ product.title | escape }}"
-            data-url="{{ shop.url }}{{ product.url }}"
+            data-domain={domain}
+            data-product-id={productId}
+            data-product-models={productId}
+            data-name={productTitle}
+            data-url={`${shopUrl}${productUrl}`}
             data-image-url={prodFeatImg}
-            data-description="{{ product.description | escape }}"
-            data-bread-crumbs="{{% for tag in product.tags %}{{ tag | escape }}}"
+            data-description={productDesc}
+            data-bread-crumbs={`{% for tag in product.tags %}${tag}`}
           />
         );
+      }
       case "yotpo-shoppers-say":
         return (
           <div
             className="yotpo yotpo-shoppers-say"
-            data-product-id="{{ product.id }}"
+            data-product-id={productId}
           />
         );
       case "yotpo-reviews-carousel": {

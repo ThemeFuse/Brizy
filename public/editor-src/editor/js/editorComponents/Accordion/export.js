@@ -1,8 +1,8 @@
 import $ from "jquery";
 import { collapse, expand } from "./utils";
 
-export default function($node) {
-  $node.find(".brz-accordion").each(function() {
+export default function ($node) {
+  $node.find(".brz-accordion").each(function () {
     const _this = this;
     const $accordionNavItems = $(_this).find(
       "> .brz-accordion__item > .brz-accordion__nav"
@@ -14,7 +14,7 @@ export default function($node) {
       .find("> .brz-accordion__item > .brz-accordion__content")
       .toArray();
 
-    $accordionNavItems.on("click", function() {
+    $accordionNavItems.on("click", function () {
       const activeClassName = "brz-accordion__item--active";
       const $item = $(this).closest(".brz-accordion__item");
       const $itemContent = $item.find("> .brz-accordion__content");
@@ -24,7 +24,7 @@ export default function($node) {
 
       // need to calculate inner elements height
       // it's needed for animation
-      const heights = contents.map(node => {
+      const heights = contents.map((node) => {
         const child = node.firstElementChild;
         return child ? child.getBoundingClientRect().height : 0;
       });
@@ -40,9 +40,16 @@ export default function($node) {
           tabs: $item.siblings().get()
         });
 
+        const stickyHeaderHeight = $(
+          ".brz-section__header-sticky-item"
+        ).innerHeight();
+
         // verify if content is outside of viewport
         if (window.scrollY > offsetTop) {
-          $("html, body").animate({ scrollTop: offsetTop }, 200);
+          $("html, body").animate(
+            { scrollTop: offsetTop - (stickyHeaderHeight ?? 0) },
+            200
+          );
         }
       };
 
@@ -100,7 +107,7 @@ export default function($node) {
       }
     });
 
-    $accordionFilter.on("click", function({ target }) {
+    $accordionFilter.on("click", function ({ target }) {
       const $this = $(this);
       const hiddenClassName = "brz-accordion__hidden";
       const $filterItem = $(target).closest(".brz-accordion__filter__item");

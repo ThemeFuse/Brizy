@@ -5,7 +5,10 @@ import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
+import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
+import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Link from "visual/component/Link";
+import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { Roles } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
@@ -21,6 +24,8 @@ import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
 import { isPopup } from "visual/utils/models";
+import { getCSSId } from "visual/utils/models/cssId";
+import { getLinkData } from "visual/utils/models/link";
 import {
   defaultValueValue,
   validateKeyByProperty
@@ -134,7 +139,7 @@ class Row extends EditorComponent {
 
   dvv = (key) => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = deviceModeSelector(this.getReduxState());
     const state = State.mRead(v.tabsState);
 
     return defaultValueValue({ v, key, device, state });
@@ -172,6 +177,18 @@ class Row extends EditorComponent {
         </SortableHandle>
       </Toolbar>
     );
+  };
+
+  getHoverData = (v) => {
+    const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
+    const options = makeOptionValueToAnimation(v);
+
+    return {
+      hoverName,
+      options: getHoverAnimationOptions(options, hoverName),
+      animationId: this.getId(),
+      isHidden: hoverName === "none"
+    };
   };
 
   renderContent(v, vs, vd) {
@@ -243,11 +260,10 @@ class Row extends EditorComponent {
       className,
       customClassName,
       showToolbar,
-      cssClassPopulation,
+      cssClass,
       customAttributes
     } = v;
-    const customID = Str.mRead(v.customID) || undefined;
-    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
+    const id = getCSSId(v);
     const classNameRowContainer = classNames(
       "brz-row__container",
       className,
@@ -256,7 +272,7 @@ class Row extends EditorComponent {
         `${this.getId()}-row`,
         styleRow(v, vs, vd)
       ),
-      cssClassPopulation === "" ? customClassName : cssClassPopulation
+      cssClass || customClassName
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
@@ -277,10 +293,18 @@ class Row extends EditorComponent {
         </SortableElement>
       );
     }
-
+    const { options, hoverName, isHidden, animationId } = this.getHoverData(v);
     const content = (
       <ScrollMotion options={makeOptionValueToMotion(v)}>
-        {this.renderContent(v, vs, vd)}
+        <HoverAnimation
+          animationId={animationId}
+          cssKeyframe={hoverName}
+          options={options}
+          target={"parent"}
+          isHidden={isHidden}
+        >
+          {this.renderContent(v, vs, vd)}
+        </HoverAnimation>
       </ScrollMotion>
     );
 
@@ -311,7 +335,7 @@ class Row extends EditorComponent {
                         ...parseCustomAttributes(customAttributes),
                         ...sortableElementAttr,
                         ...containerBorderAttr,
-                        id: cssIDPopulation ?? customID,
+                        ...(id && { id }),
                         className: classNameRowContainer
                       }}
                       animationClass={animationClassName}
@@ -337,31 +361,11 @@ class Row extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const {
-      className,
-      tagName,
-      linkExternalType,
-      linkType,
-      linkAnchor,
-      linkExternalBlank,
-      linkExternalRel,
-      linkPopup,
-      linkUpload,
-      customClassName,
-      cssClassPopulation,
-      customAttributes
-    } = v;
-
+    const { className, tagName, customClassName, cssClass, customAttributes } =
+      v;
+    const linkData = getLinkData(v);
+    const id = getCSSId(v);
     const { sectionPopup, sectionPopup2 } = this.props.meta;
-
-    const linkHrefs = {
-      anchor: linkAnchor,
-      external: v[linkExternalType],
-      popup: linkPopup,
-      upload: linkUpload
-    };
-    const customID = Str.mRead(v.customID) || undefined;
-    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
     const classNameRowContainer = classNames(
       "brz-row__container",
       className,
@@ -370,10 +374,11 @@ class Row extends EditorComponent {
         `${this.getId()}-row`,
         styleRow(v, vs, vd)
       ),
-      cssClassPopulation === "" ? customClassName : cssClassPopulation
+      cssClass || customClassName
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
+    const { options, hoverName, isHidden, animationId } = this.getHoverData(v);
 
     return (
       <Fragment>
@@ -383,21 +388,29 @@ class Row extends EditorComponent {
             component={tagName}
             componentProps={{
               ...parseCustomAttributes(customAttributes),
-              id: cssIDPopulation ?? customID,
+              ...(id && { id }),
               className: classNameRowContainer
             }}
             animationClass={animationClassName}
           >
             <ScrollMotion options={makeOptionValueToMotion(v)}>
-              {this.renderContent(v, vs, vd)}
+              <HoverAnimation
+                animationId={animationId}
+                cssKeyframe={hoverName}
+                options={options}
+                target={"parent"}
+                isHidden={isHidden}
+              >
+                {this.renderContent(v, vs, vd)}
+              </HoverAnimation>
             </ScrollMotion>
-            {linkHrefs[linkType] !== "" && (
+            {linkData.href && (
               <Link
                 className="brz-link-container"
-                type={linkType}
-                href={linkHrefs[linkType]}
-                target={linkExternalBlank}
-                rel={linkExternalRel}
+                type={linkData.type}
+                href={linkData.href}
+                target={linkData.target}
+                rel={linkData.rel}
               />
             )}
           </Animation>

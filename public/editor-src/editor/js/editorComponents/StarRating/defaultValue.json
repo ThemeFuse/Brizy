@@ -21,10 +21,14 @@
 
     "text": "Rating",
     "textPopulation": "",
+    "textPopulationEntityType": "",
+    "textPopulationEntityId": "",
 
     "rating": 2.5,
     "ratingSuffix": "px",
     "ratingPopulation": "",
+    "ratingPopulationEntityType": "",
+    "ratingPopulationEntityId": "",
 
     "spacing": 15,
     "spacingSuffix": "px",

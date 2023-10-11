@@ -25,6 +25,7 @@ import { Motion } from "visual/component/Options/types/dev/Motion";
 import { MultiSelect } from "visual/component/Options/types/dev/MultiSelect2";
 import { Order } from "visual/component/Options/types/dev/Order";
 import { PayPal } from "visual/component/Options/types/dev/PayPal";
+import { PredefinedPopulation } from "visual/component/Options/types/dev/PredefinedPopulation";
 import { Range as RangeDev } from "visual/component/Options/types/dev/Range";
 import { SavedBlockOption as SavedBlockDev } from "visual/component/Options/types/dev/SavedBlock";
 import { Select as SelectDev } from "visual/component/Options/types/dev/Select";
@@ -49,7 +50,6 @@ import FormApps from "./FormApps";
 import GBConditions from "./GBConditions";
 import GlobalBlock from "./GlobalBlock";
 import Grid from "./Grid";
-import ImageSetter from "./ImageSetter";
 import Input from "./Input";
 import IntegrationsApps from "./IntegrationsApps";
 import MultiInputPickerOptionType from "./MultiInputPickerOptionType";
@@ -64,8 +64,8 @@ import SavedBlock from "./SavedBlock";
 import Select from "./Select";
 import Slider from "./Slider";
 import Stepper from "./Stepper";
-import Toggle from "./Toggle";
 import Tabs from "./Tabs";
+import Toggle from "./Toggle";
 import { StateMode } from "./common/StateMode";
 import { Alert } from "./dev/Alert";
 import { CodeMirror as CodeMirrorDev } from "./dev/CodeMirror";
@@ -113,6 +113,7 @@ const newTypes = {
   "paypal-dev": PayPal,
   "popover-dev": PopoverDev,
   "population-dev": Population,
+  "predefinedPopulation-dev": PredefinedPopulation,
   "select-dev": SelectDev,
   "sidebarTabs-dev": SidebarTabs,
   "sidebarTabsButton-dev": SidebarTabsButton,
@@ -146,7 +147,6 @@ const oldTypes = {
   fontStyleEditor: FontStyleEditor,
   formApps: FormApps,
   grid: Grid,
-  imageSetter: ImageSetter,
   input: Input,
   multiInputPicker: MultiInputPickerOptionType,
   multiPicker: MultiPicker,

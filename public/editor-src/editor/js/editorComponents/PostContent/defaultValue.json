@@ -1,7 +1,10 @@
 {
   "content": {
     "type": "wp",
-    "sourceID": ""
+
+    "textPopulation": "{{brizy_dc_post_content}}",
+    "textPopulationEntityType": "",
+    "textPopulationEntityId": ""
   },
 
   "toolbar": {

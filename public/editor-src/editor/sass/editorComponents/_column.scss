@@ -7,6 +7,10 @@
   flex-basis: 100%;
   will-change: flex, max-width;
 
+  .brz-hover-animation__container {
+    flex-direction: column;
+  }
+
   & .brz-container-link {
     position: absolute;
     height: 100%;
@@ -14,7 +18,7 @@
     top: 0;
     left: 0;
   }
-  & > [data-scroll-motion] > .brz-bg,
+  & > .brz-wrapper__scrollmotion > .brz-bg,
   & > .brz-bg {
     width: auto;
     height: auto;

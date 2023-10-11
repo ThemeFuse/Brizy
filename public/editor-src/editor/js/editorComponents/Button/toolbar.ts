@@ -2,6 +2,7 @@ import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { Block } from "visual/types";
+import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
@@ -18,6 +19,9 @@ import { getMaxBorderRadius } from "./utils";
 // @ts-expect-error "advancedSettings" old option
 export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const config = Config.getAll();
+  const collectionTypesHandler =
+    config?.api?.collectionTypes?.loadCollectionTypes.handler;
+
   const IS_STORY = isStory(config);
   const IS_GLOBAL_POPUP = isPopup(config);
 
@@ -27,6 +31,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const context = component.context;
 
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+
+  const linkSource = dvv("linkSource");
 
   const maxBorderRadius = getMaxBorderRadius(v, device);
 
@@ -61,6 +67,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const customBorderRadius = dvv("borderRadiusType") !== "custom";
 
   const disableIconOptions = dvv("iconName") === "" && dvv("iconType") === "";
+
+  const fillTypeDefault = fillType === "default";
 
   return [
     {
@@ -139,7 +147,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   id: "borderRadiusTypeGroup",
                   type: "group-dev",
                   devices: "desktop",
-                  disabled: searchType,
+                  disabled: searchType || fillTypeDefault,
                   position: 30,
                   options: [
                     {
@@ -342,7 +350,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   id: "border",
                   type: "border-dev",
                   states: [NORMAL, HOVER],
-                  disabled: fillType === "default"
+                  disabled: fillTypeDefault
                 }
               ]
             },
@@ -354,7 +362,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   id: "boxShadow",
                   type: "boxShadow-dev",
                   states: [NORMAL, HOVER],
-                  disabled: fillType === "default"
+                  disabled: fillTypeDefault
                 }
               ]
             }
@@ -381,6 +389,38 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
             saveTab: true
           },
           tabs: [
+            {
+              id: "page",
+              label: t("Page"),
+              options: [
+                {
+                  id: "linkSource",
+                  type: "select-dev",
+                  disabled: !collectionTypesHandler,
+                  label: t("Type"),
+                  devices: "desktop",
+                  choices: {
+                    load: () => getCollectionTypes(config),
+                    emptyLoad: {
+                      title: t("There are no choices")
+                    }
+                  },
+                  config: {
+                    size: "large"
+                  }
+                },
+                {
+                  id: "linkPage",
+                  type: "internalLink-dev",
+                  label: t("Find Page"),
+                  devices: "desktop",
+                  disabled: !linkSource,
+                  config: {
+                    postType: linkSource
+                  }
+                }
+              ]
+            },
             {
               id: "external",
               label: t("URL"),

@@ -1,12 +1,12 @@
-import { Post } from "visual/component/Options/types/dev/InternalLink/types/Post";
-import { getPostObjects } from "visual/utils/api";
 import { toPosts } from "visual/component/Options/types/dev/InternalLink/utils";
+import { getPostObjects } from "visual/utils/api";
 import { MValue } from "visual/utils/value";
+import { ChoicesSync } from "./types";
 
-let promise: MValue<Promise<Post[]>>;
+let promise: MValue<Promise<ChoicesSync>>;
 let timeout = 0;
 
-const updatePosts = (): Promise<Post[]> =>
+const updatePosts = (): Promise<ChoicesSync> =>
   (promise = getPostObjects()
     .then(toPosts)
     .then((posts = []) => {
@@ -17,9 +17,9 @@ const updatePosts = (): Promise<Post[]> =>
         }, 60000); // cache the posts list for 1 minute
       return posts;
     })
-    .catch(e => {
+    .catch((e) => {
       promise = undefined;
       throw e;
     }));
 
-export const getPosts = (): Promise<Post[]> => promise || updatePosts();
+export const getPosts = (): Promise<ChoicesSync> => promise || updatePosts();

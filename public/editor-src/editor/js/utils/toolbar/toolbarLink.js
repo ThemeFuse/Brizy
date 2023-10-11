@@ -53,16 +53,20 @@ export function toolbarLinkExternal({ v, config, devices = "all" }) {
     population: population,
     value: {
       value: v.linkExternal,
-
-      population: v.linkPopulation
+      population: {
+        population: v.linkPopulation,
+        populationEntityType: v.linkPopulationEntityType,
+        populationEntityId: v.linkPopulationEntityId
+      }
     },
-    onChange: (
-      { value: linkExternal, population: linkPopulation },
-      { changed }
-    ) => {
+    onChange: ({ value: linkExternal, population }, { changed }) => {
+      const linkPopulation = population.population;
+
       return {
         linkExternal,
         linkPopulation,
+        linkPopulationEntityId: population.populationEntityId,
+        linkPopulationEntityType: population.populationEntityType,
         linkExternalType:
           changed === "value" || linkPopulation === ""
             ? "linkExternal"

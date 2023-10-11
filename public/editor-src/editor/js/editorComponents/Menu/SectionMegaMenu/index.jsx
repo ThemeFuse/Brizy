@@ -1,22 +1,22 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import _ from "underscore";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
+import CustomCSS from "visual/component/CustomCSS";
+import { CustomTag } from "visual/component/CustomTag";
+import { Roles } from "visual/component/Roles";
 import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
 import { DESKTOP, TABLET } from "visual/utils/responsiveMode";
-import { Roles } from "visual/component/Roles";
-import CustomCSS from "visual/component/CustomCSS";
-import { CustomTag } from "visual/component/CustomTag";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import defaultValue from "./defaultValue.json";
 import SectionMegaMenuItems from "./items";
-import { styleSection, styleContainer } from "./styles";
-import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import * as sidebarConfig from "./sidebar";
+import { styleContainer, styleSection } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class SectionMegaMenu extends EditorComponent {
   static get componentId() {
@@ -90,7 +90,7 @@ class SectionMegaMenu extends EditorComponent {
     };
   }
 
-  renderToolbar = ContainerBorderButton => {
+  renderToolbar = (ContainerBorderButton) => {
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
@@ -126,16 +126,11 @@ class SectionMegaMenu extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const {
-      className,
-      customClassName,
-      cssClassPopulation,
-      customAttributes
-    } = v;
+    const { className, customClassName, cssClass, customAttributes } = v;
     const classNameSection = classnames(
       "brz-mega-menu",
       className,
-      cssClassPopulation === "" ? customClassName : cssClassPopulation,
+      cssClass || customClassName,
       css(
         `${this.constructor.componentId}-section`,
         `${this.getId()}-section`,
@@ -189,15 +184,15 @@ class SectionMegaMenu extends EditorComponent {
       className,
       tagName,
       customClassName,
-      cssIDPopulation,
-      cssClassPopulation,
+      cssID,
+      cssClass,
       customAttributes,
       customCSS
     } = v;
     const classNameSection = classnames(
       "brz-mega-menu",
       className,
-      cssClassPopulation === "" ? customClassName : cssClassPopulation,
+      cssClass || customClassName,
       css(
         `${this.constructor.componentId}-section`,
         `${this.getId()}-section`,
@@ -209,7 +204,7 @@ class SectionMegaMenu extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <CustomTag
           tagName={tagName}
-          id={cssIDPopulation === "" ? this.getId() : cssIDPopulation}
+          id={cssID === "" ? this.getId() : cssID}
           className={classNameSection}
           data-uid={this.getId()}
           {...parseCustomAttributes(customAttributes)}

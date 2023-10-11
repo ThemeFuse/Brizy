@@ -31,11 +31,14 @@ export const Filter = <T extends BlockTypes>(props: Props<T>): ReactElement => {
     initState
   );
 
-  const handleChange = useCallback((value: string) => {
-    if (value !== EMPTY) {
-      onChange(value);
-    }
-  }, []);
+  const handleChange = useCallback(
+    (value: string) => {
+      if (value !== EMPTY) {
+        onChange(value);
+      }
+    },
+    [onChange]
+  );
 
   useEffect(() => {
     const config = Config.getAll();

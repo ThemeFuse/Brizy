@@ -1,20 +1,22 @@
+import { Base64 } from "js-base64";
 import { V } from "visual/types";
-import { MValue } from "visual/utils/value";
+import {
+  DCPlaceholderObj,
+  placeholderName
+} from "visual/utils/dynamicContent/types";
 import { ECKeyDCInfo } from "../../types";
-import { DCPlaceholderObj } from "../types";
 import {
   dcApiProxyTestFetcher,
   dcKeyToKey,
   hasDC,
   isDCKey,
-  isPlaceholderStr,
   keyDCInfo,
   keyToDCAttrKey,
+  keyToDCEntityIdKey,
+  keyToDCEntityTypeKey,
   keyToDCFallback2Key,
   keyToDCKey,
-  placeholderObjFromECKeyDCInfo,
-  placeholderObjFromStr,
-  placeholderObjToStr
+  placeholderObjFromECKeyDCInfo
 } from "../utils";
 
 //#region keys
@@ -55,6 +57,24 @@ describe("Testing 'keyToDCFallback2Key' function", () => {
     ["abc", "abcPopulationFallback2"]
   ])("test %#", (key, expected) => {
     expect(keyToDCFallback2Key(key)).toStrictEqual(expected);
+  });
+});
+
+describe("Testing 'keyToDCEntityIdKey' function", () => {
+  test.each([
+    ["test", "testPopulationEntityId"],
+    ["abc", "abcPopulationEntityId"]
+  ])("test %#", (key, expected) => {
+    expect(keyToDCEntityIdKey(key)).toStrictEqual(expected);
+  });
+});
+
+describe("Testing 'keyToDCEntityTypeKey' function", () => {
+  test.each([
+    ["test", "testPopulationEntityType"],
+    ["abc", "abcPopulationEntityType"]
+  ])("test %#", (key, expected) => {
+    expect(keyToDCEntityTypeKey(key)).toStrictEqual(expected);
   });
 });
 
@@ -155,6 +175,62 @@ describe("Testing 'keyDCInfo' function", () => {
           b: "abc"
         }
       }
+    ],
+    [
+      {
+        test: "test static",
+        testPopulation: "{{ test_placeholder }}",
+        testPopulationFallback2: "test fallback2",
+        testPopulationEntityId: "11",
+        testPopulationAttr: {
+          a: "aKey",
+          b: "bKey"
+        },
+        aKey: 123,
+        bKey: "abc"
+      },
+      "test",
+      {
+        key: "test",
+        hasDC: true,
+        staticValue: "test static",
+        dcValue: "{{ test_placeholder }}",
+        fallback: "test fallback2",
+        entityId: "11",
+        attr: {
+          a: 123,
+          b: "abc"
+        }
+      }
+    ],
+    [
+      {
+        test: "test static",
+        testPopulation: "{{ test_placeholder }}",
+        testPopulationFallback2: "test fallback2",
+        testPopulationEntityId: "111",
+        testPopulationEntityType: "22",
+        testPopulationAttr: {
+          a: "aKey",
+          b: "bKey"
+        },
+        aKey: 123,
+        bKey: "abc"
+      },
+      "test",
+      {
+        key: "test",
+        hasDC: true,
+        staticValue: "test static",
+        dcValue: "{{ test_placeholder }}",
+        fallback: "test fallback2",
+        entityId: "111",
+        entityType: "22",
+        attr: {
+          a: 123,
+          b: "abc"
+        }
+      }
     ]
   ])("no. %#", (v, key, expected) => {
     expect(keyDCInfo(v, key)).toStrictEqual(expected);
@@ -165,90 +241,8 @@ describe("Testing 'keyDCInfo' function", () => {
 
 //#region placeholder
 
-describe("Testing 'placeholderObjFromStr' function", () => {
-  test.each<[string, boolean, MValue<DCPlaceholderObj>]>([
-    ["", false, undefined],
-    ["invalid string", false, undefined],
-    ["{", false, undefined],
-    ["}", false, undefined],
-    ["{ test", false, undefined],
-    ["test }", false, undefined],
-    ["{ test }", false, undefined],
-    ["{{", false, undefined],
-    ["}}", false, undefined],
-    ["{{ test", false, undefined],
-    ["test }}", false, undefined],
-    ["{{ test }", false, undefined],
-    ["{ test }}", false, undefined],
-    ["a='123' b='456'", false, undefined],
-    ["{ a='123' b='456' }", false, undefined],
-
-    ["{ test }", true, { name: "{ test }" }],
-    ["{{", true, { name: "{{" }],
-    ["}}", true, { name: "}}" }],
-    ["{{ test", true, { name: "{{ test" }],
-    ["test }}", true, { name: "test }}" }],
-    ["{{ test }", true, { name: "{{ test }" }],
-    ["{ test }}", true, { name: "{ test }}" }],
-    ["a='123' b='456'", true, { name: "a='123' b='456'" }],
-    ["{ a='123' b='456' }", true, { name: "{ a='123' b='456' }" }],
-    ["[[ asdasd asd ]]", true, { name: "[[ asdasd asd ]]" }]
-  ])("Invalid str %#", (str, useCustomPlaceholder, expected) => {
-    expect(placeholderObjFromStr(str, useCustomPlaceholder)).toStrictEqual(
-      expected
-    );
-  });
-
-  test.each<[string, boolean, DCPlaceholderObj]>([
-    ["{{test}}", false, { name: "test" }],
-    ["{{ test }}", false, { name: "test" }],
-    ["{{            test   }}", false, { name: "test" }],
-    ["{{test_abc123}}", false, { name: "test_abc123" }],
-    ["{{ test_abc123}}", false, { name: "test_abc123" }],
-    ["{{ test_abc123-23324}}", false, { name: "test_abc123-23324" }],
-    ["{{test_abc123-23324 }}", false, { name: "test_abc123-23324" }],
-    [
-      "{{ test_abc123-23324 a='123' b='344'}}",
-      false,
-      { name: "test_abc123-23324", attr: { a: "123", b: "344" } }
-    ],
-    [
-      "{{ test     a='123'       b=\"abc-111__xyz\"  }}",
-      false,
-      { name: "test", attr: { a: "123", b: "abc-111__xyz" } }
-    ],
-    [
-      "{{ test  dasdasdas   ac='1'  12121212121 DC=\"z\"  }}",
-      false,
-      { name: "test", attr: { ac: "1", DC: "z" } }
-    ],
-    ["{{ a-b-c }}", false, { name: "a-b-c" }],
-    ["{{ a='123' b='456' }}", false, { name: "a", attr: { b: "456" } }],
-    [
-      "{{ a='123' _fallback='test' }}",
-      false,
-      { name: "a", attr: { _fallback: "test" } }
-    ],
-
-    [
-      "{{ a='123' _fallback='test' }}",
-      true,
-      { name: "{{ a='123' _fallback='test' }}" }
-    ],
-    [
-      "{{ UserInfo['asdasdasd'] _fallback='test' }}",
-      true,
-      { name: "{{ UserInfo['asdasdasd'] _fallback='test' }}" }
-    ]
-  ])("Valid str %#", (str, useCustomPlaceholder, expected) => {
-    expect(placeholderObjFromStr(str, useCustomPlaceholder)).toStrictEqual(
-      expected
-    );
-  });
-});
-
 describe("Testing 'placeholderObjFromECKeyDCInfo' function", () => {
-  test.each<[ECKeyDCInfo, boolean, DCPlaceholderObj | undefined]>([
+  test.each<[ECKeyDCInfo, DCPlaceholderObj | undefined]>([
     [
       {
         key: "test",
@@ -258,7 +252,6 @@ describe("Testing 'placeholderObjFromECKeyDCInfo' function", () => {
         fallback: "",
         attr: {}
       },
-      false,
       undefined
     ],
     [
@@ -266,11 +259,10 @@ describe("Testing 'placeholderObjFromECKeyDCInfo' function", () => {
         key: "test",
         hasDC: false,
         staticValue: "test static",
-        dcValue: "{{ test_placeholder }}",
+        dcValue: "{{ placeholder }}",
         fallback: "",
         attr: {}
       },
-      false,
       undefined
     ],
     [
@@ -282,10 +274,10 @@ describe("Testing 'placeholderObjFromECKeyDCInfo' function", () => {
         fallback: "",
         attr: {}
       },
-      false,
       {
-        name: "test_placeholder",
-        attr: {}
+        name: placeholderName,
+        attr: {},
+        content: "{{ test_placeholder }}"
       }
     ],
     [
@@ -295,12 +287,14 @@ describe("Testing 'placeholderObjFromECKeyDCInfo' function", () => {
         staticValue: "test static",
         dcValue: "{{ test_placeholder }}",
         fallback: "fb",
+        entityId: "11",
+        entityType: "22",
         attr: {}
       },
-      false,
       {
-        name: "test_placeholder",
-        attr: { _fallback: "fb" }
+        name: placeholderName,
+        attr: { _fallback: "fb", entityId: "11", entityType: "22" },
+        content: "{{ test_placeholder }}"
       }
     ],
     [
@@ -316,9 +310,9 @@ describe("Testing 'placeholderObjFromECKeyDCInfo' function", () => {
           c: "qwerty"
         }
       },
-      false,
       {
-        name: "test_placeholder",
+        name: placeholderName,
+        content: "{{ test_placeholder }}",
         attr: {
           _fallback: "fb",
           a: undefined,
@@ -327,160 +321,87 @@ describe("Testing 'placeholderObjFromECKeyDCInfo' function", () => {
         }
       }
     ],
-
     [
       {
         key: "test",
         hasDC: true,
         staticValue: "test static",
-        dcValue: "{{ UserInfo['admin'] }}",
+        dcValue: "{{ test_placeholder }}",
         fallback: "fb",
-        attr: {}
-      },
-      true,
-      {
-        name: "{{ UserInfo['admin'] }}",
+        entityId: "11",
+        entityType: "111",
         attr: {
-          _fallback: "fb"
+          a: undefined,
+          b: 123,
+          c: "qwerty"
+        }
+      },
+      {
+        name: placeholderName,
+        content: "{{ test_placeholder }}",
+        attr: {
+          _fallback: "fb",
+          entityId: "11",
+          entityType: "111",
+          a: undefined,
+          b: 123,
+          c: "qwerty"
         }
       }
-    ],
-    [
-      {
-        key: "test",
-        hasDC: true,
-        staticValue: "test static",
-        dcValue: "[[ UserInfo['3'] attr ]]",
-        fallback: "",
-        attr: {}
-      },
-      true,
-      {
-        name: "[[ UserInfo['3'] attr ]]",
-        attr: {}
-      }
     ]
-  ])("no. %#", (keyDCInfo, useCustomPlaceholder, expected) => {
-    expect(
-      placeholderObjFromECKeyDCInfo(keyDCInfo, useCustomPlaceholder)
-    ).toStrictEqual(expected);
-  });
-});
-
-describe("Testing 'placeholderObjToStr' function", () => {
-  test.each<[DCPlaceholderObj, boolean, string]>([
-    [{ name: "a" }, false, "{{a}}"],
-    [{ name: "b", attr: {} }, false, "{{b}}"],
-    [
-      { name: "c", attr: { a: undefined, b: null, c: [1, 2, 3], d: () => {} } },
-      false,
-      "{{c}}"
-    ],
-    [{ name: "d", attr: { a: "", b: undefined } }, false, "{{d a=''}}"],
-    [
-      { name: "efg", attr: { a: "abc", b: 123 } },
-      false,
-      "{{efg a='abc' b='123'}}"
-    ],
-    [
-      {
-        name: "h_i_j",
-        attr: { x: 777, c: "xxx", b: "abc", a: 123, _fallback: "fb" }
-      },
-      false,
-      "{{h_i_j _fallback='fb' a='123' b='abc' c='xxx' x='777'}}"
-    ],
-    [
-      { name: "test", attr: { placeholder: "This is O'reilly book" } },
-      false,
-      "{{test placeholder='This%20is%20O%27reilly%20book'}}"
-    ],
-    [{ name: "{{UserAttribute['test']}}" }, true, "{{UserAttribute['test']}}"],
-    [
-      { name: "{{UserAttribute['test']}}", attr: { a: "", b: undefined } },
-      true,
-      "{{UserAttribute['test']}}"
-    ]
-  ])("no. %#", (placeholderObj, useCustomPlaceholder, expected) => {
-    expect(
-      placeholderObjToStr(placeholderObj, useCustomPlaceholder)
-    ).toStrictEqual(expected);
-  });
-});
-
-describe("Testing 'isPlaceholderStr' function", () => {
-  test.each([
-    ["", false, false],
-    ["invalid string", false, false],
-    ["{", false, false],
-    ["}", false, false],
-    ["{ test", false, false],
-    ["test }", false, false],
-    ["{ test }", false, false],
-    ["{{", false, false],
-    ["}}", false, false],
-    ["{{ test", false, false],
-    ["test }}", false, false],
-    ["{{ test }", false, false],
-    ["{ test }}", false, false],
-    ["a='123' b='456'", false, false],
-    ["{ a='123' b='456' }", false, false],
-
-    ["{{a}}", false, true],
-    ["{{  a       }}", false, true],
-    ["{{ a }}", false, true],
-    ["{{a a='123' b='abc'}}", false, true],
-    ["{{a a='123' b='abc' c='fp'}}", false, true],
-    ["{{a _fallback='Test fallback'}}", false, true],
-    ["{{a _fallback='fb' a='aaa' x='xxx'}}", false, true],
-    ["{{ UserAttr['asdasd'] }}", true, true],
-    ["[[ a ]]", true, true]
-  ])("no. %#", (str, useCustomPlaceholder, expected) => {
-    expect(isPlaceholderStr(str, useCustomPlaceholder)).toStrictEqual(expected);
+  ])("no. %#", (keyDCInfo, expected) => {
+    expect(placeholderObjFromECKeyDCInfo(keyDCInfo)).toStrictEqual(expected);
   });
 });
 
 //#endregion
 
 describe("Testing 'dcApiProxyTestFetcher' function", () => {
+  const c = Base64.encode("22a");
+
   test.each([
     //#region simple (no attr, no fallback)
     [
       {
-        "123": ["{{ a }}"]
+        "123": [`{{ ${placeholderName} content='${c}' }}`]
       },
-      false,
       {
-        "123": ["123_a"]
+        "123": [`123_${Base64.decode(c)}`]
       }
     ],
     [
       {
-        "123": ["{{b}}"]
+        "123": [`{{${placeholderName} content='${c}'}}`]
       },
-      false,
       {
-        "123": ["123_b"]
+        "123": [`123_${Base64.decode(c)}`]
       }
     ],
     [
       {
-        "123": ["{{a}}", "{{ b }}"]
+        "123": [
+          `{{${placeholderName} content='${c}'}}`,
+          `{{ ${placeholderName} content='${c}'}}`
+        ]
       },
-      false,
       {
-        "123": ["123_a", "123_b"]
+        "123": [`123_${Base64.decode(c)}`, `123_${Base64.decode(c)}`]
       }
     ],
     [
       {
-        "123": ["{{ c }}", "{{ f }}"],
-        "1234": ["{{ m }}", "{{ n }}"]
+        "123": [
+          `{{ ${placeholderName} content='${c}'}}`,
+          `{{ ${placeholderName} content='${c}' }}`
+        ],
+        "1234": [
+          `{{ ${placeholderName} content='${c}' }}`,
+          `{{ ${placeholderName} content='${c}' }}`
+        ]
       },
-      false,
       {
-        "123": ["123_c", "123_f"],
-        "1234": ["1234_m", "1234_n"]
+        "123": [`123_${Base64.decode(c)}`, `123_${Base64.decode(c)}`],
+        "1234": [`1234_${Base64.decode(c)}`, `1234_${Base64.decode(c)}`]
       }
     ],
     //#endregion
@@ -488,22 +409,26 @@ describe("Testing 'dcApiProxyTestFetcher' function", () => {
     //#region with attr
     [
       {
-        "123": ["{{ a x='1' }}"]
+        "123": [`{{ ${placeholderName} content='${c}' x='1' }}`]
       },
-      false,
       {
-        "123": ["123_a_x='1'"]
+        "123": [`123_${Base64.decode(c)}_x='1'`]
       }
     ],
     [
       {
-        "123": ["{{ a x='1' }}"],
-        "1234": ["{{ c c='c' }}", "{{ b y='yyy' z='zzz' }}"]
+        "123": [`{{ ${placeholderName} content='${c}' x='1' }}`],
+        "1234": [
+          `{{ ${placeholderName} content='${c}' c='c' }}`,
+          `{{ ${placeholderName} content='${c}' y='yyy' z='zzz' }}`
+        ]
       },
-      false,
       {
-        "123": ["123_a_x='1'"],
-        "1234": ["1234_c_c='c'", "1234_b_y='yyy'_z='zzz'"]
+        "123": [`123_${Base64.decode(c)}_x='1'`],
+        "1234": [
+          `1234_${Base64.decode(c)}_c='c'`,
+          `1234_${Base64.decode(c)}_y='yyy'_z='zzz'`
+        ]
       }
     ],
     //#endregion
@@ -511,21 +436,22 @@ describe("Testing 'dcApiProxyTestFetcher' function", () => {
     //#region with fallback
     [
       {
-        "123": ["{{ a _fallback='fb1' }}", "{{ a abc='123' _fallback='fb2'}}"]
+        "123": [
+          `{{ ${placeholderName} content='${c}' _fallback='fb1' }}`,
+          `{{ ${placeholderName} content='${c} 'abc='123' _fallback='fb2'}}`
+        ]
       },
-      false,
       {
-        "123": ["123_a", "123_a_abc='123'"]
+        "123": [`123_${Base64.decode(c)}`, `123_${Base64.decode(c)}_abc='123'`]
       }
     ],
     [
       {
         "123": [
-          "{{ a _fallback='fb1' _useFallback='true' }}",
-          "{{ a abc='123' _fallback='fb2' _useFallback='true'}}"
+          `{{ ${placeholderName} content='${c}' _fallback='fb1' _useFallback='true' }}`,
+          `{{ ${placeholderName} content='${c}' abc='123' _fallback='fb2' _useFallback='true'}}`
         ]
       },
-      false,
       {
         "123": ["123_fb1", "123_fb2"]
       }
@@ -537,36 +463,22 @@ describe("Testing 'dcApiProxyTestFetcher' function", () => {
       {
         "123": ["{{ _empty_ }}"],
         "124": ["{{ _empty_ a='123' b='456' }}"],
-        "125": ["{{ _empty_ _fallback='fb' _useFallback='true' }}"]
+        "125": ["{{ _empty_ _fallback='fb' _useFallback='true' }}"],
+        "126": [`{{ ${placeholderName} _fallback='fb' }}`],
+        "127": [`{{ content='${c}' _fallback='fb' _useFallback='true' }}`]
       },
-      false,
       {
         "123": [""],
         "124": [""],
-        "125": [""]
-      }
-    ],
-    //#endregion
-
-    //#region Custom Placeholder
-    [
-      {
-        "123": ["{{ _empty_ }}"],
-        "124": ["{{ userInfo['asdasdasd'] }}"],
-        "125": ["{{ userInfo['asdasdasd'] asdasd }}"]
-      },
-      true,
-      {
-        "123": ["123_{{ _empty_ }}"],
-        "124": ["124_{{ userInfo['asdasdasd'] }}"],
-        "125": ["125_{{ userInfo['asdasdasd'] asdasd }}"]
+        "125": [""],
+        "126": [""],
+        "127": [""]
       }
     ]
     //#endregion
-  ])("no. %#", async (placeholdersByPostId, useCustomPlaceholder, expected) => {
+  ])("no. %#", async (placeholdersByPostId, expected) => {
     const r = await dcApiProxyTestFetcher({
-      placeholders: placeholdersByPostId,
-      useCustomPlaceholder
+      placeholders: placeholdersByPostId
     });
 
     expect(r).toStrictEqual(expected);

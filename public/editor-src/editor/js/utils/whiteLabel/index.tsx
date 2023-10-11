@@ -1,9 +1,9 @@
 import { match } from "fp-utilities";
-import { WhiteLabel } from "visual/component/LeftSidebar/components/Cms/types/WhiteLabel";
 import Conf from "visual/global/Config";
 import { Config } from "visual/global/Config/types";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
+import { WhiteLabel } from "visual/global/Config/types/configs/WhiteLabel";
 
 export const getWhiteLabel = (): boolean => {
   const pro = Conf.get("pro");

@@ -3,29 +3,44 @@
     "start": 0,
     "startPopulation": "",
     "startPopulationFallback2": null,
+    "startPopulationEntityType": "",
+    "startPopulationEntityId": "",
 
     "end": 100,
     "endPopulation": "",
     "endPopulationFallback2": null,
+    "endPopulationEntityType": "",
+    "endPopulationEntityId": "",
 
     "duration": 2,
     "durationSuffix": "",
 
     "prefixLabel": "",
     "prefixLabelPopulation": "",
+    "prefixLabelPopulationEntityType": "",
+    "prefixLabelPopulationEntityId": "",
 
     "suffixLabel": "",
     "suffixLabelPopulation": "",
+    "suffixLabelPopulationEntityType": "",
+    "suffixLabelPopulationEntityId": "",
 
     "prefixLabelRadial": "",
     "prefixLabelRadialPopulation": "",
+    "prefixLabelRadialPopulationEntityType": "",
+    "prefixLabelRadialPopulationEntityId": "",
+
     "suffixLabelRadialPopulation": "",
+    "suffixLabelRadialPopulationEntityType": "",
+    "suffixLabelRadialPopulationEntityId": "",
 
     "suffixLabelRadial": "%",
     "suffixLabelRadial2Population": "",
 
     "separator": ",",
     "separatorPopulation": "",
+    "separatorPopulationEntityType": "",
+    "separatorPopulationEntityId": "",
 
     "offsetX": 0,
     "offsetY": 0

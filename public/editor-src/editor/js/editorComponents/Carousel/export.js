@@ -1,23 +1,20 @@
 import $ from "jquery";
+import { initHoverAnimation } from "visual/libs/hoveranimation/utils";
 
-export default function($node) {
+export default function ($node) {
   const isRtl = $node.closest("[dir='rtl']").length > 0;
-  const makeArrow = node => {
-    const $svg = $(node)
-      .children(".brz-icon-svg")
-      .removeClass("brz-hidden");
+  const makeArrow = (node) => {
+    const $svg = $(node).children(".brz-icon-svg").removeClass("brz-hidden");
 
     // Delete Svg
-    $(node)
-      .children(".brz-icon-svg")
-      .remove();
+    $(node).children(".brz-icon-svg").remove();
 
-    return className => {
+    return (className) => {
       return `<div class="brz-slick-slider__arrow ${className}">${$svg[0].outerHTML}</div>`;
     };
   };
 
-  $node.find(".brz-carousel__slider").each(function() {
+  $node.find(".brz-carousel__slider").each(function () {
     const _this = this;
     const $this = $(this);
     const data = $this.data();
@@ -33,11 +30,12 @@ export default function($node) {
     const swipe = data.swipe;
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
 
-    $this.on("init", function() {
+    $this.on("init", function () {
+      initHoverAnimation(_this);
       // when preview is opening via mobile - slick init plugin - then destroy it
       // and init again. this steps remove click lightbox event inside slider.
       // So we should reinitialize lightbox manually
-      $this.find(".brz-image__lightbox").each(function() {
+      $this.find(".brz-image__lightbox").each(function () {
         $(this).magnificPopup({
           delegate: "a",
           type: "image",
@@ -76,8 +74,8 @@ export default function($node) {
       "elements.mmenu.panel.opened"
     ];
 
-    elements.forEach(id => {
-      window.Brz.on(id, element => {
+    elements.forEach((id) => {
+      window.Brz.on(id, (element) => {
         if (element && element.contains(_this)) {
           $slick.slick("setPosition");
         }

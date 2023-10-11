@@ -14,7 +14,7 @@
     "mobileGridColumnSuffix": null,
 
     "coverZoom": 100,
-    "coverZoomSuffix": null,
+    "coverZoomSuffix": "%",
 
     "tabletCoverPositionY": null,
     "tabletCoverPositionX": null,

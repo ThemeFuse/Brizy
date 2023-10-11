@@ -1,5 +1,6 @@
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
@@ -26,9 +27,16 @@ import {
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component, context, state }) {
+  const config = Config.getAll();
+
+  const collectionTypesHandler =
+    config?.api?.collectionTypes?.loadCollectionTypes.handler;
+
+  const IS_GLOBAL_POPUP = isPopup(config);
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
-  const dvv = (key) => defaultValueValue({ v, key, device });
+
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -50,8 +58,7 @@ export function getItems({ v, device, component, context, state }) {
     (maskShape === "custom" && !maskCustomUploadImageSrc) ||
     disableMaskTab;
 
-  const config = Config.getAll();
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const linkSource = dvv("linkSource");
 
   const customVideo = isPro(config)
     ? [
@@ -389,6 +396,38 @@ export function getItems({ v, device, component, context, state }) {
             saveTab: true
           },
           tabs: [
+            {
+              id: "page",
+              label: t("Page"),
+              options: [
+                {
+                  id: "linkSource",
+                  type: "select-dev",
+                  disabled: !collectionTypesHandler,
+                  label: t("Type"),
+                  devices: "desktop",
+                  choices: {
+                    load: () => getCollectionTypes(config),
+                    emptyLoad: {
+                      title: t("There are no choices")
+                    }
+                  },
+                  config: {
+                    size: "large"
+                  }
+                },
+                {
+                  id: "linkPage",
+                  type: "internalLink-dev",
+                  label: t("Find Page"),
+                  devices: "desktop",
+                  disabled: !linkSource,
+                  config: {
+                    postType: linkSource
+                  }
+                }
+              ]
+            },
             {
               id: "external",
               label: t("URL"),

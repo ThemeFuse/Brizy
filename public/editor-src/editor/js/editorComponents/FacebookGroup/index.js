@@ -1,14 +1,15 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import { style } from "./styles";
 import classnames from "classnames";
-import { css } from "visual/utils/cssStyle";
+import React from "react";
+import CustomCSS from "visual/component/CustomCSS";
 import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class FacebookGroup extends EditorComponent {
   static get componentId() {
@@ -20,7 +21,9 @@ class FacebookGroup extends EditorComponent {
   getAppData() {
     return {
       appId: 113869198637480,
-      lang: "{{ brizy_dc_page_language }}"
+      lang: makePlaceholder({
+        content: "{{ brizy_dc_page_language }}"
+      })
     };
   }
 

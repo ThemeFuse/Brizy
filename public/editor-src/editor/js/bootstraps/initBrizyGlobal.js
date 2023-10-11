@@ -39,10 +39,6 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   toolbarColor2,
   toolbarColorHexField2,
-  toolbarFilterBrightness,
-  toolbarFilterContrast,
-  toolbarFilterHue,
-  toolbarFilterSaturation,
   toolbarLinkPopup
 } from "visual/utils/toolbar";
 
@@ -95,10 +91,6 @@ global.Brizy = {
   toolbar: {
     toolbarColor2,
     toolbarColorHexField2,
-    toolbarFilterHue,
-    toolbarFilterSaturation,
-    toolbarFilterBrightness,
-    toolbarFilterContrast,
     toolbarLinkPopup
   }
 };

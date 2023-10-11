@@ -36,6 +36,7 @@ export type Props<T> = WithClassName & {
   editable?: boolean;
   inputValue?: string;
   placeholder?: string;
+  autoClose?: boolean;
   onType?: OnChange<string>;
   onKeyDown?: OnChange<KeyboardEvent<HTMLInputElement>>;
 };
@@ -56,6 +57,7 @@ export function Component<T extends Literal>({
   onSelect,
   inputValue,
   scroll = 5,
+  autoClose,
   onOpen
 }: Props<T>): ReactElement {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -92,11 +94,19 @@ export function Component<T extends Literal>({
           onChange={_onSelect}
           itemToString={(i?: ItemInstance<T>): string => Str.mRead(i?.key)}
         >
-          {({ openMenu, isOpen, getMenuProps, getItemProps }): ReactElement => {
+          {({
+            openMenu,
+            isOpen,
+            getMenuProps,
+            getItemProps,
+            closeMenu
+          }): ReactElement => {
             const triggerOpen = (): void => {
               if (!isOpen) {
                 onOpen && onOpen();
                 openMenu();
+              } else if (autoClose) {
+                closeMenu();
               }
               inputRef.current?.focus();
             };

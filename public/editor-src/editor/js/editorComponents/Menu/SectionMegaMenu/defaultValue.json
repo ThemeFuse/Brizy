@@ -23,8 +23,11 @@
     "bgImageHeight": 0,
     "bgPositionY": 50,
     "bgPositionX": 50,
-    "bgPopulation": "",
     "bgImageExtension": "",
+
+    "bgPopulation": "",
+    "bgPopulationEntityType": "",
+    "bgPopulationEntityId": "",
 
     "brightness": 100,
     "hue": 0,
@@ -80,6 +83,8 @@
     "anchorName": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "multiPage": "off",
 
@@ -143,9 +148,13 @@
     "customClassName": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "customAttributes": "",
     "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
 
     "borderStyle": "",
 

@@ -20,27 +20,35 @@ import {
   styleTypography2FontSizeSuffix
 } from "visual/utils/style2";
 import {
-  styleElementRichTextBGImagePositionX,
-  styleElementRichTextBGImagePositionY,
   styleElementRichTextDCGradient,
   styleElementRichTextFontFamily,
-  styleElementRichTextGradient,
-  styleElementRichTextMarginBottom,
-  styleElementRichTextMarginTop
+  styleElementRichTextGradient
 } from "visual/utils/style2/styleElementRichText";
 import { styleState, styleTypography2FontSize } from "../style2";
 import { CSSValue } from "../style2/types";
 import { cssStyleColor } from "./cssStyleColor";
 import { cssStyleTypography3FontSize } from "./cssStyleTypography2";
 
-export function cssStyleElementRichTextMartinTop(d: CSSValue): string {
-  const marginTop = styleElementRichTextMarginTop(d);
+export function cssStyleElementRichTextMarginTop({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const marginTop = dvv("marginTop");
 
   return marginTop === undefined ? "" : `margin-top:${marginTop}px !important;`;
 }
 
-export function cssStyleElementRichTextMartinBottom(d: CSSValue): string {
-  const marginBottom = styleElementRichTextMarginBottom(d);
+export function cssStyleElementRichTextMarginBottom({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const marginBottom = dvv("marginBottom");
 
   return marginBottom === undefined
     ? ""
@@ -106,17 +114,11 @@ export function cssStyleElementRichTextBgImage({
     ? styleBgImage({ v, device, state })
     : styleExportBgImage({ v, device, state });
 
-  const x = styleElementRichTextBGImagePositionX({
-    v,
-    device,
-    state
-  });
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
 
-  const y = styleElementRichTextBGImagePositionY({
-    v,
-    device,
-    state
-  });
+  const x = dvv("bgPositionX");
+  const y = dvv("bgPositionY");
 
   const styles = {
     "background-clip": "text",

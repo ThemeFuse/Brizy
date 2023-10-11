@@ -1,15 +1,16 @@
 import { testEq } from "visual/utils/types/Eq.test";
 import { testReader } from "visual/utils/types/Type.test";
-import { Post, eq, read } from "../types/Post";
+import { ChoiceWithPermalink } from "../types";
+import { eq, read } from "../types/Post";
 
 describe("Testing 'read' function", function () {
   const valid = [
     {
-      id: 1,
+      value: 1,
       title: "Test"
     },
     {
-      id: "2",
+      value: "2",
       title: "Test 2"
     }
   ];
@@ -19,8 +20,8 @@ describe("Testing 'read' function", function () {
 });
 
 describe("Testing 'eq' function", function () {
-  const a: Post = { id: "1", title: "test 1" };
-  const b: Post = { id: "1", title: "test 2" };
-  const c: Post = { id: "2", title: "test 2" };
+  const a: ChoiceWithPermalink = { title: "test 1", value: "1" };
+  const b: ChoiceWithPermalink = { title: "test 2", value: "1" };
+  const c: ChoiceWithPermalink = { title: "test 2", value: "3" };
   testEq(eq, a, b, c);
 });

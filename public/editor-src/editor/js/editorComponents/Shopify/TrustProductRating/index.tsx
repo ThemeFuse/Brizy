@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import * as sidebar from "./sidebar";
 import * as toolbar from "./toolbar";
@@ -15,6 +16,8 @@ export class TrustProductRating extends EditorComponent<Value> {
   }
 
   renderForEdit(): React.ReactNode {
+    const productId = makePlaceholder({ content: "{{ product.id }}" });
+
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
         <Wrapper
@@ -26,7 +29,7 @@ export class TrustProductRating extends EditorComponent<Value> {
             <div
               id="vnts_prodrating_wrp"
               className="vnts_prodreviews_wrp vnts_prodrating_wrp"
-              data-product-id="{{ product.id }}"
+              data-product-id={productId}
             />
           ) : (
             <Placeholder icon="shopify" type="fa" />

@@ -1,3 +1,4 @@
+import { fromJS } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 import Options from "visual/component/Options";
@@ -38,7 +39,14 @@ class DrawerComponent extends React.Component {
 
     for (const fs of value) {
       for (const fs2 of mergedFontStyles) {
-        if (fs.id === fs2.id && fs !== fs2) {
+        if (fs.id === fs2.id) {
+          const _fs = fromJS(fs);
+          const _fs2 = fromJS(fs2);
+
+          if (_fs.equals(_fs2)) {
+            continue;
+          }
+
           if (fs.deletable === "off") {
             dispatch(
               updateCurrentStyle({
@@ -51,8 +59,6 @@ class DrawerComponent extends React.Component {
               updateExtraFontStyles(value.filter((fs) => fs.deletable === "on"))
             );
           }
-
-          return;
         }
       }
     }
@@ -91,7 +97,7 @@ class DrawerComponent extends React.Component {
       {
         id: "fontStyles",
         type: "fontStyleEditor",
-        value: [...fontStyles, ...extraFontStyles],
+        value: { extraFontStyles, fontStyles },
         onChange: this.handleFontStylesChange
       }
     ];

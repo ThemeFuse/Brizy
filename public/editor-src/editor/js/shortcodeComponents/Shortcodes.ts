@@ -2,10 +2,10 @@ import Config, { isWp } from "visual/global/Config";
 import Accordion from "./Accordion";
 import Alert from "./Alert";
 import Archive from "./Archive";
-import AssetsPosts from "./AssetsPosts";
+import getAssetsPosts from "./AssetsPosts";
 import Audio from "./Audio";
-import Button from "./Button";
-import Columns from "./Columns";
+import getButton from "./Button";
+import getColumns from "./Columns";
 import Countdown2 from "./Countdown2";
 import Counter from "./Counter";
 import Cart from "./Ecwid/Cart";
@@ -14,9 +14,10 @@ import Product from "./Ecwid/Product";
 import ShoppingBag from "./Ecwid/ShoppingBag";
 import Embed from "./Embed";
 import Form2 from "./Form2";
-import Icon from "./Icon";
+import getIcon from "./Icon";
 import IconText from "./IconText";
-import Image from "./Image";
+import getImage from "./Image";
+import Leadific from "./Leadific/Leadific";
 import Line from "./Line";
 import Map from "./Map";
 import MenuSimple from "./MenuSimple";
@@ -35,17 +36,17 @@ import MinistryBrandsSermonDetail from "./MinistryBrands/MinistryBrandsSermonDet
 import MinistryBrandsSermonFeatured from "./MinistryBrands/MinistryBrandsSermonFeatured";
 import MinistryBrandsSermonLayout from "./MinistryBrands/MinistryBrandsSermonLayout";
 import MinistryBrandsSermonList from "./MinistryBrands/MinistryBrandsSermonList";
-import PostExcerpt from "./PostExcerpt";
-import PostTitle from "./PostTitle";
-import Posts from "./Posts";
+import getPostExcerpt from "./PostExcerpt";
+import getPostTitle from "./PostTitle";
+import getPosts from "./Posts";
 import ProgressBar from "./ProgressBar";
 import ProtectedPage from "./ProtectedPage";
-import Row from "./Row";
-import ShopCategories from "./ShopCategories";
-import ShopPosts from "./ShopPosts";
+import getRow from "./Row";
+import getShopCategories from "./ShopCategories";
+import getShopPosts from "./ShopPosts";
 import Spacer from "./Spacer";
 import Tabs from "./Tabs";
-import Text from "./Text";
+import getText from "./Text";
 import Translation from "./Translation";
 import UserEmail from "./UserEmail";
 import UserFirstName from "./UserFirstName";
@@ -57,7 +58,7 @@ import Video from "./Video";
 import WOOCategories from "./WOOCategories";
 import WOOPages from "./WOOPages";
 import WPCustomShortcode from "./WPCustomShortcode";
-import WPFeaturedImage from "./WPFeaturedImage";
+import getFeaturedImage from "./WPFeaturedImage";
 import WPSidebar from "./WPSidebar";
 import Calendly from "./pro/Calendly";
 import Carousel from "./pro/Carousel";
@@ -65,7 +66,7 @@ import Facebook from "./pro/Facebook";
 import FacebookComments from "./pro/FacebookComments";
 import ImageGallery from "./pro/ImageGallery";
 import Login from "./pro/Login";
-import Lottie from "./pro/Lottie";
+import getLottie from "./pro/Lottie";
 import Menu from "./pro/Menu";
 import Products from "./pro/Products";
 import ResetPassword from "./pro/ResetPassword";
@@ -93,7 +94,7 @@ import WOOSku from "./pro/WOOSku";
 import WOOStock from "./pro/WOOStock";
 import WOOUpsell from "./pro/WOOUpsell.js";
 import WPBreadcrumbs from "./pro/WPBreadcrumbs";
-import WPPostContent from "./pro/WPPostContent";
+import getPostContent from "./pro/WPPostContent";
 import WPPostInfo from "./pro/WPPostInfo";
 import WPPostNavigation from "./pro/WPPostNavigation";
 import StoryLottie from "./pro/story/StoryLottie";
@@ -105,6 +106,7 @@ import StoryEmbed from "./story/StoryEmbed";
 import StoryForm2 from "./story/StoryForm2";
 import StoryIcon from "./story/StoryIcon";
 import StoryImage from "./story/StoryImage";
+import StoryLeadific from "./story/StoryLeadific";
 import StoryLine from "./story/StoryLine";
 import StoryMap from "./story/StoryMap";
 import StoryProgressBar from "./story/StoryProgressBar";
@@ -112,6 +114,7 @@ import StoryShape from "./story/StoryShape";
 import StoryText from "./story/StoryText";
 import StoryVideo from "./story/StoryVideo";
 
+const config = Config.getAll();
 export const ProShortCodes = {
   Text: false,
   Image: false,
@@ -164,6 +167,8 @@ export const ProShortCodes = {
   StoryImage: false,
   StoryVideo: false,
 
+  StoryLeadific: false,
+
   Facebook: true,
   Twitter: true,
   FacebookComments: true,
@@ -206,6 +211,8 @@ export const ProShortCodes = {
   MinistryBrandsEventDetail: false,
   MinistryBrandsFormWidget: false,
 
+  Leadific: false,
+
   ShopPosts: false,
   ShopCategories: false,
 
@@ -247,10 +254,10 @@ export const ProShortCodes = {
 };
 
 export const CloudShortCodes = {
-  Text,
-  Image,
-  Button,
-  Icon,
+  Text: getText(config),
+  Image: getImage(config),
+  Button: getButton(config),
+  Icon: getIcon(config),
   Spacer,
   Map,
   Form2,
@@ -259,7 +266,7 @@ export const CloudShortCodes = {
   MenuSimple,
   Login,
   Translation,
-  Posts,
+  Posts: getPosts(config),
 
   ImageGallery,
   Video,
@@ -267,7 +274,7 @@ export const CloudShortCodes = {
   VideoPlaylist,
 
   IconText,
-  Lottie,
+  Lottie: getLottie(config),
   Embed,
   StarRating,
   Alert,
@@ -299,14 +306,16 @@ export const CloudShortCodes = {
   StoryImage,
   StoryVideo,
 
+  StoryLeadific,
+
   Facebook,
   Twitter,
   FacebookComments,
 
-  Columns,
-  Row,
+  Columns: getColumns(config),
+  Row: getRow(config),
 
-  AssetsPosts,
+  AssetsPosts: getAssetsPosts(config),
 
   ProtectedPage,
   ResetPassword,
@@ -321,8 +330,8 @@ export const CloudShortCodes = {
   Cart,
   ShoppingBag,
   MyAccount,
-  ShopPosts,
-  ShopCategories,
+  ShopPosts: getShopPosts(config),
+  ShopCategories: getShopCategories(config),
 
   MinistryBrandsGroupLayout,
   MinistryBrandsGroupSlider,
@@ -340,17 +349,19 @@ export const CloudShortCodes = {
   MinistryBrandsEventDetail,
   MinistryBrandsFormWidget,
 
+  Leadific,
+
   Product
 };
 
 export const WPShortCodes = {
   Archive,
-  PostExcerpt,
-  PostTitle,
+  PostExcerpt: getPostExcerpt(config),
+  PostTitle: getPostTitle(config),
   WOOCategories,
   WOOPages,
   WPCustomShortcode,
-  WPFeaturedImage,
+  WPFeaturedImage: getFeaturedImage(config),
   WPSidebar,
   Products,
   Review,
@@ -371,7 +382,7 @@ export const WPShortCodes = {
   WOOStock,
   WOOUpsell,
   WPBreadcrumbs,
-  WPPostContent,
+  WPPostContent: getPostContent(config),
   WPPostInfo,
   WPPostNavigation
 };

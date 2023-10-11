@@ -3,7 +3,11 @@
     "popups": [],
 
     "type": "wp",
-    "sourceType": "profile"
+    "sourceType": "profile",
+
+    "textPopulation": "{{brizy_dc_post_excerpt}}",
+    "textPopulationEntityType": "",
+    "textPopulationEntityId": ""
   },
 
   "toolbar": {
@@ -55,6 +59,9 @@
   },
 
   "link": {
+    "linkPage": "",
+    "linkPageTitle": "",
+    "linkSource": "",
     "linkType": "external",
     "linkExternal": "",
     "linkAnchor": "",
@@ -62,6 +69,8 @@
     "linkExternalRel": "off",
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
+    "linkPopulationEntityId": "",
+    "linkPopulationEntityType": "",
     "linkUpload": "",
     "linkPopup": "",
 

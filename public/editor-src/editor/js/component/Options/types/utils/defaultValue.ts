@@ -81,6 +81,7 @@ export const defaultValues: DefaultValues = {
   "paypal-dev": paypal,
   "popover-dev": popover,
   "population-dev": population,
+  "predefinedPopulation-dev": population,
   "radioGroup-dev": radioGroup,
   "range-dev": range,
   "select-dev": select,

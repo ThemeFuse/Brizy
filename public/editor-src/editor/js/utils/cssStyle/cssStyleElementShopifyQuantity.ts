@@ -1,79 +1,49 @@
-import { checkValue } from "visual/utils/checkValue";
 import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
 import { cssStyleBorder } from "visual/utils/cssStyle/cssStyleBorder";
 import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
 import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
+import {
+  cssStyleSizeHeight,
+  cssStyleSizeWidth
+} from "visual/utils/cssStyle/cssStyleSize";
 import { cssStyleSpacing } from "visual/utils/cssStyle/cssStyleSpacing";
 import { defaultValueValue } from "visual/utils/onChange";
-import * as Num from "visual/utils/reader/number";
+import * as Str from "visual/utils/reader/string";
 import { capByPrefix } from "visual/utils/string";
-import * as Str from "visual/utils/string/specs";
 import { styleBgColor, styleBgGradient } from "visual/utils/style2";
 import { CSSValue } from "../style2/types";
 import { cssStyleColor } from "./cssStyleColor";
 
-type Size = "small" | "medium" | "large" | "custom";
-const getSize = checkValue<Size>(["small", "medium", "large", "custom"]);
-export function cssStyleElementShopifyQuantityButtonSize({
+export function cssStyleElementShopifyQuantityButtonWidth({
   v,
   device,
-  state,
-  prefix = "button"
+  state
 }: CSSValue): string {
-  const { width, height } = cssStyleElementShopifyQuantitySize({
-    v,
-    device,
-    state,
-    prefix
-  });
-
-  return `min-width:${width}px; min-height:${height}px;`;
+  return cssStyleSizeWidth({ v, device, state, prefix: "button" });
 }
 
-export function cssStyleElementShopifyQuantityInputSize({
+export function cssStyleElementShopifyQuantityInputWidth({
   v,
   device,
-  state,
-  prefix = "input"
+  state
 }: CSSValue): string {
-  const { width, height } = cssStyleElementShopifyQuantitySize({
-    v,
-    device,
-    state,
-    prefix
-  });
-
-  return `width:${width}px; height:${height}px;`;
+  return cssStyleSizeWidth({ v, device, state, prefix: "input" });
 }
 
-function cssStyleElementShopifyQuantitySize({
+export function cssStyleElementShopifyQuantityButtonHeight({
   v,
   device,
-  prefix = ""
-}: CSSValue): { width: number; height: number } {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  state
+}: CSSValue): string {
+  return cssStyleSizeHeight({ v, device, state, prefix: "button" });
+}
 
-  const paddingWidth = Str.read(dvv(capByPrefix(prefix, "width")));
-  const paddingHeight = Str.read(dvv(capByPrefix(prefix, "height")));
-  const size = getSize(dvv(capByPrefix(prefix, "size")));
-
-  const widths = {
-    small: 40,
-    medium: 60,
-    large: 80,
-    custom: paddingWidth
-  };
-  const heights = {
-    small: 50,
-    medium: 50,
-    large: 50,
-    custom: paddingHeight
-  };
-
-  const _width = size ? Num.read(widths[size]) ?? 0 : 0;
-  const _height = size ? Num.read(heights[size]) ?? 0 : 0;
-
-  return { width: _width, height: _height };
+export function cssStyleElementShopifyQuantityInputHeight({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeHeight({ v, device, state, prefix: "input" });
 }
 
 export function cssStyleElementShopifyQuantityButtonSpacing({
@@ -178,3 +148,17 @@ export const cssStyleElementShopifyQuantityIconColor = ({
 }: CSSValue): string => {
   return cssStyleColor({ v, device, state, prefix: "buttonIconColor" });
 };
+
+export function cssStyleElementShopifyQuantityIconSize({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const customSize = dvv(capByPrefix(prefix, "iconCustomSize"));
+  const customSizeSuffix = Str.read(
+    dvv(capByPrefix(prefix, "iconCustomSizeSuffix"))
+  );
+  return `font-size:${customSize}${customSizeSuffix ?? "px"};`;
+}

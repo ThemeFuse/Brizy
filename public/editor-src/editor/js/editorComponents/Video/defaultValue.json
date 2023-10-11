@@ -38,7 +38,9 @@
 
   "link": {
     "video": "https://www.youtube.com/watch?v=4dzj5rEFAdk",
-    "videoPopulation": ""
+    "videoPopulation": "",
+    "videoPopulationEntityType": "",
+    "videoPopulationEntityId": ""
   },
 
   "toolbar": {

@@ -1,15 +1,16 @@
+import classnames from "classnames";
 import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import classnames from "classnames";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 export default class WOOProductMeta extends EditorComponent {
   static get componentId() {
@@ -29,6 +30,9 @@ export default class WOOProductMeta extends EditorComponent {
         style(v, vs, vd)
       )
     );
+    const placeholder = makePlaceholder({
+      content: "{{editor_product_metas}}"
+    });
 
     return (
       <Toolbar
@@ -37,7 +41,7 @@ export default class WOOProductMeta extends EditorComponent {
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Wrapper {...this.makeWrapperProps({ className })}>
             <DynamicContentHelper
-              placeholder="{{editor_product_metas}}"
+              placeholder={placeholder}
               placeholderIcon="woo-meta"
               tagName="div"
             />

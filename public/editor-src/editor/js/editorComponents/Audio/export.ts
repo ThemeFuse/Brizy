@@ -37,6 +37,52 @@ export default function ($node: JQuery): void {
     return (offsetLeft * 100) / sliderWidth;
   };
 
+  const showSoundCloud = (node: HTMLElement): void => {
+    node
+      .querySelectorAll<HTMLElement>(".brz-soundCloud-content")
+      .forEach((soundCloud) => {
+        const url = soundCloud.getAttribute("data-brz-url");
+        const iframe = soundCloud.querySelector(
+          ".brz-iframe"
+        ) as HTMLIFrameElement;
+
+        if (!iframe || !url) return;
+        if (iframe.src === url) return;
+
+        iframe.src = url;
+      });
+  };
+  const hideSoundCloud = (node: HTMLElement): void => {
+    node
+      .querySelectorAll<HTMLIFrameElement>(
+        ".brz-soundCloud-content .brz-iframe"
+      )
+      .forEach((iframe) => {
+        iframe.src = "";
+      });
+  };
+  const pauseCustomAudio = (node: HTMLElement) => {
+    node.querySelectorAll(".brz-audio").forEach((item) => {
+      const audio = item.querySelector("audio");
+      const currentPlayPauseIcons = item.querySelector(
+        ".brz-audio-play-pause-btn"
+      );
+
+      if (audio && currentPlayPauseIcons) {
+        audio.pause();
+        changeIconVisibility(currentPlayPauseIcons, false);
+      }
+    });
+  };
+
+  window.Brz.on("elements.popup.open", (popup: HTMLElement) => {
+    showSoundCloud(popup);
+  });
+  window.Brz.on("elements.popup.close", (popup: HTMLElement) => {
+    hideSoundCloud(popup);
+    pauseCustomAudio(popup);
+  });
+
   node.querySelectorAll(".brz-audio").forEach((item) => {
     const audio = item.querySelector("audio");
 

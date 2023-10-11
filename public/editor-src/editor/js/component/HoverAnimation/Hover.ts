@@ -6,16 +6,16 @@ export class Hover {
   public controller: Animation | undefined = undefined;
   private node: Element | null = null;
   constructor({
-    child,
+    target,
     keyframes,
     options
   }: {
-    child: HTMLElement;
+    target: Element;
     keyframes: Keyframe[];
-    options: KeyframeEffectOptions;
+    options: OptionalEffectTiming;
   }) {
-    this.node = child;
-    this.updateAnimation(keyframes, options, child);
+    this.node = target;
+    this.updateAnimation(keyframes, options, target);
   }
 
   private getRate(mode: AnimationMode): 1 | -1 {
@@ -39,14 +39,14 @@ export class Hover {
     });
   }
 
-  public setEffectsOnMouseEnter(options: KeyframeEffectOptions): void {
+  public setEffectsOnMouseEnter(options: OptionalEffectTiming): void {
     if (this.controller) {
       this.controller.onfinish = noop;
       this.controller.effect?.updateTiming(options);
     }
   }
 
-  public setEffectsOnMouseLeave(options: KeyframeEffectOptions): void {
+  public setEffectsOnMouseLeave(options: OptionalEffectTiming): void {
     const { iterations } = options;
     if (iterations === Infinity) {
       this.controller?.effect?.updateTiming({
@@ -57,7 +57,7 @@ export class Hover {
 
   public updateAnimation(
     keyframes: Keyframe[],
-    options: KeyframeEffectOptions,
+    options: OptionalEffectTiming,
     child: Element
   ) {
     if (this.node) {
@@ -72,12 +72,15 @@ export class Hover {
     options = {}
   }: {
     keyframes: Keyframe[];
-    extraOptions?: KeyframeEffectOptions;
-    options?: KeyframeEffectOptions;
+    extraOptions?: OptionalEffectTiming;
+    options?: OptionalEffectTiming;
   }) {
     if (this.controller && this.effects) {
       this.effects.setKeyframes(keyframes);
-      this.effects.updateTiming({ ...options, ...extraOptions });
+      this.effects.updateTiming({
+        ...options,
+        ...extraOptions
+      });
       this.controller.play();
     }
   }
@@ -87,7 +90,7 @@ export class Hover {
     options
   }: {
     keyframes: AnimationBase[];
-    options: KeyframeEffectOptions;
+    options: OptionalEffectTiming;
   }): void {
     if (this.controller) {
       keyframes.forEach((animation) => {

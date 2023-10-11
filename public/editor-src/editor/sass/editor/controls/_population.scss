@@ -17,7 +17,7 @@
     letter-spacing: 0;
     background: $control-bg none;
     color: $control__variant-color;
-    min-width: $control__lg-width;
+    min-width: $control__md-width;
     height: $control-height;
     padding: 0 5px 0 10px;
     border-radius: $control-border-radius;
@@ -50,6 +50,93 @@
     &--only-icon {
       margin-left: 0;
     }
+  }
+}
+
+.brz-ed-control__population--wrapper {
+  margin-left: 10px;
+  cursor: initial;
+
+  .brz-control__select {
+    width: 100%;
+
+    .brz-control__select--arrow {
+      right: 8px;
+    }
+  }
+
+  &.brz-control__select-population--only-icon {
+    margin-left: 0;
+  }
+
+  &.brz-control__select-current__icon {
+    width: auto;
+    height: auto;
+    font-size: 0;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--primary-gray, #fff);
+
+    .brz-icon-svg {
+      font-size: 14px;
+    }
+  }
+
+  &.brz-control__select-current {
+    color: $control-color;
+    overflow: visible;
+  }
+
+  .brz-ed-control__population-content-wrapper {
+    width: 120px;
+    z-index: 1110;
+    background-color: #383e48;
+    border-radius: 4px;
+    margin-top: 5px;
+    padding: 5px;
+
+    .brz-control__select {
+      margin-left: 0;
+
+      &-options {
+        border-radius: 4px;
+        margin-left: 0;
+        box-shadow: 0 1px 3px 0
+          var(--picker__select__option-box-shadow, rgba(0, 0, 0, 0.5));
+        background-color: var(--secondary-dark, #383e48);
+        width: 100%;
+
+        .brz-control__select-option {
+          border-bottom: 1px solid
+            var(--tertiary-white, rgba(255, 255, 255, 0.07)) !important;
+        }
+      }
+
+      &-current__input > .brz-control__select-option {
+        border-bottom: transparent;
+      }
+
+      &--active {
+        color: $brand__primary;
+      }
+    }
+  }
+
+  .brz-ed-control__multiSelect__menu {
+    max-width: 110px;
+
+    .brz-ed-control__multiSelect__option {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 110px;
+      width: 100%;
+      display: inline-block;
+    }
+  }
+
+  .brz-ed-control__multiSelect--tag--value {
+    display: block;
   }
 }
 

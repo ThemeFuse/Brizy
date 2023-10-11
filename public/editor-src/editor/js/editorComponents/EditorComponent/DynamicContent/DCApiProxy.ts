@@ -1,5 +1,4 @@
 import QuickLRU from "quick-lru";
-import Config from "visual/global/Config";
 import { Dictionary } from "visual/types/utils";
 import { getDynamicContent as apiGetDynamicContent } from "visual/utils/api";
 import { GetDynamicContent } from "visual/utils/api/types";
@@ -15,15 +14,12 @@ interface DCApiProxyFetcher {
 
 interface Options {
   waitTime?: number;
-  useCustomPlaceholder?: boolean;
 }
 
 export class BatchFetcher implements DCApiProxyFetcher {
   private readonly fetcher: GetDynamicContent;
 
   private readonly waitTime: number;
-
-  private readonly useCustomPlaceholder: boolean;
 
   private promise: Promise<Dictionary<string[]>> | undefined;
   private promiseResolve: ((value: unknown) => void) | undefined;
@@ -35,10 +31,9 @@ export class BatchFetcher implements DCApiProxyFetcher {
   private buffer = new Map<string, Map<string, number>>();
 
   constructor(fetcher: GetDynamicContent, options?: Options) {
-    const { waitTime = 2000, useCustomPlaceholder = false } = options ?? {};
+    const { waitTime = 2000 } = options ?? {};
     this.fetcher = fetcher;
     this.waitTime = waitTime;
-    this.useCustomPlaceholder = useCustomPlaceholder;
   }
 
   getDC(placeholders: string[], config: DCApiProxyConfig): Promise<string[]> {
@@ -54,9 +49,8 @@ export class BatchFetcher implements DCApiProxyFetcher {
 
         this.buffer.clear();
         this.promise = undefined;
-        const useCustomPlaceholder = this.useCustomPlaceholder;
 
-        return this.fetcher({ placeholders, useCustomPlaceholder });
+        return this.fetcher({ placeholders });
       });
     }
 
@@ -198,7 +192,5 @@ export class DCApiProxy {
 }
 
 export const DCApiProxyInstance = new DCApiProxy({
-  fetcher: new BatchFetcher(apiGetDynamicContent, {
-    useCustomPlaceholder: Config.getAll()?.dynamicContent?.useCustomPlaceholder
-  })
+  fetcher: new BatchFetcher(apiGetDynamicContent)
 });

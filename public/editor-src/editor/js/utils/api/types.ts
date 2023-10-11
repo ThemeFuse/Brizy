@@ -11,7 +11,6 @@ export interface ResponseWithBody<T> {
 export type GetDynamicContent = (args: {
   placeholders: Dictionary<string[]>;
   signal?: AbortSignal;
-  useCustomPlaceholder: boolean;
 }) => Promise<Dictionary<string[]>>;
 
 //#endregion
@@ -119,6 +118,7 @@ export type GetWPCollectionSourceItems = (
 
 export interface Rule {
   id: string;
+  blog_id?: string;
   title: string;
   type: string;
 }

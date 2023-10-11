@@ -31,12 +31,13 @@ export const Transform: FC<Props> = ({
   const EffectComponent = active && effectOptions(active);
   const onCheck = useCallback<OnChange<Effect>>(
     (e) => onChange(Patch.enable(e, !value[e], active === e)),
-    [value, onChange]
+    [value, onChange, active]
   );
 
-  const onClick = useCallback<OnChange<Effect>>(pipe(Patch.active, onChange), [
-    onChange
-  ]);
+  const onClick = useCallback<OnChange<Effect>>(
+    (v) => pipe(Patch.active, onChange)(v),
+    [onChange]
+  );
 
   const onOptionChange = useMemo((): OnChange<EffectValue<Effect>> => {
     return active

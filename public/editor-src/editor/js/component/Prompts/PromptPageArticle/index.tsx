@@ -57,7 +57,7 @@ export const PromptPageArticle = (props: Props): ReactElement => {
     const config = Config.getAll();
     if (isCloud(config) && isShopify(config)) {
       const selectedP = getPageRelations(config).then((is) =>
-        is.map((i) => i.id)
+        is.map((i) => i.blog_id || i.id)
       );
       const itemsP = shopifyBlogItems();
 

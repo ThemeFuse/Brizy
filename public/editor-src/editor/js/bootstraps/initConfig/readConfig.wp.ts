@@ -7,6 +7,7 @@ import * as Num from "visual/utils/reader/number";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { throwOnNullish } from "visual/utils/value";
+import { parsePageCommon } from "./common";
 import { withDefaultConfig } from "./default";
 
 const tParser = parseStrict<unknown, Rule>({
@@ -44,17 +45,16 @@ const t = pipe(pass(Array.isArray), throwOnNullish("Err"), (v) =>
   v.map(tParser)
 );
 
-// arg config - should be unknown, but because we parse it partly,
-// we temporary set Wp
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const readConfig = (_config: WP): WP => {
+export const readConfig = (_config: Record<string, unknown>): WP => {
+  const wp = Obj.read(_config.wp) ?? {};
   const config = {
     ..._config,
+    pageData: parsePageCommon(_config.pageData),
     wp: {
-      ..._config.wp,
-      ruleMatches: t(_config.wp.ruleMatches)
+      ...wp,
+      ruleMatches: t(wp.ruleMatches)
     }
   };
 
-  return withDefaultConfig(config);
+  return withDefaultConfig(config as WP);
 };

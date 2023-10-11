@@ -1,34 +1,17 @@
 import { ApolloQueryResult, FetchResult, gql } from "@apollo/client";
 import {
-  GetCustomer,
-  GetCustomerVariables
-} from "visual/utils/api/cms/graphql/types/GetCustomer";
-import {
   GetCustomerAndCollection,
   GetCustomerAndCollectionVariables
 } from "visual/utils/api/cms/graphql/types/GetCustomerAndCollection";
-import {
-  GetCustomers,
-  GetCustomersVariables
-} from "visual/utils/api/cms/graphql/types/GetCustomers";
 import {
   UpdateCustomer,
   UpdateCustomerVariables
 } from "visual/utils/api/cms/graphql/types/UpdateCustomer";
 import { ApolloClient } from "./apollo";
-import { graphQLIdPrefixes } from "./convertors";
 import {
   CreateCollectionItem,
   CreateCollectionItemVariables
 } from "./types/CreateCollectionItem";
-import {
-  DeleteCollectionItem,
-  DeleteCollectionItemVariables
-} from "./types/DeleteCollectionItem";
-import {
-  GetCollectionItem,
-  GetCollectionItemVariables
-} from "./types/GetCollectionItem";
 import { GetCollectionItemFieldBySlug } from "./types/GetCollectionItemFieldBySlug";
 import {
   GetCollectionItems,
@@ -36,12 +19,9 @@ import {
 } from "./types/GetCollectionItems";
 import { GetCollectionTypeFieldBySlug } from "./types/GetCollectionTypeFieldBySlug";
 import { GetCollectionTypesWithFields } from "./types/GetCollectionTypesWithFields";
-import {
-  UpdateCollectionItem,
-  UpdateCollectionItemVariables
-} from "./types/UpdateCollectionItem";
 
 //#region CollectionItem fragment
+
 const collectionItemFragment = gql`
   fragment CollectionItemFragment on CollectionItem {
     id
@@ -92,9 +72,11 @@ const collectionItemFragment = gql`
     }
   }
 `;
+
 //#endregion
 
 //#region CollectionTypes
+
 export const getCollectionTypesWithFields = (
   apolloClient: ApolloClient
 ): Promise<ApolloQueryResult<GetCollectionTypesWithFields>> =>
@@ -130,7 +112,6 @@ export const getCollectionTypesWithFields = (
       }
     `
   });
-//#endregion
 
 export const collectionTypeFieldBySlug = (
   apolloClient: ApolloClient,
@@ -155,6 +136,10 @@ export const collectionTypeFieldBySlug = (
       slug: collectionFieldSlug
     }
   });
+
+//#endregion
+
+//#region CollectionItems
 
 export const collectionItemFieldBySlug = (
   apolloClient: ApolloClient,
@@ -182,7 +167,6 @@ export const collectionItemFieldBySlug = (
     }
   });
 
-//#region CollectionItems
 export const getCollectionItems = (
   apolloClient: ApolloClient,
   {
@@ -219,22 +203,6 @@ export const getCollectionItems = (
     }
   });
 
-export const getCollectionItem = (
-  apolloClient: ApolloClient,
-  variables: GetCollectionItemVariables & { withFields?: boolean }
-): Promise<ApolloQueryResult<GetCollectionItem>> =>
-  apolloClient.query<GetCollectionItem, GetCollectionItemVariables>({
-    query: gql`
-      query GetCollectionItem($id: ID!, $withFields: Boolean = true) {
-        collectionItem(id: $id) {
-          ...CollectionItemFragment
-        }
-      }
-      ${collectionItemFragment}
-    `,
-    variables
-  });
-
 export const createCollectionItem = (
   apolloClient: ApolloClient,
   variables: CreateCollectionItemVariables & { withFields?: boolean }
@@ -256,73 +224,9 @@ export const createCollectionItem = (
     variables
   });
 
-export const updateCollectionItem = (
-  apolloClient: ApolloClient,
-  variables: UpdateCollectionItemVariables
-): Promise<FetchResult<UpdateCollectionItem>> =>
-  apolloClient.mutate<UpdateCollectionItem, UpdateCollectionItemVariables>({
-    mutation: gql`
-      mutation UpdateCollectionItem($input: updateCollectionItemInput!) {
-        updateCollectionItem(input: $input) {
-          collectionItem {
-            id
-            title
-            slug
-            status
-            createdAt
-            pageData
-            type {
-              id
-            }
-          }
-        }
-      }
-    `,
-    variables
-  });
-
-export const deleteCollectionItem = (
-  apolloClient: ApolloClient,
-  id: number
-): Promise<FetchResult<DeleteCollectionItem>> =>
-  apolloClient.mutate<DeleteCollectionItem, DeleteCollectionItemVariables>({
-    mutation: gql`
-      mutation DeleteCollectionItem($input: deleteCollectionItemInput!) {
-        deleteCollectionItem(input: $input) {
-          collectionItem {
-            id
-          }
-        }
-      }
-    `,
-    variables: {
-      input: {
-        id: `${graphQLIdPrefixes.collectionItem}${id}`
-      }
-    }
-  });
 //#endregion
 
 //#region Customers
-export const getCustomer = (
-  apolloClient: ApolloClient,
-  variables: GetCustomerVariables
-): Promise<ApolloQueryResult<GetCustomer>> =>
-  apolloClient.query<GetCustomer, GetCustomerVariables>({
-    query: gql`
-      query GetCustomer($id: ID!) {
-        customer(id: $id) {
-          id
-          pageData
-          customerGroups {
-            id
-            name
-          }
-        }
-      }
-    `,
-    variables
-  });
 
 export const updateCustomer = (
   apolloClient: ApolloClient,
@@ -342,29 +246,10 @@ export const updateCustomer = (
     variables
   });
 
-export const getCustomers = (
-  apolloClient: ApolloClient,
-  variables: GetCustomersVariables
-): Promise<FetchResult<GetCustomers>> =>
-  apolloClient.query<GetCustomers, GetCustomersVariables>({
-    query: gql`
-      query GetCustomers($page: Int, $itemsPerPage: Int) {
-        customers(page: $page, itemsPerPage: $itemsPerPage) {
-          collection {
-            id
-            email
-            firstName
-            lastName
-          }
-        }
-      }
-    `,
-    variables
-  });
-
 //#endregion
 
 //#refion Customers with Collection
+
 export const getCustomersAndCollectionTypes = (
   apolloClient: ApolloClient,
   variables: GetCustomerAndCollectionVariables
@@ -422,4 +307,5 @@ export const getCustomersAndCollectionTypes = (
     `,
     variables
   });
+
 //#endregion

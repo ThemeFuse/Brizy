@@ -2,6 +2,8 @@
   "content": {
     "text": "BUTTON",
     "textPopulation": "",
+    "textPopulationEntityType": "",
+    "textPopulationEntityId": "",
 
     "type": "link",
 
@@ -20,6 +22,9 @@
   },
 
   "link": {
+    "linkSource": "",
+    "linkPage": "",
+    "linkPageTitle": "",
     "linkType": "external",
     "linkExternal": "",
     "linkAnchor": "",
@@ -28,6 +33,8 @@
     "linkExternalRel": "off",
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
+    "linkPopulationEntityId": "",
+    "linkPopulationEntityType": "",
     "linkUpload": "",
     "linkPopup": "",
     "actionClosePopup": "off"
@@ -41,8 +48,12 @@
     "customID": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "iconSize": "small",
 

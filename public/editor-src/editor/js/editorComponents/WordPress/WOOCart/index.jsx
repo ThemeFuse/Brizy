@@ -1,23 +1,24 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar, { hideToolbar } from "visual/component/Toolbar";
-import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import defaultValue from "./defaultValue.json";
-import * as toolbar from "./toolbar";
 import * as sidebar from "./sidebar";
-import * as toolbarProductName from "./toolbarProductName";
-import * as toolbarProductPrice from "./toolbarProductPrice";
-import * as toolbarProductSubtotal from "./toolbarProductSubtotal";
-import * as toolbarProductButton from "./toolbarProductButton";
-import * as toolbarSidebarSettings from "./toolbarSidebarSettings";
 import * as sidebarProduct from "./sidebarProduct";
 import * as sidebarSidebarSettings from "./sidebarSettings";
 import { style } from "./styles";
+import * as toolbar from "./toolbar";
+import * as toolbarProductButton from "./toolbarProductButton";
+import * as toolbarProductName from "./toolbarProductName";
+import * as toolbarProductPrice from "./toolbarProductPrice";
+import * as toolbarProductSubtotal from "./toolbarProductSubtotal";
+import * as toolbarSidebarSettings from "./toolbarSidebarSettings";
 
 export default class WOOCart extends EditorComponent {
   static get componentId() {
@@ -38,7 +39,7 @@ export default class WOOCart extends EditorComponent {
     // a hack that stops click propagation on the backdrop
     // so that it does not reach to the Toolbars with selectors
     // that are situated beneath it and would open otherwise
-    this.backgroundRef.current?.addEventListener("click", e =>
+    this.backgroundRef.current?.addEventListener("click", (e) =>
       e.stopPropagation()
     );
   }
@@ -63,7 +64,7 @@ export default class WOOCart extends EditorComponent {
 
   handleDCSuccess = () => {
     // closes the sidebar when the user clicks the X icon
-    this.dcRef.current?.addEventListener("click", e => {
+    this.dcRef.current?.addEventListener("click", (e) => {
       if (e.target.classList.contains("brz-woocart__sidebar-close")) {
         this.setState({ sidebarOpened: false });
       }
@@ -87,6 +88,9 @@ export default class WOOCart extends EditorComponent {
       className_,
       css(this.constructor.componentId, id, style(v, vs, vd))
     );
+    const placeholder = makePlaceholder({
+      content: "{{editor_product_cart}}"
+    });
 
     return (
       <Toolbar
@@ -160,7 +164,7 @@ export default class WOOCart extends EditorComponent {
                       ref={this.backgroundRef}
                     />
                     <DynamicContentHelper
-                      placeholder="{{editor_product_cart}}"
+                      placeholder={placeholder}
                       placeholderIcon="woo-cart"
                       tagName="div"
                       props={{ className: "brz-woocart__dc", ref: this.dcRef }}

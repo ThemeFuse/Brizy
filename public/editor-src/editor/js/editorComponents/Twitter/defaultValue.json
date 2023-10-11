@@ -2,6 +2,8 @@
   "content": {
     "twitterUsername": "@natgeo",
     "twitterUsernamePopulation": "",
+    "twitterUsernamePopulationEntityType": "",
+    "twitterUsernamePopulationEntityId": "",
 
     "twitter": "embed",
     "twitterType": "embed",

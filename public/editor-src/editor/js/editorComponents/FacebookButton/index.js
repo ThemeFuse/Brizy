@@ -1,15 +1,16 @@
+import classnames from "classnames";
 import React from "react";
-//import Config from "visual/global/Config";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import classnames from "classnames";
-import { style } from "./styles";
+//import Config from "visual/global/Config";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class FacebookButton extends EditorComponent {
   static get componentId() {
@@ -26,8 +27,12 @@ class FacebookButton extends EditorComponent {
       //appId: facebook && facebook.appid ? facebook.appid : "nick",
 
       appId: 113869198637480,
-      href: "{{ brizy_dc_current_page_unique_url }}",
-      lang: "{{ brizy_dc_page_language }}"
+      href: makePlaceholder({
+        content: "{{ brizy_dc_current_page_unique_url }}"
+      }),
+      lang: makePlaceholder({
+        content: "{{ brizy_dc_page_language }}"
+      })
     };
   }
 

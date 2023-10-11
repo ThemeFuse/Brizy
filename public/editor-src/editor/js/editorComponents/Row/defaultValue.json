@@ -87,8 +87,11 @@
     "bgImageHeight": 0,
     "bgPositionY": 50,
     "bgPositionX": 50,
-    "bgPopulation": "",
     "bgImageExtension": "",
+
+    "bgPopulation": "",
+    "bgPopulationEntityType": "",
+    "bgPopulationEntityId": "",
 
     "brightness": 100,
     "hue": 0,
@@ -127,7 +130,7 @@
 
     "bgMapAddress": "Wall Street",
     "bgMapZoom": 15,
-    "bgMapZoomSuffix": null,
+    "bgMapZoomSuffix": "",
 
     "hoverMedia": "image",
 
@@ -363,6 +366,9 @@
   },
 
   "link": {
+    "linkPage": "",
+    "linkPageTitle": "",
+    "linkSource": "",
     "linkType": "external",
     "linkExternal": "",
     "linkAnchor": "",
@@ -370,6 +376,8 @@
     "linkExternalRel": "off",
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
+    "linkPopulationEntityId":  "",
+    "linkPopulationEntityType": "",
     "linkUpload": "",
     "linkPopup": "",
 
@@ -400,6 +408,11 @@
     "animationDelay": 1000,
     "animationInfiniteAnimation": false,
 
+    "hoverName": "none",
+    "hoverDuration": 600,
+    "hoverDelay": 0,
+    "hoverInfiniteAnimation": true,
+
     "tempAnimationName": "none",
 
     "tabletAnimationName": null,
@@ -425,6 +438,8 @@
 
     "customAttributes": "",
     "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
 
     "borderStyle": "solid",
 
@@ -593,8 +608,12 @@
     "customID": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "tabletColumnsHeightStyle": "auto",
     "tabletColumnsHeight": 400,

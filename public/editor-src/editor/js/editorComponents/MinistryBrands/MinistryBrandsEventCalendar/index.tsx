@@ -29,7 +29,7 @@ import * as toolbarPagination from "./toolbarPagination";
 import * as toolbarTitle from "./toolbarTitle";
 import * as toolbarWeekdays from "./toolbarWeekdays";
 import { Props, Value } from "./types";
-import { getPlaceholder } from "./utils";
+import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsEventCalendar" {

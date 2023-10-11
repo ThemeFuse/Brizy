@@ -3,12 +3,12 @@ import { hoverEffects } from "visual/component/Options/types/dev/Animation/utils
 import Config from "visual/global/Config";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { t } from "visual/utils/i18n";
+import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
+import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
+import { read as readString } from "visual/utils/string/specs";
 import { GetItems } from "../EditorComponent/types";
 import type { V } from "./types";
-import { read as readString } from "visual/utils/string/specs";
-import { isGIF, isSVG } from "./utils";
-import { isStory } from "visual/utils/models";
 
 export const getItems: GetItems<V> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
@@ -83,8 +83,8 @@ export const getItems: GetItems<V> = ({ v, device }) => {
                       label: t("Show Original image"),
                       disabled:
                         !IS_WP ||
-                        isSVG(imageExtension) ||
-                        isGIF(imageExtension) ||
+                        isSVGExtension(imageExtension) ||
+                        isGIFExtension(imageExtension) ||
                         !imageSrc
                     }
                   ]

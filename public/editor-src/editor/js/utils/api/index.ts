@@ -1,7 +1,9 @@
 import { isT, mPipe, pass } from "fp-utilities";
 import { UploadData } from "visual/component/Options/types/dev/FileUpload/types/Value";
-import { ChoicesAsync } from "visual/component/Options/types/dev/MultiSelect2/types";
-import { ChoicesAsync as ChoicesAsyncSimpleSelect } from "visual/component/Options/types/dev/Select/types";
+import {
+  ChoicesAsync,
+  ChoicesSync
+} from "visual/component/Options/types/dev/MultiSelect2/types";
 import Config from "visual/global/Config";
 import { isShopifyShop } from "visual/global/Config/types/configs/Base";
 import {
@@ -9,37 +11,18 @@ import {
   Shopify,
   isCloud
 } from "visual/global/Config/types/configs/Cloud";
-import {
-  AutoSave,
-  ConfigCommon,
-  CreateSavedBlock,
-  CreateSavedLayout,
-  DeleteSavedBlock,
-  DeleteSavedLayout,
-  OnChange,
-  PublishData,
-  SavedBlockAPIMeta,
-  SavedBlockFilter,
-  SavedBlockImport,
-  SavedLayoutAPIMeta,
-  SavedLayoutFilter,
-  SavedLayoutImport,
-  UpdateSavedBlock,
-  UpdateSavedLayout
-} from "visual/global/Config/types/configs/ConfigCommon";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
-import { GlobalBlock, SavedBlock, SavedLayout } from "visual/types";
+import { GlobalBlock } from "visual/types";
 import * as Arr from "visual/utils/array";
 import { GlobalBlocksError } from "visual/utils/errors";
 import { pipe } from "visual/utils/fp";
-import { t } from "visual/utils/i18n";
 import * as ArrReader from "visual/utils/reader/array";
 import { read } from "visual/utils/reader/json";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { throwOnNullish } from "visual/utils/value";
 import {
-  makeBlockMeta,
   parseBlogSourceItem,
   parseCollectionSourceItem,
   parseGlobalBlock,
@@ -64,6 +47,31 @@ import {
 import { makeFormEncode, makeUrl } from "./utils";
 
 export {
+  autoSave,
+  createSavedBlock,
+  createSavedLayout,
+  createSavedPopup,
+  deleteSavedBlock,
+  deleteSavedLayout,
+  deleteSavedPopup,
+  filterSavedBlocks,
+  filterSavedLayouts,
+  filterSavedPopups,
+  getSavedBlockById,
+  getSavedBlocks,
+  getSavedLayoutById,
+  getSavedLayouts,
+  getSavedPopupById,
+  getSavedPopups,
+  importSaveBlocks,
+  importSavePopups,
+  importSavedLayout,
+  onChange,
+  publish,
+  updatePopupRules,
+  updateSavedBlock,
+  updateSavedLayout,
+  updateSavedPopup,
   defaultKitsMeta,
   defaultKitsData,
   defaultPopupsMeta,
@@ -71,11 +79,12 @@ export {
   defaultLayoutsMeta,
   defaultLayoutsData,
   defaultStoriesMeta,
-  defaultStoriesData
+  defaultStoriesData,
+  getCollectionTypes,
+  getSourceIds
 } from "./common";
 
 export * from "./cms";
-export * from "./cms/page";
 export * from "./cms/popup";
 export { makeFormEncode, makeUrl, parseJSON } from "./utils";
 
@@ -148,47 +157,6 @@ export function pendingRequest(time = 650): Promise<boolean> {
     setTimeout(() => {
       res(true);
     }, time);
-  });
-}
-
-//#endregion
-
-//#region Publish
-
-export function publish(
-  data: PublishData,
-  config: ConfigCommon
-): Promise<PublishData> {
-  return new Promise((res, rej) => {
-    const { handler } = config.ui?.publish ?? {};
-
-    if (!handler) {
-      rej(t("API: No publish handler found."));
-    } else {
-      handler(res, rej, data);
-    }
-  });
-}
-
-//#endregion
-
-//#region AutoSave
-
-export function autoSave(data: AutoSave, config: ConfigCommon): Promise<void> {
-  return new Promise((res) => {
-    config.onAutoSave?.(data);
-    res();
-  });
-}
-
-//#endregion
-
-//#region OnChange
-
-export function onChange(data: OnChange, config: ConfigCommon): Promise<void> {
-  return new Promise((res) => {
-    config.onChange?.(data);
-    res();
   });
 }
 
@@ -547,381 +515,6 @@ export const updateBlockScreenshot: UpdateScreenshot = ({ id, base64 }) => {
 
 //#endregion
 
-//#region Saved blocks
-
-export const getSavedBlocks = async (
-  config: ConfigCommon,
-  filter?: { filterBy: string }
-): Promise<Array<SavedBlockAPIMeta>> => {
-  return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
-    const get = savedBlocks?.get;
-
-    if (!get) {
-      rej(t("API: No savedBlocks get found."));
-    } else {
-      get(res, rej, filter);
-    }
-  });
-};
-
-export const getSavedBlockById = (
-  uid: string,
-  config: ConfigCommon
-): Promise<SavedBlock> => {
-  return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
-    const getSavedBlockById = savedBlocks?.getByUid;
-
-    if (!getSavedBlockById) {
-      rej(t("API: No savedBlocks getByUid found."));
-    } else {
-      getSavedBlockById(res, rej, { uid });
-    }
-  });
-};
-
-interface _SavedBlock extends SavedBlock {
-  uid: string;
-}
-
-export const createSavedBlock = (
-  block: _SavedBlock,
-  config: ConfigCommon,
-  meta?: { is_autosave: 0 | 1 }
-) => {
-  return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
-    const create = savedBlocks?.create;
-
-    if (!create) {
-      rej(t("API: No savedBlocks create found."));
-    } else {
-      const { is_autosave = 0 } = meta ?? {};
-      const data: CreateSavedBlock = {
-        block: { ...block, media: makeBlockMeta(block) },
-        is_autosave
-      };
-
-      create(res, rej, data);
-    }
-  });
-};
-
-export const deleteSavedBlock = (
-  savedBlock: DeleteSavedBlock,
-  config: ConfigCommon
-) => {
-  return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
-    const deleteSavedBlock = savedBlocks?.delete;
-
-    if (!deleteSavedBlock) {
-      rej(t("API: No savedBlocks delete found."));
-    } else {
-      deleteSavedBlock(res, rej, savedBlock);
-    }
-  });
-};
-
-export const updateSavedBlock = (
-  savedBlock: UpdateSavedBlock,
-  config: ConfigCommon
-) => {
-  return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
-    const updateSavedBlock = savedBlocks?.update;
-
-    if (!updateSavedBlock) {
-      rej(t("API: No savedBlocks update found."));
-    } else {
-      updateSavedBlock(res, rej, savedBlock);
-    }
-  });
-};
-
-export const importSaveBlocks = async (
-  config: ConfigCommon
-): Promise<SavedBlockImport> => {
-  return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
-    const importSavedBlocks = savedBlocks?.import;
-
-    if (!importSavedBlocks) {
-      rej(t("API: No savedBlocks upload found."));
-    } else {
-      importSavedBlocks(res, rej);
-    }
-  });
-};
-
-export const filterSavedBlocks = (
-  config: ConfigCommon
-): Promise<SavedBlockFilter> => {
-  return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
-    const filterSavedBlocks = savedBlocks?.filter?.handler;
-
-    if (!filterSavedBlocks) {
-      rej(t("API: No savedBlocks filter found."));
-    } else {
-      filterSavedBlocks(res, rej);
-    }
-  });
-};
-
-//#endregion
-
-//#region Saved popups
-
-export const getSavedPopups = async (
-  config: ConfigCommon,
-  filter?: { filterBy: string }
-): Promise<Array<SavedBlockAPIMeta>> => {
-  return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
-    const get = savedPopups?.get;
-
-    if (!get) {
-      rej(t("API: No savedPopups get found."));
-    } else {
-      get(res, rej, filter);
-    }
-  });
-};
-
-export const getSavedPopupById = (
-  uid: string,
-  config: ConfigCommon
-): Promise<SavedBlock> => {
-  return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
-    const getSavedPopupById = savedPopups?.getByUid;
-
-    if (!getSavedPopupById) {
-      rej(t("API: No savedPopups getByUid found."));
-    } else {
-      getSavedPopupById(res, rej, { uid });
-    }
-  });
-};
-
-interface _SavedPopup extends SavedBlock {
-  uid: string;
-}
-
-export const createSavedPopup = (
-  block: _SavedPopup,
-  config: ConfigCommon,
-  meta?: { is_autosave: 0 | 1 }
-) => {
-  return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
-    const create = savedPopups?.create;
-
-    if (!create) {
-      rej(t("API: No savedPopups create found."));
-    } else {
-      const { is_autosave = 0 } = meta ?? {};
-      const data: CreateSavedBlock = {
-        block: { ...block, media: makeBlockMeta(block) },
-        is_autosave
-      };
-
-      create(res, rej, data);
-    }
-  });
-};
-
-export const deleteSavedPopup = (
-  savedBlock: DeleteSavedBlock,
-  config: ConfigCommon
-) => {
-  return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
-    const deleteSavedPopup = savedPopups?.delete;
-
-    if (!deleteSavedPopup) {
-      rej(t("API: No savedPopup delete found."));
-    } else {
-      deleteSavedPopup(res, rej, savedBlock);
-    }
-  });
-};
-
-export const updateSavedPopup = (
-  savedBlock: UpdateSavedBlock,
-  config: ConfigCommon
-) => {
-  return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
-    const updateSavedPopup = savedPopups?.update;
-
-    if (!updateSavedPopup) {
-      rej(t("API: No savedPopup update found."));
-    } else {
-      updateSavedPopup(res, rej, savedBlock);
-    }
-  });
-};
-
-export const importSavePopups = async (
-  config: ConfigCommon
-): Promise<SavedBlockImport> => {
-  return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
-    const importSavedPopups = savedPopups?.import;
-
-    if (!importSavedPopups) {
-      rej(t("API: No savedPopups import found."));
-    } else {
-      importSavedPopups(res, rej);
-    }
-  });
-};
-
-export const filterSavedPopups = (
-  config: ConfigCommon
-): Promise<SavedBlockFilter> => {
-  return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
-    const filterSavedPopups = savedPopups?.filter?.handler;
-
-    if (!filterSavedPopups) {
-      rej(t("API: No savedPopups filter found."));
-    } else {
-      filterSavedPopups(res, rej);
-    }
-  });
-};
-
-//#endregion
-
-//#region Saved layouts
-
-export const getSavedLayouts = (
-  config: ConfigCommon,
-  filter?: { filterBy: string }
-): Promise<Array<SavedLayoutAPIMeta>> => {
-  return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
-    const get = savedLayouts?.get;
-
-    if (!get) {
-      rej(t("API: No savedLayouts get found."));
-    } else {
-      get(res, rej, filter);
-    }
-  });
-};
-
-export const getSavedLayoutById = (
-  id: string,
-  config: ConfigCommon
-): Promise<SavedLayout> => {
-  return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
-    const getByUid = savedLayouts?.getByUid;
-
-    if (!getByUid) {
-      rej(t("API: No savedLayouts getByUid found."));
-    } else {
-      getByUid(res, rej, { uid: id });
-    }
-  });
-};
-
-interface _Layout extends SavedLayout {
-  uid: string;
-}
-
-export const createSavedLayout = (
-  layout: _Layout,
-  config: ConfigCommon,
-  meta?: { is_autosave: 0 | 1 }
-) => {
-  return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
-    const create = savedLayouts?.create;
-
-    if (!create) {
-      rej(t("API: No savedLayouts create found."));
-    } else {
-      const { is_autosave = 0 } = meta ?? {};
-      const data: CreateSavedLayout = {
-        block: { ...layout, media: makeBlockMeta(layout) },
-        is_autosave
-      };
-
-      create(res, rej, data);
-    }
-  });
-};
-
-export const deleteSavedLayout = (
-  savedLayout: DeleteSavedLayout,
-  config: ConfigCommon
-) => {
-  return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
-    const deleteSavedLayout = savedLayouts?.delete;
-
-    if (!deleteSavedLayout) {
-      rej(t("API: No savedLayout delete found."));
-    } else {
-      deleteSavedLayout(res, rej, savedLayout);
-    }
-  });
-};
-
-export const updateSavedLayout = (
-  savedLayout: UpdateSavedLayout,
-  config: ConfigCommon
-) => {
-  return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
-    const updateSavedLayout = savedLayouts?.update;
-
-    if (!updateSavedLayout) {
-      rej(t("API: No savedLayout update found."));
-    } else {
-      updateSavedLayout(res, rej, savedLayout);
-    }
-  });
-};
-
-export const importSavedLayout = (
-  config: ConfigCommon
-): Promise<SavedLayoutImport> => {
-  return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
-    const importSavedLayout = savedLayouts?.import;
-
-    if (!importSavedLayout) {
-      rej(t("API: No savedLayout import found."));
-    } else {
-      importSavedLayout(res, rej);
-    }
-  });
-};
-
-export const filterSavedLayouts = (
-  config: ConfigCommon
-): Promise<SavedLayoutFilter> => {
-  return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
-    const filterSavedLayouts = savedLayouts?.filter?.handler;
-
-    if (!filterSavedLayouts) {
-      rej(t("API: No savedLayouts filter found."));
-    } else {
-      filterSavedLayouts(res, rej);
-    }
-  });
-};
-
-//#endregion
-
 type T = { by: "id"; value: string } | { by: "slug"; value: ShopifyTemplate };
 
 function getCollectionSourceItems(v: T): Promise<CollectionSourceItem[]> {
@@ -975,12 +568,6 @@ export const getCollectionSourceItemsById = (
 ): Promise<CollectionSourceItem[]> => {
   return getCollectionSourceItems({ by: "id", value: id });
 };
-
-export function getCollectionSourceItemsByType(
-  type: ShopifyTemplate
-): Promise<CollectionSourceItem[]> {
-  return getCollectionSourceItems({ by: "slug", value: type });
-}
 
 //#region page rules
 // right now is used only shopify integration
@@ -1190,23 +777,6 @@ export const getPostsSourceRefs: GetPostsSourceRefs = (type) => {
 
 //#endregion
 
-export const getSourceIds = (
-  type: string,
-  config: ConfigCommon
-): ChoicesAsyncSimpleSelect["load"] => {
-  const sourceItemsHandler = config?.api?.sourceItems?.handler;
-
-  return () => {
-    return new Promise((res, rej) => {
-      if (typeof sourceItemsHandler === "function") {
-        sourceItemsHandler(res, rej, { id: type });
-      } else {
-        rej("Missing api handler in config");
-      }
-    });
-  };
-};
-
 export const getMetafields = (
   sourceType: string,
   config: ConfigCommon
@@ -1296,4 +866,18 @@ export const searchCollectionItems = (
       }
     });
   };
+};
+
+export const getLeadificCustomFields = (
+  config: ConfigCommon
+): Promise<ChoicesSync> => {
+  const { handler } = config?.api?.modules?.leadific?.getCustomFields ?? {};
+
+  return new Promise((res, rej) => {
+    if (typeof handler === "function") {
+      handler(res, rej);
+    } else {
+      rej("Missing api handler in config");
+    }
+  });
 };

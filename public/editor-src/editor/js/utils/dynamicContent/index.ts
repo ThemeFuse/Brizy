@@ -1,3 +1,13 @@
-export function isDynamicContent(s: string): boolean {
-  return /{{\s*(\w+)(.*?)}}/g.test(s);
-}
+export {
+  isPlaceholderName,
+  isPlaceholderStart,
+  getVaryAttr,
+  getPopulatedEntityValues
+} from "./common";
+export {
+  makeEndPlaceholder,
+  makeStartPlaceholder,
+  makePlaceholder
+} from "./makePlaceholder";
+export { explodePlaceholder } from "./explodePlaceholder";
+export { isDynamicContent } from "./isDynamicContent";

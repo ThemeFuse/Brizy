@@ -1,4 +1,5 @@
 import { setIn } from "timm";
+import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
@@ -6,6 +7,7 @@ import {
   hexToRgba,
   makeStylePaletteCSSVar
 } from "visual/utils/color";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
@@ -91,7 +93,7 @@ const changeColor = (value) => {
         linearAngle: value.gradientLinearDegree,
         radialPosition: value.gradientRadialDegree
       },
-      color: null,
+      color: value.bgColorHex,
       opacity: null,
       colorPalette: value.bgColorPalette,
       bgColorType: "gradient"
@@ -181,17 +183,62 @@ function getPopulationColorOptions({ populationColor }, onChange) {
   ];
 }
 
-function getSimpleColorOptions(v, { context }, onChange) {
+function patchImage(v, patch) {
   const {
-    src = null,
-    population = null,
-    fileName = null,
-    x = null,
-    y = null,
-    extension = null,
-    width = null,
-    height = null
-  } = v.backgroundImage || {};
+    imageSrc = v.imageSrc,
+    imageExtension = v.imageExtension,
+    imageFileName = v.imageFileName,
+    imageHeight = v.imageHeight,
+    imageWidth = v.imageWidth,
+    positionX = v.imagePositionX,
+    positionY = v.imagePositionY
+  } = patch;
+  const imagePositionX = positionX || 50;
+  const imagePositionY = positionY || 50;
+
+  return {
+    imageSrc,
+    imageFileName,
+    imageExtension,
+    imageWidth,
+    imageHeight,
+    imagePositionX,
+    imagePositionY
+  };
+}
+
+function patchImagePopulation(v, patch) {
+  const {
+    imagePopulation,
+    imagePopulationEntityId,
+    imagePopulationEntityType
+  } = patch;
+  const imageData = {
+    imageSrc: v.imageSrc,
+    imageFileName: v.imageFileName,
+    imageExtension: v.imageExtension,
+    imageWidth: v.imageWidth,
+    imageHeight: v.imageHeight,
+    imagePositionX: v.imagePositionX,
+    imagePositionY: v.imagePositionY
+  };
+  const populationAttr = {};
+
+  if (imagePopulationEntityId) {
+    populationAttr.entityId = imagePopulationEntityId;
+  }
+  if (imagePopulationEntityType) {
+    populationAttr.entityType = imagePopulationEntityType;
+  }
+
+  const population = imagePopulation
+    ? makePlaceholder({ content: imagePopulation, attr: populationAttr })
+    : undefined;
+
+  return { ...imageData, imagePopulation: population };
+}
+
+function getSimpleColorOptions(v, { context, device }, onChange) {
   const config = Config.getAll();
 
   const imageDynamicContentChoices = getDynamicContentOption({
@@ -286,45 +333,31 @@ function getSimpleColorOptions(v, { context }, onChange) {
           id: "tabImage",
           label: t("Mask"),
           options: [
+            // Use population-dev option type instead of using the `population` config for imageUpload-dev,
+            // because the population id and imageUpload-dev id are different.
             {
               id: "image",
+              type: "population-dev",
               label: t("Image"),
-              type: "imageSetter",
-              population: imageDynamicContentChoices,
-              value: {
-                src,
-                population,
-                width,
-                height,
-                x,
-                y,
-                fileName,
-                extension
+              config: imageDynamicContentChoices,
+              fallback: {
+                id: keyToDCFallback2Key("image"),
+                type: "imageUpload-dev"
               },
-              onChange: ({
-                width,
-                height,
-                src,
-                x,
-                y,
-                population,
-                fileName,
-                extension
-              }) => {
-                x = x || 50;
-                y = y || 50;
-
-                return onChange({
-                  backgroundImage: {
-                    src,
-                    population,
-                    fileName,
-                    x,
-                    y,
-                    extension,
-                    width,
-                    height
-                  }
+              option: {
+                id: "",
+                type: "imageUpload-dev",
+                config: {
+                  edit: device === "desktop",
+                  disableSizes: true
+                },
+                dependencies: (patch) => {
+                  onChange({ backgroundImage: patchImage(v, patch) });
+                }
+              },
+              dependencies: (patch) => {
+                onChange({
+                  backgroundImage: patchImagePopulation(v, patch)
                 });
               }
             }
@@ -343,12 +376,13 @@ function getTextPopulationOptions() {
       type: "tabs-dev",
       tabs: [
         {
-          id: "tabBg",
-          label: t("Bg"),
+          id: "tabText",
+          label: t("Color"),
           options: [
             {
               id: "",
-              type: "backgroundColor-dev"
+              type: "backgroundColor-dev",
+              states: [NORMAL]
             }
           ]
         },

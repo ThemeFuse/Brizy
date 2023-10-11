@@ -3,9 +3,10 @@ import classnames from "classnames";
 import React from "react";
 import Placeholder from "visual/component/Placeholder";
 import { css } from "visual/utils/cssStyle";
+import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { stylePicture } from "../styles";
 import { ImageProps, Styles } from "../types";
-import { isGIF, isSVG, showOriginalImage } from "../utils";
+import { showOriginalImage } from "../utils";
 import Population from "./Population";
 import SimpleImage from "./SimpleImage";
 import SvgImage from "./SvgImage";
@@ -47,7 +48,9 @@ const Content: React.FC<ImageProps> = (props) => {
   // imagePopulation is rendering during compilation time as usual Image
   if (imageSrc || imagePopulation) {
     const content =
-      isSVG(imageExtension) || isGIF(imageExtension) || showOriginalImage(v) ? (
+      isSVGExtension(imageExtension) ||
+      isGIFExtension(imageExtension) ||
+      showOriginalImage(v) ? (
         <SvgImage
           v={v}
           vs={vs}

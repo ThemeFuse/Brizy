@@ -2,6 +2,8 @@
   "content": {
     "text": "<p class='brz-tp-paragraph'><span class='brz-cp-color7'>The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span></p>",
     "textPopulation": "",
+    "textPopulationEntityType": "",
+    "textPopulationEntityId": "",
 
     "popups": [],
 
@@ -39,6 +41,8 @@
     "bgPositionY": 50,
 
     "bgPopulation": "",
+    "bgPopulationEntityType": "",
+    "bgPopulationEntityId": "",
 
     "contentHorizontalAlign": "left",
     "tabletContentHorizontalAlign": null,
@@ -294,6 +298,9 @@
   },
 
   "link": {
+    "linkPage": "",
+    "linkPageTitle": "",
+    "linkSource": "",
     "linkType": "external",
     "linkExternal": "",
     "linkAnchor": "",
@@ -301,6 +308,8 @@
     "linkExternalRel": "off",
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
+    "linkPopulationEntityType": "",
+    "linkPopulationEntityId": "",
     "linkUpload": "",
     "linkPopup": "",
     "actionClosePopup": "off",

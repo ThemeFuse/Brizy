@@ -7,9 +7,6 @@ export function makeEmptySidebarConfig({ title }) {
   };
 }
 
-// BG Image
-export { toolbarBgImage } from "./toolbarBgImage";
-
 // Color
 export { toolbarColor2, toolbarColorHexField2 } from "./toolbarColor";
 
@@ -53,14 +50,6 @@ export {
   toolbarShowOnMobile,
   toolbarShowOnResponsive
 } from "./toolbarShowOnDevices";
-
-// Filter
-export {
-  toolbarFilterHue,
-  toolbarFilterSaturation,
-  toolbarFilterBrightness,
-  toolbarFilterContrast
-} from "./toolbarFilters";
 
 // Disabled
 export {

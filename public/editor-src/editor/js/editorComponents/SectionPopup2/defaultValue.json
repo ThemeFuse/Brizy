@@ -24,8 +24,11 @@
     "bgImageHeight": 0,
     "bgPositionY": 50,
     "bgPositionX": 50,
-    "bgPopulation": "",
     "bgImageExtension": "",
+
+    "bgPopulation": "",
+    "bgPopulationEntityType": "",
+    "bgPopulationEntityId": "",
 
     "brightness": 100,
     "hue": 0,
@@ -95,7 +98,10 @@
 
     "customAttributes": "",
     "closeCustomAttributes": "",
+
     "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
 
     "closePosition": "outside",
 
@@ -150,7 +156,7 @@
 
     "showCloseButton": "on",
     "showCloseButtonAfter": 0,
-    "showCloseButtonAfterSuffix": "px",
+    "showCloseButtonAfterSuffix": "s",
 
     "hoverShowCloseButton": null,
 

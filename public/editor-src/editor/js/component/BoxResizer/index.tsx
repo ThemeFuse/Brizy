@@ -34,10 +34,6 @@ const BoxResizer: React.FC<Props> = ({
   meta = {},
   ...props
 }) => {
-  if (IS_PREVIEW) {
-    return <>{props.children}</>;
-  }
-
   const restrictions = transformRestrictions(props.restrictions, value);
   const horizontalAlign = transformAlign(meta, "horizontalAlign");
   const verticalAlign =
@@ -54,13 +50,7 @@ const BoxResizer: React.FC<Props> = ({
     }
 
     return transformedValue;
-  }, [
-    resizerV.size,
-    resizerV.width,
-    resizerV.height,
-    value.offsetX,
-    value.offsetY
-  ]);
+  }, [resizerV, value]);
 
   // add useCallback hook
   const handleStart = (): void => {
@@ -98,8 +88,12 @@ const BoxResizer: React.FC<Props> = ({
 
       onChange(path);
     },
-    [onChange, startValue, value]
+    [onChange, value]
   );
+
+  if (IS_PREVIEW) {
+    return <>{props.children}</>;
+  }
 
   return (
     <Resizer

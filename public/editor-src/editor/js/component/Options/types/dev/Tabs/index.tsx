@@ -1,18 +1,18 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { sortBy } from "underscore";
+import { Tabs as Control } from "visual/component/Controls/Tabs2";
+import { Props as CProps } from "visual/component/Controls/Tabs2";
+import { Tab } from "visual/component/Controls/Tabs2/Tab";
 import Options from "visual/component/Options";
 import { Props as OptionProps } from "visual/component/Options/Type";
-import { Literal } from "visual/utils/types/Literal";
 import { SimpleValue } from "visual/component/Options/Type";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import {
   WithClassName,
   WithConfig,
   WithId
 } from "visual/utils/options/attributes";
-import { Tabs as Control } from "visual/component/Controls/Tabs2";
-import { Tab } from "visual/component/Controls/Tabs2/Tab";
-import { Props as CProps } from "visual/component/Controls/Tabs2";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { Literal } from "visual/utils/types/Literal";
 
 export type Config = {
   showSingle?: boolean;
@@ -41,16 +41,21 @@ export const Tabs: FC<Props> = ({
   toolbar,
   className
 }) => {
+  const {
+    position = "top",
+    align = "center",
+    saveTab,
+    showSingle = false
+  } = config ?? {};
+
   const [_value, setValue] = useState(value);
-  const position = config?.position ?? "top";
-  const align = config?.align ?? "center";
-  const _onChange = useCallback(setValue, [value]);
+  const _onChange = useCallback(setValue, [setValue]);
 
   useEffect(() => {
-    if (config?.saveTab) {
+    if (saveTab) {
       onChange({ value: _value });
     }
-  }, [_value]);
+  }, [_value, saveTab, onChange]);
 
   return (
     <Control
@@ -58,7 +63,7 @@ export const Tabs: FC<Props> = ({
       value={_value}
       onChange={_onChange}
       position={position}
-      showSingle={config?.showSingle ?? false}
+      showSingle={showSingle}
       className={className}
     >
       {sortBy(tabs, ({ position = 100 }) => position).map(

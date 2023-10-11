@@ -1,8 +1,9 @@
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { Dictionary } from "visual/types/utils";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { ECKeyDCInfo } from "../types";
 import { DCApiProxy, DCApiProxyInstance } from "./DCApiProxy";
-import { placeholderObjFromECKeyDCInfo, placeholderObjToStr } from "./utils";
+import { placeholderObjFromECKeyDCInfo } from "./utils";
 
 export interface DCObjResult {
   [k: string]: unknown;
@@ -28,24 +29,15 @@ export interface DCObjIncomplete {
   details: DCObjDetails;
 }
 
-export const getDCObjPreview = (
-  keys: ECKeyDCInfo[],
-  useCustomPlaceholder: boolean
-): DCObjComplete => {
+export const getDCObjPreview = (keys: ECKeyDCInfo[]): DCObjComplete => {
   const value: DCObjResult = {};
   const details: DCObjDetails = {};
 
   for (const keyDcInfo of keys) {
-    const placeholderObj = placeholderObjFromECKeyDCInfo(
-      keyDcInfo,
-      useCustomPlaceholder
-    );
+    const placeholderObj = placeholderObjFromECKeyDCInfo(keyDcInfo);
 
     if (placeholderObj) {
-      value[keyDcInfo.key] = placeholderObjToStr(
-        placeholderObj,
-        useCustomPlaceholder
-      );
+      value[keyDcInfo.key] = makePlaceholder(placeholderObj);
       details[keyDcInfo.key] = {
         loaded: true,
         staticValue: keyDcInfo.staticValue,
@@ -66,32 +58,24 @@ export const getDCObjEditor_ =
   (apiProxy: DCApiProxy) =>
   (
     keys: ECKeyDCInfo[],
-    context: EditorComponentContextValue,
-    useCustomPlaceholder: boolean
+    context: EditorComponentContextValue
   ): DCObjComplete | DCObjIncomplete => {
     const toFetchK: string[] = [];
     const toFetchV: string[] = [];
     const partialValue: DCObjResult = {};
     const details: DCObjDetails = {};
     const apiProxyConfig = {
-      postId: context.dynamicContent.itemId,
-      useCustomPlaceholder
+      postId: context.dynamicContent.itemId
     };
 
     for (const keyDCInfo of keys) {
-      const placeholderObj = placeholderObjFromECKeyDCInfo(
-        keyDCInfo,
-        useCustomPlaceholder
-      );
+      const placeholderObj = placeholderObjFromECKeyDCInfo(keyDCInfo);
 
       if (!placeholderObj) {
         continue;
       }
 
-      const placeholderStr = placeholderObjToStr(
-        placeholderObj,
-        useCustomPlaceholder
-      );
+      const placeholderStr = makePlaceholder(placeholderObj);
       const cached = apiProxy.getFromCache(placeholderStr, apiProxyConfig);
 
       if (cached === undefined) {

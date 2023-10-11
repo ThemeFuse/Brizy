@@ -1,6 +1,7 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import Config from "visual/global/Config";
 import { Block } from "visual/types";
+import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
@@ -16,6 +17,7 @@ import {
 import EditorComponent from "../EditorComponent";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
 import { Value } from "./index";
+import {DESKTOP} from "visual/utils/devices";
 
 export function getItems({
   v,
@@ -39,8 +41,13 @@ export function getItems({
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
   const config = Config.getAll();
+  const collectionTypesHandler =
+    config?.api?.collectionTypes?.loadCollectionTypes.handler;
+
   const IS_STORY = isStory(config);
   const IS_GLOBAL_POPUP = isPopup(config);
+
+  const linkSource = dvv("linkSource");
 
   return [
     {
@@ -64,6 +71,7 @@ export function getItems({
                   id: "",
                   label: t("Icon"),
                   type: "iconSetter-dev",
+                  devices: DESKTOP,
                   position: 40
                 },
                 {
@@ -265,6 +273,38 @@ export function getItems({
           type: "tabs-dev",
           config: { saveTab: true },
           tabs: [
+            {
+              id: "page",
+              label: t("Page"),
+              options: [
+                {
+                  id: "linkSource",
+                  type: "select-dev",
+                  disabled: !collectionTypesHandler,
+                  label: t("Type"),
+                  devices: "desktop",
+                  choices: {
+                    load: () => getCollectionTypes(config),
+                    emptyLoad: {
+                      title: t("There are no choices")
+                    }
+                  },
+                  config: {
+                    size: "large"
+                  }
+                },
+                {
+                  id: "linkPage",
+                  type: "internalLink-dev",
+                  label: t("Find Page"),
+                  devices: "desktop",
+                  disabled: !linkSource,
+                  config: {
+                    postType: linkSource
+                  }
+                }
+              ]
+            },
             {
               id: "external",
               label: t("URL"),
