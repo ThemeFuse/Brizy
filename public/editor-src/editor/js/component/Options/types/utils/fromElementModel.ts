@@ -33,6 +33,7 @@ import { fromElementModel as order } from "visual/component/Options/types/dev/Or
 import { fromElementModel as padding } from "visual/component/Options/types/dev/Padding/converters";
 import { fromElementModel as paypal } from "visual/component/Options/types/dev/PayPal/converters";
 import { fromElementModel as popover } from "visual/component/Options/types/dev/Popover/converters";
+import { fromElementModel as predefinedPopulation } from "visual/component/Options/types/dev/PredefinedPopulation/converters";
 import { fromElementModel as radioGroup } from "visual/component/Options/types/dev/RadioGroup/converters";
 import { fromElementModel as range } from "visual/component/Options/types/dev/Range/converters";
 import { fromElementModel as savedBlock } from "visual/component/Options/types/dev/SavedBlock/converters";
@@ -84,6 +85,7 @@ const fns: FromElementModelFns = {
   "paypal-dev": paypal,
   "popover-dev": popover,
   "population-dev": population,
+  "predefinedPopulation-dev": predefinedPopulation,
   "radioGroup-dev": radioGroup,
   "range-dev": range,
   "select-dev": select,

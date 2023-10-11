@@ -9,6 +9,8 @@
 
     "url": "https://soundcloud.com/englicious/lord-of-the-flies-audiobook-slightly-sped-up",
     "urlPopulation": "",
+    "urlPopulationEntityType": "",
+    "urlPopulationEntityId": "",
 
     "autoPlay": "off",
     "loop": "off",
@@ -46,7 +48,7 @@
     "mobileCoverPositionX": null,
 
     "coverZoom": 100,
-    "coverZoomSuffix": null,
+    "coverZoomSuffix": "%",
 
     "tabletCoverZoom": null,
     "tabletCoverZoomSuffix": null,

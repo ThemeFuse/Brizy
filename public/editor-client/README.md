@@ -49,6 +49,8 @@ export interface __BRZ_PLUGIN_ENV__ {
     getMediaUid: string;
     getAttachmentUid: string;
     setProject: string;
+    updatePage: string;
+    updateRules: string;
   
     getSavedBlockList: string;
     getSavedBlockByUid: string;
@@ -62,6 +64,8 @@ export interface __BRZ_PLUGIN_ENV__ {
     getLayoutByUid: string;
     updateLayout: string;
     deleteLayout: string;
+    createBlockScreenshot: string
+    updateBlockScreenshot: string
   };
   api: {
     mediaResizeUrl: string;

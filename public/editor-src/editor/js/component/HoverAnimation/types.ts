@@ -1,6 +1,6 @@
 export interface AnimationOptions {
   animation: Keyframe[] | MultiAnimation;
-  extraOptions?: KeyframeEffectOptions;
+  extraOptions?: OptionalEffectTiming;
   reversibleAnimation?: boolean;
 }
 
@@ -11,7 +11,7 @@ export interface MultiAnimation {
 
 export interface AnimationBase {
   keyframes: Keyframe[];
-  extraOptions?: KeyframeEffectOptions;
+  extraOptions?: OptionalEffectTiming;
 }
 
 export interface AnimationEmmitterInfo {
@@ -20,3 +20,5 @@ export interface AnimationEmmitterInfo {
 }
 
 export type AnimationMode = "normal" | "reverse";
+
+export type HoverTarget = "parent" | "firstChild" | string;

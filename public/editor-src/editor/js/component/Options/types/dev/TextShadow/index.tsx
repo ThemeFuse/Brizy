@@ -34,36 +34,40 @@ export const TextShadow: FC<Props> = ({ onChange, value, className }) => {
   const onValueChange = useCallback<
     ShadowProps<Palette, SelectType>["onChange"]
   >(
-    mPipe(
-      (
-        m: CValue<Palette, SelectType>,
-        meta: CMeta<Palette, SelectType>
-      ): Value.Value => {
-        switch (meta.isChanged) {
-          case "opacity": {
-            return Value.setOpacity(m.opacity as Value.Value["opacity"], value);
+    (v, m) =>
+      mPipe(
+        (
+          m: CValue<Palette, SelectType>,
+          meta: CMeta<Palette, SelectType>
+        ): Value.Value => {
+          switch (meta.isChanged) {
+            case "opacity": {
+              return Value.setOpacity(
+                m.opacity as Value.Value["opacity"],
+                value
+              );
+            }
+            case "blur": {
+              return Value.setBlur(m.blur as Value.Value["blur"], value);
+            }
+            case "hex": {
+              return Value.setHex(m.hex, value);
+            }
+            case "palette": {
+              return m.palette ? Value.setPalette(m.palette, value) : value;
+            }
+            case "horizontal": {
+              return Value.setHorizontal(m.horizontal, value);
+            }
+            case "vertical": {
+              return Value.setVertical(m.vertical, value);
+            }
+            case "select":
+              return valueFromSelectType(m.select, value);
           }
-          case "blur": {
-            return Value.setBlur(m.blur as Value.Value["blur"], value);
-          }
-          case "hex": {
-            return Value.setHex(m.hex, value);
-          }
-          case "palette": {
-            return m.palette ? Value.setPalette(m.palette, value) : value;
-          }
-          case "horizontal": {
-            return Value.setHorizontal(m.horizontal, value);
-          }
-          case "vertical": {
-            return Value.setVertical(m.vertical, value);
-          }
-          case "select":
-            return valueFromSelectType(m.select, value);
-        }
-      },
-      onChange
-    ),
+        },
+        onChange
+      )(v, m),
     [onChange, value]
   );
   const openPaletteSidebar = useCallback(

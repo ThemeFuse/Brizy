@@ -1,5 +1,9 @@
 import React from "react";
 import { stringifyAttributes } from "visual/editorComponents/Posts/utils.common";
+import {
+  makeEndPlaceholder,
+  makeStartPlaceholder
+} from "visual/utils/dynamicContent";
 import Items from "./items.js";
 
 export default class ItemsWP extends Items {
@@ -27,11 +31,19 @@ export default class ItemsWP extends Items {
         }
       });
 
+      const startPlaceholder = makeStartPlaceholder({
+        content: "{{brizy_dc_post_loop}}",
+        attrStr: loopAttributes
+      });
+      const endPlaceholder = makeEndPlaceholder({
+        content: "{{end_brizy_dc_post_loop}}"
+      });
+
       content = (
         <>
-          {`{{ brizy_dc_post_loop ${loopAttributes} }}`}
+          {startPlaceholder}
           {content}
-          {"{{end_brizy_dc_post_loop}}"}
+          {endPlaceholder}
         </>
       );
     }

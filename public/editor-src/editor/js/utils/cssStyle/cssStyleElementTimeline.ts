@@ -521,7 +521,8 @@ export function cssStyleElementTimelineCustomLineTop({
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = getOrientation(dvv("verticalMode"));
   const style = getStyle(dvv("timelineStyle"));
-  const textSpacing = dvv("textSpacing");
+  const enableText = styleElementTimelineEnableText({ v, device, state });
+  const textSpacing = enableText ? dvv("textSpacing") : 0;
   const borderWidth = dvv("borderWidth");
   const borderWidthLine = dvv("lineBorderWidth");
   const iconSize = styleElementTimelineLineForIcon({ v, device, state });
@@ -577,7 +578,8 @@ export function cssStyleElementTimelineCustomLineOdd({
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = getOrientation(dvv("verticalMode"));
   const style = getStyle(dvv("timelineStyle"));
-  const textSpacing = dvv("textSpacing");
+  const enableText = styleElementTimelineEnableText({ v, device, state });
+  const textSpacing = enableText ? dvv("textSpacing") : 0;
   const borderWidth = dvv("borderWidth");
   const borderWidthLine = dvv("lineBorderWidth");
   const iconSize = styleElementTimelineLineForIcon({ v, device, state });

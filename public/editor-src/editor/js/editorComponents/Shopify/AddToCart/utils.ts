@@ -13,7 +13,7 @@ export const getAddToCartData = ({
         `.brz-shopify-variant-container [data-product-handle="${productId}"]`
       )?.value
     ) ??
-    (defaultVarintId || "41542267404482");
+    (defaultVarintId || "0");
 
   const quantity =
     Str.read(

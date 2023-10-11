@@ -2,8 +2,9 @@
 import classnames from "classnames";
 import React, { useCallback } from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { getSizeType, isGIF, isSVG } from "visual/editorComponents/Image/utils";
+import { getSizeType } from "visual/editorComponents/Image/utils";
 import { css } from "visual/utils/cssStyle";
+import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { clamp } from "visual/utils/math";
 import { mobileSyncOnChange, tabletSyncOnChange } from "visual/utils/onChange";
 import { DESKTOP } from "visual/utils/responsiveMode";
@@ -21,13 +22,13 @@ const Image: React.FC<ImageProps> = (props) => {
     componentId,
     wrapperSizes,
     meta,
+    context,
     onChange,
     onStart,
     onEnd
   } = props;
-
   const { maskShape = "none" } = v;
-  const { points, restrictions } = useResizerPoints(props);
+  const { points, restrictions } = useResizerPoints({ ...props, context });
 
   const classNameWrapper = classnames(
     "brz-ed-image__wrapper",
@@ -102,7 +103,8 @@ const Image: React.FC<ImageProps> = (props) => {
     const sizeType = getSizeType(v, DESKTOP);
     const { size, ..._v } = v;
     const isSvgOrGif =
-      (isSVG(imageExtension) || isGIF(imageExtension)) && !imagePopulation;
+      (isSVGExtension(imageExtension) || isGIFExtension(imageExtension)) &&
+      !imagePopulation;
 
     return {
       ..._v,

@@ -27,6 +27,8 @@
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
+    "bgPopulationEntityType": "",
+    "bgPopulationEntityId": "",
     "bgImageExtension": "",
     "bgSize": "cover",
     "bgRepeat": "off",
@@ -41,7 +43,7 @@
 
     "bgMapAddress": "Wall Street",
     "bgMapZoom": 15,
-    "bgMapZoomSuffix": null,
+    "bgMapZoomSuffix": "",
 
     "brightness": 100,
     "hue": 0,

@@ -1,14 +1,15 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
+import React from "react";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class WOOExcerpt extends EditorComponent {
   static get componentId() {
@@ -24,6 +25,9 @@ class WOOExcerpt extends EditorComponent {
       className_,
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
+    const placeholder = makePlaceholder({
+      content: "{{editor_product_short_description}}"
+    });
 
     return (
       <Toolbar
@@ -31,7 +35,7 @@ class WOOExcerpt extends EditorComponent {
       >
         <Wrapper {...this.makeWrapperProps({ className })}>
           <DynamicContentHelper
-            placeholder="{{editor_product_short_description}}"
+            placeholder={placeholder}
             placeholderIcon="wp-excerpt"
             tagName="div"
           />

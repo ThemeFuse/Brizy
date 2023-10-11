@@ -1,11 +1,5 @@
-import { isT, mPipe, pass } from "fp-utilities";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { makeUrl } from "visual/utils/api/utils";
-import * as Arr from "visual/utils/array";
-import { pipe } from "visual/utils/fp";
-import * as ArrReader from "visual/utils/reader/array";
-import * as Obj from "visual/utils/reader/object";
-import { throwOnNullish } from "visual/utils/value";
 
 export function request(
   url: string,
@@ -33,45 +27,6 @@ export function request(
     });
   }
 }
-
-//#region GetCollectionSourceTypes
-
-interface CloudCollectionSourceType {
-  id: string;
-  title: string;
-  slug?: string;
-}
-export type GetCollectionSourceTypes = (
-  c: ConfigCommon
-) => Promise<CloudCollectionSourceType[]>;
-
-export const getCollectionSourceTypes: GetCollectionSourceTypes = async (
-  config
-) => {
-  // @ts-expect-error: TODO All this code will removed after create Client in Brizy-Cloud
-  const { urls, project } = config;
-  const apiUrl = `${urls.api}/types/${project.id}`;
-
-  return request(
-    apiUrl,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    },
-    config
-  )
-    .then((r) => r.json())
-    .catch((e) => {
-      if (process.env.NODE_ENV === "development") {
-        console.error(e);
-      }
-      return [];
-    });
-};
-
-//#endregion
 
 //#region CollectionItemsBySearch
 
@@ -101,79 +56,7 @@ export const searchCollectionItems: CollectionItemsBySearch = (
 
 //#endregion
 
-//#region CollectionItemsBySlug
-
-export const getCollectionSourceItemsByType = (
-  data: { slug: string },
-  config: ConfigCommon
-) => {
-  // @ts-expect-error: TODO All this code will removed after create Client in Brizy-Cloud
-  const { urls, project } = config;
-
-  const readCollectionSourceItem = mPipe(
-    pass(Obj.isObject),
-    Obj.readKey("collection"),
-    ArrReader.read,
-    Arr.map(mPipe(pass(Obj.isObject))),
-    Arr.filter(isT)
-  );
-
-  const url = makeUrl(`${urls.api}/pages/${project.id}/type`, {
-    searchCriteria: "id",
-    searchValue: data.slug
-  });
-
-  return request(
-    url,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    },
-    config
-  )
-    .then((r) => r.json())
-    .then(pipe(readCollectionSourceItem, throwOnNullish("Invalid response")));
-};
-
-//#endregion
-
 // #region CollectionItemsById
-
-export const getCollectionSourceItemsById = (
-  data: { id: string },
-  config: ConfigCommon
-) => {
-  // @ts-expect-error: TODO All this code will be removed after create Client in Brizy-Cloud
-  const { urls, project } = config;
-
-  const readCollectionSourceItem = mPipe(
-    pass(Obj.isObject),
-    Obj.readKey("collection"),
-    ArrReader.read,
-    Arr.map(mPipe(pass(Obj.isObject))),
-    Arr.filter(isT)
-  );
-
-  const url = makeUrl(`${urls.api}/pages/${project.id}/type`, {
-    searchCriteria: "id",
-    searchValue: data.id
-  });
-
-  return request(
-    url,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    },
-    config
-  )
-    .then((r) => r.json())
-    .then(pipe(readCollectionSourceItem, throwOnNullish("Invalid response")));
-};
 
 export const getShopifyMetafields = (
   data: { sourceType: string },

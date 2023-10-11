@@ -1,7 +1,7 @@
-import { AddImageData } from "visual/global/Config/types/configs/common";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { getImageUrl, preloadImage } from "visual/utils/image";
 import { WithId } from "visual/utils/options/attributes";
+import { AddImageData } from "./types/Image";
 import { UploadData } from "./types/UploadData";
 
 export const allowedExtensions = ["jpeg", "jpg", "png", "gif", "svg"];
@@ -11,10 +11,10 @@ export const maxId = <T extends WithId<number>>(ts: T[]): number =>
 
 export const toUploadData = (d: AddImageData): Promise<UploadData> => {
   return new Promise((res, rej) => {
-    const { uid, fileName } = d;
+    const { uid, fileName = "" } = d;
     const url = getImageUrl({
       uid,
-      fileName: fileName,
+      fileName,
       sizeType: SizeType.custom
     });
 

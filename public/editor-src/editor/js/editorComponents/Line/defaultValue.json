@@ -4,8 +4,12 @@
     "offsetY": 0,
     "style": "default",
     "text": "Text",
+
     "textPopulation": "",
     "textPopulationFallback2": "Text",
+    "textPopulationEntityType": "",
+    "textPopulationEntityId": "",
+
     "iconName": "shape-star",
     "iconType": "glyph",
     "tagName": "span"

@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 6.2.2
-Requires PHP: 5.6.20
-Stable tag: 2.4.27
+Tested up to: 6.3.1
+Requires PHP: 7.0.0
+Stable tag: 2.4.28
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -133,8 +133,36 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 
 == Changelog ==
 
+= 2.4.28 - 2023-10-11 =
+* New: Added Internal Link on the link option for all elements
+* Improved: Removed getPage request added pageData inside config 
+* Improved: Sections container width was changed in 1170px 
+* Improved: Changed icon for the Webhooks integration on forms
+* Improved: Removed the ability to change icons in responsive views for the icon element
+* Improved: Button width for default fill type 
+* Improved: Rename Tags titles in Saved blocks 
+* Improved: Rearrange Global typography styles 
+* Improved: Responsive views change automatically when you select the devices in global typography styling
+* Fixed: Text color picker on dynamic elements
+* Fixed: Hover on certain elements that have motion effects set
+* Fixed: Drag and Drop was not working on images with link
+* Fixed: Lightbox preview 
+* Fixed: Toolbars label text length 
+* Fixed: Dynamic text with gradient color was not visible
+* Fixed: Hover animation not working for the same item after sliding
+* Fixed: Column content align when scroll animation is applied
+* Fixed: Text space for ordered and unordered lists 
+* Fixed: The accordion element disappears after deleting tags 
+* Fixed: Opacity for Gradient color does not work correctly
+* Fixed: Button Spacing incorrectly affects position and alignment
+* Fixed: Global styling not changing 
+* Fixed: Audio element is still playing after the pop-up is closed
+* Fixes: Global colors for Image shadow
+* Fixes: Global colors for Image border
+* Fixed: Tab and Accordion elements heading get hidden under Sticky/Fixed menu on mobiles 
+
 = 2.4.27 - 2023-08-08 =
-* New: Added new  blocks
+* New: Added 26 new premade design templates
 
 = 2.4.26 - 2023-07-12 =
 * New: Added custom video URL for Block background
@@ -162,7 +190,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Section Parallax
 * Fixed: Section containers
 
-= 2.4.26 - 2023-06-21 =
+= 2.4.22 - 2023-06-21 =
 * New: Added option to sort tags alphabetically in the Accordion element
 * New: Added vertical space option for Accordion element
 * New: Add width in px for the boxed option on Blocks

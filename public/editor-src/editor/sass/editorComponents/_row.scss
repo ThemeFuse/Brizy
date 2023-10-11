@@ -22,10 +22,11 @@
     }
 
     // align by container
+    > .brz-hover-animation__container > .brz-bg,
     > .brz-bg {
       left: auto;
     }
-    [data-scroll-motion] {
+    .brz-wrapper__scrollmotion {
       width: 100%;
       max-width: 100%;
     }

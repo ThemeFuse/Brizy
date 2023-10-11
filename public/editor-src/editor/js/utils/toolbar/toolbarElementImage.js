@@ -28,16 +28,21 @@ export function toolbarImageLinkExternal({
     devices,
     population: linkDynamicContentChoices,
     value: {
-      population: dvv("linkPopulation"),
-      value: dvv("linkExternal")
+      value: dvv("linkExternal"),
+      population: {
+        population: dvv("linkPopulation"),
+        populationEntityType: dvv("linkPopulationEntityType"),
+        populationEntityId: dvv("linkPopulationEntityId")
+      }
     },
-    onChange: (
-      { value: linkExternal, population: linkPopulation },
-      { changed }
-    ) => {
+    onChange: ({ value: linkExternal, population }, { changed }) => {
+      const linkPopulation = population.population;
+
       return {
         linkExternal,
         linkPopulation,
+        linkPopulationEntityId: population.populationEntityId,
+        linkPopulationEntityType: population.populationEntityType,
         linkExternalType:
           changed === "value" || linkPopulation === ""
             ? "linkExternal"

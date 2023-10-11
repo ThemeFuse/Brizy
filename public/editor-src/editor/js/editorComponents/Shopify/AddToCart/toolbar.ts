@@ -32,7 +32,8 @@ export const getItems = ({
   );
 
   const sourceType = Str.read(dvv("sourceType")) ?? "";
-  const sourceItemsHandler = config?.api?.sourceItems?.handler;
+  const sourceItemsHandler =
+    config?.api?.collectionItems?.getCollectionItemsIds?.handler;
 
   return [
     {
@@ -56,7 +57,7 @@ export const getItems = ({
               type: "select-dev",
               disabled: !sourceItemsHandler || sourceType === "",
               choices: {
-                load: getSourceIds(sourceType, config),
+                load: () => getSourceIds(sourceType, config),
                 emptyLoad: {
                   title: t("There are no choices")
                 }

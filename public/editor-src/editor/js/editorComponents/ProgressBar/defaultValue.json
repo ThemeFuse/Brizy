@@ -4,11 +4,16 @@
 
     "text": "My skill",
     "textPopulation": "",
+    "textPopulationEntityType": "",
+    "textPopulationEntityId": "",
     "textPopulationFallback2": "My skill",
+
     "showText": "on",
 
     "percentage": 80,
     "percentagePopulation": "",
+    "percentagePopulationEntityType": "",
+    "percentagePopulationEntityId": "",
     "percentagePopulationFallback2": 80,
     "percentageSuffix": "%",
 

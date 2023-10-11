@@ -32,8 +32,11 @@
     "bgImageHeight": 0,
     "bgPositionY": 50,
     "bgPositionX": 50,
-    "bgPopulation": "",
     "bgImageExtension": "",
+
+    "bgPopulation": "",
+    "bgPopulationEntityType": "",
+    "bgPopulationEntityId": "",
 
     "bgVideo": "",
     "bgVideoCustom": "",
@@ -42,7 +45,7 @@
 
     "bgMapAddress": "Wall Street",
     "bgMapZoom": 15,
-    "bgMapZoomSuffix": null,
+    "bgMapZoomSuffix": "",
 
     "motionActive": false,
     "motionVerticalEnabled": false,
@@ -326,6 +329,9 @@
   },
 
   "link": {
+    "linkSource": "",
+    "linkPage": "",
+    "linkPageTitle": "",
     "linkType": "external",
     "linkExternal": "",
     "linkAnchor": "",
@@ -333,6 +339,8 @@
     "linkExternalRel": "off",
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
+    "linkPopulationEntityId":  "",
+    "linkPopulationEntityType": "",
     "linkUpload": "",
     "linkPopup": "",
 
@@ -375,6 +383,8 @@
 
     "customAttributes": "",
     "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
 
     "borderStyle": "solid",
 
@@ -536,8 +546,12 @@
     "customID": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "tabletPaddingType": "ungrouped",
     "tempTabletPaddingType": "ungrouped",
@@ -676,6 +690,11 @@
     "animationInfiniteAnimation": false,
 
     "tempAnimationName": "none",
+
+    "hoverName": "none",
+    "hoverDuration": 600,
+    "hoverDelay": 0,
+    "hoverInfiniteAnimation": true,
 
     "tabletAnimationName": null,
     "tabletAnimationDuration": null,

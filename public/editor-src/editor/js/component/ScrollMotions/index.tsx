@@ -11,7 +11,7 @@ export const ScrollMotion = (props: ScrollMotionsProps): ReactElement => {
   const motion = useRef<Motions>();
   let attr: ScrollMotionsAttr | undefined;
 
-  useEffect((): VoidFunction => {
+  useEffect(() => {
     const node = nodeRef.current;
     const instance = motion.current;
 
@@ -47,6 +47,19 @@ export const ScrollMotion = (props: ScrollMotionsProps): ReactElement => {
       }
     };
   }, [options]);
+
+  useEffect(() => {
+    // destroy Motions on unMount
+    return () => {
+      if (motion.current && options) {
+        motion.current.destroy();
+        motion.current = undefined;
+      }
+    };
+    // Don't need to add option in deps because this effects needed
+    // only when the component is unMounted
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (IS_PREVIEW && options) {
     attr = {

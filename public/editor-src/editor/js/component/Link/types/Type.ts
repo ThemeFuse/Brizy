@@ -17,7 +17,8 @@ export const types: Type[] = [
   "lightBox",
   "popup",
   "upload",
-  "action"
+  "action",
+  "page"
 ];
 
 export const read: Reader<Type> = (v) =>

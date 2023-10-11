@@ -1,7 +1,9 @@
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { getCollectionTypes } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
+import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { encodeToString } from "visual/utils/string";
 import {
@@ -9,6 +11,7 @@ import {
   toolbarLinkExternal,
   toolbarLinkPopup
 } from "visual/utils/toolbar";
+import { handleChangePage } from "../utils";
 import getColorToolbar from "./color";
 import { checkTextIncludeTag } from "./utils/checkTextIncludeTag";
 
@@ -51,8 +54,11 @@ const getBlockTag = (value) => {
 const getItems =
   (v, onChange) =>
   ({ device, component, context }) => {
-    const IS_STORY = isStory(Config.getAll());
-    const IS_GLOBAL_POPUP = isPopup(Config.getAll());
+    const config = Config.getAll();
+    const collectionTypesHandler =
+      config?.api?.collectionTypes?.loadCollectionTypes.handler;
+    const IS_STORY = isStory(config);
+    const IS_GLOBAL_POPUP = isPopup(config);
     const inPopup = Boolean(component.props.meta?.sectionPopup);
     const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
     const isPopulationBlock = v.population && v.population.display === "block";
@@ -92,6 +98,9 @@ const getItems =
 
       return !checkTextIncludeTag(text, tag);
     };
+
+    const dvv = (key) => defaultValueValue({ key, v, device });
+    const linkSource = dvv("linkSource");
 
     return [
       {
@@ -560,6 +569,42 @@ const getItems =
             },
             tabs: [
               {
+                id: "page",
+                label: t("Page"),
+                options: [
+                  {
+                    id: "linkSource",
+                    type: "select-dev",
+                    disabled: !collectionTypesHandler,
+                    label: t("Type"),
+                    devices: "desktop",
+                    choices: {
+                      load: () => getCollectionTypes(config),
+                      emptyLoad: {
+                        title: t("There are no choices")
+                      }
+                    },
+                    config: {
+                      size: "large"
+                    }
+                  },
+                  {
+                    id: "linkPage",
+                    type: "internalLink-dev",
+                    label: t("Find Page"),
+                    devices: "desktop",
+                    disabled: !linkSource,
+                    config: {
+                      postType: linkSource
+                    },
+                    dependencies: (value) =>
+                      v.textPopulation
+                        ? value
+                        : onChange({ link: handleChangePage(v, value) })
+                  }
+                ]
+              },
+              {
                 id: "external",
                 label: t("URL"),
                 options: [
@@ -572,6 +617,14 @@ const getItems =
                     ...(v.textPopulation
                       ? {}
                       : {
+                          value: {
+                            value: v.linkExternal,
+                            population: {
+                              population: v.linkPopulation,
+                              populationEntityType: v.linkPopulationEntityType,
+                              populationEntityId: v.linkPopulationEntityId
+                            }
+                          },
                           onChange: (
                             { value: linkExternal, population: linkPopulation },
                             { changed, changeEvent }
@@ -594,7 +647,11 @@ const getItems =
                                     changed === "value" || !linkPopulation
                                       ? "external"
                                       : "population",
-                                  population: linkPopulation,
+                                  population: linkPopulation.population,
+                                  populationEntityType:
+                                    linkPopulation.populationEntityType,
+                                  populationEntityId:
+                                    linkPopulation.populationEntityId,
                                   popup: v.linkPopup ? `#${v.linkPopup}` : "",
                                   upload: v.linkUpload,
                                   linkToSlide: v.linkToSlide
@@ -622,6 +679,9 @@ const getItems =
                                 externalRel: v.linkExternalRel,
                                 externalType: v.linkExternalType,
                                 population: v.linkPopulation,
+                                populationEntityId: v.linkPopulationEntityId,
+                                populationEntityType:
+                                  v.linkPopulationEntityType,
                                 popup: v.linkPopup ? `#${v.linkPopup}` : "",
                                 upload: v.linkUpload,
                                 linkToSlide: v.linkToSlide
@@ -648,6 +708,9 @@ const getItems =
                                 externalRel: linkExternalRel,
                                 externalType: v.linkExternalType,
                                 population: v.linkPopulation,
+                                populationEntityId: v.linkPopulationEntityId,
+                                populationEntityType:
+                                  v.linkPopulationEntityType,
                                 popup: v.linkPopup ? `#${v.linkPopup}` : "",
                                 upload: v.linkUpload,
                                 linkToSlide: v.linkToSlide
@@ -665,8 +728,8 @@ const getItems =
                     ...toolbarLinkAnchor({ v }),
                     disabled:
                       device !== "desktop" ||
-                      isPopup(Config.getAll()) ||
-                      isStory(Config.getAll()),
+                      isPopup(config) ||
+                      isStory(config),
                     ...(v.textPopulation
                       ? {}
                       : {
@@ -680,6 +743,9 @@ const getItems =
                                 externalRel: v.linkExternalRel,
                                 externalType: v.linkExternalType,
                                 population: v.linkPopulation,
+                                populationEntityId: v.linkPopulationEntityId,
+                                populationEntityType:
+                                  v.linkPopulationEntityType,
                                 popup: v.linkPopup ? `#${v.linkPopup}` : "",
                                 upload: v.linkUpload,
                                 linkToSlide: v.linkToSlide
@@ -712,6 +778,9 @@ const getItems =
                                 externalRel: v.linkExternalRel,
                                 externalType: v.linkExternalType,
                                 population: v.linkPopulation,
+                                populationEntityId: v.linkPopulationEntityId,
+                                populationEntityType:
+                                  v.linkPopulationEntityType,
                                 popup: v.linkPopup ? `#${v.linkPopup}` : "",
                                 upload: linkUpload,
                                 linkToSlide: v.linkToSlide
@@ -746,6 +815,9 @@ const getItems =
                                 externalRel: v.linkExternalRel,
                                 externalType: v.linkExternalType,
                                 population: v.linkPopulation,
+                                populationEntityId: v.linkPopulationEntityId,
+                                populationEntityType:
+                                  v.linkPopulationEntityType,
                                 popup: linkPopup ? `#${linkPopup}` : "",
                                 upload: v.linkUpload,
                                 linkToSlide: v.linkToSlide
@@ -779,6 +851,8 @@ const getItems =
                           externalRel: v.linkExternalRel,
                           externalType: v.linkExternalType,
                           population: v.linkPopulation,
+                          populationEntityId: v.linkPopulationEntityId,
+                          populationEntityType: v.linkPopulationEntityType,
                           popup: v.linkPopup ? `#${v.linkPopup}` : "",
                           linkToSlide: linkToSlide
                         })
@@ -802,6 +876,8 @@ const getItems =
                         externalRel: v.linkExternalRel,
                         externalType: v.linkExternalType,
                         population: v.linkPopulation,
+                        populationEntityId: v.linkPopulationEntityId,
+                        populationEntityType: v.linkPopulationEntityType,
                         popup: v.linkPopup ? `#${v.linkPopup}` : "",
                         upload: v.linkUpload,
                         linkToSlide: v.linkToSlide

@@ -1,12 +1,12 @@
 import React, { useCallback } from "react";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { Button as Control } from "visual/component/Controls/Button";
-import { WithConfig } from "visual/utils/options/attributes";
-import { pipe } from "visual/utils/fp";
-import { updateUI } from "visual/redux/actions2";
 import { useDispatch, useSelector } from "react-redux";
+import { Button as Control } from "visual/component/Controls/Button";
+import { Props as OptionProps } from "visual/component/Options/Type";
+import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors-new";
+import { pipe } from "visual/utils/fp";
 import { prop } from "visual/utils/object/get";
+import { WithConfig } from "visual/utils/options/attributes";
 
 export interface Config {
   tabId: string;
@@ -20,22 +20,29 @@ export interface Props extends OptionProps<undefined>, WithConfig<Config> {}
 const selector = pipe(uiSelector, prop("rightSidebar"));
 
 export const SidebarTabsButton: React.FC<Props> = ({ config }) => {
+  const { tabId, icon, align, text } = config ?? {};
+
   const dispatch = useDispatch();
   const rightSidebar = useSelector(selector);
   const onClick = useCallback(
-    pipe(
-      () => config?.tabId,
-      (activeTab) =>
-        updateUI("rightSidebar", { ...rightSidebar, isOpen: true, activeTab }),
-      dispatch
-    ),
-    [dispatch, rightSidebar]
+    () =>
+      pipe(
+        () => tabId,
+        (activeTab) =>
+          updateUI("rightSidebar", {
+            ...rightSidebar,
+            isOpen: true,
+            activeTab
+          }),
+        dispatch
+      )(),
+    [dispatch, rightSidebar, tabId]
   );
 
   return (
     <>
-      <Control onClick={onClick} icon={config?.icon} align={config?.align}>
-        {config?.text}
+      <Control onClick={onClick} icon={icon} align={align}>
+        {text}
       </Control>
     </>
   );

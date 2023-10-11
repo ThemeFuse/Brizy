@@ -8,6 +8,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { getTerms } from "visual/utils/api";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { DynamicContentHelper } from "../common/DynamicContentHelper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -16,13 +17,24 @@ import toolbarConfigFn from "./toolbar";
 
 // NOTE: woocommerce_* because of backwards compatibility
 const shortcodeToPlaceholder = {
-  woocommerce_cart: () => "{{editor_product_default_cart}}",
-  woocommerce_checkout: () => "{{editor_product_checkout}}",
-  woocommerce_my_account: () => "{{editor_product_my_account}}",
-  woocommerce_order_tracking: () => "{{editor_product_order_tracking}}",
-  product: ({ productID }) => `{{editor_product_page id="${productID}"}}`,
+  woocommerce_cart: () =>
+    makePlaceholder({ content: "{{editor_product_default_cart}}" }),
+  woocommerce_checkout: () =>
+    makePlaceholder({ content: "{{editor_product_checkout}}" }),
+  woocommerce_my_account: () =>
+    makePlaceholder({ content: "{{editor_product_my_account}}" }),
+  woocommerce_order_tracking: () =>
+    makePlaceholder({ content: "{{editor_product_order_tracking}}" }),
+  product: ({ productID }) =>
+    makePlaceholder({
+      content: "{{editor_product_page}}",
+      attr: { itemId: productID }
+    }),
   products: ({ limit, category, columns, orderBy, order }) =>
-    `{{editor_product_products limit="${limit}" category="${category}" columns="${columns}" orderby="${orderBy}" order="${order}"}}`
+    makePlaceholder({
+      content: "{{editor_product_products}}",
+      attr: { limit, category, columns, orderby: orderBy, order }
+    })
 };
 
 const resizerPoints = ["centerLeft", "centerRight"];

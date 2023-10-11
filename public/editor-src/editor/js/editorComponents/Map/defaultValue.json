@@ -2,9 +2,11 @@
   "content": {
     "address": "Wall Street",
     "addressPopulation": "",
+    "addressPopulationEntityType": "",
+    "addressPopulationEntityId": "",
 
     "zoom": 15,
-    "zoomSuffix": null,
+    "zoomSuffix": "",
 
     "offsetX": 0,
     "offsetY": 0

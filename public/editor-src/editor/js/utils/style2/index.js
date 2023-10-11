@@ -20,8 +20,6 @@ export * from "./styleColor";
 export * from "./styleElementColumn";
 // Element Countdown
 export * from "./styleElementCountdown";
-// Filters
-export * from "./styleElementFiters";
 // Element Form2
 export * from "./styleElementForm2";
 // Element IconBox

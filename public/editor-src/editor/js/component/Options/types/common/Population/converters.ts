@@ -7,17 +7,26 @@ import {
 } from "visual/component/Options/Type";
 import { fromString } from "visual/utils/string/NoEmptyString";
 import * as Str from "visual/utils/string/specs";
+import { read as readLiteral } from "visual/utils/types/Literal";
 import { Value } from "./types/Value";
 
 export const defaultValue: Value = {
-  population: undefined
+  population: undefined,
+  populationEntityType: undefined,
+  populationEntityId: undefined
 };
 
 export const fromElementModel: FromElementModel<"population-dev"> = parseStrict<
   FromElementModelGetter,
   Value
 >({
-  population: optional(mPipe(callGetter("population"), Str.read, fromString))
+  population: optional(mPipe(callGetter("population"), Str.read, fromString)),
+  populationEntityType: optional(
+    mPipe(callGetter("populationEntityType"), Str.read, fromString)
+  ),
+  populationEntityId: optional(
+    mPipe(callGetter("populationEntityId"), readLiteral)
+  )
 });
 
 export const toElementModel: ToElementModel<"population-dev"> = (value) =>

@@ -16,7 +16,7 @@ import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import { Props, Value } from "./types";
-import { getPlaceholder } from "./utils";
+import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsSermonDetail" {

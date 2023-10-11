@@ -5,12 +5,13 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { getPopulatedEntityValues } from "visual/utils/dynamicContent/common";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { getPlaceholder } from "./utils";
 
 export default class WPPostContent extends EditorComponent {
   // NOTE: initially this element was for WordPress only.
@@ -23,7 +24,19 @@ export default class WPPostContent extends EditorComponent {
   static defaultValue = defaultValue;
 
   renderForEdit(v, vs, vd) {
-    const { sourceType, sourceID, className: className_ } = v;
+    const {
+      textPopulation,
+      textPopulationEntityId,
+      textPopulationEntityType,
+      className: className_
+    } = v;
+
+    const attr = getPopulatedEntityValues(
+      textPopulationEntityId,
+      textPopulationEntityType
+    );
+
+    const placeholder = makePlaceholder({ content: textPopulation, attr });
     const className = classnames(
       "brz-wp-post-content",
       className_,
@@ -41,7 +54,7 @@ export default class WPPostContent extends EditorComponent {
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Wrapper {...this.makeWrapperProps({ className })}>
             <DynamicContentHelper
-              placeholder={getPlaceholder(sourceType, sourceID)}
+              placeholder={placeholder}
               placeholderIcon="wp-content"
               tagName="div"
             />

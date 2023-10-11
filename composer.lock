@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bdcbe172c58a2c591f0dfd20b08210f9",
+    "content-hash": "80c38decbf36b1e58a5022c5a3a64005",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bagrinsergiu/brizy-merge-page-assets.git",
+                "url": "git@github.com:bagrinsergiu/brizy-merge-page-assets.git",
                 "reference": "61eea2244cb34ff8666b802aafa74f74dec869da"
             },
             "dist": {
@@ -40,10 +40,6 @@
                 "brizy",
                 "brizy merge assets"
             ],
-            "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/master",
-                "issues": "https://github.com/bagrinsergiu/brizy-merge-page-assets/issues"
-            },
             "time": "2022-09-27T14:56:05+00:00"
         },
         {
@@ -51,7 +47,7 @@
             "version": "1.5.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bagrinsergiu/brizy-migration-utils.git",
+                "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git",
                 "reference": "81523e89975e56d192bb3a5622ddbe1d06e10809"
             },
             "dist": {
@@ -81,32 +77,29 @@
                 }
             ],
             "description": "Data migration utils",
-            "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/1.5.4",
-                "issues": "https://github.com/bagrinsergiu/brizy-migration-utils/issues"
-            },
             "time": "2022-07-08T10:43:38+00:00"
         },
         {
             "name": "bagrinsergiu/content-placeholder",
-            "version": "2.0.6",
+            "version": "v2.0.15",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
-                "reference": "ba8b64a6055615b2294f2b575e303fb3b0331d7e"
+                "url": "git@github.com:bagrinsergiu/brizy-content-placeholder.git",
+                "reference": "6454569bd8982a53e1fd56e64fe9ef2b2cc18c73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/ba8b64a6055615b2294f2b575e303fb3b0331d7e",
-                "reference": "ba8b64a6055615b2294f2b575e303fb3b0331d7e",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/6454569bd8982a53e1fd56e64fe9ef2b2cc18c73",
+                "reference": "6454569bd8982a53e1fd56e64fe9ef2b2cc18c73",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpspec/prophecy-phpunit": "^2.0",
-                "phpunit/phpunit": "^9.4"
+                "php": ">=7.1.0",
+                "phpspec/prophecy-phpunit": "^2",
+                "phpunit/phpunit": "^9.5.9"
             },
             "type": "library",
             "autoload": {
@@ -121,11 +114,7 @@
                 "content",
                 "placeholders"
             ],
-            "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-content-placeholder/tree/2.0.6",
-                "issues": "https://github.com/bagrinsergiu/brizy-content-placeholder/issues"
-            },
-            "time": "2021-12-22T12:23:25+00:00"
+            "time": "2023-09-08T10:56:27+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",

@@ -6,13 +6,4 @@ export interface Project {
   dataVersion: number;
 }
 
-export interface PublishData {
-  // TODO  Currently only projectData is used
-  //  Need to add pageData and globalBlocks
-  projectData?: Project;
-  is_autosave: 1 | 0;
-  // pageData: PageCommon;
-  // globalBlocks: Array<GlobalBlock>;
-}
-
 //#endregion

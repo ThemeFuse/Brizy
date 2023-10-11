@@ -1,14 +1,15 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import React from "react";
 import Toolbar from "visual/component/Toolbar";
-import { getMenus } from "visual/utils/api";
-import toolbarConfigFn from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { getMenus } from "visual/utils/api";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import toolbarConfigFn from "./toolbar";
 
 export default class MenuSimpleWP extends EditorComponent {
   static get componentId() {
@@ -25,7 +26,7 @@ export default class MenuSimpleWP extends EditorComponent {
   };
 
   componentDidMount() {
-    getMenus().then(menus => {
+    getMenus().then((menus) => {
       this.setState({ menus });
 
       const v = this.getValue();
@@ -47,12 +48,13 @@ export default class MenuSimpleWP extends EditorComponent {
 
     const { tabletToggleMenu, mobileToggleMenu } = v;
     const toolbarConfig = toolbarConfigFn(this.state.menus);
+    const placeholder = makePlaceholder({
+      content: "{{ editor_navigation }}",
+      attr: { menuId: v.menuName }
+    });
 
     let content = (
-      <DynamicContentHelper
-        placeholder={`{{editor_navigation name="${v.menuName}"}}`}
-        tagName="div"
-      />
+      <DynamicContentHelper placeholder={placeholder} tagName="div" />
     );
 
     if (tabletToggleMenu === "on" || mobileToggleMenu === "on") {

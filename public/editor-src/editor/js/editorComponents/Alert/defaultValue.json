@@ -1,9 +1,13 @@
 {
   "title": "Title",
   "titlePopulation": "",
+  "titlePopulationEntityType": "",
+  "titlePopulationEntityId": "",
 
   "description": "Description",
   "descriptionPopulation": "",
+  "descriptionPopulationEntityType": "",
+  "descriptionPopulationEntityId": "",
 
   "closeButtonState": "on",
   "descriptionState": "on",

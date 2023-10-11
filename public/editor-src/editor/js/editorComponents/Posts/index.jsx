@@ -17,16 +17,17 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import Config from "visual/global/Config";
+import { isCustomerPage } from "visual/global/Config/types/configs/Base";
 import {
   isCloud,
   isCollectionPage,
-  isCustomerPage,
   isShopifyPage
 } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { pageSelector } from "visual/redux/selectors";
 import { getPostsSourceRefs } from "visual/utils/api";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { tabletSyncOnChange } from "visual/utils/onChange";
 import * as json from "visual/utils/reader/json";
 import Items from "./Items";
@@ -88,20 +89,29 @@ export class Posts extends EditorComponent {
           const loopName = getLoopName(v.type);
 
           if (loop) {
-            loops.push(
-              `{{${loopName} ${loop}}}`,
-              `{{brizy_dc_post_loop_pagination ${loop}}}`
-            );
+            const loopPlaceholder = makePlaceholder({
+              content: `{{${loopName}}}`,
+              attrStr: loop
+            });
+            const loopPaginationPlaceholder = makePlaceholder({
+              content: "{{brizy_dc_post_loop_pagination}}",
+              attrStr: loop
+            });
+
+            loops.push(loopPlaceholder, loopPaginationPlaceholder);
           }
           if (loopTags) {
-            loops.push(`{{brizy_dc_post_loop_tags ${loopTags}}}`);
+            const placeholder = makePlaceholder({
+              content: "{{brizy_dc_post_loop_tags}}",
+              attrStr: loopTags
+            });
+            loops.push(placeholder);
           }
 
           return from(
             DCApiProxyInstance.getDC(loops, {
               postId: getCurrentPageId(),
-              cache: false,
-              useCustomPlaceholder: false
+              cache: false
             }).then((r) => {
               const [loop, pagination, tags] = r || [];
               return {
@@ -143,6 +153,7 @@ export class Posts extends EditorComponent {
 
   async componentDidMount() {
     this.reloadData();
+    const config = Config.getAll();
 
     const toolbarContext = await (async () => {
       try {
@@ -157,7 +168,10 @@ export class Posts extends EditorComponent {
           };
         }
 
-        if (isCustomerPage(page) || isShopifyPage(page)) {
+        if (
+          isCloud(config) &&
+          (isCustomerPage(config.page) || isShopifyPage(page))
+        ) {
           return {
             collectionTypesInfo: await getPostsSourceRefs(page.id)
           };

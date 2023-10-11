@@ -1,9 +1,14 @@
 import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
 import { cssStyleBorder } from "visual/utils/cssStyle/cssStyleBorder";
+import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
 import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
 import { cssStyleColor } from "visual/utils/cssStyle/cssStyleColor";
 import { cssStyleMargin } from "visual/utils/cssStyle/cssStyleMargin";
 import { cssStylePaddingFourFields } from "visual/utils/cssStyle/cssStylePadding";
+import {
+  cssStyleSizeMinHeightImportant,
+  cssStyleSizeMinWidth
+} from "visual/utils/cssStyle/cssStyleSize";
 import {
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
@@ -11,6 +16,8 @@ import {
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle/cssStyleTypography2";
+import { defaultValueValue } from "visual/utils/onChange";
+import * as Num from "visual/utils/reader/number";
 import { CSSValue } from "../style2/types";
 
 export function cssStyleElementShopifyBgColorPrice({
@@ -189,4 +196,76 @@ export function cssStyleElementShopifyLetterSpacingThroughPrice({
   prefix = "typographyThroughPrice"
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix });
+}
+
+export function cssStyleElementShopifyPriceHeight({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeMinHeightImportant({ v, device, state, prefix: "price" });
+}
+
+export function cssStyleElementShopifyPriceWidth({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeMinWidth({ v, device, state, prefix: "price" });
+}
+
+export function cssStyleElementShopifyPriceThroughHeight({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeMinHeightImportant({
+    v,
+    device,
+    state,
+    prefix: "thoughPrice"
+  });
+}
+
+export function cssStyleElementShopifyPriceThroughWidth({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeMinWidth({ v, device, state, prefix: "thoughPrice" });
+}
+
+export function cssStyleElementShopifyPriceSpacingStyle1({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const spacing = Num.read(dvv("spacing"));
+  const style = dvv("priceStyle");
+
+  if (style === "style-1" && spacing) {
+    return `margin-right:${spacing}px;`;
+  }
+  return "";
+}
+
+export function cssStyleElementShopifyPriceRadius({
+  v,
+  device,
+  state,
+  prefix = "price"
+}: CSSValue): string {
+  return cssStyleBorderRadius({ v, device, state, prefix });
+}
+
+export function cssStyleElementShopifyPriceThroughRadius({
+  v,
+  device,
+  state,
+  prefix = "priceThrough"
+}: CSSValue): string {
+  return cssStyleBorderRadius({ v, device, state, prefix });
 }

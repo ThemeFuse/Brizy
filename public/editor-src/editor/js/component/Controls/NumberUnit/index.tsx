@@ -2,8 +2,8 @@ import classNames from "classnames";
 import React, { ReactElement, useCallback } from "react";
 import Number from "visual/component/Controls/AutoCorrectingInput";
 import { Literal } from "visual/utils/types/Literal";
-import { Item } from "../Select2/Item";
 import { Select2 } from "../Select2";
+import { Item } from "../Select2/Item";
 import { Props } from "./types";
 
 const inputWidth = (v: number): number =>
@@ -18,11 +18,14 @@ export function NumberUnit<U extends Literal>({
   step,
   units
 }: Props<U>): ReactElement {
-  const onUnitChange = (u: U): void => {
-    if (u !== unit) {
-      onChange({ number, unit: u });
-    }
-  };
+  const onUnitChange = useCallback(
+    (u: U): void => {
+      if (u !== unit) {
+        onChange({ number, unit: u });
+      }
+    },
+    [number, onChange, unit]
+  );
 
   const onNumberChange = (n: number): void => {
     if (n !== number) {

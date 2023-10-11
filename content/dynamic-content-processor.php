@@ -22,7 +22,7 @@ class Brizy_Content_DynamicContentProcessor implements Brizy_Editor_Content_Proc
 
 		$replacer = new Replacer( $placeholderProvider );
 
-		$content = $replacer->replaceWithExtractedData( $contentPlaceholders, $placeholderInstances, $content ,$context);
+		$content = $replacer->replaceWithExtractedData( $contentPlaceholders, $placeholderInstances, $content, $context );
 
 		return $content;
 	}

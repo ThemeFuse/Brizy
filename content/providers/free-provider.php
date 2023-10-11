@@ -1,78 +1,78 @@
 <?php
 
 use BrizyPlaceholders\ContentPlaceholder;
-use \BrizyPlaceholders\Registry;
 
 class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_AbstractProvider
 {
-    public function __construct() {
+    public function __construct()
+    {
 
-	    $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_roles', function ( Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder ) {
-
-		    $attrs = $contentPlaceholder->getAttributes();
-
-		    if ( ! empty( $attrs['roles'] ) ) {
-			    $roles     = explode( ',', $attrs['roles'] );
-			    $userRoles = (array) wp_get_current_user()->roles;
-
-                if ( in_array( 'logged', $roles ) && is_user_logged_in() ) {
-	                $userRoles[] = 'logged';
-                }
-
-			    if ( Brizy_Editor_User::is_user_allowed() ) {
-
-				    if ( ! empty( $_GET['role'] ) ) {
-
-					    if ( $_GET['role'] === 'default' ) {
-						    $roles[]     = 'default';
-						    $userRoles[] = 'default';
-					    } else {
-						    $userRoles = [];
-
-						    if ( $_GET['role'] == 'not_logged' ) {
-
-							    if ( in_array( 'not_logged', $roles ) ) {
-								    $roles[]     = 'default';
-								    $userRoles[] = 'default';
-							    }
-						    } else {
-							    $userRoles[] = $_GET['role'];
-						    }
-                        }
-				    }
-			    }
-
-			    if ( in_array( 'not_logged', $roles ) ) {
-
-				    $roles = array_diff( $roles, [ 'not_logged' ] );
-
-				    if ( is_user_logged_in() ) {
-					    if ( ! array_intersect( $roles, $userRoles ) ) {
-						    return '';
-					    }
-				    }
-			    } else {
-				    if ( ! array_intersect( $roles, $userRoles ) ) {
-					    return '';
-				    }
-			    }
-		    }
-
-		    $replacer = new \BrizyPlaceholders\Replacer( $context->getProvider() );
-
-		    return $replacer->replacePlaceholders( $contentPlaceholder->getContent(), $context );
-	    } ) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_ImageTitleAttribute('Internal Title Attributes', 'brizy_dc_image_title') );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_ImageAltAttribute('Internal Alt Attributes', 'brizy_dc_image_alt') );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_UniquePageUrl('Uniquer page url', 'brizy_dc_current_page_unique_url') );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('WP Language', 'brizy_dc_page_language', get_locale()) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('Ajax Url', 'brizy_dc_ajax_url', admin_url('admin-ajax.php')) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Permalink() );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('', 'editor_sidebar', function ($context, $contentPlaceholder) {
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('Internal Display Block By User Role', 'display_by_roles', function (Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder) {
 
             $attrs = $contentPlaceholder->getAttributes();
 
-            $id = isset($attrs['id']) ? $attrs['id'] : null;
+            if (!empty($attrs['roles'])) {
+                $roles = explode(',', $attrs['roles']);
+                $userRoles = (array)wp_get_current_user()->roles;
+
+                if (in_array('logged', $roles) && is_user_logged_in()) {
+                    $userRoles[] = 'logged';
+                }
+
+                if (Brizy_Editor_User::is_user_allowed()) {
+
+                    if (!empty($_GET['role'])) {
+
+                        if ($_GET['role'] === 'default') {
+                            $roles[] = 'default';
+                            $userRoles[] = 'default';
+                        } else {
+                            $userRoles = [];
+
+                            if ($_GET['role'] == 'not_logged') {
+
+                                if (in_array('not_logged', $roles)) {
+                                    $roles[] = 'default';
+                                    $userRoles[] = 'default';
+                                }
+                            } else {
+                                $userRoles[] = $_GET['role'];
+                            }
+                        }
+                    }
+                }
+
+                if (in_array('not_logged', $roles)) {
+
+                    $roles = array_diff($roles, ['not_logged']);
+
+                    if (is_user_logged_in()) {
+                        if (!array_intersect($roles, $userRoles)) {
+                            return '';
+                        }
+                    }
+                } else {
+                    if (!array_intersect($roles, $userRoles)) {
+                        return '';
+                    }
+                }
+            }
+
+            $replacer = new \BrizyPlaceholders\Replacer($context->getProvider());
+
+            return $replacer->replacePlaceholders($contentPlaceholder->getContent(), $context);
+        }));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_ImageTitleAttribute('Internal Title Attributes', 'brizy_dc_image_title'));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_ImageAltAttribute('Internal Alt Attributes', 'brizy_dc_image_alt'));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_UniquePageUrl('Uniquer page url', 'brizy_dc_current_page_unique_url'));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('WP Language', 'brizy_dc_page_language', get_locale()));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('Ajax Url', 'brizy_dc_ajax_url', admin_url('admin-ajax.php')));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Permalink());
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('', 'editor_sidebar', function ($context, $contentPlaceholder) {
+
+            $attrs = $contentPlaceholder->getAttributes();
+
+            $id = isset($attrs['sidebarId']) ? $attrs['sidebarId'] : null;
 
             if ($id) {
                 ob_start();
@@ -83,14 +83,14 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             }
 
             return '';
-        }) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('', 'editor_navigation', function ($context, $contentPlaceholder) {
+        }));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('', 'editor_navigation', function ($context, $contentPlaceholder) {
 
             $attrs = $contentPlaceholder->getAttributes();
 
-            return $attrs['name'] ? wp_nav_menu(array('menu' => $attrs['name'], 'echo' => false)) : '';
-        }) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('', 'editor_post_field', function ($context, $contentPlaceholder) {
+            return $attrs['menuId'] ? wp_nav_menu(array('menu' => $attrs['menuId'], 'echo' => false)) : '';
+        }));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('', 'editor_post_field', function ($context, $contentPlaceholder) {
 
             $attrs = $contentPlaceholder->getAttributes();
 
@@ -101,25 +101,25 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             }
 
             return $this->filterData($attrs['property'], $post);
-        }) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('', 'editor_post_info', function () {
+        }));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('', 'editor_post_info', function () {
 
             $post = ($context = Brizy_Content_ContextFactory::getGlobalContext()) ? $context->getWpPost() : get_post();
 
-            if ( $post ) {
-                $commentsCount      = get_approved_comments( $post->ID, [ 'count' => true ] );
-                $params             = [];
-                $params['author']   = get_the_author_meta( 'display_name', $post->post_author );
-                $params['date']     = get_the_date( '', $post );
-                $params['time']     = get_the_time( '', $post );
-                $params['comments'] = sprintf( _n( '%s comment', '%s comments', $commentsCount, 'brizy' ), number_format_i18n( $commentsCount ) );
+            if ($post) {
+                $commentsCount = get_approved_comments($post->ID, ['count' => true]);
+                $params = [];
+                $params['author'] = get_the_author_meta('display_name', $post->post_author);
+                $params['date'] = get_the_date('', $post);
+                $params['time'] = get_the_time('', $post);
+                $params['comments'] = sprintf(_n('%s comment', '%s comments', $commentsCount, 'brizy'), number_format_i18n($commentsCount));
 
-                return Brizy_Editor_View::get( BRIZY_PLUGIN_PATH . '/public/views/post-info', $params );
+                return Brizy_Editor_View::get(BRIZY_PLUGIN_PATH . '/public/views/post-info', $params);
             }
 
             return '';
-        }) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('', 'editor_posts', function ($context, $contentPlaceholder) {
+        }));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('', 'editor_posts', function ($context, $contentPlaceholder) {
 
             $atts = $contentPlaceholder->getAttributes();
 
@@ -137,8 +137,8 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             $posts = $this->getPosts($atts);
 
             return $this->displayPosts($posts, $extra_atts);
-        }) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('Product Page', 'editor_product_page', function ($context, $contentPlaceholder) {
+        }));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('Product Page', 'editor_product_page', function ($context, $contentPlaceholder) {
 
             $atts = $contentPlaceholder->getAttributes();
 
@@ -147,7 +147,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 //		            $product = ! empty( $product_data ) && in_array( $product_data->post_type, [ 'product', 'product_variation' ] ) ? wc_setup_product_data( $product_data ) : false;
 //	            }
 
-            if (empty($atts['id']) && current_user_can('manage_options')) {
+            if (empty($atts['itemId']) && current_user_can('manage_options')) {
                 return __('Please set a valid product', 'brizy');
             }
 
@@ -156,13 +156,13 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             // Avoid infinite loop. There's a call of the function the_content() in the woocommerce/single-product/tabs/description.php
             remove_filter('the_content', [Brizy_Admin_Templates::instance(), 'filterPageContent'], -12000);
 
-            $html = do_shortcode('[product_page id="' . $atts['id'] . '"]');
+            $html = do_shortcode('[product_page id="' . $atts['itemId'] . '"]');
 
             add_filter('the_content', [Brizy_Admin_Templates::instance(), 'filterPageContent'], -12000);
 
             return $html;
-        }) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('Products Page', 'editor_product_products', function ($context, $contentPlaceholder) {
+        }));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('Products Page', 'editor_product_products', function ($context, $contentPlaceholder) {
 
             $atts = $contentPlaceholder->getAttributes();
 
@@ -187,23 +187,23 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             $shortcodeAttributes = implode(' ', $shortcodeAttributes);
 
             return do_shortcode('[products ' . $shortcodeAttributes . ' ]');
-        }) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('', 'editor_product_default_cart', function () {
+        }));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('', 'editor_product_default_cart', function () {
             return do_shortcode('[woocommerce_cart]');
-        }) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('', 'editor_product_checkout', function () {
+        }));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('', 'editor_product_checkout', function () {
             return do_shortcode('[woocommerce_checkout]');
-        }) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('', 'editor_product_my_account', function () {
+        }));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('', 'editor_product_my_account', function () {
             return do_shortcode('[woocommerce_my_account]');
-        }) );
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple('', 'editor_product_order_tracking', function () {
+        }));
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple('', 'editor_product_order_tracking', function () {
             return do_shortcode('[woocommerce_order_tracking]');
-        }) );
+        }));
 
-        $this->registerPlaceholder( new Brizy_Content_Placeholders_Simple(__( 'WooCommerce Notices', 'brizy' ), 'editor_woo_notice', function () {
-            return wc_print_notices( true );
-        }, self::CONFIG_KEY_TEXT ) );
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_Simple(__('WooCommerce Notices', 'brizy'), 'editor_woo_notice', function () {
+            return wc_print_notices(true);
+        }, self::CONFIG_KEY_TEXT));
     }
 
     private function filterData($property, $post)

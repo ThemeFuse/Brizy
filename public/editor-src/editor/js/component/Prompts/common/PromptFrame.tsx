@@ -1,4 +1,10 @@
-import React, { ReactElement, ReactNode, useEffect, useReducer } from "react";
+import React, {
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useReducer
+} from "react";
 import { forkJoin, of } from "rxjs";
 import { catchError, mapTo, switchMap } from "rxjs/operators";
 import { noop } from "underscore";
@@ -66,8 +72,12 @@ export const PromptFrame = ({
     }
   }, State.closed);
 
+  const isSaving = useMemo(() => state === State.saving, [state]);
+  const isCanceling = useMemo(() => state === State.canceling, [state]);
+  const isClosed = useMemo(() => state === State.closed, [state]);
+
   useEffect(() => {
-    if (state === State.saving) {
+    if (isSaving) {
       const s = of(1)
         .pipe(
           switchMap(() => forkJoin([onSave(), pendingRequest()])),
@@ -78,9 +88,9 @@ export const PromptFrame = ({
 
       return () => s.unsubscribe();
     }
-  }, [state === State.saving]);
+  }, [onSave, isSaving]);
   useEffect(() => {
-    if (state === State.canceling) {
+    if (isCanceling) {
       const s = of(1)
         .pipe(
           switchMap(() => forkJoin([onCancel(), pendingRequest()])),
@@ -91,7 +101,7 @@ export const PromptFrame = ({
 
       return () => s.unsubscribe();
     }
-  }, [state === State.canceling]);
+  }, [onCancel, isCanceling]);
 
   return (
     <>
@@ -103,7 +113,7 @@ export const PromptFrame = ({
       >
         <EditorIcon icon={"nc-extensions-2"} />
       </Button>
-      {state === State.closed ? null : (
+      {isClosed ? null : (
         <Tabs
           tabs={tab}
           onChange={noop}
@@ -121,14 +131,14 @@ export const PromptFrame = ({
               {children}
               <PromptButton
                 color="teal"
-                loading={state === State.saving}
+                loading={isSaving}
                 onClick={() => dispatch(Actions.save)}
               >
                 {t("Connect")}
               </PromptButton>
               <PromptButton
                 color="default"
-                loading={state === State.canceling}
+                loading={isCanceling}
                 onClick={() => dispatch(Actions.cancel)}
               >
                 {t("Cancel")}

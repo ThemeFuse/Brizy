@@ -2,8 +2,10 @@
   "content": {
     "type": "wp",
     "popups": [],
-    "sourceType": "",
-    "sourceID": ""
+
+    "textPopulation": "{{brizy_dc_post_title}}",
+    "textPopulationEntityType": "",
+    "textPopulationEntityId": ""
   },
 
   "toolbar": {
@@ -86,6 +88,9 @@
   },
 
   "link": {
+    "linkPage": "",
+    "linkPageTitle": "",
+    "linkSource": "",
     "linkType": "external",
     "linkExternal": "",
     "linkAnchor": "",
@@ -93,6 +98,8 @@
     "linkExternalRel": "off",
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
+    "linkPopulationEntityType": "",
+    "linkPopulationEntityId": "",
     "linkUpload": "",
     "linkPopup": "",
     "actionClosePopup": "off"

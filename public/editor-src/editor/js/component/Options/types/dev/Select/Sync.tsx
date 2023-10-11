@@ -1,10 +1,10 @@
 import classnames from "classnames";
 import React, { FC, ReactElement } from "react";
+import { Select2 } from "visual/component/Controls/Select2";
 import {
   Item,
   Props as ItemProps
 } from "visual/component/Controls/Select2/Item";
-import { Select2 } from "visual/component/Controls/Select2";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { Literal } from "visual/utils/types/Literal";
 import { ChoicesSync, Props } from "./types";
@@ -28,6 +28,7 @@ export const Sync: FC<Omit<Props, "choices"> & { choices: ChoicesSync }> = ({
       value={value}
       className={className}
       editable={config?.search ?? false}
+      autoClose={config?.autoClose ?? false}
       onChange={(value): void => {
         onChange(toElement(value));
       }}

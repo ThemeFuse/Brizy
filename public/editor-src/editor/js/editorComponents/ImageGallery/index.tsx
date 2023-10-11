@@ -39,6 +39,7 @@ import { Unit } from "../Image/types";
 import { calcWrapperSizes, readSizeType, readUnit } from "../Image/utils";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
+import { patchOnColumnChange } from "./imageGalleryChange";
 import Items from "./items";
 import * as sidebarExtendImage from "./sidebarExtendImage";
 import * as sidebarExtendParentConfig from "./sidebarExtendParent";
@@ -790,6 +791,10 @@ class ImageGallery extends EditorComponent<Value, Props> {
       });
 
       newValue = mergeIn(newValue, ["items"], newItems) as Value;
+    }
+
+    if (meta.patch.gridColumn && oldValue.gridColumn < meta.patch.gridColumn) {
+      newValue = patchOnColumnChange(meta.patch.gridColumn, newValue, oldValue);
     }
 
     super.handleValueChange(newValue, meta);

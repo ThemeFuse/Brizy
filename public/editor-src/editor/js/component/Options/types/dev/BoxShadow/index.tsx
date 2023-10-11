@@ -16,6 +16,7 @@ import {
   setType,
   setVertical
 } from "visual/component/Options/types/dev/BoxShadow/model";
+import { paletteHex } from "visual/component/Options/types/dev/ColorPicker/utils";
 import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
@@ -121,11 +122,17 @@ export const BoxShadow: FC<Props> = ({
     );
   }, []);
 
+  const palette = getColorPaletteColors();
+  const _value: Value = {
+    ...value,
+    hex: paletteHex(value.palette, palette) ?? value.hex
+  };
+
   return (
     <ShadowControl
       opacity={opacity ?? true}
       className={_className}
-      value={value}
+      value={_value}
       onChange={onValueChange}
       types={types}
       palette={getColorPaletteColors()}

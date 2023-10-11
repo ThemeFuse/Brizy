@@ -264,6 +264,8 @@
 
     "customAttributes": "",
     "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
 
     "itemClassName": "",
     "itemPadding": 10,
@@ -333,8 +335,12 @@
     "customID": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "tabletHorizontalAlign": null,
 

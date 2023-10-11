@@ -3,6 +3,8 @@ import {
   AnimationBase,
   MultiAnimation
 } from "visual/component/HoverAnimation/types";
+import { AnimationEvents } from "visual/utils/animation";
+import { HoverAnimation, SideEffectCallback } from ".";
 
 export const getKeyframe = (keyframeEncoded: string): Keyframe[] => {
   return JSON.parse(decodeURI(keyframeEncoded));
@@ -35,9 +37,9 @@ export const readKeyframes = (keyframes: unknown): Keyframe[] => {
   return [];
 };
 
-export const isKeyofKeyframeEffectOptions = (
+export const isKeyofOptionalEffectTiming = (
   key: string
-): key is keyof KeyframeEffectOptions => {
+): key is keyof OptionalEffectTiming => {
   const allowedKeys = [
     "composite",
     "iterationComposite",
@@ -56,11 +58,11 @@ export const isKeyofKeyframeEffectOptions = (
   return allowedKeys.includes(key);
 };
 
-export const readKeyframeOptions = (data: unknown): KeyframeEffectOptions => {
+export const readKeyframeOptions = (data: unknown): OptionalEffectTiming => {
   if (_.isObject(data)) {
-    let options: KeyframeEffectOptions = {};
+    let options: OptionalEffectTiming = {};
     Object.keys(data).forEach((key) => {
-      if (isKeyofKeyframeEffectOptions(key)) {
+      if (isKeyofOptionalEffectTiming(key)) {
         options[key] = data[key];
       }
     });
@@ -82,12 +84,12 @@ export const getMultiAnimationKeyframes = (
     const { multiAnimation = [], endAnimation = {} } = animation;
 
     if (Array.isArray(multiAnimation) && _.isObject(endAnimation)) {
-      let isMultiAnimationValide = multiAnimation.every((animation) => {
+      const isMultiAnimationValide = multiAnimation.every((animation) => {
         const { keyframes } = animation;
         return Array.isArray(keyframes) && keyframes.every(isValidKeyframe);
       });
 
-      let _multiAnimation: AnimationBase[] = isMultiAnimationValide
+      const _multiAnimation: AnimationBase[] = isMultiAnimationValide
         ? multiAnimation.map((animation) => {
             const { keyframes, extraOptions } = animation;
             return {
@@ -107,4 +109,29 @@ export const getMultiAnimationKeyframes = (
     }
     return undefined;
   }
+};
+
+const effectOnEntranceOn: SideEffectCallback = (animationId, setCanHover) => {
+  window.Brz.on(AnimationEvents.entranceOn, (_animationId: string) => {
+    if (animationId === _animationId) {
+      setCanHover(false);
+    }
+  });
+};
+
+const effectOnEntranceOff: SideEffectCallback = (animationId, setCanHover) => {
+  window.Brz.on(AnimationEvents.entranceOff, (_animationId: string) => {
+    if (animationId === _animationId) {
+      setCanHover(true);
+    }
+  });
+};
+
+export const initHoverAnimation = (hoverContainerNode: Element) => {
+  hoverContainerNode
+    .querySelectorAll<HTMLElement>(".brz-hover-animation__container")
+    .forEach((node) => {
+      const hoverAnimation = new HoverAnimation({ node });
+      hoverAnimation.sideEffects([effectOnEntranceOn, effectOnEntranceOff]);
+    });
 };

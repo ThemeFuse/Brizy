@@ -1,7 +1,9 @@
 import { mPipe, optional, parseStrict } from "fp-utilities";
+import { CollectionType } from "./types/Collections";
 import { PLUGIN_ENV } from "./types/global";
 import { pipe } from "./utils/fp/pipe";
 import { onNullish } from "./utils/onNullish";
+import * as Arr from "./utils/reader/array";
 import * as Obj from "./utils/reader/object";
 import * as Str from "./utils/reader/string";
 import { throwOnNullish } from "./utils/throwOnNullish";
@@ -18,6 +20,8 @@ interface Actions {
   getMediaUid: string;
   getAttachmentUid: string;
   setProject: string;
+  updatePage: string;
+  updateRules: string;
 
   getSavedBlockList: string;
   getSavedBlockByUid: string;
@@ -31,6 +35,13 @@ interface Actions {
   getLayoutByUid: string;
   updateLayout: string;
   deleteLayout: string;
+
+  getPostObjects: string;
+
+  searchPosts: string;
+
+  createBlockScreenshot: string;
+  updateBlockScreenshot: string;
 }
 
 interface API {
@@ -46,6 +57,7 @@ export interface Config {
   actions: Actions;
   api: API;
   l10n?: Record<string, string>;
+  collectionTypes: CollectionType[];
 }
 
 const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
@@ -66,6 +78,12 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
     throwOnNullish("Invalid API Config: stories")
   )
 });
+
+const collectionTypesReader = (arr: Array<unknown>): Array<CollectionType> => {
+  return arr.filter(
+    (o): o is CollectionType => Obj.isObject(o) && !!o.label && !!o.name
+  );
+};
 
 const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
   mediaResizeUrl: pipe(
@@ -104,6 +122,14 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   setProject: pipe(
     mPipe(Obj.readKey("setProject"), Str.read),
     throwOnNullish("Invalid actions: setProject")
+  ),
+  updatePage: pipe(
+    mPipe(Obj.readKey("updatePage"), Str.read),
+    throwOnNullish("Invalid actions: updatePage")
+  ),
+  updateRules: pipe(
+    mPipe(Obj.readKey("updateRules"), Str.read),
+    throwOnNullish("Invalid actions: updateRules")
   ),
   createSavedBlock: pipe(
     mPipe(Obj.readKey("createSavedBlock"), Str.read),
@@ -148,6 +174,22 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   deleteLayout: pipe(
     mPipe(Obj.readKey("deleteLayout"), Str.read),
     throwOnNullish("Invalid actions: deleteLayout")
+  ),
+  getPostObjects: pipe(
+    mPipe(Obj.readKey("getPostObjects"), Str.read),
+    throwOnNullish("Invalid actions: getPostObjects")
+  ),
+  searchPosts: pipe(
+    mPipe(Obj.readKey("searchPosts"), Str.read),
+    throwOnNullish("Invalid actions: searchPosts")
+  ),
+  createBlockScreenshot: pipe(
+    mPipe(Obj.readKey("createBlockScreenshot"), Str.read),
+    throwOnNullish("Invalid actions: createBlockScreenshot")
+  ),
+  updateBlockScreenshot: pipe(
+    mPipe(Obj.readKey("updateBlockScreenshot"), Str.read),
+    throwOnNullish("Invalid actions: updateBlockScreenshot")
   )
 });
 
@@ -176,7 +218,11 @@ const reader = parseStrict<PLUGIN_ENV, Config>({
     mPipe(Obj.readKey("api"), Obj.read, apiReader),
     throwOnNullish("Invalid: api")
   ),
-  l10n: optional(pipe(Obj.readKey("l10n"), Obj.read, onNullish({})))
+  l10n: optional(pipe(Obj.readKey("l10n"), Obj.read, onNullish({}))),
+  collectionTypes: pipe(
+    mPipe(Obj.readKey("collectionTypes"), Arr.read, collectionTypesReader),
+    throwOnNullish("Invalid: collectionTypes")
+  )
 });
 
 export const getConfig = (): MValue<Config> => {

@@ -2,7 +2,7 @@ import { IS_WP } from "visual/utils/env";
 import { GlobalBlocksError, ProjectError } from "visual/utils/errors";
 import { apiRuleToEditorRule, editorRuleToApiRule } from "./adapter";
 
-// project
+//#region Project
 
 export const parseProject = (project) => {
   let data;
@@ -19,6 +19,8 @@ export const parseProject = (project) => {
 
   return { ...project, data };
 };
+
+//#endregion
 
 //#region Global Blocks
 

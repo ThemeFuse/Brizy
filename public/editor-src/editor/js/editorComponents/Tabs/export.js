@@ -33,18 +33,18 @@ function changeTab($tabs, target) {
   });
 }
 
-export default function($node) {
-  $node.find(".brz-tabs").each(function() {
+export default function ($node) {
+  $node.find(".brz-tabs").each(function () {
     const $this = $(this);
     const action = $this.attr("data-action");
     const events = action === "hover" ? "mouseenter" : "click";
 
     if (events === "click") {
-      $this.children(".brz-tabs__nav").on("click", function(e) {
+      $this.children(".brz-tabs__nav").on("click", function (e) {
         changeTab($this, e.target);
       });
     } else {
-      $this.find(".brz-tabs__nav > li").on("mouseenter", function(e) {
+      $this.find(".brz-tabs__nav > li").on("mouseenter", function (e) {
         changeTab($this, e.target);
       });
     }
@@ -52,7 +52,7 @@ export default function($node) {
     // For Mobile
     const $mobileTabsContent = $this.find(".brz-tabs__nav--mobile");
 
-    $mobileTabsContent.on("click", function() {
+    $mobileTabsContent.on("click", function () {
       const $navMobile = $(this);
       const activeClassName = "brz-tabs__items--active";
       const mobileActiveClassName = "brz-tabs__nav--mobile--active";
@@ -70,12 +70,18 @@ export default function($node) {
       $item.addClass(activeClassName);
       $item.children(".brz-tabs__nav--mobile").addClass(mobileActiveClassName);
 
-      setTimeout(function() {
+      setTimeout(function () {
         // normalize content if is outside of Viewport
         const offsetTop = $navMobile.offset().top;
+        const stickyHeaderHeight = $(
+          ".brz-section__header-sticky-item"
+        ).innerHeight();
 
         if (window.scrollY > offsetTop) {
-          $("html, body").animate({ scrollTop: offsetTop }, 200);
+          $("html, body").animate(
+            { scrollTop: offsetTop - (stickyHeaderHeight ?? 0) },
+            200
+          );
         }
       }, 100);
 

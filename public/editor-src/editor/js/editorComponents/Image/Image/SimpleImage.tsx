@@ -1,6 +1,11 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import classnames from "classnames";
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import { MIN_COL_WIDTH } from "visual/config/columns";
 import {
   SizeType,
@@ -82,7 +87,7 @@ const SimpleImage: React.FC<ImageProps> = (props) => {
     extraAttributes = {},
     getResponsiveUrls
   } = props;
-  const { desktopW, tabletW, mobileW } = meta;
+  const { desktopW, tabletW, mobileW, row } = meta;
   const {
     imageSrc,
     imageFileName,
@@ -94,9 +99,113 @@ const SimpleImage: React.FC<ImageProps> = (props) => {
     width,
     height,
     widthSuffix,
-    heightSuffix
+    heightSuffix,
+    tabletWidth,
+    tabletHeight,
+    mobileWidth,
+    mobileHeight,
+    className
   } = v;
   const isFirstRun = useRef(true);
+
+  const dvv: <T>(key: string, device: Device) => T = useCallback(
+    (key, device) => defaultValueValue({ v, key, device }),
+    [v]
+  );
+
+  const getImageSizes = useMemo(() => {
+    return (cW = desktopW): ImageSizes => {
+      const desktopValue = {
+        imageWidth,
+        imageHeight,
+        positionX,
+        positionY,
+        zoom,
+        width,
+        height,
+        widthSuffix,
+        heightSuffix,
+        size: dvv<number>("size", DESKTOP)
+      };
+      const tabletValue = {
+        imageWidth,
+        imageHeight,
+        positionX: tabletSyncOnChange(v, "positionX"),
+        positionY: tabletSyncOnChange(v, "positionY"),
+        zoom: tabletSyncOnChange(v, "zoom"),
+        width: tabletWidth || width,
+        height: tabletHeight || height,
+        widthSuffix: tabletSyncOnChange(v, "widthSuffix"),
+        heightSuffix: tabletSyncOnChange(v, "heightSuffix"),
+        size: dvv<number>("size", TABLET)
+      };
+      const mobileValue = {
+        imageWidth,
+        imageHeight,
+        positionX: mobileSyncOnChange(v, "positionX"),
+        positionY: mobileSyncOnChange(v, "positionY"),
+        zoom: mobileSyncOnChange(v, "zoom"),
+        width: mobileWidth || width,
+        height: mobileHeight || height,
+        widthSuffix: mobileSyncOnChange(v, "widthSuffix"),
+        heightSuffix: mobileSyncOnChange(v, "heightSuffix"),
+        size: dvv<number>("size", MOBILE)
+      };
+
+      return {
+        desktop: calcImageSizes(desktopValue, cW),
+        tablet: calcImageSizes(tabletValue, tabletW),
+        mobile: calcImageSizes(mobileValue, mobileW)
+      };
+    };
+  }, [
+    desktopW,
+    height,
+    heightSuffix,
+    imageHeight,
+    imageWidth,
+    mobileW,
+    positionX,
+    positionY,
+    tabletW,
+    v,
+    width,
+    widthSuffix,
+    zoom,
+    mobileHeight,
+    mobileWidth,
+    tabletHeight,
+    tabletWidth,
+    dvv
+  ]);
+
+  const getMaxCW = useMemo(() => {
+    return (cW: number, type: Device = "desktop"): number => {
+      const widthStepInPercent = 20;
+      const imgSizes = getImageSizes(cW);
+
+      let shortcodeWidthInPercent;
+      let maxDesktopContainerWidth;
+      if (row?.itemsLength) {
+        const { itemsLength } = row;
+
+        maxDesktopContainerWidth = desktopW - MIN_COL_WIDTH * (itemsLength - 1);
+        shortcodeWidthInPercent =
+          (imgSizes[type].width * 100) / maxDesktopContainerWidth;
+      } else {
+        maxDesktopContainerWidth = cW;
+        shortcodeWidthInPercent = (imgSizes[type].width * 100) / cW;
+      }
+
+      const maxWidthPercent =
+        Math.ceil(shortcodeWidthInPercent / widthStepInPercent) *
+        widthStepInPercent;
+
+      return Math.round(
+        Math.min((maxWidthPercent * maxDesktopContainerWidth) / 100, imageWidth)
+      );
+    };
+  }, [desktopW, getImageSizes, row, imageWidth]);
 
   const [maxDesktopCW, setMaxDesktopCw] = useState(getMaxCW(desktopW));
   const [maxTabletCW, setMaxTabletCw] = useState(getMaxCW(tabletW, "tablet"));
@@ -114,7 +223,18 @@ const SimpleImage: React.FC<ImageProps> = (props) => {
     }
 
     isFirstRun.current = false;
-  }, [desktopW, tabletW, mobileW, width, height, zoom]);
+  }, [
+    desktopW,
+    tabletW,
+    mobileW,
+    maxDesktopCW,
+    maxMobileCW,
+    maxTabletCW,
+    getMaxCW,
+    setMaxDesktopCw,
+    setMaxTabletCw,
+    setMaxMobileCw
+  ]);
 
   const imageSizes = getImageSizes();
   const sizeType = dvv<SizeType>("sizeType", DESKTOP);
@@ -155,7 +275,7 @@ const SimpleImage: React.FC<ImageProps> = (props) => {
   const imageClassName = IS_EDITOR
     ? classnames(
         "brz-img",
-        v.className,
+        className,
         css(
           `${componentId}-${_id}-image`,
           `${_id}-image`,
@@ -178,80 +298,6 @@ const SimpleImage: React.FC<ImageProps> = (props) => {
       />
     </>
   );
-  function dvv<T>(key: string, device: Device): T {
-    return defaultValueValue({ v, key, device });
-  }
-
-  function getMaxCW(cW: number, type: Device = "desktop"): number {
-    const widthStepInPercent = 20;
-    const imgSizes = getImageSizes(cW);
-
-    let shortcodeWidthInPercent;
-    let maxDesktopContainerWidth;
-    if (meta.row?.itemsLength) {
-      const { itemsLength } = meta.row;
-
-      maxDesktopContainerWidth = desktopW - MIN_COL_WIDTH * (itemsLength - 1);
-      shortcodeWidthInPercent =
-        (imgSizes[type].width * 100) / maxDesktopContainerWidth;
-    } else {
-      maxDesktopContainerWidth = cW;
-      shortcodeWidthInPercent = (imgSizes[type].width * 100) / cW;
-    }
-
-    const maxWidthPercent =
-      Math.ceil(shortcodeWidthInPercent / widthStepInPercent) *
-      widthStepInPercent;
-
-    return Math.round(
-      Math.min((maxWidthPercent * maxDesktopContainerWidth) / 100, v.imageWidth)
-    );
-  }
-
-  function getImageSizes(cW = desktopW): ImageSizes {
-    const desktopValue = {
-      imageWidth,
-      imageHeight,
-      positionX,
-      positionY,
-      zoom,
-      width,
-      height,
-      widthSuffix,
-      heightSuffix,
-      size: dvv<number>("size", DESKTOP)
-    };
-    const tabletValue = {
-      imageWidth,
-      imageHeight,
-      positionX: tabletSyncOnChange(v, "positionX"),
-      positionY: tabletSyncOnChange(v, "positionY"),
-      zoom: tabletSyncOnChange(v, "zoom"),
-      width: v.tabletWidth || width,
-      height: v.tabletHeight || height,
-      widthSuffix: tabletSyncOnChange(v, "widthSuffix"),
-      heightSuffix: tabletSyncOnChange(v, "heightSuffix"),
-      size: dvv<number>("size", TABLET)
-    };
-    const mobileValue = {
-      imageWidth,
-      imageHeight,
-      positionX: mobileSyncOnChange(v, "positionX"),
-      positionY: mobileSyncOnChange(v, "positionY"),
-      zoom: mobileSyncOnChange(v, "zoom"),
-      width: v.mobileWidth || width,
-      height: v.mobileHeight || height,
-      widthSuffix: mobileSyncOnChange(v, "widthSuffix"),
-      heightSuffix: mobileSyncOnChange(v, "heightSuffix"),
-      size: dvv<number>("size", MOBILE)
-    };
-
-    return {
-      desktop: calcImageSizes(desktopValue, cW),
-      tablet: calcImageSizes(tabletValue, tabletW),
-      mobile: calcImageSizes(mobileValue, mobileW)
-    };
-  }
 };
 
 export default SimpleImage;

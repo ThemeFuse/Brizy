@@ -8,7 +8,7 @@ import { t } from "visual/utils/i18n";
 import { isExternalStory } from "visual/utils/models";
 import { Base, Shopify } from "../components/AddElements";
 import { BlocksSortable } from "../components/BlocksSortable";
-import { Cms } from "../components/Cms";
+import { custom } from "../components/Custom";
 import { DeviceModes } from "../components/DeviceModes";
 import { Settings } from "../components/Settings";
 import { Styling } from "../components/Styling";
@@ -21,6 +21,7 @@ export interface Option {
   icon?: string;
   title?: string;
   onClick?: (e: MouseEvent) => void;
+  roles?: Array<string>;
   drawerTitle?: string;
   disabled?: boolean;
   showInDeviceModes?: Array<string>;
@@ -37,6 +38,7 @@ interface Options {
 
 const getItems = (config: Config): Record<LeftSidebarOptionsIds, Option> => {
   const { urls } = config;
+  const leftSidebar = config.ui?.leftSidebar ?? {};
 
   const pageSettingsOptions = getPageSettings(config);
   const moreOptions = getMoreOptions(config);
@@ -51,7 +53,7 @@ const getItems = (config: Config): Record<LeftSidebarOptionsIds, Option> => {
   };
 
   return {
-    [LeftSidebarOptionsIds.cms]: Cms,
+    [LeftSidebarOptionsIds.cms]: custom(leftSidebar[LeftSidebarOptionsIds.cms]),
     // @ts-expect-error: 'disabledElements' is declared here.
     [LeftSidebarOptionsIds.addElements]: Base,
     [LeftSidebarOptionsIds.reorderBlock]: BlocksSortable,

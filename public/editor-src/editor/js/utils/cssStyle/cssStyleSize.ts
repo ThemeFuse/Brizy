@@ -262,6 +262,19 @@ export function cssStyleSizeMinHeightPx({
   return height === undefined ? "" : `min-height:${height}${unit};`;
 }
 
+export function cssStyleSizeMinHeightImportant({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
+  const height = styleSizeHeight({ v, device, state, prefix });
+  const unit = Str.read(dvv(capByPrefix(prefix, "heightSuffix"))) || "px";
+
+  return height === undefined ? "" : `min-height:${height}${unit} !important;`;
+}
+
 export function cssStyleSizeSize({
   v,
   device,

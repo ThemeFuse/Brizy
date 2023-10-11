@@ -1,5 +1,5 @@
-import classnames from "classnames";
 import { LottieEditor, LottieView } from "@brizy/component";
+import classnames from "classnames";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import Link from "visual/component/Link";
@@ -12,10 +12,8 @@ import { blocksDataSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { customFileUrl } from "visual/utils/customFile";
-import { pipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
-import * as Num from "visual/utils/reader/number";
-import { isNullish } from "visual/utils/value";
+import { getLinkData } from "visual/utils/models/link";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -24,12 +22,11 @@ import * as toolbarConfig from "./toolbar";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
-const isNan = pipe(Num.read, isNullish);
-
 class Lottie extends EditorComponent {
   static get componentId() {
     return "Lottie";
   }
+  static defaultValue = defaultValue;
 
   state = {
     animation: null
@@ -79,8 +76,6 @@ class Lottie extends EditorComponent {
   }
 
   handleResizerChange = (patch) => this.patchValue(patch);
-
-  static defaultValue = defaultValue;
 
   renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
@@ -183,24 +178,10 @@ class Lottie extends EditorComponent {
       direction,
       renderer,
       animationLink,
-      animationFile,
-      linkType,
-      linkAnchor,
-      linkToSlide,
-      linkExternalBlank,
-      linkExternalRel,
-      linkExternalType,
-      linkPopup,
-      linkUpload
+      animationFile
     } = v;
 
-    const hrefs = {
-      anchor: linkAnchor,
-      story: !isNan(linkToSlide) ? `slide-${linkToSlide}` : "",
-      external: v[linkExternalType],
-      popup: linkPopup,
-      upload: linkUpload
-    };
+    const linkData = getLinkData(v);
 
     const className = classnames(
       "brz-lottie",
@@ -211,21 +192,16 @@ class Lottie extends EditorComponent {
       ? customFileUrl(animationFile)
       : animationLink;
 
-    const slideAnchor =
-      linkType !== "story" || isNan(linkToSlide)
-        ? {}
-        : { "data-brz-link-story": linkToSlide };
-
     return (
       <>
         <Wrapper {...this.makeWrapperProps({ className })}>
-          {hrefs[linkType] ? (
+          {linkData.href ? (
             <Link
-              href={hrefs[linkType]}
-              type={linkType}
-              target={linkExternalBlank}
-              rel={linkExternalRel}
-              slide={slideAnchor}
+              href={linkData.href}
+              type={linkData.type}
+              target={linkData.target}
+              rel={linkData.rel}
+              slide={linkData.slide}
             >
               <LottieView
                 animationData={_animationData}

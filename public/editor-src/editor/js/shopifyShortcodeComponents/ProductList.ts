@@ -85,9 +85,7 @@ export default function (config: ConfigCommon) {
                             {
                               type: "AddToCart",
                               value: {
-                                _styles: ["addToCart"],
-                                itemId: `{{ brizy_dc_collection_item_field slug="id" }}`,
-                                variantId: `{{ brizy_dc_collection_item_field slug='variant' }}`
+                                _styles: ["addToCart"]
                               }
                             }
                           ]

@@ -1,4 +1,7 @@
 import { autoSave } from "./autoSave";
+import { getCollectionItemsIds } from "./collectionItems/getCollectionItemsIds";
+import { searchCollectionItems } from "./collectionItems/searchCollectionItems";
+import { loadCollectionTypes } from "./collectionTypes/loadCollectionTypes";
 import { getConfig } from "./config";
 import { addFile } from "./customFile/addFile";
 import {
@@ -10,10 +13,12 @@ import {
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
+import { popupConditions } from "./popupConditions";
 import { publish } from "./publish";
 import { savedBlocks } from "./savedBlocks/savedBlocks";
 import { savedLayouts } from "./savedBlocks/savedLayouts";
 import { savedPopups } from "./savedBlocks/savedPopups";
+import { screenshots } from "./screenshots";
 
 const config = getConfig();
 
@@ -34,10 +39,19 @@ const api = {
   savedBlocks,
   savedPopups,
   savedLayouts,
+  popupConditions,
   defaultKits: defaultKits(config),
   defaultPopups: defaultPopups(config),
   defaultStories: defaultStories(config),
-  defaultLayouts: defaultLayouts(config)
+  defaultLayouts: defaultLayouts(config),
+  collectionItems: {
+    searchCollectionItems,
+    getCollectionItemsIds
+  },
+  collectionTypes: {
+    loadCollectionTypes
+  },
+  screenshots: screenshots()
 };
 
 if (window.__VISUAL_CONFIG__) {

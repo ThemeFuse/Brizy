@@ -1,19 +1,24 @@
 import Config from "visual/global/Config";
 import { Shortcodes } from "visual/types";
 import getAddToCart from "./AddToCart";
-import getBlogPostContent from "./BlogPostContent";
+import getBlogDescription from "./BlogPostContent";
+import getBlogPostExcerpt from "./BlogPostExcerpt";
+import getBlogPostImage from "./BlogPostImage";
 import getBlogPostList from "./BlogPostList";
 import getBlogPostMeta from "./BlogPostMeta";
 import getBlogTitle from "./BlogTitle";
 import getCollectionDescription from "./CollectionDescription";
+import getCollectionImage from "./CollectionImage";
 import getCollectionList from "./CollectionList";
 import getCollectionTitle from "./CollectionTitle";
 import getPrice from "./Price";
 import getProductDescription from "./ProductDescription";
+import getProductImage from "./ProductImage";
 import getProductList from "./ProductList";
 import getProductMetafield from "./ProductMetafield";
 import getProductTitle from "./ProductTitle";
 import getQuantity from "./Quantity";
+import getVariant from "./Variant";
 import getVendor from "./Vendor";
 
 // import AliExpressReview from "./AliExpressReview";
@@ -89,11 +94,13 @@ const config = ((): Shortcodes => {
     base: [
       { component: getProductTitle(config), pro: false },
       { component: getProductDescription(config), pro: false },
+      { component: getProductImage(config), pro: false },
       { component: getProductList(config), pro: false },
       { component: getAddToCart(config), pro: false },
       { component: getPrice(config), pro: false },
       { component: getQuantity(config), pro: false },
       { component: getProductMetafield(config), pro: false },
+      { component: getVariant(config), pro: false },
       // { component: Quantity, pro: false },
       // { component: ProductReview, pro: false },
       // { component: KlavyioMarketing, pro: false },
@@ -165,13 +172,16 @@ const config = ((): Shortcodes => {
     ],
     blog: [
       { component: getBlogTitle(config), pro: false },
-      { component: getBlogPostContent(config), pro: false },
+      { component: getBlogDescription(config), pro: false },
+      { component: getBlogPostImage(config), pro: false },
+      { component: getBlogPostList(config), pro: false },
       { component: getBlogPostMeta(config), pro: false },
-      { component: getBlogPostList(config), pro: false }
+      { component: getBlogPostExcerpt(config), pro: false }
     ],
     collection: [
       { component: getCollectionTitle(config), pro: false },
       { component: getCollectionDescription(config), pro: false },
+      { component: getCollectionImage(config), pro: false },
       { component: getCollectionList(config), pro: false }
     ]
   };

@@ -2,12 +2,18 @@
   "content": {
     "date": "",
     "datePopulation": "",
+    "datePopulationEntityType": "",
+    "datePopulationEntityId": "",
 
     "hours": "10 am",
     "hoursPopulation": "",
+    "hoursPopulationEntityType": "",
+    "hoursPopulationEntityId": "",
 
     "minutes": 30,
     "minutesPopulation": "",
+    "minutesPopulationEntityType": "",
+    "minutesPopulationEntityId": "",
 
     "timeZone": -120,
     "timeZonePopulation": "",
@@ -16,9 +22,13 @@
 
     "messageText": "Congratulation!",
     "messageTextPopulation": "",
+    "messageTextPopulationEntityType": "",
+    "messageTextPopulationEntityId": "",
 
     "messageRedirect": "",
     "messageRedirectPopulation": "",
+    "messageRedirectPopulationEntityType": "",
+    "messageRedirectPopulationEntityId": "",
 
     "actions": "none",
 

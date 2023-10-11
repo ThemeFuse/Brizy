@@ -13,6 +13,10 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import Config from "visual/global/Config";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
+import {
+  makeEndPlaceholder,
+  makeStartPlaceholder
+} from "visual/utils/dynamicContent";
 import { IS_CLOUD } from "visual/utils/env";
 import { attachRef } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
@@ -371,7 +375,7 @@ class MenuItem extends EditorComponent {
     }
 
     const className = classnames(
-      "brz-mega-menu__portal",
+      "brz brz-mega-menu__portal",
       css(this.constructor.componentId, this.getId(), styleMegaMenu(v, vs, vd))
     );
     const dW = styleElementMegaMenuWidth({ v, device: DESKTOP });
@@ -436,18 +440,32 @@ class MenuItem extends EditorComponent {
     if (IS_PREVIEW) {
       const placeholderItemId = IS_CLOUD ? v.itemId : v.id;
       const placeholderUid = uuid(8);
+      const startPlaceholder =
+        IS_PRO &&
+        makeStartPlaceholder({
+          content: `{{nav_item_${placeholderUid}}}`,
+          attr: {
+            menuId: menuSelected,
+            itemId: placeholderItemId
+          }
+        });
+
+      const endPlaceholder =
+        IS_PRO &&
+        makeEndPlaceholder({
+          content: `{{end_nav_item_${placeholderUid}}}`
+        });
 
       return (
         <>
-          {IS_PRO &&
-            `{{ nav_item_${placeholderUid} menuId='${menuSelected}' itemId='${placeholderItemId}' }}`}
+          {startPlaceholder}
           <li className={className} data-menu-item-id={v.id}>
             {this.renderLink(v, vs, vd, content)}
             {v.megaMenu === "off"
               ? this.renderDropDown(v, vs, vd)
               : this.renderMegaMenu(v, vs, vd)}
           </li>
-          {IS_PRO && `{{ end_nav_item_${placeholderUid} }}`}
+          {endPlaceholder}
         </>
       );
     }
@@ -543,10 +561,24 @@ class MenuItem extends EditorComponent {
       const placeholderItemId = IS_CLOUD ? v.itemId : v.id;
       const placeholderUid = uuid(8);
 
+      const startPlaceholder =
+        IS_PRO &&
+        makeStartPlaceholder({
+          content: `{{nav_item_${placeholderUid}}}`,
+          attr: {
+            menuId: menuSelected,
+            itemId: placeholderItemId
+          }
+        });
+      const endPlaceholder =
+        IS_PRO &&
+        makeEndPlaceholder({
+          content: `{{end_nav_item_${placeholderUid}}}`
+        });
+
       return (
         <>
-          {IS_PRO &&
-            `{{ nav_item_${placeholderUid} menuId='${menuSelected}' itemId='${placeholderItemId}' }}`}
+          {startPlaceholder}
           <li className={className} data-menu-item-id={v.id}>
             {this.renderLink(v, vs, vd, content)}
             <div>
@@ -555,7 +587,7 @@ class MenuItem extends EditorComponent {
                 : this.renderMegaMenu(v, vs, vd)}
             </div>
           </li>
-          {IS_PRO && `{{ end_nav_item_${placeholderUid} }}`}
+          {endPlaceholder}
         </>
       );
     }

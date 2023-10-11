@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -22,14 +23,21 @@ export class LaiReviews extends EditorComponent<Value> {
 
   renderLaiWidget(type: WidgetType): ReactNode {
     switch (type) {
-      case "star":
+      case "star": {
+        const productId = makePlaceholder({ content: "{{ product.id }}" });
+        const productReview = makePlaceholder({
+          content:
+            "{{ product.metafields.scm_review_importer.reviewsData.reviewCountInfo | json }}"
+        });
+
         return (
           <div
             className="scm-reviews-rate"
-            data-rate-version2={`{{ product.metafields.scm_review_importer.reviewsData.reviewCountInfo | json }}`}
-            data-product-id={`{{ product.id }}`}
+            data-rate-version2={productReview}
+            data-product-id={productId}
           />
         );
+      }
 
       case "widget":
         return (

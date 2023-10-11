@@ -40,6 +40,8 @@
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
+    "bgPopulationEntityType": "",
+    "bgPopulationEntityId": "",
     "bgImageExtension": "",
 
     "brightness": 100,
@@ -76,6 +78,8 @@
     "anchorName": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "multiPage": "off",
 
@@ -140,9 +144,13 @@
     "customClassName": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "customAttributes": "",
     "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
 
     "maskShape": "none",
     "maskSize": "cover",

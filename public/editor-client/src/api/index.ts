@@ -1,4 +1,6 @@
 import { getConfig } from "../config";
+import { Page } from "../types/Page";
+import { Rule } from "../types/PopupConditions";
 import { Project } from "../types/Project";
 import { ResponseWithBody } from "../types/Response";
 import {
@@ -9,15 +11,18 @@ import {
   SavedLayout,
   SavedLayoutMeta
 } from "../types/SavedBlocks";
+import { ScreenshotData } from "../types/Screenshots";
 import { t } from "../utils/i18n";
 import {
+  GetCollections,
   parseMetaSavedBlock,
   parseSavedBlock,
   parseSavedLayout,
+  stringifyPage,
+  stringifyProject,
   stringifySavedBlock
 } from "./adapter";
-import { makeFormEncode } from "./utils";
-import { stringifyProject } from "./adapter";
+import { makeFormEncode, makeUrl } from "./utils";
 
 //#region Common Utils Request & PersistentRequest
 
@@ -45,19 +50,6 @@ export function request(
   const { fetch } = window.parent || window;
   return fetch(url, config);
 }
-
-export const makeUrl = (
-  baseUrl: string,
-  params: Record<string, string> = {}
-): string => {
-  const url = new URL(baseUrl);
-
-  Object.entries(params).forEach(([key, value]) => {
-    url.searchParams.append(key, value);
-  });
-
-  return url.toString();
-};
 
 export function persistentRequest<T>(
   url: string,
@@ -611,6 +603,248 @@ export const uploadSaveLayouts = async (
   }
 
   throw rj;
+};
+
+//#endregion
+
+//#region Collections
+
+export const getCollections: GetCollections = async (
+  { search = "", postType, abortSignal },
+  config
+) => {
+  const {
+    url,
+    hash,
+    actions: { searchPosts }
+  } = config;
+
+  const version = config.editorVersion;
+  const body = new URLSearchParams({
+    hash,
+    version,
+    action: searchPosts
+  });
+
+  if (search !== "") {
+    body.append("search", search);
+  }
+  if (postType !== undefined) {
+    for (const p of postType) {
+      body.append("post_type[]", p);
+    }
+  }
+
+  const r = await request(url, {
+    method: "POST",
+    body,
+    signal: abortSignal
+  });
+  const rj = await r.json();
+
+  if (rj.success) {
+    return rj.data;
+  } else {
+    throw rj;
+  }
+};
+
+export const getCollectionSourceItems = async (id: string) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  return request(_url, {
+    method: "POST",
+    body: new URLSearchParams({
+      hash,
+      version: editorVersion,
+      postType: id,
+      action: actions.getPostObjects
+    })
+  })
+    .then((r) => r.json())
+    .then((result) => {
+      if (!result?.data) {
+        throw t("Something went wrong");
+      }
+
+      return result.data;
+    })
+    .catch((e) => {
+      if (process.env.NODE_ENV === "development") {
+        console.error(e);
+      }
+      return [];
+    });
+};
+
+//#endregion
+
+//#region Page
+
+export const updatePage = (
+  page: Page,
+  meta: { is_autosave?: 0 | 1 } = {}
+): Promise<unknown> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+  const url = makeUrl(_url, {
+    action: actions.updatePage,
+    version: editorVersion,
+    hash
+  });
+  const { is_autosave = 1 } = meta;
+  const { id, status, data, dataVersion } = stringifyPage(page);
+  const body = new URLSearchParams({
+    id,
+    status,
+    data,
+    dataVersion: `${dataVersion}`,
+    is_autosave: `${is_autosave}`
+  });
+
+  return persistentRequest<Page>(url, { method: "POST", body }).then((d) => {
+    if (!d.ok) {
+      throw new Error(t("Fail to update page"));
+    }
+
+    return d.data;
+  });
+};
+
+//#endregion
+
+//#region PopupRules
+
+interface PopupData {
+  dataVersion: number;
+  rules: Array<Rule>;
+}
+
+export const updatePopupRules = async (
+  data: PopupData
+): Promise<Array<Rule>> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+  const { pageId, url, hash, editorVersion, actions } = config;
+  const { rules, dataVersion } = data;
+
+  const _url = makeUrl(url, {
+    action: actions.updateRules,
+    hash,
+    post: pageId,
+    version: editorVersion,
+    dataVersion: `${dataVersion}`
+  });
+
+  try {
+    const r = await request(_url, {
+      method: "POST",
+      body: JSON.stringify(rules)
+    });
+    const data = await r.json();
+
+    return data.data;
+  } catch (e) {
+    throw new Error(t("Fail to update popup rules"));
+  }
+};
+
+//#endregion
+
+//#region Screenshots
+
+export const createBlockScreenshot = async ({
+  base64,
+  blockType
+}: ScreenshotData): Promise<{ id: string }> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { pageId, url, hash, editorVersion, actions } = config;
+  const attachment = base64.replace(/data:image\/.+;base64,/, "");
+  const _url = makeUrl(url, {
+    hash,
+    action: actions.createBlockScreenshot,
+    post: pageId,
+    version: editorVersion
+  });
+  const body = new URLSearchParams({
+    block_type: blockType,
+    ibsf: attachment // ibsf - image base64
+  });
+
+  try {
+    const r = await request(_url, { method: "POST", body });
+    const d = await r.json();
+
+    if (d?.data?.id) {
+      return { id: d.data.id };
+    }
+
+    throw new Error(t("Failed to create Screenshot"));
+  } catch (e) {
+    throw new Error(t("Failed to create Screenshot"));
+  }
+};
+
+interface UpdateScreenshot extends ScreenshotData {
+  id: string;
+}
+
+export const updateBlockScreenshot = async ({
+  id,
+  base64,
+  blockType
+}: UpdateScreenshot): Promise<{ id: string }> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { pageId, url, hash, editorVersion, actions } = config;
+  const attachment = base64.replace(/data:image\/.+;base64,/, "");
+  const _url = makeUrl(url, {
+    hash,
+    action: actions.updateBlockScreenshot,
+    post: pageId,
+    version: editorVersion
+  });
+  const body = new URLSearchParams({
+    id,
+    block_type: blockType,
+    ibsf: attachment
+  });
+
+  try {
+    const r = await request(_url, { method: "POST", body });
+    const d = await r.json();
+
+    if (d?.data?.id) {
+      return { id: d.data.id };
+    }
+
+    throw new Error(t("Failed to update Screenshot"));
+  } catch (e) {
+    throw new Error(t("Failed to update Screenshot"));
+  }
 };
 
 //#endregion

@@ -1,6 +1,5 @@
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import _ from "underscore";
-import Config from "visual/global/Config";
 import {
   autoSave as apiAutoSave,
   createGlobalBlock as apiCreateGlobalBlock,
@@ -9,23 +8,15 @@ import {
   onChange as apiOnChange,
   publish as apiPublish,
   sendHeartBeat as apiSendHeartBeat,
-  updateCustomerPage as apiUpdateCustomPage,
   updateGlobalBlock as apiUpdateGlobalBlock,
   updateGlobalBlocks as apiUpdateGlobalBlocks,
-  updatePage as apiUpdatePage,
   updatePopupRules as apiUpdatePopupRules
 } from "visual/utils/api";
-import { isCustomerPage } from "visual/utils/env";
-
-const updateFn = (() => {
-  return isCustomerPage(Config.getAll()) ? apiUpdateCustomPage : apiUpdatePage;
-})();
 
 export {
   apiPublish,
   apiAutoSave,
   apiOnChange,
-  updateFn as apiUpdatePage,
   apiCreateGlobalBlock,
   apiUpdateGlobalBlock,
   apiUpdateGlobalBlocks,
@@ -73,8 +64,6 @@ class debounceById {
 export const debouncedApiAutoSave = _.debounce(apiAutoSave, DEBOUNCE_WAIT);
 
 export const debouncedApiPublish = _.debounce(apiPublish, DEBOUNCE_WAIT);
-
-export const debouncedApiUpdatePage = _.debounce(updateFn, DEBOUNCE_WAIT);
 
 export const debouncedApiUpdateGlobalBlock = new debounceById(
   apiUpdateGlobalBlock,

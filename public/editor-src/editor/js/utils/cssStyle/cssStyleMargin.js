@@ -1,8 +1,4 @@
 import {
-  styleItemMarginBottom,
-  styleItemMarginLeft,
-  styleItemMarginRight,
-  styleItemMarginTop,
   styleMarginGrouped,
   styleMarginGroupedSuffix,
   styleMarginType,
@@ -144,29 +140,4 @@ export function cssStyleMargin({ v, device, state, prefix = "" }) {
   else r = "margin:0;";
 
   return r;
-}
-
-export function cssStyleItemMargin({ v, device, state }) {
-  const marginTop = styleItemMarginTop({
-    v,
-    device,
-    state
-  });
-  const marginRight = styleItemMarginRight({
-    v,
-    device,
-    state
-  });
-  const marginBottom = styleItemMarginBottom({
-    v,
-    device,
-    state
-  });
-  const marginLeft = styleItemMarginLeft({
-    v,
-    device,
-    state
-  });
-
-  return `margin:${marginTop} ${marginRight} ${marginBottom} ${marginLeft};`;
 }

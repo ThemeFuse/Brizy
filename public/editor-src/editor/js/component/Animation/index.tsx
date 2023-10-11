@@ -11,10 +11,10 @@ import React, {
   forwardRef
 } from "react";
 import UIEvents from "visual/global/UIEvents";
+import { AnimationEvents } from "visual/utils/animation";
 import { WithClassName } from "visual/utils/options/attributes";
 import { mApply } from "visual/utils/value";
 import * as Observer from "./Observer";
-import { AnimationEvents } from "./utils";
 
 type CProps = PropsWithRef<unknown> & WithClassName;
 type Component<P> = ComponentType<P> | keyof JSX.IntrinsicElements;

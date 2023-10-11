@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
+import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { ECDC } from "visual/editorComponents/EditorComponent/types";
 
 type sizes = {
@@ -96,6 +97,7 @@ export type ImageProps = {
   v: V;
   vs: V;
   vd: V;
+  context: EditorComponentContextValue;
   _id: string;
   componentId: string;
   meta: Meta;

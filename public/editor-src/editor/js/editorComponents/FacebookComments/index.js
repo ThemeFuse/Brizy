@@ -1,19 +1,19 @@
 // 1. Nu functioneaza href si lang cu valori randont trebuei sa fie language si href corecta. In alte elemente FB merge
-
+import classnames from "classnames";
 import React from "react";
+import Comments from "visual/component/Comments";
+import CustomCSS from "visual/component/CustomCSS";
+import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 //import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import classnames from "classnames";
 import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
-import Comments from "visual/component/Comments";
-import Toolbar, { hideToolbar } from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import * as toolbarExtendParentConfig from "./toolbarExtend";
-import * as sidebarExtendConfig from "./sidebarExtend";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import * as sidebarExtendConfig from "./sidebarExtend";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
+import * as toolbarExtendParentConfig from "./toolbarExtend";
 
 class FacebookComments extends EditorComponent {
   static get componentId() {
@@ -47,8 +47,12 @@ class FacebookComments extends EditorComponent {
       // comments au nevoie obligatoriu de appId si lang si in editor noi nu avem replacer, cind o sa avem o sa schimbam
 
       appId: 113869198637480,
-      href: "{{ brizy_dc_current_page_unique_url }}",
-      lang: "{{ brizy_dc_page_language }}"
+      href: makePlaceholder({
+        content: "{{ brizy_dc_current_page_unique_url }}"
+      }),
+      lang: makePlaceholder({
+        content: "{{ brizy_dc_page_language }}"
+      })
     };
   }
 

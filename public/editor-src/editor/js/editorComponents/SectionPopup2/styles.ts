@@ -32,17 +32,18 @@ export function style(
     ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
       standart: ["cssStyleBgImageHover"]
     },
-    ".brz &&:hover > .brz-bg > .brz-bg-color": {
-      standart: [
-        "cssStyleBgColor",
-        "cssStyleBgGradient",
-        "cssStyleMaskShape",
-        "cssStyleMaskCustomShape",
-        "cssStyleMaskSize",
-        "cssStyleMaskPosition",
-        "cssStyleMaskRepeat"
-      ]
-    }
+    ".brz &&:hover > .brz-bg > .brz-bg-color, .brz&&:hover > .brz-bg > .brz-bg-color":
+      {
+        standart: [
+          "cssStyleBgColor",
+          "cssStyleBgGradient",
+          "cssStyleMaskShape",
+          "cssStyleMaskCustomShape",
+          "cssStyleMaskSize",
+          "cssStyleMaskPosition",
+          "cssStyleMaskRepeat"
+        ]
+      }
   };
   return renderStyles({ v, vs, vd, styles });
 }
@@ -72,15 +73,16 @@ export function styleInner(
       ],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && > .brz-container__wrap .brz-popup2__close:hover .brz-icon-svg": {
-      standart: [
-        "cssStyleContainerPopup2CloseFontSize",
-        "cssStyleContainerPopup2CloseBgSize",
-        "cssStyleContainerPopup2CloseBgColor",
-        "cssStyleContainerPopup2CloseBorderRadius",
-        "cssStyleBoxShadow"
-      ]
-    },
+    ".brz && > .brz-container__wrap .brz-popup2__close:hover .brz-icon-svg, .brz&& > .brz-container__wrap .brz-popup2__close:hover .brz-icon-svg":
+      {
+        standart: [
+          "cssStyleContainerPopup2CloseFontSize",
+          "cssStyleContainerPopup2CloseBgSize",
+          "cssStyleContainerPopup2CloseBgColor",
+          "cssStyleContainerPopup2CloseBorderRadius",
+          "cssStyleBoxShadow"
+        ]
+      },
     ".brz &&:hover .brz-container > .brz-row__container": {
       standart: [
         "cssStyleRowMinHeight",

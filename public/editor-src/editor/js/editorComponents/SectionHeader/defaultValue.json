@@ -9,6 +9,8 @@
     "anchorName": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "membership": "off",
     "membershipRoles": "[]",
@@ -27,11 +29,15 @@
     "customClassName": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "containerClassName": "",
 
     "customAttributes": "",
-    "customAttributesPopulation": ""
+    "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": ""
   },
 
   "animation": {

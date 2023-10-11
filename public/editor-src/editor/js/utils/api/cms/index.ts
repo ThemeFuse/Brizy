@@ -1,12 +1,12 @@
 import {
   GetCustomerAndCollection_collectionTypes as CustomerAndCollectionCollection,
-  GetCustomerAndCollection_customerGroups_collection as CustomerAndCollectionCustomerGroups,
-  GetCustomerAndCollection_customers_collection as CustomerAndCollectionCustomer
+  GetCustomerAndCollection_customers_collection as CustomerAndCollectionCustomer,
+  GetCustomerAndCollection_customerGroups_collection as CustomerAndCollectionCustomerGroups
 } from "visual/utils/api/cms/graphql/types/GetCustomerAndCollection";
 import { paginationData } from "visual/utils/api/const";
 import { CustomError } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
-import { isNullish, isT, MNullish } from "visual/utils/value";
+import { MNullish, isNullish, isT } from "visual/utils/value";
 import * as TMP from "./correctors";
 import { getConnection } from "./graphql/apollo";
 import * as Gql from "./graphql/gql";
@@ -67,14 +67,8 @@ export function getCollectionItems(
   );
 }
 
-export function getCollectionItem(itemId: string): Promise<CollectionItem> {
-  return Gql.getCollectionItem(getConnection(), { id: itemId })
-    .then((r) => r?.data?.collectionItem)
-    .then(errOnEmpty(t("Invalid api data")))
-    .catch(onCatch(t("Failed to fetch api data")));
-}
-
 //#region Customer & Collections
+
 interface CustomerAndCollectionTypes {
   customers: CustomerAndCollectionCustomer[];
   customerGroups: CustomerAndCollectionCustomerGroups[];

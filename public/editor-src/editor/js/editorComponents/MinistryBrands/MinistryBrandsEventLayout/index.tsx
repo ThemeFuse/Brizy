@@ -23,7 +23,7 @@ import { style } from "./styles";
 import * as toolbarExtendLayoutView from "./toolbarExtendLayoutView";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import type { Props, Value } from "./types";
-import { getPlaceholder } from "./utils";
+import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsEventLayout" {

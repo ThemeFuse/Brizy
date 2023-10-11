@@ -1,10 +1,13 @@
 import classnames from "classnames";
 import React from "react";
+import { connect } from "react-redux";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar } from "visual/component/Scrollbar";
 import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 import Config from "visual/global/Config";
+import { setDeviceMode } from "visual/redux/actions2";
+import { deviceModeSelector } from "visual/redux/selectors";
 import { getFontById } from "visual/utils/fonts";
 import { getWeightChoices } from "visual/utils/fonts";
 import { getSuffixChoices } from "visual/utils/fonts/SizeSuffix";
@@ -12,6 +15,15 @@ import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { printf } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
+
+const animateClassName = "brz-ed-option__font-style-editor--animate";
+
+const mapDevice = (device) => ({
+  deviceMode: deviceModeSelector(device)
+});
+const mapDispatch = { setDeviceMode };
+
+const connector = connect(mapDevice, mapDispatch);
 
 class FontStyle extends React.Component {
   static defaultProps = {
@@ -49,6 +61,8 @@ class FontStyle extends React.Component {
   };
 
   handleTabsChange = (device) => {
+    this.props.setDeviceMode(device);
+
     this.setState({ device });
   };
 
@@ -83,19 +97,25 @@ class FontStyle extends React.Component {
       mobileLetterSpacing,
       showDeleteIcon,
       deletable,
-      onChange
+      onChange,
+      itemIndex,
+      animationCounter,
+      deviceMode
     } = this.props;
-    const { device, active } = this.state;
+    const { active } = this.state;
+
     const className = classnames("brz-ed-option__font-style-editor", {
-      active
+      active,
+      [`${animateClassName}`]: animationCounter !== 0
     });
+
     const sampleStyle = {
       fontFamily: getFontById({ family: fontFamily, type: fontFamilyType })
         .family,
       fontWeight:
-        device === "desktop"
+        deviceMode === "desktop"
           ? fontWeight
-          : device === "tablet"
+          : deviceMode === "tablet"
           ? tabletFontWeight
           : mobileFontWeight
     };
@@ -396,7 +416,7 @@ class FontStyle extends React.Component {
                         ]
                       }
                     ],
-                    value: device,
+                    value: deviceMode,
                     onChange: this.handleTabsChange
                   }
                 ]
@@ -407,8 +427,10 @@ class FontStyle extends React.Component {
       }
     ];
 
+    const style = { animationDelay: `${0.2 * itemIndex}s` };
+
     return (
-      <div className={className}>
+      <div className={className} style={style}>
         {showDeleteIcon ? (
           <div
             className="brz-ed-option__font-style-editor--delete"
@@ -443,49 +465,129 @@ class FontStyle extends React.Component {
   }
 }
 
+const FontStyleItems = connector(FontStyle);
+
 class FontStyleEditor extends React.Component {
   static defaultProps = {
     value: {}
   };
 
+  state = {
+    brzNewItem: false,
+    numItems:
+      this.props.value.fontStyles.length +
+      this.props.value.extraFontStyles.length,
+    animationCounter: 0
+  };
+
+  scrollRef = React.createRef();
+
   handleChange = (id, newValue) => {
     const { value: _value, onChange } = this.props;
-    const value = _value.map((el) =>
+    const fonts = [..._value.extraFontStyles, ..._value.fontStyles];
+
+    const value = fonts.map((el) =>
       id === el.id ? { ...el, ...newValue } : el
     );
 
     onChange(value);
+
+    this.setState({ brzNewItem: false });
+  };
+
+  handleAnimationEnd = (event) => {
+    const { numItems, animationCounter } = this.state;
+    const targetEvent = event.target;
+
+    targetEvent.classList.remove(animateClassName);
+    targetEvent.removeEventListener("animationend", this.handleAnimationEnd);
+
+    if (animationCounter < numItems - 1) {
+      this.setState((prevState) => ({
+        animationCounter: prevState.animationCounter + 1
+      }));
+    }
   };
 
   handleAddNew = () => {
     const { value, onChange } = this.props;
+
+    const lastFont = value.fontStyles.find((v) => v.id === "paragraph");
+    const valuesLength = value.extraFontStyles.length + value.fontStyles.length;
+
     const newFont = {
-      ...value[0],
+      ...(lastFont ?? value.fontStyles[0]),
       deletable: "on",
       id: uuid(),
-      title: printf(t("New Style #%s"), value.length)
+      title: printf(t("New Style #%s"), valuesLength)
     };
-    const newValue = [...value, newFont];
+    const newValue = [...value.fontStyles, ...value.extraFontStyles, newFont];
 
     onChange(newValue);
+
+    this.setState((prevState) => ({
+      brzNewItem: true,
+      numItems: prevState.numItems + 1,
+      animationCounter: prevState.animationCounter + 1
+    }));
+
+    const getAllItems = window.parent.document.querySelectorAll(
+      ".brz-ed-option__font-style-editor"
+    );
+
+    getAllItems.forEach((element, index) => {
+      const endAnimation = element.addEventListener(
+        "animationend",
+        this.handleAnimationEnd
+      );
+
+      element.classList.remove(animateClassName);
+
+      if (index === 0) {
+        requestAnimationFrame(() => {
+          element.classList.add(animateClassName);
+          endAnimation;
+        });
+      } else {
+        element.classList.add(animateClassName);
+        endAnimation;
+      }
+    });
+
+    if (this.scrollRef.current) {
+      this.scrollRef.current.scrollToTop();
+    }
   };
 
   render() {
-    const { value } = this.props;
+    const { value: _value } = this.props;
+    const { brzNewItem, numItems, animationCounter } = this.state;
+    const reversedExtraFontStyles = _value.extraFontStyles.slice().reverse();
+    const value = [...reversedExtraFontStyles, ..._value.fontStyles];
+
     const items = value
-      .filter((el) => el.deleted !== true)
-      .map((el) => (
-        <FontStyle
+      .filter((el) => !el.deleted)
+      .map((el, index) => (
+        <FontStyleItems
           key={el.id}
           showDeleteIcon={el.deletable === "on"}
           {...el}
           onChange={this.handleChange.bind(null, el.id)}
+          itemIndex={index}
+          numItems={numItems}
+          animationCounter={animationCounter}
         />
       ));
 
+    const className = classnames("brz-ed-option__font-styles", {
+      "brz-ed-option__font-styles--new-item": brzNewItem
+    });
+
     return (
-      <div className="brz-ed-option__font-styles">
-        <Scrollbar theme="dark">{items}</Scrollbar>
+      <div className={className}>
+        <Scrollbar theme="dark" ref={this.scrollRef}>
+          {items}
+        </Scrollbar>
         <div
           className="brz-ed-option__font-styles--add"
           onClick={this.handleAddNew}

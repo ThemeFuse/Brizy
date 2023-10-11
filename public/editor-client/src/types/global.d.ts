@@ -1,4 +1,6 @@
 import { AutoSave } from "./AutoSave";
+import { ChoicesSync } from "./Choices";
+import { CollectionExtra, CollectionType } from "./Collections";
 import {
   BlocksArray,
   DefaultBlock,
@@ -9,9 +11,13 @@ import {
   PopupsWithThumbs,
   StoriesWithThumbs
 } from "./DefaultTemplate";
-import { AddMediaData, AddMediaExtra } from "./Media";
+import { AddFileData } from "./File";
+import { AddMediaData, AddMediaGallery } from "./Media";
 import { OnChange } from "./OnChange";
-import { PublishData } from "./Project";
+import { PopupConditions } from "./PopupConditions";
+import { Data } from "./Publish";
+import { SavedBlocks, SavedLayouts, SavedPopups } from "./SavedBlocks";
+import { Screenshots } from "./Screenshots";
 
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
@@ -30,6 +36,7 @@ export interface PLUGIN_ENV {
     customFileUrl?: string;
   };
   l10n?: Record<string, string>;
+  collectionTypes?: CollectionType[];
 }
 
 export interface VISUAL_CONFIG {
@@ -41,9 +48,9 @@ export interface VISUAL_CONFIG {
     publish?: {
       label?: string;
       handler: (
-        res: Response<PublishData>,
+        res: Response<Data>,
         rej: Response<string>,
-        extra: PublishData
+        extra: Data
       ) => void;
     };
 
@@ -69,37 +76,32 @@ export interface VISUAL_CONFIG {
     media?: {
       mediaResizeUrl?: string;
 
-      addMedia?: {
-        label?: string;
-        handler: (
-          res: Response<AddMediaData>,
-          rej: Response<string>,
-          extra: AddMediaExtra
-        ) => void;
-      };
+      addMedia?: AddMediaData;
 
-      addMediaGallery?: {
-        label?: string;
-        handler: (
-          res: Response<Array<AddImageData>>,
-          rej: Response<string>,
-          extra: AddMediaExtra
-        ) => void;
-      };
+      addMediaGallery?: AddMediaGallery;
     };
+
     // File
     customFile?: {
       customFileUrl?: string;
 
-      addFile?: {
-        label?: string;
-        handler: (
-          res: Response<AddFileData>,
-          rej: Response<string>,
-          extra: AddFileExtra
-        ) => void;
-      };
+      addFile?: AddFileData;
     };
+
+    // SavedBlocks
+    savedBlocks?: SavedBlocks;
+
+    // SavedLayouts
+    savedLayouts?: SavedLayouts;
+
+    // SavedPopups
+    savedPopups?: SavedPopups;
+
+    // PopupConditions
+    popupConditions?: PopupConditions;
+
+    // Screenshots
+    screenshots?: Screenshots;
 
     defaultKits?: DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock>;
     defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
@@ -111,6 +113,31 @@ export interface VISUAL_CONFIG {
       StoriesWithThumbs,
       BlocksArray<DefaultBlock> | DefaultBlock
     >;
+
+    //Collection Items
+    collectionItems?: {
+      searchCollectionItems: {
+        handler: (
+          res: Response<Post[]>,
+          rej: Response<string>,
+          extra: CollectionExtra
+        ) => void;
+      };
+      getCollectionItemsIds: {
+        handler: (
+          res: Response<ChoicesSync>,
+          rej: Response<string>,
+          extra: { id: string }
+        ) => void;
+      };
+    };
+
+    //Collection Types
+    collectionTypes?: {
+      loadCollectionTypes: {
+        handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
+      };
+    };
   };
 
   //#endregion
@@ -139,7 +166,7 @@ declare global {
       };
     };
     query: (query: {
-      type: "image, audio, video, application, text, pdf";
+      type: "image, audio, video, application, text, pdf" | "image";
     }) => WPMediaLibrary;
     state: () => WPMediaLibrary;
   }

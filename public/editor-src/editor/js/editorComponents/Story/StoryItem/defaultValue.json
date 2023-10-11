@@ -28,7 +28,7 @@
 
     "bgMapAddress": "Wall Street",
     "bgMapZoom": 15,
-    "bgMapZoomSuffix": null,
+    "bgMapZoomSuffix": "",
 
     "brightness": 100,
     "hue": 0,

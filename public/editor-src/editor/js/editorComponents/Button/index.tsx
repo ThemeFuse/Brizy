@@ -19,14 +19,14 @@ import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { Block } from "visual/types";
 import { css } from "visual/utils/cssStyle";
-import { pipe } from "visual/utils/fp";
 import { isStory } from "visual/utils/models";
+import { getCSSId } from "visual/utils/models/cssId";
+import { getLinkData } from "visual/utils/models/link";
 import { defaultValueValue } from "visual/utils/onChange";
-import * as Num from "visual/utils/reader/number";
 import * as State from "visual/utils/stateMode";
 import * as Str from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
-import { MValue, isNullish } from "visual/utils/value";
+import { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -53,8 +53,6 @@ const restrictions = {
     "%": { min: 5, max: Infinity }
   }
 };
-
-const isNan = pipe(Num.read, isNullish);
 
 export default class Button extends EditorComponent<Value, Props> {
   static get componentId(): "Button" {
@@ -87,21 +85,11 @@ export default class Button extends EditorComponent<Value, Props> {
   }
 
   renderSubmit(v: Value, vs: Value, vd: Value, content: ReactNode): ReactNode {
-    const {
-      cssClassPopulation,
-      customClassName,
-      cssIDPopulation,
-      customID,
-      tabsState,
-      type
-    } = v;
+    const { cssClass, customClassName, tabsState, type } = v;
     const device = deviceModeSelector(this.getReduxState());
     const state = State.mRead(tabsState);
-
-    const populationClassName =
-      cssClassPopulation === ""
-        ? Str.mRead(customClassName)
-        : Str.mRead(cssClassPopulation);
+    const id = getCSSId<Value>(v);
+    const populationClassName = Str.mRead(cssClass || customClassName);
 
     const className = classnames(
       "brz-btn",
@@ -115,8 +103,6 @@ export default class Button extends EditorComponent<Value, Props> {
     );
 
     const componentType = IS_EDITOR ? "a" : "button";
-    const id: string =
-      cssIDPopulation === "" ? customID : (cssIDPopulation as string);
 
     return (
       <Wrapper
@@ -144,34 +130,13 @@ export default class Button extends EditorComponent<Value, Props> {
   }
 
   renderLink(v: Value, vs: Value, vd: Value, content: ReactNode): ReactNode {
-    const {
-      linkType,
-      linkAnchor,
-      linkToSlide,
-      linkExternalBlank,
-      linkExternalType,
-      linkExternalRel,
-      linkPopup,
-      linkUpload,
-      actionClosePopup,
-      customClassName,
-      customID,
-      cssIDPopulation,
-      cssClassPopulation,
-      pageLink,
-      tabsState
-    } = v;
+    const { actionClosePopup, customClassName, cssClass, tabsState } = v;
 
     const state = State.mRead(tabsState);
     const device = deviceModeSelector(this.getReduxState());
-
-    const _className =
-      cssClassPopulation === ""
-        ? Str.mRead(customClassName)
-        : Str.mRead(cssClassPopulation);
-
-    const _id =
-      cssIDPopulation === "" ? Str.mRead(customID) : Str.mRead(cssIDPopulation);
+    const linkData = getLinkData<Value>(v);
+    const id = getCSSId<Value>(v);
+    const _className = Str.mRead(cssClass || customClassName);
 
     const className = classnames(
       "brz-btn",
@@ -183,46 +148,21 @@ export default class Button extends EditorComponent<Value, Props> {
       ),
       {
         "brz-popup2__action-close":
-          linkType === "action" && actionClosePopup === "on"
+          linkData.type === "action" && actionClosePopup === "on"
       }
     );
 
-    const hrefs = {
-      anchor: linkAnchor,
-      story: isNan(linkToSlide) ? "" : `slide-${linkToSlide}`,
-      external: v[linkExternalType],
-      popup: linkPopup,
-      upload: linkUpload,
-      page: pageLink,
-      action: "",
-      lightBox: ""
-    };
-
-    const slideAnchor =
-      linkType === "story" && !isNan(linkToSlide)
-        ? { "data-brz-link-story": linkToSlide }
-        : {};
-
-    const props: {
-      type: string;
-      href: string;
-      target: string;
-      rel: string;
-      className: string;
-      onDragStart?: (e: Event) => void;
-      draggable?: string;
-      id: string;
-    } = {
-      type: linkType,
-      href: hrefs[linkType],
-      target: linkExternalBlank,
-      rel: linkExternalRel,
+    const props: Record<string, unknown> = {
+      type: linkData.type,
+      href: linkData.href,
+      target: linkData.target,
+      rel: linkData.rel,
       className: className,
-      id: _id
+      ...(id && { id })
     };
 
     if (IS_EDITOR) {
-      props.onDragStart = (e) => {
+      props.onDragStart = (e: Event) => {
         e.preventDefault();
         return false;
       };
@@ -231,7 +171,7 @@ export default class Button extends EditorComponent<Value, Props> {
 
     return (
       <Wrapper
-        {...this.makeWrapperProps({ attributes: props, slide: slideAnchor })}
+        {...this.makeWrapperProps({ attributes: props, slide: linkData.slide })}
         component={Link}
       >
         {hasSizing(v, device, state) ? (
@@ -291,14 +231,25 @@ export default class Button extends EditorComponent<Value, Props> {
     return defaultValueValue({ v, key, device, state });
   };
 
+  getHoverData(v: Value) {
+    const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
+    const options = makeOptionValueToAnimation(v);
+    const { cloneableAnimationId } = this.props.meta;
+    const animationId = Str.read(cloneableAnimationId) ?? this.getId();
+
+    return {
+      hoverName,
+      options: getHoverAnimationOptions(options, hoverName),
+      animationId,
+      isHidden: isStory(Config.getAll()) || hoverName === "none"
+    };
+  }
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const { type, iconName, iconType, customCSS, tabsState } = v;
-    const IS_STORY = isStory(Config.getAll());
     const state = State.mRead(tabsState);
     const device = deviceModeSelector(this.getReduxState());
 
     const renderIcon = iconName && iconType;
-    const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
     const content =
       hasSizing(v, device, state) && IS_EDITOR && type !== "submit" ? (
         <div className="brz-btn--story-container">
@@ -312,34 +263,25 @@ export default class Button extends EditorComponent<Value, Props> {
         </>
       );
 
-    const renderButton =
-      type === "link"
-        ? this.renderLink(v, vs, vd, content)
-        : this.renderSubmit(v, vs, vd, content);
-
-    const options = makeOptionValueToAnimation(v);
-
-    const { cloneableAnimationId } = this.props.meta;
-    const animationId = Str.read(cloneableAnimationId) ?? this.getId();
-    const isHidden = IS_STORY || (IS_PREVIEW && hoverName === "none");
-
+    const { hoverName, isHidden, animationId, options } = this.getHoverData(v);
     return (
       <>
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+        <HoverAnimation
+          animationId={animationId}
+          cssKeyframe={hoverName}
+          options={options}
+          isHidden={isHidden}
         >
-          <CustomCSS selectorName={this.getId()} css={customCSS}>
-            <HoverAnimation
-              animationId={animationId}
-              className="brz-btn-hover__unset-height"
-              cssKeyframe={hoverName}
-              options={getHoverAnimationOptions(options, hoverName)}
-              isHidden={isHidden}
-            >
-              {renderButton}
-            </HoverAnimation>
-          </CustomCSS>
-        </Toolbar>
+          <Toolbar
+            {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+          >
+            <CustomCSS selectorName={this.getId()} css={customCSS}>
+              {type === "link"
+                ? this.renderLink(v, vs, vd, content)
+                : this.renderSubmit(v, vs, vd, content)}
+            </CustomCSS>
+          </Toolbar>
+        </HoverAnimation>
         {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
           this.renderPopups()}
       </>

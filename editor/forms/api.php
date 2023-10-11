@@ -448,7 +448,14 @@ class Brizy_Editor_Forms_Api
             $this->error(400, "Invalid form integration");
         }
 
-        $integrationId = apply_filters('brizy_update_integration', $integrationId, $form);
+		$integration = $form->getIntegration( $integrationId);
+
+        if (!$integration) {
+            $this->error(400, "The requested integration has been deleted.");
+        }
+
+        apply_filters('brizy_delete_integration', $integration, $form);
+
         $deleted = false;
 
         if ($integrationId) {

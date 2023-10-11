@@ -20,6 +20,8 @@ class Story extends EditorComponent {
 
   static defaultValue = defaultValue;
 
+  static experimentalDynamicContent = true;
+
   getMeta() {
     const { meta } = this.props;
 
@@ -52,7 +54,7 @@ class Story extends EditorComponent {
       sliderAutoPlay,
       sliderAutoPlaySpeed,
       sliderAnimation,
-      cssClassPopulation,
+      cssClass,
       customClassName
     } = v;
 
@@ -67,7 +69,7 @@ class Story extends EditorComponent {
           sliderLoop,
           sliderAutoPlay,
           sliderAutoPlaySpeed,
-          cssClassPopulation,
+          cssClass,
           customClassName
         }
       },
@@ -83,13 +85,13 @@ class Story extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { className, customClassName, cssClassPopulation } = v;
+    const { className, customClassName, cssClass } = v;
 
     const classNameSection = classnames(
       "brz-section",
       "brz-story",
       className,
-      cssClassPopulation === "" ? customClassName : cssClassPopulation,
+      cssClass || customClassName,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -110,13 +112,13 @@ class Story extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className, customClassName, cssClassPopulation } = v;
+    const { className, customClassName, cssClass } = v;
 
     const classNameSection = classnames(
       "brz-section",
       "brz-story",
       className,
-      cssClassPopulation === "" ? customClassName : cssClassPopulation,
+      cssClass || customClassName,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,

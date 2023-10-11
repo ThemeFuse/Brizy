@@ -1,12 +1,13 @@
 import { mPipe, optional, pass } from "fp-utilities";
 import { ElementModel } from "visual/component/Elements/Types";
-import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { DeviceMode } from "visual/types";
 import * as Math from "visual/utils/math";
 import * as Num from "visual/utils/math/number";
 import { prop } from "visual/utils/object/get";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { readWithParser } from "visual/utils/reader/readWithParser";
+import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
 import * as Str from "visual/utils/string/specs";
 import { Unit, isUnit } from "./types";
 import {
@@ -17,6 +18,7 @@ import {
 } from "./types/ImagePatch";
 import {
   calcWrapperSizes,
+  getImageDCSize,
   getImageSize,
   isCustomSize,
   isOriginalSize,
@@ -79,6 +81,7 @@ export interface PatchDC {
   height?: number;
   heightSuffix?: Unit;
   widthSuffix?: Unit;
+  sizeType: string;
 }
 
 export interface PatchUnit {
@@ -257,43 +260,42 @@ export const patchOnDCChange = (
   cW: number,
   patch: ImageDCPatch,
   wrapperSizes: Size,
-  useCustomPlaceholder: boolean
+  context: EditorComponentContextValue
 ): PatchDC => {
-  const placeholderData = placeholderObjFromStr(
-    patch.imagePopulation,
-    useCustomPlaceholder
-  );
-
-  if (placeholderData === undefined) {
+  if (!patch.imagePopulation) {
     return {
       width: 100,
       height: 100,
       widthSuffix: "%",
-      heightSuffix: "%"
+      heightSuffix: "%",
+      sizeType: "custom"
     };
   }
 
-  const { attr } = placeholderData;
-  const getSize = mPipe(Str.read, getImageSize);
-  const size = getSize(attr?.size);
+  const dcSize = getImageDCSize(patch.imagePopulation, context);
 
-  if (size !== undefined) {
-    if (isPredefinedSize(size)) {
-      const resize = Math.roundTo((size.width / cW) * 100, 2);
+  if (dcSize === undefined) {
+    return {
+      sizeType: "custom",
+      height: wrapperSizes.height,
+      heightSuffix: "px"
+    };
+  }
 
-      return {
-        size: Math.clamp(resize, 0, 100)
-      };
-    }
+  const size = getImageSize(dcSize);
+
+  if (isPredefinedSize(size)) {
+    const resize = Math.roundTo((size.width / cW) * 100, 2);
 
     return {
-      size: 100
+      sizeType: dcSize,
+      size: Math.clamp(resize, 0, 100)
     };
   }
 
   return {
-    height: wrapperSizes.height,
-    heightSuffix: "px"
+    sizeType: isNoEmptyString(dcSize) ? dcSize : "custom",
+    size: 100
   };
 };
 

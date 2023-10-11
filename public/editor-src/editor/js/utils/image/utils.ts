@@ -13,3 +13,9 @@ export const getFilter = (options: FilterOption): string => {
 
 export const isCropSize = (d: Data): d is CustomSize =>
   d.sizeType === SizeType.custom;
+
+export const isSVGExtension = (extension: string): extension is "svg" =>
+  extension === "svg";
+
+export const isGIFExtension = (extension: string): extension is "gif" =>
+  extension === "gif";

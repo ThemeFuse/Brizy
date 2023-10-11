@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -64,13 +65,22 @@ export class OkendoReview extends EditorComponent<Value> {
     } = v;
 
     const attr: Record<string, string> = {};
+    const productId = makePlaceholder({
+      content: "{{ product.id }}"
+    });
+    const productListingSnippet = makePlaceholder({
+      content: "{{ product.metafields.okendo.ProductListingSnippet }}"
+    });
+    const productReviewsSnippet = makePlaceholder({
+      content: "{{ product.metafields.okendo.ProductReviewsWidgetSnippet }}"
+    });
 
     switch (type) {
       case "star":
         return (
           <div data-pf-type="Okendo">
             <div data-oke-reviews-product-listing-rating>
-              {"{{ product.metafields.okendo.ProductListingSnippet }}"}
+              {productListingSnippet}
             </div>
           </div>
         );
@@ -80,9 +90,9 @@ export class OkendoReview extends EditorComponent<Value> {
             <div
               className="okeReviews-widget-holder"
               data-oke-reviews-widget
-              data-oke-reviews-product-id="shopify-{{ product.id }}"
+              data-oke-reviews-product-id={`shopify-${productId}`}
             >
-              {"{{ product.metafields.okendo.ProductReviewsWidgetSnippet }}"}
+              {productReviewsSnippet}
             </div>
           </div>
         );
@@ -98,7 +108,7 @@ export class OkendoReview extends EditorComponent<Value> {
           <div data-pf-type="Okendo">
             <div
               data-oke-reviews-carousel
-              data-oke-reviews-product-id="shopify-{{ product.id }}"
+              data-oke-reviews-product-id={`shopify-${productId}`}
               {...attr}
             />
           </div>
@@ -117,7 +127,7 @@ export class OkendoReview extends EditorComponent<Value> {
             data-oke-reviews-min-images="1"
             data-oke-reviews-slide-size={slideSize}
             data-oke-reviews-arrow-position={arrowPosition}
-            data-oke-reviews-product-id="shopify-{{ product.id }}"
+            data-oke-reviews-product-id={`shopify-${productId}`}
             {...attr}
           />
         );
@@ -142,7 +152,7 @@ export class OkendoReview extends EditorComponent<Value> {
             data-oke-reviews-grid-style={desktopGridStyle}
             data-oke-reviews-mobile-grid-style={mobileGridStyle}
             data-oke-reviews-cell-link-text={linkText}
-            data-oke-reviews-product-id="shopify-{{ product.id }}"
+            data-oke-reviews-product-id={`shopify-${productId}`}
             {...attr}
           />
         );

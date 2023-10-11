@@ -60,8 +60,6 @@ export * from "./cssStyleElementEcwidProducts";
 export * from "./cssStyleElementEcwidShoppingBag";
 // Facebook
 export * from "./cssStyleElementFacebook";
-// Filters
-export * from "./cssStyleElementFilters";
 // Element Form2
 export * from "./cssStyleElementForm2";
 // Element Icon
@@ -199,3 +197,5 @@ export * from "./cssStyleZIndex";
 export * from "./styleBgVideo";
 // Mask
 export * from "./cssStyleMask";
+// Variant
+export * from "./cssStyleElementShopifyVariant";

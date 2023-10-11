@@ -40,18 +40,25 @@ export default function useRuleList(
   const [customerRuleList, setCustomerRuleList] = useState<RuleList[]>([]);
   const [ecwidProductsList, setEcwidProductsList] = useState<
     | { type: "ready"; items: CmsListItem[] }
-    | { type: "init" }
-    | { type: "loading" }
+    | { type: "init"; items?: CmsListItem[] }
+    | { type: "loading"; items?: CmsListItem[] }
   >({ type: "init" });
+
   const [ecwidCategoriesList, setEcwidCategoriesList] = useState<
     | { type: "ready"; items: CmsListItem[] }
-    | { type: "init" }
-    | { type: "loading" }
+    | { type: "init"; items?: CmsListItem[] }
+    | { type: "loading"; items?: CmsListItem[] }
   >({ type: "init" });
+
   const [listLoading, setListLoading] = useState(true);
 
   // it's needed only for cms!
   const [refsById, setRefsById] = useState<RefsById>({});
+
+  const { type: currentTypeProducts, items: currentItemsProducts } =
+    ecwidProductsList;
+  const { type: currentTypeCategories, items: currentItemsCategories } =
+    ecwidCategoriesList;
 
   const ecwidProductsClient = useMemo((): Products | undefined => {
     const config = Config.getAll();
@@ -86,7 +93,7 @@ export default function useRuleList(
       return [];
     }
 
-    switch (ecwidProductsList.type) {
+    switch (currentTypeProducts) {
       case "init":
       case "loading":
         return [
@@ -103,17 +110,17 @@ export default function useRuleList(
             title: "Products",
             groupValue: 1,
             value: ECWID_PRODUCT_TYPE,
-            items: ecwidProductsList.items
+            items: currentItemsProducts
           }
         ];
     }
-  }, [ecwidProductsList]);
+  }, [currentItemsProducts, ecwidProductsClient, currentTypeProducts]);
   const ecwidCategoriesRules = useMemo((): RuleList[] => {
     if (!ecwidCategoriesClient) {
       return [];
     }
 
-    switch (ecwidCategoriesList.type) {
+    switch (currentTypeCategories) {
       case "init":
       case "loading":
         return [
@@ -130,11 +137,11 @@ export default function useRuleList(
             title: "Product Categories",
             groupValue: 1,
             value: ECWID_PRODUCT_CATEGORY_TYPE,
-            items: ecwidCategoriesList.items
+            items: currentItemsCategories
           }
         ];
     }
-  }, [ecwidCategoriesList]);
+  }, [currentItemsCategories, currentTypeCategories, ecwidCategoriesClient]);
 
   useEffect(() => {
     async function fetchData(): Promise<void> {
@@ -204,7 +211,8 @@ export default function useRuleList(
 
             const items = await fetchRuleListItems(
               rule,
-              newRulesList[ruleIndex]
+              newRulesList[ruleIndex],
+              refsById
             );
 
             newRulesList = setIn(
@@ -230,7 +238,7 @@ export default function useRuleList(
     if (collectionRuleList.length) {
       fetchData();
     }
-  }, [rules, collectionRuleList]);
+  }, [rules, collectionRuleList, refsById]);
 
   useEffect(() => {
     setCustomerRuleList(disableAlreadyUsedRules(rules, customerRuleList));
@@ -239,7 +247,7 @@ export default function useRuleList(
   useEffect(() => {
     if (
       ecwidProductsClient &&
-      ecwidProductsList.type === "init" &&
+      currentTypeProducts === "init" &&
       rules
         .filter(isOneOf([isCollectionTypeRule, isCollectionItemRule]))
         .some((r) => r.entityType === ECWID_PRODUCT_TYPE)
@@ -269,12 +277,12 @@ export default function useRuleList(
 
       return () => fetch$.unsubscribe();
     }
-  }, [rules]);
+  }, [rules, ecwidProductsClient, currentTypeProducts]);
 
   useEffect(() => {
     if (
       ecwidCategoriesClient &&
-      ecwidCategoriesList.type === "init" &&
+      currentTypeCategories === "init" &&
       rules
         .filter(isOneOf([isCollectionTypeRule, isCollectionItemRule]))
         .some((r) => r.entityType === ECWID_PRODUCT_CATEGORY_TYPE)
@@ -304,7 +312,7 @@ export default function useRuleList(
 
       return () => fetch$.unsubscribe();
     }
-  }, [rules]);
+  }, [rules, ecwidCategoriesClient, currentTypeCategories]);
 
   return [
     listLoading,
@@ -315,28 +323,41 @@ export default function useRuleList(
       ...ecwidCategoriesRules
     ]
   ];
+}
 
-  async function fetchRuleListItems(
-    rule: CollectionTypeRule | CollectionItemRule,
-    collectionType: RuleList
-  ): Promise<RuleListItem[]> {
-    // maybe we should union our queries into one!
-    const items = await getItems(rule.entityType);
+async function getItems(entityType: string): Promise<RuleList[]> {
+  const items = await getCollectionItems(entityType, { status: "all" });
 
-    const ruleList: RuleListItem[] = [
-      {
-        title: `Specific ${collectionType.title}`,
-        value: collectionType.value,
-        mode: "specific",
-        items
-      }
-    ];
+  return items.map(({ id, title, status }) => ({
+    title: title,
+    value: id,
+    status
+  }));
+}
 
-    const entityType = refsById[rule.entityType];
+async function fetchRuleListItems(
+  rule: CollectionTypeRule | CollectionItemRule,
+  collectionType: RuleList,
+  refsById: RefsById
+): Promise<RuleListItem[]> {
+  // maybe we should union our queries into one!
+  const items = await getItems(rule.entityType);
 
-    if (entityType) {
-      await Promise.all(
-        entityType.map(async (ref) => {
+  const ruleList: RuleListItem[] = [
+    {
+      title: `Specific ${collectionType.title}`,
+      value: collectionType.value,
+      mode: "specific",
+      items
+    }
+  ];
+
+  const entityType = refsById[rule.entityType];
+
+  if (entityType) {
+    await Promise.all(
+      entityType.map(
+        async (ref: { title: string; fieldId: string; value: string }) => {
           const allReference = [
             {
               title: `All ${ref.title}`,
@@ -360,20 +381,10 @@ export default function useRuleList(
           });
 
           return Promise.resolve();
-        })
-      );
-    }
-
-    return ruleList;
+        }
+      )
+    );
   }
-}
 
-async function getItems(entityType: string): Promise<RuleList[]> {
-  const items = await getCollectionItems(entityType, { status: "all" });
-
-  return items.map(({ id, title, status }) => ({
-    title: title,
-    value: id,
-    status
-  }));
+  return ruleList;
 }

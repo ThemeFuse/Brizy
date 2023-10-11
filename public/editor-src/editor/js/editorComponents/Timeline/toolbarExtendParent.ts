@@ -1,7 +1,7 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { Value } from "./index";
+import { Props, Value } from "./index";
 
-export const getItems: GetItems<Value> = () => {
+export const getItems: GetItems<Value, Props> = () => {
   return [
     { id: "horizontalAlign", type: "toggle-dev", disabled: true, choices: [] }
   ];

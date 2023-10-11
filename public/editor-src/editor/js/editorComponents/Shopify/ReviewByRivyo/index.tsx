@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -22,6 +23,9 @@ export class ReviewRivyo extends EditorComponent<Value> {
   static defaultValue = defaultValue;
 
   renderRivyoWidget(type: ReviewType): ReactNode {
+    const productHandle = makePlaceholder({ content: "{{ product.handle }}" });
+    const shopUrl = makePlaceholder({ content: "{{ shop.url }}" });
+
     switch (type) {
       case "reviewWidget":
         return (
@@ -29,8 +33,8 @@ export class ReviewRivyo extends EditorComponent<Value> {
             data-pf-element="true"
             id="wc_review_section"
             className="wc_review_main_content"
-            data-url="{{ shop.url }}"
-            data-handle="{{ product.handle }}"
+            data-url={shopUrl}
+            data-handle={productHandle}
             data-limit="0"
           />
         );
@@ -40,7 +44,7 @@ export class ReviewRivyo extends EditorComponent<Value> {
             data-pf-element="true"
             id="wc_all_review_page"
             className="wc_review_main_content"
-            data-url="{{ shop.url }}"
+            data-url={shopUrl}
             data-limit="0"
           />
         );
@@ -48,7 +52,7 @@ export class ReviewRivyo extends EditorComponent<Value> {
         return (
           <div
             className="wc_product_review_badge"
-            data-handle="{{ product.handle }}"
+            data-handle={productHandle}
           />
         );
     }

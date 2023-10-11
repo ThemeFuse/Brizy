@@ -23,7 +23,7 @@ export function styleContainer(v, vs, vd) {
       standart: [
         "cssStyleFlexHorizontalAlign",
         "cssStylePaddingFourFields",
-        "cssStyleItemMargin"
+        "cssStyleElementCloneableGap"
       ]
     }
   };
@@ -32,15 +32,6 @@ export function styleContainer(v, vs, vd) {
     styles[".brz &&:hover"].interval = ["cssStyleVisibleMode|||editor"];
   }
 
-  return renderStyles({ v, vs, vd, styles });
-}
-
-export function styleItem(v, vs, vd) {
-  const styles = {
-    ".brz &&:hover": {
-      standart: ["cssStyleElementCloneablePadding"]
-    }
-  };
   return renderStyles({ v, vs, vd, styles });
 }
 
