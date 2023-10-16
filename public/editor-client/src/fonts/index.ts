@@ -87,18 +87,22 @@ function convertDataToLocal(mockTypeKitData: KitData): Fonts {
 
 // export const getAdobeFonts = {
 //   async handler(res: Response<any>, rej: Response<string>, extra: string) {
-//     const a = fetch("https://typekit.com/api/v1/json/kits/gvs0pdl/published", {
-//       mode: "no-cors",
-//       headers: {
-//         "User-Agent": "PostmanRuntime/7.33.0"
+//     const a = await fetch(
+//       "https://typekit.com/api/v1/json/kits/gvs0pdl/published",
+//       {
+//         mode: "no-cors",
+//         referrerPolicy: "no-referrer"
 //       }
-//     });
-//     console.log("a: ", a);
+//     );
+//
+//     console.log("jjj", a);
 //
 //     if (a.success) {
-//       return res(convertDataToLocal(a.data));
+//       console.log("aaa: ", a.data);
+//       res(convertDataToLocal(mockTypeKitData));
 //     } else {
-//       rej("Failed to get fonts");
+//       console.log("bbb");
+//       rej("Failed to get adobe fonts");
 //     }
 //   }
 // };
