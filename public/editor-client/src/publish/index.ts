@@ -1,10 +1,10 @@
-import { updatePage, updateProject } from "../api";
-import { Publish } from "../types/Publish";
-import { t } from "../utils/i18n";
+import { updateGlobalBlocks, updatePage, updateProject } from "@/api";
+import { Publish } from "@/types/Publish";
+import { t } from "@/utils/i18n";
 
 export const publish: Publish = {
   async handler(res, rej, args) {
-    const { projectData, pageData } = args;
+    const { projectData, pageData, globalBlocks } = args;
 
     if (projectData) {
       try {
@@ -21,6 +21,14 @@ export const publish: Publish = {
         res(args);
       } catch (e) {
         rej(t("Failed to update page"));
+      }
+    }
+
+    if (globalBlocks && globalBlocks.length > 0) {
+      try {
+        await updateGlobalBlocks(globalBlocks, { is_autosave: 0 });
+      } catch (e) {
+        rej(t("Failed to update global blocks"));
       }
     }
   }

@@ -100,28 +100,6 @@ class Brizy_Editor_User {
 	}
 
 
-	/**
-	 * @param Brizy_Editor_Project $project
-	 * @param Brizy_Editor_Post $post
-	 *
-	 * @return array
-	 * @throws Brizy_Editor_API_Exceptions_Exception
-	 * @throws Brizy_Editor_Http_Exceptions_BadRequest
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseException
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseNotFound
-	 * @throws Brizy_Editor_Http_Exceptions_ResponseUnauthorized
-	 * @throws Exception
-	 */
-	public function compile_page( $project, $post ) {
-
-		$editor_data = $post->get_editor_data();
-
-		$config     = Brizy_Editor_Editor_Editor::get( $project, $post )->config(Brizy_Editor_Editor_Editor::COMPILE_CONTEXT);
-		$urlBuilder = new Brizy_Editor_UrlBuilder( $project, $post->getWpPostId() );
-
-		return $this->get_client()->compile_page( $project, $editor_data, $config, $urlBuilder->compiler_url() );
-	}
-
 	public static function is_administrator() {
 
 		if ( ! is_user_logged_in() ) {

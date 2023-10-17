@@ -42,6 +42,10 @@ interface Actions {
 
   createBlockScreenshot: string;
   updateBlockScreenshot: string;
+
+  createGlobalBlock: string;
+  updateGlobalBlock: string;
+  updateGlobalBlocks: string;
 }
 
 interface API {
@@ -109,9 +113,7 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
     mPipe(Obj.readKey("templates"), Obj.read, templatesReader),
     throwOnNullish("Invalid API: templates")
   ),
-  openAIUrl: optional(pipe(
-    mPipe(Obj.readKey("openAIUrl"), Str.read),
-  ))
+  openAIUrl: optional(pipe(mPipe(Obj.readKey("openAIUrl"), Str.read)))
 });
 
 const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
@@ -194,6 +196,18 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   updateBlockScreenshot: pipe(
     mPipe(Obj.readKey("updateBlockScreenshot"), Str.read),
     throwOnNullish("Invalid actions: updateBlockScreenshot")
+  ),
+  createGlobalBlock: pipe(
+    mPipe(Obj.readKey("createGlobalBlock"), Str.read),
+    throwOnNullish("Invalid actions: createGlobalBlock")
+  ),
+  updateGlobalBlock: pipe(
+    mPipe(Obj.readKey("updateGlobalBlock"), Str.read),
+    throwOnNullish("Invalid actions: updateGlobalBlock")
+  ),
+  updateGlobalBlocks: pipe(
+    mPipe(Obj.readKey("updateGlobalBlocks"), Str.read),
+    throwOnNullish("Invalid actions: updateGlobalBlocks")
   )
 });
 
