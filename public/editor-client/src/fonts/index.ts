@@ -85,35 +85,30 @@ function convertDataToLocal(mockTypeKitData: KitData): Fonts {
   return fonts;
 }
 
-// export const getAdobeFonts = {
-//   async handler(res: Response<any>, rej: Response<string>, extra: string) {
-//     const a = await fetch(
-//       "https://typekit.com/api/v1/json/kits/gvs0pdl/published",
-//       {
-//         mode: "no-cors",
-//         referrerPolicy: "no-referrer"
-//       }
-//     );
-//
-//     console.log("jjj", a);
-//
-//     if (a.success) {
-//       console.log("aaa: ", a.data);
-//       res(convertDataToLocal(mockTypeKitData));
-//     } else {
-//       console.log("bbb");
-//       rej("Failed to get adobe fonts");
-//     }
-//   }
-// };
-
 export const getAdobeFonts = {
-  async handler(res: Response<Fonts>, rej: Response<string>, extra: string) {
-    console.log("KITID: ", extra);
-    if (true) {
-      res(convertDataToLocal(mockTypeKitData));
+  async handler(res: Response<any>, rej: Response<string>, extra: string) {
+    const response = await fetch(
+      `https://typekit.com/api/v1/json/kits/${extra}/published`,
+      {
+        mode: "no-cors"
+      }
+    );
+
+    if (response.ok) {
+      res(convertDataToLocal(await response.json()));
     } else {
-      rej("Failed to get fonts");
+      rej("Failed to get adobe fonts");
     }
   }
 };
+
+// export const getAdobeFonts = {
+//   async handler(res: Response<Fonts>, rej: Response<string>, extra: string) {
+//     console.log("KITID: ", extra);
+//     if (true) {
+//       res(convertDataToLocal(mockTypeKitData));
+//     } else {
+//       rej("Failed to get fonts");
+//     }
+//   }
+// };
