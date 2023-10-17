@@ -136,6 +136,9 @@ class Brizy_Editor_Editor_Editor
                 'status' => $this->getProjectStatus(),
                 'heartBeatInterval' => ($heartBeatInterval > 10 && $heartBeatInterval < 30 ? $heartBeatInterval : 30) * 1000,
             ),
+//            'compiler' => array(
+//                'type' => ($context=='compile' ? Brizy_Editor_Entity::COMPILER_EXTERNAL : Brizy_Editor_Entity::COMPILER_BROWSER)
+//            ),
             'urls' => array(
                 'site' => home_url(),
                 'api' => home_url('/wp-json/v1'),
@@ -219,7 +222,6 @@ class Brizy_Editor_Editor_Editor
         $config = $this->addWpPostTypes($config, $context);
         $config = $this->addTemplateFields($config, $mode === 'template', $wp_post_id, $context);
         $config['wp']['api'] = $this->getApiActions($config, $context);
-        $config = $this->addGlobalBlocksData($config);
         $config = $this->addGlobalBlocksData($config);
         $config = $this->addLoopSourcesConfig($config, $mode === 'template', $wp_post_id, $context);
         $config = $this->getApiConfigFields($config, $context);
@@ -348,7 +350,6 @@ class Brizy_Editor_Editor_Editor
 
     private function addPageData($config, $context)
     {
-
         $config['pageData'] = $this->post->createConfigData($context);
 
         return $config;
@@ -356,9 +357,7 @@ class Brizy_Editor_Editor_Editor
 
     private function addModuleGroups($config, $context)
     {
-
         $moduleGroupCollector = new Brizy_Editor_Editor_ModuleGroups_Manager();
-
         $config['ui']['leftSidebar'] = array_merge(
             $config['ui']['leftSidebar'],
             ['moduleGroups' => $moduleGroupCollector->getAll($config)]
@@ -370,7 +369,6 @@ class Brizy_Editor_Editor_Editor
 
     private function addProjectData($config, $context)
     {
-
         $response = Brizy_Editor_Project::get()->createResponse();
         $response['data'] = json_decode($response['data']);
         $config['projectData'] = $response;

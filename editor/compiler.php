@@ -1,0 +1,147 @@
+<?php
+
+class Brizy_Editor_Compiler {
+
+	/**
+	 * @var Brizy_Editor_Project
+	 */
+	private $project;
+
+	/**
+	 * @var Brizy_Admin_Blocks_Manager
+	 */
+	private $blocksManager;
+	/**
+	 * @var Brizy_Editor_UrlBuilder
+	 */
+	private $urlBuilder;
+	private $compilerUrl;
+	private $compilerDownloadUrl;
+
+	public function __construct(
+		Brizy_Editor_Project $project,
+		Brizy_Admin_Blocks_Manager $blocksManager,
+		Brizy_Editor_UrlBuilder $urlBuilder,
+		$compilerUrl,
+		$compilerDownloadUrl
+	) {
+
+		$this->project             = $project;
+		$this->blocksManager       = $blocksManager;
+		$this->urlBuilder          = $urlBuilder;
+		$this->compilerUrl         = $compilerUrl;
+		$this->compilerDownloadUrl = $compilerDownloadUrl;
+	}
+
+	public function compilePost( Brizy_Editor_Post $post, $editorConfig ) {
+		$this->urlBuilder->set_post_id( $post->getWpPostId() );
+		$editor_data   = $post->get_editor_data( true );
+		$compilerParam = $this->compilerParams( $editor_data, $editorConfig );
+
+		$httpClient = new Brizy_Editor_Http_Client();
+
+		$compilerResult = $httpClient->request( $this->compilerUrl, array( 'body' => $compilerParam ), 'POST' )
+		                             ->get_response_body();
+
+		if ( ! is_array( $compilerResult ) ) {
+			throw new UnexpectedValueException( 'The compiler response body is invalid' );
+		}
+
+		// process page data
+		$pageData        = $compilerResult['compiled']['page'];
+		$globalBlockData = $compilerResult['compiled']['globalBlocks'];
+		$projectData     = $compilerResult['compiled']['project'];
+
+		// update post
+		$this->updatePost( $post, $pageData );
+
+		// update project styles
+		$this->updateProjectStyles( $projectData );
+
+		// update global blocks
+		$this->updateGlobalBLocks( $globalBlockData );
+
+		return true;
+	}
+
+	public function needsCompile( Brizy_Editor_Post $post ) {
+
+		if ( is_preview() || isset( $_GET['preview'] ) ) {
+			return true;
+		}
+
+		if ( version_compare(
+			$t = str_replace( '-wp', '', $post->get_compiler_version() ),
+			$k = str_replace( '-wp', '', BRIZY_MINIMUM_COMPILER_VERSION ),
+			"<" ) ) {
+			return true;
+		}
+
+		return false;
+
+		//return ! $post->isCompiledWithCurrentVersion() || $post->get_needs_compile();
+	}
+
+	private function updateProjectStyles( $styles ) {
+		$this->project->setCompiledStyles( $styles );
+		$this->project->set_compiler(Brizy_Editor_Entity::COMPILER_BROWSER );
+		$this->project->saveStorage();
+	}
+
+	private function updatePost( Brizy_Editor_Post $post, $pageData ) {
+		$pageData['html'] = Brizy_SiteUrlReplacer::hideSiteUrl( $pageData['html'] );
+		$post->set_compiled_html( $pageData['html'] );
+
+		$assets  = $pageData['assets'];
+		$scripts = [
+			'free' => $assets['freeScripts'],
+			'pro'  => ( isset( $assets['proScripts'] ) ? $assets['proScripts'] : [] ),
+		];
+		$styles  = [
+			'free' => $assets['freeStyles'],
+			'pro'  => ( isset( $assets['proStyles'] ) ? $assets['proStyles'] : [] ),
+		];
+
+		$post->setCompiledScripts( $scripts );
+		$post->setCompiledStyles( $styles );
+
+		$post->set_needs_compile( false );
+		$post->set_compiler( Brizy_Editor_Post::COMPILER_BROWSER );
+		$post->set_compiler_version( BRIZY_EDITOR_VERSION );
+		$post->set_plugin_version( BRIZY_VERSION );
+		$post->set_pro_plugin_version( defined( 'BRIZY_PRO_VERSION' ) ? BRIZY_PRO_VERSION : null );
+		$post->savePost();
+		$post->saveStorage();
+	}
+
+	private function updateGlobalBLocks( $globalBlockData ) {
+		foreach ( $globalBlockData as $blockData ) {
+			$block = $this->blocksManager->getEntity( $blockData['uid'] );
+			$this->updatePost( $block, $blockData );
+		}
+	}
+
+	private function compilerParams( $pageData, $editorConfig ) {
+
+		return apply_filters(
+			'brizy_compiler_params',
+			array(
+				'page_id'      => (int) $editorConfig['wp']['page'],
+				'free_version' => BRIZY_EDITOR_VERSION,
+				'free_url'     => $this->compilerDownloadUrl,
+				'config_json'  => json_encode( $editorConfig ),
+				'pages_json'   => json_encode(
+					array(
+						array(
+							'id'       => (int) $editorConfig['wp']['page'],
+							'data'     => $pageData,
+							'is_index' => true,
+						),
+					)
+				),
+				'project_json' => json_encode( $this->project->createResponse() ),
+			)
+		);
+	}
+
+}

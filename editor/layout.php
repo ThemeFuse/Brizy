@@ -62,7 +62,6 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
 	public function createResponse( $fields = array() ) {
 
-
 		if ( empty( $fields ) ) {
 			$fields = array(
 				'id',
@@ -107,7 +106,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		}
 
 		if ( in_array( 'data', $fields ) ) {
-			$global['data'] = $this->get_editor_data();
+			$global['data'] = $this->get_editor_data(false);
 		}
 
 		if ( in_array( 'meta', $fields ) ) {
@@ -129,6 +128,8 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		if ( in_array( 'author', $fields ) ) {
 			$global['author'] = $this->getWpPost()->post_author;
 		}
+
+		$global['compiler'] = $this->get_compiler();
 
 		return $global;
 	}

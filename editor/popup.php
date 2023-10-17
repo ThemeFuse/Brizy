@@ -228,7 +228,7 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 		$global = array();
 
 		if ( in_array( 'data', $fields ) ) {
-			$global['data'] = $this->get_editor_data();
+			$global['data'] = $this->get_editor_data(false);
 		}
 
 		if ( in_array( 'uid', $fields ) ) {
@@ -258,6 +258,8 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 		if ( in_array( 'author', $fields ) ) {
 			$global['author'] = $this->getWpPost()->post_author;
 		}
+
+		$global['compiler'] = $this->get_compiler();
 
 		return $global;
 	}

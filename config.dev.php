@@ -51,11 +51,15 @@ class Brizy_Config {
     const CLOUD_CUSTOM_FILES = '/api/custom_files';
 	const WP_HTTP_TIMEOUT = 600;
 
+
+	// this file will be stored in uploads/brizy/
+	const PROJECT_STLYES_FILE_PATH = '/project/styles.css';
+
 	static public function getCompilerUrls() {
 		$host = self::getEnvValue('COMPILER_HOST');
 		return new Brizy_Admin_UrlIterator(
 			array(
-				"http://{$host}/compile/v3"
+				"http://{$host}/compile/v4"
 			)
 		);
 	}

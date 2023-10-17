@@ -7,7 +7,7 @@ class Brizy_Admin_Post_ProjectPostMonitor extends Brizy_Admin_Post_AbstractMonit
 	 * Brizy_Admin_Post_ProjectPostMonitor constructor.
 	 */
 	public function __construct() {
-		parent::__construct( 'brizy-project', array( 'brizy-project','brizy_data_version' ) );
+		parent::__construct( 'brizy-project', array( 'brizy-project','brizy_data_version','brizy-project-styles' ) );
 	}
 
 	/**
