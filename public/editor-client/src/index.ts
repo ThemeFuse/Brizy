@@ -1,5 +1,4 @@
 import set from "lodash/set";
-import { handler as posts } from "./Elements/Posts";
 import { doAiRequest } from "./aiText";
 import { autoSave } from "./autoSave";
 import { getCollectionItemsIds } from "./collectionItems/getCollectionItemsIds";
@@ -13,6 +12,9 @@ import {
   defaultPopups,
   defaultStories
 } from "./defaultTemplates";
+import { handler as posts } from "./Elements/Posts";
+import { globalBlocks } from "./globalBlocks/blocks";
+import { globalPopups } from "./globalBlocks/popups";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
@@ -30,7 +32,7 @@ if (!config) {
 }
 
 const api = {
-  ...(config.api.openAIUrl ? {textAI: {handler: doAiRequest}} : {}),
+  ...(config.api.openAIUrl ? { textAI: { handler: doAiRequest } } : {}),
   media: {
     addMedia,
     addMediaGallery,
@@ -44,6 +46,8 @@ const api = {
   savedPopups,
   savedLayouts,
   popupConditions,
+  globalBlocks,
+  globalPopups,
   defaultKits: defaultKits(config),
   defaultPopups: defaultPopups(config),
   defaultStories: defaultStories(config),

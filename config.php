@@ -51,6 +51,8 @@ class Brizy_Config {
 	const CLOUD_CUSTOM_FILES = '/api/custom_files';
     const WP_HTTP_TIMEOUT = 30;
 
+	// this file will be stored in uploads/brizy/
+	const PROJECT_STLYES_FILE_PATH = '/project/styles.css';
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(

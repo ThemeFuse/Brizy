@@ -1,13 +1,12 @@
+import { GlobalBlock } from "@/types/GlobalBlocks";
 import { Page } from "./Page";
 import { Project } from "./Project";
 import { Response } from "./Response";
 
 export interface Data {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
   projectData?: Project;
   pageData?: Page;
-  // globalBlocks: Array<GlobalBlock>;
+  globalBlocks?: Array<GlobalBlock>;
 }
 
 export interface Publish {

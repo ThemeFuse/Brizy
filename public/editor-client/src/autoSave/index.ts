@@ -1,5 +1,5 @@
-import { updatePage, updateProject } from "../api";
-import { AutoSave } from "../types/AutoSave";
+import { updateGlobalBlock, updatePage, updateProject } from "@/api";
+import { AutoSave } from "@/types/AutoSave";
 
 export const autoSave = (data: AutoSave) => {
   if (data.projectData) {
@@ -8,5 +8,9 @@ export const autoSave = (data: AutoSave) => {
 
   if (data.pageData) {
     updatePage(data.pageData);
+  }
+
+  if (data.globalBlock) {
+    updateGlobalBlock(data.globalBlock);
   }
 };

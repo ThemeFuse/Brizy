@@ -75,12 +75,22 @@ class Brizy_Admin_PanelPostContent {
 		try {
 			$editor = Brizy_Editor_Post::get( $postId );
 
-			if ( ! $editor->isCompiledWithCurrentVersion() || $editor->get_needs_compile() ) {
-				$editor->compile_page();
-				$editor->saveStorage();
-				$editor->savePost();
+			try {
+		        $compiler = new Brizy_Editor_Compiler(
+			        Brizy_Editor_Project::get(),
+			        new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL ),
+			        new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $editor ),
+			        Brizy_Config::getCompilerUrls(),
+			        Brizy_Config::getCompilerDownloadUrl()
+		        );
 
-				global $wpdb;
+		        if ( $compiler->needsCompile( $editor ) ) {
+			        $editorConfig = Brizy_Editor_Editor_Editor::get( Brizy_Editor_Project::get(), $editor )
+			                                                   ->config( Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
+			        $compiler->compilePost( $editor, $editorConfig );
+		        }
+
+		        global $wpdb;
 
 				$query = $wpdb->get_col( "SELECT post_content FROM $wpdb->posts WHERE ID = $postId" );
 
@@ -89,7 +99,10 @@ class Brizy_Admin_PanelPostContent {
 				}
 
 				$content = $query[0];
-			}
+
+	        } catch ( Exception $e ) {
+		        Brizy_Logger::instance()->exception( $e );
+	        }
 
 		} catch ( Exception $e ) {
 			return $content;

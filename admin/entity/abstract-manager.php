@@ -151,4 +151,14 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 		return $response;
 	}
 
+	public function createEntityResponseForCompile( $entities, $fields = [] ) {
+		$response = [];
+		foreach ( $entities as $entity ) {
+			$data  = $entity->createResponse( $fields );
+			$data['data'] = base64_decode($data['data']);
+			$response[] = $data;
+		}
+		return $response;
+	}
+
 }

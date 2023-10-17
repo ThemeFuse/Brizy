@@ -1,5 +1,5 @@
-import { updatePage, updateProject } from "../api";
-import { OnChange } from "../types/OnChange";
+import { updateGlobalBlock, updatePage, updateProject } from "@/api";
+import { OnChange } from "@/types/OnChange";
 
 export const onChange = (data: OnChange) => {
   if (data.projectData) {
@@ -8,5 +8,9 @@ export const onChange = (data: OnChange) => {
 
   if (data.pageData) {
     updatePage(data.pageData, { is_autosave: 0 });
+  }
+
+  if (data.globalBlock) {
+    updateGlobalBlock(data.globalBlock, { is_autosave: 0 });
   }
 };

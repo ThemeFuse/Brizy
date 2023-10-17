@@ -452,6 +452,16 @@ class Brizy_Editor_UrlBuilder
         return sprintf($url, $template_version);
     }
 
+    public function compiled_project_styles_url()
+    {
+		return $this->brizy_upload_url(Brizy_Config::PROJECT_STLYES_FILE_PATH);
+    }
+
+    public function compiled_project_styles_path()
+    {
+		return $this->brizy_upload_path(Brizy_Config::PROJECT_STLYES_FILE_PATH);
+    }
+
 	static public function cleanPath($path) {
 
 		if ( ! $path ) {
