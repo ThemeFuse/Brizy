@@ -1,20 +1,20 @@
 import { Response } from "../types/Response";
 
-const mockTypeKitData = {
-  kit: {
-    id: "gvs0pdl",
-    families: [
-      {
-        id: "gev",
-        name: "Utopia Std Headline",
-        slug: "utopia-std-headline",
-        css_names: ["utopia-std-headline"],
-        css_stack: '"utopia-std-headline",serif',
-        variations: ["n4"]
-      }
-    ]
-  }
-};
+// const mockTypeKitData = {
+//   kit: {
+//     id: "gvs0pdl",
+//     families: [
+//       {
+//         id: "gev",
+//         name: "Utopia Std Headline",
+//         slug: "utopia-std-headline",
+//         css_names: ["utopia-std-headline"],
+//         css_stack: '"utopia-std-headline",serif',
+//         variations: ["n4"]
+//       }
+//     ]
+//   }
+// };
 
 // const fonts = {
 //   kit: {
@@ -86,9 +86,13 @@ function convertDataToLocal(mockTypeKitData: KitData): Fonts {
 }
 
 export const getAdobeFonts = {
-  async handler(res: Response<any>, rej: Response<string>, extra: string) {
+  async handler(
+    res: Response<unknown>,
+    rej: Response<string>,
+    extra: { kitId: string }
+  ) {
     const response = await fetch(
-      `https://typekit.com/api/v1/json/kits/${extra}/published`,
+      `https://typekit.com/api/v1/json/kits/${extra.kitId}/published`,
       {
         mode: "no-cors"
       }
@@ -103,8 +107,12 @@ export const getAdobeFonts = {
 };
 
 // export const getAdobeFonts = {
-//   async handler(res: Response<Fonts>, rej: Response<string>, extra: string) {
-//     console.log("KITID: ", extra);
+//   async handler(
+//     res: Response<Fonts>,
+//     rej: Response<string>,
+//     extra: { kitId: string }
+//   ) {
+//     console.log("KITID: ", extra.kitId);
 //     if (true) {
 //       res(convertDataToLocal(mockTypeKitData));
 //     } else {
