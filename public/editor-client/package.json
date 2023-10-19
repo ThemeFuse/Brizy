@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@babel/parser": "^7.21.8",
-    "@babel/traverse": "^7.21.5",
+    "@babel/traverse": "^7.23.2",
     "@types/backbone": "^1.4.15",
     "@types/jest": "^29.5.1",
     "@types/node": "^18.11.17",
