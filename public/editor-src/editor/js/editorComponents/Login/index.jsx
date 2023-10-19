@@ -17,6 +17,8 @@ import Config from "visual/global/Config";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { IS_WP } from "visual/utils/env";
+import * as Json from "visual/utils/reader/json";
+import { encodeToString } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarAutorized from "./sidebarAutorized";
@@ -113,11 +115,15 @@ class Login extends EditorComponent {
   }
 
   getDefaultRoles(rules) {
-    try {
-      return JSON.stringify(JSON.parse(rules)?.map((item) => ({ id: item })));
-    } catch {
-      return [];
-    }
+    const _rules = Json.read(rules);
+
+    return _rules
+      ? {
+          "data-defaultrole": encodeToString(
+            _rules.map((item) => ({ id: item }))
+          )
+        }
+      : {};
   }
 
   renderLink(v) {
@@ -424,7 +430,7 @@ class Login extends EditorComponent {
         <form
           className="brz-login-form brz-login-form__register"
           noValidate
-          data-defaultrole={this.getDefaultRoles(defaultRoles)}
+          {...this.getDefaultRoles(defaultRoles)}
         >
           {this.renderRegisterForm(v)}
         </form>
