@@ -11,6 +11,7 @@ import {
   defaultPopups,
   defaultStories
 } from "./defaultTemplates";
+import { handler as filters, possibleValues } from "./Elements/Filters";
 import { handler as posts } from "./Elements/Posts";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
@@ -74,7 +75,19 @@ if (window.__VISUAL_CONFIG__) {
   // Elements
   if (window.__VISUAL_CONFIG__.elements) {
     set(window.__VISUAL_CONFIG__.elements, ["posts", "handler"], posts);
+    set(window.__VISUAL_CONFIG__.elements, ["filters", "handler"], filters);
+    set(
+      window.__VISUAL_CONFIG__.elements,
+      ["filters", "possibleValues"],
+      possibleValues
+    );
   } else {
     set(window.__VISUAL_CONFIG__, ["elements", "posts", "handler"], posts);
+    set(window.__VISUAL_CONFIG__, ["elements", "filters", "handler"], filters);
+    set(
+      window.__VISUAL_CONFIG__,
+      ["elements", "filters", "possibleValues"],
+      possibleValues
+    );
   }
 }
