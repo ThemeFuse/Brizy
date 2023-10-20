@@ -51,6 +51,8 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
 			do_action( 'brizy_before_send_asset' );
 
+            ob_end_clean();
+
 			$this->send_file( $croppedPath );
 
 		} catch ( Exception $e ) {
