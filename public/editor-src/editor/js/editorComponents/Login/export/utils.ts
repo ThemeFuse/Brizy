@@ -1,9 +1,9 @@
 import {
-  clearAlerts,
   ElementType,
-  parseCustomerGroups,
+  clearAlerts,
   getValidateInputs,
-  getValidateRegisterInputs
+  getValidateRegisterInputs,
+  parseCustomerGroups
 } from "./utils.common";
 
 export enum CloudURL {
@@ -80,19 +80,23 @@ export const getData = (
 
   switch (elementType) {
     case ElementType.register: {
-      inputs.forEach(item => {
+      inputs.forEach((item) => {
         const { name, value } = item;
 
         data[name] = value;
       });
 
       const defaultRoles = form.getAttribute("data-defaultrole") || "";
-      data.customerGroups = parseCustomerGroups(defaultRoles);
+      const customerGroups = parseCustomerGroups(defaultRoles);
+
+      if (customerGroups.length) {
+        data.customerGroups = customerGroups;
+      }
 
       break;
     }
     case ElementType.forgot: {
-      inputs.forEach(item => {
+      inputs.forEach((item) => {
         const { name, value } = item;
 
         data[name] = value;
@@ -101,7 +105,7 @@ export const getData = (
       break;
     }
     case ElementType.login: {
-      inputs.forEach(item => {
+      inputs.forEach((item) => {
         const { type } = item;
 
         if (["text", "password"].includes(type)) {

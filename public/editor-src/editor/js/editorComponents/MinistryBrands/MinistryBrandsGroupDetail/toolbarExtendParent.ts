@@ -28,6 +28,9 @@ export const getItems: GetItems<Value, Props> = ({
         {
           id: "tabsCurrentElement",
           type: "tabs-dev",
+          config: {
+            saveTab: true
+          },
           devices: "desktop",
           tabs: [
             {
