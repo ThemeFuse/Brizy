@@ -178,7 +178,6 @@ class Brizy_Editor_Editor_Editor
                     'woocommerce' => self::get_woocomerce_plugin_info(),
                 ),
                 'hasSidebars' => count($wp_registered_sidebars) > 0,
-                'l10n' => $this->getTexts(),
                 'pageData' => apply_filters('brizy_page_data', array()),
                 'availableRoles' => Brizy_Admin_Membership_Membership::roleList(),
                 'usersCanRegister' => get_option('users_can_register'),
@@ -201,7 +200,8 @@ class Brizy_Editor_Editor_Editor
             'editorVersion' => BRIZY_EDITOR_VERSION,
             'imageSizes' => $this->getImgSizes(),
             'moduleGroups' => [],
-            'help' => $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL)
+            'help' => $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL),
+            'l10n' => $this->getTexts(),
         );
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
