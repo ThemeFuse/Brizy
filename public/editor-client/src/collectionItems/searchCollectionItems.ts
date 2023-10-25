@@ -33,7 +33,7 @@ export const searchCollectionItems = {
         .map(({ title, permalink, ID }) => {
           return {
             title,
-            permalink,
+            populationPermalink: permalink,
             id: String(ID)
           };
         });
