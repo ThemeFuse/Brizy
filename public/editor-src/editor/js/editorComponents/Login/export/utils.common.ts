@@ -1,4 +1,5 @@
 import { Role } from "visual/utils/membership";
+import { decodeFromString } from "visual/utils/string";
 
 export enum ElementType {
   login = "login",
@@ -35,7 +36,7 @@ export const addAlerts = (
   messages: string[],
   type: "success" | "error"
 ): void => {
-  (messages || ["An error has occured."]).forEach(message => {
+  (messages || ["An error has occured."]).forEach((message) => {
     const alert = document.createElement("div");
     alert.className = `brz-login__alert brz-login__alert--${type}`;
     alert.innerHTML = message;
@@ -45,14 +46,14 @@ export const addAlerts = (
 };
 
 export const clearAlerts = (form: Element): void => {
-  form.parentNode?.querySelectorAll(".brz-login__alert").forEach(item => {
+  form.parentNode?.querySelectorAll(".brz-login__alert").forEach((item) => {
     item.remove();
   });
 };
 
 export const parseCustomerGroups = (defaultRoles: string): Role[] => {
   try {
-    return JSON.parse(defaultRoles);
+    return decodeFromString(defaultRoles);
   } catch {
     return [];
   }
@@ -61,14 +62,14 @@ export const parseCustomerGroups = (defaultRoles: string): Role[] => {
 export const validatePasswordsMatch = (
   passFields: HTMLInputElement[]
 ): boolean => {
-  passFields.forEach(item => {
+  passFields.forEach((item) => {
     item.classList.remove("brz-login__field-empty");
   });
 
   if (passFields[0].value === passFields[1].value) {
     return true;
   } else {
-    passFields.forEach(item => {
+    passFields.forEach((item) => {
       item.classList.add("brz-login__field-empty");
     });
 
@@ -94,7 +95,7 @@ export const getValidateInputs = (
 ): { success: boolean; messages: string[] } => {
   const { emptyFieldsError } = errorMessages;
 
-  inputs.forEach(input => {
+  inputs.forEach((input) => {
     input.classList.remove("brz-login__field-empty");
 
     if (input.required && input.value === "") {
@@ -103,7 +104,7 @@ export const getValidateInputs = (
   });
 
   const inputEmpty = [...inputs].some(
-    input => input.required && input.value === ""
+    (input) => input.required && input.value === ""
   );
 
   if (inputEmpty) {
@@ -126,7 +127,7 @@ export const getValidateRegisterInputs = (
   }
 
   const passFields = [...inputs].filter(
-    input => input.name === "password" || input.name === "passwordConfirm"
+    (input) => input.name === "password" || input.name === "passwordConfirm"
   );
 
   const isPasswordsMatch = validatePasswordsMatch(passFields);
@@ -170,7 +171,7 @@ export const formTypeUpdate = (element: Element, formClass: string): void => {
 };
 
 export const clearForm = (form: Element): void => {
-  form.querySelectorAll("input").forEach(item => {
+  form.querySelectorAll("input").forEach((item) => {
     item.value = "";
   });
 };
@@ -193,42 +194,44 @@ export const handleSubmitSuccess = (
   }
 };
 
-export const handleSubmitResponse = (
-  elementType: ElementType,
-  form: Element,
-  node: Element
-): ((response: Response) => void) => (response: Response): void => {
-  if (response.ok) {
-    response
-      .json()
-      .then(data => {
-        if (data.success) {
-          // maybe divide in Cloud and WP
-          handleSubmitSuccess(form, elementType, node);
-        } else {
-          addAlerts(form, data.errors || [`An error has occured.`], "error");
-        }
-      })
-      .catch((err: string) => {
-        addAlerts(form, [err], "error");
-      });
-  } else if (response.status === 403) {
-    response
-      .json()
-      .then(data => {
-        addAlerts(
-          form,
-          data.errors || [`An error has occured. ${response.status}`],
-          "error"
-        );
-      })
-      .catch((err: string) => {
-        addAlerts(form, [err], "error");
-      });
-  } else {
-    addAlerts(form, [`An error has occured. ${response.status}`], "error");
-  }
-};
+export const handleSubmitResponse =
+  (
+    elementType: ElementType,
+    form: Element,
+    node: Element
+  ): ((response: Response) => void) =>
+  (response: Response): void => {
+    if (response.ok) {
+      response
+        .json()
+        .then((data) => {
+          if (data.success) {
+            // maybe divide in Cloud and WP
+            handleSubmitSuccess(form, elementType, node);
+          } else {
+            addAlerts(form, data.errors || [`An error has occured.`], "error");
+          }
+        })
+        .catch((err: string) => {
+          addAlerts(form, [err], "error");
+        });
+    } else if (response.status === 403) {
+      response
+        .json()
+        .then((data) => {
+          addAlerts(
+            form,
+            data.errors || [`An error has occured. ${response.status}`],
+            "error"
+          );
+        })
+        .catch((err: string) => {
+          addAlerts(form, [err], "error");
+        });
+    } else {
+      addAlerts(form, [`An error has occured. ${response.status}`], "error");
+    }
+  };
 
 export const handleSubmit = (
   elementType: ElementType,
@@ -245,7 +248,7 @@ export const handleSubmit = (
     headers: fetchHeaders
   })
     .then(handleSubmitResponse(elementType, form, element))
-    .catch(err => {
+    .catch((err) => {
       addAlerts(form, [err], "error");
     });
 };
@@ -257,7 +260,7 @@ export const buttonEvent = (
 ): void => {
   const needToOpenForm = findElem(element, needToOpenFormClass);
 
-  buttons.forEach(button => {
+  buttons.forEach((button) => {
     button.addEventListener("click", () => {
       clearAlerts(element);
 

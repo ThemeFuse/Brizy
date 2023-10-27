@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.3.1<br>
+Tested up to: 6.3.2<br>
 Requires PHP: 7.0.0<br>
-Stable tag: 2.4.28<br>
+Stable tag: 2.4.29<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.29 - 2023-10-20
+* Fixed: Login element error when try to register
 
 ### 2.4.28 - 2023-10-11
 * New: Added Internal Link on the link option for all elements
