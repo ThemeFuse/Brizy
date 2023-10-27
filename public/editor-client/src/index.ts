@@ -1,3 +1,4 @@
+import { getEkklesiaFields, updateEkklesiaFields } from "ekklesia/index";
 import set from "lodash/set";
 import {doAiRequest} from "./aiText";
 import {autoSave} from "./autoSave";
@@ -53,6 +54,12 @@ const api = {
   collectionItems: {
     searchCollectionItems,
     getCollectionItemsIds
+  },
+  modules: {
+    ekklesia: {
+      getEkklesiaFields: getEkklesiaFields(config),
+      updateEkklesiaFields: updateEkklesiaFields(config)
+    }
   },
   collectionTypes: {
     loadCollectionTypes
