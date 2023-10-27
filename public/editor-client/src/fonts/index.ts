@@ -85,13 +85,13 @@ function convertDataToLocal(mockTypeKitData: KitData): Fonts {
   return fonts;
 }
 
-const headers = {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json',
-  'Origin': location.href,
-  'X-Requested-With': 'XMLHttpRequest',
-  'Referer': location.href,
-};
+// const headers = {
+//   Accept: "application/json",
+//   "Content-Type": "application/json",
+// Origin: `${location.href}/`
+//   "X-Requested-With": "XMLHttpRequest",
+// Referer: `${location.href}/`
+// };
 
 export const getAdobeFonts = {
   async handler(
@@ -101,11 +101,8 @@ export const getAdobeFonts = {
   ) {
     const response = await fetch(
       // `https://typekit.com/api/v1/json/kits/${extra.kitId}/published`,
-      `https://cors-anywhere.herokuapp.com/https://typekit.com/api/v1/json/kits/gvs0pdl/published`,
-      {headers}
+      `https://typekit.com/api/v1/json/kits/${extra.kitId}/published`
     );
-
-    console.log("response: " , response)
 
     if (response.ok) {
       res(convertDataToLocal(await response.json()));
