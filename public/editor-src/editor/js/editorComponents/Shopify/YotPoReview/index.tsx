@@ -6,6 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { hexToRgba } from "visual/utils/color";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
 import * as toolbar from "./toolbar";
@@ -85,100 +86,131 @@ export class YotPoReview extends EditorComponent<Value> {
     const productDesc = makePlaceholder({
       content: "{{ product.description | escape }}"
     });
+    const imageUrlDataFromAttr = makeDataAttr({
+      name: "image-url",
+      value: prodFeatImg
+    });
+    const placeholderProductTitleDataFromAttr = makeDataAttr({
+      name: "name",
+      value: productTitle
+    });
+
+    const placeholderShopUrlDataFromAttr = makeDataAttr({
+      name: "url",
+      value: `${shopUrl}${productUrl}`
+    });
+
+    const placeholderProductDesctiptionDataFromAttr = makeDataAttr({
+      name: "description",
+      value: productDesc
+    });
+
+    const productIdAttr = makeDataAttr({
+      name: "product-id",
+      value: productId
+    });
 
     switch (reviewType) {
       case "yotpo-main-widget":
         return (
           <div
             className="yotpo yotpo-main-widget"
-            data-product-id={productId}
-            data-name={productTitle}
-            data-url={`${shopUrl}${productUrl}`}
-            data-image-url={prodFeatImg}
-            data-description={productDesc}
+            {...productIdAttr}
+            {...placeholderProductTitleDataFromAttr}
+            {...placeholderShopUrlDataFromAttr}
+            {...imageUrlDataFromAttr}
+            {...placeholderProductDesctiptionDataFromAttr}
           />
         );
       case "brz yotpo-main-widget": // added brz only for making difference for attribute data-mode
         return (
           <div
             className="yotpo yotpo-main-widget"
-            data-product-id={productId}
-            data-name={productTitle}
-            data-url={`${shopUrl}${productUrl}`}
-            data-image-url={prodFeatImg}
-            data-description={productDesc}
-            data-mode="questions"
+            {...productIdAttr}
+            {...placeholderProductTitleDataFromAttr}
+            {...placeholderShopUrlDataFromAttr}
+            {...imageUrlDataFromAttr}
+            {...placeholderProductDesctiptionDataFromAttr}
+            {...makeDataAttr({ name: "mode", value: "questions" })}
           />
         );
+
       case "bottomLine": {
         const domain = makePlaceholder({
           content: "{{ shop.permanent_domain | escape }}"
         });
         const tag = makePlaceholder({ content: "{{ tag | escape }}}" });
-
         return (
           <div
             className="yotpo bottomLine"
-            data-appkey={appKey}
-            data-domain={domain}
-            data-product-id={productId}
-            data-product-models={productId}
-            data-name={productTitle}
-            data-url={`${shopUrl}${productUrl}`}
-            data-image-url={prodFeatImg}
-            data-description={productDesc}
-            data-bread-crumbs={`{% for tag in product.tags %}${tag}`}
+            {...makeDataAttr({ name: "appkey", value: appKey })}
+            {...makeDataAttr({
+              name: "domain",
+              value: domain
+            })}
+            {...productIdAttr}
+            {...makeDataAttr({
+              name: "product-models",
+              value: productId
+            })}
+            {...placeholderProductTitleDataFromAttr}
+            {...placeholderShopUrlDataFromAttr}
+            {...imageUrlDataFromAttr}
+            {...makeDataAttr({
+              name: "description",
+              value: productDesc,
+              translatable: true
+            })}
+            {...makeDataAttr({
+              name: "bread-crumbs",
+              value: `{% for tag in product.tags %}${tag}`
+            })}
           />
         );
       }
       case "yotpo-shoppers-say":
-        return (
-          <div
-            className="yotpo yotpo-shoppers-say"
-            data-product-id={productId}
-          />
-        );
+        return <div className="yotpo yotpo-shoppers-say" {...productIdAttr} />;
       case "yotpo-reviews-carousel": {
         const attr: Record<string, string> = {};
 
         if (showTotalReviewsCount === "on") {
-          attr["data-show-bottomline"] = "1";
+          attr[`${makeAttr("show-bottomline")}`] = "1";
         }
 
         if (autoPlay === "on" && autoplaySpeed) {
-          attr["data-autoplay-enabled"] = "1";
-          attr["data-autoplay-speed"] = `${autoplaySpeed}`;
+          attr[`${makeAttr("autoplay-enabled")}`] = "1";
+          attr[`${makeAttr("autoplay-speed")}`] = `${autoplaySpeed}`;
         }
 
         if (showNavigation === "on") {
-          attr["data-show-navigation"] = "1";
+          attr[`${makeAttr("show-navigation")}`] = "1";
         }
 
         if (headerCustomisation === "on") {
-          attr["data-header-customisation-enabled"] = "1";
+          attr[`${makeAttr("header-customisation-enabled")}`] = "1";
 
-          attr["data-header-customisation-color"] =
+          attr[`${makeAttr("header-customisation-color")}`] =
             hexToRgba(colorHex, colorOpacity) ?? "";
 
-          attr["data-header-customisation-font-size"] = `${fontSize}`;
-          attr["data-header-customisation-text"] = headerText;
-          attr["data-header-customisation-alignment"] = textAlign;
+          attr[`${makeAttr("header-customisation-font-size")}`] = `${fontSize}`;
+          attr[`${makeAttr("header-customisation-text")}`] = headerText;
+          attr[`${makeAttr("header-customisation-alignment")}`] = textAlign;
         }
 
         if (bgColorSwitch === "on") {
-          attr["data-background-color-enabled"] = "1";
-          attr["data-background-color"] =
+          attr[`${makeAttr("background-color-enabled")}`] = "1";
+          attr[`${makeAttr("background-color")}`] =
             hexToRgba(bgColorHex, bgColorOpacity) ?? "";
         } else {
-          attr["data-background-color"] = "transparent";
+          attr[`${makeAttr("background-color")}`] = "transparent";
         }
 
         return (
           <div
             className="yotpo yotpo-reviews-carousel"
-            data-mode={reviewLogic}
-            data-type={showReviews}
-            data-count={reviewsNumber.toString()}
+            {...makeDataAttr({ name: "mode", value: reviewLogic })}
+            {...makeDataAttr({ name: "type", value: showReviews })}
+            {...makeDataAttr({ name: "count", value: reviewsNumber })}
             {...attr}
           />
         );

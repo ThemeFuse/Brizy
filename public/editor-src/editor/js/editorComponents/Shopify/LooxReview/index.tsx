@@ -4,6 +4,7 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
@@ -27,27 +28,42 @@ export class LooxReview extends EditorComponent<Value> {
   displayLooxWidget(widgetType: WidgetType, v: Value): ReactNode {
     const { productID, reviewLimit, withImage } = v;
 
-    const attr: Record<string, string> = {
-      "data-limit": `${reviewLimit}`
-    };
+    const attr = makeDataAttr({
+      name: "limit",
+      value: `${reviewLimit}`
+    });
 
     if (withImage === "on") {
-      attr["data-mode"] = "img";
+      attr[makeAttr("mode")] = "img";
     }
     switch (widgetType) {
       case "gallery":
         return (
-          <div id="looxReviews" data-loox-aggregate="true" {...attr}>
+          <div
+            id="looxReviews"
+            {...makeDataAttr({ name: "loox-aggregate", value: "true" })}
+            {...attr}
+          >
             gallery + allProductReviews
           </div>
         );
 
       case "custom":
-        return <div id="looxReviews" data-product-id={productID} {...attr} />;
+        return (
+          <div
+            id="looxReviews"
+            {...makeDataAttr({ name: "product-id", value: productID })}
+            {...attr}
+          />
+        );
 
       case "star":
         return (
-          <div className="loox-rating" data-fetch="true" data-id={productID} />
+          <div
+            className="loox-rating"
+            {...makeDataAttr({ name: "fetch", value: "true" })}
+            {...makeDataAttr({ name: "id", value: productID })}
+          />
         );
     }
   }
@@ -75,7 +91,7 @@ export class LooxReview extends EditorComponent<Value> {
       <Wrapper
         {...this.makeWrapperProps({ className: "brz-shopify-loox-review" })}
       >
-        {this.displayLooxWidget(reviewType,v)}
+        {this.displayLooxWidget(reviewType, v)}
       </Wrapper>
     );
   }

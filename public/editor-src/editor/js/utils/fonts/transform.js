@@ -1,9 +1,9 @@
 import produce from "immer";
-import { uuid } from "visual/utils/uuid";
-import { getGoogleFonts } from "visual/utils/fonts";
 import { getUploadedFonts } from "visual/utils/api";
+import { getGoogleFonts } from "visual/utils/fonts";
+import { uuid } from "visual/utils/uuid";
 
-const normalizeWeights = weights => {
+const normalizeWeights = (weights) => {
   return weights.reduce(
     (acc, curr) => {
       const toNumber = parseInt(curr); // "100italic => 100";
@@ -16,7 +16,7 @@ const normalizeWeights = weights => {
   );
 };
 
-const tripId = str => str.toLowerCase().replace(/\s+/g, "_");
+const tripId = (str) => str.toLowerCase().replace(/\s+/g, "_");
 
 export const findFonts = (fonts = [], fontId = "", type = "google") => {
   if (type === "upload") {
@@ -26,7 +26,7 @@ export const findFonts = (fonts = [], fontId = "", type = "google") => {
   return fonts.find(({ family }) => tripId(family) === fontId);
 };
 
-export const projectFontsData = projectFonts => {
+export const projectFontsData = (projectFonts) => {
   return Object.entries(projectFonts).reduce((acc, curr) => {
     const [type, { data }] = curr;
 
@@ -36,13 +36,14 @@ export const projectFontsData = projectFonts => {
   }, {});
 };
 
-export const getGoogleFontDetails = font => {
+export const getGoogleFontDetails = (font) => {
   const { family, category, variants, brizyId, deleted } = font;
 
   return {
     id: tripId(family),
     title: family,
-    family: `${family}, ${category}`, // category => sans-serif, serif
+    // category => sans-serif, serif
+    family: `'${family}', ${category}`,
     weights: normalizeWeights(variants),
 
     // Extra Data
@@ -51,7 +52,7 @@ export const getGoogleFontDetails = font => {
   };
 };
 
-export const getUploadFontDetails = font => {
+export const getUploadFontDetails = (font) => {
   const { id, family, weights, brizyId, deleted } = font;
 
   return {
@@ -73,13 +74,13 @@ export const fontTransform = {
   upload: getUploadFontDetails
 };
 
-export const normalizeFonts = async newFonts => {
+export const normalizeFonts = async (newFonts) => {
   if (newFonts.length === 0) {
     return [];
   }
 
   const fonts = new Map();
-  const makeFontWithId = font => ({ brizyId: uuid(), ...font });
+  const makeFontWithId = (font) => ({ brizyId: uuid(), ...font });
 
   const [googleFonts, uploadedFonts] = await Promise.all([
     getGoogleFonts(),
@@ -133,15 +134,15 @@ export const normalizeFonts = async newFonts => {
   }, []);
 };
 
-export const normalizeStyles = styles => {
-  return produce(styles, draft => {
+export const normalizeStyles = (styles) => {
+  return produce(styles, (draft) => {
     draft.map(({ fontStyles }) => normalizeFontStyles(fontStyles));
   });
 };
 
-export const normalizeFontStyles = fontStyles => {
-  return produce(fontStyles, draft => {
-    draft.map(style => {
+export const normalizeFontStyles = (fontStyles) => {
+  return produce(fontStyles, (draft) => {
+    draft.map((style) => {
       if (!style.fontSizeSuffix) {
         style.fontSizeSuffix = "px";
       }

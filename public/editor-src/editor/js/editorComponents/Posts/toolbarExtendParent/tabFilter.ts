@@ -7,6 +7,7 @@ import { t } from "visual/utils/i18n";
 import { Context, V, VDecoded } from "../types";
 import { CURRENT_CONTEXT_TYPE, decodeV } from "../utils.common";
 import { createFieldCollectionId, useAsSimpleSelectConditions } from "./utils";
+import { orderByConverter } from "./utils.common";
 
 type TabOptionType = ArrayType<Required<TabsOptionProps>["tabs"]>;
 
@@ -25,11 +26,17 @@ export function tabFilter(v: V, context: Context): TabOptionType {
   const vd = decodeV(v);
   const isPosts = vd.type === "posts";
   const isCurrentQuery = vd.source === CURRENT_CONTEXT_TYPE;
+
   const sourceChoices =
-    context.collectionTypesInfo?.collectionTypes.map((collectionType) => ({
+    context.collectionTypesInfo?.sources.map((collectionType) => ({
       value: collectionType.id,
       title: collectionType.title
     })) ?? [];
+
+  const orderByChoices = orderByConverter(
+    v.source,
+    context.collectionTypesInfo.sources
+  );
 
   const collectionChoices = sourceChoices.filter(
     (c) => c.value !== CURRENT_CONTEXT_TYPE
@@ -81,10 +88,7 @@ export function tabFilter(v: V, context: Context): TabOptionType {
         type: "select-dev",
         label: t("Order By"),
         devices: "desktop",
-        choices: [
-          { title: t("ID"), value: "id" },
-          { title: t("Title"), value: "title" }
-        ],
+        choices: orderByChoices,
         disabled: disableOrderBy
       },
       {
@@ -183,7 +187,7 @@ function getIncludeExclude({
     });
 
   if (vd.symbols[lvl1SymbolId]?.includes("manual")) {
-    const id = context.collectionTypesInfo?.collectionTypes.find(
+    const id = context.collectionTypesInfo?.sources.find(
       (c) => c.id === source
     )?.id;
 

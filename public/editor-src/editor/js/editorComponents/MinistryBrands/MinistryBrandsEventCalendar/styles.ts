@@ -311,6 +311,30 @@ export function style(
         "cssStyleElementMinistryEventCalendarEmptyBgGradient"
       ],
       interval: ["cssStyleHoverTransition"]
+    },
+    ".brz &&:hover .brz-eventCalendar__subscribe__container": {
+      standart: ["cssStyleElementMinistryEventCalendarSubscribeToCalendarAlign"]
+    },
+    ".brz &&:hover .brz-eventCalendar__subscribe svg": {
+      standart: [
+        "cssStyleSizeFontSizeIcon",
+        "cssStyleElementMinistryEventCalendarIconMargin",
+        "cssStyleElementMinistryEventCalendarIconStrokeWidth"
+      ]
+    },
+    ".brz && .brz-eventCalendar__subscribe:hover": {
+      standart: [
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarTypography",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarColor",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBgColor",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBgGradient",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBorder",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBoxShadow",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarWidth",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarHeight",
+        "cssStyleElementMinistryEventCalendarIconPosition"
+      ],
+      interval: ["cssStyleHoverTransition"]
     }
   };
 

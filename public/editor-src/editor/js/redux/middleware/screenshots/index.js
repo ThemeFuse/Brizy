@@ -1,37 +1,38 @@
-import _ from "underscore";
 import { getIn } from "timm";
-import { findDeep } from "visual/utils/object";
+import _ from "underscore";
+import Config from "visual/global/Config";
+import {
+  ADD_BLOCK,
+  EDITOR_RENDERED,
+  UPDATE_BLOCKS,
+  UPDATE_CURRENT_STYLE,
+  UPDATE_CURRENT_STYLE_ID,
+  UPDATE_GLOBAL_BLOCK,
+  UPDATE_UI
+} from "visual/redux/actions";
+import { updateScreenshot } from "visual/redux/actions";
+import {
+  ADD_GLOBAL_BLOCK,
+  IMPORT_TEMPLATE,
+  UPDATE_EXTRA_FONT_STYLES
+} from "visual/redux/actions2";
+import { REDO, UNDO } from "visual/redux/history/types";
+import {
+  deviceModeSelector,
+  blocksDataSelector as getBlocksData,
+  globalBlocksSelector as getGlobalBlocks,
+  pageBlocksSelector as getPageBlocks,
+  globalBlocksAssembledSelector,
+  screenshotsSelector
+} from "visual/redux/selectors";
 import {
   createBlockScreenshot as apiCreateBlockScreenshot,
   updateBlockScreenshot as apiUpdateBlockScreenshot
 } from "visual/utils/api";
-import {
-  EDITOR_RENDERED,
-  UPDATE_UI,
-  UPDATE_BLOCKS,
-  UPDATE_GLOBAL_BLOCK,
-  UPDATE_CURRENT_STYLE_ID,
-  UPDATE_CURRENT_STYLE,
-  ADD_BLOCK
-} from "visual/redux/actions";
-import {
-  IMPORT_TEMPLATE,
-  UPDATE_EXTRA_FONT_STYLES,
-  ADD_GLOBAL_BLOCK
-} from "visual/redux/actions2";
-import { UNDO, REDO } from "visual/redux/history/types";
-import { updateScreenshot } from "visual/redux/actions";
-import {
-  pageBlocksSelector as getPageBlocks,
-  globalBlocksSelector as getGlobalBlocks,
-  blocksDataSelector as getBlocksData,
-  screenshotsSelector,
-  deviceModeSelector,
-  globalBlocksAssembledSelector
-} from "visual/redux/selectors";
-import { makeNodeScreenshot } from "visual/utils/screenshots";
-import { makeTaskQueue, debounceAdvanced } from "./utils";
 import { createFullModelPath } from "visual/utils/models";
+import { findDeep } from "visual/utils/object";
+import { makeNodeScreenshot } from "visual/utils/screenshots";
+import { debounceAdvanced, makeTaskQueue } from "./utils";
 
 const TASK_QUEUE_INTERVAL = 2000;
 const DEBOUNCE_INTERVAL = 2000;
@@ -39,7 +40,7 @@ const DEBOUNCE_INTERVAL = 2000;
 const taskQueue = makeTaskQueue({
   interval: TASK_QUEUE_INTERVAL
 });
-const getBlocksMap = blocks =>
+const getBlocksMap = (blocks) =>
   blocks.reduce((acc, block) => {
     acc[block.value._id] = block;
     return acc;
@@ -47,10 +48,10 @@ const getBlocksMap = blocks =>
 const blockIsInThePage = (blockId, store) =>
   Boolean(getBlocksMap(getPageBlocks(store.getState()))[blockId]);
 
-const isDesktopMode = store =>
+const isDesktopMode = (store) =>
   deviceModeSelector(store.getState()) === "desktop";
 
-export default store => next => action => {
+export default (store) => (next) => (action) => {
   const prevState = store.getState();
   next(action);
 
@@ -190,7 +191,7 @@ const changedBlocksDebounced = debounceAdvanced({
 });
 
 async function enqueueTasks(changedBlocks, store, next, options = {}) {
-  const pageBlockTasks = Array.from(changedBlocks.page).map(block => {
+  const pageBlockTasks = Array.from(changedBlocks.page).map((block) => {
     return {
       id: block.value._id + (options.taskIdSuffix || ""),
       priority:
@@ -201,7 +202,7 @@ async function enqueueTasks(changedBlocks, store, next, options = {}) {
       cbArgs: [store, next, options, block]
     };
   });
-  const globalBlockTasks = Array.from(changedBlocks.global).map(_id => {
+  const globalBlockTasks = Array.from(changedBlocks.global).map((_id) => {
     return {
       id: _id + (options.taskIdSuffix || ""),
       priority:
@@ -260,21 +261,21 @@ async function pageBlockTaskCb(store, next, options, block, enqueueAgain) {
     }
 
     const screenshots = screenshotsSelector(store.getState());
+    const config = Config.getAll();
     if (!screenshots[blockId]) {
-      const r = await apiCreateBlockScreenshot({
-        base64: screenshot.src,
-        blockType: "normal"
-      });
+      const r = await apiCreateBlockScreenshot(
+        { base64: screenshot.src, blockType: "normal" },
+        config
+      );
 
       screenshotId = r.id;
     } else {
       screenshotId = screenshots[blockId]._thumbnailSrc;
 
-      await apiUpdateBlockScreenshot({
-        id: screenshotId,
-        base64: screenshot.src,
-        blockType: "normal"
-      });
+      await apiUpdateBlockScreenshot(
+        { id: screenshotId, base64: screenshot.src, blockType: "normal" },
+        config
+      );
     }
   }
 
@@ -313,7 +314,7 @@ async function globalBlockTaskCb(store, next, options, _id, enqueueAgain) {
       const pageBlocks = getPageBlocks(store.getState());
       const { obj: sourceBlock } = findDeep(
         pageBlocks,
-        obj => obj.value && obj.value._id === _id
+        (obj) => obj.value && obj.value._id === _id
       );
 
       if (!sourceBlock) {
@@ -353,32 +354,39 @@ async function globalBlockTaskCb(store, next, options, _id, enqueueAgain) {
     }
 
     const screenshots = screenshotsSelector(store.getState());
+    const config = Config.getAll();
     const publishedScreenshot =
       screenshots._published[_id] && screenshots._published[_id]._thumbnailSrc;
     const latestScreenshot = screenshots[_id] && screenshots[_id]._thumbnailSrc;
     if (!publishedScreenshot || publishedScreenshot === latestScreenshot) {
-      const r = await apiCreateBlockScreenshot({
-        base64: screenshot.src,
+      const r = await apiCreateBlockScreenshot(
+        {
+          base64: screenshot.src,
 
-        // ATTENTION: this is used only for WP and is
-        // deliberately set to global because in the WP plugin
-        // we store global, popup block screenshots in the "global" folder.
-        blockType: "global"
-      });
+          // ATTENTION: this is used only for WP and is
+          // deliberately set to global because in the WP plugin
+          // we store global, popup block screenshots in the "global" folder.
+          blockType: "global"
+        },
+        config
+      );
 
       screenshotId = r.id;
     } else {
       screenshotId = latestScreenshot;
 
-      await apiUpdateBlockScreenshot({
-        id: screenshotId,
-        base64: screenshot.src,
+      await apiUpdateBlockScreenshot(
+        {
+          id: screenshotId,
+          base64: screenshot.src,
 
-        // ATTENTION: this is used only for WP and is
-        // deliberately set to global because in the WP plugin
-        // we store global, popup block screenshots in the "global" folder.
-        blockType: "global"
-      });
+          // ATTENTION: this is used only for WP and is
+          // deliberately set to global because in the WP plugin
+          // we store global, popup block screenshots in the "global" folder.
+          blockType: "global"
+        },
+        config
+      );
     }
   }
 
@@ -450,34 +458,41 @@ async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
     }
 
     const screenshots = screenshotsSelector(store.getState());
+    const config = Config.getAll();
     const publishedScreenshot =
       screenshots._published[popupId] &&
       screenshots._published[popupId]._thumbnailSrc;
     const latestScreenshot =
       screenshots[popupId] && screenshots[popupId]._thumbnailSrc;
     if (!latestScreenshot || latestScreenshot === publishedScreenshot) {
-      const r = await apiCreateBlockScreenshot({
-        base64: screenshot.src,
+      const r = await apiCreateBlockScreenshot(
+        {
+          base64: screenshot.src,
 
-        // ATTENTION: this is used only for WP and is
-        // deliberately set to global because in the WP plugin
-        // we store global, popup block screenshots in the "global" folder.
-        blockType: "global"
-      });
+          // ATTENTION: this is used only for WP and is
+          // deliberately set to global because in the WP plugin
+          // we store global, popup block screenshots in the "global" folder.
+          blockType: "global"
+        },
+        config
+      );
 
       screenshotId = r.id;
     } else {
       screenshotId = latestScreenshot;
 
-      await apiUpdateBlockScreenshot({
-        id: screenshotId,
-        base64: screenshot.src,
+      await apiUpdateBlockScreenshot(
+        {
+          id: screenshotId,
+          base64: screenshot.src,
 
-        // ATTENTION: this is used only for WP and is
-        // deliberately set to global because in the WP plugin
-        // we store global, popup block screenshots in the "global" folder.
-        blockType: "global"
-      });
+          // ATTENTION: this is used only for WP and is
+          // deliberately set to global because in the WP plugin
+          // we store global, popup block screenshots in the "global" folder.
+          blockType: "global"
+        },
+        config
+      );
     }
   }
 
@@ -524,7 +539,7 @@ async function popupBlockInsideGlobalBlockTaskCb(
 
   const { obj: popupData } = findDeep(
     globalBlock,
-    obj => obj && obj.value && obj.value._id === popupDbId
+    (obj) => obj && obj.value && obj.value._id === popupDbId
   );
 
   if (!popupData) {
@@ -567,7 +582,7 @@ async function popupBlockInsideGlobalBlockTaskCb(
 
     const { obj: popup } = findDeep(
       globalBlock,
-      obj => obj && obj.value && obj.value._id === popupDbId
+      (obj) => obj && obj.value && obj.value._id === popupDbId
     );
     const popupIsInPage = Boolean(popup);
     if (!popupIsInPage) {
@@ -579,13 +594,18 @@ async function popupBlockInsideGlobalBlockTaskCb(
       return;
     }
 
+    const config = Config.getAll();
+
     if (!popup.value._thumbnailSrc) {
       // if the popup block doesn't have a screenshot yet, create one
 
-      const r = await apiCreateBlockScreenshot({
-        base64: screenshot.src,
-        blockType: popupIsGlobal ? "global" : "normal"
-      });
+      const r = await apiCreateBlockScreenshot(
+        {
+          base64: screenshot.src,
+          blockType: popupIsGlobal ? "global" : "normal"
+        },
+        config
+      );
 
       screenshotId = r.id;
     } else {
@@ -600,20 +620,26 @@ async function popupBlockInsideGlobalBlockTaskCb(
         publishedScreenshot &&
         popup.value._thumbnailSrc === publishedScreenshot._thumbnailSrc
       ) {
-        const r = await apiCreateBlockScreenshot({
-          base64: screenshot.src,
-          blockType: popupIsGlobal ? "global" : "normal"
-        });
+        const r = await apiCreateBlockScreenshot(
+          {
+            base64: screenshot.src,
+            blockType: popupIsGlobal ? "global" : "normal"
+          },
+          config
+        );
 
         screenshotId = r.id;
       } else {
         screenshotId = popup.value._thumbnailSrc;
 
-        await apiUpdateBlockScreenshot({
-          id: screenshotId,
-          base64: screenshot.src,
-          blockType: popupIsGlobal ? "global" : "normal"
-        });
+        await apiUpdateBlockScreenshot(
+          {
+            id: screenshotId,
+            base64: screenshot.src,
+            blockType: popupIsGlobal ? "global" : "normal"
+          },
+          config
+        );
       }
     }
   }
@@ -630,7 +656,7 @@ async function popupBlockInsideGlobalBlockTaskCb(
 
     const { obj: popup } = findDeep(
       globalBlock,
-      obj => obj && obj.value && obj.value._id === popupDbId
+      (obj) => obj && obj.value && obj.value._id === popupDbId
     );
     const popupIsInPage = Boolean(popup);
     if (!popupIsInPage) {

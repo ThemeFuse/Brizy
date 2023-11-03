@@ -71,7 +71,8 @@
       "listItemTitleTypographyFontFamily": "lato",
       "listItemMetaTypographyFontFamily": "lato",
       "calendarHeadingTypographyFontFamily": "lato",
-      "calendarDaysTypographyFontFamily": "lato"
+      "calendarDaysTypographyFontFamily": "lato",
+      "eventsTypographyFontFamily": "lato"
     },
 
     "layoutViewTypographyFontStyle": "",
@@ -143,7 +144,7 @@
     "filterBgColorType": "solid",
     "tempFilterBgColorType": "solid",
     "filterBgColorHex": "#d9d9d9",
-    "filterBgColorOpacity": 1,
+    "filterBgColorOpacity": 0.5,
     "filterBgColorPalette": "",
     "tempFilterBgColorPalette": "",
     "filterGradientColorHex": "#000000",
@@ -303,6 +304,14 @@
     "calendarDaysTypographyLetterSpacing": 0,
     "calendarDaysTypographyLineHeight": 1.5,
 
+    "eventsTypographyFontStyle": "",
+    "eventsTypographyFontFamilyType": "google",
+    "eventsTypographyFontSize": 16,
+    "eventsTypographyFontSizeSuffix": "px",
+    "eventsTypographyFontWeight": 400,
+    "eventsTypographyLetterSpacing": 0,
+    "eventsTypographyLineHeight": 1.5,
+
     "colorHex": "#707070",
     "colorOpacity": 1,
     "colorPalette": "",
@@ -357,6 +366,10 @@
     "calendarDaysColorHex": "#fffffff",
     "calendarDaysColorOpacity": 1,
     "calendarDaysColorPalette": "",
+
+    "eventsColorHex": "#fffffff",
+    "eventsColorOpacity": 1,
+    "eventsColorPalette": "",
 
     "listBorderStyle": "solid",
     "listBorderColorHex": "#000000",

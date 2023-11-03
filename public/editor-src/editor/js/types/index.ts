@@ -20,6 +20,7 @@ export type Block = {
   value: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   blockId: string;
   deleted?: boolean;
+  meta?: Screenshot;
 };
 
 export enum BlockTypeRule {
@@ -84,20 +85,39 @@ export interface CollectionItemRule extends AllRule {
 
 export type Rule = AllRule | CollectionTypeRule | CollectionItemRule;
 
-export type GlobalBlock = {
+interface GlobalBlockBase {
+  id: string;
   data: Block & { deleted?: boolean };
   status: "draft" | "publish";
   rules: Rule[];
   position: GlobalBlockPosition | null;
+  title?: string;
+  tags?: string;
+}
+
+export interface GlobalBlockNormal extends GlobalBlockBase {
   meta: {
-    type: BlockMetaType;
+    type: "normal";
     extraFontStyles: ExtraFontStyle[];
     _thumbnailSrc?: string;
     _thumbnailWidth?: number;
     _thumbnailHeight?: number;
     _thumbnailTime?: number;
   };
-};
+}
+
+export interface GlobalBlockPopup extends GlobalBlockBase {
+  meta: {
+    type: "popup";
+    extraFontStyles: ExtraFontStyle[];
+    _thumbnailSrc?: string;
+    _thumbnailWidth?: number;
+    _thumbnailHeight?: number;
+    _thumbnailTime?: number;
+  };
+}
+
+export type GlobalBlock = GlobalBlockNormal | GlobalBlockPopup;
 
 export type SavedBlock = {
   data: Block;
@@ -202,6 +222,7 @@ export interface ShopifyPage extends PageCommon {
   layout: {
     id: string;
     value: string | undefined;
+    isHomePage: string | null;
   };
 }
 
@@ -303,6 +324,10 @@ export interface Breakpoint {
   breakpoint: number;
   content: number;
 }
+
+// activeElement
+
+export type ActiveElement = Element | null;
 
 // deviceMode
 

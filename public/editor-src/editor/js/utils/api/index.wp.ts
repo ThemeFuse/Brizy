@@ -11,7 +11,6 @@ import {
   stringifyGlobalBlock
 } from "./adapter";
 import {
-  CreateScreenshot,
   GetAuthors,
   GetDynamicContent,
   GetPostTaxonomies,
@@ -22,8 +21,7 @@ import {
   GetTermsBy,
   GetWPCollectionSourceItems,
   GetWPCollectionSourceTypes,
-  ResponseWithBody,
-  UpdateScreenshot
+  ResponseWithBody
 } from "./types";
 import { makeFormEncode, makeUrl } from "./utils";
 
@@ -62,7 +60,10 @@ export {
   defaultStoriesMeta,
   defaultStoriesData,
   getCollectionTypes,
-  getSourceIds
+  getSourceIds,
+  createBlockScreenshot,
+  updateBlockScreenshot,
+  defaultPostsSources
 } from "./common";
 
 export { makeFormEncode, makeUrl };
@@ -217,76 +218,6 @@ export const getDynamicContent: GetDynamicContent = async ({
 
 //#endregion
 
-//#region Screenshots
-
-export const createBlockScreenshot: CreateScreenshot = ({
-  base64,
-  blockType
-}) => {
-  const {
-    page,
-    api: { url, hash, createBlockScreenshot }
-  } = Config.get("wp");
-  const version = Config.get("editorVersion");
-  const attachment = base64.replace(/data:image\/.+;base64,/, "");
-
-  return request(url, {
-    method: "POST",
-    body: new URLSearchParams({
-      action: createBlockScreenshot,
-      post: page,
-      version,
-      hash,
-      block_type: blockType,
-      ibsf: attachment // ibsf - image base64
-    })
-  })
-    .then((r) => r.json())
-    .then((rj) => {
-      if (rj.success) {
-        return rj.data;
-      }
-
-      throw rj;
-    });
-};
-
-export const updateBlockScreenshot: UpdateScreenshot = ({
-  id,
-  base64,
-  blockType
-}) => {
-  const {
-    page,
-    api: { url, hash, updateBlockScreenshot }
-  } = Config.get("wp");
-  const version = Config.get("editorVersion");
-  const attachment = base64.replace(/data:image\/.+;base64,/, "");
-
-  return request(url, {
-    method: "POST",
-    body: new URLSearchParams({
-      action: updateBlockScreenshot,
-      post: page,
-      version,
-      hash,
-      block_type: blockType,
-      id,
-      ibsf: attachment
-    })
-  })
-    .then((r) => r.json())
-    .then((rj) => {
-      if (rj.success) {
-        return rj.data;
-      }
-
-      throw rj;
-    });
-};
-
-//#endregion
-
 //#region Rules
 
 export function getRulesList(): Promise<Rule> {
@@ -360,6 +291,8 @@ export function getGlobalBlocks(): Promise<Record<string, GlobalBlock>> {
     rules: string;
     position: string;
     status: string;
+    title: string;
+    tags: string;
   }>;
 
   return persistentRequest<GlobalBlocks>(url, {
@@ -368,23 +301,28 @@ export function getGlobalBlocks(): Promise<Record<string, GlobalBlock>> {
     .then(({ data }) => {
       return data
         .map(parseGlobalBlock)
-        .reduce((acc, { uid, data, status, rules, position, meta }) => {
-          // was commented because of this cases:
-          // add block to page -> Update the page -> refresh it ->
-          // make block global -> refresh the page -> make the same block global again
-          // if (status === "draft") return acc;
+        .reduce(
+          (acc, { uid, title, tags, data, status, rules, position, meta }) => {
+            // was commented because of this cases:
+            // add block to page -> Update the page -> refresh it ->
+            // make block global -> refresh the page -> make the same block global again
+            // if (status === "draft") return acc;
 
-          acc[uid] = {
-            data,
-            status,
-            meta,
-            rules,
-            position,
-            id: uid
-          };
+            acc[uid] = {
+              title,
+              tags,
+              data,
+              status,
+              meta,
+              rules,
+              position,
+              id: uid
+            };
 
-          return acc;
-        }, {});
+            return acc;
+          },
+          {}
+        );
     })
     .catch(() => {
       throw new GlobalBlocksError("Failed to get Global blocks");
@@ -407,13 +345,21 @@ export function createGlobalBlock(
   });
 
   const uid = globalBlock.data.value._id;
-  const { data, rules, meta } = stringifyGlobalBlock(globalBlock);
+  const {
+    title = "",
+    tags = "",
+    data,
+    rules,
+    meta
+  } = stringifyGlobalBlock(globalBlock);
   const media = makeBlockMeta(globalBlock);
   const body = new URLSearchParams({
     uid,
     data,
     rules,
     meta,
+    title,
+    tags,
     media: JSON.stringify(media),
     status: "draft"
   });
@@ -453,13 +399,22 @@ export function updateGlobalBlock(
 
   const { is_autosave = 1 } = extraMeta;
   // const uid = globalBlock.data.value._id;
-  const { data, rules, meta, status } = stringifyGlobalBlock(globalBlock);
+  const {
+    title = "",
+    tags = "",
+    data,
+    rules,
+    meta,
+    status
+  } = stringifyGlobalBlock(globalBlock);
   const body = new URLSearchParams({
     uid,
     status,
     data,
     rules,
     meta,
+    title,
+    tags,
     is_autosave: `${is_autosave}`
   });
 
@@ -490,8 +445,15 @@ export function updateGlobalBlocks(
   const { is_autosave = 1 } = extraMeta;
   const data = Object.entries(globalBlocks).reduce(
     (acc, [uid, globalBlock]) => {
-      const { data, position, rules, meta, status } =
-        stringifyGlobalBlock(globalBlock);
+      const {
+        title = "",
+        tags = "",
+        data,
+        position,
+        rules,
+        meta,
+        status
+      } = stringifyGlobalBlock(globalBlock);
 
       acc.uid.push(uid);
       acc.status.push(status);
@@ -499,6 +461,8 @@ export function updateGlobalBlocks(
       acc.position.push(JSON.stringify(position));
       acc.rules.push(rules);
       acc.meta.push(meta);
+      acc.title.push(title);
+      acc.tags.push(tags);
 
       return acc;
     },
@@ -508,7 +472,9 @@ export function updateGlobalBlocks(
       data: [],
       position: [],
       rules: [],
-      meta: []
+      meta: [],
+      title: [],
+      tags: []
     } as {
       uid: string[];
       status: string[];
@@ -516,6 +482,8 @@ export function updateGlobalBlocks(
       position: string[];
       rules: string[];
       meta: string[];
+      title: string[];
+      tags: string[];
     }
   );
   const dataEncode = makeFormEncode({
@@ -525,6 +493,8 @@ export function updateGlobalBlocks(
     position: data.position,
     rules: data.rules,
     meta: data.meta,
+    title: data.title,
+    tags: data.tags,
     is_autosave: `${is_autosave}`
   });
   const body = new URLSearchParams(dataEncode);

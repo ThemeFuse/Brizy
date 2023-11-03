@@ -35,20 +35,6 @@
     "iconSpacing": 10,
     "iconSpacingSuffix": "px",
 
-    "tabletIconSize": null,
-    "tabletIconCustomSize": null,
-    "tabletIconCustomSizeSuffix": null,
-    "tabletIconPosition": null,
-    "tabletIconSpacing": null,
-    "tabletIconSpacingSuffix": null,
-
-    "mobileIconSize": null,
-    "mobileIconCustomSize": null,
-    "mobileIconCustomSizeSuffix": null,
-    "mobileIconPosition": null,
-    "mobileIconSpacing": null,
-    "mobileIconSpacingSuffix": null,
-
     "iconStrokeWidth": 1,
 
     "iconSmallSize": 16,
@@ -312,18 +298,6 @@
     "animationDuration": 1000,
     "animationDelay": 1000,
     "animationInfiniteAnimation": false,
-    "tempAnimationName": "none",
-
-    "tabletAnimationName": null,
-    "tabletAnimationDuration": null,
-    "tabletAnimationDelay": null,
-    "tabletAnimationInfiniteAnimation": null,
-    "tempTabletAnimationName": null,
-
-    "mobileAnimationName": null,
-    "mobileAnimationDuration": null,
-    "mobileAnimationDelay": null,
-    "mobileAnimationInfiniteAnimation": null,
-    "tempMobileAnimationName": null
+    "tempAnimationName": "none"
   }
 }

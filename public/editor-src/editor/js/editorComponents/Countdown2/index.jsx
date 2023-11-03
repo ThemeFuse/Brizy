@@ -1,21 +1,22 @@
-import React from "react";
-import { TextEditor } from "visual/component/Controls/TextEditor";
-import _ from "underscore";
-import jQuery from "jquery";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import jQuery from "jquery";
+import React from "react";
+import _ from "underscore";
+import BoxResizer from "visual/component/BoxResizer";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import { style, styleMessage } from "./styles";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import "visual/libs/countdown2/jquery.countdown";
 import { css } from "visual/utils/cssStyle";
-import { getTime, formatDate } from "./utils";
-import BoxResizer from "visual/component/BoxResizer";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { capitalize } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
-import "visual/libs/countdown2/jquery.countdown";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style, styleMessage } from "./styles";
+import * as toolbarConfig from "./toolbar";
+import { formatDate, getTime } from "./utils";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -47,7 +48,7 @@ class Countdown2 extends EditorComponent {
       this.patchValue({ date: formatDate(after30days, "d/m/Y") });
     }
 
-    const leftPadWith0 = function(number) {
+    const leftPadWith0 = function (number) {
       return ("0" + number).slice(-2);
     };
 
@@ -112,7 +113,7 @@ class Countdown2 extends EditorComponent {
     const list = ["days", "hours", "minutes", "seconds"];
 
     const content = list
-      .filter(type => {
+      .filter((type) => {
         const propertyName = `show${capitalize(type)}`;
 
         return v[propertyName] === "on";
@@ -156,7 +157,7 @@ class Countdown2 extends EditorComponent {
     );
   }
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   renderForEdit(v, vs, vd) {
     const className = classnames(
@@ -204,7 +205,7 @@ class Countdown2 extends EditorComponent {
           <Wrapper
             {...this.makeWrapperProps({
               className: className,
-              ref: el => {
+              ref: (el) => {
                 this.countdown = el;
               }
             })}
@@ -246,22 +247,36 @@ class Countdown2 extends EditorComponent {
       )
     );
 
-    const { timeZone, linkType, messageText, messageRedirect, actions } = v;
+    const {
+      timeZone,
+      linkType,
+      messageText,
+      messageRedirect,
+      actions,
+      customCSS,
+      date,
+      hours,
+      minutes
+    } = v;
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Wrapper
           {...this.makeWrapperProps({
             className: className,
             attributes: {
-              "data-end": v.date,
-              "data-hours": v.hours,
-              "data-minutes": v.minutes,
-              "data-timezone": timeZone,
-              "data-link-type": linkType,
-              "data-redirect": messageRedirect,
-              "data-message": messageText,
-              "data-action": actions
+              ...makeDataAttr({ name: "end", value: date }),
+              ...makeDataAttr({ name: "hours", value: hours }),
+              ...makeDataAttr({ name: "minutes", value: minutes }),
+              ...makeDataAttr({ name: "timeZone", value: timeZone }),
+              ...makeDataAttr({ name: "link-type", value: linkType }),
+              ...makeDataAttr({ name: "redirect", value: messageRedirect }),
+              ...makeDataAttr({
+                name: "message",
+                value: messageText,
+                translatable: true
+              }),
+              ...makeDataAttr({ name: "action", value: actions })
             }
           })}
         >

@@ -20,17 +20,7 @@
     "megaMenuOffsetTopSuffix": null,
     "megaMenuPlacement": "bottom",
 
-    "tabletMegaMenuWidth": null,
-    "tabletMegaMenuWidthSuffix": null,
-    "tabletMegaMenuOffsetTop": null,
-    "tabletMegaMenuOffsetTopSuffix": null,
-    "tabletMegaMenuPlacement": null,
-
-    "mobileMegaMenuWidth": null,
-    "mobileMegaMenuWidthSuffix": null,
     "mobileMegaMenuOffsetTop": 0,
-    "mobileMegaMenuOffsetTopSuffix": null,
-    "mobileMegaMenuPlacement": null,
 
     "megaMenuItems": [
       {

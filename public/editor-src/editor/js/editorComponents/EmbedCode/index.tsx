@@ -1,5 +1,5 @@
-import classNames from "classnames";
 import { EmbedCode as EmbedCodeComponent } from "@brizy/component";
+import classNames from "classnames";
 import React, { ReactElement } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
@@ -9,7 +9,6 @@ import EditorComponent, {
   ComponentsMeta
 } from "visual/editorComponents/EditorComponent";
 import Config from "visual/global/Config";
-import { isWp } from "visual/global/Config/types/configs/WP";
 import { css } from "visual/utils/cssStyle";
 import { xss } from "visual/utils/xss";
 import { Wrapper } from "../tools/Wrapper";
@@ -31,7 +30,7 @@ export default class EmbedCode extends EditorComponent<Value, ComponentsMeta> {
   handleValueChange(newValue: Value, meta: Meta) {
     const config = Config.getAll();
 
-    if (meta.patch.code && isWp(config) && !config.user.allowScripts) {
+    if (meta.patch.code && !config.user.allowScripts) {
       const xssCode = xss(newValue.code, "discard");
       super.handleValueChange({ ...newValue, code: xssCode }, meta);
     } else {

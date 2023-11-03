@@ -10,6 +10,7 @@ import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { decodeFromString, encodeToString } from "visual/utils/string";
 import { isNullish, onNullish, throwOnNullish } from "visual/utils/value";
+import { capByPrefix } from "visual/utils/string";
 import { classNamesToV } from "./transforms";
 
 // have problems with cheerio it declared _ as global variables
@@ -171,6 +172,22 @@ const getLink = (value = "{}") => {
   };
 };
 
+const getPopulationColorFormat = ({ populationColor }) => {
+  return Object.entries(populationColor).reduce((acc, [key, value]) => {
+    const populationColorHex = value.hex;
+    const populationColorOpacity = value.opacity;
+    const populationColorPalette = value.colorPalette;
+    const prefix = capByPrefix("paragraphColor", key);
+
+    return {
+      ...acc,
+      [`${prefix}Hex`]: populationColorHex,
+      [`${prefix}Opacity`]: populationColorOpacity,
+      [`${prefix}Palette`]: populationColorPalette
+    };
+  }, {});
+};
+
 // background
 const getBackground = (value) => {
   if (isNullish(value)) {
@@ -319,9 +336,9 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
 
     ...getLink(format.link),
     ...populationColor,
+    ...getPopulationColorFormat({ ...populationColor }),
 
     list: format.list ?? "",
-
     population: getPopulation(format.population, $elem),
     prepopulation: format.prepopulation
       ? $elem.closest(".brz-pre-population-visible").text()

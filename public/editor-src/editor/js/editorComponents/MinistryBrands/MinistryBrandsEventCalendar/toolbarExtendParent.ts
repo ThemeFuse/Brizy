@@ -138,6 +138,12 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "switch-dev",
                   label: t("Event Start Time"),
                   devices: "desktop"
+                },
+                {
+                  id: "showSubscribeToCalendarButton",
+                  type: "switch-dev",
+                  label: t("Subscribe to Calendar"),
+                  devices: "desktop"
                 }
               ]
             },

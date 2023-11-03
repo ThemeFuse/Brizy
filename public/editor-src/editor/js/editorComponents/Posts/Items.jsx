@@ -7,12 +7,15 @@ import Sortable from "visual/component/Sortable";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { EditorComponentContext } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import {
   makeEndPlaceholder,
   makePlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
 import { IS_WP } from "visual/utils/env";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
+import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { getLoopName, stringifyAttributes } from "./utils.common";
 
@@ -61,6 +64,14 @@ export default class Items extends EditorArrayComponent {
 
   handleSortableAcceptElements = (from) => {
     const meta = this.props.meta;
+    const sortableType = makeDataAttr({
+      name: "sortable-type",
+      value: "row"
+    });
+    const sortableElement = makeDataAttr({
+      name: "sortable-element",
+      value: "true"
+    });
 
     if (meta.row && meta.row.isInner) {
       if (from.elementType === "column" || from.elementType === "row") {
@@ -69,7 +80,7 @@ export default class Items extends EditorArrayComponent {
 
       if (from.elementType === "addable") {
         const addableSubtype = from.elementNode.getAttribute(
-          "data-sortable-subtype"
+          makeAttr("sortable-subtype")
         );
 
         return addableSubtype !== "row" && addableSubtype !== "columns";
@@ -78,7 +89,7 @@ export default class Items extends EditorArrayComponent {
       if (from.elementType === "row" || from.elementType === "column") {
         return (
           from.elementNode.querySelector(
-            "[data-sortable-type=row][data-sortable-element=true]"
+            `[${sortableType}][${sortableElement}]`
           ) === null // hasn't inner row (thus avoiding level 3 columns)
         );
       }
@@ -105,7 +116,10 @@ export default class Items extends EditorArrayComponent {
         >
           <div
             className="brz-posts__item"
-            data-filter={this.getLoopItemFilter()}
+            {...makeDataAttr({
+              name: "filter",
+              value: this.getLoopItemFilter()
+            })}
           >
             {item}
           </div>
@@ -162,40 +176,27 @@ export default class Items extends EditorArrayComponent {
   }
 
   renderPaginationForEdit() {
+    const loopAttributes = this.getLoopAttributesString();
+    const className = "brz-posts__pagination__wrapper";
+    const placeholder = makePlaceholder({
+      content: "{{brizy_dc_post_loop_pagination}}",
+      attrStr: loopAttributes
+    });
+
     return (
       <Toolbar {...this.props.toolbarExtendPagination}>
-        <div className="brz-posts__pagination">
-          <ul className="page-numbers">
-            <li>
-              <span className="page-numbers current">1</span>
-            </li>
-            <li>
-              <a className="page-numbers" href="#">
-                2
-              </a>
-            </li>
-            <li>
-              <a className="page-numbers" href="#">
-                3
-              </a>
-            </li>
-            <li>
-              <a className="page-numbers" href="#">
-                ...
-              </a>
-            </li>
-            <li>
-              <a className="page-numbers" href="#">
-                10
-              </a>
-            </li>
-            <li>
-              <a className="page-numbers" href="#">
-                11
-              </a>
-            </li>
-          </ul>
-        </div>
+        <Wrapper
+          {...this.makeWrapperProps({
+            className
+          })}
+        >
+          <DynamicContentHelper
+            placeholder={placeholder}
+            tagName="div"
+            placeholderIcon="wp-post-info"
+            blocked={false}
+          />
+        </Wrapper>
       </Toolbar>
     );
   }

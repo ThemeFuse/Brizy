@@ -46,8 +46,6 @@
 
     "column": "off",
 
-    "hoverColumn": null,
-
     "tabletFontStyle": "",
     "tabletFontFamilyType": "google",
     "tabletFontSize": 15,
@@ -64,11 +62,6 @@
     "tabletSaleLineHeight": 1.8,
     "tabletSaleLetterSpacing": 1,
 
-    "tabletSpacing": null,
-    "tabletSpacingSuffix": null,
-
-    "tabletColumn": null,
-
     "mobileFontStyle": "",
     "mobileFontFamilyType": "google",
     "mobileFontSize": 14,
@@ -83,11 +76,6 @@
     "mobileSaleFontSizeSuffix": "px",
     "mobileSaleFontWeight": 700,
     "mobileSaleLineHeight": 1.8,
-    "mobileSaleLetterSpacing": 1,
-
-    "mobileSpacing": null,
-    "mobileSpacingSuffix": null,
-
-    "mobileColumn": null
+    "mobileSaleLetterSpacing": 1
   }
 }

@@ -34,15 +34,13 @@ import { paginationData } from "./const";
 import {
   BlogSourceItem,
   CollectionSourceItem,
-  CreateScreenshot,
   GetCollectionSourceTypes,
   GetDynamicContent,
   GetPostsSourceRefId,
   GetPostsSourceRefs,
   ResponseWithBody,
   Rule,
-  SelectedItem,
-  UpdateScreenshot
+  SelectedItem
 } from "./types";
 import { makeFormEncode, makeUrl } from "./utils";
 
@@ -81,7 +79,10 @@ export {
   defaultStoriesMeta,
   defaultStoriesData,
   getCollectionTypes,
-  getSourceIds
+  getSourceIds,
+  createBlockScreenshot,
+  updateBlockScreenshot,
+  defaultPostsSources
 } from "./common";
 
 export * from "./cms";
@@ -212,23 +213,25 @@ export function getGlobalBlocks(): Promise<Record<string, GlobalBlock>> {
     method: "GET"
   })
     .then((r) => {
-      return r.data
-        .map(parseGlobalBlock)
-        .reduce((acc, { id, uid, data, meta, rules, position, status }) => {
-          // map uids to ids to use them in updates
-          uidToApiId[uid] = id;
+      return r.data.map(parseGlobalBlock).reduce((acc, block) => {
+        const { id, uid, title, tags, data, meta, rules, position, status } =
+          block;
+        // map uids to ids to use them in updates
+        uidToApiId[uid] = id;
 
-          acc[uid] = {
-            id: uid,
-            data,
-            meta,
-            rules,
-            position,
-            status
-          };
+        acc[uid] = {
+          id: uid,
+          title,
+          tags,
+          data,
+          meta,
+          rules,
+          position,
+          status
+        };
 
-          return acc;
-        }, {});
+        return acc;
+      }, {});
     })
     .catch(() => {
       throw new GlobalBlocksError("Failed to get Global blocks");
@@ -239,7 +242,8 @@ export function createGlobalBlock(
   globalBlock: GlobalBlock
 ): Promise<{ data: string; meta: string; dataVersion: string; id: number }> {
   const uid = globalBlock.data.value._id;
-  const { data, rules, meta, status } = stringifyGlobalBlock(globalBlock);
+  const { title, tags, data, rules, meta, status } =
+    stringifyGlobalBlock(globalBlock);
   const {
     project: { id },
     urls: { api }
@@ -251,7 +255,9 @@ export function createGlobalBlock(
     status,
     data,
     rules,
-    meta
+    meta,
+    title,
+    tags
   });
   type GlobalBlock = {
     data: string;
@@ -284,7 +290,7 @@ export function updateGlobalBlock(
   } = Config.getAll() as Cloud;
   // const uid = globalBlock.data.value._id;
 
-  const { data, rules, meta } = stringifyGlobalBlock(globalBlock);
+  const { title, tags, data, rules, meta } = stringifyGlobalBlock(globalBlock);
   if (uidToApiId[uid]) {
     const { is_autosave = 1 } = extraMeta;
     const requestData = new URLSearchParams({
@@ -292,6 +298,8 @@ export function updateGlobalBlock(
       data,
       rules,
       meta,
+      ...(title && { title }),
+      ...(tags && { tags }),
       is_autosave: `${is_autosave}`
     });
 
@@ -319,13 +327,15 @@ export function updateGlobalBlocks(
   const { is_autosave = 1 } = extraMeta;
   const data = Object.entries(globalBlocks).reduce(
     (acc, [uid, globalBlock]) => {
-      const { data, rules, position, meta, status } =
+      const { title, tags, data, rules, position, meta, status } =
         stringifyGlobalBlock(globalBlock);
 
       acc.push({
         id: uidToApiId[uid],
         status,
         data,
+        ...(title && { title }),
+        ...(tags && { tags }),
         position: JSON.stringify(position),
         rules,
         meta
@@ -335,6 +345,8 @@ export function updateGlobalBlocks(
     },
     [] as {
       id: number;
+      title?: string;
+      tags?: string;
       status: string;
       data: string;
       position: string;
@@ -487,34 +499,6 @@ export const getDynamicContent: GetDynamicContent = async ({
 
 //#endregion
 
-//#region Screenshots
-
-export const createBlockScreenshot: CreateScreenshot = ({ base64 }) => {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  const attachment = base64.replace(/data:image\/.+;base64,/, "");
-
-  return request(`${api}/screenshots`, {
-    method: "POST",
-    body: new URLSearchParams({ attachment })
-  }).then((r) => r.json());
-};
-
-export const updateBlockScreenshot: UpdateScreenshot = ({ id, base64 }) => {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  const attachment = base64.replace(/data:image\/.+;base64,/, "");
-
-  return request(`${api}/screenshots/${id}`, {
-    method: "PUT",
-    body: new URLSearchParams({ attachment })
-  }).then((r) => r.json());
-};
-
-//#endregion
-
 type T = { by: "id"; value: string } | { by: "slug"; value: ShopifyTemplate };
 
 function getCollectionSourceItems(v: T): Promise<CollectionSourceItem[]> {
@@ -653,14 +637,18 @@ export const shopifySyncArticle = (
   });
 };
 
-export const shopifySyncPage = (title: string): Promise<void> => {
+export const shopifySyncPage = (
+  title: string,
+  isHomePage: boolean
+): Promise<void> => {
   const config = Config.getAll() as Cloud;
   const { platform, project, page, urls } = config;
 
   const body = new URLSearchParams({
     page: `${page.id}`,
     blog_title: title,
-    title
+    title,
+    isHomePage: isHomePage ? "1" : "0"
   });
 
   return request(`${urls.api}/${platform}/projects/${project.id}/sync`, {

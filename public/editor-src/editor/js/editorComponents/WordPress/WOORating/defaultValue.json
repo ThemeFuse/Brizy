@@ -3,10 +3,8 @@
     "tabsState": "",
     "tabsColor": "",
 
-    "tabletTabsState": null,
     "tabletTabsColor": "",
 
-    "mobileTabsState": null,
     "mobileTabsColor": ""
   },
   "style": {
@@ -15,10 +13,10 @@
     "text": "on",
 
     "ratingSize": 16,
-    "ratingSizeSuffix": null,
+    "ratingSizeSuffix": "px",
 
     "spacing": 10,
-    "spacingSuffix": null,
+    "spacingSuffix": "px",
 
     "families": {
       "typographyFontFamily": "lato",
@@ -58,12 +56,6 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "tabletRatingSize": null,
-    "tabletRatingSizeSuffix": null,
-
-    "tabletSpacing": null,
-    "tabletSpacingSuffix": null,
-
     "tabletTypographyFontStyle": "paragraph",
     "tabletTypographyFontFamilyType": null,
     "tabletTypographyFontSize": 15,
@@ -71,12 +63,6 @@
     "tabletTypographyFontWeight": 400,
     "tabletTypographyLineHeight": 1.3,
     "tabletTypographyLetterSpacing": 0,
-
-    "mobileRatingSize": null,
-    "mobileRatingSizeSuffix": null,
-
-    "mobileSpacing": null,
-    "mobileSpacingSuffix": null,
 
     "mobileTypographyFontStyle": "paragraph",
     "mobileTypographyFontFamilyType": null,

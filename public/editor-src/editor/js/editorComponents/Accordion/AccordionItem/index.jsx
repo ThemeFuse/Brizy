@@ -1,15 +1,16 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import { ThemeIcon } from "visual/component/ThemeIcon";
+import React from "react";
 import Animation from "visual/component/Animation";
-import Toolbar from "visual/component/Toolbar";
 import { TextEditor } from "visual/component/Controls/TextEditor";
+import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { collapse, expand } from "../utils";
 import ItemItems from "./Items";
 import defaultValue from "./defaultValue.json";
-import * as toolbar from "./toolbar";
 import * as sidebar from "./sidebar";
-import { expand, collapse } from "../utils";
+import * as toolbar from "./toolbar";
 
 class AccordionItem extends EditorComponent {
   static get componentId() {
@@ -113,7 +114,7 @@ class AccordionItem extends EditorComponent {
     }
   };
 
-  handleTextChange = labelText => {
+  handleTextChange = (labelText) => {
     this.patchValue({ labelText });
   };
 
@@ -152,7 +153,7 @@ class AccordionItem extends EditorComponent {
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
         <div
           className="brz-accordion__nav"
-          data-collapsible={collapsible}
+          {...makeDataAttr({ name: "collapsible", value: collapsible })}
           onClick={this.handleClick}
         >
           <TextEditor
@@ -203,13 +204,8 @@ class AccordionItem extends EditorComponent {
   }
 
   renderForEdit(v) {
-    const {
-      activeAccordionItem,
-      collapsible,
-      visibleTag,
-      tag,
-      allTag
-    } = this.props;
+    const { activeAccordionItem, collapsible, visibleTag, tag, allTag } =
+      this.props;
 
     const active =
       collapsible === "off" ? this.state.active : activeAccordionItem;

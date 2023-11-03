@@ -10,19 +10,19 @@ import {
 import {
   styleElementVideoCoverSrc,
   styleElementVideoIconFontSize,
-  styleElementVideoPaddingRatio
+  styleElementVideoRatio
 } from "visual/utils/style2";
 import { defaultValueValue } from "../onChange";
 import { CSSValue } from "../style2/types";
 
-export function cssStyleElementVideoPaddingRatio({
+export function cssStyleElementVideoRatio({
   v,
   device,
   state
 }: CSSValue): string {
-  const paddingRatio = styleElementVideoPaddingRatio({ v, device, state });
+  const ratio = styleElementVideoRatio({ v, device, state });
 
-  return paddingRatio === undefined ? "" : `padding-top:${paddingRatio};`;
+  return ratio === undefined ? "" : `aspect-ratio:${ratio};`;
 }
 
 export function cssStyleElementVideoBgSize({
@@ -145,17 +145,11 @@ export function cssStyleElementVideoCoverPaddingBG({
     p.paddingTop === p.paddingLeft &&
     p.paddingTop > 0;
 
-  const empty =
-    p.paddingTop === 0 &&
-    p.paddingRight === 0 &&
-    p.paddingBottom === 0 &&
-    p.paddingLeft === 0;
+  const bottomMarginGrouped = v.controls === "on" ? "margin-bottom:0;" : "";
+  const bottomMarginUngrouped =
+    v.controls === "on" ? 0 : `${p.paddingBottom}${p.paddingBottomSuffix}`;
 
-  if (empty) {
-    return "margin:0;";
-  } else if (noEmptyGrouped) {
-    return `margin:${p.paddingTop}${p.paddingTopSuffix};`;
-  } else {
-    return `margin:${p.paddingTop}${p.paddingTopSuffix} ${p.paddingRight}${p.paddingRightSuffix} ${p.paddingBottom}${p.paddingBottomSuffix} ${p.paddingLeft}${p.paddingLeftSuffix};`;
-  }
+  return noEmptyGrouped
+    ? `margin: ${p.paddingTop}${p.paddingTopSuffix};${bottomMarginGrouped}`
+    : `margin: ${p.paddingTop}${p.paddingTopSuffix} ${p.paddingRight}${p.paddingRightSuffix} ${bottomMarginUngrouped} ${p.paddingLeft}${p.paddingLeftSuffix};`;
 }

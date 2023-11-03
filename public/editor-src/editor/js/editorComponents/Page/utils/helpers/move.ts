@@ -1,9 +1,9 @@
 import { getIn, setIn } from "timm";
 import { every, isEqual, some } from "underscore";
 import { ElementModel } from "visual/component/Elements/Types";
-import { MValue } from "visual/utils/value";
 import { normalizeRowColumns } from "visual/editorComponents/Row/utils";
 import { setIds } from "visual/utils/models";
+import { MValue } from "visual/utils/value";
 import { addIn, removeIn } from "./addRemove";
 
 //#region Normalize Column Widths
@@ -207,7 +207,7 @@ export const moveColumnToSection = (
   },
   to: { itemPath: string[] }
 ): MValue<ElementModel> => {
-  const movedColumn = getIn(oldValue, from.itemPath);
+  const movedColumn = getIn(oldValue, from.itemPath) as ElementModel;
   const newRow = createNewItem("Row", {
     _styles: ["row", "hide-row-borders", "padding-0"],
     items: normalizeRowColumns([movedColumn])

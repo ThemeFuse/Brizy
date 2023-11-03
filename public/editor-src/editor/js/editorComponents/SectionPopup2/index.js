@@ -25,12 +25,13 @@ import Config from "visual/global/Config";
 import { triggersSelector } from "visual/redux/selectors";
 import { css } from "visual/utils/cssStyle";
 import { t } from "visual/utils/i18n";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
 import { isExternalPopup, isInternalPopup, isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import * as Str from "visual/utils/string/specs";
+import { mRead } from "visual/utils/string/specs";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as sidebarCloseConfig from "./sidebarClose";
@@ -198,7 +199,7 @@ class SectionPopup2 extends EditorComponent {
       closeCustomID,
       cssID
     } = v;
-    const _closeCustomID = Str.mRead(closeCustomID) || undefined;
+    const _closeCustomID = mRead(closeCustomID) || undefined;
     const config = Config.getAll();
     const popupSettings = config.ui?.popupSettings ?? {};
     const embedded = popupSettings.embedded === true;
@@ -316,7 +317,7 @@ class SectionPopup2 extends EditorComponent {
             <div
               id={id}
               className={classNamePopup}
-              data-block-id={this.props.blockId}
+              {...makeDataAttr({ name: "block-id", value: this.props.blockId })}
               ref={containerBorderRef}
               {...parseCustomAttributes(customAttributes)}
               {...containerBorderAttr}
@@ -411,7 +412,7 @@ class SectionPopup2 extends EditorComponent {
 
       attr = triggers.reduce((acc, item) => {
         if (item.active) {
-          const convertedKey = `data-${convertString(item.id)}`;
+          const convertedKey = makeAttr(convertString(item.id));
           if (encodeIdsList.includes(item.id)) {
             acc[convertedKey] = acc[convertedKey]
               ? encodeData([...decodeData(acc[convertedKey]), item.value])
@@ -426,16 +427,16 @@ class SectionPopup2 extends EditorComponent {
     }
 
     if (scrollPage === "on" && scrollPageBehind === true) {
-      attr["data-scroll_page"] = "true";
+      attr[makeAttr("scroll_page")] = "true";
     }
     if (clickOutsideToClose === "on" && clickOutside === true) {
-      attr["data-click_outside_to_close"] = "true";
+      attr[makeAttr("click_outside_to_close")] = "true";
     }
     if (embedded === true) {
-      attr["data-brz-embedded"] = "true";
+      attr[makeAttr("embedded")] = "true";
     }
     if (showCloseButtonAfter) {
-      attr["data-show-close-button-after"] = showCloseButtonAfter;
+      attr[makeAttr("show-close-button-after")] = showCloseButtonAfter;
     }
 
     const classNamePopup = classnames(
@@ -464,7 +465,7 @@ class SectionPopup2 extends EditorComponent {
         <div
           className={classNamePopup}
           id={this.instanceKey}
-          data-brz-popup={this.instanceKey}
+          {...makeDataAttr({ name: "popup", value: this.instanceKey })}
           {...attr}
           {...parseCustomAttributes(customAttributes)}
         >

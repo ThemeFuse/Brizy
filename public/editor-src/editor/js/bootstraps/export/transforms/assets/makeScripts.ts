@@ -1,6 +1,7 @@
 import LibsConfig from "visual/bootstraps/libs.json";
 import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Asset, AssetLibsMap, ScriptsFree, ScriptsPro } from "./index";
 import { LIBS_SCORE, MAIN_INIT_SCORE, MAIN_SCORE } from "./scores";
 
@@ -61,7 +62,7 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
         url: assetUrl(`editor/js/${name}.min.js`),
         attr: {
           class: "brz-script brz-script-preview-lib",
-          "data-group": name
+          ...makeDataAttr({ name: "group", value: name })
         }
       },
       pro: false
@@ -124,7 +125,7 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
           url: `${proUrls.assets}/js/${name}.pro.min.js`,
           attr: {
             class: `brz-script brz-script-preview-lib-pro`,
-            "data-group": name
+            ...makeDataAttr({ name: "group", value: name })
           }
         },
         pro: true

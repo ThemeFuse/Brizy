@@ -15,6 +15,7 @@ import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getPopulatedEntityValues } from "visual/utils/dynamicContent/common";
 import { getLinkData } from "visual/utils/models/link";
+import { handleLinkChange } from "visual/utils/patch/Link";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import { migrations } from "./migrations";
@@ -34,10 +35,12 @@ class PostTitle extends EditorComponent {
 
   patchValue(patch, meta) {
     const { fontStyle } = patch;
+    const link = handleLinkChange(patch);
 
     super.patchValue(
       {
         ...patch,
+        ...link,
         ...(fontStyle ? getTagNameFromFontStyle(fontStyle) : {})
       },
       meta

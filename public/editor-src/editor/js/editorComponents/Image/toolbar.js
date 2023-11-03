@@ -20,7 +20,6 @@ import {
 import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
-  toolbarImageLinkExternal,
   toolbarImageTags,
   toolbarLinkAnchor,
   toolbarStoryAnchor
@@ -65,9 +64,15 @@ export const getItems =
     const {
       inGallery = false,
       withBigImage = false,
+      layout,
       enableTags
     } = gallery || {};
     const dvv = (key) => defaultValueValue({ v, key, device });
+
+    const linkDC = getDynamicContentOption({
+      options: context.dynamicContent.config,
+      type: DCTypes.link
+    });
     const { hex: borderColorHex } = getOptionColorHexByPalette(
       dvv("borderColorHex"),
       dvv("borderColorPalette")
@@ -154,7 +159,8 @@ export const getItems =
                       id: "",
                       type: "imageUpload-dev",
                       config: {
-                        edit: device === "desktop"
+                        edit: device === "desktop",
+                        disableSizes: inGallery && layout === "justified"
                       }
                     }
                   },
@@ -431,12 +437,19 @@ export const getItems =
                 id: "external",
                 label: t("URL"),
                 options: [
-                  toolbarImageLinkExternal({
-                    v,
-                    inGallery,
-                    config: context.dynamicContent.config,
-                    devices: "desktop"
-                  }),
+                  {
+                    id: "link",
+                    type: "population-dev",
+                    label: t("Link to"),
+                    config: linkDC,
+                    option: {
+                      id: "linkExternal",
+                      type: "inputText-dev",
+                      placeholder: "http://",
+                      disabled: inGallery,
+                      devices: "desktop"
+                    }
+                  },
                   {
                     id: "linkExternalBlank",
                     label: t("Open In New Tab"),
@@ -552,12 +565,14 @@ export const getItems =
           },
           {
             id: "grid",
-            type: "grid",
-            separator: true,
+            type: "grid-dev",
+            config: {
+              separator: true
+            },
             columns: [
               {
                 id: "grid-settings",
-                width: 50,
+                size: 1,
                 options: [
                   {
                     id: "styles",
@@ -572,7 +587,7 @@ export const getItems =
               },
               {
                 id: "grid-effects",
-                width: 50,
+                size: 1,
                 options: [
                   {
                     id: "effects",

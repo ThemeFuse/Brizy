@@ -16,6 +16,12 @@ import {
   projectFontsData
 } from "visual/utils/fonts";
 import {
+  getClosestSections,
+  isElementInViewport,
+  scrollToActiveElement,
+  scrollToClosestCenterSection
+} from "visual/utils/viewport";
+import {
   ADD_BLOCK,
   COPY_ELEMENT,
   HYDRATE,
@@ -31,7 +37,8 @@ import {
   IMPORT_STORY,
   IMPORT_TEMPLATE,
   UPDATE_DEFAULT_FONT,
-  UPDATE_EXTRA_FONT_STYLES
+  UPDATE_EXTRA_FONT_STYLES,
+  updateUI
 } from "../actions2";
 import { historySelector } from "../history/selectors";
 import { REDO, UNDO } from "../history/types";
@@ -277,8 +284,27 @@ function handleStylesChange(callbacks) {
 }
 
 function handleDeviceModeChange(callbacks) {
-  callbacks.onAfterNext.push(({ config, action }) => {
+  callbacks.onAfterNext.push(({ config, action, state, store }) => {
     const { document, parentDocument } = config;
+    const {
+      ui: { activeElement }
+    } = state;
+    const {
+      innerHeight,
+      document: viewportDocument,
+      scrollTo
+    } = document.defaultView;
+
+    const isActiveElementInView = activeElement
+      ? isElementInViewport(activeElement, innerHeight)
+      : false;
+    let sections = [];
+
+    if (!isActiveElementInView) {
+      store.dispatch(updateUI("activeElement", null));
+      sections = getClosestSections(viewportDocument, innerHeight);
+    }
+
     const mode = action.value;
 
     const blocksIframe = parentDocument.getElementById("brz-ed-iframe");
@@ -308,6 +334,21 @@ function handleDeviceModeChange(callbacks) {
       blocksIframe.className = newIframeClassName;
       brz.className = newBrzClassName;
       blocksIframe.style.maxWidth = iframeMaxWidth;
+
+      isActiveElementInView
+        ? scrollToActiveElement({
+            activeElement,
+            document: viewportDocument,
+            scrollTo,
+            innerHeight,
+            maxRecursion: 5
+          })
+        : scrollToClosestCenterSection(
+            sections,
+            viewportDocument,
+            scrollTo,
+            innerHeight
+          );
     });
   });
 }

@@ -1,6 +1,6 @@
 import jQuery from "jquery";
 import React, { ReactElement, RefObject, useMemo, useRef } from "react";
-import { customFileUrl } from "visual/utils/customFile/customFileUrl.js";
+import { customFileUrl } from "visual/utils/customFile";
 import { videoUrl } from "visual/utils/video";
 import "../lib/jquery.background-video.js";
 import { useLayoutEffect } from "../utils";
@@ -130,7 +130,7 @@ const Video: React.FC<Props> = ({
   const src =
     video && !isCustomVideo
       ? videoUrl(video, settings)
-      : dataType === VideoType.BgVideoCustom
+      : dataType === VideoType.BgVideoCustom && customVideo
       ? customFileUrl(customVideo)
       : customVideo;
 
@@ -145,7 +145,7 @@ const Video: React.FC<Props> = ({
             <iframe
               src={src}
               data-src={src}
-              className="brz-iframe intrinsic-ignore brz-bg-video__cover absolute top-0 left-0 w-full h-full border-none !max-w-none bg-no-repeat bg-cover"
+              className="brz-iframe intrinsic-ignore brz-bg-video__cover"
               loading="lazy"
               style={iframeStyle}
               title="background-video"
@@ -158,7 +158,7 @@ const Video: React.FC<Props> = ({
         <>
           {src && (
             <video
-              className="brz-bg-video-custom brz-bg-video__cover absolute top-0 left-0 w-full h-full border-none !max-w-none bg-no-repeat bg-cover"
+              className="brz-bg-video-custom brz-bg-video__cover"
               muted
               autoPlay
               playsInline

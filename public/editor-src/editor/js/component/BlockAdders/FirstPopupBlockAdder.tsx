@@ -1,30 +1,30 @@
 import React, { Component, ReactElement } from "react";
-import { noop } from "underscore";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { noop } from "underscore";
 import Prompts, { PromptsProps } from "visual/component/Prompts";
-import RoundPlus from "visual/component/RoundPlus";
-import { rolesHOC } from "visual/component/Roles";
-import { setDeviceMode, ActionUpdateUI } from "visual/redux/actions2";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { t } from "visual/utils/i18n";
 import {
   PromptBlock,
   PromptBlockTemplate
 } from "visual/component/Prompts/PromptBlocks/types";
+import { rolesHOC } from "visual/component/Roles";
+import RoundPlus from "visual/component/RoundPlus";
+import { ActionUpdateUI, setDeviceMode } from "visual/redux/actions2";
+import { deviceModeSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
+import { t } from "visual/utils/i18n";
 
-type TextsDevice = {
+interface TextsDevice {
   title: string;
   description: string;
-};
+}
 
-type FirstPopupBlockAdderProps = {
+interface Props {
   deviceMode: DeviceMode;
   onAddBlock: (data: PromptBlock) => void;
   setDeviceMode: (device: DeviceMode) => void;
-};
+}
 
 const getDeviceTexts = (device: DeviceMode): TextsDevice => {
   switch (device) {
@@ -49,8 +49,8 @@ const getDeviceTexts = (device: DeviceMode): TextsDevice => {
   }
 };
 
-class FirstPopupBlockAdder extends Component<FirstPopupBlockAdderProps> {
-  static defaultProps: FirstPopupBlockAdderProps = {
+class FirstPopupBlockAdder extends Component<Props> {
+  static defaultProps: Props = {
     deviceMode: "desktop",
     onAddBlock: noop,
     setDeviceMode: noop
@@ -70,7 +70,7 @@ class FirstPopupBlockAdder extends Component<FirstPopupBlockAdderProps> {
     const { deviceMode, setDeviceMode, onAddBlock } = this.props;
 
     if (deviceMode === "desktop") {
-      const data: PromptsProps = {
+      const data: PromptsProps<"popup"> = {
         prompt: "blocks",
         mode: "single",
         props: {

@@ -174,20 +174,8 @@
     "filterSpacing": 3,
     "filterSpacingSuffix": "",
 
-    "tabletFilterSpacing": null,
-    "tabletFilterSpacingSuffix": null,
-
-    "mobileFilterSpacing": null,
-    "mobileFilterSpacingSuffix": null,
-
     "afterFilterSpacing": 20,
     "afterFilterSpacingSuffix": "",
-
-    "tabletAfterFilterSpacing": null,
-    "tabletAfterFilterSpacingSuffix": null,
-
-    "mobileAfterFilterSpacing": null,
-    "mobileAfterFilterSpacingSuffix": null,
 
     "filterFontStyle": "",
     "filterFontFamilyType": "google",

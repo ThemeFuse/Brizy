@@ -12,18 +12,6 @@
     "widthSuffix": null,
 
     "height": 165,
-    "heightSuffix": null,
-
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-
-    "tabletHeight": null,
-    "tabletHeightSuffix": null,
-
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
-
-    "mobileHeight": null,
-    "mobileHeightSuffix": null
+    "heightSuffix": null
   }
 }

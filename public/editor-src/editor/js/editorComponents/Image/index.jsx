@@ -27,6 +27,10 @@ import {
   mobileSyncOnChange,
   tabletSyncOnChange
 } from "visual/utils/onChange";
+import {
+  fromLinkElementModel,
+  patchOnDCChange as patchOnLinkDCChange
+} from "visual/utils/patch/Link/";
 import { read as readBoolean } from "visual/utils/reader/bool";
 import { read as readNumber } from "visual/utils/reader/number";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
@@ -123,6 +127,8 @@ class Image extends EditorComponent {
 
     const imageUnit = ImagePatch.patchImageUnit(patch, device);
 
+    const imageLinkDC = fromLinkElementModel(patch);
+
     if (value === undefined) {
       return {};
     }
@@ -153,6 +159,10 @@ class Image extends EditorComponent {
       const containerWidth = this.getContainerSize()[device];
 
       return patchOnSizeTypeChange(containerWidth, imageSizeType);
+    }
+
+    if (imageLinkDC) {
+      return patchOnLinkDCChange(imageLinkDC);
     }
 
     return {};

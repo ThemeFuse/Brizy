@@ -10,6 +10,7 @@ import {
   CreateIntegrationAccount,
   CreateIntegrationList,
   CreateSmptIntegration,
+  DeleteSmtpIntegration,
   FormData,
   FormResponse,
   GetForm,
@@ -315,6 +316,20 @@ export const updateSmtpIntegration: UpdateSmptIntegration = ({
       emailTo: string;
     } | null>(r)
   );
+};
+
+export const deleteSmtpIntegration: DeleteSmtpIntegration = ({
+  formId,
+  notificationId
+}) => {
+  const { api } = Config.get("urls");
+
+  return request(`${api}/forms/${formId}/notifications/${notificationId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    }
+  }).then((r) => ({ status: r.status, message: r.statusText }));
 };
 
 // Recaptcha

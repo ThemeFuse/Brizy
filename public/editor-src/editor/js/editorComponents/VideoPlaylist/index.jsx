@@ -1,23 +1,24 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import classnames from "classnames";
-import CustomCSS from "visual/component/CustomCSS";
+import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
+import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import { ThemeIcon } from "visual/component/ThemeIcon";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import {
   videoData as getVideoData,
   videoUrl as getVideoUrl
 } from "visual/utils/video";
-import { css } from "visual/utils/cssStyle";
-import * as toolbarExtend from "./toolbarExtend";
-import * as sidebarExtendConfig from "./sidebarExtend";
-import * as toolbarExtendParentConfig from "./toolbarExtendParent";
-import * as sidebarExtendParentConfig from "./sidebarExtendParent";
-import Items from "./Items";
-import { styleContents, styleCover, styleSideBar } from "./styles";
-import defaultValue from "./defaultValue.json";
 import { Wrapper } from "../tools/Wrapper";
+import Items from "./Items";
+import defaultValue from "./defaultValue.json";
+import * as sidebarExtendConfig from "./sidebarExtend";
+import * as sidebarExtendParentConfig from "./sidebarExtendParent";
+import { styleContents, styleCover, styleSideBar } from "./styles";
+import * as toolbarExtend from "./toolbarExtend";
+import * as toolbarExtendParentConfig from "./toolbarExtendParent";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -53,9 +54,9 @@ class VideoPlaylist extends EditorComponent {
     }
   }
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
-  handleActive = currentIndex => this.setState({ currentIndex });
+  handleActive = (currentIndex) => this.setState({ currentIndex });
 
   handleCoverIconClick(e) {
     e.preventDefault();
@@ -98,7 +99,7 @@ class VideoPlaylist extends EditorComponent {
         <div className="brz-video-playlist__cover-icon">
           <span
             className="brz-play-button"
-            data-video-url={videoSrc}
+            {...makeDataAttr({ name: "video-url", value: videoSrc })}
             onClick={this.handleCoverIconClick}
           >
             <ThemeIcon name="play" type="editor" />

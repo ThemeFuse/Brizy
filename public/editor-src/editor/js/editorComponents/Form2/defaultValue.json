@@ -54,10 +54,6 @@
     "tempPaddingBottomSuffix": "px",
     "tempPaddingLeftSuffix": "px",
 
-    "tabletWidth": null,
-    "tabletSubmitWidth": null,
-    "tabletSubmitWidthSuffix": null,
-
     "tabletPaddingType": "ungrouped",
     "tempTabletPaddingType": "ungrouped",
 
@@ -72,9 +68,6 @@
     "tempTabletPaddingRightSuffix": "px",
     "tempTabletPaddingBottomSuffix": "px",
     "tempTabletPaddingLeftSuffix": "px",
-
-    "mobileSubmitWidth": null,
-    "mobileSubmitWidthSuffix": null,
 
     "mobilePaddingType": "ungrouped",
     "tempMobilePaddingType": "ungrouped",

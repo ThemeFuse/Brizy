@@ -1,5 +1,5 @@
 import { renderStyles } from "visual/utils/cssStyle";
-import type { Value } from "./index";
+import type { Value } from "./types";
 
 export function style(
   v: Value,
@@ -30,25 +30,8 @@ export function style(
     },
     ".brz &&.brz-image__gallery-with-thumb .brz-image__gallery-item:hover .brz-image":
       {
-        standart: [
-          "cssStyleElementImageGalleryBorderRadiusThumbnail",
-          ...(IS_PREVIEW ? ["cssStyleElementImageGalleryImagesBorder"] : [])
-        ]
+        standart: ["cssStyleElementImageGalleryBorderRadiusThumbnail"]
       },
-
-    ".brz && .brz-image__gallery-item:hover .brz-image": {
-      standart: [
-        "cssStyleElementImageGalleryImagesBoxShadow",
-        ...(IS_PREVIEW ? ["cssStyleElementImageGalleryImagesBorder"] : []),
-        ...(v.imagesMaskShape !== "none"
-          ? ["cssStyleElementImageGalleryImagesBorder"]
-          : [])
-      ]
-    },
-
-    ".brz && .brz-image__gallery-item:hover .brz-ed-image__wrapper-container": {
-      standart: ["cssStyleElementImageGalleryImagesBorder"]
-    },
 
     ".brz && .brz-image__gallery-item:hover .brz-picture": {
       standart: [
@@ -68,23 +51,7 @@ export function style(
       {
         standart: ["cssStyleElementImageGalleryBorderRadiusThumbnail"]
       },
-    ".brz && .brz-image__gallery-item:hover .brz-ed-image__wrapper::after": {
-      standart: [
-        "cssStyleElementImageGalleryImagesOverlay",
-        "cssStyleElementImageGalleryImagesGradient"
-      ]
-    },
 
-    ".brz && .brz-image__gallery-item:hover .brz-picture::after": {
-      standart: [
-        ...(IS_PREVIEW
-          ? [
-              "cssStyleElementImageGalleryImagesOverlay",
-              "cssStyleElementImageGalleryImagesGradient"
-            ]
-          : [])
-      ]
-    },
     ".brz &&.brz-image__gallery-with-thumb .brz-image__gallery-item:hover .brz-ed-image__wrapper":
       {
         standart: ["cssStyleElementImageGalleryBorderRadiusThumbnail"]
@@ -96,10 +63,7 @@ export function style(
         "cssStyleElementImageGalleryBigImageImagesMaskSize",
         "cssStyleElementImageGalleryBigImageImagesMaskPosition",
         "cssStyleElementImageGalleryBigImageImagesMaskRepeat",
-        "cssStyleElementImageGalleryBigImageImagesCustomMask",
-        ...(v.imagesMaskShape === "none"
-          ? ["cssStyleElementImageGalleryImagesBorder"]
-          : [])
+        "cssStyleElementImageGalleryBigImageImagesCustomMask"
       ]
     }
   };

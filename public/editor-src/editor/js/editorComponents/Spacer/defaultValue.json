@@ -5,10 +5,7 @@
     "height": 50,
     "heightSuffix": "px",
 
-    "tabletHeight": null,
     "tabletHeightSuffix": null,
-
-    "mobileHeight": null,
     "mobileHeightSuffix": null
   }
 }

@@ -13,6 +13,7 @@ import Config from "visual/global/Config";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { clamp, isNumeric } from "visual/utils/math";
 import * as N from "visual/utils/math/number";
 import { defaultValueKey } from "visual/utils/onChange";
@@ -391,7 +392,7 @@ class RowItems extends EditorArrayComponent {
   handleSortableAcceptElements = (from, to) => {
     if (from.elementType === "addable") {
       const addableSubtype = from.elementNode.getAttribute(
-        "data-sortable-subtype"
+        makeAttr("sortable-subtype")
       );
 
       if (addableSubtype === "row") {

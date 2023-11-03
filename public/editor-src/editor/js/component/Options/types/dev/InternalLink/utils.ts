@@ -1,5 +1,6 @@
 import { partial, property } from "underscore";
 import * as A from "visual/utils/array";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { toObject } from "visual/utils/object";
 import { String } from "visual/utils/string/specs";
 import { Reader } from "visual/utils/types/Type";
@@ -31,7 +32,7 @@ export const toPosts = mCompose(
 
 export const normalizeItem = (item: ChoiceWithPermalink): Choice => ({
   title: item.title,
-  value: item.permalink ?? ""
+  value: makePlaceholder({ content: item.populationPermalink ?? "" })
 });
 
 export const normalizeItems = (items: ChoicesSync): Choice[] => {

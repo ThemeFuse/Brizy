@@ -29,8 +29,6 @@
     "media": "image",
 
     "bgSizeType": "custom",
-    "tabletBgSizeType": null,
-    "mobileBgSizeType": null,
 
     "dynamicTextCapitalize": "off",
 
@@ -45,8 +43,6 @@
     "bgPopulationEntityId": "",
 
     "contentHorizontalAlign": "left",
-    "tabletContentHorizontalAlign": null,
-    "mobileContentHorizontalAlign": null,
 
     "families": {
       "typographyFontFamily": "lato",
@@ -308,16 +304,12 @@
     "linkExternalRel": "off",
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
+    "linkExternalPopulation": "",
     "linkPopulationEntityType": "",
     "linkPopulationEntityId": "",
     "linkUpload": "",
     "linkPopup": "",
     "actionClosePopup": "off",
-    "linkToSlide": 1,
-    "tabletLinkType": null,
-    "tabletLinkPopup": null,
-
-    "mobileLinkType": null,
-    "mobileLinkPopup": null
+    "linkToSlide": 1
   }
 }

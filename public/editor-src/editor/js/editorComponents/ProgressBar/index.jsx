@@ -1,5 +1,5 @@
+import { ProgressBar1, ProgressBar2 } from "@brizy/component";
 import classnames from "classnames";
-import { ProgressBar1, ProgressBar2} from "@brizy/component";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import { Text } from "visual/component/ContentOptions/types";
@@ -7,6 +7,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -112,7 +113,9 @@ export default class ProgressBar extends EditorComponent {
           <Wrapper
             {...this.makeWrapperProps({
               className: classNameBg,
-              attributes: { "data-type": progressBarStyle }
+              attributes: {
+                ...makeDataAttr({ name: "type", value: progressBarStyle })
+              }
             })}
           >
             <BoxResizer
@@ -188,7 +191,9 @@ export default class ProgressBar extends EditorComponent {
         <Wrapper
           {...this.makeWrapperProps({
             className: classNameBg,
-            attributes: { "data-type": progressBarStyle }
+            attributes: {
+              ...makeDataAttr({ name: "type", value: progressBarStyle })
+            }
           })}
         >
           {progressBarStyle === "style1" ? (

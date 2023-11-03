@@ -1,4 +1,5 @@
 import React from "react";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 
 class SortableHandle extends React.Component {
   render() {
@@ -9,7 +10,7 @@ class SortableHandle extends React.Component {
     }
 
     return React.cloneElement(React.Children.only(children), {
-      "data-sortable-handle": true
+      ...makeDataAttr({ name: "sortable-handle", value: "true" })
     });
   }
 }

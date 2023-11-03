@@ -1,11 +1,17 @@
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
+import { read } from "visual/utils/reader/string";
 import { uuid } from "visual/utils/uuid";
 
 export const extractPopups = ($: cheerio.Root): void => {
   const globalPopupsProcessed: Record<string, string> = {};
 
-  $("[data-brz-link-type='popup']").each(function (this: cheerio.CheerioAPI) {
+  $(makeDataAttrString({ name: "link-type", value: "popup" })).each(function (
+    this: cheerio.CheerioAPI
+  ) {
     const $this = $(this);
     const popupId = $this.attr("href")?.replace("#", "");
+    const dataPopupAttr = makeAttr("popup");
+    const selector = `[${dataPopupAttr}*='${read(popupId) ?? ""}']`;
     let $parent = $this.parent();
     let $popup;
 
@@ -18,7 +24,7 @@ export const extractPopups = ($: cheerio.Root): void => {
        * popupId contains only {some_hash} and that's why we
        * search with *= instead of = (to match both normal and global popups)
        */
-      $popup = $parent.children(`[data-brz-popup*='${popupId}']`);
+      $popup = $parent.children(selector);
 
       if ($popup.length > 0) {
         break;
@@ -28,7 +34,7 @@ export const extractPopups = ($: cheerio.Root): void => {
     }
 
     if ($popup && $popup.length > 0) {
-      const popupId = $popup.attr("data-brz-popup") ?? "";
+      const popupId = $popup.attr(makeAttr("popup")) ?? "";
       const isGlobal = popupId.includes("global_");
 
       if (isGlobal && globalPopupsProcessed[popupId]) {
@@ -39,7 +45,7 @@ export const extractPopups = ($: cheerio.Root): void => {
         const newId = uuid();
 
         $this.attr("href", `#${newId}`);
-        $popup.attr("data-brz-popup", newId);
+        $popup.attr(makeAttr("popup"), newId);
 
         if (isGlobal) {
           globalPopupsProcessed[popupId] = newId;

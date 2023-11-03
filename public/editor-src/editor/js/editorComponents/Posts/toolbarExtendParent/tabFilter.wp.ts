@@ -1,10 +1,10 @@
 import { Props as TabsOptionProps } from "visual/component/Options/types/dev/Tabs";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import Config, { WP } from "visual/global/Config";
 import { ArrayType } from "visual/utils/array/types";
 import { t } from "visual/utils/i18n";
-import { V, VDecoded } from "../types";
+import { Context, V, VDecoded } from "../types";
 import { CURRENT_CONTEXT_TYPE, decodeV } from "../utils.common";
+import { orderByConverter } from "./utils.common";
 import {
   authorsLoad,
   authorsSearch,
@@ -16,7 +16,7 @@ import {
 
 type TabOptionType = ArrayType<Required<TabsOptionProps>["tabs"]>;
 
-export function tabFilter(v: V): TabOptionType | undefined {
+export function tabFilter(v: V, context: Context): TabOptionType | undefined {
   const isPosts = v.type === "posts";
   const isArchive = v.type === "archives";
   const isProducts = v.type === "products";
@@ -29,7 +29,7 @@ export function tabFilter(v: V): TabOptionType | undefined {
   const vd = decodeV(v);
   const isCurrentQuery = vd.source === CURRENT_CONTEXT_TYPE;
 
-  const source = getSource(vd);
+  const source = getSource(vd, context);
   const includeBy = getIncludeExclude(
     "include",
     vd,
@@ -39,6 +39,11 @@ export function tabFilter(v: V): TabOptionType | undefined {
     "exclude",
     vd,
     (!isPosts && !isProducts) || isCurrentQuery
+  );
+
+  const orderByChoices = orderByConverter(
+    v.source,
+    context.collectionTypesInfo.sources
   );
 
   return {
@@ -59,13 +64,7 @@ export function tabFilter(v: V): TabOptionType | undefined {
         type: "select-dev",
         label: t("Order By"),
         devices: "desktop",
-        choices: [
-          { title: t("ID"), value: "id" },
-          { title: t("Title"), value: "title" },
-          { title: t("Date"), value: "date" },
-          { title: t("Random"), value: "rand" },
-          { title: t("Comment Count"), value: "comment_count" }
-        ]
+        choices: orderByChoices
       },
       {
         id: "order",
@@ -81,24 +80,21 @@ export function tabFilter(v: V): TabOptionType | undefined {
   };
 }
 
-function getSource(vd: VDecoded): ToolbarItemType {
-  const config = Config.getAll() as WP;
+function getSource(vd: VDecoded, context: Context): ToolbarItemType {
   const isPosts = vd.type === "posts";
-  let choices: Array<{ title: string; value: string }> = [];
 
-  if (isPosts) {
-    choices = (config.wp.postLoopSources ?? []).map(({ label, name }) => ({
-      title: label,
-      value: name
-    }));
-  }
+  const sourceChoices =
+    context.collectionTypesInfo?.sources.map((collectionType) => ({
+      value: collectionType.id,
+      title: collectionType.title
+    })) ?? [];
 
   return {
     id: "source",
     type: "select-dev",
     label: t("Source"),
     devices: "desktop",
-    choices: choices,
+    choices: sourceChoices,
     disabled: !isPosts
   };
 }

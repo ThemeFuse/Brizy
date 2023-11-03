@@ -1,9 +1,9 @@
 import { Layout, Tabs } from "visual/component/Prompts/common/PromptPage/types";
-import { Setters } from "./types/Setters";
 import { Actions as _Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
 import { State } from "visual/component/Prompts/common/states/Classic/types/State";
-import { BlogSourceItem } from "visual/utils/api/types";
 import { ShopifyPage } from "visual/types";
+import { BlogSourceItem } from "visual/utils/api/types";
+import { Setters } from "./types/Setters";
 
 export interface Props {
   headTitle: string;
@@ -20,7 +20,7 @@ export interface Invalid {
   title: string | undefined;
   layout: string;
   layouts: [Layout, ...Layout[]];
-  items: [BlogSourceItem, ...BlogSourceItem[]];
+  items: BlogSourceItem[];
   selected: BlogSourceItem | undefined;
   error: string | undefined;
 }

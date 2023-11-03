@@ -50,7 +50,7 @@ export function styleRow(v, vs, vd) {
         ...(maskShape === "none"
           ? ["cssStyleBoxShadow"]
           : ["cssStyleMaskDropShadow"]),
-        "cssStyleSizeMaxWidthPercentOnly",
+        "cssStyleSizeMaxWidthSize",
         "cssStyleBlendMode"
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
@@ -122,10 +122,7 @@ export function styleRow(v, vs, vd) {
 export function styleContainer(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
-      standart: [
-        "cssStylePaddingFourFields",
-        "cssStyleSizeMaxWidthPercentOnly"
-      ],
+      standart: ["cssStylePaddingFourFields", "cssStyleSizeMaxWidthSize"],
       interval: IS_EDITOR ? ["cssStyleVisible|||editor"] : []
     }
   };

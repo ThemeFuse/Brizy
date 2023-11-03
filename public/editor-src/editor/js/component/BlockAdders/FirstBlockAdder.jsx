@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import RoundPlus from "visual/component/RoundPlus";
 import Prompts from "visual/component/Prompts";
 import { rolesHOC } from "visual/component/Roles";
+import RoundPlus from "visual/component/RoundPlus";
+import Config from "visual/global/Config";
+import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
-import Config from "visual/global/Config";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 
 const textsByDeviceMode = {
   desktop: {
@@ -28,6 +28,7 @@ class FirstBlockAdder extends React.Component {
   handleOpen = () => {
     const { deviceMode, dispatch, onAddBlock, onAddTemplate } = this.props;
     const config = Config.getAll();
+    ///// TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
     const showGlobal = !(isCloud(config) && isShopify(config));
 
     if (deviceMode === "desktop") {
@@ -76,11 +77,11 @@ class FirstBlockAdder extends React.Component {
   }
 }
 
-const stateToProps = state => ({
+const stateToProps = (state) => ({
   deviceMode: deviceModeSelector(state)
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   dispatch
 });
 

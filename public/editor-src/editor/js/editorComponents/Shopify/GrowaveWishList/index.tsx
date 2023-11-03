@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import * as sidebarConfig from "./sidebar";
@@ -38,7 +39,7 @@ export class GrowaveWishlist extends EditorComponent<ElementModel> {
           className: "brz-shopify-growave-wishlist"
         })}
       >
-        <div data-pf-type="GrowaveWishlist">
+        <div {...makeDataAttr({ name: "pf-type", value: "GrowaveWishlist" })}>
           {`{% capture the_snippet_fave %}{% include 'socialshopwave-widget-fave' %}{% endcapture %}{% unless the_snippet_fave contains 'Liquid error' %}${placeholder}{% endunless %}`}
         </div>
       </Wrapper>

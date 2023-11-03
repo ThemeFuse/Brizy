@@ -1,5 +1,6 @@
 import { add as addToCart } from "visual/libs/shopify/AjaxApi/Cart";
 import { ProductHandle } from "visual/libs/shopify/types/Product";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { getAddToCartData, useSpinner } from "./utils";
 
 export default function ($node: JQuery): void {
@@ -10,10 +11,10 @@ export default function ($node: JQuery): void {
   node
     .querySelectorAll<HTMLButtonElement>(".brz-shopify-add-to-cart")
     .forEach((item) => {
-      const productId = item.getAttribute("data-product-handle") as
+      const productId = item.getAttribute(makeAttr("product-handle")) as
         | ProductHandle
         | "";
-      const defaultVarintId = item.getAttribute("data-default-variant-id");
+      const defaultVarintId = item.getAttribute(makeAttr("default-variant-id"));
 
       if (!productId) {
         return;

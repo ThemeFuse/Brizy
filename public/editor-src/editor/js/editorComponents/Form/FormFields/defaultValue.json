@@ -82,13 +82,11 @@
     "tabletLineHeight": 1.5,
     "tabletLetterSpacing": 0,
     "tabletFontWeight": 400,
-    "tabletBorderRadius": null,
 
     "mobileFontStyle": "",
     "mobileFontSize": 14,
     "mobileLineHeight": 1.5,
     "mobileFontWeight": 400,
-    "mobileLetterSpacing": 0,
-    "mobileBorderRadius": null
+    "mobileLetterSpacing": 0
   }
 }

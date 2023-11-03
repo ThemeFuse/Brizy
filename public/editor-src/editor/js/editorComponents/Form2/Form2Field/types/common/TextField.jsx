@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React, { Component } from "react";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 
 function isExistingType(value) {
   const types = [
@@ -197,9 +198,12 @@ export default class TextField extends Component {
           required: required === "on",
           pattern:
             this.constructor.pattern && encodeURI(this.constructor.pattern),
-          "data-type": type,
-          "data-label": label,
-          "data-placeholder": this.getPlaceholder(),
+          ...makeDataAttr({ name: "type", value: type }),
+          ...makeDataAttr({ name: "label", value: label }),
+          ...makeDataAttr({
+            name: "placeholder",
+            value: this.getPlaceholder()
+          }),
           ...this.getAttributes()
         }
       };

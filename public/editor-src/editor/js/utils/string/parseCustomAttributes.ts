@@ -1,9 +1,10 @@
 import { isDynamicContent } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import * as S from "visual/utils/string/specs";
 import { MRead, Reader } from "visual/utils/types/Type";
 import { mCompose } from "visual/utils/value";
 
-export type Attributes = { [K: string]: string };
+export type Attributes = { [K: string]: string | unknown };
 
 export type SupportSSREvents =
   | "data-brz-onclick-event"
@@ -15,9 +16,7 @@ export const isSSREvent = (t: unknown): t is SupportSSREvents => {
 
 export function parseCustomAttributes(attributes: string): Attributes {
   if (isDynamicContent(attributes)) {
-    return {
-      "data-brz-dcatts": attributes
-    };
+    return makeDataAttr({ name: "dcatts", value: attributes });
   }
 
   const res: Attributes = {};

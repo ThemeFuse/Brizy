@@ -53,6 +53,7 @@ export type AppData = {
   pro: boolean;
   img: string;
   title: string;
+  shortTitle: string;
   stages: Array<{ type: BaseKey; title: string; hideProgress?: boolean }>;
   docsUrl: string;
 };

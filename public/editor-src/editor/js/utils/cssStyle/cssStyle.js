@@ -1,6 +1,7 @@
 import Config from "visual/global/Config";
 import { murmurhash2 } from "visual/utils/crypto";
 import * as onStyles from "visual/utils/cssStyle";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { isStory } from "visual/utils/models";
 import { uuid } from "visual/utils/uuid";
 
@@ -358,7 +359,7 @@ export function css(
       if (!css.isServer) {
         node = document.createElement("style");
         if (process.env.NODE_ENV === "development") {
-          node.setAttribute("data-brz-css", `default-${defaultID}`);
+          node.setAttribute(makeAttr("css"), `default-${defaultID}`);
         }
         node.appendChild(document.createTextNode(""));
         node.childNodes[0].nodeValue = cssText;
@@ -401,7 +402,7 @@ export function css(
       if (!css.isServer) {
         node = document.createElement("style");
         if (process.env.NODE_ENV === "development") {
-          node.setAttribute("data-brz-css", `rules-${defaultID}`);
+          node.setAttribute(makeAttr("css"), `rules-${defaultID}`);
         }
         node.appendChild(document.createTextNode(""));
         node.childNodes[0].nodeValue = cssText;
@@ -431,7 +432,7 @@ export function css(
       if (!css.isServer) {
         node = document.createElement("style");
         if (process.env.NODE_ENV === "development") {
-          node.setAttribute("data-brz-css", `custom-${defaultID}`);
+          node.setAttribute(makeAttr("css"), `custom-${defaultID}`);
         }
         node.appendChild(document.createTextNode(""));
         node.childNodes[0].nodeValue = cssText;
@@ -483,7 +484,7 @@ export function css1(
     if (!css.isServer) {
       node = document.createElement("style");
       if (process.env.NODE_ENV === "development") {
-        node.setAttribute("data-brz-css", "");
+        node.setAttribute(makeAttr("css"), "");
       }
       node.appendChild(document.createTextNode(""));
       node.childNodes[0].nodeValue = cssText;

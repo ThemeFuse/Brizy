@@ -1,6 +1,10 @@
 import classnames from "classnames";
 import React from "react";
+import { connect } from "react-redux";
 import { currentUserRole } from "visual/component/Roles";
+import { setDeviceMode } from "visual/redux/actions2";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { Option as OptionData } from "../../options";
 import Option from "./Option";
 
@@ -21,6 +25,12 @@ const fillerOption = (option: OptionData) => {
 
   return true;
 };
+const mapDevice = (device: ReduxState) => ({
+  deviceMode: deviceModeSelector(device)
+});
+const mapDispatch = { setDeviceMode };
+
+const connector = connect(mapDevice, mapDispatch);
 
 interface Props {
   className?: string;
@@ -62,4 +72,4 @@ class Options extends React.Component<Props> {
   }
 }
 
-export default Options;
+export default connector(Options);

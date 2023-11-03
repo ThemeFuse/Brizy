@@ -1,4 +1,5 @@
 import $ from "jquery";
+import { makeAttr } from "visual/utils/i18n/attribute";
 
 function changeTab($tabs, target) {
   const $tabsContent = $tabs
@@ -36,7 +37,7 @@ function changeTab($tabs, target) {
 export default function ($node) {
   $node.find(".brz-tabs").each(function () {
     const $this = $(this);
-    const action = $this.attr("data-action");
+    const action = $this.attr(makeAttr("action"));
     const events = action === "hover" ? "mouseenter" : "click";
 
     if (events === "click") {

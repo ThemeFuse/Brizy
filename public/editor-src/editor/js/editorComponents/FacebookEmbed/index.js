@@ -7,6 +7,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
@@ -95,22 +96,38 @@ class FacebookEmbed extends EditorComponent {
       postHref,
       videoHref
     } = v;
+
     const appData = this.getAppData();
     const data =
       type === "post"
         ? {
-            "data-show-text": postAndVideoShowText === "on",
-            "data-href": postHref,
-            "data-lang": appData.lang
+            ...makeDataAttr({
+              name: "show-text",
+              value: String(postAndVideoShowText === "on")
+            }),
+            ...makeDataAttr({ name: "href", value: postHref }),
+            ...makeDataAttr({ name: "lang", value: appData.lang })
           }
         : {
-            "data-width": "auto",
-            "data-show-text": postAndVideoShowText === "on",
-            "data-allowFullScreen": videoAllowFullScreen === "on",
-            "data-autoplay": videoAutoPlay === "on",
-            "data-show-captions": videoCaptions == "on",
-            "data-href": videoHref,
-            "data-lang": appData.lang
+            ...makeDataAttr({ name: "width", value: "auto" }),
+            ...makeDataAttr({
+              name: "show-text",
+              value: String(postAndVideoShowText === "on")
+            }),
+            ...makeDataAttr({
+              name: "allowFullScreen",
+              value: String(videoAllowFullScreen === "on")
+            }),
+            ...makeDataAttr({
+              name: "autoplay",
+              value: String(videoAutoPlay === "on")
+            }),
+            ...makeDataAttr({
+              name: "show-captions",
+              value: String(videoCaptions === "on")
+            }),
+            ...makeDataAttr({ name: "href", value: videoHref }),
+            ...makeDataAttr({ name: "lang", value: appData.lang })
           };
     const t = type === "post" ? "post" : "video";
 

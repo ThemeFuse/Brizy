@@ -106,7 +106,7 @@ export const getUsedModelsFonts: GetUsedModelsFonts = ({
       const globalBlockValue = id ? globalBlocks[id] : undefined;
 
       if (globalBlockValue) {
-        const models = { models: globalBlockValue, globalBlocks };
+        const models = { models: globalBlockValue.data, globalBlocks };
 
         getUsedModelsFonts(models).forEach((font) => {
           fontFamilies.add(splitFont(font));

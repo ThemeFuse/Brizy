@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { capitalize } from "visual/utils/string";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -42,7 +43,7 @@ export class LimeSpot extends EditorComponent<Value> {
       <Wrapper
         {...this.makeWrapperProps({ className: "brz-shopify-limespot-upsell" })}
       >
-        <div data-pf-type="LimeSpot">
+        <div {...makeDataAttr({ name: "pf-type", value: "LimeSpot" })}>
           <div id={`pf_limespot_${capitalize(upsellType)}`} />
         </div>
       </Wrapper>

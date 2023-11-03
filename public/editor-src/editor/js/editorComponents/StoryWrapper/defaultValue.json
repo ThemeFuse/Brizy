@@ -5,7 +5,7 @@
     "showToolbar": "off",
 
     "zIndex": 0,
-    "zIndexSuffix": null
+    "zIndexSuffix": ""
   },
 
   "style": {

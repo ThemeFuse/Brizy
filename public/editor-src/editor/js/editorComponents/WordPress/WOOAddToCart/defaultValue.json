@@ -360,23 +360,6 @@
     "tempButtonBorderBottomWidth": 2,
     "tempButtonBorderLeftWidth": 2,
 
-    "tabletSpacing": null,
-    "tabletSpacingSuffix": null,
-
-    "tabletInputSize": null,
-
-    "tabletInputWidth": null,
-    "tabletInputWidthSuffix": null,
-
-    "tabletInputHeight": null,
-    "tabletInputHeightSuffix": null,
-
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-
-    "tabletHeight": null,
-    "tabletHeightSuffix": null,
-
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontFamilyType": null,
     "tabletTypographyFontSize": 13,
@@ -416,23 +399,6 @@
     "tabletClearFontWeight": 400,
     "tabletClearLineHeight": 1.5,
     "tabletClearLetterSpacing": 1,
-
-    "mobileSpacing": null,
-    "mobileSpacingSuffix": null,
-
-    "mobileInputSize": null,
-
-    "mobileInputWidth": null,
-    "mobileInputWidthSuffix": null,
-
-    "mobileInputHeight": null,
-    "mobileInputHeightSuffix": null,
-
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
-
-    "mobileHeight": null,
-    "mobileHeightSuffix": null,
 
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontFamilyType": null,

@@ -14,6 +14,7 @@ import Config from "visual/global/Config";
 import { CMS, isCMS, isCloud } from "visual/global/Config/types/configs/Cloud";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -236,8 +237,8 @@ export default class Translation extends EditorComponent<Value, Props, State> {
           {...this.makeWrapperProps({
             className,
             attributes: {
-              "data-showflags": showFlags,
-              "data-showname": showName
+              ...makeDataAttr({ name: "showflags", value: showFlags }),
+              ...makeDataAttr({ name: "showName", value: showName })
             }
           })}
         >

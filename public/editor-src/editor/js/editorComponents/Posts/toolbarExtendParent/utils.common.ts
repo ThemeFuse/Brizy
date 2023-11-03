@@ -1,3 +1,5 @@
+import { Choice } from "visual/component/Options/types/dev/Select/types";
+import { Sources } from "visual/editorComponents/Posts/types";
 import { V } from "visual/types";
 import * as Str from "visual/utils/reader/string";
 
@@ -49,3 +51,14 @@ export const disableNavigation = (v: V): boolean => {
 
   return false;
 };
+
+export const orderByConverter = (
+  selectedSource: string | null | undefined,
+  sourcesArr: Sources[]
+): Choice[] =>
+  sourcesArr
+    .find((item) => item.id === selectedSource)
+    ?.orderBy.map((orderByItem) => ({
+      value: orderByItem.id,
+      title: orderByItem.title
+    })) ?? [];

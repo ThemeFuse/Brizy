@@ -1,10 +1,11 @@
-import { ReduxState } from "../types";
 import { ReduxAction } from "../actions2";
+import { ReduxState } from "../types";
 
 type UIState = ReduxState["ui"];
 
 const defaultState: UIState = {
   deviceMode: "desktop",
+  activeElement: null,
   leftSidebar: {
     isOpen: false,
     drawerContentType: undefined

@@ -24,18 +24,9 @@ const webpackConfigPro = require("./webpack.config.pro");
 // postcss
 const sass = require("@csstools/postcss-sass");
 const postcssSCSS = require("postcss-scss");
+const postcssURL = require("postcss-url");
 const autoprefixer = require("autoprefixer");
 const tailwindcss = require("tailwindcss");
-const postsCssProcessors = [
-  sass({
-    includePaths: ["node_modules", "../node_modules"],
-    errLogToConsole: true
-  }),
-  autoprefixer({
-    browsers: ["last 2 versions"]
-  }),
-  tailwindcss()
-];
 
 const chalk = require("chalk");
 const del = require("del");
@@ -66,6 +57,29 @@ const {
   paths
 } = argvVars(process.argv);
 const WP = TARGET === "WP";
+
+const postsCssProcessors = [
+  sass({
+    includePaths: ["node_modules", "../node_modules"],
+    errLogToConsole: true
+  }),
+  autoprefixer({
+    browsers: ["last 2 versions"]
+  }),
+  postcssURL({
+    filter: "**/subset-Nunito-*",
+    basePath: path.resolve("./node_modules/@brizy/ui/dist"),
+    assetsPath: paths.build,
+    url: (asset, _, options) => {
+      fs.copyFileSync(
+        `${options.basePath}/${asset.relativePath}`,
+        `${paths.build}/editor/${asset.relativePath}`
+      );
+      return `../fonts/${path.basename(asset.url)}`;
+    }
+  }),
+  tailwindcss()
+];
 
 function verifications(done) {
   let aborted = false;
@@ -306,7 +320,10 @@ function exportJS(done) {
       }
       if (ANALYZE_PREVIEW) {
         fs.writeFileSync(
-          path.resolve(paths.build, "editor/js/preview.min.js.webpack-stats.json"),
+          path.resolve(
+            paths.build,
+            "editor/js/preview.min.js.webpack-stats.json"
+          ),
           JSON.stringify(stats.toJson().children[0]),
           "utf8"
         );

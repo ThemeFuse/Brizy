@@ -30,7 +30,7 @@ export const isCMS = (c: Cloud): c is CMS => c.platform === "cms";
 
 export interface Shopify extends Base<"shopify"> {
   page: CollectionPage;
-  templates: { id: string }[];
+  templates: { id: string; title: string }[];
   templateType: {
     id: string;
     type: ShopifyTemplate;

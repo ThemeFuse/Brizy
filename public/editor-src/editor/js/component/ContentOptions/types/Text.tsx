@@ -1,10 +1,11 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
 import { TextEditor } from "visual/component/Controls/TextEditor";
-import * as str from "visual/utils/reader/string";
+import { Translate } from "visual/component/Translate";
 import { hasDC } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { V } from "visual/types";
+import * as str from "visual/utils/reader/string";
 
 type Props = {
   id: string;
@@ -28,14 +29,14 @@ export const Text: React.FC<Props> = ({
   const hasDC_ = hasDC(v, id);
 
   return hasDC_ ? (
-    React.createElement(tagName, {
-      className,
-
+    <Translate
+      tagName={tagName}
+      className={className}
+      dangerouslySetInnerHTML={{ __html: v[id] || "" }}
       // WordPress can send contents with encoded html entities
       // (e.g. Brizy&#8217;s Dynamic Content)
       // making us resort for dangerouslySetInnerHTML for now
-      dangerouslySetInnerHTML: { __html: v[id] || "" }
-    })
+    />
   ) : (
     <TextEditor
       className={className_} // TextEditor puts brz-${tagName} class itself

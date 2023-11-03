@@ -4,6 +4,7 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { hexToRgba } from "visual/utils/color";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -77,45 +78,73 @@ export class StampedBadge extends EditorComponent<Value> {
     const attr: Record<string, string> = {};
 
     if (fillEmpty === "on") {
-      attr["data-fill-empty"] = "true";
+      attr[`${makeAttr("fill-empty")}`] = "true";
     }
 
     if (randomizer === "on") {
-      attr["data-random"] = "true";
+      attr[`${makeAttr("random")}`] = "true";
     }
     if (reviewIDs !== "") {
-      attr["data-review-ids"] = reviewIDs.trim().replace(/ /g, ",");
+      attr[`${makeAttr("review-ids")}`] = reviewIDs.trim().replace(/ /g, ",");
     }
     if (productIDs !== "") {
-      attr["data-product-ids"] = productIDs.trim().replace(/ /g, ",");
+      attr[`${makeAttr("product-ids")}`] = productIDs.trim().replace(/ /g, ",");
     }
     if (productType !== "") {
-      attr["data-product-category"] = productType;
+      attr[`${makeAttr("product-category")}`] = productType;
     }
     if (productVendor !== "") {
-      attr["data-product-brand"] = productVendor;
+      attr[`${makeAttr("product-brand")}`] = productVendor;
     }
     if (feedTags !== "") {
-      attr["data-tags"] = feedTags.trim().replace(/ /g, ",");
+      attr[`${makeAttr("tags")}`] = feedTags.trim().replace(/ /g, ",");
     }
     if (headerTitle !== "") {
-      attr["data-title"] = headerTitle;
+      attr[`${makeAttr("title")}`] = headerTitle;
     }
+
+    const limitWordsDataFromAttr = makeDataAttr({
+      name: "limit-words",
+      value: limitWords
+    });
+
+    const minimumRatingDataFromAttr = makeDataAttr({
+      name: "min-rating",
+      value: minimumRating
+    });
+
+    const hexToRgbColorTextDataFromAttr = makeDataAttr({
+      name: "color-text",
+      value: hexToRgba(textColorHex, textColorOpacity)
+    });
+
+    const hexToRgbaStartDataFromAttr = makeDataAttr({
+      name: "color-stars",
+      value: hexToRgba(starColorHex, starColorOpacity)
+    });
+
+    const hexToRgbStyleColorTextDataFromAttr = makeDataAttr({
+      name: "style-color-text",
+      value: hexToRgba(textColorHex, textColorOpacity)
+    });
 
     switch (type) {
       case "minimal":
         return (
           <div
             id="stamped-reviews-widget"
-            data-widget-type="site-badge"
-            data-badge-type="minimal"
-            data-color-text={hexToRgba(textColorHex, textColorOpacity)}
-            data-color-stars={hexToRgba(starColorHex, starColorOpacity)}
-            data-star-size={`${starSize}${starSizeSuffix}`}
-            data-limit-words={limitWords.toString()}
-            data-min-rating={minimumRating}
-            data-style-color-star="false"
-            data-style-color-text={hexToRgba(textColorHex, textColorOpacity)}
+            {...makeDataAttr({ name: "widget-type", value: "site-badge" })}
+            {...makeDataAttr({ name: "badge-type", value: "minimal" })}
+            {...hexToRgbColorTextDataFromAttr}
+            {...hexToRgbaStartDataFromAttr}
+            {...makeDataAttr({
+              name: "star-size",
+              value: `${starSize}${starSizeSuffix}`
+            })}
+            {...limitWordsDataFromAttr}
+            {...minimumRatingDataFromAttr}
+            {...makeDataAttr({ name: "style-color-star", value: "false" })}
+            {...hexToRgbStyleColorTextDataFromAttr}
             {...attr}
           />
         );
@@ -124,25 +153,31 @@ export class StampedBadge extends EditorComponent<Value> {
         return (
           <div
             id="stamped-reviews-widget"
-            data-widget-type="site-badge"
-            data-height={`${feedHeight}${feedHeightSuffix}`}
-            data-with-photos="false"
-            data-badge-type="badge"
-            data-color-outer={hexToRgba(
-              ribbonOuterColorHex,
-              ribbonOuterColorOpacity
-            )}
-            data-color-inner={hexToRgba(
-              ribbonInnerColorHex,
-              ribbonInnerColorOpacity
-            )}
-            data-color-ribbon={hexToRgba(ribbonColorHex, ribbonColorOpacity)}
-            data-color-text={hexToRgba(textColorHex, textColorOpacity)}
-            data-color-stars={hexToRgba(starColorHex, starColorOpacity)}
-            data-limit-words={limitWords.toString()}
-            data-min-rating={minimumRating}
-            data-style-color-star="false"
-            data-style-color-text={hexToRgba(textColorHex, textColorOpacity)}
+            {...makeDataAttr({ name: "widget-type", value: "site-badge" })}
+            {...makeDataAttr({
+              name: "height",
+              value: `${feedHeight}${feedHeightSuffix}`
+            })}
+            {...makeDataAttr({ name: "with-photos", value: "false" })}
+            {...makeDataAttr({ name: "badge-type", value: "badge" })}
+            {...makeDataAttr({
+              name: "color-outer",
+              value: hexToRgba(ribbonOuterColorHex, ribbonOuterColorOpacity)
+            })}
+            {...makeDataAttr({
+              name: "color-inner",
+              value: hexToRgba(ribbonInnerColorHex, ribbonInnerColorOpacity)
+            })}
+            {...makeDataAttr({
+              name: "color-ribbon",
+              value: hexToRgba(ribbonColorHex, ribbonColorOpacity)
+            })}
+            {...hexToRgbColorTextDataFromAttr}
+            {...hexToRgbaStartDataFromAttr}
+            {...limitWordsDataFromAttr}
+            {...minimumRatingDataFromAttr}
+            {...makeDataAttr({ name: "style-color-star", value: "false" })}
+            {...hexToRgbStyleColorTextDataFromAttr}
             {...attr}
           />
         );

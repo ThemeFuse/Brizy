@@ -3,12 +3,15 @@ import { mergeDeep } from "timm";
 import _ from "underscore";
 import { fontsSelector } from "visual/redux/selectors";
 import {
+  ActiveElement,
   Authorized,
   Block,
   DeviceMode,
   ExtraFontStyle,
   Font,
   GlobalBlock,
+  GlobalBlockNormal,
+  GlobalBlockPopup,
   GoogleFont,
   ShopifyPage,
   Style,
@@ -64,7 +67,7 @@ export type ActionUpdateBlocks = {
 
 export type ActionMakeNormalToGlobalBlock = {
   type: "MAKE_NORMAL_TO_GLOBAL_BLOCK";
-  payload: GlobalBlock;
+  payload: GlobalBlockNormal;
 };
 
 export type ActionMakeGlobalToNormalBlock = {
@@ -74,7 +77,7 @@ export type ActionMakeGlobalToNormalBlock = {
 
 export type ActionMakePopupToGlobalBlock = {
   type: "MAKE_POPUP_TO_GLOBAL_BLOCK";
-  payload: GlobalBlock;
+  payload: GlobalBlockPopup;
 };
 
 export type ActionMakeGlobalBlockToPopup = {
@@ -88,6 +91,8 @@ export type ActionUpdateGlobalBlock = {
     id: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: any;
+    title?: string;
+    tags?: string;
   };
   meta: {
     is_autosave: 0 | 1;
@@ -167,7 +172,7 @@ export type ActionAddGlobalBlock = {
 export type ActionDeleteGlobalBlock = {
   type: "DELETE_GLOBAL_BLOCK";
   payload: {
-    id: number;
+    id: string;
   };
 };
 
@@ -235,6 +240,7 @@ export type ReduxAction =
   | ActionUpdateKitId
   | ActionDisabledElements
   | ActionUpdatePageLayout
+  | ActionUpdateIsHomePage
   | ActionFetchPageSuccess
   | ActionUpdateExtraFontStyles
   | ActionImportTemplate
@@ -333,6 +339,13 @@ export type ActionUpdatePageLayout = {
   };
 };
 
+export type ActionUpdateIsHomePage = {
+  type: "UPDATE_PAGE_IS_HOME_PAGE";
+  payload: {
+    isHomePage: ShopifyPage["layout"]["isHomePage"];
+  };
+};
+
 export const FETCH_PAGE_SUCCESS = "FETCH_PAGE_SUCCESS";
 
 export type ActionFetchPageSuccess = {
@@ -351,7 +364,7 @@ export type ActionUpdateExtraFontStyles = {
 export { redo, undo } from "./history/actions";
 
 export function makeNormalToGlobalBlock(
-  globalBlock: GlobalBlock
+  globalBlock: GlobalBlockNormal
 ): ActionMakeNormalToGlobalBlock {
   return {
     type: "MAKE_NORMAL_TO_GLOBAL_BLOCK",
@@ -376,7 +389,7 @@ export function makeGlobalToNormalBlock({
 }
 
 export function makePopupToGlobalBlock(
-  globalBlock: GlobalBlock
+  globalBlock: GlobalBlockPopup
 ): ActionMakePopupToGlobalBlock {
   return {
     type: "MAKE_POPUP_TO_GLOBAL_BLOCK",
@@ -406,10 +419,14 @@ export function makeGlobalBlockToPopup({
 export function updateGlobalBlock({
   id,
   data,
+  title,
+  tags,
   meta
 }: {
   id: string;
   data: GlobalBlock["data"];
+  title?: string;
+  tags?: string;
   meta?: {
     is_autosave?: 1 | 0;
     sourceBlockId?: string;
@@ -417,10 +434,7 @@ export function updateGlobalBlock({
 }): ActionUpdateGlobalBlock {
   return {
     type: "UPDATE_GLOBAL_BLOCK",
-    payload: {
-      id,
-      data
-    },
+    payload: { id, data, title, tags },
     meta: {
       is_autosave: 1,
       ...meta
@@ -630,7 +644,7 @@ export function addGlobalBlock(
 export function deleteGlobalBlock({
   id
 }: {
-  id: number;
+  id: string;
 }): ActionDeleteGlobalBlock {
   return {
     type: "DELETE_GLOBAL_BLOCK",
@@ -745,6 +759,10 @@ export function setDeviceMode(mode: DeviceMode): ActionUpdateUI {
   return updateUI("deviceMode", mode);
 }
 
+export function setActiveElement(element: ActiveElement): ActionUpdateUI {
+  return updateUI("activeElement", element);
+}
+
 // authorized
 
 export function updateAuthorization(
@@ -775,3 +793,12 @@ export function updatePageTitle(title: string): ActionUpdatePageTitle {
     payload: title
   };
 }
+
+export const updatePageIsHomePage = (
+  isHomePage: string | null
+): ActionUpdateIsHomePage => {
+  return {
+    type: "UPDATE_PAGE_IS_HOME_PAGE",
+    payload: { isHomePage }
+  };
+};

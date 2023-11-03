@@ -97,9 +97,15 @@
       &-image {
         width: 100%;
         position: relative;
+        padding-bottom: 56.25%;
 
         img {
           width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          object-fit: cover;
+          background-color: red;
         }
 
         .brz-eventLayout--featured__preview {
@@ -327,6 +333,7 @@
 
       a {
         color: inherit;
+        transition: inherit;
       }
 
       table {

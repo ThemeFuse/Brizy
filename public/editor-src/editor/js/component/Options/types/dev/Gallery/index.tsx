@@ -27,7 +27,7 @@ import { reducer } from "./reducer";
 import * as Actions from "./types/Actions";
 import * as Image from "./types/Image";
 import * as Item from "./types/Item";
-import { allowedExtensions, toUploadData } from "./utils";
+import { allowedExtensions, toInitialStructure, toUploadData } from "./utils";
 
 export type Value<I extends Image.Image> = Array<Image.Image | I>;
 type Items = Item.Item<number>[];
@@ -119,10 +119,17 @@ export function Gallery<I extends Image.Image>({
       .subscribe(dispatch);
     const onChange$ = items$.current
       .pipe(
-        map((is) => is.filter(Item.isThumbnail).map((i) => i.payload)),
+        map((is) =>
+          is
+            .filter(Item.isThumbnail)
+            .map(({ id, payload }) => ({ id, payload }))
+        ),
         withLatestFrom(value$.current),
-        filter(([newValue, current]) => !Arr.eq(Image.eq, newValue, current)),
-        map(([v]) => v)
+        filter(
+          ([newValue, current]) =>
+            !Arr.eq(Image.eq, toInitialStructure(newValue), current)
+        ),
+        map(([v]) => toInitialStructure(v))
       )
       .subscribe(handleOnChange.current.fn);
     return () => {

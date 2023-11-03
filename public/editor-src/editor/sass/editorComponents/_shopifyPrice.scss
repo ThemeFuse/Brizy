@@ -22,6 +22,10 @@
     justify-content: center;
     text-decoration: line-through;
     height: fit-content;
+
+    &:empty{
+      display:none;
+    }
   }
 
   .brz-shortcode__placeholder.placeholder-is-empty {

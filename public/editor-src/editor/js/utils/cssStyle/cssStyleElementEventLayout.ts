@@ -407,3 +407,29 @@ export const cssStyleElementEventLayoutViewBgGradientActive = ({
     prefix: "view"
   });
 };
+
+export const cssStyleElementEventLayoutCalendarEventsColor = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "eventsColor"
+  });
+};
+
+export const cssStyleElementEventLayoutCalendarEventsTypography = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "eventsTypography"
+  });
+};

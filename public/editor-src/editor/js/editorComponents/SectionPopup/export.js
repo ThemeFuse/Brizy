@@ -1,4 +1,5 @@
 import $ from "jquery";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
 
 export default function ($node) {
@@ -8,60 +9,66 @@ export default function ($node) {
   const rootBody = root.ownerDocument.body;
   const globalPopupsProcessed = {};
 
-  root.querySelectorAll("[data-brz-link-type='popup']").forEach((node) => {
-    const popupId = node.getAttribute("href").slice(1); // without the `#`
-    let parent = node.parentElement;
-    let popup;
+  root
+    .querySelectorAll(
+      makeDataAttrString({ name: "link-type", value: "'popup'" })
+    )
+    .forEach((node) => {
+      const popupId = node.getAttribute("href").slice(1); // without the `#`
+      let parent = node.parentElement;
+      let popup;
 
-    // Link with reference to a global popup
-    // Global Block Popup exist only 1 in all page
-    if (globalPopupsProcessed[popupId]) {
-      node.setAttribute("href", `#${globalPopupsProcessed[popupId]}`);
-      return;
-    }
-
-    while (parent) {
-      popup = [...parent.children].find(
-        (node) => node.dataset.brzPopup === popupId
-      );
-
-      if (popup) {
-        break;
+      // Link with reference to a global popup
+      // Global Block Popup exist only 1 in all page
+      if (globalPopupsProcessed[popupId]) {
+        node.setAttribute("href", `#${globalPopupsProcessed[popupId]}`);
+        return;
       }
 
-      parent = parent.parentElement;
-    }
+      while (parent) {
+        popup = [...parent.children].find(
+          (node) => node.dataset.brzPopup === popupId
+        );
 
-    // append the popup to body to avoid problems with z-index
-    // need to regenerate ids for popups for Dynamic Content
-    if (popup && popup.parentElement !== rootBody) {
-      const newId = uuid();
-      const isGlobal = popup.getAttribute("id").includes("global_");
+        if (popup) {
+          break;
+        }
 
-      node.setAttribute("href", `#${newId}`);
-      popup.setAttribute("data-brz-popup", newId);
-
-      if (isGlobal) {
-        globalPopupsProcessed[popupId] = newId;
+        parent = parent.parentElement;
       }
 
-      rootBody.append(popup);
-    }
-  });
+      // append the popup to body to avoid problems with z-index
+      // need to regenerate ids for popups for Dynamic Content
+      if (popup && popup.parentElement !== rootBody) {
+        const newId = uuid();
+        const isGlobal = popup.getAttribute("id").includes("global_");
 
-  $node.find("[data-brz-link-type='popup']").on("click", function (e) {
-    e.preventDefault();
+        node.setAttribute("href", `#${newId}`);
+        popup.setAttribute(makeAttr("popup"), newId);
 
-    const popupId = this.getAttribute("href").slice(1); // without the `#`
+        if (isGlobal) {
+          globalPopupsProcessed[popupId] = newId;
+        }
 
-    if (popupId) {
-      const $popup = $(`[data-brz-popup="${popupId}"]`);
-
-      if ($popup.hasClass("brz-popup")) {
-        openPopup($popup.get(0));
+        rootBody.append(popup);
       }
-    }
-  });
+    });
+
+  $node
+    .find(makeDataAttrString({ name: "link-type", value: "'popup'" }))
+    .on("click", function (e) {
+      e.preventDefault();
+
+      const popupId = this.getAttribute("href").slice(1); // without the `#`
+
+      if (popupId) {
+        const $popup = $(makeDataAttrString({ name: "popup", value: popupId }));
+
+        if ($popup.hasClass("brz-popup")) {
+          openPopup($popup.get(0));
+        }
+      }
+    });
 
   $node.find(".brz-popup:not(.brz-initialized)").click(function (e) {
     const clickedInsideContent =

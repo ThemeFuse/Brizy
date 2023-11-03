@@ -63,9 +63,15 @@ export type VDecoded = {
   excludeCurrentProductOption?: boolean;
 };
 
+export interface Sources {
+  id: string;
+  title: string;
+  orderBy: { id: string; title: string }[];
+}
+
 export interface Context {
   collectionTypesInfo: {
-    collectionTypes: { id: string; slug?: string | null; title: string }[];
+    sources: Sources[];
     refsById: Dictionary<
       {
         type: "single" | "multi" | "manual";

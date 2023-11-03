@@ -25,6 +25,7 @@ const data: GlobalBlock["data"] = {
 };
 
 const globalBlock1: GlobalBlock = {
+  id: "block1",
   status: "publish",
   rules: [],
   position: null,
@@ -33,6 +34,7 @@ const globalBlock1: GlobalBlock = {
 };
 
 const globalBlock2: GlobalBlock = {
+  id: "block2",
   status: "publish",
   rules: [],
   position: {
@@ -45,6 +47,7 @@ const globalBlock2: GlobalBlock = {
 };
 
 const globalBlock3: GlobalBlock = {
+  id: "block3",
   status: "publish",
   rules: [],
   position: {
@@ -57,6 +60,7 @@ const globalBlock3: GlobalBlock = {
 };
 
 const globalBlock4: GlobalBlock = {
+  id: "block4",
   status: "publish",
   rules: [],
   position: {
@@ -69,6 +73,7 @@ const globalBlock4: GlobalBlock = {
 };
 
 const globalBlock6: GlobalBlock = {
+  id: "block6",
   status: "publish",
   rules: [],
   position: {

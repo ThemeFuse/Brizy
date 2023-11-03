@@ -22,7 +22,7 @@ export type Props = Option.Props<MValue<ChoiceWithPermalink>> &
   };
 
 export interface ChoiceWithPermalink extends Choice {
-  permalink?: string;
+  populationPermalink?: string;
   id?: string;
 }
 

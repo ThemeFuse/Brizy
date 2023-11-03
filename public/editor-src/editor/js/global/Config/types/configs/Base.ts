@@ -78,7 +78,7 @@ export interface Base<Platform> extends ConfigCommon, WithId<number> {
   platform: Platform;
   dynamicContent: DynamicContent<"cloud">;
   pro: Pro<"cloud">;
-  user: User<"cloud">;
+  user: User;
   urls: Urls<"cloud">;
   project: Project<"cloud">;
   whiteLabel?: WhiteLabel;

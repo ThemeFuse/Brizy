@@ -4,6 +4,7 @@ import React from "react";
 import ClickOutside from "visual/component/ClickOutside";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import ContainerBorderButton from "./ContainerBorderButton";
 
 export default class ContainerBorder extends React.Component {
@@ -182,9 +183,12 @@ export default class ContainerBorder extends React.Component {
     if (this.isBorderActive !== border) {
       this.isBorderActive = border;
       if (border) {
-        this.containerRef.current.setAttribute("data-border--active", type);
+        this.containerRef.current.setAttribute(
+          makeAttr("border--active"),
+          type
+        );
       } else {
-        this.containerRef.current.removeAttribute("data-border--active");
+        this.containerRef.current.removeAttribute(makeAttr("border--active"));
       }
     }
   }
@@ -195,9 +199,12 @@ export default class ContainerBorder extends React.Component {
 
       if (hover) {
         const { type } = this.props;
-        this.containerRef.current.setAttribute("data-border--hovered", type);
+        this.containerRef.current.setAttribute(
+          makeAttr("border--hovered"),
+          type
+        );
       } else {
-        this.containerRef.current.removeAttribute("data-border--hovered");
+        this.containerRef.current.removeAttribute(makeAttr("border--hovered"));
       }
     }
   }
@@ -208,9 +215,12 @@ export default class ContainerBorder extends React.Component {
 
       if (hidden) {
         const { type } = this.props;
-        this.containerRef.current.setAttribute("data-border--hidden", type);
+        this.containerRef.current.setAttribute(
+          makeAttr("border--hidden"),
+          type
+        );
       } else {
-        this.containerRef.current.removeAttribute("data-border--hidden");
+        this.containerRef.current.removeAttribute(makeAttr("border--hidden"));
       }
     }
   }
@@ -253,12 +263,10 @@ export default class ContainerBorder extends React.Component {
       <div ref={this.innerBorderRef} className={borderClassName} />
     );
 
-    let attr = {
-      "data-border": type
-    };
+    let attr = makeDataAttr({ name: "border", value: type });
 
     if (color) {
-      attr[`data-border--${color}`] = type;
+      attr[makeAttr(`border--${color}`)] = type;
     }
 
     return (

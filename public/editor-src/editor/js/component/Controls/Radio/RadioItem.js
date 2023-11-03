@@ -1,10 +1,11 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import { uuid } from "visual/utils/uuid";
 import Toolbar from "visual/component/Toolbar";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
+import { uuid } from "visual/utils/uuid";
 
 export default class RadioItem extends React.Component {
   static defaultProps = {
@@ -85,8 +86,14 @@ export default class RadioItem extends React.Component {
           value={value}
           checked={active}
           required={required}
-          data-type={this.props["data-type"]}
-          data-label={this.props["data-label"]}
+          {...makeDataAttr({
+            name: "type",
+            value: this.props[makeAttr("type")]
+          })}
+          {...makeDataAttr({
+            name: "label",
+            value: this.props[makeAttr("label")]
+          })}
           onChange={() => {}}
         />
         <label className="brz-label" htmlFor={id}>

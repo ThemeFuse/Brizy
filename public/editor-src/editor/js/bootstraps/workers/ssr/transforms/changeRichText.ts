@@ -1,9 +1,10 @@
+import { addDataColorAttribute } from "visual/bootstraps/workers/ssr/utils/changeRichText";
 import { Type as LinkType } from "visual/component/Link/types/Type";
-import Config, { Config as Conf, isWp } from "visual/global/Config";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { Block } from "visual/types";
+import { customFileUrl } from "visual/utils/customFile";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import {
   defaultImagePopulation,
@@ -20,7 +21,6 @@ const linkClassNames = [
 ];
 
 export const changeRichText = ($: cheerio.Root): void => {
-  const config = Config.getAll();
   const $richText = $(".brz-rich-text");
 
   // Change Links
@@ -88,7 +88,7 @@ export const changeRichText = ($: cheerio.Root): void => {
 
         $this.replaceWith(link);
       } else if (url) {
-        link.attr("href", getLinkContentByType(data.type, url, config));
+        link.attr("href", getLinkContentByType(data.type, url));
         link.attr("data-brz-link-type", data.type);
 
         if (newData.type === "external" && newData.externalBlank === "on") {
@@ -109,6 +109,8 @@ export const changeRichText = ($: cheerio.Root): void => {
         );
       }
     });
+
+  addDataColorAttribute($, $richText);
 
   // replace DynamicContent
   $richText.find("[data-population]").each(function (this: cheerio.Cheerio) {
@@ -181,11 +183,7 @@ export const changeRichText = ($: cheerio.Root): void => {
     });
 };
 
-function getLinkContentByType(
-  type: LinkType,
-  href: string,
-  config: Conf
-): string {
+function getLinkContentByType(type: LinkType, href: string): string {
   switch (type) {
     case "anchor": {
       href = href.replace("#", "");
@@ -197,10 +195,7 @@ function getLinkContentByType(
       return `#${anchorName}`;
     }
     case "upload": {
-      const { customFile } = config.urls;
-      const [name] = href.split("|||", 1);
-
-      return isWp(config) ? `${customFile}${name}` : `${customFile}/${name}`;
+      return customFileUrl(href) ?? "";
     }
     case "popup":
     case "lightBox":

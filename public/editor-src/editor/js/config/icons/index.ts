@@ -1,16 +1,17 @@
-import { Id, Type } from "visual/config/icons/Type";
-import { Icon } from "visual/config/icons/Icon";
 import { Category } from "visual/config/icons/Categories";
-import { categories as ncCats } from "visual/config/icons/categories/nc";
+import { Icon } from "visual/config/icons/Icon";
+import { Id, Type } from "visual/config/icons/Type";
 import { categories as faCats } from "visual/config/icons/categories/fa";
+import { categories as ncCats } from "visual/config/icons/categories/nc";
+import { getTypeIcons } from "visual/config/icons/icons";
 import { types as freeTypes } from "visual/config/icons/types/free";
 import { types as proTypes } from "visual/config/icons/types/pro";
-import { IS_WP, IS_PRO } from "visual/utils/env";
 import * as Arr from "visual/utils/array";
-import { getTypeIcons } from "visual/config/icons/icons";
+import { IS_PRO, IS_WP } from "visual/utils/env";
 
+const allTypes = [...proTypes, ...freeTypes];
 export const getTypes = (): Type[] =>
-  IS_WP ? (IS_PRO ? [...proTypes, ...freeTypes] : freeTypes) : proTypes;
+  IS_WP ? (IS_PRO ? allTypes : freeTypes) : allTypes;
 
 export const getIcons = (types: Id[]): Promise<Icon[]> => {
   return Promise.all(types.map(getTypeIcons)).then(Arr.concat);

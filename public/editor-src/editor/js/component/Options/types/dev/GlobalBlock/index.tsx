@@ -16,7 +16,13 @@ import {
   pageSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { Block, GlobalBlock, Screenshot } from "visual/types";
+import {
+  Block,
+  GlobalBlock,
+  GlobalBlockNormal,
+  GlobalBlockPopup,
+  Screenshot
+} from "visual/types";
 import { createGlobalBlock, pendingRequest } from "visual/utils/api";
 import { changeRule, isPopup } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
@@ -89,13 +95,14 @@ export const GlobalBlockOption: Component = ({
           blockData.deleted = false;
         }
 
-        let globalBlock: GlobalBlock = {
+        let globalBlock = {
+          id: blockData.value._id,
           meta,
           status: "draft",
           data: blockData,
           rules: [],
           position: { align: "bottom", top: 0, bottom: 0 }
-        };
+        } as GlobalBlock;
 
         if (!isPopup(blockData) && page) {
           globalBlock = changeRule(globalBlock, true, page);
@@ -114,7 +121,9 @@ export const GlobalBlockOption: Component = ({
               case "externalPopup": {
                 const popupId = blockType === "popup" && getOpenedPopupId();
 
-                dispatch(makePopupToGlobalBlock(globalBlock));
+                dispatch(
+                  makePopupToGlobalBlock(globalBlock as GlobalBlockPopup)
+                );
                 popupId && openPopupById(popupId);
 
                 if (blockType === "externalPopup") {
@@ -123,7 +132,9 @@ export const GlobalBlockOption: Component = ({
                 break;
               }
               case "normal": {
-                dispatch(makeNormalToGlobalBlock(globalBlock));
+                dispatch(
+                  makeNormalToGlobalBlock(globalBlock as GlobalBlockNormal)
+                );
                 openPromptCondition({ type: "block", _id });
                 break;
               }

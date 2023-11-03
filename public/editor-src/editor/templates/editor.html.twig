@@ -36,6 +36,22 @@
   </head>
   <body class="brz brz-ed">
       <div class="brz-ed-page-curtain"><div class="brz-ed-page-spinner"></div></div>
+      <script>
+        const userAgent = navigator.userAgent;
+        const browserRegex =
+          /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i;
+        const browserTypes = userAgent.match(browserRegex) || [];
+        const browser = browserTypes[1]?.toLowerCase();
+
+        if (browser && browser === "safari") {
+          const regexPattern = /version\/(\d+\.\d+)/i;
+          const matches = userAgent.match(regexPattern);  
+          const version = matches ? matches[1] : null;
+          if (version && Number(version) <= 16.3) {
+            alert("Please update Safari browser to the latest version");
+          }
+        }
+      </script>
       <iframe id="brz-ed-iframe" class="brz-iframe brz-ed-iframe--desktop" style="border: 0" srcdoc='
         <html>
           <head>

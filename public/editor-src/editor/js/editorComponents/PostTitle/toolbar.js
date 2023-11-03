@@ -7,14 +7,11 @@ import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import {
-  toolbarLinkAnchor,
-  toolbarLinkExternal,
-  toolbarLinkPopup
-} from "visual/utils/toolbar";
+import { toolbarLinkAnchor, toolbarLinkPopup } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component, context }) {
   const config = Config.getAll();
@@ -42,6 +39,10 @@ export function getItems({ v, device, component, context }) {
 
   const linkSource = dvv("linkSource");
 
+  const linkDC = getDynamicContentOption({
+    options: component.context.dynamicContent.config,
+    type: DCTypes.link
+  });
   return [
     {
       id: "popoverTypography",
@@ -209,13 +210,18 @@ export function getItems({ v, device, component, context }) {
               id: "external",
               label: t("URL"),
               options: [
-                toolbarLinkExternal({
-                  v,
-                  device,
-                  config: component.context.dynamicContent.config,
-                  devices: "desktop",
-                  state: "normal"
-                }),
+                {
+                  id: "link",
+                  type: "population-dev",
+                  label: t("Link to"),
+                  config: linkDC,
+                  option: {
+                    id: "linkExternal",
+                    type: "inputText-dev",
+                    placeholder: "http://",
+                    devices: "desktop"
+                  }
+                },
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),

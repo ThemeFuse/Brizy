@@ -1,6 +1,7 @@
 import { getOptions } from "visual/component/ConditionsComponent";
 import { ToastNotification } from "visual/component/Notifications";
 import Prompts from "visual/component/Prompts";
+import Conf from "visual/global/Config";
 import { GlobalBlock, Screenshot } from "visual/types";
 import { createBlockScreenshot } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
@@ -30,11 +31,12 @@ export const createScreenshot = async (
 
   if (screenshotsSupported) {
     try {
+      const config = Conf.getAll();
       const { src, width, height } = await makeNodeScreenshot(node);
-      const { id } = await createBlockScreenshot({
-        base64: src,
-        blockType: "global"
-      });
+      const { id } = await createBlockScreenshot(
+        { base64: src, blockType: "global" },
+        config
+      );
 
       return {
         _thumbnailSrc: id,

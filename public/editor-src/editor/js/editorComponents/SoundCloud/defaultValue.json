@@ -98,12 +98,6 @@
 
     "customCSS": "",
 
-    "hoverTransition": 50,
-
-    "tabletWidth": null,
-    "tabletHeight": null,
-
-    "mobileWidth": null,
-    "mobileHeight": null
+    "hoverTransition": 50
   }
 }
