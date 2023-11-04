@@ -440,7 +440,7 @@ class Brizy_Editor
             $pid = wc_get_page_id('shop');
         }
 
-        return $pid;
+        return apply_filters( 'brizy_current_post_id', $pid );
     }
 
     static public function get_slug()
