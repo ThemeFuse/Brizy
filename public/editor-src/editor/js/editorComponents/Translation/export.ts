@@ -1,6 +1,7 @@
 import $ from "jquery";
 import { getFreeLibs } from "visual/libs";
-import * as Str from "visual/utils/reader/string";
+import { makeAttr } from "visual/utils/i18n/attribute";
+import { read } from "visual/utils/reader/string";
 
 interface ShowData {
   showName: boolean;
@@ -18,7 +19,7 @@ const divInnerHTML = (
   flag: string,
   showData: ShowData
 ) =>
-  getNameElement(showData.showName, Str.read(item.text) ?? "English") +
+  getNameElement(showData.showName, read(item.text) ?? "English") +
   getFlagElement(showData.showFlags, flag);
 
 const handleTemplateResult =
@@ -59,9 +60,8 @@ export default function ($node: JQuery): void {
 
   root.querySelectorAll<HTMLElement>(".brz-translation").forEach((element) => {
     const $this = $(element).find(".brz-translation__dc") ?? $(element);
-
-    const showFlags = element.getAttribute("data-showflags") === "on";
-    const showName = element.getAttribute("data-showname") === "on";
+    const showFlags = element.getAttribute(makeAttr("showflags")) === "on";
+    const showName = element.getAttribute(makeAttr("showname")) === "on";
     const selectDom =
       element.querySelector<HTMLSelectElement>("select.brz-select");
 

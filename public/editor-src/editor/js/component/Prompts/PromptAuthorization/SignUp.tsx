@@ -2,15 +2,11 @@ import classnames from "classnames";
 import produce from "immer";
 import React, { Component } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import { connect, ConnectedProps } from "react-redux";
+import { ConnectedProps, connect } from "react-redux";
 import { noop } from "underscore";
 import { Alert } from "visual/component/Alert";
-import CheckGroup, {
-  CheckGroupItem
-} from "visual/component/Controls/CheckGroup";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 import { Spacer } from "visual/component/Controls/Spacer";
-import EditorIcon from "visual/component/EditorIcon";
 import { Button } from "visual/component/Prompts/common/Button";
 import { Loading } from "visual/component/Prompts/common/Loading";
 import Config, { isWp } from "visual/global/Config";
@@ -64,7 +60,6 @@ interface SignUpState {
     email: string;
     password: string;
     confirmPassword: string;
-    termsCondition: boolean;
   };
 }
 
@@ -93,8 +88,7 @@ class SignUp extends Component<SingUpProps, SignUpState> {
       lastName: "",
       email: "",
       password: "",
-      confirmPassword: "",
-      termsCondition: false
+      confirmPassword: ""
     }
   };
 
@@ -125,25 +119,8 @@ class SignUp extends Component<SingUpProps, SignUpState> {
   handleConnect = async (): Promise<void> => {
     const { onSuccess, onClose, updateAuthorization, updateSyncAllowed } =
       this.props;
-    const {
-      email,
-      password,
-      confirmPassword,
-      firstName,
-      lastName,
-      termsCondition
-    } = this.state.formData;
-
-    if (!termsCondition) {
-      this.setState({
-        nextLoading: false,
-        notice: {
-          message: t("Agree Terms & Conditions"),
-          type: "error"
-        }
-      });
-      return;
-    }
+    const { email, password, confirmPassword, firstName, lastName } =
+      this.state.formData;
 
     if (!validateEmail(email)) {
       this.setState({
@@ -280,37 +257,6 @@ class SignUp extends Component<SingUpProps, SignUpState> {
                 />
               );
             })}
-
-            <CheckGroup
-              className="brz-ed-popup-authorization__terms"
-              defaultValue={{
-                termsCondition: this.state.formData.termsCondition
-              }}
-              onChange={({ termsCondition }: { termsCondition: boolean }) => {
-                this.handleChange("termsCondition", termsCondition);
-              }}
-            >
-              <CheckGroupItem
-                value="termsCondition"
-                renderIcons={({ active }: { active: boolean }) =>
-                  active ? (
-                    <EditorIcon icon="nc-check-alt" />
-                  ) : (
-                    <EditorIcon icon="nc-uncheck-alt" />
-                  )
-                }
-              >
-                <a
-                  className="brz-a"
-                  href="https://www.brizy.io/terms-and-conditions"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {t("I agree with Terms & Conditions")}
-                </a>
-              </CheckGroupItem>
-            </CheckGroup>
-
             <div className="brz-ed-popup-authorization__buttons">
               <Button
                 color="teal"

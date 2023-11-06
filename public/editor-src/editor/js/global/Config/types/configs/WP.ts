@@ -72,14 +72,13 @@ export interface Prop {
 
   availableRoles: Role[];
   page: string;
-  l10n?: Record<string, string>;
 }
 
 export interface WP extends ConfigCommon {
   prefix?: string;
   dynamicContent: DynamicContent<"wp">;
   pro?: Pro<"wp">;
-  user: User<"wp">;
+  user: User;
   urls: Urls<"wp">;
   project: Project<"wp">;
   template_type?: TemplateType;

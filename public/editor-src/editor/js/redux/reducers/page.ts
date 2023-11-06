@@ -64,6 +64,15 @@ export const page: RPage = (state, action, fullState) => {
       }
       return state;
     }
+    case "UPDATE_PAGE_IS_HOME_PAGE": {
+      if (isShopifyPage(state)) {
+        return produce<ShopifyPage>(state, (draft) => {
+          draft.layout.isHomePage = action.payload.isHomePage;
+          draft.dataVersion = draft.dataVersion + 1;
+        });
+      }
+      return state;
+    }
     default:
       return state;
   }

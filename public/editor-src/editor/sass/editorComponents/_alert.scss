@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   position: relative;
-  word-break: break-all;
+  overflow-wrap: break-word;
   transition-property: color, background-color, text-shadow, box-shadow, border;
 
   .brz-ed-box__resizer {

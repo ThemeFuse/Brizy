@@ -7,6 +7,10 @@ import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/Config
 import UIEvents from "visual/global/UIEvents";
 import { updateUI } from "visual/redux/actions2";
 import { getStore } from "visual/redux/store";
+import {
+  makeAttr,
+  makeDataAttr
+} from "visual/utils/i18n/attribute";
 import SortablePlugin from "./plugin";
 import { SortablePluginOptions } from "./plugin/types";
 
@@ -24,8 +28,8 @@ const fallbackRender = () => {
     <div className="brz-ed-sortable--empty brz-blocked">
       <div
         className="brz-ed-border__sortable brz-ed-border__inner brz-ed-border--no-space"
-        data-border--grey="true"
-        data-border--dotted="true"
+        {...makeDataAttr({ name: "border--grey", value: "true" })}
+        {...makeDataAttr({ name: "border--dotted", value: "true" })}
       />
       <div className="brz-ed-container-trigger brz-ed-container-trigger--small" />
     </div>
@@ -36,14 +40,17 @@ const onSort: SortablePluginOptions["onSort"] = (data): void => {
   const { from, to } = data;
 
   const fromContainerPath =
-    from.sortableNode.getAttribute("data-sortable-path")?.split("-") || [];
-  const fromContainerType =
-    from.sortableNode.getAttribute("data-sortable-type");
+    from.sortableNode.getAttribute(makeAttr("sortable-path"))?.split("-") || [];
+  const fromContainerType = from.sortableNode.getAttribute(
+    makeAttr("sortable-type")
+  );
   const fromItemPath = [...fromContainerPath, String(from.elementIndex)];
 
   const toContainerPath =
-    to.sortableNode?.getAttribute("data-sortable-path")?.split("-") || [];
-  const toContainerType = to.sortableNode.getAttribute("data-sortable-type");
+    to.sortableNode?.getAttribute(makeAttr("sortable-path"))?.split("-") || [];
+  const toContainerType = to.sortableNode.getAttribute(
+    makeAttr("sortable-type")
+  );
   const toItemPath = [...toContainerPath, String(to.elementIndex)];
 
   // notify React to actually change state accordingly
@@ -141,14 +148,17 @@ class Sortable extends Component<Props> {
     return (
       <div
         className="brz-ed-sortable--empty"
-        data-sortable-type={type}
-        data-sortable-path={path}
-        data-sortable-disabled={disabled}
+        {...makeDataAttr({ name: "sortable-type", value: type })}
+        {...makeDataAttr({ name: "sortable-path", value: path })}
+        {...makeDataAttr({
+          name: "sortable-disabled",
+          value: String(disabled)
+        })}
       >
         <div
           className="brz-ed-border__sortable brz-ed-border__inner brz-ed-border--no-space"
-          data-border--grey="true"
-          data-border--dotted="true"
+          {...makeDataAttr({ name: "border--grey", value: "true" })}
+          {...makeDataAttr({ name: "border--dotted", value: "true" })}
         />
         <div
           className="brz-ed-container-trigger brz-ed-container-trigger--small"

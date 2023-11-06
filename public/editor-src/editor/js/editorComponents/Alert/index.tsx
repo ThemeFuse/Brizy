@@ -11,6 +11,7 @@ import EditorComponent, {
   ComponentsMeta
 } from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { WithClassName } from "visual/utils/options/attributes";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -166,7 +167,7 @@ class Alert extends EditorComponent<Value, Props> {
     return (
       <Wrapper
         {...this.makeWrapperProps({ className })}
-        attributes={{ "data-delay": showCloseButtonAfter }}
+        attributes={makeDataAttr({ name: "delay", value: showCloseButtonAfter })}
       >
         {this.renderAlert(v)}
       </Wrapper>

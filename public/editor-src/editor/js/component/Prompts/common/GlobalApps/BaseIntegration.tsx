@@ -1,11 +1,12 @@
-import React, { Component, ElementType, ReactElement, ReactNode } from "react";
-import _ from "underscore";
 import classnames from "classnames";
 import produce from "immer";
+import React, { Component, ElementType, ReactElement, ReactNode } from "react";
+import _ from "underscore";
 import { Alert } from "visual/component/Alert";
-import { Context } from "./Context";
 import { Loading } from "../Loading";
 import Steppers from "../Steppers";
+import { BaseAppElementTypes, BaseKey, BaseTypes } from "./BaseApp";
+import { Context } from "./Context";
 import AppList from "./StepsView/AppsList";
 import {
   AppData,
@@ -13,7 +14,6 @@ import {
   BaseIntegrationProps,
   BaseIntegrationState
 } from "./type";
-import { BaseAppElementTypes, BaseKey, BaseTypes } from "./BaseApp";
 
 type AppComponent = {
   [k: string]: BaseTypes;
@@ -53,14 +53,8 @@ class BaseIntegration<
   proExceptions = false;
 
   getContextValue(): BaseIntegrationContext {
-    const {
-      connectedApp,
-      connectedApps,
-      data,
-      stages,
-      stage,
-      oldStage
-    } = this.state;
+    const { connectedApp, connectedApps, data, stages, stage, oldStage } =
+      this.state;
 
     return {
       app: data[connectedApp] || {},
@@ -94,7 +88,7 @@ class BaseIntegration<
     const { id, stages } = appData;
 
     this.setState(
-      produce(draft => {
+      produce((draft) => {
         draft.stages = stages;
         draft.connectedApp = id;
         draft.data[id] = appData;
@@ -109,7 +103,7 @@ class BaseIntegration<
     const { stage, stages } = this.props;
 
     this.setState(
-      produce(draft => {
+      produce((draft) => {
         const connectedApps = draft.connectedApps;
 
         draft.stage = stage;
@@ -127,7 +121,7 @@ class BaseIntegration<
 
   handleChange = (id: string, appData: Record<string, unknown>): void => {
     this.setState(
-      produce(draft => {
+      produce((draft) => {
         draft.data[id].data = appData;
       })
     );
@@ -207,6 +201,7 @@ class BaseIntegration<
           apps={this.appsData}
           proExceptions={this.proExceptions}
           error={appError}
+          hasDelete={false}
         />
       </>
     );
@@ -221,12 +216,12 @@ class BaseIntegration<
       data
     } = this.state;
     const showProgress =
-      _showProgress && !stages.find(el => el.type === stage)?.hideProgress;
+      _showProgress && !stages.find((el) => el.type === stage)?.hideProgress;
     const progress = stages.reduce((acc, cur, index, arr) => {
       const props: { num: BaseKey; img?: string; text?: string } = {
         num: cur.type
       };
-      const firstNormalIndex = arr.findIndex(it => it.title);
+      const firstNormalIndex = arr.findIndex((it) => it.title);
 
       if (index === firstNormalIndex) {
         props.img = data[connectedApp].img;

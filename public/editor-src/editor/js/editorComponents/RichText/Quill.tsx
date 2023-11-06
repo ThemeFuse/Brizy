@@ -3,6 +3,7 @@ import { BoundsStatic, RangeStatic } from "quill";
 import React, { ReactNode } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
+import { Translate } from "visual/component/Translate";
 import Config from "visual/global/Config";
 import { ConfigDCItem } from "visual/global/Config/types/DynamicContent";
 import {
@@ -48,6 +49,7 @@ type Props = {
 
   onSelectionChange: (format: Formats, coords: Coords) => void;
   onTextChange: (text: string) => void;
+  onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
   isToolbarOpen: () => boolean;
 };
 
@@ -238,8 +240,9 @@ class QuillComponent extends React.Component<Props> {
     this.props.onTextChange(text);
   }, 500);
 
-  handleClick = (): void => {
+  handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const node = this.content.current;
+    this.props.onClick(event);
 
     node && node.classList.add(...classToDisableDnd);
   };
@@ -314,7 +317,7 @@ class QuillComponent extends React.Component<Props> {
 
     if (IS_PREVIEW) {
       return (
-        <div
+        <Translate
           dangerouslySetInnerHTML={{
             __html: newValue
           }}

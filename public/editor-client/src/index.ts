@@ -1,3 +1,4 @@
+import set from "lodash/set";
 import { autoSave } from "./autoSave";
 import { getCollectionItemsIds } from "./collectionItems/getCollectionItemsIds";
 import { searchCollectionItems } from "./collectionItems/searchCollectionItems";
@@ -10,6 +11,7 @@ import {
   defaultPopups,
   defaultStories
 } from "./defaultTemplates";
+import { handler as posts } from "./Elements/Posts";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
@@ -34,7 +36,7 @@ const api = {
   },
   customFile: {
     addFile,
-    customFileUrl: config.api.customFileUrl
+    fileUrl: config.api.fileUrl
   },
   savedBlocks,
   savedPopups,
@@ -67,5 +69,12 @@ if (window.__VISUAL_CONFIG__) {
   // UI
   if (window.__VISUAL_CONFIG__.ui) {
     window.__VISUAL_CONFIG__.ui.publish = publish;
+  }
+
+  // Elements
+  if (window.__VISUAL_CONFIG__.elements) {
+    set(window.__VISUAL_CONFIG__.elements, ["posts", "handler"], posts);
+  } else {
+    set(window.__VISUAL_CONFIG__, ["elements", "posts", "handler"], posts);
   }
 }

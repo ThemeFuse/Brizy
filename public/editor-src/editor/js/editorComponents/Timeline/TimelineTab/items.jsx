@@ -1,12 +1,13 @@
 import React from "react";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Sortable from "visual/component/Sortable";
-import contextMenuExtendConfigFn from "visual/editorComponents/Tabs/Tab/contextMenu";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
-import { t } from "visual/utils/i18n";
-import { hideToolbar } from "visual/component/Toolbar";
+import Sortable from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
+import { hideToolbar } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import contextMenuExtendConfigFn from "visual/editorComponents/Tabs/Tab/contextMenu";
+import { t } from "visual/utils/i18n";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 
 export default class TimelineTabItems extends EditorArrayComponent {
   static get componentId() {
@@ -17,8 +18,18 @@ export default class TimelineTabItems extends EditorArrayComponent {
     meta: {}
   };
 
-  handleSortableAcceptElements = from => {
+  handleSortableAcceptElements = (from) => {
     const meta = this.props.meta;
+
+    const sortableType = makeDataAttrString({
+      name: "sortable-type",
+      value: "row"
+    });
+
+    const sortableElement = makeDataAttrString({
+      name: "sortable-element",
+      value: "true"
+    });
 
     if (meta.row && meta.row.isInner) {
       if (from.elementType === "column" || from.elementType === "row") {
@@ -27,7 +38,7 @@ export default class TimelineTabItems extends EditorArrayComponent {
 
       if (from.elementType === "addable") {
         const addableSubtype = from.elementNode.getAttribute(
-          "data-sortable-subtype"
+          makeAttr("sortable-subtype")
         );
 
         return addableSubtype !== "row" && addableSubtype !== "columns";
@@ -36,7 +47,7 @@ export default class TimelineTabItems extends EditorArrayComponent {
       if (from.elementType === "row" || from.elementType === "column") {
         return (
           from.elementNode.querySelector(
-            "[data-sortable-type=row][data-sortable-element=true]"
+            `${sortableType}${sortableElement}`
           ) === null // hasn't inner row (thus avoiding level 3 columns)
         );
       }

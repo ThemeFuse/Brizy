@@ -4,22 +4,10 @@
     "activeTab": 0,
 
     "spacing": 20,
-    "spacingSuffix": null,
-
-    "tabletSpacing": null,
-    "tabletSpacingSuffix": null,
-
-    "mobileSpacing": null,
-    "mobileSpacingSuffix": null,
+    "spacingSuffix": "px",
 
     "navStyle2Size": 50,
     "navStyle2SizeSuffix": "px",
-
-    "tabletNavStyle2Size": null,
-    "tabletNavStyle2SizeSuffix": null,
-
-    "mobileNavStyle2Size": null,
-    "mobileNavStyle2SizeSuffix": null,
 
     "navStyle1Width": 200,
     "navStyle1WidthSuffix": "px",
@@ -52,26 +40,14 @@
     },
 
     "iconSize": "small",
-    "tabletIconSize": null,
-    "mobileIconSize": null,
 
     "iconCustomSize": 16,
     "iconCustomSizeSuffix": "px",
-    "tabletIconCustomSize": null,
-    "tabletIconCustomSizeSuffix": null,
-    "mobileIconCustomSize": null,
-    "mobileIconCustomSizeSuffix": null,
 
     "iconPosition": "left",
-    "tabletIconPosition": null,
-    "mobileIconPosition": null,
 
     "iconSpacing": 10,
     "iconSpacingSuffix": "px",
-    "tabletIconSpacing": null,
-    "tabletIconSpacingSuffix": null,
-    "mobileIconSpacing": null,
-    "mobileIconSpacingSuffix": null,
 
     "iconStrokeWidth": 1,
 
@@ -215,9 +191,6 @@
     "tempPaddingBottomSuffix": "px",
     "tempPaddingLeftSuffix": "px",
 
-    "tabletNavStyle1Width": null,
-    "tabletNavStyle1WidthSuffix": null,
-
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontFamilyType": null,
     "tabletTypographyFontSize": null,
@@ -252,9 +225,6 @@
     "tempTabletPaddingRightSuffix": "px",
     "tempTabletPaddingBottomSuffix": "px",
     "tempTabletPaddingLeftSuffix": "px",
-
-    "mobileNavStyle1Width": null,
-    "mobileNavStyle1WidthSuffix": null,
 
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontFamilyType": null,
@@ -297,18 +267,6 @@
     "animationDuration": 1000,
     "animationDelay": 1000,
     "animationInfiniteAnimation": false,
-    "tempAnimationName": "none",
-
-    "tabletAnimationName": null,
-    "tabletAnimationDuration": null,
-    "tabletAnimationDelay": null,
-    "tabletAnimationInfiniteAnimation": null,
-    "tempTabletAnimationName": null,
-
-    "mobileAnimationName": null,
-    "mobileAnimationDuration": null,
-    "mobileAnimationDelay": null,
-    "mobileAnimationInfiniteAnimation": null,
-    "tempMobileAnimationName": null
+    "tempAnimationName": "none"
   }
 }

@@ -11,6 +11,7 @@ import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendParent from "./sidebar";
 import * as sidebarButton from "./sidebarButton";
@@ -700,7 +701,10 @@ export class EcwidCart extends EditorComponent<Value> {
 
     return (
       <Wrapper {...this.makeWrapperProps({ className })}>
-        <div className="brz-ecwid-cart" data-store-id={storeId} />
+        <div
+          className="brz-ecwid-cart"
+          {...makeDataAttr({ name: "store-id", value: storeId })}
+        />
       </Wrapper>
     );
   }

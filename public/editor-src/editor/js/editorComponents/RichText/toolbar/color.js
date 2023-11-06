@@ -1,4 +1,3 @@
-import { setIn } from "timm";
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
@@ -15,7 +14,7 @@ import {
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { NORMAL } from "visual/utils/stateMode";
-import { encodeToString } from "visual/utils/string";
+import { getPopulationColor } from "../utils/dependencies";
 
 const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
 
@@ -32,26 +31,6 @@ const shadowToString = (value, config) => {
     hex: value.hex,
     opacity: value.opacity
   })} ${value.horizontal}px ${value.vertical}px ${value.blur}px`;
-};
-
-const getPopulationColor = (populationColor, type, value) => {
-  if (value.isChanged === "hex") {
-    const newValue = setIn(populationColor, [type, "hex"], value.hex);
-    return encodeToString(setIn(newValue, [type, "colorPalette"], null));
-  }
-
-  if (value.isChanged === "opacity") {
-    return encodeToString(
-      setIn(populationColor, [type, "opacity"], value.opacity)
-    );
-  }
-
-  const newValue = setIn(
-    populationColor,
-    [type, "colorPalette"],
-    value.palette
-  );
-  return encodeToString(setIn(newValue, [type, "hex"], null));
 };
 
 const changeColor = (value) => {
@@ -120,57 +99,21 @@ function getPopulationTabs({ populationColor }, onChange) {
     h6: "H6"
   };
 
-  return Object.entries(populationColor).reduce((acc, [key, headerValue]) => {
-    const { hex: hexPalette } =
-      getColorPaletteColor(headerValue.colorPalette) || {};
-
-    acc.push({
-      id: translationsMap[key],
-      label: translationsMap[key],
-      options: [
-        {
-          id: "paragraphColor",
-          type: "colorPicker2",
-          select: {
-            show: false
-          },
-          value: {
-            hex: hexPalette || headerValue.hex,
-            opacity: headerValue.opacity,
-            palette: headerValue.colorPalette
-          },
-          onChange: (value) =>
-            onChange({
-              populationColor: getPopulationColor(populationColor, key, value)
-            })
-        },
-        {
-          type: "grid-dev",
-          className: "brz-ed-grid__color-fileds",
-          columns: [
-            {
-              size: "auto",
-              options: [
-                {
-                  id: "paragraphColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: hexPalette || headerValue.hex,
-                    opacity: headerValue.opacity
-                  },
-                  onChange: (value) =>
-                    onChange(getPopulationColor(populationColor, key, value))
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    });
-
-    return acc;
-  }, []);
+  return Object.entries(translationsMap).map(([key, value]) => ({
+    id: value,
+    label: value,
+    options: [
+      {
+        id: `paragraphColor${value}`,
+        type: "colorPicker-dev",
+        dependencies: (data) =>
+          onChange({
+            ...data,
+            populationColor: getPopulationColor(populationColor, key, data)
+          })
+      }
+    ]
+  }));
 }
 
 function getPopulationColorOptions({ populationColor }, onChange) {

@@ -46,17 +46,6 @@ export function cssStyleSizeWidthPercentOnly({
   return width === undefined ? "" : `width:${width}%;`;
 }
 
-export function cssStyleSizeMaxWidthPercentOnly({
-  v,
-  device,
-  state,
-  prefix
-}: CSSValue): string {
-  const width = styleSizeSize({ v, device, state, prefix });
-
-  return width === undefined ? "" : `max-width:${width}%;`;
-}
-
 export function cssStyleSizeWidthPrefix({
   v,
   device,

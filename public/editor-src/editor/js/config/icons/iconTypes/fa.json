@@ -824,6 +824,22 @@
     "uniqId": "f081"
   },
   {
+    "name": "square-x-twitter",
+    "title": "Square X Twitter",
+    "type": 2,
+    "family": "fa-brands",
+    "cat": [],
+    "uniqId": "e61a"
+  },
+  {
+    "name": "x-twitter",
+    "title": "X Twitter",
+    "type": 2,
+    "family": "fa-brands",
+    "cat": [],
+    "uniqId": "e61b"
+  },
+  {
     "name": "r-project",
     "title": "R Project",
     "type": 2,

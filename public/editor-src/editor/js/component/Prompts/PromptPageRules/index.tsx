@@ -5,10 +5,18 @@ import CheckGroup, {
   CheckGroupItem
 } from "visual/component/Controls/CheckGroup";
 import Fixed from "visual/component/Prompts/Fixed";
+import { EmptyContentWithDefaults } from "visual/component/Prompts/common/PromptPage/EmptyContent";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
-import { getChoices } from "visual/component/Prompts/utils";
+import {
+  getChoices,
+  getTabsByItemsNumber
+} from "visual/component/Prompts/utils";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import {
+  ShopifyTemplate,
+  getShopifyTemplate
+} from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
 import {
   getCollectionSourceItemsById,
@@ -23,7 +31,7 @@ import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
 import { SettingsTab } from "../common/PromptPage/SettingsTab";
-import { Tabs, tabs } from "../common/PromptPage/types";
+import { Tabs } from "../common/PromptPage/types";
 import * as Actions from "../common/states/Classic/types/Actions";
 import { reducer } from "./reducer";
 import { Props, RulesState, Valid } from "./types";
@@ -44,6 +52,12 @@ const getErrors = (s: RulesState): string | undefined => {
 };
 
 export const PromptPageRules = (props: Props): ReactElement => {
+  const _config = Config.getAll();
+
+  const templateType = useMemo(() => {
+    return getShopifyTemplate(_config) ?? ShopifyTemplate.Product;
+  }, [_config]);
+
   const { headTitle, pageTitle, opened, selectedLayout, onClose, onSave } =
     props;
 
@@ -80,7 +94,7 @@ export const PromptPageRules = (props: Props): ReactElement => {
       );
       const layouts = getChoices(config);
 
-      if (isNonEmptyArray(items) && isNonEmptyArray(layouts)) {
+      if (isNonEmptyArray(layouts)) {
         return {
           items,
           layouts,
@@ -146,6 +160,10 @@ export const PromptPageRules = (props: Props): ReactElement => {
 
         switch (state.payload.activeTab) {
           case Tabs.page:
+            if (!items.length) {
+              return <EmptyContentWithDefaults type={templateType} />;
+            }
+
             return (
               <Content
                 head={headTitle}
@@ -200,6 +218,8 @@ export const PromptPageRules = (props: Props): ReactElement => {
       }
     }
   };
+
+  const tabs = getTabsByItemsNumber(state);
 
   return (
     <Fixed opened={opened} onClose={onClose}>

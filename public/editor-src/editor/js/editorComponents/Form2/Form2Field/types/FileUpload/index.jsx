@@ -1,9 +1,10 @@
-import React from "react";
 import classnames from "classnames";
-import TextField from "../common/TextField";
+import React from "react";
 import { t } from "visual/utils/i18n";
-import Upload from "./Upload";
 import { encodeToString } from "visual/utils/string";
+import { makeDataAttr } from "../../../../../utils/i18n/attribute";
+import TextField from "../common/TextField";
+import Upload from "./Upload";
 
 export default class FileUpload extends TextField {
   static get componentTitle() {
@@ -24,16 +25,16 @@ export default class FileUpload extends TextField {
 
     return {
       accept: fileTypes,
-      "data-file-max-size": fileMaxSize,
-      "data-error": encodeToString(error)
+      ...makeDataAttr({ name: "file-max-size", value: fileMaxSize }),
+      ...makeDataAttr({ name: "error", value: encodeToString(error) })
     };
   }
 
-  handleTextChange = value => {
+  handleTextChange = (value) => {
     this.handleChange({ fileText: value });
   };
 
-  handleValueChange = e => {
+  handleValueChange = (e) => {
     this.handleChange({
       label: e.target.value,
       placeholder: e.target.value

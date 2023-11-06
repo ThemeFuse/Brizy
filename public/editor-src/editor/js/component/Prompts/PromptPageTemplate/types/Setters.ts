@@ -22,4 +22,16 @@ export const setLayout = (payload: string): SetLayout => ({
 });
 // endregion
 
-export type Setters = SetTitle | SetLayout;
+// region SetIsHomePage
+export interface SetIsHomePage {
+  type: "SetIsHomePage";
+  payload: boolean;
+}
+
+export const setIsHomePage = (payload: boolean): SetIsHomePage => ({
+  type: "SetIsHomePage",
+  payload
+});
+// endregion
+
+export type Setters = SetTitle | SetLayout | SetIsHomePage;

@@ -24,6 +24,7 @@ const setOpacity = Utils.setOpacity.bind(null, _setOpacity);
 
 export interface Config {
   opacity: boolean;
+  isPaletteHidden?: boolean;
 }
 
 export interface Props
@@ -103,13 +104,19 @@ export const ColorPicker: FC<Props> = ({
     );
   }, []);
 
+  const isPaletteHidden = config?.isPaletteHidden;
+  const palette = useMemo(
+    () => (isPaletteHidden ? undefined : paletteColors()),
+    [isPaletteHidden]
+  );
+
   return (
     <div {...attr} className={className}>
       <ColorPicker3
         value={value}
         opacity={config?.opacity ?? true}
         onChange={_onChange}
-        palette={paletteColors()}
+        palette={palette}
         paletteOpenSettings={enableGlobalStyle ? openLeftSidebar : undefined}
       />
       <ColorPickerInputs value={value.hex} onChange={onHexChange} />

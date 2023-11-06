@@ -6,24 +6,10 @@
 
     "thumbWidth": 70,
     "thumbWidthSuffix": "px",
-    "tabletThumbWidth": null,
-    "tabletThumbWidthSuffix": null,
-    "mobileThumbWidth": null,
-    "mobileThumbWidthSuffix": null,
 
     "thumbPerRowTB": 4,
-    "thumbPerRowTBSuffix": null,
-    "tabletThumbPerRowTB": null,
-    "tabletThumbPerRowTBSuffix": null,
-    "mobileThumbPerRowTB": null,
-    "mobileThumbPerRowTBSuffix": null,
 
     "thumbPerRowRL": 1,
-    "thumbPerRowRLSuffix": null,
-    "tabletThumbPerRowRL": null,
-    "tabletThumbPerRowRLSuffix": null,
-    "mobileThumbPerRowRL": null,
-    "mobileThumbPerRowRLSuffix": null,
 
     "width": 100,
     "widthSuffix": "%",
@@ -34,23 +20,8 @@
     "betweenThumbnail": 10,
     "betweenThumbnailSuffix": "px",
 
-    "tabletWidth": null,
     "tabletWidthSuffix": null,
-
-    "tabletSpacing": null,
-    "tabletSpacingSuffix": null,
-
-    "tabletBetweenThumbnail": null,
-    "tabletBetweenThumbnailSuffix": null,
-
-    "mobileWidth": null,
     "mobileWidthSuffix": null,
-
-    "mobileSpacing": null,
-    "mobileSpacingSuffix": null,
-
-    "mobileBetweenThumbnail": null,
-    "mobileBetweenThumbnailSuffix": null,
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",

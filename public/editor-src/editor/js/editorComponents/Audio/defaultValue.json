@@ -28,33 +28,16 @@
       "coverImageSrc": ""
     },
 
-    "coverImageFileName": null,
     "coverSizeType": "custom",
 
     "coverImageWidth": 0,
     "coverImageHeight": 0,
 
-    "coverImageExtension": null,
-
     "coverPositionY": 50,
     "coverPositionX": 50,
 
-    "tabletCoverSizeType": null,
-    "tabletCoverPositionY": null,
-    "tabletCoverPositionX": null,
-
-    "mobileCoverSizeType": null,
-    "mobileCoverPositionY": null,
-    "mobileCoverPositionX": null,
-
     "coverZoom": 100,
-    "coverZoomSuffix": "%",
-
-    "tabletCoverZoom": null,
-    "tabletCoverZoomSuffix": null,
-
-    "mobileCoverZoom": null,
-    "mobileCoverZoomSuffix": null
+    "coverZoomSuffix": "%"
   },
 
   "toolbar": {
@@ -221,14 +204,10 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "tabletWidth": null,
     "tabletWidthSuffix": null,
-    "tabletHeight": null,
     "tabletHeightSuffix": null,
 
-    "mobileWidth": null,
     "mobileWidthSuffix": null,
-    "mobileHeight": null,
     "mobileHeightSuffix": null
   }
 }

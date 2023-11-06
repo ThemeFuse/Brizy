@@ -1,8 +1,11 @@
-import { makePlaceholder } from "visual/utils/dynamicContent";
+import {
+  makeEndPlaceholder,
+  makeStartPlaceholder
+} from "visual/utils/dynamicContent";
 import { getAttr, getDetail, getFeatures } from "../../utils/helpers";
 import { Value } from "../types";
 
-export const getPlaceholder = (v: Value): string => {
+export const getPlaceholder = (v: Value, icon: string): string => {
   const {
     category,
     group,
@@ -10,7 +13,9 @@ export const getPlaceholder = (v: Value): string => {
     numberOfMonths,
     features,
     nonfeatures,
-    detailPage
+    detailPage,
+    showSubscribeToCalendarButton,
+    subscribeToCalendarText
   } = v;
 
   const attr = [
@@ -20,11 +25,23 @@ export const getPlaceholder = (v: Value): string => {
     getFeatures(nonfeatures, "nonfeatures"),
     `howmanymonths='${numberOfMonths}'`,
     `detail_page='${getDetail(detailPage)}'`,
-    getAttr(showEventTime, "time")
+    getAttr(showEventTime, "time"),
+    getAttr(showSubscribeToCalendarButton, "showSubscribeToCalendarButton")
   ];
-
-  return makePlaceholder({
+  const startPlaceholder = makeStartPlaceholder({
     content: "{{ekk_event_calendar}}",
     attrStr: attr.join(" ")
   });
+  const endPlaceholder = makeEndPlaceholder({
+    content: "{{end_ekk_event_calendar}}"
+  });
+
+  return `
+    ${startPlaceholder}
+    <a class="brz-eventCalendar__subscribe" href="?mc-subscribe">
+        <span class='brz-eventCalendar__subscribe__icon'>${icon}</span>
+        <span>${subscribeToCalendarText}</span>
+    </a>
+    ${endPlaceholder}
+  `;
 };

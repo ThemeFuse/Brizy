@@ -6,6 +6,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
@@ -62,15 +63,27 @@ class FacebookGroup extends EditorComponent {
 
   renderForView(v, vs, vd) {
     const { width, href, showSocialContext, showMetaData, skin } = v;
+
     const appData = this.getAppData();
     const data = {
-      "data-width": width,
-      "data-href":
-        href === "" ? "https://www.facebook.com/groups/brizy/" : href,
-      "data-show-social-context": showSocialContext === "on",
-      "data-show-metadata": showMetaData === "on",
-      "data-skin": skin,
-      "data-lang": appData.lang
+      ...makeDataAttr({ name: "width", value: width }),
+      ...makeDataAttr({
+        name: "href",
+        value: href === "" ? "https://www.facebook.com/groups/brizy/" : href
+      }),
+      ...makeDataAttr({
+        name: "show-social-context",
+        value: String(showSocialContext === "on")
+      }),
+      ...makeDataAttr({
+        name: "show-metadata",
+        value: String(showMetaData === "on")
+      }),
+      ...makeDataAttr({ name: "skin", value: skin }),
+      ...makeDataAttr({
+        name: "lang",
+        value: appData.lang
+      })
     };
     const className = classnames(
       "brz-fb-group",

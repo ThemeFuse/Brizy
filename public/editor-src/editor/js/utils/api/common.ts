@@ -17,6 +17,7 @@ import {
   UpdateSavedBlock,
   UpdateSavedLayout
 } from "visual/global/Config/types/configs/ConfigCommon";
+import { ScreenshotData } from "visual/global/Config/types/configs/common";
 import {
   BlocksArray,
   DefaultBlock,
@@ -26,7 +27,8 @@ import {
   PopupsWithThumbs,
   StoriesWithThumbs
 } from "visual/global/Config/types/configs/templates";
-import { Rule, SavedBlock, SavedLayout } from "visual/types";
+import { PageCommon, Rule, SavedBlock, SavedLayout } from "visual/types";
+import { PostsSources } from "visual/utils/api/types";
 import { t } from "visual/utils/i18n";
 import { editorRuleToApiRule, makeBlockMeta } from "./adapter";
 
@@ -629,6 +631,60 @@ export const getSourceIds = (
       sourceItemsHandler(res, rej, { id: type });
     } else {
       rej(t("Missing api handler in config"));
+    }
+  });
+};
+
+//#endregion
+
+//#region Screenshots
+
+export const createBlockScreenshot = (
+  data: ScreenshotData,
+  config: ConfigCommon
+): Promise<{ id: string }> => {
+  const create = config.api?.screenshots?.create;
+
+  return new Promise((res, rej) => {
+    if (typeof create === "function") {
+      create(res, rej, data);
+    } else {
+      rej(t("Missing create screenshots in api config"));
+    }
+  });
+};
+
+export const updateBlockScreenshot = (
+  data: ScreenshotData & { id: string },
+  config: ConfigCommon
+): Promise<{ id: string }> => {
+  const update = config.api?.screenshots?.update;
+
+  return new Promise((res, rej) => {
+    if (typeof update === "function") {
+      update(res, rej, data);
+    } else {
+      rej(t("Missing update screenshots in api config"));
+    }
+  });
+};
+
+//#endregion
+
+//#region Elements Posts
+
+export const defaultPostsSources = (
+  config: ConfigCommon,
+  page: PageCommon
+): Promise<PostsSources> => {
+  return new Promise((res, rej) => {
+    const { elements } = config;
+
+    if (!elements?.posts?.handler) {
+      rej(t("Failed to load sources"));
+    } else {
+      const { handler } = elements.posts;
+      handler(res, rej, page);
     }
   });
 };

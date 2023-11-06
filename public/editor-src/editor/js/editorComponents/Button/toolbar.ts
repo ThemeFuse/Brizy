@@ -12,7 +12,7 @@ import {
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarLinkAnchor, toolbarLinkExternal } from "visual/utils/toolbar";
+import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { Props, Value } from "./types";
 import { getMaxBorderRadius } from "./utils";
 
@@ -50,6 +50,11 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
     options: context.dynamicContent.config,
     type: DCTypes.richText,
     config: { iconOnly: true }
+  });
+
+  const linkDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.link
   });
 
   const type = dvv("type");
@@ -425,10 +430,17 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               id: "external",
               label: t("URL"),
               options: [
-                toolbarLinkExternal({
-                  v,
-                  config: context.dynamicContent.config
-                }),
+                {
+                  id: "link",
+                  type: "population-dev",
+                  label: t("Link to"),
+                  config: linkDC,
+                  option: {
+                    id: "linkExternal",
+                    type: "inputText-dev",
+                    placeholder: "http://"
+                  }
+                },
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),

@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import StoryItems from "./Items";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendConfig from "./sidebarExtend";
@@ -103,8 +104,8 @@ class Story extends EditorComponent {
       <section
         id={this.getId()}
         className={classNameSection}
-        data-block-id={this.props.blockId}
-        data-uid={this.getId()}
+        {...makeDataAttr({ name: "block-id", value: this.props.blockId })}
+        {...makeDataAttr({ name: "uid", value: this.getId() })}
       >
         {this.renderItems(v)}
       </section>
@@ -127,7 +128,10 @@ class Story extends EditorComponent {
     );
 
     return (
-      <section className={classNameSection} data-uid={this.getId()}>
+      <section
+        className={classNameSection}
+        {...makeDataAttr({ name: "uid", value: this.getId() })}
+      >
         {this.renderItems(v)}
       </section>
     );

@@ -1,7 +1,6 @@
 import { t } from "visual/utils/i18n";
-import { toolbarElementWPPostsNumber } from "visual/utils/toolbar";
 
-export function getItems({ v, device }) {
+export function getItems() {
   return [
     {
       id: "toolbarWPPosts",
@@ -30,12 +29,13 @@ export function getItems({ v, device }) {
                     { title: t("Page"), value: "page" }
                   ]
                 },
-                toolbarElementWPPostsNumber({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
+
+                {
+                  id: "numberPosts",
+                  label: t("Number of posts"),
+                  type: "inputText-dev",
+                  devices: "desktop"
+                },
                 {
                   id: "category",
                   label: t("Category"),

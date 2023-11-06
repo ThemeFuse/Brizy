@@ -15,13 +15,7 @@
   "toolbar": {
     "tabsState": "",
     "tabsCurrentElement": "",
-    "tabsColor": "",
-
-    "tabletTabsState": null,
-    "tabletTabsCurrentElement": null,
-
-    "mobileTabsState": null,
-    "mobileTabsCurrentElement": null
+    "tabsColor": ""
   },
 
   "style": {
@@ -153,24 +147,7 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "tabletBrightness": null,
-    "tabletHue": null,
-    "tabletSaturation": null,
-    "tabletContrast": null,
-
-    "tabletSize": null,
-    "tabletSizeSuffix": null,
-    "tabletHeight": null,
-    "tabletHeightSuffix": null,
-
-    "mobileBrightness": null,
-    "mobileHue": null,
-    "mobileSaturation": null,
-    "mobileContrast": null,
-
-    "mobileSize": null,
     "mobileSizeSuffix": null,
-    "mobileHeight": null,
     "mobileHeightSuffix": null
   }
 }

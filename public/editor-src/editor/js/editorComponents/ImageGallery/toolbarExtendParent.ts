@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import type { GetItems } from "../EditorComponent/types";
-import type { Props, Value } from "./index";
+import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   const dvv = (key: string): unknown =>
@@ -95,6 +95,12 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                   type: "switch-dev",
                   devices: "desktop",
                   disabled: layout === "bigImage"
+                },
+                {
+                  id: "lightBox",
+                  label: t("Open in Lightbox"),
+                  type: "switch-dev",
+                  devices: "desktop"
                 }
               ]
             },
@@ -128,24 +134,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               ]
             }
           ]
-        }
-      ]
-    },
-    {
-      id: "toolbarLink",
-      type: "popover-dev",
-      config: {
-        icon: "nc-link",
-        size: "medium",
-        title: t("Link")
-      },
-      position: 90,
-      options: [
-        {
-          id: "lightBox",
-          label: t("Open in Lightbox"),
-          type: "switch-dev",
-          devices: "desktop"
         }
       ]
     }

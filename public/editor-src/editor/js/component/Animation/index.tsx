@@ -12,6 +12,7 @@ import React, {
 } from "react";
 import UIEvents from "visual/global/UIEvents";
 import { AnimationEvents } from "visual/utils/animation";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { WithClassName } from "visual/utils/options/attributes";
 import { mApply } from "visual/utils/value";
 import * as Observer from "./Observer";
@@ -178,10 +179,13 @@ class _Animation<
       className: _className,
       componentProps: { className, ...otherProps }
     } = this.props;
+
     const hasAnimation = this.hasAnimation();
     const props = {
       ...otherProps,
-      ...(hasAnimation ? { "data-iteration-count": iterationCount } : {}),
+      ...(hasAnimation
+        ? makeDataAttr({ name: "iteration-count", value: iterationCount })
+        : {}),
       className: classNames(_className, className, {
         "brz-animated": hasAnimation,
         [this.getAnimationClass() ?? ""]: hasAnimation

@@ -8,6 +8,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
@@ -78,17 +79,30 @@ class FacebookPage extends EditorComponent {
 
   renderForView(v, vs, vd) {
     const { pageTabs, height, smallHeader, hideCover, showFacepile, href } = v;
+
     const appData = this.getAppData();
     const data = {
-      "data-width": "500",
-      "data-tabs": pageTabs,
-      "data-height": height,
-      "data-small-header": smallHeader === "on",
-      "data-hide-cover": hideCover === "on",
-      "data-adapt-container-width": true,
-      "data-show-facepile": showFacepile === "on",
-      "data-href": href === "" ? "https://facebook.com/brizy.io" : href,
-      "data-lang": appData.lang
+      ...makeDataAttr({ name: "width", value: "500" }),
+      ...makeDataAttr({ name: "tabs", value: pageTabs }),
+      ...makeDataAttr({ name: "height", value: height }),
+      ...makeDataAttr({
+        name: "small-header",
+        value: String(smallHeader === "on")
+      }),
+      ...makeDataAttr({
+        name: "hide-cover",
+        value: String(hideCover === "on")
+      }),
+      ...makeDataAttr({ name: "adapt-container-width", value: "true" }),
+      ...makeDataAttr({
+        name: "show-facepile",
+        value: String(showFacepile === "on")
+      }),
+      ...makeDataAttr({
+        name: "href",
+        value: href === "" ? "https://facebook.com/brizy.io" : href
+      }),
+      ...makeDataAttr({ name: "lang", value: appData.lang })
     };
     const className = classnames(
       "brz-fb-page",

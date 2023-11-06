@@ -10,14 +10,11 @@ import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
+  getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import {
-  toolbarLinkAnchor,
-  toolbarLinkExternal,
-  toolbarLinkPopup
-} from "visual/utils/toolbar";
+import { toolbarLinkAnchor, toolbarLinkPopup } from "visual/utils/toolbar";
 
 // @ts-expect-error "advancedSettings" old options
 export const getItems: GetItems<ElementModel> = ({
@@ -58,6 +55,10 @@ export const getItems: GetItems<ElementModel> = ({
     DCTypes.richText
   );
 
+  const linkDC = getDynamicContentOption({
+    options: component.context.dynamicContent.config,
+    type: DCTypes.link
+  });
   return [
     {
       id: "posts",
@@ -210,11 +211,18 @@ export const getItems: GetItems<ElementModel> = ({
               id: "external",
               label: t("URL"),
               options: [
-                toolbarLinkExternal({
-                  v,
-                  config: component.context.dynamicContent.config,
-                  devices: "desktop"
-                }),
+                {
+                  id: "link",
+                  type: "population-dev",
+                  label: t("Link to"),
+                  config: linkDC,
+                  option: {
+                    id: "linkExternal",
+                    type: "inputText-dev",
+                    placeholder: "http://",
+                    devices: "desktop"
+                  }
+                },
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),

@@ -4,6 +4,7 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -74,23 +75,48 @@ export class OkendoReview extends EditorComponent<Value> {
     const productReviewsSnippet = makePlaceholder({
       content: "{{ product.metafields.okendo.ProductReviewsWidgetSnippet }}"
     });
+    const pfTypeAttr = makeDataAttr({
+      name: "pf-type",
+      value: "Okendo"
+    });
+    const okeHideHeaderAttr = makeAttr("oke-hide-header");
+    const okeReviewsCarouselHeadingAttr = makeAttr(
+      "oke-reviews-carousel-heading"
+    );
+    const okeReviewsProductIdAttr = makeDataAttr({
+      name: "oke-reviews-product-id",
+      value: `shopify-${productId}`
+    });
+    const okeReviewsAutoplayAttr = makeAttr("oke-reviews-autoplay");
+    const okeReviewsHideArrowAttr = makeAttr("oke-reviews-hide-arrow");
+    const okeReviewsLoadMoreOnScrollAttr = makeAttr(
+      "oke-reviews-load-more-on-scroll"
+    );
 
     switch (type) {
       case "star":
         return (
-          <div data-pf-type="Okendo">
-            <div data-oke-reviews-product-listing-rating>
+          <div {...pfTypeAttr}>
+            <div
+              {...makeDataAttr({
+                name: "oke-reviews-product-listing-rating",
+                value: "true"
+              })}
+            >
               {productListingSnippet}
             </div>
           </div>
         );
       case "widget":
         return (
-          <div data-pf-type="Okendo">
+          <div {...pfTypeAttr}>
             <div
               className="okeReviews-widget-holder"
-              data-oke-reviews-widget
-              data-oke-reviews-product-id={`shopify-${productId}`}
+              {...makeDataAttr({
+                name: "oke-reviews-widget",
+                value: "true"
+              })}
+              {...okeReviewsProductIdAttr}
             >
               {productReviewsSnippet}
             </div>
@@ -98,61 +124,91 @@ export class OkendoReview extends EditorComponent<Value> {
         );
       case "reviewCarousel":
         if (showHeader === "off") {
-          attr["data-oke-hide-header"] = "true";
-          attr["data-oke-reviews-carousel-heading"] = "undefined";
+          attr[`${okeHideHeaderAttr}`] = "true";
+          attr[`${okeReviewsCarouselHeadingAttr}`] = "true";
         } else {
-          attr["data-oke-hide-header"] = "false";
-          attr["data-oke-reviews-carousel-heading"] = headingText;
+          attr[`${okeHideHeaderAttr}`] = "false";
+          attr[`${okeReviewsCarouselHeadingAttr}`] = headingText;
         }
         return (
-          <div data-pf-type="Okendo">
+          <div {...pfTypeAttr}>
             <div
-              data-oke-reviews-carousel
-              data-oke-reviews-product-id={`shopify-${productId}`}
+              {...makeDataAttr({ name: "oke-reviews-carousel", value: "true" })}
+              {...okeReviewsProductIdAttr}
               {...attr}
             />
           </div>
         );
       case "mediaCarousel":
         if (autoPlay === "off") {
-          attr["data-oke-reviews-autoplay"] = "false";
+          attr[`${okeReviewsAutoplayAttr}`] = "false";
         } else {
-          attr["data-oke-reviews-autoplay"] = "true";
+          attr[`${okeReviewsAutoplayAttr}`] = "true";
         }
 
         return (
           <div
-            data-oke-media-carousel
-            data-oke-reviews-slide-link-text={imageLinkText}
-            data-oke-reviews-min-images="1"
-            data-oke-reviews-slide-size={slideSize}
-            data-oke-reviews-arrow-position={arrowPosition}
-            data-oke-reviews-product-id={`shopify-${productId}`}
+            {...makeDataAttr({
+              name: "oke-media-carousel",
+              value: "true"
+            })}
+            {...makeDataAttr({
+              name: "oke-reviews-slide-link-text",
+              value: imageLinkText
+            })}
+            {...makeDataAttr({
+              name: "oke-reviews-min-images",
+              value: "1"
+            })}
+            {...makeDataAttr({
+              name: "oke-reviews-slide-size",
+              value: slideSize
+            })}
+            {...makeDataAttr({
+              name: "oke-reviews-arrow-position",
+              value: arrowPosition
+            })}
+            {...okeReviewsProductIdAttr}
             {...attr}
           />
         );
 
       case "mediaGrid":
         if (hideLoadMoreArrow === "off") {
-          attr["data-oke-reviews-hide-arrow"] = "false";
+          attr[`${okeReviewsHideArrowAttr}`] = "false";
         } else {
-          attr["data-oke-reviews-hide-arrow"] = "true";
+          attr[`${okeReviewsHideArrowAttr}`] = "true";
         }
 
         if (loadMoreOnScoll === "off") {
-          attr["data-oke-reviews-load-more-on-scroll"] = "false";
+          attr[`${okeReviewsLoadMoreOnScrollAttr}`] = "false";
         } else {
-          attr["data-oke-reviews-load-more-on-scroll"] = "true";
+          attr[`${okeReviewsLoadMoreOnScrollAttr}`] = "true";
         }
 
         return (
           <div
-            data-oke-media-grid
-            data-oke-reviews-gap-size={`${gapSize.toString()}${gapSizeSuffix}`}
-            data-oke-reviews-grid-style={desktopGridStyle}
-            data-oke-reviews-mobile-grid-style={mobileGridStyle}
-            data-oke-reviews-cell-link-text={linkText}
-            data-oke-reviews-product-id={`shopify-${productId}`}
+            {...makeDataAttr({
+              name: "oke-media-grid",
+              value: "true"
+            })}
+            {...makeDataAttr({
+              name: "oke-reviews-gap-size",
+              value: `${gapSize.toString()}${gapSizeSuffix}`
+            })}
+            {...makeDataAttr({
+              name: "oke-reviews-grid-style",
+              value: desktopGridStyle
+            })}
+            {...makeDataAttr({
+              name: "oke-reviews-mobile-grid-style",
+              value: mobileGridStyle
+            })}
+            {...makeDataAttr({
+              name: "oke-reviews-cell-link-text",
+              value: linkText
+            })}
+            {...okeReviewsProductIdAttr}
             {...attr}
           />
         );
@@ -164,9 +220,18 @@ export class OkendoReview extends EditorComponent<Value> {
             }`}
           >
             <div
-              data-oke-reviews-badge
-              data-oke-reviews-badge-size={badgeSize}
-              data-oke-reviews-badge-link={linkToPage}
+              {...makeDataAttr({
+                name: "oke-reviews-badge",
+                value: "true"
+              })}
+              {...makeDataAttr({
+                name: "oke-reviews-badge-size",
+                value: badgeSize
+              })}
+              {...makeDataAttr({
+                name: "oke-reviews-badge-link",
+                value: linkToPage
+              })}
             />
           </div>
         );

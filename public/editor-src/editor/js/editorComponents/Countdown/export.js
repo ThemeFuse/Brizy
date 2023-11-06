@@ -1,8 +1,9 @@
 import $ from "jquery";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import * as languages from "./languages";
 
-export default function($node) {
-  $node.find(".brz-countdown").each(function() {
+export default function ($node) {
+  $node.find(".brz-countdown").each(function () {
     var $this = $(this);
 
     // timer
@@ -30,11 +31,11 @@ export default function($node) {
       ".brz-countdown__seconds > .brz-countdown__label"
     );
 
-    var endTime = $this.attr("data-end");
-    var timezone = $this.attr("data-timezone");
-    var language = $this.attr("data-language");
+    var endTime = $this.attr(makeAttr("end"));
+    var timezone = $this.attr(makeAttr("timezone"));
+    var language = $this.attr(makeAttr("language"));
 
-    var leftPadWith0 = function(number) {
+    var leftPadWith0 = function (number) {
       return ("0" + number).slice(-2);
     };
 
@@ -44,7 +45,7 @@ export default function($node) {
       timeZoneOffset: timezone * 60 * 1000,
       tickInterval: 1000,
       language: languages[language] || languages["en"],
-      onTick: function(remaining) {
+      onTick: function (remaining) {
         $daysNumber.text(remaining.days.amount);
         $hoursNumber.text(leftPadWith0(remaining.hours.amount));
         $minutesNumber.text(leftPadWith0(remaining.minutes.amount));

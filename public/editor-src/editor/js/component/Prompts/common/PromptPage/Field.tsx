@@ -1,17 +1,25 @@
+import classnames from "classnames";
 import React, { FC, ReactElement } from "react";
 
 interface Props {
   label: string;
   required: boolean;
+  className?: string;
 }
 
 export const Field: FC<Props> = ({
   children,
   label,
-  required
+  required,
+  className: _className
 }): ReactElement => {
+  const className = classnames(
+    "brz-ed-popup-integrations-step__fields-option brz-d-xs-flex brz-align-items-xs-center brz-justify-content-xs-between",
+    _className
+  );
+
   return (
-    <div className="brz-ed-popup-integrations-step__fields-option brz-d-xs-flex brz-align-items-xs-center brz-justify-content-xs-between">
+    <div className={className}>
       <p className="brz-p">
         {label}
         {required ? (

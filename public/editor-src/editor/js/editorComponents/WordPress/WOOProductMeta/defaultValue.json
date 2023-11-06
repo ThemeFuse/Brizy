@@ -11,10 +11,10 @@
     "className": "",
 
     "topSpacing": 0,
-    "topSpacingSuffix": null,
+    "topSpacingSuffix": "px",
 
     "rightSpacing": 10,
-    "rightSpacingSuffix": null,
+    "rightSpacingSuffix": "px",
 
     "families": {
       "categoryFontFamily": "lato",
@@ -62,12 +62,6 @@
     "tempDividersColorOpacity": 0.3,
     "tempDividersColorPalette": "color1",
 
-    "tabletTopSpacing": null,
-    "tabletTopSpacingSuffix": null,
-
-    "tabletRightSpacing": null,
-    "tabletRightSpacingSuffix": null,
-
     "tabletCategoryFontStyle": "",
     "tabletCategoryFontFamilyType": null,
     "tabletCategoryFontSize": 15,
@@ -83,12 +77,6 @@
     "tabletValueFontWeight": 300,
     "tabletValueLineHeight": 1.3,
     "tabletValueLetterSpacing": 0,
-
-    "mobileTopSpacing": null,
-    "mobileTopSpacingSuffix": null,
-
-    "mobileRightSpacing": null,
-    "mobileRightSpacingSuffix": null,
 
     "mobileCategoryFontStyle": "",
     "mobileCategoryFontFamilyType": null,

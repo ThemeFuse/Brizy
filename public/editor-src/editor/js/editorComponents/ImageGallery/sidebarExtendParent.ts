@@ -6,7 +6,7 @@ import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { read as readString } from "visual/utils/string/specs";
 import type { GetItems } from "../EditorComponent/types";
-import type { Props, Value } from "./index";
+import type { Props, Value } from "./types";
 
 export const title = t("Gallery");
 

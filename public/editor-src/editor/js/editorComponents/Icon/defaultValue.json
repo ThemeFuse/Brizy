@@ -254,12 +254,7 @@
 
     "customCSS": "",
 
-    "tabletSize": null,
-    "tabletCustomSize": null,
     "tabletCustomSizeSuffix": null,
-
-    "mobileSize": null,
-    "mobileCustomSize": null,
     "mobileCustomSizeSuffix": null,
 
     "tempMobilePadding": 20,

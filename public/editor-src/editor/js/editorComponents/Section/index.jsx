@@ -19,6 +19,7 @@ import {
   makeEndPlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { cloneItem } from "visual/utils/models";
 import {
   defaultValueValue,
@@ -244,8 +245,8 @@ export default class Section extends EditorComponent {
 
     const props = {
       ...parseCustomAttributes(customAttributes),
-      "data-block-id": this.props.blockId,
-      "data-uid": this.getId(),
+      ...makeDataAttr({ name: "block-id", value: this.props.blockId }),
+      ...makeDataAttr({ name: "uid", value: this.getId() }),
       id: this.getId(),
       className: classNameSection
     };
@@ -355,7 +356,7 @@ export default class Section extends EditorComponent {
 
     const props = {
       ...parseCustomAttributes(customAttributes),
-      "data-uid": this.getId(),
+      ...makeDataAttr({ name: "uid", value: this.getId() }),
       id: blockName,
       name: blockName,
       className: classNameSection

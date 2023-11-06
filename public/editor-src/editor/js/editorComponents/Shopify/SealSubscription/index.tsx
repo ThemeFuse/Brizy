@@ -4,6 +4,7 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
@@ -36,10 +37,20 @@ export class SealSubscription extends EditorComponent<ElementModel> {
           className: "brz-shopify-seal-subscription"
         })}
       >
-        <div data-pf-type="SealSubs">
+        <div
+          {...makeDataAttr({
+            name: "pf-type",
+            value: "SealSubs"
+          })}
+        >
           <div
             className="sealsubs-target-element"
-            data-handle={makePlaceholder({ content: "{{ product.handle }}" })}
+            {...makeDataAttr({
+              name: "handle",
+              value: makePlaceholder({
+                content: "{{ product.handle }}"
+              })
+            })}
           />
         </div>
       </Wrapper>

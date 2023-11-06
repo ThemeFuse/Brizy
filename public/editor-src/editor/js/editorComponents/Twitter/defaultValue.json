@@ -20,12 +20,6 @@
     "height": 400,
     "heightSuffix": "px",
 
-    "customCSS": "",
-
-    "tabletWidth": null,
-    "tabletHeight": null,
-
-    "mobileWidth": null,
-    "mobileHeight": null
+    "customCSS": ""
   }
 }

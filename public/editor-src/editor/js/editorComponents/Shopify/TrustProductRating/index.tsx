@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import * as sidebar from "./sidebar";
@@ -29,7 +30,10 @@ export class TrustProductRating extends EditorComponent<Value> {
             <div
               id="vnts_prodrating_wrp"
               className="vnts_prodreviews_wrp vnts_prodrating_wrp"
-              data-product-id={productId}
+              {...makeDataAttr({
+                name: "product-id",
+                value: productId
+              })}
             />
           ) : (
             <Placeholder icon="shopify" type="fa" />

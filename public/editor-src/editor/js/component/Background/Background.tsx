@@ -94,7 +94,7 @@ class Background extends Component<Props> {
     return (
       <>
         {needRenderMedia(this.props) && (
-          <div style={style} className="brz-bg overflow-hidden !z-auto absolute top-0 left-0 w-full h-full">
+          <div style={style} className="brz-bg">
             {image && (
               <Image showParallax={parallax}>
                 {({ innerRef, attr }): ReactElement => (
@@ -114,10 +114,7 @@ class Background extends Component<Props> {
                   <div
                     ref={innerRef as RefObject<HTMLDivElement>}
                     {...attr}
-                    className={classnames(
-                      "brz-bg-video absolute top-0 left-0 w-full h-full",
-                      attr.className
-                    )}
+                    className={classnames("brz-bg-video", attr.className)}
                   >
                     {children}
                   </div>
@@ -125,13 +122,11 @@ class Background extends Component<Props> {
               </Video>
             )}
             {map && (
-              <div className="brz-bg-map absolute top-0 left-0 w-full h-full">
+              <div className="brz-bg-map">
                 {map && <Map map={map} mapZoom={mapZoom} />}
               </div>
             )}
-            {opacity && (
-              <div className="brz-bg-color absolute top-0 left-0 w-full h-full" />
-            )}
+            {opacity && <div className="brz-bg-color" />}
             {(shapeTop || shapeBottom) && (
               <Shape shapeTop={shapeTop} shapeBottom={shapeBottom} />
             )}

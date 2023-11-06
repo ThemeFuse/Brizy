@@ -1,4 +1,5 @@
 import $ from "jquery";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import * as Num from "visual/utils/reader/number";
 
 export default function ($node) {
@@ -98,14 +99,17 @@ export default function ($node) {
       rows: 0
     });
 
-    node.querySelectorAll("[data-brz-link-story]").forEach((item) => {
-      const linkIndex = Num.read(item.getAttribute("data-brz-link-story")) ?? 1;
+    node
+      .querySelectorAll(makeDataAttrString({ name: "link-story" }))
+      .forEach((item) => {
+        const linkIndex =
+          Num.read(item.getAttribute(makeAttr("link-story"))) ?? 1;
 
-      item.addEventListener("click", (e) => {
-        e.preventDefault();
-        $slideshow.slick("slickGoTo", linkIndex - 1);
+        item.addEventListener("click", (e) => {
+          e.preventDefault();
+          $slideshow.slick("slickGoTo", linkIndex - 1);
+        });
       });
-    });
 
     $(".brz-slick-slider__arrow-replay").on("click", function () {
       $slideshow.slick("slickGoTo", 0);

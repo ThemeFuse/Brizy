@@ -95,17 +95,17 @@ export const getOptions = (config: Config): Options => {
 
   topTabsOrder.forEach((id) => {
     top.push(options[id]);
-  });
 
+    // INFO: is not good how it was made, normally need to work with __VISUAL_CONFIG__ but it goes like this because of necessity of second moduleGroups
+    if (id === "addElements" && isCloud(config) && isShopify(config)) {
+      // TODO: need to review this when Shopify will be...
+      // @ts-expect-error: 'disabledElements' is declared here.
+      top.push(Shopify);
+    }
+  });
   bottomTabsOrder.forEach((id) => {
     bottom.push(options[id]);
   });
-
-  if (isCloud(config) && isShopify(config)) {
-    // TODO: need to review this when Shopify will be...
-    // @ts-expect-error: 'disabledElements' is declared here.
-    top.push(Shopify);
-  }
 
   if (isExternalStory(config)) {
     // TODO: Temporary this code need to be on backend

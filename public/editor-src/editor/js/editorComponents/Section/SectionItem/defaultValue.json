@@ -8,17 +8,10 @@
     "bgSizeType": "custom",
     "bgImageFileName": null,
     "maskCustomUploadImageFileName": "",
-    "hoverBgImageFileName": null,
-    "tabletBgImageFileName": null,
-    "mobileBgImageFileName": null,
-    "hoverBgSizeType": null,
 
     "images": {
       "bgImageSrc": "",
-      "maskCustomUploadImageSrc": "",
-      "hoverBgImageSrc": null,
-      "tabletBgImageSrc": null,
-      "mobileBgImageSrc": null
+      "maskCustomUploadImageSrc": ""
     },
 
     "bgImageWidth": 0,
@@ -50,63 +43,17 @@
     "saturation": 100,
     "contrast": 100,
 
-    "hoverBgImageWidth": null,
-    "hoverBgImageHeight": null,
-    "hoverBgPositionY": null,
-    "hoverBgPositionX": null,
-    "hoverBgPopulation": null,
-    "hoverBgImageExtension": null,
-
-    "hoverBrightness": null,
-    "hoverHue": null,
-    "hoverSaturation": null,
-    "hoverContrast": null,
-
     "tabletMedia": "image",
 
-    "tabletBgSizeType": null,
-
-    "tabletBgImageWidth": null,
-    "tabletBgImageHeight": null,
-    "tabletBgPositionX": null,
-    "tabletBgPositionY": null,
     "tabletBgPopulation": "",
-    "tabletBgImageExtension": null,
-    "tabletBgSize": null,
-    "tabletBgRepeat": null,
-
-    "tabletBrightness": null,
-    "tabletHue": null,
-    "tabletSaturation": null,
-    "tabletContrast": null,
 
     "tabletBgAttachment": "none",
 
-    "tabletBgMapZoom": null,
-    "tabletBgMapZoomSuffix": null,
-
     "mobileMedia": "image",
 
-    "mobileBgSizeType": null,
-
-    "mobileBgImageWidth": null,
-    "mobileBgImageHeight": null,
-    "mobileBgPositionX": null,
-    "mobileBgPositionY": null,
     "mobileBgPopulation": "",
-    "mobileBgImageExtension": null,
-    "mobileBgSize": null,
-    "mobileBgRepeat": null,
 
-    "mobileBrightness": null,
-    "mobileHue": null,
-    "mobileSaturation": null,
-    "mobileContrast": null,
-
-    "mobileBgAttachment": "none",
-
-    "mobileBgMapZoom": null,
-    "mobileBgMapZoomSuffix": null
+    "mobileBgAttachment": "none"
   },
 
   "toolbar": {

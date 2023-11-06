@@ -193,8 +193,6 @@
     "tabletH6LineHeight": null,
     "tabletH6LetterSpacing": null,
 
-    "tabletExcerptHorizontalAlign": null,
-
     "mobileParagraphFontStyle": null,
     "mobileParagraphFontFamilyType": null,
     "mobileParagraphFontSize": null,
@@ -249,8 +247,6 @@
     "mobileH6FontSizeSuffix": "px",
     "mobileH6FontWeight": null,
     "mobileH6LineHeight": null,
-    "mobileH6LetterSpacing": null,
-
-    "mobileExcerptHorizontalAlign": null
+    "mobileH6LetterSpacing": null
   }
 }

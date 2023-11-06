@@ -1,4 +1,3 @@
-import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import {
   MaskPositions,
@@ -7,19 +6,12 @@ import {
   MaskSizes
 } from "visual/utils/mask/Mask";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { HOVER, NORMAL } from "visual/utils/stateMode";
 import type { GetItems } from "../EditorComponent/types";
-import type { Props, Value } from "./index";
+import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state: "normal" });
-
-  const { hex: galleryImageBorderColorHex } = getOptionColorHexByPalette(
-    dvv("galleryImageBorderColorHex"),
-    dvv("galleryImageBorderColorPallete")
-  );
 
   const layout = dvv("layout");
   const maskShape = dvv("imagesMaskShape");
@@ -160,72 +152,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                   type: "select-dev",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
                   choices: MaskRepeat
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: "toolbarColor",
-      type: "popover-dev",
-      disabled: true
-    },
-    {
-      id: "toolbarGalleryImageColor",
-      type: "popover-dev",
-      config: {
-        size: "auto",
-        title: t("Colors"),
-        icon: {
-          style: {
-            backgroundColor: hexToRgba(
-              galleryImageBorderColorHex,
-              dvv("galleryImageBorderColorOpacity")
-            )
-          }
-        }
-      },
-      position: 80,
-      options: [
-        {
-          id: "tabsColor",
-          type: "tabs-dev",
-          tabs: [
-            {
-              id: "tabOverlayImages",
-              label: t("Overlay"),
-              options: [
-                {
-                  id: "galleryImageOverlay",
-                  type: "backgroundColor-dev",
-                  devices: "desktop",
-                  states: [NORMAL, HOVER]
-                }
-              ]
-            },
-            {
-              id: "tabBorder",
-              label: t("Border"),
-              options: [
-                {
-                  id: "galleryImageBorder",
-                  type: "border-dev",
-                  devices: "desktop",
-                  states: [NORMAL, HOVER]
-                }
-              ]
-            },
-            {
-              id: "tabBoxShadow",
-              label: t("Shadow"),
-              options: [
-                {
-                  id: "galleryImageBoxShadow",
-                  type: "boxShadow-dev",
-                  devices: "desktop",
-                  states: [NORMAL, HOVER]
                 }
               ]
             }

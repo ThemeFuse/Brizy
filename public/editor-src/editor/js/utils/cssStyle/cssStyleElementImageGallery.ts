@@ -18,7 +18,6 @@ import {
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
 import { cssStyleBorderRadius } from "visual/utils/cssStyle";
-import { cssStyleBgGradient } from "visual/utils/cssStyle";
 import { cssStyleSpacing } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Num from "visual/utils/reader/number";
@@ -340,14 +339,6 @@ export function cssStyleElementImageGalleryGridAspectRatio({
     : "";
 }
 
-export function cssStyleElementImageGalleryImagesBoxShadow({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "galleryImage" });
-}
-
 export function cssStyleElementImageGalleryBigImageSpacing({
   v,
   device,
@@ -430,41 +421,12 @@ export function cssStyleElementImageGalleryBigImageWidth({
   return `width:${bigImageWidth}${bigImageWidthSuffix};`;
 }
 
-export function cssStyleElementImageGalleryImagesBorder({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "galleryImage" });
-}
-
 export function cssStyleElementImageGalleryBorderRadiusThumbnail({
   v,
   device,
   state
 }: CSSValue): string {
   return cssStyleBorderRadius({ v, device, state, prefix: "thumbnail" });
-}
-
-export function cssStyleElementImageGalleryImagesOverlay({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "galleryImageOverlayBg" });
-}
-
-export function cssStyleElementImageGalleryImagesGradient({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleBgGradient({
-    v,
-    device,
-    state,
-    prefix: "galleryImageOverlay"
-  });
 }
 
 export function cssStyleElementImageGalleryBigImageImagesMaskShape({

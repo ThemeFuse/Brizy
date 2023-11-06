@@ -23,6 +23,7 @@ import { isStory } from "visual/utils/models";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
 import { defaultValueValue } from "visual/utils/onChange";
+import { handleLinkChange } from "visual/utils/patch/Link";
 import * as State from "visual/utils/stateMode";
 import * as Str from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
@@ -32,7 +33,7 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleIcon } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { Props, Value } from "./types";
+import { PatchValue, Props, Value } from "./types";
 
 const resizerPoints = [
   "topLeft",
@@ -62,6 +63,11 @@ export default class Button extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
 
   static experimentalDynamicContent = true;
+
+  patchValue(patch: PatchValue, meta = {}) {
+    const link = handleLinkChange(patch);
+    super.patchValue({ ...patch, ...link }, meta);
+  }
 
   handleResizerChange = (patch: Patch): void => this.patchValue(patch);
 

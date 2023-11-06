@@ -1,3 +1,4 @@
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { Role } from "visual/utils/membership";
 import { decodeFromString } from "visual/utils/string";
 
@@ -146,8 +147,8 @@ export const getValidateRegisterInputs = (
 };
 
 export const handleRedirect = (node: Element): void => {
-  const dataRedirect = node.getAttribute("data-redirect");
-  const dataRedirectValue = node.getAttribute("data-redirect-value");
+  const dataRedirect = node.getAttribute(makeAttr("redirect"));
+  const dataRedirectValue = node.getAttribute(makeAttr("redirect-value"));
 
   if (dataRedirect === "samePage") {
     window.location.reload();
@@ -277,7 +278,7 @@ export const buttonEvent = (
 
 export const loginDisplay = (element: Element): void => {
   const type = element.getAttribute("type");
-  const isLogged = element.getAttribute("data-islogged") === "true";
+  const isLogged = element.getAttribute(makeAttr("islogged")) === "true";
 
   const authorizedNode = findElem(element, ".brz-login__authorized");
   const loginNode = findElem(element, ".brz-login-form__login");
@@ -286,7 +287,7 @@ export const loginDisplay = (element: Element): void => {
   const redirectNode = findElem(element, "input[name=redirect_to]");
 
   if (redirectNode) {
-    const redirectType = redirectNode.getAttribute("data-redirect");
+    const redirectType = redirectNode.getAttribute(makeAttr("redirect"));
 
     if (redirectType === "samePage") {
       redirectNode.setAttribute("value", window.location.href);
@@ -346,15 +347,16 @@ export const getErrorMessages = (
   passMatchError: string;
 } => {
   const emptyFieldsError =
-    element.getAttribute("data-error-empty") ||
+    element.getAttribute(makeAttr("error-empty", true)) ||
     "Please fill in the mandatory fields";
 
   const passLengthError =
-    element.getAttribute("data-error-passlength") ||
+    element.getAttribute(makeAttr("error-passlength", true)) ||
     "Password should be at least 6 characters";
 
   const passMatchError =
-    element.getAttribute("data-error-passmatch") || "Passwords do not match";
+    element.getAttribute(makeAttr("error-passmatch", true)) ||
+    "Passwords do not match";
 
   return {
     emptyFieldsError,

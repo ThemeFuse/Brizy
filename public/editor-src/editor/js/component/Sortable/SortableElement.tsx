@@ -1,10 +1,11 @@
 import React from "react";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 
 export interface SortableElementDataAttributes {
-  "data-sortable-element"?: "true";
-  "data-sortable-type"?: string;
-  "data-sortable-subtype"?: string;
-  "data-sortable-use-handle"?: "true";
+  "data-brz-sortable-element"?: "true";
+  "data-brz-sortable-type"?: string;
+  "data-brz-sortable-subtype"?: string;
+  "data-brz-sortable-use-handle"?: "true";
 }
 type FunctionAsAChild = (
   atts: SortableElementDataAttributes
@@ -22,13 +23,23 @@ export const SortableElement: (props: Props) => React.ReactElement = ({
   subtype,
   useHandle
 }) => {
+  const sortableUseHandleDataFromAttr = useHandle
+    ? makeDataAttr({
+        name: "sortable-use-handle",
+        value: "true"
+      })
+    : {};
+
   const dataProps: SortableElementDataAttributes = IS_PREVIEW
     ? {}
     : {
-        "data-sortable-element": "true",
-        "data-sortable-type": type,
-        "data-sortable-subtype": subtype,
-        "data-sortable-use-handle": useHandle ? "true" : undefined
+        ...makeDataAttr({
+          name: "sortable-element",
+          value: "true"
+        }),
+        ...makeDataAttr({ name: "sortable-type", value: type }),
+        ...makeDataAttr({ name: "sortable-subtype", value: subtype }),
+        ...sortableUseHandleDataFromAttr
       };
 
   return typeof children === "function"

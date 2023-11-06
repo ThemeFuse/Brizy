@@ -17,16 +17,14 @@ class EditorPopup extends Component {
 
   render() {
     const config = Config.getAll();
-    const { backgroundPreviewUrl } = config.ui.popupSettings;
-
+    const { backgroundPreviewUrl } = config.ui?.popupSettings ?? {};
     const { PagePopup } = EditorGlobal.getComponents();
     const { reduxState, reduxDispatch } = this.props;
-
     const items = pageBlocksSelector(reduxState);
 
     return (
       <Fragment>
-        {Boolean(items.length) && (
+        {items.length > 0 && backgroundPreviewUrl && (
           <iframe
             id="brz-ed-home-page"
             src={backgroundPreviewUrl}

@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -50,17 +51,35 @@ export class KiwiChart extends EditorComponent<Value> {
           })}
         >
           {IS_PREVIEW ? (
-            <div data-pf-type="KiwiSizeChart">
+            <div {...makeDataAttr({ name: "pf-type", value: "KiwiSizeChart" })}>
               <div
                 id="KiwiSizingChart"
-                data-collections={productCollection}
-                data-tags={productTags}
-                data-product={productId}
-                data-vendor={productVendor}
-                data-product-name={productTitle}
-                data-product-images={productImage}
-                data-type={productType}
-                data-display-mode={displayMode}
+                {...makeDataAttr({
+                  name: "collections",
+                  value: productCollection
+                })}
+                {...makeDataAttr({
+                  name: "tags",
+                  value: productTags
+                })}
+                {...makeDataAttr({ name: "product", value: productId })}
+                {...makeDataAttr({
+                  name: "vendor",
+                  value: productVendor
+                })}
+                {...makeDataAttr({
+                  name: "product-name",
+                  value: productTitle
+                })}
+                {...makeDataAttr({
+                  name: "product-images",
+                  value: productImage
+                })}
+                {...makeDataAttr({
+                  name: "type",
+                  value: productType
+                })}
+                {...makeDataAttr({ name: "display-mode", value: displayMode })}
               />
             </div>
           ) : (

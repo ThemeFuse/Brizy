@@ -58,7 +58,7 @@ export function styleWrapper(
 ): [string, string, string] {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleElementVideoPaddingRatio"]
+      standart: ["cssStyleElementVideoRatio"]
     },
     ".brz &&:hover .brz-video__cover::before": {
       standart: [

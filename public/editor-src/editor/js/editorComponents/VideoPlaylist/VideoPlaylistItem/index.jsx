@@ -6,6 +6,7 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { getImageUrl } from "visual/utils/image";
 import { getUrlQueryParam } from "visual/utils/url";
 import {
@@ -109,7 +110,7 @@ class VideoPlaylistItem extends EditorComponent {
         <CustomCSS selectorName={this.getId()} css={customCSS}>
           <div
             className={classNameContent}
-            data-link={videoSrc}
+            {...makeDataAttr({ name: "link", value: videoSrc })}
             onClick={onActiveItem}
           >
             <div className="brz-video-playlist-video-elem">{content}</div>

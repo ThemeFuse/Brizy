@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import * as sidebar from "./sidebar";
@@ -17,6 +18,7 @@ export class PreProduct extends EditorComponent<ElementModel> {
     const productId = makePlaceholder({
       content: "{{product.id}}"
     });
+
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
         <Wrapper
@@ -25,10 +27,10 @@ export class PreProduct extends EditorComponent<ElementModel> {
           })}
         >
           {IS_PREVIEW ? (
-            <div data-pf-type="PreProduct">
+            <div {...makeDataAttr({ name: "pf-type", value: "PreProduct" })}>
               <div
                 id="preproduct-pledge"
-                data-id={productId}
+                {...makeDataAttr({ name: "id", value: productId })}
                 style={{ textAlign: "left" }}
               />
             </div>

@@ -72,12 +72,6 @@
     "linkPopulationEntityId": "",
     "linkPopulationEntityType": "",
     "linkUpload": "",
-    "linkPopup": "",
-
-    "tabletLinkType": null,
-    "tabletLinkPopup": null,
-
-    "mobileLinkType": null,
-    "mobileLinkPopup": null
+    "linkPopup": ""
   }
 }

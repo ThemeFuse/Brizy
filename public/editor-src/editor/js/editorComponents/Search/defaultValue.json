@@ -144,22 +144,12 @@
     "bgPaddingBottomSuffix": "px",
     "bgPaddingLeftSuffix": "px",
 
-    "tabletHeight": null,
-    "tabletHeightSuffix": null,
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontSize": 13,
     "tabletTypographyFontSizeSuffix": "px",
     "tabletTypographyFontWeight": 400,
     "tabletTypographyLineHeight": 1,
     "tabletTypographyLetterSpacing": 1,
-
-    "mobileHeight": null,
-    "mobileHeightSuffix": null,
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
 
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontSize": 13,

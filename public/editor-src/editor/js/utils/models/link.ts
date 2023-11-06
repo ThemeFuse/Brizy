@@ -8,6 +8,7 @@ import {
   makePlaceholder
 } from "visual/utils/dynamicContent";
 import { pipe } from "visual/utils/fp";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import {
   defaultImagePopulation,
   getImageUrl,
@@ -150,7 +151,7 @@ export const getLinkData = <T extends Value>(v: T): Link => {
 
   const slideAnchor =
     type === "story" && !isNullish(slide)
-      ? { "data-brz-link-story": slide }
+      ? makeDataAttr({ name: "link-story", value: slide })
       : undefined;
 
   return {

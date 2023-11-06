@@ -9,6 +9,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import * as Str from "visual/utils/reader/string";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -45,7 +46,7 @@ export class AddToCart extends EditorComponent<Value> {
     }
   }
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
-    const { itemId } = v;
+    const { itemId, customCSS } = v;
 
     const className = classnames(
       "brz-shopify-add-to-cart",
@@ -66,13 +67,13 @@ export class AddToCart extends EditorComponent<Value> {
 
     return (
       <PortalToolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <CustomCSS selectorName={this.getId()} css={customCSS}>
           <Wrapper
             {...this.makeWrapperProps({
               className,
               attributes: {
-                "data-product-handle": _itemId,
-                "data-default-variant-id": _variantId
+                ...makeDataAttr({ name: "product-handle", value: _itemId }),
+                ...makeDataAttr({ name: "default-variant-id", value: _variantId })
               }
             })}
             component={"button"}

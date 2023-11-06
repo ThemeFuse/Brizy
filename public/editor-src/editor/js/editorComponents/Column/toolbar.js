@@ -20,7 +20,6 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { read as readString } from "visual/utils/string/specs";
 import {
   toolbarElementContainerTypeImageMap,
-  toolbarImageLinkExternal,
   toolbarLinkAnchor,
   toolbarLinkPopup,
   toolbarShowOnResponsive
@@ -76,6 +75,13 @@ export function getItems({ v, device, component, context, state }) {
   const vimeoType = videoType === "vimeo";
   const customType = videoType === "bgVideoCustom";
   const urlType = videoType === "url";
+  const linkDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.link
+  });
+  const image = dvv("media") !== "image";
+  const video = dvv("media") !== "video";
+  const map = dvv("media") !== "map";
 
   return [
     toolbarShowOnResponsive({ v, device, devices: "responsive" }),
@@ -120,7 +126,7 @@ export function getItems({ v, device, component, context, state }) {
                   devices: "desktop",
                   states: [NORMAL, HOVER],
                   population: imageDynamicContentChoices,
-                  disabled: dvv("media") !== "image"
+                  disabled: image
                 },
                 {
                   label: t("Image"),
@@ -129,7 +135,7 @@ export function getItems({ v, device, component, context, state }) {
                   devices: "responsive",
                   states: [NORMAL, HOVER],
                   population: imageDynamicContentChoices,
-                  disabled: dvv("media") !== "image" && dvv("media") !== "video"
+                  disabled: image && video
                 },
                 {
                   id: "bgVideoType",
@@ -180,14 +186,14 @@ export function getItems({ v, device, component, context, state }) {
                   label: t("Loop"),
                   type: "switch-dev",
                   devices: "desktop",
-                  disabled: dvv("media") !== "video"
+                  disabled: video
                 },
                 {
                   id: "bgMapAddress",
                   label: t("Address"),
                   type: "inputText-dev",
                   devices: "desktop",
-                  disabled: dvv("media") !== "map",
+                  disabled: map,
                   placeholder: t("Enter address"),
                   config: {
                     size: "large"
@@ -197,7 +203,7 @@ export function getItems({ v, device, component, context, state }) {
                   id: "bgMapZoom",
                   label: t("Zoom"),
                   type: "slider-dev",
-                  disabled: dvv("media") !== "map" || device !== "desktop",
+                  disabled: map || device !== "desktop",
                   config: {
                     min: 1,
                     max: 21
@@ -432,13 +438,18 @@ export function getItems({ v, device, component, context, state }) {
               id: "external",
               label: t("URL"),
               options: [
-                toolbarImageLinkExternal({
-                  v,
-                  device,
-                  config: context.dynamicContent.config,
-                  state: "normal",
-                  devices: "desktop"
-                }),
+                {
+                  id: "link",
+                  type: "population-dev",
+                  label: t("Link to"),
+                  config: linkDC,
+                  option: {
+                    id: "linkExternal",
+                    type: "inputText-dev",
+                    placeholder: "http://",
+                    devices: "desktop"
+                  }
+                },
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),

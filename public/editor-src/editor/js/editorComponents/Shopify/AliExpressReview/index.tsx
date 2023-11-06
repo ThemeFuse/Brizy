@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -54,10 +55,15 @@ export class AliExpressReview extends EditorComponent<Value> {
 
     const qAHtml = `<questions-answers handle="${productHandle}" product_id="${productId}"/>`;
 
+    const ryviuProductReviewsAttr = makeDataAttr({
+      name: "pt-type",
+      value: "RyviuProductReviews"
+    });
+
     switch (type) {
       case "star":
         return (
-          <div data-pt-type="RyviuProductReviews">
+          <div {...ryviuProductReviewsAttr}>
             <div
               className="review-widget"
               dangerouslySetInnerHTML={{ __html: starHtml }}
@@ -66,7 +72,7 @@ export class AliExpressReview extends EditorComponent<Value> {
         );
       case "widget":
         return (
-          <div data-pt-type="RyviuProductReviews">
+          <div {...ryviuProductReviewsAttr}>
             <div
               className="lt-block-reviews"
               dangerouslySetInnerHTML={{ __html: widgetHtml }}
@@ -77,7 +83,7 @@ export class AliExpressReview extends EditorComponent<Value> {
       case "featuredMasonry":
         return (
           <div
-            data-pt-type="RyviuProductReviews"
+            {...ryviuProductReviewsAttr}
             dangerouslySetInnerHTML={{ __html: masonryHtml }}
           />
         );
@@ -85,14 +91,19 @@ export class AliExpressReview extends EditorComponent<Value> {
       case "featuredCarousel":
         return (
           <div
-            data-pt-type="RyviuProductReviews"
+            {...ryviuProductReviewsAttr}
             dangerouslySetInnerHTML={{ __html: carouselHtml }}
           />
         );
 
       case "questionAnswers":
         return (
-          <div data-pt-type="QuestionsAndAnswersRyviu">
+          <div
+            {...makeDataAttr({
+              name: "pt-type",
+              value: "QuestionsAndAnswersRyviu"
+            })}
+          >
             <div
               className="lt-block-reviews"
               dangerouslySetInnerHTML={{ __html: qAHtml }}

@@ -212,7 +212,12 @@ class Brizy_Public_Main
     {
         $post = $this->post->getWpPost();
 
-        $template_path = get_post_meta($post->ID, '_wp_page_template', true);
+		$parentPostId = $post->ID;
+	    if ( wp_is_post_autosave( $post->ID ) ) {
+		    $parentPostId = wp_get_post_parent_id( $post->ID );
+	    }
+
+        $template_path = get_post_meta($parentPostId, '_wp_page_template', true);
         $template_path = !$template_path && $post->post_type == Brizy_Admin_Templates::CP_TEMPLATE ? Brizy_Config::BRIZY_TEMPLATE_FILE_NAME : $template_path;
 
         if (in_array(
@@ -420,9 +425,7 @@ class Brizy_Public_Main
     private function getClientConfigObject($context = Brizy_Editor_Editor_Editor::EDITOR_CONTEXT)
     {
         $editor = Brizy_Editor_Editor_Editor::get(Brizy_Editor_Project::get(), $this->post);
-        $editorConfig = $editor->config($context);
-
-        $config_json   = json_encode($editor->getClientConfig($editorConfig,$context));
+        $config_json   = json_encode($editor->getClientConfig($context));
         $config_object = json_decode($config_json);
 
         return $config_object;

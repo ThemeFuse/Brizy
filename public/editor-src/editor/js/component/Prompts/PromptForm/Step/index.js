@@ -9,6 +9,9 @@ export { default as Done } from "./Done";
 export { default as SmtpFields } from "./SmtpFields";
 export { default as GmailFields } from "./GmailFields";
 
+// Email
+export { EmailDisconnect } from "./EmailDisconnect";
+
 // ReCaptcha
 export { default as RecaptchaConnect } from "./RecaptchaConnect";
 export { default as RecaptchaDisconnect } from "./RecaptchaDisconnect";

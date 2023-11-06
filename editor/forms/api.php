@@ -254,6 +254,10 @@ class Brizy_Editor_Forms_Api
             $form = apply_filters('brizy_form', $form);
             $fields = apply_filters('brizy_form_submit_data', $fields, $form);
 
+			if(count($form->getIntegrations())==0) {
+				 $this->error(500, 'The form has no integrations.');
+			}
+
             $result = null;
             foreach ($form->getIntegrations() as $integration) {
 

@@ -9,14 +9,17 @@ import EditorIcon from "visual/component/EditorIcon";
 import Prompts, { PromptsProps } from "visual/component/Prompts";
 import { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types";
 import { hideToolbar } from "visual/component/Toolbar";
-import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
 import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
+import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
+import Config from "visual/global/Config";
+import { isCloud } from "visual/global/Config/types";
+import { isShopify } from "visual/global/Config/types/configs/Cloud";
 import {
   ActionAddFonts,
   ActionUpdateExtraFontStyles,
   ActionUpdateGlobalBlock,
-  addFonts,
   FontsPayload,
+  addFonts,
   updateExtraFontStyles,
   updateGlobalBlock
 } from "visual/redux/actions2";
@@ -79,14 +82,18 @@ class PromptAddPopupOptionType extends React.Component<Props> {
   };
 
   handleCreate = (): void => {
-    const data: PromptsProps = {
+    const config = Config.getAll();
+    ///// TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
+    const showGlobal = !(isCloud(config) && isShopify(config));
+
+    const data: PromptsProps<"popup"> = {
       prompt: "blocks",
       mode: "single",
       props: {
         type: "popup",
+        showGlobal,
         showTemplate: false,
         blocksType: false,
-        globalSearch: false,
         onChangeBlocks: this.handleAddBlocks,
         onChangeGlobal: this.handleAddBlocks,
         onChangeSaved: this.handleAddSavedBlock

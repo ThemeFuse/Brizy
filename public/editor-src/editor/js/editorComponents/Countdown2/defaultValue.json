@@ -230,10 +230,7 @@
     "tabletMessageLineHeight": 1,
     "tabletMessageLetterSpacing": 1,
 
-    "tabletWidth": null,
     "tabletWidthSuffix": null,
-
-    "tabletHeight": null,
     "tabletHeightSuffix": null,
 
     "mobileNumberFontStyle": "",
@@ -257,10 +254,7 @@
     "mobileMessageLineHeight": 1,
     "mobileMessageLetterSpacing": 1,
 
-    "mobileWidth": null,
     "mobileWidthSuffix": null,
-
-    "mobileHeight": null,
     "mobileHeightSuffix": null
   }
 }

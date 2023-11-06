@@ -26,6 +26,7 @@ import {
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
 import { IS_PRO } from "visual/utils/env";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { hasMembership } from "visual/utils/membership";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
 import {
@@ -266,7 +267,10 @@ class SectionFooter extends EditorComponent {
               componentProps={{
                 ...parseCustomAttributes(customAttributes),
                 ...containerBorderAttr,
-                "data-block-id": this.props.blockId,
+                ...makeDataAttr({
+                  name: "block-id",
+                  value: this.props.blockId
+                }),
                 id: this.getId(),
                 className: classnames(
                   "brz-footer",
@@ -383,7 +387,6 @@ class SectionFooter extends EditorComponent {
     } = v;
 
     const blockName = cssID ? cssID : anchorName || this.getId();
-
     const content = (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Animation
@@ -391,7 +394,7 @@ class SectionFooter extends EditorComponent {
           component={tagName}
           componentProps={{
             ...parseCustomAttributes(customAttributes),
-            "data-uid": this.getId(),
+            ...makeDataAttr({ name: "uid", value: this.getId() }),
             id: blockName,
             name: blockName,
             className: classnames(

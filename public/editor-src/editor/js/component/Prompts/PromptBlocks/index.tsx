@@ -18,6 +18,7 @@ import { get } from "visual/utils/object/get";
 import { capitalize } from "visual/utils/string";
 import Blocks from "./Blocks";
 import Global from "./Global";
+import { PromptGlobalBlock } from "./Global/types";
 import Layouts from "./Layouts";
 import Library from "./Library";
 import {
@@ -28,24 +29,34 @@ import {
   PromptTabsId
 } from "./types";
 
-type Tab = {
-  id: PromptTabsId;
-  title: string;
-  icon: string;
-  renderTab(props: TabComponentProps): ReactElement;
-};
+interface OnChanges<T extends BlockMetaType> {
+  blocks: PromptBlock;
+  template: PromptBlockTemplate;
+  saved: PromptBlockTemplate;
+  global: PromptGlobalBlock<T>;
+}
 
-type TabComponentProps = {
-  type: "normal" | "popup";
+interface TabComponentProps<T extends BlockMetaType, A extends PromptTabsId> {
+  type: T;
   showSearch: boolean;
   showSidebar: boolean;
   HeaderSlotLeft: ComponentType;
   onClose: VoidFunction;
-  onAddBlocks: (block: PromptBlockTemplate | PromptBlock) => void;
+  onAddBlocks: (block: OnChanges<T>[A]) => void;
   getParentNode?: () => HTMLElement | null;
-};
+}
 
-const getTabs = (config: ConfigCommon, type: BlockMetaType): Array<Tab> => {
+interface Tab<ID extends PromptTabsId, T extends BlockMetaType> {
+  id: ID;
+  title: string;
+  icon: string;
+  renderTab(props: TabComponentProps<T, ID>): ReactElement;
+}
+
+const getTabs = <T extends BlockMetaType>(
+  config: ConfigCommon,
+  type: BlockMetaType
+): Array<Tab<PromptTabsId, T>> => {
   const { defaultLayouts, defaultStories, defaultKits, defaultPopups } =
     config.api ?? {};
 
@@ -60,14 +71,14 @@ const getTabs = (config: ConfigCommon, type: BlockMetaType): Array<Tab> => {
 
   const _isStory = isStory(Config.getAll());
   const _isPopup = type === "popup";
-  const tabs: Array<Tab> = [];
+  const tabs: Array<Tab<"template" | "blocks", T>> = [];
 
   if (hasDefaultStories && _isStory) {
     tabs.push({
       id: "template",
       title: defaultStories?.label ?? t("Stories"),
       icon: "nc-pages",
-      renderTab(props: TabComponentProps): ReactElement {
+      renderTab(props): ReactElement {
         return <Layouts {...props} type="stories" />;
       }
     });
@@ -78,7 +89,7 @@ const getTabs = (config: ConfigCommon, type: BlockMetaType): Array<Tab> => {
       id: "template",
       title: defaultLayouts?.label ?? t("Layouts"),
       icon: "nc-pages",
-      renderTab(props: TabComponentProps): ReactElement {
+      renderTab(props): ReactElement {
         return <Layouts {...props} type="layouts" />;
       }
     });
@@ -89,7 +100,7 @@ const getTabs = (config: ConfigCommon, type: BlockMetaType): Array<Tab> => {
       id: "blocks",
       title: defaultKits?.label ?? t("Blocks"),
       icon: "nc-blocks",
-      renderTab(props: TabComponentProps): ReactElement {
+      renderTab(props): ReactElement {
         return <Blocks {...props} />;
       }
     });
@@ -100,18 +111,17 @@ const getTabs = (config: ConfigCommon, type: BlockMetaType): Array<Tab> => {
       id: "blocks",
       title: defaultPopups?.label ?? t("Popups"),
       icon: "nc-blocks",
-      renderTab(props: TabComponentProps): ReactElement {
+      renderTab(props): ReactElement {
         return <Blocks {...props} />;
       }
     });
   }
 
-  const globalBlockTab: Tab = {
+  const globalBlockTab: Tab<"global", T> = {
     id: "global",
     title: isPopup(config) ? t("Global Popups") : t("Global Blocks"),
     icon: "nc-global",
     renderTab(props): ReactElement {
-      // @ts-expect-error -- Need to rewrite to TSX
       return <Global {...props} />;
     }
   };
@@ -157,8 +167,11 @@ const getTabs = (config: ConfigCommon, type: BlockMetaType): Array<Tab> => {
   return tabs;
 };
 
-class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
-  static defaultProps: PromptBlocksProps = {
+class PromptBlocks<T extends BlockMetaType> extends Component<
+  PromptBlocksProps<T>,
+  PromptBlocksState
+> {
+  static defaultProps: PromptBlocksProps<BlockMetaType> = {
     activeTab: "blocks",
     type: "normal",
     opened: false,
@@ -189,7 +202,7 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
 
   mounted = false;
 
-  tabs = getTabs(Config.getAll(), this.props.type);
+  tabs = getTabs<T>(Config.getAll(), this.props.type);
 
   state: PromptBlocksState = {
     currentTab: this.props.activeTab || "blocks"
@@ -208,18 +221,24 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
   };
 
   hasSearch(currentTab: PromptTabsId): boolean {
-    return !!get(`${currentTab}Search` as keyof PromptBlocksProps, this.props);
+    return !!get(
+      `${currentTab}Search` as keyof PromptBlocksProps<T>,
+      this.props
+    );
   }
 
   hasSidebar(currentTab: PromptTabsId): boolean {
-    return !!get(`${currentTab}Sidebar` as keyof PromptBlocksProps, this.props);
+    return !!get(
+      `${currentTab}Sidebar` as keyof PromptBlocksProps<T>,
+      this.props
+    );
   }
 
   handleTabChange(tabId: PromptTabsId): void {
     this.setState({ currentTab: tabId });
   }
 
-  handleChange = (block: PromptBlock | PromptBlockTemplate): void => {
+  handleChange = (block: OnChanges<T>[PromptTabsId]): void => {
     const { currentTab } = this.state;
     const { onChangeBlocks, onChangeGlobal, onChangeSaved, onChangeTemplate } =
       this.props;
@@ -238,7 +257,7 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
         break;
       }
       case "global": {
-        onChangeGlobal?.(block as PromptBlock);
+        onChangeGlobal?.(block as PromptGlobalBlock<T>);
         break;
       }
     }
@@ -256,9 +275,9 @@ class PromptBlocks extends Component<PromptBlocksProps, PromptBlocksState> {
   renderTabs(): ReactElement {
     const { currentTab } = this.state;
 
-    const filterTabs = ({ id }: Tab): boolean => {
+    const filterTabs = ({ id }: Tab<PromptTabsId, T>): boolean => {
       const key = `show${capitalize(id)}`;
-      return !!get(key as keyof PromptBlocksProps, this.props);
+      return !!get(key as keyof PromptBlocksProps<T>, this.props);
     };
 
     const headerTabs = this.tabs.filter(filterTabs).map((tab) => {

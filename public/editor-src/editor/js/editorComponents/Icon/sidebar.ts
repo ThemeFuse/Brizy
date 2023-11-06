@@ -8,7 +8,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { read as readString } from "visual/utils/string/specs";
 import { GetItems } from "../EditorComponent/types";
-import { Value } from "./index";
+import { Value } from "./types";
 
 export const title = t("Icon");
 

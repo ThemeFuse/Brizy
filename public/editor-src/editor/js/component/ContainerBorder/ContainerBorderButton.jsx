@@ -1,7 +1,8 @@
-import React, { Component } from "react";
 import classnames from "classnames";
+import React, { Component } from "react";
 import { CSSTransition } from "react-transition-group";
 import EditorIcon from "visual/component/EditorIcon";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 
 class ContainerBorderButton extends Component {
   static defaultProps = {
@@ -54,7 +55,10 @@ class ContainerBorderButton extends Component {
       <div
         ref={innerRef}
         className={className}
-        data-sortable-handle={this.props["data-sortable-handle"]}
+        {...makeDataAttr({
+          name: "sortable-handle",
+          value: this.props[makeAttr("sortable-handle")]
+        })}
       >
         {this.renderIcon()}
       </div>

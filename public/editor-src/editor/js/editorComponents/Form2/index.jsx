@@ -9,6 +9,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import Config from "visual/global/Config";
 import { css } from "visual/utils/cssStyle";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { isStory } from "visual/utils/models";
 import * as Attr from "visual/utils/string/parseCustomAttributes";
 import defaultValue from "./defaultValue.json";
@@ -109,6 +110,8 @@ export default class Form2 extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
+    const { customCSS } = v;
+
     const className = classnames(
       "brz-forms2",
       css(
@@ -132,7 +135,7 @@ export default class Form2 extends EditorComponent {
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Wrapper {...this.makeWrapperProps({ className })}>
           {isStory(Config.getAll()) ? (
             <BoxResizer
@@ -171,18 +174,18 @@ export default class Form2 extends EditorComponent {
         <Wrapper
           {...this.makeWrapperProps({
             className,
-            attributes: { "data-form-version": "2" }
+            attributes: makeDataAttr({ name: "form-version", value: "2" })
           })}
         >
           <form
             className="brz-form brz-d-xs-flex brz-flex-xs-wrap"
             action={submitUrl}
             noValidate
-            data-form-id={_id}
-            data-project-id={projectId}
-            data-success={messageSuccess}
-            data-error={messageError}
-            data-redirect={messageRedirect}
+            {...makeDataAttr({ name: "form-id", value: _id })}
+            {...makeDataAttr({ name: "project-id", value: projectId })}
+            {...makeDataAttr({ name: "success", value: messageSuccess })}
+            {...makeDataAttr({ name: "error", value: messageError })}
+            {...makeDataAttr({ name: "redirect", value: messageRedirect })}
           >
             {this.renderFields(v)}
             {this.renderButton(v)}

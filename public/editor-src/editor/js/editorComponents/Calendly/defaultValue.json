@@ -4,17 +4,14 @@
   "style": {
     "width": 100,
     "widthSuffix": "%",
+
     "height": 500,
     "heightSuffix": "px",
 
-    "tabletHeight": null,
     "tabletHeightSuffix": null,
-    "tabletWidth": null,
     "tabletWidthSuffix": null,
 
-    "mobileWidth": null,
     "mobileWidthSuffix": null,
-    "mobileHeight": null,
     "mobileHeightSuffix": null,
 
     "bgColorType": "solid",

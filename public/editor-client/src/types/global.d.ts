@@ -15,6 +15,7 @@ import { AddFileData } from "./File";
 import { AddMediaData, AddMediaGallery } from "./Media";
 import { OnChange } from "./OnChange";
 import { PopupConditions } from "./PopupConditions";
+import { Posts } from "./Posts";
 import { Data } from "./Publish";
 import { SavedBlocks, SavedLayouts, SavedPopups } from "./SavedBlocks";
 import { Screenshots } from "./Screenshots";
@@ -33,7 +34,7 @@ export interface PLUGIN_ENV {
   };
   api?: {
     mediaResizeUrl?: string;
-    customFileUrl?: string;
+    fileUrl?: string;
   };
   l10n?: Record<string, string>;
   collectionTypes?: CollectionType[];
@@ -83,7 +84,7 @@ export interface VISUAL_CONFIG {
 
     // File
     customFile?: {
-      customFileUrl?: string;
+      fileUrl?: string;
 
       addFile?: AddFileData;
     };
@@ -138,6 +139,14 @@ export interface VISUAL_CONFIG {
         handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
       };
     };
+  };
+
+  //#endregion
+
+  //#region Elements
+
+  elements?: {
+    posts: Posts;
   };
 
   //#endregion

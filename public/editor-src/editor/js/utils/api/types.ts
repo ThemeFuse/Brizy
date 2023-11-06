@@ -1,3 +1,4 @@
+import { Sources } from "visual/editorComponents/Posts/types";
 import { Dictionary } from "visual/types/utils";
 
 export interface ResponseWithBody<T> {
@@ -12,21 +13,6 @@ export type GetDynamicContent = (args: {
   placeholders: Dictionary<string[]>;
   signal?: AbortSignal;
 }) => Promise<Dictionary<string[]>>;
-
-//#endregion
-
-//#region Screenshots
-
-export type CreateScreenshot = (
-  data: ScreenshotData
-) => Promise<{ id: string }>;
-export type UpdateScreenshot = (
-  data: ScreenshotData & { id: string }
-) => Promise<{ id: string }>;
-type ScreenshotData = {
-  base64: string;
-  blockType: "normal" | "global" | "saved" | "layout";
-};
 
 //#endregion
 
@@ -150,5 +136,9 @@ export type GetPostsSourceRefs = (t: string) => Promise<{
   collectionTypes: Array<{ id: string; slug?: string | null; title: string }>;
   refsById: GetPostsSourceRefId;
 }>;
+
+export interface PostsSources {
+  sources: Sources[];
+}
 
 //#endregion

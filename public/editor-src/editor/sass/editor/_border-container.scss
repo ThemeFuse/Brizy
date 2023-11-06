@@ -159,7 +159,7 @@
 }
 
 // With data
-[data-border] {
+[data-brz-border] {
   position: relative;
 
   // Section CollapsibleToolbar
@@ -169,18 +169,18 @@
 }
 
 // Border Style
-[data-border--none] {
+[data-brz-border--none] {
   border-style: none;
 }
-[data-border--solid] {
+[data-brz-border--solid] {
   border-style: solid;
 }
-[data-border--dotted] {
+[data-brz-border--dotted] {
   border-style: dotted;
 }
 
 // Border Style Active
-[data-border--active] > {
+[data-brz-border--active] > {
   .brz-ed-border--active-none {
     border-style: none;
   }
@@ -191,48 +191,48 @@
     border-style: dotted;
   }
 }
-[data-border]:hover,
-[data-border--hovered],
-[data-border--active] {
-  &[data-border--grey] > .brz-ed-border__inner {
+[data-brz-border]:hover,
+[data-brz-border--hovered],
+[data-brz-border--active] {
+  &[data-brz-border--grey] > .brz-ed-border__inner {
     border-color: $by__block__border__grey;
   }
-  &[data-border--blue] > .brz-ed-border__inner {
+  &[data-brz-border--blue] > .brz-ed-border__inner {
     border-color: $by__block__border__blue;
   }
-  &[data-border--red] > .brz-ed-border__inner {
+  &[data-brz-border--red] > .brz-ed-border__inner {
     border-color: $by__block__border__red;
   }
 }
 
 // Colors
-[data-border--grey] > .brz-ed-border__button {
+[data-brz-border--grey] > .brz-ed-border__button {
   background-color: $by__block__border__grey;
 }
-[data-border--blue] > .brz-ed-border__button {
+[data-brz-border--blue] > .brz-ed-border__button {
   background-color: $by__block__border__blue;
 }
-[data-border--red] > .brz-ed-border__button {
+[data-brz-border--red] > .brz-ed-border__button {
   background-color: $by__block__border__red;
 }
-[data-border]:hover,
-[data-border--hovered],
-[data-border--active] {
-  &[data-border--grey] > .brz-ed-border__inner {
+[data-brz-border]:hover,
+[data-brz-border--hovered],
+[data-brz-border--active] {
+  &[data-brz-border--grey] > .brz-ed-border__inner {
     border-color: $by__block__border__grey;
   }
-  &[data-border--blue] > .brz-ed-border__inner {
+  &[data-brz-border--blue] > .brz-ed-border__inner {
     border-color: $by__block__border__blue;
   }
-  &[data-border--red] > .brz-ed-border__inner {
+  &[data-brz-border--red] > .brz-ed-border__inner {
     border-color: $by__block__border__red;
   }
 }
 
 // Hover + Active
-[data-border]:hover >,
-[data-border--hovered] >,
-[data-border--active] > {
+[data-brz-border]:hover >,
+[data-brz-border--hovered] >,
+[data-brz-border--active] > {
   // Button
   .brz-ed-border__button {
     opacity: 1;
@@ -253,8 +253,8 @@
 }
 
 // CollapsibleToolbar for section
-[data-border--hidden] >,
-[data-border--hidden]:hover > {
+[data-brz-border--hidden] >,
+[data-brz-border--hidden]:hover > {
   .brz-ed-collapsible--section {
     opacity: 0;
     pointer-events: none;

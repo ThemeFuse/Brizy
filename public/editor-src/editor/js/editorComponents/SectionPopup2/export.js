@@ -1,18 +1,22 @@
 import $ from "jquery";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
 import "./popupsPlugin";
 
 // do not close popup is element with some of this className was clicked
 const clickInsideExceptions = ["brz-map__cover"];
+const clickOutsideAttr = makeAttr("click_outside_to_close");
+const oldClickOutsideAttr = "data-click_outside_to_close";
 
 $.fn.popup = function () {
   const $this = $(this);
 
   return {
     show() {
-      const scrollPage = $this.attr("data-scroll_page");
-      const showAfter = $this.attr("data-show-close-button-after");
-      const clickedOutSideToClose = $this.attr("data-click_outside_to_close");
+      const scrollPage = $this.attr(makeAttr("scroll_page"));
+      const showAfter = $this.attr(makeAttr("show-close-button-after"));
+      const clickedOutSideToClose =
+        $this.attr(clickOutsideAttr) ?? $this.attr(oldClickOutsideAttr);
 
       if (!clickedOutSideToClose) {
         $this.addClass("brz-pointer-events-none");
@@ -57,60 +61,66 @@ export default function ($node) {
   const rootBody = root.ownerDocument.body;
   const globalPopupsProcessed = {};
 
-  root.querySelectorAll("[data-brz-link-type='popup']").forEach((node) => {
-    const popupId = node.getAttribute("href").slice(1); // without the `#`
-    let parent = node.parentElement;
-    let popup;
+  root
+    .querySelectorAll(
+      makeDataAttrString({ name: "link-type", value: "'popup'" })
+    )
+    .forEach((node) => {
+      const popupId = node.getAttribute("href").slice(1); // without the `#`
+      let parent = node.parentElement;
+      let popup;
 
-    // Link with reference to a global popup
-    // Global Block Popup exist only 1 in all page
-    if (globalPopupsProcessed[popupId]) {
-      node.setAttribute("href", `#${globalPopupsProcessed[popupId]}`);
-      return;
-    }
-
-    while (parent) {
-      popup = [...parent.children].find(
-        (node) => node.dataset.brzPopup === popupId
-      );
-
-      if (popup) {
-        break;
+      // Link with reference to a global popup
+      // Global Block Popup exist only 1 in all page
+      if (globalPopupsProcessed[popupId]) {
+        node.setAttribute("href", `#${globalPopupsProcessed[popupId]}`);
+        return;
       }
 
-      parent = parent.parentElement;
-    }
+      while (parent) {
+        popup = [...parent.children].find(
+          (node) => node.dataset.brzPopup === popupId
+        );
 
-    // append the popup to body to avoid problems with z-index
-    // need to regenerate ids for popups for Dynamic Content
-    if (popup && popup.parentElement !== rootBody) {
-      const newId = uuid();
-      const isGlobal = popup.getAttribute("id").includes("global_");
+        if (popup) {
+          break;
+        }
 
-      node.setAttribute("href", `#${newId}`);
-      popup.setAttribute("data-brz-popup", newId);
-
-      if (isGlobal) {
-        globalPopupsProcessed[popupId] = newId;
+        parent = parent.parentElement;
       }
 
-      rootBody.append(popup);
-    }
-  });
+      // append the popup to body to avoid problems with z-index
+      // need to regenerate ids for popups for Dynamic Content
+      if (popup && popup.parentElement !== rootBody) {
+        const newId = uuid();
+        const isGlobal = popup.getAttribute("id").includes("global_");
 
-  $node.find("[data-brz-link-type='popup']").on("click", function (e) {
-    e.preventDefault();
+        node.setAttribute("href", `#${newId}`);
+        popup.setAttribute(makeAttr("popup"), newId);
 
-    const popupId = this.getAttribute("href").slice(1); // without the `#`
+        if (isGlobal) {
+          globalPopupsProcessed[popupId] = newId;
+        }
 
-    if (popupId) {
-      const $elem = $(`[data-brz-popup="${popupId}"]`);
-      if ($elem.hasClass("brz-popup2")) {
-        const popup = $elem.popup();
-        popup.show();
+        rootBody.append(popup);
       }
-    }
-  });
+    });
+
+  $node
+    .find(makeDataAttrString({ name: "link-type", value: "'popup'" }))
+    .on("click", function (e) {
+      e.preventDefault();
+
+      const popupId = this.getAttribute("href").slice(1); // without the `#`
+
+      if (popupId) {
+        const $elem = $(makeDataAttrString({ name: "popup", value: popupId }));
+        if ($elem.hasClass("brz-popup2")) {
+          const popup = $elem.popup();
+          popup.show();
+        }
+      }
+    });
 
   $node
     .find(
@@ -128,9 +138,8 @@ export default function ($node) {
         );
 
         if (canClosePopup) {
-          const clickedOutSideToClose = $this.attr(
-            "data-click_outside_to_close"
-          );
+          const clickedOutSideToClose =
+            $this.attr(clickOutsideAttr) ?? $this.attr(oldClickOutsideAttr);
 
           const clickedOutSideContent =
             $(e.target).closest(".brz-container").length === 0;
@@ -189,29 +198,30 @@ export default function ($node) {
 }
 
 function _parsePopupData($popup) {
-  var triggerOnce = $popup.attr("data-trigger_once");
+  var triggerOnce = $popup.attr(makeAttr("trigger_once"));
 
-  var popupId = $popup.attr("data-brz-popup");
+  var popupId = $popup.attr(makeAttr("popup"));
 
-  var pageLoad = $popup.attr("data-page_load");
-  var click = $popup.attr("data-click");
-  var inactivity = $popup.attr("data-inactivity");
-  var exitIntent = $popup.attr("data-exit_intent");
-  var scrolling = _parseData($popup.attr("data-scrolling"));
+  var pageLoad =
+    $popup.attr(makeAttr("page_load")) ?? $popup.attr("data-page_load");
+  var click = $popup.attr(makeAttr("click"));
+  var inactivity = $popup.attr(makeAttr("inactivity"));
+  var exitIntent = $popup.attr(makeAttr("exit_intent"));
+  var scrolling = _parseData($popup.attr(makeAttr("scrolling")));
 
-  var showing = _parseData($popup.attr("data-showing"));
-  var loggedIn = _parseData($popup.attr("data-logged_in"));
-  var referrer = _parseData($popup.attr("data-referrer"));
-  var devices = _parseData($popup.attr("data-devices"));
+  var showing = _parseData($popup.attr(makeAttr("showing")));
+  var loggedIn = _parseData($popup.attr(makeAttr("logged_in")));
+  var referrer = _parseData($popup.attr(makeAttr("referrer")));
+  var devices = _parseData($popup.attr(makeAttr("devices")));
 
-  var currentUrl = _parseData($popup.attr("data-current_url"));
-  var currentDate = _parseData($popup.attr("data-current_date"));
-  var lastVisitDate = _parseData($popup.attr("data-last_visit_date"));
-  var timeFrom = _parseData($popup.attr("data-time_from"));
-  var cookie = _parseData($popup.attr("data-cookie"));
-  var os = _parseData($popup.attr("data-os"));
-  var otherPopups = _parseData($popup.attr("data-other_popups"));
-  var specificPopup = _parseData($popup.attr("data-specific_popup"));
+  var currentUrl = _parseData($popup.attr(makeAttr("current_url")));
+  var currentDate = _parseData($popup.attr(makeAttr("current_date")));
+  var lastVisitDate = _parseData($popup.attr(makeAttr("last_visit_date")));
+  var timeFrom = _parseData($popup.attr(makeAttr("time_from")));
+  var cookie = _parseData($popup.attr(makeAttr("cookie")));
+  var os = _parseData($popup.attr(makeAttr("os")));
+  var otherPopups = _parseData($popup.attr(makeAttr("other_popups")));
+  var specificPopup = _parseData($popup.attr(makeAttr("specific_popup")));
 
   return {
     pageLoad: pageLoad,

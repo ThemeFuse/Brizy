@@ -24,6 +24,20 @@
     width: 100%;
     grid-template-columns: repeat(var(--columnCount), var(--columnSize));
     word-break: break-word;
+
+    .brz-groupLayout--item__content > :is(div, a) {
+      position: relative;
+      padding-bottom: 56.25%;
+      width: 100%;
+      height: 100%;
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+      }
+    }
   }
 
   &__pagination {
@@ -39,9 +53,8 @@
       margin: 0 0.25rem;
     }
   }
-
   &--item {
-    * {
+    & > div > *:not(:last-child) {
       margin: 0 0 0.5rem 0;
     }
 

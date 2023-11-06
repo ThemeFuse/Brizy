@@ -19,8 +19,7 @@ import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
-import { blocksDataSelector } from "visual/redux/selectors";
-import { deviceModeSelector } from "visual/redux/selectors";
+import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
@@ -30,6 +29,7 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { handleLinkChange } from "visual/utils/patch/Link";
 import { attachRef } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
@@ -107,6 +107,11 @@ class Column extends EditorComponent {
   handleToolbarEscape = () => {
     this.toolbarRef.current.show();
   };
+
+  patchValue(patch, meta) {
+    const link = handleLinkChange(patch);
+    super.patchValue({ ...patch, ...link }, meta);
+  }
 
   getMeta(v) {
     const { verticalAlign, tabletVerticalAlign, mobileVerticalAlign } = v;

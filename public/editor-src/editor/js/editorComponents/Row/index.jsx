@@ -30,10 +30,11 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { handleLinkChange } from "visual/utils/patch/Link";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import * as Str from "visual/utils/string/specs";
-import { styleSizeSize } from "visual/utils/style2";
 import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
@@ -71,6 +72,11 @@ class Row extends EditorComponent {
     this.mounted = false;
   }
 
+  patchValue(patch, meta) {
+    const link = handleLinkChange(patch);
+    super.patchValue({ ...patch, ...link }, meta);
+  }
+
   handleValueChange(value, meta) {
     const inPopup = Boolean(this.props.meta.sectionPopup);
     const inPopup2 = Boolean(this.props.meta.sectionPopup2);
@@ -91,28 +97,52 @@ class Row extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const size = styleSizeSize({ v, device: "desktop" });
-    const tabletSize = styleSizeSize({ v, device: "tablet" });
-    const mobileSize = styleSizeSize({ v, device: "mobile" });
+
+    const dvv = (key, device) => defaultValueValue({ v, key, device });
+
+    const size = dvv("size", DESKTOP);
+    const tabletSize = dvv("size", TABLET);
+    const mobileSize = dvv("size", MOBILE);
+
+    const pixelSuffix = dvv("sizeSuffix", DESKTOP) === "px";
+    const tabletPixelSuffix = dvv("sizeSuffix", TABLET) === "px";
+    const mobilePixelSuffix = dvv("sizeSuffix", MOBILE) === "px";
+
+    const _w = pixelSuffix ? size : meta.desktopW;
+    const _tabletW = tabletPixelSuffix ? tabletSize : meta.tabletW;
+    const _mobileW = mobilePixelSuffix ? mobileSize : meta.mobileW;
+
+    const _width = pixelSuffix ? 100 : size;
+    const _tabletWidth = tabletPixelSuffix ? 100 : tabletSize;
+    const _mobileWidth = mobilePixelSuffix ? 100 : mobileSize;
+
+    const _wNoSpacing = pixelSuffix ? size : meta.desktopWNoSpacing;
+    const _tabletWNoSpacing = tabletPixelSuffix
+      ? tabletSize
+      : meta.tabletWNoSpacing;
+    const _mobileWNoSpacing = mobilePixelSuffix
+      ? mobileSize
+      : meta.mobileWNoSpacing;
+
     const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,
-      w: meta.desktopW,
-      wNoSpacing: meta.desktopWNoSpacing,
-      width: size,
+      w: _w,
+      wNoSpacing: _wNoSpacing,
+      width: _width,
       device: "desktop"
     });
     const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
       v,
-      w: meta.tabletW,
-      wNoSpacing: meta.tabletWNoSpacing,
-      width: tabletSize,
+      w: _tabletW,
+      wNoSpacing: _tabletWNoSpacing,
+      width: _tabletWidth,
       device: "tablet"
     });
     const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
       v,
-      w: meta.mobileW,
-      wNoSpacing: meta.mobileWNoSpacing,
-      width: mobileSize,
+      w: _mobileW,
+      wNoSpacing: _mobileWNoSpacing,
+      width: _mobileWidth,
       device: "mobile"
     });
 

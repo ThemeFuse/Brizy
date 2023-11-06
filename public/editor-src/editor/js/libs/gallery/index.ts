@@ -1,3 +1,4 @@
+import { adjustImagesWidthByContainerWidth } from "./utils";
 import { attachResize, detachResize } from "./utils/attachResize";
 
 interface JustifiedRowParams {
@@ -172,12 +173,22 @@ export default class Gallery {
 
       const _width = rowHeight * (width / height);
 
-      if (!_width) {
-        const height = imageWrapper.getBoundingClientRect().height;
-        const width = imageWrapper.getBoundingClientRect().width;
+      const placeholder = imageWrapper.querySelector(
+        ".brz-shortcode__placeholder"
+      );
+
+      if (placeholder) {
+        const { width, height } = placeholder.getBoundingClientRect();
+
         computedWidth.push(rowHeight * (width / height));
       } else {
-        computedWidth.push(_width);
+        if (!_width) {
+          const { width, height } = imageWrapper.getBoundingClientRect();
+
+          computedWidth.push(rowHeight * (width / height));
+        } else {
+          computedWidth.push(_width);
+        }
       }
 
       const _ratio = width / height;
@@ -205,7 +216,10 @@ export default class Gallery {
 
     let oldRowWidth = 0;
 
-    const _computedWidth = computedWidth.filter(Boolean);
+    const _computedWidth = adjustImagesWidthByContainerWidth(
+      computedWidth,
+      containerWidth
+    );
 
     if (nodeItems.length && _computedWidth.length) {
       for (let index = startIndex; ; index++) {
@@ -229,7 +243,7 @@ export default class Gallery {
               containerWidth,
               nodeItems,
               rowsHeights,
-              computedWidth,
+              _computedWidth,
               ratio
             );
 
@@ -262,7 +276,7 @@ export default class Gallery {
             containerWidth,
             nodeItems,
             rowsHeights,
-            computedWidth,
+            _computedWidth,
             ratio
           );
 
