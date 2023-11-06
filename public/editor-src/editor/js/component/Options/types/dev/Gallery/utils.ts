@@ -1,7 +1,7 @@
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { getImageUrl, preloadImage } from "visual/utils/image";
 import { WithId } from "visual/utils/options/attributes";
-import { AddImageData } from "./types/Image";
+import { AddImageData, Image } from "./types/Image";
 import { UploadData } from "./types/UploadData";
 
 export const allowedExtensions = ["jpeg", "jpg", "png", "gif", "svg"];
@@ -25,3 +25,14 @@ export const toUploadData = (d: AddImageData): Promise<UploadData> => {
       .catch(rej);
   });
 };
+
+export const toInitialStructure = (
+  v: {
+    id: number;
+    payload: Image;
+  }[]
+): Image[] =>
+  v.map(({ id, payload }) => ({
+    id,
+    ...payload
+  }));

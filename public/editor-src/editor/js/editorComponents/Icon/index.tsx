@@ -6,15 +6,11 @@ import { ElementModel } from "visual/component/Elements/Types";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Link from "visual/component/Link";
-import { Target } from "visual/component/Link/types/Target";
-import { Type } from "visual/component/Link/types/Type";
 import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import EditorComponent, {
-  ComponentsMeta
-} from "visual/editorComponents/EditorComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import Config from "visual/global/Config";
@@ -23,64 +19,21 @@ import { getStore } from "visual/redux/store";
 import { Block } from "visual/types";
 import { css } from "visual/utils/cssStyle";
 import { isStory } from "visual/utils/models";
-import { CssId, getCSSId } from "visual/utils/models/cssId";
+import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import { WithClassName } from "visual/utils/options/attributes";
+import { handleLinkChange } from "visual/utils/patch/Link";
+import * as Str from "visual/utils/reader/string";
 import * as State from "visual/utils/stateMode";
-import * as Str from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
+import { Patch, PatchValue, Props, Value } from "./types";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
-
-export interface Value extends ElementModel, CssId {
-  name: string;
-  type: string;
-
-  linkPage: string;
-  popups: Block[];
-  linkPopup: string;
-  linkLightBox: string;
-  linkExternal: string;
-  linkExternalBlank: Target;
-  linkExternalRel: string;
-  linkPopulation: string;
-  linkAnchor: string;
-  linkUpload: string;
-  linkExternalType: "linkExternal" | "linkPopulation";
-  linkType: Type;
-  customClassName: string;
-  customID: string;
-  linkToSlide: number;
-
-  customSize: number;
-  tabletCustomSize: number;
-  mobileCustomSize: number;
-
-  customSizeSuffix: string;
-  tabletCustomSizeSuffix: string;
-  mobileCustomSizeSuffix: string;
-
-  hrefs: {
-    anchor: string;
-    external: string;
-    popup: string;
-    upload: string;
-  };
-}
-
-interface Props extends WithClassName {
-  meta: ComponentsMeta;
-  attributes: Record<string, string | number>;
-}
-interface Patch {
-  [k: string]: string;
-}
 
 const resizerTransformValue = (v: Value): ElementModel => {
   const {
@@ -136,6 +89,11 @@ class Icon extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
 
   static experimentalDynamicContent = true;
+
+  patchValue(patch: PatchValue, meta = {}) {
+    const link = handleLinkChange(patch);
+    super.patchValue({ ...patch, ...link }, meta);
+  }
 
   handleResizerChange = (patch: Patch): void => {
     const device = deviceModeSelector(getStore().getState());

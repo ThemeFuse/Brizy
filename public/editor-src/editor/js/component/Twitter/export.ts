@@ -1,5 +1,6 @@
 import { DeviceMode, ExportFunction } from "visual/types";
-import * as Str from "visual/utils/reader/string";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
+import { read } from "visual/utils/reader/string";
 import { decodeFromString } from "visual/utils/string";
 
 interface Heights {
@@ -49,7 +50,7 @@ const updateTwitterEmbed = (
 
     if (iframe) {
       try {
-        const _heights = Str.read(node.getAttribute("data-heights")) ?? "";
+        const _heights = read(node.getAttribute(makeAttr("heights"))) ?? "";
         const heights = decodeFromString<Heights>(_heights);
         const newIframeUrl = new URL(iframe.src);
         const types = heights[device];
@@ -90,11 +91,13 @@ const fn: ExportFunction = ($node) => {
       if (lastCurrentDevice !== "desktop") {
         twitterEmbeds.forEach((node) => {
           try {
-            const link = node.querySelector<HTMLElement>("[data-height]");
+            const link = node.querySelector<HTMLElement>(
+              makeDataAttrString({ name: "height" })
+            );
 
             if (link) {
               const _heights =
-                Str.read(node.getAttribute("data-heights")) ?? "";
+                read(node.getAttribute(makeAttr("heights"))) ?? "";
               const heights = decodeFromString<Heights>(_heights);
               link.dataset.height = `${heights[lastCurrentDevice]}`;
             }

@@ -348,6 +348,7 @@ describe("testing WP getAllowedGBIds", () => {
   test.each<[GlobalBlock, Page, boolean]>([
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -366,6 +367,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -384,6 +386,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -402,6 +405,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -420,6 +424,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -438,6 +443,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -456,6 +462,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -474,6 +481,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -492,6 +500,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -510,6 +519,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -530,6 +540,7 @@ describe("testing WP getAllowedGBIds", () => {
     //#region Author
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -555,6 +566,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -580,6 +592,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -609,6 +622,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -634,6 +648,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -659,6 +674,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -684,6 +700,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -709,6 +726,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -737,6 +755,7 @@ describe("testing WP getAllowedGBIds", () => {
     //#region Child
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -762,6 +781,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -787,6 +807,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -812,6 +833,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -837,6 +859,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -978,6 +1001,7 @@ describe("testing Cloud getAllowedGBIds", () => {
   test.each<[GlobalBlock, Page, boolean]>([
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -996,6 +1020,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1014,6 +1039,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1032,6 +1058,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1050,6 +1077,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1068,6 +1096,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1086,6 +1115,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1104,6 +1134,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1122,6 +1153,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1140,6 +1172,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1160,6 +1193,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     // Specific case in CollectionItem: rules with reference and multiReference
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1210,6 +1244,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1262,6 +1297,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1314,6 +1350,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1366,6 +1403,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1418,6 +1456,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1530,6 +1569,7 @@ describe("testing Cloud Customer getAllowedGBIds", () => {
     // Specific case in CustomerPage: rules with group
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1556,6 +1596,7 @@ describe("testing Cloud Customer getAllowedGBIds", () => {
     // Specific case in CustomerPage: rules with group
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",

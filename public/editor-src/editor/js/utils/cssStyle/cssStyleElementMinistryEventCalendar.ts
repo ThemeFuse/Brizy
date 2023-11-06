@@ -6,9 +6,12 @@ import {
   cssStyleBoxShadow,
   cssStyleColor,
   cssStyleFlexHorizontalAlign,
+  cssStyleIconMargin,
+  cssStyleIconPosition,
   cssStyleSizeHeight,
   cssStyleSizeWidth,
   cssStyleSpacing,
+  cssStyleStrokeWidth,
   cssStyleTextAlign,
   getAllCssStyleTypography
 } from "visual/utils/cssStyle";
@@ -629,4 +632,130 @@ export function cssStyleElementMinistryEventCalendarTableBorder({
   state
 }: CSSValue): string {
   return cssStyleBorder({ v, device, state, prefix: "table" });
+}
+
+export function cssStyleElementMinistryEventCalendarSubscribeToCalendarTypography({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "subscribeToCalendarTypography"
+  });
+}
+
+export function cssStyleElementMinistryEventCalendarSubscribeToCalendarColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "subscribeToCalendarColor"
+  });
+}
+
+export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBgColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "subscribeToCalendarBg" });
+}
+
+export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBgGradient({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    prefix: "subscribeToCalendar"
+  });
+}
+
+export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBorder({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorder({ v, device, state, prefix: "subscribeToCalendar" });
+}
+
+export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBoxShadow({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBoxShadow({ v, device, state, prefix: "subscribeToCalendar" });
+}
+
+export function cssStyleElementMinistryEventCalendarSubscribeToCalendarWidth({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeWidth({
+    v,
+    device,
+    state,
+    prefix: "subscribeToCalendar"
+  });
+}
+
+export function cssStyleElementMinistryEventCalendarSubscribeToCalendarHeight({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeHeight({
+    v,
+    device,
+    state,
+    prefix: "subscribeToCalendar"
+  });
+}
+
+export function cssStyleElementMinistryEventCalendarSubscribeToCalendarAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    prefix: "subscribeToCalendar"
+  });
+}
+
+export function cssStyleElementMinistryEventCalendarIconPosition({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleIconPosition({ v, device, state, prefix: "icon" });
+}
+
+export function cssStyleElementMinistryEventCalendarIconMargin({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleIconMargin({ v, device, state, prefix: "icon" });
+}
+
+export function cssStyleElementMinistryEventCalendarIconStrokeWidth({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleStrokeWidth({ v, device, state, prefix: "icon" });
 }

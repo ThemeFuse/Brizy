@@ -50,4 +50,10 @@
       border-radius: 50%;
     }
   }
+
+  &.brz-ed-option-type__population-dev
+    .brz-ed-option__label
+    .brz-ed-option__label__text--small {
+    white-space: nowrap;
+  }
 }

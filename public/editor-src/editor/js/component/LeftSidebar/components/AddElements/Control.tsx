@@ -15,6 +15,7 @@ import { ReduxState } from "visual/redux/types";
 import { Shortcode } from "visual/types";
 import { IS_PRO } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { isStory, setIds } from "visual/utils/models";
 import { Category } from "./Category";
 import { SortData } from "./types";
@@ -84,9 +85,11 @@ class ControlInner extends Component<Props, State> {
     const itemData = setIds(resolve);
 
     const toContainerPath = to.sortableNode
-      .getAttribute("data-sortable-path")
+      .getAttribute(makeAttr("sortable-path"))
       ?.split("-");
-    const toContainerType = to.sortableNode.getAttribute("data-sortable-type");
+    const toContainerType = to.sortableNode.getAttribute(
+      makeAttr("sortable-type")
+    );
     const toItemPath = [...(toContainerPath ?? []), String(to.elementIndex)];
 
     // notify React to actually change state accordingly
@@ -113,7 +116,7 @@ class ControlInner extends Component<Props, State> {
         ".slick-list .slick-active"
       );
       const sortableContainer = slickContainer?.querySelector(
-        "[data-sortable-type='section']"
+        makeDataAttrString({ name: "sortable-type", value: "'section'" })
       );
 
       const containerPath = sortableContainer

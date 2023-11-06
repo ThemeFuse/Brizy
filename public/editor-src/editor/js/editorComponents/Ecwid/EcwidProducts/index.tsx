@@ -10,6 +10,7 @@ import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { css } from "visual/utils/cssStyle";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendParent from "./sidebar";
@@ -423,10 +424,13 @@ export class EcwidProducts extends EditorComponent<Value> {
       <Wrapper {...this.makeWrapperProps({ className })}>
         <div
           className="brz-ecwid-products"
-          data-store-id={storeId}
-          data-storefront={encodeURIComponent(
-            JSON.stringify(valueToEciwdConfigProducts(v))
-          )}
+          {...makeDataAttr({ name: "store-id", value: storeId })}
+          {...makeDataAttr({
+            name: "storefront",
+            value: encodeURIComponent(
+              JSON.stringify(valueToEciwdConfigProducts(v))
+            )
+          })}
         />
       </Wrapper>
     );

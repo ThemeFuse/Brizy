@@ -199,6 +199,7 @@ class PublishButton extends Component<Props, State> {
       prompt: "pageTemplate",
       mode: "single",
       props: {
+        pageId: page.id,
         headTitle: t("YOUR PAGE IS READY TO PUBLISH!"),
         selectedLayout: isShopifyPage(page) ? page.layout : undefined,
         pageTitle: isShopifyPage(page) ? page.title : undefined,
@@ -319,10 +320,11 @@ class PublishButton extends Component<Props, State> {
       );
 
       if (src && isNumber(width) && isNumber(height)) {
-        const { id } = await createBlockScreenshot({
-          base64: src,
-          blockType: "layout"
-        }).catch(() => ({ id: undefined }));
+        const config = Config.getAll();
+        const { id } = await createBlockScreenshot(
+          { base64: src, blockType: "layout" },
+          config
+        ).catch(() => ({ id: undefined }));
 
         if (id) {
           meta._thumbnailSrc = id;

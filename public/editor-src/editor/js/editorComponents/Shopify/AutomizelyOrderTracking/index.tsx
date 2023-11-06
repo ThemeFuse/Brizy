@@ -1,9 +1,10 @@
-import React,{ReactNode} from "react";
+import React, { ReactNode } from "react";
 import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { hexToRgba } from "visual/utils/color";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -49,19 +50,28 @@ export class AutomizelyOrderTracking extends EditorComponent<Value> {
           })}
         >
           {IS_PREVIEW ? (
-            <div data-pf-type="Aftership">
+            <div {...makeDataAttr({ name: "pf-type", value: "Aftership" })}>
               <div
                 className="as-track-button"
-                data-size={size}
-                data-domain={domain}
-                data-look-up-option={lookupOption}
-                data-btn-label={buttonText}
-                data-btn-bg-color={hexToRgba(
-                  buttonColorHex,
-                  buttonColorOpacity
-                )}
-                data-btn-text-color={hexToRgba(textColorHex, textColorOpacity)}
-                data-hide-icon={hideIcon === "off" ? "false" : "true"}
+                {...makeDataAttr({ name: "size", value: size })}
+                {...makeDataAttr({ name: "domain", value: domain })}
+                {...makeDataAttr({
+                  name: "look-up-option",
+                  value: lookupOption
+                })}
+                {...makeDataAttr({ name: "btn-label", value: buttonText })}
+                {...makeDataAttr({
+                  name: "btn-bg-color",
+                  value: String(hexToRgba(buttonColorHex, buttonColorOpacity))
+                })}
+                {...makeDataAttr({
+                  name: "btn-text-color",
+                  value: String(hexToRgba(textColorHex, textColorOpacity))
+                })}
+                {...makeDataAttr({
+                  name: "hide-icon",
+                  value: hideIcon === "off" ? "false" : "true"
+                })}
               />
             </div>
           ) : (

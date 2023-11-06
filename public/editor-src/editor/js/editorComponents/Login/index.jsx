@@ -17,6 +17,7 @@ import Config from "visual/global/Config";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { IS_WP } from "visual/utils/env";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import * as Json from "visual/utils/reader/json";
 import { encodeToString } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
@@ -476,7 +477,14 @@ class Login extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { type } = v;
+    const {
+      type,
+      redirectType,
+      messageRedirect,
+      emptyFieldsError,
+      passLengthError,
+      passMatchError
+    } = v;
     const className = classnames(
       "brz-login",
       css(
@@ -492,14 +500,31 @@ class Login extends EditorComponent {
           {...this.makeWrapperProps({
             className,
             attributes: {
-              "data-islogged": makePlaceholder({
-                content: "{{editor_is_user_logged_in}}"
+              ...makeDataAttr({
+                name: "islogged",
+                value: makePlaceholder({
+                  content: "{{editor_is_user_logged_in}}"
+                })
               }),
-              "data-redirect": v.redirectType,
-              "data-redirect-value": v.messageRedirect,
-              "data-error-empty": v.emptyFieldsError,
-              "data-error-passlength": v.passLengthError,
-              "data-error-passmatch": v.passMatchError,
+              ...makeDataAttr({ name: "redirect", value: redirectType }),
+              ...makeDataAttr({
+                name: "redirect-value",
+                value: messageRedirect
+              }),
+              ...makeDataAttr({
+                name: "error-empty",
+                value: emptyFieldsError,
+                translatable: true
+              }),
+              ...makeDataAttr({
+                name: "error-passlength",
+                value: passLengthError,
+                translatable: true
+              }),
+              ...makeDataAttr({
+                name: "error-passmatch",
+                value: passMatchError
+              }),
               type
             }
           })}

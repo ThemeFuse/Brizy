@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.3.2
 Requires PHP: 7.0.0
-Stable tag: 2.4.29
+Stable tag: 2.4.30
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,39 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.30 - 2023-11-06 =
+* New: Added title and tags for global blocks
+* New: Added delete option for form integrations 
+* Improved: Brizy UI Library in Editor 
+* Improved: Added notification for outdated Safari browser (version 16.3 and below)
+* Improved: Styling option for the Button element in responsive 
+* Improved: Removed Effects from the Text element in responsive 
+* Improved: Various option toolbars where the title of the label is too long
+* Improved: Added scroll navigation to active element when device mode changes 
+* Improved: Added GET, POST for Form webhooks 
+* Improved: Prefixed all data-attributes 
+* Improved: Added width in PX for the Row element
+* Improved: Removed the terms & conditions checkbox from authorization form
+* Improved: Sidebar device mode titles 
+* Improved: Google Fonts updated to the latest version
+* Fixed: HTML tags being removed from the Embed element
+* Fixed: Autoplay for video background in block slider
+* Fixed: Line element does not align if hover is set 
+* Fixed: Random Google Fonts were not displayed in the preview
+* Fixed: Word break does not work correctly in the Alert element
+* Fixed: Background video on block slider does not resize correctly
+* Fixed: Updated Twitter icon to X
+* Fixed: Hide background preview for popups 
+* Fixed: XSS vulnerability to Text Editor 
+* Fixed: Accordion tags not working correctly in preview
+* Fixed: Version checking for zip files when moving blocks or layouts from WP to Cloud
+* Fixed: Setup config data for help videos inside the builder 
+* Fixed: Added permission to download svg files 
+* Fixed: Default template display in preview 
+* Fixed: Jump to the second block by link 
+* Fixed: Sites give a 500 Error when Brizy Free is updated to latest version on WordPress.com
+* Fixed: Gutenberg opens in iframe and the edit with brizy button is not displayed 
 
 = 2.4.29 - 2023-10-20 =
 * Fixed: Login element error when try to register

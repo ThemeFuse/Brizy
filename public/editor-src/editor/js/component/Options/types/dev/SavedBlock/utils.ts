@@ -51,6 +51,7 @@ export const handleCreateSaveBlock = async ({
     type: blockType
   };
 
+  const config = Config.getAll();
   let screenshotsSupported: boolean;
 
   try {
@@ -74,10 +75,10 @@ export const handleCreateSaveBlock = async ({
       );
 
       if (src && isNumber(width) && isNumber(height)) {
-        const { id } = await createBlockScreenshot({
-          base64: src,
-          blockType: "saved"
-        }).catch(() => ({ id: undefined }));
+        const { id } = await createBlockScreenshot(
+          { base64: src, blockType: "saved" },
+          config
+        ).catch(() => ({ id: undefined }));
 
         if (id) {
           meta._thumbnailSrc = id;
@@ -89,7 +90,6 @@ export const handleCreateSaveBlock = async ({
     }
   }
 
-  const config = Config.getAll();
   const data = {
     data: block,
     meta,

@@ -42,6 +42,7 @@ import toolbarConfigFn from "./toolbar";
 import { TypographyTags, tagId } from "./toolbar/utils";
 import { dcItemOptionParser, parseShadow } from "./utils";
 import { getInnerElement, getStyles } from "./utils/ContextMenu";
+import { handleChangeLink } from "./utils/dependencies";
 import { getImagePopulation } from "./utils/requests/ImagePopulation";
 import { classNamesToV } from "./utils/transforms";
 
@@ -177,6 +178,10 @@ class RichText extends EditorComponent {
     this.setState(newState, () => this.toolbarRef.current.show());
   };
 
+  handleActiveClick = (event) => {
+    this.toolbarRef.current.handleNodeClick(event);
+  };
+
   handleTextChange = (text) => {
     let popups;
 
@@ -247,7 +252,6 @@ class RichText extends EditorComponent {
       this.tmpPopups = values.popups;
     }
 
-    this.patchValue(values);
     // TODO NEED review and exclude ReactDOM.findDOMNode
     // eslint-disable-next-line react/no-find-dom-node
     if (!ReactDOM.findDOMNode(this).contains(prevActive)) {
@@ -269,6 +273,7 @@ class RichText extends EditorComponent {
     }
 
     this.quillRef.current.formatMultiple(values);
+    this.patchValue(values);
   };
 
   handleKeyDown = (e, { keyName }) => {
@@ -410,6 +415,11 @@ class RichText extends EditorComponent {
       };
     }
 
+    if ("linkPopulation" in patch || "linkExternal" in patch) {
+      const link = handleChangeLink(this.getValue2().v, patch);
+      this.quillRef.current.formatMultiple(link);
+    }
+
     super.patchValue(newPatch, meta);
   }
 
@@ -418,6 +428,7 @@ class RichText extends EditorComponent {
     if (v.textPopulation) {
       return { v, vs, vd };
     }
+
     return {
       v: {
         ...v,
@@ -600,6 +611,7 @@ class RichText extends EditorComponent {
         componentId={this.getId()}
         value={v.text}
         onSelectionChange={this.handleSelectionChange}
+        onClick={this.handleActiveClick}
         onTextChange={this.handleTextChange}
         isToolbarOpen={this.getToolbarOpen}
         initDelay={inPopup || inPopup2 || isPopup(config) ? 1000 : 0}

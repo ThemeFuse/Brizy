@@ -5,6 +5,7 @@ import {
   ProductApiMock
 } from "visual/libs/shopify/Stores/types/Api.mock";
 import { ProductHandle } from "visual/libs/shopify/types/Product";
+import { makeAttr } from "visual/utils/i18n/attribute";
 
 export default function ($node: JQuery): void {
   const node = $node.get(0);
@@ -14,7 +15,9 @@ export default function ($node: JQuery): void {
   const productClient = new ProductApiMock();
 
   node.querySelectorAll(`.brz-shopify-price`).forEach((item) => {
-    const t = item.getAttribute("data-product-handle") as ProductHandle | null;
+    const t = item.getAttribute(
+      makeAttr("product-handle")
+    ) as ProductHandle | null;
     const price = item.querySelector(".price");
 
     if (!t || !price) {

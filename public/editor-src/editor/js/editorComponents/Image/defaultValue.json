@@ -19,21 +19,8 @@
     "size": 100,
     "sizeSuffix": "%",
 
-    "tabletSizeType": null,
-    "tabletSize": null,
-    "tabletSizeSuffix": null,
-    "mobileSizeType": null,
-    "mobileSize": null,
-    "mobileSizeSuffix": null,
-
     "positionY": 50,
     "positionX": 50,
-
-    "tabletPositionY": null,
-    "tabletPositionX": null,
-
-    "mobilePositionY": null,
-    "mobilePositionX": null,
 
     "popups": [],
     "tags": "",
@@ -187,24 +174,6 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "tabletZoom": null,
-    "tabletZoomSuffix": null,
-
-    "tabletWidth": null,
-    "tabletHeight": null,
-
-    "tabletWidthSuffix": null,
-    "tabletHeightSuffix": null,
-
-    "mobileZoom": null,
-    "mobileZoomSuffix": null,
-
-    "mobileWidth": null,
-    "mobileHeight": null,
-
-    "mobileWidthSuffix": null,
-    "mobileHeightSuffix": null,
-
     "maskShape": "none",
     "maskSize": "cover",
     "maskPosition": "center center",
@@ -233,6 +202,12 @@
     "hoverName": "none",
     "hoverDuration": 600,
     "hoverDelay": 0,
-    "hoverInfiniteAnimation": true
+    "hoverInfiniteAnimation": true,
+
+    "tabletWidthSuffix": null,
+    "tabletHeightSuffix": null,
+
+    "mobileWidthSuffix": null,
+    "mobileHeightSuffix": null
   }
 }

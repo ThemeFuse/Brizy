@@ -21,6 +21,7 @@ import { triggersSelector } from "visual/redux/selectors";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
+import { makeDataAttr, makeAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
 import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -246,7 +247,7 @@ class SectionPopup extends EditorComponent {
               ref={containerBorderRef}
               id={id}
               className={classNameClose}
-              data-block-id={this.props.blockId}
+              {...makeDataAttr({ name: "block-id", value: this.props.blockId })}
               {...containerBorderAttr}
             >
               <div className="brz-popup__close" onClick={this.handleDropClick}>
@@ -268,7 +269,7 @@ class SectionPopup extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className, customClassName } = v;
+    const { className, customClassName, customCSS } = v;
     const triggers = triggersSelector(getStore().getState());
 
     let attr = {};
@@ -287,7 +288,7 @@ class SectionPopup extends EditorComponent {
 
       attr = triggers.reduce((acc, item) => {
         if (item.active) {
-          const convertedKey = `data-${convertString(item.id)}`;
+          const convertedKey = makeAttr(convertString(item.id));
           if (encodeIdsList.includes(item.id)) {
             acc[convertedKey] = acc[convertedKey]
               ? encodeData([...decodeData(acc[convertedKey]), item.value])
@@ -315,11 +316,11 @@ class SectionPopup extends EditorComponent {
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div
           className={classNameClose}
           id={this.instanceKey}
-          data-brz-popup={this.instanceKey}
+          {...makeDataAttr({ name: "popup", value: this.instanceKey })}
           {...attr}
         >
           <div className="brz-popup__close">

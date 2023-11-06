@@ -1,3 +1,4 @@
+import { makeAttr } from "visual/utils/i18n/attribute";
 import {
   ElementType,
   clearAlerts,
@@ -86,7 +87,7 @@ export const getData = (
         data[name] = value;
       });
 
-      const defaultRoles = form.getAttribute("data-defaultrole") || "";
+      const defaultRoles = form.getAttribute(makeAttr("defaultrole")) || "";
       const customerGroups = parseCustomerGroups(defaultRoles);
 
       if (customerGroups.length) {

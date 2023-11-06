@@ -23,7 +23,7 @@ export const getBlogPostMeta = <C extends ConfigCommon>(config: C): C => {
           config
         );
         const items = [
-          { title: "None", value: "" },
+          { title: "Auto", value: "" },
           ...data.map(({ id, title }: { id: string; title: string }) => ({
             value: id,
             title

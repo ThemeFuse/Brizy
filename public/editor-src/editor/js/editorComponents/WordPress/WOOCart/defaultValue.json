@@ -10,7 +10,7 @@
     "cartVerticalAlign": "top",
 
     "spacing": 5,
-    "spacingSuffix": null,
+    "spacingSuffix": "px",
 
     "iconCustomSize": 16,
     "iconCustomSizeSuffix": "px",
@@ -21,7 +21,7 @@
     "buttonDirection": "inline",
 
     "buttonSpacing": 5,
-    "buttonSpacingSuffix": null,
+    "buttonSpacingSuffix": "px",
 
     "sidebarWidth": 330,
     "sidebarWidthSuffix": "px",
@@ -250,28 +250,6 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "tabletSidebar": null,
-
-    "tabletCartHorizontalAlign": null,
-    "tabletCartVerticalAlign": null,
-
-    "tabletSpacing": null,
-    "tabletSpacingSuffix": null,
-
-    "tabletIconCustomSize": null,
-    "tabletIconCustomSizeSuffix": null,
-
-    "tabletButtonSpacing": null,
-    "tabletButtonSpacingSuffix": null,
-
-    "tabletSidebarWidth": null,
-    "tabletSidebarWidthSuffix": null,
-
-    "tabletSidebarHeightStyle": null,
-
-    "tabletSidebarHeight": null,
-    "tabletSidebarHeightSuffix": null,
-
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontFamilyType": null,
     "tabletTypographyFontSize": 15,
@@ -319,28 +297,6 @@
     "tabletButtonFontWeight": 400,
     "tabletButtonLineHeight": 1.3,
     "tabletButtonLetterSpacing": 0,
-
-    "mobileSidebar": null,
-
-    "mobileCartHorizontalAlign": null,
-    "mobileCartVerticalAlign": null,
-
-    "mobileSpacing": null,
-    "mobileSpacingSuffix": null,
-
-    "mobileIconCustomSize": null,
-    "mobileIconCustomSizeSuffix": null,
-
-    "mobileButtonSpacing": null,
-    "mobileButtonSpacingSuffix": null,
-
-    "mobileSidebarWidth": null,
-    "mobileSidebarWidthSuffix": null,
-
-    "mobileSidebarHeightStyle": null,
-
-    "mobileSidebarHeight": null,
-    "mobileSidebarHeightSuffix": null,
 
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontFamilyType": null,

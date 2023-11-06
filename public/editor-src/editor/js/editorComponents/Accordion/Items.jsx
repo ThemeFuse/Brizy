@@ -6,6 +6,7 @@ import Toolbar from "visual/component/Toolbar";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 
 class AccordionItems extends EditorArrayComponent {
   static get componentId() {
@@ -199,7 +200,10 @@ class AccordionItems extends EditorArrayComponent {
                         : ""
                     }`
                   }
-                  data-filter={tag === allTag ? "*" : tag}
+                  {...makeDataAttr({
+                    name: "filter",
+                    value: tag === allTag ? "*" : tag
+                  })}
                   onClick={() => {
                     this.handleFilterClick(tag);
                   }}
@@ -240,7 +244,7 @@ class AccordionItems extends EditorArrayComponent {
       <div
         className={className}
         style={style}
-        data-duration={animDuration * 1000}
+        {...makeDataAttr({ name: "duration", value: animDuration * 1000 })}
       >
         {enableTags === "on" && tags.size > 0 && this.renderTags()}
         {items}

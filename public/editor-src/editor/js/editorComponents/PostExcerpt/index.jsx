@@ -13,6 +13,7 @@ import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { getPopulatedEntityValues } from "visual/utils/dynamicContent/common";
 import { getLinkData } from "visual/utils/models/link";
+import { handleLinkChange } from "visual/utils/patch/Link";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -32,10 +33,12 @@ export default class PostExcerpt extends EditorComponent {
 
   patchValue(patch, meta) {
     const { fontStyle } = patch;
+    const link = handleLinkChange(patch);
 
     super.patchValue(
       {
         ...patch,
+        ...link,
         ...(fontStyle ? getTagNameFromFontStyle(fontStyle) : {})
       },
       meta

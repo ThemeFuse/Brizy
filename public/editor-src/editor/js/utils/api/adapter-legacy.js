@@ -30,6 +30,8 @@ export const parseGlobalBlock = (globalBlock) => {
   let rules;
   let position;
   let status;
+  const title = globalBlock.title || "";
+  const tags = globalBlock.tags || "";
 
   if (!globalBlock.data) {
     throw new GlobalBlocksError("globalBlock data should exist");
@@ -88,6 +90,8 @@ export const parseGlobalBlock = (globalBlock) => {
     meta,
     position,
     status,
+    title,
+    tags,
     rules: rules.map(apiRuleToEditorRule)
   };
 };

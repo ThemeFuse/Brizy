@@ -1,3 +1,4 @@
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { decodeFromString } from "visual/utils/string";
 
 export default function ($node: JQuery): void {
@@ -19,7 +20,7 @@ export default function ($node: JQuery): void {
     const child = yotpo?.firstChild as HTMLElement | null;
 
     if (child?.classList.contains("bottomLine")) {
-      const appKey = child.getAttribute("data-appkey");
+      const appKey = child.getAttribute(makeAttr("appkey"));
 
       const appkey =
         appKey && appKey.length !== 0 ? decodeFromString<string>(appKey) : "";

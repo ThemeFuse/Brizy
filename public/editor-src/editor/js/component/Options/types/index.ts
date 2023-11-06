@@ -48,7 +48,6 @@ import FontStyle from "./FontStyle";
 import FontStyleEditor from "./FontStyleEditor";
 import FormApps from "./FormApps";
 import GBConditions from "./GBConditions";
-import GlobalBlock from "./GlobalBlock";
 import Grid from "./Grid";
 import Input from "./Input";
 import IntegrationsApps from "./IntegrationsApps";
@@ -60,7 +59,6 @@ import PromptAddPopup from "./PromptAddPopup";
 import PromptIcon from "./PromptIcon";
 import RadioGroup from "./RadioGroup";
 import Range2 from "./Range2";
-import SavedBlock from "./SavedBlock";
 import Select from "./Select";
 import Slider from "./Slider";
 import Stepper from "./Stepper";
@@ -136,8 +134,6 @@ const oldTypes = {
   advancedSettings: AdvancedSettings,
   blockThumbnail: BlockThumbnail,
   button: Button,
-  savedBlock: SavedBlock,
-  globalBlock: GlobalBlock,
   colorFields: ColorFields,
   colorPaletteEditor: ColorPaletteEditor,
   colorPalette2: ColorPalette2,

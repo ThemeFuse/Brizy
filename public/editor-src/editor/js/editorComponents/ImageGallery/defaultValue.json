@@ -180,56 +180,6 @@
     "bigImageBoxShadowHorizontal": 0,
     "tempBigImageBoxShadowHorizontal": 1,
 
-    "galleryImageBorderStyle": "none",
-    "tempGalleryImageBorderStyle": "solid",
-
-    "galleryImageBorderColorHex": "#000000",
-
-    "galleryImageBorderColorOpacity": 0,
-    "tempGalleryImageBorderColorOpacity": 1,
-
-    "galleryImageBorderColorPalette": "",
-    "tempGalleryImageBorderColorPalette": "",
-
-    "galleryImageBorderWidthType": "grouped",
-    "galleryImageBorderWidth": 4,
-    "tempGalleryImageBorderWidth": 4,
-
-    "galleryImageBorderTopWidth": 4,
-    "tempGalleryImageBorderTopWidth": 4,
-
-    "galleryImageBorderRightWidth": 4,
-    "tempGalleryImageBorderRightWidth": 4,
-
-    "galleryImageBorderBottomWidth": 4,
-    "tempGalleryImageBorderBottomWidth": 4,
-
-    "galleryImageBorderLeftWidth": 4,
-    "tempGalleryImageBorderLeftWidth": 4,
-
-    "galleryImageBoxShadow": "",
-    "tempGalleryImageBoxShadow": "on",
-
-    "galleryImageBoxShadowColorHex": "#000000",
-
-    "galleryImageBoxShadowColorPalette": "",
-    "tempGalleryImageBoxShadowColorPalette": "",
-
-    "galleryImageBoxShadowColorOpacity": 0,
-    "tempGalleryImageBoxShadowColorOpacity": 1,
-
-    "galleryImageBoxShadowBlur": 0,
-    "tempGalleryImageBoxShadowBlur": 4,
-
-    "galleryImageBoxShadowSpread": 0,
-    "tempGalleryImageBoxShadowSpread": 0,
-
-    "galleryImageBoxShadowVertical": 0,
-    "tempGalleryImageBoxShadowVertical": 2,
-
-    "galleryImageBoxShadowHorizontal": 0,
-    "tempGalleryImageBoxShadowHorizontal": 1,
-
     "thumbnailBorderRadiusType": "grouped",
 
     "thumbnailBorderRadius": 0,
@@ -254,33 +204,6 @@
     "tempThumbnailBorderBottomLeftRadius": 1,
     "thumbnailBorderBottomLeftRadiusSuffix": "px",
     "tempThumbnailBorderBottomLeftRadiusSuffix": "px",
-
-    "galleryImageOverlayBgColorType": "none",
-    "tempGalleryImageOverlayBgColorType": "solid",
-
-    "galleryImageOverlayBgColorHex": "#009900",
-
-    "galleryImageOverlayBgColorOpacity": 0,
-    "tempGalleryImageOverlayBgColorOpacity": 1,
-
-    "galleryImageOverlayBgColorPalette": "",
-    "tempGalleryImageOverlayBgColorPalette": "",
-
-    "galleryImageOverlayGradientColorHex": "",
-
-    "galleryImageOverlayGradientColorOpacity": 1,
-    "tempGalleryImageOverlayGradientColorOpacity": 1,
-
-    "galleryImageOverlayGradientColorPalette": "color3",
-    "tempGalleryImageOverlayGradientColorPalette": "",
-
-    "galleryImageOverlayGradientType": "linear",
-
-    "galleryImageOverlayGradientStartPointer": 0,
-    "galleryImageOverlayGradientFinishPointer": 100,
-    "galleryImageOverlayGradientActivePointer": "startPointer",
-    "galleryImageOverlayGradientLinearDegree": 90,
-    "galleryImageOverlayGradientRadialDegree": 90,
 
     "filterColorHex": "#73777f",
     "filterColorOpacity": 0.7,
@@ -402,13 +325,6 @@
     "tabletFilterLetterSpacing": 0,
     "tabletFilterFontWeight": 400,
 
-    "tabletSpacing": null,
-    "tabletSpacingSuffix": null,
-    "tabletFilterSpacing": null,
-    "tabletFilterSpacingSuffix": null,
-    "tabletAfterFilterSpacing": null,
-    "tabletAfterFilterSpacingSuffix": null,
-
     "tabletFilterPaddingType": "grouped",
     "tempTabletFilterPaddingType": "grouped",
 
@@ -418,14 +334,6 @@
     "mobileFilterLineHeight": 1.5,
     "mobileFilterLetterSpacing": 0,
     "mobileFilterFontWeight": 400,
-    "mobileHorizontalAlign": null,
-
-    "mobileSpacing": null,
-    "mobileSpacingSuffix": null,
-    "mobileFilterSpacing": null,
-    "mobileFilterSpacingSuffix": null,
-    "mobileAfterFilterSpacing": null,
-    "mobileAfterFilterSpacingSuffix": null,
 
     "mobileFilterPaddingType": "grouped",
     "tempMobileFilterPaddingType": "grouped",

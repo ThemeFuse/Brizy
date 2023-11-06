@@ -48,3 +48,12 @@ export const defaultCrop: CropData = {
 };
 
 //#endregion
+
+//#region Screenshot
+
+export interface ScreenshotData {
+  base64: string;
+  blockType: "normal" | "global" | "saved" | "layout";
+}
+
+//#endregion

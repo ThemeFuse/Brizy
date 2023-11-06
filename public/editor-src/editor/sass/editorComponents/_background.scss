@@ -1,3 +1,79 @@
-.brz-bg-video-custom {
+.brz-bg {
+  overflow: hidden;
+  z-index: auto !important;
+}
+
+.brz-bg,
+.brz-bg-color,
+.brz-bg-image,
+.brz-bg-video,
+.brz-bg-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.brz-bg-image {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.brz-bg-image-parallax--init {
+  width: 100%;
+  background-size: cover;
+  background-position: 50% 50%;
+  left: 0;
+  top: -50vh;
+  height: 100vh;
+  transition: all 0s ease !important;
+  transform-origin: center center 0;
+  transform-style: preserve-3d;
+}
+
+.brz-bg-shape {
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-repeat: no-repeat;
+  pointer-events: none;
+
+  &__top {
+    top: 0;
+  }
+
+  &__bottom {
+    bottom: 0;
+    transform: rotateX(180deg);
+  }
+
+  &__top::after,
+  &__bottom::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+  }
+}
+
+.brz-iframe.brz-bg-video__cover,
+.brz-iframe.brz-bg-map__cover,
+.brz-bg-video__cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  max-width: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.brz-bg-video__cover {
   object-fit: cover;
 }

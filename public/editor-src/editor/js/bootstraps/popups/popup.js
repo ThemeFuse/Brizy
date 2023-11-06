@@ -1,9 +1,28 @@
-(function(window, document) {
+export const read = (v) => {
+  switch (typeof v) {
+    case "string":
+      return v;
+    case "number":
+      return isNaN(v) ? undefined : v.toString();
+    default:
+      return undefined;
+  }
+};
+
+const makeDataAttr = (name, value) => {
+  const attribute = { [`data-brz-${name}`]: value };
+
+  if (value === "") return attribute;
+
+  return read(value) ? attribute : {};
+};
+
+(function (window, document) {
   var loadingPromises = {};
 
-  window.brzExternalPopup = function(url) {
+  window.brzExternalPopup = function (url) {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
       var hostDocument = document;
       var guestDocument;
 
@@ -16,18 +35,18 @@
           .then(appendStyles)
           .then(appendHTML)
           .then(appendScripts)
-          .then(function(data) {
+          .then(function (data) {
             if (data.html) {
               window.Brz.emit("init.dom", window.jQuery(data.html));
             }
           })
-          .catch(function(r) {
+          .catch(function (r) {
             console.log("Error", r);
           });
       }
 
       function appendFonts(data) {
-        var googleFonts = new Promise(function(res) {
+        var googleFonts = new Promise(function (res) {
           var hostGoogleFonts = hostDocument.querySelector(
             "link.brz-link-google"
           );
@@ -43,7 +62,7 @@
           if (hostGoogleFonts && guestGoogleFonts) {
             var guestGoogleFontsArr = _parseGoogleFonts(guestGoogleFonts.href);
             var hostGoogleFontsArr = _parseGoogleFonts(hostGoogleFonts.href);
-            var diff = guestGoogleFontsArr.filter(function(font) {
+            var diff = guestGoogleFontsArr.filter(function (font) {
               return !_includes(hostGoogleFontsArr, font);
             });
 
@@ -58,7 +77,7 @@
           res();
         });
 
-        var uploadFonts = new Promise(function(res) {
+        var uploadFonts = new Promise(function (res) {
           var guestUploadFonts = guestDocument.querySelector(
             "link.brz-link-upload"
           );
@@ -71,7 +90,7 @@
           }
         });
 
-        return Promise.all([googleFonts, uploadFonts]).then(function() {
+        return Promise.all([googleFonts, uploadFonts]).then(function () {
           return data;
         });
       }
@@ -109,7 +128,7 @@
             !hostLibCSS ||
             (hostLibGroup !== "group-all" && guestLibGroup !== hostLibGroup)
           ) {
-            loadingPromises["hostLibCSS"] = new Promise(function(res) {
+            loadingPromises["hostLibCSS"] = new Promise(function (res) {
               guestLibCSS.onload = res;
               hostDocument.head.appendChild(guestLibCSS);
             });
@@ -132,7 +151,7 @@
             (hostLibProGroup !== "group-all" &&
               guestLibProGroup !== hostLibProGroup)
           ) {
-            loadingPromises["hostLibProCSS"] = new Promise(function(res) {
+            loadingPromises["hostLibProCSS"] = new Promise(function (res) {
               guestLibProCSS.onload = res;
               hostDocument.head.appendChild(guestLibProCSS);
             });
@@ -147,7 +166,7 @@
 
         if (guestPreviewCSS) {
           if (!hostPreviewCSS && !hostPreviewProCSS) {
-            loadingPromises["hostPreviewCSS"] = new Promise(function(res) {
+            loadingPromises["hostPreviewCSS"] = new Promise(function (res) {
               guestPreviewCSS.onload = res;
               hostDocument.head.appendChild(guestPreviewCSS);
             });
@@ -162,7 +181,7 @@
 
         if (guestPreviewProCSS) {
           if (!hostPreviewProCSS) {
-            loadingPromises["hostPreviewProCSS"] = new Promise(function(res) {
+            loadingPromises["hostPreviewProCSS"] = new Promise(function (res) {
               guestPreviewProCSS.onload = res;
               hostDocument.head.appendChild(guestPreviewProCSS);
             });
@@ -175,16 +194,16 @@
           promises.push(loadingPromises["hostPreviewProCSS"]);
         }
 
-        return Promise.all(promises).then(function() {
+        return Promise.all(promises).then(function () {
           return data;
         });
       }
 
       function appendStyles(data) {
-        return new Promise(function(res) {
+        return new Promise(function (res) {
           var styles = guestDocument.querySelectorAll("style.brz-style");
 
-          styles.forEach(function(style) {
+          styles.forEach(function (style) {
             document.head.appendChild(style);
           });
 
@@ -193,7 +212,7 @@
       }
 
       function appendHTML(data) {
-        return new Promise(function(res) {
+        return new Promise(function (res) {
           var popup = guestDocument.body.querySelector(".brz-conditions-popup");
           var div;
 
@@ -245,11 +264,11 @@
             !hostLibJS ||
             (hostLibGroup !== "group-all" && hostLibGroup !== guestLibGroup)
           ) {
-            loadingPromises["hostLibJS"] = new Promise(function(res) {
+            loadingPromises["hostLibJS"] = new Promise(function (res) {
               _appendScript(hostDocument, {
                 className: guestLibJS.className,
                 src: guestLibJS.src,
-                "data-group": guestLibGroup,
+                ...makeDataAttr("group", guestLibGroup),
                 onload: res,
                 async: false
               });
@@ -273,7 +292,7 @@
             (hostLibProGroup !== "group-all" &&
               guestLibProGroup !== hostLibProGroup)
           ) {
-            loadingPromises["hostLibProJS"] = new Promise(function(res) {
+            loadingPromises["hostLibProJS"] = new Promise(function (res) {
               _appendScript(hostDocument, {
                 className: guestLibProJS.className,
                 src: guestLibProJS.src,
@@ -292,7 +311,7 @@
 
         if (guestJS) {
           if (!hostJS && !hostProJS) {
-            loadingPromises["hostJS"] = new Promise(function(res) {
+            loadingPromises["hostJS"] = new Promise(function (res) {
               _appendScript(hostDocument, {
                 className: guestJS.className,
                 src: guestJS.src,
@@ -311,7 +330,7 @@
 
         if (guestProJS) {
           if (!hostProJS) {
-            loadingPromises["hostProJS"] = new Promise(function(res) {
+            loadingPromises["hostProJS"] = new Promise(function (res) {
               _appendScript(hostDocument, {
                 className: guestProJS.className,
                 src: guestProJS.src,
@@ -328,7 +347,7 @@
           promises.push(loadingPromises["hostProJS"]);
         }
 
-        return Promise.all(promises).then(function() {
+        return Promise.all(promises).then(function () {
           return data;
         });
       }
@@ -410,7 +429,7 @@
   function _appendScript(doc, attributes) {
     var script = doc.createElement("script");
 
-    Object.keys(attributes).forEach(function(attr) {
+    Object.keys(attributes).forEach(function (attr) {
       script[attr] = attributes[attr];
     });
 

@@ -15,12 +15,13 @@ import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/Config
 import UIEvents from "visual/global/UIEvents";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors-new";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import SortablePlugin from "./plugin";
 
 interface SortableAttr {
-  "data-sortable-type": string;
-  "data-sortable-path": string;
-  "data-sortable-disabled": boolean;
+  "data-brz-sortable-type": string;
+  "data-brz-sortable-path": string;
+  "data-brz-sortable-disabled": boolean;
 }
 
 type onSortData = SortablePluginOptions["onSort"];
@@ -56,10 +57,13 @@ export interface Props {
 const handleSort: onSortData = (data): void => {
   const { from, to } = data;
 
-  const fromPath = from.sortableNode.getAttribute("data-sortable-path");
-  const fromType = from.sortableNode.getAttribute("data-sortable-type");
-  const toPath = to.sortableNode.getAttribute("data-sortable-path");
-  const toType = to.sortableNode.getAttribute("data-sortable-type");
+  const sortablePathAttr = makeAttr("sortable-path");
+  const sortableTypeAttr = makeAttr("sortable-type");
+
+  const fromPath = from.sortableNode.getAttribute(sortablePathAttr);
+  const fromType = from.sortableNode.getAttribute(sortableTypeAttr);
+  const toPath = to.sortableNode.getAttribute(sortablePathAttr);
+  const toType = to.sortableNode.getAttribute(sortableTypeAttr);
 
   const fromContainerPath = fromPath?.split("-") ?? [];
   const fromContainerType = fromType;
@@ -110,9 +114,9 @@ const Sortable = (props: Props): ReactElement => {
   const dataProps: SortableAttr | undefined = IS_PREVIEW
     ? undefined
     : {
-        "data-sortable-type": type,
-        "data-sortable-path": path ?? "",
-        "data-sortable-disabled": disabled
+        "data-brz-sortable-type": type,
+        "data-brz-sortable-path": path ?? "",
+        "data-brz-sortable-disabled": disabled
       };
   const onSort = typeof _onSort === "function" ? _onSort : handleSort;
 
@@ -178,8 +182,8 @@ const Sortable = (props: Props): ReactElement => {
       <div ref={nodeRef} {...dataProps} className="brz-ed-sortable--empty">
         <div
           className="brz-ed-border__sortable brz-ed-border__inner brz-ed-border--no-space"
-          data-border--grey="true"
-          data-border--dotted="true"
+          {...makeDataAttr({ name: "border--grey", value: "true" })}
+          {...makeDataAttr({ name: "border--dotted", value: "true" })}
         />
         <div
           className="brz-ed-container-trigger brz-ed-container-trigger--small"

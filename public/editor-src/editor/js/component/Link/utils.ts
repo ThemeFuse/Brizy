@@ -1,6 +1,6 @@
-import Config from "visual/global/Config";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
+import { customFileUrl } from "visual/utils/customFile";
 import { MValue } from "visual/utils/value";
 import { Target, TargetTypes } from "./types/Target";
 import { Type } from "./types/Type";
@@ -22,8 +22,6 @@ interface SectionModel {
 type Data = {
   items: Array<SectionModel>;
 };
-
-const isWP = Config.get("wp");
 
 export const getAttr = (
   attr: JSX.IntrinsicAttributes
@@ -102,9 +100,7 @@ export const getHref = (type: Type, _href: string): string => {
       break;
     }
     case "upload": {
-      const { customFile } = Config.get("urls");
-      const [name] = _href.split("|||", 1);
-      href = isWP ? `${customFile}${name}` : `${customFile}/${name}`;
+      href = customFileUrl(_href) ?? "";
       break;
     }
     case "page":

@@ -10,6 +10,7 @@ import EditorComponent, {
 } from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { WithClassName } from "visual/utils/options/attributes";
 import { Wrapper } from "../../tools/Wrapper";
 import * as sidebarConfig from "./sidebar";
@@ -61,7 +62,10 @@ export class ProductReview extends EditorComponent<Value, Props> {
 
     return (
       <Wrapper {...this.makeWrapperProps({ className })}>
-        <div id="shopify-product-reviews" data-id={productId}>
+        <div
+          id="shopify-product-reviews"
+          {...makeDataAttr({ name: "id", value: productId })}
+        >
           {placeholder}
         </div>
       </Wrapper>

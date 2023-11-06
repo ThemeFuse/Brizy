@@ -6,6 +6,7 @@ import {
   ProductApiMock
 } from "visual/libs/shopify/Stores/types/Api.mock";
 import { ProductHandle } from "visual/libs/shopify/types/Product";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { read } from "visual/utils/math/number";
 import { prop } from "visual/utils/object/get";
 import { readKey } from "visual/utils/reader/object";
@@ -18,7 +19,9 @@ export default function ($node: JQuery): void {
   const productClient = new ProductApiMock();
 
   node.querySelectorAll(`.brz-shopify-quantity`).forEach((item) => {
-    const t = item.getAttribute("data-product-handle") as ProductHandle | "";
+    const t = item.getAttribute(makeAttr("product-handle")) as
+      | ProductHandle
+      | "";
     const input = item.querySelector(
       "input[type=number]"
     ) as HTMLInputElement | null;

@@ -1,8 +1,9 @@
-import {
-  findClosestSortable as findClosestSortableT,
-  SortableBox as SortableBoxT
-} from "./findClosestSortable";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import * as Observer from "./Observer";
+import {
+  SortableBox as SortableBoxT,
+  findClosestSortable as findClosestSortableT
+} from "./findClosestSortable";
 import { GlobalState, SortablePluginOptions } from "./types";
 import {
   addClass,
@@ -79,6 +80,8 @@ export default class SortablePlugin {
   helperRect: DOMRect;
 
   constructor(el: HTMLElement, options: Partial<SortablePluginOptions>) {
+    const sortableZIndexAttr = makeAttr("sortable-zindex");
+
     // options
     {
       const tmp: { [k: string]: unknown } = {};
@@ -97,10 +100,10 @@ export default class SortablePlugin {
     // sortableInfo
     let zIndex = 0;
     closest(this.el, (el) => {
-      if (el.hasAttribute("data-sortable-zindex")) {
+      if (el.hasAttribute(sortableZIndexAttr)) {
         // this is done in unlikely case that an element
         // with sortableZIndex is located inside another such element
-        zIndex += Number(el.getAttribute("data-sortable-zindex"));
+        zIndex += Number(el.getAttribute(sortableZIndexAttr));
       }
       return false;
     });
@@ -176,16 +179,18 @@ export default class SortablePlugin {
     }
 
     const sortableElement = closest(e.target, (el) =>
-      el.hasAttribute("data-sortable-element")
+      el.hasAttribute(makeAttr("sortable-element"))
     );
     if (!sortableElement) {
       return; // invalid or missing sortable element. It happened sometimes although not sure why
     }
 
-    const usesHandle = sortableElement.hasAttribute("data-sortable-use-handle");
+    const usesHandle = sortableElement.hasAttribute(
+      makeAttr("sortable-use-handle")
+    );
     if (usesHandle) {
       const targetInsideHandle = closest(e.target, (el) =>
-        el.hasAttribute("data-sortable-handle")
+        el.hasAttribute(makeAttr("sortable-handle"))
       );
 
       if (targetInsideHandle === undefined) {
@@ -306,7 +311,7 @@ export default class SortablePlugin {
       const { sourceSortable, sourceElement, sourceElementIndex } = source;
       const { targetSortable, targetElementIndex } = target;
       const sourceElementType =
-        sourceElement.getAttribute("data-sortable-type") ?? "";
+        sourceElement.getAttribute(makeAttr("sortable-type")) ?? "";
 
       onSort({
         from: {
@@ -535,7 +540,7 @@ export default class SortablePlugin {
 
     const { sourceSortable, sourceElement } = globalState.dragInfo.source;
     const sourceElementType =
-      sourceElement.getAttribute("data-sortable-type") ?? "";
+      sourceElement.getAttribute(makeAttr("sortable-type")) ?? "";
 
     return globalState.allSortables.filter((node) => {
       const isInViewPort = globalState.sortableInViewPort.has(node);
@@ -549,8 +554,10 @@ export default class SortablePlugin {
       }
 
       if (
-        node.getAttribute("data-sortable-disabled") === "true" ||
-        node.closest("[data-sortable-disabled='true']")
+        node.getAttribute(makeAttr("sortable-disabled")) === "true" ||
+        node.closest(
+          makeDataAttrString({ name: "sortable-disabled", value: "true" })
+        )
       ) {
         return false;
       }

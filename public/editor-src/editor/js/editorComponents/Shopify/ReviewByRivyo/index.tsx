@@ -4,6 +4,7 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -23,38 +24,53 @@ export class ReviewRivyo extends EditorComponent<Value> {
   static defaultValue = defaultValue;
 
   renderRivyoWidget(type: ReviewType): ReactNode {
-    const productHandle = makePlaceholder({ content: "{{ product.handle }}" });
-    const shopUrl = makePlaceholder({ content: "{{ shop.url }}" });
+    const productHandle = makePlaceholder({
+      content: "{{ product.handle }}"
+    });
+    const shopUrl = makePlaceholder({
+      content: "{{ shop.url }}"
+    });
+    const pfElementAttr = makeDataAttr({
+      name: "pf-element",
+      value: "true"
+    });
+    const urlAttr = makeDataAttr({
+      name: "url",
+      value: shopUrl
+    });
+    const handleAttr = makeDataAttr({
+      name: "handle",
+      value: productHandle
+    });
+    const limitAttr = makeDataAttr({
+      name: "limit",
+      value: "0"
+    });
 
     switch (type) {
       case "reviewWidget":
         return (
           <div
-            data-pf-element="true"
+            {...pfElementAttr}
             id="wc_review_section"
             className="wc_review_main_content"
-            data-url={shopUrl}
-            data-handle={productHandle}
-            data-limit="0"
+            {...urlAttr}
+            {...handleAttr}
+            {...limitAttr}
           />
         );
       case "allStore":
         return (
           <div
-            data-pf-element="true"
+            {...pfElementAttr}
             id="wc_all_review_page"
             className="wc_review_main_content"
-            data-url={shopUrl}
-            data-limit="0"
+            {...urlAttr}
+            {...limitAttr}
           />
         );
       case "averageRating":
-        return (
-          <div
-            className="wc_product_review_badge"
-            data-handle={productHandle}
-          />
-        );
+        return <div className="wc_product_review_badge" {...handleAttr} />;
     }
   }
 

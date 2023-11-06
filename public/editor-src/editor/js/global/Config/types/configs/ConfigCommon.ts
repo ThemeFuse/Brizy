@@ -24,6 +24,7 @@ import {
   SavedBlock,
   SavedLayout
 } from "visual/types";
+import { PostsSources } from "visual/utils/api/types";
 import { Literal } from "visual/utils/types/Literal";
 import { ElementTypes } from "./ElementTypes";
 import {
@@ -31,7 +32,8 @@ import {
   AddFileExtra,
   AddImageData,
   AddImageExtra,
-  Response
+  Response,
+  ScreenshotData
 } from "./common";
 
 export enum Mode {
@@ -326,7 +328,7 @@ interface _ConfigCommon<Mode> {
 
     //#region Publish
 
-    publish: {
+    publish?: {
       label?: string;
       handler: (
         res: Response<PublishData>,
@@ -601,6 +603,20 @@ interface _ConfigCommon<Mode> {
         };
       };
     };
+
+    // Screenshots
+    screenshots?: {
+      create?: (
+        res: Response<{ id: string }>,
+        rej: Response<string>,
+        extra: ScreenshotData
+      ) => void;
+      update?: (
+        res: Response<{ id: string }>,
+        rej: Response<string>,
+        extra: ScreenshotData & { id: string }
+      ) => void;
+    };
   };
 
   //#endregion
@@ -808,6 +824,11 @@ interface _ConfigCommon<Mode> {
       offset?: boolean;
       orderBy?: boolean;
       order?: boolean;
+      handler: (
+        res: Response<PostsSources>,
+        ref: Response<string>,
+        page: PageCommon
+      ) => void;
     };
 
     postTitle?: {
@@ -820,6 +841,12 @@ interface _ConfigCommon<Mode> {
   };
 
   //#endregion
+
+  // #region Localisation
+
+  l10n?: Record<string, string>;
+
+  // #endregion
 }
 
 export type ConfigCommon = _ConfigCommon<Mode>;

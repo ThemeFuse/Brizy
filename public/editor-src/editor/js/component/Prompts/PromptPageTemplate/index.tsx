@@ -2,9 +2,11 @@ import React, { ReactElement, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import Fixed from "visual/component/Prompts/Fixed";
 import {
+  setIsHomePage,
   setLayout,
   setTitle
 } from "visual/component/Prompts/PromptPageTemplate/types/Setters";
+import { getShopifyLayout } from "visual/component/Prompts/PromptPageTemplate/utils";
 import {
   cancel,
   save,
@@ -14,7 +16,11 @@ import { useStateReducer } from "visual/component/Prompts/common/states/Classic/
 import { getChoices } from "visual/component/Prompts/utils";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
-import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
+import {
+  updatePageIsHomePage,
+  updatePageLayout,
+  updatePageTitle
+} from "visual/redux/actions2";
 import { shopifySyncPage } from "visual/utils/api";
 import { isNonEmptyArray } from "visual/utils/array/types";
 import { t } from "visual/utils/i18n";
@@ -29,23 +35,33 @@ import { Props } from "./types";
 import { Valid } from "./types";
 
 export const PromptPageTemplate = (props: Props): ReactElement => {
-  const { headTitle, pageTitle, selectedLayout, opened, onClose, onSave } =
-    props;
+  const {
+    pageId,
+    headTitle,
+    pageTitle,
+    selectedLayout,
+    opened,
+    onClose,
+    onSave
+  } = props;
+
+  const isHomePage = pageId === selectedLayout?.isHomePage;
 
   const { value } = selectedLayout || { value: undefined };
 
   const dispatch = useDispatch();
 
   const handleSave = useCallback(
-    ({ title, layout }: Valid): Promise<void> => {
+    ({ title, layout, isHomePage }: Valid): Promise<void> => {
       dispatch(updatePageLayout(layout));
       dispatch(updatePageTitle(title));
+      dispatch(updatePageIsHomePage(isHomePage ? pageId : null));
 
       return onSave()
-        .then(() => shopifySyncPage(title))
+        .then(() => shopifySyncPage(title, isHomePage))
         .then(() => undefined);
     },
-    [dispatch, onSave]
+    [dispatch, onSave, pageId]
   );
   const getData = useCallback(async () => {
     const config = Config.getAll();
@@ -56,14 +72,15 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
         return {
           layouts,
           title: pageTitle,
-          layout: value ?? layouts[0].id,
-          error: undefined
+          layout: value ?? getShopifyLayout(layouts)?.id ?? layouts[0].id,
+          error: undefined,
+          isHomePage
         };
       }
     }
 
     return Promise.reject();
-  }, [pageTitle, value]);
+  }, [pageTitle, value, isHomePage]);
 
   const [state, dispatchS] = useStateReducer(
     reducer,
@@ -128,6 +145,8 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
                 footer={footer}
                 onChange={(v): void => dispatchS(setLayout(v))}
                 error={state.payload.error}
+                isHomePage={state.payload.isHomePage}
+                onSwitchChange={(v): void => dispatchS(setIsHomePage(v))}
               />
             );
         }

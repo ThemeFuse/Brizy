@@ -9,6 +9,7 @@ import { Scrollbar } from "visual/component/Scrollbar";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import TextField from "./common/TextField";
 
 export default class Select extends TextField {
@@ -148,7 +149,7 @@ export default class Select extends TextField {
     const { label, options } = this.props;
 
     return (
-      <div data-label={label}>
+      <div {...makeDataAttr({ name: "label", value: label })}>
         <SelectControl
           inputAttributes={v}
           defaultValue={this.props.label}

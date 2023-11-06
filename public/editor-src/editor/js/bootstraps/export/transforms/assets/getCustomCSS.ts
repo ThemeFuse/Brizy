@@ -1,14 +1,18 @@
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
+
 export const getCustomCSS = ($: cheerio.Root): string[] => {
   let styles = "";
 
-  $("[data-custom-css]").each(function (this: cheerio.Element) {
+  $(makeDataAttrString({ name: "custom-css" })).each(function (
+    this: cheerio.Element
+  ) {
     const $this = $(this);
-    const id = $this.attr("data-custom-id") || "";
+    const id = $this.attr(makeAttr("custom-id")) || "";
 
-    styles += $this.attr("data-custom-css");
+    styles += $this.attr(makeAttr("custom-css"));
 
     const children = $this.children();
-    children.attr("data-custom-id", id);
+    children.attr(makeAttr("custom-id"), id);
     $this.replaceWith(children);
   });
 

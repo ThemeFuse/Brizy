@@ -17,15 +17,10 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import Config from "visual/global/Config";
-import { isCustomerPage } from "visual/global/Config/types/configs/Base";
-import {
-  isCloud,
-  isCollectionPage,
-  isShopifyPage
-} from "visual/global/Config/types/configs/Cloud";
+import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { pageSelector } from "visual/redux/selectors";
-import { getPostsSourceRefs } from "visual/utils/api";
+import { defaultPostsSources } from "visual/utils/api";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { tabletSyncOnChange } from "visual/utils/onChange";
@@ -33,7 +28,7 @@ import * as json from "visual/utils/reader/json";
 import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
-import { migrations } from "./migrations";
+import { getCollectionTypesInfo, migrations } from "./migrations";
 import * as sidebarExtendFilter from "./sidebarExtendFilter";
 import * as sidebarExtendPagination from "./sidebarExtendPagination";
 import * as sidebarExtendParent from "./sidebarExtendParent";
@@ -41,7 +36,6 @@ import { style } from "./styles";
 import * as toolbarExtendFilter from "./toolbarExtendFilter";
 import * as toolbarExtendPagination from "./toolbarExtendPagination";
 import toolbarExtendParentFn from "./toolbarExtendParent";
-import { getCollectionTypesInfo } from "./toolbarExtendParent/utils";
 import { getLoopAttributes, getLoopTagsAttributes } from "./utils";
 import {
   decodeSymbols,
@@ -153,27 +147,16 @@ export class Posts extends EditorComponent {
 
   async componentDidMount() {
     this.reloadData();
-    const config = Config.getAll();
 
     const toolbarContext = await (async () => {
       try {
         const state = this.getReduxState();
         const page = pageSelector(state);
+        const config = Config.getAll();
 
-        if (isCollectionPage(page)) {
+        if (page) {
           return {
-            collectionTypesInfo: await getPostsSourceRefs(
-              page.collectionType.id
-            )
-          };
-        }
-
-        if (
-          isCloud(config) &&
-          (isCustomerPage(config.page) || isShopifyPage(page))
-        ) {
-          return {
-            collectionTypesInfo: await getPostsSourceRefs(page.id)
+            collectionTypesInfo: await defaultPostsSources(config, page)
           };
         }
 
@@ -197,8 +180,7 @@ export class Posts extends EditorComponent {
 
     this.props.extendParentToolbar(toolbarExtend);
 
-    const firstItem =
-      toolbarContext?.collectionTypesInfo?.collectionTypes[0]?.id;
+    const firstItem = toolbarContext?.collectionTypesInfo?.sources[0]?.id;
     if (firstItem && !this.getValue2().v.source) {
       this.patchValue({ source: firstItem });
     }
@@ -312,7 +294,8 @@ export class Posts extends EditorComponent {
         toolbarExtendFilter,
         sidebarExtendFilter,
         { allowExtend: false }
-      )
+      ),
+      loopAttributes: getLoopAttributes(v)
     });
 
     return (

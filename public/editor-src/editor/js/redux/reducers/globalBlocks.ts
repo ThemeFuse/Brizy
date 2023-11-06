@@ -70,12 +70,26 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
 
       return state;
     }
-    case "MAKE_POPUP_TO_GLOBAL_BLOCK":
-    case "MAKE_NORMAL_TO_GLOBAL_BLOCK": {
-      const { data, status, meta, rules, position } = action.payload;
+    case "MAKE_POPUP_TO_GLOBAL_BLOCK": {
+      const { id, data, status, meta, rules, position } = action.payload;
 
       return produce(state, (draft) => {
         draft[data.value._id] = {
+          id,
+          meta,
+          data,
+          status,
+          rules,
+          position
+        };
+      });
+    }
+    case "MAKE_NORMAL_TO_GLOBAL_BLOCK": {
+      const { id, data, status, meta, rules, position } = action.payload;
+
+      return produce(state, (draft) => {
+        draft[data.value._id] = {
+          id,
           meta,
           data,
           status,
@@ -89,7 +103,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     // last slide - then instead of REMOVE_BLOCK action we get
     // UPDATE_GLOBAL_BLOCK - with payload.data.value = null
     case "UPDATE_GLOBAL_BLOCK": {
-      const { id, data } = action.payload;
+      const { id, data, title = "", tags = "" } = action.payload;
 
       if (data.value === null && !isPopup(state[id].data)) {
         const globalBlock = changeRule(state[id], false, allState?.page);
@@ -99,7 +113,10 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
         };
       }
 
-      return state;
+      return produce(state, (draft) => {
+        draft[id].title = title;
+        draft[id].tags = tags;
+      });
     }
 
     case "REMOVE_BLOCK": {
@@ -228,9 +245,8 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     }
 
     case "PUBLISH": {
-      const allGlobalBlocks: GlobalBlocks = globalBlocksAssembledSelector(
-        allState
-      );
+      const allGlobalBlocks: GlobalBlocks =
+        globalBlocksAssembledSelector(allState);
 
       const globalBlocksInPage = globalBlocksInPageSelector(allState);
 

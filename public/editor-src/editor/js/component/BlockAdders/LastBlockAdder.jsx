@@ -1,12 +1,12 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import { connect } from "react-redux";
 import Prompts from "visual/component/Prompts";
-import RoundPlus from "visual/component/RoundPlus";
 import { rolesHOC } from "visual/component/Roles";
-import { t } from "visual/utils/i18n";
+import RoundPlus from "visual/component/RoundPlus";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { t } from "visual/utils/i18n";
 
 class LastBlockAdder extends React.Component {
   static defaultProps = {
@@ -16,6 +16,7 @@ class LastBlockAdder extends React.Component {
   handleOpen = () => {
     const { onAddBlock, onAddTemplate } = this.props;
     const config = Config.getAll();
+    ///// TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
     const showGlobal = !(isCloud(config) && isShopify(config));
 
     Prompts.open({

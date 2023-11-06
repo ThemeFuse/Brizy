@@ -1,15 +1,16 @@
 import $ from "jquery";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import * as Num from "visual/utils/reader/number";
 
 export default function ($node: JQuery): void {
   $node.find(".brz-groupSlider-swiper-wrapper").each(function () {
     const $this = $(this);
 
-    const $slidesToShow = $this.attr("data-brz-show");
-    const $dots = Num.read($this.attr("data-brz-pagination")) === 1;
+    const $slidesToShow = $this.attr(makeAttr("show"));
+    const $dots = Num.read($this.attr(makeAttr("pagination"))) === 1;
 
     const container = $this.closest(".brz-groupSlider_wrap");
-    const showarrows = Num.read(container.attr("data-brz-showarrows")) === 1;
+    const showarrows = Num.read(container.attr(makeAttr("showarrows"))) === 1;
 
     const prevArrow = container.find(".brz-swiper-arrow_prev")[0];
     const nextArrow = container.find(".brz-swiper-arrow_next")[0];

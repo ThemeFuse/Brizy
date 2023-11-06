@@ -7,6 +7,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
 import {
   defaultValueValue,
@@ -14,9 +15,9 @@ import {
 } from "visual/utils/onChange";
 import * as State from "visual/utils/stateMode";
 import { Wrapper } from "../tools/Wrapper";
+import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
-import Items from "./Items";
 import * as sidebarExtend from "./sidebarExtend";
 import * as sidebarExtendParent from "./sidebarExtendParent";
 import { styleAnimation, styleTabs } from "./styles";
@@ -120,8 +121,10 @@ export default class Tabs extends EditorComponent {
       verticalMode,
       navStyle,
       verticalAlign,
-      action
+      action,
+      customCSS
     } = v;
+
     const meta = this.getMeta(v);
     const itemNavProps = this.makeSubcomponentProps({
       activeTab,
@@ -186,12 +189,12 @@ export default class Tabs extends EditorComponent {
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
           <Wrapper
             {...this.makeWrapperProps({
               className,
-              attributes: { "data-action": action }
+              attributes: makeDataAttr({ name: "action", value: action })
             })}
           >
             <ul className={classNameNav}>

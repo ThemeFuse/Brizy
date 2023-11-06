@@ -1,6 +1,7 @@
 import Quill from "quill";
 import Config from "visual/global/Config";
 import { SizeType } from "visual/global/Config/types/configs/common";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { getImageUrl } from "visual/utils/image";
 import { getImagePopulation } from "../requests/ImagePopulation";
 
@@ -70,8 +71,8 @@ class BackgroundImage extends Inline {
 
       requestAnimationFrame(() => {
         const itemId = node
-          .closest("[data-item_id]")
-          .getAttribute("data-item_id");
+          .closest(makeDataAttrString({ name: "item_id" }))
+          .getAttribute(makeAttr("item_id"));
         const dynamicContent = Config.getAll().dynamicContent;
         const liveInBuilder = dynamicContent?.liveInBuilder ?? false;
 

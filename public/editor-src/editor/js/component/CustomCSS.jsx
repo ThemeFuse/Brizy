@@ -1,11 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {
+  makeAttr,
+  makeDataAttr,
+  makeDataAttrString
+} from "visual/utils/i18n/attribute";
 
 let styles = {};
 
 function toCSS(stylesObj) {
   return Object.entries(stylesObj).reduce((acc, [key, value]) => {
-    acc += value.replace(/element/g, `[data-custom-id=${key}]`);
+    acc += value.replace(
+      /element/g,
+      makeDataAttrString({ name: "custom-id", value: key })
+    );
     return acc;
   }, "");
 }
@@ -28,6 +36,8 @@ export default class CustomCSS extends React.Component {
 
   updateCSS() {
     const { selectorName, css } = this.props;
+    const customIdAttr = makeAttr("custom-id");
+
     // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
     if (styles[selectorName] === css) {
@@ -35,10 +45,10 @@ export default class CustomCSS extends React.Component {
     }
 
     if (!css) {
-      node.removeAttribute("data-custom-id", selectorName);
+      node.removeAttribute(customIdAttr, selectorName);
       delete styles[selectorName];
     } else {
-      node.setAttribute("data-custom-id", selectorName);
+      node.setAttribute(customIdAttr, selectorName);
       styles[selectorName] = css;
     }
 
@@ -73,8 +83,11 @@ export default class CustomCSS extends React.Component {
 
     return (
       <div
-        data-custom-id={selectorName}
-        data-custom-css={toCSS({ [selectorName]: css })}
+        {...makeDataAttr({ name: "custom-id", value: selectorName })}
+        {...makeDataAttr({
+          name: "custom-css",
+          value: toCSS({ [selectorName]: css })
+        })}
       >
         {React.Children.only(children)}
       </div>

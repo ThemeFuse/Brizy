@@ -11,7 +11,7 @@ export const SortableZIndex = (props: Props): ReactElement => {
   const dataProps: Dictionary<number> = IS_PREVIEW
     ? {}
     : {
-        "data-sortable-zindex": zIndex
+        "data-brz-sortable-zindex": zIndex
       };
 
   return typeof children === "function"

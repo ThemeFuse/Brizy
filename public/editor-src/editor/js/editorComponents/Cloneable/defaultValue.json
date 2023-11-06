@@ -8,20 +8,11 @@
     "showOnDesktop": "on",
 
     "zIndex": 0,
-    "zIndexSuffix": null,
-
-    "hoverZIndex": null,
-    "hoverZIndexSuffix": null,
+    "zIndexSuffix": "",
 
     "showOnTablet": "on",
 
-    "tabletZIndex": null,
-    "tabletZIndexSuffix": null,
-
     "showOnMobile": "on",
-
-    "mobileZIndex": null,
-    "mobileZIndexSuffix": null,
 
     "items": []
   },
@@ -102,165 +93,17 @@
     "motionMouseTiltSpeed": 0.25,
     "motionMouseTiltSpeedSuffix": null,
 
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-    "tabletElementWidthType": null,
-    "tabletOffsetX": null,
-    "tabletOffsetXSuffix": null,
-    "tabletOffsetXAlignment": null,
-    "tabletOffsetY": null,
-    "tabletOffsetYSuffix": null,
-    "tabletOffsetYAlignment": null,
-    "tabletElementPosition": null,
-
     "tabletMotionActive": false,
-    "tabletMotionVerticalEnabled": null,
-    "tabletMotionVerticalSpeed": null,
-    "tabletMotionVerticalSpeedSuffix": null,
-    "tabletMotionVerticalDirection": null,
-    "tabletMotionVerticalViewportType": null,
-    "tabletMotionVerticalViewportTop": null,
-    "tabletMotionVerticalViewportBottom": null,
-
-    "tabletMotionHorizontalEnabled": null,
-    "tabletMotionHorizontalSpeed": null,
-    "tabletMotionHorizontalSpeedSuffix": null,
-    "tabletMotionHorizontalDirection": null,
-    "tabletMotionHorizontalViewportType": null,
-    "tabletMotionHorizontalViewportTop": null,
-    "tabletMotionHorizontalViewportBottom": null,
-
-    "tabletMotionRotateEnabled": null,
-    "tabletMotionRotateSpeed": null,
-    "tabletMotionRotateSpeedSuffix": null,
-    "tabletMotionRotateDirection": null,
-    "tabletMotionRotateX": null,
-    "tabletMotionRotateY": null,
-    "tabletMotionRotateViewportType": null,
-    "tabletMotionRotateViewportTop": null,
-    "tabletMotionRotateViewportBottom": null,
-
-    "tabletMotionTransparencyEnabled": null,
-    "tabletMotionTransparencyLevel": null,
-    "tabletMotionTransparencyLevelSuffix": null,
-    "tabletMotionTransparencyDirection": null,
-    "tabletMotionTransparencyViewportType": null,
-    "tabletMotionTransparencyViewportTop": null,
-    "tabletMotionTransparencyViewportBottom": null,
-
-    "tabletMotionScaleEnabled": null,
-    "tabletMotionScaleSpeed": null,
-    "tabletMotionScaleSpeedSuffix": null,
-    "tabletMotionScaleDirection": null,
-    "tabletMotionScaleX": null,
-    "tabletMotionScaleY": null,
-    "tabletMotionScaleViewportType": null,
-    "tabletMotionScaleViewportTop": null,
-    "tabletMotionScaleViewportBottom": null,
-
-    "tabletMotionBlurEnabled": null,
-    "tabletMotionBlurLevel": null,
-    "tabletMotionBlurLevelSuffix": null,
-    "tabletMotionBlurDirection": null,
-    "tabletMotionBlurViewportType": null,
-    "tabletMotionBlurViewportTop": null,
-    "tabletMotionBlurViewportBottom": null,
 
     "tabletMotionMouseTrackEnabled": false,
-    "tabletMotionMouseTrackDirection": null,
-    "tabletMotionMouseTrackSpeed": null,
-    "tabletMotionMouseTrackSpeedSuffix": null,
-    "tabletMotionMouseTrackViewportType": null,
-    "tabletMotionMouseTrackViewportTop": null,
-    "tabletMotionMouseTrackViewportBottom": null,
 
     "tabletMotionMouseTiltEnabled": false,
-    "tabletMotionMouseTiltDirection": null,
-    "tabletMotionMouseTiltSpeed": null,
-    "tabletMotionMouseTiltSpeedSuffix": null,
-    "tabletMotionMouseTiltViewportType": null,
-    "tabletMotionMouseTiltViewportTop": null,
-    "tabletMotionMouseTiltViewportBottom": null,
-
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
-    "mobileElementWidthType": null,
-    "mobileOffsetX": null,
-    "mobileOffsetXSuffix": null,
-    "mobileOffsetXAlignment": null,
-    "mobileOffsetY": null,
-    "mobileOffsetYSuffix": null,
-    "mobileOffsetYAlignment": null,
-    "mobileElementPosition": null,
 
     "mobileMotionActive": false,
-    "mobileMotionVerticalEnabled": null,
-    "mobileMotionVerticalSpeed": null,
-    "mobileMotionVerticalSpeedSuffix": null,
-    "mobileMotionVerticalDirection": null,
-    "mobileMotionVerticalViewportType": null,
-    "mobileMotionVerticalViewportTop": null,
-    "mobileMotionVerticalViewportBottom": null,
-
-    "mobileMotionHorizontalEnabled": null,
-    "mobileMotionHorizontalSpeed": null,
-    "mobileMotionHorizontalSpeedSuffix": null,
-    "mobileMotionHorizontalDirection": null,
-    "mobileMotionHorizontalViewportType": null,
-    "mobileMotionHorizontalViewportTop": null,
-    "mobileMotionHorizontalViewportBottom": null,
-
-    "mobileMotionRotateEnabled": null,
-    "mobileMotionRotateSpeed": null,
-    "mobileMotionRotateSpeedSuffix": null,
-    "mobileMotionRotateDirection": null,
-    "mobileMotionRotateX": null,
-    "mobileMotionRotateY": null,
-    "mobileMotionRotateViewportType": null,
-    "mobileMotionRotateViewportTop": null,
-    "mobileMotionRotateViewportBottom": null,
-
-    "mobileMotionTransparencyEnabled": null,
-    "mobileMotionTransparencyLevel": null,
-    "mobileMotionTransparencyLevelSuffix": null,
-    "mobileMotionTransparencyDirection": null,
-    "mobileMotionTransparencyViewportType": null,
-    "mobileMotionTransparencyViewportTop": null,
-    "mobileMotionTransparencyViewportBottom": null,
-
-    "mobileMotionScaleEnabled": null,
-    "mobileMotionScaleSpeed": null,
-    "mobileMotionScaleSpeedSuffix": null,
-    "mobileMotionScaleDirection": null,
-    "mobileMotionScaleX": null,
-    "mobileMotionScaleY": null,
-    "mobileMotionScaleViewportType": null,
-    "mobileMotionScaleViewportTop": null,
-    "mobileMotionScaleViewportBottom": null,
-
-    "mobileMotionBlurEnabled": null,
-    "mobileMotionBlurLevel": null,
-    "mobileMotionBlurLevelSuffix": null,
-    "mobileMotionBlurDirection": null,
-    "mobileMotionBlurViewportType": null,
-    "mobileMotionBlurViewportTop": null,
-    "mobileMotionBlurViewportBottom": null,
 
     "mobileMotionMouseTrackEnabled": false,
-    "mobileMotionMouseTrackDirection": null,
-    "mobileMotionMouseTrackSpeed": null,
-    "mobileMotionMouseTrackSpeedSuffix": null,
-    "mobileMotionMouseTrackViewportType": null,
-    "mobileMotionMouseTrackViewportTop": null,
-    "mobileMotionMouseTrackViewportBottom": null,
 
     "mobileMotionMouseTiltEnabled": false,
-    "mobileMotionMouseTiltDirection": null,
-    "mobileMotionMouseTiltSpeed": null,
-    "mobileMotionMouseTiltSpeedSuffix": null,
-    "mobileMotionMouseTiltViewportType": null,
-    "mobileMotionMouseTiltViewportTop": null,
-    "mobileMotionMouseTiltViewportBottom": null,
 
     "customAttributes": "",
     "customAttributesPopulation": "",
@@ -342,8 +185,6 @@
     "cssClassPopulationEntityType": "",
     "cssClassPopulationEntityId": "",
 
-    "tabletHorizontalAlign": null,
-
     "tabletPaddingType": "grouped",
     "tempTabletPaddingType": "grouped",
 
@@ -396,8 +237,6 @@
     "tempTabletMarginRightSuffix": "px",
     "tempTabletMarginBottomSuffix": "px",
     "tempTabletMarginLeftSuffix": "px",
-
-    "mobileHorizontalAlign": null,
 
     "mobilePaddingType": "grouped",
     "tempMobilePaddingType": "grouped",
@@ -459,20 +298,6 @@
     "animationDelay": 1000,
     "animationInfiniteAnimation": false,
 
-    "tempAnimationName": "none",
-
-    "tabletAnimationName": null,
-    "tabletAnimationDuration": null,
-    "tabletAnimationDelay": null,
-    "tabletAnimationInfiniteAnimation": null,
-
-    "tempTabletAnimationName": null,
-
-    "mobileAnimationName": null,
-    "mobileAnimationDuration": null,
-    "mobileAnimationDelay": null,
-    "mobileAnimationInfiniteAnimation": null,
-
-    "tempMobileAnimationName": null
+    "tempAnimationName": "none"
   }
 }

@@ -1,4 +1,5 @@
 import $ from "jquery";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { collapse, expand } from "./utils";
 
 export default function ($node) {
@@ -8,8 +9,8 @@ export default function ($node) {
       "> .brz-accordion__item > .brz-accordion__nav"
     );
     const $accordionFilter = $(_this).find(".brz-accordion__filter-wrapper");
-    const $collapsible = $accordionNavItems.attr("data-collapsible");
-    const duration = Number(_this.dataset.duration || 0);
+    const $collapsible = $accordionNavItems.attr(makeAttr("collapsible"));
+    const duration = Number(_this.dataset.brzDuration || 0);
     const contents = $(_this)
       .find("> .brz-accordion__item > .brz-accordion__content")
       .toArray();
@@ -121,15 +122,15 @@ export default function ($node) {
       }
 
       if ($filterItem.length) {
-        const { filter } = $filterItem.data();
+        const { brzFilter } = $filterItem.data();
 
-        if (filter === "*") {
+        if (brzFilter === "*") {
           $this.siblings().removeClass(hiddenClassName);
         } else {
           $this
             .siblings()
             .addClass(hiddenClassName)
-            .siblings(`.${filter}`)
+            .siblings(`.${brzFilter}`)
             .removeClass(hiddenClassName);
         }
       }

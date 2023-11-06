@@ -121,9 +121,6 @@
     "tempTablePaddingLeftSuffix": "px",
 
     "tabletWidth": 100,
-    "tabletWidthSuffix": null,
-    "tabletAsideWidth": null,
-    "tabletAsideWidthSuffix": null,
 
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontFamilyType": null,
@@ -169,9 +166,6 @@
     "mobileTypographyFontWeight": null,
 
     "mobileWidth": 100,
-    "mobileWidthSuffix": null,
-    "mobileAsideWidth": null,
-    "mobileAsideWidthSuffix": null,
 
     "mobileTablePaddingType": "ungrouped",
     "tempMobileTablePaddingType": "ungrouped",

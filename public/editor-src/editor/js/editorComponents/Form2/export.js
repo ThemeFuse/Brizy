@@ -1,5 +1,6 @@
 import $ from "jquery";
 import { getFreeLibs } from "visual/libs";
+import { makeDataAttrString } from "visual/utils/i18n/attribute";
 import { decodeFromString } from "visual/utils/string";
 import { isNullish } from "visual/utils/value";
 
@@ -7,6 +8,10 @@ let isSubmitEnabled = true;
 
 export default function ($node) {
   const root = $node.get(0);
+  const versionAttr = makeDataAttrString({
+    name: "form-version",
+    value: "'2'"
+  });
 
   // RECAPTCHA
   const recaptcha = root.querySelectorAll(".brz-g-recaptcha");
@@ -18,7 +23,7 @@ export default function ($node) {
     // callback recaptcha
     global.brzFormV2Captcha = (token) => {
       const formActive = root.querySelector(
-        "[data-form-version='2'].brz-forms2--pending"
+        `${versionAttr}.brz-forms2--pending`
       );
 
       if (formActive) {
@@ -55,14 +60,16 @@ export default function ($node) {
     };
   }
 
-  root.querySelectorAll("[data-form-version='2']").forEach(initForm);
+  root.querySelectorAll(versionAttr).forEach((item) => {
+    initForm(item);
+  });
 
   // For Date
   root.querySelectorAll(".brz-forms2__field-date").forEach((node) => {
     const data = node.dataset;
-    const minDate = data.min;
-    const maxDate = data.max;
-    const native = data.native === "true";
+    const minDate = data.brzMin;
+    const maxDate = data.brzMax;
+    const native = data.brzNative === "true";
     const { Flatpickr } = getFreeLibs();
 
     if (!native && Flatpickr) {
@@ -80,9 +87,9 @@ export default function ($node) {
   // For Time
   root.querySelectorAll(".brz-forms2__field-time").forEach((node) => {
     const data = node.dataset;
-    const minDate = data.min;
-    const maxDate = data.max;
-    const native = data.native === "true";
+    const minDate = data.brzMin;
+    const maxDate = data.brzMax;
+    const native = data.brzNative === "true";
     const { Flatpickr } = getFreeLibs();
 
     if (!native && Flatpickr) {
@@ -104,7 +111,7 @@ export default function ($node) {
     const $this = $(node);
     const $select = $this.find(".brz-select");
     const isMultiple = $select.get(0).multiple;
-    const placeholder = $select.data("placeholder");
+    const placeholder = $select.data("brz-placeholder");
     const maxItemDropdown = $select.data("max-item-dropdown");
     let initialized = false;
 
@@ -112,6 +119,7 @@ export default function ($node) {
       width: "100%",
       minimumResultsForSearch: Infinity,
       dropdownParent: $this,
+      placeholder,
       templateSelection: (data) => {
         return !placeholder && !initialized ? "" : data.text;
       }
@@ -175,9 +183,9 @@ function validateFormItem(node) {
   const form = node.closest(".brz-form");
   const parentElem = node.closest(".brz-forms2__item");
   const { value, dataset: data, required: isRequired } = node;
-  const { type, error, fileMaxSize } = data;
+  const { brzType, brzError, brzFileMaxSize } = data;
 
-  const _error = error ? decodeFromString(error) : null;
+  const _error = brzError ? decodeFromString(brzError) : null;
 
   const pattern = node.getAttribute("pattern");
   const patternTest = isNullish(pattern) || new RegExp(pattern).test(value);
@@ -205,17 +213,17 @@ function validateFormItem(node) {
     result = false;
   }
 
-  if (type === "Number") {
-    const { min, max } = data;
+  if (brzType === "Number") {
+    const { brzMin, brzMax } = data;
     const toNum = Number(value);
 
-    if (Boolean(value) && toNum < min && min !== "") {
+    if (Boolean(value) && toNum < brzMin && brzMin !== "") {
       const messages = getFormMessage(
         "error",
         `${
           _error?.minNumError ||
           "Selected quantity is less than stock status, min:"
-        } ${min}`
+        } ${brzMin}`
       );
 
       showFormMessage(form, messages);
@@ -225,13 +233,13 @@ function validateFormItem(node) {
       );
       result = false;
     }
-    if (Boolean(value) && toNum > max && max !== "") {
+    if (Boolean(value) && toNum > brzMax && brzMax !== "") {
       const messages = getFormMessage(
         "error",
         `${
           _error?.maxNumError ||
           "Selected quantity is more than stock status, max:"
-        } ${max}`
+        } ${brzMax}`
       );
 
       showFormMessage(form, messages);
@@ -243,9 +251,9 @@ function validateFormItem(node) {
     }
   }
 
-  if (type === "FileUpload") {
+  if (brzType === "FileUpload") {
     const files = node.files;
-    const maxSize = parseInt(node.dataset.fileMaxSize) || 1;
+    const maxSize = parseInt(node.dataset.brzFileMaxSize) || 1;
     const accepts = node.getAttribute("accept")
       ? node.getAttribute("accept").replace(/\s+/g, "").toLowerCase().split(",")
       : [];
@@ -277,7 +285,7 @@ function validateFormItem(node) {
         `${
           _error?.fileMaxSizeError ||
           "This file exceeds the maximum allowed size."
-        } ${fileMaxSize}`
+        } ${brzFileMaxSize}`
       );
 
       showFormMessage(form, messages);
@@ -330,7 +338,7 @@ function validateFormItem(node) {
 
   if (
     isRequired &&
-    type === "Checkbox" &&
+    brzType === "Checkbox" &&
     ![...parentElem.querySelectorAll("input")].some(({ checked }) => checked)
   ) {
     parentElem.classList.add(
@@ -465,18 +473,18 @@ function handleSubmit(form, allData) {
   }
 
   const {
-    projectId,
-    formId,
-    redirect,
-    success: successMessage,
-    error: errorMessage
+    brzProjectId,
+    brzFormId,
+    brzRedirect,
+    brzSuccess: successMessage,
+    brzError: errorMessage
   } = nodeForm.dataset;
   const url = nodeForm.getAttribute("action");
   const { formData, data } = allData;
 
   formData.append("data", JSON.stringify(data));
-  formData.append("project_id", projectId);
-  formData.append("form_id", formId);
+  formData.append("project_id", brzProjectId);
+  formData.append("form_id", brzFormId);
 
   const handleDone = (data) => {
     // check status in the data
@@ -487,8 +495,8 @@ function handleSubmit(form, allData) {
     } else {
       showFormMessage(nodeForm, getFormMessage("success", successMessage));
 
-      if (redirect !== "") {
-        window.location.replace(redirect);
+      if (brzRedirect !== "") {
+        window.location.replace(brzRedirect);
       }
 
       // Reset Form Values
@@ -546,34 +554,34 @@ function getFormData(form) {
           dataValue.name = name;
           dataValue.required = required;
           dataValue.type = type;
-          dataValue.label = dataset.label;
+          dataValue.label = dataset.brzLabel;
         });
 
         dataValue.value = elementValues.join(",");
       } else {
         const [node] = elements;
         const name = node.getAttribute("name");
-        const { type, label, placeholder } = node.dataset;
+        const { brzType, brzLabel, brzPlaceholder } = node.dataset;
         const required = node.required;
         let value = node.value;
 
         dataValue.name = name;
         dataValue.value = value;
         dataValue.required = required;
-        dataValue.type = type;
-        dataValue.label = label;
+        dataValue.type = brzType;
+        dataValue.label = brzLabel;
 
-        if (type === "FileUpload") {
+        if (brzType === "FileUpload") {
           const files = node.files;
 
           for (const file of files) {
             formData.append(`${name}[]`, file, file.name);
           }
 
-          dataValue.maxSize = parseInt(node.dataset.fileMaxSize);
+          dataValue.maxSize = parseInt(node.dataset.brzFileMaxSize);
           dataValue.extensions = node.getAttribute("accept");
         }
-        if (type === "Select") {
+        if (brzType === "Select") {
           const multiple = node.multiple;
 
           if (multiple) {
@@ -584,8 +592,8 @@ function getFormData(form) {
           }
         }
 
-        if (type === "Hidden") {
-          dataValue.value = placeholder || label;
+        if (brzType === "Hidden") {
+          dataValue.value = brzPlaceholder || brzLabel;
         }
       }
 

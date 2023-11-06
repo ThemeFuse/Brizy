@@ -1,9 +1,9 @@
-import { ShopifyPage } from "visual/types";
-import { State } from "../common/states/Classic/types/State";
-import { Layout, Tabs } from "../common/PromptPage/types";
 import { Setters } from "visual/component/Prompts/PromptPageRules/types/Setters";
 import { Actions as _Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
+import { ShopifyPage } from "visual/types";
 import { Rule } from "visual/utils/api/types";
+import { Layout, Tabs } from "../common/PromptPage/types";
+import { State } from "../common/states/Classic/types/State";
 
 export interface Props {
   headTitle: string;
@@ -24,7 +24,7 @@ export interface Invalid {
   title: string | undefined;
   layout: string;
   layouts: [Layout, ...Layout[]];
-  items: [Item, ...Item[]];
+  items: Item[];
   error: string | undefined;
 }
 

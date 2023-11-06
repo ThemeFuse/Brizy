@@ -127,14 +127,7 @@
     "bgPaddingBottomSuffix": "px",
     "bgPaddingLeftSuffix": "px",
 
-    "tabletWidth": null,
     "tabletWidthSuffix": null,
-
-    "tabletHeight": null,
-
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
-
-    "mobileHeight": null
+    "mobileWidthSuffix": null
   }
 }

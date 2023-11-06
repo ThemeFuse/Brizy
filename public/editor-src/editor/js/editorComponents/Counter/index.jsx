@@ -1,25 +1,24 @@
-import React from "react";
-import jQuery from "jquery";
 import classnames from "classnames";
+import jQuery from "jquery";
+import React from "react";
 import _ from "underscore";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
 import BoxResizer from "visual/component/BoxResizer";
+import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { roundTo } from "visual/utils/math";
+import { Wrapper } from "../tools/Wrapper";
+import { Chart } from "./Chart";
+import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleChart, styleNumber } from "./styles";
-import { roundTo } from "visual/utils/math";
-import { css } from "visual/utils/cssStyle";
-import { Wrapper } from "../tools/Wrapper";
-
-import defaultValue from "./defaultValue.json";
+import * as toolbarConfig from "./toolbar";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
-import { Chart } from "./Chart";
-
-const resizerTransformValue = v => {
+const resizerTransformValue = (v) => {
   const {
     width,
     tabletWidth,
@@ -40,7 +39,7 @@ const resizerTransformValue = v => {
     ...rest
   };
 };
-const resizerTransformPatch = patch => {
+const resizerTransformPatch = (patch) => {
   if (patch.size) {
     patch.width = patch.size;
     delete patch.size;
@@ -68,7 +67,7 @@ class Counter extends EditorComponent {
 
   static experimentalDynamicContent = true;
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   state = {
     final: 0
@@ -99,7 +98,7 @@ class Counter extends EditorComponent {
     const endNumber = Number(end);
     const _end = isSimple ? endNumber : Math.max(0, Math.min(100, endNumber));
 
-    const step = final => {
+    const step = (final) => {
       this.state.final !== final && this.setState({ final });
     };
 
@@ -110,10 +109,10 @@ class Counter extends EditorComponent {
       {
         duration: duration * 1000,
         easing: "linear",
-        step: function() {
+        step: function () {
           step(roundTo(this.countNum, 2));
         },
-        complete: function() {
+        complete: function () {
           step(_end);
         }
       }
@@ -171,7 +170,7 @@ class Counter extends EditorComponent {
       )
     );
 
-    const formatNumber = function(number) {
+    const formatNumber = function (number) {
       var splitNum;
       number = number.toFixed(0);
       splitNum = number.split(".");
@@ -196,11 +195,11 @@ class Counter extends EditorComponent {
             {...this.makeWrapperProps({
               className,
               attributes: {
-                "data-start": start,
-                "data-end": end,
-                "data-duration": duration,
-                "data-separator": separator,
-                "data-type": type
+                ...makeDataAttr({ name: "start", value: start }),
+                ...makeDataAttr({ name: "end", value: end }),
+                ...makeDataAttr({ name: "duration", value: duration }),
+                ...makeDataAttr({ name: "separator", value: separator }),
+                ...makeDataAttr({ name: "type", value: type })
               }
             })}
           >
@@ -211,7 +210,7 @@ class Counter extends EditorComponent {
                 restrictions={resizerRestrictions}
                 meta={this.props.meta}
                 value={resizerTransformValue(v)}
-                onChange={patch =>
+                onChange={(patch) =>
                   this.handleResizerChange(resizerTransformPatch(patch))
                 }
               >

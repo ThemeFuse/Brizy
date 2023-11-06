@@ -13,6 +13,7 @@ import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { customFileUrl } from "visual/utils/customFile";
 import { t } from "visual/utils/i18n";
+import { handleLinkChange } from "visual/utils/patch/Link";
 import { getLinkData } from "visual/utils/models/link";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -54,6 +55,11 @@ class Lottie extends EditorComponent {
     this.getAnimation(
       animationFile ? customFileUrl(animationFile) : animationLink
     );
+  }
+
+  patchValue(patch, meta = {}) {
+    const link = handleLinkChange(patch);
+    super.patchValue({ ...patch, ...link }, meta);
   }
 
   handleValueChange(newValue, meta) {

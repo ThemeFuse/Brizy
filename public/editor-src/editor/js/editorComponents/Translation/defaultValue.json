@@ -41,17 +41,9 @@
 
     "height": 40,
     "heightSuffix": "px",
-    "tabletHeight": null,
-    "tabletHeightSuffix": null,
-    "mobileHeight": null,
-    "mobileHeightSuffix": null,
 
     "width": 150,
     "widthSuffix": "px",
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
 
     "colorHex": "#000000",
     "colorOpacity": 1,

@@ -1,43 +1,51 @@
 import $ from "jquery";
+import { makeAttr } from "visual/utils/i18n/attribute";
 
 var elements = [];
-export default function($node) {
+export default function ($node) {
   const isStory = $node.find(".brz-story").length > 0;
+  const separatorAttr = makeAttr("separator");
+  const durationAttr = makeAttr("duration");
+  const endAttr = makeAttr("end");
 
   if (isStory) {
     const $slider = $node.find(".brz-slick-slider");
 
-    $slider.on("afterChange init", function(e, slick) {
+    $slider.on("afterChange init", function (e, slick) {
       const { currentSlide, $slides } = slick;
       const $currentSlide = $slides[currentSlide];
 
       $($currentSlide)
         .find(".brz-counter")
-        .each(function() {
+        .each(function () {
           var $this = $(this);
           const start =
-            $this.attr("data-type") === "simple" ? $this.attr("data-start") : 0;
+            $this.attr(makeAttr("type")) === "simple"
+              ? $this.attr(makeAttr("start"))
+              : 0;
 
           animate({
             elem: this,
             start: start,
-            end: $this.attr("data-end"),
-            duration: $this.attr("data-duration"),
-            separator: $this.attr("data-separator")
+            end: $this.attr(endAttr),
+            duration: $this.attr(durationAttr),
+            separator: $this.attr(separatorAttr)
           });
         });
     });
   } else {
-    $node.find(".brz-counter").each(function() {
+    $node.find(".brz-counter").each(function () {
       var $this = $(this);
       const start =
-        $this.attr("data-type") === "simple" ? $this.attr("data-start") : 0;
+        $this.attr(makeAttr("type")) === "simple"
+          ? $this.attr(makeAttr("start"))
+          : 0;
       elements.push({
         elem: this,
         start: start,
-        end: $this.attr("data-end"),
-        duration: $this.attr("data-duration"),
-        separator: $this.attr("data-separator")
+        end: $this.attr(endAttr),
+        duration: $this.attr(durationAttr),
+        separator: $this.attr(separatorAttr)
       });
 
       $this.addClass("brz-initialized");
@@ -74,7 +82,7 @@ function animate(value) {
   const endNumber = Number(value.end);
   const end = $chart.length ? Math.max(0, Math.min(100, endNumber)) : endNumber;
 
-  var step = function(countNum) {
+  var step = function (countNum) {
     $figures.text(formatNumber(countNum, separator));
     $chart &&
       $chart.css("stroke-dasharray", "calc(" + (countNum + 0.5) + "px) 100");
@@ -86,11 +94,11 @@ function animate(value) {
       duration: Number(value.duration * 1000),
       easing: "linear",
 
-      step: function() {
+      step: function () {
         step(this.countNum);
       },
 
-      complete: function() {
+      complete: function () {
         step(end);
       }
     }
@@ -98,7 +106,7 @@ function animate(value) {
 }
 
 function onScroll() {
-  elements = elements.filter(function(value) {
+  elements = elements.filter(function (value) {
     if (isScrolledIntoView(value.elem)) {
       animate(value);
       return false;

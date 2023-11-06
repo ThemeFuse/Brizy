@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -52,7 +53,7 @@ export class FeraReviews extends EditorComponent<Value> {
       case "eventPopups":
         return (
           <div
-            data-pf-type="Fera"
+            {...makeDataAttr({ name: "pf-type", value: "Fera" })}
             dangerouslySetInnerHTML={{ __html: embededCode }}
           />
         );

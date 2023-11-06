@@ -6,11 +6,7 @@ import { isPopup, isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { encodeToString } from "visual/utils/string";
-import {
-  toolbarLinkAnchor,
-  toolbarLinkExternal,
-  toolbarLinkPopup
-} from "visual/utils/toolbar";
+import { toolbarLinkAnchor, toolbarLinkPopup } from "visual/utils/toolbar";
 import { handleChangePage } from "../utils";
 import getColorToolbar from "./color";
 import { checkTextIncludeTag } from "./utils/checkTextIncludeTag";
@@ -101,6 +97,11 @@ const getItems =
 
     const dvv = (key) => defaultValueValue({ key, v, device });
     const linkSource = dvv("linkSource");
+
+    const linkDC = getDynamicContentOption({
+      options: context.dynamicContent.config,
+      type: DCTypes.link
+    });
 
     return [
       {
@@ -609,57 +610,16 @@ const getItems =
                 label: t("URL"),
                 options: [
                   {
-                    ...toolbarLinkExternal({
-                      v,
-                      config: context.dynamicContent.config
-                    }),
-                    disabled: device !== "desktop",
-                    ...(v.textPopulation
-                      ? {}
-                      : {
-                          value: {
-                            value: v.linkExternal,
-                            population: {
-                              population: v.linkPopulation,
-                              populationEntityType: v.linkPopulationEntityType,
-                              populationEntityId: v.linkPopulationEntityId
-                            }
-                          },
-                          onChange: (
-                            { value: linkExternal, population: linkPopulation },
-                            { changed, changeEvent }
-                          ) => {
-                            if (
-                              changeEvent === "blur" ||
-                              changed === "population"
-                            ) {
-                              onChange({
-                                link: encodeToString({
-                                  type: v.linkType,
-                                  anchor: v.linkAnchor
-                                    ? `#${v.linkAnchor}`
-                                    : "",
-                                  external: linkExternal,
-                                  externalBlank: v.linkExternalBlank,
-                                  externalRel: v.linkExternalRel,
-                                  externalType:
-                                    // if changed is value and doesn't have population
-                                    changed === "value" || !linkPopulation
-                                      ? "external"
-                                      : "population",
-                                  population: linkPopulation.population,
-                                  populationEntityType:
-                                    linkPopulation.populationEntityType,
-                                  populationEntityId:
-                                    linkPopulation.populationEntityId,
-                                  popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                                  upload: v.linkUpload,
-                                  linkToSlide: v.linkToSlide
-                                })
-                              });
-                            }
-                          }
-                        })
+                    id: "link",
+                    type: "population-dev",
+                    label: t("Link to"),
+                    config: linkDC,
+                    option: {
+                      id: "linkExternal",
+                      type: "inputText-dev",
+                      placeholder: "http://",
+                      devices: "desktop"
+                    }
                   },
                   {
                     id: "linkExternalBlank",

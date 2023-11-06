@@ -2,8 +2,7 @@ import $ from "jquery";
 import { attachResize, detachResize } from "./attachResize";
 import { attachWheel, detachWheel } from "./attachWheel";
 
-const parallaxInitClassName =
-  "brz-bg-image-parallax--init brz-ed-preserve-3d absolute !transition-[all] !duration-[0s] !ease-[ease] !delay-[0s] origin-[center_center_0]";
+const parallaxInitClassName = "brz-bg-image-parallax--init";
 
 // Parallax
 (function ($, window, document) {

@@ -2,13 +2,16 @@ import { isT } from "fp-utilities";
 import React, { ReactElement } from "react";
 import ReactDOM from "react-dom";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { noop } from "underscore";
 import ClickOutside from "visual/component/ClickOutside";
 import HotKeys from "visual/component/HotKeys";
 import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
 import { currentUserRole } from "visual/component/Roles";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { ActionUpdateUI, setActiveElement } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
-import { DeviceMode } from "visual/types";
+import { ActiveElement, DeviceMode } from "visual/types";
 import {
   ToolbarExtendContext,
   ToolbarExtendContextType
@@ -58,6 +61,7 @@ type ToolbarClickEvent = Event & {
 
 interface PropsWithState extends PortalToolbarProps {
   device: DeviceMode;
+  setActiveElement: (element: ActiveElement) => void;
 }
 
 class _PortalToolbar
@@ -71,7 +75,8 @@ class _PortalToolbar
   static contextType = ToolbarExtendContext;
 
   static defaultProps = {
-    manualControl: false
+    manualControl: false,
+    setActiveElement: noop
   };
 
   context: ToolbarExtendContextType = undefined;
@@ -144,6 +149,8 @@ class _PortalToolbar
     if (this.node === null || (event as ToolbarClickEvent).brzToolbarHandled) {
       return;
     }
+
+    this.props.setActiveElement(this.node);
 
     if (this.props.selector === undefined) {
       if (monitor.getActive() === this) {
@@ -412,12 +419,19 @@ class _PortalToolbar
 
 export type PortalToolbar = InstanceType<typeof _PortalToolbar>;
 
+const mapDispatchToProps = (
+  dispatch: Dispatch
+): { setActiveElement: (element: ActiveElement) => ActionUpdateUI } => ({
+  setActiveElement: (element: ActiveElement): ActionUpdateUI =>
+    dispatch(setActiveElement(element))
+});
+
 export default connect<
   { device: DeviceMode },
   // eslint-disable-next-line @typescript-eslint/ban-types
   {},
   PortalToolbarProps,
   ReduxState
->((s) => ({ device: s.ui.deviceMode }), null, null, { forwardRef: true })(
-  _PortalToolbar
-);
+>((s) => ({ device: s.ui.deviceMode }), mapDispatchToProps, null, {
+  forwardRef: true
+})(_PortalToolbar);

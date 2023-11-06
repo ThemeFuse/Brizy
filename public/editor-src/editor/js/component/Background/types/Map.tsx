@@ -19,7 +19,7 @@ const Map: React.FC<Props> = ({ map, mapZoom }) => {
   // and breaks our code(video, map inside megamenu isn't showing as example)
   return (
     <iframe
-      className="brz-iframe intrinsic-ignore brz-bg-map__cover absolute top-0 left-0 w-full h-full border-none max-w-none bg-no-repeat bg-cover"
+      className="brz-iframe intrinsic-ignore brz-bg-map__cover"
       src={src}
       style={iframeStyle}
       title="background-map"

@@ -1,6 +1,6 @@
-import _ from "underscore";
-import React from "react";
 import classnames from "classnames";
+import React from "react";
+import _ from "underscore";
 
 export { default as RadioItem } from "./RadioItem";
 
@@ -15,7 +15,7 @@ export default class Radio extends React.Component {
     currentValue: this.props.defaultValue
   };
 
-  onItemClick = value => {
+  onItemClick = (value) => {
     this.setState({
       currentValue: value
     });
@@ -24,7 +24,7 @@ export default class Radio extends React.Component {
 
   getCurrent = () => {
     return (
-      _.find(this.props.children, child => {
+      _.find(this.props.children, (child) => {
         return child.props.value === this.state.currentValue;
       }) || this.props.children[0]
     );
@@ -44,7 +44,9 @@ export default class Radio extends React.Component {
   }
 
   renderForEdit() {
-    const { className: _className, name, currentValue } = this.props;
+    const { className: _className, name } = this.props;
+    const { currentValue } = this.state;
+
     const className = classnames("brz-control__radio", _className);
 
     return (

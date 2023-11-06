@@ -57,7 +57,7 @@
     "className": "",
 
     "strokeWidth": 7,
-    "strokeWidthSuffix": null,
+    "strokeWidthSuffix": "",
 
     "families": {
       "fontFamily": "lato",
@@ -163,9 +163,6 @@
     "bgPaddingBottomSuffix": "px",
     "bgPaddingLeftSuffix": "px",
 
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-
     "tabletFontStyle": "",
     "tabletFontFamilyType": null,
     "tabletFontSize": 56,
@@ -174,8 +171,7 @@
     "tabletLineHeight": 1.3,
     "tabletLetterSpacing": 0,
 
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
+    "tabletWidthSuffix": null,
 
     "mobileFontStyle": "",
     "mobileFontFamilyType": null,
@@ -183,6 +179,8 @@
     "mobileFontSizeSuffix": "px",
     "mobileFontWeight": 400,
     "mobileLineHeight": 1.3,
-    "mobileLetterSpacing": 0
+    "mobileLetterSpacing": 0,
+
+    "mobileWidthSuffix": null
   }
 }

@@ -247,8 +247,17 @@ export function style(
     ".brz && .brz-eventLayout--calendar-day:hover": {
       standart: [
         "cssStyleElementEventLayoutCalendarDaysTypography",
-        "cssStyleElementEventLayoutCalendarDaysColor",
         "cssStyleElementEventLayoutCalendarDaysBorder"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-eventLayout--calendar-day li span:hover": {
+      standart: [
+        "cssStyleElementEventLayoutCalendarEventsTypography",
+        "cssStyleElementEventLayoutCalendarEventsColor"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -258,7 +267,8 @@ export function style(
     ".brz && .brz-eventLayout--calendar-day__number span:hover": {
       standart: [
         "cssStyleElementEventLayoutCalendarDaysBgColor",
-        "cssStyleElementEventLayoutCalendarDaysBgGradient"
+        "cssStyleElementEventLayoutCalendarDaysBgGradient",
+        "cssStyleElementEventLayoutCalendarDaysColor"
       ],
       interval: [
         "cssStyleHoverTransition",

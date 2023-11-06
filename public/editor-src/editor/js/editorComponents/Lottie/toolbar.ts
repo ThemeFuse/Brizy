@@ -1,19 +1,19 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { Block } from "visual/types";
 import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getDynamicContentOption,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL, State } from "visual/utils/stateMode";
-import {
-  toolbarLinkAnchor,
-  toolbarLinkExternal,
-  toolbarStoryAnchor
-} from "visual/utils/toolbar";
+import { toolbarLinkAnchor, toolbarStoryAnchor } from "visual/utils/toolbar";
 import EditorComponent from "../EditorComponent";
 import { ToolbarItemType } from "../ToolbarItemType";
 
@@ -51,6 +51,10 @@ export function getItems({
 
   const linkSource = dvv("linkSource");
 
+  const linkDC = getDynamicContentOption({
+    options: component.context.dynamicContent.config,
+    type: DCTypes.link
+  });
   return [
     {
       id: "toolbarCurrentShortcode",
@@ -242,11 +246,17 @@ export function getItems({
               id: "external",
               label: t("URL"),
               options: [
-                // @ts-expect-error: Old option
-                toolbarLinkExternal({
-                  v,
-                  config: component.context.dynamicContent.config
-                }),
+                {
+                  id: "link",
+                  type: "population-dev",
+                  label: t("Link to"),
+                  config: linkDC,
+                  option: {
+                    id: "linkExternal",
+                    type: "inputText-dev",
+                    placeholder: "http://"
+                  }
+                },
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),

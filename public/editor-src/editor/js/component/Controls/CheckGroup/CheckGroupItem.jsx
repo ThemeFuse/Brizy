@@ -1,7 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import _ from "underscore";
 import classnames from "classnames";
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+import _ from "underscore";
+import { Translate } from "visual/component/Translate";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
 
 export default class CheckGroupItem extends Component {
@@ -81,7 +83,7 @@ export default class CheckGroupItem extends Component {
     const id = uuid();
 
     return (
-      <div className={className}>
+      <Translate className={className}>
         <input
           id={id}
           className="brz-input"
@@ -91,14 +93,20 @@ export default class CheckGroupItem extends Component {
           checked={active}
           onChange={() => {}}
           required={required}
-          data-type={this.props["data-type"]}
-          data-label={this.props["data-label"]}
+          {...makeDataAttr({
+            name: "type",
+            value: this.props[makeAttr("type")]
+          })}
+          {...makeDataAttr({
+            name: "label",
+            value: this.props[makeAttr("label")]
+          })}
         />
         <label className="brz-label" htmlFor={id}>
           {typeof renderIcons === "function" && renderIcons()}
           {children}
         </label>
-      </div>
+      </Translate>
     );
   }
 

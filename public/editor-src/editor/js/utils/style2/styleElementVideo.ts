@@ -2,11 +2,7 @@ import { getImageUrl } from "visual/utils/image";
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "./types";
 
-export function styleElementVideoPaddingRatio({
-  v,
-  device,
-  state
-}: CSSValue): string {
+export function styleElementVideoRatio({ v, device, state }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const ratio:
     | "1:1"
@@ -19,19 +15,19 @@ export function styleElementVideoPaddingRatio({
     | "16:9"
     | "21:9" = dvv("ratio");
 
-  const paddingRatio = {
-    "1:1": "100%",
-    "2:1": "50%",
-    "2:3": "150%",
-    "3:4": "125%",
-    "3:2": "66.67%",
-    "4:3": "75%",
-    "9:16": "177.78%",
-    "16:9": "56.25%",
-    "21:9": "42.86%"
+  const types = {
+    "1:1": "1/1",
+    "2:1": "2/1",
+    "2:3": "2/3",
+    "3:4": "3/4",
+    "3:2": "3/2",
+    "4:3": "4/3",
+    "9:16": "9/16",
+    "16:9": "16/9",
+    "21:9": "21/9"
   };
 
-  return ratio === undefined ? ratio : paddingRatio[ratio];
+  return ratio === undefined ? ratio : types[ratio];
 }
 
 export function styleElementVideoIconFontSize({

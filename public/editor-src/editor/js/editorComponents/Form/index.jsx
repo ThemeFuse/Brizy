@@ -1,15 +1,16 @@
 import React from "react";
 import { noop } from "underscore";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import Config from "visual/global/Config";
-import { styleClassName, styleCSSVars } from "./styles";
+import { makeDataAttr } from "../../utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
-import * as toolbarExtendParent from "./toolbarExtendParent";
-import * as sidebarExtendParent from "./sidebarExtendParent";
-import * as toolbarExtendButton from "./toolbarExtendButton";
 import * as sidebarExtendButton from "./sidebarExtendButton";
+import * as sidebarExtendParent from "./sidebarExtendParent";
+import { styleCSSVars, styleClassName } from "./styles";
+import * as toolbarExtendButton from "./toolbarExtendButton";
+import * as toolbarExtendParent from "./toolbarExtendParent";
 
 export default class Form extends EditorComponent {
   static get componentId() {
@@ -35,7 +36,7 @@ export default class Form extends EditorComponent {
     this.props.extendParentToolbar(toolbarExtend);
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
   };
 
@@ -93,17 +94,17 @@ export default class Form extends EditorComponent {
         <div
           className={styleClassName(v)}
           style={styleCSSVars(v)}
-          data-form-version="1"
+          data-brz-form-version="1"
         >
           <form
             className="brz-form"
             action={submitUrl}
             noValidate
-            data-form-id={_id}
-            data-project-id={projectId}
-            data-success={messageSuccess}
-            data-error={messageError}
-            data-redirect={messageRedirect}
+            {...makeDataAttr({ name: "form-id", value: _id })}
+            {...makeDataAttr({ name: "project-id", value: projectId })}
+            {...makeDataAttr({ name: "success", value: messageSuccess })}
+            {...makeDataAttr({ name: "error", value: messageError })}
+            {...makeDataAttr({ name: "redirect", value: messageRedirect })}
             onSubmit={this.handleSubmit}
           >
             {this.renderFields(v)}

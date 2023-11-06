@@ -91,6 +91,7 @@ export function getItems({ v, device }) {
         {
           id: "styles",
           type: "sidebarTabsButton-dev",
+          devices: "desktop",
           config: {
             tabId: "styles",
             text: t("Styling"),

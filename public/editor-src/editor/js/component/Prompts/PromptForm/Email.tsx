@@ -6,6 +6,8 @@ import { CodeMirror } from "visual/component/Controls/CodeMirror";
 import { Switch } from "visual/component/Controls/Switch";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
+import { EmailDisconnect } from "visual/component/Prompts/PromptForm/Step";
+import { IntegrationType } from "visual/component/Prompts/PromptForm/api/types";
 import { assetUrl } from "visual/utils/asset";
 import { IS_PRO, IS_WP } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
@@ -36,6 +38,8 @@ type Props = BaseIntegrationProps & {
 type State = BaseIntegrationState & {
   emailTemplate: string;
   hasEmailTemplate: boolean;
+  deletedApp: { id: number; type: string } | null;
+  notifications: IntegrationType[];
 };
 
 export type Context = BaseIntegrationContext & {
@@ -56,7 +60,9 @@ class Email extends BaseIntegration<Props, State, Context> {
     error: null,
     appError: null,
     emailTemplate: "",
-    hasEmailTemplate: false
+    hasEmailTemplate: false,
+    deletedApp: null,
+    notifications: []
   };
 
   appsData: AppData[] = [];
@@ -105,6 +111,7 @@ class Email extends BaseIntegration<Props, State, Context> {
         connectedApps: this.getConnectedApps(data.integrations),
         emailTemplate: data.emailTemplate || "",
         hasEmailTemplate: data.hasEmailTemplate,
+        notifications: data.notifications || [],
         loading: false
       });
     }
@@ -194,6 +201,14 @@ class Email extends BaseIntegration<Props, State, Context> {
     }
   };
 
+  handleDelete = (deletedApp: State["deletedApp"]) => {
+    this.setState({ deletedApp });
+  };
+
+  handleRemoveDeletedApp = () => {
+    this.setState({ deletedApp: null });
+  };
+
   renderFormInfo(): ReactElement {
     return (
       <div className="brz-ed-popup-integration-email__info">
@@ -203,15 +218,34 @@ class Email extends BaseIntegration<Props, State, Context> {
   }
 
   renderApps(): ReactElement {
-    const { error, emailTemplate, hasEmailTemplate } = this.state;
+    const {
+      error,
+      emailTemplate,
+      hasEmailTemplate,
+      deletedApp,
+      notifications
+    } = this.state;
+    const { formId } = this.props;
     const className = classnames("brz-ed-popup-integration-email__template", {
       "brz-ed-popup-integration-email__template--open": hasEmailTemplate
     });
 
-    return (
+    return deletedApp ? (
+      <EmailDisconnect
+        handleRemoveDeletedApp={this.handleRemoveDeletedApp}
+        app={this.appsData.find((app) => app.id === deletedApp.type)}
+        notification={notifications[deletedApp.id]}
+        formId={formId}
+      />
+    ) : (
       <>
         {error && super.renderError()}
-        <AppList apps={this.appsData} proExceptions={this.proExceptions} />
+        <AppList
+          apps={this.appsData}
+          proExceptions={this.proExceptions}
+          hasDelete
+          handleDelete={this.handleDelete}
+        />
         {!this.proExceptions && (
           <div className={className}>
             <div className="brz-ed-popup-integration-email__template-head">

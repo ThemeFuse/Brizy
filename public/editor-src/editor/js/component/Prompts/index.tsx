@@ -19,6 +19,7 @@ import {
   PromptKeyHelperProps
 } from "visual/component/Prompts/types";
 import UIState from "visual/global/UIState";
+import { BlockMetaType } from "visual/types";
 import Apps from "./PromptApps";
 import Authorization from "./PromptAuthorization";
 import Blocks from "./PromptBlocks";
@@ -50,13 +51,13 @@ export type PromptTypes = typeof PROMPTS;
 export type PromptKey = keyof PromptTypes;
 export type PromptsMode = "single" | "stack";
 
-export type PromptsProps = {
+export type PromptsProps<T extends BlockMetaType = "normal"> = {
   mode: PromptsMode;
   prompt: PromptKey;
   props:
     | PromptFormProps
     | SignAuthorizationProps
-    | PromptBlocksProps
+    | PromptBlocksProps<T>
     | PromptConditionsProps
     | PromptAppsProps
     | PromptIconProps

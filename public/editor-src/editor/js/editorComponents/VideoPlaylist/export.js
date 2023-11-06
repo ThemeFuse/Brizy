@@ -1,4 +1,5 @@
 import $ from "jquery";
+import { makeAttr } from "visual/utils/i18n/attribute";
 
 const makeSrcWithAutoplay = (baseUrl, params = {}) => {
   let url = new URL(baseUrl);
@@ -12,12 +13,12 @@ const makeSrcWithAutoplay = (baseUrl, params = {}) => {
 
 let initResize = false;
 
-export default function($node) {
+export default function ($node) {
   const $window = $(window);
   const $doc = $(document);
   let needRefreshOnDesktop = false;
 
-  $node.find(".brz-video-playlist").on("click", function(e) {
+  $node.find(".brz-video-playlist").on("click", function (e) {
     const $this = $(this);
     const $target = $(e.target);
     const $playlistItem = $target.closest(".brz-video-playlist-video-item");
@@ -34,7 +35,7 @@ export default function($node) {
     }
 
     if ($playlistItem.length) {
-      const src = $playlistItem.attr("data-link");
+      const src = $playlistItem.attr(makeAttr("link"));
 
       $this.find(".brz-video-playlist-main").addClass("brz-d-none");
       $this
@@ -76,7 +77,7 @@ export default function($node) {
     // Cover
     if ($cover.length) {
       e.preventDefault();
-      const src = $cover.find(".brz-play-button").attr("data-video-url");
+      const src = $cover.find(".brz-play-button").attr(makeAttr("video-url"));
 
       $cover.addClass("brz-d-none");
       $video.removeClass("brz-d-none");
@@ -89,7 +90,7 @@ export default function($node) {
   // onresize play video
   if (!initResize) {
     initResize = true;
-    $window.on("resize", function() {
+    $window.on("resize", function () {
       if (needRefreshOnDesktop && $window.innerWidth() >= 767) {
         const $playlist = $(".brz-video-playlist");
         const $currentPlaylistItem = $playlist.find(
@@ -106,7 +107,7 @@ export default function($node) {
           const hasCover = $currentPlaylistItem.hasClass(
             "brz-video-playlist-video-item__cover"
           );
-          const src = $currentPlaylistItem.attr("data-link");
+          const src = $currentPlaylistItem.attr(makeAttr("link"));
 
           $playlist.find(".brz-video-playlist-main").addClass("brz-d-none");
 
@@ -126,17 +127,15 @@ export default function($node) {
   }
 
   // stopping all videos inside a popup that is closed(video can be set through embed code)
-  $doc.on("brz.popup.close", function(e, popup) {
+  $doc.on("brz.popup.close", function (e, popup) {
     const $popup = $(popup);
 
-    $popup
-      .find(".brz-video-playlist .brz-iframe")
-      .each(function() {
-        const $this = $(this);
-        const src = $this.attr("src");
+    $popup.find(".brz-video-playlist .brz-iframe").each(function () {
+      const $this = $(this);
+      const src = $this.attr("src");
 
-        $this.attr("src", ""); // this forces the video to stop
-        $this.attr("src", makeSrcWithAutoplay(src, { autoplay: 0 }));
-      });
+      $this.attr("src", ""); // this forces the video to stop
+      $this.attr("src", makeSrcWithAutoplay(src, { autoplay: 0 }));
+    });
   });
 }

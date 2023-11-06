@@ -1,7 +1,12 @@
 import $ from "jquery";
+import { makeDataAttrString } from "visual/utils/i18n/attribute";
 
-export default function($node) {
+export default function ($node) {
   const root = $node.get(0);
+  const versionAttr = makeDataAttrString({
+    name: "form-version",
+    value: "'1'"
+  });
 
   // RECAPTCHA
   const recaptcha = root.querySelectorAll(".brz-g-recaptcha");
@@ -11,9 +16,9 @@ export default function($node) {
     loadReCAPTCHA();
 
     // callback recaptcha
-    global.brzFormV1Captcha = token => {
+    global.brzFormV1Captcha = (token) => {
       const formActive = root.querySelector(
-        "[data-form-version='1'].brz-forms--pending"
+        `${versionAttr}.brz-forms--pending`
       );
 
       if (formActive) {
@@ -38,8 +43,8 @@ export default function($node) {
     };
 
     // render Recaptcha
-    global.brzOnloadRecaptchaCallback = function() {
-      recaptcha.forEach(node => {
+    global.brzOnloadRecaptchaCallback = function () {
+      recaptcha.forEach((node) => {
         const { sitekey, size, callback } = node.dataset;
         const recaptchaId = global.grecaptcha.render(node, {
           sitekey,
@@ -52,7 +57,7 @@ export default function($node) {
     };
   }
 
-  root.querySelectorAll("[data-form-version='1']").forEach(initForm);
+  root.querySelectorAll(versionAttr).forEach(initForm);
 }
 
 function validateFormItem(node) {
@@ -98,7 +103,7 @@ function validateForm(form) {
     "input[pattern], textarea[pattern], input[required], textarea[required]"
   );
 
-  elements.forEach(element => {
+  elements.forEach((element) => {
     if (!validateFormItem(element)) {
       isValid = false;
     }
@@ -110,14 +115,14 @@ function validateForm(form) {
 function initForm(form) {
   const $form = $(form);
 
-  $form.on("blur", "form input, form textarea", function() {
+  $form.on("blur", "form input, form textarea", function () {
     validateFormItem(this);
   });
 
   $form.on(
     "click",
     "form .brz-control__select .brz-control__select-option",
-    function() {
+    function () {
       const input = $(this)
         .closest(".brz-control__select")
         .find("input")
@@ -134,7 +139,7 @@ function initForm(form) {
   // (2) need added the pending form selector .brz-forms--pending
   // (2.1) this class is used in brzFormV1Captcha for find and generate formData
   if (recaptcha) {
-    $form.on("submit", "form", function(event) {
+    $form.on("submit", "form", function (event) {
       event.preventDefault();
 
       // validate form
@@ -151,7 +156,7 @@ function initForm(form) {
       global.grecaptcha.execute(recaptchaId);
     });
   } else {
-    $form.on("submit", "form", function(event) {
+    $form.on("submit", "form", function (event) {
       event.preventDefault();
 
       // validate form
@@ -184,15 +189,15 @@ function handleSimpleSubmit(form, data) {
   }
 
   const {
-    projectId,
-    formId,
-    success: successMessage,
-    error: errorMessage,
-    redirect
+    brzProjectId,
+    brzFormId,
+    brzSuccess: successMessage,
+    brzError: errorMessage,
+    brzRedirect
   } = nodeForm.dataset;
   const url = nodeForm.getAttribute("action");
 
-  const handleDone = data => {
+  const handleDone = (data) => {
     // check status in the data
     const { success = undefined } = data || {};
 
@@ -201,8 +206,8 @@ function handleSimpleSubmit(form, data) {
     } else {
       showFormMessage(form, getFormMessage("success", successMessage));
 
-      if (redirect !== "") {
-        window.location.replace(redirect);
+      if (brzRedirect !== "") {
+        window.location.replace(brzRedirect);
       }
 
       // Reset Forms Fields Value
@@ -226,8 +231,8 @@ function handleSimpleSubmit(form, data) {
   };
   const formData = {
     data: JSON.stringify(data),
-    project_id: projectId,
-    form_id: formId
+    project_id: brzProjectId,
+    form_id: brzFormId
   };
 
   return sendForm(url, formData, callbacks);
@@ -238,8 +243,8 @@ function getFormData(form) {
 
   form
     .querySelectorAll(".brz-forms__fields input,  .brz-forms__fields textarea")
-    .forEach(element => {
-      const { type, label } = element.dataset;
+    .forEach((element) => {
+      const { brzType, brzLabel } = element.dataset;
       const name = element.getAttribute("name");
       const value = element.value;
       const required = element.required;
@@ -248,8 +253,8 @@ function getFormData(form) {
         name: name,
         value: value,
         required: required,
-        type: type,
-        label: label
+        type: brzType,
+        label: brzLabel
       });
     });
 
@@ -299,8 +304,8 @@ function showFormMessage(form, message) {
 }
 
 function resetFormValues(form) {
-  form.querySelectorAll(".brz-forms__item").forEach(element => {
-    element.querySelectorAll("input, textarea, select").forEach(element => {
+  form.querySelectorAll(".brz-forms__item").forEach((element) => {
+    element.querySelectorAll("input, textarea, select").forEach((element) => {
       element.value = "";
       element.dispatchEvent(new Event("change", { bubbles: true }));
     });

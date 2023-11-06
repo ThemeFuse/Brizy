@@ -1,4 +1,5 @@
 import $ from "jquery";
+import { makeAttr } from "visual/utils/i18n/attribute";
 
 const getFromStorage = (key) => {
   try {
@@ -57,7 +58,7 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
     if ($popup.hasClass("brz-conditions-popup")) {
       var showedPopups = JSON.parse(getFromStorage("brz-showedPopups") || "[]");
 
-      var popupId = $popup.attr("data-brz-popup");
+      var popupId = $popup.attr(makeAttr("popup"));
 
       setToStorage(
         "brz-showedPopups",

@@ -42,15 +42,11 @@
     "tabletLineHeight": 1,
     "tabletLetterSpacing": 1,
 
-    "tabletWidth": null,
-
     "mobileFontStyle": "",
     "mobileFontFamilyType": null,
     "mobileFontSize": 30,
     "mobileFontWeight": 700,
     "mobileLineHeight": 1,
-    "mobileLetterSpacing": 1,
-
-    "mobileWidth": null
+    "mobileLetterSpacing": 1
   }
 }

@@ -1,9 +1,9 @@
-import { Response } from "visual/utils/api/response";
 import { ResponseWithBody } from "visual/component/Prompts/common/utils/Request";
+import { Response } from "visual/utils/api/response";
 
 // Forms
 
-type IntegrationType = {
+export type IntegrationType = {
   id: string;
   type: string;
   completed: boolean;
@@ -123,6 +123,12 @@ export type UpdateSmptIntegration = (data: {
   formId: string;
   completed: boolean;
 }) => Promise<SmptIntegrationResponse>;
+
+export type DeleteSmtpIntegration = (data: {
+  formId: string;
+  integration: string;
+  notificationId: string;
+}) => Promise<Response>;
 
 // Recaptcha
 

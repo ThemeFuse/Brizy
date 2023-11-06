@@ -35,6 +35,10 @@
         // and set to .brz-image__gallery-item
         height: 100%;
       }
+
+      .brz-image img {
+        object-fit: cover;
+      }
     }
 
     .brz-image__gallery-item-empty {

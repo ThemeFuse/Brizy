@@ -1,3 +1,4 @@
+import { Patch } from "visual/component/BoxResizer/types";
 import { ElementModel } from "visual/component/Elements/Types";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent";
 import { Block } from "visual/types";
@@ -67,3 +68,5 @@ export interface Props extends WithClassName {
   meta: ComponentsMeta;
   attributes: Record<string, string | number>;
 }
+
+export type PatchValue = Value | Patch | Record<string, string>;

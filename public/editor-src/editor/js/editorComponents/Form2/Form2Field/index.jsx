@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React from "react";
 import Toolbar from "visual/component/Toolbar";
+import { Translate } from "visual/component/Translate";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { uuid } from "visual/utils/uuid";
@@ -113,7 +114,7 @@ class Form2Field extends EditorComponent {
     );
 
     return (
-      <div className={classNameField}>
+      <Translate className={classNameField}>
         {labelType === "outside" && <Component.Label id={labelId} value={v} />}
         <Component
           {...v}
@@ -123,7 +124,7 @@ class Form2Field extends EditorComponent {
           selectClassName={selectClassName}
           labelType={labelType}
         />
-      </div>
+      </Translate>
     );
   }
 }

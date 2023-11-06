@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import _ from "underscore";
+import EditorIcon from "visual/component/EditorIcon";
+import { Scrollbar } from "visual/component/Scrollbar";
 import Config from "visual/global/Config";
+import { t } from "visual/utils/i18n";
+import { Context } from "../../Context";
 import Grid from "./Grid";
 import GridItem from "./GridItem";
-import { Context } from "../../Context";
-import EditorIcon from "visual/component/EditorIcon";
-import { t } from "visual/utils/i18n";
-import { Scrollbar } from "visual/component/Scrollbar";
 
 const ConfigUrls = Config.get("urls");
 
@@ -66,9 +66,10 @@ class AppList extends Component {
   }
 
   render() {
-    const { apps, proExceptions, error } = this.props;
+    const { apps, proExceptions, error, hasDelete, handleDelete } = this.props;
     const { connectedApps } = this.context;
     const { loadingApp } = this.state;
+    const isActive = (id) => connectedApps.includes(id);
 
     return (
       <Scrollbar theme="light">
@@ -76,12 +77,15 @@ class AppList extends Component {
         {proExceptions && this.renderProException()}
         <Grid
           apps={apps}
-          render={app => (
+          render={(app, idx) => (
             <GridItem
               {...app}
               key={app.id}
+              idx={idx}
               loading={loadingApp === app.id}
-              active={connectedApps.includes(app.id)}
+              active={isActive(app.id)}
+              isDeletable={hasDelete && isActive(app.id)}
+              handleDelete={handleDelete}
               onClick={() => {
                 this.handleChangeApp(app);
               }}
