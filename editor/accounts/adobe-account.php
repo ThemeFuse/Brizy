@@ -49,4 +49,8 @@ class Brizy_Editor_Accounts_AdobeAccount extends Brizy_Editor_Accounts_Account {
 
 		throw new Exception( 'Invalid json provided.' );
 	}
+
+	public function getKey() {
+		return ! empty( $this->data['key'] ) ? $this->data['key'] : null;
+	}
 }
