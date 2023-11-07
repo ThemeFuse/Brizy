@@ -48,6 +48,7 @@ interface API {
   mediaResizeUrl: string;
   fileUrl: string;
   templates: DefaultTemplates;
+  openAIUrl: string;
 }
 export interface Config {
   hash: string;
@@ -107,7 +108,11 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
   templates: pipe(
     mPipe(Obj.readKey("templates"), Obj.read, templatesReader),
     throwOnNullish("Invalid API: templates")
-  )
+  ),
+  openAIUrl: pipe(
+    mPipe(Obj.readKey("openAIUrl"), Str.read),
+    throwOnNullish("Invalid API: openAIUrl")
+  ),
 });
 
 const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
