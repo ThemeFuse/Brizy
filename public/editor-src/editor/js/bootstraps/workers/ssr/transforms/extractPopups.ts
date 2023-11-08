@@ -4,14 +4,20 @@ import { uuid } from "visual/utils/uuid";
 
 export const extractPopups = ($: cheerio.Root): void => {
   const globalPopupsProcessed: Record<string, string> = {};
+  const popupSelector = makeDataAttrString({
+    name: "link-type",
+    value: "popup"
+  });
 
-  $(makeDataAttrString({ name: "link-type", value: "popup" })).each(function (
-    this: cheerio.CheerioAPI
-  ) {
+  $(popupSelector).each(function (this: cheerio.CheerioAPI) {
     const $this = $(this);
-    const popupId = $this.attr("href")?.replace("#", "");
-    const dataPopupAttr = makeAttr("popup");
-    const selector = `[${dataPopupAttr}*='${read(popupId) ?? ""}']`;
+    const popupId = read($this.attr("href")?.replace("#", ""));
+
+    if (!popupId) {
+      return;
+    }
+
+    const selector = makeDataAttrString({ name: "popup*", value: popupId });
     let $parent = $this.parent();
     let $popup;
 
