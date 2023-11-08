@@ -1,39 +1,8 @@
 import { request } from "../api";
+import { makeUrl } from "../api/utils";
 import { getConfig } from "../config";
 import { Response } from "../types/Response";
 import { t } from "../utils/i18n";
-
-// const mockTypeKitData = {
-//   kit: {
-//     id: "gvs0pdl",
-//     families: [
-//       {
-//         id: "gev",
-//         name: "Utopia Std Headline",
-//         slug: "utopia-std-headline",
-//         css_names: ["utopia-std-headline"],
-//         css_stack: '"utopia-std-headline",serif',
-//         variations: ["n4"]
-//       }
-//     ]
-//   }
-// };
-
-// const fonts = {
-//   kit: {
-//     id: "gvs4g55",
-//     families: [
-//       {
-//         id: "kfjie",
-//         family: "Aloha3 style",
-//         category: "aloha-style",
-//         kind: "webfonts#webfont",
-//         subsets: ["aloha-style"],
-//         variants: ["n4"]
-//       }
-//     ]
-//   }
-// };
 
 interface Family {
   id: string;
@@ -88,49 +57,34 @@ function convertDataToLocal(mockTypeKitData: KitData): Fonts {
   return fonts;
 }
 
-// const headers = {
-//   Accept: "application/json",
-//   "Content-Type": "application/json",
-// Origin: `${location.href}/`
-//   "X-Requested-With": "XMLHttpRequest",
-// Referer: `${location.href}/`
-// };
-
 export const getAdobeFonts = {
-  async handler(
-    res: Response<unknown>,
-    rej: Response<string>,
-    extra: { kitId: string }
-  ) {
+  async handler(res: Response<unknown>, rej: Response<string>) {
     const config = getConfig();
 
     if (!config) {
       throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
     }
 
-    const r = await request(config.actions.adobeFontsUrl, {
+    const { editorVersion, url: _url, hash, actions } = config;
+
+    const url = makeUrl(_url, {
+      hash,
+      action: actions.adobeFontsUrl,
+      version: editorVersion
+    });
+
+    const r = await request(url, {
       method: "GET"
     });
 
     if (r.ok) {
-      res(convertDataToLocal(await r.json()));
+      const d = await r.json();
+
+      if (d) {
+        res(convertDataToLocal(d.data));
+      }
     } else {
       rej("Failed to get adobe fonts");
     }
   }
 };
-
-// export const getAdobeFonts = {
-//   async handler(
-//     res: Response<Fonts>,
-//     rej: Response<string>,
-//     extra: { kitId: string }
-//   ) {
-//     console.log("KITID: ", extra.kitId);
-//     if (true) {
-//       res(convertDataToLocal(mockTypeKitData));
-//     } else {
-//       rej("Failed to get fonts");
-//     }
-//   }
-// };
