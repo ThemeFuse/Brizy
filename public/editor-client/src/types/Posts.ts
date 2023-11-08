@@ -1,8 +1,8 @@
 import { Response } from "./Response";
 
 type OrderBy = {
-  id: string;
-  title: string;
+  id: string | undefined;
+  title: string | undefined;
 };
 
 type PostSources = {

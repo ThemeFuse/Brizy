@@ -1,3 +1,4 @@
+import { first, keys, values } from "lodash";
 import { getConfig } from "../../config";
 import { CollectionType } from "../../types/Collections";
 import { Posts } from "../../types/Posts";
@@ -12,14 +13,14 @@ export const handler: Posts["handler"] = async (res, rej) => {
         id: name,
         title: label,
         orderBy: orderBy.map((orderItem) => ({
-          title: orderItem.label,
-          id: orderItem.field
+          title: first(values(orderItem)),
+          id: first(keys(orderItem))
         }))
       })
     );
 
     res({
-      sources: src ?? [],
+      sources: src ?? []
     });
   } catch (e) {
     rej(t("Failed to load sources"));
