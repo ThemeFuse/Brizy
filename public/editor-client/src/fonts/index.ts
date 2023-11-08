@@ -1,4 +1,7 @@
+import { request } from "../api";
+import { getConfig } from "../config";
 import { Response } from "../types/Response";
+import { t } from "../utils/i18n";
 
 // const mockTypeKitData = {
 //   kit: {
@@ -99,13 +102,18 @@ export const getAdobeFonts = {
     rej: Response<string>,
     extra: { kitId: string }
   ) {
-    const response = await fetch(
-      // `https://typekit.com/api/v1/json/kits/${extra.kitId}/published`,
-      `https://typekit.com/api/v1/json/kits/${extra.kitId}/published`
-    );
+    const config = getConfig();
 
-    if (response.ok) {
-      res(convertDataToLocal(await response.json()));
+    if (!config) {
+      throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+    }
+
+    const r = await request(config.actions.adobeFontsUrl, {
+      method: "GET"
+    });
+
+    if (r.ok) {
+      res(convertDataToLocal(await r.json()));
     } else {
       rej("Failed to get adobe fonts");
     }
