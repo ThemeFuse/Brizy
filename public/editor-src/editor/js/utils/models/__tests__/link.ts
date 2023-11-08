@@ -71,7 +71,7 @@ describe("Testing 'getLinkData' function", () => {
         type: "story",
         href: "slide-1",
         slide: {
-          "data-brz-link-story": 1
+          "data-brz-link-story": "1"
         }
       }
     ],
