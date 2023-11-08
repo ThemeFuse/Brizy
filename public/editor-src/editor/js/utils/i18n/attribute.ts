@@ -17,28 +17,26 @@ interface DatasetUnknown extends Omit<DatasetObj, "value"> {
 export const makeAttr = (name: string, translatable?: boolean): string =>
   translatable ? `data-brz-translatable-${name}` : `data-brz-${name}`;
 
-export const makeDataAttrString = ({
-  name,
-  value,
-  translatable
-}: DatasetString): string => {
-  const attribute = read(value)
-    ? translatable
-      ? `[data-brz-translatable-${name}=${value}]`
-      : `[data-brz-${name}=${value}]`
-    : `[${makeAttr(name)}]`;
+export const makeDataAttrString = (data: DatasetString): string => {
+  const { name, value, translatable } = data;
+  const attrName = makeAttr(name, translatable);
+  const attrValue = read(value);
 
-  if (value === "") return attribute;
+  if (attrValue === undefined) {
+    return `[${attrName}]`;
+  }
 
-  return attribute;
+  return `[${attrName}=${attrValue}]`;
 };
 
-export const makeDataAttr = ({ name, value, translatable }: DatasetUnknown) => {
-  const attribute = translatable
-    ? { [`data-brz-translate-${name}`]: value }
-    : { [`data-brz-${name}`]: value };
+export const makeDataAttr = (data: DatasetUnknown): Record<string, string> => {
+  const { name, value, translatable } = data;
+  const attrValue = read(value);
 
-  if (value === "") return attribute;
+  if (attrValue === undefined) {
+    return {};
+  }
 
-  return read(value) ? attribute : {};
+  const attrName = makeAttr(name, translatable);
+  return { [attrName]: attrValue };
 };

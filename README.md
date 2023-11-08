@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.3.2<br>
+Tested up to: 6.4<br>
 Requires PHP: 7.0.0<br>
-Stable tag: 2.4.30<br>
+Stable tag: 2.4.31<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.31 - 2023-11-08
+* Fixed: Malformed attribute selector data-brz-popup
+* Fixed: Order By feature in Posts and Archive element is not displayed
 
 ### 2.4.30 - 2023-11-06
 * New: Added title and tags for global blocks

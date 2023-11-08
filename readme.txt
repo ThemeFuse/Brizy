@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 6.3.2
+Tested up to: 6.4
 Requires PHP: 7.0.0
-Stable tag: 2.4.30
+Stable tag: 2.4.31
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,10 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.31 - 2023-11-08 =
+* Fixed: Malformed attribute selector data-brz-popup
+* Fixed: Order By feature in Posts and Archive element is not displayed
 
 = 2.4.30 - 2023-11-06 =
 * New: Added title and tags for global blocks
