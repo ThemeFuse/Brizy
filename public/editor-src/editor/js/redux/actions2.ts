@@ -33,7 +33,6 @@ type StrictFonts = Required<RFonts>;
 export type FontKeyTypes = keyof StrictFonts;
 
 type FontPayload<T extends FontKeyTypes> = {
-  id?: string
   type: T;
   fonts: ArrayType<StrictFonts[T]["data"]>[];
 };
