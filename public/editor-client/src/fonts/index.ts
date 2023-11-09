@@ -3,59 +3,25 @@ import { makeUrl } from "../api/utils";
 import { getConfig } from "../config";
 import { Response } from "../types/Response";
 import { t } from "../utils/i18n";
+import { Fonts, KitData } from "./types";
 
-interface Family {
-  id: string;
-  name: string;
-  slug: string;
-  css_names: string[];
-  variations: string[];
-}
+const convertDataToLocal = (mockTypeKitData: KitData): Fonts => {
+  const families = mockTypeKitData.kit.families.map((family) => ({
+    id: family.id,
+    family: family.name,
+    category: family.slug,
+    kind: "webfonts#webfont",
+    subsets: [family.css_names[0]],
+    variants: family.variations
+  }));
 
-interface KitData {
-  kit: {
-    id: string;
-    families: Family[];
-  };
-}
-
-interface Font {
-  id: string;
-  family: string;
-  category: string;
-  kind: string;
-  subsets: string[];
-  variants: string[];
-}
-
-interface Fonts {
-  kit: {
-    id: string;
-    families: Font[];
-  };
-}
-
-function convertDataToLocal(mockTypeKitData: KitData): Fonts {
-  const fonts: Fonts = {
+  return {
     kit: {
       id: mockTypeKitData.kit.id,
-      families: []
+      families
     }
   };
-
-  mockTypeKitData.kit.families.forEach((family) => {
-    fonts.kit.families.push({
-      id: family.id,
-      family: family.name,
-      category: family.slug,
-      kind: "webfonts#webfont",
-      subsets: [family.css_names[0]],
-      variants: family.variations
-    });
-  });
-
-  return fonts;
-}
+};
 
 export const getAdobeFonts = {
   async handler(res: Response<unknown>, rej: Response<string>) {
