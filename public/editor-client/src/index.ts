@@ -30,9 +30,7 @@ if (!config) {
 }
 
 const api = {
-  textAI: {
-    handler: doAiRequest
-  },
+  ...(config.api.openAIUrl ? {textAI: {handler: doAiRequest}} : {}),
   media: {
     addMedia,
     addMediaGallery,

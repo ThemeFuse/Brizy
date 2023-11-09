@@ -13,7 +13,11 @@ export const doAiRequest = async (
   const config = getConfig();
 
   if (!config) {
-    throw new Error("Invalid __BRZ_PLUGIN_ENV__");
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  if (typeof config.api.openAIUrl === "undefined") {
+    throw new Error(t("Missing OpenAiUrl"));
   }
 
   try {
