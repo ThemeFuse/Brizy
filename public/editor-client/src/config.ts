@@ -43,6 +43,7 @@ interface Actions {
   createBlockScreenshot: string;
   updateBlockScreenshot: string;
   adobeFontsUrl: string;
+  addAccount: string;
 }
 
 interface API {
@@ -199,6 +200,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   adobeFontsUrl: pipe(
     mPipe(Obj.readKey("adobeFontsUrl"), Str.read),
     throwOnNullish("Invalid actions: adobeFontsUrl")
+  ),
+  addAccount: pipe(
+    mPipe(Obj.readKey("addAccount"), Str.read),
+    throwOnNullish("Invalid actions: addAccount")
   )
 });
 
