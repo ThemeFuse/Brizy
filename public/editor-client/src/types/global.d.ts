@@ -19,6 +19,7 @@ import { Posts } from "./Posts";
 import { Data } from "./Publish";
 import { SavedBlocks, SavedLayouts, SavedPopups } from "./SavedBlocks";
 import { Screenshots } from "./Screenshots";
+import { Action } from "./AiText";
 
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
@@ -75,10 +76,10 @@ export interface VISUAL_CONFIG {
   api?: {
     //AI
     textAI?: {
-      handler: (
+      handler?: (
         res: Response<string>,
         rej: Response<string>,
-        data: { prompt: string; action?: string }
+        data: { prompt: string; action?: Action }
       ) => void;
     };
 
