@@ -2,7 +2,7 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export default (menus) => {
   const menuList = menus.map((item) => ({
@@ -98,7 +98,7 @@ const getItems =
           {
             id: "color",
             type: "colorPicker-dev",
-            states: [NORMAL, HOVER, ACTIVE]
+            states: [NORMAL, HOVER]
           }
         ]
       },

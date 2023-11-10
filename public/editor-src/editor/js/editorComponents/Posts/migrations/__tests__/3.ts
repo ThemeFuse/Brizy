@@ -53,7 +53,7 @@ describe("testing m3 migration", () => {
     [
       sourceAuto,
       {
-        collectionTypes: [],
+        sources: [],
         refsById: {}
       },
       sourceAuto
@@ -61,7 +61,7 @@ describe("testing m3 migration", () => {
     [
       sourceAuto,
       {
-        collectionTypes: [],
+        sources: [],
         refsById: {
           posts: [
             {

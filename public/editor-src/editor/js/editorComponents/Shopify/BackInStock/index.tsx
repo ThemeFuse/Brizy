@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -31,9 +32,9 @@ export class BISStock extends EditorComponent<Value> {
         >
           {IS_PREVIEW ? (
             <button
-              data-id="BIS_trigger"
+              {...makeDataAttr({ name: "id", value: "BIS_trigger" })}
+              {...makeDataAttr({ name: "pf-type", value: "BackInStock" })}
               className="btn BIS_trigger"
-              data-pf-type="BackInStock"
             >
               {buttonName.trim()}
             </button>

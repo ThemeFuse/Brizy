@@ -7,6 +7,7 @@ import { TextEditor } from "visual/component/Controls/TextEditor";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
+import { Translate } from "visual/component/Translate";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
 import { css } from "visual/utils/cssStyle";
@@ -245,7 +246,7 @@ class LoginField extends EditorComponent {
                   <label className="brz-label">{this.getLabel(v)}</label>
                 </div>
               )}
-              <div className="brz-login__field">
+              <Translate className="brz-login__field">
                 <input
                   type={getFieldType(_type)}
                   maxLength={isEmail ? 255 : undefined}
@@ -255,7 +256,7 @@ class LoginField extends EditorComponent {
                   defaultValue=""
                   required
                 />
-              </div>
+              </Translate>
             </div>
           )}
           {_type === "Remember" && remember === "on" && (

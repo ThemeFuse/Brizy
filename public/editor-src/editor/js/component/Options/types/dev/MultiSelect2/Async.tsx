@@ -3,6 +3,7 @@ import React, {
   ReactElement,
   useCallback,
   useEffect,
+  useMemo,
   useReducer,
   useRef,
   useState
@@ -28,7 +29,7 @@ function useDebounce<T>(value: T, delay: number): T {
     return (): void => {
       clearTimeout(handler);
     };
-  }, [value]);
+  }, [value, delay]);
 
   return debouncedValue;
 }
@@ -268,7 +269,7 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
   const debouncedSearch = useDebounce(state.search, 1000);
   const currentSearchController = useRef<AbortController>();
   const initialChoices = useRef<ChoicesSync>([]);
-  const { vChoices, sChoices } = state;
+  const { vChoices, sChoices, state: currentState } = state;
   const { useAsSimpleSelect = false, showArrow = false } = config ?? {};
 
   const _onChange = useCallback<OnChange<Value>>(
@@ -321,7 +322,7 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
     return (): void => {
       controller?.abort();
     };
-  }, []);
+  }, [choices, value]);
 
   useEffect(() => {
     if (debouncedSearch !== "") {
@@ -347,35 +348,41 @@ export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
           }
         });
     }
-  }, [debouncedSearch]);
+  }, [debouncedSearch, choices]);
+
+  const isIdle = useMemo(() => currentState === "IDLE", [currentState]);
+  const isSelected = useMemo(() => currentState === "SELECTED", [currentState]);
+  const isLoading = useMemo(() => currentState === "LOADING", [currentState]);
+  const isFetching = useMemo(() => currentState === "FETCHING", [currentState]);
+  const isFetchNotFound = useMemo(
+    () => currentState === "FETCH_NOT_FOUND",
+    [currentState]
+  );
 
   useEffect(() => {
-    if (state.state === "IDLE") {
-      initialChoices.current = state.vChoices;
+    if (isIdle) {
+      initialChoices.current = vChoices;
     }
-  }, [state.state === "IDLE"]);
+  }, [isIdle, vChoices]);
 
-  const _choices =
-    state.state === "SELECTED"
+  const _choices = useMemo(() => {
+    return isSelected
       ? mergeChoices(
-          missingChoices(value, state.vChoices),
+          missingChoices(value, vChoices),
           initialChoices.current,
-          state.sChoices
+          sChoices
         )
-      : mergeChoices(
-          missingChoices(value, state.vChoices),
-          state.vChoices,
-          state.sChoices
-        );
+      : mergeChoices(missingChoices(value, vChoices), vChoices, sChoices);
+  }, [isSelected, sChoices, vChoices, value]);
 
   return (
     <Control<ValueItem>
       value={value}
-      valueIsLoading={state.state === "LOADING"}
+      valueIsLoading={isLoading}
       placeholder={placeholder}
       search={true}
-      searchIsLoading={state.state === "FETCHING"}
-      searchIsEmpty={state.state === "FETCH_NOT_FOUND"}
+      searchIsLoading={isFetching}
+      searchIsEmpty={isFetchNotFound}
       onChange={_onChange}
       useAsSimpleSelect={useAsSimpleSelect}
       showArrow={showArrow}

@@ -3,6 +3,8 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
@@ -37,8 +39,13 @@ export class AppstleSubscription extends EditorComponent<ElementModel> {
       >
         <span
           className="appstle_stand_alone_selector"
-          data-product-data="{{ product | json | escape }}"
-          data-pf-type="AppstleSubs"
+          {...makeDataAttr({
+            name: "product-data",
+            value: makePlaceholder({
+              content: "{{ product | json | escape }}"
+            })
+          })}
+          {...makeDataAttr({ name: "pf-type", value: "AppstleSubs" })}
         />
       </Wrapper>
     );

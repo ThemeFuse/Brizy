@@ -14,17 +14,21 @@ export function styleDC(v, vs, vd) {
   const styles = {
     ".brz &&:hover": {
       standart: [
-        "cssStyleElementRichTextDCColor",
-        "cssStyleElementRichTextDCGradient",
-        "cssStyleElementTitleTextShadow",
         "cssStyleElementRichTextAlign",
         "cssStyleElementRichTextFontFamily",
         "cssStyleElementRichTextFontSize",
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing",
-        "cssStyleElementRichTextBgImage",
         "cssStyleElementRichTextDCUppercase"
+      ]
+    },
+    ".brz &&:hover span": {
+      standart: [
+        "cssStyleElementRichTextDCColor",
+        "cssStyleElementRichTextDCGradient",
+        "cssStyleElementTitleTextShadow",
+        "cssStyleElementRichTextBgImage"
       ]
     },
     ".brz &&:hover *": {
@@ -120,8 +124,8 @@ export function styleHeading(v, vs, vd) {
       standart: [
         "cssStyleColor",
         ...(IS_EDITOR ? [] : ["cssStyleElementRichTextColor"]),
-        "cssStyleElementRichTextMartinTop",
-        "cssStyleElementRichTextMartinBottom",
+        "cssStyleElementRichTextMarginTop",
+        "cssStyleElementRichTextMarginBottom",
         "cssStyleElementRichTextAlign",
         "cssStyleElementRichTextFontFamily",
         "cssStyleElementRichTextFontSize",

@@ -3,6 +3,7 @@ import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
 import { IS_WP } from "visual/utils/env";
 import { makePrefetchFonts } from "visual/utils/fonts";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { toHashCode } from "visual/utils/string";
 import { getCustomCSS } from "./getCustomCSS";
 import { getDCColor } from "./getDCColor";
@@ -256,7 +257,7 @@ export const makeStyles = ($doc: cheerio.Root, fonts: Fonts): MakeStyles => {
         url: assetUrl(`editor/css/${name}.min.css`),
         attr: withRel({
           class: "brz-link brz-link-preview-lib",
-          "data-group": name
+          ...makeDataAttr({ name: "group", value: name })
         })
       },
       pro: false
@@ -317,7 +318,7 @@ export const makeStyles = ($doc: cheerio.Root, fonts: Fonts): MakeStyles => {
           url: `${proUrls.assets}/css/${name}-pro.min.css`,
           attr: withRel({
             class: "brz-link brz-link-preview-lib-pro",
-            "data-group": name
+            ...makeDataAttr({ name: "group", value: name })
           })
         },
         pro: true

@@ -1,7 +1,7 @@
-import React from "react";
 import classnames from "classnames";
-import Toolbar from "visual/component/Toolbar";
+import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import Toolbar from "visual/component/Toolbar";
 
 class ColorPalette extends React.Component {
   static defaultProps = {
@@ -16,7 +16,7 @@ class ColorPalette extends React.Component {
     active: null
   };
 
-  handleToolbarOpen = index => {
+  handleToolbarOpen = (index) => {
     this.setState({ active: index });
   };
 
@@ -74,44 +74,18 @@ class ColorPalette extends React.Component {
           options: [
             {
               id: "backgroundColor",
-              type: "colorPicker2",
+              type: "colorPicker-dev",
               label: "Color HEX",
-              disableOpacity: true,
-              select: {
-                show: false
+              config: {
+                opacity: false,
+                isPaletteHidden: true
               },
-              picker: {
-                showOpacity: false
-              },
-              palette: {
-                show: false
-              },
+              className: "brz-ed-option__colorPicker__global__styles",
               value: {
                 hex: color.hex,
                 opacity: 1
               },
-              onChange: value => this.handleColorChange(value, index)
-            },
-            {
-              type: "grid",
-              className: "brz-ed-grid__color-fileds",
-              columns: [
-                {
-                  width: 100,
-                  options: [
-                    {
-                      id: "backgroundColorFields",
-                      type: "colorFields",
-                      disableOpacity: true,
-                      value: {
-                        hex: color.hex,
-                        opacity: 1
-                      },
-                      onChange: value => this.handleColorChange(value, index)
-                    }
-                  ]
-                }
-              ]
+              onChange: (value) => this.handleColorChange(value, index)
             }
           ]
         }

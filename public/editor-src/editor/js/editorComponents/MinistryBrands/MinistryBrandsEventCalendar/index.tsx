@@ -1,10 +1,15 @@
 import classnames from "classnames";
 import React, { ReactNode } from "react";
+import ReactDOM from "react-dom";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorComponent, {
+  Props as ModelProps
+} from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { css } from "visual/utils/cssStyle";
+import * as Str from "visual/utils/string/specs";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as sidebarDay from "./sidebarDay";
@@ -26,10 +31,11 @@ import * as toolbarMonth10 from "./toolbarMonths/toolbarMonth10";
 import * as toolbarMonth11 from "./toolbarMonths/toolbarMonth11";
 import * as toolbarMonth12 from "./toolbarMonths/toolbarMonth12";
 import * as toolbarPagination from "./toolbarPagination";
+import * as toolbarSubscribeToCalendar from "./toolbarSubscribeToCalendar";
 import * as toolbarTitle from "./toolbarTitle";
 import * as toolbarWeekdays from "./toolbarWeekdays";
 import { Props, Value } from "./types";
-import { getPlaceholder } from "./utils";
+import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsEventCalendar" {
@@ -38,6 +44,7 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
+  calendarIcon = React.createRef<Element>();
   componentDidMount(): void {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendParent,
@@ -52,11 +59,62 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
     this.props.extendParentToolbar(toolbarExtend);
   }
 
+  componentDidUpdate(prevProps: ModelProps<Value, Props>): void {
+    const { iconName, iconType } = this.getIconData();
+    const { iconName: prevIconName, iconType: prevIconType } =
+      prevProps.dbValue;
+
+    const _prevIconName = Str.read(prevIconName);
+    const _prevIconType = Str.read(prevIconType);
+
+    if (iconName !== _prevIconName || iconType !== _prevIconType) {
+      this.renderIcon({ iconName, iconType });
+    }
+  }
+
+  getIconData() {
+    const v = this.getValue();
+    const { iconName, iconType } = v;
+
+    return {
+      iconName: Str.read(iconName) ?? "",
+      iconType: Str.read(iconType) ?? ""
+    };
+  }
+
+  renderIcon = ({
+    iconName,
+    iconType
+  }: {
+    iconName: string;
+    iconType: string;
+  }) => {
+    const iconContainer = this.calendarIcon.current?.querySelector(
+      ".brz-eventCalendar__subscribe__icon"
+    );
+
+    if (!iconContainer) return;
+
+    const newIcon =
+      iconName && iconType ? (
+        <ThemeIcon name={iconName} type={iconType} />
+      ) : (
+        <></>
+      );
+    ReactDOM.render(newIcon, iconContainer);
+  };
+
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
+    const { iconName, iconType } = this.getIconData();
     const className = classnames(
       "brz-eventCalendar__wrapper",
       css(this.getComponentId(), this.getId(), style(v, vs, vd))
     );
+
+    const icon =
+      IS_EDITOR || (!iconName && !iconType)
+        ? ""
+        : `<svg class='brz-icon-svg align-[initial]' data-name='${iconName}' data-type='${iconType}'></svg>`;
 
     return (
       <Toolbar
@@ -216,21 +274,42 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
                                           )}
                                           selector=".brz-eventCalendar-links .brz-eventCalendar__event-start-time"
                                         >
-                                          <Wrapper
-                                            {...this.makeWrapperProps({
-                                              className
-                                            })}
+                                          <Toolbar
+                                            {...this.makeToolbarPropsFromConfig2(
+                                              toolbarSubscribeToCalendar,
+                                              undefined,
+                                              {
+                                                allowExtend: false
+                                              }
+                                            )}
+                                            selector=".brz-eventCalendar__subscribe"
                                           >
-                                            <DynamicContentHelper
-                                              placeholder={getPlaceholder(v)}
-                                              props={{
-                                                className:
-                                                  "brz-ministryBrands brz-eventCalendar"
-                                              }}
-                                              blocked={false}
-                                              tagName="div"
-                                            />
-                                          </Wrapper>
+                                            <Wrapper
+                                              {...this.makeWrapperProps({
+                                                className,
+                                                ref: this.calendarIcon
+                                              })}
+                                            >
+                                              <DynamicContentHelper
+                                                placeholder={getPlaceholder(
+                                                  v,
+                                                  icon
+                                                )}
+                                                props={{
+                                                  className:
+                                                    "brz-ministryBrands brz-eventCalendar"
+                                                }}
+                                                blocked={false}
+                                                tagName="div"
+                                                onSuccess={() =>
+                                                  this.renderIcon({
+                                                    iconName,
+                                                    iconType
+                                                  })
+                                                }
+                                              />
+                                            </Wrapper>
+                                          </Toolbar>
                                         </Toolbar>
                                       </Toolbar>
                                     </Toolbar>

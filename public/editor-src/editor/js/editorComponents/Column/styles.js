@@ -16,7 +16,7 @@ export function styleColumn(v, vs, vd) {
       });
     });
   };
-  const { maskShape = "none" } = v;
+  const { maskShape = "none", hoverName = "none" } = v;
   const motion = fromElementModel(get);
   const enabledMotion =
     motion.vertical ||
@@ -28,7 +28,9 @@ export function styleColumn(v, vs, vd) {
     motion.mouseTrack ||
     motion.mouseTilt;
 
-  let innerDivFromMotion = enabledMotion ? "div > " : "";
+  const innerDivFromMotion = enabledMotion ? "div > " : "";
+  const hoverSelector =
+    hoverName === "none" ? "" : ".brz-hover-animation__container > ";
 
   let styles = {
     ".brz &&:hover": {
@@ -39,7 +41,13 @@ export function styleColumn(v, vs, vd) {
         "cssStyleFlexColumnVerticalAlign"
       ]
     },
-    [`.brz &&:hover > ${innerDivFromMotion}.brz-bg`]: {
+    ".brz && .brz-columns__scroll-effect": {
+      standart: ["cssStyleFlexColumnVerticalAlign"]
+    },
+    ".brz &&:hover .brz-hover-animation__container": {
+      standart: ["cssStyleFlexColumnVerticalAlign"]
+    },
+    [`.brz &&:hover > ${innerDivFromMotion}${hoverSelector}.brz-bg`]: {
       standart: [
         "cssStyleBorder",
         "cssStyleBorderRadius",
@@ -51,51 +59,58 @@ export function styleColumn(v, vs, vd) {
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
-    [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-image`]: {
-      standart: [
-        "cssStyleBgImage",
-        "cssStyleFilter",
-        "cssStyleBgImagePosition",
-        "cssStyleBgMediaImage",
-        "cssStyleMaskShape",
-        "cssStyleMaskCustomShape",
-        "cssStyleMaskSize",
-        "cssStyleMaskPosition",
-        "cssStyleMaskRepeat"
-      ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
-    },
-    [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-image:after`]: {
-      standart: ["cssStyleBgImageHover"]
-    },
-    [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-color`]: {
-      standart: [
-        "cssStyleBgColor",
-        "cssStyleBgGradient",
-        "cssStyleMaskShape",
-        "cssStyleMaskCustomShape",
-        "cssStyleMaskSize",
-        "cssStyleMaskPosition",
-        "cssStyleMaskRepeat"
-      ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
-    },
-    [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-map`]: {
-      standart: ["cssStyleFilter", "cssStyleBgMediaMap"]
-    },
-    [`.brz &&:hover > ${innerDivFromMotion}.brz-bg > .brz-bg-video`]: {
-      standart: ["cssStyleFilter", "cssStyleBgMediaVideo"]
-    }
+    [`.brz &&:hover > ${innerDivFromMotion}${hoverSelector}.brz-bg > .brz-bg-image`]:
+      {
+        standart: [
+          "cssStyleBgImage",
+          "cssStyleFilter",
+          "cssStyleBgImagePosition",
+          "cssStyleBgMediaImage",
+          "cssStyleMaskShape",
+          "cssStyleMaskCustomShape",
+          "cssStyleMaskSize",
+          "cssStyleMaskPosition",
+          "cssStyleMaskRepeat"
+        ],
+        interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      },
+    [`.brz &&:hover > ${innerDivFromMotion}${hoverSelector}.brz-bg > .brz-bg-image:after`]:
+      {
+        standart: ["cssStyleBgImageHover"]
+      },
+    [`.brz &&:hover > ${innerDivFromMotion}${hoverSelector}.brz-bg > .brz-bg-color`]:
+      {
+        standart: [
+          "cssStyleBgColor",
+          "cssStyleBgGradient",
+          "cssStyleMaskShape",
+          "cssStyleMaskCustomShape",
+          "cssStyleMaskSize",
+          "cssStyleMaskPosition",
+          "cssStyleMaskRepeat"
+        ],
+        interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      },
+    [`.brz &&:hover > ${innerDivFromMotion}${hoverSelector}.brz-bg > .brz-bg-map`]:
+      {
+        standart: ["cssStyleFilter", "cssStyleBgMediaMap"]
+      },
+    [`.brz &&:hover > ${innerDivFromMotion}${hoverSelector}.brz-bg > .brz-bg-video`]:
+      {
+        standart: ["cssStyleFilter", "cssStyleBgMediaVideo"]
+      }
   };
 
   if (IS_EDITOR) {
     styles[".brz &&:hover > *"] = {
       interval: ["cssStyleVisibleEditorDisplayNoneOrBlock|||editor"]
     };
-    styles[`.brz &&:hover > ${innerDivFromMotion}.brz-bg`].interval.push(
-      "cssStyleVisible|||editor"
-    );
-    styles[`.brz &&:hover > ${innerDivFromMotion}.brz-column__items`] = {
+    styles[
+      `.brz &&:hover > ${innerDivFromMotion}${hoverSelector}.brz-bg`
+    ].interval.push("cssStyleVisible|||editor");
+    styles[
+      `.brz &&:hover > ${innerDivFromMotion}${hoverSelector}.brz-column__items`
+    ] = {
       interval: ["cssStyleVisible|||editor"]
     };
   } else {

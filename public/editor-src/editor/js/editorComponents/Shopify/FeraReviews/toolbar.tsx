@@ -1,5 +1,6 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { t } from "visual/utils/i18n";
+import { makeAttr } from "visual/utils/i18n/attribute";
 
 export const getItems = (): ToolbarItemType[] => {
   return [
@@ -37,7 +38,7 @@ export const getItems = (): ToolbarItemType[] => {
           id: "htmlTag",
           label: t("HTML Tag"),
           type: "inputText-dev",
-          placeholder: "<div data-fera..."
+          placeholder: `<div ${makeAttr("fera...")}`
         }
       ]
     },

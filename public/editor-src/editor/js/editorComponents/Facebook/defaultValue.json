@@ -28,18 +28,28 @@
 
     "href": "",
     "hrefPopulation": "",
+    "hrefPopulationEntityType": "",
+    "hrefPopulationEntityId": "",
 
     "facebookEmbedPostHref": "https://www.facebook.com/dji.europe/posts/2786565258230244",
     "facebookEmbedPostHrefPopulation": "",
+    "facebookEmbedPostHrefPopulationEntityType": "",
+    "facebookEmbedPostHrefPopulationEntityId": "",
 
     "facebookEmbedVideoHref": "https://www.facebook.com/ISS/videos/2889900194627264",
     "facebookEmbedVideoHrefPopulation": "",
+    "facebookEmbedVideoHrefPopulationEntityType": "",
+    "facebookEmbedVideoHrefPopulationEntityId": "",
 
     "facebookPageHref": "https://www.facebook.com/techcrunch/",
     "facebookPageHrefPopulation": "",
+    "facebookPageHrefPopulationEntityType": "",
+    "facebookPageHrefPopulationEntityId": "",
 
     "facebookGroupHref": "https://www.facebook.com/groups/669915249871846",
-    "facebookGroupHrefPopulation": ""
+    "facebookGroupHrefPopulation": "",
+    "facebookGroupHrefPopulationEntityType": "",
+    "facebookGroupHrefPopulationEntityId": ""
   },
   "style": {
     "width": 300,

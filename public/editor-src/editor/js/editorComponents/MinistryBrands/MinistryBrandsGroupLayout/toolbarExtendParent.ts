@@ -1,5 +1,6 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
+import { getCollectionTypes } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
 import { getEkklesiaChoiches } from "../utils/helpers";
@@ -15,7 +16,6 @@ export const getItems: GetItems<Value, Props> = ({
 }) => {
   const _config = Config.getAll();
   const { apiUrl } = _config.modules?.ekklesia ?? {};
-  const { getSourceChoices } = _config.api?.sourceTypes ?? {};
 
   const isNotCategoryFilter = v.showCategoryFilter === "off";
   const isNotExtraCategory1Filter = v.addCategoryFilter === "off";
@@ -35,6 +35,9 @@ export const getItems: GetItems<Value, Props> = ({
         {
           id: "tabsCurrentElement",
           type: "tabs-dev",
+          config: {
+            saveTab: true
+          },
           tabs: [
             {
               id: "tabColumns",
@@ -138,7 +141,12 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "select-dev",
                   label: t("Type"),
                   devices: "desktop",
-                  choices: getSourceChoices?.() ?? [],
+                  choices: {
+                    load: () => getCollectionTypes(_config),
+                    emptyLoad: {
+                      title: t("There are no choices")
+                    }
+                  },
                   config: {
                     size: "large"
                   },

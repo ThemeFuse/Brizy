@@ -13,7 +13,7 @@ export default function (config: ConfigCommon) {
         _styles: ["wrapper", "wrapper-postTitle"],
         items: [
           {
-            type: "WPPostsTitle",
+            type: ElementTypes.PostTitle,
             value: {
               _styles: ["postTitle"],
               ...config.contentDefaults?.[ElementTypes.CollectionTitle]

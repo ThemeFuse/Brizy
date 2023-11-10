@@ -1,13 +1,10 @@
-.brz-hover-animation {
+.brz-hover-animation__container {
+  width: 100%;
+  height: 100%;
+  display: inherit;
+  justify-content: inherit;
+
   svg {
     backface-visibility: hidden;
-  }
-
-  &,
-  &__container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
   }
 }

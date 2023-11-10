@@ -439,6 +439,7 @@ class Video extends EditorComponent {
     const animationId = readString(wrapperAnimationId) ?? this.getId();
     const { wrapperAnimationActive } = this.props.meta;
     const isDisabledHover = readBoolean(wrapperAnimationActive);
+    const isHidden = isStory(Config.getAll()) || _hoverName === "none";
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
@@ -450,7 +451,7 @@ class Video extends EditorComponent {
               cssKeyframe={_hoverName}
               options={getHoverAnimationOptions(options, _hoverName)}
               isDisabledHover={isDisabledHover}
-              isHidden={isStory(Config.getAll())}
+              isHidden={isHidden}
             >
               <BoxResizer
                 points={resizerPoints}

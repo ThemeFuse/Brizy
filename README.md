@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.2.2<br>
-Requires PHP: 5.6.20<br>
-Stable tag: 2.4.27<br>
+Tested up to: 6.4<br>
+Requires PHP: 7.0.0<br>
+Stable tag: 2.4.31<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,74 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.31 - 2023-11-08
+* Fixed: Malformed attribute selector data-brz-popup
+* Fixed: Order By feature in Posts and Archive element is not displayed
+
+### 2.4.30 - 2023-11-06
+* New: Added title and tags for global blocks
+* New: Added delete option for form integrations 
+* Improved: Brizy UI Library in Editor 
+* Improved: Added notification for outdated Safari browser (version 16.3 and below)
+* Improved: Styling option for the Button element in responsive 
+* Improved: Removed Effects from the Text element in responsive 
+* Improved: Various option toolbars where the title of the label is too long
+* Improved: Added scroll navigation to active element when device mode changes 
+* Improved: Added GET, POST for Form webhooks 
+* Improved: Prefixed all data-attributes 
+* Improved: Added width in PX for the Row element
+* Improved: Removed the terms & conditions checkbox from authorization form
+* Improved: Sidebar device mode titles 
+* Improved: Google Fonts updated to the latest version
+* Fixed: HTML tags being removed from the Embed element
+* Fixed: Autoplay for video background in block slider
+* Fixed: Line element does not align if hover is set 
+* Fixed: Random Google Fonts were not displayed in the preview
+* Fixed: Word break does not work correctly in the Alert element
+* Fixed: Background video on block slider does not resize correctly
+* Fixed: Updated Twitter icon to X
+* Fixed: Hide background preview for popups 
+* Fixed: XSS vulnerability to Text Editor 
+* Fixed: Accordion tags not working correctly in preview
+* Fixed: Version checking for zip files when moving blocks or layouts from WP to Cloud
+* Fixed: Setup config data for help videos inside the builder 
+* Fixed: Added permission to download svg files 
+* Fixed: Default template display in preview 
+* Fixed: Jump to the second block by link 
+* Fixed: Sites give a 500 Error when Brizy Free is updated to latest version on WordPress.com
+* Fixed: Gutenberg opens in iframe and the edit with brizy button is not displayed 
+
+### 2.4.29 - 2023-10-20
+* Fixed: Login element error when try to register
+
+### 2.4.28 - 2023-10-11
+* New: Added Internal Link on the link option for all elements
+* Improved: Removed getPage request added pageData inside config 
+* Improved: Sections container width was changed in 1170px 
+* Improved: Changed icon for the Webhooks integration on forms
+* Improved: Removed the ability to change icons in responsive views for the icon element
+* Improved: Button width for default fill type 
+* Improved: Rename Tags titles in Saved blocks 
+* Improved: Rearrange Global typography styles 
+* Improved: Responsive views change automatically when you select the devices in global typography styling
+* Fixed: Text color picker on dynamic elements
+* Fixed: Hover on certain elements that have motion effects set
+* Fixed: Drag and Drop was not working on images with link
+* Fixed: Lightbox preview 
+* Fixed: Toolbars label text length 
+* Fixed: Dynamic text with gradient color was not visible
+* Fixed: Hover animation not working for the same item after sliding
+* Fixed: Column content align when scroll animation is applied
+* Fixed: Text space for ordered and unordered lists 
+* Fixed: The accordion element disappears after deleting tags 
+* Fixed: Opacity for Gradient color does not work correctly
+* Fixed: Button Spacing incorrectly affects position and alignment
+* Fixed: Global styling not changing 
+* Fixed: Audio element is still playing after the pop-up is closed
+* Fixes: Global colors for Image shadow
+* Fixes: Global colors for Image border
+* Fixed: Tab and Accordion elements heading get hidden under Sticky/Fixed menu on mobiles 
 
 ### 2.4.27 - 2023-08-08
 * New: Added 26 new premade design templates

@@ -16,9 +16,6 @@ export { styleColor } from "./styleColor";
 // BG Color
 export { styleBgColor } from "./styleBgColor";
 
-// BG Gradient
-export { styleBgGradient } from "./styleBgGradient";
-
 // Border Color
 export { styleBorderColor } from "./styleBorderColor";
 

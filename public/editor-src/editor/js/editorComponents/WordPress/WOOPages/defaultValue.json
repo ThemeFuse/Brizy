@@ -18,11 +18,8 @@
     "width": 100,
     "widthSuffix": "%",
 
-    "tabletWidth": null,
-    "tabletSuffixWidth": null,
-
-    "mobileWidth": null,
-    "mobileSuffixWidth": null,
+    "tabletWidthSuffix": null,
+    "mobileWidthSuffix": null,
 
     "customCSS": "",
 

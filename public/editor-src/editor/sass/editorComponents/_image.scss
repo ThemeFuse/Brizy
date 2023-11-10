@@ -85,3 +85,7 @@
 .mfp-iframe-scaler iframe {
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
 }
+
+&.brz-lightbox {
+  z-index: 1102;
+}

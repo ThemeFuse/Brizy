@@ -3,6 +3,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
@@ -31,7 +32,10 @@ export class ParcelPanel extends EditorComponent<ElementModel> {
       <Wrapper
         {...this.makeWrapperProps({ className: "brz-shopify-parcel-panel" })}
       >
-        <div data-pf-type="ParcelPanel" className="sc-eTwdGJ IQtZe pf-22_">
+        <div
+          {...makeDataAttr({ name: "pf-type", value: "ParcelPanel" })}
+          className="sc-eTwdGJ IQtZe pf-22_"
+        >
           <div className="sc-eTwdGJ IQtZe">
             <div className="pp_main">
               <div className="pp_tracking_info" style={{ display: "none" }} />

@@ -36,15 +36,7 @@ import {
   getShapes
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import {
-  toolbarColor2,
-  toolbarColorHexField2,
-  toolbarFilterBrightness,
-  toolbarFilterContrast,
-  toolbarFilterHue,
-  toolbarFilterSaturation,
-  toolbarLinkPopup
-} from "visual/utils/toolbar";
+import { toolbarLinkPopup } from "visual/utils/toolbar";
 
 global.Brizy = {
   config: Config,
@@ -93,12 +85,6 @@ global.Brizy = {
     HOVER
   },
   toolbar: {
-    toolbarColor2,
-    toolbarColorHexField2,
-    toolbarFilterHue,
-    toolbarFilterSaturation,
-    toolbarFilterBrightness,
-    toolbarFilterContrast,
     toolbarLinkPopup
   }
 };

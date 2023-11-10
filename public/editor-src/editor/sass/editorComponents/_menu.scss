@@ -63,7 +63,7 @@ $dropdown-arrow-size: 7px;
     }
 
     // Item Dropdown
-    .brz-menu__item-dropdown>.brz-a {
+    .brz-menu__item-dropdown > .brz-a {
       position: relative;
 
       &:after {
@@ -95,7 +95,7 @@ $dropdown-arrow-size: 7px;
     align-items: center;
     flex-wrap: wrap;
 
-    >.brz-a {
+    > .brz-a {
       color: inherit;
       font-weight: inherit;
       font-family: inherit;
@@ -147,7 +147,7 @@ $dropdown-arrow-size: 7px;
       z-index: 1;
 
       a:not(.brz-btn),
-      >* {
+      > * {
         color: inherit;
       }
 
@@ -162,17 +162,17 @@ $dropdown-arrow-size: 7px;
     }
 
     .brz-menu__ul {
-      &>.brz-mm-navbar {
+      & > .brz-mm-navbar {
         height: 44px;
         border-bottom-width: inherit;
         background-color: transparent;
       }
 
-      .brz-mm-listitem_opened>.brz-mm-panel {
+      .brz-mm-listitem_opened > .brz-mm-panel {
         background-color: rgba(255, 255, 255, 0.05);
       }
 
-      &--has-dropdown .brz-mm-listitem_opened>.brz-mm-panel {
+      &--has-dropdown .brz-mm-listitem_opened > .brz-mm-panel {
         background-color: transparent;
       }
     }
@@ -189,11 +189,11 @@ $dropdown-arrow-size: 7px;
       opacity: 1;
       width: auto;
 
-      &.brz-mm-listitem_vertical>.brz-mm-panel {
+      &.brz-mm-listitem_vertical > .brz-mm-panel {
         padding: 0 10px;
       }
 
-      &.brz-mm-menu__item-mega-menu>.brz-mm-panel {
+      &.brz-mm-menu__item-mega-menu > .brz-mm-panel {
         padding: 0;
         overflow: visible;
       }
@@ -201,7 +201,7 @@ $dropdown-arrow-size: 7px;
       &.brz-mm-listitem_opened {
         overflow: hidden;
 
-        >.brz-mm-listitem__text {
+        > .brz-mm-listitem__text {
           position: relative;
 
           &:after {
@@ -278,7 +278,7 @@ $dropdown-arrow-size: 7px;
       }
     }
 
-    .brz-mm-menu__item>.brz-mm-listitem__text {
+    .brz-mm-menu__item > .brz-mm-listitem__text {
       padding-right: 50px;
     }
   }
@@ -294,6 +294,7 @@ $dropdown-arrow-size: 7px;
   // Menu links
   .brz-a {
     width: 100%;
+    white-space: break-spaces;
   }
 
   .brz-a,
@@ -326,7 +327,7 @@ $dropdown-arrow-size: 7px;
   }
 
   // Animation
-  &.brz-mm-menu_opened~.brz-mm-wrapper__blocker {
+  &.brz-mm-menu_opened ~ .brz-mm-wrapper__blocker {
     transition-delay: 0s;
   }
 
@@ -353,6 +354,7 @@ $dropdown-arrow-size: 7px;
 
 // Mega Menu
 // Reset Offset by placement
+&.brz-mega-menu__portal,
 .brz-mega-menu__portal {
   opacity: 0;
   visibility: hidden;
@@ -423,11 +425,11 @@ $dropdown-arrow-size: 7px;
 .brz-mega-menu {
   position: relative;
 
-  &>.brz-bg {
+  & > .brz-bg {
     overflow: hidden;
   }
 
-  &>.brz-container {
+  & > .brz-container {
     position: relative;
   }
 }
@@ -445,8 +447,8 @@ $dropdown-arrow-size: 7px;
       display: none;
     }
 
-    .brz-menu__item:hover>.brz-menu__sub-menu,
-    .brz-menu__item:hover>.brz-mega-menu__portal {
+    .brz-menu__item:hover > .brz-menu__sub-menu,
+    .brz-menu__item:hover > .brz-mega-menu__portal {
       visibility: visible;
       opacity: 1;
       z-index: z("mega-menu");
@@ -490,23 +492,25 @@ $dropdown-arrow-size: 7px;
   z-index: 4;
 }
 
-.brz-mm-menu_position-bottom.brz-mm-menu_opened~.brz-mm-wrapper__blocker,
-.brz-mm-menu_position-front.brz-mm-menu_opened~.brz-mm-wrapper__blocker,
-.brz-mm-menu_position-top.brz-mm-menu_opened~.brz-mm-wrapper__blocker {
+.brz-mm-menu_position-bottom.brz-mm-menu_opened ~ .brz-mm-wrapper__blocker,
+.brz-mm-menu_position-front.brz-mm-menu_opened ~ .brz-mm-wrapper__blocker,
+.brz-mm-menu_position-top.brz-mm-menu_opened ~ .brz-mm-wrapper__blocker {
   z-index: 3;
 }
 
-&.brz-mm-wrapper:not(.brz-mm-wrapper_blocking) {
+&.brz-mm-wrapper:not(.brz-mm-wrapper_blocking),
+.brz-mm-wrapper:not(.brz-mm-wrapper_blocking) {
   overflow: visible;
 }
 
-&.brz-mm-wrapper_opened {
+&.brz-mm-wrapper_opened,
+.brz-mm-wrapper_opened {
   .brz-root__container.brz-mm-page {
     z-index: auto;
   }
 
   // Normalize all section in .brz-root
-  &:not(.brz-ed) .brz-root__container>.brz-section:not(.brz-section__header) {
+  &:not(.brz-ed) .brz-root__container > .brz-section:not(.brz-section__header) {
     z-index: 1;
   }
 

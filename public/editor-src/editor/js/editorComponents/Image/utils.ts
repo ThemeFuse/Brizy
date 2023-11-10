@@ -1,11 +1,17 @@
 import { Value as ImageUploadValue } from "visual/component/Options/types/dev/ImageUpload/Types";
-import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { SizeType } from "visual/global/Config/types/configs/common";
+import { flatMap } from "visual/utils/array";
 import { getImageUrl } from "visual/utils/image";
+import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { clamp, roundTo } from "visual/utils/math";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getDynamicContentChoices } from "visual/utils/options";
+import { Choice } from "visual/utils/options/getDynamicContentChoices";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
+import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
 import * as Str from "visual/utils/string/specs";
 import { MValue, isNullish } from "visual/utils/value";
 import { ImageSize, Unit, V } from "./types";
@@ -213,11 +219,6 @@ export const calcImageSizes = (
   };
 };
 
-export const isSVG = (extension: string): extension is "svg" =>
-  extension === "svg";
-export const isGIF = (extension: string): extension is "gif" =>
-  extension === "gif";
-
 export const isPredefinedSize = (
   size: ALLSizes
 ): size is PredefinedCustomSize => {
@@ -262,30 +263,13 @@ export const getImageSize = (size: string): ALLSizes => {
 };
 
 export const getSizeType = (v: V, device: ResponsiveMode): string => {
-  if (v.imagePopulation) {
-    const config = Config.getAll();
-    const useCustomPlaceholder =
-      config.dynamicContent?.useCustomPlaceholder ?? false;
-    const placeholderData = placeholderObjFromStr(
-      v.imagePopulation,
-      useCustomPlaceholder
-    );
-
-    if (placeholderData?.attr?.size !== undefined) {
-      const size = Str.read(placeholderData.attr.size) ?? "custom";
-      return size.trim().length > 0 ? size : "custom";
-    }
-
-    return "custom";
-  }
-
   return defaultValueValue({ v, device, key: "sizeType" });
 };
 
 export const showOriginalImage = (v: V): boolean =>
   Boolean(
-    !isSVG(v.imageExtension) &&
-      !isGIF(v.imageExtension) &&
+    !isSVGExtension(v.imageExtension) &&
+      !isGIFExtension(v.imageExtension) &&
       v.imageSrc &&
       v.showOriginalImage === "on"
   );
@@ -343,8 +327,8 @@ export function getCustomImageUrl(
   });
 
   return {
-    source: `${url}`,
-    url: `${url} 1x, ${retinaUrl} 2x`
+    source: `${url ?? ""}`,
+    url: `${url ?? ""} 1x, ${retinaUrl ?? ""} 2x`
   };
 }
 
@@ -357,7 +341,7 @@ export function multiplier<
       typeof value === "number" ? Math.min(value * num, maxRetinaSize) : value
     ) as T[keyof T];
     return acc;
-  }, data);
+  }, {} as T);
 }
 
 export const readUnit = (v: unknown): MValue<Unit> => {
@@ -372,4 +356,29 @@ export const readSizeType = (sizeType: unknown): MValue<SizeType> => {
     case SizeType.original:
       return sizeType;
   }
+};
+
+export const getImageDCSize = (
+  placeholder: string,
+  context: EditorComponentContextValue
+): MValue<string> => {
+  const dcConfig = context.dynamicContent.config;
+
+  if (!dcConfig || !isNoEmptyString(placeholder)) {
+    return undefined;
+  }
+
+  const imageDCItems = getDynamicContentChoices(dcConfig, DCTypes.image);
+
+  if (imageDCItems.length === 0) {
+    return undefined;
+  }
+
+  const choices = flatMap(imageDCItems, (i) =>
+    "optgroup" in i ? (i.optgroup as Array<Choice>) : i
+  );
+
+  return Str.read(
+    choices.find((item) => item.value === placeholder)?.attr?.size
+  );
 };

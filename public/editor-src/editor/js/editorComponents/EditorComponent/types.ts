@@ -25,6 +25,8 @@ export type ECKeyDCInfo = {
   dcValue: string;
   attr: Dictionary<unknown>;
   fallback: unknown;
+  entityType?: unknown;
+  entityId?: unknown;
 };
 
 export type Model<M> = M & {

@@ -26,7 +26,6 @@
 
       // after destroy isotopes, library save transform
       transform: none !important;
-      overflow: hidden;
 
       .brz-image,
       .brz-ed-image__wrapper,
@@ -35,6 +34,10 @@
         // we set all this to height: 100%; because gallery lib calculate images sizes
         // and set to .brz-image__gallery-item
         height: 100%;
+      }
+
+      .brz-image img {
+        object-fit: cover;
       }
     }
 

@@ -46,17 +46,6 @@ export function cssStyleSizeWidthPercentOnly({
   return width === undefined ? "" : `width:${width}%;`;
 }
 
-export function cssStyleSizeMaxWidthPercentOnly({
-  v,
-  device,
-  state,
-  prefix
-}: CSSValue): string {
-  const width = styleSizeSize({ v, device, state, prefix });
-
-  return width === undefined ? "" : `max-width:${width}%;`;
-}
-
 export function cssStyleSizeWidthPrefix({
   v,
   device,
@@ -260,6 +249,19 @@ export function cssStyleSizeMinHeightPx({
   const unit = Str.read(dvv(capByPrefix(prefix, "heightSuffix"))) || "px";
 
   return height === undefined ? "" : `min-height:${height}${unit};`;
+}
+
+export function cssStyleSizeMinHeightImportant({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
+  const height = styleSizeHeight({ v, device, state, prefix });
+  const unit = Str.read(dvv(capByPrefix(prefix, "heightSuffix"))) || "px";
+
+  return height === undefined ? "" : `min-height:${height}${unit} !important;`;
 }
 
 export function cssStyleSizeSize({

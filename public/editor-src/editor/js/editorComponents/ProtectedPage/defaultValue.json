@@ -123,17 +123,7 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-
-    "tabletInputWidth": null,
-    "tabletInputWidthSuffix": null,
-
-    "tabletInputSpacing": null,
-    "tabletInputSpacingSuffix": null,
-
     "tabletInputHeight": 18,
-    "tabletInputHeightSuffix": null,
 
     "tabletTypographyFontStyle": "",
     "tabletTypographyFontFamilyType": null,
@@ -143,20 +133,7 @@
     "tabletTypographyLineHeight": 1,
     "tabletTypographyLetterSpacing": 1,
 
-    "tabletSubmitWidth": null,
-    "tabletSubmitWidthSuffix": null,
-
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
-
-    "mobileInputWidth": null,
-    "mobileInputWidthSuffix": null,
-
-    "mobileInputSpacing": null,
-    "mobileInputSpacingSuffix": null,
-
     "mobileInputHeight": 16,
-    "mobileInputHeightSuffix": null,
 
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontFamilyType": null,
@@ -164,9 +141,6 @@
     "mobileTypographyFontSizeSuffix": "px",
     "mobileTypographyFontWeight": 400,
     "mobileTypographyLineHeight": 1,
-    "mobileTypographyLetterSpacing": 1,
-
-    "mobileSubmitWidth": null,
-    "mobileSubmitWidthSuffix": null
+    "mobileTypographyLetterSpacing": 1
   }
 }

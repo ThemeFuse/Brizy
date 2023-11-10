@@ -1,3 +1,4 @@
+import { makeAttr } from "visual/utils/i18n/attribute";
 import * as Str from "visual/utils/reader/string";
 
 export const getAddToCartData = ({
@@ -7,20 +8,22 @@ export const getAddToCartData = ({
   productId: string;
   defaultVarintId: string | null;
 }) => {
+  const productIdAttr = `[${makeAttr("product-handle")}="${productId}"]`;
   const variantId =
     Str.read(
       document.querySelector<HTMLInputElement>(
-        `.brz-shopify-variant-container [data-product-handle="${productId}"]`
+        `.brz-shopify-variant-container ${productIdAttr}`
       )?.value
-    ) ??
-    (defaultVarintId || "41542267404482");
+    ) ||
+    defaultVarintId ||
+    "0";
 
   const quantity =
     Str.read(
       document.querySelector<HTMLInputElement>(
-        `.brz-shopify-quantity-container [data-product-handle="${productId}"]`
+        `.brz-shopify-quantity-container ${productIdAttr}`
       )?.value
-    ) ?? "1";
+    ) || "1";
 
   const formData = new FormData();
 

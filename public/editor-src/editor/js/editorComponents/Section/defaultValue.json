@@ -5,6 +5,8 @@
     "anchorName": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "membership": "off",
     "membershipRoles": "[]",
@@ -16,33 +18,15 @@
     "tagName": "section",
 
     "slider": "off",
-    "hoverSlider": null,
 
     "showOnDesktop": "on",
 
     "zIndex": 0,
-    "zIndexSuffix": null,
-
-    "hoverZIndex": null,
-
-    "tabletAnchorName": null,
-    "tabletFullHeight": null,
-
-    "tabletSlider": null,
+    "zIndexSuffix": "",
 
     "showOnTablet": "on",
 
-    "tabletZIndex": null,
-    "tabletZIndexSuffix": null,
-    "mobileAnchorName": null,
-    "mobileFullHeight": null,
-
-    "mobileSlider": null,
-
-    "showOnMobile": "on",
-
-    "mobileZIndex": null,
-    "mobileZIndexSuffix": null
+    "showOnMobile": "on"
   },
 
   "animation": {
@@ -51,34 +35,12 @@
     "sliderAutoPlaySpeed": 3,
     "sliderAutoPlaySpeedSuffix": null,
 
-    "tabletSliderAutoPlay": null,
-    "tabletSliderAutoPlaySpeed": null,
-    "tabletSliderAutoPlaySpeedSuffix": null,
-
-    "mobileSliderAutoPlay": null,
-    "mobileSliderAutoPlaySpeed": null,
-    "mobileSliderAutoPlaySpeedSuffix": null,
-
     "animationName": "none",
     "animationDuration": 1000,
     "animationDelay": 1000,
     "animationInfiniteAnimation": false,
 
-    "tempAnimationName": "none",
-
-    "tabletAnimationName": null,
-    "tabletAnimationDuration": null,
-    "tabletAnimationDelay": null,
-    "tabletAnimationInfiniteAnimation": null,
-
-    "tempTabletAnimationName": null,
-
-    "mobileAnimationName": null,
-    "mobileAnimationDuration": null,
-    "mobileAnimationDelay": null,
-    "mobileAnimationInfiniteAnimation": null,
-
-    "tempMobileAnimationName": null
+    "tempAnimationName": "none"
   },
 
   "toolbar": {
@@ -92,9 +54,13 @@
     "customClassName": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "customAttributes": "",
     "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
 
     "sliderDots": "circle",
 
@@ -133,8 +99,6 @@
     "sectionHeightSuffix": "px",
 
     "verticalAlign": "center",
-    "tabletVerticalAlign": null,
-    "mobileVerticalAlign": null,
 
     "marginType": "grouped",
     "margin": 0,
@@ -149,13 +113,6 @@
     "marginBottomSuffix": "px",
     "marginLeftSuffix": "px",
 
-    "tabletSliderDots": null,
-    "tabletSliderArrows": null,
-
-    "tabletSectionHeightStyle": null,
-    "tabletSectionHeight": null,
-    "tabletSectionHeightSuffix": null,
-
     "tabletMarginType": "ungrouped",
     "tabletMargin": 0,
     "tabletMarginTop": 0,
@@ -168,9 +125,6 @@
     "tabletMarginRightSuffix": "px",
     "tabletMarginBottomSuffix": "px",
     "tabletMarginLeftSuffix": "px",
-
-    "mobileSliderDots": null,
-    "mobileSliderArrows": null,
 
     "mobileMarginType": "ungrouped",
     "mobileMargin": 0,

@@ -10,6 +10,7 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import TextField from "./common/TextField";
 
 const MAX_ITEM_DROPDOWN = 5;
@@ -47,7 +48,7 @@ export default class Select extends TextField {
 
     return {
       multiple: multipleSelection === "on",
-      "data-max-item-dropdown": MAX_ITEM_DROPDOWN
+      ...makeDataAttr({ name: "max-item-dropdown", value: MAX_ITEM_DROPDOWN })
     };
   }
 

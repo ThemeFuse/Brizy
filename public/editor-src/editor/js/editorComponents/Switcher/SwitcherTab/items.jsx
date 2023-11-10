@@ -1,12 +1,13 @@
 import React from "react";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { hideToolbar } from "visual/component/Toolbar";
-import Sortable from "visual/component/Sortable";
-import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
-import contextMenuExtendConfigFn from "./contextMenu";
+import Sortable from "visual/component/Sortable";
+import SortableEmpty from "visual/component/Sortable/SortableEmpty";
+import { hideToolbar } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
+import contextMenuExtendConfigFn from "./contextMenu";
 
 class SwitcherTab extends EditorArrayComponent {
   static get componentId() {
@@ -18,8 +19,16 @@ class SwitcherTab extends EditorArrayComponent {
     meta: {}
   };
 
-  handleSortableAcceptElements = from => {
+  handleSortableAcceptElements = (from) => {
     const meta = this.props.meta;
+    const sortableTypeAttr = makeDataAttrString({
+      name: "sortable-type",
+      value: "row"
+    });
+    const sortableElementAttr = makeDataAttrString({
+      name: "sortable-element",
+      value: "true"
+    });
 
     if (meta.row && meta.row.isInner) {
       if (from.elementType === "column" || from.elementType === "row") {
@@ -28,7 +37,7 @@ class SwitcherTab extends EditorArrayComponent {
 
       if (from.elementType === "addable") {
         const addableSubtype = from.elementNode.getAttribute(
-          "data-sortable-subtype"
+          makeAttr("sortable-subtype")
         );
 
         return addableSubtype !== "row" && addableSubtype !== "columns";
@@ -37,7 +46,7 @@ class SwitcherTab extends EditorArrayComponent {
       if (from.elementType === "row" || from.elementType === "column") {
         return (
           from.elementNode.querySelector(
-            "[data-sortable-type=row][data-sortable-element=true]"
+            `${sortableTypeAttr}${sortableElementAttr}`
           ) === null // hasn't inner row (thus avoiding level 3 columns)
         );
       }
@@ -74,9 +83,8 @@ class SwitcherTab extends EditorArrayComponent {
         ];
       }
     };
-    const toolbarExtend = this.makeToolbarPropsFromConfig2(
-      toolbarExtendSetting
-    );
+    const toolbarExtend =
+      this.makeToolbarPropsFromConfig2(toolbarExtendSetting);
 
     return {
       meta: this.props.meta,

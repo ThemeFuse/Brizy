@@ -29,14 +29,13 @@ type DrawerWrapperProps = DrawerProps &
     iconProps: unknown;
   };
 
-const Drawer: React.FC<DrawerProps> = ({
+const _Drawer: React.FC<DrawerProps> = ({
   drawerContentType,
   drawerTitle = "",
   withHelpIcon,
   drawerComponent: DrawerContent,
   wrapperHeaderComponent: WrapperHeaderComponent = ({ children }) => children,
-  id,
-  ...extraProps
+  id
 }) => {
   const prevContentTypeRef = useRef(drawerContentType);
   useEffect(() => {
@@ -52,7 +51,7 @@ const Drawer: React.FC<DrawerProps> = ({
     <DrawerAnimation in={!!drawerContentType} appear={isOpened}>
       <WrapperHeaderComponent>
         <DrawerComponent headerText={drawerTitle} withHelpIcon={withHelpIcon}>
-          {DrawerContent && <DrawerContent extraProps={extraProps} />}
+          {DrawerContent && <DrawerContent />}
         </DrawerComponent>
       </WrapperHeaderComponent>
     </DrawerAnimation>
@@ -71,6 +70,8 @@ const Drawer: React.FC<DrawerProps> = ({
   return ReactDOM.createPortal(content, sidebarSelector);
 };
 
+const Drawer = React.memo(_Drawer);
+
 const DrawerWrapper: React.FC<DrawerWrapperProps> = ({ ...props }) => {
   const {
     id,
@@ -78,9 +79,12 @@ const DrawerWrapper: React.FC<DrawerWrapperProps> = ({ ...props }) => {
     showInDeviceModes,
     disabled,
     drawerContentType,
+    withHelpIcon,
     iconProps,
     icon,
     drawerTitle,
+    drawerComponent,
+    wrapperHeaderComponent,
     onDrawerContentTypeChange
   } = props;
 
@@ -117,7 +121,14 @@ const DrawerWrapper: React.FC<DrawerWrapperProps> = ({ ...props }) => {
         onClick={handleDrawerContentTypeChange}
         {...iconPropsClass}
       />
-      <Drawer {...props} />
+      <Drawer
+        id={id}
+        drawerTitle={drawerTitle}
+        drawerContentType={drawerContentType}
+        withHelpIcon={withHelpIcon}
+        drawerComponent={drawerComponent}
+        wrapperHeaderComponent={wrapperHeaderComponent}
+      />
     </>
   );
 };

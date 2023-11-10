@@ -78,11 +78,28 @@ export default class GridItem extends Component {
   }
 
   renderFree() {
-    const { img, title, loading, active, onClick } = this.props;
+    const {
+      img,
+      title,
+      loading,
+      active,
+      onClick,
+      isDeletable,
+      handleDelete,
+      id,
+      idx
+    } = this.props;
+
+    const handleDeleteEmail = (evt) => {
+      evt.stopPropagation();
+      handleDelete({ type: id, id: idx });
+    };
+
     const className = classnames(
       "brz-ed-popup-integrations__app",
       active && "brz-ed-popup-integrations__app--connected",
-      loading && "brz-ed-popup-integrations__app--loading"
+      loading && "brz-ed-popup-integrations__app--loading",
+      isDeletable && "brz-ed-popup-integrations__app--deletable"
     );
 
     return (
@@ -92,6 +109,14 @@ export default class GridItem extends Component {
           {active && !loading && (
             <span className="brz-span brz-ed-popup-integrations__app-icon">
               <EditorIcon icon="nc-check-small" />
+            </span>
+          )}
+          {isDeletable && !loading && (
+            <span
+              className="brz-span brz-ed-popup-integrations__delete-icon"
+              onClick={handleDeleteEmail}
+            >
+              <EditorIcon icon="nc-trash" />
             </span>
           )}
           {loading && (

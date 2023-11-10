@@ -7,7 +7,9 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import PortalToolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import * as Str from "visual/utils/reader/string";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -18,7 +20,6 @@ export interface Value extends ElementModel {
   iconName: string;
   iconType: string;
   itemId: string;
-  variantId?: number;
 }
 
 export class AddToCart extends EditorComponent<Value> {
@@ -45,22 +46,34 @@ export class AddToCart extends EditorComponent<Value> {
     }
   }
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
-    const { itemId, variantId } = v;
+    const { itemId, customCSS } = v;
 
     const className = classnames(
       "brz-shopify-add-to-cart",
       css(this.getComponentId(), this.getId(), style(v, vs, vd))
     );
 
+    const _itemId =
+      Str.read(itemId) ||
+      makePlaceholder({
+        content: "{{ brizy_dc_collection_item_field }}",
+        attr: { slug: "id" }
+      });
+
+    const _variantId = makePlaceholder({
+      content: "{{ brizy_dc_collection_item_field }}",
+      attr: { slug: "variants.id" }
+    });
+
     return (
       <PortalToolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <CustomCSS selectorName={this.getId()} css={customCSS}>
           <Wrapper
             {...this.makeWrapperProps({
               className,
               attributes: {
-                "data-product-handle": itemId,
-                "data-default-variant-id": Str.read(variantId) ?? ""
+                ...makeDataAttr({ name: "product-handle", value: _itemId }),
+                ...makeDataAttr({ name: "default-variant-id", value: _variantId })
               }
             })}
             component={"button"}

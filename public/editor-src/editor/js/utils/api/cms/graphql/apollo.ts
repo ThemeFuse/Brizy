@@ -55,7 +55,7 @@ let connection: ApolloClient | undefined = undefined;
 export const getConnection = (): ApolloClient =>
   connection ??
   (connection = createApolloClient({
-    uri: Config.get("cms")?.apiUrl,
+    uri: Config.getAll().api?.brizyApiUrl ?? "",
     authorization: Config.get("tokenV2")
       ? `${Config.get("tokenV2").token_type} ${
           Config.get("tokenV2").access_token

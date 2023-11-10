@@ -97,6 +97,21 @@ const fn: ExportFunction = ($node) => {
         $this.backgroundVideo("typeChange", { type, loop, start });
       }
     });
+    window.Brz.on("elements.slick.ready", (slick: HTMLElement) => {
+      const video = $this.get(0);
+
+      if (video) {
+        $this.backgroundVideo("resize");
+
+        if (slick.contains(video)) {
+          $this.backgroundVideo("reinit", {
+            type,
+            loop,
+            start
+          });
+        }
+      }
+    });
   });
 };
 

@@ -9,6 +9,7 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { normalizeCarouselColumns, setDataSortable } from "./utils";
 
@@ -96,7 +97,7 @@ class Items extends EditorArrayComponent {
   handleSortableAcceptElements = (from, to) => {
     if (from.elementType === "addable") {
       const addableSubtype = from.elementNode.getAttribute(
-        "data-sortable-subtype"
+        makeAttr("sortable-subtype")
       );
 
       if (addableSubtype === "row") {

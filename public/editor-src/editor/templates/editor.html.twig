@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ assetsUrl }}/editor/css/editor.min.css" rel="stylesheet">
+    <link href="{{ apiAssetsUrl }}/index.css" rel="stylesheet">
     <style id="brz-ed-page-curtain-style">@keyframes spin{100%{transform:rotate(360deg)}}.brz-ed-page-curtain{position:fixed;left:0;right:0;top:0;bottom:0;background-color:#141923;z-index:1000}.brz-ed-page-spinner,.brz-ed-page-spinner:after,.brz-ed-page-spinner:before{content:'';position:absolute;top:50%;left:50%;border:3px solid transparent;border-radius:50%;animation:spin 1s linear infinite}.brz-ed-page-spinner{width:100px;height:100px;margin:-50px 0 0 -50px;border-top-color:#22b0da;animation-duration:2.5s}.brz-ed-page-spinner:after{width:80px;height:80px;margin:-40px 0 0 -40px;border-right-color:#ed2164;animation-duration:2s}.brz-ed-page-spinner:before{width:60px;height:60px;margin:-30px 0 0 -30px;border-bottom-color:#fff}</style>
 
     {% if false and (DEV is not defined or DEV == false) %}
@@ -35,10 +36,27 @@
   </head>
   <body class="brz brz-ed">
       <div class="brz-ed-page-curtain"><div class="brz-ed-page-spinner"></div></div>
+      <script>
+        const userAgent = navigator.userAgent;
+        const browserRegex =
+          /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i;
+        const browserTypes = userAgent.match(browserRegex) || [];
+        const browser = browserTypes[1]?.toLowerCase();
+
+        if (browser && browser === "safari") {
+          const regexPattern = /version\/(\d+\.\d+)/i;
+          const matches = userAgent.match(regexPattern);  
+          const version = matches ? matches[1] : null;
+          if (version && Number(version) <= 16.3) {
+            alert("Please update Safari browser to the latest version");
+          }
+        }
+      </script>
       <iframe id="brz-ed-iframe" class="brz-iframe brz-ed-iframe--desktop" style="border: 0" srcdoc='
         <html>
           <head>
             <link href="{{ assetsUrl }}/editor/css/editor.min.css" rel="stylesheet">
+            <link href="{{ apiAssetsUrl }}/index.css" rel="stylesheet">
 
             {% if PRO is defined and PRO %}
             {% set assetsUrlPro = editorData.pro.urls.assets %}

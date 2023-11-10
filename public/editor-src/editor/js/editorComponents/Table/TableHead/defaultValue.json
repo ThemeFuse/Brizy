@@ -14,21 +14,7 @@
     "iconCustomSizeSuffix": "px",
     "iconPosition": "right",
     "iconSpacing": 10,
-    "iconSpacingSuffix": null,
-
-    "tabletIconSize": null,
-    "tabletIconCustomSize": null,
-    "tabletIconCustomSizeSuffix": null,
-    "tabletIconPosition": null,
-    "tabletIconSpacing": null,
-    "tabletIconSpacingSuffix": null,
-
-    "mobileIconSize": null,
-    "mobileIconCustomSize": null,
-    "mobileIconCustomSizeSuffix": null,
-    "mobileIconPosition": null,
-    "mobileIconSpacing": null,
-    "mobileIconSpacingSuffix": null,
+    "iconSpacingSuffix": "px",
 
     "iconStrokeWidth": 1,
 

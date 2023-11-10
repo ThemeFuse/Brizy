@@ -3,6 +3,7 @@ import { BoundsStatic, RangeStatic } from "quill";
 import React, { ReactNode } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
+import { Translate } from "visual/component/Translate";
 import Config from "visual/global/Config";
 import { ConfigDCItem } from "visual/global/Config/types/DynamicContent";
 import {
@@ -11,6 +12,7 @@ import {
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { css1 } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { isStory } from "visual/utils/models";
 import { uuid } from "visual/utils/uuid";
 import { styleHeading } from "./styles";
@@ -47,6 +49,7 @@ type Props = {
 
   onSelectionChange: (format: Formats, coords: Coords) => void;
   onTextChange: (text: string) => void;
+  onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
   isToolbarOpen: () => boolean;
 };
 
@@ -237,8 +240,9 @@ class QuillComponent extends React.Component<Props> {
     this.props.onTextChange(text);
   }, 500);
 
-  handleClick = (): void => {
+  handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const node = this.content.current;
+    this.props.onClick(event);
 
     node && node.classList.add(...classToDisableDnd);
   };
@@ -313,7 +317,7 @@ class QuillComponent extends React.Component<Props> {
 
     if (IS_PREVIEW) {
       return (
-        <div
+        <Translate
           dangerouslySetInnerHTML={{
             __html: newValue
           }}
@@ -413,7 +417,6 @@ class QuillComponent extends React.Component<Props> {
   }): void => {
     const config = Config.getAll();
     const dcOptionRichText = config?.dynamicContent?.groups?.richText;
-    const useCustomPlaceholder = config?.dynamicContent?.useCustomPlaceholder;
 
     const { label: _label, display, placeholder } = data;
     let label = createLabel(_label);
@@ -421,10 +424,6 @@ class QuillComponent extends React.Component<Props> {
     if (!Array.isArray(dcOptionRichText) && dcOptionRichText?.handler) {
       label = _label;
     }
-
-    const population = useCustomPlaceholder
-      ? placeholder
-      : placeholder.replace("{{", "").replace("}}", "");
 
     const quill = this.quill as Quill;
     const selection = quill.getSelection(true);
@@ -440,6 +439,7 @@ class QuillComponent extends React.Component<Props> {
 
     quill.deleteText(index, length);
 
+    const population = makePlaceholder({ content: placeholder });
     const newFormats = {
       ...formats,
       population,

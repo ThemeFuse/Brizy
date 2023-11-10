@@ -1,7 +1,5 @@
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import { getDynamicContentOption } from "visual/utils/options";
 
 export function toolbarLinkAnchor({
   v,
@@ -33,41 +31,6 @@ export function toolbarStoryAnchor({ disabled = false, devices = "all" }) {
     config: {
       min: 1,
       max: 1000000
-    }
-  };
-}
-
-export function toolbarLinkExternal({ v, config, devices = "all" }) {
-  const population = getDynamicContentOption({
-    options: config,
-    type: DCTypes.link,
-    config: { show: true }
-  });
-
-  return {
-    id: "linkExternal",
-    type: "input",
-    devices,
-    label: t("Link to"),
-    placeholder: "http://",
-    population: population,
-    value: {
-      value: v.linkExternal,
-
-      population: v.linkPopulation
-    },
-    onChange: (
-      { value: linkExternal, population: linkPopulation },
-      { changed }
-    ) => {
-      return {
-        linkExternal,
-        linkPopulation,
-        linkExternalType:
-          changed === "value" || linkPopulation === ""
-            ? "linkExternal"
-            : "linkPopulation"
-      };
     }
   };
 }

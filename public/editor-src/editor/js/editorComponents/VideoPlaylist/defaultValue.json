@@ -5,28 +5,14 @@
     "positionThumbs": "above",
 
     "gridColumn": 2,
-    "gridColumnSuffix": null,
+    "gridColumnSuffix": "",
 
     "tabletGridColumn": 2,
-    "tabletGridColumnSuffix": null,
 
     "mobileGridColumn": 2,
-    "mobileGridColumnSuffix": null,
 
     "coverZoom": 100,
-    "coverZoomSuffix": null,
-
-    "tabletCoverPositionY": null,
-    "tabletCoverPositionX": null,
-
-    "mobileCoverPositionY": null,
-    "mobileCoverPositionX": null,
-
-    "tabletCoverZoom": null,
-    "tabletCoverZoomSuffix": null,
-
-    "mobileCoverZoom": null,
-    "mobileCoverZoomSuffix": null
+    "coverZoomSuffix": "%"
   },
 
   "toolbar": {
@@ -288,9 +274,6 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "tabletCoverImageWidth": null,
-    "tabletCoverImageHeight": null,
-
     "tabletFontStyle": "",
     "tabletFontSize": 18,
     "tabletFontSizeSuffix": "px",
@@ -305,12 +288,9 @@
     "tabletSubTitleLineHeight": 1.1,
     "tabletSubTitleLetterSpacing": 0,
 
-    "tabletWidth": null,
     "tabletWidthSuffix": null,
     "tabletWidthSidebar": 250,
-    "tabletWidthSidebarSuffix": null,
     "tabletWidthImage": 75,
-    "tabletWidthImageSuffix": null,
 
     "tabletPaddingType": "grouped",
     "tempTabletPaddingType": "grouped",
@@ -382,12 +362,7 @@
     "mobileSubTitleLineHeight": 1.1,
     "mobileSubTitleLetterSpacing": 0,
 
-    "mobileWidth": null,
     "mobileWidthSuffix": null,
-    "mobileWidthSidebar": null,
-    "mobileWidthSidebarSuffix": null,
-    "mobileWidthImage": null,
-    "mobileWidthImageSuffix": null,
 
     "mobilePaddingType": "grouped",
     "tempMobilePaddingType": "grouped",

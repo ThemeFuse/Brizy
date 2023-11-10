@@ -34,7 +34,8 @@
       "titleTypographyFontFamily": "lato",
       "previewTypographyFontFamily": "lato",
       "metaLinksTypographyFontFamily": "lato",
-      "mediaLinksTypographyFontFamily": "lato"
+      "mediaLinksTypographyFontFamily": "lato",
+      "detailButtonTypographyFontFamily": "lato"
     },
 
     "typographyFontStyle": "",
@@ -76,6 +77,14 @@
     "mediaLinksTypographyFontWeight": 400,
     "mediaLinksTypographyLetterSpacing": 0,
     "mediaLinksTypographyLineHeight": 1,
+
+    "detailButtonTypographyFontStyle": "",
+    "detailButtonTypographyFontFamilyType": "google",
+    "detailButtonTypographyFontSize": 15,
+    "detailButtonTypographyFontSizeSuffix": "px",
+    "detailButtonTypographyFontWeight": 400,
+    "detailButtonTypographyLetterSpacing": 0,
+    "detailButtonTypographyLineHeight": 1,
 
     "itemHorizontalAlign": "left",
 

@@ -1,5 +1,6 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
+import { getCollectionTypes } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
 import type { Props, Value } from "./types";
@@ -12,7 +13,7 @@ export const getItems: GetItems<Value, Props> = ({
   component,
   context
 }) => {
-  const { getSourceChoices } = Config.getAll().api?.sourceTypes ?? {};
+  const config = Config.getAll();
 
   return [
     {
@@ -27,6 +28,9 @@ export const getItems: GetItems<Value, Props> = ({
         {
           id: "tabsCurrentElement",
           type: "tabs-dev",
+          config: {
+            saveTab: true
+          },
           tabs: [
             {
               id: "tabColumns",
@@ -159,7 +163,12 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "select-dev",
                   label: t("Type"),
                   devices: "desktop",
-                  choices: getSourceChoices?.() ?? [],
+                  choices: {
+                    load: () => getCollectionTypes(config),
+                    emptyLoad: {
+                      title: t("There are no choices")
+                    }
+                  },
                   config: {
                     size: "large"
                   },

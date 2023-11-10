@@ -9,6 +9,7 @@ class MiddleBlockAdder extends React.Component {
   handleOpen = () => {
     const { onAddBlock, onAddTemplate } = this.props;
     const config = Config.getAll();
+    ///// TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
     const showGlobal = !(isCloud(config) && isShopify(config));
 
     Prompts.open({

@@ -1,4 +1,5 @@
 import $ from "jquery";
+import { makeAttr } from "visual/utils/i18n/attribute";
 
 var callbacks = [];
 var isAlreadyMounted = false;
@@ -131,9 +132,10 @@ function Vimeo($iframe, settings) {
     function (event) {
       if (!event.origin.includes("vimeo")) return;
       var parsedData = JSON.parse(event.data);
+      const readyAttr = makeAttr("ready");
 
-      if (parsedData.method === "ping" && !$iframe.attr("data-ready")) {
-        $iframe.attr("data-ready", "true");
+      if (parsedData.method === "ping" && !$iframe.attr(readyAttr)) {
+        $iframe.attr(readyAttr, "true");
         sendMessage("addEventListener", "loaded");
         sendMessage("addEventListener", "finish");
       }
@@ -141,7 +143,7 @@ function Vimeo($iframe, settings) {
       switch (parsedData.event) {
         case "ready": {
           if (!$iframe.data("ready")) {
-            $iframe.attr("data-ready", "true");
+            $iframe.attr(readyAttr, "true");
             sendMessage("addEventListener", "loaded");
             sendMessage("addEventListener", "finish");
           }

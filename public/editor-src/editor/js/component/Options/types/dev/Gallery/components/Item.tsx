@@ -17,7 +17,7 @@ export function Item<T>({ item, onRemove }: Props<T>): ReactElement {
       const src =
         getImageUrl({
           uid: item.payload.uid,
-          fileName: item.payload.fileName,
+          fileName: item.payload.fileName ?? "",
           sizeType: SizeType.custom,
           crop: { iW: 42, iH: 42 }
         }) ?? "";

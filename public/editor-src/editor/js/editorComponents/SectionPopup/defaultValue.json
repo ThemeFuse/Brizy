@@ -9,15 +9,9 @@
     "bgSizeType": "custom",
 
     "bgImageFileName": null,
-    "hoverBgImageFileName": null,
-    "tabletBgImageFileName": null,
-    "mobileBgImageFileName": null,
 
     "images": {
-      "bgImageSrc": "",
-      "hoverBgImageSrc": null,
-      "tabletBgImageSrc": null,
-      "mobileBgImageSrc": null
+      "bgImageSrc": ""
     },
 
     "bgImageWidth": 0,
@@ -34,61 +28,18 @@
 
     "hoverMedia": "image",
 
-    "hoverBgImageWidth": null,
-    "hoverBgImageHeight": null,
-    "hoverBgPositionY": null,
-    "hoverBgPositionX": null,
-    "hoverBgPopulation": null,
-    "hoverBgImageExtension": null,
-
-    "hoverBrightness": null,
-    "hoverHue": null,
-    "hoverSaturation": null,
-    "hoverContrast": null,
-
     "tabletMedia": "image",
 
-    "tabletBgSizeType": null,
-
-    "tabletBgImageWidth": null,
-    "tabletBgImageHeight": null,
-    "tabletBgPositionX": null,
-    "tabletBgPositionY": null,
     "tabletBgPopulation": "",
-    "tabletBgImageExtension": null,
-
-    "tabletBrightness": null,
-    "tabletHue": null,
-    "tabletSaturation": null,
-    "tabletContrast": null,
 
     "mobileMedia": "image",
-
-    "mobileBgImageWidth": null,
-    "mobileBgImageHeight": null,
-    "mobileBgPositionX": null,
-    "mobileBgPositionY": null,
-    "mobileBgPopulation": "",
-    "mobileBgImageExtension": null,
-
-    "mobileBrightness": null,
-    "mobileHue": null,
-    "mobileSaturation": null,
-    "mobileContrast": null
+    "mobileBgPopulation": ""
   },
 
   "toolbar": {
     "tabsMedia": "",
     "tabsState": "",
-    "tabsColor": "",
-
-    "tabletTabsMedia": null,
-    "tabletTabsState": null,
-    "tabletTabsColor": null,
-
-    "mobileTabsMedia": null,
-    "mobileTabsState": null,
-    "mobileTabsColor": null
+    "tabsColor": ""
   },
 
   "style": {

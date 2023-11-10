@@ -15,7 +15,6 @@ import {
   Page,
   PageCollection,
   DataCommon as PageCommon,
-  PageCustomer,
   Rule
 } from "visual/types";
 import { NoEmptyString } from "visual/utils/string/NoEmptyString";
@@ -37,7 +36,37 @@ export const urlsCommon = {
   upgradeToPro: "",
   editorIcons: "",
   worker: "",
+  assetsExternal: "",
+  backToDashboard: "",
+  blockThumbnails: "",
+  changeTemplate: "",
+  dashboardNavMenu: "",
+  pluginSettings: "",
+  templateIcons: "",
+  templateThumbnails: "",
   projectCloneLink: ""
+};
+
+const cmsCommon = {
+  adminUrl: "",
+  apiUrl: "",
+  blogId: "",
+  supportLinks: {
+    customCss: undefined,
+    codeInject: undefined,
+    webhooks: undefined,
+    redirects: undefined,
+    acf: undefined,
+    users: undefined,
+    orders: undefined,
+    discount: undefined
+  },
+  customerEditorUrl: "",
+  customerPreviewUrl: "",
+  isAvailablePreviewBadge: true,
+  collectionPreviewUrl: "",
+  translationsApiUrl: "",
+  notificationsApiUrl: ""
 };
 
 export const projectCommon = {
@@ -146,12 +175,6 @@ const pageCollection: PageCollection = {
   title: ""
 };
 
-const pageCustomer: PageCustomer = {
-  ...pageCommon,
-  groups: [{ id: "role-1", name: "admin" }],
-  title: ""
-};
-
 // @ts-expect-error: the TARGET is added from webpack, here we are hardcoded
 const currentTarget = global.TARGET;
 
@@ -213,7 +236,6 @@ describe("testing WP getAllowedGBIds", () => {
       },
       dynamicContent: {
         liveInBuilder: true,
-        useCustomPlaceholder: false,
         groups: {
           [DCTypes.image]: [],
           [DCTypes.link]: [],
@@ -326,6 +348,7 @@ describe("testing WP getAllowedGBIds", () => {
   test.each<[GlobalBlock, Page, boolean]>([
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -344,6 +367,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -362,6 +386,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -380,6 +405,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -398,6 +424,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -416,6 +443,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -434,6 +462,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -452,6 +481,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -470,6 +500,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -488,6 +519,7 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -508,6 +540,7 @@ describe("testing WP getAllowedGBIds", () => {
     //#region Author
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -533,6 +566,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -558,6 +592,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -587,6 +622,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -612,6 +648,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -637,6 +674,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -662,6 +700,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -687,6 +726,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -715,6 +755,7 @@ describe("testing WP getAllowedGBIds", () => {
     //#region Child
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -740,6 +781,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -765,6 +807,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -790,6 +833,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -815,6 +859,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -876,38 +921,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         isGuest: false,
         allowScripts: false
       },
-      cms: {
-        adminUrl: "",
-        apiUrl: "",
-        blogId: "",
-        supportLinks: {
-          customCss: undefined,
-          codeInject: undefined,
-          webhooks: undefined,
-          redirects: undefined,
-          acf: undefined,
-          users: undefined,
-          orders: undefined,
-          discount: undefined
-        },
-        customerEditorUrl: "",
-        customerPreviewUrl: "",
-        isAvailablePreviewBadge: true,
-        collectionPreviewUrl: "",
-        translationsApiUrl: "",
-        notificationsApiUrl: ""
-      },
-      urls: {
-        ...urlsCommon,
-        assetsExternal: "",
-        backToDashboard: "",
-        blockThumbnails: "",
-        changeTemplate: "",
-        dashboardNavMenu: "",
-        pluginSettings: "",
-        templateIcons: "",
-        templateThumbnails: ""
-      },
+      cms: cmsCommon,
+      urls: urlsCommon,
       project: {
         ...projectCommon,
         id: 1,
@@ -916,7 +931,6 @@ describe("testing Cloud getAllowedGBIds", () => {
       },
       dynamicContent: {
         liveInBuilder: true,
-        useCustomPlaceholder: false,
         groups: {
           [DCTypes.image]: [],
           [DCTypes.link]: [],
@@ -987,6 +1001,7 @@ describe("testing Cloud getAllowedGBIds", () => {
   test.each<[GlobalBlock, Page, boolean]>([
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1005,6 +1020,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1023,6 +1039,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1041,6 +1058,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1059,6 +1077,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1077,6 +1096,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1095,6 +1115,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1113,6 +1134,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1131,6 +1153,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1149,6 +1172,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1169,6 +1193,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     // Specific case in CollectionItem: rules with reference and multiReference
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1219,6 +1244,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1271,6 +1297,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1323,6 +1350,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1375,6 +1403,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1427,6 +1456,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1476,11 +1506,70 @@ describe("testing Cloud getAllowedGBIds", () => {
         ]
       },
       false
-    ],
+    ]
+  ])("canUseConditionInPage nr %#", (globalBlock, page, resolve) => {
+    expect(canUseConditionInPage(globalBlock, page)).toBe(resolve);
+  });
 
+  //#endregion
+});
+
+describe("testing Cloud Customer getAllowedGBIds", () => {
+  const itemRule: CollectionItemRule = {
+    mode: "specific",
+    type: BlockTypeRule.include,
+    appliedFor: PAGES_GROUP_ID,
+    entityType: "collectionItem/1",
+    entityValues: ["1"]
+  };
+
+  beforeAll(() => {
+    // @ts-expect-error: the IS_CLOUD is added from webpack, here we are hardcoded
+    global.TARGET = "Cloud";
+    Config.init({
+      ...configCommon,
+      //@ts-expect-error: implicit set cms
+      platform: "cms",
+      page: {
+        //@ts-expect-error: implicit set customers
+        provider: "customers"
+      },
+      availableRoles: [{ role: "role-1", name: "admin" }],
+      user: {
+        isAuthorized: false,
+        role: "admin",
+        isGuest: false,
+        allowScripts: false
+      },
+      cms: cmsCommon,
+      urls: urlsCommon,
+      project: {
+        ...projectCommon,
+        id: 1,
+        apiVersion: 2,
+        protectedPagePassword: ""
+      },
+      dynamicContent: {
+        liveInBuilder: true,
+        groups: {
+          [DCTypes.image]: [],
+          [DCTypes.link]: [],
+          [DCTypes.richText]: []
+        }
+      }
+    });
+  });
+
+  afterAll(() => {
+    // @ts-expect-error: the TARGET is added from webpack, here we are hardcoded
+    global.TARGET = currentTarget;
+  });
+
+  test.each<[GlobalBlock, Page, boolean]>([
     // Specific case in CustomerPage: rules with group
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1500,13 +1589,14 @@ describe("testing Cloud getAllowedGBIds", () => {
           extraFontStyles: []
         }
       },
-      pageCustomer,
+      pageCommon,
       true
     ],
 
     // Specific case in CustomerPage: rules with group
     [
       {
+        id: "b1",
         data: {
           blockId: "b1",
           type: "Section",
@@ -1526,12 +1616,10 @@ describe("testing Cloud getAllowedGBIds", () => {
           extraFontStyles: []
         }
       },
-      pageCustomer,
+      pageCommon,
       false
     ]
-  ])("canUseConditionInPage nr %#", (globalBlock, page, resolve) => {
+  ])(`canUseConditionInPage nr %#`, (globalBlock, page, resolve) => {
     expect(canUseConditionInPage(globalBlock, page)).toBe(resolve);
   });
-
-  //#endregion
 });

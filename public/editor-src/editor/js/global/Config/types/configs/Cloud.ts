@@ -1,4 +1,3 @@
-import { XAuthUserToken } from "visual/component/LeftSidebar/components/Cms/types/XAuth";
 import Config from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Subscription } from "visual/global/Config/types/shopify/Subscription";
@@ -7,15 +6,16 @@ import {
   EcwidProductPage,
   Page,
   PageCollection,
-  PageCustomer,
   ShopifyPage
 } from "visual/types";
 import { Language } from "visual/utils/multilanguages";
 import { TemplateType } from "../TemplateType";
 import { ShopifyTemplate } from "../shopify/ShopifyTemplate";
 import { Base, CollectionPage } from "./Base";
+import { XAuthUserToken } from "./XAuth";
 
 //#region CMS
+
 export interface CMS extends Base<"cms"> {
   templateType?: TemplateType;
   availableTranslations: Language[];
@@ -23,12 +23,14 @@ export interface CMS extends Base<"cms"> {
 }
 
 export const isCMS = (c: Cloud): c is CMS => c.platform === "cms";
+
 //#endregion
 
 //#region Shopify
+
 export interface Shopify extends Base<"shopify"> {
   page: CollectionPage;
-  templates: { id: string }[];
+  templates: { id: string; title: string }[];
   templateType: {
     id: string;
     type: ShopifyTemplate;
@@ -37,13 +39,7 @@ export interface Shopify extends Base<"shopify"> {
 }
 
 export const isShopify = (c: Cloud): c is Shopify => c.platform === "shopify";
-//#endregion
 
-//#region Provider
-export const isCustomer = (c: CMS): boolean => c.page.provider === "customers";
-
-export const isCollection = (c: CMS): boolean =>
-  c.page.provider === "collections";
 //#endregion
 
 export type Cloud = CMS | Shopify;
@@ -53,6 +49,7 @@ export const isCloud = (config: ConfigCommon): config is Cloud =>
   TARGET === "Cloud" || TARGET === "Cloud-localhost";
 
 //#region Page
+
 export const isEcwidProductPage = (p: Page): p is EcwidProductPage => {
   return "__type" in p && p.__type === "ecwid-product";
 };
@@ -70,7 +67,4 @@ export const isShopifyPage = (page: Page): page is ShopifyPage => {
   return isCloud(config) && isShopify(config) && !("rules" in page);
 };
 
-export const isCustomerPage = (page: Page): page is PageCustomer => {
-  return "groups" in page;
-};
 //#endregion

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import _ from "underscore";
 import { t } from "visual/utils/i18n";
 import { Button } from "../../../common/Button";
-import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
+import { InputField } from "./index";
 
 class Connect extends Component {
   static defaultProps = {
@@ -13,7 +13,9 @@ class Connect extends Component {
       {
         title: "",
         name: "",
-        value: ""
+        value: "",
+        type: "",
+        choices: []
       }
     ],
     nextLoading: null,
@@ -31,34 +33,12 @@ class Connect extends Component {
     );
   }
 
-  handleKeyDown = e => {
+  handleKeyDown = (e) => {
     // prevent enter
     if (e.which === 13) {
       this.props.onNext();
     }
   };
-
-  renderInputs() {
-    const { data, onChange } = this.props;
-
-    return data.map((key, index) => {
-      const { title, name, value } = key;
-
-      return (
-        <InputPlaceholder
-          key={index}
-          title={title}
-          name={name}
-          required={true}
-          value={value}
-          onChange={({ target }) => {
-            onChange(target.value, name);
-          }}
-          onKeyDonw={this.handleKeyDown}
-        />
-      );
-    });
-  }
 
   render() {
     const {
@@ -70,7 +50,9 @@ class Connect extends Component {
       prevLoading,
       onNext,
       onPrev,
-      docsUrl
+      docsUrl,
+      data,
+      onChange
     } = this.props;
 
     return (
@@ -91,7 +73,14 @@ class Connect extends Component {
         </div>
         <div className="brz-ed-popup-integrations__connect-body">
           {error && this.renderError()}
-          {this.renderInputs()}
+          {data.map((field, index) => (
+            <InputField
+              key={index}
+              field={field}
+              onChange={onChange}
+              onKeyDown={this.handleKeyDown}
+            />
+          ))}
           {nextLoading !== null && (
             <Button color="teal" loading={nextLoading} onClick={onNext}>
               {t("Connect")}

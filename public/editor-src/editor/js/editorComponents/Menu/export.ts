@@ -11,7 +11,7 @@ import { BrizyProLibs } from "visual/types/global";
 import * as Str from "visual/utils/reader/string";
 import { decodeFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
-import { getParentMegaMenuUid } from "./utils.common";
+import { getParentMegaMenuUid, isClonedSlide } from "./utils.common";
 
 interface Settings {
   widths?: {
@@ -442,7 +442,10 @@ export default function ($node: JQuery): void {
   let needToOpen: string | undefined = undefined;
 
   root.querySelectorAll<HTMLElement>("[data-mmenu-id]").forEach((node) => {
-    const { mmenuId, mmenuPosition, mmenuTitle } = node.dataset;
+    const { mmenuId, mmenuPosition, mmenuTitle, mmenuIsslider } = node.dataset;
+
+    if (mmenuIsslider && isClonedSlide(node)) return;
+
     const icon = [...node.children].find((node) =>
       node.classList.contains("brz-mm-menu__icon")
     );

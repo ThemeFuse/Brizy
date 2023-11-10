@@ -10,6 +10,9 @@
   },
 
   "link": {
+    "linkPage": "",
+    "linkPageTitle": "",
+    "linkSource": "",
     "linkType": "external",
     "linkExternal": "",
     "linkAnchor": "",
@@ -18,6 +21,8 @@
     "linkExternalRel": "off",
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
+    "linkPopulationEntityType": "",
+    "linkPopulationEntityId": "",
     "linkUpload": "",
     "linkPopup": "",
     "actionClosePopup": "off"
@@ -36,8 +41,12 @@
     "customID": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "size": "custom",
 
@@ -245,12 +254,7 @@
 
     "customCSS": "",
 
-    "tabletSize": null,
-    "tabletCustomSize": null,
     "tabletCustomSizeSuffix": null,
-
-    "mobileSize": null,
-    "mobileCustomSize": null,
     "mobileCustomSizeSuffix": null,
 
     "tempMobilePadding": 20,

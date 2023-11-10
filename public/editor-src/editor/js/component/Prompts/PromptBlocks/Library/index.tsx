@@ -595,7 +595,11 @@ class Library extends Component<
   makeThumbsData(
     block: SavedBlockAPIMetaWithoutSync | SavedLayoutAPIMetaWithoutSync
   ): Thumbs {
-    const { url, width, height } = blockThumbnailData(block);
+    const { url, width, height } = blockThumbnailData({
+      type: "",
+      value: {},
+      meta: block.meta
+    });
     const isAdminRole = currentUserRole() === "admin";
 
     return {

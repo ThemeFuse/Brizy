@@ -6,7 +6,11 @@
     },
     "maskCustomUploadImageFileName": "",
     "imageFileName": "",
+
     "imagePopulation": "",
+    "imagePopulationEntityType": "",
+    "imagePopulationEntityId": "",
+
     "imageWidth": 600,
     "imageHeight": 450,
     "imageExtension": "",
@@ -15,21 +19,8 @@
     "size": 100,
     "sizeSuffix": "%",
 
-    "tabletSizeType": null,
-    "tabletSize": null,
-    "tabletSizeSuffix": null,
-    "mobileSizeType": null,
-    "mobileSize": null,
-    "mobileSizeSuffix": null,
-
     "positionY": 50,
     "positionX": 50,
-
-    "tabletPositionY": null,
-    "tabletPositionX": null,
-
-    "mobilePositionY": null,
-    "mobilePositionX": null,
 
     "popups": [],
     "tags": "",
@@ -41,6 +32,9 @@
   },
 
   "link": {
+    "linkPage": "",
+    "linkPageTitle": "",
+    "linkSource": "",
     "linkType": "external",
     "linkExternal": "",
     "linkAnchor": "",
@@ -50,6 +44,8 @@
     "linkLightBox": "off",
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
+    "linkPopulationEntityId": "",
+    "linkPopulationEntityType": "",
     "linkUpload": "",
     "linkPopup": "",
     "actionClosePopup": "off"
@@ -71,7 +67,7 @@
     "imageOpacity": 100,
 
     "zoom": 100,
-    "zoomSuffix": null,
+    "zoomSuffix": "%",
 
     "width": 100,
     "height": 100,
@@ -178,24 +174,6 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "tabletZoom": null,
-    "tabletZoomSuffix": null,
-
-    "tabletWidth": null,
-    "tabletHeight": null,
-
-    "tabletWidthSuffix": null,
-    "tabletHeightSuffix": null,
-
-    "mobileZoom": null,
-    "mobileZoomSuffix": null,
-
-    "mobileWidth": null,
-    "mobileHeight": null,
-
-    "mobileWidthSuffix": null,
-    "mobileHeightSuffix": null,
-
     "maskShape": "none",
     "maskSize": "cover",
     "maskPosition": "center center",
@@ -224,6 +202,12 @@
     "hoverName": "none",
     "hoverDuration": 600,
     "hoverDelay": 0,
-    "hoverInfiniteAnimation": true
+    "hoverInfiniteAnimation": true,
+
+    "tabletWidthSuffix": null,
+    "tabletHeightSuffix": null,
+
+    "mobileWidthSuffix": null,
+    "mobileHeightSuffix": null
   }
 }

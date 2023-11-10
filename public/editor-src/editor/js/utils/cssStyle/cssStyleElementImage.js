@@ -1,5 +1,6 @@
-import { getSizeType, isGIF, isSVG } from "visual/editorComponents/Image/utils";
+import { getSizeType } from "visual/editorComponents/Image/utils";
 import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
+import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { roundTo } from "visual/utils/math";
 import { defaultValueValue } from "visual/utils/onChange";
 import { isNullish } from "visual/utils/value";
@@ -13,7 +14,9 @@ const isSvgOrGif = (v, device) => {
   const dvv = (key) => defaultValueValue({ v, key, device });
   const extension = dvv("imageExtension");
   const population = dvv("imagePopulation");
-  return (isSVG(extension) || isGIF(extension)) && !population;
+  return (
+    (isSVGExtension(extension) || isGIFExtension(extension)) && !population
+  );
 };
 
 export function cssStyleElementImageMaxWidthPreview({ v, device, props = {} }) {
@@ -149,7 +152,11 @@ export function cssStyleElementImageMarginTop({ v, device, props = {} }) {
   return "margin-top: auto;";
 }
 
-export function cssStyleElementImagePictureSizePreview({ v, device, props }) {
+export function cssStyleElementImagePictureSizePreview({
+  v,
+  device,
+  props = {}
+}) {
   const sizeType = getSizeType(v, device);
   const dvv = (key) => defaultValueValue({ v, device, key });
   const src = dvv("imageSrc");

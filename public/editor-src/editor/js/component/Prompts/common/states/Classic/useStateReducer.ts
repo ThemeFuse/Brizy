@@ -1,10 +1,10 @@
-import { useEffect, useReducer } from "react";
-import { loading, St, State } from "./types/State";
-import * as Actions from "./types/Actions";
-import { from, of, Subscription } from "rxjs";
+import { useEffect, useMemo, useReducer } from "react";
+import { Subscription, from, of } from "rxjs";
 import { catchError, delay, map, mapTo } from "rxjs/operators";
 import { Tabs } from "visual/component/Prompts/common/PromptPage/types";
+import * as Actions from "./types/Actions";
 import { Reducer } from "./types/Reducer";
+import { St, State, loading } from "./types/State";
 
 export const useStateReducer = <
   Invalid extends St,
@@ -21,10 +21,17 @@ export const useStateReducer = <
     loading({ activeTab: Tabs.page })
   );
 
+  const { type, payload } = state;
+
+  const isLoading = useMemo(() => type === "Loading", [type]);
+  const isSaving = useMemo(() => type === "Saving", [type]);
+  const isCanceling = useMemo(() => type === "Canceling", [type]);
+  const isCanceled = useMemo(() => type === "Canceled", [type]);
+
   useEffect(() => {
     const fetcher = from(getData())
       .pipe(
-        map(t =>
+        map((t) =>
           Actions.fetchSuccess<Invalid>({
             ...t,
             activeTab: Tabs.page
@@ -35,12 +42,13 @@ export const useStateReducer = <
       .subscribe(dispatch);
 
     return (): void => fetcher?.unsubscribe();
-  }, [state.type === "Loading"]);
+  }, [isLoading, getData]);
+
   useEffect(() => {
     let fetcher: Subscription | undefined;
 
-    if (state.type === "Saving") {
-      fetcher = from(onSave(state.payload))
+    if (isSaving) {
+      fetcher = from(onSave(payload as Valid))
         .pipe(
           mapTo(Actions.saveSuccess()),
           catchError(() => of(Actions.saveError()))
@@ -49,23 +57,24 @@ export const useStateReducer = <
     }
 
     return (): void => fetcher?.unsubscribe();
-  }, [state.type === "Saving"]);
+  }, [onSave, payload, isSaving]);
+
   useEffect(() => {
     let fetcher: Subscription | undefined;
 
-    if (state.type === "Canceling") {
+    if (isCanceling) {
       fetcher = of(1)
         .pipe(delay(650), mapTo(Actions.canceled()))
         .subscribe(dispatch);
     }
 
     return (): void => fetcher?.unsubscribe();
-  }, [state.type === "Canceling"]);
+  }, [isCanceling]);
   useEffect(() => {
-    if (state.type === "Canceled") {
+    if (isCanceled) {
       onClose();
     }
-  }, [state.type === "Canceled"]);
+  }, [onClose, isCanceled]);
 
   return [state, dispatch];
 };

@@ -1,5 +1,6 @@
 import React, { ComponentType, ReactElement, useMemo } from "react";
-import items from "./items";
+import Config from "visual/global/Config";
+import { getComponents } from "./items";
 
 const objectIsReactClassObject = (o: unknown): o is { displayName: string } => {
   if (typeof o === "object" && o !== null) {
@@ -13,10 +14,12 @@ const isComponentType = (c: unknown): c is ComponentType =>
 
 export default function BottomPanel(): ReactElement {
   const panelItems = useMemo(() => {
-    return items.filter(isComponentType).map((Item, index): ReactElement => {
-      // @ts-expect-error: Type 'undefined' is not assignable to type 'Element | null'.
-      return <Item key={index} />;
-    });
+    const config = Config.getAll();
+    return getComponents(config)
+      .filter(isComponentType)
+      .map((Item, index): ReactElement => {
+        return <Item key={index} />;
+      });
   }, []);
 
   return (

@@ -1,15 +1,17 @@
-import React from "react";
-//import Config from "visual/global/Config";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import { style } from "./styles";
 import classnames from "classnames";
-import { css } from "visual/utils/cssStyle";
+import React from "react";
+import CustomCSS from "visual/component/CustomCSS";
 import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
+//import Config from "visual/global/Config";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class FacebookEmbed extends EditorComponent {
   static get componentId() {
@@ -26,7 +28,9 @@ class FacebookEmbed extends EditorComponent {
       //appId: facebook && facebook.appid ? facebook.appid : "nick",
 
       appId: 113869198637480,
-      lang: "{{ brizy_dc_page_language }}"
+      lang: makePlaceholder({
+        content: "{{ brizy_dc_page_language }}"
+      })
     };
   }
 
@@ -92,22 +96,38 @@ class FacebookEmbed extends EditorComponent {
       postHref,
       videoHref
     } = v;
+
     const appData = this.getAppData();
     const data =
       type === "post"
         ? {
-            "data-show-text": postAndVideoShowText === "on",
-            "data-href": postHref,
-            "data-lang": appData.lang
+            ...makeDataAttr({
+              name: "show-text",
+              value: String(postAndVideoShowText === "on")
+            }),
+            ...makeDataAttr({ name: "href", value: postHref }),
+            ...makeDataAttr({ name: "lang", value: appData.lang })
           }
         : {
-            "data-width": "auto",
-            "data-show-text": postAndVideoShowText === "on",
-            "data-allowFullScreen": videoAllowFullScreen === "on",
-            "data-autoplay": videoAutoPlay === "on",
-            "data-show-captions": videoCaptions == "on",
-            "data-href": videoHref,
-            "data-lang": appData.lang
+            ...makeDataAttr({ name: "width", value: "auto" }),
+            ...makeDataAttr({
+              name: "show-text",
+              value: String(postAndVideoShowText === "on")
+            }),
+            ...makeDataAttr({
+              name: "allowFullScreen",
+              value: String(videoAllowFullScreen === "on")
+            }),
+            ...makeDataAttr({
+              name: "autoplay",
+              value: String(videoAutoPlay === "on")
+            }),
+            ...makeDataAttr({
+              name: "show-captions",
+              value: String(videoCaptions === "on")
+            }),
+            ...makeDataAttr({ name: "href", value: videoHref }),
+            ...makeDataAttr({ name: "lang", value: appData.lang })
           };
     const t = type === "post" ? "post" : "video";
 

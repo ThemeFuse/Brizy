@@ -9,7 +9,12 @@ import { PopulationMethod } from "./types/PopulationMethod";
 import { bindPopulation, isOptgroup } from "./utils";
 
 describe("Testing 'bindPopulation' function", function () {
-  const method: PopulationMethod = { title: "test", value: "test" };
+  const method: PopulationMethod = {
+    title: "test",
+    value: "test",
+    attr: {},
+    varyAttr: []
+  };
   const option: ToolbarItemType = {
     id: "test",
     type: "imageUpload-dev"
@@ -47,9 +52,7 @@ describe("Testing 'bindPopulation' function", function () {
   test("If option is not in development, return original option", () => {
     const i: ToolbarItemType = {
       id: "test",
-      // @ts-expect-error
-      type: "imageSetter",
-      value: { src: "test.jpg", extension: "jpg" }
+      type: "imageUpload-dev"
     };
 
     expect(bindPopulation(i)).toEqual(i);

@@ -2,7 +2,7 @@ import { IS_WP } from "visual/utils/env";
 import { GlobalBlocksError, ProjectError } from "visual/utils/errors";
 import { apiRuleToEditorRule, editorRuleToApiRule } from "./adapter";
 
-// project
+//#region Project
 
 export const parseProject = (project) => {
   let data;
@@ -20,6 +20,8 @@ export const parseProject = (project) => {
   return { ...project, data };
 };
 
+//#endregion
+
 //#region Global Blocks
 
 export const parseGlobalBlock = (globalBlock) => {
@@ -28,6 +30,8 @@ export const parseGlobalBlock = (globalBlock) => {
   let rules;
   let position;
   let status;
+  const title = globalBlock.title || "";
+  const tags = globalBlock.tags || "";
 
   if (!globalBlock.data) {
     throw new GlobalBlocksError("globalBlock data should exist");
@@ -86,6 +90,8 @@ export const parseGlobalBlock = (globalBlock) => {
     meta,
     position,
     status,
+    title,
+    tags,
     rules: rules.map(apiRuleToEditorRule)
   };
 };

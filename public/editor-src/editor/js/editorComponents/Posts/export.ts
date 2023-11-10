@@ -1,5 +1,6 @@
 import $ from "jquery";
 import { getProLibs } from "visual/libs";
+import { makeAttr } from "visual/utils/i18n/attribute";
 
 export default function ($node: JQuery): void {
   const root = $node.get(0);
@@ -34,12 +35,13 @@ export default function ($node: JQuery): void {
 
             const filteredPostsItems = Array.from(postsItems).filter(
               (postItem) => {
-                const { filter: postItemFilter = "*" } = postItem.dataset;
+                const { brzFilter: postItemFilter = "*" } = postItem.dataset;
 
                 if (filter === "*") {
                   return postItem;
                 }
-                return filter === postItemFilter;
+
+                return postItemFilter.includes(filter);
               }
             );
 
@@ -95,6 +97,7 @@ export default function ($node: JQuery): void {
 
       // first tag active by default
       const activeTagClassName = "brz-posts-filter__item--active";
+
       item
         .querySelector(".brz-posts__filter__item:first-child")
         ?.classList.add(activeTagClassName);
@@ -113,8 +116,10 @@ export default function ($node: JQuery): void {
 
           // filter
           const filter = this.getAttribute("data-filter") || "*";
+
           isotope.arrange({
-            filter: filter === "*" ? filter : `[data-filter*="${filter}"]`
+            filter:
+              filter === "*" ? filter : `[${makeAttr("filter")}*="${filter}"]`
           });
         }
       );

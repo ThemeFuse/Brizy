@@ -16,8 +16,9 @@ import { SelectItem } from "visual/component/Controls/Select2/SelectItem";
 import { Tag } from "visual/component/Controls/Select2/Tag";
 import EditorIcon from "visual/component/EditorIcon";
 import { OnChange } from "visual/component/Options/Type";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { WithClassName } from "visual/utils/options/attributes";
-import * as Str from "visual/utils/string/specs";
+import { mRead } from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
 import { mCompose } from "visual/utils/value";
 import { Props as ItemProps } from "./Item";
@@ -36,6 +37,7 @@ export type Props<T> = WithClassName & {
   editable?: boolean;
   inputValue?: string;
   placeholder?: string;
+  autoClose?: boolean;
   onType?: OnChange<string>;
   onKeyDown?: OnChange<KeyboardEvent<HTMLInputElement>>;
 };
@@ -56,6 +58,7 @@ export function Component<T extends Literal>({
   onSelect,
   inputValue,
   scroll = 5,
+  autoClose,
   onOpen
 }: Props<T>): ReactElement {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -90,13 +93,21 @@ export function Component<T extends Literal>({
           key={Number(mount)}
           environment={getEnvironment(containerRef.current)}
           onChange={_onSelect}
-          itemToString={(i?: ItemInstance<T>): string => Str.mRead(i?.key)}
+          itemToString={(i?: ItemInstance<T>): string => mRead(i?.key)}
         >
-          {({ openMenu, isOpen, getMenuProps, getItemProps }): ReactElement => {
+          {({
+            openMenu,
+            isOpen,
+            getMenuProps,
+            getItemProps,
+            closeMenu
+          }): ReactElement => {
             const triggerOpen = (): void => {
               if (!isOpen) {
                 onOpen && onOpen();
                 openMenu();
+              } else if (autoClose) {
+                closeMenu();
               }
               inputRef.current?.focus();
             };
@@ -167,7 +178,10 @@ export function Component<T extends Literal>({
                           ref={ref}
                           style={style}
                           className="brz-ed-control__multiSelect__menu"
-                          data-placement={placement}
+                          {...makeDataAttr({
+                            name: "placement",
+                            value: placement
+                          })}
                         >
                           <Scrollbars
                             onUpdate={onScrollUpdate}

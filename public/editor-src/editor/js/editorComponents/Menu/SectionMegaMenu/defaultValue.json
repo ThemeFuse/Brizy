@@ -6,25 +6,22 @@
     "tagName": "div",
 
     "bgSizeType": "custom",
-    "hoverBgSizeType": null,
     "bgImageFileName": null,
-    "hoverBgImageFileName": null,
-    "tabletBgImageFileName": null,
-    "mobileBgImageFileName": null,
 
     "images": {
       "bgImageSrc": "",
-      "tabletBgImageSrc": null,
-      "mobileBgImageSrc": "",
-      "hoverBgImageSrc": null
+      "mobileBgImageSrc": ""
     },
 
     "bgImageWidth": 0,
     "bgImageHeight": 0,
     "bgPositionY": 50,
     "bgPositionX": 50,
-    "bgPopulation": "",
     "bgImageExtension": "",
+
+    "bgPopulation": "",
+    "bgPopulationEntityType": "",
+    "bgPopulationEntityId": "",
 
     "brightness": 100,
     "hue": 0,
@@ -38,18 +35,6 @@
     "bgMapZoom": 15,
 
     "hoverMedia": "image",
-
-    "hoverBgImageWidth": null,
-    "hoverBgImageHeight": null,
-    "hoverBgPositionY": null,
-    "hoverBgPositionX": null,
-    "hoverBgPopulation": null,
-    "hoverBgImageExtension": null,
-
-    "hoverBrightness": null,
-    "hoverHue": null,
-    "hoverSaturation": null,
-    "hoverContrast": null,
 
     "filterBoxShadow": "",
 
@@ -80,6 +65,8 @@
     "anchorName": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "multiPage": "off",
 
@@ -88,47 +75,13 @@
 
     "tabletMedia": "image",
 
-    "tabletBgImageWidth": null,
-    "tabletBgImageHeight": null,
-    "tabletBgPositionX": null,
-    "tabletBgPositionY": null,
     "tabletBgPopulation": "",
-    "tabletBgImageExtension": null,
-
-    "tabletBrightness": null,
-    "tabletHue": null,
-    "tabletSaturation": null,
-    "tabletContrast": null,
-
-    "tabletSectionHeightStyle": null,
-    "tabletSectionHeight": null,
-    "tabletSectionHeightSuffix": null,
-
-    "tabletBgMapZoom": null,
 
     "showOnMobile": "on",
 
     "mobileMedia": "image",
 
-    "mobileBgSizeType": null,
-
-    "mobileBgImageWidth": null,
-    "mobileBgImageHeight": null,
-    "mobileBgPositionX": null,
-    "mobileBgPositionY": null,
-    "mobileBgPopulation": "",
-    "mobileBgImageExtension": null,
-
-    "mobileBrightness": null,
-    "mobileHue": null,
-    "mobileSaturation": null,
-    "mobileContrast": null,
-
-    "mobileSectionHeightStyle": null,
-    "mobileSectionHeight": null,
-    "mobileSectionHeightSuffix": null,
-
-    "mobileBgMapZoom": null
+    "mobileBgPopulation": ""
   },
 
   "toolbar": {
@@ -143,9 +96,13 @@
     "customClassName": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "customAttributes": "",
     "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
 
     "borderStyle": "",
 

@@ -1,13 +1,13 @@
-import { Setters } from "./types/Setters";
-import { Invalid, Valid } from "./types";
 import { createReducer } from "visual/component/Prompts/common/states/Classic/reducer";
 import {
   Either,
   left,
   right
 } from "visual/component/Prompts/common/states/Classic/types/Either";
-import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import { t } from "visual/utils/i18n";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
+import { Invalid, Valid } from "./types";
+import { Setters } from "./types/Setters";
 
 export const setters = (v: Invalid, a: Setters): Invalid => {
   switch (a.type) {
@@ -15,6 +15,8 @@ export const setters = (v: Invalid, a: Setters): Invalid => {
       return { ...v, layout: a.payload };
     case "SetTitle":
       return { ...v, title: a.payload };
+    case "SetIsHomePage":
+      return { ...v, isHomePage: a.payload };
   }
 };
 
@@ -28,11 +30,14 @@ export const validate = (v: Invalid): Either<Invalid, Valid> => {
     });
   }
 
+  const { activeTab, layout, layouts, isHomePage } = v;
+
   return right({
     title,
-    activeTab: v.activeTab,
-    layout: v.layout,
-    layouts: v.layouts,
+    activeTab,
+    layout,
+    layouts,
+    isHomePage,
     error: undefined
   });
 };

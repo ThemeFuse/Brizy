@@ -1,8 +1,8 @@
-import { ShopifyPage } from "visual/types";
 import { Layout, Tabs } from "visual/component/Prompts/common/PromptPage/types";
-import { Setters } from "./types/Setters";
 import { Actions as _Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
 import { State } from "visual/component/Prompts/common/states/Classic/types/State";
+import { ShopifyPage } from "visual/types";
+import { Setters } from "./types/Setters";
 
 export interface Props {
   selectedLayout: ShopifyPage["layout"] | undefined;
@@ -10,6 +10,7 @@ export interface Props {
   pageTitle: string | undefined;
   opened: boolean;
   title: string;
+  pageId: string;
   onClose: VoidFunction;
   onSave: () => Promise<unknown>;
   onCancel: VoidFunction;
@@ -21,6 +22,7 @@ export interface Invalid {
   layout: string;
   layouts: [Layout, ...Layout[]];
   error: string | undefined;
+  isHomePage: boolean;
 }
 
 export interface Valid extends Invalid {

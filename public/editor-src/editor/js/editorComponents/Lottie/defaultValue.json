@@ -18,6 +18,9 @@
   },
 
   "link": {
+    "linkPage": "",
+    "linkPageTitle": "",
+    "linkSource": "",
     "linkType": "external",
     "linkExternal": "",
 
@@ -28,6 +31,9 @@
     "linkExternalType": "linkExternal",
 
     "linkPopulation": "",
+    "linkPopulationEntityId": "",
+    "linkPopulationEntityType": "",
+
     "linkUpload": "",
     "linkPopup": "",
 
@@ -100,10 +106,7 @@
     "bgPaddingBottomSuffix": "px",
     "bgPaddingLeftSuffix": "px",
 
-    "tabletWidth": null,
     "tabletWidthSuffix": null,
-
-    "mobileWidth": null,
     "mobileWidthSuffix": null
   }
 }

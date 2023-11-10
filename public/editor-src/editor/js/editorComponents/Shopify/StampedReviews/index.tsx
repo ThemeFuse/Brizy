@@ -4,6 +4,8 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { hexToRgba } from "visual/utils/color";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -98,92 +100,178 @@ export class StampedReviews extends EditorComponent<Value> {
     };
 
     if (randomizer === "on") {
-      attr["data-random"] = "true";
+      attr[`${makeAttr("random")}`] = "true";
     }
     if (carouselTitle !== "") {
-      attr["data-title"] = carouselTitle;
+      attr[`${makeAttr("title")}`] = carouselTitle;
     }
 
     if (limitWords !== null) {
-      attr["data-limit-words"] = `${limitWords}`;
+      attr[`${makeAttr("limit-words")}`] = `${limitWords}`;
     }
     if (minimumRating !== null) {
-      attr["data-min-rating"] = minimumRating;
+      attr[`${makeAttr("min-rating")}`] = minimumRating;
     }
     if (autoSlide === "on") {
-      attr["data-auto-play"] = "true";
+      attr[`${makeAttr("auto-play")}`] = "true";
     }
     if (autoPlaySpeed) {
-      attr["data-auto-play-speed"] = `${autoPlaySpeed}`;
+      attr[`${makeAttr("auto-play-speed")}`] = `${autoPlaySpeed}`;
     }
     if (fillEmpty === "on") {
-      attr["data-fill-empty"] = "true";
+      attr[`${makeAttr("fill-empty")}`] = "true";
     }
     if (feedTags !== "") {
-      attr["data-tags"] = feedTags.trim().replace(/ /g, ",");
+      attr[`${makeAttr("tags")}`] = feedTags.trim().replace(/ /g, ",");
     }
     if (reviewIDs !== "") {
-      attr["data-review-ids"] = reviewIDs.trim().replace(/ /g, ",");
+      attr[`${makeAttr("review-ids")}`] = reviewIDs.trim().replace(/ /g, ",");
     }
     if (productVendor !== "") {
-      attr["data-product-brand"] = productVendor.trim();
+      attr[`${makeAttr("product-brand")}`] = productVendor.trim();
     }
     if (productType !== "") {
-      attr["data-product-category"] = productType.trim();
+      attr[`${makeAttr("product-category")}`] = productType.trim();
     }
     if (productIDs !== "") {
-      attr["data-product-ids"] = productIDs.trim().replace(/ /g, ",");
+      attr[`${makeAttr("product-ids")}`] = productIDs.trim().replace(/ /g, ",");
     }
+    const productId = makePlaceholder({
+      content: "{{ product.id }}"
+    });
+    const productHandle = makePlaceholder({
+      content: "{{ product.handle }}"
+    });
+
+    const hexToRgbaStarDataFromAttr = makeDataAttr({
+      name: "style-color-star",
+      value: hexToRgba(starColorHex, starColorOpacity)
+    });
+
+    const hexToRgbaStyleColorTextDataFromAttr = makeDataAttr({
+      name: "style-color-text",
+      value: hexToRgba(textColorHex, textColorOpacity)
+    });
+
+    const styleColorLinkDataFromAttr = makeDataAttr({
+      name: "style-color-link",
+      value: hexToRgba(linkColorHex, linkColorOpacity)
+    });
+
+    const styleColorHoverDataFromAttr = makeDataAttr({
+      name: "style-color-hover",
+      value: hexToRgba(hoverColorHex, hoverColorOpacity)
+    });
 
     switch (type) {
-      case "standard":
+      case "standard": {
+        const shopUrl = makePlaceholder({
+          content: "{{ shop.url }}"
+        });
+        const productUrl = makePlaceholder({
+          content: "{{ product.url }}"
+        });
+        const productTitle = makePlaceholder({
+          content: "{{ product.title | escape }}"
+        });
+        const productImage = makePlaceholder({
+          content:
+            "{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+        });
+        const productDesc = makePlaceholder({
+          content: "{{ product.description | escape }}"
+        });
+
+        const productType = makePlaceholder({
+          content: "{{ product.type }}"
+        });
+        const productReviews = makePlaceholder({
+          content: "{{ product.metafields.stamped.reviews }}"
+        });
+
         return (
           <div
             id="stamped-main-widget"
             className="stamped-main-widget"
-            data-widget-style="standard"
-            data-product-id="{{ product.id }}"
-            data-name="{{ product.title | escape }}"
-            data-url="{{ shop.url }}{{ product.url }}"
-            data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
-            data-description="{{ product.description | escape }}"
-            data-product-sku="{{ product.handle }}"
-            data-product-type="{{ product.type }}"
-          >{`{{ product.metafields.stamped.reviews }}`}</div>
+            {...makeDataAttr({
+              name: "widget-style",
+              value: "standard"
+            })}
+            {...makeDataAttr({
+              name: "product-id",
+              value: productId
+            })}
+            {...makeDataAttr({
+              name: "name",
+              value: productTitle
+            })}
+            {...makeDataAttr({
+              name: "url",
+              value: `${shopUrl}${productUrl}`
+            })}
+            {...makeDataAttr({
+              name: "image-url",
+              value: productImage
+            })}
+            {...makeDataAttr({
+              name: "description",
+              value: productDesc,
+              translatable: true
+            })}
+            {...makeDataAttr({
+              name: "product-sku",
+              value: productHandle
+            })}
+            {...makeDataAttr({
+              name: "product-type",
+              value: productType
+            })}
+          >
+            {productReviews}
+          </div>
         );
+      }
 
       case "carousel": {
         return (
           <div
-            data-widget-type="carousel"
             {...attr}
-            data-style-color-title={hexToRgba(titleColorHex, titleColorOpacity)}
-            data-style-color-star={hexToRgba(starColorHex, starColorOpacity)}
-            data-style-color-text={hexToRgba(textColorHex, textColorOpacity)}
-            data-style-color-link={hexToRgba(linkColorHex, linkColorOpacity)}
+            {...makeDataAttr({
+              name: "widget-type",
+              value: "carousel"
+            })}
+            {...makeDataAttr({
+              name: "style-color-title",
+              value: hexToRgba(titleColorHex, titleColorOpacity)
+            })}
+            {...hexToRgbaStarDataFromAttr}
+            {...hexToRgbaStyleColorTextDataFromAttr}
+            {...styleColorLinkDataFromAttr}
           />
         );
       }
-
       case "fullPage": {
         if (productImage === "on") {
-          attr["data-product-image"] = "true";
+          attr[`${makeAttr("product-image")}`] = "true";
         }
 
         if (labelSubtitle !== "") {
-          attr["data-label-subtitle"] = labelSubtitle;
+          attr[`${makeAttr("product-image")}`] = labelSubtitle;
         }
 
         return (
           <div
-            data-widget-type="full-page"
-            data-style-color-verified={hexToRgba(
-              verifiedColorHex,
-              verifiedColorOpacity
-            )}
-            data-style-color-star={hexToRgba(starColorHex, starColorOpacity)}
-            data-style-color-text={hexToRgba(textColorHex, textColorOpacity)}
-            data-style-color-link={hexToRgba(linkColorHex, linkColorOpacity)}
+            {...makeDataAttr({
+              name: "widget-type",
+              value: "full-page"
+            })}
+            {...makeDataAttr({
+              name: "style-color-verified",
+              value: hexToRgba(verifiedColorHex, verifiedColorOpacity)
+            })}
+            {...hexToRgbaStarDataFromAttr}
+            {...hexToRgbaStyleColorTextDataFromAttr}
+            {...styleColorLinkDataFromAttr}
             {...attr}
           />
         );
@@ -191,10 +279,16 @@ export class StampedReviews extends EditorComponent<Value> {
       case "topRated": {
         return (
           <div
-            data-widget-type="top-rated"
-            data-with-photos="false"
-            data-style-color-link={hexToRgba(linkColorHex, linkColorOpacity)}
-            data-style-color-star={hexToRgba(starColorHex, starColorOpacity)}
+            {...makeDataAttr({
+              name: "widget-type",
+              value: "top-rated"
+            })}
+            {...makeDataAttr({
+              name: "with-photos",
+              value: "false"
+            })}
+            {...styleColorLinkDataFromAttr}
+            {...hexToRgbaStarDataFromAttr}
             {...attr}
           />
         );
@@ -203,28 +297,40 @@ export class StampedReviews extends EditorComponent<Value> {
         return (
           <span
             className="stamped-product-reviews-badge stamped-main-badge"
-            data-id="{{ product.id }}"
-            data-product-sku="{{ product.handle }}"
+            {...makeDataAttr({
+              name: "id",
+              value: productId
+            })}
+            {...makeDataAttr({
+              name: "product-sku",
+              value: productHandle
+            })}
             style={{ display: "inline-block" }}
-          >{`{{ product.metafields.stamped.badge }}`}</span>
+          >
+            {makePlaceholder({
+              content: "{{ product.metafields.stamped.badge }}"
+            })}
+          </span>
         );
       }
 
       case "visualGallery": {
         if (feedType !== "") {
           if (feedType === "carousel") {
-            attr["data-height"] = `${feedHeight}${feedHeightSuffix}`;
+            attr[`${makeAttr("height")}`] = `${feedHeight}${feedHeightSuffix}`;
           }
-          attr["data-feed-type"] = feedType;
-          attr["data-style-color-hover-opacity"] = `${hoverOpacity.toString()}`;
+          attr[`${makeAttr("feed-type")}`] = feedType;
+          attr[
+            `${makeAttr("style-color-hover-opacity")}`
+          ] = `${hoverOpacity.toString()}`;
         }
 
         return (
           <div
-            data-widget-type="visual-gallery"
-            data-with-photos="true"
-            data-style-color-star={hexToRgba(starColorHex, starColorOpacity)}
-            data-style-color-hover={hexToRgba(hoverColorHex, hoverColorOpacity)}
+            {...makeDataAttr({ name: "widget-type", value: "visual-gallery" })}
+            {...makeDataAttr({ name: "with-photos", value: "true" })}
+            {...hexToRgbaStarDataFromAttr}
+            {...styleColorHoverDataFromAttr}
             {...attr}
           />
         );
@@ -232,11 +338,14 @@ export class StampedReviews extends EditorComponent<Value> {
       case "wallPhotos": {
         return (
           <div
-            data-widget-type="wall-photos"
-            data-style-color-hover={hexToRgba(hoverColorHex, hoverColorOpacity)}
-            data-style-color-hover-opacity={hoverOpacity.toString()}
-            data-style-color-star={hexToRgba(starColorHex, starColorOpacity)}
-            data-with-photos="true"
+            {...makeDataAttr({ name: "widget-type", value: "wall-photos" })}
+            {...styleColorHoverDataFromAttr}
+            {...makeDataAttr({
+              name: "style-color-hover-opacity",
+              value: hoverOpacity
+            })}
+            {...hexToRgbaStarDataFromAttr}
+            {...makeDataAttr({ name: "with-photos", value: "true" })}
             {...attr}
           />
         );

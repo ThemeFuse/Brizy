@@ -35,6 +35,7 @@ export type ReduxState = {
   fonts: Fonts;
   ui: {
     deviceMode: DeviceMode;
+    activeElement: Element | null;
     leftSidebar: {
       isOpen: boolean;
       drawerContentType: string | null | undefined; // TODO: converted to a union of actual drawer type later

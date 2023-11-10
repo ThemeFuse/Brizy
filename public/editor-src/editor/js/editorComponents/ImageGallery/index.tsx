@@ -1,12 +1,10 @@
 import classnames from "classnames";
-import { isT } from "fp-utilities";
 import React, { Fragment, ReactNode } from "react";
 import ResizeAware from "react-resize-aware";
-import { getIn, insert, merge, mergeIn, removeAt } from "timm";
-import _, { last } from "underscore";
+import { merge } from "timm";
+import _ from "underscore";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementModel } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent, {
   ComponentsMeta,
@@ -15,7 +13,6 @@ import EditorComponent, {
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
-import { Breakpoint, DeviceMode2 } from "visual/types";
 import {
   GalleryIsotope,
   GalleryIsotopeType,
@@ -25,20 +22,31 @@ import {
 import { css } from "visual/utils/cssStyle";
 import { applyFilter } from "visual/utils/filters";
 import { getImageUrl } from "visual/utils/image";
-import { setIds } from "visual/utils/models";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import { WithClassName } from "visual/utils/options/attributes";
 import * as Num from "visual/utils/reader/number";
 import * as Str from "visual/utils/reader/string";
 import { MOBILE, TABLET } from "visual/utils/responsiveMode";
-import * as State from "visual/utils/stateMode";
 import { encodeToString } from "visual/utils/string";
 import { MValue } from "visual/utils/value";
 import EditorArrayComponent from "../EditorArrayComponent";
-import { Unit } from "../Image/types";
-import { calcWrapperSizes, readSizeType, readUnit } from "../Image/utils";
+import { readSizeType, readUnit } from "../Image/utils";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
+import {
+  patchOnBigImageAsCurrLayout,
+  patchOnBigImageAsPrevLayout,
+  patchOnBigImageChange,
+  patchOnBigImageImagesThumbSizeChange,
+  patchOnBigImageLayout,
+  patchOnColumnChange,
+  patchOnGridAspectRationAndColumnChange,
+  patchOnGridItemsChange,
+  patchOnGridLayout,
+  patchOnJustifiedLayout,
+  patchOnLightBox,
+  patchOnMasonryLayout,
+  patchOnThumbStyleChange
+} from "./imageGalleryChange";
 import Items from "./items";
 import * as sidebarExtendImage from "./sidebarExtendImage";
 import * as sidebarExtendParentConfig from "./sidebarExtendParent";
@@ -47,72 +55,16 @@ import { style, styleBigImage, styleForFilter, styleWrapper } from "./styles";
 import * as toolbarExtendImage from "./toolbarExtendImage";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarFilterConfig from "./toolbarFilter";
+import type { Meta, Patch, Props, Value } from "./types";
 import {
   JustifySettings,
-  addHorizontalThumbStyleData,
-  changeImagesData,
+  breakpoints,
   getSpacing,
+  imagesSrc,
   makeOptionValueToSettings,
-  mergeLinkType,
-  removeHorizontalThumbStyleData
+  multiUpload
 } from "./utils";
 import { arrangeGridByTags } from "./utils.export";
-
-type Patch = Partial<Value>;
-
-interface Meta {
-  [k: string]: unknown;
-  patch: Patch;
-}
-
-const breakpoints: Breakpoint[] = [
-  {
-    title: "desktop",
-    value: DeviceMode2.Desktop,
-    enabled: true,
-    breakpoint: 1500,
-    content: 1500
-  },
-  {
-    title: "tablet",
-    value: DeviceMode2.Tablet,
-    enabled: true,
-    breakpoint: 991,
-    content: 991
-  },
-  {
-    title: "mobile",
-    value: DeviceMode2.Mobile,
-    enabled: true,
-    breakpoint: 767,
-    content: 767
-  }
-];
-
-export interface Value extends ElementModel {
-  layout: "grid" | "masonry" | "justified" | "bigImage";
-  lightBox: "on" | "off";
-  spacing: number;
-  gridColumn: number;
-  tabletGridColumn: number;
-  mobileGridColumn: number;
-  items: ElementModel[];
-  itemsOption: ElementModel[];
-  gridAspectRatio: string;
-  tags: string;
-  imageSrc: string;
-  imageFileName: string;
-  allTag: string;
-  imageWidth: number;
-  imageHeight: number;
-  bigImageImagesHeight: number;
-  tabletBigImageImagesHeight: number;
-  mobileBigImageImagesHeight: number;
-}
-
-export interface Props extends WithClassName {
-  meta: ComponentsMeta;
-}
 
 class ImageGallery extends EditorComponent<Value, Props> {
   static get componentId(): "ImageGallery" {
@@ -226,258 +178,15 @@ class ImageGallery extends EditorComponent<Value, Props> {
     }
   }
 
-  getDefaultGridItems({
-    gridAspectRatio,
-    gridColumn,
-    items,
-    lightBox
-  }: {
-    gridAspectRatio?: string;
-    gridColumn?: number;
-    items?: ElementModel[];
-    lightBox?: Value["lightBox"];
-  }): ElementModel[] {
-    const { gridAspectRatio: oldGridAspectRatio, gridColumn: oldGridColumn } =
-      this.getValue();
-
-    if (this.node) {
-      const { items: oldItems }: { items: ElementModel[] } = this.getValue();
-      const { width: containerWidth } = this.node.getBoundingClientRect();
-      const _newItems = (items ?? oldItems).map((el: ElementModel) => {
-        const value = el.value as Value;
-
-        const [x, y] = (gridAspectRatio ?? oldGridAspectRatio).split("/");
-        const _x = Num.read(x) ?? 4;
-        const _y = Num.read(y) ?? 3;
-
-        const newHeight =
-          containerWidth / (_x / _y) / (gridColumn ?? oldGridColumn);
-
-        const wrapperSizes = {
-          width: containerWidth / (gridColumn ?? oldGridColumn),
-          height: newHeight
-        };
-
-        const newWrapperSizes = calcWrapperSizes(
-          {
-            imageWidth: Num.read(value.imageWidth) ?? 600,
-            imageHeight: Num.read(value.imageHeight) ?? 450,
-            width: 100,
-            widthSuffix: "%",
-            height: 100,
-            heightSuffix: "%",
-            size: Num.read(value.size) ?? 100
-          },
-          containerWidth / (gridColumn ?? oldGridColumn)
-        );
-
-        const newHoverWrapperSizes = calcWrapperSizes(
-          {
-            imageWidth: Num.read(value.hoverImageWidth) ?? 600,
-            imageHeight: Num.read(value.hoverImageHeight) ?? 450,
-            widthSuffix: "%",
-            heightSuffix: "%",
-            width: 100,
-            height: 100,
-            size: Num.read(value.size) ?? 100
-          },
-          containerWidth / (gridColumn ?? oldGridColumn)
-        );
-
-        return mergeIn(el, ["value"], {
-          height: (wrapperSizes.height * 100) / newWrapperSizes.height,
-          hoverHeight:
-            (wrapperSizes.height * 100) / newHoverWrapperSizes.height,
-          heightSuffix: "%",
-          tabletHeight: null,
-          tabletHeightSuffix: null,
-          mobileHeight: null,
-          mobileHeightSuffix: null,
-          sizeType: "custom",
-          tabletSizeType: null,
-          mobileSizeType: null,
-          ...(lightBox && mergeLinkType(lightBox))
-        }) as ElementModel;
-      });
-
-      return _newItems;
-    }
-
-    return items ?? [];
-  }
-
-  adjustImagesByHeight({
-    height,
-    heightKey,
-    heightSuffix = "px",
-    width,
-    widthKey,
-    items,
-    isChanged
-  }: {
-    height?: number;
-    heightSuffix?: Unit;
-    width?: number;
-    heightKey?: string;
-    widthKey?: string;
-    items: ElementModel[];
-    isChanged?: "width" | "height";
-  }): { items: ElementModel[]; height: number } {
-    if (this.node) {
-      const { gridColumn } = this.getValue();
-      const { width: containerWidth } = this.node.getBoundingClientRect();
-
-      const _height = height ?? containerWidth / gridColumn;
-      let vHeight = _height;
-
-      const newItems = items.map((image: ElementModel) => {
-        const value = image.value as Value;
-
-        if (value.clonedFromGallery) {
-          return image;
-        }
-
-        const newWrapperSizes = calcWrapperSizes(
-          {
-            imageWidth: Num.read(value.imageWidth) ?? 600,
-            imageHeight: Num.read(value.imageHeight) ?? 450,
-            width: 100,
-            widthSuffix: "%",
-            height: _height,
-            heightSuffix,
-            size: Num.read(value.size) ?? 100
-          },
-          containerWidth / this.dvv("gridColumn")
-        );
-
-        vHeight = newWrapperSizes.height;
-
-        return mergeIn(image, ["value"], {
-          hoverHeight: newWrapperSizes.height,
-          heightSuffix: "px",
-          tabletHeight: value.tabletHeight ?? value.height,
-          tabletHeightSuffix: "px",
-          mobileHeight: value.mobileHeight ?? value.height,
-          mobileHeightSuffix: "px",
-          [heightKey ?? "height"]:
-            isChanged === "height" ? newWrapperSizes.height : value.height,
-          ...(isChanged === "width"
-            ? {
-                widthSuffix: "px",
-                tabletWidth: value.tabletWidth ?? width ?? value.width,
-                tabletWidthSuffix: "px",
-                mobileWidth: value.mobileWidth ?? width ?? value.width,
-                mobileWidthSuffix: "px",
-                [widthKey ?? "width"]: width
-              }
-            : {})
-        });
-      }) as ElementModel[];
-
-      return {
-        items: newItems,
-        height: vHeight
-      };
-    }
-
-    return {
-      items,
-      height: height ?? 100
-    };
-  }
-
   patchValue(patch: Patch, meta = {}): void {
     if (patch.itemsOption) {
-      const {
-        layout,
-        bigImageImagesHeight,
-        tabletBigImageImagesHeight,
-        mobileBigImageImagesHeight
-      } = this.getValue();
-      const sizeType = layout === "justified" ? "original" : "custom";
+      const v = this.getValue();
 
-      const dbItems = this.getValue().items;
-      const items = patch.itemsOption
-        .map((item: ElementModel) => {
-          const currentItem = dbItems.find((i: ElementModel) => {
-            const value = i.value as Value;
-            return value._id === item.id;
-          });
-          if (currentItem) {
-            const currentValue = currentItem.value as Value;
-            const { uid, width, height } = item;
-            const { imageSrc, imageWidth, imageHeight, imageFileName } =
-              currentValue;
+      const { itemsOption, ...currentPatch } = patch;
 
-            return imageSrc !== uid ||
-              imageWidth !== width ||
-              imageHeight !== height
-              ? {
-                  ...currentItem,
-                  value: {
-                    ...(currentItem.value as Value),
-                    imageSrc: uid,
-                    imageWidth: width,
-                    imageHeight: height,
-                    imageFileName
-                  }
-                }
-              : currentItem;
-          } else {
-            const extraData =
-              layout === "bigImage"
-                ? {
-                    height: bigImageImagesHeight,
-                    heightSuffix: "px",
-                    tabletHeight: tabletBigImageImagesHeight,
-                    tabletHeightSuffix: "px",
-                    mobileHeight: mobileBigImageImagesHeight,
-                    mobileHeightSuffix: "px"
-                  }
-                : {};
+      const items = multiUpload(v, itemsOption);
 
-            return setIds({
-              type: "Image",
-              value: {
-                imageSrc: item.uid,
-                imageFileName: item.fileName,
-                imageWidth: item.width,
-                imageHeight: item.height,
-                imageExtension: last((Str.read(item.uid) ?? "").split(".")),
-                ...extraData,
-                _styles: ["image"],
-                sizeType
-              }
-            });
-          }
-        })
-        .filter(isT);
-
-      const { imageSrc, imageFileName, imageExtension } = items[0].value;
-
-      // gallery-dev option does not know that we have cloned image and when we change something from toolbar we lose that cloned image
-      const newItem =
-        layout === "bigImage"
-          ? setIds({
-              type: "Image",
-              value: {
-                ...(dbItems[0].value as Value),
-                imageSrc,
-                imageFileName,
-                imageExtension,
-                sizeType: "custom",
-                tabletSizeType: null,
-                mobileSizeType: null,
-                clonedFromGallery: true
-              }
-            })
-          : null;
-
-      const { itemsOption, ...currentPatch } = patch; // eslint-disable-line
-      super.patchValue(
-        { ...currentPatch, items: newItem ? insert(items, 0, newItem) : items },
-        meta
-      );
+      super.patchValue({ ...currentPatch, items }, meta);
     } else {
       super.patchValue(patch, meta);
     }
@@ -503,14 +212,6 @@ class ImageGallery extends EditorComponent<Value, Props> {
     }
   };
 
-  dvv = (key: string) => {
-    const v = this.getValue();
-    const state = State.mRead(v.tabsState);
-    const device = deviceModeSelector(getStore().getState());
-
-    return defaultValueValue({ v, key, device, state });
-  };
-
   handleValueChange(newValue: Value, meta: Meta): void {
     const device = deviceModeSelector(getStore().getState());
     const oldValue = this.getValue();
@@ -522,28 +223,18 @@ class ImageGallery extends EditorComponent<Value, Props> {
     const dvv = (key: string) => defaultValueValue({ key, device, v });
 
     if (meta.patch.lightBox) {
-      const { lightBox, layout } = newValue;
-
-      const items = newValue.items.map((el) =>
-        mergeIn(el, ["value"], {
-          linkType:
-            lightBox === "on" && layout !== "bigImage"
-              ? "lightBox"
-              : "external",
-          linkLightBox: layout !== "bigImage" && lightBox
-        })
-      );
-
-      newValue = mergeIn(newValue, ["items"], items) as Value;
+      newValue = patchOnLightBox(newValue);
     }
 
     if (meta.patch.items) {
-      if (meta.patch.items.length !== oldItems.length) {
+      if (imagesSrc(meta.patch.items).length !== imagesSrc(oldItems).length) {
         if (v.layout === "grid") {
-          const newItems = this.getDefaultGridItems({
-            items: meta.patch.items
-          });
-          newValue = mergeIn(newValue, ["items"], newItems) as Value;
+          newValue = patchOnGridItemsChange(
+            this.node,
+            newValue,
+            oldValue,
+            meta.patch.items
+          );
         } else {
           this.destroyJustifiedGallery();
           this.destroyIsotope();
@@ -552,43 +243,19 @@ class ImageGallery extends EditorComponent<Value, Props> {
       }
 
       if (v.layout === "bigImage" && v.items[1] !== oldItems[1]) {
-        const {
-          imageSrc,
-          imageFileName,
-          imageExtension,
-          imageWidth,
-          imageHeight,
-          size
-        } = v.items[1].value as Value;
-
-        newValue = mergeIn(newValue, ["items", 0, "value"], {
-          imageSrc,
-          imageFileName,
-          imageExtension,
-          imageWidth,
-          imageHeight,
-          size
-        }) as Value;
+        newValue = patchOnBigImageChange(newValue);
       }
     }
 
     switch (meta.patch.layout) {
       case "justified": {
         this.destroyIsotope();
-        const { lightBox } = newValue;
 
-        const newItems = v.items.map((el: ElementModel) =>
-          mergeIn(el, ["value"], {
-            sizeType: "original",
-            ...mergeLinkType(lightBox),
-            tabletSizeType: null,
-            mobileSizeType: null,
-            [dvk("height")]: dvv("rowHeight"),
-            [dvk("heightSuffix")]: "px"
-          })
-        );
-
-        newValue = mergeIn(newValue, ["items"], newItems) as Value;
+        newValue = patchOnJustifiedLayout(newValue, {
+          heightKey: dvk("height"),
+          heightSuffixKey: dvk("heightSuffix"),
+          rowHeight: dvv("rowHeight")
+        });
 
         this.destroyJustifiedGallery();
         this.initJustifiedGallery(v);
@@ -596,78 +263,29 @@ class ImageGallery extends EditorComponent<Value, Props> {
         break;
       }
       case "grid": {
-        const { lightBox } = newValue;
-
         this.destroyJustifiedGallery();
         this.destroyIsotope();
 
-        const newItems = this.getDefaultGridItems({
-          lightBox
-        });
-
-        newValue = mergeIn(newValue, ["items"], newItems) as Value;
+        newValue = patchOnGridLayout(this.node, newValue, oldValue);
         break;
       }
       case "masonry": {
-        const { lightBox } = newValue;
-
         this.destroyJustifiedGallery();
         this.destroyIsotope();
         this.initIsotope();
 
-        const newItems = newValue.items.map((image: ElementModel) =>
-          mergeIn(image, ["value"], {
-            ...(image.value as Value),
-            sizeType: "custom",
-            ...mergeLinkType(lightBox),
-            tabletSizeType: null,
-            mobileSizeType: null
-          })
-        );
-
-        newValue = mergeIn(newValue, ["items"], newItems) as Value;
+        newValue = patchOnMasonryLayout(newValue);
         break;
       }
       case "bigImage": {
         this.destroyJustifiedGallery();
         this.destroyIsotope();
 
-        const _newItems = newValue.items.map((image: ElementModel) =>
-          mergeIn(image, ["value"], {
-            ...(image.value as Value),
-            linkType: "external",
-            linkLightBox: "off",
-            sizeType: "custom",
-            tabletSizeType: null,
-            mobileSizeType: null
-          })
-        ) as ElementModel[];
-
-        const { items: newItems, height } = this.adjustImagesByHeight({
-          height: Num.read(v.bigImageImagesHeight),
-          heightSuffix: readUnit(v.bigImageImagesHeightSuffix),
-          items: _newItems,
-          isChanged: "height"
+        newValue = patchOnBigImageLayout(newValue, oldValue, {
+          node: this.node,
+          responsiveGridColumn: dvv("gridColumn"),
+          thumbStyle: dvv("thumbStyle")
         });
-
-        if (
-          v[dvk("thumbStyle")] === "left" ||
-          v[dvk("thumbStyle")] === "right"
-        ) {
-          newValue = mergeIn(
-            newValue,
-            ["items"],
-            addHorizontalThumbStyleData(v, newItems)
-          ) as Value;
-
-          break;
-        }
-
-        const clonedValue = Object.assign({}, newValue);
-        clonedValue.bigImageImagesHeight = height;
-
-        newValue = merge(newValue, clonedValue);
-        newValue = mergeIn(newValue, ["items"], newItems) as Value;
 
         break;
       }
@@ -677,13 +295,7 @@ class ImageGallery extends EditorComponent<Value, Props> {
       meta.patch[dvk("bigImageImagesHeight")] ||
       meta.patch[dvk("thumbWidth")]
     ) {
-      const _newItems = changeImagesData(newValue.items, {
-        sizeType: "custom",
-        tabletSizeType: null,
-        mobileSizeType: null
-      });
-
-      const { items: newItems, height } = this.adjustImagesByHeight({
+      newValue = patchOnBigImageImagesThumbSizeChange(newValue, oldValue, {
         height: Num.read(
           meta.patch[dvk("bigImageImagesHeight")] ??
             v[dvk("bigImageImagesHeight")]
@@ -692,35 +304,17 @@ class ImageGallery extends EditorComponent<Value, Props> {
         heightKey: dvk("height"),
         width: Num.read(meta.patch[dvk("thumbWidth")] ?? v[dvk("thumbWidth")]),
         widthKey: dvk("width"),
-        items: _newItems,
-        isChanged: meta.patch[dvk("bigImageImagesHeight")] ? "height" : "width"
+        isChanged: meta.patch[dvk("bigImageImagesHeight")] ? "height" : "width",
+        imagesHeightKey: dvk("bigImageImagesHeight"),
+        responsiveGridColumn: dvv("gridColumn"),
+        node: this.node
       });
-
-      const clonedValue = Object.assign({}, newValue);
-      clonedValue[dvk("bigImageImagesHeight")] = height;
-
-      newValue = merge(newValue, clonedValue);
-      newValue = mergeIn(newValue, ["items"], newItems) as Value;
     }
 
     if (meta.patch[dvk("thumbStyle")]) {
-      switch (meta.patch[dvk("thumbStyle")]) {
-        case "top":
-        case "bottom":
-          newValue = mergeIn(
-            newValue,
-            ["items"],
-            removeHorizontalThumbStyleData(v.items)
-          ) as Value;
-          break;
-        case "left":
-        case "right":
-          newValue = mergeIn(
-            newValue,
-            ["items"],
-            addHorizontalThumbStyleData(v)
-          ) as Value;
-      }
+      const thumbStyle = meta.patch[dvk("thumbStyle")] as Value["thumbStyle"];
+
+      newValue = patchOnThumbStyleChange(thumbStyle, newValue, v);
     }
 
     // #region
@@ -730,44 +324,11 @@ class ImageGallery extends EditorComponent<Value, Props> {
       const { layout: currentLayout } = v;
 
       if (prevLayout === "bigImage") {
-        const clonedValue = Object.assign({}, newValue);
-        const newItems = removeAt(newValue.items, 0);
-
-        clonedValue.items = removeHorizontalThumbStyleData(newItems);
-
-        newValue = merge(newValue, clonedValue);
+        newValue = patchOnBigImageAsPrevLayout(newValue);
       }
 
       if (currentLayout === "bigImage") {
-        const image = getIn(newValue, ["items", 0]) as ElementModel;
-        const value = image.value as Value;
-        const {
-          imageSrc,
-          imageFileName,
-          imageWidth,
-          imageHeight,
-          size,
-          imageExtension
-        } = value;
-
-        const newImage = setIds({
-          type: "Image",
-          value: {
-            imageSrc,
-            imageFileName,
-            imageExtension,
-            imageWidth,
-            imageHeight,
-            size,
-            sizeType: "custom",
-            tabletSizeType: null,
-            mobileSizeType: null,
-            clonedFromGallery: true
-          }
-        });
-        const newItems = insert(newValue.items, 0, newImage);
-
-        newValue = mergeIn(newValue, ["items"], newItems) as Value;
+        newValue = patchOnBigImageAsCurrLayout(newValue);
       }
     }
     // #end region
@@ -784,12 +345,19 @@ class ImageGallery extends EditorComponent<Value, Props> {
       (meta.patch.gridAspectRatio || meta.patch[dvk("gridColumn")]) &&
       newValue.layout === "grid"
     ) {
-      const newItems = this.getDefaultGridItems({
-        gridAspectRatio: meta.patch.gridAspectRatio,
-        gridColumn: Num.read(meta.patch[dvk("gridColumn")])
-      });
+      newValue = patchOnGridAspectRationAndColumnChange(
+        this.node,
+        newValue,
+        oldValue,
+        {
+          gridAspectRatio: meta.patch.gridAspectRatio,
+          gridColumn: Num.read(meta.patch[dvk("gridColumn")])
+        }
+      );
+    }
 
-      newValue = mergeIn(newValue, ["items"], newItems) as Value;
+    if (meta.patch.gridColumn && oldValue.gridColumn < meta.patch.gridColumn) {
+      newValue = patchOnColumnChange(meta.patch.gridColumn, newValue, oldValue);
     }
 
     super.handleValueChange(newValue, meta);

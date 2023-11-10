@@ -1,8 +1,9 @@
-import { placeholderObjFromStr } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import Config from "visual/global/Config";
-import Image from "./index.jsx";
+import { withMigrations } from "visual/editorComponents/tools/withMigrations";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { Image } from "./index.jsx";
+import { migrations } from "./migrations";
 
-export default class WPImage extends Image {
+class WPImage extends Image {
   getExtraImageProps(v) {
     const { alt: alt_, imageSrc, imagePopulation } = v;
 
@@ -11,20 +12,22 @@ export default class WPImage extends Image {
     }
 
     if (imagePopulation) {
-      const useCustomPlaceholder =
-        Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
-      const placeholderData = placeholderObjFromStr(
-        imagePopulation,
-        useCustomPlaceholder
-      );
-
-      if (placeholderData) {
-        return {
-          alt: `{{ brizy_dc_image_alt placeholder='${placeholderData.name}' }}`
-        };
-      }
+      return {
+        alt: makePlaceholder({
+          content: "{{ brizy_dc_image_alt }}",
+          // prettier-ignore
+          attr: { imagePlaceholder: imagePopulation.replace(/"/g, "\\\"") }
+        })
+      };
     }
 
-    return { alt: `{{ brizy_dc_image_alt uid='${imageSrc}' }}` };
+    return {
+      alt: makePlaceholder({
+        content: "{{ brizy_dc_image_alt }}",
+        attr: { imageSrc }
+      })
+    };
   }
 }
+
+export default withMigrations(WPImage, migrations);

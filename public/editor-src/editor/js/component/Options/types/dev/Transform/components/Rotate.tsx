@@ -23,7 +23,8 @@ export const Rotate: JSXElementConstructor<EffectProps<V>> = ({
   onChange
 }) => {
   const onDegreeChange = useCallback<OnChange<number>>(
-    mPipe(Degree.fromNumber, (degree) => onChange({ ...value, degree })),
+    (v) =>
+      mPipe(Degree.fromNumber, (degree) => onChange({ ...value, degree }))(v),
     [value, onChange]
   );
 

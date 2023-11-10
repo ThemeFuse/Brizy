@@ -80,8 +80,11 @@ export function getOptions(
           title: t("WHAT WILL TRIGGER THE POPUP TO OPEN")
         }
       ];
+      const config = Config.getAll();
+      const { popupConditions } = config.api ?? {};
+      const save = popupConditions?.conditions?.save;
 
-      if (!isExternalPopup(Config.getAll())) {
+      if (!isExternalPopup(Config.getAll()) && save) {
         // ts-ignore added because cms's getRulesList method is expecting
         // CollectionItemId, wp is expecting nothing
         const asyncGetValue = IS_CLOUD

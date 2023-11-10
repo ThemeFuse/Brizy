@@ -6,6 +6,7 @@ import Toolbar from "visual/component/Toolbar";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 
 class AccordionItems extends EditorArrayComponent {
   static get componentId() {
@@ -23,7 +24,23 @@ class AccordionItems extends EditorArrayComponent {
     visibleTag: this.props.allTag
   };
 
-  tags = new Set();
+  componentDidUpdate() {
+    if (
+      !this.getItemsTags(this.props.dbValue).size &&
+      this.state.visibleTag !== this.props.allTag
+    ) {
+      this.setState({ visibleTag: this.props.allTag });
+    }
+  }
+
+  getItemsTags = (dbValue) => {
+    return dbValue.reduce((acc, cur) => {
+      if (cur?.value?.tags) {
+        this.getTags(cur.value.tags).forEach((tag) => acc.add(tag));
+      }
+      return acc;
+    }, new Set());
+  };
 
   handleFilterClick(tag) {
     if (tag !== this.state.visibleTag) {
@@ -44,7 +61,7 @@ class AccordionItems extends EditorArrayComponent {
     } = this.props;
 
     const { tags = "" } = itemData.value;
-    const tag = this.updateTags(tags);
+    const tag = this.getTags(tags);
 
     const cloneRemoveConfig = {
       getItems: () => [
@@ -140,22 +157,8 @@ class AccordionItems extends EditorArrayComponent {
     }, []);
   }
 
-  updateTags(_tags) {
-    const tags = this.getTags(_tags);
-
-    if (tags.length) {
-      tags.forEach((t) => {
-        this.tags.add(t);
-      });
-    }
-
-    return tags;
-  }
-
   updateItem(itemIndex, itemValue, updateMeta = {}) {
     super.updateItem(itemIndex, itemValue, updateMeta);
-    this.tags.clear();
-    this.updateTags(itemValue.tag);
   }
 
   handleMainTagChange = (allTag) => {
@@ -167,10 +170,11 @@ class AccordionItems extends EditorArrayComponent {
 
   renderTags() {
     const { allTag, toolbarExtendFilter, filterStyle, sortTags } = this.props;
+    const initialTags = this.getItemsTags(this.props.dbValue);
     const _tags =
       sortTags === "on"
-        ? [...this.tags].sort((a, b) => a.localeCompare(b))
-        : this.tags;
+        ? [...initialTags].sort((a, b) => a.localeCompare(b))
+        : initialTags;
     const tags = [allTag, ..._tags];
     const filterClassName = classnames(
       "brz-accordion__filter",
@@ -196,7 +200,10 @@ class AccordionItems extends EditorArrayComponent {
                         : ""
                     }`
                   }
-                  data-filter={tag === allTag ? "*" : tag}
+                  {...makeDataAttr({
+                    name: "filter",
+                    value: tag === allTag ? "*" : tag
+                  })}
                   onClick={() => {
                     this.handleFilterClick(tag);
                   }}
@@ -231,14 +238,15 @@ class AccordionItems extends EditorArrayComponent {
 
   renderItemsContainer(items) {
     const { className, style, enableTags, animDuration } = this.props;
+    const tags = this.getItemsTags(this.props.dbValue);
 
     return (
       <div
         className={className}
         style={style}
-        data-duration={animDuration * 1000}
+        {...makeDataAttr({ name: "duration", value: animDuration * 1000 })}
       >
-        {enableTags === "on" && this.tags.size > 0 && this.renderTags()}
+        {enableTags === "on" && tags.size > 0 && this.renderTags()}
         {items}
       </div>
     );

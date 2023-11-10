@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  important: ".brz",
   content: ["./editor/**/*.{js,ts,jsx,tsx}", "./packages/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
@@ -34,6 +35,7 @@ module.exports = {
   },
   plugins: [],
   corePlugins: {
+    container: false,
     preflight: false
   }
 };

@@ -1,13 +1,15 @@
-import { mPipe } from "fp-utilities";
 import { V } from "visual/types";
-import { Dictionary } from "visual/types/utils";
 import { GetDynamicContent } from "visual/utils/api/types";
+import {
+  explodePlaceholder,
+  isPlaceholderStart
+} from "visual/utils/dynamicContent";
+import { DCPlaceholderStartObj } from "visual/utils/dynamicContent/types";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { camelCase } from "visual/utils/string";
 import { MValue } from "visual/utils/value";
 import { ECKeyDCInfo } from "../types";
-import { DCPlaceholderObj } from "./types";
 
 //#region keys
 
@@ -24,12 +26,20 @@ export const keyToDCAttrKey = (key: string): string =>
 export const keyToDCFallback2Key = (key: string): string =>
   camelCase([key, "populationFallback2"]);
 
+export const keyToDCEntityIdKey = (key: string): string =>
+  camelCase([key, "populationEntityId"]);
+
+export const keyToDCEntityTypeKey = (key: string): string =>
+  camelCase([key, "populationEntityType"]);
+
 export const hasDC = (v: V, key: string): boolean =>
   !!Str.read(v[keyToDCKey(key)]);
 
 export const keyDCInfo = (v: V, key: string): ECKeyDCInfo => {
   const staticValue = v[key];
   const dcValue = Str.read(v[keyToDCKey(key)]) ?? "";
+  const entityId = Str.read(v[keyToDCEntityIdKey(key)]);
+  const entityType = Str.read(v[keyToDCEntityTypeKey(key)]);
   const fallback = v[keyToDCFallback2Key(key)];
   const attr_ = Obj.read(v[keyToDCAttrKey(key)]);
   const attr = attr_
@@ -44,7 +54,9 @@ export const keyDCInfo = (v: V, key: string): ECKeyDCInfo => {
     staticValue,
     dcValue,
     attr,
-    fallback
+    fallback,
+    ...(entityType && { entityType }),
+    ...(entityId && { entityId })
   };
 };
 
@@ -52,105 +64,41 @@ export const keyDCInfo = (v: V, key: string): ECKeyDCInfo => {
 
 //#region placeholder
 
-const _unescape = mPipe(Str.read, unescape);
-export function placeholderObjFromStr(
-  placeholder: string,
-  useCustomPlaceholder: boolean
-): MValue<DCPlaceholderObj> {
-  if (useCustomPlaceholder) {
-    return { name: placeholder };
-  }
-
-  const r1 = /^{{\s*([\w-]+)(.*?)\s*}}$/;
-  const nameAndAttr = r1.exec(placeholder);
-
-  if (!nameAndAttr) {
-    return undefined;
-  }
-
-  const [, name, attrStr] = nameAndAttr;
-
-  if (attrStr === "") {
-    return { name };
-  }
-
-  const r2 = /(\w+)=("|'|&quot;|&apos;)(.*?)\2/g;
-  let attr: Dictionary<string> | undefined = undefined;
-  let match;
-
-  while ((match = r2.exec(attrStr.trim()))) {
-    attr = attr ?? {};
-    attr[match[1]] = _unescape(match[3]);
-  }
-
-  return attr ? { name, attr } : { name };
-}
-
 export function placeholderObjFromECKeyDCInfo(
-  info: ECKeyDCInfo,
-  useCustomPlaceholder: boolean
-): MValue<DCPlaceholderObj> {
-  if (!info.hasDC) {
+  info: ECKeyDCInfo
+): MValue<DCPlaceholderStartObj> {
+  const placeholder = info.dcValue;
+
+  if (!info.hasDC || !placeholder) {
     return undefined;
   }
 
-  const placeholderObj = placeholderObjFromStr(
-    info.dcValue,
-    useCustomPlaceholder
-  );
+  if (info.fallback || info.attr || info.entityId || info.entityType) {
+    const entityId = Str.read(info.entityId);
+    const entityType = Str.read(info.entityType);
 
-  if (!placeholderObj) {
-    return undefined;
-  }
-
-  if (info.fallback || info.attr) {
-    placeholderObj.attr = {
-      ...placeholderObj.attr,
-      ...info.attr,
-      ...(info.fallback ? { _fallback: info.fallback } : {})
+    return {
+      name: "placeholder",
+      content: placeholder,
+      attr: {
+        ...info.attr,
+        ...(info.fallback ? { _fallback: info.fallback } : {}),
+        ...(entityId ? { entityId } : {}),
+        ...(entityType ? { entityType } : {})
+      }
     };
   }
 
-  return placeholderObj;
-}
-
-const _escape = mPipe(Str.read, escape);
-export function placeholderObjToStr(
-  placeholderObj: DCPlaceholderObj,
-  useCustomPlaceholder: boolean
-): string {
-  const { name, attr } = placeholderObj;
-
-  if (useCustomPlaceholder) {
-    return name;
-  }
-
-  const attrStr = attr
-    ? Object.keys(attr)
-        .sort()
-        .flatMap((k) => {
-          const v = _escape(attr[k]);
-          return v !== undefined ? `${k}='${v}'` : [];
-        })
-        .join(" ")
-    : "";
-
-  return attrStr.length > 0 ? `{{${name} ${attrStr}}}` : `{{${name}}}`;
-}
-
-export function isPlaceholderStr(
-  str: string,
-  useCustomPlaceholder: boolean
-): boolean {
-  return placeholderObjFromStr(str, useCustomPlaceholder) !== undefined;
+  return {
+    name: "placeholder",
+    content: placeholder
+  };
 }
 
 //#endregion
 
-export const dcApiProxyTestFetcher: GetDynamicContent = ({
-  placeholders,
-  useCustomPlaceholder
-}) => {
+// Fetcher Exist only for Tests
+export const dcApiProxyTestFetcher: GetDynamicContent = ({ placeholders }) => {
   const entries: [string, string[]][] = Object.entries(placeholders).map(
     ([postId, value]) => {
       if (value === undefined) {
@@ -160,14 +108,11 @@ export const dcApiProxyTestFetcher: GetDynamicContent = ({
       return [
         postId,
         value.map((placeholder) => {
-          const placeholderObj = placeholderObjFromStr(
-            placeholder,
-            useCustomPlaceholder
-          );
+          const placeholderObj = explodePlaceholder(placeholder);
 
           if (
             placeholderObj === undefined ||
-            placeholderObj.name === "_empty_"
+            !isPlaceholderStart(placeholderObj)
           ) {
             return "";
           }
@@ -181,12 +126,12 @@ export const dcApiProxyTestFetcher: GetDynamicContent = ({
 
           delete placeholderObj.attr?._fallback;
 
-          const { name, attr } = placeholderObj;
+          const { content, attr } = placeholderObj;
           const attrStrArr = Object.entries(attr ?? {}).map(
             ([k, v]) => `${k}='${v}'`
           );
 
-          return [postId, name, ...attrStrArr].join("_");
+          return [postId, content, ...attrStrArr].join("_");
         })
       ];
     }

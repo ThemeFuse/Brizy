@@ -9,6 +9,8 @@
     "anchorName": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "membership": "off",
     "membershipRoles": "[]",
@@ -27,11 +29,15 @@
     "customClassName": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "containerClassName": "",
 
     "customAttributes": "",
-    "customAttributesPopulation": ""
+    "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": ""
   },
 
   "animation": {
@@ -40,20 +46,6 @@
     "animationDelay": 1000,
     "animationInfiniteAnimation": false,
 
-    "tempAnimationName": "none",
-
-    "tabletAnimationName": null,
-    "tabletAnimationDuration": null,
-    "tabletAnimationDelay": null,
-    "tabletAnimationInfiniteAnimation": null,
-
-    "tempTabletAnimationName": null,
-
-    "mobileAnimationName": null,
-    "mobileAnimationDuration": null,
-    "mobileAnimationDelay": null,
-    "mobileAnimationInfiniteAnimation": null,
-
-    "tempMobileAnimationName": null
+    "tempAnimationName": "none"
   }
 }

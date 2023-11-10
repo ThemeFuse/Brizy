@@ -4,6 +4,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtend from "./sidebarExtend";
@@ -118,6 +119,15 @@ class ResetPassword extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
+    const {
+      customCSS,
+      redirectType,
+      messageRedirect,
+      emptyFieldsError,
+      submitUrlError,
+      passLengthError,
+      passMatchError
+    } = v;
     const className = classnames(
       "brz-reset-psw",
       css(
@@ -128,17 +138,31 @@ class ResetPassword extends EditorComponent {
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Wrapper
           {...this.makeWrapperProps({
             className,
             attributes: {
-              "data-redirect": v.redirectType,
-              "data-redirect-value": v.messageRedirect,
-              "data-error-empty": v.emptyFieldsError,
-              "data-error-url": v.submitUrlError,
-              "data-error-passlength": v.passLengthError,
-              "data-error-passmatch": v.passMatchError
+              ...makeDataAttr({ name: "redirect", value: redirectType }),
+              ...makeDataAttr({
+                name: "redirect-value",
+                value: messageRedirect
+              }),
+              ...makeDataAttr({
+                name: "error-empty",
+                value: emptyFieldsError,
+                translatable: true
+              }),
+              ...makeDataAttr({
+                name: "error-url",
+                value: submitUrlError,
+                translatable: true
+              }),
+              ...makeDataAttr({
+                name: "error-passlength",
+                value: passLengthError
+              }),
+              ...makeDataAttr({ name: "error-passmatch", value: passMatchError })
             }
           })}
         >

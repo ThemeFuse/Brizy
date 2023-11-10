@@ -1,16 +1,17 @@
+import classnames from "classnames";
 import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import toolbarConfigFn from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import classnames from "classnames";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import { getSidebars } from "visual/utils/api";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { getSidebars } from "visual/utils/api";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import toolbarConfigFn from "./toolbar";
 
 class WPSidebar extends EditorComponent {
   static get componentId() {
@@ -24,7 +25,7 @@ class WPSidebar extends EditorComponent {
   };
 
   componentDidMount() {
-    getSidebars().then(sidebars => {
+    getSidebars().then((sidebars) => {
       this.setState({ sidebars });
 
       const v = this.getValue();
@@ -34,7 +35,7 @@ class WPSidebar extends EditorComponent {
     });
   }
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   renderForEdit(v, vs, vd) {
     const { className } = v;
@@ -50,6 +51,10 @@ class WPSidebar extends EditorComponent {
       ),
       className
     );
+    const placeholder = makePlaceholder({
+      content: "{{editor_sidebar}}",
+      attr: { sidebarId: v.sidebar }
+    });
 
     return (
       <Toolbar
@@ -57,10 +62,7 @@ class WPSidebar extends EditorComponent {
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Wrapper {...this.makeWrapperProps({ className: classNameWP })}>
-            <DynamicContentHelper
-              placeholder={`{{editor_sidebar id="${v.sidebar}"}}`}
-              tagName="div"
-            />
+            <DynamicContentHelper placeholder={placeholder} tagName="div" />
           </Wrapper>
         </CustomCSS>
       </Toolbar>

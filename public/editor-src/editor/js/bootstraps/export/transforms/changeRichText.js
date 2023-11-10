@@ -1,14 +1,14 @@
-import Config from "visual/global/Config";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { customFileUrl } from "visual/utils/customFile";
 import {
   defaultImagePopulation,
   getImageUrl,
   imagePopulationUrl
 } from "visual/utils/image";
-
-const isWP = Config.get("wp");
+import { addDataColorAttribute } from "../../workers/ssr/utils/changeRichText";
 
 const linkClassNames = [
   "link--anchor",
@@ -18,11 +18,9 @@ const linkClassNames = [
 ];
 
 export default function changeRichText($) {
-  const dynamicContent = Config.getAll()?.dynamicContent;
-  const useCustomPlaceholder = dynamicContent?.useCustomPlaceholder ?? false;
-
+  const $richText = $(".brz-rich-text");
   // Change Links
-  $(".brz-rich-text")
+  $richText
     .find("a[data-href]")
     .filter(function () {
       const attr = $(this).attr("data-href");
@@ -35,9 +33,28 @@ export default function changeRichText($) {
       const style = $this.attr("style") || "";
       const href = $this.attr("data-href") ?? "";
       const data = JSON.parse(decodeURIComponent(href));
+      const { population, populationEntityId, populationEntityType } =
+        data ?? {};
+      const populationAttr = {};
+
+      if (populationEntityId) {
+        populationAttr.entityId = populationEntityId;
+      }
+      if (populationEntityType) {
+        populationAttr.entityType = populationEntityType;
+      }
+
       const externalLink = {
         external: data.external,
-        population: data.population
+        population: population
+          ? makePlaceholder({
+              content: population,
+              attr: populationAttr
+            })
+          : ""
+      };
+      const internalLink = {
+        page: data.internal
       };
       const newData = {
         ...data,
@@ -46,7 +63,10 @@ export default function changeRichText($) {
         // so temporarily defaulted to external
         external: data.externalType
           ? externalLink[data.externalType]
-          : externalLink.external
+          : externalLink.external,
+        page: data.internalType
+          ? internalLink[data.internalType]
+          : internalLink.page
       };
 
       const url = newData[data.type];
@@ -86,95 +106,73 @@ export default function changeRichText($) {
       }
     });
 
+  addDataColorAttribute($, $richText);
+
   // replace DynamicContent
-  $(".brz-rich-text")
-    .find("[data-population]")
-    .each(function () {
-      const $this = $(this);
-      const population = $this.attr("data-population");
-      const $blockDynamicContentElem = $this.closest(".brz-tp__dc-block");
-      let $elem;
-      if ($blockDynamicContentElem.length) {
-        $elem = $blockDynamicContentElem;
-        const classNames = $elem
-          .attr("class")
-          .split(" ")
-          .filter(
-            (className) =>
-              className.startsWith("brz-tp__dc-block") ||
-              className.startsWith("brz-mt") ||
-              className.startsWith("dc-color") ||
-              className.startsWith("brz-mb")
-          )
-          .join(" ");
-        $elem.attr("class", classNames);
-      } else {
-        $elem = $this;
-      }
-
-      let _population;
-
-      if (useCustomPlaceholder) {
-        _population = population;
-        // Removed extra attribute
-        $elem.removeAttr("data-population");
-      } else {
-        _population = `{{${population}}}`;
-      }
-
-      // Override current html with placeholder
-      $elem.html(_population);
-    });
-
-  // replace Image
-  $(".brz-rich-text")
-    .find(".brz-text-mask, .brz-population-mask")
-    .each(function () {
-      const $this = $(this);
-      const src = $this.attr("data-image_src");
-      const population = $this.attr("data-image_population");
-      const fileName = $this.attr("data-image_file_name") ?? "image";
-
-      const imgUrl = getImageUrl({
-        fileName,
-        uid: src,
-        sizeType: SizeType.custom
-      });
-
-      const css = $this.css();
-      const newCSS = Object.entries(css).reduce((acc, [property, value]) => {
-        // cheeriojs have bug for background-image: url("someurl")
-        // this is small fix for this case
-        if (!property.includes("http")) {
-          acc[property] = value;
-        }
-
-        return acc;
-      }, {});
-
-      $this.removeAttr("style");
+  $richText.find("[data-population]").each(function () {
+    const $this = $(this);
+    const population = $this.attr("data-population");
+    const $blockDynamicContentElem = $this.closest(".brz-tp__dc-block");
+    let $elem;
+    if ($blockDynamicContentElem.length) {
+      $elem = $blockDynamicContentElem;
+    } else {
+      $elem = $this;
+    }
 
       if (population) {
-        $this.css({
-          ...newCSS,
-          "background-image": `url('${imagePopulationUrl(population, {
-            ...defaultImagePopulation,
-            useCustomPlaceholder
-          })}')`
-        });
-      } else if (imgUrl)
-        $this.css({
-          ...newCSS,
-          "background-image": `url('${imgUrl}')`
-        });
+        // Override current html with placeholder
+        $elem.html(population);
+        $elem.removeAttr("data-population");
+    }
+  });
 
-      $this.removeAttr("data-image_src");
-      $this.removeAttr("data-image_width");
-      $this.removeAttr("data-image_height");
-      $this.removeAttr("data-image_extension");
-      $this.removeAttr("data-image_file_name");
-      $this.removeAttr("data-image_population");
+  // replace Image
+  $richText.find(".brz-text-mask, .brz-population-mask").each(function () {
+    const $this = $(this);
+    const src = $this.attr("data-image_src") ?? "";
+    const population = $this.attr("data-image_population");
+    const fileName = $this.attr("data-image_file_name") ?? "image";
+
+    const imgUrl = getImageUrl({
+      fileName,
+      uid: src,
+      sizeType: SizeType.custom
     });
+
+    const css = $this.css();
+    const newCSS = Object.entries(css).reduce((acc, [property, value]) => {
+      // cheeriojs have bug for background-image: url("someurl")
+      // this is small fix for this case
+      if (!property.includes("http")) {
+        acc[property] = value;
+      }
+
+      return acc;
+    }, {});
+
+    $this.removeAttr("style");
+
+    if (population) {
+      $this.css({
+        ...newCSS,
+        "background-image": `url('${imagePopulationUrl(population, {
+          ...defaultImagePopulation
+        })}')`
+      });
+    } else if (imgUrl)
+      $this.css({
+        ...newCSS,
+        "background-image": `url('${imgUrl}')`
+      });
+
+    $this.removeAttr("data-image_src");
+    $this.removeAttr("data-image_width");
+    $this.removeAttr("data-image_height");
+    $this.removeAttr("data-image_extension");
+    $this.removeAttr("data-image_file_name");
+    $this.removeAttr("data-image_population");
+  });
 }
 
 function getLinkContentByType(type, href) {
@@ -189,10 +187,7 @@ function getLinkContentByType(type, href) {
       return `#${anchorName}`;
     }
     case "upload": {
-      const { customFile } = Config.get("urls");
-      const [name] = href.split("|||", 1);
-
-      return isWP ? `${customFile}${name}` : `${customFile}/${name}`;
+      return customFileUrl(href);
     }
     case "popup":
     case "lightBox":

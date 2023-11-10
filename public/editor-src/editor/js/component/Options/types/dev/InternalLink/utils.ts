@@ -1,15 +1,16 @@
 import { partial, property } from "underscore";
 import * as A from "visual/utils/array";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { toObject } from "visual/utils/object";
 import { String } from "visual/utils/string/specs";
 import { Reader } from "visual/utils/types/Type";
 import { mCompose } from "visual/utils/value";
 import { Choice } from "../Select/types";
-import { Post } from "./types/Post";
+import { ChoiceWithPermalink, ChoicesSync } from "./types";
 
-const readPost: Reader<Post> = (v) => {
+const readPost: Reader<ChoiceWithPermalink> = (v) => {
   type _Post = {
-    ID: number;
+    value: string;
     title: string;
   };
 
@@ -17,10 +18,10 @@ const readPost: Reader<Post> = (v) => {
     return undefined;
   }
 
-  const id = String.read((v as _Post).ID);
+  const value = String.read((v as _Post).value);
   const title = String.read((v as _Post).title);
 
-  return id && title ? { id, title } : undefined;
+  return value && title ? { title, value } : undefined;
 };
 
 export const toPosts = mCompose(
@@ -29,12 +30,13 @@ export const toPosts = mCompose(
   toObject
 );
 
-const normalizeItem = (item: Post): Choice => {
-  return { title: item.title, value: item.id };
-};
+export const normalizeItem = (item: ChoiceWithPermalink): Choice => ({
+  title: item.title,
+  value: makePlaceholder({ content: item.populationPermalink ?? "" })
+});
 
-export const normalizeItems = (items: Post[]): Choice[] => {
-  if (items.length === 1 && items[0].id === "" && items[0].title === "") {
+export const normalizeItems = (items: ChoicesSync): Choice[] => {
+  if (items.length === 1 && items[0].value === "" && items[0].title === "") {
     return [];
   }
 

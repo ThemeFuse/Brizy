@@ -31,9 +31,6 @@ export function styleWrapper(
         "cssStyleWrapperContainerFlex",
         "cssStyleWrapperBorderFlex"
       ]
-    },
-    ".brz &&:hover .brz-hover-animation": {
-      standart: ["cssStyleFlexHorizontalAlign"]
     }
   };
 

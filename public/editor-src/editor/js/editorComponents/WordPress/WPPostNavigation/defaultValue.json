@@ -14,13 +14,13 @@
     "height": 80,
     "heightSuffix": "%",
     "left": 50,
-    "leftSuffix": null,
+    "leftSuffix": "px",
 
     "width": 100,
     "widthSuffix": "%",
 
     "spacing": 20,
-    "spacingSuffix": null,
+    "spacingSuffix": "px",
 
     "customCSS": "",
 
@@ -88,17 +88,6 @@
     "tabletPostTypographyLineHeight": 1.3,
     "tabletPostTypographyLetterSpacing": 0,
 
-    "tabletHeight": null,
-    "tabletHeightSuffix": null,
-    "tabletLeft": null,
-    "tabletLeftSuffix": null,
-
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-
-    "tabletSpacing": null,
-    "tabletSpacingSuffix": null,
-
     "mobileTitleTypographyFontStyle": "",
     "mobileTitleTypographyFontFamilyType": null,
     "mobileTitleTypographyFontSize": 14,
@@ -113,17 +102,6 @@
     "mobilePostTypographyFontSizeSuffix": "px",
     "mobilePostTypographyFontWeight": 600,
     "mobilePostTypographyLineHeight": 1.3,
-    "mobilePostTypographyLetterSpacing": 0,
-
-    "mobileHeight": null,
-    "mobileHeightSuffix": null,
-    "mobileLeft": null,
-    "mobileLeftSuffix": null,
-
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
-
-    "mobileSpacing": null,
-    "mobileSpacingSuffix": null
+    "mobilePostTypographyLetterSpacing": 0
   }
 }

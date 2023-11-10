@@ -1,48 +1,21 @@
-export function makeEmptySidebarConfig({ title }) {
-  return {
-    title,
-    getItems() {
-      return [];
-    }
-  };
-}
-
-// BG Image
-export { toolbarBgImage } from "./toolbarBgImage";
-
-// Color
-export { toolbarColor2, toolbarColorHexField2 } from "./toolbarColor";
-
 // Gradient
 export {
   toolbarGradientLinearDegree,
   toolbarGradientRadialDegree
 } from "./toolbarGradient";
 
-// BG Color
-export { toolbarBgColor2, toolbarBgColorHexField2 } from "./toolbarBgColor";
-
 // Border Color
 export {
-  toolbarBorder2,
-  toolbarBorderColorHexField2,
   toolbarBorderWidthOneField2,
   toolbarBorderWidthFourFields2
 } from "./toolbarBorder";
 
 //Box Shadow
-export {
-  toolbarBoxShadowFields2,
-  toolbarBoxShadow2,
-  toolbarBoxShadowHexField2
-} from "./toolbarBoxShadow";
-
-export { toolbarTextShadowHexField2 } from "./toolbarTextShadow";
+export { toolbarBoxShadowFields2 } from "./toolbarBoxShadow";
 
 // Anchor and URL
 export {
   toolbarLinkAnchor,
-  toolbarLinkExternal,
   toolbarStoryAnchor,
   toolbarLinkPopup
 } from "./toolbarLink";
@@ -53,14 +26,6 @@ export {
   toolbarShowOnMobile,
   toolbarShowOnResponsive
 } from "./toolbarShowOnDevices";
-
-// Filter
-export {
-  toolbarFilterHue,
-  toolbarFilterSaturation,
-  toolbarFilterBrightness,
-  toolbarFilterContrast
-} from "./toolbarFilters";
 
 // Disabled
 export {
@@ -84,22 +49,7 @@ export { getInstanceParentId } from "./toolbarElementSection";
 export { toolbarElementSoundCloudStyle } from "./toolbarElementSoundCloud";
 
 // Element Image
-export {
-  toolbarImageLinkExternal,
-  toolbarImageTags
-} from "./toolbarElementImage";
-
-// Typography
-export {
-  toolbarTypography2FontFamily,
-  toolbarTypography2FontStyle,
-  toolbarTypography2FontSize,
-  toolbarTypography2LineHeight,
-  toolbarTypography2LetterSpacing
-} from "./toolbarTypography2";
-
-//Element WP Posts
-export { toolbarElementWPPostsNumber } from "./toolbarElementWPPosts";
+export { toolbarImageTags } from "./toolbarElementImage";
 
 export {
   toolbarElementForm2Apps,

@@ -2,13 +2,13 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { noop } from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
+import { ToastNotification } from "visual/component/Notifications";
 import { Scrollbar } from "visual/component/Scrollbar";
 import Config from "visual/global/Config";
+import { isCustomerPage } from "visual/global/Config/types/configs/Base";
 import {
-  isCMS,
   isCloud,
   isCollectionPage,
-  isCustomer,
   isEcwidCategoryPage,
   isEcwidProductPage
 } from "visual/global/Config/types/configs/Cloud";
@@ -42,14 +42,7 @@ interface Props {
     };
     meta: {
       syncSuccess: () => void;
-      syncFail: (data: {
-        // TODO: add correct type here
-        responseJSON?: {
-          data: {
-            message: string;
-          };
-        };
-      }) => void;
+      syncFail: (data: { message?: string }) => void;
     };
   }) => void;
 }
@@ -64,7 +57,6 @@ const Rules = (props: Props): ReactElement => {
   } = props;
   const [rules, setRules] = useState(value);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [listLoading, rulesList] = useRuleList(rules, context);
   const page = useSelector(pageSelector);
 
@@ -119,7 +111,7 @@ const Rules = (props: Props): ReactElement => {
           newRule.entityType =
             ECWID_PRODUCT_CATEGORY_TYPE as NoEmptyString.NoEmptyString;
         }
-        if (isCloud(config) && isCMS(config) && isCustomer(config)) {
+        if (isCloud(config) && isCustomerPage(config.page)) {
           newRule.entityType = CUSTOMER_TYPE as NoEmptyString.NoEmptyString;
         }
 
@@ -131,7 +123,6 @@ const Rules = (props: Props): ReactElement => {
   function handleChange(): void {
     if (IS_PRO) {
       setLoading(true);
-      setError(null);
 
       onChange({
         data: {
@@ -141,9 +132,7 @@ const Rules = (props: Props): ReactElement => {
           syncSuccess: (): void => setLoading(false),
           syncFail: (data): void => {
             setLoading(false);
-            setError(
-              data.responseJSON?.data.message ?? t("Something went wrong")
-            );
+            ToastNotification.error(data.message ?? t("Something went wrong"));
           }
         }
       });
@@ -180,7 +169,6 @@ const Rules = (props: Props): ReactElement => {
         </Scrollbar>
       )}
 
-      {error && <div className="error">{error}</div>}
       <Buttons loading={loading} onChange={handleChange} onClose={onClose} />
     </>
   );

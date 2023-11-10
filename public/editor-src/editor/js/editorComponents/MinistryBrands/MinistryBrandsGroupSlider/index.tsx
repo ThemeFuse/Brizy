@@ -16,7 +16,7 @@ import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarMeta from "./toolbarMeta";
 import * as toolbarSliderDots from "./toolbarSliderDots";
 import { Props, Value } from "./types";
-import { getPlaceholder } from "./utils";
+import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsGroupSlider" {

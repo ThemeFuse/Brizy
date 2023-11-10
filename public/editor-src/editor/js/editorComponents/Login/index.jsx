@@ -15,7 +15,11 @@ import * as toolbarRegisterLink from "visual/editorComponents/Login/toolbarRegis
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import Config from "visual/global/Config";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { IS_WP } from "visual/utils/env";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
+import * as Json from "visual/utils/reader/json";
+import { encodeToString } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarAutorized from "./sidebarAutorized";
@@ -109,6 +113,40 @@ class Login extends EditorComponent {
           };
       }
     }
+  }
+
+  getDefaultRoles(rules) {
+    const _rules = Json.read(rules);
+
+    return _rules
+      ? {
+          "data-defaultrole": encodeToString(
+            _rules.map((item) => ({ id: item }))
+          )
+        }
+      : {};
+  }
+
+  renderLink(v) {
+    if (IS_WP) {
+      const { logoutRedirectType, logoutRedirect } = v;
+      const redirectLogoutHref = makePlaceholder({
+        content: "{{editor_logout_url}}",
+        attr: {
+          redirect:
+            logoutRedirectType === "samePage" ? "samePage" : logoutRedirect
+        }
+      });
+
+      return (
+        <a className="brz-login__authorized-link" href={redirectLogoutHref}>
+          {" "}
+          Logout
+        </a>
+      );
+    }
+
+    return <span className="brz-login__authorized-link"> Logout</span>;
   }
 
   renderLoginFields(v) {
@@ -342,26 +380,10 @@ class Login extends EditorComponent {
   }
 
   renderAuthorizedForm(v) {
-    const renderLink = () => {
-      if (IS_WP) {
-        const { logoutRedirectType, logoutRedirect } = v;
-
-        const redirectLogoutHref = `{{editor_logout_url redirect="${
-          logoutRedirectType === "samePage" ? "samePage" : logoutRedirect
-        }"}}`;
-
-        return (
-          <a className="brz-login__authorized-link" href={redirectLogoutHref}>
-            {" "}
-            Logout
-          </a>
-        );
-      }
-
-      return <span className="brz-login__authorized-link"> Logout</span>;
-    };
-
     const fallbackComponent = <p>John Doe</p>;
+    const placeholder = makePlaceholder({
+      content: "{{editor_user_display_name}}"
+    });
 
     return (
       <Toolbar
@@ -373,12 +395,12 @@ class Login extends EditorComponent {
         <div className="brz-login__authorized">
           {v.showName === "on" && (
             <DynamicContentHelper
-              placeholder="{{editor_user_display_name}}"
+              placeholder={placeholder}
               tagName="p"
               fallbackComponent={fallbackComponent}
             />
           )}
-          {renderLink()}
+          {this.renderLink(v)}
         </div>
       </Toolbar>
     );
@@ -387,26 +409,16 @@ class Login extends EditorComponent {
   getActions(type) {
     switch (type) {
       case "register":
-        return "{{editor_registration_url}}";
+        return makePlaceholder({ content: "{{editor_registration_url}}" });
       case "forgot":
-        return "{{editor_lostpassword_url}}";
+        return makePlaceholder({ content: "{{editor_lostpassword_url}}" });
       default:
-        return "{{editor_login_url}}";
+        return makePlaceholder({ content: "{{editor_login_url}}" });
     }
   }
 
   renderFormForView(v) {
     const { defaultRoles } = v;
-
-    const getDefaultRoles = () => {
-      try {
-        return JSON.stringify(
-          JSON.parse(defaultRoles)?.map((item) => ({ id: item }))
-        );
-      } catch {
-        return [];
-      }
-    };
 
     return (
       <>
@@ -419,7 +431,7 @@ class Login extends EditorComponent {
         <form
           className="brz-login-form brz-login-form__register"
           noValidate
-          data-defaultrole={getDefaultRoles()}
+          {...this.getDefaultRoles(defaultRoles)}
         >
           {this.renderRegisterForm(v)}
         </form>
@@ -465,7 +477,14 @@ class Login extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { type } = v;
+    const {
+      type,
+      redirectType,
+      messageRedirect,
+      emptyFieldsError,
+      passLengthError,
+      passMatchError
+    } = v;
     const className = classnames(
       "brz-login",
       css(
@@ -481,12 +500,31 @@ class Login extends EditorComponent {
           {...this.makeWrapperProps({
             className,
             attributes: {
-              "data-islogged": "{{editor_is_user_logged_in}}",
-              "data-redirect": v.redirectType,
-              "data-redirect-value": v.messageRedirect,
-              "data-error-empty": v.emptyFieldsError,
-              "data-error-passlength": v.passLengthError,
-              "data-error-passmatch": v.passMatchError,
+              ...makeDataAttr({
+                name: "islogged",
+                value: makePlaceholder({
+                  content: "{{editor_is_user_logged_in}}"
+                })
+              }),
+              ...makeDataAttr({ name: "redirect", value: redirectType }),
+              ...makeDataAttr({
+                name: "redirect-value",
+                value: messageRedirect
+              }),
+              ...makeDataAttr({
+                name: "error-empty",
+                value: emptyFieldsError,
+                translatable: true
+              }),
+              ...makeDataAttr({
+                name: "error-passlength",
+                value: passLengthError,
+                translatable: true
+              }),
+              ...makeDataAttr({
+                name: "error-passmatch",
+                value: passMatchError
+              }),
               type
             }
           })}

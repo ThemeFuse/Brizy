@@ -13,7 +13,13 @@
     "features": "off",
     "nonfeatures": "off",
 
-    "showEventTime": "off"
+    "showEventTime": "off",
+
+    "showSubscribeToCalendarButton": "on",
+    "subscribeToCalendarText": "Subscribe",
+
+    "iconName": "hit-down",
+    "iconType": "glyph"
   },
   "style": {
     "families": {
@@ -21,8 +27,21 @@
       "weekdaysTypographyFontFamily": "lato",
       "dayTypographyFontFamily": "lato",
       "titleTypographyFontFamily": "lato",
-      "eventStartTimeTypographyFontFamily": "lato"
+      "eventStartTimeTypographyFontFamily": "lato",
+      "subscribeToCalendarTypographyFontFamily": "lato"
     },
+
+    "iconSize": "small",
+
+    "iconCustomSize": 16,
+    "iconCustomSizeSuffix": "px",
+
+    "iconPosition": "right",
+
+    "iconSpacing": 10,
+    "iconSpacingSuffix": "px",
+
+    "iconStrokeWidth": 1,
 
     "paginationTypographyFontStyle": "",
     "paginationTypographyFontFamilyType": "google",
@@ -74,6 +93,14 @@
     "dayTypographyFontWeight": 700,
     "dayTypographyLetterSpacing": 0,
     "dayTypographyLineHeight": 1,
+
+    "subscribeToCalendarTypographyFontStyle": "",
+    "subscribeToCalendarTypographyFontFamilyType": "google",
+    "subscribeToCalendarTypographyFontSize": 16,
+    "subscribeToCalendarTypographyFontSizeSuffix": "px",
+    "subscribeToCalendarTypographyFontWeight": 700,
+    "subscribeToCalendarTypographyLetterSpacing": 0,
+    "subscribeToCalendarTypographyLineHeight": 1,
 
     "dayColorHex": "#000000",
     "dayColorOpacity": 1,
@@ -127,6 +154,78 @@
     "dayBorderTopRightRadiusSuffix": "px",
     "dayBorderBottomRightRadiusSuffix": "px",
     "dayBorderBottomLeftRadiusSuffix": "px",
+
+    "subscribeToCalendarColorHex": "#000000",
+    "subscribeToCalendarColorOpacity": 1,
+    "subscribeToCalendarColorPalette": "",
+
+    "subscribeToCalendarBgColorType": "solid",
+
+    "subscribeToCalendarBgColorHex": "#ebebeb",
+    "subscribeToCalendarBgColorOpacity": 1,
+    "subscribeToCalendarBgColorPalette": "color6",
+
+    "subscribeToCalendarGradientType": "linear",
+
+    "subscribeToCalendarGradientColorHex": "#009900",
+    "subscribeToCalendarGradientColorOpacity": 1,
+    "subscribeToCalendarGradientColorPalette": "",
+
+    "subscribeToCalendarGradientStartPointer": 0,
+    "subscribeToCalendarGradientFinishPointer": 100,
+
+    "subscribeToCalendarGradientActivePointer": "startPointer",
+
+    "subscribeToCalendarGradientLinearDegree": 90,
+    "subscribeToCalendarGradientRadialDegree": 90,
+
+    "subscribeToCalendarBorderRadiusType": "grouped",
+
+    "subscribeToCalendarBorderRadius": 100,
+    "subscribeToCalendarBorderRadiusSuffix": "px",
+
+    "subscribeToCalendarBorderStyle": "none",
+
+    "subscribeToCalendarBorderColorHex": "#000000",
+    "subscribeToCalendarBorderColorOpacity": 0,
+    "subscribeToCalendarBorderColorPalette": "",
+
+    "subscribeToCalendarBorderWidthType": "grouped",
+
+    "subscribeToCalendarBorderWidth": 0,
+    "subscribeToCalendarBorderTopWidth": 0,
+    "subscribeToCalendarBorderRightWidth": 0,
+    "subscribeToCalendarBorderBottomWidth": 0,
+    "subscribeToCalendarBorderLeftWidth": 0,
+
+    "subscribeToCalendarBorderTopLeftRadius": 100,
+    "subscribeToCalendarBorderTopRightRadius": 100,
+    "subscribeToCalendarBorderBottomRightRadius": 100,
+    "subscribeToCalendarBorderBottomLeftRadius": 100,
+
+    "subscribeToCalendarBorderTopLeftRadiusSuffix": "px",
+    "subscribeToCalendarBorderTopRightRadiusSuffix": "px",
+    "subscribeToCalendarBorderBottomRightRadiusSuffix": "px",
+    "subscribeToCalendarBorderBottomLeftRadiusSuffix": "px",
+
+    "subscribeToCalendarBoxShadow": "none",
+
+    "subscribeToCalendarBoxShadowColorHex": "#000000",
+    "subscribeToCalendarBoxShadowColorPalette": "",
+    "subscribeToCalendarBoxShadowColorOpacity": 0,
+
+    "subscribeToCalendarBoxShadowBlur": 0,
+    "subscribeToCalendarBoxShadowSpread": 0,
+    "subscribeToCalendarBoxShadowVertical": 0,
+    "subscribeToCalendarBoxShadowHorizontal": 0,
+
+    "subscribeToCalendarHorizontalAlign": "center",
+
+    "subscribeToCalendarWidth": 25,
+    "subscribeToCalendarWidthSuffix": "%",
+
+    "subscribeToCalendarHeight": 50,
+    "subscribeToCalendarHeightSuffix": "px",
 
     "tableBorderRadiusType": "grouped",
 

@@ -10,18 +10,16 @@ import { makeOptionValueToAnimation } from "visual/component/Options/types/utils
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import {
-  keyToDCFallback2Key,
-  placeholderObjFromStr,
-  placeholderObjToStr
-} from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import Config from "visual/global/Config";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { imagePopulationUrl } from "visual/utils/image";
+import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { isNumber } from "visual/utils/math";
 import { isStory } from "visual/utils/models";
 import {
@@ -29,6 +27,10 @@ import {
   mobileSyncOnChange,
   tabletSyncOnChange
 } from "visual/utils/onChange";
+import {
+  fromLinkElementModel,
+  patchOnDCChange as patchOnLinkDCChange
+} from "visual/utils/patch/Link/";
 import { read as readBoolean } from "visual/utils/reader/bool";
 import { read as readNumber } from "visual/utils/reader/number";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
@@ -44,6 +46,7 @@ import {
   patchOnSizeTypeChange,
   pathOnUnitChange
 } from "./imageChange";
+import { migrations } from "./migrations";
 import * as sidebarConfig from "./sidebar";
 import { style, styleContent, styleHover } from "./styles";
 import toolbarConfigFn from "./toolbar";
@@ -56,10 +59,8 @@ import {
   getCustomImageUrl,
   getImageSize,
   getSizeType,
-  isGIF,
   isOriginalSize,
   isPredefinedSize,
-  isSVG,
   multiplier,
   showOriginalImage
 } from "./utils";
@@ -126,6 +127,8 @@ class Image extends EditorComponent {
 
     const imageUnit = ImagePatch.patchImageUnit(patch, device);
 
+    const imageLinkDC = fromLinkElementModel(patch);
+
     if (value === undefined) {
       return {};
     }
@@ -138,17 +141,11 @@ class Image extends EditorComponent {
     }
 
     if (imageDC !== undefined) {
+      const context = this.context;
       const wrapperSize = this.getWrapperSizes(v)[device];
       const containerWidth = this.getContainerSize()[device];
-      const useCustomPlaceholder =
-        Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
 
-      return patchOnDCChange(
-        containerWidth,
-        patch,
-        wrapperSize,
-        useCustomPlaceholder
-      );
+      return patchOnDCChange(containerWidth, patch, wrapperSize, context);
     }
 
     if (imageUnit !== undefined) {
@@ -164,14 +161,20 @@ class Image extends EditorComponent {
       return patchOnSizeTypeChange(containerWidth, imageSizeType);
     }
 
+    if (imageLinkDC) {
+      return patchOnLinkDCChange(imageLinkDC);
+    }
+
     return {};
   }
 
   handleResize = () => {
     const IS_STORY = isStory(Config.getAll());
+
     if (!IS_STORY) {
       this.updateContainerWidth();
     }
+
     this.props.onResize();
   };
 
@@ -181,6 +184,9 @@ class Image extends EditorComponent {
 
   handleBoxResizerChange = (patch) => {
     if (this.state.isDragging) {
+      // INFO: we need to reset this flag after migration of image because our resizer works with internal state
+      // and because of this handleValueChange is not called initially to reset the "dbValueMigrated"
+      this.dbValueMigrated = undefined;
       this.setState({ sizePatch: patch });
     } else {
       this.handleChange(patch);
@@ -199,7 +205,10 @@ class Image extends EditorComponent {
   };
 
   getWidth = () => {
-    const parentNode = this.container?.current?.parentElement;
+    let parentNode = this.container?.current?.parentElement;
+    if (parentNode.classList.contains("brz-wrapper__scrollmotion")) {
+      parentNode = parentNode.parentElement;
+    }
     const parentWidth = parentNode?.getBoundingClientRect().width;
 
     if (parentNode && isNumber(parentWidth)) {
@@ -259,18 +268,15 @@ class Image extends EditorComponent {
     cH = Math.round(cH);
 
     if (v.imagePopulation) {
-      const useCustomPlaceholder =
-        Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
       const src = v.imageSrc;
       const options = { cW: Math.round(cW), cH: Math.round(cH) };
       const options2X = multiplier(options, 2);
-      const url = imagePopulationUrl(src, { ...options, useCustomPlaceholder });
+      const url = imagePopulationUrl(src, { ...options });
 
       return {
         source: url,
         url: `${url} 1x, ${imagePopulationUrl(src, {
-          ...options2X,
-          useCustomPlaceholder
+          ...options2X
         })} 2x`
       };
     }
@@ -307,7 +313,8 @@ class Image extends EditorComponent {
       heightSuffix
     } = v;
     const isSvgOfGif =
-      (isSVG(imageExtension) || isGIF(imageExtension)) && !imagePopulation;
+      (isSVGExtension(imageExtension) || isGIFExtension(imageExtension)) &&
+      !imagePopulation;
     const _sizeType = getSizeType(v, DESKTOP);
     const _tabletSizeType = getSizeType(v, TABLET);
     const _mobileSizeType = getSizeType(v, MOBILE);
@@ -393,7 +400,7 @@ class Image extends EditorComponent {
         (v.imageSrc || v.imagePopulation) &&
         v.linkLightBox === "on" &&
         !inGallery &&
-        !(isSVG(v.imageExtension) || isGIF(v.imageExtension))
+        !(isSVGExtension(v.imageExtension) || isGIFExtension(v.imageExtension))
     };
   }
 
@@ -449,35 +456,11 @@ class Image extends EditorComponent {
       };
     }
 
-    if (dbValue.imagePopulation) {
-      const { imageSizes, dynamicContent } = Config.getAll();
-      const useCustomPlaceholder =
-        dynamicContent?.useCustomPlaceholder ?? false;
-      const placeholderData = placeholderObjFromStr(
-        dbValue.imagePopulation,
-        useCustomPlaceholder
-      );
-      const attr = placeholderData?.attr;
-      const name = placeholderData?.name;
-
-      if (name !== undefined && attr?.size !== undefined) {
-        const imageData = imageSizes?.find(({ name }) => name === attr.size);
-
-        if (imageSizes !== undefined && imageData === undefined) {
-          const _attr = { ...attr, size: "original" };
-
-          value = {
-            ...value,
-            imagePopulation: placeholderObjToStr(
-              { name, attr: _attr },
-              useCustomPlaceholder
-            )
-          };
-        }
-      }
-    }
-
-    if (dbValue.sizeType !== undefined && dbValue.sizeType !== "custom") {
+    if (
+      !dbValue.imagePopulation &&
+      dbValue.sizeType !== undefined &&
+      dbValue.sizeType !== "custom"
+    ) {
       const { imageSizes } = Config.getAll();
       const imageData = imageSizes?.find(
         ({ name }) => name === dbValue.sizeType
@@ -600,11 +583,12 @@ class Image extends EditorComponent {
       hoverInfiniteAnimation: galleryHoverInfiniteAnimation,
       inGallery
     } = gallery;
-
+    const { clonedFromGallery = false } = v;
+    const IS_STORY = isStory(Config.getAll());
     const animationId = readString(wrapperAnimationId) ?? this.getId();
-
-    if (inGallery) {
+    if (inGallery && !clonedFromGallery) {
       const hoverName = readString(galleryHoverName) ?? "none";
+      const isHidden = IS_STORY || hoverName === "none";
       const optionsFromGallery = {
         duration: readNumber(galleryHoverDuration) ?? 1000,
         infiniteAnimation: galleryHoverInfiniteAnimation ?? false
@@ -613,17 +597,20 @@ class Image extends EditorComponent {
       return {
         hoverName,
         animationId,
-        options: getHoverAnimationOptions(optionsFromGallery, hoverName)
+        options: getHoverAnimationOptions(optionsFromGallery, hoverName),
+        isHidden
       };
     }
     const { hoverName } = v;
     const _hoverName = readString(hoverName) ?? "none";
+    const isHidden = IS_STORY || _hoverName === "none";
     const options = makeOptionValueToAnimation(v);
 
     return {
       hoverName: _hoverName,
       animationId,
-      options: getHoverAnimationOptions(options, _hoverName)
+      options: getHoverAnimationOptions(options, _hoverName),
+      isHidden
     };
   }
 
@@ -682,19 +669,20 @@ class Image extends EditorComponent {
       _dc: this._dc
     };
 
-    const { animationId, hoverName, options } = this.getHoverAnimationData(v);
+    const { animationId, hoverName, options, isHidden } =
+      this.getHoverAnimationData(v);
     const { wrapperAnimationActive } = this.props.meta;
     const isDisabledHover = readBoolean(wrapperAnimationActive);
     return (
       <Fragment>
-        <Wrapper
-          {...this.makeWrapperProps({
-            className: classnames(parentClassName, classNameContent),
-            ref: this.container
-          })}
+        <Toolbar
+          {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         >
-          <Toolbar
-            {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+          <Wrapper
+            {...this.makeWrapperProps({
+              className: classnames(parentClassName, classNameContent),
+              ref: this.container
+            })}
           >
             <CustomCSS selectorName={this.getId()} css={v.customCSS}>
               <HoverAnimation
@@ -702,7 +690,7 @@ class Image extends EditorComponent {
                 cssKeyframe={hoverName}
                 options={options}
                 isDisabledHover={isDisabledHover}
-                isHidden={IS_STORY}
+                isHidden={isHidden}
               >
                 <ImageWrapper
                   v={v}
@@ -716,6 +704,7 @@ class Image extends EditorComponent {
                   onStart={this.onDragStart}
                   onEnd={this.onDragEnd}
                   gallery={gallery}
+                  context={this.context}
                 >
                   <ImageContent
                     v={v}
@@ -730,8 +719,8 @@ class Image extends EditorComponent {
                 </ImageWrapper>
               </HoverAnimation>
             </CustomCSS>
-          </Toolbar>
-        </Wrapper>
+          </Wrapper>
+        </Toolbar>
         {IS_EDITOR && <ResizeAware onResize={this.handleResize} />}
         {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
           this.renderPopups()}
@@ -744,7 +733,8 @@ class Image extends EditorComponent {
     const IS_STORY = isStory(Config.getAll());
     const isAbsoluteOrFixed =
       v.elementPosition === "absolute" || v.elementPosition === "fixed";
-    const { animationId, hoverName, options } = this.getHoverAnimationData(v);
+    const { animationId, hoverName, options, isHidden } =
+      this.getHoverAnimationData(v);
 
     const wrapperSizes = this.getWrapperSizes(v);
 
@@ -753,6 +743,7 @@ class Image extends EditorComponent {
 
     const styleProps = {
       wrapperSizes,
+      context: this.context,
       props: this.props
     };
 
@@ -788,7 +779,7 @@ class Image extends EditorComponent {
             className={hoverAnimationClassName}
             cssKeyframe={hoverName}
             options={options}
-            isHidden={hoverName === "none" || IS_STORY}
+            isHidden={isHidden}
           >
             <Wrapper
               {...this.makeWrapperProps({
@@ -820,4 +811,5 @@ class Image extends EditorComponent {
   }
 }
 
-export default Image;
+export { Image };
+export default withMigrations(Image, migrations);

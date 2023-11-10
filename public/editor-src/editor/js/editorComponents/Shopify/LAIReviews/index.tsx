@@ -3,6 +3,8 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -22,14 +24,24 @@ export class LaiReviews extends EditorComponent<Value> {
 
   renderLaiWidget(type: WidgetType): ReactNode {
     switch (type) {
-      case "star":
+      case "star": {
+        const productId = makePlaceholder({ content: "{{ product.id }}" });
+        const productReview = makePlaceholder({
+          content:
+            "{{ product.metafields.scm_review_importer.reviewsData.reviewCountInfo | json }}"
+        });
+
         return (
           <div
             className="scm-reviews-rate"
-            data-rate-version2={`{{ product.metafields.scm_review_importer.reviewsData.reviewCountInfo | json }}`}
-            data-product-id={`{{ product.id }}`}
+            {...makeDataAttr({
+              name: "rate-version2",
+              value: productReview
+            })}
+            {...makeDataAttr({ name: "product-id", value: productId })}
           />
         );
+      }
 
       case "widget":
         return (
@@ -76,7 +88,9 @@ export class LaiReviews extends EditorComponent<Value> {
       <Wrapper
         {...this.makeWrapperProps({ className: "brz-shopify-lai-reviews" })}
       >
-        <div data-pf-type="LaiReviews">{this.renderLaiWidget(widgetType)}</div>
+        <div {...makeDataAttr({ name: "pf-type", value: "LaiReviews" })}>
+          {this.renderLaiWidget(widgetType)}
+        </div>
       </Wrapper>
     );
   }

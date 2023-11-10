@@ -55,5 +55,7 @@ export default function($node) {
       rtl: isRtl,
       rows: 0
     });
+
+    window.Brz.emit("elements.slick.ready", $this.get(0));
   });
 }

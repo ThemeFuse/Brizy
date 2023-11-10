@@ -17,17 +17,19 @@ import { Button } from "../../common/Button";
 import DataFilter from "../common/DataFilter";
 import { Footer } from "../common/Footer";
 import SearchInput from "../common/SearchInput";
+import { Control as Select } from "../common/Select";
 import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
 import ThumbnailGrid from "../common/ThumbnailGrid";
 import { isBlock, isLayout, isPopup } from "../common/utils";
-import { BlockCategory, BlockTypes } from "../types";
+import {
+  ALL_CAT,
+  BlockCategory,
+  BlockTypes,
+  UNCATEGORISED_CAT
+} from "../types";
 import CloudConnect from "./CloudConnect";
 import { Filter } from "./Filter";
-import { Control as Select } from "./controls/Select";
 import { BlockData } from "./types";
-
-const ALL_CAT = "All";
-const UNCATEGORISED_CAT = "Uncategorised";
 
 export interface Props {
   type: "normal" | "popup";
@@ -422,7 +424,7 @@ class Blocks extends Component<Props> {
                   />
                 </SidebarOption>
 
-                <SidebarOption title={t("FILTER BY TAG")}>
+                <SidebarOption title={t("TAG")}>
                   <Select<string>
                     value={currentFilter.tags}
                     choices={tags}

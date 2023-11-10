@@ -62,16 +62,6 @@
 
     "customCSS": "",
 
-    "hoverTransition": 50,
-
-    "tabletCoverImageWidth": null,
-    "tabletCoverImageHeight": null,
-
-    "tabletSize": null,
-
-    "mobileCoverImageWidth": null,
-    "mobileCoverImageHeight": null,
-
-    "mobileSize": null
+    "hoverTransition": 50
   }
 }

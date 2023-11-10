@@ -5,7 +5,10 @@ import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
+import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
+import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Link from "visual/component/Link";
+import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { Roles } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
@@ -21,14 +24,17 @@ import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
 import { isPopup } from "visual/utils/models";
+import { getCSSId } from "visual/utils/models/cssId";
+import { getLinkData } from "visual/utils/models/link";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { handleLinkChange } from "visual/utils/patch/Link";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import * as Str from "visual/utils/string/specs";
-import { styleSizeSize } from "visual/utils/style2";
 import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
@@ -66,6 +72,11 @@ class Row extends EditorComponent {
     this.mounted = false;
   }
 
+  patchValue(patch, meta) {
+    const link = handleLinkChange(patch);
+    super.patchValue({ ...patch, ...link }, meta);
+  }
+
   handleValueChange(value, meta) {
     const inPopup = Boolean(this.props.meta.sectionPopup);
     const inPopup2 = Boolean(this.props.meta.sectionPopup2);
@@ -86,28 +97,52 @@ class Row extends EditorComponent {
 
   getMeta(v) {
     const { meta } = this.props;
-    const size = styleSizeSize({ v, device: "desktop" });
-    const tabletSize = styleSizeSize({ v, device: "tablet" });
-    const mobileSize = styleSizeSize({ v, device: "mobile" });
+
+    const dvv = (key, device) => defaultValueValue({ v, key, device });
+
+    const size = dvv("size", DESKTOP);
+    const tabletSize = dvv("size", TABLET);
+    const mobileSize = dvv("size", MOBILE);
+
+    const pixelSuffix = dvv("sizeSuffix", DESKTOP) === "px";
+    const tabletPixelSuffix = dvv("sizeSuffix", TABLET) === "px";
+    const mobilePixelSuffix = dvv("sizeSuffix", MOBILE) === "px";
+
+    const _w = pixelSuffix ? size : meta.desktopW;
+    const _tabletW = tabletPixelSuffix ? tabletSize : meta.tabletW;
+    const _mobileW = mobilePixelSuffix ? mobileSize : meta.mobileW;
+
+    const _width = pixelSuffix ? 100 : size;
+    const _tabletWidth = tabletPixelSuffix ? 100 : tabletSize;
+    const _mobileWidth = mobilePixelSuffix ? 100 : mobileSize;
+
+    const _wNoSpacing = pixelSuffix ? size : meta.desktopWNoSpacing;
+    const _tabletWNoSpacing = tabletPixelSuffix
+      ? tabletSize
+      : meta.tabletWNoSpacing;
+    const _mobileWNoSpacing = mobilePixelSuffix
+      ? mobileSize
+      : meta.mobileWNoSpacing;
+
     const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW({
       v,
-      w: meta.desktopW,
-      wNoSpacing: meta.desktopWNoSpacing,
-      width: size,
+      w: _w,
+      wNoSpacing: _wNoSpacing,
+      width: _width,
       device: "desktop"
     });
     const { w: tabletW, wNoSpacing: tabletWNoSpacing } = getContainerW({
       v,
-      w: meta.tabletW,
-      wNoSpacing: meta.tabletWNoSpacing,
-      width: tabletSize,
+      w: _tabletW,
+      wNoSpacing: _tabletWNoSpacing,
+      width: _tabletWidth,
       device: "tablet"
     });
     const { w: mobileW, wNoSpacing: mobileWNoSpacing } = getContainerW({
       v,
-      w: meta.mobileW,
-      wNoSpacing: meta.mobileWNoSpacing,
-      width: mobileSize,
+      w: _mobileW,
+      wNoSpacing: _mobileWNoSpacing,
+      width: _mobileWidth,
       device: "mobile"
     });
 
@@ -134,7 +169,7 @@ class Row extends EditorComponent {
 
   dvv = (key) => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = deviceModeSelector(this.getReduxState());
     const state = State.mRead(v.tabsState);
 
     return defaultValueValue({ v, key, device, state });
@@ -172,6 +207,18 @@ class Row extends EditorComponent {
         </SortableHandle>
       </Toolbar>
     );
+  };
+
+  getHoverData = (v) => {
+    const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
+    const options = makeOptionValueToAnimation(v);
+
+    return {
+      hoverName,
+      options: getHoverAnimationOptions(options, hoverName),
+      animationId: this.getId(),
+      isHidden: hoverName === "none"
+    };
   };
 
   renderContent(v, vs, vd) {
@@ -243,11 +290,10 @@ class Row extends EditorComponent {
       className,
       customClassName,
       showToolbar,
-      cssClassPopulation,
+      cssClass,
       customAttributes
     } = v;
-    const customID = Str.mRead(v.customID) || undefined;
-    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
+    const id = getCSSId(v);
     const classNameRowContainer = classNames(
       "brz-row__container",
       className,
@@ -256,7 +302,7 @@ class Row extends EditorComponent {
         `${this.getId()}-row`,
         styleRow(v, vs, vd)
       ),
-      cssClassPopulation === "" ? customClassName : cssClassPopulation
+      cssClass || customClassName
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
@@ -277,10 +323,18 @@ class Row extends EditorComponent {
         </SortableElement>
       );
     }
-
+    const { options, hoverName, isHidden, animationId } = this.getHoverData(v);
     const content = (
       <ScrollMotion options={makeOptionValueToMotion(v)}>
-        {this.renderContent(v, vs, vd)}
+        <HoverAnimation
+          animationId={animationId}
+          cssKeyframe={hoverName}
+          options={options}
+          target={"parent"}
+          isHidden={isHidden}
+        >
+          {this.renderContent(v, vs, vd)}
+        </HoverAnimation>
       </ScrollMotion>
     );
 
@@ -311,7 +365,7 @@ class Row extends EditorComponent {
                         ...parseCustomAttributes(customAttributes),
                         ...sortableElementAttr,
                         ...containerBorderAttr,
-                        id: cssIDPopulation ?? customID,
+                        ...(id && { id }),
                         className: classNameRowContainer
                       }}
                       animationClass={animationClassName}
@@ -337,31 +391,11 @@ class Row extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const {
-      className,
-      tagName,
-      linkExternalType,
-      linkType,
-      linkAnchor,
-      linkExternalBlank,
-      linkExternalRel,
-      linkPopup,
-      linkUpload,
-      customClassName,
-      cssClassPopulation,
-      customAttributes
-    } = v;
-
+    const { className, tagName, customClassName, cssClass, customAttributes } =
+      v;
+    const linkData = getLinkData(v);
+    const id = getCSSId(v);
     const { sectionPopup, sectionPopup2 } = this.props.meta;
-
-    const linkHrefs = {
-      anchor: linkAnchor,
-      external: v[linkExternalType],
-      popup: linkPopup,
-      upload: linkUpload
-    };
-    const customID = Str.mRead(v.customID) || undefined;
-    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
     const classNameRowContainer = classNames(
       "brz-row__container",
       className,
@@ -370,10 +404,11 @@ class Row extends EditorComponent {
         `${this.getId()}-row`,
         styleRow(v, vs, vd)
       ),
-      cssClassPopulation === "" ? customClassName : cssClassPopulation
+      cssClass || customClassName
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
+    const { options, hoverName, isHidden, animationId } = this.getHoverData(v);
 
     return (
       <Fragment>
@@ -383,21 +418,29 @@ class Row extends EditorComponent {
             component={tagName}
             componentProps={{
               ...parseCustomAttributes(customAttributes),
-              id: cssIDPopulation ?? customID,
+              ...(id && { id }),
               className: classNameRowContainer
             }}
             animationClass={animationClassName}
           >
             <ScrollMotion options={makeOptionValueToMotion(v)}>
-              {this.renderContent(v, vs, vd)}
+              <HoverAnimation
+                animationId={animationId}
+                cssKeyframe={hoverName}
+                options={options}
+                target={"parent"}
+                isHidden={isHidden}
+              >
+                {this.renderContent(v, vs, vd)}
+              </HoverAnimation>
             </ScrollMotion>
-            {linkHrefs[linkType] !== "" && (
+            {linkData.href && (
               <Link
                 className="brz-link-container"
-                type={linkType}
-                href={linkHrefs[linkType]}
-                target={linkExternalBlank}
-                rel={linkExternalRel}
+                type={linkData.type}
+                href={linkData.href}
+                target={linkData.target}
+                rel={linkData.rel}
               />
             )}
           </Animation>

@@ -67,7 +67,6 @@ $option-color: #626b70;
     }
 
     &.brz-ed-popup-integrations__app--loading {
-
       .brz-ed-popup-integrations__app-logo:hover:after,
       .brz-ed-popup-integrations__app-logo:after {
         border-color: #48be24;
@@ -87,6 +86,20 @@ $option-color: #626b70;
     .brz-ed-popup-integrations__app-logo:hover:after,
     .brz-ed-popup-integrations__app-logo:after {
       border-color: $brand__primary;
+    }
+  }
+
+  &__app--deletable {
+    .brz-ed-popup-integrations__app-logo:hover:after {
+      border-color: $brand__primary;
+    }
+    .brz-ed-popup-integrations__app-logo:hover {
+      .brz-ed-popup-integrations__delete-icon {
+        opacity: 1;
+        &:hover {
+          color: $floating__button__red-bg;
+        }
+      }
     }
   }
 
@@ -141,7 +154,8 @@ $option-color: #626b70;
     }
   }
 
-  &__app-icon {
+  &__app-icon,
+  &__delete-icon {
     position: absolute;
     width: 24px;
     height: 24px;
@@ -153,14 +167,31 @@ $option-color: #626b70;
     color: $popup__apps__loading-color;
     text-align: center;
     z-index: 2;
-
+    transition: 0.2s linear opacity;
     i {
       font-size: 12px;
       line-height: 16px;
     }
+  }
 
+  &__app-icon {
+    background-color: $popup__apps__loading-bg;
+    color: $popup__apps__loading-color;
     .brz-icon-svg {
       font-size: 24px;
+    }
+  }
+
+  &__delete-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    background-color: $left_sidebar__styling__font__icon-bg;
+    color: $left_sidebar__styling__font__icon-color;
+
+    .brz-icon-svg {
+      font-size: 12px;
     }
   }
 
@@ -235,13 +266,13 @@ $option-color: #626b70;
         outline: none;
       }
 
-      .brz-input:invalid~.brz-p {
+      .brz-input:invalid ~ .brz-p {
         opacity: 1;
         z-index: 1;
         transition: 0.2s linear opacity;
       }
 
-      .brz-input:focus~.brz-p {
+      .brz-input:focus ~ .brz-p {
         opacity: 0;
         z-index: -1;
         transition: 0.2s linear opacity;
@@ -250,6 +281,17 @@ $option-color: #626b70;
       .brz-ed-btn-default {
         min-width: 79px;
         margin-left: 8px;
+      }
+
+      .brz-ed-popup-integrations-option__radio {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 35px;
+
+        .brz-control__radio-option {
+          border-bottom: 0 !important;
+        }
       }
     }
   }
@@ -266,7 +308,7 @@ $option-color: #626b70;
     flex-shrink: 0;
 
     &-stage:after,
-    &-stage> :after {
+    &-stage > :after {
       position: absolute;
       top: 0;
       left: 100%;
@@ -336,12 +378,12 @@ $option-color: #626b70;
       color: #102750;
     }
 
-    +.brz-ed-popup-integrations-step__done {
+    + .brz-ed-popup-integrations-step__done {
       height: auto;
     }
 
     // normalize step
-    +.brz-ed-popup-integrations-step {
+    + .brz-ed-popup-integrations-step {
       max-height: calc(100% - 108px);
     }
   }
@@ -372,7 +414,7 @@ $option-color: #626b70;
 
     // normalize body height
     // used for scroll
-    +.brz-ed-popup-integrations-step__body {
+    + .brz-ed-popup-integrations-step__body {
       height: calc(100% - 38px);
     }
   }
@@ -388,16 +430,16 @@ $option-color: #626b70;
         bottom: -15px !important;
       }
       & > div:last-child {
-        right: -15px!important;
+        right: -15px !important;
       }
     }
 
     // scroll in safari
-    >div:not(.brz-ed-popup-integrations-step__buttons) {
+    > div:not(.brz-ed-popup-integrations-step__buttons) {
       flex-shrink: 1;
       display: flex;
 
-      >div:first-child {
+      > div:first-child {
         flex: 1;
       }
     }
@@ -558,7 +600,7 @@ $option-color: #626b70;
     color: $option-color;
     border-bottom: 1px solid rgba(#000, 0.1);
 
-    >.brz-d-xs-flex {
+    > .brz-d-xs-flex {
       flex-basis: 40%;
       max-width: 40%;
     }
@@ -566,6 +608,13 @@ $option-color: #626b70;
     .brz-p {
       font-size: 15px;
       font-weight: 500;
+    }
+
+    &-home-page{
+      .brz-ed-control__switch{
+        display: flex;
+        justify-content:flex-end;
+      }
     }
   }
 

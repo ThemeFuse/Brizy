@@ -13,7 +13,7 @@ import {
   getAssets
 } from "visual/bootstraps/export/transforms/assets";
 import { items as googleFonts } from "visual/config/googleFonts.json";
-import Config, { isWp } from "visual/global/Config";
+import Config from "visual/global/Config";
 import EditorGlobal from "visual/global/Editor";
 import { hydrate } from "visual/redux/actions";
 import {
@@ -145,7 +145,7 @@ export const Editor: SSREditor = async (props) => {
   changeMenuUid($pageHTML);
   customAttributes($pageHTML);
 
-  if (isWp(config) && !config.user.allowScripts) {
+  if (!config.user.allowScripts) {
     XSS($pageHTML);
   }
 

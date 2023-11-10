@@ -1,15 +1,17 @@
+import classnames from "classnames";
 import React from "react";
-//import Config from "visual/global/Config";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import classnames from "classnames";
-import { style } from "./styles";
+//import Config from "visual/global/Config";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class FacebookButton extends EditorComponent {
   static get componentId() {
@@ -26,8 +28,12 @@ class FacebookButton extends EditorComponent {
       //appId: facebook && facebook.appid ? facebook.appid : "nick",
 
       appId: 113869198637480,
-      href: "{{ brizy_dc_current_page_unique_url }}",
-      lang: "{{ brizy_dc_page_language }}"
+      href: makePlaceholder({
+        content: "{{ brizy_dc_current_page_unique_url }}"
+      }),
+      lang: makePlaceholder({
+        content: "{{ brizy_dc_page_language }}"
+      })
     };
   }
 
@@ -94,25 +100,36 @@ class FacebookButton extends EditorComponent {
       showFriends,
       darkScheme,
       targetUrl,
-      href
+      href,
+      customCSS
     } = v;
     const appData = this.getAppData();
+
     const data = {
-      "data-action": type,
-      "data-layout":
-        layout === "button"
-          ? showFriends === "on"
-            ? "standard"
-            : showCounter === "on"
-            ? "button_count"
-            : "button"
-          : "box_count",
-      "data-size": size,
-      "data-share": share,
-      "data-show-faces": showFriends,
-      "data-colorscheme": darkScheme === "on" ? "dark" : "light",
-      "data-href": targetUrl === "custom" && href !== "" ? href : appData.href,
-      "data-lang": appData.lang
+      ...makeDataAttr({ name: "action", value: type }),
+      ...makeDataAttr({
+        name: "layout",
+        value:
+          layout === "button"
+            ? showFriends === "on"
+              ? "standard"
+              : showCounter === "on"
+              ? "button_count"
+              : "button"
+            : "box_count"
+      }),
+      ...makeDataAttr({ name: "size", value: size }),
+      ...makeDataAttr({ name: "share", value: share }),
+      ...makeDataAttr({ name: "show-faces", value: showFriends }),
+      ...makeDataAttr({
+        name: "colorscheme",
+        value: darkScheme === "on" ? "dark" : "light"
+      }),
+      ...makeDataAttr({
+        name: "href",
+        value: targetUrl === "custom" && href !== "" ? href : appData.href
+      }),
+      ...makeDataAttr({ name: "lang", value: appData.lang })
     };
     const className = classnames(
       "brz-fb-like",
@@ -124,7 +141,7 @@ class FacebookButton extends EditorComponent {
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div className={className}>
           <Facebook appId={appData.appId} type="Like" data={data} />
         </div>

@@ -13,38 +13,20 @@
   },
   "style": {
     "iconPosition": "left",
-    "tabletIconPosition": null,
-    "mobileIconPosition": null,
 
     "iconSize": "custom",
 
     "iconCustomSize": 16,
     "iconCustomSizeSuffix": "px",
-    "tabletIconCustomSize": null,
-    "tabletIconCustomSizeSuffix": null,
-    "mobileIconCustomSize": null,
-    "mobileIconCustomSizeSuffix": null,
 
     "width": 20,
     "widthSuffix": "px",
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
 
     "height": 10,
     "heightSuffix": "px",
-    "tabletHeight": null,
-    "tabletHeightSuffix": null,
-    "mobileHeight": null,
-    "mobileHeightSuffix": null,
 
     "iconSpacing": 10,
     "iconSpacingSuffix": "px",
-    "tabletIconSpacing": null,
-    "tabletIconSpacingSuffix": null,
-    "mobileIconSpacing": null,
-    "mobileIconSpacingSuffix": null,
 
     "fontFamilyType": "",
     "fontStyle": "",

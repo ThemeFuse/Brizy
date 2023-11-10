@@ -1,5 +1,4 @@
 import { useContext, useEffect, useMemo, useReducer, useRef } from "react";
-import Config from "visual/global/Config";
 import { EditorComponentContext } from "../EditorComponentContext";
 import { DCApiProxyInstance } from "./DCApiProxy";
 
@@ -71,40 +70,50 @@ export function useDC(
   placeholder: string | undefined | null,
   delayMs = 0
 ): State {
-  if (placeholder === undefined || placeholder === null || placeholder === "") {
-    return { status: "empty" };
-  }
-
-  if (IS_PREVIEW) {
-    return { status: "success", data: placeholder };
-  }
-
   const [state, dispatch] = useReducer(reducer, initialState);
+
   const fetchController = useRef<AbortController>();
-  let delayTimeout: number;
+  const delayTimeout = useRef<number>();
 
   const {
     dynamicContent: { itemId }
   } = useContext(EditorComponentContext);
 
-  const useCustomPlaceholder = useMemo(() => {
-    return Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
-  }, []);
-  const apiProxyConfig = { postId: itemId, useCustomPlaceholder };
+  const { status: currentState } = state;
+
+  const isInitial = useMemo(() => currentState !== "initial", [currentState]);
 
   useEffect(() => {
-    if (state.status !== "initial") {
+    if (
+      placeholder === undefined ||
+      placeholder === null ||
+      placeholder === "" ||
+      IS_PREVIEW
+    ) {
+      return;
+    }
+
+    if (isInitial) {
       dispatch({ type: "reset" });
     }
 
     return (): void => {
       fetchController.current?.abort();
-      clearTimeout(delayTimeout);
+      clearTimeout(delayTimeout.current);
     };
+
+    // isInitial dependency is not nedded
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [placeholder]);
 
   useEffect(() => {
-    if (state.status !== "initial") {
+    if (
+      placeholder === undefined ||
+      placeholder === null ||
+      placeholder === "" ||
+      IS_PREVIEW ||
+      isInitial
+    ) {
       return;
     }
 
@@ -112,18 +121,20 @@ export function useDC(
     if (delayMs > 0) {
       dispatch({ type: "wait_delay" });
 
-      delayTimeout = window.setTimeout(() => {
+      delayTimeout.current = window.setTimeout(() => {
         dispatch({ type: "wait_fetch" });
       }, delayMs);
     } else {
       dispatch({ type: "wait_fetch" });
     }
 
+    const apiProxyConfig = { postId: itemId };
+
     // 2. fetch
     const cached = DCApiProxyInstance.getFromCache(placeholder, apiProxyConfig);
 
     if (cached !== undefined) {
-      clearTimeout(delayTimeout);
+      clearTimeout(delayTimeout.current);
       dispatch({ type: "fetch_success", data: cached });
     } else {
       const controller = new AbortController();
@@ -143,10 +154,18 @@ export function useDC(
           }
         })
         .finally(() => {
-          window.clearTimeout(delayTimeout);
+          window.clearTimeout(delayTimeout.current);
         });
     }
-  }, [state.status]);
+  }, [delayMs, placeholder, itemId, isInitial]);
+
+  if (placeholder === undefined || placeholder === null || placeholder === "") {
+    return { status: "empty" };
+  }
+
+  if (IS_PREVIEW) {
+    return { status: "success", data: placeholder };
+  }
 
   return state;
 }

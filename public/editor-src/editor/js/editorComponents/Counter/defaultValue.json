@@ -3,29 +3,44 @@
     "start": 0,
     "startPopulation": "",
     "startPopulationFallback2": null,
+    "startPopulationEntityType": "",
+    "startPopulationEntityId": "",
 
     "end": 100,
     "endPopulation": "",
     "endPopulationFallback2": null,
+    "endPopulationEntityType": "",
+    "endPopulationEntityId": "",
 
     "duration": 2,
     "durationSuffix": "",
 
     "prefixLabel": "",
     "prefixLabelPopulation": "",
+    "prefixLabelPopulationEntityType": "",
+    "prefixLabelPopulationEntityId": "",
 
     "suffixLabel": "",
     "suffixLabelPopulation": "",
+    "suffixLabelPopulationEntityType": "",
+    "suffixLabelPopulationEntityId": "",
 
     "prefixLabelRadial": "",
     "prefixLabelRadialPopulation": "",
+    "prefixLabelRadialPopulationEntityType": "",
+    "prefixLabelRadialPopulationEntityId": "",
+
     "suffixLabelRadialPopulation": "",
+    "suffixLabelRadialPopulationEntityType": "",
+    "suffixLabelRadialPopulationEntityId": "",
 
     "suffixLabelRadial": "%",
     "suffixLabelRadial2Population": "",
 
     "separator": ",",
     "separatorPopulation": "",
+    "separatorPopulationEntityType": "",
+    "separatorPopulationEntityId": "",
 
     "offsetX": 0,
     "offsetY": 0
@@ -42,7 +57,7 @@
     "className": "",
 
     "strokeWidth": 7,
-    "strokeWidthSuffix": null,
+    "strokeWidthSuffix": "",
 
     "families": {
       "fontFamily": "lato",
@@ -148,9 +163,6 @@
     "bgPaddingBottomSuffix": "px",
     "bgPaddingLeftSuffix": "px",
 
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
-
     "tabletFontStyle": "",
     "tabletFontFamilyType": null,
     "tabletFontSize": 56,
@@ -159,8 +171,7 @@
     "tabletLineHeight": 1.3,
     "tabletLetterSpacing": 0,
 
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
+    "tabletWidthSuffix": null,
 
     "mobileFontStyle": "",
     "mobileFontFamilyType": null,
@@ -168,6 +179,8 @@
     "mobileFontSizeSuffix": "px",
     "mobileFontWeight": 400,
     "mobileLineHeight": 1.3,
-    "mobileLetterSpacing": 0
+    "mobileLetterSpacing": 0,
+
+    "mobileWidthSuffix": null
   }
 }

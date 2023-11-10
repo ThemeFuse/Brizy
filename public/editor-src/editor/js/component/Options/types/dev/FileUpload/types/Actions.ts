@@ -14,7 +14,7 @@ export interface Err {
   payload: string;
 }
 
-export const err = (payload: string): Err => ({ type: "Err", payload });
+export const errPayload = (payload: string): Err => ({ type: "Err", payload });
 
 export interface Success {
   type: "Success";

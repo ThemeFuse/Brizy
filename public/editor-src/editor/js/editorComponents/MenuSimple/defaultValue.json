@@ -29,7 +29,6 @@
     "tempColorOpacity": 1,
     "tempColorPalette": "",
 
-    "tabletWidth": null,
     "tabletToggleMenu": "off",
 
     "tabletFontStyle": "",
@@ -39,7 +38,6 @@
     "tabletFontWeight": 600,
     "tabletLetterSpacing": 0,
 
-    "mobileWidth": null,
     "mobileToggleMenu": "off",
 
     "mobileFontStyle": "",

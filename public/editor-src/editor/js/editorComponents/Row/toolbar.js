@@ -1,5 +1,6 @@
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
@@ -19,15 +20,20 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { read as readString } from "visual/utils/string/specs";
 import {
   toolbarElementContainerTypeImageMap,
-  toolbarImageLinkExternal,
   toolbarLinkAnchor,
   toolbarLinkPopup,
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
+import { getMaxRowWidth, getMinRowWidth } from "./utils";
 
 export function getItems({ v, device, component, state, context }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
   const dvvh = (key) => defaultValueValue({ v, key, device, state });
+
+  const linkDC = getDynamicContentOption({
+    option: context.dynamicContent.config,
+    type: DCTypes.link
+  });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -42,9 +48,15 @@ export function getItems({ v, device, component, state, context }) {
     type: DCTypes.image
   });
 
-  const IS_GLOBAL_POPUP = isPopup(Config.getAll());
-
   const config = Config.getAll();
+
+  const collectionTypesHandler =
+    config?.api?.collectionTypes?.loadCollectionTypes.handler;
+
+  const IS_GLOBAL_POPUP = isPopup(config);
+
+  const linkSource = dvv("linkSource");
+
   const customVideo = isPro(config)
     ? [
         {
@@ -73,6 +85,9 @@ export function getItems({ v, device, component, state, context }) {
     (maskShape === "custom" && !maskCustomUploadImageSrc) ||
     disableMaskTab;
 
+  const image = dvv("media") !== "image";
+  const video = dvv("media") !== "video";
+  const map = dvv("media") !== "map";
   return [
     toolbarShowOnResponsive({ v, device, devices: "responsive" }),
     {
@@ -115,7 +130,7 @@ export function getItems({ v, device, component, state, context }) {
                   type: "imageUpload-dev",
                   states: [NORMAL, HOVER],
                   devices: "desktop",
-                  disabled: dvvh("media") !== "image",
+                  disabled: image,
                   population: imageDynamicContentChoices
                 },
                 {
@@ -124,8 +139,7 @@ export function getItems({ v, device, component, state, context }) {
                   type: "imageUpload-dev",
                   states: [NORMAL, HOVER],
                   devices: "responsive",
-                  disabled:
-                    dvvh("media") !== "image" && dvvh("media") !== "video",
+                  disabled: image && video,
                   population: imageDynamicContentChoices
                 },
                 {
@@ -177,14 +191,14 @@ export function getItems({ v, device, component, state, context }) {
                   label: t("Loop"),
                   type: "switch-dev",
                   devices: "desktop",
-                  disabled: dvvh("media") !== "video"
+                  disabled: video
                 },
                 {
                   id: "bgMapAddress",
                   label: t("Address"),
                   type: "inputText-dev",
                   devices: "desktop",
-                  disabled: dvv("media") !== "map",
+                  disabled: map,
                   placeholder: t("Enter address"),
                   config: {
                     size: "large"
@@ -194,7 +208,7 @@ export function getItems({ v, device, component, state, context }) {
                   id: "bgMapZoom",
                   label: t("Zoom"),
                   type: "slider-dev",
-                  disabled: dvv("media") !== "map" || device !== "desktop",
+                  disabled: map || device !== "desktop",
                   config: {
                     min: 1,
                     max: 21
@@ -396,15 +410,53 @@ export function getItems({ v, device, component, state, context }) {
           },
           tabs: [
             {
+              id: "page",
+              label: t("Page"),
+              options: [
+                {
+                  id: "linkSource",
+                  type: "select-dev",
+                  disabled: !collectionTypesHandler,
+                  label: t("Type"),
+                  devices: "desktop",
+                  choices: {
+                    load: () => getCollectionTypes(config),
+                    emptyLoad: {
+                      title: t("There are no choices")
+                    }
+                  },
+                  config: {
+                    size: "large"
+                  }
+                },
+                {
+                  id: "linkPage",
+                  type: "internalLink-dev",
+                  label: t("Find Page"),
+                  devices: "desktop",
+                  disabled: !linkSource,
+                  config: {
+                    postType: linkSource
+                  }
+                }
+              ]
+            },
+            {
               id: "external",
               label: t("URL"),
               options: [
-                toolbarImageLinkExternal({
-                  v,
-                  device,
-                  devices: "desktop",
-                  state: "normal"
-                }),
+                {
+                  id: "link",
+                  type: "population-dev",
+                  label: t("Link to"),
+                  config: linkDC,
+                  option: {
+                    id: "linkExternal",
+                    type: "inputText-dev",
+                    placeholder: "http://",
+                    devices: "desktop"
+                  }
+                },
                 {
                   id: "linkExternalBlank",
                   type: "switch-dev",
@@ -505,9 +557,12 @@ export function getItems({ v, device, component, state, context }) {
           position: 80,
           disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP,
           config: {
-            min: 40,
-            max: 100,
-            units: [{ value: "%", title: "%" }]
+            min: getMinRowWidth({ v, device }),
+            max: getMaxRowWidth({ v, device }),
+            units: [
+              { value: "%", title: "%" },
+              { value: "px", title: "px" }
+            ]
           }
         },
         {
@@ -553,12 +608,14 @@ export function getItems({ v, device, component, state, context }) {
         },
         {
           id: "grid",
-          type: "grid",
-          separator: true,
+          type: "grid-dev",
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",
-              width: 50,
+              size: 1,
               options: [
                 {
                   id: "styles",
@@ -573,7 +630,7 @@ export function getItems({ v, device, component, state, context }) {
             },
             {
               id: "grid-effects",
-              width: 50,
+              size: 1,
               options: [
                 {
                   id: "effects",

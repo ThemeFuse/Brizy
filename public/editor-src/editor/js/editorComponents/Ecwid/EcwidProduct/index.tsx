@@ -14,6 +14,8 @@ import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { pageSelector } from "visual/redux/selectors";
 import { EcwidProductPage } from "visual/types";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import {  makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendParent from "./sidebar";
 import * as sidebarAddToBag from "./sidebarAddToBag";
@@ -1184,17 +1186,26 @@ export class EcwidProduct extends EditorComponent<Value> {
       "brz-ecwid-product-wrapper",
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
+    const productId = makePlaceholder({
+      content: "{{brizy_dc_post_id}}"
+    });
 
     return (
       <Wrapper {...this.makeWrapperProps({ className })}>
         <div
           className="brz-ecwid-product"
-          data-product-id="{{brizy_dc_post_id}}"
-          data-default-product-id={defaultProductId}
-          data-store-id="{{ecwid_store_id}}"
-          data-storefront={encodeURIComponent(
-            JSON.stringify(valueToEciwdConfig(v))
-          )}
+          {...makeDataAttr({
+            name: "product-id",
+            value: productId
+          })}
+          {...makeDataAttr({
+            name: "default-product-id",
+            value: defaultProductId
+          })}
+          {...makeDataAttr({
+            name: "storefront",
+            value: encodeURIComponent(JSON.stringify(valueToEciwdConfig(v)))
+          })}
         />
       </Wrapper>
     );

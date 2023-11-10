@@ -8,6 +8,7 @@ import {
   CreateIntegration,
   CreateIntegrationAccount,
   CreateIntegrationList,
+  DeleteSmtpIntegration,
   FormData,
   GetForm,
   GetIntegration,
@@ -281,6 +282,33 @@ export const updateSmtpIntegration: UpdateSmptIntegration = ({
       emailTo: string;
     } | null>(r)
   );
+};
+
+export const deleteSmtpIntegration: DeleteSmtpIntegration = ({
+  formId,
+  integration
+}) => {
+  const {
+    api: { url, hash, deleteIntegration }
+  } = Config.get("wp");
+
+  const version = Config.get("editorVersion");
+  const reqUrl = makeUrl(url, {
+    action: deleteIntegration,
+    hash: hash,
+    version,
+    formId,
+    integration
+  });
+
+  return request(reqUrl, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    }
+  })
+    .then((r) => parseJSON(r))
+    .then((r) => ({ status: r.status, message: "Deleted successfully !" }));
 };
 
 // Recaptcha

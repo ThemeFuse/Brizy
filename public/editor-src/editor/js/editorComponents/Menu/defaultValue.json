@@ -24,15 +24,17 @@
   "style": {
     "className": "",
     "stickyTitle": "on",
-    "tabletStickyTitle": null,
-    "mobileStickyTitle": null,
 
     "bg": "",
     "bgImageExtension": "",
     "bgImageWidth": 0,
     "bgImageHeight": 0,
-    "bgPopulation": "",
     "bgSizeType": "custom",
+
+    "bgPopulation": "",
+    "bgPopulationEntityType": "",
+    "bgPopulationEntityId": "",
+
     "media": "image",
 
     "bgPositionX": 50,
@@ -447,31 +449,15 @@
 
     "mMenuItemHorizontalAlign": "left",
 
-    "tabletMenuSize": null,
-    "tabletMenuSizeSuffix": null,
-
-    "tabletMMenuIconPosition": null,
-
-    "tabletMMenuSize": null,
-    "tabletMMenuSizeSuffix": null,
     "tabletMMenuFontStyle": "button",
     "tabletMMenuFontSize": 12,
     "tabletMMenuFontSizeSuffix": "px",
     "tabletMMenuFontWeight": 700,
     "tabletMMenuLineHeight": 1.8,
     "tabletMMenuLetterSpacing": 3,
-    "tabletMMenuPosition": null,
 
     "tabletMMenuIconSize": 12,
-    "tabletMMenuIconSizeSuffix": null,
     "tabletMMenuIconSpacing": 15,
-    "tabletMMenuIconSpacingSuffix": null,
-
-    "mobileVerticalMode": null,
-    "mobileMenuSize": null,
-    "mobileMenuSizeSuffix": null,
-
-    "mobileMMenuIconPosition": null,
 
     "mobileMMenuFontStyle": "button",
     "mobileMMenuFontSize": 12,
@@ -481,8 +467,6 @@
     "mobileMMenuLetterSpacing": 3,
 
     "mobileMMenuIconSize": 12,
-    "mobileMMenuIconSizeSuffix": null,
-    "mobileMMenuIconSpacing": 15,
-    "mobileMMenuIconSpacingSuffix": null
+    "mobileMMenuIconSpacing": 15
   }
 }

@@ -6,7 +6,6 @@
     "tagName": "footer",
 
     "bgSizeType": "custom",
-    "hoverBgSizeType": null,
 
     "membership": "off",
     "membershipRoles": "[]",
@@ -15,22 +14,16 @@
     "translationsLangs": "[]",
 
     "zIndex": 0,
-    "zIndexSuffix": null,
+    "zIndexSuffix": "",
 
     "elementPosition": "relative",
 
     "bgImageFileName": null,
     "maskCustomUploadImageFileName": "",
-    "hoverBgImageFileName": null,
-    "tabletBgImageFileName": null,
-    "mobileBgImageFileName": null,
 
     "images": {
       "bgImageSrc": "",
-      "maskCustomUploadImageSrc": "",
-      "hoverBgImageSrc": null,
-      "tabletBgImageSrc": null,
-      "mobileBgImageSrc": null
+      "maskCustomUploadImageSrc": ""
     },
 
     "fullHeight": "off",
@@ -40,6 +33,8 @@
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
+    "bgPopulationEntityType": "",
+    "bgPopulationEntityId": "",
     "bgImageExtension": "",
 
     "brightness": 100,
@@ -55,18 +50,6 @@
 
     "hoverMedia": "image",
 
-    "hoverBgImageWidth": null,
-    "hoverBgImageHeight": null,
-    "hoverBgPositionY": null,
-    "hoverBgPositionX": null,
-    "hoverBgPopulation": null,
-    "hoverBgImageExtension": null,
-
-    "hoverBrightness": null,
-    "hoverHue": null,
-    "hoverSaturation": null,
-    "hoverContrast": null,
-
     "sectionHeightStyle": "auto",
     "sectionHeight": 400,
     "sectionHeightSuffix": "px",
@@ -76,6 +59,8 @@
     "anchorName": "",
 
     "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
 
     "multiPage": "off",
 
@@ -85,47 +70,13 @@
 
     "tabletMedia": "image",
 
-    "tabletBgImageWidth": null,
-    "tabletBgImageHeight": null,
-    "tabletBgPositionX": null,
-    "tabletBgPositionY": null,
     "tabletBgPopulation": "",
-    "tabletBgImageExtension": null,
-
-    "tabletBrightness": null,
-    "tabletHue": null,
-    "tabletSaturation": null,
-    "tabletContrast": null,
-
-    "tabletSectionHeightStyle": null,
-    "tabletSectionHeight": null,
-    "tabletSectionHeightSuffix": null,
-
-    "tabletBgMapZoom": null,
 
     "showOnMobile": "on",
 
     "mobileMedia": "image",
 
-    "mobileBgSizeType": null,
-
-    "mobileBgImageWidth": null,
-    "mobileBgImageHeight": null,
-    "mobileBgPositionX": null,
-    "mobileBgPositionY": null,
-    "mobileBgPopulation": "",
-    "mobileBgImageExtension": null,
-
-    "mobileBrightness": null,
-    "mobileHue": null,
-    "mobileSaturation": null,
-    "mobileContrast": null,
-
-    "mobileSectionHeightStyle": null,
-    "mobileSectionHeight": null,
-    "mobileSectionHeightSuffix": null,
-
-    "mobileBgMapZoom": null
+    "mobileBgPopulation": ""
   },
 
   "toolbar": {
@@ -140,9 +91,13 @@
     "customClassName": "",
 
     "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
 
     "customAttributes": "",
     "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
 
     "maskShape": "none",
     "maskSize": "cover",
@@ -357,8 +312,6 @@
 
     "customCSS": "",
 
-    "tabletBgSizeType": null,
-
     "tabletMarginType": "grouped",
     "tabletMargin": 0,
     "tabletMarginTop": 0,
@@ -472,20 +425,6 @@
     "animationDelay": 1000,
     "animationInfiniteAnimation": false,
 
-    "tempAnimationName": "none",
-
-    "tabletAnimationName": null,
-    "tabletAnimationDuration": null,
-    "tabletAnimationDelay": null,
-    "tabletAnimationInfiniteAnimation": null,
-
-    "tempTabletAnimationName": null,
-
-    "mobileAnimationName": null,
-    "mobileAnimationDuration": null,
-    "mobileAnimationDelay": null,
-    "mobileAnimationInfiniteAnimation": null,
-
-    "tempMobileAnimationName": null
+    "tempAnimationName": "none"
   }
 }

@@ -1,21 +1,24 @@
+import classnames from "classnames";
 import React, { Fragment } from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import CustomCSS from "visual/component/CustomCSS";
 import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import { blocksDataSelector } from "visual/redux/selectors";
-import classnames from "classnames";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
-import { Wrapper } from "../tools/Wrapper";
 import { getTagNameFromFontStyle } from "visual/editorComponents/tools/HtmlTag";
-import { getStore } from "visual/redux/store";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { blocksDataSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
+import { getPopulatedEntityValues } from "visual/utils/dynamicContent/common";
+import { getLinkData } from "visual/utils/models/link";
+import { handleLinkChange } from "visual/utils/patch/Link";
+import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 import { getPlaceholder, getPlaceholderIcon } from "./utils";
 
 export default class PostExcerpt extends EditorComponent {
@@ -30,10 +33,12 @@ export default class PostExcerpt extends EditorComponent {
 
   patchValue(patch, meta) {
     const { fontStyle } = patch;
+    const link = handleLinkChange(patch);
 
     super.patchValue(
       {
         ...patch,
+        ...link,
         ...(fontStyle ? getTagNameFromFontStyle(fontStyle) : {})
       },
       meta
@@ -43,7 +48,7 @@ export default class PostExcerpt extends EditorComponent {
   renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
-      itemProps: itemData => {
+      itemProps: (itemData) => {
         let {
           blockId,
           value: { popupId }
@@ -73,37 +78,32 @@ export default class PostExcerpt extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const {
       type,
+      tagName,
+      customCSS,
       className: className_,
-      linkType,
-      linkAnchor,
-      linkExternalType,
-      linkExternalBlank,
-      linkExternalRel,
-      linkPopup,
-      linkUpload,
-      sourceType
+      sourceType,
+      textPopulation,
+      textPopulationEntityId,
+      textPopulationEntityType
     } = v;
     const className = classnames(
       "brz-wp-post-excerpt",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
-      ),
+      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd)),
       className_
     );
-    const hrefs = {
-      anchor: linkAnchor,
-      external: v[linkExternalType],
-      popup: linkPopup,
-      upload: linkUpload
-    };
+    const linkData = getLinkData(v);
+
+    const attr = getPopulatedEntityValues(
+      textPopulationEntityId,
+      textPopulationEntityType
+    );
+
     const text = (
       <DynamicContentHelper
-        placeholder={getPlaceholder(type, sourceType)}
+        placeholder={getPlaceholder(type, sourceType, textPopulation, attr)}
         placeholderIcon={getPlaceholderIcon(type)}
         placeholderHeight={0}
-        tagName={v.tagName}
+        tagName={tagName}
         props={{
           className: "brz-wp-post-excerpt-content"
         }}
@@ -115,14 +115,14 @@ export default class PostExcerpt extends EditorComponent {
         <Toolbar
           {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         >
-          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
             <Wrapper {...this.makeWrapperProps({ className })}>
-              {hrefs[linkType] ? (
+              {linkData.href ? (
                 <Link
-                  href={hrefs[linkType]}
-                  type={linkType}
-                  target={linkExternalBlank}
-                  rel={linkExternalRel}
+                  href={linkData.href}
+                  type={linkData.type}
+                  target={linkData.target}
+                  rel={linkData.rel}
                 >
                   {text}
                 </Link>

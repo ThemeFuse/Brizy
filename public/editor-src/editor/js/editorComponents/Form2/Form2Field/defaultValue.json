@@ -30,10 +30,6 @@
     "min": "",
     "max": "",
 
-    "columns": 1,
-
-    "tabletColumns": null,
-
-    "mobileColumns": null
+    "columns": 1
   }
 }

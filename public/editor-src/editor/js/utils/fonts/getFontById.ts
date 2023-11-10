@@ -10,7 +10,7 @@ import { Font } from "visual/types";
 import { ReduxState } from "visual/redux/types";
 import { ArrayType, NonEmptyArray } from "visual/utils/array/types";
 
-type ModelFamilyType = FontFamilyType.google | FontFamilyType.upload;
+export type ModelFamilyType = FontFamilyType.google | FontFamilyType.upload;
 type RFonts = ReduxState["fonts"];
 type DFonts = typeof fontTransform;
 type StrictFonts = Required<RFonts>;

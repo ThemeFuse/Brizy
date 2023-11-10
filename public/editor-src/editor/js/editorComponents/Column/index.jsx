@@ -6,7 +6,10 @@ import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
+import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
+import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Link from "visual/component/Link";
+import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { Roles } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
@@ -16,15 +19,17 @@ import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
-import { blocksDataSelector } from "visual/redux/selectors";
-import { deviceModeSelector } from "visual/redux/selectors";
+import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
+import { getCSSId } from "visual/utils/models/cssId";
+import { getLinkData } from "visual/utils/models/link";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { handleLinkChange } from "visual/utils/patch/Link";
 import { attachRef } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
@@ -103,6 +108,11 @@ class Column extends EditorComponent {
     this.toolbarRef.current.show();
   };
 
+  patchValue(patch, meta) {
+    const link = handleLinkChange(patch);
+    super.patchValue({ ...patch, ...link }, meta);
+  }
+
   getMeta(v) {
     const { verticalAlign, tabletVerticalAlign, mobileVerticalAlign } = v;
     const { meta } = this.props;
@@ -157,7 +167,8 @@ class Column extends EditorComponent {
 
   dvv = (key) => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = deviceModeSelector(this.getReduxState());
+
     const state = State.mRead(v.tabsState);
 
     return defaultValueValue({ v, key, device, state });
@@ -204,6 +215,18 @@ class Column extends EditorComponent {
         </SortableHandle>
       </Toolbar>
     );
+  };
+
+  getHoverData = (v) => {
+    const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
+    const options = makeOptionValueToAnimation(v);
+
+    return {
+      hoverName,
+      options: getHoverAnimationOptions(options, hoverName),
+      animationId: this.getId(),
+      isHidden: hoverName === "none"
+    };
   };
 
   renderResizer(position) {
@@ -289,12 +312,11 @@ class Column extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { items, customClassName, cssClassPopulation, customAttributes } = v;
+    const { items, customClassName, cssClass, customAttributes } = v;
     const {
       meta: { inGrid, posts }
     } = this.props;
-    const customID = Str.mRead(v.customID) || undefined;
-    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
+    const id = getCSSId(v);
     const isInnerRow = this.isInnerRow();
 
     const classNameColumn = classnames(
@@ -306,14 +328,25 @@ class Column extends EditorComponent {
         `${this.getId()}-column`,
         styleColumn(v, vs, vd)
       ),
-      cssClassPopulation === "" ? customClassName : cssClassPopulation
+      cssClass || customClassName
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
-
+    const { animationId, hoverName, options, isHidden } = this.getHoverData(v);
     const content = (
-      <ScrollMotion options={makeOptionValueToMotion(v)}>
-        {this.renderContent(v, vs, vd)}
+      <ScrollMotion
+        options={makeOptionValueToMotion(v)}
+        className="brz-columns__scroll-effect"
+      >
+        <HoverAnimation
+          animationId={animationId}
+          cssKeyframe={hoverName}
+          options={options}
+          target={"parent"}
+          isHidden={isHidden}
+        >
+          {this.renderContent(v, vs, vd)}
+        </HoverAnimation>
       </ScrollMotion>
     );
 
@@ -346,7 +379,7 @@ class Column extends EditorComponent {
                         ...parseCustomAttributes(customAttributes),
                         ...sortableElementAttr,
                         ...containerBorderAttr,
-                        id: cssIDPopulation ?? customID,
+                        ...(id && { id }),
                         className: classNameColumn
                       }}
                     >
@@ -373,29 +406,11 @@ class Column extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const {
-      tagName,
-      linkExternalType,
-      linkType,
-      linkAnchor,
-      linkExternalBlank,
-      linkExternalRel,
-      linkPopup,
-      linkUpload,
-      customClassName,
-      cssClassPopulation,
-      customAttributes
-    } = v;
+    const { tagName, customClassName, cssClass, customAttributes } = v;
     const { sectionPopup, sectionPopup2 } = this.props.meta;
 
-    const linkHrefs = {
-      anchor: linkAnchor,
-      external: v[linkExternalType],
-      popup: linkPopup,
-      upload: linkUpload
-    };
-    const customID = Str.mRead(v.customID) || undefined;
-    const cssIDPopulation = Str.mRead(v.cssIDPopulation) || undefined;
+    const linkData = getLinkData(v);
+    const id = getCSSId(v);
     const classNameColumn = classnames(
       "brz-columns",
       css(
@@ -403,10 +418,11 @@ class Column extends EditorComponent {
         `${this.getId()}-column`,
         styleColumn(v, vs, vd)
       ),
-      cssClassPopulation === "" ? customClassName : cssClassPopulation
+      cssClass || customClassName
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
+    const { animationId, hoverName, options, isHidden } = this.getHoverData(v);
 
     return (
       <>
@@ -416,21 +432,32 @@ class Column extends EditorComponent {
             component={tagName}
             componentProps={{
               ...parseCustomAttributes(customAttributes),
-              id: cssIDPopulation ?? customID,
+              ...(id && { id }),
               className: classNameColumn
             }}
             animationClass={animationClassName}
           >
-            <ScrollMotion options={makeOptionValueToMotion(v)}>
-              {this.renderContent(v, vs, vd)}
+            <ScrollMotion
+              options={makeOptionValueToMotion(v)}
+              className="brz-columns__scroll-effect"
+            >
+              <HoverAnimation
+                animationId={animationId}
+                cssKeyframe={hoverName}
+                options={options}
+                target={"parent"}
+                isHidden={isHidden}
+              >
+                {this.renderContent(v, vs, vd)}
+              </HoverAnimation>
             </ScrollMotion>
-            {linkHrefs[linkType] !== "" && (
+            {linkData.href && (
               <Link
                 className="brz-container-link"
-                type={linkType}
-                href={linkHrefs[linkType]}
-                target={linkExternalBlank}
-                rel={linkExternalRel}
+                type={linkData.type}
+                href={linkData.href}
+                target={linkData.target}
+                rel={linkData.rel}
               />
             )}
           </Animation>

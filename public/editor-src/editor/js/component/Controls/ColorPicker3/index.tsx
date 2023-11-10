@@ -30,7 +30,7 @@ export type Meta = {
 export type Props = WithClassName &
   WithValue<Value> & {
     opacity: boolean;
-    palette: PaletteObject[];
+    palette?: PaletteObject[];
     paletteOpenSettings?: () => void;
     value: Value;
     onChange: (v: Value, m: Meta) => void;
@@ -79,12 +79,14 @@ export const ColorPicker3: FC<Props> = ({
         disableOpacity={!opacity}
         onChange={onColorChange}
       />
-      <ColorPalette
-        palette={palette}
-        onChange={onPaletteChange}
-        openSettings={paletteOpenSettings}
-        value={value.palette}
-      />
+      {palette.length ? (
+        <ColorPalette
+          palette={palette}
+          onChange={onPaletteChange}
+          openSettings={paletteOpenSettings}
+          value={value.palette}
+        />
+      ) : null}
     </div>
   );
 };

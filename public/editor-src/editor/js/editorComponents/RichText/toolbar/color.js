@@ -1,4 +1,4 @@
-import { setIn } from "timm";
+import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
@@ -6,6 +6,7 @@ import {
   hexToRgba,
   makeStylePaletteCSSVar
 } from "visual/utils/color";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
@@ -13,7 +14,7 @@ import {
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { NORMAL } from "visual/utils/stateMode";
-import { encodeToString } from "visual/utils/string";
+import { getPopulationColor } from "../utils/dependencies";
 
 const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
 
@@ -30,26 +31,6 @@ const shadowToString = (value, config) => {
     hex: value.hex,
     opacity: value.opacity
   })} ${value.horizontal}px ${value.vertical}px ${value.blur}px`;
-};
-
-const getPopulationColor = (populationColor, type, value) => {
-  if (value.isChanged === "hex") {
-    const newValue = setIn(populationColor, [type, "hex"], value.hex);
-    return encodeToString(setIn(newValue, [type, "colorPalette"], null));
-  }
-
-  if (value.isChanged === "opacity") {
-    return encodeToString(
-      setIn(populationColor, [type, "opacity"], value.opacity)
-    );
-  }
-
-  const newValue = setIn(
-    populationColor,
-    [type, "colorPalette"],
-    value.palette
-  );
-  return encodeToString(setIn(newValue, [type, "hex"], null));
 };
 
 const changeColor = (value) => {
@@ -91,7 +72,7 @@ const changeColor = (value) => {
         linearAngle: value.gradientLinearDegree,
         radialPosition: value.gradientRadialDegree
       },
-      color: null,
+      color: value.bgColorHex,
       opacity: null,
       colorPalette: value.bgColorPalette,
       bgColorType: "gradient"
@@ -118,57 +99,21 @@ function getPopulationTabs({ populationColor }, onChange) {
     h6: "H6"
   };
 
-  return Object.entries(populationColor).reduce((acc, [key, headerValue]) => {
-    const { hex: hexPalette } =
-      getColorPaletteColor(headerValue.colorPalette) || {};
-
-    acc.push({
-      id: translationsMap[key],
-      label: translationsMap[key],
-      options: [
-        {
-          id: "paragraphColor",
-          type: "colorPicker2",
-          select: {
-            show: false
-          },
-          value: {
-            hex: hexPalette || headerValue.hex,
-            opacity: headerValue.opacity,
-            palette: headerValue.colorPalette
-          },
-          onChange: (value) =>
-            onChange({
-              populationColor: getPopulationColor(populationColor, key, value)
-            })
-        },
-        {
-          type: "grid-dev",
-          className: "brz-ed-grid__color-fileds",
-          columns: [
-            {
-              size: "auto",
-              options: [
-                {
-                  id: "paragraphColorFields",
-                  type: "colorFields",
-                  position: 30,
-                  value: {
-                    hex: hexPalette || headerValue.hex,
-                    opacity: headerValue.opacity
-                  },
-                  onChange: (value) =>
-                    onChange(getPopulationColor(populationColor, key, value))
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    });
-
-    return acc;
-  }, []);
+  return Object.entries(translationsMap).map(([key, value]) => ({
+    id: value,
+    label: value,
+    options: [
+      {
+        id: `paragraphColor${value}`,
+        type: "colorPicker-dev",
+        dependencies: (data) =>
+          onChange({
+            ...data,
+            populationColor: getPopulationColor(populationColor, key, data)
+          })
+      }
+    ]
+  }));
 }
 
 function getPopulationColorOptions({ populationColor }, onChange) {
@@ -181,17 +126,62 @@ function getPopulationColorOptions({ populationColor }, onChange) {
   ];
 }
 
-function getSimpleColorOptions(v, { context }, onChange) {
+function patchImage(v, patch) {
   const {
-    src = null,
-    population = null,
-    fileName = null,
-    x = null,
-    y = null,
-    extension = null,
-    width = null,
-    height = null
-  } = v.backgroundImage || {};
+    imageSrc = v.imageSrc,
+    imageExtension = v.imageExtension,
+    imageFileName = v.imageFileName,
+    imageHeight = v.imageHeight,
+    imageWidth = v.imageWidth,
+    positionX = v.imagePositionX,
+    positionY = v.imagePositionY
+  } = patch;
+  const imagePositionX = positionX || 50;
+  const imagePositionY = positionY || 50;
+
+  return {
+    imageSrc,
+    imageFileName,
+    imageExtension,
+    imageWidth,
+    imageHeight,
+    imagePositionX,
+    imagePositionY
+  };
+}
+
+function patchImagePopulation(v, patch) {
+  const {
+    imagePopulation,
+    imagePopulationEntityId,
+    imagePopulationEntityType
+  } = patch;
+  const imageData = {
+    imageSrc: v.imageSrc,
+    imageFileName: v.imageFileName,
+    imageExtension: v.imageExtension,
+    imageWidth: v.imageWidth,
+    imageHeight: v.imageHeight,
+    imagePositionX: v.imagePositionX,
+    imagePositionY: v.imagePositionY
+  };
+  const populationAttr = {};
+
+  if (imagePopulationEntityId) {
+    populationAttr.entityId = imagePopulationEntityId;
+  }
+  if (imagePopulationEntityType) {
+    populationAttr.entityType = imagePopulationEntityType;
+  }
+
+  const population = imagePopulation
+    ? makePlaceholder({ content: imagePopulation, attr: populationAttr })
+    : undefined;
+
+  return { ...imageData, imagePopulation: population };
+}
+
+function getSimpleColorOptions(v, { context, device }, onChange) {
   const config = Config.getAll();
 
   const imageDynamicContentChoices = getDynamicContentOption({
@@ -286,45 +276,31 @@ function getSimpleColorOptions(v, { context }, onChange) {
           id: "tabImage",
           label: t("Mask"),
           options: [
+            // Use population-dev option type instead of using the `population` config for imageUpload-dev,
+            // because the population id and imageUpload-dev id are different.
             {
               id: "image",
+              type: "population-dev",
               label: t("Image"),
-              type: "imageSetter",
-              population: imageDynamicContentChoices,
-              value: {
-                src,
-                population,
-                width,
-                height,
-                x,
-                y,
-                fileName,
-                extension
+              config: imageDynamicContentChoices,
+              fallback: {
+                id: keyToDCFallback2Key("image"),
+                type: "imageUpload-dev"
               },
-              onChange: ({
-                width,
-                height,
-                src,
-                x,
-                y,
-                population,
-                fileName,
-                extension
-              }) => {
-                x = x || 50;
-                y = y || 50;
-
-                return onChange({
-                  backgroundImage: {
-                    src,
-                    population,
-                    fileName,
-                    x,
-                    y,
-                    extension,
-                    width,
-                    height
-                  }
+              option: {
+                id: "",
+                type: "imageUpload-dev",
+                config: {
+                  edit: device === "desktop",
+                  disableSizes: true
+                },
+                dependencies: (patch) => {
+                  onChange({ backgroundImage: patchImage(v, patch) });
+                }
+              },
+              dependencies: (patch) => {
+                onChange({
+                  backgroundImage: patchImagePopulation(v, patch)
                 });
               }
             }
@@ -343,12 +319,13 @@ function getTextPopulationOptions() {
       type: "tabs-dev",
       tabs: [
         {
-          id: "tabBg",
-          label: t("Bg"),
+          id: "tabText",
+          label: t("Color"),
           options: [
             {
               id: "",
-              type: "backgroundColor-dev"
+              type: "backgroundColor-dev",
+              states: [NORMAL]
             }
           ]
         },

@@ -8,9 +8,10 @@ import React, {
   useEffect,
   useRef
 } from "react";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { WithClassName } from "visual/utils/options/attributes";
 import { attachRef } from "visual/utils/react";
-import * as Str from "visual/utils/string/specs";
+import { mRead } from "visual/utils/string/specs";
 import { StoryAnchorAttribute } from "./types/Slide";
 import { Target, empty as defaultTarget } from "./types/Target";
 import { Type, empty as defaultType } from "./types/Type";
@@ -26,6 +27,7 @@ type Props = PropsWithChildren<
     type?: Type;
     attr?: JSX.IntrinsicAttributes;
     id?: string;
+    draggable?: boolean;
   }
 >;
 
@@ -50,10 +52,10 @@ const _Link = (
     { "brz-anchor": type === "anchor" },
     className
   );
-  const _href = getHref(type, Str.mRead(href));
+  const _href = getHref(type, mRead(href));
   const _target = getTarget(type, target);
   const attrs = getAttr(attr);
-  const _rel = getRel(Str.mRead(rel));
+  const _rel = getRel(mRead(rel));
 
   useEffect(() => {
     const node = innerRef.current;
@@ -75,7 +77,7 @@ const _Link = (
       target={_target}
       rel={_rel}
       style={style}
-      data-brz-link-type={type}
+      {...makeDataAttr({ name: "link-type", value: type })}
       {...slide}
       {...attrs}
       ref={(v: HTMLAnchorElement | null): void => {

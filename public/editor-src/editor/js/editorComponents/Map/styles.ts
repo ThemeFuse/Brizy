@@ -2,16 +2,15 @@ import { renderStyles } from "visual/utils/cssStyle";
 import { Value } from "./index";
 
 export function style(v: Value, vs: Value, vd: Value): string[] {
+  const { hoverName = "none" } = v;
+  const hoverSelector =
+    hoverName === "none" ? ".brz-map_styles" : ` .brz-map-content`;
   const styles = {
     ".brz &&:hover.brz-map": {
       standart: ["cssStyleSizeSize", "cssStyleSizeHeightPxOnly"]
     },
-    ".brz &&:hover.brz-map_styles:before": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
-    },
-    ".brz &&:hover .brz-hover-animation:before": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
+    [`.brz &&:hover${hoverSelector}:before`]: {
+      standart: ["cssStyleBorder", "cssStyleBorderRadius"],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover:after": {
@@ -23,6 +22,7 @@ export function style(v: Value, vs: Value, vd: Value): string[] {
     ".brz &&:hover .brz-map-content": {
       standart: [
         "cssStyleBorderRadius",
+        "cssStyleBoxShadow",
         ...(IS_PREVIEW ? ["cssStyleElementMapPropertyPositionFixed"] : [])
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]

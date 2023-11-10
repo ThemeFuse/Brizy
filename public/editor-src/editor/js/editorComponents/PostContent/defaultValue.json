@@ -1,7 +1,10 @@
 {
   "content": {
     "type": "wp",
-    "sourceID": ""
+
+    "textPopulation": "{{brizy_dc_post_content}}",
+    "textPopulationEntityType": "",
+    "textPopulationEntityId": ""
   },
 
   "toolbar": {
@@ -197,8 +200,6 @@
     "tabletH6LineHeight": null,
     "tabletH6LetterSpacing": null,
 
-    "tabletContentHorizontalAlign": null,
-
     "mobileParagraphFontStyle": null,
     "mobileParagraphFontFamilyType": null,
     "mobileParagraphFontSize": null,
@@ -253,8 +254,6 @@
     "mobileH6FontSizeSuffix": "px",
     "mobileH6FontWeight": null,
     "mobileH6LineHeight": null,
-    "mobileH6LetterSpacing": null,
-
-    "mobileContentHorizontalAlign": null
+    "mobileH6LetterSpacing": null
   }
 }

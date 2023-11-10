@@ -1,23 +1,23 @@
 import Config from "visual/global/Config";
-import { isCloud } from "visual/global/Config/types";
-import { getSourceIds } from "visual/utils/api";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
-  toolbarLinkAnchor,
-  toolbarLinkExternal,
-  toolbarLinkPopup
-} from "visual/utils/toolbar";
-import { getSourceTypeChoices } from "./utils";
+  getDynamicContentChoices,
+  getDynamicContentOption,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { toolbarLinkAnchor, toolbarLinkPopup } from "visual/utils/toolbar";
 
-export function getItems({ v, device, component }) {
+export function getItems({ v, device, component, context }) {
   const config = Config.getAll();
+  const collectionTypesHandler =
+    config?.api?.collectionTypes?.loadCollectionTypes.handler;
   const IS_GLOBAL_POPUP = isPopup(config);
-
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
@@ -28,69 +28,70 @@ export function getItems({ v, device, component }) {
     dvv("colorPalette")
   );
 
-  const sourceType = dvv("sourceType");
+  const activeChoice = config.contentDefaults.PostTitle.textPopulation;
 
-  const sourceItemsHandler = config?.api?.sourceItems?.handler;
+  const disablePredefinedPopulation =
+    config.elements?.postTitle?.predefinedPopulation === false;
+  const predefinedChoices = getDynamicContentChoices(
+    context.dynamicContent.config,
+    DCTypes.richText
+  );
 
+  const linkSource = dvv("linkSource");
+
+  const linkDC = getDynamicContentOption({
+    options: component.context.dynamicContent.config,
+    type: DCTypes.link
+  });
   return [
-    {
-      id: "posts",
-      type: "popover-dev",
-      config: {
-        icon: "nc-wp-post-title",
-        size: "auto",
-        title: t("Title")
-      },
-      roles: ["admin"],
-      position: 70,
-      options: [
-        {
-          id: "sourceType",
-          type: "select-dev",
-          label: t("Source Type"),
-          disabled: isCloud(config),
-          device: "desktop",
-          placeholder: "Options",
-          choices: {
-            load: () => getSourceTypeChoices(),
-            emptyLoad: {
-              title: t("There are no choices")
-            }
-          }
-        },
-        {
-          id: "sourceID",
-          type: "select-dev",
-          label: t("Source"),
-          disabled: !sourceItemsHandler || sourceType === "",
-          device: "desktop",
-          placeholder: "Select",
-          choices: {
-            load: getSourceIds(sourceType, config),
-            emptyLoad: {
-              title: t("There are no choices")
-            }
-          }
-        }
-      ]
-    },
     {
       id: "popoverTypography",
       type: "popover-dev",
       config: {
         icon: "nc-font",
-        size: device === "desktop" ? "large" : "auto",
+        size: device === "desktop" ? "xlarge" : "auto",
         title: t("Typography")
       },
       roles: ["admin"],
       position: 70,
       options: [
         {
-          id: "",
-          type: "typography-dev",
-          config: {
-            fontFamily: device === "desktop"
-          }
+          id: "gridTypography",
+          type: "grid-dev",
+          config: { separator: true },
+          columns: [
+            {
+              id: "col-1",
+              size: 1,
+              align: "center",
+              options: [
+                {
+                  id: "",
+                  type: "typography-dev",
+                  config: {
+                    fontFamily: device === "desktop"
+                  }
+                }
+              ]
+            },
+            {
+              id: "col-2",
+              size: "1",
+              align: "center",
+              options: [
+                {
+                  id: "text",
+                  devices: "desktop",
+                  disabled: disablePredefinedPopulation || !activeChoice,
+                  type: "predefinedPopulation-dev",
+                  config: {
+                    activeChoice,
+                    choices: predefinedChoices
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -174,16 +175,53 @@ export function getItems({ v, device, component }) {
           },
           tabs: [
             {
+              id: "page",
+              label: t("Page"),
+              options: [
+                {
+                  id: "linkSource",
+                  type: "select-dev",
+                  disabled: !collectionTypesHandler,
+                  label: t("Type"),
+                  devices: "desktop",
+                  choices: {
+                    load: () => getCollectionTypes(config),
+                    emptyLoad: {
+                      title: t("There are no choices")
+                    }
+                  },
+                  config: {
+                    size: "large"
+                  }
+                },
+                {
+                  id: "linkPage",
+                  type: "internalLink-dev",
+                  label: t("Find Page"),
+                  devices: "desktop",
+                  disabled: !linkSource,
+                  config: {
+                    postType: linkSource
+                  }
+                }
+              ]
+            },
+            {
               id: "external",
               label: t("URL"),
               options: [
-                toolbarLinkExternal({
-                  v,
-                  device,
-                  config: component.context.dynamicContent.config,
-                  devices: "desktop",
-                  state: "normal"
-                }),
+                {
+                  id: "link",
+                  type: "population-dev",
+                  label: t("Link to"),
+                  config: linkDC,
+                  option: {
+                    id: "linkExternal",
+                    type: "inputText-dev",
+                    placeholder: "http://",
+                    devices: "desktop"
+                  }
+                },
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),

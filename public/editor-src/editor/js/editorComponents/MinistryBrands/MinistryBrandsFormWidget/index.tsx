@@ -3,6 +3,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import defaultValue from "./defaultValue.json";
 import * as toolbarConfig from "./toolbarConfig";
 import { Props, Value } from "./types";
@@ -30,6 +31,10 @@ export class MinistryBrandsFormWidget extends EditorComponent<Value, Props> {
 
   renderForEdit(v: Value): ReactNode {
     const { form } = v;
+    const placeholder = makePlaceholder({
+      content: "{{ekk_form}}",
+      attr: { form }
+    });
 
     return (
       <Toolbar
@@ -43,7 +48,7 @@ export class MinistryBrandsFormWidget extends EditorComponent<Value, Props> {
           })}
         >
           <DynamicContentHelper
-            placeholder={`{{ekk_form form='${form}'}}`}
+            placeholder={placeholder}
             blocked={false}
             props={{ className: "brz-formWidget" }}
             tagName="div"

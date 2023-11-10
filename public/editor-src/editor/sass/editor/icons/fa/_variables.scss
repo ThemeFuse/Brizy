@@ -139,6 +139,8 @@ $fa-var-pastafarianism: \f67b;
 $fa-var-arrow-down-up-across-line: \e4af;
 $fa-var-spoon: \f2e5;
 $fa-var-utensil-spoon: \f2e5;
+$fa-var-x-twitter: \e61b;
+$fa-var-square-x-twitter: \e61a;
 $fa-var-jar-wheat: \e517;
 $fa-var-envelopes-bulk: \f674;
 $fa-var-mail-bulk: \f674;
@@ -4217,6 +4219,8 @@ $fa-icons: (
 );
 
 $fa-brand-icons: (
+  "x-twitter": $fa-var-x-twitter,
+  "square-x-twitter": $fa-var-square-x-twitter,
   "monero": $fa-var-monero,
   "tiktok": $fa-var-tiktok,
   "hooli": $fa-var-hooli,

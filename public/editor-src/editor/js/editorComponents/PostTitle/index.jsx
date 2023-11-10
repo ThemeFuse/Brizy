@@ -1,23 +1,29 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import { blocksDataSelector } from "visual/redux/selectors";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
-import { getStore } from "visual/redux/store";
-import { Wrapper } from "../tools/Wrapper";
 import { getTagNameFromFontStyle } from "visual/editorComponents/tools/HtmlTag";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { withMigrations } from "visual/editorComponents/tools/withMigrations";
+import { blocksDataSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { getPopulatedEntityValues } from "visual/utils/dynamicContent/common";
+import { getLinkData } from "visual/utils/models/link";
+import { handleLinkChange } from "visual/utils/patch/Link";
+import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import { migrations } from "./migrations";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
-export default class PostTitle extends EditorComponent {
+class PostTitle extends EditorComponent {
   static get componentId() {
     // NOTE: initially this element was for WordPress only.
     // After we needed to make it work for cloud as well, it was renamed,
@@ -29,10 +35,12 @@ export default class PostTitle extends EditorComponent {
 
   patchValue(patch, meta) {
     const { fontStyle } = patch;
+    const link = handleLinkChange(patch);
 
     super.patchValue(
       {
         ...patch,
+        ...link,
         ...(fontStyle ? getTagNameFromFontStyle(fontStyle) : {})
       },
       meta
@@ -42,7 +50,7 @@ export default class PostTitle extends EditorComponent {
   renderPopups() {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
-      itemProps: itemData => {
+      itemProps: (itemData) => {
         let {
           blockId,
           value: { popupId }
@@ -73,40 +81,29 @@ export default class PostTitle extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const {
       className: className_,
-      linkType,
-      linkExternalBlank,
-      linkExternalRel,
-      linkAnchor,
-      linkExternalType,
-      linkPopup,
-      linkUpload,
       tagName,
-      sourceType,
-      sourceID
+      textPopulation,
+      textPopulationEntityId,
+      textPopulationEntityType
     } = v;
+
+    const attr = getPopulatedEntityValues(
+      textPopulationEntityId,
+      textPopulationEntityType
+    );
+
+    const placeholder = makePlaceholder({ content: textPopulation, attr });
+    const linkData = getLinkData(v);
+
     const className = classnames(
       "brz-wp-title",
       className_,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
-      )
+      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
-    const hrefs = {
-      anchor: linkAnchor,
-      external: v[linkExternalType],
-      popup: linkPopup,
-      upload: linkUpload
-    };
-
-    const placeholderWithTypes = sourceType
-      ? `{{brizy_dc_post_title type="${sourceType}" id="${sourceID}"}}`
-      : "{{brizy_dc_post_title}}";
 
     const text = (
       <DynamicContentHelper
-        placeholder={placeholderWithTypes}
+        placeholder={placeholder}
         placeholderIcon="wp-title"
         tagName={tagName}
         props={{
@@ -122,12 +119,12 @@ export default class PostTitle extends EditorComponent {
         >
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             <Wrapper {...this.makeWrapperProps({ className })}>
-              {hrefs[linkType] ? (
+              {linkData.href ? (
                 <Link
-                  href={hrefs[linkType]}
-                  type={linkType}
-                  target={linkExternalBlank}
-                  rel={linkExternalRel}
+                  href={linkData.href}
+                  type={linkData.type}
+                  target={linkData.target}
+                  rel={linkData.rel}
                 >
                   {text}
                 </Link>
@@ -143,3 +140,5 @@ export default class PostTitle extends EditorComponent {
     );
   }
 }
+
+export default withMigrations(PostTitle, migrations);

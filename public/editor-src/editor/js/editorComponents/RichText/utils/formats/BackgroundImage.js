@@ -1,6 +1,7 @@
 import Quill from "quill";
 import Config from "visual/global/Config";
 import { SizeType } from "visual/global/Config/types/configs/common";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { getImageUrl } from "visual/utils/image";
 import { getImagePopulation } from "../requests/ImagePopulation";
 
@@ -15,87 +16,95 @@ class BackgroundImage extends Inline {
   }
 
   static formats(node) {
-    let src = node.getAttribute("data-image_src");
-    let population = node.getAttribute("data-image_population");
+    let imageSrc = node.getAttribute("data-image_src");
+    let imagePopulation = node.getAttribute("data-image_population");
 
-    if (src || population) {
-      const x = parseInt(node.style.backgroundPositionX) || null;
-      const y = parseInt(node.style.backgroundPositionY) || null;
-      const width = parseInt(node.getAttribute("data-image_width")) || null;
-      const height = parseInt(node.getAttribute("data-image_height")) || null;
-      const extension = node.getAttribute("data-image_extension");
-      const fileName = node.getAttribute("data-image_file_name") || "image";
+    if (imageSrc || imagePopulation) {
+      const imagePositionX = parseInt(node.style.backgroundPositionX) || null;
+      const imagePositionY = parseInt(node.style.backgroundPositionY) || null;
+      const imageWidth =
+        parseInt(node.getAttribute("data-image_width")) || null;
+      const imageHeight =
+        parseInt(node.getAttribute("data-image_height")) || null;
+      const imageExtension = node.getAttribute("data-image_extension");
+      const imageFileName =
+        node.getAttribute("data-image_file_name") || "image";
 
       if (!node.classList.contains("brz-population-mask")) {
-        population = null;
+        imagePopulation = null;
       }
 
       return {
-        src,
-        population,
-        x,
-        y,
-        extension,
-        fileName,
-        width,
-        height
+        imageSrc,
+        imageWidth,
+        imageHeight,
+        imageExtension,
+        imageFileName,
+        imagePositionX,
+        imagePositionY,
+        imagePopulation
       };
     }
     return null;
   }
 
   static setValue(value, node) {
-    const { src, fileName, population, x, y, extension, width, height } = value;
+    const {
+      imageSrc,
+      imageFileName,
+      imageExtension,
+      imageWidth,
+      imageHeight,
+      imagePositionX,
+      imagePositionY,
+      imagePopulation
+    } = value;
 
-    if (population) {
+    if (imagePopulation) {
       node.style.backgroundImage = null;
       // ! should be 50% 50% or should we set image position?
       node.style.backgroundPosition = "50% 50%";
       node.classList.add("brz-population-mask");
       node.classList.remove("brz-population-mask__style");
       node.classList.remove("brz-text-mask");
-      node.setAttribute("data-image_population", population);
+      node.setAttribute("data-image_population", imagePopulation);
 
       requestAnimationFrame(() => {
         const itemId = node
-          .closest("[data-item_id]")
-          .getAttribute("data-item_id");
+          .closest(makeDataAttrString({ name: "item_id" }))
+          .getAttribute(makeAttr("item_id"));
         const dynamicContent = Config.getAll().dynamicContent;
         const liveInBuilder = dynamicContent?.liveInBuilder ?? false;
-        const useCustomPlaceholder =
-          dynamicContent?.useCustomPlaceholder ?? false;
 
         if (liveInBuilder) {
-          getImagePopulation(population, itemId, useCustomPlaceholder).then(
-            (url) => {
-              if (url) {
-                node.style.backgroundImage = `url("${url}")`;
-                node.classList.add("brz-population-mask__style");
-              }
+          getImagePopulation(imagePopulation, itemId).then((url) => {
+            if (url) {
+              node.style.backgroundImage = `url('${url}')`;
+              node.classList.add("brz-population-mask__style");
             }
-          );
+          });
         } else {
-          node.style.backgroundImage = `url("${population}")`;
+          node.style.backgroundImage = `url('${imagePopulation}')`;
           node.classList.add("brz-population-mask__style");
         }
       });
-    } else if (src) {
+    } else if (imageSrc) {
       const imgUrl = getImageUrl({
-        fileName,
-        uid: src,
+        fileName: imageFileName,
+        uid: imageSrc,
         sizeType: SizeType.custom
       });
       node.classList.add("brz-text-mask");
       node.classList.remove("brz-population-mask");
       node.classList.remove("brz-population-mask__style");
-      node.style.backgroundImage = `url("${imgUrl}")`;
-      node.style.backgroundPosition = `${x}% ${y}%`;
+      node.style.backgroundImage = `url('${imgUrl}')`;
+      node.style.backgroundPosition = `${imagePositionX}% ${imagePositionY}%`;
       node.removeAttribute("data-image_population");
-      node.setAttribute("data-image_src", src);
-      node.setAttribute("data-image_file_name", fileName);
-      node.setAttribute("data-image_width", width);
-      node.setAttribute("data-image_height", height);
-      node.setAttribute("data-image_extension", extension);
+      node.setAttribute("data-image_src", imageSrc);
+      node.setAttribute("data-image_file_name", imageFileName);
+      node.setAttribute("data-image_width", imageWidth);
+      node.setAttribute("data-image_height", imageHeight);
+      node.setAttribute("data-image_extension", imageExtension);
     } else {
       this.removeValue(node);
     }

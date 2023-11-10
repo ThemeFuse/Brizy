@@ -237,9 +237,6 @@
     "tempBoxShadowVertical": 2,
     "tempBoxShadowHorizontal": 1,
 
-    "tabletSubmitWidth": null,
-    "tabletSubmitWidthSuffix": null,
-
     "tabletSize": "medium",
 
     "tabletSizeLargePadding": 20,
@@ -253,8 +250,6 @@
     "tabletLabelLineHeight": 1.5,
     "tabletLabelFontWeight": 400,
     "tabletLabelLetterSpacing": 0,
-
-    "tabletLabelHorizontalAlign": null,
 
     "tabletFontFamilyType": null,
     "tabletFontStyle": "",
@@ -359,11 +354,6 @@
     "tempTabletFieldPaddingBottomSuffix": "px",
     "tempTabletFieldPaddingLeftSuffix": "px",
 
-    "mobileHorizontalAlign": null,
-
-    "mobileSubmitWidth": null,
-    "mobileSubmitWidthSuffix": null,
-
     "mobileSize": "small",
     "mobileSizeLargePadding": 20,
     "mobileSizeMediumPadding": 14,
@@ -376,8 +366,6 @@
     "mobileLabelLineHeight": 1.5,
     "mobileLabelFontWeight": 400,
     "mobileLabelLetterSpacing": 0,
-
-    "mobileLabelHorizontalAlign": null,
 
     "mobileFontFamilyType": null,
     "mobileFontStyle": "",

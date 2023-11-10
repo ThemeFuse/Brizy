@@ -281,13 +281,11 @@ export class EditorComponent<
     }
 
     const dcObjKeysAfterHook = this.getDCValueHook(getDCObjKeys, v);
-    const dynamicContent = _config.dynamicContent;
-    const replaceDC = dynamicContent?.liveInBuilder ?? false;
-    const useCustomPlaceholder = dynamicContent?.useCustomPlaceholder ?? false;
+    const replaceDC = _config.dynamicContent?.liveInBuilder ?? false;
 
     // Can be disabled by Config
     if (!replaceDC || IS_PREVIEW) {
-      return getDCObjPreview(dcObjKeysAfterHook, useCustomPlaceholder).value;
+      return getDCObjPreview(dcObjKeysAfterHook).value;
     }
 
     this._dc.pendingDCObjIncomplete?.abortGetComplete();
@@ -299,11 +297,7 @@ export class EditorComponent<
 
       return {};
     } else {
-      const dcObj = getDCObjEditor(
-        dcObjKeysAfterHook,
-        this.context,
-        useCustomPlaceholder
-      );
+      const dcObj = getDCObjEditor(dcObjKeysAfterHook, this.context);
 
       if (dcObj.type === "complete") {
         this._dc.keys = dcObj.details;

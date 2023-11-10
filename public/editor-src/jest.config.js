@@ -23,6 +23,10 @@ module.exports = {
     TARGET: "Jest",
     IS_EDITOR: true,
     __VISUAL_CONFIG__: {
+      pageData: {
+        id: "",
+        data: ""
+      },
       imageSizes: [
         {
           label: "Original",

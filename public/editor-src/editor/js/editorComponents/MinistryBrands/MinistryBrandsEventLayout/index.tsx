@@ -11,6 +11,7 @@ import * as toolbarDate from "../toolbarDate";
 import * as toolbarExtendFilters from "../toolbarExtendFilters";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
+import * as toolbarExtendDayEvents from "./calendarToolbars/toolbarExtendDayEvents";
 import * as toolbarExtendCalendarDays from "./calendarToolbars/toolbarExtendDays";
 import * as toolbarExtendCalendarHeading from "./calendarToolbars/toolbarExtendHeading";
 import defaultValue from "./defaultValue.json";
@@ -23,7 +24,7 @@ import { style } from "./styles";
 import * as toolbarExtendLayoutView from "./toolbarExtendLayoutView";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import type { Props, Value } from "./types";
-import { getPlaceholder } from "./utils";
+import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsEventLayout" {
@@ -165,21 +166,32 @@ export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
                               )}
                               selector=".brz-eventLayout--calendar-day"
                             >
-                              <Wrapper
-                                {...this.makeWrapperProps({
-                                  className
-                                })}
+                              <Toolbar
+                                {...this.makeToolbarPropsFromConfig2(
+                                  toolbarExtendDayEvents,
+                                  undefined,
+                                  {
+                                    allowExtend: false
+                                  }
+                                )}
+                                selector=".brz-eventLayout--calendar-day li"
                               >
-                                <DynamicContentHelper
-                                  placeholder={getPlaceholder(v)}
-                                  props={{
-                                    className:
-                                      "brz-ministryBrands brz-eventLayout"
-                                  }}
-                                  blocked={false}
-                                  tagName="div"
-                                />
-                              </Wrapper>
+                                <Wrapper
+                                  {...this.makeWrapperProps({
+                                    className
+                                  })}
+                                >
+                                  <DynamicContentHelper
+                                    placeholder={getPlaceholder(v)}
+                                    props={{
+                                      className:
+                                        "brz-ministryBrands brz-eventLayout"
+                                    }}
+                                    blocked={false}
+                                    tagName="div"
+                                  />
+                                </Wrapper>
+                              </Toolbar>
                             </Toolbar>
                           </Toolbar>
                         </Toolbar>

@@ -19,18 +19,18 @@ const Animation = (function () {
     }
 
     this.settings = { ...defaultSettings, ...settings };
-    const handleIntersection = (entries) => {
-      entries.map((entry) => {
+    const handleIntersection =  (entries) => {
+      entries.map( (entry) => {
         if (entry.intersectionRatio > 0) {
           let target = entry.target;
 
           this.settings.onStart();
 
           const iterationCount =
-            Number(target.getAttribute("data-iteration-count")) || 1;
+            Number(target.getAttribute("data-brz-iteration-count")) || 1;
 
           const iterationCompleted =
-            Number(target.getAttribute("data-iteration-completed")) || 1;
+            Number(target.getAttribute("data-brz-iteration-completed")) || 1;
 
           if (iterationCompleted >= iterationCount) {
             observer.unobserve(target);
@@ -40,7 +40,7 @@ const Animation = (function () {
           target.classList.add("brz-animate-opacity");
 
           target.setAttribute(
-            "data-iteration-completed",
+            "data-brz-iteration-completed",
             iterationCompleted + 1
           );
         }

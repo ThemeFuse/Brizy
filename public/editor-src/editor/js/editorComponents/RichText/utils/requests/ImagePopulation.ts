@@ -2,13 +2,12 @@ import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/Dyna
 
 export const getImagePopulation = async (
   placeholder: string,
-  id: string,
-  useCustomPlaceholder: boolean
+  id: string
 ): Promise<string> => {
   if (!id || !placeholder) {
     return "";
   }
-  const apiProxyConfig = { postId: id, useCustomPlaceholder };
+  const apiProxyConfig = { postId: id };
   const cached = DCApiProxyInstance.getFromCache(placeholder, apiProxyConfig);
 
   if (cached) {

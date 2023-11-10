@@ -4,6 +4,8 @@ import Placeholder from "visual/component/Placeholder";
 import PortalToolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
 import { getItems as sidebar } from "./sidebar";
 import { getItems as toolbar } from "./toolbar";
@@ -33,14 +35,39 @@ export class ReviewOpinew extends EditorComponent<Value> {
         return (
           <>
             <div style={{ clear: "both" }} />
-            <div id="opinew-reviews-product-page-code" data-pf-element="true">
+            <div
+              id="opinew-reviews-product-page-code"
+              {...makeDataAttr({ name: "pf-element", value: "true" })}
+            >
               <span
                 id="opinew-plugin"
-                data-server-address="https://www.opinew.com"
-                data-opinew-shop-id="{{shop.id}}"
-                data-shop-url="{{shop.domain}}"
-                data-platform-product-id="{{product.id}}"
-                data-opw-prodreviews='{{ product.metafields.opinew_metafields["product_plugin"] }}'
+                {...makeDataAttr({
+                  name: "server-address",
+                  value: "https://www.opinew.com"
+                })}
+                {...makeDataAttr({
+                  name: "opinew-shop-id",
+                  value: makePlaceholder({
+                    content: "{{shop.id}}"
+                  })
+                })}
+                {...makeDataAttr({
+                  name: "shop-url",
+                  value: makePlaceholder({ content: "{{shop.domain}}" })
+                })}
+                {...makeDataAttr({
+                  name: "platform-product-id",
+                  value: makePlaceholder({
+                    content: "{{product.id}}"
+                  })
+                })}
+                {...makeDataAttr({
+                  name: "opw-prodreviews",
+                  value: makePlaceholder({
+                    content:
+                      '{{ product.metafields.opinew_metafields["product_plugin"] }}'
+                  })
+                })}
               >
                 <span id="opinew_product_plugin_app" />
               </span>
@@ -54,7 +81,12 @@ export class ReviewOpinew extends EditorComponent<Value> {
             <div style={{ clear: "both" }} />
             <div
               id="opinew-reviews-all-reviews-code"
-              data-opw-prodreviews='{{ shop.metafields.opinew["opinew_all_reviews"] }}'
+              {...makeDataAttr({
+                name: "opw-prodreviews",
+                value: makePlaceholder({
+                  content: '{{ shop.metafields.opinew["opinew_all_reviews"] }}'
+                })
+              })}
             >
               <span id="opinew_all_reviews_plugin_app" />
             </div>
@@ -82,10 +114,19 @@ export class ReviewOpinew extends EditorComponent<Value> {
             <div id="opinew-reviews-all-reviews-code">
               <span id="opinew-shop-plugin">
                 {size === "average"
-                  ? '{{ shop.metafields.opinew["opinew_badge_wide_average"] }}'
+                  ? makePlaceholder({
+                      content:
+                        '{{ shop.metafields.opinew["opinew_badge_wide_average"] }}'
+                    })
                   : size === "small"
-                  ? '{{ shop.metafields.opinew["opinew_badge_small"] }}'
-                  : '{{ shop.metafields.opinew["opinew_badge_wide"] }}'}
+                  ? makePlaceholder({
+                      content:
+                        '{{ shop.metafields.opinew["opinew_badge_small"] }}'
+                    })
+                  : makePlaceholder({
+                      content:
+                        '{{ shop.metafields.opinew["opinew_badge_wide"] }}'
+                    })}
               </span>
             </div>
           </>

@@ -1,10 +1,9 @@
 import produce from "immer";
 import Config from "visual/global/Config";
+import { isCustomerPage } from "visual/global/Config/types/configs/Base";
 import {
-  isCMS,
   isCloud,
   isCollectionPage,
-  isCustomer,
   isEcwidCategoryPage,
   isEcwidProductPage
 } from "visual/global/Config/types/configs/Cloud";
@@ -334,7 +333,7 @@ export const getCurrentRule = (
     type = page.collectionType.id;
   }
 
-  if (isCloud(config) && isCMS(config) && isCustomer(config)) {
+  if (isCloud(config) && isCustomerPage(config.page)) {
     type = CUSTOMER_TYPE;
   }
 

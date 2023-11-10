@@ -1,5 +1,6 @@
 // Popups
-.brz-popup2 {
+.brz-popup2,
+&.brz-popup2 {
   width: 100% !important;
   height: 100%;
   max-width: 100% !important;
@@ -49,7 +50,8 @@
   }
 }
 
-.brz-popup2__custom2 {
+.brz-popup2__custom2,
+&.brz-popup2__custom2 {
   .brz-popup2__inner
     .brz-container__wrap
     > .brz-container
@@ -66,7 +68,8 @@
 }
 
 // Popup for preview
-.brz-popup2__preview {
+.brz-popup2__preview,
+&.brz-popup2__preview {
   &.brz-popup2--fixed {
     z-index: -1;
     visibility: hidden;

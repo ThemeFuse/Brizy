@@ -1,9 +1,13 @@
 {
   "title": "Title",
   "titlePopulation": "",
+  "titlePopulationEntityType": "",
+  "titlePopulationEntityId": "",
 
   "description": "Description",
   "descriptionPopulation": "",
+  "descriptionPopulationEntityType": "",
+  "descriptionPopulationEntityId": "",
 
   "closeButtonState": "on",
   "descriptionState": "on",
@@ -12,27 +16,14 @@
     "widthSuffix": "%",
 
     "titleHorizontalAlign": "left",
-    "tabletTitleHorizontalAlign": null,
-    "mobileTitleHorizontalAlign": null,
 
     "descriptionHorizontalAlign": "left",
-    "tabletDescriptionHorizontalAlign": null,
-    "mobileDescriptionHorizontalAlign": null,
 
     "gap": 0,
     "gapSuffix": "px",
 
     "showCloseButtonAfter": 0,
     "showCloseButtonAfterSuffix": "s",
-    "tabletShowCloseButtonAfter": null,
-    "tabletShowCloseButtonAfterSuffix": null,
-    "mobileShowCloseButtonAfter": null,
-    "mobileShowCloseButtonAfterSuffix": null,
-
-    "tabletGap": null,
-    "tabletGapSuffix": null,
-    "mobileGap": null,
-    "mobileGapSuffix": null,
 
     "closeAlign": "topRight",
 
@@ -285,8 +276,7 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "tabletCloseButtonState": null,
-    "tabletDescriptionState": null,
+    "tabletWidthSuffix": null,
 
     "tabletTitleFontStyle": null,
     "tabletTitleFontSize": null,
@@ -295,13 +285,14 @@
     "tabletTitleLetterSpacing": null,
     "tabletTitleLineHeight": null,
 
-    "tabletWidth": null,
-    "tabletWidthSuffix": null,
+    "tabletDescriptionFontStyle": null,
+    "tabletDescriptionFontSize": null,
+    "tabletDescriptionFontSizeSuffix": null,
+    "tabletDescriptionFontWeight": null,
+    "tabletDescriptionLetterSpacing": null,
+    "tabletDescriptionLineHeight": null,
 
-    "tabletHorizontalAlign": null,
-
-    "mobileCloseButtonState": null,
-    "mobileDescriptionState": null,
+    "mobileWidthSuffix": null,
 
     "mobileTitleFontStyle": null,
     "mobileTitleFontSize": null,
@@ -316,48 +307,6 @@
     "mobileDescriptionFontWeight": null,
     "mobileDescriptionLetterSpacing": null,
     "mobileDescriptionLineHeight": null,
-
-    "mobileWidth": null,
-    "mobileWidthSuffix": null,
-
-    "mobileHorizontalAlign": null,
-
-    "tabletCloseSize": null,
-    "tabletCloseCustomSize": null,
-    "tabletCloseCustomSizeSuffix": null,
-
-    "tabletCloseBgSize": null,
-    "tabletCloseBgSizeSuffix": null,
-    "tabletCloseBorderRadiusShape": null,
-    "tabletCloseBorderRadius": null,
-    "tabletCloseBorderRadiusSuffix": null,
-
-    "tabletCloseHorizontalPosition": null,
-    "tabletCloseHorizontalPositionSuffix": null,
-    "tabletCloseVerticalPosition": null,
-    "tabletCloseVerticalPositionSuffix": null,
-
-    "tabletDescriptionFontStyle": null,
-    "tabletDescriptionFontSize": null,
-    "tabletDescriptionFontSizeSuffix": null,
-    "tabletDescriptionFontWeight": null,
-    "tabletDescriptionLetterSpacing": null,
-    "tabletDescriptionLineHeight": null,
-
-    "mobileCloseSize": null,
-    "mobileCloseCustomSize": null,
-    "mobileCloseCustomSizeSuffix": null,
-
-    "mobileCloseBgSize": null,
-    "mobileCloseBgSizeSuffix": null,
-    "mobileCloseBorderRadiusShape": null,
-    "mobileCloseBorderRadius": null,
-    "mobileCloseBorderRadiusSuffix": null,
-
-    "mobileCloseHorizontalPosition": null,
-    "mobileCloseHorizontalPositionSuffix": null,
-    "mobileCloseVerticalPosition": null,
-    "mobileCloseVerticalPositionSuffix": null,
 
     "alertPaddingType": "grouped",
     "alertPadding": 15,

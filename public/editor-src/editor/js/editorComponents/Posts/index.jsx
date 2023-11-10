@@ -17,22 +17,18 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import Config from "visual/global/Config";
-import {
-  isCloud,
-  isCollectionPage,
-  isCustomerPage,
-  isShopifyPage
-} from "visual/global/Config/types/configs/Cloud";
+import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { pageSelector } from "visual/redux/selectors";
-import { getPostsSourceRefs } from "visual/utils/api";
+import { defaultPostsSources } from "visual/utils/api";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { tabletSyncOnChange } from "visual/utils/onChange";
 import * as json from "visual/utils/reader/json";
 import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
-import { migrations } from "./migrations";
+import { getCollectionTypesInfo, migrations } from "./migrations";
 import * as sidebarExtendFilter from "./sidebarExtendFilter";
 import * as sidebarExtendPagination from "./sidebarExtendPagination";
 import * as sidebarExtendParent from "./sidebarExtendParent";
@@ -40,7 +36,6 @@ import { style } from "./styles";
 import * as toolbarExtendFilter from "./toolbarExtendFilter";
 import * as toolbarExtendPagination from "./toolbarExtendPagination";
 import toolbarExtendParentFn from "./toolbarExtendParent";
-import { getCollectionTypesInfo } from "./toolbarExtendParent/utils";
 import { getLoopAttributes, getLoopTagsAttributes } from "./utils";
 import {
   decodeSymbols,
@@ -88,20 +83,29 @@ export class Posts extends EditorComponent {
           const loopName = getLoopName(v.type);
 
           if (loop) {
-            loops.push(
-              `{{${loopName} ${loop}}}`,
-              `{{brizy_dc_post_loop_pagination ${loop}}}`
-            );
+            const loopPlaceholder = makePlaceholder({
+              content: `{{${loopName}}}`,
+              attrStr: loop
+            });
+            const loopPaginationPlaceholder = makePlaceholder({
+              content: "{{brizy_dc_post_loop_pagination}}",
+              attrStr: loop
+            });
+
+            loops.push(loopPlaceholder, loopPaginationPlaceholder);
           }
           if (loopTags) {
-            loops.push(`{{brizy_dc_post_loop_tags ${loopTags}}}`);
+            const placeholder = makePlaceholder({
+              content: "{{brizy_dc_post_loop_tags}}",
+              attrStr: loopTags
+            });
+            loops.push(placeholder);
           }
 
           return from(
             DCApiProxyInstance.getDC(loops, {
               postId: getCurrentPageId(),
-              cache: false,
-              useCustomPlaceholder: false
+              cache: false
             }).then((r) => {
               const [loop, pagination, tags] = r || [];
               return {
@@ -148,18 +152,11 @@ export class Posts extends EditorComponent {
       try {
         const state = this.getReduxState();
         const page = pageSelector(state);
+        const config = Config.getAll();
 
-        if (isCollectionPage(page)) {
+        if (page) {
           return {
-            collectionTypesInfo: await getPostsSourceRefs(
-              page.collectionType.id
-            )
-          };
-        }
-
-        if (isCustomerPage(page) || isShopifyPage(page)) {
-          return {
-            collectionTypesInfo: await getPostsSourceRefs(page.id)
+            collectionTypesInfo: await defaultPostsSources(config, page)
           };
         }
 
@@ -183,8 +180,7 @@ export class Posts extends EditorComponent {
 
     this.props.extendParentToolbar(toolbarExtend);
 
-    const firstItem =
-      toolbarContext?.collectionTypesInfo?.collectionTypes[0]?.id;
+    const firstItem = toolbarContext?.collectionTypesInfo?.sources[0]?.id;
     if (firstItem && !this.getValue2().v.source) {
       this.patchValue({ source: firstItem });
     }
@@ -298,7 +294,8 @@ export class Posts extends EditorComponent {
         toolbarExtendFilter,
         sidebarExtendFilter,
         { allowExtend: false }
-      )
+      ),
+      loopAttributes: getLoopAttributes(v)
     });
 
     return (

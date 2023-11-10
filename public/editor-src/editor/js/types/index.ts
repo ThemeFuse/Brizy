@@ -20,6 +20,7 @@ export type Block = {
   value: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   blockId: string;
   deleted?: boolean;
+  meta?: Screenshot;
 };
 
 export enum BlockTypeRule {
@@ -84,20 +85,39 @@ export interface CollectionItemRule extends AllRule {
 
 export type Rule = AllRule | CollectionTypeRule | CollectionItemRule;
 
-export type GlobalBlock = {
+interface GlobalBlockBase {
+  id: string;
   data: Block & { deleted?: boolean };
   status: "draft" | "publish";
   rules: Rule[];
   position: GlobalBlockPosition | null;
+  title?: string;
+  tags?: string;
+}
+
+export interface GlobalBlockNormal extends GlobalBlockBase {
   meta: {
-    type: BlockMetaType;
+    type: "normal";
     extraFontStyles: ExtraFontStyle[];
     _thumbnailSrc?: string;
     _thumbnailWidth?: number;
     _thumbnailHeight?: number;
     _thumbnailTime?: number;
   };
-};
+}
+
+export interface GlobalBlockPopup extends GlobalBlockBase {
+  meta: {
+    type: "popup";
+    extraFontStyles: ExtraFontStyle[];
+    _thumbnailSrc?: string;
+    _thumbnailWidth?: number;
+    _thumbnailHeight?: number;
+    _thumbnailTime?: number;
+  };
+}
+
+export type GlobalBlock = GlobalBlockNormal | GlobalBlockPopup;
 
 export type SavedBlock = {
   data: Block;
@@ -177,11 +197,6 @@ export interface PageWP extends PageCommon {
   _kind: "wp";
   is_index: boolean; // TODO: would be nice if WP and cloud types would match
   template: string;
-  url: string; // TODO: find out what is this for
-}
-
-export interface ExternalStoryCloud extends DataCommon {
-  slug: string;
 }
 
 export interface InternalPopupCloud extends DataWithTitle {
@@ -197,13 +212,6 @@ export interface PageCollection extends PageCommon {
   fields: CollectionItem["fields"] | null;
 }
 
-export interface PageCustomer extends DataWithTitle {
-  groups: {
-    id: string;
-    name: string;
-  }[];
-}
-
 export interface CloudPopup extends PageCollection {
   rules: Rule[];
 }
@@ -214,6 +222,7 @@ export interface ShopifyPage extends PageCommon {
   layout: {
     id: string;
     value: string | undefined;
+    isHomePage: string | null;
   };
 }
 
@@ -238,7 +247,6 @@ export type Page =
   | ShopifyPage
   | EcwidProductPage
   | EcwidCategoryPage
-  | PageCustomer
   | InternalPopupCloud
   | ExternalPopupCloud
   | CloudPopup;
@@ -316,6 +324,10 @@ export interface Breakpoint {
   breakpoint: number;
   content: number;
 }
+
+// activeElement
+
+export type ActiveElement = Element | null;
 
 // deviceMode
 

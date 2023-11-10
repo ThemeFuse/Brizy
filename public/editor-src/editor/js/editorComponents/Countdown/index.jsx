@@ -1,18 +1,19 @@
+import classnames from "classnames";
+import jQuery from "jquery";
 import React from "react";
 import _ from "underscore";
-import jQuery from "jquery";
-import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import { getTime, formatDate, getLanguage } from "./utils";
-import BoxResizer from "visual/component/BoxResizer";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import "visual/libs/countdown/jquery.countdown";
+import { css } from "visual/utils/cssStyle";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
+import { formatDate, getLanguage, getTime } from "./utils";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -62,7 +63,7 @@ class Countdown extends EditorComponent {
     }
 
     this.initPlugin({
-      onTick: remaining => {
+      onTick: (remaining) => {
         this.setState(remaining);
       }
     });
@@ -124,7 +125,7 @@ class Countdown extends EditorComponent {
     );
   }
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   renderForEdit(v, vs, vd) {
     const className = classnames(
@@ -144,13 +145,13 @@ class Countdown extends EditorComponent {
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div
-            ref={el => {
+            ref={(el) => {
               this.countdown = el;
             }}
             className={className}
-            data-end={this.endDate}
-            data-timezone={timeZone}
-            data-language={language}
+            {...makeDataAttr({ name: "end", value: this.endDate })}
+            {...makeDataAttr({ name: "timezone", value: timeZone })}
+            {...makeDataAttr({ name: "language", value: language })}
           >
             <BoxResizer
               points={resizerPoints}

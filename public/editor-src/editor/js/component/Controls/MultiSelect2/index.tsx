@@ -177,6 +177,8 @@ function SelectDropdown<T>({
     return (): void => {
       onSearchChange?.("");
     };
+    // onSearchChange dependency is not nedded
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const className = classNames("brz-ed-control__multiSelect2__dropdown", {

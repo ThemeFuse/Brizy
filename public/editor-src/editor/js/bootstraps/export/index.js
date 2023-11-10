@@ -11,7 +11,6 @@ import {
   isEcwidCategoryPage,
   isEcwidProductPage
 } from "visual/global/Config/types/configs/Cloud";
-import { isWp } from "visual/global/Config/types/configs/WP";
 import EditorGlobal from "visual/global/Editor";
 import { hydrate } from "visual/redux/actions";
 import {
@@ -265,7 +264,7 @@ async function getPageBlocks({
   changeMenuUid($pageHTML);
   customAttributes($pageHTML);
 
-  if (isWp(config) && !config.user.allowScripts) {
+  if (!config.user.allowScripts) {
     XSS($pageHTML);
   }
 

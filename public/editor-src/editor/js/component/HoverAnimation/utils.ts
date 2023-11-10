@@ -2,9 +2,9 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isNullish } from "visual/utils/value";
 import { Value } from "../Options/types/dev/Animation/types/Value";
 import { getAnimations } from "./animations";
-import { MultiAnimation } from "./types";
+import { HoverTarget, MultiAnimation } from "./types";
 
-export const setHoverOptions = <T>(data: T) => {
+export const setHoverOptions = <T>(data: T): string => {
   return encodeURI(
     JSON.stringify(data, (_, value) =>
       value === Infinity ? "Infinity" : value
@@ -12,7 +12,7 @@ export const setHoverOptions = <T>(data: T) => {
   );
 };
 
-export const getHoverOptions = (data: string): KeyframeEffectOptions =>
+export const getHoverOptions = (data: string): OptionalEffectTiming =>
   JSON.parse(data, (_, value) => {
     return value === "Infinity" ? Infinity : value;
   });
@@ -25,7 +25,7 @@ export const hasInfiniteAnimation = (animation: string): boolean => {
 export const getHoverAnimationOptions = (
   options: Partial<Value>,
   animationName: string
-): KeyframeEffectOptions => {
+): OptionalEffectTiming => {
   const { duration = 1000, infiniteAnimation = false } = options;
 
   return {
@@ -40,13 +40,38 @@ export const isMultiAnimation = (
 ): keyframes is MultiAnimation => {
   return !Array.isArray(keyframes) && keyframes !== undefined;
 };
-export const disableHoverForElements = [
+export const disabledHoverForElements = [
   ElementTypes.Image,
   ElementTypes.Map,
   ElementTypes.Video,
   ElementTypes.ImageGallery
 ];
 
-export const setAttribute = <T>(key: string, value: T) => {
+export const setAttribute = <T>(
+  key: string,
+  value: T
+): Record<string, string> => {
   return isNullish(value) ? {} : { [key]: setHoverOptions(value) };
+};
+
+export const isValidSelector = (selector: string) => {
+  try {
+    document.createDocumentFragment().querySelector(selector);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const getHoverTarget = <T extends Element = Element>(
+  parentElement: T,
+  key: HoverTarget
+): Element | null => {
+  switch (key) {
+    case "parent":
+      return parentElement;
+    case "firstChild":
+      return parentElement.firstElementChild;
+  }
+  return parentElement.querySelector(key);
 };

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 
 export default class TextField extends Component {
   static get componentTitle() {
@@ -21,7 +22,7 @@ export default class TextField extends Component {
     this.props.onChange({ label });
   };
 
-  handleClick = e => {
+  handleClick = (e) => {
     e.preventDefault();
     const node = this.content.current;
 
@@ -62,8 +63,8 @@ export default class TextField extends Component {
         placeholder: label,
         required: required === "on",
         pattern: this.constructor.pattern,
-        "data-type": type,
-        "data-label": label
+        ...makeDataAttr({ name: "type", value: type }),
+        ...makeDataAttr({ name: "label", value: label })
       };
     }
 

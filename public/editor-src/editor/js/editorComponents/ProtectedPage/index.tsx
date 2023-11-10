@@ -10,6 +10,7 @@ import EditorComponent, {
   Props as EProps
 } from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { encodeToString } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -152,13 +153,18 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
       fail: failMessage,
       invalid: invalidMessage
     });
+
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Wrapper<Props> {...this.makeWrapperProps({ className })}>
           <form
             className="brz-form brz-protected-form"
-            data-action="/"
-            data-messages={messages}
+            {...makeDataAttr({ name: "action", value: "/" })}
+            {...makeDataAttr({
+              name: "messages",
+              value: messages,
+              translatable: true
+            })}
           >
             <div className="brz-protected-form__input">
               <input

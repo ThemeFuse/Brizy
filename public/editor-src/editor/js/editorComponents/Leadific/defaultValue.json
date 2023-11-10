@@ -1,0 +1,72 @@
+{
+  "content": {
+    "leadificCustomFields": "none",
+    "list": "",
+    "popups": []
+  },
+
+  "style": {
+    "families": {
+      "typographyFontFamily": "lato"
+    },
+
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": "",
+
+    "typographyFontStyle": "heading2",
+    "typographyFontFamilyType": "google",
+    "typographyFontSize": 56,
+    "typographyFontSizeSuffix": "px",
+    "typographyFontWeight": 400,
+    "typographyLineHeight": 1.3,
+    "typographyLetterSpacing": 0,
+
+    "colorHex": "#000000",
+    "colorOpacity": 1,
+    "colorPalette": "",
+
+    "textShadowColorHex": "#000000",
+    "textShadowColorOpacity": 1,
+    "textShadowColorPalette": "",
+
+    "tempTextShadowColorOpacity": 1,
+    "tempTextShadowColorPalette": "",
+
+    "textShadowBlur": 0,
+    "textShadowVertical": 0,
+    "textShadowHorizontal": 0,
+
+    "tempTextShadowBlur": 4,
+    "tempTextShadowVertical": 2,
+    "tempTextShadowHorizontal": 1,
+
+    "textStrokeBorderStyle": "solid",
+
+    "textStrokeBorderColorHex": "#000000",
+    "textStrokeBorderColorOpacity": 0,
+    "textStrokeBorderColorPalette": "color2",
+
+    "textStrokeBorderWidthType": "grouped",
+
+    "textStrokeBorderWidth": 0,
+    "textStrokeBorderTopWidth": 0,
+    "textStrokeBorderRightWidth": 0,
+    "textStrokeBorderBottomWidth": 0,
+    "textStrokeBorderLeftWidth": 0,
+
+    "horizontalAlign": "center"
+  },
+
+  "link": {
+    "linkType": "external",
+    "linkExternal": "",
+    "linkAnchor": "",
+    "linkExternalBlank": "off",
+    "linkExternalRel": "off",
+    "linkExternalType": "linkExternal",
+    "linkExternalPopulation": "",
+    "linkUpload": "",
+    "linkPopup": "",
+    "actionClosePopup": "off"
+  }
+}

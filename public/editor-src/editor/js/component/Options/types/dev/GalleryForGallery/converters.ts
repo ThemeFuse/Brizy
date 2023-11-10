@@ -1,4 +1,4 @@
-import { parse } from "fp-utilities";
+import { optional, parse } from "fp-utilities";
 import {
   FromElementModel,
   ToElementModel,
@@ -17,7 +17,7 @@ import { isNotClonedFromGallery } from "./utils";
 const fromRecord = parse<Record<string, unknown>, Value>({
   id: mPipe(prop("_id"), Str.read),
   uid: mPipe(prop("imageSrc"), Str.read),
-  fileName: mPipe(prop("imageFileName"), Str.read),
+  fileName: optional(mPipe(prop("imageFileName"), Str.read)),
   width: mPipe(prop("imageWidth"), Num.read),
   height: mPipe(prop("imageHeight"), Num.read)
 });

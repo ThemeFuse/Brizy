@@ -1,12 +1,12 @@
 import React, { Component } from "react";
+import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
-import { getIntegrationAccountApiKey, createIntegrationAccount } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
 import { Connect } from "../../common/GlobalApps/StepsView";
-import { pendingRequest } from "visual/utils/api";
+import { createIntegrationAccount, getIntegrationAccountApiKey } from "../api";
 
 const getMessage = (data, keys) => {
-  const keysTitle = keys.map(el => el.title).join(" & ");
+  const keysTitle = keys.map((el) => el.title).join(" & ");
 
   switch (data.code) {
     case 401:
@@ -28,10 +28,12 @@ class ApiConnect extends Component {
     const {
       data: { accountApiKeys }
     } = context.app;
-    const generatedValues = accountApiKeys.reduce(
-      (acc, { name }) => ({ ...acc, [`${name}`]: "" }),
-      {}
-    );
+
+    const generatedValues = accountApiKeys.reduce((acc, { name, choices }) => {
+      const defaultChoice = choices ? choices[0].id : "";
+
+      return { ...acc, [`${name}`]: defaultChoice };
+    }, {});
 
     this.state = {
       apiKeyValue: generatedValues,
@@ -70,7 +72,7 @@ class ApiConnect extends Component {
   }
 
   handleChange = (value, type) => {
-    this.setState(state => ({
+    this.setState((state) => ({
       apiKeyValue: {
         ...state.apiKeyValue,
         [`${type}`]: value.trim()
@@ -94,7 +96,7 @@ class ApiConnect extends Component {
       error: null
     });
 
-    if (!keysValue.some(key => !key)) {
+    if (!keysValue.some((key) => !key)) {
       const { status, data } = await createIntegrationAccount({
         ...appData,
         formId,
@@ -125,12 +127,8 @@ class ApiConnect extends Component {
   };
 
   handlePrev = async () => {
-    const {
-      oldStage,
-      onChangeNext,
-      onChangePrev,
-      onChangeProgress
-    } = this.context;
+    const { oldStage, onChangeNext, onChangePrev, onChangeProgress } =
+      this.context;
 
     this.setState({
       error: null,
@@ -152,11 +150,15 @@ class ApiConnect extends Component {
   render() {
     const { app } = this.context;
     const { apiKeyValue, error, nextLoading, prevLoading } = this.state;
-    const data = app.data.accountApiKeys.map(({ title, name }) => ({
-      title,
-      name,
-      value: apiKeyValue[name]
-    }));
+    const data = app.data.accountApiKeys.map(
+      ({ title, name, type, choices }) => ({
+        title,
+        name,
+        value: apiKeyValue[name],
+        type,
+        choices
+      })
+    );
 
     return (
       <Connect

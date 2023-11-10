@@ -13,6 +13,7 @@ export interface Value extends ElementModel {
   detailPage: string;
   source: string;
   detailPageTitle: string;
+  subscribeToCalendarText: string;
 
   numberOfMonths: number;
   visibleMonth: number;
@@ -21,4 +22,5 @@ export interface Value extends ElementModel {
   nonfeatures: Switch;
 
   showEventTime: Switch;
+  showSubscribeToCalendarButton: Switch;
 }

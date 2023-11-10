@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import Radio, { RadioItem } from "visual/component/Controls/Radio";
 import Fixed from "visual/component/Prompts/Fixed";
@@ -8,15 +8,23 @@ import {
   setLayout,
   setTitle
 } from "visual/component/Prompts/PromptPageArticle/types/Setters";
+import { EmptyContentWithDefaults } from "visual/component/Prompts/common/PromptPage/EmptyContent";
 import {
   cancel,
   save,
   switchTab
 } from "visual/component/Prompts/common/states/Classic/types/Actions";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
-import { getChoices } from "visual/component/Prompts/utils";
+import {
+  getChoices,
+  getTabsByItemsNumber
+} from "visual/component/Prompts/utils";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import {
+  ShopifyTemplate,
+  getShopifyTemplate
+} from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
 import {
   getPageRelations,
@@ -30,11 +38,16 @@ import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
 import { SettingsTab } from "../common/PromptPage/SettingsTab";
-import { Tabs, tabs } from "../common/PromptPage/types";
-import { Props } from "./types";
-import { Valid } from "./types";
+import { Tabs } from "../common/PromptPage/types";
+import { Props, Valid } from "./types";
 
 export const PromptPageArticle = (props: Props): ReactElement => {
+  const _config = Config.getAll();
+
+  const templateType = useMemo(() => {
+    return getShopifyTemplate(_config) ?? ShopifyTemplate.Product;
+  }, [_config]);
+
   const { headTitle, pageTitle, opened, selectedLayout, onClose, onSave } =
     props;
 
@@ -57,14 +70,14 @@ export const PromptPageArticle = (props: Props): ReactElement => {
     const config = Config.getAll();
     if (isCloud(config) && isShopify(config)) {
       const selectedP = getPageRelations(config).then((is) =>
-        is.map((i) => i.id)
+        is.map((i) => i.blog_id || i.id)
       );
       const itemsP = shopifyBlogItems();
 
       const [items, selected] = await Promise.all([itemsP, selectedP]);
       const layouts = getChoices(config);
 
-      if (isNonEmptyArray(items) && isNonEmptyArray(layouts)) {
+      if (isNonEmptyArray(layouts)) {
         return {
           items,
           layouts,
@@ -116,8 +129,14 @@ export const PromptPageArticle = (props: Props): ReactElement => {
       case "Saving":
       case "Canceling":
       case "Canceled": {
+        const { items } = state.payload;
+
         switch (state.payload.activeTab) {
           case Tabs.page:
+            if (!items.length) {
+              return <EmptyContentWithDefaults type={templateType} />;
+            }
+
             return (
               <Content
                 head={headTitle}
@@ -135,7 +154,7 @@ export const PromptPageArticle = (props: Props): ReactElement => {
                   defaultValue={state.payload.selected?.id}
                   onChange={(v: string): void => dispatchS(setBlog(v))}
                 >
-                  {state.payload.items.map(({ title, id }) => {
+                  {items.map(({ title, id }) => {
                     return (
                       <RadioItem checkIcon="active" value={id} key={id}>
                         {title}
@@ -161,6 +180,8 @@ export const PromptPageArticle = (props: Props): ReactElement => {
       }
     }
   };
+
+  const tabs = getTabsByItemsNumber(state);
 
   return (
     <Fixed opened={opened} onClose={onClose}>

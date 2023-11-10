@@ -1,14 +1,16 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import { style } from "./styles";
 import classnames from "classnames";
-import { css } from "visual/utils/cssStyle";
+import React from "react";
+import CustomCSS from "visual/component/CustomCSS";
 import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 class FacebookGroup extends EditorComponent {
   static get componentId() {
@@ -20,7 +22,9 @@ class FacebookGroup extends EditorComponent {
   getAppData() {
     return {
       appId: 113869198637480,
-      lang: "{{ brizy_dc_page_language }}"
+      lang: makePlaceholder({
+        content: "{{ brizy_dc_page_language }}"
+      })
     };
   }
 
@@ -59,15 +63,27 @@ class FacebookGroup extends EditorComponent {
 
   renderForView(v, vs, vd) {
     const { width, href, showSocialContext, showMetaData, skin } = v;
+
     const appData = this.getAppData();
     const data = {
-      "data-width": width,
-      "data-href":
-        href === "" ? "https://www.facebook.com/groups/brizy/" : href,
-      "data-show-social-context": showSocialContext === "on",
-      "data-show-metadata": showMetaData === "on",
-      "data-skin": skin,
-      "data-lang": appData.lang
+      ...makeDataAttr({ name: "width", value: width }),
+      ...makeDataAttr({
+        name: "href",
+        value: href === "" ? "https://www.facebook.com/groups/brizy/" : href
+      }),
+      ...makeDataAttr({
+        name: "show-social-context",
+        value: String(showSocialContext === "on")
+      }),
+      ...makeDataAttr({
+        name: "show-metadata",
+        value: String(showMetaData === "on")
+      }),
+      ...makeDataAttr({ name: "skin", value: skin }),
+      ...makeDataAttr({
+        name: "lang",
+        value: appData.lang
+      })
     };
     const className = classnames(
       "brz-fb-group",

@@ -1,3 +1,4 @@
+import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { DeviceMode } from "visual/types";
 import {
   ElementModelToValue,
@@ -165,7 +166,6 @@ describe("Testing 'Patches for image' functions", () => {
 
   test("patchOnDCChange", () => {
     const cW = 400;
-    const useCustomPlaceholder = false;
     const patch: ImageDCPatch = {
       imagePopulation: "{{test}}"
     };
@@ -173,51 +173,131 @@ describe("Testing 'Patches for image' functions", () => {
       width: 200,
       height: 200
     };
-    expect(
-      patchOnDCChange(cW, patch, wrapperSizes, useCustomPlaceholder)
-    ).toStrictEqual({
+    const makeEditorComponentContext = (
+      itemId: string
+    ): EditorComponentContextValue => ({
+      dynamicContent: {
+        itemId,
+        config: {
+          image: [
+            {
+              label: "Featured Image",
+              placeholder: "{{test size=''}}",
+              attr: {
+                size: ""
+              },
+              varyAttr: []
+            },
+            {
+              label: "Featured Image 2",
+              placeholder: "",
+              varyAttr: [],
+              optgroup: [
+                {
+                  label: "Custom",
+                  placeholder: "{{test}}",
+                  attr: {},
+                  varyAttr: []
+                },
+                {
+                  label: "Original",
+                  placeholder: "{{test size='original'}}",
+                  attr: {
+                    size: "original"
+                  },
+                  varyAttr: []
+                },
+                {
+                  label: "Thumbnail",
+                  placeholder: "{{test size='thumbnail'}}",
+                  attr: {
+                    size: "thumbnail"
+                  },
+                  varyAttr: []
+                },
+                {
+                  label: "Others",
+                  placeholder: "{{test size='others'}}",
+                  attr: {
+                    size: "others"
+                  },
+                  varyAttr: []
+                },
+                {
+                  label: "Medium",
+                  placeholder: "{{test size='medium'}}",
+                  attr: {
+                    size: "medium"
+                  },
+                  varyAttr: []
+                },
+                {
+                  label: "Large",
+                  placeholder: "{{test size='large'}}",
+                  attr: {
+                    size: "large"
+                  },
+                  varyAttr: []
+                },
+                {
+                  label: "1536x1536",
+                  placeholder: "{{test size='1536x1536'}}",
+                  attr: {
+                    size: "1536x1536"
+                  },
+                  varyAttr: []
+                }
+              ]
+            }
+          ],
+          link: [],
+          richText: [],
+          reference: [],
+          multiReference: []
+        }
+      }
+    });
+    const context = makeEditorComponentContext("post1");
+
+    expect(patchOnDCChange(cW, patch, wrapperSizes, context)).toStrictEqual({
       height: 200,
-      heightSuffix: "px"
+      heightSuffix: "px",
+      sizeType: "custom"
     });
 
     const emptyPatch: ImageDCPatch = {
       imagePopulation: ""
     };
     expect(
-      patchOnDCChange(cW, emptyPatch, wrapperSizes, useCustomPlaceholder)
+      patchOnDCChange(cW, emptyPatch, wrapperSizes, context)
     ).toStrictEqual({
       width: 100,
       height: 100,
       heightSuffix: "%",
-      widthSuffix: "%"
+      widthSuffix: "%",
+      sizeType: "custom"
     });
 
     const patchOriginal: ImageDCPatch = {
       imagePopulation: "{{test size='original'}}"
     };
     expect(
-      patchOnDCChange(cW, patchOriginal, wrapperSizes, useCustomPlaceholder)
-    ).toStrictEqual({
-      size: 100
-    });
+      patchOnDCChange(cW, patchOriginal, wrapperSizes, context)
+    ).toStrictEqual({ size: 100, sizeType: "original" });
 
     const patchOther: ImageDCPatch = {
       imagePopulation: "{{test size='others'}}"
     };
     expect(
-      patchOnDCChange(cW, patchOther, wrapperSizes, useCustomPlaceholder)
-    ).toStrictEqual({
-      size: 100
-    });
+      patchOnDCChange(cW, patchOther, wrapperSizes, context)
+    ).toStrictEqual({ size: 100, sizeType: "others" });
 
     const patchEmpty: ImageDCPatch = {
       imagePopulation: "{{test size=''}}"
     };
     expect(
-      patchOnDCChange(cW, patchEmpty, wrapperSizes, useCustomPlaceholder)
-    ).toStrictEqual({
-      size: 100
-    });
+      patchOnDCChange(cW, patchEmpty, wrapperSizes, context)
+    ).toStrictEqual({ size: 100, sizeType: "custom" });
 
     // predefined sizes from config
     // width: 150 & height: 150 see in jest.config
@@ -225,51 +305,40 @@ describe("Testing 'Patches for image' functions", () => {
       imagePopulation: "{{test size='thumbnail'}}"
     };
     expect(
-      patchOnDCChange(cW, patchThumbnail, wrapperSizes, useCustomPlaceholder)
-    ).toStrictEqual({
-      size: 37.5
-    });
+      patchOnDCChange(cW, patchThumbnail, wrapperSizes, context)
+    ).toStrictEqual({ size: 37.5, sizeType: "thumbnail" });
 
     // width: 300 & height: 300 see in jest.config
     const patchMedium: ImageDCPatch = {
       imagePopulation: "{{test size='medium'}}"
     };
     expect(
-      patchOnDCChange(cW, patchMedium, wrapperSizes, useCustomPlaceholder)
-    ).toStrictEqual({
-      size: 75
-    });
+      patchOnDCChange(cW, patchMedium, wrapperSizes, context)
+    ).toStrictEqual({ size: 75, sizeType: "medium" });
 
     // width: 1024 & height: 1024 see in jest.config
     const patchLarge: ImageDCPatch = {
       imagePopulation: "{{test size='large'}}"
     };
     expect(
-      patchOnDCChange(cW, patchLarge, wrapperSizes, useCustomPlaceholder)
-    ).toStrictEqual({
-      size: 100
-    });
+      patchOnDCChange(cW, patchLarge, wrapperSizes, context)
+    ).toStrictEqual({ size: 100, sizeType: "large" });
 
     // width: 1536 & height: 1536 see in jest.config
     const patch1536x1536: ImageDCPatch = {
       imagePopulation: "{{test size='1536x1536'}}"
     };
     expect(
-      patchOnDCChange(cW, patch1536x1536, wrapperSizes, useCustomPlaceholder)
-    ).toStrictEqual({
-      size: 100
-    });
+      patchOnDCChange(cW, patch1536x1536, wrapperSizes, context)
+    ).toStrictEqual({ size: 100, sizeType: "1536x1536" });
 
     // Custom Placeholder
     const patchCustomPlaceholder: ImageDCPatch = {
       imagePopulation: "{{UserAttribute['test_12312'] default('abc')}}"
     };
     expect(
-      patchOnDCChange(cW, patchCustomPlaceholder, wrapperSizes, true)
-    ).toStrictEqual({
-      height: 200,
-      heightSuffix: "px"
-    });
+      patchOnDCChange(cW, patchCustomPlaceholder, wrapperSizes, context)
+    ).toStrictEqual({ height: 200, heightSuffix: "px", sizeType: "custom" });
   });
 
   test.each<[number, Value, UnitPatch, DeviceMode, PatchUnit]>([

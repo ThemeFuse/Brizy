@@ -3,10 +3,6 @@ import { map } from "../map";
 
 // region Mocks
 jest.mock(
-  "visual/component/Options/types/GlobalBlock/index.tsx",
-  () => undefined
-);
-jest.mock(
   "visual/component/Options/types/AdvancedSettings.jsx",
   () => undefined
 );
@@ -24,13 +20,12 @@ jest.mock("visual/component/Options/types/ColorPicker2.jsx", () => undefined);
 jest.mock("visual/component/Options/types/FontFamily.jsx", () => undefined);
 jest.mock("visual/component/Options/types/FontStyle.jsx", () => undefined);
 jest.mock(
-  "visual/component/Options/types/FontStyleEditor.jsx",
+  "visual/component/Options/types/FontStyleEditor/index.tsx",
   () => undefined
 );
 jest.mock("visual/component/Options/types/FormApps.js", () => undefined);
 jest.mock("visual/component/Options/types/GBConditions.tsx", () => undefined);
 jest.mock("visual/component/Options/types/Grid.jsx", () => undefined);
-jest.mock("visual/component/Options/types/ImageSetter.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Input.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/IntegrationsApps.js",
@@ -50,7 +45,6 @@ jest.mock("visual/component/Options/types/PromptAddPopup.tsx", () => undefined);
 jest.mock("visual/component/Options/types/PromptIcon.jsx", () => undefined);
 jest.mock("visual/component/Options/types/RadioGroup.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Range2.jsx", () => undefined);
-jest.mock("visual/component/Options/types/SavedBlock.tsx", () => undefined);
 jest.mock("visual/component/Options/types/Select.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Stepper.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);

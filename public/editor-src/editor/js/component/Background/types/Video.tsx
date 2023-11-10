@@ -1,6 +1,6 @@
 import jQuery from "jquery";
 import React, { ReactElement, RefObject, useMemo, useRef } from "react";
-import { customFileUrl } from "visual/utils/customFile/customFileUrl.js";
+import { customFileUrl } from "visual/utils/customFile";
 import { videoUrl } from "visual/utils/video";
 import "../lib/jquery.background-video.js";
 import { useLayoutEffect } from "../utils";
@@ -42,10 +42,12 @@ const Video: React.FC<Props> = ({
   customVideo
 }) => {
   const videoMedia = video || customVideo;
+  const { type, key } = video ?? {};
 
-  const iframeStyle = {
-    display: videoMedia ? "block" : "none"
-  };
+  const iframeStyle = useMemo(
+    () => ({ display: videoMedia ? "block" : "none" }),
+    [videoMedia]
+  );
 
   const settings = {
     autoplay: true,
@@ -67,11 +69,9 @@ const Video: React.FC<Props> = ({
   const isInitialMount = useRef(true);
 
   useLayoutEffect(() => {
-    return (): void => {
-      if (videoRef.current) {
-        jQuery(videoRef.current).backgroundVideo("destroy");
-      }
-    };
+    if (videoRef.current) {
+      jQuery(videoRef.current).backgroundVideo("destroy");
+    }
   }, []);
 
   useLayoutEffect(() => {
@@ -97,22 +97,25 @@ const Video: React.FC<Props> = ({
       isInitialMount.current = false;
 
       jQuery(videoRef.current).backgroundVideo({
-        type: video?.type,
-        key: video?.key,
+        type: type,
+        key: key,
         loop: videoLoop,
         start: videoStart
       });
     } else {
       if (videoRef.current) {
         jQuery(videoRef.current).backgroundVideo("typeChange", {
-          type: video?.type,
-          key: video?.key,
+          type: type,
+          key: key,
           loop: videoLoop,
           start: videoStart
         });
       }
     }
-  }, [video?.type]);
+
+    // videoLoop and videoStart dependency are not nedded
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type, key]);
 
   useLayoutEffect(() => {
     if (videoRef.current && isCustomVideo) {
@@ -127,7 +130,7 @@ const Video: React.FC<Props> = ({
   const src =
     video && !isCustomVideo
       ? videoUrl(video, settings)
-      : dataType === VideoType.BgVideoCustom
+      : dataType === VideoType.BgVideoCustom && customVideo
       ? customFileUrl(customVideo)
       : customVideo;
 
@@ -142,7 +145,7 @@ const Video: React.FC<Props> = ({
             <iframe
               src={src}
               data-src={src}
-              className="brz-iframe intrinsic-ignore brz-bg-video__cover absolute top-0 left-0 w-full h-full border-none !max-w-none bg-no-repeat bg-cover"
+              className="brz-iframe intrinsic-ignore brz-bg-video__cover"
               loading="lazy"
               style={iframeStyle}
               title="background-video"
@@ -155,7 +158,7 @@ const Video: React.FC<Props> = ({
         <>
           {src && (
             <video
-              className="brz-bg-video-custom brz-bg-video__cover absolute top-0 left-0 w-full h-full border-none !max-w-none bg-no-repeat bg-cover"
+              className="brz-bg-video-custom brz-bg-video__cover"
               muted
               autoPlay
               playsInline
@@ -177,7 +180,7 @@ const Video: React.FC<Props> = ({
         innerRef: videoRef,
         attr: {
           "data-type": dataType,
-          "data-key": video?.key,
+          "data-key": key,
           "data-loop": videoLoop,
           "data-start": videoStart
         },

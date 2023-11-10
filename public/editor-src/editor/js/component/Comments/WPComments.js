@@ -1,7 +1,8 @@
-import React, { Component } from "react";
 import classnames from "classnames";
-import { dataPeople } from "./dataPeople";
+import React, { Component } from "react";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { dataPeople } from "./dataPeople";
 
 class WPComments extends Component {
   static defaultProps = {
@@ -226,10 +227,14 @@ class WPComments extends Component {
 
   renderForView() {
     const { limit, skin, linkPage } = this.props;
+    const placeholder = makePlaceholder({
+      content: "{{editor_comments}}",
+      attr: { limit, skin, linkPage }
+    });
 
     return (
       <DynamicContentHelper
-        placeholder={`{{editor_comments limit="${limit}" skin="${skin}" linkPage="${linkPage}"}}`}
+        placeholder={placeholder}
         tagName="div"
         props={{ className: "brz-comments-parrent" }}
       />

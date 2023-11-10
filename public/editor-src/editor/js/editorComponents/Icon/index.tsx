@@ -6,15 +6,11 @@ import { ElementModel } from "visual/component/Elements/Types";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Link from "visual/component/Link";
-import { Target } from "visual/component/Link/types/Target";
-import { Type } from "visual/component/Link/types/Type";
 import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import EditorComponent, {
-  ComponentsMeta
-} from "visual/editorComponents/EditorComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import Config from "visual/global/Config";
@@ -22,64 +18,22 @@ import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { Block } from "visual/types";
 import { css } from "visual/utils/cssStyle";
-import { pipe } from "visual/utils/fp";
 import { isStory } from "visual/utils/models";
+import { getCSSId } from "visual/utils/models/cssId";
+import { getLinkData } from "visual/utils/models/link";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import { WithClassName } from "visual/utils/options/attributes";
-import * as Num from "visual/utils/reader/number";
+import { handleLinkChange } from "visual/utils/patch/Link";
+import * as Str from "visual/utils/reader/string";
 import * as State from "visual/utils/stateMode";
-import * as Str from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
-import { MValue, isNullish } from "visual/utils/value";
+import { MValue } from "visual/utils/value";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
+import { Patch, PatchValue, Props, Value } from "./types";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
-
-export interface Value extends ElementModel {
-  name: string;
-  type: string;
-
-  popups: Block[];
-  linkPopup: string;
-  linkLightBox: string;
-  linkExternal: string;
-  linkExternalBlank: Target;
-  linkExternalRel: string;
-  linkPopulation: string;
-  linkAnchor: string;
-  linkUpload: string;
-  linkExternalType: "linkExternal" | "linkPopulation";
-  linkType: Type;
-  customClassName: string;
-  customID: string;
-  linkToSlide: number;
-
-  customSize: number;
-  tabletCustomSize: number;
-  mobileCustomSize: number;
-
-  customSizeSuffix: string;
-  tabletCustomSizeSuffix: string;
-  mobileCustomSizeSuffix: string;
-
-  hrefs: {
-    anchor: string;
-    external: string;
-    popup: string;
-    upload: string;
-  };
-}
-
-interface Props extends WithClassName {
-  meta: ComponentsMeta;
-  attributes: Record<string, string | number>;
-}
-interface Patch {
-  [k: string]: string;
-}
 
 const resizerTransformValue = (v: Value): ElementModel => {
   const {
@@ -124,8 +78,6 @@ const resizerTransformPatch = (patch: Patch): Patch => {
   return newPatch;
 };
 
-const isNan = pipe(Num.read, isNullish);
-
 const config = Config.getAll();
 const IS_STORY = isStory(config);
 
@@ -135,6 +87,13 @@ class Icon extends EditorComponent<Value, Props> {
   }
 
   static defaultValue = defaultValue;
+
+  static experimentalDynamicContent = true;
+
+  patchValue(patch: PatchValue, meta = {}) {
+    const link = handleLinkChange(patch);
+    super.patchValue({ ...patch, ...link }, meta);
+  }
 
   handleResizerChange = (patch: Patch): void => {
     const device = deviceModeSelector(getStore().getState());
@@ -194,32 +153,12 @@ class Icon extends EditorComponent<Value, Props> {
     const {
       type,
       name,
-      linkType,
-      linkAnchor,
-      linkToSlide,
-      linkExternalBlank,
-      linkExternalRel,
-      linkExternalType,
-      linkPopup,
-      linkUpload,
       actionClosePopup,
-      customID,
       customClassName,
       customCSS,
-      cssIDPopulation,
-      cssClassPopulation
+      cssClass
     } = v;
-
-    const hrefs = {
-      anchor: linkAnchor,
-      story: !isNan(linkToSlide) ? `slide-${linkToSlide}` : "",
-      external: v[linkExternalType],
-      popup: linkPopup,
-      upload: linkUpload,
-      action: "",
-      lightBox: "",
-      page: ""
-    };
+    const linkData = getLinkData(v);
 
     const classNameIcon = classnames(
       "brz-icon",
@@ -247,52 +186,37 @@ class Icon extends EditorComponent<Value, Props> {
       </span>
     );
 
-    if (hrefs[linkType]) {
+    if (linkData.href) {
       const className = classnames({
         "brz-popup2__action-close":
-          linkType === "action" && actionClosePopup === "on"
+          linkData.type === "action" && actionClosePopup === "on"
       });
-      const slideAnchor =
-        linkType === "story" && linkToSlide
-          ? { "data-brz-link-story": linkToSlide }
-          : {};
 
       content = (
         <Link
-          type={linkType}
-          href={hrefs[linkType]}
-          target={linkExternalBlank}
-          rel={linkExternalRel}
+          type={linkData.type}
+          href={linkData.href}
+          target={linkData.target}
+          rel={linkData.rel}
           className={className}
-          slide={slideAnchor}
+          slide={linkData.slide}
         >
           {content}
         </Link>
       );
     }
-    const showId =
-      Str.mRead(customID).length === 0 &&
-      Str.mRead(cssIDPopulation).length === 0;
+    const id = getCSSId(v);
 
     const props = {
-      ...(!showId && {
-        id:
-          cssIDPopulation === ""
-            ? Str.mRead(customID)
-            : Str.mRead(cssIDPopulation)
-      }),
-      className:
-        cssClassPopulation === ""
-          ? Str.mRead(customClassName)
-          : Str.mRead(cssClassPopulation)
+      ...(id && { id }),
+      className: cssClass || customClassName
     };
 
     const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
     const options = makeOptionValueToAnimation(v);
     const { cloneableAnimationId } = this.props.meta;
     const animationId = Str.read(cloneableAnimationId) ?? this.getId();
-    const isHidden = IS_STORY || (IS_PREVIEW && hoverName === "none");
-
+    const isHidden = IS_STORY || hoverName === "none";
     return (
       <Fragment>
         <Toolbar

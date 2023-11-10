@@ -19,7 +19,7 @@ import { style } from "./styles";
 import * as toolbarExtendButtons from "./toolbarExtendButtons";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import { Props, Value } from "./types";
-import { getPlaceholder } from "./utils";
+import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsSermonLayout" {

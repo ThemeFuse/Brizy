@@ -1,8 +1,8 @@
-import { StoreChanged } from "visual/redux/types";
-import { t } from "visual/utils/i18n";
-import { Page } from "visual/types";
 import { Shopify } from "visual/global/Config/types/configs/Cloud";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
+import { StoreChanged } from "visual/redux/types";
+import { Page } from "visual/types";
+import { t } from "visual/utils/i18n";
 
 export const getTooltipPageTitle = (status: Page["status"]): string => {
   switch (status) {
@@ -64,6 +64,7 @@ export const getMode = (
     case ShopifyTemplate.Product: {
       return "withRules";
     }
+    case ShopifyTemplate.Blog:
     case ShopifyTemplate.Article: {
       return "withArticle";
     }

@@ -18,9 +18,6 @@ import FacebookComments from "./FacebookComments";
 import FacebookEmbed from "./FacebookEmbed";
 import FacebookGroup from "./FacebookGroup";
 import FacebookPage from "./FacebookPage";
-import Filters from "./Filters";
-import FiltersItem from "./Filters/FiltersItem";
-import FiltersOption from "./Filters/FiltersOption";
 import Form from "./Form";
 import Form2 from "./Form2";
 import Form2Field from "./Form2/Form2Field";
@@ -32,6 +29,7 @@ import Icon from "./Icon";
 import IconText from "./IconText";
 import Image from "./Image";
 import ImageGallery from "./ImageGallery";
+import Leadific from "./Leadific";
 import Line from "./Line";
 import Login from "./Login";
 import ForgotPasswordField from "./Login/ForgotPasswordField";
@@ -173,9 +171,6 @@ export default {
   Lottie,
   StoryWrapper,
   Shape,
-  Filters,
-  FiltersItem,
-  FiltersOption,
   Translation,
   Calendly,
   Alert,
@@ -193,7 +188,10 @@ export default {
   ...Ecwid,
 
   // Ministry Brands
-  ...MinistryBrands
+  ...MinistryBrands,
+
+  // Leadific
+  Leadific
 };
 
 export { NotFound as NotFoundComponent } from "./NotFound";

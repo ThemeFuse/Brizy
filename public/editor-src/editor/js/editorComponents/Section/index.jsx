@@ -15,6 +15,11 @@ import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
+import {
+  makeEndPlaceholder,
+  makeStartPlaceholder
+} from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { cloneItem } from "visual/utils/models";
 import {
   defaultValueValue,
@@ -146,8 +151,8 @@ export default class Section extends EditorComponent {
       tabletFullHeight,
       mobileFullHeight,
       tagName,
-      cssIDPopulation,
-      cssClassPopulation,
+      cssID,
+      cssClass,
       customAttributesPopulation,
       marginType,
       tabletMarginType,
@@ -192,8 +197,8 @@ export default class Section extends EditorComponent {
           tabletFullHeight,
           mobileFullHeight,
           tagName,
-          cssIDPopulation,
-          cssClassPopulation,
+          cssID,
+          cssClass,
           customAttributesPopulation,
           marginType,
           membership,
@@ -223,13 +228,12 @@ export default class Section extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { className, customClassName, cssClassPopulation, customAttributes } =
-      v;
+    const { className, customClassName, cssClass, customAttributes } = v;
 
     const classNameSection = classnames(
       "brz-section",
       className,
-      cssClassPopulation === "" ? customClassName : cssClassPopulation,
+      cssClass || customClassName,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -241,8 +245,8 @@ export default class Section extends EditorComponent {
 
     const props = {
       ...parseCustomAttributes(customAttributes),
-      "data-block-id": this.props.blockId,
-      "data-uid": this.getId(),
+      ...makeDataAttr({ name: "block-id", value: this.props.blockId }),
+      ...makeDataAttr({ name: "uid", value: this.getId() }),
       id: this.getId(),
       className: classNameSection
     };
@@ -266,29 +270,57 @@ export default class Section extends EditorComponent {
     const languages = JSON.parse(translationsLangs).join(",");
 
     if (membership === "on" && translations === "off" && onlyCloud) {
+      const startPlaceholder = makeStartPlaceholder({
+        content: "{{display_by_roles}}",
+        attr: { roles }
+      });
+      const endPlaceholder = makeEndPlaceholder({
+        content: "{{end_display_by_roles}}"
+      });
       return (
         <>
-          {`{{display_by_roles roles="${roles}"}}`}
+          {startPlaceholder}
           {content}
-          {"{{end_display_by_roles}}"}
+          {endPlaceholder}
         </>
       );
     } else if (membership === "off" && translations === "on" && onlyCloud) {
+      const startPlaceholder = makeStartPlaceholder({
+        content: "{{display_by_translations}}",
+        attr: { translations: languages }
+      });
+      const endPlaceholder = makeEndPlaceholder({
+        content: "{{end_display_by_translations}}"
+      });
       return (
         <>
-          {`{{display_by_translations translations="${languages}"}}`}
+          {startPlaceholder}
           {content}
-          {"{{end_display_by_translations}}"}
+          {endPlaceholder}
         </>
       );
     } else if (membership === "on" && translations === "on" && onlyCloud) {
+      const startRolesPlaceholder = makeStartPlaceholder({
+        content: "{{display_by_roles}}",
+        attr: { roles }
+      });
+      const endRolesPlaceholder = makeEndPlaceholder({
+        content: "{{end_display_by_roles}}"
+      });
+      const startTranslationsPlaceholder = makeStartPlaceholder({
+        content: "{{display_by_translations}}",
+        attr: { translations: languages }
+      });
+      const endTranslationsPlaceholder = makeEndPlaceholder({
+        content: "{{end_display_by_translations}}"
+      });
       return (
         <>
-          {`{{display_by_roles roles="${roles}"}}`}
-          {`{{display_by_translations translations="${languages}"}}`}
+          {startRolesPlaceholder}
+          {startTranslationsPlaceholder}
           {content}
-          {"{{end_display_by_translations}}"}
-          {"{{end_display_by_roles}}"}
+          {endTranslationsPlaceholder}
+          {endRolesPlaceholder}
         </>
       );
     }
@@ -301,8 +333,8 @@ export default class Section extends EditorComponent {
       className,
       tagName,
       customClassName,
-      cssIDPopulation,
-      cssClassPopulation,
+      cssID,
+      cssClass,
       customAttributes,
       anchorName
     } = v;
@@ -311,7 +343,7 @@ export default class Section extends EditorComponent {
     const classNameSection = classnames(
       "brz-section",
       className,
-      cssClassPopulation === "" ? customClassName : cssClassPopulation,
+      cssClass || customClassName,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,
@@ -320,13 +352,11 @@ export default class Section extends EditorComponent {
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
-
-    const blockName =
-      cssIDPopulation === "" ? anchorName || this.getId() : cssIDPopulation;
+    const blockName = cssID ? cssID : anchorName || this.getId();
 
     const props = {
       ...parseCustomAttributes(customAttributes),
-      "data-uid": this.getId(),
+      ...makeDataAttr({ name: "uid", value: this.getId() }),
       id: blockName,
       name: blockName,
       className: classNameSection

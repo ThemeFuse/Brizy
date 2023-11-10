@@ -4,7 +4,6 @@ import { TemplateType } from "visual/global/Config/types/TemplateType";
 import {
   isCMS,
   isCloud,
-  isCustomer,
   isShopify
 } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
@@ -52,10 +51,6 @@ export const IS_WP = isWp(config);
 export const IS_CLOUD = isCloud(config);
 
 export const isPage = (config: Conf): boolean => config.mode === "page";
-
-export const isCustomerPage = (config: Conf): boolean => {
-  return isCloud(config) && isCMS(config) && isCustomer(config);
-};
 
 export const isProductPage = (config: Conf): boolean =>
   config.mode === "product";

@@ -4,11 +4,16 @@
 
     "text": "My skill",
     "textPopulation": "",
+    "textPopulationEntityType": "",
+    "textPopulationEntityId": "",
     "textPopulationFallback2": "My skill",
+
     "showText": "on",
 
     "percentage": 80,
     "percentagePopulation": "",
+    "percentagePopulationEntityType": "",
+    "percentagePopulationEntityId": "",
     "percentagePopulationFallback2": 80,
     "percentageSuffix": "%",
 
@@ -177,7 +182,6 @@
     "tabletTypographyLineHeight": 1.3,
     "tabletTypographyLetterSpacing": 0,
 
-    "tabletWidth": null,
     "tabletWidthSuffix": null,
 
     "mobileFontStyle": "",
@@ -194,7 +198,6 @@
     "mobileTypographyLineHeight": 1.1,
     "mobileTypographyLetterSpacing": 0,
 
-    "mobileWidth": null,
     "mobileWidthSuffix": null
   }
 }

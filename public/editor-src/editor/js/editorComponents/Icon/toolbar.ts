@@ -1,21 +1,23 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { Block } from "visual/types";
+import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
+import { DESKTOP } from "visual/utils/devices";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import {
+  getDynamicContentOption,
+  getOptionColorHexByPalette
+} from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import {
-  toolbarLinkAnchor,
-  toolbarLinkExternal,
-  toolbarStoryAnchor
-} from "visual/utils/toolbar";
+import { toolbarLinkAnchor, toolbarStoryAnchor } from "visual/utils/toolbar";
 import EditorComponent from "../EditorComponent";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
-import { Value } from "./index";
+import { Value } from "./types";
 
 export function getItems({
   v,
@@ -39,8 +41,17 @@ export function getItems({
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
   const config = Config.getAll();
+  const collectionTypesHandler =
+    config?.api?.collectionTypes?.loadCollectionTypes.handler;
+
   const IS_STORY = isStory(config);
   const IS_GLOBAL_POPUP = isPopup(config);
+
+  const linkSource = dvv("linkSource");
+  const linkDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.link
+  });
 
   return [
     {
@@ -64,6 +75,7 @@ export function getItems({
                   id: "",
                   label: t("Icon"),
                   type: "iconSetter-dev",
+                  devices: DESKTOP,
                   position: 40
                 },
                 {
@@ -266,14 +278,52 @@ export function getItems({
           config: { saveTab: true },
           tabs: [
             {
+              id: "page",
+              label: t("Page"),
+              options: [
+                {
+                  id: "linkSource",
+                  type: "select-dev",
+                  disabled: !collectionTypesHandler,
+                  label: t("Type"),
+                  devices: "desktop",
+                  choices: {
+                    load: () => getCollectionTypes(config),
+                    emptyLoad: {
+                      title: t("There are no choices")
+                    }
+                  },
+                  config: {
+                    size: "large"
+                  }
+                },
+                {
+                  id: "linkPage",
+                  type: "internalLink-dev",
+                  label: t("Find Page"),
+                  devices: "desktop",
+                  disabled: !linkSource,
+                  config: {
+                    postType: linkSource
+                  }
+                }
+              ]
+            },
+            {
               id: "external",
               label: t("URL"),
               options: [
-                //@ts-expect-error New option doesn't work
-                toolbarLinkExternal({
-                  v,
-                  config: context.dynamicContent.config
-                }),
+                {
+                  id: "link",
+                  type: "population-dev",
+                  label: t("Link to"),
+                  config: linkDC,
+                  option: {
+                    id: "linkExternal",
+                    type: "inputText-dev",
+                    placeholder: "http://"
+                  }
+                },
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),

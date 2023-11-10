@@ -21,31 +21,30 @@ import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { blocksDataSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
-import { pipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
+import { getLinkData } from "visual/utils/models/link";
 import { defaultValueKey2 } from "visual/utils/onChange/device";
 import {
   getDynamicContentByPlaceholder,
   getDynamicContentChoices
 } from "visual/utils/options";
-import * as Num from "visual/utils/reader/number";
 import * as ResponsiveMode from "visual/utils/responsiveMode";
-import { isNullish } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
+import { withMigrations } from "../tools/withMigrations";
 import Quill, { triggerCodes } from "./Quill";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
+import { migrations } from "./migrations";
 import * as sidebarConfig from "./sidebar";
 import { style, styleDC } from "./styles";
 import toolbarConfigFn from "./toolbar";
 import { TypographyTags, tagId } from "./toolbar/utils";
 import { dcItemOptionParser, parseShadow } from "./utils";
 import { getInnerElement, getStyles } from "./utils/ContextMenu";
+import { handleChangeLink } from "./utils/dependencies";
 import { getImagePopulation } from "./utils/requests/ImagePopulation";
 import { classNamesToV } from "./utils/transforms";
-
-const isNan = pipe(Num.read, isNullish);
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -81,8 +80,6 @@ class RichText extends EditorComponent {
     // TODO NEED review and exclude ReactDOM.findDOMNode
     // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this);
-    const useCustomPlaceholder =
-      Config.getAll().dynamicContent?.useCustomPlaceholder ?? false;
 
     node.addEventListener(
       "click",
@@ -98,11 +95,7 @@ class RichText extends EditorComponent {
         const placeholder = element.getAttribute("data-image_population");
 
         if (placeholder) {
-          const newUrl = await getImagePopulation(
-            placeholder,
-            itemId,
-            useCustomPlaceholder
-          );
+          const newUrl = await getImagePopulation(placeholder, itemId);
           if (newUrl) {
             element.classList.add("brz-population-mask__style");
             element.style.backgroundImage = `url("${newUrl}")`;
@@ -185,6 +178,10 @@ class RichText extends EditorComponent {
     this.setState(newState, () => this.toolbarRef.current.show());
   };
 
+  handleActiveClick = (event) => {
+    this.toolbarRef.current.handleNodeClick(event);
+  };
+
   handleTextChange = (text) => {
     let popups;
 
@@ -255,7 +252,6 @@ class RichText extends EditorComponent {
       this.tmpPopups = values.popups;
     }
 
-    this.patchValue(values);
     // TODO NEED review and exclude ReactDOM.findDOMNode
     // eslint-disable-next-line react/no-find-dom-node
     if (!ReactDOM.findDOMNode(this).contains(prevActive)) {
@@ -277,6 +273,7 @@ class RichText extends EditorComponent {
     }
 
     this.quillRef.current.formatMultiple(values);
+    this.patchValue(values);
   };
 
   handleKeyDown = (e, { keyName }) => {
@@ -418,6 +415,11 @@ class RichText extends EditorComponent {
       };
     }
 
+    if ("linkPopulation" in patch || "linkExternal" in patch) {
+      const link = handleChangeLink(this.getValue2().v, patch);
+      this.quillRef.current.formatMultiple(link);
+    }
+
     super.patchValue(newPatch, meta);
   }
 
@@ -426,6 +428,7 @@ class RichText extends EditorComponent {
     if (v.textPopulation) {
       return { v, vs, vd };
     }
+
     return {
       v: {
         ...v,
@@ -535,25 +538,8 @@ class RichText extends EditorComponent {
   }
 
   renderLink(v) {
-    const {
-      linkType,
-      linkAnchor,
-      linkExternalBlank,
-      linkExternalRel,
-      linkExternalType,
-      linkPopup,
-      linkUpload,
-      linkToSlide,
-      text
-    } = v;
-
-    const hrefs = {
-      anchor: linkAnchor,
-      linkToSlide: !isNan(linkToSlide) ? `slide-${linkToSlide}` : "",
-      external: v[linkExternalType],
-      popup: linkPopup,
-      upload: linkUpload
-    };
+    const { text } = v;
+    const linkData = getLinkData(v);
 
     let content = (
       <div className="placeholder-is-empty">
@@ -563,7 +549,7 @@ class RichText extends EditorComponent {
 
     if (this._dc?.lastCache?.text || this.renderDC) {
       if (IS_PREVIEW) {
-        content = text;
+        content = <span>{text}</span>;
       } else {
         content = (
           <span
@@ -574,19 +560,15 @@ class RichText extends EditorComponent {
       }
     }
 
-    if (hrefs[linkType] !== "") {
-      const slideAnchor = !isNaN(linkToSlide)
-        ? { "data-brz-link-story": linkToSlide }
-        : {};
-
+    if (linkData.href) {
       return (
         <Link
           className="brz-ed-content-dc-link !text-inherit"
-          type={linkType}
-          href={hrefs[linkType]}
-          target={linkExternalBlank}
-          rel={linkExternalRel}
-          slide={slideAnchor}
+          type={linkData.type}
+          href={linkData.href}
+          target={linkData.target}
+          rel={linkData.rel}
+          slide={linkData.slide}
         >
           {content}
         </Link>
@@ -608,10 +590,11 @@ class RichText extends EditorComponent {
       ...v,
       popups: this.tmpPopups || v.popups
     };
+
     const toolbarConfig = toolbarConfigFn(newV, this.handleChange);
 
     const showPopulationHelper =
-      !getCurrentTooltip() && (prepopulation !== null || population);
+      !getCurrentTooltip() && (prepopulation || population);
 
     const restrictions = {
       width: {
@@ -628,6 +611,7 @@ class RichText extends EditorComponent {
         componentId={this.getId()}
         value={v.text}
         onSelectionChange={this.handleSelectionChange}
+        onClick={this.handleActiveClick}
         onTextChange={this.handleTextChange}
         isToolbarOpen={this.getToolbarOpen}
         initDelay={inPopup || inPopup2 || isPopup(config) ? 1000 : 0}
@@ -639,6 +623,7 @@ class RichText extends EditorComponent {
       onOpen: this.handleToolbarOpen,
       onClose: this.handleToolbarClose
     };
+
     if (v.textPopulation) {
       toolbarOptions = {};
 
@@ -733,4 +718,4 @@ class RichText extends EditorComponent {
   }
 }
 
-export default RichText;
+export default withMigrations(RichText, migrations);

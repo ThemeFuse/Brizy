@@ -1,5 +1,6 @@
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
@@ -19,16 +20,22 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { read as readString } from "visual/utils/string/specs";
 import {
   toolbarElementContainerTypeImageMap,
-  toolbarImageLinkExternal,
   toolbarLinkAnchor,
   toolbarLinkPopup,
   toolbarShowOnResponsive
 } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component, context, state }) {
+  const config = Config.getAll();
+
+  const collectionTypesHandler =
+    config?.api?.collectionTypes?.loadCollectionTypes.handler;
+
+  const IS_GLOBAL_POPUP = isPopup(config);
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
-  const dvv = (key) => defaultValueValue({ v, key, device });
+
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -50,8 +57,7 @@ export function getItems({ v, device, component, context, state }) {
     (maskShape === "custom" && !maskCustomUploadImageSrc) ||
     disableMaskTab;
 
-  const config = Config.getAll();
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const linkSource = dvv("linkSource");
 
   const customVideo = isPro(config)
     ? [
@@ -69,6 +75,13 @@ export function getItems({ v, device, component, context, state }) {
   const vimeoType = videoType === "vimeo";
   const customType = videoType === "bgVideoCustom";
   const urlType = videoType === "url";
+  const linkDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.link
+  });
+  const image = dvv("media") !== "image";
+  const video = dvv("media") !== "video";
+  const map = dvv("media") !== "map";
 
   return [
     toolbarShowOnResponsive({ v, device, devices: "responsive" }),
@@ -113,7 +126,7 @@ export function getItems({ v, device, component, context, state }) {
                   devices: "desktop",
                   states: [NORMAL, HOVER],
                   population: imageDynamicContentChoices,
-                  disabled: dvv("media") !== "image"
+                  disabled: image
                 },
                 {
                   label: t("Image"),
@@ -122,7 +135,7 @@ export function getItems({ v, device, component, context, state }) {
                   devices: "responsive",
                   states: [NORMAL, HOVER],
                   population: imageDynamicContentChoices,
-                  disabled: dvv("media") !== "image" && dvv("media") !== "video"
+                  disabled: image && video
                 },
                 {
                   id: "bgVideoType",
@@ -173,14 +186,14 @@ export function getItems({ v, device, component, context, state }) {
                   label: t("Loop"),
                   type: "switch-dev",
                   devices: "desktop",
-                  disabled: dvv("media") !== "video"
+                  disabled: video
                 },
                 {
                   id: "bgMapAddress",
                   label: t("Address"),
                   type: "inputText-dev",
                   devices: "desktop",
-                  disabled: dvv("media") !== "map",
+                  disabled: map,
                   placeholder: t("Enter address"),
                   config: {
                     size: "large"
@@ -190,7 +203,7 @@ export function getItems({ v, device, component, context, state }) {
                   id: "bgMapZoom",
                   label: t("Zoom"),
                   type: "slider-dev",
-                  disabled: dvv("media") !== "map" || device !== "desktop",
+                  disabled: map || device !== "desktop",
                   config: {
                     min: 1,
                     max: 21
@@ -390,16 +403,53 @@ export function getItems({ v, device, component, context, state }) {
           },
           tabs: [
             {
+              id: "page",
+              label: t("Page"),
+              options: [
+                {
+                  id: "linkSource",
+                  type: "select-dev",
+                  disabled: !collectionTypesHandler,
+                  label: t("Type"),
+                  devices: "desktop",
+                  choices: {
+                    load: () => getCollectionTypes(config),
+                    emptyLoad: {
+                      title: t("There are no choices")
+                    }
+                  },
+                  config: {
+                    size: "large"
+                  }
+                },
+                {
+                  id: "linkPage",
+                  type: "internalLink-dev",
+                  label: t("Find Page"),
+                  devices: "desktop",
+                  disabled: !linkSource,
+                  config: {
+                    postType: linkSource
+                  }
+                }
+              ]
+            },
+            {
               id: "external",
               label: t("URL"),
               options: [
-                toolbarImageLinkExternal({
-                  v,
-                  device,
-                  config: context.dynamicContent.config,
-                  state: "normal",
-                  devices: "desktop"
-                }),
+                {
+                  id: "link",
+                  type: "population-dev",
+                  label: t("Link to"),
+                  config: linkDC,
+                  option: {
+                    id: "linkExternal",
+                    type: "inputText-dev",
+                    placeholder: "http://",
+                    devices: "desktop"
+                  }
+                },
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),

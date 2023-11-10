@@ -21,10 +21,14 @@
 
     "text": "Rating",
     "textPopulation": "",
+    "textPopulationEntityType": "",
+    "textPopulationEntityId": "",
 
     "rating": 2.5,
     "ratingSuffix": "px",
     "ratingPopulation": "",
+    "ratingPopulationEntityType": "",
+    "ratingPopulationEntityId": "",
 
     "spacing": 15,
     "spacingSuffix": "px",
@@ -102,20 +106,6 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "tabletSpacing": null,
-    "tabletSpacingSuffix": null,
-
-    "tabletIconSize": null,
-    "tabletIconCustomSize": null,
-    "tabletIconCustomSizeSuffix": null,
-
-    "tabletIconSmallSize": null,
-    "tabletIconMediumSize": null,
-    "tabletIconLargeSize": null,
-
-    "tabletIconSpacing": null,
-    "tabletIconSpacingSuffix": null,
-
     "tabletFontStyle": null,
     "tabletFontFamilyType": null,
     "tabletFontSize": null,
@@ -123,20 +113,6 @@
     "tabletFontWeight": null,
     "tabletLineHeight": null,
     "tabletLetterSpacing": null,
-
-    "mobileSpacing": null,
-    "mobileSpacingSuffix": null,
-
-    "mobileIconSize": null,
-    "mobileIconCustomSize": null,
-    "mobileIconCustomSizeSuffix": null,
-
-    "mobileIconSmallSize": null,
-    "mobileIconMediumSize": null,
-    "mobileIconLargeSize": null,
-
-    "mobileIconSpacing": null,
-    "mobileIconSpacingSuffix": null,
 
     "mobileFontStyle": null,
     "mobileFontFamilyType": null,

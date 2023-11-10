@@ -10,7 +10,7 @@ export default function (config: ConfigCommon) {
     resolve: {
       type: "Wrapper",
       value: {
-        _styles: ["wrapper", "wrapper-price"],
+        _styles: ["wrapper"],
         items: [
           {
             type: ElementTypes.Price,
