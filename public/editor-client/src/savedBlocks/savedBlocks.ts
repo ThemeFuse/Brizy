@@ -6,6 +6,7 @@ import {
   updateSavedBlock,
   uploadSaveBlocks
 } from "../api";
+import { getErrorMessage } from "../api/utils";
 import { SavedBlockMeta, SavedBlocks } from "../types/SavedBlocks";
 import { createUpload } from "../utils/createUpload";
 import { t } from "../utils/i18n";
@@ -93,7 +94,10 @@ export const savedBlocks: SavedBlocks = {
       res(data);
     } catch (e) {
       console.error("API Client savedBlocks handlerImport:", e);
-      rej(t("Failed to import saved blocks"));
+      const message =
+        getErrorMessage(e)?.data ?? t("Failed to import saved blocks");
+
+      rej(message);
     }
   }
 };
