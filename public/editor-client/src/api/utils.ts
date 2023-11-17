@@ -3,6 +3,8 @@ import { Dictionary } from "../types/utils";
 import * as Num from "../utils/reader/number";
 import * as Obj from "../utils/reader/object";
 import * as Str from "../utils/reader/string";
+import { MValue } from "../utils/types";
+import { ErrorResponse } from "./types";
 
 export const makeUrl = (
   baseUrl: string,
@@ -68,4 +70,11 @@ export const makeFormEncode = (
   });
 
   return r;
+};
+
+export const getErrorMessage = (e: unknown): MValue<ErrorResponse> => {
+  if (Obj.isObject(e) && "data" in e) {
+    return e as unknown as ErrorResponse;
+  }
+  return undefined;
 };
