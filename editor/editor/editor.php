@@ -2180,12 +2180,12 @@ class Brizy_Editor_Editor_Editor
         foreach ($categoryVideos as $title => $videos) {
 
             foreach ($videos as &$video) {
-                $video['id'] = $nextId;
+                $video['id'] = strval($nextId);
                 $nextId++;
             }
 
             $editorHelpVideos['video'][] = [
-                'id' => count($editorHelpVideos['video']),
+                'id' => strval(count($editorHelpVideos['video'])),
                 'category' => $title,
                 'items' => $videos
             ];
