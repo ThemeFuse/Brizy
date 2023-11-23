@@ -2180,12 +2180,12 @@ class Brizy_Editor_Editor_Editor
         foreach ($categoryVideos as $title => $videos) {
 
             foreach ($videos as &$video) {
-                $video['id'] = strval($nextId);
+                $video['id'] = (string)$nextId;
                 $nextId++;
             }
 
             $editorHelpVideos['video'][] = [
-                'id' => strval(count($editorHelpVideos['video'])),
+                'id' => (string)count($editorHelpVideos['video']).'c', // we make the id different from the id of the videos. It is an issue in the react component
                 'category' => $title,
                 'items' => $videos
             ];
