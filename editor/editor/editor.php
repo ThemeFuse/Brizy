@@ -190,7 +190,9 @@ class Brizy_Editor_Editor_Editor
                         ),
                 ),
             ),
-            'ui' => [],
+            'ui' => [
+                'help' => $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL)
+            ],
             'server' => array(
                 'maxUploadFileSize' => $this->fileUploadMaxSize(),
             ),
@@ -200,7 +202,6 @@ class Brizy_Editor_Editor_Editor
             'editorVersion' => BRIZY_EDITOR_VERSION,
             'imageSizes' => $this->getImgSizes(),
             'moduleGroups' => [],
-            'help' => $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL),
             'l10n' => $this->getTexts(),
         );
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
@@ -2174,10 +2175,13 @@ class Brizy_Editor_Editor_Editor
 
         $editorHelpVideos = ['video' => []];
 
+        $nextId = 1;
+
         foreach ($categoryVideos as $title => $videos) {
 
-            foreach ($videos as $index => &$video) {
-                $video['id'] = $index;
+            foreach ($videos as &$video) {
+                $video['id'] = $nextId;
+                $nextId++;
             }
 
             $editorHelpVideos['video'][] = [
