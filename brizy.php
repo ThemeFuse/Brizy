@@ -118,6 +118,7 @@ function brizy_install()
     Brizy_Logger::install();
     add_option('brizy-regenerate-permalinks', 1);
     do_action('brizy-activated');
+    set_transient( 'admin_notice', true, 7200 );
 }
 
 function brizy_clean()
