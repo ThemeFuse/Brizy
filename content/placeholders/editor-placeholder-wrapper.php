@@ -27,9 +27,6 @@ class Brizy_Content_Placeholders_EditorPlaceholderWrapper extends Brizy_Content_
         $this->setDisplay($display);
         $this->setGroup($group);
         $this->setAttributes($attrs);
-        if (is_array($varyAttrs)) {
-            $this->setVaryAttributes($varyAttrs);
-        }
         $this->value = $value;
     }
 

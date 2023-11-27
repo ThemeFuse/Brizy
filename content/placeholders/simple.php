@@ -25,10 +25,6 @@ class Brizy_Content_Placeholders_Simple extends Brizy_Content_Placeholders_Abstr
         $this->setDisplay($display);
         $this->setGroup($group);
         $this->setAttributes($attrs);
-        if(is_array($varyAttrs))
-        {
-			$this->setVaryAttributes($varyAttrs);
-        }
         $this->value = $value;
     }
 

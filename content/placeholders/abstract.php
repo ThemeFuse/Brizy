@@ -25,8 +25,6 @@ abstract class Brizy_Content_Placeholders_Abstract extends \BrizyPlaceholders\Ab
      */
     protected $attributes = [];
 
-    protected $varyAttributes = ['entityType', 'entityId'];
-
     /**
      * @var string
      */
@@ -57,8 +55,7 @@ abstract class Brizy_Content_Placeholders_Abstract extends \BrizyPlaceholders\Ab
             'label' => $this->getLabel(),
             'placeholder' => $this->buildPlaceholder(),
             'display' => $this->getDisplay(),
-            'attr' => (object)$this->getAttributes(),
-            'varyAttr' => $this->getVaryAttributes()
+            'attr' => (object)$this->getAttributes()
         ];
     }
 
@@ -167,16 +164,6 @@ abstract class Brizy_Content_Placeholders_Abstract extends \BrizyPlaceholders\Ab
     public function setAttributes($attributes)
     {
         return $this->attributes = (array)$attributes;
-    }
-
-    public function getVaryAttributes()
-    {
-        return $this->varyAttributes;
-    }
-
-    public function setVaryAttributes($attributes)
-    {
-        return $this->varyAttributes = (array)$attributes;
     }
 
     public function getEntity(ContentPlaceholder $placeholder)
