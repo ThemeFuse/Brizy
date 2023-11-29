@@ -5,6 +5,19 @@
   grid-template-columns: 208px 175px;
   width: 100%;
 
+  &--tabs-icon {
+    .brz-ed-font__typography {
+      padding: 0 0 10px 25px !important;
+    }
+
+    .brz-ed-control__typography--tab-icon
+      .brz-ed__col.brz-ed__col-1-1
+      .brz-ed-control__typography-styles_icon {
+      position: relative;
+      top: -11px;
+    }
+  }
+
   &--style-only {
     grid-template-columns: 170px;
   }
@@ -36,6 +49,48 @@
     padding: $options__item-padding;
     display: flex;
     flex-wrap: wrap;
+
+    &.brz-ed-control__typography--tab-icon {
+      padding: 0 15px;
+    }
+
+    &_icon {
+      width: 144px;
+      margin-bottom: 5px;
+      color: $popover__tabs-color;
+      border-bottom: 1px solid $popover__tabs-border;
+
+      .brz-ed-control__tab__icon {
+        cursor: pointer;
+        transition: color 0.2s linear;
+        border-bottom: 2px solid transparent;
+        height: $popover__tabs-height;
+        display: inline-flex;
+        align-items: center;
+        margin: 0 0 -1px;
+        padding-top: 2px;
+        width: auto;
+
+        .brz-icon-svg {
+          font-size: 16px;
+          flex: 1 0 auto;
+        }
+
+        &:hover,
+        &.active {
+          color: $popover__tabs-color--active;
+          transition: color 0.2s linear;
+        }
+
+        &.active {
+          border-bottom-color: $popover__tabs-border--active;
+        }
+
+        &:not(:last-child) {
+          margin-right: 15px;
+        }
+      }
+    }
 
     .brz-ed-component__label {
       margin-right: 0;

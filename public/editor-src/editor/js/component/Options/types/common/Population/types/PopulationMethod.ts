@@ -24,7 +24,8 @@ export interface PopulationOptgroupMethod {
 export interface PopulationMethodHandler {
   handlerChoices: (
     response: (r: string) => void,
-    reject: (r: string) => void
+    reject: (r: string) => void,
+    extra?: { keyCode?: string; placeholder: Literal }
   ) => void;
 }
 

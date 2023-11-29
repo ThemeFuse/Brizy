@@ -27,6 +27,7 @@ export default function ($node) {
     const vertical = data.vertical;
     const autoPlay = data.autoPlay;
     const autoPlaySpeed = data.autoPlaySpeed;
+    const transitionSpeed = data.transitionSpeed;
     const swipe = data.swipe;
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
 
@@ -57,7 +58,7 @@ export default function ($node) {
       vertical,
       responsive,
       useTransform: false,
-      speed: 350,
+      speed: transitionSpeed * 100,
       draggable: swipe,
       nextArrow: arrows && getArrow("brz-slick-slider__arrow-next"),
       prevArrow: arrows && getArrow("brz-slick-slider__arrow-prev"),
@@ -65,6 +66,8 @@ export default function ($node) {
       autoplaySpeed: autoPlaySpeed,
       rtl: isRtl
     });
+
+    window.Brz.emit("elements.slick.ready", $this.get(0));
 
     // Need rearrange when changed some of elements [tabs, accordion, ... ]
     const elements = [

@@ -22,6 +22,7 @@ import { imagePopulationUrl } from "visual/utils/image";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { isNumber } from "visual/utils/math";
 import { isStory } from "visual/utils/models";
+import { getLinkData } from "visual/utils/models/link";
 import {
   defaultValueValue,
   mobileSyncOnChange,
@@ -64,6 +65,7 @@ import {
   multiplier,
   showOriginalImage
 } from "./utils";
+import { getLinkValue } from "visual/component/Link/utils";
 
 class Image extends EditorComponent {
   static get componentId() {
@@ -615,7 +617,7 @@ class Image extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { className } = v;
+    const { className, actionClosePopup } = v;
     const IS_STORY = isStory(Config.getAll());
     const { gallery = {} } = this.props.renderer
       ? this.props.renderer
@@ -636,6 +638,16 @@ class Image extends EditorComponent {
     });
 
     const linked = v.linkExternal !== "" || v.linkPopulation !== "";
+
+    const link = getLinkData(v);
+
+    const linkProps = {
+      className: classnames({
+        "brz-popup2__action-close":
+          link.type === "action" && actionClosePopup === "on"
+      }),
+      slide: link.slide
+    };
 
     const parentClassName = classnames(
       "brz-image",
@@ -715,6 +727,7 @@ class Image extends EditorComponent {
                     wrapperSizes={wrapperSizes}
                     meta={meta}
                     gallery={gallery}
+                    linkProps={linkProps}
                   />
                 </ImageWrapper>
               </HoverAnimation>
@@ -729,7 +742,7 @@ class Image extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className } = v;
+    const { className, actionClosePopup } = v;
     const IS_STORY = isStory(Config.getAll());
     const isAbsoluteOrFixed =
       v.elementPosition === "absolute" || v.elementPosition === "fixed";
@@ -746,6 +759,18 @@ class Image extends EditorComponent {
       context: this.context,
       props: this.props
     };
+
+    const link = getLinkData(v);
+
+    const linkProps = {
+      className: classnames({
+        "brz-popup2__action-close":
+          link.type === "action" && actionClosePopup === "on"
+      }),
+      slide: link.slide
+    };
+
+    const linkValue = getLinkValue(v);
 
     const linked = v.linkExternal !== "" || v.linkPopulation !== "";
 
@@ -791,6 +816,7 @@ class Image extends EditorComponent {
                 v={v}
                 vs={vs}
                 vd={vd}
+                link={linkValue}
                 _id={this.getId()}
                 componentId={this.constructor.componentId}
                 wrapperSizes={wrapperSizes}
@@ -799,6 +825,7 @@ class Image extends EditorComponent {
                 getResponsiveUrls={(imageSizes) =>
                   this.getResponsiveUrls(wrapperSizes, imageSizes)
                 }
+                linkProps={linkProps}
                 onChange={this.handleChange}
               />
             </Wrapper>

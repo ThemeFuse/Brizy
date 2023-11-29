@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React, { ReactNode } from "react";
 import ReactDOM from "react-dom";
+import { ToastNotification } from "visual/component/Notifications";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent, {
@@ -8,12 +9,16 @@ import EditorComponent, {
 } from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import Config from "visual/global/Config";
+import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
 import * as Str from "visual/utils/string/specs";
+import { EkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as sidebarDay from "./sidebarDay";
 import { style } from "./styles";
+import * as toolbarArrow from "./toolbarArrow";
 import * as toolbarCell from "./toolbarCell";
 import * as toolbarDay from "./toolbarDay";
 import * as toolbarEmpty from "./toolbarEmpty";
@@ -45,7 +50,7 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
   static experimentalDynamicContent = true;
 
   calendarIcon = React.createRef<Element>();
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendParent,
       sidebarConfig,
@@ -57,6 +62,20 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
     );
 
     this.props.extendParentToolbar(toolbarExtend);
+
+    const { category, group } = this.getValue();
+    const config = Config.getAll();
+
+    const changedKeys = await updateEkklesiaFields(config, {
+      fields: [
+        { value: { category }, module: { key: "event" } },
+        { value: { group }, module: { key: "groups" } }
+      ]
+    });
+    if (changedKeys) {
+      ToastNotification.warn(EkklesiaMessages["event_calendar"]);
+      this.patchValue(changedKeys);
+    }
   }
 
   componentDidUpdate(prevProps: ModelProps<Value, Props>): void {
@@ -239,76 +258,87 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
                                 >
                                   <Toolbar
                                     {...this.makeToolbarPropsFromConfig2(
-                                      toolbarDay,
-                                      sidebarDay
+                                      toolbarArrow,
+                                      undefined,
+                                      {
+                                        allowExtend: false
+                                      }
                                     )}
-                                    selector=".brz-eventCalendar-day-number span"
+                                    selector=".brz-eventCalendar-pagination a"
                                   >
                                     <Toolbar
                                       {...this.makeToolbarPropsFromConfig2(
-                                        toolbarEmpty,
-                                        undefined,
-                                        {
-                                          allowExtend: false
-                                        }
+                                        toolbarDay,
+                                        sidebarDay
                                       )}
-                                      selector=".brz-eventCalendar-day-np"
+                                      selector=".brz-eventCalendar-day-number span"
                                     >
                                       <Toolbar
                                         {...this.makeToolbarPropsFromConfig2(
-                                          toolbarTitle,
+                                          toolbarEmpty,
                                           undefined,
                                           {
                                             allowExtend: false
                                           }
                                         )}
-                                        selector=".brz-eventCalendar-links"
+                                        selector=".brz-eventCalendar-day-np"
                                       >
                                         <Toolbar
                                           {...this.makeToolbarPropsFromConfig2(
-                                            toolbarEventStartTime,
+                                            toolbarTitle,
                                             undefined,
                                             {
                                               allowExtend: false
                                             }
                                           )}
-                                          selector=".brz-eventCalendar-links .brz-eventCalendar__event-start-time"
+                                          selector=".brz-eventCalendar-links"
                                         >
                                           <Toolbar
                                             {...this.makeToolbarPropsFromConfig2(
-                                              toolbarSubscribeToCalendar,
+                                              toolbarEventStartTime,
                                               undefined,
                                               {
                                                 allowExtend: false
                                               }
                                             )}
-                                            selector=".brz-eventCalendar__subscribe"
+                                            selector=".brz-eventCalendar-links .brz-eventCalendar__event-start-time"
                                           >
-                                            <Wrapper
-                                              {...this.makeWrapperProps({
-                                                className,
-                                                ref: this.calendarIcon
-                                              })}
-                                            >
-                                              <DynamicContentHelper
-                                                placeholder={getPlaceholder(
-                                                  v,
-                                                  icon
-                                                )}
-                                                props={{
-                                                  className:
-                                                    "brz-ministryBrands brz-eventCalendar"
-                                                }}
-                                                blocked={false}
-                                                tagName="div"
-                                                onSuccess={() =>
-                                                  this.renderIcon({
-                                                    iconName,
-                                                    iconType
-                                                  })
+                                            <Toolbar
+                                              {...this.makeToolbarPropsFromConfig2(
+                                                toolbarSubscribeToCalendar,
+                                                undefined,
+                                                {
+                                                  allowExtend: false
                                                 }
-                                              />
-                                            </Wrapper>
+                                              )}
+                                              selector=".brz-eventCalendar__subscribe"
+                                            >
+                                              <Wrapper
+                                                {...this.makeWrapperProps({
+                                                  className,
+                                                  ref: this.calendarIcon
+                                                })}
+                                              >
+                                                <DynamicContentHelper
+                                                  placeholder={getPlaceholder(
+                                                    v,
+                                                    icon
+                                                  )}
+                                                  props={{
+                                                    className:
+                                                      "brz-ministryBrands brz-eventCalendar"
+                                                  }}
+                                                  blocked={false}
+                                                  tagName="div"
+                                                  onSuccess={() =>
+                                                    this.renderIcon({
+                                                      iconName,
+                                                      iconType
+                                                    })
+                                                  }
+                                                />
+                                              </Wrapper>
+                                            </Toolbar>
                                           </Toolbar>
                                         </Toolbar>
                                       </Toolbar>

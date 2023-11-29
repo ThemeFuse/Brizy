@@ -9,6 +9,7 @@ import { getOptionFontByGlobal } from "visual/utils/options";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { capByPrefix } from "visual/utils/string";
 import { isNullish } from "visual/utils/value";
+import { FONT_INITIAL } from "../fonts/utils";
 
 export function styleTypography2FontFamily({ v, device, state, prefix = "" }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
@@ -23,7 +24,7 @@ export function styleTypography2FontFamily({ v, device, state, prefix = "" }) {
       device: DESKTOP,
       key: "fontFamily",
       config: Config.getAll()
-    })})`;
+    })}, ${FONT_INITIAL})`;
   } else {
     const fontFamily = getOptionFontByGlobal(
       "fontFamily",

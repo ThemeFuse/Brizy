@@ -45,11 +45,52 @@
     "saturation": 100,
     "contrast": 100,
 
+    "closeDrawerIcon": "off",
+
+    "closePaddingType": "ungrouped",
+    "closePadding": 10,
+    "closePaddingSuffix": "px",
+    "closePaddingTop": 10,
+    "closePaddingTopSuffix": "px",
+    "closePaddingRight": 15,
+    "closePaddingRightSuffix": "px",
+    "closePaddingBottom": 10,
+    "closePaddingBottomSuffix": "px",
+    "closePaddingLeft": 10,
+    "closePaddingLeftSuffix": "px",
+
+    "closeMarginType": "grouped",
+    "closeMargin": 0,
+    "closeMarginSuffix": "px",
+    "closeMarginTop": 0,
+    "closeMarginTopSuffix": "px",
+    "closeMarginRight": 0,
+    "closeMarginRightSuffix": "px",
+    "closeMarginBottom": 0,
+    "closeMarginBottomSuffix": "px",
+    "closeMarginLeft": 0,
+    "closeMarginLeftSuffix": "px",
+
+    "closeHoverTransition": 30,
+    "closeHoverTransitionSuffix": "",
+
     "colorHex": "#000000",
     "colorOpacity": 1,
     "colorPalette": "",
     "tempColorOpacity": 1,
     "tempColorPalette": 1,
+
+    "closeIconSize": "small",
+    "closeIconCustomSize": 35,
+    "closeIconCustomSizeSuffix": "px",
+
+    "closeColorHex": "#ffffff",
+    "closeColorOpacity": 1,
+    "closeColorPalette": "",
+
+    "closeBgColorHex": "#333333",
+    "closeBgColorOpacity": 0,
+    "closeBgColorPalette": "",
 
     "hoverColorHex": "#000000",
     "hoverColorOpacity": 1,

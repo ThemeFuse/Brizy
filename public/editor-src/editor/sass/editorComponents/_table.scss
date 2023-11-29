@@ -4,6 +4,17 @@
   table-layout: fixed;
   margin: 0;
 
+  &.brz-table__disabled-tableHead {
+    .brz-table__head {
+      visibility: hidden;
+
+      & > .brz-table__tr > .brz-table__th.brz-table__aside {
+        padding: 0;
+        border: none;
+      }
+    }
+  }
+
   .brz-table__tr:nth-child(even) .brz-table__td {
     font-size: initial;
     font-style: inherit;

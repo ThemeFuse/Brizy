@@ -2,6 +2,7 @@
 import classnames from "classnames";
 import React from "react";
 import Placeholder from "visual/component/Placeholder";
+import { withLink } from "visual/component/hooks/withLink";
 import { css } from "visual/utils/cssStyle";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { stylePicture } from "../styles";
@@ -10,7 +11,6 @@ import { showOriginalImage } from "../utils";
 import Population from "./Population";
 import SimpleImage from "./SimpleImage";
 import SvgImage from "./SvgImage";
-import withLink from "./withLink";
 
 const Content: React.FC<ImageProps> = (props) => {
   const { v, vs, vd, _id, componentId, wrapperSizes, extraAttributes, meta } =

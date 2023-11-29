@@ -1,5 +1,6 @@
 import {
   cssStyleBgColor,
+  cssStyleBgColorHex,
   cssStyleBgGradient,
   cssStyleBgImage,
   cssStyleBorder,
@@ -11,11 +12,14 @@ import {
   cssStyleDisplayNone,
   cssStyleFilter,
   cssStyleFlexHorizontalAlign,
+  cssStyleHoverTransition,
+  cssStyleMargin,
   cssStylePadding,
   cssStylePaddingFourFields,
   cssStylePositionAbsolute,
   cssStylePositionRelative,
   cssStyleSizeFontSize,
+  cssStyleSizeFontSizeIcon,
   cssStyleSizeMaxWidthSize,
   cssStyleTextAlign,
   cssStyleTypography2FontFamily,
@@ -32,14 +36,14 @@ import {
   styleBorderStyle,
   styleBorderWidthGrouped,
   styleColor,
-  styleElementMMenu,
-  styleElementMMenuIconPosition,
-  styleElementMMenuIconSpacing,
   styleElementMenuIconPosition,
   styleElementMenuIconSpacing,
   styleElementMenuMode,
   styleElementMenuSubMenuIconPosition,
   styleElementMenuSubMenuIconSpacing,
+  styleElementMMenu,
+  styleElementMMenuIconPosition,
+  styleElementMMenuIconSpacing,
   styleItemMarginBottom,
   styleItemMarginLeft,
   styleItemMarginRight,
@@ -128,6 +132,10 @@ export function cssStyleElementMenuBgColor({ v, device, state }) {
   }
 
   return "background-color: transparent;";
+}
+
+export function cssStyleElementMenuBgCloseColor({ v, device, state }) {
+  return cssStyleBgColorHex({ v, device, state, prefix: "closeBg" });
 }
 
 export function cssStyleElementMenuLinkBgColor({ v, device, state }) {
@@ -248,6 +256,10 @@ export function cssStyleElementMenuColor({ v, device, state }) {
   return cssStyleColor({ v, device, state });
 }
 
+export function cssStyleElementMenuCloseColor({ v, device, state }) {
+  return cssStyleColor({ v, device, state, prefix: "closeColor" });
+}
+
 export function cssStyleElementMMenuBorderColor({ v, device, state }) {
   const borderColor = styleBorderColor({ v, device, state, prefix: "mMenu" });
 
@@ -335,6 +347,15 @@ export function cssStyleElementMMenuIconSize({ v, device, state }) {
     device,
     state,
     prefix: "mMenuIcon"
+  });
+}
+
+export function cssStyleElementMMenuIconCloseSize({ v, device, state }) {
+  return cssStyleSizeFontSizeIcon({
+    v,
+    device,
+    state,
+    prefix: "close"
   });
 }
 
@@ -430,6 +451,18 @@ export function cssStyleElementMMenuItemPaddingBottomZero({
 
 export function cssStyleElementMMenuPadding({ v, device, state }) {
   return cssStylePaddingFourFields({ v, device, state, prefix: "mMenu" });
+}
+
+export function cssStyleElementMMenuClosePadding({ v, device, state }) {
+  return cssStylePaddingFourFields({ v, device, state, prefix: "close" });
+}
+
+export function cssStyleElementMMenuCloseMargin({ v, device, state }) {
+  return cssStyleMargin({ v, device, state, prefix: "close" });
+}
+
+export function cssStyleElementMMenuCloseTransition({ v, device, state }) {
+  return cssStyleHoverTransition({ v, device, state, prefix: "close" });
 }
 
 // SubMenu

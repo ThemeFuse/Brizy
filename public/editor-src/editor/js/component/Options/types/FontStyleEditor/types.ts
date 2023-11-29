@@ -8,10 +8,9 @@ export interface FontStyleState {
   active: boolean;
 }
 
-export interface FontStyleProps {
-  title: string;
-  fontFamilyType: ModelFamilyType;
+export interface Styles {
   fontFamily: string;
+  fontFamilyType: ModelFamilyType;
   fontSizeSuffix: string;
   tabletFontSizeSuffix: string;
   mobileFontSizeSuffix: string;
@@ -27,6 +26,11 @@ export interface FontStyleProps {
   mobileFontWeight: number;
   mobileLineHeight: number;
   mobileLetterSpacing: number;
+}
+
+export interface FontStyleProps extends Styles {
+  title: string;
+
   numItems: number;
 
   deleted: boolean;
@@ -36,8 +40,8 @@ export interface FontStyleProps {
   onChange: (data: Partial<FontStyleProps>) => void;
   itemIndex: number;
   animationCounter: number;
-  deviceMode: DeviceMode;
 
+  deviceMode: DeviceMode;
   setDeviceMode: (device: DeviceMode) => void;
 }
 
@@ -62,3 +66,7 @@ export interface FontStyleEditorProps {
   value: FontStyleEditorValue;
   onChange: (value: FontStyleEditorData[]) => void;
 }
+
+export type ModelType = {
+  [key: string]: Styles;
+};

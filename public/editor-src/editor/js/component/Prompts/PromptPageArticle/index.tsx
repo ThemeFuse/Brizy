@@ -9,6 +9,7 @@ import {
   setTitle
 } from "visual/component/Prompts/PromptPageArticle/types/Setters";
 import { EmptyContentWithDefaults } from "visual/component/Prompts/common/PromptPage/EmptyContent";
+import { HeaderFooterField } from "visual/component/Prompts/common/PromptPage/HeaderFooterField";
 import {
   cancel,
   save,
@@ -37,7 +38,6 @@ import { Button } from "../common/Button";
 import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
-import { SettingsTab } from "../common/PromptPage/SettingsTab";
 import { Tabs } from "../common/PromptPage/types";
 import { Props, Valid } from "./types";
 
@@ -48,8 +48,15 @@ export const PromptPageArticle = (props: Props): ReactElement => {
     return getShopifyTemplate(_config) ?? ShopifyTemplate.Product;
   }, [_config]);
 
-  const { headTitle, pageTitle, opened, selectedLayout, onClose, onSave } =
-    props;
+  const {
+    headTitle,
+    pageTitle,
+    opened,
+    selectedLayout,
+    onClose,
+    onSave,
+    onAfterSave
+  } = props;
 
   const { value } = selectedLayout || { value: undefined };
 
@@ -61,10 +68,18 @@ export const PromptPageArticle = (props: Props): ReactElement => {
       dispatch(updatePageTitle(title));
 
       return onSave()
-        .then(() => shopifySyncArticle(selected.id, selected.title, title))
+        .then(() => {
+          return shopifySyncArticle(selected.id, selected.title, title).then(
+            () => {
+              if (typeof onAfterSave === "function") {
+                onAfterSave();
+              }
+            }
+          );
+        })
         .then(() => undefined);
     },
-    [dispatch, onSave]
+    [dispatch, onSave, onAfterSave]
   );
   const getData = useCallback(async () => {
     const config = Config.getAll();
@@ -132,7 +147,7 @@ export const PromptPageArticle = (props: Props): ReactElement => {
         const { items } = state.payload;
 
         switch (state.payload.activeTab) {
-          case Tabs.page:
+          case Tabs.settings:
             if (!items.length) {
               return <EmptyContentWithDefaults type={templateType} />;
             }
@@ -149,6 +164,11 @@ export const PromptPageArticle = (props: Props): ReactElement => {
                   onChange={(s): void => dispatchS(setTitle(s))}
                   placeholder={t("Page title")}
                 />
+                <HeaderFooterField
+                  value={state.payload.layout}
+                  layouts={state.payload.layouts}
+                  onChange={(v): void => dispatchS(setLayout(v))}
+                />
                 <Radio
                   className="brz-ed-popup-integrations-option__radio"
                   defaultValue={state.payload.selected?.id}
@@ -163,18 +183,6 @@ export const PromptPageArticle = (props: Props): ReactElement => {
                   })}
                 </Radio>
               </Content>
-            );
-          case Tabs.settings:
-            return (
-              <SettingsTab
-                layouts={state.payload.layouts}
-                headTitle={headTitle}
-                value={state.payload.layout}
-                inlineFooter={true}
-                footer={footer}
-                onChange={(v): void => dispatchS(setLayout(v))}
-                error={state.payload.error}
-              />
             );
         }
       }

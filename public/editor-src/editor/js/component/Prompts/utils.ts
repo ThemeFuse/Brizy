@@ -1,5 +1,6 @@
 import { RulesState as PageArticleRulesState } from "visual/component/Prompts/PromptPageArticle/types";
 import {
+  Item,
   RulesState as PageRulesState,
   Valid
 } from "visual/component/Prompts/PromptPageRules/types";
@@ -12,6 +13,7 @@ import { Shopify } from "visual/global/Config/types/configs/Cloud";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { t } from "visual/utils/i18n";
 import * as Arr from "visual/utils/reader/array";
+import { MValue } from "visual/utils/value";
 
 export const getChoices = (config: Shopify): Layout[] =>
   config.templates.map(({ id, title }) => ({
@@ -29,7 +31,7 @@ export const getTabsByItemsNumber = (
   }
 
   if (!items.length) {
-    return tabs.filter((tab) => tab.id === Tabs.page);
+    return tabs.filter((tab) => tab.id === Tabs.settings);
   }
 
   return tabs;
@@ -84,3 +86,50 @@ export const getLinkText = (type: ShopifyTemplate): string => {
 
   return t("Add Products in Shopify");
 };
+
+export const getAllOptionText = (type: ShopifyTemplate): string => {
+  switch (type) {
+    case ShopifyTemplate.Collection:
+      return t("All collections");
+    case ShopifyTemplate.Product:
+      return t("All products");
+    case ShopifyTemplate.Blog:
+      return t("All blogs");
+  }
+
+  return t("All products");
+};
+
+export const getPromptPageRulesHeadTitle = (
+  type: MValue<ShopifyTemplate>
+): string => {
+  switch (type) {
+    case ShopifyTemplate.Product:
+      return t("WHICH PRODUCTS WILL USE THIS TEMPLATE ?");
+    case ShopifyTemplate.Collection:
+      return t("WHICH COLLECTIONS WILL USE THIS TEMPLATE ?");
+  }
+
+  return t("SELECT FOR WHAT THE TEMPLATE IS USED");
+};
+
+export const getPromptPageArticleHeadTitle = (
+  type: MValue<ShopifyTemplate>
+): string => {
+  switch (type) {
+    case ShopifyTemplate.Article:
+      return t("YOUR BLOG POST IS READY TO BE PUBLISHED");
+    case ShopifyTemplate.Blog:
+      return t("WHICH BLOG WILL USE THIS TEMPLATE ?");
+  }
+
+  return t("YOUR PAGE IS READY TO PUBLISH!");
+};
+
+export const isAllChecked = (items: Item[]): boolean =>
+  items.every((item) => item.selected);
+
+export const getRulesId = (rules: Record<string, boolean>): string[] =>
+  Object.entries(rules)
+    .filter(([, v]) => v)
+    .map(([k]) => k);

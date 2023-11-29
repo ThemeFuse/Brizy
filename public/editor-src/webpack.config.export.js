@@ -35,6 +35,7 @@ module.exports = (options) => {
     entry: [
       "./editor/js/bootstraps/initConfig/index.js",
       "./editor/js/bootstraps/initBrizyGlobal.js",
+      "./editor/js/bootstraps/registerEditorParts.ts",
       "./editor/js/bootstraps/export/index.js"
     ],
     output: {

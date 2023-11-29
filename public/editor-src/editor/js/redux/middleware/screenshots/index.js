@@ -5,15 +5,12 @@ import {
   ADD_BLOCK,
   EDITOR_RENDERED,
   UPDATE_BLOCKS,
-  UPDATE_CURRENT_STYLE,
-  UPDATE_CURRENT_STYLE_ID,
   UPDATE_GLOBAL_BLOCK,
   UPDATE_UI
 } from "visual/redux/actions";
 import { updateScreenshot } from "visual/redux/actions";
 import {
   ADD_GLOBAL_BLOCK,
-  IMPORT_TEMPLATE,
   UPDATE_EXTRA_FONT_STYLES
 } from "visual/redux/actions2";
 import { REDO, UNDO } from "visual/redux/history/types";
@@ -32,6 +29,7 @@ import {
 import { createFullModelPath } from "visual/utils/models";
 import { findDeep } from "visual/utils/object";
 import { makeNodeScreenshot } from "visual/utils/screenshots";
+import { ActionTypes } from "../../actions2";
 import { debounceAdvanced, makeTaskQueue } from "./utils";
 
 const TASK_QUEUE_INTERVAL = 2000;
@@ -65,10 +63,10 @@ export default (store) => (next) => (action) => {
 
   if (
     action.type === EDITOR_RENDERED ||
-    action.type === UPDATE_CURRENT_STYLE_ID ||
-    action.type === UPDATE_CURRENT_STYLE ||
+    action.type === ActionTypes.UPDATE_CURRENT_STYLE_ID ||
+    action.type === ActionTypes.UPDATE_CURRENT_STYLE ||
     action.type === UPDATE_EXTRA_FONT_STYLES ||
-    action.type === IMPORT_TEMPLATE
+    action.type === ActionTypes.IMPORT_TEMPLATE
   ) {
     allBlocksDebounced(store, next);
   }

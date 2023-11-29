@@ -12,6 +12,16 @@ export const getItems = () => {
       position: 110,
       options: [
         {
+          id: "widthType",
+          label: t("Width Type"),
+          type: "select-dev",
+          position: 90,
+          choices: [
+            { title: t("Auto"), value: "off" },
+            { title: t("Custom"), value: "custom" }
+          ]
+        },
+        {
           id: "asideWidth",
           label: t("Width"),
           type: "slider-dev",

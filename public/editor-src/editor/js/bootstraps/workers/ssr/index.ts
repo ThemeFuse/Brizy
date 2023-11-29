@@ -1,14 +1,20 @@
 import Config from "visual/global/Config";
-import { Data } from "./types";
 
 self.onerror = (e) => {
   console.error(e);
 };
 
-self.onmessage = async (e: Data) => {
-  const { config, page, project, globalBlocks } = e.data;
+// @ts-expect-error: Config in worker
+global.__VISUAL_CONFIG__ = {};
 
-  Config.init(config);
+self.onmessage = async (e: MessageEvent) => {
+  const { config, page, project, globalBlocks } = JSON.parse(e.data);
+  if (config.thirdPartyAssetsURL) {
+    importScripts(config.thirdPartyAssetsURL);
+  }
+
+  // @ts-expect-error: Config in worker
+  Config.init({ ...global.__VISUAL_CONFIG__, ...config });
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { Editor } = require("./components/Editor");
@@ -19,5 +25,5 @@ self.onmessage = async (e: Data) => {
     globalBlocks
   });
 
-  postMessage(data, config.urls.site);
+  postMessage(data);
 };

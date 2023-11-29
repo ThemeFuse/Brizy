@@ -83,8 +83,20 @@ export function getItems({
                       type: "switch-dev"
                     },
                     {
-                      id: "sliderAutoPlaySpeed",
+                      id: "transitionSpeed",
                       label: t("Speed"),
+                      type: "slider-dev",
+                      disabled: dvv("sliderAutoPlay") !== "on",
+                      config: {
+                        min: 1,
+                        max: 5,
+                        step: 0.1,
+                        units: [{ value: "s", title: "s" }]
+                      }
+                    },
+                    {
+                      id: "sliderAutoPlaySpeed",
+                      label: t("Stop Time"),
                       type: "slider-dev",
                       disabled: dvv("sliderAutoPlay") !== "on",
                       config: {

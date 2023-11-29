@@ -16,6 +16,7 @@ class AccordionItem extends EditorComponent {
   static get componentId() {
     return "AccordionItem";
   }
+
   static defaultValue = defaultValue;
 
   static defaultProps = {
@@ -120,27 +121,26 @@ class AccordionItem extends EditorComponent {
 
   getIcon(active, navIcon) {
     const icon = active ? `up-arrow-${navIcon}` : `down-arrow-${navIcon}`;
+
     return IS_EDITOR ? (
-      <div className="brz-accordion--icon-wrapper">
-        <ThemeIcon
-          className="brz-accordion__nav--icon"
-          type="editor"
-          name={icon}
-        />
-      </div>
+      <ThemeIcon
+        className="brz-accordion-icon brz-accordion__nav--icon"
+        type="editor"
+        name={icon}
+      />
     ) : (
-      <div className="brz-accordion--icon-wrapper">
+      <>
         <ThemeIcon
-          className="brz-accordion__nav--previewIcon--active"
+          className="brz-accordion-icon brz-accordion__nav--previewIcon--active"
           type="editor"
           name={`up-arrow-${navIcon}`}
         />
         <ThemeIcon
-          className="brz-accordion__nav--previewIcon"
+          className="brz-accordion-icon brz-accordion__nav--previewIcon"
           type="editor"
           name={`down-arrow-${navIcon}`}
         />
-      </div>
+      </>
     );
   }
 

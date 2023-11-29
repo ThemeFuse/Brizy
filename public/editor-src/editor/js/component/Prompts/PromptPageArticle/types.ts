@@ -13,6 +13,7 @@ export interface Props {
   onClose: VoidFunction;
   onSave: () => Promise<unknown>;
   onCancel: VoidFunction;
+  onAfterSave?: VoidFunction;
 }
 
 export interface Invalid {

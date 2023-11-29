@@ -5,6 +5,7 @@ import { IS_WP } from "visual/utils/env";
 import { makePrefetchFonts } from "visual/utils/fonts";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { toHashCode } from "visual/utils/string";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import { getCustomCSS } from "./getCustomCSS";
 import { getDCColor } from "./getDCColor";
 import { getFontLinks } from "./getProjectFonts";
@@ -179,21 +180,33 @@ const makeDCColor = ($doc: cheerio.Root): Asset[] => {
   }));
 };
 
-const makeDynamicStyle = ($doc: cheerio.Root): Asset => {
+const makeDynamicStyle = ($doc: cheerio.Root): Asset[] => {
   const $styles = $doc("style.brz-style");
-  const __html = $doc.html($styles);
-  const otherStyles: Asset = {
-    name: toHashCode(__html),
-    score: OTHERS_SCORE,
-    content: {
-      type: "code",
-      content: __html
-    },
-    pro: false
-  };
-  $styles.remove();
+  const assets: Asset[] = [];
 
-  return otherStyles;
+  $styles.each(function (this: cheerio.Element) {
+    const $style = $doc(this);
+    const __html = $style?.html() ?? "";
+
+    if (NoEmptyString.is(__html)) {
+      const style = $doc.html($style);
+
+      const asset: Asset = {
+        name: toHashCode(style),
+        score: OTHERS_SCORE,
+        content: {
+          type: "code",
+          content: style
+        },
+        pro: false
+      };
+
+      assets.push(asset);
+    }
+    $style.remove();
+  });
+
+  return assets;
 };
 
 // main => preview.min.css | preview.pro.min.css only one added in the page
@@ -238,7 +251,7 @@ export const makeStyles = ($doc: cheerio.Root, fonts: Fonts): MakeStyles => {
 
   // dynamic styles
   const dynamicStyles = makeDynamicStyle($doc);
-  generic.push(dynamicStyles);
+  generic.push(...dynamicStyles);
 
   const libsMap: AssetLibsMap[] = [];
   const libsSelectors = new Set<string>();

@@ -1,10 +1,13 @@
 import classNames from "classnames";
 import React from "react";
 import { ReactElement } from "react";
+import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import Config from "visual/global/Config";
+import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
@@ -14,6 +17,7 @@ import * as toolbarMeta from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
+import { EkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
@@ -27,7 +31,7 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendParent,
       sidebarConfig,
@@ -39,6 +43,40 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
     );
 
     this.props.extendParentToolbar(toolbarExtend);
+    const {
+      parentCategory,
+      categoryFilterParent,
+      addCategoryFilterParent,
+      addCategoryFilterParent2,
+      addCategoryFilterParent3
+    } = this.getValue();
+    const config = Config.getAll();
+
+    const changedKeys = await updateEkklesiaFields(config, {
+      fields: [
+        {
+          value: { parentCategory },
+          module: { key: "smallgroupsLvl", subKey: "parents" }
+        },
+        {
+          value: { categoryFilterParent },
+          module: { key: "eventsLvl", subKey: "childs" }
+        },
+        {
+          value: {
+            addCategoryFilterParent,
+            addCategoryFilterParent2,
+            addCategoryFilterParent3
+          },
+          module: { key: "smallgroupsLvl", subKey: "childs" }
+        }
+      ]
+    });
+
+    if (changedKeys) {
+      ToastNotification.warn(EkklesiaMessages["group_layout"]);
+      this.patchValue(changedKeys);
+    }
   }
 
   renderForEdit(v: Value, vs: Value, vd: Value): ReactElement {

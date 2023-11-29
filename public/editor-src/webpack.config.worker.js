@@ -62,7 +62,16 @@ exports.ssr = (options) => {
       ...editorConfig.output,
       filename: "ssr.worker.min.js"
     },
-    resolve: editorConfig.resolve,
+    resolve: {
+      ...editorConfig.resolve,
+      fallback: {
+        ...editorConfig.resolve.fallback,
+        // Need for webpack 5 and sanitize-html package
+        util: require.resolve("util"),
+        stream: require.resolve("stream-browserify"),
+        buffer: require.resolve("buffer")
+      }
+    },
     module: {
       rules: [
         {
@@ -96,6 +105,9 @@ exports.ssr = (options) => {
         IS_EDITOR: false,
         IS_PREVIEW: true,
         window: "undefined"
+      }),
+      new webpack.ProvidePlugin({
+        process: "process/browser"
       })
     ],
     devtool: editorConfig.devtool,

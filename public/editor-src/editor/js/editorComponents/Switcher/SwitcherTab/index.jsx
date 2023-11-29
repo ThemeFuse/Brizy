@@ -1,12 +1,12 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import { ThemeIcon } from "visual/component/ThemeIcon";
-import Items from "./items";
-import defaultValue from "./defaultValue.json";
-import { TextEditor } from "visual/component/Controls/TextEditor";
-import Toolbar from "visual/component/Toolbar";
+import React from "react";
 import Animation from "visual/component/Animation";
+import { TextEditor } from "visual/component/Controls/TextEditor";
+import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import defaultValue from "./defaultValue.json";
+import Items from "./items";
 import * as toolbarConfig from "./toolbar";
 
 class SwitcherTab extends EditorComponent {
@@ -20,7 +20,7 @@ class SwitcherTab extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleLabelChange = labelText => {
+  handleLabelChange = (labelText) => {
     this.patchValue({ labelText });
   };
 
@@ -32,16 +32,17 @@ class SwitcherTab extends EditorComponent {
     });
 
     return (
-      <div className={className} onClick={onChangeNav}>
-        <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-          <div className="brz-switcher__nav--button">
-            {iconName && iconType && (
-              <ThemeIcon name={iconName} type={iconType} />
-            )}
-            <TextEditor value={labelText} onChange={this.handleLabelChange} />
-          </div>
-        </Toolbar>
-      </div>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
+        selector=".brz-icon-svg,.brz-span"
+      >
+        <div className={className} onClick={onChangeNav}>
+          {iconName && iconType && (
+            <ThemeIcon name={iconName} type={iconType} />
+          )}
+          <TextEditor value={labelText} onChange={this.handleLabelChange} />
+        </div>
+      </Toolbar>
     );
   }
 

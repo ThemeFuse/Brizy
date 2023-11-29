@@ -1,9 +1,12 @@
 import classnames from "classnames";
 import React, { ReactNode } from "react";
+import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import Config from "visual/global/Config";
+import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
@@ -12,6 +15,7 @@ import * as toolbarMedia from "../toolbarMedia";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
+import { EkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
@@ -28,7 +32,7 @@ export class MinistryBrandsSermonFeatured extends EditorComponent<
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendParent,
       sidebarConfig,
@@ -40,6 +44,22 @@ export class MinistryBrandsSermonFeatured extends EditorComponent<
     );
 
     this.props.extendParentToolbar(toolbarExtend);
+    const { category, group, series, sermonRecentList } = this.getValue();
+    const config = Config.getAll();
+
+    const changedKeys = await updateEkklesiaFields(config, {
+      fields: [
+        { value: { category }, module: { key: "sermon" } },
+        { value: { group }, module: { key: "groups" } },
+        { value: { series }, module: { key: "series" } },
+        { value: { sermonRecentList }, module: { key: "recentSermons" } }
+      ]
+    });
+
+    if (changedKeys) {
+      ToastNotification.warn(EkklesiaMessages["sermon_featured"]);
+      this.patchValue(changedKeys);
+    }
   }
 
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {

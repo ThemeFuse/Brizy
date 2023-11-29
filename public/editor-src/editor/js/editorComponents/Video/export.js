@@ -538,8 +538,12 @@ function changePlayerState($shortcodeVideo) {
         .html(formatTime(currentTime));
 
       if (currentTime >= timeEnd) {
-        video.pause();
-        timeEnd = Infinity;
+        if (video.hasAttribute("loop")) {
+          video.currentTime = $timeStart;
+        } else {
+          video.pause();
+          timeEnd = Infinity;
+        }
       }
     });
 

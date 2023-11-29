@@ -1,11 +1,20 @@
-import { applyFilter } from "visual/utils/filters";
-import type { Shortcodes } from "visual/types";
+import { ComponentType } from "react";
 import type { EditorInstance as EditorComponent } from "visual/editorComponents/EditorComponent";
+import { ThirdPartyComponentData } from "visual/global/Config/types/configs/ThirdParty";
+import type { Shortcode, Shortcodes } from "visual/types";
+import { applyFilter } from "visual/utils/filters";
 
 const components: Record<string, EditorComponent | null> = {};
 let notFoundComponent: undefined | EditorComponent;
 let shortcodes: Shortcodes = {};
 let shopifyShortcodes: Shortcodes = {};
+const thirdPartyShortcodes: Record<
+  string,
+  {
+    component: ComponentType;
+    config: Omit<ThirdPartyComponentData, "component">;
+  }
+> = {};
 
 const Editor = {
   // components
@@ -58,7 +67,65 @@ const Editor = {
 
   getShopifyShortcodes(): Shortcodes {
     return applyFilter("getShopifyShortcodes", shopifyShortcodes);
+  },
+
+  registerThirdPartyElement(config: ThirdPartyComponentData): void {
+    const validConfig = isValidThirdPartyConfig(config);
+
+    if (!validConfig) {
+      throw new Error("Invalid third party element config");
+    }
+
+    if (!shortcodes["customComponent"]) {
+      shortcodes["customComponent"] = [];
+    }
+
+    const shortcodeConfig: Shortcode = {
+      pro: false,
+      component: {
+        id: config.id,
+        title: config.title ?? "Component",
+        icon: config.icon ?? "nc-wp-shortcode-element",
+        resolve: {
+          type: "Wrapper",
+          value: {
+            _styles: ["wrapper", "wrapper--toolbar"],
+            items: [
+              {
+                type: "ThirdParty",
+                value: {
+                  thirdPartyId: config.id
+                }
+              }
+            ]
+          }
+        }
+      }
+    };
+
+    shortcodes["customComponent"].push(shortcodeConfig);
+    const { component, ...options } = config;
+    thirdPartyShortcodes[config.id] = {
+      component: component,
+      config: options
+    };
+  },
+
+  getThirdPartyElements() {
+    return thirdPartyShortcodes;
   }
 };
+
+function isValidThirdPartyConfig(config: ThirdPartyComponentData): boolean {
+  const componentId = config?.id;
+
+  if (!componentId) {
+    return false;
+  }
+
+  const customComponents = shortcodes["customComponent"] ?? [];
+
+  return !customComponents.some((e) => e.component.id === componentId);
+}
 
 export default Editor;

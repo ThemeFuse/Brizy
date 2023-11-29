@@ -29,6 +29,17 @@ export function style(
       standart: ["cssStyleElementMinistryEventCalendarTableSpacing"],
       interval: ["cssStyleHoverTransition"]
     },
+    ".brz && .brz-eventCalendar-pagination a": {
+      standart: ["cssStyleElementMinistryEventCalendarArrowSize"]
+    },
+    ".brz && .brz-eventCalendar-pagination a:hover": {
+      standart: [
+        "cssStyleElementMinistryEventCalendarArrowColor",
+        "cssStyleElementMinistryEventCalendarArrowBoxShadow",
+        "cssStyleElementMinistryEventCalendarArrowBorder"
+      ],
+      interval: ["cssStyleHoverTransition"]
+    },
     [`.brz && .brz-eventCalendar .brz-eventCalendar_wrap .brz-eventCalendar-layout .brz-eventCalendar-month.brz-eventCalendar-month${visibleMonth}`]:
       {
         standart: IS_EDITOR ? ["cssStyleDisplayBlock"] : []

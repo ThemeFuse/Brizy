@@ -12,6 +12,9 @@ export function style(
       standart?: string[];
     };
   } = {
+    ".brz &&:hover .brz-eventLayout--view ul": {
+      standart: ["cssStyleElementEventLayoutTabAlign"]
+    },
     ".brz &&:hover .brz-eventLayout": {
       standart: [
         "cssStylePaddingBG",

@@ -3,6 +3,7 @@ import { defaultValueValue } from "../onChange";
 import { getOptionColorHexByPalette } from "../options";
 import { ACTIVE } from "../stateMode";
 import type { CSSValue } from "../style2/types";
+import { cssStyleFlexHorizontalAlign } from "./cssStyleAlign";
 import { cssStyleBgColor } from "./cssStyleBgColor";
 import { cssStyleBgGradient } from "./cssStyleBgGradient";
 import { cssStyleBorder } from "./cssStyleBorder";
@@ -433,3 +434,16 @@ export const cssStyleElementEventLayoutCalendarEventsTypography = ({
     prefix: "eventsTypography"
   });
 };
+
+export function cssStyleElementEventLayoutTabAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    prefix: "tab"
+  });
+}

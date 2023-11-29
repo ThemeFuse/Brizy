@@ -9,6 +9,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Portal from "visual/component/Portal";
 import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
 import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
 import { wInMMenu } from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -22,13 +23,16 @@ import { applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { encodeToString } from "visual/utils/string";
 import { styleElementMMenu, styleElementMenuMode } from "visual/utils/style2";
 import { Wrapper } from "../tools/Wrapper";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
+import * as sidebarClose from "./sidebarClose";
 import * as sidebarExtend from "./sidebarExtend";
 import * as sidebarExtendParent from "./sidebarExtendParent";
 import { styleMenu, styleMenuContainer } from "./styles";
+import * as toolbarClose from "./toolbarClose";
 import * as toolbarExtend from "./toolbarExtend";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import { itemsToSymbols, normalizeMenuItems, symbolsToItems } from "./utils";
@@ -223,17 +227,34 @@ export default class Menu extends EditorComponent {
   };
 
   renderMMenuTitle(v) {
-    const { mMenuTitle, stickyTitle } = v;
-
-    const className = classnames("brz-mm-navbar", {
-      "brz-mm-navbar-sticky": stickyTitle === "on"
-    });
+    const { mMenuTitle, stickyTitle, mMenuPosition } = v;
+    const device = this.getDeviceMode();
+    const isCloseDrawerIcon =
+      defaultValueValue({ key: "closeDrawerIcon", device, v }) === "on";
+    const className = classnames(
+      "brz-mm-navbar",
+      [`brz-mm-navbar-${mMenuPosition}`],
+      {
+        "brz-mm-navbar-sticky": stickyTitle === "on"
+      }
+    );
 
     return (
       <li className={className}>
         <a className="brz-a brz-mm-navbar__title">
           <TextEditor value={mMenuTitle} onChange={this.handleTextChange} />
         </a>
+        {isCloseDrawerIcon && (
+          <Toolbar
+            {...this.makeToolbarPropsFromConfig2(toolbarClose, sidebarClose, {
+              allowExtend: false
+            })}
+          >
+            <span className="brz-mm-close">
+              <ThemeIcon name="close-popup" type="editor" />
+            </span>
+          </Toolbar>
+        )}
       </li>
     );
   }
@@ -417,8 +438,22 @@ export default class Menu extends EditorComponent {
       return null;
     }
 
-    const { mMenuTitle, mMenuPosition, stickyTitle } = v;
+    const {
+      mMenuTitle,
+      mMenuPosition,
+      stickyTitle,
+      closeDrawerIcon,
+      mobileCloseDrawerIcon,
+      tabletCloseDrawerIcon,
+      customCSS
+    } = v;
+
     const isSlider = this.props.meta?.section?.isSlider;
+    const closingIcon = encodeToString({
+      desktop: closeDrawerIcon,
+      tablet: tabletCloseDrawerIcon || closeDrawerIcon,
+      mobile: mobileCloseDrawerIcon || closeDrawerIcon
+    });
 
     const hasMMenu = this.hasMMenu();
     const mMenuProps = hasMMenu
@@ -427,9 +462,11 @@ export default class Menu extends EditorComponent {
           "data-mmenu-position": `position-${mMenuPosition}`,
           "data-mmenu-title": mMenuTitle,
           "data-mmenu-stickytitle": stickyTitle,
-          "data-mmenu-isslider": isSlider
+          "data-mmenu-isslider": isSlider,
+          "data-mmenu-closingicon": closingIcon
         }
       : {};
+
     const className = classnames(
       "brz-menu__container",
       css(
@@ -440,7 +477,7 @@ export default class Menu extends EditorComponent {
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div className={className} {...mMenuProps}>
           {this.renderMenu(v, vs, vd)}
           {hasMMenu && (

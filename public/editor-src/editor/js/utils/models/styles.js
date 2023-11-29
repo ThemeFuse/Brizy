@@ -1,8 +1,11 @@
 import { getIn, setIn } from "timm";
 import Editor from "visual/global/Editor";
+import { DESKTOP } from "visual/utils/devices";
+import { defaultValueValue } from "visual/utils/onChange";
+import { ACTIVE, HOVER } from "visual/utils/stateMode";
 
 export function getElementOfArrayLoop(list, currentValue, operation) {
-  let currentIndex = list.findIndex(item => item === currentValue);
+  let currentIndex = list.findIndex((item) => item === currentValue);
 
   let newIndex = operation === "increase" ? ++currentIndex : --currentIndex;
   if (newIndex === list.length) {
@@ -15,7 +18,7 @@ export function getElementOfArrayLoop(list, currentValue, operation) {
 }
 
 export function getParentWhichContainsStyleProperty(path, value, property) {
-  return getClosestParent(path, value, v => {
+  return getClosestParent(path, value, (v) => {
     if (v.type) {
       const { defaultValue } = Editor.getComponent(v.type) || {};
 
@@ -47,11 +50,27 @@ export function getClosestParent(path, value, cb) {
     path: null
   };
 }
+export function getStateModeKeys(v) {
+  const dvv = (key, state) =>
+    defaultValueValue({ v, key, device: DESKTOP, state });
+
+  return Object.keys(v).reduce((stateModeKeys, key) => {
+    if (key.startsWith("hover")) {
+      stateModeKeys[key] = dvv(key, HOVER);
+    }
+    if (key.startsWith("active")) {
+      stateModeKeys[key] = dvv(key, ACTIVE);
+    }
+
+    return stateModeKeys;
+  }, {});
+}
 
 export function getStyles(value) {
   const { defaultValue } = Editor.getComponent(value.type);
+  const stateModeValues = getStateModeKeys(value.value);
 
-  return defaultValue.style;
+  return Object.assign({}, defaultValue.style, stateModeValues);
 }
 
 export function setStyles(componentValue, depth = 0, i = 0) {

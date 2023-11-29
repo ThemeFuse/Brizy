@@ -6,16 +6,10 @@ export type Layout = {
 };
 
 export enum Tabs {
-  page = "page-tab",
   settings = "settings-tab"
 }
 
 export const tabs = [
-  {
-    id: Tabs.page,
-    icon: "nc-eye-17",
-    title: t("Page")
-  },
   {
     id: Tabs.settings,
     icon: "nc-settings",

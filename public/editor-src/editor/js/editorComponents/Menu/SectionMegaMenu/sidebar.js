@@ -43,6 +43,14 @@ export function getItems({ context }) {
                   icon: "nc-styling",
                   options: [
                     {
+                      id: "showOnDesktop",
+                      label: t("Show on Desktop"),
+                      position: 10,
+                      closeTooltip: true,
+                      type: "switch-dev",
+                      devices: "desktop"
+                    },
+                    {
                       id: "padding",
                       type: "padding-dev",
                       label: t("Padding"),
@@ -65,14 +73,6 @@ export function getItems({ context }) {
                   icon: "nc-cog",
                   devices: "desktop",
                   options: [
-                    {
-                      id: "showOnDesktop",
-                      label: t("Show on Desktop"),
-                      position: 10,
-                      closeTooltip: true,
-                      type: "switch-dev",
-                      devices: "desktop"
-                    },
                     {
                       id: "cssID",
                       label: t("Block Name"),

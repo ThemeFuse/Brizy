@@ -194,6 +194,7 @@ class Triggers extends React.Component {
         itemHeight={30}
         defaultValue={currentId}
         onChange={(newValue) => this.handleTriggerChange(index, newValue)}
+        inPortal={true}
       >
         {triggersList}
       </Select>

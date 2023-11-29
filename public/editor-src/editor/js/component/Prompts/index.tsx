@@ -100,7 +100,11 @@ class Prompts extends Component<Record<string, never>, PromptsState> {
   close(position: number): void {
     this.setState(
       produce((state) => {
-        state.prompts[position].opened = false;
+        const prompt = state.prompts[position];
+
+        if (prompt && prompt.opened) {
+          prompt.opened = false;
+        }
       }),
       () => {
         this.setState(

@@ -27,6 +27,9 @@ import Items from "./items";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { style, styleAnimation, styleContainer } from "./styles";
 import * as toolbarExtendConfig from "./toolbarExtend";
+import Toolbar from "../../component/Toolbar";
+import * as toolbarConfig from "./toolbar";
+import SortableHandle from "../../component/Sortable/SortableHandle";
 
 export default class Cloneable extends EditorComponent {
   static get componentId() {
@@ -153,7 +156,7 @@ export default class Cloneable extends EditorComponent {
   };
 
   renderContent(v, vs, vd) {
-    const { className, itemClassName } = v;
+    const { className } = v;
 
     const classNameContainer = classnames(
       "brz-d-xs-flex brz-flex-xs-wrap",
@@ -165,8 +168,6 @@ export default class Cloneable extends EditorComponent {
       className
     );
 
-    const classNameItem = classnames("brz-wrapper-clone__item", itemClassName);
-
     const { minItems, maxItems, blockType } = v;
     const motion = makeOptionValueToMotion(v);
     const itemsProps = this.makeSubcomponentProps({
@@ -176,7 +177,7 @@ export default class Cloneable extends EditorComponent {
       motion,
       bindWithKey: "items",
       containerClassName: classNameContainer,
-      itemClassName: classNameItem,
+      itemClassName: "brz-wrapper-clone__item",
       meta: this.getMeta(v),
       toolbarExtend: this.makeToolbarPropsFromConfig2(
         toolbarExtendConfig,
@@ -240,10 +241,12 @@ export default class Cloneable extends EditorComponent {
                 type="wrapper__clone"
                 color="grey"
                 borderStyle="dotted"
+                renderButtonWrapper={this.renderToolbar}
               >
                 {({
                   ref: containerBorderRef,
                   attr: containerBorderAttr,
+                  button: ContainerBorderButton,
                   border: ContainerBorderBorder
                 }) => (
                   <Animation
@@ -263,6 +266,7 @@ export default class Cloneable extends EditorComponent {
                     animationClass={animationClassName}
                   >
                     {this.renderContent(v, vs, vd)}
+                    {ContainerBorderButton}
                     {ContainerBorderBorder}
                   </Animation>
                 )}
@@ -354,4 +358,14 @@ export default class Cloneable extends EditorComponent {
       </Animation>
     );
   }
+
+  renderToolbar = (Button) => (
+    <Toolbar
+      {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarExtendConfig)}
+    >
+      <SortableHandle>
+        <Button />
+      </SortableHandle>
+    </Toolbar>
+  );
 }

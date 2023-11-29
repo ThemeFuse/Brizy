@@ -6,6 +6,7 @@ import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import Config from "visual/global/Config";
+import { isPro } from "visual/utils/env";
 import { WithClassName } from "visual/utils/options/attributes";
 import { types } from "./types";
 
@@ -31,6 +32,7 @@ class Option extends React.Component<Props> {
   onChange = (...args: [unknown]): void => {
     this.props.data.onChange(...args);
   };
+
   renderLegacy(Component: ComponentType<LegacyProps>): ReactElement {
     const {
       data = {
@@ -68,6 +70,8 @@ class Option extends React.Component<Props> {
       className: _className = ""
     } = this.props;
 
+    const config = Config.getAll();
+
     const className = classNames(
       "brz-ed-option",
       `brz-ed-option-type__${type}`,
@@ -87,8 +91,8 @@ class Option extends React.Component<Props> {
       <OptionWrapper
         className={className}
         display={display}
-        lock={optionProps.isPro}
-        upgradeToPro={Config.getAll().urls.upgradeToPro}
+        lock={optionProps.isPro && !isPro(config)}
+        upgradeToPro={config.urls.upgradeToPro}
       >
         <Component
           toolbar={this.props.toolbar}

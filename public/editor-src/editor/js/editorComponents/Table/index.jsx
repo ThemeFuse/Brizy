@@ -1,16 +1,16 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
-import defaultValue from "./defaultValue.json";
-import * as toolbarExtendParentConfig from "./toolbarExtendParent";
-import * as sidebarExtendParentConfig from "./sidebarExtendParent";
-import * as toolbarExtendConfig from "./toolbarExtend";
-import { calculateMeta } from "./meta";
 import { NORMAL } from "visual/utils/stateMode";
+import defaultValue from "./defaultValue.json";
+import { calculateMeta } from "./meta";
+import * as sidebarExtendParentConfig from "./sidebarExtendParent";
+import { style } from "./styles";
+import * as toolbarExtendConfig from "./toolbarExtend";
+import * as toolbarExtendParentConfig from "./toolbarExtendParent";
 
 const HEAD_ITEM_INDEX = 0;
 const ASIDE_ITEM_INDEX = 1;
@@ -71,17 +71,29 @@ class Table extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { tableHead } = v;
+    const { tableHead, tableAside, widthType } = v;
     const meta = this.getMeta(v);
     const className = classnames(
       "brz-table",
+      { "brz-table__disabled-tableHead": tableHead === "off" },
+      { "brz-table__disabled-tableAside": tableAside === "off" },
+      { "brz-table__custom--width": widthType === "custom" },
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
     );
     const headProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       sliceStartIndex: HEAD_ITEM_INDEX,
       sliceEndIndex: ASIDE_ITEM_INDEX,
-      itemProps: { meta }
+      itemProps: {
+        meta,
+        widthType,
+        showHead: tableHead === "on",
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtendConfig,
+          null,
+          { allowExtend: true }
+        )
+      }
     });
     const asideAndBodyProps = this.makeSubcomponentProps({
       bindWithKey: "items",
@@ -102,7 +114,7 @@ class Table extends EditorComponent {
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <table className={className}>
-          {tableHead === "on" && head}
+          {head}
           {body}
         </table>
       </CustomCSS>

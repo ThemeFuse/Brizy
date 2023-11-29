@@ -38,9 +38,8 @@ export function getItems({ context }) {
               devices: "desktop",
               tabs: [
                 {
-                  id: "moreSettingsAdvanced",
-                  label: t("Advanced"),
-                  icon: "nc-cog",
+                  id: "settingsStyling",
+                  label: t("Basic"),
                   options: [
                     {
                       id: "showOnDesktop",
@@ -49,7 +48,14 @@ export function getItems({ context }) {
                       closeTooltip: true,
                       type: "switch-dev",
                       devices: "desktop"
-                    },
+                    }
+                  ]
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  icon: "nc-cog",
+                  options: [
                     {
                       id: "cssID",
                       label: t("Block Name"),

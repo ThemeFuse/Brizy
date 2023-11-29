@@ -118,6 +118,13 @@ const _Icon = <T extends Literal>(props: IconProps<T>): ReactElement => {
     [onChange]
   );
 
+  const extra = useMemo(
+    () => ({
+      placeholder: value
+    }),
+    [value]
+  );
+
   const handleClick = useCallback(() => {
     if (typeof handlerChoices === "function") {
       const res = (placeholder: T) => {
@@ -130,9 +137,9 @@ const _Icon = <T extends Literal>(props: IconProps<T>): ReactElement => {
       const rej = (error: string) => {
         ToastNotification.error(error);
       };
-      handlerChoices(res, rej);
+      handlerChoices(res, rej, extra);
     }
-  }, [handlerChoices, onChange]);
+  }, [handlerChoices, onChange, extra]);
 
   if (value) {
     input = <Input value={`${value}`} onRemove={handleRemove} />;

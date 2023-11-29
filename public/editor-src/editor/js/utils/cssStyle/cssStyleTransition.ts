@@ -5,10 +5,11 @@ import { capByPrefix } from "../string";
 export function cssStyleHoverTransition({
   v,
   device,
-  state
+  state,
+  prefix = ""
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const hoverTransition = dvv("hoverTransition");
+  const hoverTransition = dvv(capByPrefix(prefix, "hoverTransition"));
 
   return hoverTransition === undefined
     ? ""

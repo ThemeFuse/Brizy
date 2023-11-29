@@ -21,13 +21,17 @@ export function style(v, vs, vd) {
     ".brz &&:hover .brz-table__th": {
       standart: ["cssStyleBorder"]
     },
-    ".brz &&:hover .brz-table__head > .brz-table__tr > .brz-table__aside:first-child":
+    ".brz &&:not(.brz-table__disabled-tableAside) .brz-table__head > .brz-table__tr > .brz-table__aside:first-child":
       {
         standart: ["cssStyleElementTableAsideWidth"]
       },
-    ".brz &&:hover .brz-table__body > .brz-table__tr > .brz-table__aside:first-child":
+    ".brz &&:not(.brz-table__disabled-tableAside) .brz-table__body > .brz-table__tr > .brz-table__aside:first-child":
       {
         standart: ["cssStyleElementTableAsideWidth"]
+      },
+    ".brz &&:not(.brz-table__custom--width) .brz-table__head .brz-table__aside":
+      {
+        standart: ["cssStyleElementTableAsideAutoWidth"]
       }
   };
 

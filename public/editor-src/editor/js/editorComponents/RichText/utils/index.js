@@ -9,8 +9,8 @@ import { getDynamicContentChoices } from "visual/utils/options";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { decodeFromString, encodeToString } from "visual/utils/string";
-import { isNullish, onNullish, throwOnNullish } from "visual/utils/value";
 import { capByPrefix } from "visual/utils/string";
+import { isNullish, onNullish, throwOnNullish } from "visual/utils/value";
 import { classNamesToV } from "./transforms";
 
 // have problems with cheerio it declared _ as global variables
@@ -364,7 +364,7 @@ export const dcItemOptionParser = parseStrict({
 });
 
 export const createLabel = (label) => {
-  return `#${label}`;
+  return `✦${label}`;
 };
 
 export const handleChangePage = (v, value) => {

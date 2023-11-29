@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 6.4
+Tested up to: 6.4.1
 Requires PHP: 7.0.0
-Stable tag: 2.4.31
+Stable tag: 2.4.32
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,27 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.32 - 2023-11-29 =
+* New: Use system default fonts instead of Google or custom fonts
+* Improved: Reduce icons size
+* Improved: Save form checkbox value in preview
+* Improved: Move "Show on Desktop" icon under the Basic tab in the right sidebar
+* Improved: Delete dynamic content inside Text in one backspace
+* Improved: Optimised code output for the Accordion element
+* Improved: Optimised code output for the Tabs element
+* Improved: Optimised code output for the Icon element
+* Improved: Optimised code output for the Button element
+* Improved: Reduced ID length in HTML attributes
+* Improved: Removed "data-uid" and "name" attributes from section in preview
+* Improved: Integrations API new data output format
+* Fixed: Drag image with link
+* Fixed: Icon sizes values in the Icon element
+* Fixed: Dynamic content text color in preview
+* Fixed: Sound of video with cover image plays twice
+* Fixed: Custom video loop not working
+* Fixed: Copy and Paste styles for hover overlay
+* Fixed: Return empty for placeholders that are working with WooCommerce functions
 
 = 2.4.31 - 2023-11-08 =
 * Fixed: Malformed attribute selector data-brz-popup

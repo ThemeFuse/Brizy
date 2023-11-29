@@ -1,12 +1,12 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import defaultValue from "./defaultValue.json";
-import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
 import classnames from "classnames";
-import * as toolbarExtendConfig from "./toolbar";
+import React from "react";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { css } from "visual/utils/cssStyle";
+import defaultValue from "./defaultValue.json";
 import * as sidebarExtendConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarExtendConfig from "./toolbar";
 
 class TableBody extends EditorComponent {
   static get componentId() {
@@ -35,7 +35,8 @@ class TableBody extends EditorComponent {
         toolbarExtend: this.makeToolbarPropsFromConfig2(
           toolbarExtendConfig,
           sidebarExtendConfig
-        )
+        ),
+        isFromBody: true
       }
     });
 

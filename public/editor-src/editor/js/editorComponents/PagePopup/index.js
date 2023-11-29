@@ -1,19 +1,20 @@
+import classnames from "classnames";
 import React from "react";
-import Prompts from "visual/component/Prompts";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { FirstPopupBlockAdder } from "visual/component/BlockAdders";
 import HotKeys from "visual/component/HotKeys";
-import UIEvents from "visual/global/UIEvents";
-import { getStore } from "visual/redux/store";
-import { triggersAmountSelector } from "visual/redux/selectors";
-import { updateTriggers } from "visual/redux/actions";
-import { addBlock, addGlobalBlock } from "visual/redux/actions2";
+import Prompts from "visual/component/Prompts";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 // should we move this util folder to another place?
 import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
-import defaultValue from "./defaultValue.json";
+import UIEvents from "visual/global/UIEvents";
+import { updateTriggers } from "visual/redux/actions";
+import { addBlock, addGlobalBlock } from "visual/redux/actions2";
+import { triggersAmountSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
+import { setIds, stripSystemKeys } from "visual/utils/models";
 import { uuid } from "visual/utils/uuid";
-import { stripSystemKeys, setIds } from "visual/utils/models";
+import defaultValue from "./defaultValue.json";
 
 class PagePopup extends EditorComponent {
   static get componentId() {
@@ -57,7 +58,7 @@ class PagePopup extends EditorComponent {
     });
   };
 
-  handleDNDSort = data => {
+  handleDNDSort = (data) => {
     const { dbValue } = this.props;
 
     const newValue = changeValueAfterDND(dbValue, data);
@@ -65,7 +66,7 @@ class PagePopup extends EditorComponent {
     this.props.onChange(newValue);
   };
 
-  handleBlocksAdd = data => {
+  handleBlocksAdd = (data) => {
     const { dispatch } = getStore();
     const meta = { insertIndex: 0 };
     const { block, ...rest } = data;
@@ -106,18 +107,13 @@ class PagePopup extends EditorComponent {
       })
     });
 
-    return (
-      <React.Fragment>
-        <EditorArrayComponent {...popupsProps} />
-        <div className="brz-root__container-after" />
-      </React.Fragment>
-    );
+    return <EditorArrayComponent {...popupsProps} />;
   }
 
   renderForEdit(v) {
-    if (IS_EDITOR && v.items.length === 0) {
+    if (v.items.length === 0) {
       return (
-        <React.Fragment>
+        <>
           <FirstPopupBlockAdder
             insertIndex={0}
             onAddBlock={this.handleBlocksAdd}
@@ -134,15 +130,24 @@ class PagePopup extends EditorComponent {
             id="key-helper-blocks"
             onKeyDown={this.handlePromptOpen}
           />
-        </React.Fragment>
+        </>
       );
     }
 
-    return this.renderItems();
+    return (
+      <>
+        {this.renderItems()}
+        <div className="brz-root__container-after" />
+      </>
+    );
   }
 
   renderForView() {
-    return this.renderItems();
+    const className = classnames(
+      "brz-root__container brz-root__container-popup brz-reset-all",
+      this.props.className
+    );
+    return <div className={className}>{this.renderItems()}</div>;
   }
 }
 

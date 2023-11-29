@@ -103,7 +103,33 @@ const getItems =
       type: DCTypes.link
     });
 
+    const disableAiText =
+      !!v.population ||
+      !!v.textPopulation ||
+      typeof config?.api?.textAI?.handler !== "function";
+
     return [
+      {
+        id: "aiText",
+        type: "popover-dev",
+        config: {
+          icon: "t2-star-shapes",
+          size: "auto",
+          title: t("AiText")
+        },
+        roles: ["admin"],
+        position: 10,
+        options: [
+          {
+            id: "text",
+            type: "aiText-dev",
+            isPro: true,
+            selectedValue: v.selectedValue,
+            devices: "desktop"
+          }
+        ],
+        disabled: disableAiText
+      },
       {
         id: "toolbarFont",
         type: "popover-dev",

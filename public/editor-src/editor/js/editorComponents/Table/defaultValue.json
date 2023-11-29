@@ -2,7 +2,8 @@
   "content": {
     "items": [],
     "rows": 9,
-    "columns": 2
+    "columns": 2,
+    "widthType": "off"
   },
 
   "style": {

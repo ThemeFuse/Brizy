@@ -1,6 +1,7 @@
 import { ThunkAction } from "redux-thunk";
 import { mergeDeep } from "timm";
 import _ from "underscore";
+import { PublishData } from "visual/global/Config/types/configs/ConfigCommon";
 import { fontsSelector } from "visual/redux/selectors";
 import {
   ActiveElement,
@@ -15,6 +16,7 @@ import {
   GoogleFont,
   ShopifyPage,
   Style,
+  SystemFont,
   UploadedFont
 } from "visual/types";
 import { ArrayType } from "visual/utils/array/types";
@@ -259,50 +261,9 @@ export type ReduxAction =
   | ActionMakePopupToGlobalBlock
   | ActionMakeGlobalBlockToPopup
   | ActionStoreWasChanged
-  | ActionUpdatePageTitle;
-
-export const IMPORT_TEMPLATE = "IMPORT_TEMPLATE";
-
-export type ActionImportTemplate = {
-  type: typeof IMPORT_TEMPLATE;
-  payload: {
-    blocks: Block[];
-    fonts: FontsPayload;
-    extraFontStyles: Array<ExtraFontStyle>;
-    styles?: Style[];
-    currentStyleId?: string;
-  };
-  meta: {
-    insertIndex: number;
-  };
-};
-
-export const IMPORT_KIT = "IMPORT_KIT";
-
-export interface ActionImportKit {
-  type: typeof IMPORT_KIT;
-  payload: {
-    selectedKit: string;
-    styles: Style[];
-    fonts: FontsPayload;
-  };
-}
-
-export const IMPORT_STORY = "IMPORT_STORY";
-
-export type ActionImportStory = {
-  type: typeof IMPORT_STORY;
-  payload: {
-    blocks: Block[];
-    fonts: FontsPayload;
-    extraFontStyles: Array<{ id: string }>;
-    styles?: Style[];
-    currentStyleId?: string;
-  };
-  meta: {
-    insertIndex: number;
-  };
-};
+  | ActionUpdatePageTitle
+  | AddNewGlobalStyle
+  | UpdateCurrentStyleId;
 
 export type ActionUpdateAuthorized = {
   type: "UPDATE_AUTHORIZATION";
@@ -321,11 +282,24 @@ export type ActionUpdateSyncAllowed = {
 
 export const PUBLISH = "PUBLISH";
 
+interface PublishBase {
+  status: ReduxState["page"]["status"];
+}
+
+interface PublishInternal extends PublishBase {
+  type: "internal";
+}
+
+interface PublishExternal extends PublishBase {
+  type: "external";
+  res: (data: PublishData) => void;
+}
+
+type PublishPayload = PublishInternal | PublishExternal;
+
 export type ActionUpdatePageStatus = {
   type: typeof PUBLISH;
-  payload: {
-    status: ReduxState["page"]["status"];
-  };
+  payload: PublishPayload;
   meta?: {
     onSuccess: (s?: void) => void;
     onError: (e?: void) => void;
@@ -474,7 +448,7 @@ export const addFonts: ThunkAddFonts =
       // current version of tsc (3.7.3) does not allow
       // calling map on (GoogleFont[] | UploadFont[])
       // but does on (GoogleFont | UploadedFont)[]
-      const fontData: (GoogleFont | UploadedFont)[] =
+      const fontData: (GoogleFont | UploadedFont | SystemFont)[] =
         usedFonts[type]?.data || [];
 
       // Separated Deleted Font with Normal Font
@@ -514,6 +488,7 @@ export const deleteFont: ThunkDeleteFonts =
     const { type, fonts: removedFonts } = payload;
     const fonts = fontsSelector(getState());
     const fontData: Font[] = (fonts[type] && fonts[type]?.data) || [];
+
     const dataFonts = {
       [type]: {
         data: fontData.map((font) =>
@@ -603,7 +578,7 @@ export const updatePageStatus: ThunkPublishPage =
     return new Promise((res, rej) => {
       dispatch({
         type: "PUBLISH",
-        payload: { status },
+        payload: { status, type: "internal" },
         meta: {
           onSuccess: res,
           onError: rej
@@ -706,53 +681,6 @@ export function reorderBlocks(payload: {
   };
 }
 
-export function importStory(
-  story: {
-    blocks: Block[];
-    fonts: FontsPayload;
-    extraFontStyles: Array<{ id: string }>;
-  },
-  meta = { insertIndex: 0 }
-): ActionImportStory {
-  return {
-    type: IMPORT_STORY,
-    payload: story,
-    meta
-  };
-}
-
-// templates
-
-export function importTemplate(
-  template: {
-    blocks: Block[];
-    fonts: FontsPayload;
-    extraFontStyles: Array<ExtraFontStyle>;
-  },
-  meta = { insertIndex: 0 }
-): ActionImportTemplate {
-  return {
-    meta,
-    type: "IMPORT_TEMPLATE",
-    payload: template
-  };
-}
-
-// kit
-
-interface Kit {
-  selectedKit: string;
-  styles: Style[];
-  fonts: FontsPayload;
-}
-
-export const importKit = (payload: Kit): ActionImportKit => {
-  return {
-    type: "IMPORT_KIT",
-    payload
-  };
-};
-
 // UI
 
 export function setDeviceMode(mode: DeviceMode): ActionUpdateUI {
@@ -802,3 +730,121 @@ export const updatePageIsHomePage = (
     payload: { isHomePage }
   };
 };
+
+// region Add New Global Style
+
+export enum ActionTypes {
+  "ADD_NEW_GLOBAL_STYLE" = "ADD_NEW_GLOBAL_STYLE",
+  "IMPORT_KIT" = "IMPORT_KIT",
+  "IMPORT_STORY" = "IMPORT_STORY",
+  "IMPORT_TEMPLATE" = "IMPORT_TEMPLATE",
+  "UPDATE_CURRENT_STYLE_ID" = "UPDATE_CURRENT_STYLE_ID",
+  "UPDATE_CURRENT_STYLE" = "UPDATE_CURRENT_STYLE"
+}
+
+// templates
+
+export type ActionImportTemplate = {
+  type: ActionTypes.IMPORT_TEMPLATE;
+  payload: {
+    blocks: Block[];
+    fonts: FontsPayload;
+    extraFontStyles: Array<ExtraFontStyle>;
+    styles?: Style[];
+    currentStyleId?: string;
+  };
+  meta: {
+    insertIndex: number;
+  };
+};
+
+export const importTemplate = (
+  template: {
+    blocks: Block[];
+    fonts: FontsPayload;
+    extraFontStyles: Array<ExtraFontStyle>;
+  },
+  meta = { insertIndex: 0 }
+): ActionImportTemplate => ({
+  meta,
+  type: ActionTypes.IMPORT_TEMPLATE,
+  payload: template
+});
+
+export const updateCurrentStyle = (currentStyle: string) => ({
+  type: ActionTypes.UPDATE_CURRENT_STYLE,
+  payload: currentStyle
+});
+
+export type ActionImportStory = {
+  type: ActionTypes.IMPORT_STORY;
+  payload: {
+    blocks: Block[];
+    fonts: FontsPayload;
+    extraFontStyles: Array<{ id: string }>;
+    styles?: Style[];
+    currentStyleId?: string;
+  };
+  meta: {
+    insertIndex: number;
+  };
+};
+
+export const importStory = (
+  story: {
+    blocks: Block[];
+    fonts: FontsPayload;
+    extraFontStyles: Array<{ id: string }>;
+  },
+  meta = { insertIndex: 0 }
+): ActionImportStory => ({
+  type: ActionTypes.IMPORT_STORY,
+  payload: story,
+  meta
+});
+
+export interface ActionImportKit {
+  type: ActionTypes.IMPORT_KIT;
+  payload: {
+    selectedKit: string;
+    styles: Style[];
+    fonts: FontsPayload;
+  };
+}
+
+// kit
+
+interface Kit {
+  selectedKit: string;
+  styles: Style[];
+  fonts: FontsPayload;
+}
+
+export const importKit = (payload: Kit): ActionImportKit => ({
+  type: ActionTypes.IMPORT_KIT,
+  payload
+});
+
+export type AddNewGlobalStyle = {
+  type: ActionTypes.ADD_NEW_GLOBAL_STYLE;
+  payload: Style;
+};
+
+export const addNewGlobalStyle = (payload: Style): AddNewGlobalStyle => ({
+  type: ActionTypes.ADD_NEW_GLOBAL_STYLE,
+  payload
+});
+
+export type UpdateCurrentStyleId = {
+  type: ActionTypes.UPDATE_CURRENT_STYLE_ID;
+  payload: string;
+};
+
+export const updateCurrentStyleId = (
+  payload: string
+): UpdateCurrentStyleId => ({
+  type: ActionTypes.UPDATE_CURRENT_STYLE_ID,
+  payload
+});
+
+// endregion

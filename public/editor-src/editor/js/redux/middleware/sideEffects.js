@@ -25,17 +25,13 @@ import {
   ADD_BLOCK,
   COPY_ELEMENT,
   HYDRATE,
-  UPDATE_CURRENT_STYLE,
-  UPDATE_CURRENT_STYLE_ID,
   UPDATE_UI,
   updateCopiedElement
 } from "../actions";
 import {
   ADD_FONTS,
+  ActionTypes,
   DELETE_FONTS,
-  IMPORT_KIT,
-  IMPORT_STORY,
-  IMPORT_TEMPLATE,
   UPDATE_DEFAULT_FONT,
   UPDATE_EXTRA_FONT_STYLES,
   updateUI
@@ -68,9 +64,9 @@ export default (config) => (store) => (next) => (action) => {
   }
 
   if (
-    action.type === IMPORT_TEMPLATE ||
-    action.type === IMPORT_KIT ||
-    action.type === IMPORT_STORY ||
+    action.type === ActionTypes.IMPORT_TEMPLATE ||
+    action.type === ActionTypes.IMPORT_KIT ||
+    action.type === ActionTypes.IMPORT_STORY ||
     action.type === ADD_BLOCK ||
     action.type === ADD_FONTS ||
     action.type === DELETE_FONTS ||
@@ -80,11 +76,11 @@ export default (config) => (store) => (next) => (action) => {
   }
 
   if (
-    action.type === IMPORT_TEMPLATE ||
-    action.type === UPDATE_CURRENT_STYLE_ID ||
-    action.type === UPDATE_CURRENT_STYLE ||
+    action.type === ActionTypes.IMPORT_TEMPLATE ||
+    action.type === ActionTypes.UPDATE_CURRENT_STYLE_ID ||
+    action.type === ActionTypes.UPDATE_CURRENT_STYLE ||
     action.type === UPDATE_EXTRA_FONT_STYLES ||
-    action.type === IMPORT_STORY
+    action.type === ActionTypes.IMPORT_STORY
   ) {
     handleStylesChange(callbacks);
   }

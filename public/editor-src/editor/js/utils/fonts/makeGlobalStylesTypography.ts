@@ -1,6 +1,7 @@
 import { once } from "underscore";
 import Conf, { Config } from "visual/global/Config";
 import { FontStyle as _FontStyle } from "visual/types";
+import { FONT_INITIAL } from "visual/utils/fonts/utils";
 import { isExternalPopup } from "visual/utils/models/modes";
 import {
   DESKTOP,
@@ -65,10 +66,14 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
         tabletLineHeight
       } = style;
       const id = _id.toLowerCase();
-      const fontFamily = getFontById({
-        family: style.fontFamily,
-        type: style.fontFamilyType
-      }).family;
+
+      const fontFamily =
+        style.fontFamily === FONT_INITIAL
+          ? FONT_INITIAL
+          : getFontById({
+              family: style.fontFamily,
+              type: style.fontFamilyType
+            }).family;
 
       const _fontSize = `${fontSize}${fontSizeSuffix ?? "px"}`;
       const _mobileFontSize = `${mobileFontSize}${

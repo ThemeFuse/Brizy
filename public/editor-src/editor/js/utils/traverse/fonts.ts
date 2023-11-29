@@ -5,10 +5,11 @@ import {
 import { mapBlockElements } from "visual/editorComponents/RichText/utils";
 import { classNamesToV } from "visual/editorComponents/RichText/utils/transforms";
 import {
-  FontStyle,
   Fonts,
+  FontStyle,
   GlobalBlock,
   GoogleFont,
+  SystemFont,
   UploadedFont
 } from "visual/types";
 import { findFonts, projectFontsData } from "visual/utils/fonts";
@@ -160,8 +161,11 @@ export const getBlocksStylesFonts: GetBlocksStylesFonts = (
   }, [] as Font[]);
 
   // @ts-expect-error: Need transform to ts
-  const projectFonts: { google: GoogleFont[]; upload: UploadedFont[] } =
-    projectFontsData(projectFonts_);
+  const projectFonts: {
+    google: GoogleFont[];
+    upload: UploadedFont[];
+    system: SystemFont[];
+  } = projectFontsData(projectFonts_);
 
   return uniqFonts.reduce((acc, curr) => {
     const { type, family } = curr;
@@ -176,6 +180,7 @@ export const getBlocksStylesFonts: GetBlocksStylesFonts = (
           : ([...acc, curr] as FontModel[]);
       }
       case "google":
+      case "system":
       case "upload": {
         return findFonts(projectFonts[type], family, type)
           ? acc

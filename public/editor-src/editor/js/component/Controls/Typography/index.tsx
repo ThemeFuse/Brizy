@@ -1,8 +1,8 @@
-import classNames from "classnames";
+import classnames from "classnames";
 import React, { PureComponent } from "react";
 import { FontFamily } from "visual/component/Controls/FontFamily";
-import { Item } from "visual/component/Controls/Select2/Item";
 import { Select2 } from "visual/component/Controls/Select2";
+import { Item } from "visual/component/Controls/Select2/Item";
 import Stepper from "visual/component/Controls/Stepper";
 import { Label } from "visual/component/Label";
 import Config from "visual/global/Config";
@@ -10,6 +10,7 @@ import { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
 import { Weight } from "visual/utils/fonts/Weight";
 import { isStory } from "visual/utils/models";
 import { FontStyle } from "./FontStyle";
+import { Icon } from "./TabIcon";
 import { Font } from "./types/FontFamily";
 import { TypographyProps as Props } from "./types/Props";
 import { Value } from "./types/Value";
@@ -67,12 +68,27 @@ export class Typography extends PureComponent<Props> {
       letterSpacingMin,
       letterSpacingStep,
       letterSpacingLabel,
-      className
+      className,
+      icons,
+      activeIcon,
+      onIconClick
     } = this.props;
 
-    const _className = classNames("brz-ed-control__typography", className, {
-      "brz-ed-control__typography--style-only": !showFontFamily
-    });
+    const IS_STORY = isStory(Config.getAll());
+
+    const typographyStyleClassName = classnames(
+      "brz-ed-control__typography-styles",
+      { "brz-ed-control__typography--tab-icon": icons }
+    );
+
+    const _className = classnames(
+      "brz-ed-control__typography",
+      {
+        "brz-ed-control__typography--style-only": !showFontFamily,
+        "brz-ed-control__typography--tabs-icon": icons
+      },
+      className
+    );
 
     return (
       <div className={_className}>
@@ -85,18 +101,33 @@ export class Typography extends PureComponent<Props> {
             addFontLabel={fontAddLabel}
           />
         )}
-        <div className="brz-ed-control__typography-styles">
+        <div className={typographyStyleClassName}>
           <div className="brz-ed__col brz-ed__col-1-1">
-            <Label>{styleLabel}</Label>
-            <FontStyle
-              styles={styles}
-              openSettings={styleOpenSettings}
-              onChange={this.onFontStyle}
-              value={style}
-            />
+            {icons?.length && !IS_STORY ? (
+              <div className="brz-ed-control__typography-styles_icon">
+                {icons?.map((icon, index) => (
+                  <Icon
+                    key={index}
+                    icon={icon}
+                    active={icon === activeIcon}
+                    onClick={onIconClick}
+                  />
+                ))}
+              </div>
+            ) : (
+              <>
+                <Label>{styleLabel}</Label>
+                <FontStyle
+                  styles={styles}
+                  openSettings={styleOpenSettings}
+                  onChange={this.onFontStyle}
+                  value={style}
+                />
+              </>
+            )}
           </div>
           <div className="brz-ed__col brz-ed__col-1-2">
-            {isStory(Config.getAll()) ? (
+            {IS_STORY ? (
               <Label>{sizeLabel}</Label>
             ) : (
               <div className="brz-control__typography-suffix">

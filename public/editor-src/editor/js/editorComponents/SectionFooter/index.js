@@ -394,9 +394,7 @@ class SectionFooter extends EditorComponent {
           component={tagName}
           componentProps={{
             ...parseCustomAttributes(customAttributes),
-            ...makeDataAttr({ name: "uid", value: this.getId() }),
             id: blockName,
-            name: blockName,
             className: classnames(
               "brz-footer",
               className,

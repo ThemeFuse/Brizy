@@ -26,7 +26,7 @@ function youtubeLoadScript(cb) {
       if (window.onYouTubeIframeAPIReady === undefined) {
         window.onYouTubeIframeAPIReady = () => {
           if (window.Brz) {
-            window.Brz.emit("elements.video.iframe.ready");
+            window.Brz.emit("plugin.video.iframe.ready");
           }
         };
       }
@@ -41,7 +41,7 @@ function youtubeLoadScript(cb) {
       }
 
       if (window.Brz) {
-        window.Brz.on("elements.video.iframe.ready", () => {
+        window.Brz.on("plugin.video.iframe.ready", () => {
           isAlreadyMounted = true;
           callbacks.forEach(function (cb) {
             cb();

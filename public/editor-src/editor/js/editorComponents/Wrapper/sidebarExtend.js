@@ -47,6 +47,13 @@ export function getItems({ v, device, context }) {
                   position: 10,
                   options: [
                     {
+                      id: "showOnDesktop",
+                      label: t("Show on Desktop"),
+                      type: "switch-dev",
+                      position: 10,
+                      closeTooltip: true
+                    },
+                    {
                       id: "padding",
                       type: "padding-dev",
                       label: t("Padding"),
@@ -139,13 +146,6 @@ export function getItems({ v, device, context }) {
                   label: t("Advanced"),
                   icon: "nc-cog",
                   options: [
-                    {
-                      id: "showOnDesktop",
-                      label: t("Show on Desktop"),
-                      type: "switch-dev",
-                      position: 10,
-                      closeTooltip: true
-                    },
                     {
                       id: "zIndex",
                       type: "slider-dev",

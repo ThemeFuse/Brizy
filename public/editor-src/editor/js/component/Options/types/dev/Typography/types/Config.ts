@@ -8,4 +8,6 @@ export interface Config {
   fontSize?: Boundaries;
   lineHeight?: Boundaries;
   letterSpacing?: Boundaries;
+
+  icons?: string[];
 }

@@ -66,6 +66,7 @@ import Tabs from "./Tabs";
 import Toggle from "./Toggle";
 import { StateMode } from "./common/StateMode";
 import { Alert } from "./dev/Alert";
+import { Ai } from "./dev/AiText";
 import { CodeMirror as CodeMirrorDev } from "./dev/CodeMirror";
 import { FormApps as FormAppsDev } from "./dev/FormApps";
 import { GlobalBlockOption as GlobalBlockDev } from "./dev/GlobalBlock";
@@ -80,6 +81,7 @@ import { Textarea as TextareaDev } from "./dev/Textarea";
 import { Toggle as ToggleDev } from "./dev/Toggle";
 
 const newTypes = {
+  "aiText-dev": Ai,
   "alert-dev": Alert,
   "animation-dev": Animation,
   "backgroundColor-dev": BackgroundColor,

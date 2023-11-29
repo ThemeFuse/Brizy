@@ -15,6 +15,8 @@ import {
   cssStyleTextAlign,
   getAllCssStyleTypography
 } from "visual/utils/cssStyle";
+import { read as readNumber } from "visual/utils/reader/number";
+import { read as readString } from "visual/utils/reader/string";
 import { CSSValue } from "visual/utils/style2/types";
 import { defaultValueValue } from "../onChange";
 
@@ -758,4 +760,45 @@ export function cssStyleElementMinistryEventCalendarIconStrokeWidth({
   state
 }: CSSValue): string {
   return cssStyleStrokeWidth({ v, device, state, prefix: "icon" });
+}
+
+export function cssStyleElementMinistryEventCalendarArrowColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "arrowColor"
+  });
+}
+
+export function cssStyleElementMinistryEventCalendarArrowBorder({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorder({ v, device, state, prefix: "arrow" });
+}
+
+export function cssStyleElementMinistryEventCalendarArrowBoxShadow({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBoxShadow({ v, device, state, prefix: "arrow" });
+}
+
+export function cssStyleElementMinistryEventCalendarArrowSize({
+  v,
+  device
+}: CSSValue): string {
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+
+  const arrowSize = readNumber(dvv("arrowSize")) ?? 16;
+  const arrowSizeSuffix = readString(dvv("arrowSizeSuffix")) ?? "px";
+
+  return `font-size:${arrowSize}${arrowSizeSuffix};`;
 }

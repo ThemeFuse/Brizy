@@ -57,6 +57,7 @@ const getItems = (config: Config): Record<LeftSidebarOptionsIds, Option> => {
     // @ts-expect-error: 'disabledElements' is declared here.
     [LeftSidebarOptionsIds.addElements]: Base,
     [LeftSidebarOptionsIds.reorderBlock]: BlocksSortable,
+    // @ts-expect-error connected components
     [LeftSidebarOptionsIds.globalStyle]: Styling,
     [LeftSidebarOptionsIds.collaboration]: {
       id: LeftSidebarOptionsIds.collaboration,
