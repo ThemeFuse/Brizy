@@ -1,6 +1,6 @@
 import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import defaultValue from "./defaultValue.json";
 
 const HEAD_ITEM_INDEX = 0;
@@ -18,18 +18,35 @@ class TableRow extends EditorComponent {
   static defaultValue = defaultValue;
 
   renderForEdit() {
-    const { meta, toolbarExtend } = this.props;
+    const { meta, toolbarExtend, isFromBody, showHead, widthType } = this.props;
+    const { showAside } = meta.table;
+
     const headProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       sliceStartIndex: HEAD_ITEM_INDEX,
       sliceEndIndex: ASIDE_ITEM_INDEX,
-      itemProps: { meta, toolbarExtend }
+      itemProps: (itemData, itemIndex) => {
+        return {
+          meta,
+          toolbarExtend,
+          isFromBody,
+          widthType,
+          showHead,
+          isFirstItem: showAside ? itemIndex === 0 : undefined
+        };
+      }
     });
+
     const asideProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       sliceStartIndex: ASIDE_ITEM_INDEX,
       sliceEndIndex: meta.table.columns + 1,
-      itemProps: { meta, toolbarExtend }
+      itemProps: {
+        meta,
+        toolbarExtend,
+        widthType,
+        showHead
+      }
     });
 
     const head = <EditorArrayComponent {...headProps} />;

@@ -12,7 +12,7 @@ import {
   StylesPro,
   getAssets
 } from "visual/bootstraps/export/transforms/assets";
-import { items as googleFonts } from "visual/config/googleFonts.json";
+import googleFonts from "visual/config/googleFonts.json";
 import Config from "visual/global/Config";
 import EditorGlobal from "visual/global/Editor";
 import { hydrate } from "visual/redux/actions";
@@ -26,6 +26,8 @@ import { GlobalBlock, GoogleFont, PageCommon, Project } from "visual/types";
 import { getBlocksInPage } from "visual/utils/blocks";
 import { css, tmpCSSFromCache } from "visual/utils/cssStyle";
 import { findFonts } from "visual/utils/fonts";
+import { systemFont } from "visual/utils/fonts/utils";
+import { isPopup, isStory } from "visual/utils/models";
 import { getBlocksStylesFonts } from "visual/utils/traverse";
 import { MValue } from "visual/utils/value";
 import "../../../registerEditorParts";
@@ -75,7 +77,7 @@ export const Editor: SSREditor = async (props) => {
 
   getBlocksStylesFonts(parsedFonts, fonts).forEach(({ type, family }) => {
     if (type === "google" || type === "unknowns") {
-      const font = findFonts(googleFonts, family);
+      const font = findFonts(googleFonts.items, family);
 
       if (font) {
         blocksFonts.push(font);
@@ -84,7 +86,10 @@ export const Editor: SSREditor = async (props) => {
   });
 
   const _fonts = deepMerge(fonts, {
-    blocks: { data: blocksFonts }
+    blocks: { data: blocksFonts },
+    system: {
+      data: systemFont
+    }
   });
 
   store.dispatch(
@@ -98,7 +103,7 @@ export const Editor: SSREditor = async (props) => {
     })
   );
 
-  const { Page } = EditorGlobal.getComponents();
+  const { Page, PagePopup, PageStory } = EditorGlobal.getComponents();
   const reduxState = store.getState();
 
   // @ts-expect-error: === TMP SSR ===
@@ -107,16 +112,29 @@ export const Editor: SSREditor = async (props) => {
 
   const dbValue = pageDataDraftBlocksSelector(reduxState);
 
-  if (!Page) {
+  if (!Page || !PagePopup || !PageStory) {
     console.log("Missing Page Components", EditorGlobal.getComponents());
     return;
   }
+  const pageProps = {
+    dbValue,
+    reduxState,
+    className: "brz"
+  };
 
   const { html, css: glamorCSS } = renderStatic(() =>
     ReactDOMServer.renderToStaticMarkup(
       <Provider store={store}>
-        {/* @ts-expect-error: Page */}
-        <Page dbValue={dbValue} reduxState={reduxState} />
+        {isPopup(config) ? (
+          // @ts-expect-error PagePopup
+          <PagePopup {...pageProps} />
+        ) : isStory(config) ? (
+          // @ts-expect-error PageStory
+          <PageStory {...pageProps} />
+        ) : (
+          // @ts-expect-error Page
+          <Page {...pageProps} />
+        )}
       </Provider>
     )
   );

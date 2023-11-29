@@ -3,6 +3,11 @@ import {
   ChoicesAsync,
   ChoicesSync
 } from "visual/component/Options/types/dev/Select/types";
+import {
+  EkklesiaFieldMap,
+  EkklesiaKeys,
+  EkklesiaParams
+} from "visual/editorComponents/MinistryBrands/utils/types";
 import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
@@ -26,7 +31,9 @@ import {
 } from "visual/types";
 import { PostsSources } from "visual/utils/api/types";
 import { Literal } from "visual/utils/types/Literal";
+import type { Compiler } from "./Compiler";
 import { ElementTypes } from "./ElementTypes";
+import { ThirdPartyComponents } from "./ThirdParty";
 import {
   AddFileData,
   AddFileExtra,
@@ -35,6 +42,7 @@ import {
   Response,
   ScreenshotData
 } from "./common";
+import { EkklesiaFields } from "./modules/ekklesia/Ekklesia";
 
 export enum Mode {
   page = "page",
@@ -110,17 +118,14 @@ export interface PopupSettings {
   backgroundPreviewUrl?: string;
 }
 
-export interface UpdateRes {
-  pageData: PageCommon;
-  projectData: Project;
-}
-
 export interface PublishData {
   // TODO  Currently only projectData and pageData is used
   //  Need to add globalBlocks
-  is_autosave: 1 | 0;
   projectData?: Project;
   pageData?: PageCommon;
+  html?: string;
+  styles?: Array<string>;
+  scripts?: Array<string>;
   // globalBlocks: Array<GlobalBlock>;
 }
 
@@ -272,6 +277,16 @@ interface _ConfigCommon<Mode> {
 
   pageData?: PageCommon;
 
+  // HTML Compilation: inside Browser or External Server
+
+  compiler?: Compiler;
+
+  //#region Third Party
+
+  thirdPartyComponents?: ThirdPartyComponents;
+
+  //#endregion
+
   //#region UI
 
   ui?: {
@@ -331,7 +346,7 @@ interface _ConfigCommon<Mode> {
     publish?: {
       label?: string;
       handler: (
-        res: Response<PublishData>,
+        res: Response<void>,
         rej: Response<string>,
         extra: PublishData
       ) => void;
@@ -360,7 +375,7 @@ interface _ConfigCommon<Mode> {
 
   // OnUpdate are triggered outside the editor when
   // the thirty party app want to update the page
-  onUpdate: (res: Response<UpdateRes>, config?: ConfigCommon) => void;
+  onUpdate: (res: Response<PublishData>, config?: ConfigCommon) => void;
 
   //#endregion
 
@@ -370,6 +385,15 @@ interface _ConfigCommon<Mode> {
     // Used only in Posts(Migration) & GlobalBlocks PopupConditions
     /** @deprecated */
     brizyApiUrl?: string;
+
+    //AI
+    textAI?: {
+      handler: (
+        res: Response<string>,
+        rej: Response<string>,
+        data: { prompt: string; action?: string }
+      ) => void;
+    };
 
     // Media
     media?: {
@@ -600,6 +624,24 @@ interface _ConfigCommon<Mode> {
       leadific?: {
         getCustomFields?: {
           handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
+        };
+      };
+      ekklesia?: {
+        getEkklesiaFields?: {
+          handler: <T extends keyof EkklesiaFields = keyof EkklesiaFields>(
+            res: Response<ChoicesSync | ChoicesSync>,
+            rej: Response<string>,
+            keys: EkklesiaParams<T>
+          ) => void;
+        };
+        updateEkklesiaFields?: {
+          handler: <T extends keyof EkklesiaFields = keyof EkklesiaFields>(
+            res: Response<EkklesiaKeys>,
+            rej: Response<string>,
+            keys: {
+              fields: Array<EkklesiaFieldMap[T]>;
+            }
+          ) => EkklesiaKeys;
         };
       };
     };

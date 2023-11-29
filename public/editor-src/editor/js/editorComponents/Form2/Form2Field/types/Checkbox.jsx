@@ -1,12 +1,12 @@
 import React from "react";
-import { replaceAt, removeAt, omit } from "timm";
-import TextField from "./common/TextField";
-import { t } from "visual/utils/i18n";
+import { omit, removeAt, replaceAt } from "timm";
 import CheckboxControls, {
   CheckGroupItem as CheckboxControlsItem
 } from "visual/component/Controls/CheckGroup";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
+import { t } from "visual/utils/i18n";
+import TextField from "./common/TextField";
 
 export default class Checkbox extends TextField {
   static get componentTitle() {
@@ -18,16 +18,15 @@ export default class Checkbox extends TextField {
   }
 
   state = {
-    value: "",
-    active: {}
+    value: ""
   };
 
   getClassName() {
     return "brz-forms2__field brz-forms2__checkbox";
   }
 
-  handleActive = active => {
-    this.setState({ active });
+  handleActive = (active) => {
+    this.props.onChange({ active });
   };
 
   handleChangeOption(value, index) {
@@ -38,11 +37,11 @@ export default class Checkbox extends TextField {
     });
   }
 
-  handleChangeValue = e => {
+  handleChangeValue = (e) => {
     this.setState({ value: e.target.value });
   };
 
-  handleKeyUp = e => {
+  handleKeyUp = (e) => {
     if (e.keyCode === 13) {
       this.handleAddOption();
     }
@@ -58,11 +57,14 @@ export default class Checkbox extends TextField {
     }
   };
 
-  handleRemoveOption(index) {
-    const { options, onChange } = this.props;
+  handleRemoveOption(e, index) {
+    const { options, onChange, active } = this.props;
+    e.stopPropagation();
 
-    this.setState({ active: omit(this.state.active, options[index]) });
-    onChange({ options: removeAt(options, index) });
+    onChange({
+      options: removeAt(options, index),
+      active: omit(active, options[index])
+    });
   }
 
   renderIconForEdit = ({ active }) => {
@@ -99,7 +101,7 @@ export default class Checkbox extends TextField {
 
   renderOptions(v) {
     const { label, _id } = v;
-    const { active } = this.state;
+    const { active } = this.props;
 
     return (
       <CheckboxControls
@@ -121,13 +123,13 @@ export default class Checkbox extends TextField {
                 type="text"
                 className="brz-input"
                 value={option}
-                onChange={e => this.handleChangeOption(e.target.value, index)}
+                onChange={(e) => this.handleChangeOption(e.target.value, index)}
               />
               <span className="brz-span brz-invisible">{option}</span>
             </div>
             <div
               className="brz-forms2__checkbox-option-icon"
-              onClick={() => this.handleRemoveOption(index)}
+              onClick={(e) => this.handleRemoveOption(e, index)}
             >
               <EditorIcon icon="nc-trash" />
             </div>
@@ -166,13 +168,17 @@ export default class Checkbox extends TextField {
 
   renderForView(v) {
     const { attr } = v;
-    const options = v.options.filter(option => option && option.trim());
+
+    const options = v.options.filter((option) => option && option.trim());
 
     return options.length ? (
       <div className={this.getClassName()}>
-        <CheckboxControls className="brz-forms2__checkbox-options">
+        <CheckboxControls
+          className="brz-forms2__checkbox-options"
+          defaultValue={this.props.active}
+        >
           {options
-            .filter(option => option && option.trim())
+            .filter((option) => option && option.trim())
             .map((option, index) => (
               <CheckboxControlsItem
                 {...attr}

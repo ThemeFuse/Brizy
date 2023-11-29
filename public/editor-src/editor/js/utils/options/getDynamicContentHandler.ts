@@ -13,9 +13,13 @@ export const getDynamicContentHandler = (
     return undefined;
   }
 
-  return (res, rej) => {
-    item.handler((r) => {
-      res(r.placeholder);
-    }, rej);
+  return (res, rej, extra) => {
+    item.handler(
+      (r) => {
+        res(r.placeholder);
+      },
+      rej,
+      extra
+    );
   };
 };

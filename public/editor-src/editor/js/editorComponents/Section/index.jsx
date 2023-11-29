@@ -356,9 +356,7 @@ export default class Section extends EditorComponent {
 
     const props = {
       ...parseCustomAttributes(customAttributes),
-      ...makeDataAttr({ name: "uid", value: this.getId() }),
       id: blockName,
-      name: blockName,
       className: classNameSection
     };
 

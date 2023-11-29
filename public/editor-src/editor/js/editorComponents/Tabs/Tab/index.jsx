@@ -1,5 +1,5 @@
-import classnames from "classnames";
 import { DangerouslySetHtmlContent } from "@brizy/component/src/common/components/DangerouslySetHtmlContent";
+import classnames from "classnames";
 import React from "react";
 import Animation from "visual/component/Animation";
 import { TextEditor } from "visual/component/Controls/TextEditor";
@@ -51,7 +51,7 @@ class Tab extends EditorComponent {
   }
 
   renderContent(v) {
-    const { labelText, customClassName, iconName, iconType } = v;
+    const { labelText, iconName, iconType } = v;
     const { active, meta, onChangeNav, animationClassName } = this.props;
     const itemsProps = this.makeSubcomponentProps({
       meta,
@@ -65,10 +65,6 @@ class Tab extends EditorComponent {
     const labelClassName = classnames("brz-tabs__nav--mobile", {
       "brz-tabs__nav--mobile--active": active
     });
-    const contentClassName = classnames(
-      "brz-tabs__item--content",
-      customClassName
-    );
 
     return (
       <div className={className}>
@@ -86,20 +82,21 @@ class Tab extends EditorComponent {
             </div>
           </Toolbar>
         </div>
-        <div className={contentClassName}>
-          <Animation
-            iterationCount={
-              IS_PREVIEW && (meta.sectionPopup || meta.sectionPopup2)
-                ? Infinity
-                : 1
-            }
-            component={"div"}
-            componentProps={{ className: "brz-d-xs-flex brz-flex-xs-column" }}
-            animationClass={animationClassName}
-          >
-            <Items {...itemsProps} />
-          </Animation>
-        </div>
+        <Animation
+          iterationCount={
+            IS_PREVIEW && (meta.sectionPopup || meta.sectionPopup2)
+              ? Infinity
+              : 1
+          }
+          component={"div"}
+          componentProps={{
+            className:
+              "brz-tabs__item--content brz-d-xs-flex brz-flex-xs-column"
+          }}
+          animationClass={animationClassName}
+        >
+          <Items {...itemsProps} />
+        </Animation>
       </div>
     );
   }

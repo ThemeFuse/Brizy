@@ -1,7 +1,7 @@
 import EditorComponents from "visual/global/Editor";
 import { Block } from "visual/types";
 
-export type FontType = "google" | "upload" | "unknowns";
+export type FontType = "google" | "upload" | "system" | "unknowns";
 
 export type Font = {
   type: FontType;

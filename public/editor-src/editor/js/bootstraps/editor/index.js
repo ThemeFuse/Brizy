@@ -5,14 +5,12 @@ import { Provider } from "react-redux";
 import Editor from "visual/component/Editor";
 import Config from "visual/global/Config";
 import { editorRendered, hydrate } from "visual/redux/actions";
-import { pageSelector, projectSelector } from "visual/redux/selectors";
 import { createStore } from "visual/redux/store";
 import {
   addProjectLockedBeacon,
   getGlobalBlocks,
   removeProjectLockedSendBeacon
 } from "visual/utils/api";
-import { AuthProvider } from "visual/utils/api/providers/Auth";
 import { flatMap } from "visual/utils/array";
 import { getBlocksInPage } from "visual/utils/blocks";
 import { PageError, ProjectError } from "visual/utils/errors";
@@ -24,7 +22,7 @@ import {
   getUsedStylesFonts
 } from "visual/utils/traverse";
 import { getAuthorized } from "visual/utils/user/getAuthorized";
-import "../registerEditorParts";
+import { systemFont } from "../../utils/fonts/utils";
 import getMiddleware from "./middleware";
 import { showError } from "./utils/errors";
 import { readPageData } from "./utils/readPageData";
@@ -33,6 +31,12 @@ const appDiv = document.querySelector("#brz-ed-root");
 const pageCurtain = window.parent.document.querySelector(
   ".brz-ed-page-curtain"
 );
+
+const _systemFont = {
+  system: {
+    data: systemFont
+  }
+};
 
 (async function main() {
   try {
@@ -87,6 +91,7 @@ const pageCurtain = window.parent.document.querySelector(
     const fontsDiff = await normalizeFonts(
       getBlocksStylesFonts([...pageFonts, ...stylesFonts], fonts)
     );
+
     const newFonts = fontsDiff.reduce(
       (acc, { type, fonts }) => ({ ...acc, [type]: { data: fonts } }),
       {}
@@ -112,7 +117,7 @@ const pageCurtain = window.parent.document.querySelector(
         globalBlocks,
         authorized: getAuthorized(),
         syncAllowed: isSyncAllowed,
-        fonts: deepMerge(fonts, newFonts)
+        fonts: deepMerge.all([fonts, newFonts, _systemFont])
       })
     );
 
@@ -129,38 +134,14 @@ const pageCurtain = window.parent.document.querySelector(
       );
     }
 
+    // For External API
     config.onUpdate = (res) => {
       store.dispatch({
         type: "PUBLISH",
         payload: {
-          status: store.getState().page.status
-        },
-        meta: {
-          onSuccess: () => {
-            (async () => {
-              try {
-                const state = store.getState();
-                const pageData = pageSelector(state);
-                const projectData = projectSelector(state);
-                let pageHTML = {};
-
-                if (IS_EXPORT) {
-                  try {
-                    if (AUTHORIZATION_URL) {
-                      const Auth = new AuthProvider(AUTHORIZATION_URL);
-                      await Auth.send();
-                    }
-                  } catch (e) {
-                    console.warn("Compile without export");
-                  }
-                }
-
-                res({ ...pageHTML, pageData, projectData });
-              } catch (e) {
-                showError({ e });
-              }
-            })();
-          }
+          status: store.getState().page.status,
+          type: "external",
+          res
         }
       });
     };

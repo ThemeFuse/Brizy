@@ -56,10 +56,10 @@ export function style(
           "cssStyleTypography2LetterSpacing"
         ]
       },
-    ".brz && > .brz-accordion__item .brz-accordion--icon-wrapper": {
+    ".brz && > .brz-accordion__item .brz-accordion-icon": {
       standart: ["cssStyleElementAccordionNavIconSpacing"]
     },
-    ".brz && > .brz-accordion__item > .brz-accordion__nav .brz-accordion--icon-wrapper .brz-icon-svg":
+    ".brz && > .brz-accordion__item > .brz-accordion__nav .brz-accordion-icon":
       { standart: ["cssStyleElementAccordionNavIconSize"] },
     ".brz && > .brz-accordion__item:not(:last-child)": {
       standart: ["cssStyleElementAccordionSpacing"]

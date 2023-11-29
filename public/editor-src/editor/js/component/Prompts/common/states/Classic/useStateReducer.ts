@@ -18,7 +18,7 @@ export const useStateReducer = <
 ): [State<Invalid, Valid>, (a: Actions.PublicActions | A) => void] => {
   const [state, dispatch] = useReducer(
     reducer,
-    loading({ activeTab: Tabs.page })
+    loading({ activeTab: Tabs.settings })
   );
 
   const { type, payload } = state;
@@ -34,7 +34,7 @@ export const useStateReducer = <
         map((t) =>
           Actions.fetchSuccess<Invalid>({
             ...t,
-            activeTab: Tabs.page
+            activeTab: Tabs.settings
           } as Invalid)
         ),
         catchError(() => of(Actions.fetchError()))

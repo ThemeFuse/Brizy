@@ -2,7 +2,7 @@ import { insert, removeAt, replaceAt } from "timm";
 import Config from "visual/global/Config";
 import { generateBlocksList } from "visual/utils/blocks";
 import { isPopup, isStory } from "visual/utils/models";
-import { ReduxAction } from "../actions2";
+import { ActionTypes, ReduxAction } from "../actions2";
 import { ReduxState } from "../types";
 
 type BlocksOrder = ReduxState["blocksOrder"];
@@ -89,7 +89,7 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
 
       return insert(removeAt(state, oldIndex), newIndex, movedBlockId);
     }
-    case "IMPORT_TEMPLATE": {
+    case ActionTypes.IMPORT_TEMPLATE: {
       const { blocks: templateBlocks } = action.payload;
       const { insertIndex } = action.meta;
 

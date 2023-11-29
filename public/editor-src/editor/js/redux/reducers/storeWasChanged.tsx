@@ -1,5 +1,5 @@
+import { ActionTypes, ReduxAction } from "../actions2";
 import { ReduxState, StoreChanged } from "../types";
-import { ReduxAction } from "../actions2";
 
 type StoreWasChanged = ReduxState["storeWasChanged"];
 type RStoreWasChanged = (s: StoreWasChanged, a: ReduxAction) => StoreWasChanged;
@@ -14,11 +14,11 @@ export const storeWasChanged: RStoreWasChanged = (state, action) => {
     case "REMOVE_BLOCKS":
     case "REORDER_BLOCKS":
     case "UPDATE_BLOCKS":
-    case "UPDATE_GLOBAL_BLOCK": // @ts-expect-error: don't have in ts
-    case "UPDATE_CURRENT_STYLE_ID": // @ts-expect-error: don't have in ts
-    case "UPDATE_CURRENT_STYLE":
+    case "UPDATE_GLOBAL_BLOCK":
+    case ActionTypes.UPDATE_CURRENT_STYLE_ID: // @ts-expect-error: don't have in ts
+    case ActionTypes.UPDATE_CURRENT_STYLE:
     case "UPDATE_EXTRA_FONT_STYLES":
-    case "IMPORT_TEMPLATE": // @ts-expect-error: don't have in ts
+    case ActionTypes.IMPORT_TEMPLATE: // @ts-expect-error: don't have in ts
     case "UNDO": // @ts-expect-error: don't have in ts
     case "REDO": {
       return StoreChanged.changed;

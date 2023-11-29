@@ -13,6 +13,6 @@ window.Brz = {
   }
 };
 
-window.Brz.on("init.dom", $node => {
+window.Brz.on("init.dom", ($node) => {
   initExports($node);
 });

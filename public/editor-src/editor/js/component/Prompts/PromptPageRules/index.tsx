@@ -1,15 +1,20 @@
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
+import _ from "underscore";
 import CheckGroup, {
   CheckGroupIcon,
   CheckGroupItem
 } from "visual/component/Controls/CheckGroup";
 import Fixed from "visual/component/Prompts/Fixed";
 import { EmptyContentWithDefaults } from "visual/component/Prompts/common/PromptPage/EmptyContent";
+import { HeaderFooterField } from "visual/component/Prompts/common/PromptPage/HeaderFooterField";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
 import {
+  getAllOptionText,
   getChoices,
-  getTabsByItemsNumber
+  getRulesId,
+  getTabsByItemsNumber,
+  isAllChecked
 } from "visual/component/Prompts/utils";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
@@ -26,11 +31,11 @@ import {
 import { SelectedItem } from "visual/utils/api/types";
 import { isNonEmptyArray } from "visual/utils/array/types";
 import { t } from "visual/utils/i18n";
+import * as Obj from "visual/utils/reader/object";
 import { Button } from "../common/Button";
 import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
-import { SettingsTab } from "../common/PromptPage/SettingsTab";
 import { Tabs } from "../common/PromptPage/types";
 import * as Actions from "../common/states/Classic/types/Actions";
 import { reducer } from "./reducer";
@@ -58,27 +63,42 @@ export const PromptPageRules = (props: Props): ReactElement => {
     return getShopifyTemplate(_config) ?? ShopifyTemplate.Product;
   }, [_config]);
 
-  const { headTitle, pageTitle, opened, selectedLayout, onClose, onSave } =
-    props;
+  const {
+    headTitle,
+    pageTitle,
+    opened,
+    selectedLayout,
+    onClose,
+    onSave,
+    onAfterSave
+  } = props;
 
   const { value } = selectedLayout || { value: undefined };
 
   const dispatch = useDispatch();
   const handleSave = useCallback(
     ({ items, title, layout }: Valid): Promise<void> => {
+      const optionAll = _.findWhere(items, { id: "all" });
+
+      const _items = optionAll ? _.without(items, optionAll) : items;
+
       dispatch(updatePageLayout(layout));
       dispatch(updatePageTitle(title));
 
       return onSave()
-        .then(() =>
-          shopifySyncRules(
-            items.filter((i): i is SelectedItem => i.selected),
+        .then(() => {
+          return shopifySyncRules(
+            _items.filter((i): i is SelectedItem => i.selected),
             title
-          )
-        )
+          ).then(() => {
+            if (typeof onAfterSave === "function") {
+              onAfterSave();
+            }
+          });
+        })
         .then(() => undefined);
     },
-    [dispatch, onSave]
+    [dispatch, onSave, onAfterSave]
   );
   const getData = useCallback(async () => {
     const config = Config.getAll();
@@ -88,10 +108,21 @@ export const PromptPageRules = (props: Props): ReactElement => {
       );
       const itemsP = getCollectionSourceItemsById(config.templateType.id);
 
-      const items = await Promise.all([itemsP, selectedP]).then(
+      const _items = await Promise.all([itemsP, selectedP]).then(
         ([items, selected]): Item[] =>
           items.map((i) => ({ ...i, selected: selected.includes(i.id) }))
       );
+
+      const items = [
+        {
+          id: "all",
+          type: "",
+          title: getAllOptionText(templateType),
+          selected: isAllChecked(_items)
+        },
+        ..._items
+      ];
+
       const layouts = getChoices(config);
 
       if (isNonEmptyArray(layouts)) {
@@ -159,7 +190,7 @@ export const PromptPageRules = (props: Props): ReactElement => {
         const error = getErrors(state);
 
         switch (state.payload.activeTab) {
-          case Tabs.page:
+          case Tabs.settings:
             if (!items.length) {
               return <EmptyContentWithDefaults type={templateType} />;
             }
@@ -176,17 +207,35 @@ export const PromptPageRules = (props: Props): ReactElement => {
                   onChange={(v): void => dispatchS(Setters.setTitle(v))}
                   placeholder={t("Page title")}
                 />
+                <HeaderFooterField
+                  value={state.payload.layout}
+                  layouts={state.payload.layouts}
+                  onChange={(s): void => dispatchS(Setters.setLayout(s))}
+                />
                 <CheckGroup
                   defaultValue={checked}
-                  onChange={(v: Record<string, boolean>): void =>
-                    dispatchS(
-                      Setters.setRules(
-                        Object.entries(v)
-                          .filter(([, v]) => v)
-                          .map(([k]) => k)
-                      )
-                    )
-                  }
+                  onChange={(v: Record<string, boolean>): void => {
+                    if (Obj.hasKey("all", v)) {
+                      if (v.all) {
+                        const someItemWasUnchecked = !Object.values(v).every(
+                          (i) => i
+                        );
+
+                        if (someItemWasUnchecked) {
+                          dispatchS(
+                            Setters.setRules(getRulesId(_.omit(v, "all")))
+                          );
+                        } else {
+                          const rules = items.map((i) => i.id);
+                          dispatchS(Setters.setRules([...rules, "all"]));
+                        }
+                      } else {
+                        dispatchS(Setters.setRules([]));
+                      }
+                    } else {
+                      dispatchS(Setters.setRules(getRulesId(v)));
+                    }
+                  }}
                 >
                   {items.map((rule) => (
                     <CheckGroupItem
@@ -201,18 +250,6 @@ export const PromptPageRules = (props: Props): ReactElement => {
                   ))}
                 </CheckGroup>
               </Content>
-            );
-          case Tabs.settings:
-            return (
-              <SettingsTab
-                layouts={state.payload.layouts}
-                headTitle={headTitle}
-                value={state.payload.layout}
-                inlineFooter={true}
-                footer={footer}
-                onChange={(s): void => dispatchS(Setters.setLayout(s))}
-                error={error}
-              />
             );
         }
       }

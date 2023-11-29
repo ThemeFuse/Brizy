@@ -1,6 +1,6 @@
 import { FontKeyTypes } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
-import { GoogleFont, UploadedFont } from "visual/types";
+import { GoogleFont, SystemFont, UploadedFont } from "visual/types";
 import { findFonts, projectFontsData } from "visual/utils/fonts";
 import { FontGroup } from "visual/utils/fonts/getFontById";
 import { ParsedFonts } from "./parseFonts";
@@ -8,6 +8,7 @@ import { ParsedFonts } from "./parseFonts";
 interface UsedFonts {
   google: Array<GoogleFont>;
   upload: Array<UploadedFont>;
+  system: Array<SystemFont>;
 }
 
 type RFonts = ReduxState["fonts"];
@@ -23,11 +24,12 @@ export const getUsedFonts = (data: Data): UsedFonts => {
   const { fonts, parsedFonts, defaultFont, projectDefaultFontId } = data;
   const fontMap: UsedFonts = {
     google: [],
-    upload: []
+    upload: [],
+    system: []
   };
 
   // @ts-expect-error: Property 'upload' | 'google' does not exist on type '{}'.
-  const { upload = [], google = [] } = projectFontsData(fonts);
+  const { upload = [], google = [], system = [] } = projectFontsData(fonts);
   let includedDefaultProjectFont = false;
 
   parsedFonts.forEach(({ type, family }) => {
@@ -36,6 +38,13 @@ export const getUsedFonts = (data: Data): UsedFonts => {
     }
 
     switch (type) {
+      case "system": {
+        const font = findFonts(system, family);
+        if (font){
+          fontMap.system.push(font);
+        }
+        break;
+      }
       case "upload": {
         const font = findFonts(upload, family, "upload");
         font && fontMap.upload.push(font);
@@ -64,10 +73,15 @@ export const getUsedFonts = (data: Data): UsedFonts => {
   if (!includedDefaultProjectFont) {
     const { group, font } = defaultFont;
 
-    if (group === "upload") {
-      fontMap.upload.push(<UploadedFont>font);
-    } else {
-      fontMap.google.push(<GoogleFont>font);
+    switch (group) {
+      case "upload":
+        fontMap.upload.push(<UploadedFont>font);
+        break;
+      case "system":
+        fontMap.system.push(<SystemFont>font);
+        break;
+      default:
+        fontMap.google.push(<GoogleFont>font);
     }
   }
   return fontMap;

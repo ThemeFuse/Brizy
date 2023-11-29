@@ -1,5 +1,6 @@
 import React, { ReactElement, useCallback } from "react";
 import { useDispatch } from "react-redux";
+import { Switch } from "visual/component/Controls/Switch";
 import Fixed from "visual/component/Prompts/Fixed";
 import {
   setIsHomePage,
@@ -7,6 +8,8 @@ import {
   setTitle
 } from "visual/component/Prompts/PromptPageTemplate/types/Setters";
 import { getShopifyLayout } from "visual/component/Prompts/PromptPageTemplate/utils";
+import { Field } from "visual/component/Prompts/common/PromptPage/Field";
+import { HeaderFooterField } from "visual/component/Prompts/common/PromptPage/HeaderFooterField";
 import {
   cancel,
   save,
@@ -28,7 +31,6 @@ import { Button } from "../common/Button";
 import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
-import { SettingsTab } from "../common/PromptPage/SettingsTab";
 import { Tabs, tabs } from "../common/PromptPage/types";
 import { reducer } from "./reducer";
 import { Props } from "./types";
@@ -42,7 +44,8 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
     selectedLayout,
     opened,
     onClose,
-    onSave
+    onSave,
+    onAfterSave
   } = props;
 
   const isHomePage = pageId === selectedLayout?.isHomePage;
@@ -58,10 +61,16 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
       dispatch(updatePageIsHomePage(isHomePage ? pageId : null));
 
       return onSave()
-        .then(() => shopifySyncPage(title, isHomePage))
+        .then(() => {
+          return shopifySyncPage(title, isHomePage).then(() => {
+            if (typeof onAfterSave === "function") {
+              onAfterSave();
+            }
+          });
+        })
         .then(() => undefined);
     },
-    [dispatch, onSave, pageId]
+    [dispatch, onSave, onAfterSave, pageId]
   );
   const getData = useCallback(async () => {
     const config = Config.getAll();
@@ -120,7 +129,7 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
       case "Canceling":
       case "Canceled": {
         switch (state.payload.activeTab) {
-          case Tabs.page:
+          case Tabs.settings:
             return (
               <Content
                 head={headTitle}
@@ -133,21 +142,22 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
                   onChange={(v): void => dispatchS(setTitle(v))}
                   placeholder={t("Page title")}
                 />
+                <HeaderFooterField
+                  value={state.payload.layout}
+                  layouts={state.payload.layouts}
+                  onChange={(v): void => dispatchS(setLayout(v))}
+                />
+                <Field
+                  className="brz-ed-popup-integrations-step__fields-option-home-page"
+                  label={t("Set as Homepage")}
+                  required={false}
+                >
+                  <Switch
+                    value={state.payload.isHomePage}
+                    onChange={(v): void => dispatchS(setIsHomePage(v))}
+                  />
+                </Field>
               </Content>
-            );
-          case Tabs.settings:
-            return (
-              <SettingsTab
-                layouts={state.payload.layouts}
-                headTitle={headTitle}
-                value={state.payload.layout}
-                inlineFooter={true}
-                footer={footer}
-                onChange={(v): void => dispatchS(setLayout(v))}
-                error={state.payload.error}
-                isHomePage={state.payload.isHomePage}
-                onSwitchChange={(v): void => dispatchS(setIsHomePage(v))}
-              />
             );
         }
       }

@@ -1,9 +1,9 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { getCollectionTypes } from "visual/utils/api";
+import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
-import { getEkklesiaChoiches } from "../utils/helpers";
 import type { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings old option
@@ -22,8 +22,7 @@ export const getItems: GetItems<Value, Props> = ({
   const isNotExtraCategory2Filter = v.addCategoryFilter2 === "off";
   const isNotExtraCategory3Filter = v.addCategoryFilter3 === "off";
 
-  const _config = Config.getAll();
-  const { apiUrl } = _config.modules?.ekklesia ?? {};
+  const config = Config.getAll();
 
   return [
     {
@@ -75,7 +74,6 @@ export const getItems: GetItems<Value, Props> = ({
               id: "tabEventLayout",
               label: t("Display"),
               options: [
-                // Featured View Group
                 {
                   id: "featuredViewGroup",
                   type: "group-dev",
@@ -135,7 +133,6 @@ export const getItems: GetItems<Value, Props> = ({
                     }
                   ]
                 },
-                // List View Group
                 {
                   id: "listViewGroup",
                   type: "group-dev",
@@ -171,7 +168,6 @@ export const getItems: GetItems<Value, Props> = ({
                     }
                   ]
                 },
-                // Calendar View Group
                 {
                   id: "calendarViewGroup",
                   type: "group-dev",
@@ -225,7 +221,7 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Type"),
                   devices: "desktop",
                   choices: {
-                    load: () => getCollectionTypes(_config),
+                    load: () => getCollectionTypes(config),
                     emptyLoad: {
                       title: t("There are no choices")
                     }
@@ -260,10 +256,9 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Parent Category"),
                   type: "select-dev",
                   devices: "desktop",
-                  choices: getEkklesiaChoiches({
+                  choices: getEkklesiaChoiches(config, {
                     key: "eventsLvl",
-                    subKey: "parents",
-                    url: apiUrl
+                    subKey: "parents"
                   }),
                   helper: {
                     content: t(
@@ -271,7 +266,6 @@ export const getItems: GetItems<Value, Props> = ({
                     )
                   }
                 },
-                // Category Group
                 {
                   id: "categoryGroup",
                   type: "group-dev",
@@ -289,10 +283,9 @@ export const getItems: GetItems<Value, Props> = ({
                       label: t("Parent"),
                       devices: "desktop",
                       disabled: isNotCategoryFilter,
-                      choices: getEkklesiaChoiches({
+                      choices: getEkklesiaChoiches(config, {
                         key: "eventsLvl",
-                        subKey: "childs",
-                        url: apiUrl
+                        subKey: "childs"
                       }),
                       helper: {
                         content: t(
@@ -321,7 +314,6 @@ export const getItems: GetItems<Value, Props> = ({
                     }
                   ]
                 },
-                // showGroup Group
                 {
                   id: "showGroupGroup",
                   type: "group-dev",
@@ -342,7 +334,6 @@ export const getItems: GetItems<Value, Props> = ({
                     }
                   ]
                 },
-                // showSearch Group
                 {
                   id: "showGroupSearch",
                   type: "group-dev",
@@ -369,7 +360,6 @@ export const getItems: GetItems<Value, Props> = ({
               id: "tabAdvanced",
               label: t("Advanced"),
               options: [
-                // Add Category Group
                 {
                   id: "addCategoryGroup",
                   type: "group-dev",
@@ -387,10 +377,9 @@ export const getItems: GetItems<Value, Props> = ({
                       label: t("Parent"),
                       devices: "desktop",
                       disabled: isNotExtraCategory1Filter,
-                      choices: getEkklesiaChoiches({
+                      choices: getEkklesiaChoiches(config, {
                         key: "eventsLvl",
-                        subKey: "childs",
-                        url: apiUrl
+                        subKey: "childs"
                       }),
 
                       helper: {
@@ -437,10 +426,9 @@ export const getItems: GetItems<Value, Props> = ({
                       label: t("Parent"),
                       devices: "desktop",
                       disabled: isNotExtraCategory2Filter,
-                      choices: getEkklesiaChoiches({
+                      choices: getEkklesiaChoiches(config, {
                         key: "eventsLvl",
-                        subKey: "childs",
-                        url: apiUrl
+                        subKey: "childs"
                       }),
                       helper: {
                         content: t(
@@ -487,10 +475,9 @@ export const getItems: GetItems<Value, Props> = ({
                       label: t("Parent"),
                       devices: "desktop",
                       disabled: isNotExtraCategory3Filter,
-                      choices: getEkklesiaChoiches({
+                      choices: getEkklesiaChoiches(config, {
                         key: "eventsLvl",
-                        subKey: "childs",
-                        url: apiUrl
+                        subKey: "childs"
                       }),
                       helper: {
                         content: t(

@@ -10,7 +10,7 @@ import {
   mapModels
 } from "visual/utils/models";
 import { map, objectTraverse2 } from "visual/utils/object";
-import { ReduxAction } from "../actions2";
+import { ActionTypes, ReduxAction } from "../actions2";
 import { blocksOrderSelector, globalBlocksSelector } from "../selectors";
 import { ReduxState } from "../types";
 
@@ -85,7 +85,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
       );
     }
 
-    case "IMPORT_STORY": {
+    case ActionTypes.IMPORT_STORY: {
       const { blocks: storiesBlocks } = action.payload;
       const { insertIndex } = action.meta;
       const firstBlockId = blocksOrderSelector(allState)[0];
@@ -245,7 +245,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
       return { ...state, [id]: data };
     }
 
-    case "IMPORT_TEMPLATE":
+    case ActionTypes.IMPORT_TEMPLATE:
     case "UPDATE_BLOCKS": {
       const { blocks } = action.payload;
 

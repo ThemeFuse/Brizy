@@ -1,16 +1,19 @@
-import { getStore } from "visual/redux/store";
 import {
-  fontsSelector,
   defaultFontSelector,
+  fontsSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors-new";
+import { getStore } from "visual/redux/store";
+import { ReduxState } from "visual/redux/types";
+import { Font } from "visual/types";
+import { ArrayType, NonEmptyArray } from "visual/utils/array/types";
 import { findFonts, fontTransform, projectFontsData } from "visual/utils/fonts";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
-import { Font } from "visual/types";
-import { ReduxState } from "visual/redux/types";
-import { ArrayType, NonEmptyArray } from "visual/utils/array/types";
 
-export type ModelFamilyType = FontFamilyType.google | FontFamilyType.upload;
+export type ModelFamilyType =
+  | FontFamilyType.google
+  | FontFamilyType.upload
+  | FontFamilyType.system;
 type RFonts = ReduxState["fonts"];
 type DFonts = typeof fontTransform;
 type StrictFonts = Required<RFonts>;
@@ -32,7 +35,7 @@ export const getGroupFontsById = (fonts: RFonts, id: string): GroupFontById => {
   return entries.reduce((acc, curr) => {
     const [group, { data = [] }] = curr;
     const getFont = fontTransform[group];
-    const font = data.find(font => id === getFont(font).id);
+    const font = data.find((font) => id === getFont(font).id);
 
     return font ? { group, font } : acc;
   }, undefined as GroupFontById);

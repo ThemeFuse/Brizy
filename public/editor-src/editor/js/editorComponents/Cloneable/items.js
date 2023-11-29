@@ -1,16 +1,16 @@
-import React from "react";
 import classnames from "classnames";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { ScrollMotion } from "visual/component/ScrollMotions";
+import React from "react";
+import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
+import { ScrollMotion } from "visual/component/ScrollMotions";
 import Sortable from "visual/component/Sortable";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import { hideToolbar } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { t } from "visual/utils/i18n";
 import { attachRef } from "visual/utils/react";
-import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
 import contextMenuConfig from "./contextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
-import { t } from "visual/utils/i18n";
 
 class Items extends EditorArrayComponent {
   static get componentId() {
@@ -46,7 +46,7 @@ class Items extends EditorArrayComponent {
                 : itemIndex === items.length - 1
                 ? "next"
                 : undefined,
-            onChange: v => {
+            onChange: (v) => {
               switch (v) {
                 case "prev":
                   this.reorderItem(itemIndex, itemIndex - 1);
@@ -104,7 +104,7 @@ class Items extends EditorArrayComponent {
           <div
             {...sortableAttr}
             {...scrollMotionAttr?.options}
-            ref={v => {
+            ref={(v) => {
               attachRef(v, sortableRef);
               attachRef(v, scrollMotionRef);
             }}
@@ -127,7 +127,7 @@ class Items extends EditorArrayComponent {
           <ul
             {...sortableAttr}
             {...scrollMotionAttr?.options}
-            ref={v => {
+            ref={(v) => {
               attachRef(v, sortableRef);
               attachRef(v, scrollMotionRef);
             }}
@@ -173,9 +173,13 @@ class Items extends EditorArrayComponent {
 
     let content = (
       <SortableElement key={itemKey} type="shortcode">
-        <div className={itemClassName} id={itemKey}>
-          {item}
-        </div>
+        {IS_EDITOR ? (
+          <div className={itemClassName} id={itemKey}>
+            {item}
+          </div>
+        ) : (
+          item
+        )}
       </SortableElement>
     );
 

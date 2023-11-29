@@ -3,6 +3,7 @@ import { ToElementModel } from "visual/component/Options/Type";
 import { OptionName, OptionValue } from "visual/component/Options/types";
 import { toElementModel as population } from "visual/component/Options/types/common/Population/converters";
 import { toElementModel as stateMode } from "visual/component/Options/types/common/StateMode/converters";
+import { toElementModel as ai } from "visual/component/Options/types/dev/AiText/converters";
 import { toElementModel as alert } from "visual/component/Options/types/dev/Alert/converters";
 import { toElementModel as animation } from "visual/component/Options/types/dev/Animation/converters";
 import { toElementModel as backgroundColor } from "visual/component/Options/types/dev/BackgroundColor/converters";
@@ -55,6 +56,7 @@ type ToElementModelFns = {
 };
 
 const fns: ToElementModelFns = {
+  "aiText-dev": ai,
   "alert-dev": alert,
   "animation-dev": animation,
   "backgroundColor-dev": backgroundColor,

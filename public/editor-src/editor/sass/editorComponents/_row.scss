@@ -13,6 +13,10 @@
     text-align: center;
     justify-content: center;
 
+    .brz-row__scroll-motion {
+      width: 100%;
+    }
+
     .brz-link-container {
       position: absolute;
       height: 100%;
@@ -26,6 +30,7 @@
     > .brz-bg {
       left: auto;
     }
+
     .brz-wrapper__scrollmotion {
       width: 100%;
       max-width: 100%;

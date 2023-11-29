@@ -17,6 +17,7 @@ import {
 import { Font, UploadedFont } from "visual/types";
 import { pendingRequest } from "visual/utils/api";
 import { fontTransform } from "visual/utils/fonts";
+import { FONT_INITIAL } from "visual/utils/fonts/utils";
 import { t } from "visual/utils/i18n";
 import { deleteFont as apiDeleteFont } from "./api";
 import { FontTypes } from "./types";
@@ -67,6 +68,8 @@ export const List = (): ReactElement => {
         {sorted.map(({ fontGroupType, ...font }) => {
           const { id, brizyId, title, family } =
             fontTransform[fontGroupType](font);
+
+          const isSystemFont = id === FONT_INITIAL;
           const isDefaultFont = defaultFont === id;
           const isLoading = loading === brizyId;
           const className = classNames(
@@ -75,7 +78,7 @@ export const List = (): ReactElement => {
           );
 
           return (
-            <div key={brizyId} className={className}>
+            <div key={brizyId ?? id} className={className}>
               <div
                 className="brz-ed-popup-fonts__item-logo"
                 style={{
@@ -86,7 +89,7 @@ export const List = (): ReactElement => {
                 }}
               >
                 Aa
-                {!isDefaultFont && !isLoading && (
+                {!isDefaultFont && !isLoading && !isSystemFont && (
                   <div
                     className="brz-ed-badge__delete brz-ed-popup-fonts__delete"
                     onClick={(e: MouseEvent<HTMLDivElement>): void => {

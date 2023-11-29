@@ -3,7 +3,12 @@ import Config from "visual/global/Config";
 import { assetUrl } from "visual/utils/asset";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Asset, AssetLibsMap, ScriptsFree, ScriptsPro } from "./index";
-import { LIBS_SCORE, MAIN_INIT_SCORE, MAIN_SCORE } from "./scores";
+import {
+  LIBS_SCORE,
+  MAIN_INIT_SCORE,
+  MAIN_SCORE,
+  OTHERS_SCORE
+} from "./scores";
 
 type MakeScripts = {
   free: ScriptsFree;
@@ -19,6 +24,9 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
   const generic: Asset[] = [];
   const libsSelectors = new Set<string>();
   const libsMap: AssetLibsMap[] = [];
+  const config = Config.getAll();
+
+  const { thirdPartyComponents = {}, pro: proConfig } = config;
 
   // added previewJS
   const main: Asset = {
@@ -33,6 +41,25 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
     },
     pro: false
   };
+
+  Object.values(thirdPartyComponents).forEach((component) => {
+    if (component.preview.type !== "vanilla") {
+      return;
+    }
+
+    generic.push({
+      name: `thirdParty-${component.id}`,
+      score: OTHERS_SCORE,
+      content: {
+        type: "file",
+        url: component.preview.assetsURL,
+        attr: {
+          class: "brz-script brz-third-party"
+        }
+      },
+      pro: false
+    });
+  });
 
   // added emit init.dom
   generic.push({
@@ -91,7 +118,6 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
     }
   };
 
-  const proConfig = Config.getAll().pro;
   const proUrls = proConfig && proConfig.urls;
 
   // PRO

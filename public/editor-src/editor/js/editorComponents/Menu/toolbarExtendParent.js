@@ -103,6 +103,12 @@ export function getItems({ v, device }) {
           ]
         },
         {
+          id: "closeDrawerIcon",
+          type: "switch-dev",
+          disabled: dvv("mMenu") === "off",
+          label: t("Close Drawer Icon")
+        },
+        {
           id: "itemPadding",
           type: "slider-dev",
           label: t("Spacing"),

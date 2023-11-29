@@ -3,6 +3,9 @@
     "items": [],
     "labelText": "",
 
+    "headerWidth": 288,
+    "headerWidthSuffix": "px",
+
     "type": "",
     "name": ""
   },

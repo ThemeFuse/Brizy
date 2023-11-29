@@ -191,15 +191,27 @@ export function getItems({
       ]
     },
     {
-      id: "advancedSettings",
-      //@ts-expect-error Old option doesn't work
-      type: "advancedSettings",
-      sidebarLabel: t("More Settings"),
+      id: "toolbarSettings",
+      type: "popover-dev",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog",
-      devices: "desktop",
-      title: t("Settings")
+      options: [
+        {
+          id: "styles",
+          type: "sidebarTabsButton-dev",
+          devices: "desktop",
+          config: {
+            tabId: "styles",
+            text: t("Styling"),
+            icon: "nc-cog",
+            align: "left"
+          }
+        }
+      ]
     }
   ];
 }

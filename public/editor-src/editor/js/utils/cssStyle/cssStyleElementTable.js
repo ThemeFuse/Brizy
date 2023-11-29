@@ -11,6 +11,8 @@ import {
   styleElementTableColumns,
   styleElementTableIconPosition,
   styleElementTableIconSpacing,
+  styleElementTableWidthType,
+  styleSizeHeaderWidth,
   styleSizeWidth
 } from "visual/utils/style2";
 
@@ -77,11 +79,21 @@ export function cssStyleElementTableAsideWidth({ v, device, state }) {
 
   if (aside === "on") {
     const width = styleSizeWidth({ v, device, state, prefix: "aside" });
-    return `min-width: ${width}px; width: ${width}px`;
+    return `min-width: ${width}px; width: ${width}px;`;
   }
 
-  const columns = styleElementTableColumns({ v, device, state });
-  return `width: calc(100% / ${columns});`;
+  return "";
+}
+
+export function cssStyleElementTableAsideAutoWidth({ v, device, state }) {
+  const widthType = styleElementTableWidthType({ v, device, state });
+
+  if (widthType === "off") {
+    const columns = styleElementTableColumns({ v, device, state });
+    return `width: calc(100% / ${columns});`;
+  }
+
+  return "";
 }
 
 export function cssStyleElementTableEvenBgColor({ v, device }) {
@@ -94,4 +106,10 @@ export function cssStyleElementTableEvenColor({ v, device }) {
 
 export function cssStyleTablePadding({ v, device, state, prefix = "table" }) {
   return cssStylePaddingFourFields({ v, device, state, prefix });
+}
+
+export function cssStyleElementTableHeaderWidth({ v, device, state }) {
+  const width = styleSizeHeaderWidth({ v, device, state });
+
+  return `width: ${width}px; min-width: ${width}px;`;
 }

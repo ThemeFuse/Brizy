@@ -2,6 +2,7 @@ import { FromElementModel } from "visual/component/Options/Type";
 import type { OptionName, OptionValue } from "visual/component/Options/types";
 import { fromElementModel as population } from "visual/component/Options/types/common/Population/converters";
 import { fromElementModel as stateMode } from "visual/component/Options/types/common/StateMode/converters";
+import { fromElementModel as ai } from "visual/component/Options/types/dev/AiText/converters";
 import { fromElementModel as alert } from "visual/component/Options/types/dev/Alert/converters";
 import { fromElementModel as animation } from "visual/component/Options/types/dev/Animation/converters";
 import { fromElementModel as backgroundColor } from "visual/component/Options/types/dev/BackgroundColor/converters";
@@ -55,6 +56,7 @@ type FromElementModelFns = {
 };
 
 const fns: FromElementModelFns = {
+  "aiText-dev": ai,
   "alert-dev": alert,
   "animation-dev": animation,
   "backgroundColor-dev": backgroundColor,

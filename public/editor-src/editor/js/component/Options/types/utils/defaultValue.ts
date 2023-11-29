@@ -45,12 +45,14 @@ import { defaultValue as textarea } from "visual/component/Options/types/dev/Tex
 import { defaultValue as toggle } from "visual/component/Options/types/dev/Toggle/converters";
 import { defaultValue as transform } from "visual/component/Options/types/dev/Transform/converters";
 import { defaultValue as typography } from "visual/component/Options/types/dev/Typography/converters";
+import { defaultValue as ai } from "visual/component/Options/types/dev/AiText/converters";
 
 type DefaultValues = {
   [K in OptionName]: OptionValue<K>;
 };
 
 export const defaultValues: DefaultValues = {
+  "aiText-dev": ai,
   "alert-dev": alert,
   "animation-dev": animation,
   "backgroundColor-dev": backgroundColor,

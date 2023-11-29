@@ -40,8 +40,7 @@ div[contenteditable] {
   }
 
   // Data Population Ribons
-  span[data-brz-population] {
-    text-decoration: underline;
-    text-decoration-style: dashed;
+  span[data-population] {
+    background-color: color-mix(in srgb, currentColor 20%, transparent);
   }
 }

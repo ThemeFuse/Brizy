@@ -7,6 +7,7 @@ import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils
 import { Hex } from "visual/utils/color/Hex";
 import { Palette as ColorPalette } from "visual/utils/color/Palette";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
+import * as Obj from "visual/utils/reader/object";
 import { Dictionary } from "./utils";
 
 export type V = Dictionary<unknown>;
@@ -270,6 +271,14 @@ export type GoogleFont = {
   deleted?: boolean;
 };
 
+export type SystemFont = {
+  brizyId: string;
+  id: string;
+  family: string;
+  category: string;
+  weights: string[];
+};
+
 export type UploadedFont = {
   id: string;
   family: string;
@@ -279,7 +288,7 @@ export type UploadedFont = {
   deleted?: boolean;
 };
 
-export type Font = GoogleFont | UploadedFont;
+export type Font = GoogleFont | UploadedFont | SystemFont;
 
 export interface Fonts {
   config?: {
@@ -290,6 +299,9 @@ export interface Fonts {
   };
   google?: {
     data: GoogleFont[];
+  };
+  system?: {
+    data: SystemFont[];
   };
   upload?: {
     data: UploadedFont[];
@@ -364,6 +376,31 @@ export interface FontStyle {
   mobileLetterSpacing: number;
 }
 
+export const isFontStyle = (item: unknown): item is ExtraFontStyle =>
+  Obj.isObject(item) &&
+  Obj.hasKeys(
+    [
+      "id",
+      "title",
+      "fontFamily",
+      "fontFamilyType",
+      "fontSize",
+      "fontWeight",
+      "lineHeight",
+      "letterSpacing",
+      "tabletFontSize",
+      "tabletFontWeight",
+      "tabletLineHeight",
+      "tabletLetterSpacing",
+      "mobileFontSize",
+      "mobileFontWeight",
+      "mobileLineHeight",
+      "mobileLetterSpacing",
+      "deletable"
+    ],
+    item
+  );
+
 export interface Palette {
   id: ColorPalette;
   hex: Hex;
@@ -379,6 +416,11 @@ export interface Style {
 export interface ExtraFontStyle extends FontStyle {
   deletable: "on";
 }
+
+export const isExtraFontStyle = (item: unknown): item is ExtraFontStyle =>
+  isFontStyle(item) && item.deletable === "on";
+
+export type FontStyles = FontStyle | ExtraFontStyle;
 
 // Shortcodes
 

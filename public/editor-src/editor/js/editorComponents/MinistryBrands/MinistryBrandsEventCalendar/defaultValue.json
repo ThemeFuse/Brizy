@@ -219,6 +219,50 @@
     "subscribeToCalendarBoxShadowVertical": 0,
     "subscribeToCalendarBoxShadowHorizontal": 0,
 
+    "arrowColorHex": "#0170B9",
+    "arrowColorOpacity": 1,
+    "arrowColorPalette": "",
+
+    "arrowBorderRadiusType": "grouped",
+
+    "arrowBorderRadius": 100,
+    "arrowBorderRadiusSuffix": "px",
+
+    "arrowBorderStyle": "none",
+
+    "arrowBorderColorHex": "#000000",
+    "arrowBorderColorOpacity": 0,
+    "arrowBorderColorPalette": "",
+
+    "arrowBorderWidthType": "grouped",
+
+    "arrowBorderWidth": 0,
+    "arrowBorderTopWidth": 0,
+    "arrowBorderRightWidth": 0,
+    "arrowBorderBottomWidth": 0,
+    "arrowBorderLeftWidth": 0,
+
+    "arrowBorderTopLeftRadius": 100,
+    "arrowBorderTopRightRadius": 100,
+    "arrowBorderBottomRightRadius": 100,
+    "arrowBorderBottomLeftRadius": 100,
+
+    "arrowBorderTopLeftRadiusSuffix": "px",
+    "arrowBorderTopRightRadiusSuffix": "px",
+    "arrowBorderBottomRightRadiusSuffix": "px",
+    "arrowBorderBottomLeftRadiusSuffix": "px",
+
+    "arrowBoxShadow": "none",
+
+    "arrowBoxShadowColorHex": "#000000",
+    "arrowBoxShadowColorPalette": "",
+    "arrowBoxShadowColorOpacity": 0,
+
+    "arrowBoxShadowBlur": 0,
+    "arrowBoxShadowSpread": 0,
+    "arrowBoxShadowVertical": 0,
+    "arrowBoxShadowHorizontal": 0,
+
     "subscribeToCalendarHorizontalAlign": "center",
 
     "subscribeToCalendarWidth": 25,
@@ -226,6 +270,9 @@
 
     "subscribeToCalendarHeight": 50,
     "subscribeToCalendarHeightSuffix": "px",
+
+    "arrowSize": 16,
+    "arrowSizeSuffix": "px",
 
     "tableBorderRadiusType": "grouped",
 

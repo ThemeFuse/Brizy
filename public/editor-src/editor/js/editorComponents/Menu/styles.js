@@ -120,6 +120,16 @@ export function styleMenu(v, vs, vd) {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-mm-navbar .brz-mm-close:hover": {
+      standart: [
+        "cssStyleElementMenuCloseColor",
+        "cssStyleElementMenuBgCloseColor",
+        "cssStyleElementMMenuIconCloseSize",
+        "cssStyleElementMMenuCloseMargin",
+        "cssStyleElementMMenuClosePadding"
+      ],
+      interval: ["cssStyleElementMMenuCloseTransition"]
+    },
     ".brz && .brz-menu__ul > .brz-menu__item > a": {
       standart: ["cssStyleElementMenuBorderRadius"]
     },

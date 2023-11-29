@@ -57,7 +57,8 @@ export default function (config: ConfigCommon) {
                                   "postTitle",
                                   "postTitle-posts",
                                   "postTitle-posts-posts"
-                                ]
+                                ],
+                                linkPopulation: "{{brizy_dc_url_post}}"
                               }
                             }
                           ]

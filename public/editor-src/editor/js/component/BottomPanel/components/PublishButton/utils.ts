@@ -3,6 +3,9 @@ import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTempl
 import { StoreChanged } from "visual/redux/types";
 import { Page } from "visual/types";
 import { t } from "visual/utils/i18n";
+import { MValue } from "visual/utils/value";
+
+type Mode = "withRules" | "withTemplate" | "withArticle";
 
 export const getTooltipPageTitle = (status: Page["status"]): string => {
   switch (status) {
@@ -56,15 +59,13 @@ export const getButtonLabel = (
   }
 };
 
-export const getMode = (
-  config: Shopify
-): "withRules" | "withTemplate" | "withArticle" | undefined => {
+export const getMode = (config: Shopify): MValue<Mode> => {
   switch (config.templateType.type) {
     case ShopifyTemplate.Collection:
-    case ShopifyTemplate.Product: {
+    case ShopifyTemplate.Product:
+    case ShopifyTemplate.Blog: {
       return "withRules";
     }
-    case ShopifyTemplate.Blog:
     case ShopifyTemplate.Article: {
       return "withArticle";
     }
@@ -73,3 +74,6 @@ export const getMode = (
     }
   }
 };
+
+export const isTemplateOrRulesMode = (mode: unknown): mode is Mode =>
+  mode === "withRules" || mode === "withTemplate" || mode === "withArticle";

@@ -12,6 +12,7 @@ type Maps = {
 };
 
 const fns: Maps = {
+  "aiText-dev": undefined,
   "alert-dev": undefined,
   "animation-dev": undefined,
   "backgroundColor-dev": undefined,

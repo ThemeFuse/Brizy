@@ -45,7 +45,7 @@
 
         if (browser && browser === "safari") {
           const regexPattern = /version\/(\d+\.\d+)/i;
-          const matches = userAgent.match(regexPattern);  
+          const matches = userAgent.match(regexPattern);
           const version = matches ? matches[1] : null;
           if (version && Number(version) <= 16.3) {
             alert("Please update Safari browser to the latest version");

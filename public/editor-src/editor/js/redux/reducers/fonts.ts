@@ -1,6 +1,6 @@
 import produce from "immer";
+import { ActionTypes, ReduxAction } from "../actions2";
 import { ReduxState } from "../types";
-import { ReduxAction } from "../actions2";
 
 type Fonts = ReduxState["fonts"];
 type RFonts = (s: Fonts, a: ReduxAction) => Fonts;
@@ -22,9 +22,9 @@ export const fonts: RFonts = (state = {}, action) => {
 
       return { ...state, ...fonts };
     }
-    case "IMPORT_STORY":
-    case "IMPORT_TEMPLATE":
-    case "IMPORT_KIT":
+    case ActionTypes.IMPORT_STORY:
+    case ActionTypes.IMPORT_TEMPLATE:
+    case ActionTypes.IMPORT_KIT:
     case "ADD_BLOCK":
     case "ADD_GLOBAL_BLOCK": {
       const { fonts } = action.payload;
@@ -33,7 +33,7 @@ export const fonts: RFonts = (state = {}, action) => {
         return state;
       }
 
-      return produce(state, draft => {
+      return produce(state, (draft) => {
         fonts.forEach(({ type, fonts }) => {
           // @ts-expect-error: Is not assignable to type fonts
           draft[type] = draft[type] || { data: [] };

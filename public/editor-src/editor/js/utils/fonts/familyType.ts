@@ -2,7 +2,8 @@ import { pass } from "visual/utils/fp";
 
 export enum FontFamilyType {
   google = "google",
-  upload = "upload"
+  upload = "upload",
+  system = "system"
 }
 
 /**

@@ -1,7 +1,7 @@
 import produce from "immer";
 import { fromJS } from "immutable";
 import { projectAssembled } from "visual/redux/selectors";
-import { ReduxAction } from "../actions2";
+import { ActionTypes, ReduxAction } from "../actions2";
 import { ReduxState } from "../types";
 
 type Project = ReduxState["project"];
@@ -34,7 +34,7 @@ export const project: RProject = (state, action, fullState) => {
         draft.dataVersion = draft.dataVersion + 1;
       });
     }
-    case "IMPORT_KIT": {
+    case ActionTypes.IMPORT_KIT: {
       const { selectedKit } = action.payload;
 
       return produce(state, (draft) => {
@@ -50,8 +50,8 @@ export const project: RProject = (state, action, fullState) => {
         draft.dataVersion = draft.dataVersion + 1;
       });
     }
-    case "IMPORT_STORY":
-    case "IMPORT_TEMPLATE": {
+    case ActionTypes.IMPORT_STORY:
+    case ActionTypes.IMPORT_TEMPLATE: {
       const { styles, fonts } = action.payload;
 
       if (styles?.length || fonts?.length) {

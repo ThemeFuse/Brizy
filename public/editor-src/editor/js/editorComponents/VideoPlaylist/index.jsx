@@ -96,14 +96,12 @@ class VideoPlaylist extends EditorComponent {
   renderCover(videoSrc) {
     return (
       <div className="brz-video-playlist__cover">
-        <div className="brz-video-playlist__cover-icon">
-          <span
-            className="brz-play-button"
-            {...makeDataAttr({ name: "video-url", value: videoSrc })}
-            onClick={this.handleCoverIconClick}
-          >
-            <ThemeIcon name="play" type="editor" />
-          </span>
+        <div
+          className="brz-video-playlist__cover-icon brz-play-button"
+          {...makeDataAttr({ name: "video-url", value: videoSrc })}
+          onClick={this.handleCoverIconClick}
+        >
+          <ThemeIcon name="play" type="editor" />
         </div>
       </div>
     );

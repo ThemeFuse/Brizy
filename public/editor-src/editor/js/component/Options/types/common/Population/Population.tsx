@@ -103,6 +103,13 @@ const _Icon = (props: IconProps): ReactElement => {
     return [];
   }, [iconOnly]);
 
+  const extra = useMemo(
+    () => ({
+      placeholder: value
+    }),
+    [value]
+  );
+
   const handleChange = useCallback(
     ({ population: value }) => {
       if (value === CHOICE_HANDLER) {
@@ -113,7 +120,8 @@ const _Icon = (props: IconProps): ReactElement => {
               populationEntityType: EMPTY,
               populationEntityId: EMPTY
             }),
-          ToastNotification.error
+          ToastNotification.error,
+          extra
         );
       } else {
         onChange({
@@ -123,7 +131,7 @@ const _Icon = (props: IconProps): ReactElement => {
         });
       }
     },
-    [onChange, handlerChoices]
+    [onChange, handlerChoices, extra]
   );
 
   const handleClick = useCallback(() => {
@@ -134,9 +142,10 @@ const _Icon = (props: IconProps): ReactElement => {
           populationEntityType: EMPTY,
           populationEntityId: EMPTY
         }),
-      ToastNotification.error
+      ToastNotification.error,
+      extra
     );
-  }, [onChange, handlerChoices]);
+  }, [onChange, handlerChoices, extra]);
 
   if (choices.length > 0) {
     return (

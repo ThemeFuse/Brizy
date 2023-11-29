@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
+import { LinkProps } from "visual/component/hooks/withLink";
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { ECDC } from "visual/editorComponents/EditorComponent/types";
+import { LinkData } from "visual/component/Link/types/Type";
 
 type sizes = {
   width: number;
@@ -97,6 +99,7 @@ export type ImageProps = {
   v: V;
   vs: V;
   vd: V;
+  link: LinkData;
   context: EditorComponentContextValue;
   _id: string;
   componentId: string;
@@ -111,6 +114,8 @@ export type ImageProps = {
     inGallery: boolean;
     layout: string;
   };
+
+  linkProps?: LinkProps;
 };
 
 export type Styles = [string, string, string];

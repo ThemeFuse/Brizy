@@ -21,6 +21,10 @@ export interface TypographyProps
     FontFamily {
   className?: string;
   onChange: (v: changeValue, meta: changeMeta) => void;
+
+  icons?: string[];
+  activeIcon?: string;
+  onIconClick: (icon: string) => void;
 }
 
 export interface FontStyleProps {

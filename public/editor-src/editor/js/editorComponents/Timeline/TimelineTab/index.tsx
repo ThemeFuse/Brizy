@@ -68,11 +68,13 @@ export default class TimelineTab extends EditorComponent<Value, Props> {
 
     return (
       <div className={className}>
-        <div className="brz-timeline__nav--title">
-          <Toolbar {...toolbarExtendLabel}>
-            <TextEditor value={labelText} onChange={this.handleLabelChange} />
-          </Toolbar>
-        </div>
+        <Toolbar {...toolbarExtendLabel}>
+          <TextEditor
+            value={labelText}
+            onChange={this.handleLabelChange}
+            className="brz-timeline__nav--title"
+          />
+        </Toolbar>
         <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar)}>
           <div className="brz-timeline__nav--icon">
             <ThemeIcon name={name} type={type} />

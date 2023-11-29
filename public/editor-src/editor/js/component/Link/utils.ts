@@ -3,11 +3,15 @@ import { getStore } from "visual/redux/store";
 import { customFileUrl } from "visual/utils/customFile";
 import { MValue } from "visual/utils/value";
 import { Target, TargetTypes } from "./types/Target";
-import { Type } from "./types/Type";
+import { LinkData, Type } from "./types/Type";
 import {
   getPopulatedEntityValues,
   makePlaceholder
 } from "visual/utils/dynamicContent";
+import { ElementModel } from "visual/component/Elements/Types";
+import { read } from "visual/utils/reader/string";
+import { read as readNum } from "visual/utils/reader/number";
+import * as LinkType from "visual/component/Link/types/Type";
 
 interface SectionModel {
   value: {
@@ -127,4 +131,24 @@ export const getRel = (_rel: string): string => {
   }
 
   return rel.join(" ");
+};
+
+export const getLinkValue = (v: ElementModel): LinkData => {
+  return {
+    linkPage: read(v.linkPage) ?? "",
+    linkSource: read(v.linkSource) ?? "",
+    linkType: LinkType.mRead(v.linkType),
+    linkExternal: read(v.linkExternal) ?? "",
+    linkExternalBlank: read(v.linkExternalBlank) ?? "",
+    linkExternalRel: read(v.linkExternalRel) ?? "",
+    linkPopup: read(v.linkPopup) ?? "",
+    linkUpload: read(v.linkUpload) ?? "",
+    linkLightBox: read(v.linkLightBox) ?? "",
+    linkAnchor: read(v.linkAnchor) ?? "",
+    linkToSlide: readNum(v.linkToSlide) ?? 1,
+    linkPopulation: read(v.linkPopulation) ?? "",
+    linkExternalType: LinkType.readExternalType(v.linkExternalType),
+    linkPopulationEntityType: read(v.linkPopulationEntityType) ?? "",
+    linkPopulationEntityId: read(v.linkPopulationEntityId) ?? ""
+  };
 };

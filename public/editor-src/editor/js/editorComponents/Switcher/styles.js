@@ -26,10 +26,10 @@ export function style(v, vs, vd) {
     ".brz && > .brz-switcher__nav .brz-switcher__nav--item--active": {
       standart: ["cssStyleElementSwitcherActiveTextColor"]
     },
-    ".brz && .brz-switcher__nav--button": {
+    ".brz && .brz-switcher__nav--item": {
       standart: ["cssStyleElementSwitcherBtnIconPosition"]
     },
-    ".brz && .brz-switcher__nav--button .brz-icon-svg": {
+    ".brz && .brz-switcher__nav--item .brz-icon-svg": {
       standart: [
         "cssStyleSizeFontSizeIcon",
         "cssStyleElementSwitcherBtnSpacing"

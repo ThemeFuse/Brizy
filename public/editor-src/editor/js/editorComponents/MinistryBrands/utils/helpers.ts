@@ -1,37 +1,5 @@
-import {
-  Choice,
-  ChoicesSync
-} from "visual/component/Options/types/dev/MultiSelect2/types";
-import { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
-import {
-  EkklesiaFields,
-  EkklesiaParentsChilds,
-  EkklesiaResponse
-} from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
 import { t } from "visual/utils/i18n";
-import { Literal } from "visual/utils/types/Literal";
-import {
-  EkklesiaChoiceParams,
-  EkklesiaChoiceParamsWithSubKey,
-  EkklesiaParams,
-  Switch
-} from "./types";
-
-export const getOption = (
-  obj: Record<string, Literal> | undefined
-): Choice[] => {
-  return obj
-    ? [
-        { title: "None", value: "" },
-        ...Object.entries(obj).map(([key, value]) => {
-          return {
-            title: String(value),
-            value: key
-          };
-        })
-      ]
-    : [];
-};
+import { Switch } from "./types";
 
 export const getAttr = (option: Switch, key: string): string => {
   return option === "on" ? `${key}='1'` : `${key}='0'`;
@@ -73,72 +41,50 @@ export function changeContentVisibility({
   items[currentIndex].classList.add(activeClassName);
 }
 
-const request = (url: string): Promise<EkklesiaResponse> => {
-  return fetch(url).then((res) => res.json());
-};
-
-const fieldHaveParentsChildsKeys = (
-  key: Record<string, Literal> | EkklesiaParentsChilds
-): key is EkklesiaParentsChilds => {
-  return "childs" in key && "parents" in key;
-};
-
-const keysHaveSubkey = (
-  keys: EkklesiaChoiceParams | EkklesiaChoiceParamsWithSubKey
-): keys is EkklesiaChoiceParamsWithSubKey => {
-  return "subKey" in keys;
-};
-
-export const getEkklesiaFields = async <
-  T extends keyof EkklesiaFields = keyof EkklesiaFields
->(
-  keys:
-    | Required<EkklesiaChoiceParams<T>>
-    | Required<EkklesiaChoiceParamsWithSubKey<T>>
-): Promise<Choice[]> => {
-  try {
-    const { url, key } = keys;
-    const data = await request(url.concat("?module=", key));
-    const field = data.data[key];
-    if (field && fieldHaveParentsChildsKeys(field)) {
-      if (keysHaveSubkey(keys)) {
-        return getOption(field[keys.subKey]);
-      }
-    } else {
-      return getOption(field);
-    }
-  } catch (error) {
-    if (process.env.NODE_ENV === "development") {
-      console.error(error);
-    }
-  }
-
-  return [];
-};
-
-export const getEkklesiaChoiches = <
-  T extends keyof EkklesiaFields = keyof EkklesiaFields
->(
-  keys: EkklesiaParams<T>
-): ChoicesAsync | ChoicesSync => {
-  const { url, key } = keys;
-  if (!url) {
-    return [];
-  }
-
-  if (keysHaveSubkey(keys)) {
-    return {
-      load: () => getEkklesiaFields({ key, subKey: keys.subKey, url }),
-      emptyLoad: {
-        title: t("There are no choices")
-      }
-    };
-  }
-
-  return {
-    load: () => getEkklesiaFields({ key, url }),
-    emptyLoad: {
-      title: t("There are no choices")
-    }
-  };
+export const EkklesiaMessages = {
+  event_calendar: t(
+    "Ministry Content - Event Calendar - module fields have been updated."
+  ),
+  event_list: t(
+    "Ministry Content - Event List - module fields have been updated."
+  ),
+  event_layout: t(
+    "Ministry Content - Event Layout - module fields have been updated."
+  ),
+  event_detail: t(
+    "Ministry Content - Event Detail - module fields have been updated."
+  ),
+  event_featured: t(
+    "Ministry Content - Event Featured - module fields have been updated."
+  ),
+  form_widget: t(
+    "Ministry Content - Form Widget - module fields have been updated."
+  ),
+  group_detail: t(
+    "Ministry Content - Group Detail - module fields have been updated."
+  ),
+  group_featured: t(
+    "Ministry Content - Group Featured - module fields have been updated."
+  ),
+  group_list: t(
+    "Ministry Content - Group List - module fields have been updated."
+  ),
+  group_layout: t(
+    "Ministry Content - Group Layout - module fields have been updated."
+  ),
+  group_slider: t(
+    "Ministry Content - Group Slider - module fields have been updated."
+  ),
+  sermon_detail: t(
+    "Ministry Content - Sermon Detail - module fields have been updated."
+  ),
+  sermon_featured: t(
+    "Ministry Content - Sermon Featured - module fields have been updated."
+  ),
+  sermon_list: t(
+    "Ministry Content - Sermon List - module fields have been updated."
+  ),
+  sermon_layout: t(
+    "Ministry Content - Sermon Layout - module fields have been updated."
+  )
 };

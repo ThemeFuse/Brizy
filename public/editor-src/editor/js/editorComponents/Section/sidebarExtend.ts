@@ -46,6 +46,13 @@ export function getItems({
                   label: t("Basic"),
                   options: [
                     {
+                      id: "showOnDesktop",
+                      label: t("Show on Desktop"),
+                      position: 10,
+                      type: "switch-dev",
+                      devices: "desktop"
+                    },
+                    {
                       id: "margin",
                       label: t("Margin"),
                       type: "margin-dev",
@@ -57,13 +64,6 @@ export function getItems({
                   id: "moreSettingsAdvanced",
                   label: t("Advanced"),
                   options: [
-                    {
-                      id: "showOnDesktop",
-                      label: t("Show on Desktop"),
-                      position: 10,
-                      type: "switch-dev",
-                      devices: "desktop"
-                    },
                     {
                       id: "zIndex",
                       type: "slider-dev",
