@@ -19,7 +19,7 @@ class Brizy_Admin_Feedback {
 	        return;
         }
 
-        if ( get_transient( 'admin_notice' ) !== false ) {
+        if ( get_transient( 'brizy_admin_notice' ) !== false ) {
             return;
         }
 
