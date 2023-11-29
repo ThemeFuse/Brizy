@@ -19,8 +19,6 @@ import {
   REMOVE_BLOCK,
   REORDER_BLOCKS,
   UPDATE_BLOCKS,
-  UPDATE_CURRENT_STYLE,
-  UPDATE_CURRENT_STYLE_ID,
   UPDATE_ERROR,
   UPDATE_GB_RULES,
   UPDATE_GLOBAL_BLOCK,
@@ -31,10 +29,8 @@ import {
 import {
   ADD_FONTS,
   ADD_GLOBAL_BLOCK,
+  ActionTypes,
   DELETE_FONTS,
-  IMPORT_KIT,
-  IMPORT_STORY,
-  IMPORT_TEMPLATE,
   PUBLISH,
   UPDATE_CURRENT_KIT_ID,
   UPDATE_DEFAULT_FONT,
@@ -66,6 +62,7 @@ import {
   debouncedApiAutoSave,
   debouncedApiPublish,
   debouncedApiUpdateGlobalBlock,
+  onUpdate,
   pollingSendHeartBeat
 } from "./utils";
 
@@ -89,7 +86,8 @@ export default (store) => (next) => {
 
 function handlePublish({ action, state, oldState, apiHandler }) {
   if (action.type === PUBLISH) {
-    const { onSuccess = _.noop, onError = _.noop } = action.meta;
+    const config = Config.getAll();
+    const { onSuccess = _.noop, onError = _.noop } = action.meta ?? {};
 
     // update
     const meta = { is_autosave: 0 };
@@ -101,7 +99,6 @@ function handlePublish({ action, state, oldState, apiHandler }) {
     const page = pageSelector(state);
 
     const allApi = [];
-    const config = Config.getAll();
 
     if (!isStory(config)) {
       const changedGBIds = changedGBIdsSelector(state);
@@ -127,24 +124,41 @@ function handlePublish({ action, state, oldState, apiHandler }) {
       allApi.push(apiUpdateGlobalBlocks(newGlobalBlocks, meta));
     }
 
-    if (config.ui?.publish?.handler) {
-      let data = undefined;
+    let data = undefined;
 
-      if (project !== oldProject) {
-        data = {
-          projectData: project
-        };
-      }
+    if (project !== oldProject) {
+      data = {
+        projectData: project
+      };
+    }
 
-      if (page !== oldPage) {
-        data = data || {};
-        data.pageData = page;
-      }
+    if (page !== oldPage) {
+      data = data || {};
+      data.pageData = page;
+    }
 
-      if (data) {
-        allApi.push(
-          apiPublish({ ...data, is_autosave: meta.is_autosave }, config)
-        );
+    if (data) {
+      switch (action.payload.type) {
+        case "internal": {
+          const publish = {
+            config,
+            data,
+            requiredCompilerData: { page, project }
+          };
+          allApi.push(apiPublish(publish));
+          break;
+        }
+        case "external": {
+          allApi.push(
+            onUpdate({
+              page,
+              project,
+              config,
+              onDone: action.payload.res
+            })
+          );
+          break;
+        }
       }
     }
 
@@ -156,8 +170,8 @@ function handleProject({ action, state, oldState, apiHandler }) {
   const config = Config.getAll();
 
   switch (action.type) {
-    case UPDATE_CURRENT_STYLE_ID:
-    case UPDATE_CURRENT_STYLE:
+    case ActionTypes.UPDATE_CURRENT_STYLE_ID:
+    case ActionTypes.UPDATE_CURRENT_STYLE:
     case UPDATE_EXTRA_FONT_STYLES: {
       const project = projectAssembled(state);
 
@@ -165,7 +179,7 @@ function handleProject({ action, state, oldState, apiHandler }) {
       break;
     }
 
-    case IMPORT_KIT:
+    case ActionTypes.IMPORT_KIT:
     case UPDATE_CURRENT_KIT_ID:
     case UPDATE_DISABLED_ELEMENTS: {
       const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
@@ -182,8 +196,8 @@ function handleProject({ action, state, oldState, apiHandler }) {
       break;
     }
 
-    case IMPORT_STORY:
-    case IMPORT_TEMPLATE: {
+    case ActionTypes.IMPORT_STORY:
+    case ActionTypes.IMPORT_TEMPLATE: {
       const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
       const oldFonts = fontsSelector(oldState);
       const fonts = fontsSelector(state);

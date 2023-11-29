@@ -1,10 +1,10 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { getCollectionTypes } from "visual/utils/api";
+import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
-import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
@@ -15,8 +15,7 @@ export const getItems: GetItems<Value, Props> = ({
   context,
   state
 }) => {
-  const _config = Config.getAll();
-  const { apiUrl } = _config.modules?.ekklesia ?? {};
+  const config = Config.getAll();
 
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
@@ -60,7 +59,9 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Category"),
                   type: "select-dev",
                   disabled: !sermonLatestActive,
-                  choices: getEkklesiaChoiches({ key: "sermon", url: apiUrl }),
+                  choices: getEkklesiaChoiches(config, {
+                    key: "sermon"
+                  }),
                   helper: {
                     content: t("This option only applies to 'Show Latest'.")
                   }
@@ -71,7 +72,9 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Group"),
                   type: "select-dev",
                   disabled: !sermonLatestActive,
-                  choices: getEkklesiaChoiches({ key: "groups", url: apiUrl }),
+                  choices: getEkklesiaChoiches(config, {
+                    key: "groups"
+                  }),
                   helper: {
                     content: t("This option only applies to 'Show Latest'.")
                   }
@@ -82,7 +85,9 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Series"),
                   type: "select-dev",
                   disabled: !sermonLatestActive,
-                  choices: getEkklesiaChoiches({ key: "series", url: apiUrl }),
+                  choices: getEkklesiaChoiches(config, {
+                    key: "series"
+                  }),
                   helper: {
                     content: t("This option only applies to 'Show Latest'.")
                   }
@@ -93,9 +98,8 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "select-dev",
                   devices: "desktop",
                   disabled: sermonLatestActive,
-                  choices: getEkklesiaChoiches({
-                    key: "recentSermons",
-                    url: apiUrl
+                  choices: getEkklesiaChoiches(config, {
+                    key: "recentSermons"
                   }),
                   helper: {
                     content: t(
@@ -132,7 +136,7 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "nonfeatures",
                   type: "switch-dev",
                   devices: "desktop",
-                  label: t("No featured"),
+                  label: t("Non Featured"),
                   disabled: !sermonLatestActive || dvv("features") === "on",
                   helper: {
                     content: t(
@@ -252,7 +256,7 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Type"),
                   devices: "desktop",
                   choices: {
-                    load: () => getCollectionTypes(_config),
+                    load: () => getCollectionTypes(config),
                     emptyLoad: {
                       title: t("There are no choices")
                     }

@@ -67,8 +67,8 @@ const postsCssProcessors = [
     browsers: ["last 2 versions"]
   }),
   postcssURL({
-    filter: "**/subset-Nunito-*",
-    basePath: path.resolve("./node_modules/@brizy/ui/dist"),
+    filter: "**/Nunito-*",
+    basePath: path.resolve("../node_modules/@brizy/ui/dist"),
     assetsPath: paths.build,
     url: (asset, _, options) => {
       fs.copyFileSync(

@@ -15,6 +15,7 @@ type Filters = {
 };
 
 const fns: Filters = {
+  "aiText-dev": undefined,
   "alert-dev": undefined,
   "animation-dev": undefined,
   "backgroundColor-dev": undefined,
@@ -67,16 +68,16 @@ const fns: Filters = {
   // Old option, here should not be "grid" option, it will be removed when all toolbars will work with "grid-dev"
   grid: withColumns,
   // Old option, here should not be "popover" option, it will be removed when all toolbars will work with "popover-dev"
-  popover: withOptions,
+  popover: withOptions
 };
 
 const getFilter = <T extends OptionName>(
   t: T
 ):
   | ((
-      f: (t: ToolbarItemType) => ToolbarItemType | undefined,
-      t: GenericToolbarItemType<T>
-    ) => GenericToolbarItemType<T>)
+  f: (t: ToolbarItemType) => ToolbarItemType | undefined,
+  t: GenericToolbarItemType<T>
+) => GenericToolbarItemType<T>)
   | undefined =>
   // @ts-expect-error, Need to find a way to filter better options with filters
   fns[t];

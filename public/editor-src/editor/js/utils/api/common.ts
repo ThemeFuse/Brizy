@@ -1,4 +1,12 @@
 import { ChoicesSync } from "visual/component/Options/types/dev/InternalLink/types";
+import { ChoicesSync as ChoiceSync } from "visual/component/Options/types/dev/MultiSelect2/types";
+import { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
+import {
+  EkklesiaFieldMap,
+  EkklesiaKeys,
+  EkklesiaParams
+} from "visual/editorComponents/MinistryBrands/utils/types";
+import { Config } from "visual/global/Config";
 import {
   AutoSave,
   ConfigCommon,
@@ -7,7 +15,6 @@ import {
   DeleteSavedBlock,
   DeleteSavedLayout,
   OnChange,
-  PublishData,
   SavedBlockAPIMeta,
   SavedBlockFilter,
   SavedBlockImport,
@@ -18,6 +25,7 @@ import {
   UpdateSavedLayout
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { ScreenshotData } from "visual/global/Config/types/configs/common";
+import { EkklesiaFields } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
 import {
   BlocksArray,
   DefaultBlock,
@@ -27,24 +35,48 @@ import {
   PopupsWithThumbs,
   StoriesWithThumbs
 } from "visual/global/Config/types/configs/templates";
-import { PageCommon, Rule, SavedBlock, SavedLayout } from "visual/types";
+import {
+  PageCommon,
+  Project,
+  Rule,
+  SavedBlock,
+  SavedLayout
+} from "visual/types";
 import { PostsSources } from "visual/utils/api/types";
+import { getCompile } from "visual/utils/compiler";
 import { t } from "visual/utils/i18n";
 import { editorRuleToApiRule, makeBlockMeta } from "./adapter";
 
 //#region Publish
 
-export function publish(
-  data: PublishData,
-  config: ConfigCommon
-): Promise<PublishData> {
+interface Data {
+  page: PageCommon;
+  project: Project;
+}
+
+interface Publish {
+  config: ConfigCommon;
+  data: Partial<Data>;
+  requiredCompilerData: Data;
+}
+
+export function publish(props: Publish): Promise<void> {
   return new Promise((res, rej) => {
+    const { config } = props;
     const { handler } = config.ui?.publish ?? {};
 
     if (!handler) {
       rej(t("API: No publish handler found."));
     } else {
-      handler(res, rej, data);
+      const { data, requiredCompilerData } = props;
+
+      (async () => {
+        const pageHTML = await getCompile({
+          ...requiredCompilerData,
+          config
+        });
+        handler(res, rej, { ...pageHTML, ...data });
+      })();
     }
   });
 }
@@ -690,3 +722,78 @@ export const defaultPostsSources = (
 };
 
 //#endregion
+
+// #region Ministry Brands
+
+export const getEkklesiaChoiches = <
+  T extends keyof EkklesiaFields = keyof EkklesiaFields
+>(
+  config: Config,
+  keys: EkklesiaParams<T>
+): ChoicesAsync | ChoiceSync => {
+  const { handler } = config?.api?.modules?.ekklesia?.getEkklesiaFields ?? {};
+
+  if (!handler) {
+    if (process.env.NODE_ENV === "development") {
+      console.error("Missing Ekklesia handler in api-client");
+    }
+    return [{ value: "", title: t("None") }];
+  }
+
+  return {
+    load: () =>
+      new Promise((res, rej) => {
+        return handler(res, rej, keys);
+      }),
+    emptyLoad: {
+      title: t("There are no choices")
+    }
+  };
+};
+
+export const updateEkklesiaFields = async <
+  T extends keyof EkklesiaFields = keyof EkklesiaFields
+>(
+  config: Config,
+  {
+    fields
+  }: {
+    fields: Array<EkklesiaFieldMap[T]>;
+  }
+): Promise<EkklesiaKeys | undefined> => {
+  const { handler } =
+    config?.api?.modules?.ekklesia?.updateEkklesiaFields ?? {};
+  if (!handler) {
+    if (process.env.NODE_ENV === "development") {
+      console.error("Missing Ekklesia handler in api-client");
+    }
+    return undefined;
+  }
+
+  return new Promise((res, rej) =>
+    handler(res, rej, {
+      fields
+    })
+  );
+};
+
+// #endregion
+
+//#region Ai-Text
+
+export const sendToAi = (
+  config: ConfigCommon,
+  { prompt, action }: { prompt: string; action?: string }
+): Promise<string> => {
+  const handler = config.api?.textAI?.handler;
+
+  return new Promise((res, rej) => {
+    if (typeof handler === "function") {
+      handler(res, rej, { prompt, action });
+    } else {
+      rej(t("Missing AI handler in api-client"));
+    }
+  });
+};
+
+//#endregion Ai-Text

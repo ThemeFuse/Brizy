@@ -280,6 +280,7 @@ class Items extends EditorArrayComponent {
       sliderAutoPlay,
       sliderAutoPlaySpeed,
       sliderDots,
+      transitionSpeed,
       swipe,
       tabletSlidesToShow
     } = this.props;
@@ -313,6 +314,7 @@ class Items extends EditorArrayComponent {
           data-auto-play={sliderAutoPlay === "on"}
           data-auto-play-speed={sliderAutoPlaySpeed * 1000}
           data-swipe={swipe === "on"}
+          data-transition-speed={transitionSpeed}
           data-responsive={encodeURIComponent(JSON.stringify(responsive))}
         >
           {content}

@@ -33,7 +33,7 @@ import {
   getUsedModelsFonts,
   getUsedStylesFonts
 } from "visual/utils/traverse";
-import "../registerEditorParts";
+import { systemFont } from "../../utils/fonts/utils";
 import { getAssets } from "./transforms/assets";
 import { changeMenuUid } from "./transforms/changeMenuUid";
 import changeRichText from "./transforms/changeRichText";
@@ -135,6 +135,7 @@ async function getPageBlocks({
 }) {
   const store = createStore();
   const project = parseProject(_project);
+
   const { fonts, font: projectDefaultFont } = project.data;
   const config = Config.getAll();
 
@@ -158,11 +159,17 @@ async function getPageBlocks({
     }
   });
 
-  const _fonts = deepMerge(fonts, {
-    blocks: {
-      data: blocksFonts
+  const _fonts = deepMerge.all([
+    fonts,
+    {
+      blocks: {
+        data: blocksFonts
+      },
+      system: {
+        data: systemFont
+      }
     }
-  });
+  ]);
 
   store.dispatch(
     hydrate({
@@ -212,9 +219,10 @@ async function getPageBlocks({
   // uses for generate <link> with fontFamily
   let fontMap = {
     google: [],
-    upload: []
+    upload: [],
+    system: []
   };
-  const { upload = [], google = [] } = projectFontsData(_fonts);
+  const { upload = [], google = [], system = [] } = projectFontsData(_fonts);
   let includedDefaultProjectFont = false;
 
   parsedFonts.forEach(({ type, family }) => {
@@ -223,6 +231,11 @@ async function getPageBlocks({
     }
 
     switch (type) {
+      case "system": {
+        const font = findFonts(system, family);
+        font && fontMap.system.push(font);
+        break;
+      }
       case "upload": {
         const font = findFonts(upload, family, "upload");
         font && fontMap.upload.push(font);
@@ -251,10 +264,15 @@ async function getPageBlocks({
   if (!includedDefaultProjectFont) {
     const { group, font } = defaultFont;
 
-    if (group === "upload") {
-      fontMap.upload.push(font);
-    } else {
-      fontMap.google.push(font);
+    switch (group) {
+      case "upload":
+        fontMap.upload.push(font);
+        break;
+      case "system":
+        fontMap.system.push(font);
+        break;
+      default:
+        fontMap.google.push(font);
     }
   }
 

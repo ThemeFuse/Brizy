@@ -42,7 +42,8 @@ const _Link = (
     href,
     slide = {},
     attr = {},
-    id = ""
+    id = "",
+    draggable
   }: Props,
   ref: Ref<HTMLAnchorElement>
 ): ReactElement => {
@@ -85,6 +86,7 @@ const _Link = (
         attachRef(v, innerRef || null);
       }}
       {...(id && { id })}
+      draggable={draggable}
     >
       {children}
     </a>

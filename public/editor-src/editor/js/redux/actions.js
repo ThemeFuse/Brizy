@@ -13,8 +13,6 @@ export const CREATE_RULES = "CREATE_RULES";
 export const UPDATE_POPUP_RULES = "UPDATE_POPUP_RULES";
 export const UPDATE_UI = "UPDATE_UI";
 export const COPY_ELEMENT = "COPY_ELEMENT";
-export const UPDATE_CURRENT_STYLE_ID = "UPDATE_CURRENT_STYLE_ID";
-export const UPDATE_CURRENT_STYLE = "UPDATE_CURRENT_STYLE";
 export const UPDATE_SCREENSHOT = "UPDATE_SCREENSHOT";
 export const UPDATE_GB_RULES = "UPDATE_GB_RULES";
 export const UPDATE_TRIGGERS = "UPDATE_TRIGGERS";
@@ -53,20 +51,6 @@ export function editorRendered() {
 }
 
 // project
-
-export function updateCurrentStyleId(id) {
-  return {
-    type: UPDATE_CURRENT_STYLE_ID,
-    payload: id
-  };
-}
-
-export function updateCurrentStyle(currentStyle) {
-  return {
-    type: UPDATE_CURRENT_STYLE,
-    payload: currentStyle
-  };
-}
 
 export function updatePopupRules({ data, meta }) {
   return {

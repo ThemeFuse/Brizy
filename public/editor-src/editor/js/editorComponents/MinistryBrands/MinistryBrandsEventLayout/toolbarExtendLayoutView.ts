@@ -91,6 +91,16 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
           ]
         }
       ]
+    },
+    {
+      id: "tabHorizontalAlign",
+      type: "toggle-dev",
+      position: 80,
+      choices: [
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
+      ]
     }
   ];
 };

@@ -1,11 +1,12 @@
+import classnames from "classnames";
 import React from "react";
+import { DraggableOverlay } from "visual/component/DraggableOverlay";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import UIEvents from "visual/global/UIEvents";
-import { DraggableOverlay } from "visual/component/DraggableOverlay";
-import Blocks from "./Blocks";
 import { uuid } from "visual/utils/uuid";
-import { changeValueAfterDND } from "./utils";
+import Blocks from "./Blocks";
 import defaultValue from "./defaultValue.json";
+import { changeValueAfterDND } from "./utils";
 
 class Page extends EditorComponent {
   static get componentId() {
@@ -36,7 +37,7 @@ class Page extends EditorComponent {
     UIEvents.off("dnd.sort", this.handleDNDSort);
   }
 
-  handleDNDSort = data => {
+  handleDNDSort = (data) => {
     const { dbValue } = this.props;
     const newValue = changeValueAfterDND(dbValue, data);
 
@@ -44,12 +45,16 @@ class Page extends EditorComponent {
   };
 
   renderForEdit() {
+    const className = classnames(
+      "brz-root__container brz-reset-all",
+      this.props.className
+    );
     const blocksProps = this.makeSubcomponentProps({
       bindWithKey: "items"
     });
 
     return (
-      <div className="brz-root__container brz-reset-all">
+      <div className={className}>
         <Blocks {...blocksProps} />
         <DraggableOverlay />
       </div>
@@ -57,12 +62,16 @@ class Page extends EditorComponent {
   }
 
   renderForView() {
+    const className = classnames(
+      "brz-root__container brz-reset-all",
+      this.props.className
+    );
     const blocksProps = this.makeSubcomponentProps({
       bindWithKey: "items"
     });
 
     return (
-      <div className="brz-root__container brz-reset-all">
+      <div className={className}>
         <Blocks {...blocksProps} />
       </div>
     );

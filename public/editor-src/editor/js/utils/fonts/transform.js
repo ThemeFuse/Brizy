@@ -1,6 +1,7 @@
 import produce from "immer";
 import { getUploadedFonts } from "visual/utils/api";
 import { getGoogleFonts } from "visual/utils/fonts";
+import { t } from "visual/utils/i18n";
 import { uuid } from "visual/utils/uuid";
 
 const normalizeWeights = (weights) => {
@@ -32,6 +33,8 @@ export const projectFontsData = (projectFonts) => {
 
     return type === "upload"
       ? { ...acc, upload: data }
+      : type === "system"
+      ? { ...acc, system: data }
       : { ...acc, google: [...(acc.google || []), ...data] };
   }, {});
 };
@@ -67,11 +70,23 @@ export const getUploadFontDetails = (font) => {
   };
 };
 
+export const getSystemDetails = (font) => {
+  const { id, weights } = font;
+
+  return {
+    id,
+    title: t("Default system font"),
+    family: id,
+    weights: normalizeWeights(weights)
+  };
+};
+
 export const fontTransform = {
   config: getGoogleFontDetails,
   google: getGoogleFontDetails,
   blocks: getGoogleFontDetails,
-  upload: getUploadFontDetails
+  upload: getUploadFontDetails,
+  system: getSystemDetails
 };
 
 export const normalizeFonts = async (newFonts) => {

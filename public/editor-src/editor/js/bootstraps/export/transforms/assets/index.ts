@@ -66,7 +66,7 @@ export type AssetFonts = AssetGoogle | AssetUpload;
 export interface StylesFree {
   main: Asset;
   generic: Asset[];
-  libsMap: Asset[];
+  libsMap: AssetLibsMap[];
   libsSelectors: string[];
   pageFonts: AssetFonts[];
   pageStyles: Asset[];
@@ -75,7 +75,7 @@ export interface StylesFree {
 export interface StylesPro {
   main: Asset;
   generic: Asset[];
-  libsMap: Asset[];
+  libsMap: AssetLibsMap[];
   libsSelectors: string[];
 }
 

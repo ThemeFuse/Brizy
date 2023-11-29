@@ -325,7 +325,10 @@ class Row extends EditorComponent {
     }
     const { options, hoverName, isHidden, animationId } = this.getHoverData(v);
     const content = (
-      <ScrollMotion options={makeOptionValueToMotion(v)}>
+      <ScrollMotion
+        className="brz-row__scroll-motion"
+        options={makeOptionValueToMotion(v)}
+      >
         <HoverAnimation
           animationId={animationId}
           cssKeyframe={hoverName}
@@ -423,7 +426,10 @@ class Row extends EditorComponent {
             }}
             animationClass={animationClassName}
           >
-            <ScrollMotion options={makeOptionValueToMotion(v)}>
+            <ScrollMotion
+              className="brz-row__scroll-motion"
+              options={makeOptionValueToMotion(v)}
+            >
               <HoverAnimation
                 animationId={animationId}
                 cssKeyframe={hoverName}

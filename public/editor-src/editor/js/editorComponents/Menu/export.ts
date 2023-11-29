@@ -25,6 +25,12 @@ interface Settings {
   };
 }
 
+interface ClosingType {
+  desktop: "on" | "off";
+  tablet: "on" | "off";
+  mobile: "on" | "off";
+}
+
 const $rootContainer = $(document).find(".brz-root__container");
 const megaMenus = new Map<string, HTMLElement>();
 const dropdowns = new Map<
@@ -440,6 +446,7 @@ export default function ($node: JQuery): void {
 
   let currentMenuOpened: string | undefined = undefined;
   let needToOpen: string | undefined = undefined;
+  let hasClosingIcon = false;
 
   root.querySelectorAll<HTMLElement>("[data-mmenu-id]").forEach((node) => {
     const { mmenuId, mmenuPosition, mmenuTitle, mmenuIsslider } = node.dataset;
@@ -451,6 +458,23 @@ export default function ($node: JQuery): void {
     );
     const isSticky =
       Str.read(node.getAttribute("data-mmenu-stickyTitle")) === "on";
+
+    const closingIconAttribute: string =
+      Str.read(node.getAttribute("data-mmenu-closingicon")) || "";
+
+    const closingIconData: ClosingType = decodeFromString(closingIconAttribute);
+
+    switch (lastCurrentDevice) {
+      case "desktop":
+        hasClosingIcon = closingIconData.desktop === "on";
+        break;
+      case "tablet":
+        hasClosingIcon = closingIconData.tablet === "on";
+        break;
+      case "mobile":
+        hasClosingIcon = closingIconData.mobile === "on";
+        break;
+    }
 
     if (!mmenuId || !icon) {
       return;
@@ -468,7 +492,8 @@ export default function ($node: JQuery): void {
       navbar: {
         title: mmenuTitle,
         titleLink: "custom",
-        sticky: isSticky
+        sticky: isSticky,
+        closeIcon: hasClosingIcon
       },
       hooks: {
         "openPanel:after": (panel: HTMLElement): void => {

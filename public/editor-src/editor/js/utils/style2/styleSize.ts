@@ -24,7 +24,7 @@ export function styleSizeHeight({
   state,
   prefix = ""
 }: CSSValue): MNum {
-  const dvv: Get = key => defaultValueValue({ v, key, device, state });
+  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
 
   return N.read(dvv(capByPrefix(prefix, "height")));
 }
@@ -35,7 +35,7 @@ export function styleSizeSize({
   state,
   prefix = ""
 }: CSSValue): MNum {
-  const dvv: Get = key => defaultValueValue({ v, key, device, state });
+  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
 
   return N.read(dvv(capByPrefix(prefix, "size")));
 }
@@ -46,7 +46,7 @@ export function styleSizeContainerSize({
   state,
   prefix = ""
 }: CSSValue): MNum {
-  const dvv: Get = key => defaultValueValue({ v, key, device, state });
+  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
 
   return N.read(dvv(capByPrefix(prefix, "containerSize")));
 }
@@ -57,7 +57,7 @@ export function styleSizeTextSpacing({
   state,
   prefix = ""
 }: CSSValue): MNum {
-  const dvv: Get = key => defaultValueValue({ v, key, device, state });
+  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
 
   return N.read(dvv(capByPrefix(prefix, "textSpacing")));
 }
@@ -68,7 +68,7 @@ export function styleSizeSpacing({
   state,
   prefix = ""
 }: CSSValue): MNum {
-  const dvv: Get = key => defaultValueValue({ v, key, device, state });
+  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
 
   return N.read(dvv(capByPrefix(prefix, "spacing")));
 }
@@ -79,7 +79,18 @@ export function styleSizeCustom({
   state,
   prefix = ""
 }: CSSValue): MNum {
-  const dvv: Get = key => defaultValueValue({ v, key, device, state });
+  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
 
   return N.read(dvv(capByPrefix(prefix, "customSize")));
+}
+
+export function styleSizeHeaderWidth({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): MNum {
+  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
+
+  return N.read(dvv(capByPrefix(prefix, "headerWidth")));
 }

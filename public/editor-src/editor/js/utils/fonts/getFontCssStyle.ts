@@ -1,5 +1,6 @@
 import Config from "visual/global/Config";
 import { makeStyleCSSVar } from "visual/utils/fonts";
+import { FONT_INITIAL } from "visual/utils/fonts/utils";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 
 export const getFontCssStyle = ({
@@ -17,6 +18,6 @@ export const getFontCssStyle = ({
       device,
       key,
       config: Config.getAll()
-    })})`;
+    })}, ${FONT_INITIAL})`;
   }
 };

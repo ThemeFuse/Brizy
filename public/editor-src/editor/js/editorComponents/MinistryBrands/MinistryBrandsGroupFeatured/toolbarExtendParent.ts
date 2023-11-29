@@ -1,10 +1,10 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { getCollectionTypes } from "visual/utils/api";
+import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
-import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
@@ -15,8 +15,7 @@ export const getItems: GetItems<Value, Props> = ({
   component,
   context
 }) => {
-  const _config = Config.getAll();
-  const { apiUrl } = _config.modules?.ekklesia ?? {};
+  const config = Config.getAll();
 
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
@@ -60,9 +59,8 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Category"),
                   type: "select-dev",
                   disabled: !groupLatestActive,
-                  choices: getEkklesiaChoiches({
-                    key: "smallgroup",
-                    url: apiUrl
+                  choices: getEkklesiaChoiches(config, {
+                    key: "smallgroup"
                   }),
                   helper: {
                     content: t("This option only applies to 'Show Latest'.")
@@ -74,7 +72,9 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Group"),
                   type: "select-dev",
                   disabled: !groupLatestActive,
-                  choices: getEkklesiaChoiches({ key: "groups", url: apiUrl }),
+                  choices: getEkklesiaChoiches(config, {
+                    key: "groups"
+                  }),
                   helper: {
                     content: t("This option only applies to 'Show Latest'.")
                   }
@@ -85,9 +85,8 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Recent Groups"),
                   type: "select-dev",
                   disabled: groupLatestActive || dvv("groupSlug") !== "",
-                  choices: getEkklesiaChoiches({
-                    key: "smallgroups",
-                    url: apiUrl
+                  choices: getEkklesiaChoiches(config, {
+                    key: "smallgroups"
                   }),
                   helper: {
                     content: t(
@@ -168,7 +167,7 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Type"),
                   devices: "desktop",
                   choices: {
-                    load: () => getCollectionTypes(_config),
+                    load: () => getCollectionTypes(config),
                     emptyLoad: {
                       title: t("There are no choices")
                     }

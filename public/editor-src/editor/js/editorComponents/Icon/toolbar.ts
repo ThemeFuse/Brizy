@@ -89,9 +89,9 @@ export function getItems({
                       label: t("Size"),
                       type: "radioGroup-dev",
                       choices: [
-                        { value: "small", icon: "nc-16" },
-                        { value: "medium", icon: "nc-24" },
-                        { value: "large", icon: "nc-32" },
+                        { value: "small", icon: "nc-32" },
+                        { value: "medium", icon: "nc-48" },
+                        { value: "large", icon: "nc-64" },
                         { value: "custom", icon: "nc-more" }
                       ]
                     },
@@ -387,6 +387,7 @@ export function getItems({
       devices: "desktop",
       //@ts-expect-error Old option doesn't work
       type: "advancedSettings",
+      disabled: !IS_STORY,
       roles: ["admin"],
       position: 110,
       icon: "nc-cog",

@@ -1,17 +1,17 @@
-import { defaultValueValue } from "visual/utils/onChange";
-import { getFontStyle, fontTransform } from "visual/utils/fonts";
-import { DefaultFont } from "visual/utils/fonts/getFontById";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
-import { Value } from "./types/Value";
-import { MValue } from "visual/utils/value";
-import { Literal } from "visual/utils/types/Literal";
-import { FontsBlock } from "./types/FontsBlocks";
 import { DeviceMode } from "visual/types";
+import { fontTransform, getFontStyle } from "visual/utils/fonts";
+import { FontFamilyType } from "visual/utils/fonts/familyType";
+import { DefaultFont } from "visual/utils/fonts/getFontById";
+import { defaultValueValue } from "visual/utils/onChange";
+import { Literal } from "visual/utils/types/Literal";
+import { MValue } from "visual/utils/value";
 import { defaultValue, fromElementModel } from "./converters";
+import { FontsBlock } from "./types/FontsBlocks";
+import { Value } from "./types/Value";
 
 const hasFont = (fonts: FontsBlock, fontId: string): boolean => {
-  return Object.values(fonts).some(fontList =>
-    fontList?.some(font => font.id === fontId)
+  return Object.values(fonts).some((fontList) =>
+    fontList?.some((font) => font.id === fontId)
   );
 };
 
@@ -60,6 +60,13 @@ export const getValue = (
       return {
         ...model,
         fontFamilyType: FontFamilyType.upload,
+        fontFamily: family
+      };
+    }
+    case "system": {
+      return {
+        ...model,
+        fontFamilyType: FontFamilyType.system,
         fontFamily: family
       };
     }

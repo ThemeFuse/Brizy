@@ -1,11 +1,12 @@
+import classnames from "classnames";
 import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import UIEvents from "visual/global/UIEvents";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 // should we move this util folder to another place?
 import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
-import defaultValue from "./defaultValue.json";
+import UIEvents from "visual/global/UIEvents";
 import { uuid } from "visual/utils/uuid";
+import defaultValue from "./defaultValue.json";
 
 class PageStory extends EditorComponent {
   static get componentId() {
@@ -48,7 +49,7 @@ class PageStory extends EditorComponent {
     });
   };
 
-  handleDNDSort = data => {
+  handleDNDSort = (data) => {
     const { dbValue } = this.props;
 
     const newValue = changeValueAfterDND(dbValue, data);
@@ -57,6 +58,10 @@ class PageStory extends EditorComponent {
   };
 
   renderForEdit(v) {
+    const className = classnames(
+      "brz-root__container brz-root__container-story brz-reset-all",
+      this.props.className
+    );
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: () => ({
@@ -66,7 +71,7 @@ class PageStory extends EditorComponent {
     });
 
     return (
-      <div className="brz-root__container brz-root__container-story brz-reset-all">
+      <div className={className}>
         <EditorArrayComponent {...popupsProps} />
       </div>
     );

@@ -11,3 +11,9 @@
     font-size: inherit;
   }
 }
+
+&.brz:not(.brz-ed) {
+  .brz-shopify-add-to-cart{
+    cursor: pointer;
+  }
+}

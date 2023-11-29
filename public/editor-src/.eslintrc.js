@@ -53,13 +53,7 @@ module.exports = {
   overrides: [
     {
       files: ["**/*.ts", "**/*.tsx"],
-      extends: [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:react-hooks/recommended",
-        "prettier"
-      ],
+      extends: ["plugin:react-hooks/recommended", "prettier"],
       plugins: ["graphql"],
       rules: {
         "react/prop-types": 0,

@@ -6,13 +6,14 @@ import Prompts from "visual/component/Prompts";
 import { currentUserRole } from "visual/component/Roles";
 import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
-import { updateUI } from "visual/redux/actions2";
+import { setDeviceMode, updateUI } from "visual/redux/actions2";
 import {
   deviceModeSelector,
   getDefaultFontDetailsSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
+import { DeviceMode } from "visual/types";
 import {
   fontTransform,
   getFontStyles,
@@ -28,6 +29,12 @@ import { Font } from "./types/Font";
 import { FontsBlock } from "./types/FontsBlocks";
 import * as Patch from "./types/Patch";
 import { Value } from "./types/Value";
+
+const deviceIcons: Record<DeviceMode, string> = {
+  desktop: "nc-desktop",
+  tablet: "nc-tablet",
+  mobile: "nc-phone"
+};
 
 const openFontsUploader = (): void => {
   Prompts.open({
@@ -49,9 +56,9 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
       max: letterSpacingMax = 20
     } = {},
     lineHeight: { min: lineHeightMin = 1, max: lineHeightMax = 20 } = {},
-    fontSize: { min: sizeMin = 0, max: sizeMax = 300 } = {}
+    fontSize: { min: sizeMin = 0, max: sizeMax = 300 } = {},
+    icons
   } = config ?? {};
-
   const dispatch = useDispatch();
   const unDeletedFonts = useSelector<ReduxState, ReduxState["fonts"]>(
     unDeletedFontsSelector
@@ -71,7 +78,6 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
   const _onChange = useCallback(
     (v: Value[keyof Value] | Font, meta: { isChanged: keyof Value }): void => {
       const withFontFamily = fontFamily !== false;
-
       switch (meta.isChanged) {
         case "fontFamily": {
           const { id, type, weights } = v as Font;
@@ -112,7 +118,6 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
     },
     [onChange, _value, fontFamily]
   );
-
   const handleOpenStyles = useCallback(() => {
     dispatch(
       updateUI("leftSidebar", {
@@ -121,22 +126,41 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
       })
     );
   }, [dispatch]);
-
   const enableGlobalStyle = useMemo((): boolean => {
     const config = GlobalConfig.getAll();
     const { bottomTabsOrder = [], topTabsOrder = [] } =
       config.ui?.leftSidebar ?? {};
-
     return [...bottomTabsOrder, ...topTabsOrder].includes(
       LeftSidebarOptionsIds.globalStyle
     );
   }, []);
-
   const styles = [{ id: "", title: t("Custom") }, ...getFontStyles()];
   const weights = getWeightChoices({
     type: _value.fontFamilyType,
     family: _value.fontFamily
   });
+
+  const _setDeviceMode = useCallback(
+    (device: DeviceMode) => {
+      dispatch(setDeviceMode(device));
+    },
+    [dispatch]
+  );
+
+  const onIconClick = (icon: string) => {
+    let device: DeviceMode = "desktop";
+
+    switch (icon) {
+      case deviceIcons.tablet:
+        device = "tablet";
+        break;
+      case deviceIcons.mobile:
+        device = "mobile";
+        break;
+    }
+
+    _setDeviceMode(device);
+  };
 
   return (
     <Control
@@ -170,6 +194,9 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
       sizeLabel={t("Size")}
       styleLabel={t("Typography")}
       weightLabel={t("Weight")}
+      icons={icons}
+      activeIcon={deviceIcons[device]}
+      onIconClick={onIconClick}
     />
   );
 };

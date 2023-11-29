@@ -99,7 +99,7 @@ export function canUseConditionInTemplates(
         rule.appliedFor === TEMPLATES_GROUP_ID &&
         rule.entityType === TEMPLATE_TYPE &&
         //String(v) - for old users where entityValue can store as number
-        rule.entityValues.some((v) => String(v) === page.id)
+        rule.entityValues.some((v) => String(v) === String(page.id))
       );
     }
   });

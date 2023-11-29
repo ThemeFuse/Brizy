@@ -64,7 +64,8 @@ class RichText extends EditorComponent {
     formats: {},
     prepopulation: null,
     population: null,
-    selectionCoords: null
+    selectionCoords: null,
+    selectedValue: null
   };
 
   quillRef = React.createRef();
@@ -113,6 +114,45 @@ class RichText extends EditorComponent {
     this.toolbarOpen = false;
   };
 
+  getSelectedValue = (selection) => {
+    this.setState({ ...this.state, selectedValue: selection });
+  };
+
+  handleCustomDCOption = (formats) => {
+    const res = (option) => {
+      try {
+        const dcOption = dcItemOptionParser(option);
+
+        this.prepopulation = dcOption.label;
+
+        this.quillRef.current.formatPopulation({
+          label: dcOption.label,
+          display: dcOption.display,
+          placeholder: dcOption.placeholder
+        });
+
+        this.quillRef.current.format("prepopulation", null);
+        this.prepopulation = null;
+      } catch (e) {
+        ToastNotification.error(t("Invalid Dynamic Option"));
+      }
+    };
+    const rej = (msg) => {
+      ToastNotification.error(msg);
+    };
+
+    const keyCode = formats.prepopulation?.at(-1);
+
+    const extra = {
+      ...(keyCode && { keyCode }),
+      ...(formats.population?.population && {
+        placeholder: formats.population.population
+      })
+    };
+
+    return { res, rej, extra };
+  };
+
   handleSelectionChange = (formats, selectionCoords) => {
     const newState = {
       formats
@@ -130,31 +170,10 @@ class RichText extends EditorComponent {
         const prepopulation = formats.prepopulation?.trim();
 
         if (prepopulation && this.prepopulation !== prepopulation) {
-          const res = (option) => {
-            try {
-              const dcOption = dcItemOptionParser(option);
+          const { res, rej, extra } = this.handleCustomDCOption(formats);
 
-              this.prepopulation = dcOption.label;
-              this.quillRef.current.formatPopulation({
-                label: dcOption.label,
-                display: dcOption.display,
-                placeholder: dcOption.placeholder
-              });
-
-              this.quillRef.current.format("prepopulation", null);
-              this.prepopulation = null;
-            } catch (e) {
-              ToastNotification.error(t("Invalid Dynamic Option"));
-            }
-          };
-          const rej = (msg) => {
-            ToastNotification.error(msg);
-          };
-
-          const keyCode = formats.prepopulation?.at(-1);
-
-          if (keyCode && triggerCodes.some((k) => k === keyCode)) {
-            dynamicContentGroups.richText.handler(res, rej, { keyCode });
+          if (extra.keyCode && triggerCodes.some((k) => k === extra.keyCode)) {
+            dynamicContentGroups.richText.handler(res, rej, extra);
           }
         }
 
@@ -178,8 +197,22 @@ class RichText extends EditorComponent {
     this.setState(newState, () => this.toolbarRef.current.show());
   };
 
-  handleActiveClick = (event) => {
+  handleActiveClick = (event, formats) => {
     this.toolbarRef.current.handleNodeClick(event);
+
+    const config = Config.getAll();
+    const dynamicContentGroups = config.dynamicContent?.groups;
+
+    if (
+      !Array.isArray(dynamicContentGroups) &&
+      typeof dynamicContentGroups?.richText?.handler === "function" &&
+      formats.population
+    ) {
+      const { res, rej, extra } = this.handleCustomDCOption(formats);
+
+      dynamicContentGroups.richText.handler(res, rej, extra);
+      this.setState({ formats }, () => this.toolbarRef.current.show());
+    }
   };
 
   handleTextChange = (text) => {
@@ -579,7 +612,7 @@ class RichText extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { prepopulation, population } = this.state;
+    const { prepopulation, population, selectedValue } = this.state;
     const { meta = {} } = this.props;
     const inPopup = Boolean(meta.sectionPopup);
     const inPopup2 = Boolean(meta.sectionPopup2);
@@ -588,6 +621,7 @@ class RichText extends EditorComponent {
 
     const newV = {
       ...v,
+      selectedValue,
       popups: this.tmpPopups || v.popups
     };
 
@@ -610,6 +644,7 @@ class RichText extends EditorComponent {
         ref={this.quillRef}
         componentId={this.getId()}
         value={v.text}
+        selectedValue={this.getSelectedValue}
         onSelectionChange={this.handleSelectionChange}
         onClick={this.handleActiveClick}
         onTextChange={this.handleTextChange}

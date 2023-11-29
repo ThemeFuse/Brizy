@@ -57,6 +57,14 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                   icon: "nc-styling",
                   options: [
                     {
+                      id: "showOnDesktop",
+                      label: t("Show on Desktop"),
+                      type: "switch-dev",
+                      devices: "desktop",
+                      closeTooltip: true,
+                      position: 10
+                    },
+                    {
                       id: "padding",
                       type: "padding-dev",
                       label: t("Padding"),
@@ -107,14 +115,6 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                   label: t("Advanced"),
                   icon: "nc-cog",
                   options: [
-                    {
-                      id: "showOnDesktop",
-                      label: t("Show on Desktop"),
-                      type: "switch-dev",
-                      devices: "desktop",
-                      closeTooltip: true,
-                      position: 10
-                    },
                     {
                       id: "zIndex",
                       type: "slider-dev",

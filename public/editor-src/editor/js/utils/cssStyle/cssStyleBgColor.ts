@@ -16,7 +16,8 @@ export function cssStyleBgColor({
   const bgGradient = styleBgGradient({
     v,
     device,
-    state
+    state,
+    prefix
   });
 
   return bgColor === undefined || bgGradient !== "none"

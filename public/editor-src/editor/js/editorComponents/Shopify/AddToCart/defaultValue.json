@@ -4,7 +4,7 @@
     "itemId": "",
 
     "iconName": "cart-simple-in",
-    "iconType": "outline"
+    "iconType": "glyph"
   },
   "families": {
     "fontFamily": "lato",
@@ -29,7 +29,7 @@
     "iconSpacingSuffix": "px",
 
     "fontFamilyType": "",
-    "fontStyle": "",
+    "fontStyle": "button",
     "fontSize": 15,
     "fontSizeSuffix": "px",
     "fontWeight": 700,

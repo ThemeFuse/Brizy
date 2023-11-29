@@ -20,6 +20,8 @@
     "sliderAutoPlay": "off",
     "sliderAutoPlaySpeed": 3,
     "sliderAutoPlaySpeedSuffix": "s",
+    "transitionSpeed": 3.5,
+    "transitionSpeedSuffix": "s",
 
     "items": []
   },

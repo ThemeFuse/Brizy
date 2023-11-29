@@ -3,66 +3,34 @@ import {
   blocksOrderSelector,
   globalBlocksSelector
 } from "visual/redux/selectors";
-import { objectTraverse2 } from "visual/utils/object";
 import { PROJECT_LOCKED_ERROR } from "visual/utils/errors";
-import { historyReducerEnhancer } from "../history/reducers";
-
-import { project } from "./project";
-import { page } from "./page";
-import { blocksOrder } from "./blocksOrder";
-import { blocksData } from "./blocksData";
-import { globalBlocks } from "./globalBlocks";
-import { changedGBIds } from "./changedGBIds";
+import { objectTraverse2 } from "visual/utils/object";
 import {
-  HYDRATE,
-  UPDATE_GB_RULES,
   COPY_ELEMENT,
-  UPDATE_CURRENT_STYLE_ID,
-  UPDATE_CURRENT_STYLE,
-  UPDATE_SCREENSHOT,
-  UPDATE_ERROR,
+  HYDRATE,
   MAKE_NORMAL_TO_GLOBAL_BLOCK,
   MAKE_POPUP_TO_GLOBAL_BLOCK,
   REMOVE_BLOCK,
-  REMOVE_BLOCKS
+  REMOVE_BLOCKS,
+  UPDATE_ERROR,
+  UPDATE_GB_RULES,
+  UPDATE_SCREENSHOT
 } from "../actions";
-import {
-  PUBLISH,
-  IMPORT_STORY,
-  IMPORT_KIT,
-  IMPORT_TEMPLATE
-} from "../actions2";
-import { extraFontStyles } from "./extraFontStyles";
-import { ui } from "./ui";
-import { syncAllowed } from "./syncAllowed";
+import { ActionTypes, PUBLISH } from "../actions2";
+import { historyReducerEnhancer } from "../history/reducers";
 import { authorized } from "./authorized";
+import { blocksData } from "./blocksData";
+import { blocksOrder } from "./blocksOrder";
+import { changedGBIds } from "./changedGBIds";
+import { extraFontStyles } from "./extraFontStyles";
 import { fonts } from "./fonts";
+import { globalBlocks } from "./globalBlocks";
+import { page } from "./page";
+import { project } from "./project";
 import { storeWasChanged } from "./storeWasChanged";
-
-// styles
-
-export function styles(state = [], action) {
-  switch (action.type) {
-    case HYDRATE: {
-      const { project } = action.payload;
-
-      return project.data.styles;
-    }
-    case IMPORT_STORY:
-    case IMPORT_TEMPLATE:
-    case IMPORT_KIT: {
-      const { styles } = action.payload;
-
-      if (!styles) {
-        return state;
-      }
-
-      return [...state, ...styles];
-    }
-    default:
-      return state;
-  }
-}
+import { styles } from "./styles";
+import { syncAllowed } from "./syncAllowed";
+import { ui } from "./ui";
 
 export function currentStyleId(state = "", action) {
   switch (action.type) {
@@ -71,11 +39,14 @@ export function currentStyleId(state = "", action) {
 
       return project.data.selectedStyle;
     }
-    case UPDATE_CURRENT_STYLE_ID: {
+    case ActionTypes.UPDATE_CURRENT_STYLE_ID: {
       return action.payload;
     }
-    case IMPORT_STORY:
-    case IMPORT_TEMPLATE: {
+    case ActionTypes.ADD_NEW_GLOBAL_STYLE: {
+      return action.payload.id;
+    }
+    case ActionTypes.IMPORT_STORY:
+    case ActionTypes.IMPORT_TEMPLATE: {
       const { currentStyleId } = action.payload;
 
       return currentStyleId || state;
@@ -94,16 +65,19 @@ export function currentStyle(state = {}, action, fullState) {
         (style) => style.id === project.data.selectedStyle
       );
     }
-    case UPDATE_CURRENT_STYLE: {
+    case ActionTypes.UPDATE_CURRENT_STYLE: {
       return action.payload;
     }
-    case UPDATE_CURRENT_STYLE_ID: {
+    case ActionTypes.UPDATE_CURRENT_STYLE_ID: {
       const currentStyleId = action.payload;
 
       return fullState.styles.find(({ id }) => id === currentStyleId);
     }
-    case IMPORT_STORY:
-    case IMPORT_TEMPLATE: {
+    case ActionTypes.ADD_NEW_GLOBAL_STYLE: {
+      return action.payload;
+    }
+    case ActionTypes.IMPORT_STORY:
+    case ActionTypes.IMPORT_TEMPLATE: {
       const { currentStyleId, styles } = action.payload;
       const allStyles = [...(styles ?? []), ...fullState.styles];
 
@@ -267,8 +241,6 @@ export default historyReducerEnhancer(
       syncAllowed,
       blocksData,
       copiedElement,
-      currentStyle,
-      currentStyleId,
       error,
       extraFontStyles,
       fonts,
@@ -278,6 +250,8 @@ export default historyReducerEnhancer(
       blocksOrder,
       project,
       styles,
+      currentStyleId,
+      currentStyle,
       ui,
       storeWasChanged
     },

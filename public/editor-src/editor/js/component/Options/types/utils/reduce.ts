@@ -21,6 +21,7 @@ type Reducers = {
 };
 
 const fns: Reducers = {
+  "aiText-dev": undefined,
   "alert-dev": undefined,
   "animation-dev": undefined,
   "backgroundColor-dev": undefined,

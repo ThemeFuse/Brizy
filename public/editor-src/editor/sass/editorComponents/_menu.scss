@@ -152,8 +152,11 @@ $dropdown-arrow-size: 7px;
       }
 
       &:not(.brz-mm-listitem) {
-        height: 44px;
         background-color: transparent;
+      }
+
+      span.brz-mm-close {
+        flex-grow: unset;
       }
     }
 
@@ -163,7 +166,6 @@ $dropdown-arrow-size: 7px;
 
     .brz-menu__ul {
       & > .brz-mm-navbar {
-        height: 44px;
         border-bottom-width: inherit;
         background-color: transparent;
       }
@@ -258,6 +260,7 @@ $dropdown-arrow-size: 7px;
 
   // MMenu Navbar Title
   .brz-mm-navbar__title {
+    display: flex;
     line-height: 20px;
     font-size: 13px;
     padding: 12px 20px;
@@ -273,8 +276,18 @@ $dropdown-arrow-size: 7px;
     .brz-mm-navbar {
       padding: 0;
 
+      &-right {
+        display: flex;
+        padding-right: 40px;
+        flex-direction: row-reverse;
+      }
+
+      &-left {
+        padding-left: 40px;
+      }
+
       &__title {
-        padding: 12px 50px 12px 20px;
+        padding: 12px 0;
       }
     }
 

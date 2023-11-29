@@ -26,6 +26,7 @@ import { MinistryBrandsSermonDetail } from "@brizy/ui-icons/es/icons/MinistryBra
 import { MinistryBrandsSermonFeatured } from "@brizy/ui-icons/es/icons/MinistryBrandsSermonFeatured";
 import { MinistryBrandsSermonLayout } from "@brizy/ui-icons/es/icons/MinistryBrandsSermonLayout";
 import { MinistryBrandsSermonList } from "@brizy/ui-icons/es/icons/MinistryBrandsSermonList";
+import { StarShapes } from "@brizy/ui-icons/es/icons/StarShapes";
 import React, { CSSProperties, MouseEvent } from "react";
 
 const Icons = {
@@ -56,7 +57,8 @@ const Icons = {
   "t2-shopify-vendor": ShopifyVendor,
   "t2-shopify-variant-style-select": ShopifyVariantStyleSelect,
   "t2-shopify-variant-style-radio": ShopifyVariantStyleRadio,
-  "t2-shopify-variant-style-image": ShopifyVariantStyleImage
+  "t2-shopify-variant-style-image": ShopifyVariantStyleImage,
+  "t2-star-shapes": StarShapes
 };
 
 export type IconNames = keyof typeof Icons;

@@ -1,9 +1,9 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { getCollectionTypes } from "visual/utils/api";
+import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
-import { getEkklesiaChoiches } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({
@@ -13,9 +13,7 @@ export const getItems: GetItems<Value, Props> = ({
   context,
   component
 }) => {
-  const _config = Config.getAll();
-  const { apiUrl } = _config.modules?.ekklesia ?? {};
-
+  const config = Config.getAll();
   return [
     {
       id: "toolbarEventDetail",
@@ -43,13 +41,17 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "category",
                   label: t("Category"),
                   type: "select-dev",
-                  choices: getEkklesiaChoiches({ key: "event", url: apiUrl })
+                  choices: getEkklesiaChoiches(config, {
+                    key: "event"
+                  })
                 },
                 {
                   id: "group",
                   label: t("Group"),
                   type: "select-dev",
-                  choices: getEkklesiaChoiches({ key: "groups", url: apiUrl })
+                  choices: getEkklesiaChoiches(config, {
+                    key: "groups"
+                  })
                 },
                 {
                   id: "numberOfMonths",
@@ -83,7 +85,7 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Type"),
                   devices: "desktop",
                   choices: {
-                    load: () => getCollectionTypes(_config),
+                    load: () => getCollectionTypes(config),
                     emptyLoad: {
                       title: t("There are no choices")
                     }
@@ -116,7 +118,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "features",
                   type: "switch-dev",
-                  label: t("Features"),
+                  label: t("Featured"),
                   helper: {
                     content: t(
                       "If this is selected the No featured option does not apply."
@@ -126,7 +128,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "nonfeatures",
                   type: "switch-dev",
-                  label: t("No featured"),
+                  label: t("Non Featured"),
                   helper: {
                     content: t(
                       "If this is selected the Features option does not apply."

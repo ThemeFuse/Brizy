@@ -22,7 +22,6 @@ import {
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
 import { IS_PRO } from "visual/utils/env";
-import { makeDataAttr } from "visual/utils/i18n/attribute";
 import {
   defaultValueValue,
   validateKeyByProperty
@@ -494,7 +493,6 @@ export default class SectionHeader extends EditorComponent {
         componentProps={{
           ...parseCustomAttributes(customAttributes),
           id: blockName,
-          name: blockName,
           style: this.getStyle(v),
           ref: this.sectionNode,
           className: classnames(
@@ -506,8 +504,7 @@ export default class SectionHeader extends EditorComponent {
               `${this.getId()}`,
               styleSection(v, vs, vd)
             )
-          ),
-          ...makeDataAttr({ name: "uid", value: this.getId() })
+          )
         }}
         animationClass={this.getAnimationClassName(v, vs, vd)}
       >

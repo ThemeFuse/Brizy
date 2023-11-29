@@ -46,10 +46,11 @@ type Props = {
   forceUpdate: boolean;
   defaultFont: DefaultFont;
   fonts: ReduxState["fonts"];
+  selectedValue: (v: string) => void;
 
   onSelectionChange: (format: Formats, coords: Coords) => void;
   onTextChange: (text: string) => void;
-  onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
+  onClick: (event: React.MouseEvent<HTMLDivElement>, format: Formats) => void;
   isToolbarOpen: () => boolean;
 };
 
@@ -223,6 +224,9 @@ class QuillComponent extends React.Component<Props> {
     // it's small hack.sometimes null may be returned(if we select 2 paragraph and start write text)
     if (!selection) return getDefaultValues();
 
+    const sValue = quill.getText(selection.index, selection.length);
+    this.props.selectedValue(sValue);
+
     const { index, length } = quill.getSelection(true);
     // it's small hack for triple click
     this.restoreSelection({ index, length });
@@ -242,7 +246,8 @@ class QuillComponent extends React.Component<Props> {
 
   handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const node = this.content.current;
-    this.props.onClick(event);
+    const format = this.getSelectionFormat();
+    this.props.onClick(event, format);
 
     node && node.classList.add(...classToDisableDnd);
   };

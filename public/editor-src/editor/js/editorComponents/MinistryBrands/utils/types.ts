@@ -9,7 +9,6 @@ export interface EkklesiaChoiceParams<
   T extends keyof EkklesiaFields = keyof EkklesiaFields
 > {
   key: T;
-  url?: string;
 }
 
 export interface EkklesiaChoiceParamsWithSubKey<
@@ -23,3 +22,18 @@ export type EkklesiaParams<
 > = EkklesiaFields[T] extends EkklesiaParentsChilds
   ? EkklesiaChoiceParamsWithSubKey<T>
   : EkklesiaChoiceParams<T>;
+
+export interface EkklesiaKeys {
+  [key: string]: string;
+}
+
+export type EkklesiaFieldMap = {
+  [K in keyof EkklesiaFields]: EkklesiaModuleFields<K>;
+};
+
+export interface EkklesiaModuleFields<
+  T extends keyof EkklesiaFields = keyof EkklesiaFields
+> {
+  value: Record<string, string>;
+  module: EkklesiaParams<T>;
+}

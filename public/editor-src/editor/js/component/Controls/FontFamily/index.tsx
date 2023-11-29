@@ -3,8 +3,12 @@ import React, { Component, SyntheticEvent } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
-import { ScrollbarType } from "visual/utils/fonts/scrollHelpers";
-import { scrollToActiveFont } from "visual/utils/fonts/scrollHelpers";
+import {
+  ScrollbarType,
+  scrollToActiveFont
+} from "visual/utils/fonts/scrollHelpers";
+import { FONT_INITIAL } from "visual/utils/fonts/utils";
+import { t } from "visual/utils/i18n";
 import { FontList, FontObject, FontSizes, FontWithType, Props } from "./types";
 
 const fontSizeMap: FontSizes = {
@@ -14,6 +18,15 @@ const fontSizeMap: FontSizes = {
   allura: "18px",
   parisienne: "18px"
 };
+
+const systemFont = [
+  {
+    id: FONT_INITIAL,
+    family: FONT_INITIAL,
+    title: t("Default system font"),
+    weights: [400]
+  }
+];
 
 export class FontFamily extends Component<Props> {
   scrollbarRef: React.RefObject<ScrollbarType>;
@@ -69,7 +82,8 @@ export class FontFamily extends Component<Props> {
       config: configFonts = [],
       blocks: blocksFonts = [],
       google: googleFonts = [],
-      upload: uploadFonts = []
+      upload: uploadFonts = [],
+      system: systemFonts = systemFont
     } = this.props.fonts;
 
     const needSeparator = uploadFonts.length > 0 || googleFonts.length > 0;
@@ -100,6 +114,11 @@ export class FontFamily extends Component<Props> {
               fonts: blocksFonts,
               type: FontFamilyType.google
             })}
+
+          {this.renderFontList({
+            fonts: systemFonts,
+            type: FontFamilyType.system
+          })}
           {this.renderFontList({
             fonts: configFonts,
             type: FontFamilyType.google

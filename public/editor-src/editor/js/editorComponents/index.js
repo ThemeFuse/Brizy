@@ -81,6 +81,7 @@ import TableHead from "./Table/TableHead";
 import TableRow from "./Table/TableRow";
 import Tabs from "./Tabs";
 import Tab from "./Tabs/Tab";
+import ThirdParty from "./ThirdParty";
 import Timeline from "./Timeline";
 import TimelineTab from "./Timeline/TimelineTab";
 import Translation from "./Translation";
@@ -174,6 +175,7 @@ export default {
   Translation,
   Calendly,
   Alert,
+  ThirdParty,
 
   // DC
   PostTitle,

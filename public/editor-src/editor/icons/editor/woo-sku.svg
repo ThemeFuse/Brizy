@@ -1,9 +1,1 @@
-<svg id="nc-woo-sku" viewBox="0 0 16 16">
-    <g stroke="none" stroke-width="1" fill-rule="evenodd">
-    <path
-        d="M2,1 L2,15 L0,15 L0,1 L2,1 Z M16,1 L16,15 L14,15 L14,1 L16,1 Z M5,1 L5,14 L3,14 L3,1 L5,1 Z M13,1 L13,14 L11,14 L11,1 L13,1 Z M10,1 L10,14 L6,14 L6,1 L10,1 Z"
-        fill="currentColor"
-        fill-rule="nonzero"
-    ></path>
-    </g>
-</svg>
+<svg viewBox="0 0 16 16"><path fill="currentColor" fill-rule="nonzero" d="M2 1v14H0V1h2Zm14 0v14h-2V1h2ZM5 1v13H3V1h2Zm8 0v13h-2V1h2Zm-3 0v13H6V1h4Z"/></svg>

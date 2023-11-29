@@ -6,6 +6,7 @@ import {
 } from "visual/utils/fonts";
 import { defaultValueValue } from "visual/utils/onChange";
 import { DESKTOP } from "visual/utils/responsiveMode";
+import { FONT_INITIAL } from "../fonts/utils";
 
 export function styleTypographyFontFamily({ v, device, state }) {
   const { fontFamily, fontFamilyType } = v;
@@ -23,7 +24,7 @@ export function styleTypographyFontFamily({ v, device, state }) {
       device: DESKTOP,
       key: "fontFamily",
       config: Config.getAll()
-    })})`;
+    })}, ${FONT_INITIAL})`;
   } else {
     return fontFamily === undefined
       ? fontFamily
@@ -32,7 +33,7 @@ export function styleTypographyFontFamily({ v, device, state }) {
 }
 
 export function styleTypographyFontSize({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
   const fontStyle = dvv("fontStyle");
   const globalStyle = getFontCssStyle({
     fontStyle,
@@ -74,7 +75,7 @@ export function styleTypographyFontSizeSuffix({ v, device, state }) {
 }
 
 export function styleTypographyLineHeight({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const fontStyle = dvv("fontStyle");
   const globalStyle = getFontCssStyle({
@@ -89,7 +90,7 @@ export function styleTypographyLineHeight({ v, device, state }) {
 }
 
 export function styleTypographyFontWeight({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const fontStyle = dvv("fontStyle");
   const globalStyle = getFontCssStyle({
@@ -104,7 +105,7 @@ export function styleTypographyFontWeight({ v, device, state }) {
 }
 
 export function styleTypographyLetterSpacing({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const fontStyle = dvv("fontStyle");
   const suffix = fontStyle ? "" : "px";
