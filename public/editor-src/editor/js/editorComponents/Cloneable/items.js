@@ -173,13 +173,9 @@ class Items extends EditorArrayComponent {
 
     let content = (
       <SortableElement key={itemKey} type="shortcode">
-        {IS_EDITOR ? (
-          <div className={itemClassName} id={itemKey}>
-            {item}
-          </div>
-        ) : (
-          item
-        )}
+        <div className={itemClassName} id={itemKey}>
+          {item}
+        </div>
       </SortableElement>
     );
 

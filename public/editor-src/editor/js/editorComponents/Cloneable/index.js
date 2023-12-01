@@ -27,9 +27,6 @@ import Items from "./items";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { style, styleAnimation, styleContainer } from "./styles";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import Toolbar from "../../component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import SortableHandle from "../../component/Sortable/SortableHandle";
 
 export default class Cloneable extends EditorComponent {
   static get componentId() {
@@ -241,12 +238,10 @@ export default class Cloneable extends EditorComponent {
                 type="wrapper__clone"
                 color="grey"
                 borderStyle="dotted"
-                renderButtonWrapper={this.renderToolbar}
               >
                 {({
                   ref: containerBorderRef,
                   attr: containerBorderAttr,
-                  button: ContainerBorderButton,
                   border: ContainerBorderBorder
                 }) => (
                   <Animation
@@ -266,7 +261,6 @@ export default class Cloneable extends EditorComponent {
                     animationClass={animationClassName}
                   >
                     {this.renderContent(v, vs, vd)}
-                    {ContainerBorderButton}
                     {ContainerBorderBorder}
                   </Animation>
                 )}
@@ -358,14 +352,4 @@ export default class Cloneable extends EditorComponent {
       </Animation>
     );
   }
-
-  renderToolbar = (Button) => (
-    <Toolbar
-      {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarExtendConfig)}
-    >
-      <SortableHandle>
-        <Button />
-      </SortableHandle>
-    </Toolbar>
-  );
 }
