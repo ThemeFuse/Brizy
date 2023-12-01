@@ -511,7 +511,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      disabled: submitType || searchType || !IS_STORY,
+      disabled: submitType || searchType,
       roles: ["admin"],
       position: 110,
       icon: "nc-cog",
