@@ -387,7 +387,6 @@ export function getItems({
       devices: "desktop",
       //@ts-expect-error Old option doesn't work
       type: "advancedSettings",
-      disabled: !IS_STORY,
       roles: ["admin"],
       position: 110,
       icon: "nc-cog",

@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.4.1<br>
 Requires PHP: 7.0.0<br>
-Stable tag: 2.4.32<br>
+Stable tag: 2.4.33<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.33 - 2023-12-01
+* Fixed: Buttons width in preview 
+* Fixed: Overlay was visible under gradient color 
 
 ### 2.4.32 - 2023-11-29
 * New: Use system default fonts instead of Google or custom fonts
