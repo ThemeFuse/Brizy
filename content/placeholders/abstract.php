@@ -198,6 +198,7 @@ abstract class Brizy_Content_Placeholders_Abstract extends \BrizyPlaceholders\Ab
         );
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return array(
