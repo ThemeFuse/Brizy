@@ -15,7 +15,7 @@ export const withLink =
       linkProps: LinkProps;
     }
   ): ReactElement => {
-    const link = read(props.link) ?? {};
+    const link = read(props.v) ?? {};
     const { linkProps } = props;
 
     const linkData = getLinkData(link);

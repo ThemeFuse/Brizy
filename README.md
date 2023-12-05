@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.4.1<br>
 Requires PHP: 7.0.0<br>
-Stable tag: 2.4.33<br>
+Stable tag: 2.4.34<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.34 - 2023-12-05
+* Fixed: Lightbox option on images is not working on frontend
+* Fixed: Accordion icon size issue on front end
 
 ### 2.4.33 - 2023-12-01
 * Fixed: Buttons width in preview 

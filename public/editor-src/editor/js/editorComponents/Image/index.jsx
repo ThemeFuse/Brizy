@@ -5,6 +5,7 @@ import _ from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
+import { getLinkValue } from "visual/component/Link/utils";
 import { fromElementModel } from "visual/component/Options/types/dev/ImageUpload/converters";
 import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import Toolbar from "visual/component/Toolbar";
@@ -65,7 +66,6 @@ import {
   multiplier,
   showOriginalImage
 } from "./utils";
-import { getLinkValue } from "visual/component/Link/utils";
 
 class Image extends EditorComponent {
   static get componentId() {
@@ -646,7 +646,8 @@ class Image extends EditorComponent {
         "brz-popup2__action-close":
           link.type === "action" && actionClosePopup === "on"
       }),
-      slide: link.slide
+      slide: link.slide,
+      draggable: false
     };
 
     const parentClassName = classnames(
