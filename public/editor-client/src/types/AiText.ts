@@ -1,5 +1,5 @@
 export enum RequestOptions {
-  Model = "gpt-3.5-turbo",
+  Model = "gpt-3.5-turbo-1106",
   Temperature = 0.2,
 }
 
