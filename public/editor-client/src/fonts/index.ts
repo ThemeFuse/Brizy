@@ -41,35 +41,3 @@ export const adobeFont = (): AdobeFonts => {
     }
   };
 };
-
-// export const getAdobeFonts = {
-//   async handler(res: Response<unknown>, rej: Response<string>) {
-//     const config = getConfig();
-//
-//     if (!config) {
-//       throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
-//     }
-//
-//     const { editorVersion, url: _url, hash, actions } = config;
-//
-//     const url = makeUrl(_url, {
-//       hash,
-//       action: actions.adobeFontsUrl,
-//       version: editorVersion
-//     });
-//
-//     const r = await request(url, {
-//       method: "GET"
-//     });
-//
-//     if (r.ok) {
-//       const d = await r.json();
-//
-//       if (d) {
-//         res(convertDataToLocal(d.data));
-//       }
-//     } else {
-//       rej("Failed to get adobe fonts");
-//     }
-//   }
-// };
