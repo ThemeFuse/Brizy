@@ -209,7 +209,8 @@ class Brizy_Editor_API_Client extends Brizy_Editor_Http_Client
                             'data'     => $page_data,
                             'is_index' => true,
                         ),
-                    )
+                    ),
+	                JSON_UNESCAPED_UNICODE
                 ),
                 'project_json'       => json_encode($project->createResponse()),
                 'global_blocks_json' => json_encode(
