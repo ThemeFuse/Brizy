@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 6.4.1
+Tested up to: 6.4.2
 Requires PHP: 7.0.0
-Stable tag: 2.4.34
+Stable tag: 2.4.35
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,9 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.35 - 2023-12-07 =
+* Improved: Reduce text generation time
 
 = 2.4.34 - 2023-12-05 =
 * Fixed: Lightbox option on images is not working on frontend

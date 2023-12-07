@@ -51,7 +51,7 @@ export default function ($node: JQuery): void {
       protected_page_token: inputValue
     };
 
-    const action = form.dataset.action || "/";
+    const action = window.location.href || "/";
 
     const { fail, invalid } = getErrorMessages(form);
 
