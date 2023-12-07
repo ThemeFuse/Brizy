@@ -1,5 +1,4 @@
 import set from "lodash/set";
-import { handler as posts } from "./Elements/Posts";
 import { doAiRequest } from "./aiText";
 import { autoSave } from "./autoSave";
 import { getCollectionItemsIds } from "./collectionItems/getCollectionItemsIds";
@@ -32,7 +31,7 @@ if (!config) {
 }
 
 const api = {
-  ...(config.api.openAIUrl ? {textAI: {handler: doAiRequest}} : {}),
+  ...(config.api.openAIUrl ? { textAI: { handler: doAiRequest } } : {}),
   media: {
     addMedia,
     addMediaGallery,
