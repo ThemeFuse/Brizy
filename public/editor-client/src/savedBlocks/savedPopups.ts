@@ -21,7 +21,11 @@ export const savedPopups: SavedPopups = {
 
       // get savedBLocks with recursive pagination
       const get = async (page: number): Promise<void> => {
-        const data = await getSavedBlocks({ page, count: TOTAL_COUNT });
+        const data = await getSavedBlocks({
+          page,
+          count: TOTAL_COUNT,
+          order: "DESC"
+        });
         const popupBlocks = data.filter((item) => item.meta.type === "popup");
 
         blocks = [...blocks, ...popupBlocks];
