@@ -9,7 +9,7 @@ class Brizy_Editor_Editor_ModuleGroups_ProductProvider implements Brizy_Editor_E
 	}
 
 	public function collect( $context ) {
-		$brizy_Editor_Editor_ModuleGroups_ModuleGroup_Product = new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'product', [
+		$brizy_Editor_Editor_ModuleGroups_ModuleGroup_Product = new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'product', 'brizy' ), [
 			"WOOProductTitle",
 			"WOOExcerpt",
 			"WOOProductContent",

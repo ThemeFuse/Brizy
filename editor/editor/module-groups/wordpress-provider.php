@@ -10,7 +10,7 @@ class Brizy_Editor_Editor_ModuleGroups_WordpressProvider implements Brizy_Editor
 
 	public function collect( $context ) {
 		return [
-			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'wordpress', [
+			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'wordpress', 'brizy' ), [
 				$this->hasSidebar( $context ) ? "WPSidebar" : null,
 				"WPCustomShortcode"
 			], $this->isTemplateType($context, 'single' ) ? 150 : 500 ),

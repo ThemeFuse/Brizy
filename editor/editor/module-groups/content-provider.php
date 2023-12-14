@@ -10,7 +10,7 @@ class Brizy_Editor_Editor_ModuleGroups_ContentProvider implements Brizy_Editor_E
 
 	public function collect( $context ) {
 		return [
-			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'content', [
+			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'content', 'brizy' ), [
 				"IconText",
 				"Lottie",
 				"Embed",
