@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.4.1<br>
+Tested up to: 6.4.2<br>
 Requires PHP: 7.0.0<br>
-Stable tag: 2.4.33<br>
+Stable tag: 2.4.36<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,33 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.36 - 2023-12-19
+* New: Added corner radius styling for tabs in Tab Element 
+* New: Added ability to filter by keywords in the element panel 
+* New: Added ability to delete, duplicate all buttons or icons at once
+* Improved: Added additional styling for the dynamic placeholder in Text elements
+* Improved: Localisation strings for Icons tab
+* Improved: Localisation strings for Audio element 
+* Improved: Localisation strings for Video element 
+* Improved: Localisation strings for Accordion element 
+* Improved: Localisation strings for Accordion tags
+* Improved: Localisation strings for Block option translation 
+* Improved: Localisation strings for Form element
+* Improved: Localisation strings for "View as" option in left sidebar 
+* Improved: Localisation for Right Sidebar
+* Improved: Localisation for Posts element 
+* Improved: Localisation for Blocks popup
+* Improved: Localisation for Counter element
+* Improved: Localisation for Text 
+* Improved: Localisation for Right Sidebar effects 
+* Improved: Localisation for Shortcuts popup
+* Improved: Hide longer title options in UI with elipse 
+* Fixed: Unable to delete title in Saved Blocks and Layouts
+* Fixed: Youtube Shorts in Video element 
+* Fixed: Hover effects break column dimensions 
+* Fixed: Show explicit error messages when import saved blocks 
+* Fixed: Fix the JSON data before sending to compiler
 
 ### 2.4.33 - 2023-12-01
 * Fixed: Buttons width in preview 
